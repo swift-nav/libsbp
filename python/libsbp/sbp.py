@@ -12,7 +12,7 @@
 SBP_PREAMBLE = 0x55
 
 class SBP(object):
-  def __init__(self):
+  def __init__(self, msg_type, sender, length, payload, crc):
     self.preamble = SBP_PREAMBLE
     self.msg_type = msg_type
     self.sender = sender
@@ -23,4 +23,5 @@ class SBP(object):
   def __repr__(self):
     p = (self.preamble, self.msg_type, self.sender, self.length,
          self.payload, self.crc)
-    fmt = "<SBP (%s, %s, %s, %s, %s, %s)>" % fmt
+    fmt = "<SBP (%s, %s, %s, %s, %s, %s)>"
+    return fmt % p
