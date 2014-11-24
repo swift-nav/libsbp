@@ -23,5 +23,5 @@ class SBP(object):
   def __repr__(self):
     p = (self.preamble, self.msg_type, self.sender, self.length,
          self.payload, self.crc)
-    fmt = "<SBP (%s, %s, %s, %s, %s, %s)>"
+    fmt = "<SBP (preamble=0x%X, msg_type=0x%X, sender=%s, length=%d, payload=%s, crc=0x%X)>"
     return fmt % p
