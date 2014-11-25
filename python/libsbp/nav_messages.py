@@ -2,6 +2,7 @@
 import struct
 import libsbp.sbp
 import libsbp.nav_types
+from libsbp.utils import to_repr
 
 # Automatically generated from sbp.yaml with generate.py, do not hand edit!
 
@@ -20,8 +21,11 @@ configuration requests.
   """
 
   def __init__(self, sbp):
-    self.raw = sbp
-    self.from_binary(self.raw.payload)
+    self.from_binary(sbp.payload)
+
+  def __repr__(self):
+    return to_repr(self)
+
   def from_binary(self, d):
     (
       self.reserved,
@@ -51,8 +55,11 @@ flags should be inspected.
   """
 
   def __init__(self, sbp):
-    self.raw = sbp
-    self.from_binary(self.raw.payload)
+    self.from_binary(sbp.payload)
+
+  def __repr__(self):
+    return to_repr(self)
+
   def from_binary(self, d):
     (
       self.flags,
@@ -74,8 +81,11 @@ class GPSTime(object):
   """
 
   def __init__(self, sbp):
-    self.raw = sbp
-    self.from_binary(self.raw.payload)
+    self.from_binary(sbp.payload)
+
+  def __repr__(self):
+    return to_repr(self)
+
   def from_binary(self, d):
     (
       self.wn,
@@ -103,8 +113,11 @@ class Dops(object):
   """
 
   def __init__(self, sbp):
-    self.raw = sbp
-    self.from_binary(self.raw.payload)
+    self.from_binary(sbp.payload)
+
+  def __repr__(self):
+    return to_repr(self)
+
   def from_binary(self, d):
     (
       self.tow,
@@ -136,8 +149,11 @@ class PosECEF(object):
   """
 
   def __init__(self, sbp):
-    self.raw = sbp
-    self.from_binary(self.raw.payload)
+    self.from_binary(sbp.payload)
+
+  def __repr__(self):
+    return to_repr(self)
+
   def from_binary(self, d):
     (
       self.tow,
@@ -171,8 +187,11 @@ class PosLLH(object):
   """
 
   def __init__(self, sbp):
-    self.raw = sbp
-    self.from_binary(self.raw.payload)
+    self.from_binary(sbp.payload)
+
+  def __repr__(self):
+    return to_repr(self)
+
   def from_binary(self, d):
     (
       self.tow,
@@ -208,8 +227,11 @@ class BaselineECEF(object):
   """
 
   def __init__(self, sbp):
-    self.raw = sbp
-    self.from_binary(self.raw.payload)
+    self.from_binary(sbp.payload)
+
+  def __repr__(self):
+    return to_repr(self)
+
   def from_binary(self, d):
     (
       self.tow,
@@ -243,8 +265,11 @@ class BaselineNED(object):
   """
 
   def __init__(self, sbp):
-    self.raw = sbp
-    self.from_binary(self.raw.payload)
+    self.from_binary(sbp.payload)
+
+  def __repr__(self):
+    return to_repr(self)
+
   def from_binary(self, d):
     (
       self.tow,
@@ -280,8 +305,11 @@ class VelECEF(object):
   """
 
   def __init__(self, sbp):
-    self.raw = sbp
-    self.from_binary(self.raw.payload)
+    self.from_binary(sbp.payload)
+
+  def __repr__(self):
+    return to_repr(self)
+
   def from_binary(self, d):
     (
       self.tow,
@@ -315,8 +343,11 @@ class VelNED(object):
   """
 
   def __init__(self, sbp):
-    self.raw = sbp
-    self.from_binary(self.raw.payload)
+    self.from_binary(sbp.payload)
+
+  def __repr__(self):
+    return to_repr(self)
+
   def from_binary(self, d):
     (
       self.tow,
@@ -343,7 +374,7 @@ class VelNED(object):
 
 
 
-msg_classses = {
+msg_classes = {
   0xFF00: Startup,
   0xFFFF: Heartbeat,
   0x0100: GPSTime,
@@ -357,4 +388,4 @@ msg_classses = {
 }
 
 def sbp_decode(t, d):
-  return msg_classses[t](d)
+  return msg_classes[t](d)

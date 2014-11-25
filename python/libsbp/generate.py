@@ -24,6 +24,7 @@ SIZES = {
   's64': 8,
   'float': 4,
   'double': 8,
+  'c20': 20
 }
 
 PYSTRUCT_CODE = {
@@ -37,13 +38,7 @@ PYSTRUCT_CODE = {
   's64': 'q',
   'float': 'f',
   'double': 'd',
-}
-
-COMPLEX_PYSTRUCT_CODE = {
-  'latency_t': lambda d: Latency(d),
-  'carrier_phase_t': lambda d: CarrierPhase(d),
-  'uart_state_t': lambda d: UARTState(d),
-  'gps_time_t': lambda d: GPSTime
+  'c20': '20s'
 }
 
 ACRONYMS = ['GPS', 'ECEF', 'LLH', 'NED']
@@ -171,4 +166,4 @@ if __name__ == "__main__":
   render(spec, template, destination)
   spec = "../spec/standard.yaml"
   destination = "./libsbp/nav_messages.py"
-  #render(spec, template, destination)
+  render(spec, template, destination)

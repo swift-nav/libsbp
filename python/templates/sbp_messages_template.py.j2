@@ -2,6 +2,7 @@
 import struct
 import libsbp.sbp
 import libsbp.nav_types
+from libsbp.utils import to_repr
 
 # Automatically generated from sbp.yaml with generate.py, do not hand edit!
 
@@ -16,9 +17,15 @@ class ((( m.name | classnameify )))(object):
   """
 
   def __init__(self, sbp):
-    self.raw = sbp
-    self.from_binary(self.raw.payload)
- 
+    ((*- if m.fields *))
+    self.from_binary(sbp.payload)
+    ((*- else *))
+    self.payload = sbp.payload
+    ((*- endif *))
+
+  def __repr__(self):
+    return to_repr(self)
+
   ((*- if m.fields *))
 
   def from_binary(self, d):
@@ -38,12 +45,11 @@ class ((( m.name | classnameify )))(object):
 
 ((* endfor *))
 
-msg_classses = {
+msg_classes = {
 ((*- for m in msgs *))
   ((('0x%04X'|format(m.id)))): ((( m.name | classnameify ))),
 ((*- endfor *))
 }
 
 def sbp_decode(t, d):
-  return msg_classses[t](d)
-
+  return msg_classes[t](d)
