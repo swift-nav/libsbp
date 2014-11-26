@@ -232,7 +232,7 @@
                         - 0: Float
                         - 1: Fixed RTK
 
- - BASELINE_NED:
+ - MSG_BASELINE_NED:
     id: 0x0203
     short_desc: Baseline in NED
     desc: |

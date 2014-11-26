@@ -265,10 +265,10 @@ class MsgBaselineECEF(object):
     ))
 
 
-SBP_BASELINE_NED = 0x0203
-class BaselineNED(object):
+SBP_MSG_BASELINE_NED = 0x0203
+class MsgBaselineNED(object):
   """
-  SBP class for message BASELINE_NED (0x0203)
+  SBP class for message MSG_BASELINE_NED (0x0203)
 
   Baseline in local North East Down (NED) coordinates.
 
@@ -392,7 +392,7 @@ msg_classes = {
   0x0200: MsgPosECEF,
   0x0201: MsgPosLLH,
   0x0202: MsgBaselineECEF,
-  0x0203: BaselineNED,
+  0x0203: MsgBaselineNED,
   0x0204: MsgVelECEF,
   0x0205: MsgVelNED,
 }
