@@ -229,3 +229,7 @@
         - prn:
             type: u8
             desc: PRN searched for
+
+ - MSG_EPHEMERIS:
+    id: 0x001A
+    short_desc: MSG_EPHEMERIS

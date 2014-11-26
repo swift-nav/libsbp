@@ -235,8 +235,39 @@ class MsgPackedObs(object):
   def to_binary(self):
     assert False, "Not implemented."
 
+SBP_MSG_EPHEMERIS = 0x001A
+class MsgEphemeris(object):
+  """
+  SBP class for message MSG_EPHEMERIS (0x001A).
+
+  """
+
+  def __init__(self, sbp):
+    self.from_binary(sbp.payload)
+
+  def __repr__(self):
+    return to_repr(self)
+
+  def from_binary(self, data):
+    gps_time_fmt = "dH"
+    eph_fmt = "<" + "d"*19 + gps_time_fmt*2 + "BBB"
+    eph_size = struct.calcsize(eph_fmt)
+    self.tgd, \
+    self.crs, self.crc, self.cuc, self.cus, self.cic, self.cis, \
+    self.dn, self.m0, self.ecc, self.sqrta, self.omega0, self.omegadot, \
+    self.w, self.inc, self.inc_dot, \
+    self.af0, self.af1, self.af2, \
+    self.toe_tow, self.toe_wn, self.toc_tow, self.toc_wn, \
+    self.valid, \
+    self.healthy, \
+    self.prn = struct.unpack(eph_fmt, data[:eph_size])
+
+  def to_binary(self):
+    assert False, "Not implemented."
+
 msg_classes = {
   0x0018: MsgUartState,
   0x0016: MsgTrackingState,
-  0x0045: MsgPackedObs
+  0x0045: MsgPackedObs,
+  0x001A: MsgEphemeris
 }
