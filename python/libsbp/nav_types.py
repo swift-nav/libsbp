@@ -135,10 +135,10 @@ class MsgUartState(object):
 
 class TrackingChannel(object):
 
-  def __init__(self, state = None, cn0 = None, prn = None):
+  def __init__(self, state = None, prn = None, cn0 = None):
     self.state = state
-    self.cn0 = cn0
     self.prn = prn
+    self.cn0 = cn0
 
   def update(self, state, prn, cn0):
     self.state = state
@@ -162,16 +162,81 @@ class MsgTrackingState(object):
   def from_binary(self, d):
     n_channels = len(d) / MsgTrackingState._TRACKING_STATE_BYTES_PER_CHANNEL
     fmt = '<' + n_channels * 'BBf'
-    munch = n_channels*6
     state_data = struct.unpack(fmt, d)
-    self.states = [TrackingChannel()]*n_channels
-    for n, s in enumerate(self.states):
-      s.update(*state_data[3*n:3*(n+1)])
+    self.states = []
+    for n in xrange(0, n_channels):
+      self.states.append(TrackingChannel(*state_data[3*n:3*(n+1)]))
+
+  def to_binary(self):
+    assert False, "Not implemented."
+
+
+class PackedObsContent(object):
+
+  _fmt = '<IiBBHB'
+
+  def __init__(self, d):
+    self.from_binary(d)
+
+  def __repr__(self):
+    return to_repr(self)
+
+  @staticmethod
+  def size():
+    return struct.Struct(PackedObsContent._fmt).size
+
+  def from_binary(self, data):
+    P, Li, Lf, snr, lock, prn = struct.unpack(PackedObsContent._fmt, data)
+    self.P = float(P)/1e2
+    self.L = float(Li) + float(Lf)/(1<<8)
+    self.snr = float(snr)/4
+    self.lock = lock
+    self.prn = prn
+
+  def to_binary(self):
+    assert False, "Not implemented."
+
+SBP_MSG_PACKED_OBS = 0x0045
+class MsgPackedObs(object):
+  """
+  SBP class for message MSG_PACKED_OBS (0x0045).
+
+  """
+
+  def __init__(self, sbp):
+    self.gps_tow = None
+    self.gps_week = None
+    self.obs = {}
+    self.from_binary(sbp.payload)
+
+  def __repr__(self):
+    return to_repr(self)
+
+  def from_binary(self, data):
+    hdr_fmt = "<IHB"
+    hdr_size = struct.calcsize(hdr_fmt)
+    tow, wn, seq = struct.unpack(hdr_fmt, data[:hdr_size])
+    tow = float(tow) / 1000.0
+    total = seq >> 4
+    count = seq & ((1 << 4) - 1)
+    # Confirm this packet is good.
+    # Assumes no out-of-order packets
+    self.gps_tow = tow;
+    self.gps_week = wn;
+    # Unpack observations
+    obs_size = PackedObsContent.size()
+    n_obs = (len(data) - hdr_size)/obs_size
+    obs_data = data[hdr_size:]
+    for i in range(n_obs):
+      obs = PackedObsContent(obs_data[:obs_size])
+      self.obs[obs.prn] = obs
+      obs_data = obs_data[obs_size:]
 
   def to_binary(self):
     assert False, "Not implemented."
 
 msg_classes = {
   0x0018: MsgUartState,
-  0x0016: MsgTrackingState
+  0x0016: MsgTrackingState,
+  0x0045: MsgPackedObs
 }

@@ -18,10 +18,10 @@ from libsbp.utils import to_repr
 
 
 
-SBP_STARTUP = 0xFF00
-class Startup(object):
+SBP_MSG_STARTUP = 0xFF00
+class MsgStartup(object):
   """
-  SBP class for message STARTUP (0xFF00)
+  SBP class for message MSG_STARTUP (0xFF00)
 
   The system start-up message is sent once on system start-up. It is
 intended to be used to notify the host or other attached devices that
@@ -47,10 +47,10 @@ configuration requests.
     ))
 
 
-SBP_HEARTBEAT = 0xFFFF
-class Heartbeat(object):
+SBP_MSG_HEARTBEAT = 0xFFFF
+class MsgHeartbeat(object):
   """
-  SBP class for message HEARTBEAT (0xFFFF)
+  SBP class for message MSG_HEARTBEAT (0xFFFF)
 
   The heartbeat message is sent periodically to inform the host or
 other attached devices that the system is running. It is intended to
@@ -81,10 +81,10 @@ flags should be inspected.
     ))
 
 
-SBP_GPS_TIME = 0x0100
-class GPSTime(object):
+SBP_MSG_GPS_TIME = 0x0100
+class MsgGPSTime(object):
   """
-  SBP class for message GPS_TIME (0x0100)
+  SBP class for message MSG_GPS_TIME (0x0100)
 
   GPS Time.
 
@@ -113,10 +113,10 @@ class GPSTime(object):
     ))
 
 
-SBP_DOPS = 0x0206
-class Dops(object):
+SBP_MSG_DOPS = 0x0206
+class MsgDops(object):
   """
-  SBP class for message DOPS (0x0206)
+  SBP class for message MSG_DOPS (0x0206)
 
   Dilution of Precision.
 
@@ -149,10 +149,10 @@ class Dops(object):
     ))
 
 
-SBP_POS_ECEF = 0x0200
-class PosECEF(object):
+SBP_MSG_POS_ECEF = 0x0200
+class MsgPosECEF(object):
   """
-  SBP class for message POS_ECEF (0x0200)
+  SBP class for message MSG_POS_ECEF (0x0200)
 
   Position solution in absolute Earth Centered Earth Fixed (ECEF) coordinates.
 
@@ -187,10 +187,10 @@ class PosECEF(object):
     ))
 
 
-SBP_POS_LLH = 0x0201
-class PosLLH(object):
+SBP_MSG_POS_LLH = 0x0201
+class MsgPosLLH(object):
   """
-  SBP class for message POS_LLH (0x0201)
+  SBP class for message MSG_POS_LLH (0x0201)
 
   Geodetic position solution.
 
@@ -227,10 +227,10 @@ class PosLLH(object):
     ))
 
 
-SBP_BASELINE_ECEF = 0x0202
-class BaselineECEF(object):
+SBP_MSG_BASELINE_ECEF = 0x0202
+class MsgBaselineECEF(object):
   """
-  SBP class for message BASELINE_ECEF (0x0202)
+  SBP class for message MSG_BASELINE_ECEF (0x0202)
 
   Baseline in Earth Centered Earth Fixed (ECEF) coordinates.
 
@@ -305,10 +305,10 @@ class BaselineNED(object):
     ))
 
 
-SBP_VEL_ECEF = 0x0204
-class VelECEF(object):
+SBP_MSG_VEL_ECEF = 0x0204
+class MsgVelECEF(object):
   """
-  SBP class for message VEL_ECEF (0x0204)
+  SBP class for message MSG_VEL_ECEF (0x0204)
 
   Velocity in Earth Centered Earth Fixed (ECEF) coordinates.
 
@@ -343,10 +343,10 @@ class VelECEF(object):
     ))
 
 
-SBP_VEL_NED = 0x0205
-class VelNED(object):
+SBP_MSG_VEL_NED = 0x0205
+class MsgVelNED(object):
   """
-  SBP class for message VEL_NED (0x0205)
+  SBP class for message MSG_VEL_NED (0x0205)
 
   Velocity in local North East Down (NED) coordinates.
 
@@ -385,16 +385,16 @@ class VelNED(object):
 
 
 msg_classes = {
-  0xFF00: Startup,
-  0xFFFF: Heartbeat,
-  0x0100: GPSTime,
-  0x0206: Dops,
-  0x0200: PosECEF,
-  0x0201: PosLLH,
-  0x0202: BaselineECEF,
+  0xFF00: MsgStartup,
+  0xFFFF: MsgHeartbeat,
+  0x0100: MsgGPSTime,
+  0x0206: MsgDops,
+  0x0200: MsgPosECEF,
+  0x0201: MsgPosLLH,
+  0x0202: MsgBaselineECEF,
   0x0203: BaselineNED,
-  0x0204: VelECEF,
-  0x0205: VelNED,
+  0x0204: MsgVelECEF,
+  0x0205: MsgVelNED,
 }
 
 def sbp_decode(t, d):
