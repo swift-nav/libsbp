@@ -10,7 +10,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 import struct
-import libsbp.sbp
+from libsbp.sbp import SBP
 import libsbp.nav_types
 from libsbp.utils import to_repr
 
@@ -19,7 +19,7 @@ from libsbp.utils import to_repr
 
 ((* for m in msgs *))
 SBP_(((m.name))) = ((('0x%04X'|format(m.id))))
-class ((( m.name | classnameify )))(object):
+class ((( m.name | classnameify )))(SBP):
   """
   SBP class for message (((m.name))) ((('(0x%04X)'|format(m.id))))
 
@@ -27,6 +27,7 @@ class ((( m.name | classnameify )))(object):
   """
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     ((*- if m.fields *))
     self.from_binary(sbp.payload)
     ((*- else *))

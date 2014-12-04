@@ -10,7 +10,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 import struct
-import libsbp.sbp
+from libsbp.sbp import SBP
 import libsbp.nav_types
 from libsbp.utils import to_repr
 
@@ -19,7 +19,7 @@ from libsbp.utils import to_repr
 
 
 SBP_MSG_STARTUP = 0xFF00
-class MsgStartup(object):
+class MsgStartup(SBP):
   """
   SBP class for message MSG_STARTUP (0xFF00)
 
@@ -31,6 +31,7 @@ configuration requests.
   """
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.from_binary(sbp.payload)
 
   def __repr__(self):
@@ -48,7 +49,7 @@ configuration requests.
 
 
 SBP_MSG_HEARTBEAT = 0xFFFF
-class MsgHeartbeat(object):
+class MsgHeartbeat(SBP):
   """
   SBP class for message MSG_HEARTBEAT (0xFFFF)
 
@@ -65,6 +66,7 @@ flags should be inspected.
   """
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.from_binary(sbp.payload)
 
   def __repr__(self):
@@ -82,7 +84,7 @@ flags should be inspected.
 
 
 SBP_MSG_GPS_TIME = 0x0100
-class MsgGPSTime(object):
+class MsgGPSTime(SBP):
   """
   SBP class for message MSG_GPS_TIME (0x0100)
 
@@ -91,6 +93,7 @@ class MsgGPSTime(object):
   """
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.from_binary(sbp.payload)
 
   def __repr__(self):
@@ -114,7 +117,7 @@ class MsgGPSTime(object):
 
 
 SBP_MSG_DOPS = 0x0206
-class MsgDops(object):
+class MsgDops(SBP):
   """
   SBP class for message MSG_DOPS (0x0206)
 
@@ -123,6 +126,7 @@ class MsgDops(object):
   """
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.from_binary(sbp.payload)
 
   def __repr__(self):
@@ -150,7 +154,7 @@ class MsgDops(object):
 
 
 SBP_MSG_POS_ECEF = 0x0200
-class MsgPosECEF(object):
+class MsgPosECEF(SBP):
   """
   SBP class for message MSG_POS_ECEF (0x0200)
 
@@ -159,6 +163,7 @@ class MsgPosECEF(object):
   """
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.from_binary(sbp.payload)
 
   def __repr__(self):
@@ -188,7 +193,7 @@ class MsgPosECEF(object):
 
 
 SBP_MSG_POS_LLH = 0x0201
-class MsgPosLLH(object):
+class MsgPosLLH(SBP):
   """
   SBP class for message MSG_POS_LLH (0x0201)
 
@@ -197,6 +202,7 @@ class MsgPosLLH(object):
   """
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.from_binary(sbp.payload)
 
   def __repr__(self):
@@ -228,7 +234,7 @@ class MsgPosLLH(object):
 
 
 SBP_MSG_BASELINE_ECEF = 0x0202
-class MsgBaselineECEF(object):
+class MsgBaselineECEF(SBP):
   """
   SBP class for message MSG_BASELINE_ECEF (0x0202)
 
@@ -237,6 +243,7 @@ class MsgBaselineECEF(object):
   """
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.from_binary(sbp.payload)
 
   def __repr__(self):
@@ -266,7 +273,7 @@ class MsgBaselineECEF(object):
 
 
 SBP_MSG_BASELINE_NED = 0x0203
-class MsgBaselineNED(object):
+class MsgBaselineNED(SBP):
   """
   SBP class for message MSG_BASELINE_NED (0x0203)
 
@@ -275,6 +282,7 @@ class MsgBaselineNED(object):
   """
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.from_binary(sbp.payload)
 
   def __repr__(self):
@@ -306,7 +314,7 @@ class MsgBaselineNED(object):
 
 
 SBP_MSG_VEL_ECEF = 0x0204
-class MsgVelECEF(object):
+class MsgVelECEF(SBP):
   """
   SBP class for message MSG_VEL_ECEF (0x0204)
 
@@ -315,6 +323,7 @@ class MsgVelECEF(object):
   """
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.from_binary(sbp.payload)
 
   def __repr__(self):
@@ -344,7 +353,7 @@ class MsgVelECEF(object):
 
 
 SBP_MSG_VEL_NED = 0x0205
-class MsgVelNED(object):
+class MsgVelNED(SBP):
   """
   SBP class for message MSG_VEL_NED (0x0205)
 
@@ -353,6 +362,7 @@ class MsgVelNED(object):
   """
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.from_binary(sbp.payload)
 
   def __repr__(self):

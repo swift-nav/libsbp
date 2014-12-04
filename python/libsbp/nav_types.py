@@ -15,6 +15,7 @@ Complex types needed in SBP messages.
 
 import struct
 from libsbp.utils import to_repr
+from libsbp.sbp import SBP
 
 #TODO(Buro): Check the format strings.
 
@@ -110,9 +111,10 @@ class UARTChannel(object):
                         ))
 
 SBP_UART_STATE = 0x0018
-class MsgUartState(object):
+class MsgUartState(SBP):
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.from_binary(sbp.payload)
 
   def __repr__(self):
@@ -149,11 +151,12 @@ class TrackingChannel(object):
     return to_repr(self)
 
 SBP_TRACKING_STATE = 0x0016
-class MsgTrackingState(object):
+class MsgTrackingState(SBP):
 
   _TRACKING_STATE_BYTES_PER_CHANNEL = 6
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.from_binary(sbp.payload)
 
   def __repr__(self):
@@ -197,13 +200,14 @@ class PackedObsContent(object):
     assert False, "Not implemented."
 
 SBP_MSG_PACKED_OBS = 0x0045
-class MsgPackedObs(object):
+class MsgPackedObs(SBP):
   """
   SBP class for message MSG_PACKED_OBS (0x0045).
 
   """
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.gps_tow = None
     self.gps_week = None
     self.obs = {}
@@ -236,13 +240,14 @@ class MsgPackedObs(object):
     assert False, "Not implemented."
 
 SBP_MSG_EPHEMERIS = 0x001A
-class MsgEphemeris(object):
+class MsgEphemeris(SBP):
   """
   SBP class for message MSG_EPHEMERIS (0x001A).
 
   """
 
   def __init__(self, sbp):
+    self.__dict__.update(sbp.__dict__)
     self.from_binary(sbp.payload)
 
   def __repr__(self):
