@@ -9,9 +9,14 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+TO_REMOVE = ['sender','msg_type','crc','length', 'preamble']
+
 def to_repr(obj):
   """
-  Print a string representation of an object.
+  Print a orphaned string representation of an object without the clutter of
+  its parent object.
+
   """
-  items = ("%s = %r" % (k, v) for k, v in obj.__dict__.items())
+  items = {k: v for k, v in obj.__dict__.items() if k not in TO_REMOVE}
+  items = ["%s = %r" % (k, v) for k, v in items.items()]
   return "<%s: {%s}>" % (obj.__class__.__name__, ', '.join(items))
