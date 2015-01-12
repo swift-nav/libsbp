@@ -1,0 +1,232 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swift.sbp.observation
+description: Observation messages from the Piksi.
+include:
+  - swift/sbp/types.yaml
+definitions:
+
+ - MSG_ACQ_RESULT:
+    id: 0x0015
+    short_desc: MSG_ACQ_RESULT
+    fields:
+        - snr:
+            type: float
+            desc: SNR of best point
+        - cn:
+            type: float
+            units: radians
+            desc: Code phase of best point
+        - cf:
+            type: float
+            units: hz
+            desc: Carrier frequency of best point
+        - prn:
+            type: u8
+            desc: PRN searched for
+
+ - MSG_OBS_HDR:
+    id: 0x0040
+    short_desc: MSG_OBS_HDR
+    fields:
+        - t:
+            type: GPSTime
+            desc: GPS time of observation
+        - count:
+            type: u8
+            desc: Serial count of obervation
+        - n_obs:
+            type: u8
+            desc: Number of observation records to follow
+
+ - MSG_OBS:
+    id: 0x0041
+    short_desc: MSG_OBS
+    fields:
+        - P:
+            type: u32
+            units: cm
+            desc: Pseudorange
+        - L:
+            desc: Fixed point carrier phase
+            type: Latency
+            units: s
+        - snr:
+            type: u8
+            desc: |
+                Signal-to-Noise ratio (cn0 * 4 for 0.25 precision and
+                0-64 range
+        - lock_counter:
+            type: u16
+            desc: Lock counter. Increments on new lock
+        - prn:
+            type: u8
+            desc: Satellite number
+
+ - MSG_OLD_OBS:
+    id: 0x0042
+    short_desc: MSG_OLD_OBS
+
+ - MSG_PACKED_OBS:
+    id: 0x0045
+    short_desc: MSG_PACKED_OBS
+    fields:
+        - gps_tow:
+            type: u32
+            desc: Observations
+        - gps_week:
+            type: u16
+            desc: Observations
+        - obs:
+            type: PackedObsContent
+            map_by: prn
+            desc: Observations
+
+ - MSG_BASE_POS:
+    id: 0x0044
+    short_desc: MSG_BASE_POS
+    fields:
+        - pos_llh_x:
+            type: double
+            units: m
+            desc: Base station position, x
+        - pos_llh_y:
+            type: double
+            units: m
+            desc: Base station position, y
+        - pos_llh_z:
+            type: double
+            units: m
+            desc: Base station position, z
+
+ - MSG_TRACKING_STATE:
+    id: 0x0016
+    short_desc: Tracking state.
+    desc: MSG_TRACKING_STATE
+    fields:
+      - states:
+          type: array
+          fill: TrackingChannelState
+          desc: State of satellite tracking channel.
+
+ - MSG_IAR_STATE:
+    id: 0x0019
+    short_desc: MSG_IAR_STATE
+    fields:
+        - num_hyps:
+            type: u32
+            desc: num_hyps
+
+ - MSG_EPHEMERIS:
+    id: 0x001A
+    short_desc: WGS84 satellite orbit ephemeris parameters
+    desc: WGS84 satellite orbit ephemeris parameters
+    fields:
+      - tgd:
+          type: double
+          units: s
+          desc: Group delay differential between L1 and L2 (?)
+      - crs:
+          type: double
+          units: m
+          desc: Amplitude of the sine harmonic correction term to the orbit radius
+      - crc:
+          type: double
+          units: m
+          desc: Amplitude of the cosine harmonic correction term to the orbit radius
+      - cuc:
+          type: double
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the argument of latitude
+      - cus:
+          type: double
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the argument of latitude
+      - cic:
+          type: double
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the angle of inclination
+      - cis:
+          type: double
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the angle of inclination
+      - dn:
+          type: double
+          units: rad/s
+          desc: Mean motion difference
+      - m0:
+          type: double
+          units: radians
+          desc: Mean anomaly at reference time
+      - ecc:
+          type: double
+          desc: Eccentricity of satellite orbit
+      - sqrta:
+          type: double
+          units: m^(1/2)
+          desc: Square root of the semi-major axis of orbit
+      - omega0:
+          type: double
+          units: rad
+          desc: Longitude of ascending node of orbit plane at weekly epoch
+      - omegadot:
+          type: double
+          units: rad/s
+          desc: Rate of right ascension
+      - w:
+          type: double
+          units: rad
+          desc: Argument of perigee
+      - inc:
+          type: double
+          units: rad
+          desc: Inclination
+      - inc_dot:
+          type: double
+          units: rad/s
+          desc: Inclination first derivative
+      - af0:
+          type: double
+          units: s
+          desc: Polynomial clock correction coefficient (clock bias)
+      - af1:
+          type: double
+          units: s/s
+          desc: Polynomial clock correction coefficient (clock drift)
+      - af2:
+          type: double
+          units: s/s^2
+          desc: Polynomial clock correction coefficient (rate of clock drift)
+      - toe_tow:
+          type: double
+          units: s
+          desc: Time of week
+      - toe_wn:
+          type: u16
+          units: week
+          desc: Week number
+      - toc_tow:
+          type: double
+          units: s
+          desc: clock reference time of week
+      - toc_wn:
+          type: u16
+          units: week
+          desc: clock reference week number
+      - valid:
+          type: u8
+          desc: Is valid?
+      - healthy:
+          type: u8
+          desc: Satellite is healthy?
+      - prn:
+          type: u8
+          desc: PRN searched for

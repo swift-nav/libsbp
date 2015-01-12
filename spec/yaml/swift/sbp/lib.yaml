@@ -1,0 +1,124 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swift.sbp.lib
+description: Defines a variety of common structs.
+include:
+  - swift/sbp/types.yaml
+definitions:
+
+ - UARTChannel:
+    desc: State of the UART channel.
+    fields:
+        - txThroughput:
+            type: float
+            desc: UART transmit throughput.
+        - rxThroughput:
+            type: float
+            desc: UART receive throughput.
+        - crcErrorCount:
+            type: u16
+            desc: UART CRC error count.
+        - txBufferLevel:
+            type: u8
+            desc: UART transmit usage percentage.
+        - rxBufferLevel:
+            type: float
+            desc: UART receive usage percentage.
+
+ - TrackingChannelState:
+    desc: State of the tracking channel.
+    fields:
+        - state:
+            type: u8
+            desc: Status of tracking channel.
+            fields:
+                - 2-7:
+                    desc: Reserved
+                - 0-1:
+                    desc: Tracking mode.
+                    values:
+                        - 0: Disabled
+                        - 1: Running
+        - prn:
+            type: u8
+            desc: PRN being tracked.
+        - cn0:
+            type: float
+            desc: Carrier-to-noise ratio.
+
+ - Latency:
+    desc: Describe me
+    fields:
+        - avg:
+            type: s32
+            units: ms
+            desc: Describe me
+        - lmin:
+            type: s32
+            units: ms
+            desc: Describe me
+        - lmax:
+            type: s32
+            units: ms
+            desc: Describe me
+        - current:
+            type: s32
+            units: ms
+            desc: Describe me
+
+ - GPSTime:
+    desc: Describe me
+    fields:
+        - tow:
+            type: double
+            units: s
+            desc: GPS time of the week
+        - wn:
+            type: u16
+            units: week
+            desc: GPS week number
+
+ - CarrierPhase:
+    desc: Carrier phase measurement.
+    fields:
+        - li:
+            type: u32
+            units: ms
+            desc: Describe me
+        - lf:
+            type: u8
+            units: ms
+            desc: Describe me
+
+ - PackedObsContent:
+    desc: Packed GPS observation
+    fields:
+        - P:
+            type: u32
+            units: cm
+            desc: Pseudorange measurement.
+        - Li:
+            type: s32
+            units: ms
+            desc: Describe me
+        - Lf:
+            type: u8
+            units: ms
+            desc: Describe me
+        - snr:
+            type: u8
+            desc: SNR of best point
+        - lock:
+            type: u16
+            desc: Lock counter?
+        - prn:
+            type: u8
+            desc: PRN searched for.
