@@ -49,6 +49,10 @@ TODO(Buro)
 
 ## Example - Decoding SBP in Python
 
+Here is an example of how to use the libsbp and
+[serial_link.py](https://github.com/swift-nav/piksi_firmware/tree/master/scripts)
+to decode SBP messages:
+
 ```python
 import sbp_piksi as sbp
 import serial_link
@@ -57,15 +61,15 @@ import time
 def baseline_callback(data):
   # This function is called every time we receive a BASELINE_NED message
 
-  # First decode the binary SBP data in "data" into a python object, the sbp
+  # First, decode the binary SBP data in "data" into a python object, the sbp
   # module has functions that do this for all the message types defined in the
   # official spec.
   b = sbp.BaselineNED(data)
 
-  # soln now contains the decoded baseline information and
-  # has fields with the same names as in the SBP docs
+  # Solution now contains the decoded baseline information and
+  # has fields with the same names as in the SBP docs.
 
-  # Print out the N, E, D coordinates of the baseline
+  # Print out the N, E, D coordinates of the baseline.
   print "%.4f,%.4f,%.4f" % \
     (b.n * 1e-3, b.e * 1e-3, b.d * 1e-3)
 
