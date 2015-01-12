@@ -88,3 +88,5 @@ except:
 ## LICENSE
 
 Copyright © 2015 Swift Navigation
+
+Distributed under LGPLv3.0.
