@@ -47,7 +47,7 @@ definitions:
  - array:
     type: primitive
     desc: Array of types
- - bytestring:
+ - bytes:
     type: primitive
     desc: Array of bytes
  - string:
