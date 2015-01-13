@@ -1,0 +1,9 @@
+coverage
+pytest
+pytest-xdist
+pep8
+flake8
+pyflakes
+pylint
+python-magic
+pyaml

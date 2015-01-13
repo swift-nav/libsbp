@@ -11,7 +11,7 @@
 package: swift.sbp.observation
 description: Observation messages from the Piksi.
 include:
-  - swift/sbp/types.yaml
+  - types.yaml
 definitions:
 
  - MSG_ACQ_RESULT:

@@ -8,10 +8,11 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+
 package: swift.sbp.navigation
 description: Geodetic navigation messages from the Piksi.
 include:
-  - swift/sbp/types.yaml
+  - types.yaml
 definitions:
 
  - MSG_GPS_TIME:

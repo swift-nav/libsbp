@@ -11,8 +11,8 @@
 package: swift.sbp.piksi
 description: System messages from the Piksi.
 include:
-  - swift/sbp/types.yaml
-  - swift/sbp/lib.yaml
+  - types.yaml
+  - lib.yaml
 definitions:
 
  - MSG_STARTUP:

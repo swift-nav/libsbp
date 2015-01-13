@@ -11,7 +11,7 @@
 package: swift.sbp.lib
 description: Defines a variety of common structs.
 include:
-  - swift/sbp/types.yaml
+  - types.yaml
 definitions:
 
  - UARTChannel:

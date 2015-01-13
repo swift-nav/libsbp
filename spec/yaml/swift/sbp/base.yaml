@@ -10,9 +10,10 @@
 
 package: swift.sbp.base
 description: Base definition of SBP message container.
-definitions:
 include:
-  - swift/sbp/types.yaml
+  - types.yaml
+definitions:
+
  - SBP:
     desc: |
       Defines full packet structure for Swift Navigation Binary Protocol

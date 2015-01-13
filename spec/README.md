@@ -1,4 +1,4 @@
-## SBP Generator
+## SBP Definitions
 
 A quite basic, template-based generator for SBP bindings in different
 languages.

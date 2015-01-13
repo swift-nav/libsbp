@@ -8,6 +8,24 @@ a single source, language-agnostic specification for messages used
 with SBP, a compiler for generating message bindings, and clients in a
 variety of languages.
 
+## Organization
+
+This repository is organised into the following directory structure:
+
+*
+*
+*
+
+* [`docs`](amazonka): Monad transformer and send/receive/paginate/presign logic.
+* [`docs`](amazonka): Monad transformer and send/receive/paginate/presign logic.
+
+* `amazonka-*`: Each of the individually supported Amazon Web Service libraries.
+* `amazonka-*/examples`: An example project for the parent service which can be loaded using `make install && make repl`.
+* [`core`](core): The `amazonka-core` library upon which each of the services depends.
+* [`gen`](gen): Code, templates, and assets for the `amazonka-gen` executable.
+* [`script`](script): Scripts to manage the release and life-cycle of the service libraries.
+* [`share`](share): Makefile plumbing common to all service libraries
+
 ## SBP Protocol Specification - Packet Structure
 
 The Swift Binary Protocol is a fast, simple and minimal binary
