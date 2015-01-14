@@ -49,9 +49,11 @@ definition = Schema({identifier:
                      {Optional('id'): sbp_identifier,
                       Optional('short_desc'): description,
                       Optional('desc'): description,
+                      Optional('size'): size,
                       Optional('type'): type_identifier,
                       Optional('fields'): [field]}})
 package_schema = Schema({Optional('package'): identifier,
                          Optional('description'): description,
+                         Optional('render_source'): bool,
                          Optional('include'): include,
                          Optional('definitions'): [definition]})

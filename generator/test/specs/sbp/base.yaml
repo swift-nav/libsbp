@@ -8,9 +8,8 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-package: swift.sbp.base
+package: test.spec.base
 description: Base definition of SBP message container.
-render_source: False
 include:
   - types.yaml
 definitions:

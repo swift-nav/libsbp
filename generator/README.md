@@ -35,6 +35,20 @@ python sbp/generator.py -i ../spec/yaml/swift/sbp/navigation.yaml -o ../python/ 
 
 ```
 
+## Testing and Deployment
+
+```shell
+# Install dependencies
+pip install -r requirements.txt
+
+# Running tests
+py.test -q -vv test/
+
+# Deploying to pypi
+
+
+```
+
 ## LICENSE
 
 Copyright © 2015 Swift Navigation

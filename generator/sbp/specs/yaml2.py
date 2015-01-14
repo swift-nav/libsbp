@@ -13,7 +13,7 @@
 Parsing YAML specifications of SBP.
 """
 
-#import sbp.syntax as sbp
+import sbp.syntax as sbp
 import glob
 import os
 import sbp.specs.yaml_schema as s
@@ -21,7 +21,12 @@ import sys
 import yaml
 
 toplevel = '/Users/mookerji/Dropbox/Documents/swift/clones/libsbp/spec/yaml/swift/sbp/'
-test_file = ['navigation.yaml', 'base.yaml', 'lib.yaml', 'observation.yaml', 'piksi.yaml', 'types.yaml']
+
+test_file = ['navigation.yaml', 'base.yaml', 'lib.yaml', 'observation.yaml',
+             'piksi.yaml', 'types.yaml']
+
+##############################################################################
+#
 
 def read_spec(filename, verbose=False):
   """
@@ -75,6 +80,10 @@ def get_files(input_file):
       file_index[os.path.abspath(inf)] = None
   return (base_dir, file_index)
 
+# TODO (Buro): I imagine we'd want to do a basic toposort of the
+# package and type dependencies to properly resolve types and detect
+# circular dependencies.
+
 def resolve_deps(base_dir, file_index):
   """
   Given a base directory and an initial set of files, retrieves
@@ -94,55 +103,38 @@ def resolve_deps(base_dir, file_index):
     file_index.update(flatten(file_index[fname], file_index))
   return file_index
 
-def parse_spec(contents, verbose=False):
-  """
-  Parses a specification.
-
-  Parameters
-  ----------
-  filename : str
-    Local filename for specification.
-
-  Returns
-  ----------
-  PackageSpecification
-
-  """
+def parse_spec(contents):
   return mk_package(contents)
 
+##############################################################################
+#
+
 def mk_package(contents):
-  """
-  """
   package = contents.get('package', None)
   description = contents.get('description', None)
   include = contents.get('include', [])
   definitions = contents.get('definitions', [])
-  for defn in definitions:
-    if is_message:
-      resolved.append(mk_message(defn))
-    else:
-      resolved.append(mk_struct(defn))
+  resolved = [mk_definition(defn) for defn in definitions]
   return sbp.PackageSpecification(identifier=package,
                                   description=description,
                                   includes=include,
-                                  definitions=resolved)
+                                  definitions=resolved,
+                                  render_source=contents.get('render_source', True))
+def mk_definition(defn):
+  assert len(defn) == 1
+  identifier, contents = defn.items()[0]
+  fs = [mk_field(f) for f in contents.get('fields', [])]
+  return sbp.resolve_type(sbp.Definition(identifier=identifier,
+                                         sbp_id=contents.get('id', None),
+                                         short_desc=contents.get('short_desc', None),
+                                         desc=contents.get('desc', None),
+                                         type_id=contents.get('type'),
+                                         fields=fs))
 
-def is_message(shape):
-  return 'id' in shape
-
-def mk_message(contents):
-  """
-  """
-  return Message()
-
-
-def mk_field():
-  """
-  """
-  pass
-
-
-def mk_field():
-  """
-  """
-  pass
+def mk_field(field):
+  assert len(field) == 1
+  identifier, contents = field.items()[0]
+  contents = dict({'units': '', 'n_with_values': 0}.items() + contents.items())
+  return sbp.resolve_type(sbp.Field(identifier=identifier,
+                                    type_id=contents.pop('type'),
+                                    options=contents))

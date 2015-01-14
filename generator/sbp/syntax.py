@@ -16,23 +16,40 @@ messages.
 
 """
 
+import pprint
+from sbp.utils import fmt_repr, rejig_bitfields
+
+##############################################################################
+#
 
 class PackageSpecification(object):
-  """
-  Package is a collection of messages and types to generate code for.
+  """Package is a collection of messages and types to generate code
+  for.
+
   """
 
   def __init__(self, identifier=None,
-               description=None, includes=[], definitions=[]):
-    self.identifer = identifier
+               description=None, includes=[], definitions=[], render_source=True):
+    self.identifier = identifier
     self.description = description
-    self.include = include
+    self.includes = includes
     self.definitions = definitions
+    self.render_source = render_source
+
+  @property
+  def filepath(self):
+    """
+    """
+    split = self.identifier.split(".")
+    filepath, filename = "/".join(split[:-1]), split[-1]
+    return (filepath, filename)
+
+  def __repr__(self):
+    return fmt_repr(self)
 
 
 class Dependency(object):
-  """
-  Container for package dependencies, at this point, basic links to
+  """Container for package dependencies, at this point, basic links to
   other packages.
 
   """
@@ -40,90 +57,149 @@ class Dependency(object):
   def __init__(self, includes=[]):
     self.includes = includes
 
+  def __repr__(self):
+    return fmt_repr(self)
+
 
 class Definition(object):
-  """
-  """
-
-  def __init__(self, identifier=None
+  def __init__(self, identifier=None,
                sbp_id=None, short_desc=None, desc=None, type_id=None,
                fields=[]):
-    self.identifer = identifer
+    self.identifier = identifier
     self.sbp_id = sbp_id
     self.short_desc = short_desc
     self.desc = desc
     self.type_id = type_id
     self.fields = fields
+    self.static = True
 
+  def __repr__(self):
+    return fmt_repr(self)
 
 class FieldOption(object):
-  """
+  def __init__(self, identifier, value):
+    self.identifier = identifier
+    self.value = value
 
-  """
-
-  def __init__(self):
-    pass
-
+  def __repr__(self):
+    return "<Field Option: %s=%s>" % (self.identifier, self.value)
 
 class Field(object):
-  """
-  Field is
-  """
-
-  def __init__(self, identifier=None,
-               units=None, type_id=None, desc=None, map_by=None, fill=None,
-               size=None, size_fn=None, fields=[]):
+  def __init__(self, identifier=None, type_id=None, options={}):
     self.identifier = identifier
-    self.units = units
     self.type_id = type_id
-    self.desc = desc
-    self.map_by = map_by
-    self.fill = fill
-    self.size = size
-    self.size_fn = size_fn
-    self.fields = fields
+    self.options = dict([(k, FieldOption(k, v)) for k, v in options.items()])
 
-# Accessible primitive types
-prim_types = Enum(['bool', 'float', 'double', 'uint8',
-                   'uint16', 'uint32', 'int8', 'int16', 'int32'])
+  def __repr__(self):
+    return fmt_repr(self)
 
+##############################################################################
+#
 
-class Primitive(Field):
-  """
-  Primitive field. Typically, one of:
-  'bool', 'float', 'double', 'uint8',
-  'uint16', 'uint32', 'int8', 'int16', 'int32'
+class Message(Definition):
+  def __init__(self, defn):
+    self.__dict__.update(defn.__dict__)
 
-  """
+  @property
+  def static(self):
+    return True
 
-  def __init__(self, name):
-    super(Primitive, self).__init__(123)
-    pass
+  def __repr__(self):
+    return fmt_repr(self)
 
+class Struct(Definition):
+  def __init__(self, defn):
+    self.__dict__.update(defn.__dict__)
+
+  @property
+  def static(self):
+    return True
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+class Primitive(Definition):
+  def __init__(self, defn):
+    self.__dict__.update(defn.__dict__)
+
+  def __repr__(self):
+    return fmt_repr(self)
 
 class Array(Field):
-  """
-  Array of primitives.
+  def __init__(self, defn):
+    self.__dict__.update(defn.__dict__)
 
+  @property
+  def size(self):
+    return
 
-  """
+  @property
+  def static(self):
+    return
 
-  def __init__(self, name=None, size=0, size_fn=None):
-    assert not (size and size_fn), ""
-    super(Array, self).__init__()
-    self.size = size
-    self.size_fn = size_rn
-
+  def __repr__(self):
+    return fmt_repr(self)
 
 class BitField(Field):
-  """
-  Bitfield encoded in a primitive type.
+  def __init__(self, defn):
+    self.__dict__.update(defn.__dict__)
+    self.options['fields'].value, n = rejig_bitfields(self.options['fields'].value)
+    self.options['n_with_values'].value = n
 
-  """
+  @property
+  def static(self):
+    return True
 
-  def __init__(self, bitmask=None, units=None, values=None, desc=None):
-    super(Array, self).__init__()
-    self.bitmask = bitmask
-    self.units = units
-    self.values = values
-    self.desc = desc
+  def __repr__(self):
+    return fmt_repr(self)
+
+class Literal(Field):
+  def __init__(self, defn):
+    self.__dict__.update(defn.__dict__)
+
+  @property
+  def static(self):
+    return
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+##############################################################################
+#
+
+def is_message(obj):
+  return isinstance(obj, Definition) and getattr(obj, 'sbp_id', None)
+
+def is_struct(obj):
+  return not is_message(obj) and not is_primitive(obj) and not isinstance(obj, Field)
+
+def is_primitive(obj):
+  return isinstance(obj, Definition) and (getattr(obj, 'type_id', None) == 'primitive')
+
+def is_array(obj):
+  return isinstance(obj, Field) and obj.type_id == 'array'
+    #and (obj.options.get('size', None) or obj.options.get('size_fn', None))
+
+def is_bitfield(obj):
+  return isinstance(obj, Field) and obj.options.get('fields', [])
+
+def is_field(obj):
+  return isinstance(obj, Field)
+
+def resolve_type(defn):
+  if not defn:
+    return None
+  if is_primitive(defn):
+    return Primitive(defn)
+  elif is_message(defn):
+    return Message(defn)
+  elif is_struct(defn):
+    return Struct(defn)
+  elif is_array(defn):
+    return Array(defn)
+  elif is_bitfield(defn):
+    return BitField(defn)
+  elif is_field(defn):
+    return defn
+  else:
+    raise Exception("Problem!")

@@ -13,51 +13,32 @@
 Generator for Python target.
 """
 
-import jinja2
+import os
+from sbp.targets.templating import JENV, ACRONYMS
 
-SIZES = {
-  'uint8': 1,
-  'uint16': 2,
-  'uint32': 4,
-  'uint64': 8,
-  'int8': 1,
-  'int16': 2,
-  'int32': 4,
-  'int64': 8,
-  'float': 4,
-  'double': 8,
-}
-
+TEMPLATE_NAME = "sbp_messages_template.py.j2"
 PYSTRUCT_CODE = {
-  'uint8': 'B',
-  'uint16': 'H',
-  'uint32': 'I',
-  'uint64': 'Q',
-  'int8': 'b',
-  'int16': 'h',
-  'int32': 'i',
-  'int64': 'q',
+  'u8': 'B',
+  'u16': 'H',
+  'u32': 'I',
+  'u64': 'Q',
+  's8': 'b',
+  's16': 'h',
+  's32': 'i',
+  's64': 'q',
   'float': 'f',
   'double': 'd',
 }
 
-JENV = jinja2.Environment(
-    block_start_string = '((*',
-    block_end_string = '*))',
-    variable_start_string = '(((',
-    variable_end_string = ')))',
-    comment_start_string = '((=',
-    comment_end_string = '=))',
-    loader=jinja2.FileSystemLoader("./templates/")
-)
 
-ACRONYMS = ['GPS', 'ECEF', 'LLH', 'NED']
-
-def commentify(value):
+def pystruct_format(fields):
   """
-  Builds a comment.
+  Formats for PyStruct.
   """
-  return '\n'.join([' * ' + l for l in value.split('\n')[:-1]])
+  try:
+    return '<' + ''.join(PYSTRUCT_CODE[getattr(f, 'type_id')] for f in fields)
+  except:
+    return "NOPE"
 
 def classnameify(s):
   """
@@ -65,13 +46,17 @@ def classnameify(s):
   """
   return ''.join(w if w in ACRONYMS else w.title() for w in s.split('_'))
 
-def pystruct_format(fields):
-  """
-  Formats for PyStruct.
-  """
-  return '<' + ''.join(PYSTRUCT_CODE[f['type']] for f in fields)
+JENV.filters['pystruct'] = pystruct_format
+JENV.filters['classnameify'] = classnameify
 
-def render_source():
+def render_source(output_dir, package_spec):
   """
   """
-  pass
+  path, name = package_spec.filepath
+  directory = "/".join([output_dir, path])
+  if not os.path.exists(directory):
+    os.makedirs(directory)
+  destination_filename = "%s/%s.py" % (directory, name)
+  py_template = JENV.get_template(TEMPLATE_NAME)
+  with open(destination_filename, 'w') as f:
+    f.write(py_template.render(msgs=package_spec.definitions))

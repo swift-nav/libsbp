@@ -18,6 +18,7 @@ import argparse
 import os
 import pprint
 import sbp.targets.c as c
+#import sbp.targets.latex as latex
 import sbp.targets.python as py
 import sbp.specs.yaml2 as yaml
 
@@ -40,6 +41,9 @@ def get_args():
   parser.add_argument('--c',
                       action="store_true",
                       help='Target language: C.')
+  parser.add_argument('--latex',
+                      action="store_true",
+                      help='Target language: LaTeX.')
   parser.add_argument('-v',
                       '--verbose',
                       action="store_true",
@@ -67,12 +71,18 @@ def main():
       print "Reading files..."
       pprint.pprint(file_index.keys())
       print "Writing to %s" % output_dir
-    exit()
     for fname, spec in file_index.items():
+      print yaml.parse_spec(spec)
+    for fname, spec in file_index.items():
+      parsed = yaml.parse_spec(spec)
+      if not parsed.render_source:
+        continue
       if args.python:
-        py.render_source(output_dir, yaml.parse_spec(spec))
-      elif args.c:
-        c.render_source(output_dir, yaml.parse_spec(spec))
+        py.render_source(output_dir, parsed)
+      # if args.c:
+      #   c.render_source(output_dir, yaml.parse_spec(spec))
+      # if args.latex:
+      #   latex.render_source(output_dir, yaml.parse_spec(spec))
   except KeyboardInterrupt:
     pass
 

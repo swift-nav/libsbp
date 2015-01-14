@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2011-2015 Swift Navigation Inc.
+# Copyright (C) 2015 Swift Navigation Inc.
 # Contact: Fergus Noble <fergus@swiftnav.com>
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -10,55 +10,63 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 import struct
-from libsbp.sbp import SBP
-import libsbp.nav_types
-from libsbp.utils import to_repr
+from swift.sbp import SBP
+from swift.sbp.utils import to_repr
+
+((*- for i in include *))
+from i import *
+((*- endfor *))
 
 # Automatically generated from sbp.yaml with generate.py, do not hand edit!
 
-
 ((* for m in msgs *))
-SBP_(((m.name))) = ((('0x%04X'|format(m.id))))
-class ((( m.name | classnameify )))(SBP):
+  ((*- if m.static *))
+    ((*- if m.sbp_id *))
+
+SBP_(((m.identifier))) = ((('0x%04X'|format(m.sbp_id))))
+class ((( m.identifier | classnameify )))(SBP):
   """
-  SBP class for message (((m.name))) ((('(0x%04X)'|format(m.id))))
+  SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id))))
 
   (((m.desc)))
   """
 
   def __init__(self, sbp):
     self.__dict__.update(sbp.__dict__)
-    ((*- if m.fields *))
+      ((*- if m.fields *))
     self.from_binary(sbp.payload)
-    ((*- else *))
+      ((*- else *))
     self.payload = sbp.payload
+      ((*- endif *))
     ((*- endif *))
 
   def __repr__(self):
     return to_repr(self)
 
-  ((*- if m.fields *))
-
+    ((*- if m.fields *))
   def from_binary(self, d):
     (
-    ((*- for f in m.fields *))
-      self.(((f.name))),
-    ((*- endfor *))
+      ((*- for f in m.fields *))
+      self.(((f.identifier))),
+      ((*- endfor *))
     ) = struct.unpack('((( m.fields | pystruct )))', d)
 
   def to_binary(self):
     return struct.pack('((( m.fields | pystruct )))', (
-    ((*- for f in m.fields *))
-      self.(((f.name))),
-    ((*- endfor *))
+      ((*- for f in m.fields *))
+      self.(((f.identifier))),
+      ((*- endfor *))
     ))
+    ((*- endif *))
+  ((*- else *))
   ((*- endif *))
-
 ((* endfor *))
 
 msg_classes = {
 ((*- for m in msgs *))
-  ((('0x%04X'|format(m.id)))): ((( m.name | classnameify ))),
+  ((*- if m.sbp_id *))
+  ((('0x%04X'|format(m.sbp_id)))): ((( m.identifier | classnameify ))),
+  ((*- endif*))
 ((*- endfor *))
 }
 
