@@ -23,7 +23,7 @@ import sbp.specs.yaml2 as yaml
 
 
 def get_args():
-  parser = argparse.ArgumentParser(description='Swift Nav SBP generator.')
+  parser = argparse.ArgumentParser(description='Swift Navigation SBP generator.')
   parser.add_argument('-i',
                       '--input_file',
                       nargs=1,

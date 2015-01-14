@@ -8,23 +8,38 @@ a single source, language-agnostic specification for messages used
 with SBP, a compiler for generating message bindings, and clients in a
 variety of languages.
 
-## Organization
+This repository is organized into the following directory structure:
 
-This repository is organised into the following directory structure:
+* [`docs`](docs): Documentation.
+* [`generator`](generator): Simple, template-based generator for
+  different languages.
+* [`python`](python): Python bindings.
+* [`c`](c): C definitions and decoders.
+* [`spec`](spec): YAML specifications on shared types.
 
-*
-*
-*
+## Usage
 
-* [`docs`](amazonka): Monad transformer and send/receive/paginate/presign logic.
-* [`docs`](amazonka): Monad transformer and send/receive/paginate/presign logic.
+In this directory, via `make`:
 
-* `amazonka-*`: Each of the individually supported Amazon Web Service libraries.
-* `amazonka-*/examples`: An example project for the parent service which can be loaded using `make install && make repl`.
-* [`core`](core): The `amazonka-core` library upon which each of the services depends.
-* [`gen`](gen): Code, templates, and assets for the `amazonka-gen` executable.
-* [`script`](script): Scripts to manage the release and life-cycle of the service libraries.
-* [`share`](share): Makefile plumbing common to all service libraries
+```shell
+# Build documentation.
+make docs
+
+# Distribute to package repositories.
+make dist
+
+# Generate Python module.
+make python
+
+# Generate C library.
+make c
+
+# Generate libraries for all available target languages.
+make all
+
+# Run all tests.
+make test
+```
 
 ## SBP Protocol Specification - Packet Structure
 
@@ -61,15 +76,11 @@ for the preliminary documentation of the official message types. The
 official messages include such things as timing and position messages,
 but not implementation specific messages such as firmware version.
 
-## Using the SBP Compiler
-
-TODO(Buro)
-
 ## Example - Decoding SBP in Python
 
 Here is an example of how to use the libsbp and
 [serial_link.py](https://github.com/swift-nav/piksi_firmware/tree/master/scripts)
-to decode SBP messages:
+to decode SBP messages. For more examples, see [`python`](python).
 
 ```python
 import sbp_piksi as sbp
