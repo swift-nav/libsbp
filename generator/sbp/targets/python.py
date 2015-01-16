@@ -49,8 +49,11 @@ def classnameify(s):
 JENV.filters['pystruct'] = pystruct_format
 JENV.filters['classnameify'] = classnameify
 
+# TODO (Buro): parametrize
+
 def render_source(output_dir, package_spec):
   """
+  Render and output
   """
   path, name = package_spec.filepath
   directory = "/".join([output_dir, path])

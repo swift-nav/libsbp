@@ -16,7 +16,7 @@ Generator for c target.
 import jinja2
 from sbp.targets.templating import *
 
-TEMPLATE_LOCATION = "./targets/resources/c/sbp_messages_template.h"
+TEMPLATE_LOCATION = "./sbp_messages_template.h"
 
 def commentify(value):
   """
@@ -26,12 +26,15 @@ def commentify(value):
 
 JENV.filters['commentify'] = commentify
 
-def render_header():
+def render_source(output_dir, package_spec):
   """
+  Render and output
   """
-  pass
-
-def render_source():
-  """
-  """
-  pass
+  path, name = package_spec.filepath
+  directory = "/".join([output_dir, path])
+  if not os.path.exists(directory):
+    os.makedirs(directory)
+  destination_filename = "%s/%s.py" % (directory, name)
+  py_template = JENV.get_template(TEMPLATE_NAME)
+  with open(destination_filename, 'w') as f:
+    f.write(py_template.render(msgs=package_spec.definitions))
