@@ -30,6 +30,18 @@ PYSTRUCT_CODE = {
   'double': 'd',
 }
 
+PYDOC_CODE = {
+  'u8': 'int',
+  'u16': 'int',
+  'u32': 'int',
+  'u64': 'int',
+  's8': 'int',
+  's16': 'int',
+  's32': 'int',
+  's64': 'int',
+  'float': 'float',
+  'double': 'double',
+}
 
 def pystruct_format(fields):
   """
@@ -40,6 +52,12 @@ def pystruct_format(fields):
   except:
     return "NOPE"
 
+def pydoc_format(type_id):
+  """
+  Formats type for pydoc..
+  """
+  return PYDOC_CODE.get(type_id, type_id)
+
 def classnameify(s):
   """
   Makes a classname.
@@ -48,6 +66,7 @@ def classnameify(s):
 
 JENV.filters['pystruct'] = pystruct_format
 JENV.filters['classnameify'] = classnameify
+JENV.filters['pydoc'] = pydoc_format
 
 # TODO (Buro): parametrize
 

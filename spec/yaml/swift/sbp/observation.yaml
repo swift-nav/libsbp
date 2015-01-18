@@ -10,6 +10,7 @@
 
 package: swift.sbp.observation
 description: Observation messages from the Piksi.
+stable: False
 include:
   - types.yaml
 definitions:

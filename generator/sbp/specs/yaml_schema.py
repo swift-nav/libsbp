@@ -55,5 +55,6 @@ definition = Schema({identifier:
 package_schema = Schema({Optional('package'): identifier,
                          Optional('description'): description,
                          Optional('render_source'): bool,
+                         Optional('stable'): bool,
                          Optional('include'): include,
                          Optional('definitions'): [definition]})

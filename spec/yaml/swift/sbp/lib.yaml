@@ -10,6 +10,7 @@
 
 package: swift.sbp.lib
 description: Defines a variety of common structs.
+stable: False
 include:
   - types.yaml
 definitions:

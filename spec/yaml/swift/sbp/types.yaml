@@ -11,6 +11,7 @@
 package: swift.sbp.types
 description: Defines a variety of common types.
 render_source: false
+stable: True
 definitions:
  - s8:
     type: primitive

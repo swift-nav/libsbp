@@ -21,9 +21,19 @@ SBP_MSG_GPS_TIME = 0x0100
 class MsgGPSTime(SBP):
   """
   SBP class for message MSG_GPS_TIME (0x0100)
+    GPS Time.
 
-  GPS Time.
 
+  Parameters
+  ----------
+  wn : int
+    GPS week number
+  tow : int
+    GPS Time of Week rounded to the nearest ms
+  ns : int
+    Nanosecond remainder of rounded tow
+  flags : int
+    Status flags (reserved)
   """
 
   def __init__(self, sbp):
@@ -53,9 +63,23 @@ SBP_MSG_DOPS = 0x0206
 class MsgDops(SBP):
   """
   SBP class for message MSG_DOPS (0x0206)
+    Dilution of Precision.
 
-  Dilution of Precision.
 
+  Parameters
+  ----------
+  tow : int
+    GPS Time of Week
+  gdop : int
+    Geometric Dilution of Precision
+  pdop : int
+    Position Dilution of Precision
+  tdop : int
+    Time Dilution of Precision
+  hdop : int
+    Horizontal Dilution of Precision
+  vdop : int
+    Vertical Dilution of Precision
   """
 
   def __init__(self, sbp):
@@ -89,9 +113,25 @@ SBP_MSG_POS_ECEF = 0x0200
 class MsgPosECEF(SBP):
   """
   SBP class for message MSG_POS_ECEF (0x0200)
+    Position solution in absolute Earth Centered Earth Fixed (ECEF) coordinates.
 
-  Position solution in absolute Earth Centered Earth Fixed (ECEF) coordinates.
 
+  Parameters
+  ----------
+  tow : int
+    GPS Time of Week
+  x : double
+    ECEF X coordinate
+  y : double
+    ECEF Y coordinate
+  z : double
+    ECEF Z coordinate
+  accuracy : int
+    Position accuracy estimate
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
   """
 
   def __init__(self, sbp):
@@ -127,9 +167,27 @@ SBP_MSG_POS_LLH = 0x0201
 class MsgPosLLH(SBP):
   """
   SBP class for message MSG_POS_LLH (0x0201)
+    Geodetic position solution.
 
-  Geodetic position solution.
 
+  Parameters
+  ----------
+  tow : int
+    GPS Time of Week
+  lat : double
+    Latitude
+  lon : double
+    Longitude
+  height : double
+    Height
+  h_accuracy : int
+    Horizontal position accuracy estimate
+  v_accuracy : int
+    Vertical position accuracy estimate
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
   """
 
   def __init__(self, sbp):
@@ -167,9 +225,25 @@ SBP_MSG_BASELINE_ECEF = 0x0202
 class MsgBaselineECEF(SBP):
   """
   SBP class for message MSG_BASELINE_ECEF (0x0202)
+    Baseline in Earth Centered Earth Fixed (ECEF) coordinates.
 
-  Baseline in Earth Centered Earth Fixed (ECEF) coordinates.
 
+  Parameters
+  ----------
+  tow : int
+    GPS Time of Week
+  x : int
+    Baseline ECEF X coordinate
+  y : int
+    Baseline ECEF Y coordinate
+  z : int
+    Baseline ECEF Z coordinate
+  accuracy : int
+    Position accuracy estimate
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
   """
 
   def __init__(self, sbp):
@@ -205,9 +279,27 @@ SBP_MSG_BASELINE_NED = 0x0203
 class MsgBaselineNED(SBP):
   """
   SBP class for message MSG_BASELINE_NED (0x0203)
+    Baseline in local North East Down (NED) coordinates.
 
-  Baseline in local North East Down (NED) coordinates.
 
+  Parameters
+  ----------
+  tow : int
+    GPS Time of Week
+  n : int
+    Baseline North coordinate
+  e : int
+    Baseline East coordinate
+  d : int
+    Baseline Down coordinate
+  h_accuracy : int
+    Horizontal position accuracy estimate
+  v_accuracy : int
+    Vertical position accuracy estimate
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
   """
 
   def __init__(self, sbp):
@@ -245,9 +337,25 @@ SBP_MSG_VEL_ECEF = 0x0204
 class MsgVelECEF(SBP):
   """
   SBP class for message MSG_VEL_ECEF (0x0204)
+    Velocity in Earth Centered Earth Fixed (ECEF) coordinates.
 
-  Velocity in Earth Centered Earth Fixed (ECEF) coordinates.
 
+  Parameters
+  ----------
+  tow : int
+    GPS Time of Week
+  x : int
+    Velocity ECEF X coordinate
+  y : int
+    Velocity ECEF Y coordinate
+  z : int
+    Velocity ECEF Z coordinate
+  accuracy : int
+    Velocity accuracy estimate
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags (reserved)
   """
 
   def __init__(self, sbp):
@@ -283,9 +391,27 @@ SBP_MSG_VEL_NED = 0x0205
 class MsgVelNED(SBP):
   """
   SBP class for message MSG_VEL_NED (0x0205)
+    Velocity in local North East Down (NED) coordinates.
 
-  Velocity in local North East Down (NED) coordinates.
 
+  Parameters
+  ----------
+  tow : int
+    GPS Time of Week
+  n : int
+    Velocity North coordinate
+  e : int
+    Velocity East coordinate
+  d : int
+    Velocity Down coordinate
+  h_accuracy : int
+    Horizontal velocity accuracy estimate
+  v_accuracy : int
+    Vertical velocity accuracy estimate
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags (reserved)
   """
 
   def __init__(self, sbp):

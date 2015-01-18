@@ -71,18 +71,18 @@ def main():
       print "Reading files..."
       pprint.pprint(file_index.keys())
       print "Writing to %s" % output_dir
-    for fname, spec in file_index.items():
-      print yaml.parse_spec(spec)
+    # for fname, spec in file_index.items():
+    #   print yaml.parse_spec(spec)
     for fname, spec in file_index.items():
       parsed = yaml.parse_spec(spec)
       if not parsed.render_source:
         continue
       if args.python:
         py.render_source(output_dir, parsed)
-      # if args.c:
-      #   c.render_source(output_dir, yaml.parse_spec(spec))
+      if args.c:
+        c.render_source(output_dir, parsed)
       # if args.latex:
-      #   latex.render_source(output_dir, yaml.parse_spec(spec))
+      #   latex.render_source(output_dir, parsed)
   except KeyboardInterrupt:
     pass
 

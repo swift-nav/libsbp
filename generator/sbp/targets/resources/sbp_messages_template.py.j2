@@ -27,8 +27,21 @@ SBP_(((m.identifier))) = ((('0x%04X'|format(m.sbp_id))))
 class ((( m.identifier | classnameify )))(SBP):
   """
   SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id))))
+  ((*- if m.desc *))
+    (((m.desc)))
+  ((*- endif *))
 
-  (((m.desc)))
+  ((*- if m.fields*))
+
+  Parameters
+  ----------
+  ((*- for f in m.fields *))
+  (((f.identifier))) : (((f.type_id|pydoc)))
+  ((*- if f.desc *))
+    (((f.desc)))
+  ((*- endif *))
+  ((*- endfor *))
+  ((*- endif *))
   """
 
   def __init__(self, sbp):

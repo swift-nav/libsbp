@@ -22,7 +22,16 @@ class MsgAcqResult(SBP):
   """
   SBP class for message MSG_ACQ_RESULT (0x0015)
 
-  None
+  Parameters
+  ----------
+  snr : float
+    SNR of best point
+  cn : float
+    Code phase of best point
+  cf : float
+    Carrier frequency of best point
+  prn : int
+    PRN searched for
   """
 
   def __init__(self, sbp):
@@ -53,7 +62,14 @@ class MsgObsHdr(SBP):
   """
   SBP class for message MSG_OBS_HDR (0x0040)
 
-  None
+  Parameters
+  ----------
+  t : GPSTime
+    GPS time of observation
+  count : int
+    Serial count of obervation
+  n_obs : int
+    Number of observation records to follow
   """
 
   def __init__(self, sbp):
@@ -82,7 +98,20 @@ class MsgObs(SBP):
   """
   SBP class for message MSG_OBS (0x0041)
 
-  None
+  Parameters
+  ----------
+  P : int
+    Pseudorange
+  L : Latency
+    Fixed point carrier phase
+  snr : int
+    Signal-to-Noise ratio (cn0 * 4 for 0.25 precision and
+0-64 range
+
+  lock_counter : int
+    Lock counter. Increments on new lock
+  prn : int
+    Satellite number
   """
 
   def __init__(self, sbp):
@@ -114,8 +143,6 @@ SBP_MSG_OLD_OBS = 0x0042
 class MsgOldObs(SBP):
   """
   SBP class for message MSG_OLD_OBS (0x0042)
-
-  None
   """
 
   def __init__(self, sbp):
@@ -131,7 +158,14 @@ class MsgPackedObs(SBP):
   """
   SBP class for message MSG_PACKED_OBS (0x0045)
 
-  None
+  Parameters
+  ----------
+  gps_tow : int
+    Observations
+  gps_week : int
+    Observations
+  obs : PackedObsContent
+    Observations
   """
 
   def __init__(self, sbp):
@@ -160,7 +194,14 @@ class MsgBasePos(SBP):
   """
   SBP class for message MSG_BASE_POS (0x0044)
 
-  None
+  Parameters
+  ----------
+  pos_llh_x : double
+    Base station position, x
+  pos_llh_y : double
+    Base station position, y
+  pos_llh_z : double
+    Base station position, z
   """
 
   def __init__(self, sbp):
@@ -188,8 +229,12 @@ SBP_MSG_TRACKING_STATE = 0x0016
 class MsgTrackingState(SBP):
   """
   SBP class for message MSG_TRACKING_STATE (0x0016)
+    MSG_TRACKING_STATE
 
-  MSG_TRACKING_STATE
+  Parameters
+  ----------
+  states : array
+    State of satellite tracking channel.
   """
 
   def __init__(self, sbp):
@@ -214,7 +259,10 @@ class MsgIarState(SBP):
   """
   SBP class for message MSG_IAR_STATE (0x0019)
 
-  None
+  Parameters
+  ----------
+  num_hyps : int
+    num_hyps
   """
 
   def __init__(self, sbp):
@@ -238,8 +286,62 @@ SBP_MSG_EPHEMERIS = 0x001A
 class MsgEphemeris(SBP):
   """
   SBP class for message MSG_EPHEMERIS (0x001A)
+    WGS84 satellite orbit ephemeris parameters
 
-  WGS84 satellite orbit ephemeris parameters
+  Parameters
+  ----------
+  tgd : double
+    Group delay differential between L1 and L2 (?)
+  crs : double
+    Amplitude of the sine harmonic correction term to the orbit radius
+  crc : double
+    Amplitude of the cosine harmonic correction term to the orbit radius
+  cuc : double
+    Amplitude of the cosine harmonic correction term to the argument of latitude
+  cus : double
+    Amplitude of the sine harmonic correction term to the argument of latitude
+  cic : double
+    Amplitude of the cosine harmonic correction term to the angle of inclination
+  cis : double
+    Amplitude of the sine harmonic correction term to the angle of inclination
+  dn : double
+    Mean motion difference
+  m0 : double
+    Mean anomaly at reference time
+  ecc : double
+    Eccentricity of satellite orbit
+  sqrta : double
+    Square root of the semi-major axis of orbit
+  omega0 : double
+    Longitude of ascending node of orbit plane at weekly epoch
+  omegadot : double
+    Rate of right ascension
+  w : double
+    Argument of perigee
+  inc : double
+    Inclination
+  inc_dot : double
+    Inclination first derivative
+  af0 : double
+    Polynomial clock correction coefficient (clock bias)
+  af1 : double
+    Polynomial clock correction coefficient (clock drift)
+  af2 : double
+    Polynomial clock correction coefficient (rate of clock drift)
+  toe_tow : double
+    Time of week
+  toe_wn : int
+    Week number
+  toc_tow : double
+    clock reference time of week
+  toc_wn : int
+    clock reference week number
+  valid : int
+    Is valid?
+  healthy : int
+    Satellite is healthy?
+  prn : int
+    PRN searched for
   """
 
   def __init__(self, sbp):

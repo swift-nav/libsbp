@@ -44,6 +44,10 @@ class PackageSpecification(object):
     filepath, filename = "/".join(split[:-1]), split[-1]
     return (filepath, filename)
 
+  @property
+  def max_msgid_len(self):
+    return max([0]+[len(d.identifier) for d in self.definitions if is_message(d)])
+
   def __repr__(self):
     return fmt_repr(self)
 
@@ -73,6 +77,14 @@ class Definition(object):
     self.fields = fields
     self.static = True
 
+  @property
+  def max_type_len(self):
+    return max([0]+[len(f.type_id) for f in self.fields])
+
+  @property
+  def max_fid_len(self):
+    return max([0]+[len(f.identifier) for f in self.fields])
+
   def __repr__(self):
     return fmt_repr(self)
 
@@ -89,6 +101,20 @@ class Field(object):
     self.identifier = identifier
     self.type_id = type_id
     self.options = dict([(k, FieldOption(k, v)) for k, v in options.items()])
+
+  @property
+  def desc(self):
+    if self.options.get('desc', None):
+      return self.options['desc'].value
+    else:
+      return None
+
+  @property
+  def units(self):
+    if self.options.get('units', None):
+      return self.options['units'].value
+    else:
+      return None
 
   def __repr__(self):
     return fmt_repr(self)

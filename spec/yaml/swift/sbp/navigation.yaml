@@ -11,6 +11,7 @@
 
 package: swift.sbp.navigation
 description: Geodetic navigation messages from the Piksi.
+stable: True
 include:
   - types.yaml
 definitions:

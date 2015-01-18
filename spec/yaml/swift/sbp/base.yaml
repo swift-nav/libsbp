@@ -11,6 +11,7 @@
 package: swift.sbp.base
 description: Base definition of SBP message container.
 render_source: False
+stable: True
 include:
   - types.yaml
 definitions:
