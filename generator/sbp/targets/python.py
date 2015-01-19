@@ -30,6 +30,19 @@ PYSTRUCT_CODE = {
   'double': 'd',
 }
 
+CONSTRUCT_CODE = {
+  'u8': 'ULInt8',
+  'u16': 'ULInt16',
+  'u32': 'ULInt32',
+  'u64': 'ULInt64',
+  's8': 'SLInt8',
+  's16': 'SLInt16',
+  's32': 'SLInt32',
+  's64': 'SLInt64',
+  'float': 'LFloat16',
+  'double': 'LInt16',
+}
+
 PYDOC_CODE = {
   'u8': 'int',
   'u16': 'int',
@@ -44,6 +57,15 @@ PYDOC_CODE = {
 }
 
 def pystruct_format(fields):
+  """
+  Formats for PyStruct.
+  """
+  try:
+    return '<' + ''.join(PYSTRUCT_CODE[getattr(f, 'type_id')] for f in fields)
+  except:
+    return "NOPE"
+
+def construct_format(fields):
   """
   Formats for PyStruct.
   """
