@@ -17,6 +17,7 @@ import os
 from sbp.targets.templating import JENV, ACRONYMS
 
 TEMPLATE_NAME = "sbp_messages_template.py.j2"
+TEMPLATE_NAME22 = "sbp_construct_template.py.j2"
 PYSTRUCT_CODE = {
   'u8': 'B',
   'u16': 'H',
@@ -40,7 +41,7 @@ CONSTRUCT_CODE = {
   's32': 'SLInt32',
   's64': 'SLInt64',
   'float': 'LFloat16',
-  'double': 'LInt16',
+  'double': 'LFloat32',
 }
 
 PYDOC_CODE = {
@@ -69,10 +70,17 @@ def construct_format(fields):
   """
   Formats for PyStruct.
   """
-  try:
-    return '<' + ''.join(PYSTRUCT_CODE[getattr(f, 'type_id')] for f in fields)
-  except:
-    return "NOPE"
+  formatted = ""
+  for f in fields:
+    if CONSTRUCT_CODE.get(f.type_id, None):
+      return "%s()" % CONSTRUCT_CODE.get(f.type_id)
+    elif is_array(f):
+      return "Array()"
+    elif
+  return formatted
+
+PascalString = Struct("PascalString", UBInt8("length"), Bytes("data", lambda ctx: ctx.length))
+
 
 def pydoc_format(type_id):
   """

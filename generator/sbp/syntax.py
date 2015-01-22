@@ -157,7 +157,7 @@ class Array(Field):
 
   @property
   def size(self):
-    return
+    return self.options.sys.getsizeof()
 
   @property
   def static(self):
@@ -204,7 +204,6 @@ def is_primitive(obj):
 
 def is_array(obj):
   return isinstance(obj, Field) and obj.type_id == 'array'
-    #and (obj.options.get('size', None) or obj.options.get('size_fn', None))
 
 def is_bitfield(obj):
   return isinstance(obj, Field) and obj.options.get('fields', [])
