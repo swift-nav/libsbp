@@ -1,0 +1,189 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.piksi
+description: System messages from the Piksi.
+stable: False
+include:
+  - types.yaml
+  - lib.yaml
+definitions:
+
+ - MSG_PRINT:
+    id: 0x0010
+    desc: Information and debugging information.
+
+ - MSG_DEBUG_VAR:
+    id: 0x0011
+    desc: Legacy message for tracing variable values.
+
+ - MSG_ALMANAC:
+    id: 0x0069
+    desc: MSG_ALMANAC
+
+ - MSG_SET_TIME:
+    id: 0x0068
+    desc: MSG_SET_TIME
+
+ - MSG_BOOTLOADER_HANDSHAKE:
+    id: 0x00B0
+    desc: MSG_BOOTLOADER_HANDSHAKE
+
+ - MSG_BOOTLOADER_JUMP_TO_APP:
+    id: 0x00B1
+    desc: MSG_BOOTLOADER_JUMP_TO_APP
+
+ - MSG_RESET:
+    id: 0x00B2
+    desc: Reset the devices.
+
+ - MSG_CW_RESULTS:
+    id: 0x00C0
+    desc: MSG_CW_RESULTS
+
+ - MSG_CW_START:
+    id: 0x00C1
+    desc: MSG_CW_START
+
+ - MSG_NAP_DEVICE_DNA:
+    id: 0x00DD
+    desc: MSG_NAP_DEVICE_DNA
+
+ - MSG_FLASH_PROGRAM:
+    id: 0x00E0
+    desc: MSG_FLASH_PROGRAM
+
+ - MSG_FLASH_DONE:
+    id: 0x00E0
+    desc: MSG_FLASH_DONE
+
+ - MSG_FLASH_READ:
+    id: 0x00E1
+    desc: MSG_FLASH_READ
+
+ - MSG_FLASH_ERASE:
+    id: 0x00E2
+    desc: MSG_FLASH_ERASE
+
+ - MSG_STM_FLASH_LOCK_SECTOR:
+    id: 0x00E3
+    desc: MSG_STM_FLASH_LOCK_SECTOR
+
+ - MSG_STM_FLASH_UNLOCK_SECTOR:
+    id: 0x00E4
+    desc: MSG_STM_FLASH_UNLOCK_SECTOR
+
+ - MSG_STM_UNIQUE_ID:
+    id: 0x00E5
+    desc: MSG_STM_UNIQUE_ID
+
+ - MSG_M25_FLASH_WRITE_STATUS:
+    id: 0x00F3
+    desc: MSG_M25_FLASH_WRITE_STATUS
+
+ - MSG_RESET_FILTERS:
+    id: 0x0022
+    desc: MSG_RESET_FILTERS
+
+ - MSG_INIT_BASE:
+    id: 0x0023
+    desc: MSG_INIT_BASE
+
+ - MSG_SETTINGS:
+    id: 0x00A0
+    desc: MSG_SETTINGS
+
+ - MSG_SETTINGS_SAVE:
+    id: 0x00A1
+    desc: MSG_SETTINGS_SAVE
+
+ - MSG_SETTINGS_READ_BY_INDEX:
+    id: 0x00A2
+    desc: MSG_SETTINGS_READ_BY_INDEX
+
+ - MSG_FILEIO_READ:
+    id: 0x00A8
+    desc: MSG_FILEIO_READ
+
+ - MSG_FILEIO_READ_DIR:
+    id: 0x00A9
+    desc: MSG_FILEIO_READ_DIR
+
+ - MSG_FILEIO_REMOVE:
+    id: 0x00AC
+    desc: MSG_FILEIO_REMOVE
+
+ - MSG_FILEIO_WRITE:
+    id: 0x00AD
+    desc: MSG_FILEIO_WRITE
+
+ - MSG_THREAD_STATE:
+    id: 0x0017
+    desc: State of the CPU threads.
+    fields:
+        - name:
+            type: string
+            size: 20
+            desc: Thread name
+        - cpu:
+            type: u16
+            desc: cpu
+        - stack_free:
+            type: u32
+            units: kB
+            desc: Free stack space for this thread.
+
+ - UARTChannel:
+    desc: State of the UART channel.
+    fields:
+        - tx_throughput:
+            type: float
+            units: kB/s
+            desc: UART transmit throughput.
+        - rx_throughput:
+            type: float
+            units: kB/s
+            desc: UART receive throughput.
+        - crc_error_count:
+            type: u16
+            desc: UART CRC error count.
+        - tx_buffer_level:
+            type: u8
+            units: Utilization % /255
+            desc: UART transmit usage percentage.
+        - rx_buffer_level:
+            type: u8
+            units: Utilization % /255
+            desc: UART receive usage percentage.
+
+ - MSG_UART_STATE:
+    id: 0x0018
+    desc: State of the UART channels.
+    fields:
+        - uarts0:
+            type: UARTChannel
+            desc: State of UART0.
+        - uarts1:
+            type: UARTChannel
+            desc: State of UART1.
+        - uarts2:
+            type: UARTChannel
+            desc: State of UART2.
+        - latency:
+            type: Latency
+            desc: UART communication latency.
+
+ - MSG_IAR_STATE:
+    id: 0x0019
+    desc: State of the Integer Ambiguity Resolution (IAR) process.
+    fields:
+        - num_hyps:
+            type: u32
+            desc: Number of integer ambiguity hypotheses remaining.

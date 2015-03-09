@@ -1,0 +1,40 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.acquisition
+description: Satellite acquisition messages from the Piksi.
+stable: False
+include:
+  - types.yaml
+definitions:
+
+ - MSG_ACQ_RESULT:
+    id: 0x0015
+    desc: |
+      Results of an attempted GPS signal acquisition. Contains the
+      parameters of the point in the acquisition search space with the
+      best signal-to-noise ratio.
+    fields:
+        - snr:
+            type: float
+            desc: SNR of best point.
+        - cp:
+            type: float
+            units: chips
+            desc: Code phase.
+        - cf:
+            type: float
+            units: hz
+            desc: Carrier frequency.
+        - prn:
+            type: u8
+            desc: |
+              PRN identifier of the satellite signal for which
+              acquisition was attempted.

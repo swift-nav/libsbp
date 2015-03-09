@@ -1,0 +1,99 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.observation
+description: Observation messages from the Piksi.
+stable: False
+include:
+  - types.yaml
+  - lib.yaml
+definitions:
+
+ - GPSTime:
+    desc: |
+      GPS time, defined as the number of milliseconds since the
+      beginning of the week on the Saturday/Sunday transition.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: Milliseconds since start of GPS week
+        - wn:
+            type: u16
+            units: week
+            desc: GPS week number
+
+ - ObservationHeader:
+    desc: Header of a GPS observation message
+    fields:
+        - t:
+            type: GPSTime
+            desc: GPS time of this observation.
+        - n_obs:
+            type: u8
+            desc: |
+              Total number of observations. First nibble is the size
+              of the sequence (n), second nibble is the zero-indexed
+              counter (ith packet of n)
+
+ - PackedObsContent:
+    desc: GPS observations for a particular satellite signal.
+    fields:
+        - P:
+            type: u32
+            units: cm
+            desc: Pseudorange observation.
+        - L:
+            type: CarrierPhase
+            desc: Carrier phase observation.
+        - cn0:
+            type: u8
+            units: dB Hz
+            desc: Carrier-to-Noise density
+        - lock:
+            type: u16
+            desc: |
+              Lock indicator. This value changes whenever a satellite
+              signal has lost and regained lock, indicating that the
+              carrier phase ambiguity may have changed. There is no
+              significance to the value of the lock indicator.
+        - prn:
+            type: u8
+            desc: PRN identifier of the satellite signal
+
+ - MSG_OBS:
+    id: 0x0045
+    short_desc: MSG_OBS
+    fields:
+        - header:
+            type: ObservationHeader
+            desc: Header of a GPS observation message
+        - obs:
+            type: array
+            fill: PackedObsContent
+            map_by: prn
+            desc: Observations
+
+ - MSG_BASE_POS:
+    id: 0x0044
+    short_desc: MSG_BASE_POS
+    fields:
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: double
+            units: m
+            desc: Height
