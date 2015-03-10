@@ -10,4 +10,6 @@ reincorporation with piksi_firmare/scripts.
 
 ## LICENSE
 
-Copyright © 2014 Swift Navigation
+Copyright © 2015 Swift Navigation
+
+Distributed under LGPLv3.0.
