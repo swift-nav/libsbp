@@ -39,9 +39,7 @@ a static library `libsbp-static`.
 
 ## Usage
 
-```c
-
-```
+A separate tutorial is at https://github.com/swift-nav/sbp_tutorial.
 
 ## LICENSE
 
