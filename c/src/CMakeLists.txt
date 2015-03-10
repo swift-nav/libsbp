@@ -7,13 +7,11 @@ file(GLOB libswiftnav_HEADERS "${PROJECT_SOURCE_DIR}/include/libswiftnav/*.h")
 include_directories("${PROJECT_SOURCE_DIR}/CBLAS/include")
 include_directories("${PROJECT_SOURCE_DIR}/clapack-3.2.1-CMAKE/INCLUDE")
 include_directories("${PROJECT_SOURCE_DIR}/lapacke/include")
-
 include_directories("${PROJECT_SOURCE_DIR}/include/libsbp")
 
 set(libsbp_SRCS
   edc.c
   sbp.c
-  sbp_utils.c
 )
 
 add_library(swiftnav-static STATIC ${libsbp_SRCS})

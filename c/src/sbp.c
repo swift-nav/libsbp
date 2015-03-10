@@ -11,7 +11,6 @@
  */
 
 #include "edc.h"
-
 #include "sbp.h"
 
 #define SBP_PREAMBLE 0x55
