@@ -1,0 +1,55 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: test.spec.types
+description: Defines a variety of common types.
+definitions:
+ - s8:
+    type: primitive
+    desc: Signed 8-bit integer
+ - s16:
+    type: primitive
+    desc: Signed 16-bit integer
+ - s32:
+    type: primitive
+    desc: Signed 32-bit integer
+ - s64:
+    type: primitive
+    desc: Signed 64-bit integer
+ - u8:
+    type: primitive
+    desc: Unsigned 8-bit integer
+ - u16:
+    type: primitive
+    desc: Unsigned 16-bit integer
+ - u32:
+    type: primitive
+    desc: Unsigned 32-bit integer
+ - u64:
+    type: primitive
+    desc: Unsigned 64-bit integer
+ - bool:
+    type: primitive
+    desc: Boolean
+ - float:
+    type: primitive
+    desc: Single-precision float
+ - double:
+    type: primitive
+    desc: Double-precision float
+ - array:
+    type: primitive
+    desc: Array of types
+ - bytes:
+    type: primitive
+    desc: Array of bytes
+ - string:
+    type: primitive
+    desc: string

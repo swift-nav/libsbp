@@ -1,0 +1,118 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: test.specs.navigation
+description: Geodetic navigation messages from the Piksi.
+include:
+  - types.yaml
+definitions:
+
+ - MSG_GPS_TIME:
+    id: 0x0100
+    short_desc: GPS Time
+    desc: |
+        GPS Time.
+    fields:
+        - wn:
+            type: u16
+            units: weeks
+            desc: GPS week number
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week rounded to the nearest ms
+        - ns:
+            type: s32
+            units: ns
+            desc: Nanosecond remainder of rounded tow
+        - flags:
+            type: u8
+            desc: Status flags (reserved)
+
+ - MSG_DOPS:
+    id: 0x0206
+    short_desc: Dilution of Precision
+    desc: |
+      Dilution of Precision.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - gdop:
+            type: u16
+            units: 0.01
+            desc: Geometric Dilution of Precision
+        - pdop:
+            type: u16
+            units: 0.01
+            desc: Position Dilution of Precision
+        - tdop:
+            type: u16
+            units: 0.01
+            desc: Time Dilution of Precision
+        - hdop:
+            type: u16
+            units: 0.01
+            desc: Horizontal Dilution of Precision
+        - vdop:
+            type: u16
+            units: 0.01
+            desc: Vertical Dilution of Precision
+
+ - MSG_POS_LLH:
+    id: 0x0201
+    short_desc: Geodetic Position
+    desc: |
+        Geodetic position solution.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: double
+            units: m
+            desc: Height
+        - h_accuracy:
+            type: u16
+            units: mm
+            desc: Horizontal position accuracy estimate
+        - v_accuracy:
+            type: u16
+            units: mm
+            desc: Vertical position accuracy estimate
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 4-7:
+                  desc: Reserved
+              - 3:
+                  desc: Height Mode
+                  values:
+                      - 0: Height above Ellipsoid
+                      - 1: Height above mean sea level
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Single Point Positioning (SPP)
+                      - 1: RTK
