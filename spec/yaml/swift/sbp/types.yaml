@@ -1,0 +1,68 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swift.sbp.types
+description: Defines a variety of common types.
+render_source: false
+stable: True
+definitions:
+ - s8:
+    type: primitive
+    desc: Signed 8-bit integer
+    size: 1
+ - s16:
+    type: primitive
+    desc: Signed 16-bit integer
+    size: 2
+ - s32:
+    type: primitive
+    desc: Signed 32-bit integer
+    size: 4
+ - s64:
+    type: primitive
+    desc: Signed 64-bit integer
+    size: 8
+ - u8:
+    type: primitive
+    desc: Unsigned 8-bit integer
+    size: 1
+ - u16:
+    type: primitive
+    desc: Unsigned 16-bit integer
+    size: 2
+ - u32:
+    type: primitive
+    desc: Unsigned 32-bit integer
+    size: 4
+ - u64:
+    type: primitive
+    desc: Unsigned 64-bit integer
+    size: 8
+ - bool:
+    type: primitive
+    desc: Boolean
+    size: 1
+ - float:
+    type: primitive
+    desc: Single-precision float
+    size: 4
+ - double:
+    type: primitive
+    desc: Double-precision float
+    size: 8
+ - array:
+    type: primitive
+    desc: Array of types
+ - bytes:
+    type: primitive
+    desc: Array of bytes
+ - string:
+    type: primitive
+    desc: string

@@ -1,0 +1,49 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: test.spec.base
+description: Base definition of SBP message container.
+include:
+  - types.yaml
+definitions:
+
+ - SBP:
+    desc: |
+      Defines full packet structure for Swift Navigation Binary Protocol
+      (SBP).
+    fields:
+        - preamble:
+            type: u8
+            desc: Denotes the start of frame transmission. For v1.0, always 0x55.
+        - msg_type:
+            type: u16
+            desc: ldentifies the payload contents
+        - sender:
+            type: u16
+            desc: |
+              A unique identifier of the sending hardware. For v1.0 on Piksi,
+              set to the 2 least significant bytes of the Piksi serial.
+              number.
+        - length:
+            type: u8
+            desc: Length in bytes of the Payload field.
+        - payload:
+            type: bytes
+            size_fn: length
+            desc: |
+              Binary data of the message, as identified by Message Type and
+              Length. Usually contains the in-memory binary representation of
+              a C struct (see documentation on individual message types).
+        - crc:
+            type: u16
+            desc: |
+              Cyclic Redundancy Check (CRC) of the packet's binary data from
+              the Message Type up to the end of Payload (does not include the
+              Preamble).

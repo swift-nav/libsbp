@@ -1,0 +1,159 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swift.sbp.piksi
+description: System messages from the Piksi.
+stable: False
+include:
+  - types.yaml
+  - lib.yaml
+definitions:
+
+ - MSG_PRINT:
+    id: 0x0010
+    short_desc: MSG_PRINT
+
+ - MSG_DEBUG_VAR:
+    id: 0x0011
+    short_desc: MSG_DEBUG_VAR
+
+ - MSG_ALMANAC:
+    id: 0x0069
+    short_desc: MSG_ALMANAC
+
+ - MSG_SET_TIME:
+    id: 0x0068
+    short_desc: MSG_SET_TIME
+
+ - MSG_BOOTLOADER_HANDSHAKE:
+    id: 0x00B0
+    short_desc: MSG_BOOTLOADER_HANDSHAKE
+
+ - MSG_BOOTLOADER_JUMP_TO_APP:
+    id: 0x00B1
+    short_desc: MSG_BOOTLOADER_JUMP_TO_APP
+
+ - MSG_RESET:
+    id: 0x00B2
+    short_desc: MSG_RESET
+
+ - MSG_CW_RESULTS:
+    id: 0x00C0
+    short_desc: MSG_CW_RESULTS
+
+ - MSG_CW_START:
+    id: 0x00C1
+    short_desc: MSG_CW_START
+
+ - MSG_NAP_DEVICE_DNA:
+    id: 0x00DD
+    short_desc: MSG_NAP_DEVICE_DNA
+
+ - MSG_FLASH_PROGRAM:
+    id: 0x00E0
+    short_desc: MSG_FLASH_PROGRAM
+
+ - MSG_FLASH_DONE:
+    id: 0x00E0
+    short_desc: MSG_FLASH_DONE
+
+ - MSG_FLASH_READ:
+    id: 0x00E1
+    short_desc: MSG_FLASH_READ
+
+ - MSG_FLASH_ERASE:
+    id: 0x00E2
+    short_desc: MSG_FLASH_ERASE
+
+ - MSG_STM_FLASH_LOCK_SECTOR:
+    id: 0x00E3
+    short_desc: MSG_STM_FLASH_LOCK_SECTOR
+
+ - MSG_STM_FLASH_UNLOCK_SECTOR:
+    id: 0x00E4
+    short_desc: MSG_STM_FLASH_UNLOCK_SECTOR
+
+ - MSG_STM_UNIQUE_ID:
+    id: 0x00E5
+    short_desc: MSG_STM_UNIQUE_ID
+
+ - MSG_M25_FLASH_WRITE_STATUS:
+    id: 0x00F3
+    short_desc: MSG_M25_FLASH_WRITE_STATUS
+
+ - MSG_RESET_FILTERS:
+    id: 0x0022
+    short_desc: MSG_RESET_FILTERS
+
+ - MSG_INIT_BASE:
+    id: 0x0023
+    short_desc: MSG_INIT_BASE
+
+ - MSG_SETTINGS:
+    id: 0x00A0
+    short_desc: MSG_SETTINGS
+
+ - MSG_SETTINGS_SAVE:
+    id: 0x00A1
+    short_desc: MSG_SETTINGS_SAVE
+
+ - MSG_SETTINGS_READ_BY_INDEX:
+    id: 0x00A2
+    short_desc: MSG_SETTINGS_READ_BY_INDEX
+
+ - MSG_FILEIO_READ:
+    id: 0x00A8
+    short_desc: MSG_FILEIO_READ
+
+ - MSG_FILEIO_READ_DIR:
+    id: 0x00A9
+    short_desc: MSG_FILEIO_READ_DIR
+
+ - MSG_FILEIO_REMOVE:
+    id: 0x00AC
+    short_desc: MSG_FILEIO_REMOVE
+
+ - MSG_FILEIO_WRITE:
+    id: 0x00AD
+    short_desc: MSG_FILEIO_WRITE
+
+ - MSG_THREAD_STATE:
+    id: 0x0017
+    short_desc: MSG_THREAD_STATE
+    desc: MSG_THREAD_STATE
+    fields:
+        - name:
+            type: string
+            size: 20
+            desc: name
+        - cpu:
+            type: u16
+            desc: cpu
+        - stack_free:
+            type: u32
+            desc: stack_free
+
+ - MSG_UART_STATE:
+    id: 0x0018
+    short_desc: MSG_UART_STATE
+    desc: MSG_THREAD_STATE
+    fields:
+        - uarts0:
+            type: UARTChannel
+            desc: latency
+        - uarts1:
+            type: UARTChannel
+            desc: latency
+        - uarts2:
+            type: UARTChannel
+            desc: latency
+        - latency:
+            type: Latency
+            desc: latency
