@@ -14,13 +14,6 @@
 #ifndef LIBSBP_COMMON_H
 #define LIBSBP_COMMON_H
 
-/** \defgroup common Common definitions
- * Common definitions used throughout the library.
- * \{ */
-
-#define MIN(x, y) (((x) < (y)) ? (x) : (y))
-#define MAX(x, y) (((x) > (y)) ? (x) : (y))
-
 #include <stdint.h>
 #include <stdbool.h>
 #include <inttypes.h>
