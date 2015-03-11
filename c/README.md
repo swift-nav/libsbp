@@ -1,10 +1,10 @@
 ## SBP Bindings for C
 
-libsbp provides C bindings for Swift Binary Protocol (SBP), used
-primarily in [libswiftnav](https://github.com/swift-nav/libswiftnav)
-and [piksi_firmware](https://github.com/swift-nav/piksi_firmware). It
-is intended to be as portable as possible and is written in standards
-compliant C with no dependencies other than the standard C libraries.
+libsbp provides C bindings for Swift Binary Protocol (SBP), the native
+binary protocol used by the
+[Piksi GPS receiver](http://swiftnav.com/piksi.html). It is intended
+to be as portable as possible and is written in standards compliant C
+with no dependencies other than the standard C libraries.
 
 ## Installation
 
@@ -39,7 +39,10 @@ a static library `libsbp-static`.
 
 ## Usage
 
-A separate tutorial is at https://github.com/swift-nav/sbp_tutorial.
+For now, documentation for libsbp is available with
+[libswiftnav](http://docs.swift-nav.com/libswiftnav/group__sbp.html). A
+separate tutorial for applying SBP is at
+https://github.com/swift-nav/sbp_tutorial.
 
 ## LICENSE
 
