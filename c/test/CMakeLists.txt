@@ -8,7 +8,7 @@ else (CMAKE_CROSSCOMPILING)
   else (NOT CHECK_FOUND)
 
     include_directories(${CHECK_INCLUDE_DIRS})
-    set(TEST_LIBS ${TEST_LIBS} ${CHECK_LIBRARIES} pthread swiftnav m)
+    set(TEST_LIBS ${TEST_LIBS} ${CHECK_LIBRARIES} pthread sbp m)
 
     # Check needs to be linked against Librt on Linux
     if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")

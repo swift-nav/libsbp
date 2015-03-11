@@ -2,7 +2,7 @@ if (NOT DEFINED BUILD_SHARED_LIBS)
   set(BUILD_SHARED_LIBS ON)
 endif (NOT DEFINED BUILD_SHARED_LIBS)
 
-file(GLOB libswiftnav_HEADERS "${PROJECT_SOURCE_DIR}/include/libswiftnav/*.h")
+file(GLOB libsbp_HEADERS "${PROJECT_SOURCE_DIR}/include/libsbp/*.h")
 
 include_directories("${PROJECT_SOURCE_DIR}/CBLAS/include")
 include_directories("${PROJECT_SOURCE_DIR}/clapack-3.2.1-CMAKE/INCLUDE")
@@ -14,12 +14,12 @@ set(libsbp_SRCS
   sbp.c
 )
 
-add_library(swiftnav-static STATIC ${libsbp_SRCS})
-install(TARGETS swiftnav-static DESTINATION lib${LIB_SUFFIX})
+add_library(sbp-static STATIC ${libsbp_SRCS})
+install(TARGETS sbp-static DESTINATION lib${LIB_SUFFIX})
 
 if(BUILD_SHARED_LIBS)
-  add_library(swiftnav SHARED ${libsbp_SRCS})
-  install(TARGETS swiftnav DESTINATION lib${LIB_SUFFIX})
+  add_library(sbp SHARED ${libsbp_SRCS})
+  install(TARGETS sbp DESTINATION lib${LIB_SUFFIX})
 else(BUILD_SHARED_LIBS)
   message(STATUS "Not building shared libraries")
 endif(BUILD_SHARED_LIBS)
