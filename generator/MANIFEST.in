@@ -1,0 +1,12 @@
+include *.cfg
+include *.md
+include *.py
+include .coveragerc
+include .gitignore
+include LICENSE
+include tox.ini
+recursive-include doc/ *
+recursive-include sbp/ *.html
+recursive-include sbp/ *.j2
+recursive-include sbp/ *.py
+recursive-include tests *.py

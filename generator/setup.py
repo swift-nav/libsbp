@@ -2,25 +2,26 @@
 # -*- coding: utf-8 -*-
 
 try:
-    import sys
-    reload(sys).setdefaultencoding("UTF-8")
+  import sys
+  reload(sys).setdefaultencoding("UTF-8")
 except:
-    pass
+  pass
 
 try:
-    from setuptools import setup, find_packages
+  from setuptools import setup, find_packages
 except ImportError:
-    print 'Please install or upgrade setuptools or pip to continue.'
-    sys.exit(1)
+  print 'Please install or upgrade setuptools or pip to continue.'
+  sys.exit(1)
 
-setup(name='libsbp',
-      description='Python bindings for Swift Binary Protocol',
-      version='0.22',
+setup(name='sbp_gen',
+      description='Generator for Swift Binary Protocol',
+      long_description=open('README.md').read(),
+      version='0.10',
       author='Swift Navigation',
       author_email='mookerji@swiftnav.com',
       maintainer='Bhaskar Mookerji',
       maintainer_email='mookerji@swiftnav.com',
-      url='https://github.com/swift-nav/libsbp',
+      url='https://github.com/swift-nav/libsbp/generator',
       keywords='',
       classifiers=['Intended Audience :: Developers',
                    'Intended Audience :: Science/Research',
@@ -33,6 +34,6 @@ setup(name='libsbp',
                    ],
       packages=find_packages(),
       platforms="Linux,Windows,Mac",
-      py_modules=['libsbp', 'swiftnav'],
+      py_modules=['libsbp'],
       use_2to3=False,
       zip_safe=False)
