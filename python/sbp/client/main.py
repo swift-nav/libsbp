@@ -10,7 +10,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 """
-The :mod:`swiftnav.sbp.client.main` module contains functions related to
+The :mod:`sbp.client.main` module contains functions related to
 setting up and running SBP message handling.
 """
 

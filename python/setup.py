@@ -31,7 +31,7 @@ setup(name='libsbp',
                    'Topic :: Software Development :: Libraries :: Python Modules',
                    'Programming Language :: Python :: 2.7'
                    ],
-      packages=find_packages(exclude=['swiftnav*', 'tests*']),
+      packages=find_packages(exclude=['tests*']),
       platforms="Linux,Windows,Mac",
       py_modules=['libsbp'],
       use_2to3=False,

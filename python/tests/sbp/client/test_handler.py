@@ -11,8 +11,8 @@
 import io
 import time
 
-from swiftnav.sbp.client.handler import Framer, ReceiveThread, Handler
-from swiftnav.sbp.client.todo    import SBP
+from sbp.client.handler import Framer, ReceiveThread, Handler
+from sbp.client.todo    import SBP
 
 class TestCallbackCounter(object):
   """
@@ -26,7 +26,7 @@ class TestCallbackCounter(object):
 
   def call(self, msg):
     self.value += 1
-  
+
 def test_framer_receive_empty():
   source = io.BytesIO(b"")
   framer = Framer(source.read, None)
