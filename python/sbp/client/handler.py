@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 """
-The :mod:`swiftnav.sbp.client.handler` module contains classes related to
+The :mod:`sbp.client.handler` module contains classes related to
 SBP message handling.
 """
 
