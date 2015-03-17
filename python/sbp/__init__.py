@@ -51,7 +51,7 @@ crc16_tab = [0x0000,0x1021,0x2042,0x3063,0x4084,0x50a5,0x60c6,0x70e7,
 
 def crc16(s, crc=0):
   """CRC16 implementation acording to CCITT standards.
-    
+
   """
   for ch in s:
     crc = ((crc<<8)&0xFFFF) ^ crc16_tab[ ((crc>>8)&0xFF) ^ (ord(ch)&0xFF) ]
@@ -60,9 +60,9 @@ def crc16(s, crc=0):
 
 class SBP(object):
   """Swift Binary Protocol container.
-    
+
   """
-  
+
   def __init__(self, msg_type=None, sender=None,
                length=None, payload=None, crc=None):
     self.preamble = SBP_PREAMBLE
@@ -71,11 +71,13 @@ class SBP(object):
     self.length = length
     self.payload = payload
     self.crc = crc
-  
+
+  def __eq__(self, other):
+    return self.__dict__ == other.__dict__
+
   def pack(self):
     """Pack to framed binary message.
-      
-      
+
     """
     framed_msg = struct.pack('<BHHB',
                              self.preamble,
@@ -92,7 +94,7 @@ class SBP(object):
          self.payload, self.crc)
     fmt = "<SBP (preamble=0x%X, msg_type=0x%X, sender=%s, length=%d, payload=%s, crc=0x%X)>"
     return fmt % p
-      
+
   @staticmethod
   def from_json_dict(data):
     msg_type = data['msg_type']
