@@ -11,8 +11,8 @@
 import io
 import time
 
-from sbp.client.handler import Framer, ReceiveThread, Handler
-from sbp.client.todo    import SBP
+from sbp.client.handler import *
+from sbp                import SBP
 
 class TestCallbackCounter(object):
   """

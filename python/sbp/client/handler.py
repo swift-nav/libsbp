@@ -17,7 +17,7 @@ import collections
 import struct
 import threading
 
-from todo import crc16, SBP, SBP_PREAMBLE
+from .. import crc16, SBP, SBP_PREAMBLE
 
 class Framer(object):
   """

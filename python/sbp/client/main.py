@@ -17,6 +17,7 @@ setting up and running SBP message handling.
 import sys
 import time
 
+from ..piksi                 import SBP_MSG_PRINT
 from drivers.file_driver     import FileDriver
 from drivers.pyserial_driver import PySerialDriver
 from drivers.pyftdi_driver   import PyFTDIDriver
@@ -25,7 +26,6 @@ from loggers.json_logger     import JSONLogger
 from loggers.null_logger     import NullLogger
 from loggers.pickle_logger   import PickleLogger
 from handler                 import Handler
-from todo                    import SBP_PRINT
 
 DEFAULT_PORT         = "/dev/ttyUSB0"
 DEFAULT_BAUD         = 1000000
@@ -140,7 +140,7 @@ def main():
     with get_logger(use_log, use_json, use_byte, log_filename) as logger:
       # Handler with context
       with Handler(driver.read, driver.write, verbose) as handler:
-        handler.add_callback(lambda msg: sys.stdout.write(msg.payload), SBP_PRINT)
+        handler.add_callback(lambda msg: sys.stdout.write(msg.payload), SBP_MSG_PRINT)
         handler.add_callback(logger)
         handler.start()
 
