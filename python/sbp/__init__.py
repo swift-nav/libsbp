@@ -100,10 +100,10 @@ class SBP(object):
     crc = data['crc']
     return SBP(msg_type, sender, length, payload, crc)
 
-def to_json_dict(self):
-  return {'preamble': self.preamble,
-         'msg_type': self.msg_type,
-         'sender': self.sender,
-         'length': self.length,
-         'payload': base64.standard_b64encode(self.payload),
-         'crc': self.crc}
+  def to_json_dict(self):
+    return {'preamble': self.preamble,
+            'msg_type': self.msg_type,
+            'sender': self.sender,
+            'length': self.length,
+            'payload': base64.standard_b64encode(self.payload),
+            'crc': self.crc}
