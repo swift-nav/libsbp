@@ -3,40 +3,49 @@
 from sbp import __version__
 from setuptools import setup
 
-classifiers = [
+CLASSIFIERS = [
   'Intended Audience :: Developers',
   'Intended Audience :: Science/Research',
   'Operating System :: POSIX :: Linux',
   'Operating System :: MacOS :: MacOS X',
+  'Operating System :: Microsoft :: Windows',
   'Programming Language :: Python',
   'Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator',
   'Topic :: Software Development :: Libraries :: Python Modules',
   'Programming Language :: Python :: 2.7',
 ]
 
-packages = [
+PACKAGES = [
   'sbp',
   'sbp.client',
   'sbp.client.drivers',
   'sbp.client.loggers',
 ]
 
-platforms = [
+PLATFORMS = [
   'linux',
   'osx',
   'win32',
 ]
 
-setup(name='libsbp',
+# TODO
+INSTALL_REQUIRES = []
+
+with open('README.md') as f:
+  readme = f.read()
+
+setup(name='sbp',
       description='Python bindings for Swift Binary Protocol',
+      long_description=readme,
       version=__version__,
       author='Swift Navigation',
       author_email='mookerji@swiftnav.com',
       maintainer='Bhaskar Mookerji',
       maintainer_email='mookerji@swiftnav.com',
       url='https://github.com/swift-nav/libsbp',
-      classifiers=classifiers,
-      packages=packages,
-      platforms=platforms,
+      classifiers=CLASSIFIERS,
+      packages=PACKAGES,
+      platforms=PLATFORMS,
+      install_requires=INSTALL_REQUIRES,
       use_2to3=False,
       zip_safe=False)
