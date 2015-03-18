@@ -12,7 +12,7 @@
 import base64
 import struct
 
-__version__ = "0.23"
+__version__ = "0.24"
 
 SBP_PREAMBLE = 0x55
 
