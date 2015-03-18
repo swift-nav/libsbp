@@ -1,38 +1,51 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-try:
-    import sys
-    reload(sys).setdefaultencoding("UTF-8")
-except:
-    pass
+from sbp import __version__
+from setuptools import setup
 
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    print 'Please install or upgrade setuptools or pip to continue.'
-    sys.exit(1)
+CLASSIFIERS = [
+  'Intended Audience :: Developers',
+  'Intended Audience :: Science/Research',
+  'Operating System :: POSIX :: Linux',
+  'Operating System :: MacOS :: MacOS X',
+  'Operating System :: Microsoft :: Windows',
+  'Programming Language :: Python',
+  'Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator',
+  'Topic :: Software Development :: Libraries :: Python Modules',
+  'Programming Language :: Python :: 2.7',
+]
 
-setup(name='libsbp',
+PACKAGES = [
+  'sbp',
+  'sbp.client',
+  'sbp.client.drivers',
+  'sbp.client.loggers',
+]
+
+PLATFORMS = [
+  'linux',
+  'osx',
+  'win32',
+]
+
+# TODO
+INSTALL_REQUIRES = []
+
+with open('README.md') as f:
+  readme = f.read()
+
+setup(name='sbp',
       description='Python bindings for Swift Binary Protocol',
-      version='0.22',
+      long_description=readme,
+      version=__version__,
       author='Swift Navigation',
       author_email='mookerji@swiftnav.com',
       maintainer='Bhaskar Mookerji',
       maintainer_email='mookerji@swiftnav.com',
       url='https://github.com/swift-nav/libsbp',
-      keywords='',
-      classifiers=['Intended Audience :: Developers',
-                   'Intended Audience :: Science/Research',
-                   'Operating System :: POSIX :: Linux',
-                   'Operating System :: MacOS :: MacOS X',
-                   'Programming Language :: Python',
-                   'Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator',
-                   'Topic :: Software Development :: Libraries :: Python Modules',
-                   'Programming Language :: Python :: 2.7'
-                   ],
-      packages=find_packages(exclude=['tests*']),
-      platforms="Linux,Windows,Mac",
-      py_modules=['libsbp'],
+      classifiers=CLASSIFIERS,
+      packages=PACKAGES,
+      platforms=PLATFORMS,
+      install_requires=INSTALL_REQUIRES,
       use_2to3=False,
       zip_safe=False)
