@@ -1,6 +1,10 @@
-## SBP Bindings for Python
+SBP Bindings for Python
+=======================
 
 Python bindings for Swift Binary Protocol Messages.
+
+Setup
+-----
 
 ```shell
 # Install dependencies
@@ -11,12 +15,14 @@ python setup.py install
 pip install libsbp
 ```
 
-## Usage
+Usage
+-----
 
 ```python
 ```
 
-## LICENSE
+License
+-------
 
 Copyright © 2015 Swift Navigation
 
