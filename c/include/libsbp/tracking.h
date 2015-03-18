@@ -37,7 +37,7 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_TRACKING_STATE 0x0016
 typedef struct __attribute__((packed)) {
-  tracking_channel_state_t* states;    /**< State of the tracking channel. */
+  tracking_channel_state_t states[0];    /**< State of the tracking channel. */
 } msg_tracking_state_t;
 
 

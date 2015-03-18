@@ -63,7 +63,7 @@ significance to the value of the lock indicator.
 #define SBP_MSG_OBS      0x0045
 typedef struct __attribute__((packed)) {
   observation_header_t header;    /**< Header of a GPS observation message */
-  packed_obs_content_t* obs;       /**< Observations */
+  packed_obs_content_t obs[0];       /**< Observations */
 } msg_obs_t;
 
 
