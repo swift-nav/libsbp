@@ -1,6 +1,10 @@
-## SBP Bindings for Python
+SBP Bindings for Python
+=======================
 
 Python bindings for Swift Binary Protocol Messages.
+
+Setup
+-----
 
 ```shell
 # Install dependencies
@@ -11,7 +15,8 @@ python setup.py install
 pip install libsbp
 ```
 
-## Usage
+Usage
+-----
 
 ```shell
 # To run the tests and check for coverage:
@@ -46,7 +51,8 @@ Run this example with:
 $ python -m sbp.client.examples.udp -s /path/to/serial/port
 ```
 
-## LICENSE
+License
+-------
 
 Copyright © 2015 Swift Navigation
 
