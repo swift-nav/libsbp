@@ -9,6 +9,7 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+from construct import *
 import base64
 import struct
 
@@ -63,6 +64,14 @@ class SBP(object):
 
   """
 
+  _parser = Struct("SBP",
+                   ULInt8('preamble'),
+                   ULInt16('msg_type'),
+                   ULInt16('sender'),
+                   ULInt8('length'),
+                   Bytes("payload", lambda ctx: ctx.length),
+                   ULInt16('crc'),)
+
   def __init__(self, msg_type=None, sender=None,
                length=None, payload=None, crc=None):
     self.preamble = SBP_PREAMBLE
@@ -88,6 +97,15 @@ class SBP(object):
     crc = crc16(framed_msg[1:], 0)
     framed_msg += struct.pack('<H', crc)
     return framed_msg
+
+  @staticmethod
+  def unpack(d):
+    """Unpack and return a framed binary message.
+
+    """
+    p = SBP._parser.parse(d)
+    assert p.preamble == SBP_PREAMBLE, "Invalid preamble 0x%x." % p.preamble
+    return SBP(p.msg_type, p.sender, p.length, p.payload, p.crc)
 
   def __repr__(self):
     p = (self.preamble, self.msg_type, self.sender, self.length,

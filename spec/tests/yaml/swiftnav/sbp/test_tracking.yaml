@@ -1,0 +1,301 @@
+---
+description: Unit tests for swiftnav.sbp.tracking v0.23.
+generated_on: 2015-03-24 11:31:59.432050
+package: sbp.tracking
+tests:
+
+- msg:
+    fields:
+      states:
+        TrackingChannelState:
+        - cn0: 5.2681565284729
+          prn: 0
+          state: 1
+        - cn0: 1.2068965435028076
+          prn: 27
+          state: 1
+        - cn0: 6.305882453918457
+          prn: 2
+          state: 1
+        - cn0: 11.842391014099121
+          prn: 7
+          state: 1
+        - cn0: 6.406779766082764
+          prn: 8
+          state: 1
+        - cn0: 7.05142879486084
+          prn: 15
+          state: 1
+        - cn0: 11.536842346191406
+          prn: 22
+          state: 1
+        - cn0: 6.736263751983643
+          prn: 30
+          state: 1
+        - cn0: 7.245614051818848
+          prn: 31
+          state: 1
+        - cn0: 4.375722408294678
+          prn: 5
+          state: 1
+        - cn0: -1.0
+          prn: 14
+          state: 0
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x16'
+  raw_packet: VRYAzARCAQC9lKhAARuWe5o/AQLKyclAAQdvej1BAQhXBM1AAQ9OpeFAARboljhBAR55j9dAAR8S3OdAAQXrBYxAAA4AAIC/Oek=
+  sbp:
+    crc: '0xe939'
+    length: 66
+    msg_type: '0x16'
+    payload: AQC9lKhAARuWe5o/AQLKyclAAQdvej1BAQhXBM1AAQ9OpeFAARboljhBAR55j9dAAR8S3OdAAQXrBYxAAA4AAIC/
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      states:
+        TrackingChannelState:
+        - cn0: 5.247252941131592
+          prn: 0
+          state: 1
+        - cn0: 0.9884393215179443
+          prn: 27
+          state: 1
+        - cn0: 6.298121929168701
+          prn: 2
+          state: 1
+        - cn0: 12.005524635314941
+          prn: 7
+          state: 1
+        - cn0: 6.464088439941406
+          prn: 8
+          state: 1
+        - cn0: 6.468208312988281
+          prn: 15
+          state: 1
+        - cn0: 11.792552947998047
+          prn: 22
+          state: 1
+        - cn0: 6.596590995788574
+          prn: 30
+          state: 1
+        - cn0: 7.169590473175049
+          prn: 31
+          state: 1
+        - cn0: 5.035502910614014
+          prn: 5
+          state: 1
+        - cn0: -1.0
+          prn: 14
+          state: 0
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x16'
+  raw_packet: VRYAzARCAQB/6adAARtcCn0/AQI3islAAQehFkBBAQjQ2c5AAQ+Q+85AARZMrjxBAR5GF9NAAR9JbeVAAQXXIqFAAA4AAIC/tIc=
+  sbp:
+    crc: '0x87b4'
+    length: 66
+    msg_type: '0x16'
+    payload: AQB/6adAARtcCn0/AQI3islAAQehFkBBAQjQ2c5AAQ+Q+85AARZMrjxBAR5GF9NAAR9JbeVAAQXXIqFAAA4AAIC/
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      states:
+        TrackingChannelState:
+        - cn0: 4.796703338623047
+          prn: 0
+          state: 1
+        - cn0: 0.9127907156944275
+          prn: 27
+          state: 1
+        - cn0: 6.24178409576416
+          prn: 2
+          state: 1
+        - cn0: 12.573033332824707
+          prn: 7
+          state: 1
+        - cn0: 6.131868362426758
+          prn: 8
+          state: 1
+        - cn0: 6.693181991577148
+          prn: 15
+          state: 1
+        - cn0: 11.875675201416016
+          prn: 22
+          state: 1
+        - cn0: 6.856321811676025
+          prn: 30
+          state: 1
+        - cn0: 7.206896781921387
+          prn: 31
+          state: 1
+        - cn0: 4.526627063751221
+          prn: 5
+          state: 1
+        - cn0: -1.0
+          prn: 14
+          state: 0
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x16'
+  raw_packet: VRYAzARCAQCYfplAARunrGk/AQKyvMdAAQclK0lBAQhEOMRAAQ+MLtZAARbEAj5BAR79ZttAAR/mnuZAAQUh2pBAAA4AAIC/5Rg=
+  sbp:
+    crc: '0x18e5'
+    length: 66
+    msg_type: '0x16'
+    payload: AQCYfplAARunrGk/AQKyvMdAAQclK0lBAQhEOMRAAQ+MLtZAARbEAj5BAR79ZttAAR/mnuZAAQUh2pBAAA4AAIC/
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      states:
+        TrackingChannelState:
+        - cn0: 11.941176414489746
+          prn: 0
+          state: 1
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x16'
+  raw_packet: VRYAzARCAQAPDz9BAAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/z2Q=
+  sbp:
+    crc: '0x64cf'
+    length: 66
+    msg_type: '0x16'
+    payload: AQAPDz9BAAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      states:
+        TrackingChannelState:
+        - cn0: 4.888888835906982
+          prn: 0
+          state: 1
+        - cn0: 7.107142925262451
+          prn: 2
+          state: 1
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x16'
+  raw_packet: VRYAzARCAQDHcZxAAQK3beNAAAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC//pI=
+  sbp:
+    crc: '0x92fe'
+    length: 66
+    msg_type: '0x16'
+    payload: AQDHcZxAAQK3beNAAAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      states:
+        TrackingChannelState:
+        - cn0: 2.6417911052703857
+          prn: 0
+          state: 1
+        - cn0: 3.7407407760620117
+          prn: 2
+          state: 1
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+        - cn0: -1.0
+          prn: 0
+          state: 0
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x16'
+  raw_packet: VRYAzARCAQAbEylAAQJMaG9AAAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/nbQ=
+  sbp:
+    crc: '0xb49d'
+    length: 66
+    msg_type: '0x16'
+    payload: AQAbEylAAQJMaG9AAAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/AAAAAIC/
+    preamble: '0x55'
+    sender: '0x4cc'
+version: '0.23'
+...
