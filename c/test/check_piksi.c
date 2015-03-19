@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2011-2015 Swift Navigation Inc.
- * Contact: Fergus Noble <fergus@swift-nav.com>
+ * Copyright (C) 2015 Swift Navigation Inc.
+ * Contact: Bhaskar Mookerji <mookerji@swiftnav.com>
  *
  * This source is subject to the license found in the file 'LICENSE' which must
  * be be distributed together with this source. All other rights reserved.
@@ -10,16 +10,19 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifndef CHECK_SUITES_H
-#define CHECK_SUITES_H
+#include <check.h>
+#include <piksi.h>
 
-Suite* acquisition_suite(void);
-Suite* edc_suite(void);
-Suite* lib_suite(void);
-Suite* navigation_suite(void);
-Suite* observation_suite(void);
-Suite* piksi_suite(void);
-Suite* sbp_suite(void);
-Suite* tracking_suite(void);
+START_TEST(test_sbp_piksi_msgs)
+{
+}
+END_TEST
 
-#endif /* CHECK_SUITES_H */
+Suite* piksi_suite(void)
+{
+  Suite *s = suite_create("SBP piksi tests");
+  TCase *tc_acq = tcase_create("SBP_piksi");
+  tcase_add_test(tc_acq, test_sbp_piksi_msgs);
+  suite_add_tcase(s, tc_acq);
+  return s;
+}
