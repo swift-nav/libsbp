@@ -10,12 +10,12 @@
 
 import struct
 
-from base_logger import BaseLogger
+from .base_logger import BaseLogger
 
 class ByteLogger(BaseLogger):
   """
   ByteLogger
-  
+
   The :class:`ByteLogger` logs SBP messages to bytes.
   """
   def __call__(self, msg):

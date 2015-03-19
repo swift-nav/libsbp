@@ -8,7 +8,7 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-from base_driver import BaseDriver
+from .base_driver import BaseDriver
 
 class PySerialDriver(BaseDriver):
   """

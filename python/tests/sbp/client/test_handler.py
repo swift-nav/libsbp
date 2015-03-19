@@ -9,7 +9,6 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 import io
-import time
 
 from sbp.client.handler import *
 from sbp                import SBP

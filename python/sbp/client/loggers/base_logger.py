@@ -8,6 +8,7 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+from ...table import dispatch
 import calendar
 import time
 
@@ -21,6 +22,7 @@ class BaseLogger(object):
   ----------
   filename : string
     File to log to.
+
   """
   def __init__(self, filename):
     self.handle = open(filename, "w+")
@@ -47,3 +49,42 @@ class BaseLogger(object):
     """
     return int((time.time() - self.base_time) * 1000)
 
+
+class LogIterator(object):
+  """
+  LogIterator
+
+  The :class: `LogIterator` provides an abstract interface for reading
+  serialized logs of SBP data.
+
+  Parameters
+  ----------
+  handle : File-like handle
+    Any file-like handle providing SBP messages.
+
+  """
+  def __init__(self, handle, dispatcher=dispatch):
+    self.handle = handle
+    self.dispatcher = dispatcher
+
+  def __enter__(self):
+    return self
+
+  def __exit__(self, *args):
+    self.handle.close()
+
+  def __iter__(self):
+    return self
+
+  def next(self):
+    """Return the next record tuple from the log file. If an unknown SBP
+    message type is found, it'll return the raw SBP. If EOF, throws
+    exception and then returns to start of file.
+
+    Returns
+    -------
+    (float, float, object)
+      (elapsed msec since beginning of log, UTC timestamp, msg)
+
+    """
+    raise NotImplementedError("next() not implemented!")
