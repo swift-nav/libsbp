@@ -16,6 +16,12 @@ pip install libsbp
 ```python
 ```
 
+```shell
+# To run the tests
+# ... and to check for coverage:
+py.test -v --cov sbp tests/
+```
+
 ## LICENSE
 
 Copyright © 2015 Swift Navigation

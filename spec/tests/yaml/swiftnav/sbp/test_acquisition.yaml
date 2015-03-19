@@ -1,0 +1,97 @@
+---
+description: Unit tests for swiftnav.sbp.acquisition v.0.23.
+generated_on: 2015-03-22 17:40:06.567183
+package: sbp.acquisition
+tests:
+
+- msg:
+    fields:
+      cf: -7742.43212890625
+      cp: 272.0
+      prn: 24
+      snr: 18.77777862548828
+    module: sbp.acquisition
+    name: MsgAcqResult
+  msg_type: '0x15'
+  raw_packet: VRUAzAQN5DiWQQAAiEN18/HFGLWs
+  sbp:
+    crc: '0xacb5'
+    length: 13
+    msg_type: '0x15'
+    payload: 5DiWQQAAiEN18/HFGA==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      cf: -1998.0469970703125
+      cp: 493.0
+      prn: 25
+      snr: 14.44444465637207
+    module: sbp.acquisition
+    name: MsgAcqResult
+  msg_type: '0x15'
+  raw_packet: VRUAzAQNchxnQQCA9kOBwfnEGce/
+  sbp:
+    crc: '0xbfc7'
+    length: 13
+    msg_type: '0x15'
+    payload: chxnQQCA9kOBwfnEGQ==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      cf: 4245.849609375
+      cp: 759.5
+      prn: 26
+      snr: 15.11111068725586
+    module: sbp.acquisition
+    name: MsgAcqResult
+  msg_type: '0x15'
+  raw_packet: VRUAzAQNHMdxQQDgPUTMroRFGn/x
+  sbp:
+    crc: '0xf17f'
+    length: 13
+    msg_type: '0x15'
+    payload: HMdxQQDgPUTMroRFGg==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      cf: -749.2676391601562
+      cp: 209.0
+      prn: 28
+      snr: 17.44444465637207
+    module: sbp.acquisition
+    name: MsgAcqResult
+  msg_type: '0x15'
+  raw_packet: VRUAzAQNOY6LQQAAUUMhUTvEHDz7
+  sbp:
+    crc: '0xfb3c'
+    length: 13
+    msg_type: '0x15'
+    payload: OY6LQQAAUUMhUTvEHA==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      cf: 249.75587463378906
+      cp: 928.5
+      prn: 29
+      snr: 16.55555534362793
+    module: sbp.acquisition
+    name: MsgAcqResult
+  msg_type: '0x15'
+  raw_packet: VRUAzAQNx3GEQQAgaESBwXlDHRDR
+  sbp:
+    crc: '0xd110'
+    length: 13
+    msg_type: '0x15'
+    payload: x3GEQQAgaESBwXlDHQ==
+    preamble: '0x55'
+    sender: '0x4cc'
+version: '0.23'
+...

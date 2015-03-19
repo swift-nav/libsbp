@@ -1,0 +1,37 @@
+---
+description: Unit tests for swiftnav.sbp.standard v.0.23.
+generated_on: 2015-03-22 17:40:06.716104
+package: sbp.standard
+tests:
+
+- msg:
+    fields:
+      reserved: 0
+    module: sbp.standard
+    name: MsgStartup
+  msg_type: '0xff00'
+  raw_packet: VQD/zAQEAAAAAJY/
+  sbp:
+    crc: '0x3f96'
+    length: 4
+    msg_type: '0xff00'
+    payload: AAAAAA==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      flags: 0
+    module: sbp.standard
+    name: MsgHeartbeat
+  msg_type: '0xffff'
+  raw_packet: Vf//zAQEAAAAAKuz
+  sbp:
+    crc: '0xb3ab'
+    length: 4
+    msg_type: '0xffff'
+    payload: AAAAAA==
+    preamble: '0x55'
+    sender: '0x4cc'
+version: '0.23'
+...
