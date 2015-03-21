@@ -12,7 +12,7 @@
 
 /*****************************************************************************
  * Automatically generated from piksi/yaml/
- * with generate.py at 2015-03-13 13:32:04.128822. Please do not hand edit!
+ * with generate.py at 2015-03-21 14:15:30.514871. Please do not hand edit!
  *****************************************************************************/
 
 #ifndef LIBSBP_OBSERVATION_MESSAGES_H
@@ -23,20 +23,21 @@
 
 
 /** None
-  * GPS time, defined as the number of milliseconds since the
- * beginning of the week on the Saturday/Sunday transition.
+  * A wire-appropriate GPS time, defined as the number of
+ * milliseconds since beginning of the week on the Saturday/Sunday
+ * transition.
  */
 typedef struct __attribute__((packed)) {
   u32 tow;    /**< Milliseconds since start of GPS week [ms] */
   u16 wn;     /**< GPS week number [week] */
-} gps_time_t;
+} obs_gps_time_t;
 
 
 /** None
  
  */
 typedef struct __attribute__((packed)) {
-  gps_time_t t;        /**< GPS time of this observation. */
+  obs_gps_time_t t;        /**< GPS time of this observation. */
   u8 n_obs;    /**< Total number of observations. First nibble is the size
 of the sequence (n), second nibble is the zero-indexed
 counter (ith packet of n)

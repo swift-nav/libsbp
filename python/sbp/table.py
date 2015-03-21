@@ -14,12 +14,14 @@ Single dispatch of available SBP messages, keyed by msg_type.
 
 """
 
+from construct.core import FieldError
 import acquisition as acq
 import navigation as nav
 import observation as obs
 import piksi as piksi
 import standard as std
 import tracking as track
+import warnings
 
 _SBP_TABLE = dict(nav.msg_classes.items() \
                   + obs.msg_classes.items() \
@@ -57,3 +59,7 @@ def dispatch(msg, table=_SBP_TABLE):
     error_msg = "No message found for msg_type id %d for msg %s." \
                 % (msg.msg_type, msg)
     raise InvalidSBPMessageType(error_msg)
+  except FieldError:
+    warnings.warn("SBP payload deserialization error! 0x%x" % msg.msg_type,
+                  RuntimeWarning)
+    return msg

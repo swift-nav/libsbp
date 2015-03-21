@@ -12,7 +12,7 @@
 
 /*****************************************************************************
  * Automatically generated from piksi/yaml/
- * with generate.py at 2015-03-13 13:32:04.154719. Please do not hand edit!
+ * with generate.py at 2015-03-21 14:15:30.539781. Please do not hand edit!
  *****************************************************************************/
 
 #ifndef LIBSBP_PIKSI_MESSAGES_H
@@ -202,6 +202,7 @@ typedef struct __attribute__((packed)) {
   float tx_throughput;      /**< UART transmit throughput. [kB/s] */
   float rx_throughput;      /**< UART receive throughput. [kB/s] */
   u16 crc_error_count;    /**< UART CRC error count. */
+  u16 io_error_count;     /**< UART IO error count. */
   u8 tx_buffer_level;    /**< UART transmit usage percentage. [Utilization % /255] */
   u8 rx_buffer_level;    /**< UART receive usage percentage. [Utilization % /255] */
 } uart_channel_t;
