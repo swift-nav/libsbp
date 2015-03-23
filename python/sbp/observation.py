@@ -12,10 +12,9 @@
 from construct import *
 from sbp import SBP
 from sbp.utils import fmt_repr
-from sbp.lib import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml
-# with generate.py at 2015-03-21 14:14:48.296415. Please do not hand edit!
+# with generate.py at 2015-03-24 09:47:42.317363. Please do not hand edit!
 
 
 class ObsGPSTime(object):
@@ -50,6 +49,39 @@ transition.
 
   def to_binary(self):
     return ObsGPSTime.build(self.__dict__)
+    
+class CarrierPhase(object):
+  """CarrierPhase.
+  
+  Carrier phase measurement in cycles represented as a 40-bit
+fixed point number with Q32.8 layout, i.e. 32-bits of whole
+cycles and 8-bits of fractional cycles.
+
+  
+  Parameters
+  ----------
+  i : int
+    Carrier phase whole cycles.
+  f : int
+    Carrier phase fractional part.
+
+  """
+  _parser = Struct("CarrierPhase",
+                   SLInt32('i'),
+                   ULInt8('f'),)
+
+  def __init__(self, payload):
+    self.from_binary(payload)
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = CarrierPhase._parser.parse(d)
+    self.__dict__.update(dict(p.viewitems()))
+
+  def to_binary(self):
+    return CarrierPhase.build(self.__dict__)
     
 class ObservationHeader(object):
   """ObservationHeader.

@@ -13,7 +13,6 @@ description: Satellite tracking messages from the Piksi.
 stable: False
 include:
   - types.yaml
-  - lib.yaml
 definitions:
 
  - TrackingChannelState:

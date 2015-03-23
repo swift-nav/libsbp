@@ -12,14 +12,13 @@
 
 /*****************************************************************************
  * Automatically generated from piksi/yaml/
- * with generate.py at 2015-03-21 14:15:30.539781. Please do not hand edit!
+ * with generate.py at 2015-03-24 09:47:26.874525. Please do not hand edit!
  *****************************************************************************/
 
 #ifndef LIBSBP_PIKSI_MESSAGES_H
 #define LIBSBP_PIKSI_MESSAGES_H
 
 #include "common.h"
-#include "lib.h"
 
 
 /** None
@@ -209,14 +208,29 @@ typedef struct __attribute__((packed)) {
 
 
 /** None
+  * Statistics on the latency of observations received from the base
+ * station. As observation packets are received their GPS time is
+ * compared to the current GPS time calculated locally by the
+ * receiver to give a precise measurement of the end-to-end
+ * communication latency in the system.
+ */
+typedef struct __attribute__((packed)) {
+  s32 avg;        /**< Average latency. [ms] */
+  s32 lmin;       /**< Minimum latency. [ms] */
+  s32 lmax;       /**< Maximum latency. [ms] */
+  s32 current;    /**< Smoothed estimate of the current latency. [ms] */
+} latency_t;
+
+
+/** None
  
  */
 #define SBP_MSG_UART_STATE              0x0018
 typedef struct __attribute__((packed)) {
-  uart_channel_t uarts0;     /**< State of UART0. */
-  uart_channel_t uarts1;     /**< State of UART1. */
-  uart_channel_t uarts2;     /**< State of UART2. */
-  latency_t latency;    /**< UART communication latency. */
+  uart_channel_t uart_a;       /**< State of UART A. */
+  uart_channel_t uart_b;       /**< State of UART B. */
+  uart_channel_t uart_ftdi;    /**< State of UART FTDI. */
+  latency_t latency;      /**< UART communication latency. */
 } msg_uart_state_t;
 
 

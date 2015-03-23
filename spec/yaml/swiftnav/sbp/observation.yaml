@@ -13,7 +13,6 @@ description: Observation messages from the Piksi.
 stable: False
 include:
   - types.yaml
-  - lib.yaml
 definitions:
 
  - ObsGPSTime:
@@ -30,6 +29,21 @@ definitions:
             type: u16
             units: week
             desc: GPS week number
+
+ - CarrierPhase:
+    desc: |
+      Carrier phase measurement in cycles represented as a 40-bit
+      fixed point number with Q32.8 layout, i.e. 32-bits of whole
+      cycles and 8-bits of fractional cycles.
+    fields:
+        - i:
+            type: s32
+            units: cycles
+            desc: Carrier phase whole cycles.
+        - f:
+            type: u8
+            units: cycles / 255
+            desc: Carrier phase fractional part.
 
  - ObservationHeader:
     desc: Header of a GPS observation message

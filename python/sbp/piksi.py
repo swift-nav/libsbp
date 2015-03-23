@@ -12,10 +12,9 @@
 from construct import *
 from sbp import SBP
 from sbp.utils import fmt_repr
-from sbp.lib import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml
-# with generate.py at 2015-03-21 14:14:48.334804. Please do not hand edit!
+# with generate.py at 2015-03-24 09:47:48.702701. Please do not hand edit!
 
 
 class UARTChannel(object):
@@ -59,6 +58,47 @@ class UARTChannel(object):
 
   def to_binary(self):
     return UARTChannel.build(self.__dict__)
+    
+class Latency(object):
+  """Latency.
+  
+  Statistics on the latency of observations received from the base
+station. As observation packets are received their GPS time is
+compared to the current GPS time calculated locally by the
+receiver to give a precise measurement of the end-to-end
+communication latency in the system.
+
+  
+  Parameters
+  ----------
+  avg : int
+    Average latency.
+  lmin : int
+    Minimum latency.
+  lmax : int
+    Maximum latency.
+  current : int
+    Smoothed estimate of the current latency.
+
+  """
+  _parser = Struct("Latency",
+                   SLInt32('avg'),
+                   SLInt32('lmin'),
+                   SLInt32('lmax'),
+                   SLInt32('current'),)
+
+  def __init__(self, payload):
+    self.from_binary(payload)
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = Latency._parser.parse(d)
+    self.__dict__.update(dict(p.viewitems()))
+
+  def to_binary(self):
+    return Latency.build(self.__dict__)
     
 SBP_MSG_PRINT = 0x0010
 class MsgPrint(SBP):
@@ -535,20 +575,20 @@ class MsgUartState(SBP):
 
   Parameters
   ----------
-  uarts0 : UARTChannel
-    State of UART0.
-  uarts1 : UARTChannel
-    State of UART1.
-  uarts2 : UARTChannel
-    State of UART2.
+  uart_a : UARTChannel
+    State of UART A.
+  uart_b : UARTChannel
+    State of UART B.
+  uart_ftdi : UARTChannel
+    State of UART FTDI.
   latency : Latency
     UART communication latency.
 
   """
   _parser = Struct("MsgUartState",
-                   Struct('uarts0', UARTChannel._parser),
-                   Struct('uarts1', UARTChannel._parser),
-                   Struct('uarts2', UARTChannel._parser),
+                   Struct('uart_a', UARTChannel._parser),
+                   Struct('uart_b', UARTChannel._parser),
+                   Struct('uart_ftdi', UARTChannel._parser),
                    Struct('latency', Latency._parser),)
 
   def __init__(self, sbp):

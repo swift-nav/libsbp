@@ -13,7 +13,6 @@ description: System messages from the Piksi.
 stable: False
 include:
   - types.yaml
-  - lib.yaml
 definitions:
 
  - MSG_PRINT:
@@ -166,19 +165,44 @@ definitions:
             units: Utilization % /255
             desc: UART receive usage percentage.
 
+ - Latency:
+    desc: |
+      Statistics on the latency of observations received from the base
+      station. As observation packets are received their GPS time is
+      compared to the current GPS time calculated locally by the
+      receiver to give a precise measurement of the end-to-end
+      communication latency in the system.
+    fields:
+        - avg:
+            type: s32
+            units: ms
+            desc: Average latency.
+        - lmin:
+            type: s32
+            units: ms
+            desc: Minimum latency.
+        - lmax:
+            type: s32
+            units: ms
+            desc: Maximum latency.
+        - current:
+            type: s32
+            units: ms
+            desc: Smoothed estimate of the current latency.
+
  - MSG_UART_STATE:
     id: 0x0018
     desc: State of the UART channels.
     fields:
-        - uarts0:
+        - uart_a:
             type: UARTChannel
-            desc: State of UART0.
-        - uarts1:
+            desc: State of UART A.
+        - uart_b:
             type: UARTChannel
-            desc: State of UART1.
-        - uarts2:
+            desc: State of UART B.
+        - uart_ftdi:
             type: UARTChannel
-            desc: State of UART2.
+            desc: State of UART FTDI.
         - latency:
             type: Latency
             desc: UART communication latency.
