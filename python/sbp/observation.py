@@ -15,14 +15,15 @@ from sbp.utils import fmt_repr
 from sbp.lib import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml
-# with generate.py at 2015-03-16 14:37:11.182383. Please do not hand edit!
+# with generate.py at 2015-03-21 14:14:48.296415. Please do not hand edit!
 
 
-class GPSTime(object):
-  """GPSTime.
+class ObsGPSTime(object):
+  """ObsGPSTime.
   
-  GPS time, defined as the number of milliseconds since the
-beginning of the week on the Saturday/Sunday transition.
+  A wire-appropriate GPS time, defined as the number of
+milliseconds since beginning of the week on the Saturday/Sunday
+transition.
 
   
   Parameters
@@ -33,7 +34,7 @@ beginning of the week on the Saturday/Sunday transition.
     GPS week number
 
   """
-  _parser = Struct("GPSTime",
+  _parser = Struct("ObsGPSTime",
                    ULInt32('tow'),
                    ULInt16('wn'),)
 
@@ -44,11 +45,11 @@ beginning of the week on the Saturday/Sunday transition.
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = GPSTime._parser.parse(d)
+    p = ObsGPSTime._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return GPSTime.build(self.__dict__)
+    return ObsGPSTime.build(self.__dict__)
     
 class ObservationHeader(object):
   """ObservationHeader.
@@ -57,7 +58,7 @@ class ObservationHeader(object):
   
   Parameters
   ----------
-  t : GPSTime
+  t : ObsGPSTime
     GPS time of this observation.
   n_obs : int
     Total number of observations. First nibble is the size
@@ -67,7 +68,7 @@ counter (ith packet of n)
 
   """
   _parser = Struct("ObservationHeader",
-                   Struct('t', GPSTime._parser),
+                   Struct('t', ObsGPSTime._parser),
                    ULInt8('n_obs'),)
 
   def __init__(self, payload):

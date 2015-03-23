@@ -154,6 +154,9 @@ definitions:
         - crc_error_count:
             type: u16
             desc: UART CRC error count.
+        - io_error_count:
+            type: u16
+            desc: UART IO error count.
         - tx_buffer_level:
             type: u8
             units: Utilization % /255

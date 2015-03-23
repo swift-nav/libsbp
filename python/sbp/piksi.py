@@ -15,7 +15,7 @@ from sbp.utils import fmt_repr
 from sbp.lib import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml
-# with generate.py at 2015-03-16 14:37:11.230035. Please do not hand edit!
+# with generate.py at 2015-03-21 14:14:48.334804. Please do not hand edit!
 
 
 class UARTChannel(object):
@@ -31,6 +31,8 @@ class UARTChannel(object):
     UART receive throughput.
   crc_error_count : int
     UART CRC error count.
+  io_error_count : int
+    UART IO error count.
   tx_buffer_level : int
     UART transmit usage percentage.
   rx_buffer_level : int
@@ -41,6 +43,7 @@ class UARTChannel(object):
                    LFloat32('tx_throughput'),
                    LFloat32('rx_throughput'),
                    ULInt16('crc_error_count'),
+                   ULInt16('io_error_count'),
                    ULInt8('tx_buffer_level'),
                    ULInt8('rx_buffer_level'),)
 

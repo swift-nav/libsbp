@@ -14,7 +14,7 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/standard.yaml
-# with generate.py at 2015-03-16 14:37:11.233253. Please do not hand edit!
+# with generate.py at 2015-03-21 14:14:48.337311. Please do not hand edit!
 
 
 SBP_MSG_STARTUP = 0xFF00

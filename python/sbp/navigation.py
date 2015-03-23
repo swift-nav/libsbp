@@ -14,7 +14,7 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/navigation.yaml
-# with generate.py at 2015-03-16 14:37:11.235221. Please do not hand edit!
+# with generate.py at 2015-03-21 14:14:48.338871. Please do not hand edit!
 
 
 SBP_MSG_GPS_TIME = 0x0100

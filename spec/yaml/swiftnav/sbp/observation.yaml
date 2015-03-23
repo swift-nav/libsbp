@@ -16,10 +16,11 @@ include:
   - lib.yaml
 definitions:
 
- - GPSTime:
+ - ObsGPSTime:
     desc: |
-      GPS time, defined as the number of milliseconds since the
-      beginning of the week on the Saturday/Sunday transition.
+      A wire-appropriate GPS time, defined as the number of
+      milliseconds since beginning of the week on the Saturday/Sunday
+      transition.
     fields:
         - tow:
             type: u32
@@ -34,7 +35,7 @@ definitions:
     desc: Header of a GPS observation message
     fields:
         - t:
-            type: GPSTime
+            type: ObsGPSTime
             desc: GPS time of this observation.
         - n_obs:
             type: u8
