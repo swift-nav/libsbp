@@ -47,7 +47,7 @@ definitions:
       cycles and 8-bits of fractional cycles.
     fields:
         - i:
-            type: u32
+            type: s32
             units: cycles
             desc: Carrier phase whole cycles.
         - f:

@@ -14,7 +14,7 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/acquisition.yaml
-# with generate.py at 2015-03-21 14:14:48.341570. Please do not hand edit!
+# with generate.py at 2015-03-23 14:30:01.624760. Please do not hand edit!
 
 
 SBP_MSG_ACQ_RESULT = 0x0015

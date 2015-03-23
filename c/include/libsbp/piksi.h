@@ -12,7 +12,7 @@
 
 /*****************************************************************************
  * Automatically generated from piksi/yaml/
- * with generate.py at 2015-03-21 14:15:30.539781. Please do not hand edit!
+ * with generate.py at 2015-03-23 16:49:49.791306. Please do not hand edit!
  *****************************************************************************/
 
 #ifndef LIBSBP_PIKSI_MESSAGES_H
@@ -213,10 +213,10 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_UART_STATE              0x0018
 typedef struct __attribute__((packed)) {
-  uart_channel_t uarts0;     /**< State of UART0. */
-  uart_channel_t uarts1;     /**< State of UART1. */
-  uart_channel_t uarts2;     /**< State of UART2. */
-  latency_t latency;    /**< UART communication latency. */
+  uart_channel_t uart_a;       /**< State of UART A. */
+  uart_channel_t uart_b;       /**< State of UART B. */
+  uart_channel_t uart_ftdi;    /**< State of UART FTDI. */
+  latency_t latency;      /**< UART communication latency. */
 } msg_uart_state_t;
 
 
