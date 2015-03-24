@@ -16,6 +16,21 @@ pip install libsbp
 ```python
 ```
 
+## Examples
+
+### Sending SBP messages over UDP
+
+Receives SBP messages over a serial port and sends all incoming messages to a
+UDP socket.
+
+See the [`source code`](sbp/client/examples/udp.py)
+
+Run the example:
+
+```shell
+$ python -m sbp.client.examples.udp -s /path/to/serial/port
+```
+
 ## LICENSE
 
 Copyright © 2015 Swift Navigation
