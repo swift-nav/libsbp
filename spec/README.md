@@ -3,7 +3,7 @@
 This directory contains language-agnostic definitions for structured
 messages decoded from Swift Binary Protocol (SBP)
 payloads. Language-specific message bindings use the
-[http://en.wikipedia.org/wiki/YAML](YAML) specifications defined in
+[YAML](http://en.wikipedia.org/wiki/YAML0 specifications defined in
 this directory.
 
 The definition schema is quite holistic at this point, but the key
