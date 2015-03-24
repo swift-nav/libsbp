@@ -16,6 +16,7 @@ messages from a serial port and sending them to a UDP socket.
 from sbp.client.drivers.pyserial_driver import PySerialDriver
 from sbp.client.handler import Handler
 
+from contextlib import closing
 import socket
 import struct
 import time
@@ -63,15 +64,15 @@ def main():
 
   with PySerialDriver(args.serial_port[0], args.baud[0]) as driver:
     with Handler(driver.read, driver.write) as handler:
-      udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-      handler.add_callback(send_udp_callback_generator(udp, args))
-      handler.start()
+      with closing(socket.socket(socket.AF_INET, socket.SOCK_DGRAM)) as udp:
+        handler.add_callback(send_udp_callback_generator(udp, args))
+        handler.start()
 
-      try:
-        while True:
-          time.sleep(0.1)
-      except KeyboardInterrupt:
-        pass
+        try:
+          while True:
+            time.sleep(0.1)
+        except KeyboardInterrupt:
+          pass
 
 if __name__ == "__main__":
   main()
