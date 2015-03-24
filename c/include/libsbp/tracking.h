@@ -12,7 +12,7 @@
 
 /*****************************************************************************
  * Automatically generated from piksi/yaml/
- * with generate.py at 2015-03-21 14:15:30.546594. Please do not hand edit!
+ * with generate.py at 2015-03-23 14:29:54.543342. Please do not hand edit!
  *****************************************************************************/
 
 #ifndef LIBSBP_TRACKING_MESSAGES_H

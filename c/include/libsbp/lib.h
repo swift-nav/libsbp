@@ -12,7 +12,7 @@
 
 /*****************************************************************************
  * Automatically generated from piksi/yaml/
- * with generate.py at 2015-03-21 14:15:30.541993. Please do not hand edit!
+ * with generate.py at 2015-03-23 14:29:54.539931. Please do not hand edit!
  *****************************************************************************/
 
 #ifndef LIBSBP_LIB_MESSAGES_H
@@ -42,7 +42,7 @@ typedef struct __attribute__((packed)) {
  * cycles and 8-bits of fractional cycles.
  */
 typedef struct __attribute__((packed)) {
-  u32 i;    /**< Carrier phase whole cycles. [cycles] */
+  s32 i;    /**< Carrier phase whole cycles. [cycles] */
   u8 f;    /**< Carrier phase fractional part. [cycles / 255] */
 } carrier_phase_t;
 

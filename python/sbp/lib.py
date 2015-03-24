@@ -14,7 +14,7 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/lib.yaml
-# with generate.py at 2015-03-21 14:14:48.336542. Please do not hand edit!
+# with generate.py at 2015-03-23 14:30:01.611078. Please do not hand edit!
 
 
 class Latency(object):
@@ -75,7 +75,7 @@ cycles and 8-bits of fractional cycles.
 
   """
   _parser = Struct("CarrierPhase",
-                   ULInt32('i'),
+                   SLInt32('i'),
                    ULInt8('f'),)
 
   def __init__(self, payload):

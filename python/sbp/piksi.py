@@ -15,7 +15,7 @@ from sbp.utils import fmt_repr
 from sbp.lib import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml
-# with generate.py at 2015-03-21 14:14:48.334804. Please do not hand edit!
+# with generate.py at 2015-03-23 16:50:49.168386. Please do not hand edit!
 
 
 class UARTChannel(object):
@@ -535,20 +535,20 @@ class MsgUartState(SBP):
 
   Parameters
   ----------
-  uarts0 : UARTChannel
-    State of UART0.
-  uarts1 : UARTChannel
-    State of UART1.
-  uarts2 : UARTChannel
-    State of UART2.
+  uart_a : UARTChannel
+    State of UART A.
+  uart_b : UARTChannel
+    State of UART B.
+  uart_ftdi : UARTChannel
+    State of UART FTDI.
   latency : Latency
     UART communication latency.
 
   """
   _parser = Struct("MsgUartState",
-                   Struct('uarts0', UARTChannel._parser),
-                   Struct('uarts1', UARTChannel._parser),
-                   Struct('uarts2', UARTChannel._parser),
+                   Struct('uart_a', UARTChannel._parser),
+                   Struct('uart_b', UARTChannel._parser),
+                   Struct('uart_ftdi', UARTChannel._parser),
                    Struct('latency', Latency._parser),)
 
   def __init__(self, sbp):
