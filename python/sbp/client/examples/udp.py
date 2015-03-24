@@ -13,8 +13,8 @@ the :mod:`sbp.client.examples.udp` module contains an example of reading SBP
 messages from a serial port and sending them to a UDP socket.
 """
 
-from ..drivers.pyserial_driver import PySerialDriver
-from ..handler                 import Handler
+from sbp.client.drivers.pyserial_driver import PySerialDriver
+from sbp.client.handler import Handler
 
 import socket
 import struct

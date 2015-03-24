@@ -14,9 +14,9 @@ reading SBP messages from a serial port, decoding BASELINE_NED messages and
 printing them out.
 """
 
-from ..drivers.pyserial_driver import PySerialDriver
-from ..handler                 import Handler
-from ...navigation             import SBP_MSG_BASELINE_NED, MsgBaselineNED
+from sbp.client.drivers.pyserial_driver import PySerialDriver
+from sbp.client.handler import Handler
+from sbp.navigation import SBP_MSG_BASELINE_NED, MsgBaselineNED
 
 import time
 
