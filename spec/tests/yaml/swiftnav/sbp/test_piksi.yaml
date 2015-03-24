@@ -1,0 +1,471 @@
+---
+description: Unit tests for swiftnav.sbp.piksi v.0.23.
+generated_on: 2015-03-22 17:40:06.588229
+package: sbp.piksi
+tests:
+
+- msg:
+    fields: null
+    module: sbp.piksi
+    name: MsgPrint
+  msg_type: '0x10'
+  raw_packet: VRAAzAQhSU5GTzogYWNxOiByZXN0YXJ0aW5nIFBSTiBzZWFyY2gKJEs=
+  sbp:
+    crc: '0x4b24'
+    length: 33
+    msg_type: '0x10'
+    payload: SU5GTzogYWNxOiByZXN0YXJ0aW5nIFBSTiBzZWFyY2gK
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields: null
+    module: sbp.piksi
+    name: MsgPrint
+  msg_type: '0x10'
+  raw_packet: VRAAzAQYSU5GTzogUGlrc2kgU3RhcnRpbmcuLi4KvEU=
+  sbp:
+    crc: '0x45bc'
+    length: 24
+    msg_type: '0x10'
+    payload: SU5GTzogUGlrc2kgU3RhcnRpbmcuLi4K
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields: null
+    module: sbp.piksi
+    name: MsgPrint
+  msg_type: '0x10'
+  raw_packet: VRAAzAQqSU5GTzogRmlybXdhcmUgVmVyc2lvbjogdjAuMTQtMzktZzViZjNmZWEK0R0=
+  sbp:
+    crc: '0x1dd1'
+    length: 42
+    msg_type: '0x10'
+    payload: SU5GTzogRmlybXdhcmUgVmVyc2lvbjogdjAuMTQtMzktZzViZjNmZWEK
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields: null
+    module: sbp.piksi
+    name: MsgPrint
+  msg_type: '0x10'
+  raw_packet: VRAAzAQiSU5GTzogQnVpbHQ6IE1hciAxOSAyMDE1IDE5OjA3OjAxCuQh
+  sbp:
+    crc: '0x21e4'
+    length: 34
+    msg_type: '0x10'
+    payload: SU5GTzogQnVpbHQ6IE1hciAxOSAyMDE1IDE5OjA3OjAxCg==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields: null
+    module: sbp.piksi
+    name: MsgPrint
+  msg_type: '0x10'
+  raw_packet: VRAAzARBSU5GTzogTm8gdGVsZW1ldHJ5IHJhZGlvIGZvdW5kIG9uIFVBUlRBLCBza2lwcGluZyBjb25maWd1cmF0aW9uLgpSUA==
+  sbp:
+    crc: '0x5052'
+    length: 65
+    msg_type: '0x10'
+    payload: SU5GTzogTm8gdGVsZW1ldHJ5IHJhZGlvIGZvdW5kIG9uIFVBUlRBLCBza2lwcGluZyBjb25maWd1cmF0aW9uLgo=
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      cpu: 0
+      name: "main\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      stack_free: 2452
+    module: sbp.piksi
+    name: MsgThreadState
+  msg_type: '0x17'
+  raw_packet: VRcAzAQabWFpbgAAAAAAAAAAAAAAAAAAAAAAAJQJAADk0Q==
+  sbp:
+    crc: '0xd1e4'
+    length: 26
+    msg_type: '0x17'
+    payload: bWFpbgAAAAAAAAAAAAAAAAAAAAAAAJQJAAA=
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      cpu: 512
+      name: "idle\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      stack_free: 36
+    module: sbp.piksi
+    name: MsgThreadState
+  msg_type: '0x17'
+  raw_packet: VRcAzAQaaWRsZQAAAAAAAAAAAAAAAAAAAAAAAiQAAACNdA==
+  sbp:
+    crc: '0x748d'
+    length: 26
+    msg_type: '0x17'
+    payload: aWRsZQAAAAAAAAAAAAAAAAAAAAAAAiQAAAA=
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      cpu: 371
+      name: "NAP ISR\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      stack_free: 1884
+    module: sbp.piksi
+    name: MsgThreadState
+  msg_type: '0x17'
+  raw_packet: VRcAzAQaTkFQIElTUgAAAAAAAAAAAAAAAABzAVwHAADfqA==
+  sbp:
+    crc: '0xa8df'
+    length: 26
+    msg_type: '0x17'
+    payload: TkFQIElTUgAAAAAAAAAAAAAAAABzAVwHAAA=
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      cpu: 1
+      name: "SBP\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      stack_free: 3052
+    module: sbp.piksi
+    name: MsgThreadState
+  msg_type: '0x17'
+  raw_packet: VRcAzAQaU0JQAAAAAAAAAAAAAAAAAAAAAAABAOwLAAB7Lw==
+  sbp:
+    crc: '0x2f7b'
+    length: 26
+    msg_type: '0x17'
+    payload: U0JQAAAAAAAAAAAAAAAAAAAAAAABAOwLAAA=
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      cpu: 10
+      name: "manage acq\0\0\0\0\0\0\0\0\0\0"
+      stack_free: 2428
+    module: sbp.piksi
+    name: MsgThreadState
+  msg_type: '0x17'
+  raw_packet: VRcAzAQabWFuYWdlIGFjcQAAAAAAAAAAAAAKAHwJAAATBw==
+  sbp:
+    crc: '0x713'
+    length: 26
+    msg_type: '0x17'
+    payload: bWFuYWdlIGFjcQAAAAAAAAAAAAAKAHwJAAA=
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      latency:
+        Latency:
+          avg: -1
+          current: -1
+          lmax: 0
+          lmin: 0
+      uarts0:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 0
+          tx_throughput: 0.0
+      uarts1:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 0
+          tx_throughput: 0.0
+      uarts2:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 16
+          tx_throughput: 12.40000057220459
+    module: sbp.piksi
+    name: MsgUartState
+  msg_type: '0x18'
+  raw_packet: VRgAzAQ6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGdmRkEAAAAAAAAAABAA/////wAAAAAAAAAA/////3h7
+  sbp:
+    crc: '0x7b78'
+    length: 58
+    msg_type: '0x18'
+    payload: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGdmRkEAAAAAAAAAABAA/////wAAAAAAAAAA/////w==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      latency:
+        Latency:
+          avg: -1
+          current: -1
+          lmax: 0
+          lmin: 0
+      uarts0:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 0
+          tx_throughput: 0.0
+      uarts1:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 0
+          tx_throughput: 0.0
+      uarts2:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 0
+          tx_throughput: 0.06599999964237213
+    module: sbp.piksi
+    name: MsgUartState
+  msg_type: '0x18'
+  raw_packet: VRgAzAQ6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIrhz0AAAAAAAAAAAAA/////wAAAAAAAAAA/////7If
+  sbp:
+    crc: '0x1fb2'
+    length: 58
+    msg_type: '0x18'
+    payload: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIrhz0AAAAAAAAAAAAA/////wAAAAAAAAAA/////w==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      latency:
+        Latency:
+          avg: -1
+          current: -1
+          lmax: 0
+          lmin: 0
+      uarts0:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 0
+          tx_throughput: 0.0
+      uarts1:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 0
+          tx_throughput: 0.0
+      uarts2:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 10
+          tx_throughput: 0.13899999856948853
+    module: sbp.piksi
+    name: MsgUartState
+  msg_type: '0x18'
+  raw_packet: VRgAzAQ6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARWDj4AAAAAAAAAAAoA/////wAAAAAAAAAA/////zVV
+  sbp:
+    crc: '0x5535'
+    length: 58
+    msg_type: '0x18'
+    payload: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARWDj4AAAAAAAAAAAoA/////wAAAAAAAAAA/////w==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      latency:
+        Latency:
+          avg: -1
+          current: -1
+          lmax: 0
+          lmin: 0
+      uarts0:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 0
+          tx_throughput: 0.0
+      uarts1:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 0
+          tx_throughput: 0.0
+      uarts2:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 0
+          tx_throughput: 0.06599999964237213
+    module: sbp.piksi
+    name: MsgUartState
+  msg_type: '0x18'
+  raw_packet: VRgAzAQ6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIrhz0AAAAAAAAAAAAA/////wAAAAAAAAAA/////7If
+  sbp:
+    crc: '0x1fb2'
+    length: 58
+    msg_type: '0x18'
+    payload: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIrhz0AAAAAAAAAAAAA/////wAAAAAAAAAA/////w==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      latency:
+        Latency:
+          avg: -1
+          current: -1
+          lmax: 0
+          lmin: 0
+      uarts0:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0051282052882015705
+          tx_buffer_level: 0
+          tx_throughput: 0.0
+      uarts1:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 2
+          tx_throughput: 0.061538465321063995
+      uarts2:
+        UARTChannel:
+          crc_error_count: 0
+          io_error_count: 0
+          rx_buffer_level: 0
+          rx_throughput: 0.0
+          tx_buffer_level: 38
+          tx_throughput: 0.5139999985694885
+    module: sbp.piksi
+    name: MsgUartState
+  msg_type: '0x18'
+  raw_packet: VRgAzAQ6AAAAAIEKqDsAAAAAAADCD3w9AAAAAAAAAAACAIGVAz8AAAAAAAAAACYA/////wAAAAAAAAAA/////+Gy
+  sbp:
+    crc: '0xb2e1'
+    length: 58
+    msg_type: '0x18'
+    payload: AAAAAIEKqDsAAAAAAADCD3w9AAAAAAAAAAACAIGVAz8AAAAAAAAAACYA/////wAAAAAAAAAA/////w==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      num_hyps: 0
+    module: sbp.piksi
+    name: MsgIarState
+  msg_type: '0x19'
+  raw_packet: VRkAzAQEAAAAAPs6
+  sbp:
+    crc: '0x3afb'
+    length: 4
+    msg_type: '0x19'
+    payload: AAAAAA==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      num_hyps: 1
+    module: sbp.piksi
+    name: MsgIarState
+  msg_type: '0x19'
+  raw_packet: VRkAzAQEAQAAAE9M
+  sbp:
+    crc: '0x4c4f'
+    length: 4
+    msg_type: '0x19'
+    payload: AQAAAA==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      num_hyps: 972
+    module: sbp.piksi
+    name: MsgIarState
+  msg_type: '0x19'
+  raw_packet: VRkAzAQEzAMAAD2f
+  sbp:
+    crc: '0x9f3d'
+    length: 4
+    msg_type: '0x19'
+    payload: zAMAAA==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      num_hyps: 971
+    module: sbp.piksi
+    name: MsgIarState
+  msg_type: '0x19'
+  raw_packet: VRkAzAQEywMAABDO
+  sbp:
+    crc: '0xce10'
+    length: 4
+    msg_type: '0x19'
+    payload: ywMAAA==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      num_hyps: 967
+    module: sbp.piksi
+    name: MsgIarState
+  msg_type: '0x19'
+  raw_packet: VRkAzAQExwMAACKB
+  sbp:
+    crc: '0x8122'
+    length: 4
+    msg_type: '0x19'
+    payload: xwMAAA==
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields: null
+    module: sbp.piksi
+    name: MsgBootloaderHandshake
+  msg_type: '0xb0'
+  raw_packet: VbAAzAQEdjEuMuhE
+  sbp:
+    crc: '0x44e8'
+    length: 4
+    msg_type: '0xb0'
+    payload: djEuMg==
+    preamble: '0x55'
+    sender: '0x4cc'
+version: '0.23'
+...
