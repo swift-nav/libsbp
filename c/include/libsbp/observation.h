@@ -12,14 +12,13 @@
 
 /*****************************************************************************
  * Automatically generated from piksi/yaml/
- * with generate.py at 2015-03-21 14:15:30.514871. Please do not hand edit!
+ * with generate.py at 2015-03-24 09:47:33.072248. Please do not hand edit!
  *****************************************************************************/
 
 #ifndef LIBSBP_OBSERVATION_MESSAGES_H
 #define LIBSBP_OBSERVATION_MESSAGES_H
 
 #include "common.h"
-#include "lib.h"
 
 
 /** None
@@ -31,6 +30,17 @@ typedef struct __attribute__((packed)) {
   u32 tow;    /**< Milliseconds since start of GPS week [ms] */
   u16 wn;     /**< GPS week number [week] */
 } obs_gps_time_t;
+
+
+/** None
+  * Carrier phase measurement in cycles represented as a 40-bit
+ * fixed point number with Q32.8 layout, i.e. 32-bits of whole
+ * cycles and 8-bits of fractional cycles.
+ */
+typedef struct __attribute__((packed)) {
+  s32 i;    /**< Carrier phase whole cycles. [cycles] */
+  u8 f;    /**< Carrier phase fractional part. [cycles / 255] */
+} carrier_phase_t;
 
 
 /** None

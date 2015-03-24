@@ -22,7 +22,6 @@ else (CMAKE_CROSSCOMPILING)
       check_sbp.c
       check_acquisition.c
       check_edc.c
-      check_lib.c
       check_main.c
       check_navigation.c
       check_observation.c
