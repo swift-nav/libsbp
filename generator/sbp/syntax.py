@@ -29,12 +29,14 @@ class PackageSpecification(object):
   """
 
   def __init__(self, identifier=None, description=None, includes=[],
-               definitions=[], render_source=True):
+               definitions=[], render_source=True, stable=False, public=False):
     self.identifier = identifier
     self.description = description
     self.includes = includes
     self.definitions = definitions
     self.render_source = render_source
+    self.stable = stable
+    self.public = public
     self.creation_timestamp = str(datetime.datetime.now())
 
   @property
@@ -69,13 +71,14 @@ class Dependency(object):
 class Definition(object):
   def __init__(self, identifier=None,
                sbp_id=None, short_desc=None, desc=None, type_id=None,
-               fields=[]):
+               fields=[], public=False):
     self.identifier = identifier
     self.sbp_id = sbp_id
     self.short_desc = short_desc
     self.desc = desc
     self.type_id = type_id
     self.fields = fields
+    self.public = public
     self.static = True
 
   @property

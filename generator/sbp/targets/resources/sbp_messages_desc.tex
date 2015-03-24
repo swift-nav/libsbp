@@ -1,0 +1,83 @@
+((* extends "sbp_messages_table.tex" *))
+((* block messages_desc *))
+((*- for m in msgs *))
+
+\newpage
+\section{(((m.name|escape_tex))) ((('0x%04X'|format(m.sbp_id))))}
+\label{sec:(((m.name)))}
+
+\begin{large}
+(((m.desc|escape_tex)))
+\end{large}
+
+\vspace{3em}
+\begin{table}[h]
+  \centering
+  \begin{tabularx}{\textwidth}{ccaclX}
+    \toprule
+    Offset & Size & Format & Units & Name & Description \\
+    \midrule
+    ((*- for f in m.fields *))
+      $(((f.offset)))$ &
+      $(((f.size)))$ &
+      (((f.fmt))) &
+      (((f.units|escape_tex))) &
+      \texttt{(((f.name|escape_tex)))} &
+      (((f.desc|escape_tex))) \\
+      ((*- endfor *))
+    \midrule
+    & $(((m.size)))$ \\
+    \bottomrule
+  \end{tabularx}
+  \caption{(((m.name|escape_tex))) (((('0x%04X'|format(m.sbp_id))))) message structure}
+  \label{tab:(((m.name)))}
+\end{table}
+
+((*- for f in m.fields *))
+((*- if f.bitfields *))
+\begin{table}[h]
+  \centering
+  ((*- if f.n_with_values == 1 *))
+  \begin{minipage}[b][][b]{.48\textwidth}
+  ((*- else *))
+  \begin{minipage}[c][][c]{.48\textwidth}
+  ((*- endif *))
+  \centering
+  ((*- for bf in f.bitfields *))
+  \regfieldb{(((bf['desc'])))((* if 'vals' in bf *)) (\autoref{tab:(((m.name)))_(((f.name|nobrackets)))(((bf['range'])))})((* endif *))}{(((bf['len'])))}{(((bf['lsb'])))}
+  ((*- endfor *))
+  \captionof{field}{(((f.desc))) (\texttt{(((f.name|removearray|escape_tex)))})}
+  \label{fld:(((m.name)))_(((f.name|nobrackets)))}
+  \end{minipage}
+  \hfill
+  ((*- if f.n_with_values == 1 *))
+  \begin{minipage}[b][][b]{.48\textwidth}
+  ((*- else *))
+  \begin{minipage}[c][][c]{.48\textwidth}
+  ((*- endif *))
+  \centering
+  ((*- for bf in f.bitfields|reverse if 'vals' in bf *))
+
+    \begin{tabular}{ll}
+      \toprule
+      Value & Description \\
+      \midrule
+      ((*- for v in bf['vals'] *))
+      (((v['value']))) & (((v['desc']))) \\
+      ((*- endfor *))
+      \bottomrule
+    \end{tabular}
+    \caption{(((bf['desc']))) values (\texttt{(((f.name|removearray|escape_tex)))[(((bf['range'])))]})}
+    \label{tab:(((m.name)))_(((f.name|nobrackets)))(((bf['range'])))}
+
+  ((*- if not loop.last *))
+  \vspace{2em}
+  ((*- endif *))
+  ((*- endfor *))
+  \end{minipage}
+\end{table}
+((*- endif *))
+((*- endfor *))
+
+((*- endfor *))
+((* endblock *))
