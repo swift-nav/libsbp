@@ -45,7 +45,7 @@ def main():
   args = parser.parse_args()
 
   # Open a connection to Piksi using the default baud rate (1Mbaud)
-  with PySerialDriver(args.port[0], 1000000) as driver:
+  with PySerialDriver(args.port[0], baud=1000000) as driver:
     # Create a handler to connect our Piksi driver to our callbacks
     with Handler(driver.read, driver.write, verbose=True) as handler:
       # Add a callback for BASELINE_NED messages
