@@ -1,14 +1,16 @@
 ## SBP Bindings for Python
 
-Python bindings for Swift Binary Protocol Messages.
+Python client for Swift Binary Protocol (SBP).
 
 ```shell
-# Install dependencies
-pip install -r requirements.txt
-python setup.py install
+# Install dependencies only
+sudo pip install -r requirements.txt
+
+# Install from repo
+sudo pip setup.py install
 
 # Install package from pypi
-pip install libsbp
+sudo pip install sbp
 ```
 
 ## Usage

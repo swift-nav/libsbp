@@ -28,11 +28,11 @@ PLATFORMS = [
   'win32',
 ]
 
-# TODO
-INSTALL_REQUIRES = []
-
 with open('README.md') as f:
   readme = f.read()
+
+with open('./requirements.txt') as f:
+  INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
 
 setup(name='sbp',
       description='Python bindings for Swift Binary Protocol',
