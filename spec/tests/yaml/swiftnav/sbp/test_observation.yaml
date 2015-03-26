@@ -1,0 +1,369 @@
+---
+description: Unit tests for swiftnav.sbp.observation v0.23.
+generated_on: 2015-03-24 11:31:59.766910
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      header:
+        ObservationHeader:
+          n_obs: 32
+          t:
+            ObsGPSTime:
+              tow: 416205400
+              wn: 1836
+      obs:
+        PackedObsContent:
+        - L:
+            CarrierPhase:
+              f: 174
+              i: -235696
+          P: 2231495077
+          cn0: 21
+          lock: 38768
+          prn: 0
+        - L:
+            CarrierPhase:
+              f: 19
+              i: 13563
+          P: 1869850003
+          cn0: 25
+          lock: 21056
+          prn: 2
+        - L:
+            CarrierPhase:
+              f: 103
+              i: 106804
+          P: 2298000000
+          cn0: 17
+          lock: 54429
+          prn: 5
+        - L:
+            CarrierPhase:
+              f: 117
+              i: 129163
+          P: 2179721960
+          cn0: 26
+          lock: 37300
+          prn: 8
+        - L:
+            CarrierPhase:
+              f: 121
+              i: 224769
+          P: 2082264686
+          cn0: 26
+          lock: 7258
+          prn: 15
+        - L:
+            CarrierPhase:
+              f: 26
+              i: 131900
+          P: 1993973655
+          cn0: 46
+          lock: 54534
+          prn: 22
+        - L:
+            CarrierPhase:
+              f: 219
+              i: -235729
+          P: 2194259129
+          cn0: 27
+          lock: 64155
+          prn: 30
+    module: sbp.observation
+    name: MsgObs
+  msg_type: '0x45'
+  raw_packet: VUUAzARiWMrOGCwHIKXpAYVQZ/z/rhVwlwCTpXNv+zQAABMZQFICgLL4iDShAQBnEZ3UBejq64GL+AEAdRq0kQhu1hx8AW4DAHkaWhwPl5/ZdjwDAgAaLgbVFrm8yYIvZ/z/2xub+h4ucA==
+  sbp:
+    crc: '0x702e'
+    length: 98
+    msg_type: '0x45'
+    payload: WMrOGCwHIKXpAYVQZ/z/rhVwlwCTpXNv+zQAABMZQFICgLL4iDShAQBnEZ3UBejq64GL+AEAdRq0kQhu1hx8AW4DAHkaWhwPl5/ZdjwDAgAaLgbVFrm8yYIvZ/z/2xub+h4=
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      header:
+        ObservationHeader:
+          n_obs: 33
+          t:
+            ObsGPSTime:
+              tow: 416205400
+              wn: 1836
+      obs:
+        PackedObsContent:
+        - L:
+            CarrierPhase:
+              f: 156
+              i: -183560
+          P: 2074245293
+          cn0: 29
+          lock: 53285
+          prn: 31
+    module: sbp.observation
+    name: MsgObs
+  msg_type: '0x45'
+  raw_packet: VUUAzAQUWMrOGCwHIa14onv4Mv3/nB0l0B/KDw==
+  sbp:
+    crc: '0xfca'
+    length: 20
+    msg_type: '0x45'
+    payload: WMrOGCwHIa14onv4Mv3/nB0l0B8=
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      header:
+        ObservationHeader:
+          n_obs: 32
+          t:
+            ObsGPSTime:
+              tow: 416205600
+              wn: 1836
+      obs:
+        PackedObsContent:
+        - L:
+            CarrierPhase:
+              f: 242
+              i: -236295
+          P: 2231513016
+          cn0: 20
+          lock: 38768
+          prn: 0
+        - L:
+            CarrierPhase:
+              f: 210
+              i: 13594
+          P: 1869856131
+          cn0: 26
+          lock: 21056
+          prn: 2
+        - L:
+            CarrierPhase:
+              f: 183
+              i: 107132
+          P: 2298000000
+          cn0: 19
+          lock: 54429
+          prn: 5
+        - L:
+            CarrierPhase:
+              f: 215
+              i: 129687
+          P: 2179718442
+          cn0: 26
+          lock: 37300
+          prn: 8
+        - L:
+            CarrierPhase:
+              f: 132
+              i: 225342
+          P: 2082260424
+          cn0: 27
+          lock: 7258
+          prn: 15
+        - L:
+            CarrierPhase:
+              f: 3
+              i: 132239
+          P: 1993973752
+          cn0: 49
+          lock: 54534
+          prn: 22
+        - L:
+            CarrierPhase:
+              f: 225
+              i: -236348
+          P: 2194277408
+          cn0: 26
+          lock: 64155
+          prn: 30
+    module: sbp.observation
+    name: MsgObs
+  msg_type: '0x45'
+  raw_packet: VUUAzARiIMvOGCwHILgvAoX5ZPz/8hRwlwCDvXNvGjUAANIaQFICgLL4iHyiAQC3E53UBSrd64GX+gEA1xq0kQjIxRx8PnADAIQbWhwP+J/Zdo8EAgADMQbVFiAEyoLEZPz/4Rqb+h6sFg==
+  sbp:
+    crc: '0x16ac'
+    length: 98
+    msg_type: '0x45'
+    payload: IMvOGCwHILgvAoX5ZPz/8hRwlwCDvXNvGjUAANIaQFICgLL4iHyiAQC3E53UBSrd64GX+gEA1xq0kQjIxRx8PnADAIQbWhwP+J/Zdo8EAgADMQbVFiAEyoLEZPz/4Rqb+h4=
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      header:
+        ObservationHeader:
+          n_obs: 33
+          t:
+            ObsGPSTime:
+              tow: 416205600
+              wn: 1836
+      obs:
+        PackedObsContent:
+        - L:
+            CarrierPhase:
+              f: 211
+              i: -184045
+          P: 2074260983
+          cn0: 28
+          lock: 53285
+          prn: 31
+    module: sbp.observation
+    name: MsgObs
+  msg_type: '0x45'
+  raw_packet: VUUAzAQUIMvOGCwHIfe1onsTMf3/0xwl0B+YSg==
+  sbp:
+    crc: '0x4a98'
+    length: 20
+    msg_type: '0x45'
+    payload: IMvOGCwHIfe1onsTMf3/0xwl0B8=
+    preamble: '0x55'
+    sender: '0x4cc'
+
+- msg:
+    fields:
+      header:
+        ObservationHeader:
+          n_obs: 16
+          t:
+            ObsGPSTime:
+              tow: 416271000
+              wn: 1836
+      obs:
+        PackedObsContent:
+        - L:
+            CarrierPhase:
+              f: 92
+              i: 8209
+          P: 1871702242
+          cn0: 45
+          lock: 20410
+          prn: 2
+        - L:
+            CarrierPhase:
+              f: 171
+              i: 49927
+          P: 2298000000
+          cn0: 12
+          lock: 63838
+          prn: 5
+        - L:
+            CarrierPhase:
+              f: 126
+              i: 134157
+          P: 2178477396
+          cn0: 19
+          lock: 44760
+          prn: 8
+        - L:
+            CarrierPhase:
+              f: 7
+              i: 143721
+          P: 2080732352
+          cn0: 27
+          lock: 5189
+          prn: 15
+        - L:
+            CarrierPhase:
+              f: 70
+              i: -142917
+          P: 2200152385
+          cn0: 19
+          lock: 16647
+          prn: 30
+        - L:
+            CarrierPhase:
+              f: 109
+              i: -111250
+          P: 2079310706
+          cn0: 43
+          lock: 51160
+          prn: 31
+    module: sbp.observation
+    name: MsgObs
+  msg_type: '0x45'
+  raw_packet: VUUAAABVmMrPGCwHEOLoj28RIAAAXC26TwKAsviIB8MAAKsMXvkFVO3YgQ0MAgB+E9iuCMB0BXxpMQIABxtFFA9BqSODu9H9/0YTB0EecsPve25N/v9tK9jHH4zE
+  sbp:
+    crc: '0xc48c'
+    length: 85
+    msg_type: '0x45'
+    payload: mMrPGCwHEOLoj28RIAAAXC26TwKAsviIB8MAAKsMXvkFVO3YgQ0MAgB+E9iuCMB0BXxpMQIABxtFFA9BqSODu9H9/0YTB0EecsPve25N/v9tK9jHHw==
+    preamble: '0x55'
+    sender: '0x0'
+
+- msg:
+    fields:
+      header:
+        ObservationHeader:
+          n_obs: 16
+          t:
+            ObsGPSTime:
+              tow: 416271200
+              wn: 1836
+      obs:
+        PackedObsContent:
+        - L:
+            CarrierPhase:
+              f: 154
+              i: 8251
+          P: 1871707673
+          cn0: 45
+          lock: 20410
+          prn: 2
+        - L:
+            CarrierPhase:
+              f: 243
+              i: 50266
+          P: 2298000000
+          cn0: 14
+          lock: 63838
+          prn: 5
+        - L:
+            CarrierPhase:
+              f: 32
+              i: 134699
+          P: 2178473393
+          cn0: 21
+          lock: 44760
+          prn: 8
+        - L:
+            CarrierPhase:
+              f: 174
+              i: 144306
+          P: 2080727580
+          cn0: 28
+          lock: 5189
+          prn: 15
+        - L:
+            CarrierPhase:
+              f: 72
+              i: -143519
+          P: 2200170036
+          cn0: 19
+          lock: 16647
+          prn: 30
+        - L:
+            CarrierPhase:
+              f: 144
+              i: -111721
+          P: 2079326011
+          cn0: 43
+          lock: 51160
+          prn: 31
+    module: sbp.observation
+    name: MsgObs
+  msg_type: '0x45'
+  raw_packet: VUUAAABVYMvPGCwHEBn+j287IAAAmi26TwKAsviIWsQAAPMOXvkFsd3YgSsOAgAgFdiuCBxiBXyyMwIArhxFFA807iODYc/9/0gTB0EeO//ve5dL/v+QK9jHH/cy
+  sbp:
+    crc: '0x32f7'
+    length: 85
+    msg_type: '0x45'
+    payload: YMvPGCwHEBn+j287IAAAmi26TwKAsviIWsQAAPMOXvkFsd3YgSsOAgAgFdiuCBxiBXyyMwIArhxFFA807iODYc/9/0gTB0EeO//ve5dL/v+QK9jHHw==
+    preamble: '0x55'
+    sender: '0x0'
+version: '0.23'
+...

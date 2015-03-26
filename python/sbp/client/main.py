@@ -133,7 +133,6 @@ def main():
   reset = args.reset
   input_filename = args.input_filename[0]
   log_filename = args.log_filename[0]
-
   # Driver with context
   with get_driver(use_ftdi, input_filename, port, baud) as driver:
     # Logger with context
@@ -143,10 +142,8 @@ def main():
         handler.add_callback(lambda msg: sys.stdout.write(msg.payload), SBP_MSG_PRINT)
         handler.add_callback(logger)
         handler.start()
-
         if reset:
           handler.send(SBP_RESET, "")
-
         try:
           if timeout is None:
             while True:

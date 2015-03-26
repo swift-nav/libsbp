@@ -20,17 +20,12 @@ sudo pip install sbp
 Usage
 -----
 
-```shell
-# To run the tests and check for coverage:
-py.test -v --cov sbp tests/
-```
-
 ## Examples
 
 ### Simple example
 
-Receives SBP messages over a serial port, decodes `MSG_BASELINE` messages and
-prints them out.
+Receives SBP messages over a serial port, decodes `MSG_BASELINE`
+messages and prints them out.
 
 See the [`source code`](sbp/client/examples/simple.py).
 
@@ -42,8 +37,8 @@ $ python -m sbp.client.examples.simple -p /path/to/serial/port
 
 ### Sending SBP messages over UDP
 
-Receives SBP messages over a serial port and sends all incoming messages to a
-UDP socket.
+Receives SBP messages over a serial port and sends all incoming
+messages to a UDP socket.
 
 See the [`source code`](sbp/client/examples/udp.py).
 
@@ -51,6 +46,13 @@ Run this example with:
 
 ```shell
 $ python -m sbp.client.examples.udp -s /path/to/serial/port
+```
+
+## Testing
+
+```shell
+# To run the tests and check for coverage:
+py.test -v --cov sbp tests/
 ```
 
 License
