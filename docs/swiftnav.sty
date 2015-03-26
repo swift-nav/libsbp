@@ -33,6 +33,12 @@
 % Define our alternate color
 \definecolor{alt}{RGB}{140,0,0}
 
+\makeatletter
+% Version control macros
+\immediate\write18{sh swift_git_tag.sh}
+\input{gitdescribe}
+\immediate\write18{rm gitdescribe.tex}
+
 % Colored section headings
 \titleformat*{\section}{\color{alt}\normalfont\huge\bfseries}
 \titleformat*{\subsection}{\color{alt}\normalfont\Large\bfseries}
@@ -45,9 +51,9 @@
 \setlength\multicolsep{20pt}
 
 % Define command to set a document version.
-\newcommand{\theversion}{\VCRevisionMod}
+\newcommand{\theversion}{\gitdescribe}
 \newcommand{\version}[1]{
-  \renewcommand{\theversion}{#1}
+ \renewcommand{\theversion}{#1}
 }
 
 \newcommand{\thesubtitle}{}
