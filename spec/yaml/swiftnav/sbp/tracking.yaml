@@ -16,6 +16,7 @@ include:
 definitions:
 
  - TrackingChannelState:
+    short_desc: State of the satellite tracking channel.
     desc: State of the tracking channel.
     fields:
         - state:
@@ -39,7 +40,9 @@ definitions:
 
  - MSG_TRACKING_STATE:
     id: 0x0016
-    desc: Tracking channel states
+    short_desc: Tracking channel states
+    desc: |
+      Variable-length message Tracking channel states
     fields:
       - states:
           type: array
@@ -49,7 +52,9 @@ definitions:
  - MSG_EPHEMERIS:
     id: 0x001A
     short_desc: WGS84 satellite orbit ephemeris parameters
-    desc: WGS84 satellite orbit ephemeris parameters
+    desc: |
+      A set of satellite orbit parameters that is used to calculate
+      GPS satellite positions and velocities (WGS84).
     fields:
       - tgd:
           type: double
