@@ -10,7 +10,7 @@
 
 package: swiftnav.sbp.types
 description: Defines a variety of common types. Sizes are in bytes.
-render_source: false
+render_source: False
 stable: True
 definitions:
  - s8:

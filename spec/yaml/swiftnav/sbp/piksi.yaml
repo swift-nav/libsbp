@@ -11,12 +11,14 @@
 package: swiftnav.sbp.piksi
 description: System messages from the Piksi.
 stable: False
+public: True
 include:
   - types.yaml
 definitions:
 
  - MSG_PRINT:
     id: 0x0010
+    public: True
     desc: Information and debugging information.
 
  - MSG_DEBUG_VAR:
@@ -140,6 +142,7 @@ definitions:
             desc: Free stack space for this thread.
 
  - UARTChannel:
+    public: True
     desc: State of the UART channel.
     fields:
         - tx_throughput:
@@ -166,6 +169,7 @@ definitions:
             desc: UART receive usage percentage.
 
  - Latency:
+    public: True
     desc: |
       Statistics on the latency of observations received from the base
       station. As observation packets are received their GPS time is
@@ -192,6 +196,7 @@ definitions:
 
  - MSG_UART_STATE:
     id: 0x0018
+    public: True
     desc: State of the UART channels.
     fields:
         - uart_a:
