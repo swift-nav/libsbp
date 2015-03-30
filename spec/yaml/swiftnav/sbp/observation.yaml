@@ -16,6 +16,7 @@ include:
 definitions:
 
  - ObsGPSTime:
+    short_desc: Millisecond-accurate GPS time.
     desc: |
       A wire-appropriate GPS time, defined as the number of
       milliseconds since beginning of the week on the Saturday/Sunday
@@ -31,6 +32,7 @@ definitions:
             desc: GPS week number
 
  - CarrierPhase:
+    short_desc: GPS carrier phase measurement.
     desc: |
       Carrier phase measurement in cycles represented as a 40-bit
       fixed point number with Q32.8 layout, i.e. 32-bits of whole
@@ -46,7 +48,8 @@ definitions:
             desc: Carrier phase fractional part.
 
  - ObservationHeader:
-    desc: Header of a GPS observation message
+    short_desc: Observation message.
+    desc: Header of a GPS observation message.
     fields:
         - t:
             type: ObsGPSTime
@@ -59,6 +62,7 @@ definitions:
               counter (ith packet of n)
 
  - PackedObsContent:
+    desc: GPS observations for a particular satellite signal.
     desc: GPS observations for a particular satellite signal.
     fields:
         - P:
@@ -86,6 +90,7 @@ definitions:
  - MSG_OBS:
     id: 0x0045
     short_desc: MSG_OBS
+    desc: GPS observations for a particular satellite signal.
     fields:
         - header:
             type: ObservationHeader
@@ -99,6 +104,7 @@ definitions:
  - MSG_BASE_POS:
     id: 0x0044
     short_desc: MSG_BASE_POS
+    desc: GPS observations for a particular satellite signal.
     fields:
         - lat:
             type: double

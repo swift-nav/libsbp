@@ -1,1 +1,10 @@
-include README.md
+include *.cfg
+include *.md
+include *.py
+include *.sh
+include .coveragerc
+include .gitignore
+include LICENSE
+include tox.ini
+recursive-include sbp/ *.py
+prune docs/_build

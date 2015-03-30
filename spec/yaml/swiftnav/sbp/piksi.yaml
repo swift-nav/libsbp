@@ -17,6 +17,7 @@ definitions:
 
  - MSG_PRINT:
     id: 0x0010
+    short_desc: Information and debugging information.
     desc: Information and debugging information.
 
  - MSG_DEBUG_VAR:
@@ -125,6 +126,7 @@ definitions:
 
  - MSG_THREAD_STATE:
     id: 0x0017
+    short_desc: State of the CPU threads.
     desc: State of the CPU threads.
     fields:
         - name:
@@ -140,6 +142,7 @@ definitions:
             desc: Free stack space for this thread.
 
  - UARTChannel:
+    short_desc: State of the UART channel.
     desc: State of the UART channel.
     fields:
         - tx_throughput:
@@ -166,6 +169,7 @@ definitions:
             desc: UART receive usage percentage.
 
  - Latency:
+    short_desc: Receiver-base station latency.
     desc: |
       Statistics on the latency of observations received from the base
       station. As observation packets are received their GPS time is
@@ -192,6 +196,7 @@ definitions:
 
  - MSG_UART_STATE:
     id: 0x0018
+    short_desc: State of the UART channels.
     desc: State of the UART channels.
     fields:
         - uart_a:
@@ -209,6 +214,7 @@ definitions:
 
  - MSG_IAR_STATE:
     id: 0x0019
+    short_desc: State of the Integer Ambiguity Resolution (IAR) process.
     desc: State of the Integer Ambiguity Resolution (IAR) process.
     fields:
         - num_hyps:
