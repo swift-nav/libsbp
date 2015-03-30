@@ -27,9 +27,10 @@ from .loggers.null_logger     import NullLogger
 from .loggers.pickle_logger   import PickleLogger
 from .handler                 import Handler
 
-DEFAULT_PORT         = "/dev/ttyUSB0"
-DEFAULT_BAUD         = 1000000
-DEFAULT_LOG_FILENAME = time.strftime("sbp-%Y%m%d-%H%M%S.log")
+LOG_FILENAME = time.strftime("sbp-%Y%m%d-%H%M%S.log")
+
+SERIAL_PORT  = "/dev/ttyUSB0"
+SERIAL_BAUD  = 1000000
 
 def get_args():
   """
@@ -38,10 +39,10 @@ def get_args():
   import argparse
   parser = argparse.ArgumentParser(description="Swift Navigation SBP Client.")
   parser.add_argument("-p", "--port",
-                      default=[DEFAULT_PORT], nargs=1,
+                      default=[SERIAL_PORT], nargs=1,
                       help="specify the serial port to use.")
   parser.add_argument("-b", "--baud",
-                      default=[DEFAULT_BAUD], nargs=1,
+                      default=[SERIAL_BAUD], nargs=1,
                       help="specify the baud rate to use.")
   parser.add_argument("-v", "--verbose",
                       action="store_true",
@@ -65,14 +66,14 @@ def get_args():
                       default=[None], nargs=1,
                       help="use input file to read SBP messages from.")
   parser.add_argument("-o", "--log-filename",
-                      default=[DEFAULT_LOG_FILENAME], nargs=1,
+                      default=[LOG_FILENAME], nargs=1,
                       help="file to log output to.")
   parser.add_argument("-s", "--byte",
                       action="store_true",
                       help="Serialize SBP messages to bytes.")
   return parser.parse_args()
 
-def get_driver(use_ftdi, filename, port, baud):
+def get_driver(use_ftdi, port, baud, filename=None):
   """
   Get a driver based on configuration options
 
@@ -80,12 +81,12 @@ def get_driver(use_ftdi, filename, port, baud):
   ----------
   use_ftdi : bool
     For serial driver, use the pyftdi driver, otherwise use the pyserial driver.
-  filename : string
-    File to read SBP messages from.
   port : string
     Serial port to read.
   baud : int
     Serial port baud rate to set.
+  filename : string
+    File to read SBP messages from.
   """
   if filename:
     return FileDriver(filename)
@@ -117,6 +118,17 @@ def get_logger(use_log, use_json, use_byte, filename):
     return ByteLogger(filename)
   return PickleLogger(filename)
 
+def printer(sbp_msg):
+  """
+  Default print callback
+
+  Parameters
+  ----------
+  sbp_msg: SBP
+    SBP Message to print out.
+  """
+  sys.stdout.write(sbp_msg.payload)
+
 def main():
   """
   Get configuration, get driver, get logger, and build handler and start it.
@@ -134,12 +146,12 @@ def main():
   input_filename = args.input_filename[0]
   log_filename = args.log_filename[0]
   # Driver with context
-  with get_driver(use_ftdi, input_filename, port, baud) as driver:
-    # Logger with context
-    with get_logger(use_log, use_json, use_byte, log_filename) as logger:
-      # Handler with context
-      with Handler(driver.read, driver.write, verbose) as handler:
-        handler.add_callback(lambda msg: sys.stdout.write(msg.payload), SBP_MSG_PRINT)
+  with get_driver(use_ftdi, port, baud, input_filename) as driver:
+    # Handler with context
+    with Handler(driver.read, driver.write, verbose) as handler:
+      # Logger with context
+      with get_logger(use_log, use_json, use_byte, log_filename) as logger:
+        handler.add_callback(printer, SBP_MSG_PRINT)
         handler.add_callback(logger)
         handler.start()
         if reset:
