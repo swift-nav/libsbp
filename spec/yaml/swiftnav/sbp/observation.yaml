@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.observation
-description: Observation messages from the Piksi.
+description: Satellite observation messages from the Piksi.
 stable: False
 public: True
 include:
@@ -18,6 +18,7 @@ definitions:
 
  - ObsGPSTime:
     public: True
+    short_desc: Millisecond-accurate GPS time.
     desc: |
       A wire-appropriate GPS time, defined as the number of
       milliseconds since beginning of the week on the Saturday/Sunday
@@ -34,6 +35,7 @@ definitions:
 
  - CarrierPhase:
     public: True
+    short_desc: GPS carrier phase measurement.
     desc: |
       Carrier phase measurement in cycles represented as a 40-bit
       fixed point number with Q32.8 layout, i.e. 32-bits of whole
@@ -50,7 +52,8 @@ definitions:
 
  - ObservationHeader:
     public: True
-    desc: Header of a GPS observation message
+    short_desc: Header for observation message.
+    desc: Header of a GPS observation message.
     fields:
         - t:
             type: ObsGPSTime
@@ -64,7 +67,10 @@ definitions:
 
  - PackedObsContent:
     public: True
-    desc: GPS observations for a particular satellite signal.
+    short_desc: GPS observations for a particular satellite signal.
+    desc: |
+      Pseudorange and carrier phase observation for a satellite being
+      tracked.
     fields:
         - P:
             type: u32
@@ -91,7 +97,11 @@ definitions:
  - MSG_OBS:
     id: 0x0045
     public: True
-    short_desc: MSG_OBS
+    short_desc: GPS satellite observations.
+    desc: |
+      The GPS observations message reports all the pseudo range and
+      carrier phase observations for the satellites being tracked by
+      the Piksi.
     fields:
         - header:
             type: ObservationHeader
@@ -100,12 +110,18 @@ definitions:
             type: array
             fill: PackedObsContent
             map_by: prn
-            desc: Observations
+            desc: |
+              Pseudorange and carrier phase observation for a
+              satellite being tracked.
 
  - MSG_BASE_POS:
     id: 0x0044
     public: True
-    short_desc: MSG_BASE_POS
+    short_desc: Base station position.
+    desc: |
+      This may be the position as reported by the base station itself or the
+      position obtained from doing a single point solution using the base
+      station observations.
     fields:
         - lat:
             type: double

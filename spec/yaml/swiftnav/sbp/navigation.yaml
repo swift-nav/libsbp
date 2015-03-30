@@ -9,17 +9,21 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.navigation
-description: Geodetic navigation messages from the Piksi.
+description: |
+  Geodetic navigation messages reporting GPS time, single-point
+  position, and RTK baseline position solutions.
 stable: True
+public: True
 include:
   - types.yaml
 definitions:
 
  - MSG_GPS_TIME:
     id: 0x0100
+    public: True
     short_desc: GPS Time
     desc: |
-        GPS Time.
+        This message reports the GPS Time.
     fields:
         - wn:
             type: u16
@@ -39,9 +43,12 @@ definitions:
 
  - MSG_DOPS:
     id: 0x0206
+    public: True
     short_desc: Dilution of Precision
     desc: |
-      Dilution of Precision.
+      This dilution of precision (DOP) message describes the effect of
+      navigation satellite geometry on positional measurement
+      precision.
     fields:
         - tow:
             type: u32
@@ -71,10 +78,16 @@ definitions:
 
  - MSG_POS_ECEF:
     id: 0x0200
-    short_desc: Position in ECEF
+    public: True
+    short_desc: Single-point position in ECEF
     desc: |
-      Position solution in absolute Earth Centered Earth Fixed (ECEF)
-      coordinates.
+      The single-point position solution message reports absolute
+      Earth Centered Earth Fixed (ECEF) coordinates and the status
+      (single point absolute vs RTK) of the position solution. If the
+      rover receiver knows the single-point point position of the base
+      station and has an RTK solution, this reports a pseudo-absolute
+      position solution using the base station single-point position
+      solution and the rover's RTK baseline vector.
     fields:
         - tow:
             type: u32
@@ -114,9 +127,16 @@ definitions:
 
  - MSG_POS_LLH:
     id: 0x0201
+    public: True
     short_desc: Geodetic Position
     desc: |
-        Geodetic position solution.
+      This single-point position solution message reports the absolute
+      geodetic coordinates and the status (single point absolute vs
+      RTK) of the position solution. If the rover receiver knows
+      single-point point position of the base station and has an RTK
+      solution, this reports a pseudo-absolute position solution using
+      the base station single-point position solution and the rover's
+      RTK baseline vector.
     fields:
         - tow:
             type: u32
@@ -165,9 +185,11 @@ definitions:
 
  - MSG_BASELINE_ECEF:
     id: 0x0202
-    short_desc: Baseline in ECEF
+    public: True
+    short_desc: Baseline Position in ECEF
     desc: |
-        Baseline in Earth Centered Earth Fixed (ECEF) coordinates.
+      This message reports the baseline position solution in Earth
+      Centered Earth Fixed (ECEF) coordinates.
     fields:
           - tow:
               type: u32
@@ -206,9 +228,11 @@ definitions:
 
  - MSG_BASELINE_NED:
     id: 0x0203
+    public: True
     short_desc: Baseline in NED
     desc: |
-        Baseline in local North East Down (NED) coordinates.
+      This message reports the baseline position solution in North
+      East Down (NED) coordinates.
     fields:
           - tow:
               type: u32
@@ -251,9 +275,11 @@ definitions:
 
  - MSG_VEL_ECEF:
     id: 0x0204
+    public: True
     short_desc: Velocity in ECEF
     desc: |
-        Velocity in Earth Centered Earth Fixed (ECEF) coordinates.
+      This message reports the velocity in Earth Centered Earth Fixed
+      (ECEF) coordinates.
     fields:
           - tow:
               type: u32
@@ -284,9 +310,11 @@ definitions:
 
  - MSG_VEL_NED:
     id: 0x0205
+    public: True
     short_desc: Velocity in NED
     desc: |
-        Velocity in local North East Down (NED) coordinates.
+      This message reports the velocity in local North East Down (NED)
+      coordinates.
     fields:
           - tow:
               type: u32

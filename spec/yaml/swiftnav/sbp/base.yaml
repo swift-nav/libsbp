@@ -17,16 +17,21 @@ include:
 definitions:
 
  - SBP:
+    desc: Packet structure for Swift Navigation Binary Protocol (SBP).
     desc: |
-      Defines full packet structure for Swift Navigation Binary Protocol
-      (SBP).
+      Definition of the over-the-wire message framing format and packet
+      structure for Swift Navigation Binary Protocol (SBP), a minimal
+      binary protocol for communicating with Swift devices. It is used
+      to transmit solutions, observations, status and debugging
+      messages, as well as receive messages from the host operating
+      system.
     fields:
         - preamble:
             type: u8
             desc: Denotes the start of frame transmission. For v1.0, always 0x55.
         - msg_type:
             type: u16
-            desc: Identifies the payload contents
+            desc: Uniquely identifies the type of the payload contents
         - sender:
             type: u16
             desc: |
@@ -35,7 +40,8 @@ definitions:
               number.
         - length:
             type: u8
-            desc: Length in bytes of the Payload field.
+            units: bytes
+            desc: Byte-length of the payload field.
         - payload:
             type: bytes
             size_fn: length

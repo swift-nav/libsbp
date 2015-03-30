@@ -9,8 +9,10 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.types
-description: Defines a variety of common types. Sizes are in bytes.
-render_source: False
+description: |
+  Documents a variety of common types referenced by the SBP
+  specification. Sizes are in bytes.
+render_source: false
 stable: True
 definitions:
  - s8:

@@ -1,0 +1,208 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.flash
+description: |
+  Messages for reading/writing the Piksi's onboard flash memory. These
+  are in the implementation-defined range (0x0000-0x00FF), and largely
+  intended for internal-use only.
+stable: False
+public: True
+include:
+  - types.yaml
+definitions:
+
+ - MSG_FLASH_PROGRAM:
+    id: 0x00E0
+    public: True
+    short_desc: Program addresses of the STM or M25 flash (Host => Piksi).
+    desc: |
+      The flash program message programs a set of addresses of either
+      the STM or M25 flash. The Piksi replies with either a
+      MSG_FLASH_DONE message containing the return code FLASH_OK (0)
+      on success, or FLASH_INVALID_LEN (2) if the maximum write size
+      is exceeded. Note that the sector-containing addresses must be
+      erased before addresses can be programmed.
+    fields:
+      - target:
+          type: u8
+          desc: Target flags
+          fields:
+            - 1-8:
+                desc: Reserved
+            - 0:
+                desc: Flash target to read.
+                values:
+                  - 0: FLASH_STM
+                  - 1: FLASH_M25
+      - addr_start:
+          type: array
+          fill: u8
+          size: 3
+          units: bytes
+          desc: Starting address offset to program
+      - addr_len:
+          type: u8
+          units: bytes
+          desc: |
+            Length of set of addresses to program, counting up from
+            starting address.
+      - data:
+          type: array
+          fill: u8
+          size_fn: addr_len
+          desc: Data to program addresses with, sized by addr_len.
+
+ - MSG_FLASH_DONE:
+    id: 0x00E0
+    public: True
+    short_desc: Flash response message (Piksi => Host).
+    desc: |
+      This message defines success or failure codes for a variety of
+      flash memory requests from the host to the Piksi. Flash read and
+      write messages, such as MSG_FLASH_READ or MSG_FLASH_WRITE, may
+      return this message on failure.
+    fields:
+      - response:
+          type: u8
+          desc: Response flags
+          fields:
+            - 3-7:
+                desc: Reserved
+            - 0-2:
+                desc: Response code
+                values:
+                  - 0: FLASH_OK
+                  - 1: FLASH_INVALID_FLASH
+                  - 2: FLASH_INVALID_LEN
+                  - 3: FLASH_INVALID_ADDR
+                  - 4: FLASH_INVALID_RANGE
+                  - 5: FLASH_INVALID_SECTOR
+
+ - MSG_FLASH_READ:
+    id: 0x00E1
+    public: True
+    short_desc: Read STM or M25 flash address (Host <=> Piksi).
+    desc: |
+      The flash read message reads a set of addresses of either the
+      STM or M25 onboard flash. The Piksi replies with a
+      MSG_FLASH_READ message containing either the read data on
+      success or a MSG_FLASH_DONE message containing the return code
+      FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
+      FLASH_INVALID_ADDR (3) if the address is outside of the allowed
+      range.
+    fields:
+      - target:
+          type: u8
+          desc: Target flags
+          fields:
+            - 1-8:
+                desc: Reserved
+            - 0:
+                desc: Flash target to read.
+                values:
+                  - 0: FLASH_STM
+                  - 1: FLASH_M25
+      - addr_start:
+          type: array
+          fill: u8
+          size: 3
+          units: bytes
+          desc: Starting address offset to read from
+      - addr_len:
+          type: u8
+          units: bytes
+          desc: |
+            Length of set of addresses to read, counting up from
+            starting address.
+
+ - MSG_FLASH_ERASE:
+    id: 0x00E2
+    public: True
+    short_desc: Erase sector of Piksi flash memory (Host => Piksi).
+    desc: |
+      The flash erase message from the host erases a sector of either
+      the STM or M25 onboard flash memory. The Piksi will reply with a
+      MSG_FLASH_DONE message containing the return code - FLASH_OK (0)
+      on success or FLASH_INVALID_FLASH (1) if the flash specified is
+      invalid.
+    fields:
+      - target:
+          type: u8
+          desc: Target flags
+          fields:
+            - 1-8:
+                desc: Reserved
+            - 0:
+                desc: Flash target to read
+                values:
+                  - 0: FLASH_STM
+                  - 1: FLASH_M25
+      - sector_num:
+          type: u8
+          desc: |
+            Flash sector number to erase (0-11 for the STM, 0-15 for
+            the M25).
+
+ - MSG_STM_FLASH_LOCK_SECTOR:
+    id: 0x00E3
+    public: True
+    short_desc: Lock sector of STM flash memory (Host => Piksi).
+    desc: |
+      The flash lock message locks a sector of the STM flash
+      memory. The Piksi replies with a MSG_FLASH_DONE message.
+    fields:
+      - sector:
+          type: array
+          size: 1
+          fill: u8
+          desc: Flash sector number to lock.
+
+ - MSG_STM_FLASH_UNLOCK_SECTOR:
+    id: 0x00E4
+    public: True
+    short_desc: Unlock sector of STM flash memory (Host => Piksi)
+    desc: |
+      The flash unlock message unlocks a sector of the STM flash
+      memory. The Piksi replies with a MSG_FLASH_DONE message.
+    fields:
+      - sector:
+          type: array
+          fill: u8
+          size: 1
+          desc: Flash sector number to unlock.
+
+ - MSG_STM_UNIQUE_ID:
+    id: 0x00E5
+    public: True
+    short_desc: |
+      Read STM32F4's hardcoded unique ID (Host <=> Piksi).
+    desc: |
+      This message reads the STM32F4's hardcoded unique ID. The Piksi
+      returns STM32F4 unique ID (12 bytes) back to host.
+    fields:
+      - stm_id:
+          type: string
+          size: 12
+          desc: STM32F4 unique ID.
+
+ - MSG_M25_FLASH_WRITE_STATUS:
+    id: 0x00F3
+    public: True
+    short_desc: Write M25 flash status register (Host => Piksi).
+    desc: |
+      The flash status message writes to the 8-bit M25 flash status
+      register. The Piksi replies with a MSG_FLASH_DONE message.
+    fields:
+      - status:
+          type: array
+          size: 1
+          fill: u8
+          desc: Byte to write to the M25 flash status register.
