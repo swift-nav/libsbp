@@ -2,6 +2,7 @@
 
 from sbp import __version__
 from setuptools import setup
+import os
 
 CLASSIFIERS = [
   'Intended Audience :: Developers',
@@ -28,10 +29,11 @@ PLATFORMS = [
   'win32',
 ]
 
-with open('README.md') as f:
+cwd = os.path.abspath(os.path.dirname(__file__))
+with open(cwd + '/README.rst') as f:
   readme = f.read()
 
-with open('./requirements.txt') as f:
+with open(cwd + '/requirements.txt') as f:
   INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
 
 setup(name='sbp',
