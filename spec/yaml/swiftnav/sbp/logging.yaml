@@ -1,0 +1,41 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.logging
+description: |
+  Logging and debugging messages from the Piksi. These are in the
+  implementation-defined range (0x0000-0x00FF).
+stable: False
+public: True
+include:
+  - types.yaml
+definitions:
+
+ - MSG_PRINT:
+    id: 0x0010
+    public: True
+    short_desc: Plaintext logging messages (Piksi => Host).
+    desc: |
+      This message contains a human-reabable payload string from the
+      Piksi containing errors, warnings and informational messages at
+      ERROR, WARNING, DEBUG, INFO logging levels. These message may
+      also contain information tagged by filename, as well as debug
+      info on function entry/exit when enabled within the firmware.
+    fields:
+      - text:
+          type: string
+          desc: Informative, human-readable string.
+
+ - MSG_DEBUG_VAR:
+    id: 0x0011
+    short_desc: Legacy message for tracing variable values (Piksi => Host).
+    desc: |
+      This is an unused legacy message for tracing variable values
+      within the Piksi firmware and streaming those back to the host.

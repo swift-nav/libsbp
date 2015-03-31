@@ -1,0 +1,108 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.file_io
+description: |
+  Messges for using Piksi's onboard flash filesystem functionality
+  from the Contiki project. This allows data to be stored persistently
+  in the microcontroller's program flash with wear-levelling using a
+  simple filesystem interface. The Contiki file system interface (CFS)
+  defines an abstract API for reading directories and for reading and
+  writing files. These are in the implementation-defined range
+  (0x0000-0x00FF), and intended for internal-use only. Note that some
+  of these messages taking a request from a host and a response from
+  the Piksi share the same message type ID.
+stable: False
+public: True
+include:
+  - types.yaml
+definitions:
+
+ - MSG_FILEIO_READ:
+    id: 0x00A8
+    public: True
+    short_desc: Read file from the file system (Host <=> Piksi).
+    desc: |
+      The file read message reads a certain length (up to 255 bytes)
+      from a given offset into a file, and returns the data in a
+      MSG_FILEIO_READ message where the message length field indicates
+      how many bytes were succesfully read. If the message is invalid,
+      a followup MsgPrint message will print "Invalid fileio read
+      message".
+    fields:
+      - offset:
+          type: u32
+          units: bytes
+          desc: File offset.
+      - chunk_size:
+          type: u8
+          units: bytes
+          desc: Chunk size to read.
+      - filename:
+          type: string
+          desc: Name of the file to read from (NULL terminated).
+
+ - MSG_FILEIO_READ_DIR:
+    id: 0x00A9
+    public: True
+    short_desc: List files in a directory (Host <=> Piksi).
+    desc: |
+      The read directory message lists the files in a directory on the
+      Piksi's onboard flash file system.  The offset parameter can be
+      used to skip the first n elements of the file list. Returns a
+      MSG_FILEIO_READ_DIR message containing the directory listings as
+      a NULL delimited list. The listing is chunked over multiple SBP
+      packets and the end of the list is identified by an entry
+      containing just the character 0xFF. If message is invalid, a
+      followup MsgPrint message will print "Invalid fileio read
+      message".
+    fields:
+      - offset:
+          type: u32
+          desc: |
+            The offset to skip the first n elements of the file list.
+      - dirname:
+          type: string
+          desc: Name of the directory to list.
+
+ - MSG_FILEIO_REMOVE:
+    id: 0x00AC
+    public: True
+    short_desc: Delete a file from the file system (Host => Piksi).
+    desc: |
+      The file remove message deletes a file from the file system. If
+      message is invalid, a followup MsgPrint message will print
+      "Invalid fileio remove message".
+    fields:
+      - filename:
+          type: string
+          desc: Name of the file to delete (NULL terminated)
+
+ - MSG_FILEIO_WRITE:
+    id: 0x00AD
+    public: True
+    short_desc: Write to file (Host <=> Piksi)
+    desc: |
+      The file write message writes a certain length (up to 255 bytes)
+      of data to a file at a given offset. Returns a copy of the
+      original MSG_FILEIO_WRITE message to check integrity of the
+      write. If message is invalid, a followup MsgPrint message will
+      print "Invalid fileio write message".
+    fields:
+      - filename:
+          type: string
+          desc: Name of the file to write to (NULL terminated)
+      - offset:
+          type: u32
+          units: bytes
+          desc: Offset into the file at which to start writing in bytes
+      - data:
+          type: bytes
+          desc: Data to write
