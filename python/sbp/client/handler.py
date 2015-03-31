@@ -166,7 +166,7 @@ class Handler(object):
   def add_callback(self, callback, msg_type=None):
     """
     Add per message type or global callback.
-    
+
     Parameters
     ----------
     callback : fn
@@ -175,6 +175,19 @@ class Handler(object):
       Message type to register callback against. Default `None` means global callback.
     """
     self.callbacks[msg_type].add(callback)
+
+  def remove_callback(self, callback, msg_type=None):
+    """
+    Remove per message type of global callback.
+
+    Parameters
+    ----------
+    callback : fn
+      Callback function
+    msg_type : int
+      Message type to remove callback from. Default `None` means global callback.
+    """
+    self.callbacks[msg_type].remove(callback)
 
   def get_callbacks(self, msg_type):
     """
@@ -221,3 +234,24 @@ class Handler(object):
       SBP sender id.
     """
     self.framer.send(msg_type, data, sender)
+
+  def wait(self, msg_type, timeout):
+    """
+    Wait for a SBP message.
+
+    Parameters
+    ----------
+    msg_type : int
+      SBP message type.
+    timeout : float
+      Waiting period
+    """
+    event = threading.Event()
+    payload = None
+    def cb(sbp_msg):
+      payload = sbp_msg.payload
+    self.add(cb, msg_type)
+    event.wait(timeout)
+    self.remove(cb, msg_type)
+    return payload
+
