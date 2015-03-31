@@ -54,11 +54,12 @@ class PySerialDriver(BaseDriver):
     size : int
       Number of bytes to read.
     """
-    import serial
-    try:
-      return self.handle.read(size)
-    except (OSError, serial.SerialException):
-      print
-      print "Piksi disconnected"
-      print
-      raise SystemExit
+    with self.lock:
+      import serial
+      try:
+        return self.handle.read(size)
+      except (OSError, serial.SerialException):
+        print
+        print "Piksi disconnected"
+        print
+        raise SystemExit

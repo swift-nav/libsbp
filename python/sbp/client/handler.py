@@ -166,7 +166,7 @@ class Handler(object):
   def add_callback(self, callback, msg_type=None):
     """
     Add per message type or global callback.
-    
+
     Parameters
     ----------
     callback : fn
