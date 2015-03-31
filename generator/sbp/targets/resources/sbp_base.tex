@@ -1,0 +1,95 @@
+\documentclass{article}
+
+\usepackage{swiftnav}
+\usepackage{bytefield}
+\usepackage{endnotes}
+
+\usepackage{standalone}
+
+\usepackage{register}
+\usepackage{bytefield}
+\usepackage{booktabs}
+\usepackage{minibox}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{tabularx}
+
+\setlength{\regWidth}{0.4\textwidth}
+
+\floatstyle{plain}
+\newfloat{field}{h}{fld}
+\floatname{field}{Field}
+
+\numberwithin{table}{subsection}
+\numberwithin{field}{subsection}
+
+\usepackage{draftwatermark}
+\SetWatermarkLightness{0.9}
+\SetWatermarkScale{1}
+
+\renewcommand{\regLabelFamily}{}
+
+\newcolumntype{a}{>{\hsize=.2\hsize}X}
+\newcolumntype{b}{>{\hsize=.4\hsize}X}
+\newcolumntype{c}{>{\hsize=.3\hsize}X}
+\newcolumntype{d}{>{\hsize=.7\hsize}X}
+
+% ---------------------------------------------------------------------------
+
+\version{1.0}
+\title{SwiftNav Binary Protocol}
+\mysubtitle{Protocol Specification v\theversion}
+\author{Swift Navigation}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{firstpage}
+
+\section{Message Structure}
+\label{sec:Message}
+
+
+\begin{large}
+The Swift Binary Protocol is a fast, simple and minimal binary
+protocol for sending payloads to, from and between Swift-Nav
+devices. It is primarily used to send the binary representation of C
+structs with minimal overhead across serial links.
+
+As of Version 1.0, the message consists of a 6 byte binary header
+section, a variable-sized payload field, and a 2 byte binary CRC
+value. SBP uses the CCITT CRC16 (XMODEM implementation) for error
+detection. It has no error correction and makes no delivery
+guarantees.
+\end{large}
+
+\begin{table}[h]
+  \centering
+  \begin{tabularx}{\textwidth}{aaX}
+    \toprule
+    Name & Size & Description \\
+    \midrule
+    \texttt{Preamble} & $1$ & Denotes the start of frame transmission. Always 0x55. \\
+    \texttt{Message Type} & $2$ & Identifies the payload contents. \\
+    \texttt{Sender} & $2$ & A unique identifier of the sending hardware. Set to the 2 least significant bytes of the Piksi serial number. \\
+    \texttt{Length} & $1$ & Length in bytes of the \texttt{Payload} field. \\
+    \texttt{Payload} & $N$ & Binary data of the message. \\
+    \texttt{CRC} & $2$ & Cyclic Redundancy Check of the packet's binary data from the Message Type up to the end of Payload (does not include the Preamble). \\
+    \midrule
+    & $N+8$ \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Swift Binary Protocol message structure}
+  \label{tab:message}
+\end{table}
+
+((* block messages_table *))
+((* endblock *))
+
+((* block messages_desc *))
+((* endblock *))
+
+\end{document}

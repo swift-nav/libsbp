@@ -119,7 +119,9 @@ def mk_package(contents):
                                   description=description,
                                   includes=include,
                                   definitions=resolved,
-                                  render_source=contents.get('render_source', True))
+                                  render_source=contents.get('render_source', True),
+                                  stable=contents.get('stable', False),
+                                  public=contents.get('public', False))
 def mk_definition(defn):
   assert len(defn) == 1
   identifier, contents = defn.items()[0]
@@ -129,7 +131,8 @@ def mk_definition(defn):
                                          short_desc=contents.get('short_desc', None),
                                          desc=contents.get('desc', None),
                                          type_id=contents.get('type'),
-                                         fields=fs))
+                                         fields=fs,
+                                         public=contents.get('public', False)))
 
 def mk_field(field):
   assert len(field) == 1

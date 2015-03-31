@@ -1,0 +1,31 @@
+((* extends "sbp_base.tex" *))
+((* block messages_table *))
+
+\newpage
+\section{Message Types}
+\label{sec:Messages}
+
+\begin{large}
+Messages are grouped into logical collections of packages.
+\end{large}
+
+\begin{table}[h]
+  \centering
+  \begin{tabularx}{\textwidth}{aabaX}
+    \toprule
+    Package & Message & Name & Size & Description \\
+    \midrule
+    ((*- for m in msgs *))
+      (((m.pkg|packagenameify|escape_tex))) &
+      \hyperref[sec:(((m.name)))]{\texttt{((('0x%04X'|format(m.sbp_id))))}} &
+      \hyperref[sec:(((m.name)))]{\texttt{(((m.name|escape_tex)))}} &
+      $(((m.size)))$ &
+      (((m.short_desc|escape_tex))) \\
+    ((*- endfor *))
+    \bottomrule
+  \end{tabularx}
+  \caption{Summary of message types}
+  \label{tab:messages}
+\end{table}
+
+((* endblock *))
