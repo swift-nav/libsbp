@@ -1,0 +1,34 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: test.specs.lib
+description: Defines a variety of common structs.
+include:
+  - types.yaml
+definitions:
+
+ - UARTChannel:
+    desc: State of the UART channel.
+    fields:
+        - txThroughput:
+            type: float
+            desc: UART transmit throughput.
+        - rxThroughput:
+            type: float
+            desc: UART receive throughput.
+        - crcErrorCount:
+            type: u16
+            desc: UART CRC error count.
+        - txBufferLevel:
+            type: u8
+            desc: UART transmit usage percentage.
+        - rxBufferLevel:
+            type: float
+            desc: UART receive usage percentage.
