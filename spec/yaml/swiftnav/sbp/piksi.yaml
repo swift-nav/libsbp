@@ -23,14 +23,14 @@ definitions:
 
  - MSG_ALMANAC:
     id: 0x0069
-    short_desc: Legacy message to load satellite almanac (Host => Piksi).
+    short_desc: Legacy message to load satellite almanac (Host => Piksi)
     desc: |
       This is a legacy message for sending and loading a satellite
       alamanac onto the Piksi's flash memory from the host.
 
  - MSG_SET_TIME:
     id: 0x0068
-    short_desc: Send GPS time from host (Host => Piksi).
+    short_desc: Send GPS time from host (Host => Piksi)
     desc: |
       This message sets up timing functionality using a coarse GPS
       time estimate sent by the host.
@@ -38,7 +38,7 @@ definitions:
  - MSG_RESET:
     id: 0x00B2
     public: True
-    short_desc: Reset the device (Host => Piksi).
+    short_desc: Reset the device (Host => Piksi)
     desc: |
       This message from the host resets the Piksi back into the
       bootloader. It ensures that all outstanding memory accesses
@@ -46,7 +46,7 @@ definitions:
 
  - MSG_CW_RESULTS:
     id: 0x00C0
-    short_desc: Legacy message for CW interference channel (Piksi => Host).
+    short_desc: Legacy message for CW interference channel (Piksi => Host)
     desc: |
       This is an unused legacy message for result reporting from the
       CW interference channel on the SwiftNAP. This message will be
@@ -54,7 +54,7 @@ definitions:
 
  - MSG_CW_START:
     id: 0x00C1
-    short_desc: Legacy message for CW interference channel (Host => Piksi).
+    short_desc: Legacy message for CW interference channel (Host => Piksi)
     desc: |
       This is an unused legacy message from those host for starting
       the CW interference channel on the SwiftNAP. This message will
@@ -93,7 +93,7 @@ definitions:
  - MSG_THREAD_STATE:
     id: 0x0017
     public: True
-    short_desc: State of a CPU/RTOS thread.
+    short_desc: State of a CPU/RTOS thread
     desc: |
       The thread usage message from the Piksi reports RTOS thread
       usage statistics for the named thread. The reported values
@@ -116,7 +116,7 @@ definitions:
 
  - UARTChannel:
     public: True
-    short_desc: State of the UART channel.
+    short_desc: State of the UART channel
     desc: |
       Throughput, utilization, and error counts on the RX/TX buffers
       of this UART channel. Values require renormalization.
@@ -150,7 +150,7 @@ definitions:
 
  - Latency:
     public: True
-    short_desc: Receiver-to-base station latency.
+    short_desc: Receiver-to-base station latency
     desc: |
       Statistics on the latency of observations received from the base
       station. As observation packets are received their GPS time is
@@ -178,7 +178,7 @@ definitions:
  - MSG_UART_STATE:
     id: 0x0018
     public: True
-    short_desc: State of the UART channels.
+    short_desc: State of the UART channels
     desc: |
       The UART message reports data latency and throughput of the UART
       channels providing SBP I/O. On the default Piksi configuration,
@@ -201,7 +201,7 @@ definitions:
 
  - MSG_IAR_STATE:
     id: 0x0019
-    short_desc: State of the Integer Ambiguity Resolution (IAR) process.
+    short_desc: State of the Integer Ambiguity Resolution (IAR) process
     desc: |
       This message reports the state of the Integer Ambiguity
       Resolution (IAR) process, which resolves unknown integer

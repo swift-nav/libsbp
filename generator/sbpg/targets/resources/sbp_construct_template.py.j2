@@ -10,8 +10,8 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 from construct import *
-from swift.sbp import SBP
-from swift.sbp.utils import fmt_repr
+from sbp import SBP
+from sbp.utils import fmt_repr
 
 ((*- for i in include *))
 from (((module_path))).(((i))) import *
@@ -129,6 +129,3 @@ msg_classes = {
   ((*- endif*))
 ((*- endfor *))
 }
-
-def sbp_decode(t, d):
-  return msg_classes[t](d)

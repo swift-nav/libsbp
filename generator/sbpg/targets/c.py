@@ -10,12 +10,12 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 """
-  Generator for c target.
-  """
+Generator for c target.
+"""
 
 import jinja2
 import os
-from sbp.targets.templating import *
+from sbpg.targets.templating import *
 
 TEMPLATE_NAME = "sbp_messages_template.h"
 
@@ -34,25 +34,54 @@ def extensions(includes):
 
 import re
 
-CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32', 's64', 'float', 'double'])
+CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
+                      's64', 'float', 'double'])
 
 def convert(value):
+  """
+  """
   s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', value)
   return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()+"_t"
 
 def mk_id(field):
+  """
+  """
   name = field.type_id
-  if name == "string":
-    return "%s[%d]" % ("char", field.options['size'].value)
+  if name == "string" and field.options.get('size', None):
+    return "%s" % ("char")
+  elif name == "string":
+    return "%s*" % ("char")
+  elif name == "array" and field.size:
+    if field.options['fill'].value not in CONSTRUCT_CODE:
+      return "%s" % convert(field.options['fill'].value)
+    else:
+      return "%s" % field.options['fill'].value
   elif name == "array":
-    return "%s*" % convert(field.options['fill'].value)
+    return "%s" % convert(field.options['fill'].value)
   elif name not in CONSTRUCT_CODE:
     return convert(name)
   else:
     return name
 
+def mk_size(field):
+  """
+  """
+  name = field.type_id
+  print field
+  if name == "string" and field.options.get('size', None):
+    return "%s[%d];" % (field.identifier, field.options.get('size').value)
+  elif name == "string":
+    return "%s;" % field.identifier
+  elif name == "array" and field.options.get('size', None):
+    return "%s[%d];" % (field.identifier, field.options.get('size').value)
+  elif name == "array":
+    return "%s[0];" % field.identifier
+  else:
+    return '%s;' % field.identifier
+
 JENV.filters['commentify'] = commentify
 JENV.filters['mk_id'] = mk_id
+JENV.filters['mk_size'] = mk_size
 JENV.filters['convert'] = convert
 
 def render_source(output_dir, package_spec):
@@ -60,14 +89,12 @@ def render_source(output_dir, package_spec):
   Render and output
   """
   path, name = package_spec.filepath
-  directory = "/".join([output_dir, path])
-  if not os.path.exists(directory):
-    os.makedirs(directory)
   destination_filename = "%s/%s.h" % (output_dir, name)
   py_template = JENV.get_template(TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,
                                pkg_name=name,
+                               filepath="/".join(package_spec.filepath)+".yaml",
                                max_msgid_len=package_spec.max_msgid_len,
                                timestamp=package_spec.creation_timestamp,
                                include=extensions(package_spec.includes)))

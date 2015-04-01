@@ -14,16 +14,18 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/acquisition.yaml
-# with generate.py at 2015-03-23 14:30:01.624760. Please do not hand edit!
+# with generate.py at 2015-04-02 11:56:20.690360. Please do not hand edit!
 
 
 SBP_MSG_ACQ_RESULT = 0x0015
 class MsgAcqResult(SBP):
   """SBP class for message MSG_ACQ_RESULT (0x0015).
   
-  Results of an attempted GPS signal acquisition. Contains the
-parameters of the point in the acquisition search space with the
-best signal-to-noise ratio.
+  This message describes the results from an attempted GPS signal
+acquisition search for a satellite PRN over a code phase/carrier
+frequency range. It contains the parameters of the point in the
+acquisition search space with the best signal-to-noise (SNR)
+ratio.
 
 
   Parameters
@@ -31,9 +33,9 @@ best signal-to-noise ratio.
   snr : float
     SNR of best point.
   cp : float
-    Code phase.
+    Code phase of best point.
   cf : float
-    Carrier frequency.
+    Carrier frequency of best point.
   prn : int
     PRN identifier of the satellite signal for which
 acquisition was attempted.
@@ -64,6 +66,3 @@ acquisition was attempted.
 msg_classes = {
   0x0015: MsgAcqResult,
 }
-
-def sbp_decode(t, d):
-  return msg_classes[t](d)

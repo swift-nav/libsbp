@@ -14,13 +14,15 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml
-# with generate.py at 2015-03-23 14:30:01.621847. Please do not hand edit!
+# with generate.py at 2015-04-02 11:56:20.686137. Please do not hand edit!
 
 
 class TrackingChannelState(object):
   """TrackingChannelState.
   
-  State of the tracking channel.
+  Tracking channel state for a specific satellite PRN and measured
+signal power.
+
   
   Parameters
   ----------
@@ -54,12 +56,15 @@ SBP_MSG_TRACKING_STATE = 0x0016
 class MsgTrackingState(SBP):
   """SBP class for message MSG_TRACKING_STATE (0x0016).
   
-  Tracking channel states
+  The tracking message returns a variable-length array of tracking
+channel states. It reports status and code/carrier phase signal
+power measurements for all tracked satellites.
+
 
   Parameters
   ----------
   states : array
-    State of the tracking channel.
+    Satellite tracking channel state.
 
   """
   _parser = Struct("MsgTrackingState",
@@ -83,7 +88,13 @@ SBP_MSG_EPHEMERIS = 0x001A
 class MsgEphemeris(SBP):
   """SBP class for message MSG_EPHEMERIS (0x001A).
   
-  WGS84 satellite orbit ephemeris parameters
+  The ephemeris message returns a set of satellite orbit
+parameters that is used to calculate GPS satellite position,
+velocity, and clock offset (WGS84). Please see the Navstar GPS
+Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+20-III) for more details
+(http://www.navcen.uscg.gov/pubs/gps/icd200/icd200cw1234.pdf).
+
 
   Parameters
   ----------
@@ -188,6 +199,3 @@ msg_classes = {
   0x0016: MsgTrackingState,
   0x001A: MsgEphemeris,
 }
-
-def sbp_decode(t, d):
-  return msg_classes[t](d)

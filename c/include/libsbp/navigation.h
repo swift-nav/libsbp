@@ -11,8 +11,8 @@
  */
 
 /*****************************************************************************
- * Automatically generated from piksi/yaml/
- * with generate.py at 2015-03-23 14:29:54.541553. Please do not hand edit!
+ * Automatically generated from yaml/swiftnav/sbp/navigation.yaml
+ * with generate.py at 2015-04-02 12:08:48.537325. Please do not hand edit!
  *****************************************************************************/
 
 #ifndef LIBSBP_NAVIGATION_MESSAGES_H
@@ -22,7 +22,8 @@
 
 
 /** GPS Time
-  * GPS Time.
+ *
+ * This message reports the GPS Time.
  */
 #define SBP_MSG_GPS_TIME      0x0100
 typedef struct __attribute__((packed)) {
@@ -34,7 +35,10 @@ typedef struct __attribute__((packed)) {
 
 
 /** Dilution of Precision
-  * Dilution of Precision.
+ *
+ * This dilution of precision (DOP) message describes the effect of
+ * navigation satellite geometry on positional measurement
+ * precision.
  */
 #define SBP_MSG_DOPS          0x0206
 typedef struct __attribute__((packed)) {
@@ -47,9 +51,15 @@ typedef struct __attribute__((packed)) {
 } msg_dops_t;
 
 
-/** Position in ECEF
-  * Position solution in absolute Earth Centered Earth Fixed (ECEF)
- * coordinates.
+/** Single-point position in ECEF
+ *
+ * The single-point position solution message reports absolute
+ * Earth Centered Earth Fixed (ECEF) coordinates and the status
+ * (single point absolute vs RTK) of the position solution. If the
+ * rover receiver knows surveyed position of the base station and
+ * has an RTK solution, this reports a pseudo-absolute position
+ * solution using the base station position and the rover's RTK
+ * baseline vector.
  */
 #define SBP_MSG_POS_ECEF      0x0200
 typedef struct __attribute__((packed)) {
@@ -64,7 +74,13 @@ typedef struct __attribute__((packed)) {
 
 
 /** Geodetic Position
-  * Geodetic position solution.
+ *
+ * This single-point position solution message reports the absolute
+ * geodetic coordinates and the status (single point absolute vs
+ * RTK) of the position solution. If the rover receiver knows the
+ * surveyed position of the base station and has an RTK solution,
+ * this reports a pseudo-absolute position solution using the base
+ * station position and the rover's RTK baseline vector.
  */
 #define SBP_MSG_POS_LLH       0x0201
 typedef struct __attribute__((packed)) {
@@ -79,8 +95,10 @@ typedef struct __attribute__((packed)) {
 } msg_pos_llh_t;
 
 
-/** Baseline in ECEF
-  * Baseline in Earth Centered Earth Fixed (ECEF) coordinates.
+/** Baseline Position in ECEF
+ *
+ * This message reports the baseline position solution in Earth
+ * Centered Earth Fixed (ECEF) coordinates.
  */
 #define SBP_MSG_BASELINE_ECEF 0x0202
 typedef struct __attribute__((packed)) {
@@ -95,7 +113,9 @@ typedef struct __attribute__((packed)) {
 
 
 /** Baseline in NED
-  * Baseline in local North East Down (NED) coordinates.
+ *
+ * This message reports the baseline position solution in North
+ * East Down (NED) coordinates.
  */
 #define SBP_MSG_BASELINE_NED  0x0203
 typedef struct __attribute__((packed)) {
@@ -111,7 +131,9 @@ typedef struct __attribute__((packed)) {
 
 
 /** Velocity in ECEF
-  * Velocity in Earth Centered Earth Fixed (ECEF) coordinates.
+ *
+ * This message reports the velocity in Earth Centered Earth Fixed
+ * (ECEF) coordinates.
  */
 #define SBP_MSG_VEL_ECEF      0x0204
 typedef struct __attribute__((packed)) {
@@ -126,7 +148,9 @@ typedef struct __attribute__((packed)) {
 
 
 /** Velocity in NED
-  * Velocity in local North East Down (NED) coordinates.
+ *
+ * This message reports the velocity in local North East Down (NED)
+ * coordinates.
  */
 #define SBP_MSG_VEL_NED       0x0205
 typedef struct __attribute__((packed)) {

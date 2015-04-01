@@ -14,7 +14,7 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml
-# with generate.py at 2015-03-24 09:47:42.317363. Please do not hand edit!
+# with generate.py at 2015-04-02 11:56:20.603170. Please do not hand edit!
 
 
 class ObsGPSTime(object):
@@ -86,7 +86,7 @@ cycles and 8-bits of fractional cycles.
 class ObservationHeader(object):
   """ObservationHeader.
   
-  Header of a GPS observation message
+  Header of a GPS observation message.
   
   Parameters
   ----------
@@ -119,7 +119,9 @@ counter (ith packet of n)
 class PackedObsContent(object):
   """PackedObsContent.
   
-  GPS observations for a particular satellite signal.
+  Pseudorange and carrier phase observation for a satellite being
+tracked.
+
   
   Parameters
   ----------
@@ -163,13 +165,19 @@ SBP_MSG_OBS = 0x0045
 class MsgObs(SBP):
   """SBP class for message MSG_OBS (0x0045).
   
+  The GPS observations message reports all the pseudo range and
+carrier phase observations for the satellites being tracked by
+the Piksi.
+
 
   Parameters
   ----------
   header : ObservationHeader
     Header of a GPS observation message
   obs : array
-    Observations
+    Pseudorange and carrier phase observation for a
+satellite being tracked.
+
 
   """
   _parser = Struct("MsgObs",
@@ -194,6 +202,10 @@ SBP_MSG_BASE_POS = 0x0044
 class MsgBasePos(SBP):
   """SBP class for message MSG_BASE_POS (0x0044).
   
+  This may be the position as reported by the base station itself or the
+position obtained from doing a single point solution using the base
+station observations.
+
 
   Parameters
   ----------
@@ -229,6 +241,3 @@ msg_classes = {
   0x0045: MsgObs,
   0x0044: MsgBasePos,
 }
-
-def sbp_decode(t, d):
-  return msg_classes[t](d)

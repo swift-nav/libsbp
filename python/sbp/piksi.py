@@ -14,13 +14,15 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml
-# with generate.py at 2015-03-24 09:47:48.702701. Please do not hand edit!
+# with generate.py at 2015-04-02 11:56:20.668370. Please do not hand edit!
 
 
 class UARTChannel(object):
   """UARTChannel.
   
-  State of the UART channel.
+  Throughput, utilization, and error counts on the RX/TX buffers
+of this UART channel. Values require renormalization.
+
   
   Parameters
   ----------
@@ -33,9 +35,13 @@ class UARTChannel(object):
   io_error_count : int
     UART IO error count.
   tx_buffer_level : int
-    UART transmit usage percentage.
+    UART transmit buffer percentage utilization. Ranges from
+0 - 255 and needs to be renormalized to 100.
+
   rx_buffer_level : int
-    UART receive usage percentage.
+    UART receive buffer percentage utilization. Ranges from
+0 - 255 and needs to be renormalized to 100.
+
 
   """
   _parser = Struct("UARTChannel",
@@ -100,43 +106,13 @@ communication latency in the system.
   def to_binary(self):
     return Latency.build(self.__dict__)
     
-SBP_MSG_PRINT = 0x0010
-class MsgPrint(SBP):
-  """SBP class for message MSG_PRINT (0x0010).
-  
-  Information and debugging information.
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_DEBUG_VAR = 0x0011
-class MsgDebugVar(SBP):
-  """SBP class for message MSG_DEBUG_VAR (0x0011).
-  
-  Legacy message for tracing variable values.
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
 SBP_MSG_ALMANAC = 0x0069
 class MsgAlmanac(SBP):
   """SBP class for message MSG_ALMANAC (0x0069).
   
-  MSG_ALMANAC
+  This is a legacy message for sending and loading a satellite
+alamanac onto the Piksi's flash memory from the host.
+
 
   """
 
@@ -152,39 +128,9 @@ SBP_MSG_SET_TIME = 0x0068
 class MsgSetTime(SBP):
   """SBP class for message MSG_SET_TIME (0x0068).
   
-  MSG_SET_TIME
+  This message sets up timing functionality using a coarse GPS
+time estimate sent by the host.
 
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_BOOTLOADER_HANDSHAKE = 0x00B0
-class MsgBootloaderHandshake(SBP):
-  """SBP class for message MSG_BOOTLOADER_HANDSHAKE (0x00B0).
-  
-  MSG_BOOTLOADER_HANDSHAKE
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_BOOTLOADER_JUMP_TO_APP = 0x00B1
-class MsgBootloaderJumpToApp(SBP):
-  """SBP class for message MSG_BOOTLOADER_JUMP_TO_APP (0x00B1).
-  
-  MSG_BOOTLOADER_JUMP_TO_APP
 
   """
 
@@ -200,7 +146,10 @@ SBP_MSG_RESET = 0x00B2
 class MsgReset(SBP):
   """SBP class for message MSG_RESET (0x00B2).
   
-  Reset the devices.
+  This message from the host resets the Piksi back into the
+bootloader. It ensures that all outstanding memory accesses
+including buffered writes are completed before reset begins.
+
 
   """
 
@@ -216,7 +165,10 @@ SBP_MSG_CW_RESULTS = 0x00C0
 class MsgCwResults(SBP):
   """SBP class for message MSG_CW_RESULTS (0x00C0).
   
-  MSG_CW_RESULTS
+  This is an unused legacy message for result reporting from the
+CW interference channel on the SwiftNAP. This message will be
+removed in a future release.
+
 
   """
 
@@ -232,151 +184,10 @@ SBP_MSG_CW_START = 0x00C1
 class MsgCwStart(SBP):
   """SBP class for message MSG_CW_START (0x00C1).
   
-  MSG_CW_START
+  This is an unused legacy message from those host for starting
+the CW interference channel on the SwiftNAP. This message will
+be removed in a future release.
 
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_NAP_DEVICE_DNA = 0x00DD
-class MsgNapDeviceDna(SBP):
-  """SBP class for message MSG_NAP_DEVICE_DNA (0x00DD).
-  
-  MSG_NAP_DEVICE_DNA
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_FLASH_PROGRAM = 0x00E0
-class MsgFlashProgram(SBP):
-  """SBP class for message MSG_FLASH_PROGRAM (0x00E0).
-  
-  MSG_FLASH_PROGRAM
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_FLASH_DONE = 0x00E0
-class MsgFlashDone(SBP):
-  """SBP class for message MSG_FLASH_DONE (0x00E0).
-  
-  MSG_FLASH_DONE
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_FLASH_READ = 0x00E1
-class MsgFlashRead(SBP):
-  """SBP class for message MSG_FLASH_READ (0x00E1).
-  
-  MSG_FLASH_READ
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_FLASH_ERASE = 0x00E2
-class MsgFlashErase(SBP):
-  """SBP class for message MSG_FLASH_ERASE (0x00E2).
-  
-  MSG_FLASH_ERASE
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_STM_FLASH_LOCK_SECTOR = 0x00E3
-class MsgStmFlashLockSector(SBP):
-  """SBP class for message MSG_STM_FLASH_LOCK_SECTOR (0x00E3).
-  
-  MSG_STM_FLASH_LOCK_SECTOR
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_STM_FLASH_UNLOCK_SECTOR = 0x00E4
-class MsgStmFlashUnlockSector(SBP):
-  """SBP class for message MSG_STM_FLASH_UNLOCK_SECTOR (0x00E4).
-  
-  MSG_STM_FLASH_UNLOCK_SECTOR
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_STM_UNIQUE_ID = 0x00E5
-class MsgStmUniqueId(SBP):
-  """SBP class for message MSG_STM_UNIQUE_ID (0x00E5).
-  
-  MSG_STM_UNIQUE_ID
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_M25_FLASH_WRITE_STATUS = 0x00F3
-class MsgM25FlashWriteStatus(SBP):
-  """SBP class for message MSG_M25_FLASH_WRITE_STATUS (0x00F3).
-  
-  MSG_M25_FLASH_WRITE_STATUS
 
   """
 
@@ -392,135 +203,43 @@ SBP_MSG_RESET_FILTERS = 0x0022
 class MsgResetFilters(SBP):
   """SBP class for message MSG_RESET_FILTERS (0x0022).
   
-  MSG_RESET_FILTERS
+  This message resets either the DGNSS Kalman filters or Integer
+Ambiguity Resolution (IAR) process.
+
+
+  Parameters
+  ----------
+  filter : int
+    Filter flags
 
   """
+  _parser = Struct("MsgResetFilters",
+                   ULInt8('filter'),)
 
   def __init__(self, sbp):
     self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
+    self.from_binary(sbp.payload)
 
   def __repr__(self):
     return fmt_repr(self)
  
+  def from_binary(self, d):
+    p = MsgResetFilters._parser.parse(d)
+    self.__dict__.update(dict(p.viewitems()))
+
+  def to_binary(self):
+    return MsgResetFilters.build(self.__dict__)
     
 SBP_MSG_INIT_BASE = 0x0023
 class MsgInitBase(SBP):
   """SBP class for message MSG_INIT_BASE (0x0023).
   
-  MSG_INIT_BASE
+  This message initializes the Integer Ambiguity Resolution (IAR)
+process on the Piksi to use an assumed baseline position between
+the base station and rover receivers. Warns via MsgPrint if
+there aren't a shared minimum number (4) of satellite
+observations between the two.
 
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_SETTINGS = 0x00A0
-class MsgSettings(SBP):
-  """SBP class for message MSG_SETTINGS (0x00A0).
-  
-  MSG_SETTINGS
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_SETTINGS_SAVE = 0x00A1
-class MsgSettingsSave(SBP):
-  """SBP class for message MSG_SETTINGS_SAVE (0x00A1).
-  
-  MSG_SETTINGS_SAVE
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_SETTINGS_READ_BY_INDEX = 0x00A2
-class MsgSettingsReadByIndex(SBP):
-  """SBP class for message MSG_SETTINGS_READ_BY_INDEX (0x00A2).
-  
-  MSG_SETTINGS_READ_BY_INDEX
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_FILEIO_READ = 0x00A8
-class MsgFileioRead(SBP):
-  """SBP class for message MSG_FILEIO_READ (0x00A8).
-  
-  MSG_FILEIO_READ
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_FILEIO_READ_DIR = 0x00A9
-class MsgFileioReadDir(SBP):
-  """SBP class for message MSG_FILEIO_READ_DIR (0x00A9).
-  
-  MSG_FILEIO_READ_DIR
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_FILEIO_REMOVE = 0x00AC
-class MsgFileioRemove(SBP):
-  """SBP class for message MSG_FILEIO_REMOVE (0x00AC).
-  
-  MSG_FILEIO_REMOVE
-
-  """
-
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
-SBP_MSG_FILEIO_WRITE = 0x00AD
-class MsgFileioWrite(SBP):
-  """SBP class for message MSG_FILEIO_WRITE (0x00AD).
-  
-  MSG_FILEIO_WRITE
 
   """
 
@@ -536,14 +255,19 @@ SBP_MSG_THREAD_STATE = 0x0017
 class MsgThreadState(SBP):
   """SBP class for message MSG_THREAD_STATE (0x0017).
   
-  State of the CPU threads.
+  The thread usage message from the Piksi reports RTOS thread
+usage statistics for the named thread. The reported values
+require renormalization.
+
 
   Parameters
   ----------
   name : string
-    Thread name
+    Thread name (NULL terminated)
   cpu : int
-    cpu
+    Percentage cpu use for this thread. Ranges from 0 - 1000
+and needs to be renormalized to 100.
+
   stack_free : int
     Free stack space for this thread.
 
@@ -571,18 +295,23 @@ SBP_MSG_UART_STATE = 0x0018
 class MsgUartState(SBP):
   """SBP class for message MSG_UART_STATE (0x0018).
   
-  State of the UART channels.
+  The UART message reports data latency and throughput of the UART
+channels providing SBP I/O. On the default Piksi configuration,
+UARTs A and B are used for telemetry radios, but can also be be
+host access ports for embedded hosts, or other interfaces in
+future.
+
 
   Parameters
   ----------
   uart_a : UARTChannel
-    State of UART A.
+    State of UART A
   uart_b : UARTChannel
-    State of UART B.
+    State of UART B
   uart_ftdi : UARTChannel
-    State of UART FTDI.
+    State of UART FTDI (USB logger)
   latency : Latency
-    UART communication latency.
+    UART communication latency
 
   """
   _parser = Struct("MsgUartState",
@@ -609,7 +338,11 @@ SBP_MSG_IAR_STATE = 0x0019
 class MsgIarState(SBP):
   """SBP class for message MSG_IAR_STATE (0x0019).
   
-  State of the Integer Ambiguity Resolution (IAR) process.
+  This message reports the state of the Integer Ambiguity
+Resolution (IAR) process, which resolves unknown integer
+ambiguities from double-differenced carrier-phase measurements
+from satellite observations.
+
 
   Parameters
   ----------
@@ -636,37 +369,14 @@ class MsgIarState(SBP):
     
 
 msg_classes = {
-  0x0010: MsgPrint,
-  0x0011: MsgDebugVar,
   0x0069: MsgAlmanac,
   0x0068: MsgSetTime,
-  0x00B0: MsgBootloaderHandshake,
-  0x00B1: MsgBootloaderJumpToApp,
   0x00B2: MsgReset,
   0x00C0: MsgCwResults,
   0x00C1: MsgCwStart,
-  0x00DD: MsgNapDeviceDna,
-  0x00E0: MsgFlashProgram,
-  0x00E0: MsgFlashDone,
-  0x00E1: MsgFlashRead,
-  0x00E2: MsgFlashErase,
-  0x00E3: MsgStmFlashLockSector,
-  0x00E4: MsgStmFlashUnlockSector,
-  0x00E5: MsgStmUniqueId,
-  0x00F3: MsgM25FlashWriteStatus,
   0x0022: MsgResetFilters,
   0x0023: MsgInitBase,
-  0x00A0: MsgSettings,
-  0x00A1: MsgSettingsSave,
-  0x00A2: MsgSettingsReadByIndex,
-  0x00A8: MsgFileioRead,
-  0x00A9: MsgFileioReadDir,
-  0x00AC: MsgFileioRemove,
-  0x00AD: MsgFileioWrite,
   0x0017: MsgThreadState,
   0x0018: MsgUartState,
   0x0019: MsgIarState,
 }
-
-def sbp_decode(t, d):
-  return msg_classes[t](d)
