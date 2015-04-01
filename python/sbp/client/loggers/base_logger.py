@@ -10,6 +10,7 @@
 
 from ...table import dispatch
 import calendar
+import threading
 import time
 
 class BaseLogger(object):
@@ -27,15 +28,22 @@ class BaseLogger(object):
   def __init__(self, filename):
     self.handle = open(filename, "w+")
     self.base_time = time.time()
+    self.lock = threading.RLock()
 
   def __enter__(self):
     return self
 
   def __exit__(self, *args):
+    self.flush()
     self.close()
 
+  def flush(self):
+    with self.lock:
+      self.handle.flush()
+
   def close(self):
-    self.handle.close()
+    with self.lock:
+      self.handle.close()
 
   def timestamp(self):
     """
@@ -66,15 +74,27 @@ class LogIterator(object):
   def __init__(self, handle, dispatcher=dispatch):
     self.handle = handle
     self.dispatcher = dispatcher
+    self.lock = threading.RLock()
 
   def __enter__(self):
+    self.lock.acquire()
     return self
 
   def __exit__(self, *args):
-    self.handle.close()
+    self.flush()
+    self.close()
+    self.lock.release()
 
   def __iter__(self):
     return self
+
+  def flush(self):
+    with self.lock:
+      self.handle.flush()
+
+  def close(self):
+    with self.lock:
+      self.handle.close()
 
   def next(self):
     """Return the next record tuple from the log file. If an unknown SBP

@@ -24,7 +24,8 @@ class PickleLogger(BaseLogger):
     return (self.delta(), self.timestamp(), msg)
 
   def call(self, msg):
-    pickle.dump(self.fmt_msg(msg), self.handle, 2)
+    with self.lock:
+      pickle.dump(self.fmt_msg(msg), self.handle, 2)
 
 
 class PickleLogIterator(LogIterator):
@@ -56,11 +57,13 @@ class PickleLogIterator(LogIterator):
     """
     try:
       while True:
-        delta, timestamp, item = pickle.load(self.handle)
+        with self.lock:
+          delta, timestamp, item = pickle.load(self.handle)
         try:
           yield (delta, timestamp, self.dispatcher(item))
         except KeyError:
           yield (delta, timestamp, item)
     except EOFError:
-      self.handle.seek(0, 0)
+      with self.lock:
+        self.handle.seek(0, 0)
       raise StopIteration

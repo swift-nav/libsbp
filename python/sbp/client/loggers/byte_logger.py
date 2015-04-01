@@ -29,4 +29,5 @@ class ByteLogger(BaseLogger):
     return s
 
   def call(self, msg):
-    self.handle.write(self.fmt_msg(msg))
+    with self.lock:
+      self.handle.write(self.fmt_msg(msg))
