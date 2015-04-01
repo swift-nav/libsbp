@@ -34,6 +34,7 @@ class Framer(object):
   """
   def __init__(self, read, write):
     self.read = read
+    self.write = write
 
   def readall(self, size):
     """
