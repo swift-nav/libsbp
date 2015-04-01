@@ -32,9 +32,10 @@ class Framer(object):
   write : port
     Stream of bytes to write to.
   """
-  def __init__(self, read, write):
+  def __init__(self, read, write, verbose):
     self.read = read
     self.write = write
+    self.verbose = verbose
 
   def readall(self, size):
     """
@@ -59,7 +60,8 @@ class Framer(object):
     if not preamble:
       return None
     elif ord(preamble) != SBP_PREAMBLE:
-      print "Host Side Unhandled byte: 0x%02x" % ord(preamble)
+      if self.verbose:
+        print "Host Side Unhandled byte: 0x%02x" % ord(preamble)
       return None
 
     # hdr
@@ -93,10 +95,9 @@ class Framer(object):
     sender : int
       SBP sender id.
     """
-    msg = ""
-    msg += struct.pack("<BHHB", SBP_PREAMBLE, msg_type, sender, len(msg))
+    msg = struct.pack("<BHHB", SBP_PREAMBLE, msg_type, sender, len(data))
     msg += data
-    crc = crc16(data[1:])
+    crc = crc16(msg[1:])
     msg += struct.pack("<H", crc)
     self.write(msg)
 
@@ -155,7 +156,7 @@ class Handler(object):
   """
   def __init__(self, read, write, verbose=False):
     self.callbacks = collections.defaultdict(set)
-    self.framer = Framer(read, write)
+    self.framer = Framer(read, write, verbose)
     self.receive_thread = ReceiveThread(self.framer.receive, self.call)
 
   def __enter__(self):
