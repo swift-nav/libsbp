@@ -3,6 +3,7 @@ include *.md
 include *.rst
 include *.py
 include *.sh
+include *.txt
 include .coveragerc
 include .gitignore
 include LICENSE
