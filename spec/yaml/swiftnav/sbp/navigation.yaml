@@ -84,10 +84,10 @@ definitions:
       The single-point position solution message reports absolute
       Earth Centered Earth Fixed (ECEF) coordinates and the status
       (single point absolute vs RTK) of the position solution. If the
-      rover receiver knows the single-point point position of the base
-      station and has an RTK solution, this reports a pseudo-absolute
-      position solution using the base station single-point position
-      solution and the rover's RTK baseline vector.
+      rover receiver knows surveyed position of the base station and
+      has an RTK solution, this reports a pseudo-absolute position
+      solution using the base station position and the rover's RTK
+      baseline vector.
     fields:
         - tow:
             type: u32
@@ -132,11 +132,10 @@ definitions:
     desc: |
       This single-point position solution message reports the absolute
       geodetic coordinates and the status (single point absolute vs
-      RTK) of the position solution. If the rover receiver knows
-      single-point point position of the base station and has an RTK
-      solution, this reports a pseudo-absolute position solution using
-      the base station single-point position solution and the rover's
-      RTK baseline vector.
+      RTK) of the position solution. If the rover receiver knows the
+      surveyed position of the base station and has an RTK solution,
+      this reports a pseudo-absolute position solution using the base
+      station position and the rover's RTK baseline vector.
     fields:
         - tow:
             type: u32
