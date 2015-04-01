@@ -55,14 +55,15 @@ class PickleLogIterator(LogIterator):
       (elapsed msec since beginning of log, UTC timestamp, msg)
 
     """
-    with self.lock:
-      try:
-        while True:
+    try:
+      while True:
+        with self.lock:
           delta, timestamp, item = pickle.load(self.handle)
-          try:
-            yield (delta, timestamp, self.dispatcher(item))
-          except KeyError:
-            yield (delta, timestamp, item)
-      except EOFError:
+        try:
+          yield (delta, timestamp, self.dispatcher(item))
+        except KeyError:
+          yield (delta, timestamp, item)
+    except EOFError:
+      with self.lock:
         self.handle.seek(0, 0)
-        raise StopIteration
+      raise StopIteration
