@@ -8,8 +8,6 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-import threading
-
 class BaseDriver(object):
   """
   BaseDriver
@@ -24,7 +22,6 @@ class BaseDriver(object):
   """
   def __init__(self, handle):
     self.handle = handle
-    self.lock = threading.RLock()
 
   def __enter__(self):
     self.flush()
@@ -43,8 +40,7 @@ class BaseDriver(object):
     size : int
       Number of bytes to read.
     """
-    with self.lock:
-      return self.handle.read(size)
+    return self.handle.read(size)
 
   def write(self, s):
     """
@@ -55,19 +51,16 @@ class BaseDriver(object):
     s : bytes
       Bytes to write
     """
-    with self.lock:
-      return self.handle.write(s)
+    return self.handle.write(s)
 
   def flush(self):
     """
     Flush wrapper.
     """
-    with self.lock:
-      self.handle.flush()
+    self.handle.flush()
 
   def close(self):
     """
     Close wrapper.
     """
-    with self.lock:
-      self.handle.close()
+    self.handle.close()

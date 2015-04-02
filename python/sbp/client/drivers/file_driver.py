@@ -42,19 +42,17 @@ class FileDriver(BaseDriver):
       current position and 2 means seek relative to the file's end
 
     """
-    with self.lock:
-      self.handle.seek(pos, whence)
+    self.handle.seek(pos, whence)
 
   def next(self):
     """
     Call handle's iterator.
 
     """
-    with self.lock:
-      line = self.handle.readline()
-      if not line:
-        raise StopIteration
-      return line
+    line = self.handle.readline()
+    if not line:
+      raise StopIteration
+    return line
 
   def readline(self):
     """
@@ -62,5 +60,4 @@ class FileDriver(BaseDriver):
     (EOL) character ('\n' by default), or until timeout.
 
     """
-    with self.lock:
-      return self.handle.readline()
+    return self.handle.readline()

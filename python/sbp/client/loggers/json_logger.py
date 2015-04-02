@@ -27,8 +27,7 @@ class JSONLogger(BaseLogger):
             "data": msg.to_json_dict()}
 
   def call(self, msg):
-    with self.lock:
-      self.handle.write(json.dumps(self.fmt_msg(msg)) + "\n")
+    self.handle.write(json.dumps(self.fmt_msg(msg)) + "\n")
 
 
 class JSONLogIterator(LogIterator):
@@ -58,15 +57,14 @@ class JSONLogIterator(LogIterator):
       (elapsed msec since beginning of log, UTC timestamp, msg)
 
     """
-    with self.lock:
-      for line in self.handle:
-        data = json.loads(line)
-        delta = data['delta']
-        timestamp = data['timestamp']
-        item = SBP.from_json_dict(data['data'])
-        try:
-          yield (delta, timestamp, self.dispatcher(item))
-        except KeyError:
-          yield (delta, timestamp, item)
-      self.handle.seek(0, 0)
-      raise StopIteration
+    for line in self.handle:
+      data = json.loads(line)
+      delta = data['delta']
+      timestamp = data['timestamp']
+      item = SBP.from_json_dict(data['data'])
+      try:
+        yield (delta, timestamp, self.dispatcher(item))
+      except KeyError:
+        yield (delta, timestamp, item)
+    self.handle.seek(0, 0)
+    raise StopIteration
