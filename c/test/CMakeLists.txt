@@ -18,16 +18,18 @@ else (CMAKE_CROSSCOMPILING)
     include_directories("${PROJECT_SOURCE_DIR}/include/libsbp")
 
     add_executable(test_libsbp
-      check_edc.c
-      check_sbp.c
       check_acquisition.c
+      check_bootload.c
       check_edc.c
+      check_file_io.c
+      check_flash.c
       check_main.c
       check_navigation.c
       check_observation.c
       check_piksi.c
       check_sbp.c
-      check_standard.c
+      check_settings.c
+      check_system.c
       check_tracking.c
     )
 

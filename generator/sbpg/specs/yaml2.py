@@ -13,14 +13,12 @@
 Parsing YAML specifications of SBP.
 """
 
-import sbp.syntax as sbp
 import glob
 import os
-import sbp.specs.yaml_schema as s
+import sbpg.specs.yaml_schema as s
+import sbpg.syntax as sbp
 import sys
 import yaml
-
-toplevel = '/Users/mookerji/Dropbox/Documents/swift/clones/libsbp/spec/yaml/swift/sbp/'
 
 test_file = ['navigation.yaml', 'base.yaml', 'lib.yaml', 'observation.yaml',
              'piksi.yaml', 'types.yaml']
@@ -110,6 +108,8 @@ def parse_spec(contents):
 #
 
 def mk_package(contents):
+  """
+  """
   package = contents.get('package', None)
   description = contents.get('description', None)
   include = contents.get('include', [])
@@ -123,6 +123,8 @@ def mk_package(contents):
                                   stable=contents.get('stable', False),
                                   public=contents.get('public', False))
 def mk_definition(defn):
+  """
+  """
   assert len(defn) == 1
   identifier, contents = defn.items()[0]
   fs = [mk_field(f) for f in contents.get('fields', [])]
@@ -135,6 +137,8 @@ def mk_definition(defn):
                                          public=contents.get('public', False)))
 
 def mk_field(field):
+  """
+  """
   assert len(field) == 1
   identifier, contents = field.items()[0]
   contents = dict({'units': '', 'n_with_values': 0}.items() + contents.items())

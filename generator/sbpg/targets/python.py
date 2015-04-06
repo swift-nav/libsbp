@@ -16,12 +16,9 @@ This module consumes the
 """
 
 import os
-from sbp.targets.templating import JENV, ACRONYMS
+from sbpg.targets.templating import JENV, ACRONYMS
 
 from construct import *
-PascalString = Struct("PascalString", UBInt8("length"), Bytes("data", lambda ctx: ctx.length))
-PascalString.parse("\x05helloXXX")
-
 
 TEMPLATE_NAME = "sbp_construct_template.py.j2"
 
@@ -61,8 +58,10 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
   formatted = ""
   if type_map.get(f.type_id, None):
     return "%s('%s')" % (type_map.get(f.type_id), f.identifier)
-  elif f.type_id == 'string':
+  elif f.type_id == 'string' and f.options.get('size', None):
     return "String('%s', %d)" % (f.identifier, f.options['size'].value)
+  elif f.type_id == 'string':
+    return "String('%s', %d)" % (f.identifier, 22)
   elif f.type_id == 'array':
     return "Struct('%s', OptionalGreedyRange(%s._parser))" % (f.identifier, f.options['fill'].value)
   else:
@@ -90,9 +89,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
   Render and output
   """
   path, name = package_spec.filepath
-  directory = "/".join([output_dir, path])
-  if not os.path.exists(directory):
-    os.makedirs(directory)
+  directory = output_dir
   destination_filename = "%s/%s.py" % (directory, name)
   py_template = jenv.get_template(TEMPLATE_NAME)
   module_path = ".".join(package_spec.identifier.split(".")[:-1])

@@ -21,7 +21,7 @@ definitions:
  - MSG_PRINT:
     id: 0x0010
     public: True
-    short_desc: Plaintext logging messages (Piksi => Host).
+    short_desc: Plaintext logging messages
     desc: |
       This message contains a human-reabable payload string from the
       Piksi containing errors, warnings and informational messages at
@@ -35,7 +35,7 @@ definitions:
 
  - MSG_DEBUG_VAR:
     id: 0x0011
-    short_desc: Legacy message for tracing variable values (Piksi => Host).
+    short_desc: Legacy message for tracing variable values
     desc: |
       This is an unused legacy message for tracing variable values
       within the Piksi firmware and streaming those back to the host.

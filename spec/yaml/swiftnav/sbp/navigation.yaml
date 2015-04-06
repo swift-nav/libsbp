@@ -23,7 +23,12 @@ definitions:
     public: True
     short_desc: GPS Time
     desc: |
-        This message reports the GPS Time.
+      This message reports the GPS time, an integer time scale
+      beginning at January 6, 1980 midnight. GPS time counts the weeks
+      and seconds of the week. The weeks begin at the Saturday/Sunday
+      transition. GPS week 0 began at the beginning of the GPS time
+      scale. Within each week number, the GPS time of the week is
+      between between 0 and 604800 seconds (=60*60*24*7).
     fields:
         - wn:
             type: u16
@@ -32,7 +37,7 @@ definitions:
         - tow:
             type: u32
             units: ms
-            desc: GPS Time of Week rounded to the nearest ms
+            desc: GPS time of week rounded to the nearest ms
         - ns:
             type: s32
             units: ns

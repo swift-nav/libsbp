@@ -11,8 +11,8 @@
  */
 
 /*****************************************************************************
- * Automatically generated from piksi/yaml/
- * with generate.py at 2015-03-23 14:29:54.545051. Please do not hand edit!
+ * Automatically generated from yaml/swiftnav/sbp/acquisition.yaml
+ * with generate.py at 2015-04-02 12:08:48.650967. Please do not hand edit!
  *****************************************************************************/
 
 #ifndef LIBSBP_ACQUISITION_MESSAGES_H
@@ -21,16 +21,19 @@
 #include "common.h"
 
 
-/** None
-  * Results of an attempted GPS signal acquisition. Contains the
- * parameters of the point in the acquisition search space with the
- * best signal-to-noise ratio.
+/** Satellite acquisition result.
+ *
+ * This message describes the results from an attempted GPS signal
+ * acquisition search for a satellite PRN over a code phase/carrier
+ * frequency range. It contains the parameters of the point in the
+ * acquisition search space with the best signal-to-noise (SNR)
+ * ratio.
  */
 #define SBP_MSG_ACQ_RESULT 0x0015
 typedef struct __attribute__((packed)) {
   float snr;    /**< SNR of best point. */
-  float cp;     /**< Code phase. [chips] */
-  float cf;     /**< Carrier frequency. [hz] */
+  float cp;     /**< Code phase of best point. [chips] */
+  float cf;     /**< Carrier frequency of best point. [hz] */
   u8 prn;    /**< PRN identifier of the satellite signal for which
 acquisition was attempted.
  */

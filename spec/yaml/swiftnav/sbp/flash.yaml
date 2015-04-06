@@ -63,7 +63,7 @@ definitions:
  - MSG_FLASH_DONE:
     id: 0x00E0
     public: True
-    short_desc: Flash response message (Piksi => Host).
+    short_desc: Flash response message (Host <= Piksi).
     desc: |
       This message defines success or failure codes for a variety of
       flash memory requests from the host to the Piksi. Flash read and

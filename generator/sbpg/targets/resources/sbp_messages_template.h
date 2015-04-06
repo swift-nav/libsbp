@@ -11,7 +11,7 @@
  */
 
 /*****************************************************************************
- * Automatically generated from piksi/yaml/(((filepath)))
+ * Automatically generated from yaml/(((filepath)))
  * with generate.py at (((timestamp))). Please do not hand edit!
  *****************************************************************************/
 
@@ -26,7 +26,8 @@
 ((* for m in msgs *))
 ((*- if m.desc *))
 /** (((m.short_desc)))
- (((m.desc|commentify)))
+ *
+(((m.desc|commentify)))
  */
 ((*- endif *))
 ((*- if m.sbp_id *))
@@ -36,9 +37,9 @@
 typedef struct __attribute__((packed)) {
   ((*- for f in m.fields *))
   ((*- if f.desc *))
-  (((f|mk_id))) ((((f.identifier+';').ljust(m.max_fid_len+4)))) /**< (((f.desc))) ((* if f.units *))[(((f.units)))] ((* endif *))*/
+  (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4)))) /**< (((f.desc))) ((* if f.units *))[(((f.units)))] ((* endif *))*/
   ((*- else *))
-  (((f|mk_id))) ((((f.identifier+';').ljust(m.max_fid_len+4))))
+  (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4))))
   ((*- endif *))
   ((*- endfor *))
 } (((m.identifier|convert)));

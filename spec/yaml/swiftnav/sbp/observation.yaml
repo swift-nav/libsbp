@@ -18,7 +18,7 @@ definitions:
 
  - ObsGPSTime:
     public: True
-    short_desc: Millisecond-accurate GPS time.
+    short_desc: Millisecond-accurate GPS time
     desc: |
       A wire-appropriate GPS time, defined as the number of
       milliseconds since beginning of the week on the Saturday/Sunday
@@ -97,7 +97,7 @@ definitions:
  - MSG_OBS:
     id: 0x0045
     public: True
-    short_desc: GPS satellite observations.
+    short_desc: GPS satellite observations
     desc: |
       The GPS observations message reports all the pseudo range and
       carrier phase observations for the satellites being tracked by
@@ -117,7 +117,7 @@ definitions:
  - MSG_BASE_POS:
     id: 0x0044
     public: True
-    short_desc: Base station position.
+    short_desc: Base station position
     desc: |
       This may be the position as reported by the base station itself or the
       position obtained from doing a single point solution using the base
