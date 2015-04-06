@@ -15,20 +15,21 @@ Single dispatch of available SBP messages, keyed by msg_type.
 """
 
 from construct.core import FieldError
-import acquisition as acq
-import navigation as nav
-import observation as obs
-import piksi as piksi
-import standard as std
-import tracking as track
-import warnings
+from . import acquisition as acq
+from . import logging as log
+from . import navigation as nav
+from . import observation as obs
+from . import piksi as piksi
+from . import system as sys
+from . import tracking as trac
 
-_SBP_TABLE = dict(nav.msg_classes.items() \
-                  + obs.msg_classes.items() \
-                  + acq.msg_classes.items() \
-                  + track.msg_classes.items() \
-                  + piksi.msg_classes.items() \
-                  + std.msg_classes.items())
+_SBP_TABLE = dict(acq.msg_classes.items()
+                  + log.msg_classes.items()
+                  + nav.msg_classes.items()
+                  + obs.msg_classes.items()
+                  + piksi.msg_classes.items()
+                  + sys.msg_classes.items()
+                  + trac.msg_classes.items())
 
 class InvalidSBPMessageType(NotImplementedError):
   """

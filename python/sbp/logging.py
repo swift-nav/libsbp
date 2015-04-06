@@ -14,7 +14,7 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/logging.yaml
-# with generate.py at 2015-04-02 11:56:20.661323. Please do not hand edit!
+# with generate.py at 2015-04-06 14:29:03.143810. Please do not hand edit!
 
 
 SBP_MSG_PRINT = 0x0010

@@ -13,14 +13,14 @@ from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
 import pytest
 import sbp.acquisition as acq
-import sbp.piksi as piksi
+import sbp.logging as log
 
 def test_table_count():
   """
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 44
+  number_of_messages = 27
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_available_messages():
@@ -29,7 +29,7 @@ def test_available_messages():
 
   """
   table = {acq.SBP_MSG_ACQ_RESULT: acq.MsgAcqResult,
-           piksi.SBP_MSG_PRINT: piksi.MsgPrint}
+           log.SBP_MSG_PRINT: log.MsgPrint}
   msg = SBP(msg_type=0x15, sender=1219, length=13,
             payload='\x92$yA\x00\x00\xbcC\x81\xc1\xf9\xc5\x1d')
   # TODO (Buro): Replace this message constructor once generated SBP

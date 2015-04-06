@@ -14,7 +14,7 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml
-# with generate.py at 2015-04-02 11:56:20.686137. Please do not hand edit!
+# with generate.py at 2015-04-06 14:29:03.153830. Please do not hand edit!
 
 
 class TrackingChannelState(object):
@@ -34,10 +34,10 @@ signal power.
     Carrier-to-noise density
 
   """
-  _parser = Struct("TrackingChannelState",
-                   ULInt8('state'),
-                   ULInt8('prn'),
-                   LFloat32('cn0'),)
+  _parser = Embedded(Struct("TrackingChannelState",
+                     ULInt8('state'),
+                     ULInt8('prn'),
+                     LFloat32('cn0'),))
 
   def __init__(self, payload):
     self.from_binary(payload)

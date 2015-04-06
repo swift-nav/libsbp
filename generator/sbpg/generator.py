@@ -81,7 +81,7 @@ def main():
       parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
       tex.render_source(output_dir, parsed, args.settings[0])
     else:
-      assert len(args.settings[0]) == 0, \
+      assert not args.settings, \
         "Settings flag only used for target latex."
       for fname, spec in file_index.items():
         parsed = yaml.parse_spec(spec)

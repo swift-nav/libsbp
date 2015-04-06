@@ -14,7 +14,7 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml
-# with generate.py at 2015-04-02 11:56:20.668370. Please do not hand edit!
+# with generate.py at 2015-04-06 14:29:03.146568. Please do not hand edit!
 
 
 class UARTChannel(object):
@@ -44,13 +44,13 @@ of this UART channel. Values require renormalization.
 
 
   """
-  _parser = Struct("UARTChannel",
-                   LFloat32('tx_throughput'),
-                   LFloat32('rx_throughput'),
-                   ULInt16('crc_error_count'),
-                   ULInt16('io_error_count'),
-                   ULInt8('tx_buffer_level'),
-                   ULInt8('rx_buffer_level'),)
+  _parser = Embedded(Struct("UARTChannel",
+                     LFloat32('tx_throughput'),
+                     LFloat32('rx_throughput'),
+                     ULInt16('crc_error_count'),
+                     ULInt16('io_error_count'),
+                     ULInt8('tx_buffer_level'),
+                     ULInt8('rx_buffer_level'),))
 
   def __init__(self, payload):
     self.from_binary(payload)
@@ -87,11 +87,11 @@ communication latency in the system.
     Smoothed estimate of the current latency.
 
   """
-  _parser = Struct("Latency",
-                   SLInt32('avg'),
-                   SLInt32('lmin'),
-                   SLInt32('lmax'),
-                   SLInt32('current'),)
+  _parser = Embedded(Struct("Latency",
+                     SLInt32('avg'),
+                     SLInt32('lmin'),
+                     SLInt32('lmax'),
+                     SLInt32('current'),))
 
   def __init__(self, payload):
     self.from_binary(payload)

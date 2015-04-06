@@ -41,10 +41,10 @@ class ((( m.identifier )))(object):
 
   """
   ((*- if m.fields *))
-  _parser = Struct("(((m.identifier )))",
-                   ((*- for f in m.fields *))
-                   ((( f | construct ))),
-                   ((*- endfor *)))
+  _parser = Embedded(Struct("(((m.identifier )))",
+                     ((*- for f in m.fields *))
+                     ((( f | construct ))),
+                     ((*- endfor *))))
   ((*- endif *))
 
   def __init__(self, payload):

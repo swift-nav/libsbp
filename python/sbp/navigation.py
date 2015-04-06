@@ -14,14 +14,19 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/navigation.yaml
-# with generate.py at 2015-04-02 11:56:20.676559. Please do not hand edit!
+# with generate.py at 2015-04-06 14:29:03.149562. Please do not hand edit!
 
 
 SBP_MSG_GPS_TIME = 0x0100
 class MsgGPSTime(SBP):
   """SBP class for message MSG_GPS_TIME (0x0100).
   
-  This message reports the GPS Time.
+  This message reports the GPS time, an integer time scale
+beginning at January 6, 1980 midnight. GPS time counts the weeks
+and seconds of the week. The weeks begin at the Saturday/Sunday
+transition. GPS week 0 began at the beginning of the GPS time
+scale. Within each week number, the GPS time of the week is
+between between 0 and 604800 seconds (=60*60*24*7).
 
 
   Parameters
@@ -29,7 +34,7 @@ class MsgGPSTime(SBP):
   wn : int
     GPS week number
   tow : int
-    GPS Time of Week rounded to the nearest ms
+    GPS time of week rounded to the nearest ms
   ns : int
     Nanosecond remainder of rounded tow
   flags : int

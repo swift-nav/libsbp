@@ -14,7 +14,7 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/bootload.yaml
-# with generate.py at 2015-04-02 11:56:20.655668. Please do not hand edit!
+# with generate.py at 2015-04-06 14:29:03.142115. Please do not hand edit!
 
 
 SBP_MSG_BOOTLOADER_HANDSHAKE = 0x00B0

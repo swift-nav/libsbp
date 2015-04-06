@@ -14,7 +14,7 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml
-# with generate.py at 2015-04-02 11:56:20.603170. Please do not hand edit!
+# with generate.py at 2015-04-06 14:29:03.082362. Please do not hand edit!
 
 
 class ObsGPSTime(object):
@@ -33,9 +33,9 @@ transition.
     GPS week number
 
   """
-  _parser = Struct("ObsGPSTime",
-                   ULInt32('tow'),
-                   ULInt16('wn'),)
+  _parser = Embedded(Struct("ObsGPSTime",
+                     ULInt32('tow'),
+                     ULInt16('wn'),))
 
   def __init__(self, payload):
     self.from_binary(payload)
@@ -66,9 +66,9 @@ cycles and 8-bits of fractional cycles.
     Carrier phase fractional part.
 
   """
-  _parser = Struct("CarrierPhase",
-                   SLInt32('i'),
-                   ULInt8('f'),)
+  _parser = Embedded(Struct("CarrierPhase",
+                     SLInt32('i'),
+                     ULInt8('f'),))
 
   def __init__(self, payload):
     self.from_binary(payload)
@@ -99,9 +99,9 @@ counter (ith packet of n)
 
 
   """
-  _parser = Struct("ObservationHeader",
-                   Struct('t', ObsGPSTime._parser),
-                   ULInt8('n_obs'),)
+  _parser = Embedded(Struct("ObservationHeader",
+                     Struct('t', ObsGPSTime._parser),
+                     ULInt8('n_obs'),))
 
   def __init__(self, payload):
     self.from_binary(payload)
@@ -141,12 +141,12 @@ significance to the value of the lock indicator.
     PRN identifier of the satellite signal
 
   """
-  _parser = Struct("PackedObsContent",
-                   ULInt32('P'),
-                   Struct('L', CarrierPhase._parser),
-                   ULInt8('cn0'),
-                   ULInt16('lock'),
-                   ULInt8('prn'),)
+  _parser = Embedded(Struct("PackedObsContent",
+                     ULInt32('P'),
+                     Struct('L', CarrierPhase._parser),
+                     ULInt8('cn0'),
+                     ULInt16('lock'),
+                     ULInt8('prn'),))
 
   def __init__(self, payload):
     self.from_binary(payload)

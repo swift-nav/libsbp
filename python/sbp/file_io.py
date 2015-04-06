@@ -14,7 +14,7 @@ from sbp import SBP
 from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/file_io.yaml
-# with generate.py at 2015-04-02 11:56:20.658471. Please do not hand edit!
+# with generate.py at 2015-04-06 14:29:03.143026. Please do not hand edit!
 
 
 SBP_MSG_FILEIO_READ = 0x00A8
