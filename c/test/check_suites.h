@@ -14,12 +14,16 @@
 #define CHECK_SUITES_H
 
 Suite* acquisition_suite(void);
+Suite* bootload_suite(void);
 Suite* edc_suite(void);
-Suite* lib_suite(void);
+Suite* file_io_suite(void);
+Suite* flash_suite(void);
 Suite* navigation_suite(void);
 Suite* observation_suite(void);
 Suite* piksi_suite(void);
 Suite* sbp_suite(void);
+Suite* settings_suite(void);
+Suite* system_suite(void);
 Suite* tracking_suite(void);
 
 #endif /* CHECK_SUITES_H */
