@@ -30,7 +30,7 @@ definitions:
       for a short period of time, and then jumps to the firmware if it
       doesn't receive a handshake from the host. If the host replies
       with a handshake the bootloader doesn't jump to the firmware and
-      waits for flash programming messages, and the host has to send a
+      nwaits for flash programming messages, and the host has to send a
       MSG_BOOTLOADER_JUMP_TO_APP when it's done programming. On old
       versions of the bootloader (<=v0.1), hardcoded u8=0. On new
       versions, return the git describe string for the bootloader
@@ -62,8 +62,8 @@ definitions:
       buffer is empty; the Piksi returns the device DNA in a
       MSG_NAP_DEVICE_DNA message.
     fields:
-      dna:
-        type: array
-        fill: u8
-        size: 8
-        desc: 57-bit SwiftNAP FPGA Device DNA
+      - dna:
+          type: array
+          fill: u8
+          size: 8
+          desc: 57-bit SwiftNAP FPGA Device DNA

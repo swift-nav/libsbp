@@ -24,7 +24,7 @@ definitions:
 
  - MSG_SETTINGS:
     id: 0x00A0
-    public: True
+    public: False
     short_desc: Read/write Piksi configuration settings (Host <=> Piksi).
     desc: |
       The setting message reads and writes the Piksi's configuration.

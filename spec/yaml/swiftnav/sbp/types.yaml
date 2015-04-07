@@ -14,6 +14,7 @@ description: |
   specification. Sizes are in bytes.
 render_source: false
 stable: True
+public: True
 definitions:
  - s8:
     type: primitive
@@ -60,11 +61,18 @@ definitions:
     desc: Double-precision float
     size: 8
  - array:
-    type: primitive
-    desc: Array of types
+    type: collection
+    desc: |
+      Fixed or variable length array of any fill type
  - bytes:
-    type: primitive
-    desc: Array of bytes
+    type: collection
+    desc: |
+      Fixed or variable length array of bytes
  - string:
-    type: primitive
-    desc: string
+    type: collection
+    desc: |
+      Fixed or variable length string (NULL terminated)
+ - bitfield:
+    type: collection
+    desc: |
+      A primitive type, such as a u8, can encode boolean status flags.

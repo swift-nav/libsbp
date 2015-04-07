@@ -19,7 +19,7 @@ definitions:
 
  - TrackingChannelState:
     public: True
-    short_desc: Satellite tracking channel state.
+    short_desc: Satellite tracking channel state
     desc: |
       Tracking channel state for a specific satellite PRN and measured
       signal power.
@@ -46,7 +46,7 @@ definitions:
  - MSG_TRACKING_STATE:
     id: 0x0016
     public: True
-    short_desc: Satellite tracking channel states.
+    short_desc: Satellite tracking channel states
     desc: |
       The tracking message returns a variable-length array of tracking
       channel states. It reports status and code/carrier phase signal

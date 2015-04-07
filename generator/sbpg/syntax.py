@@ -16,7 +16,7 @@ messages.
 
 """
 
-from sbp.utils import fmt_repr, rejig_bitfields
+from sbpg.utils import fmt_repr, rejig_bitfields
 import datetime
 
 ##############################################################################
@@ -161,7 +161,7 @@ class Array(Field):
 
   @property
   def size(self):
-    return self.options.sys.getsizeof()
+    return self.options['fill'].value
 
   @property
   def static(self):

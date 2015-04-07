@@ -47,6 +47,7 @@ definitions:
           desc: Chunk size to read.
       - filename:
           type: string
+          size: 20
           desc: Name of the file to read from (NULL terminated).
 
  - MSG_FILEIO_READ_DIR:
@@ -70,6 +71,7 @@ definitions:
             The offset to skip the first n elements of the file list.
       - dirname:
           type: string
+          size: 20
           desc: Name of the directory to list.
 
  - MSG_FILEIO_REMOVE:
@@ -83,6 +85,7 @@ definitions:
     fields:
       - filename:
           type: string
+          size: 20
           desc: Name of the file to delete (NULL terminated)
 
  - MSG_FILEIO_WRITE:
@@ -98,11 +101,13 @@ definitions:
     fields:
       - filename:
           type: string
+          size: 20
           desc: Name of the file to write to (NULL terminated)
       - offset:
           type: u32
           units: bytes
           desc: Offset into the file at which to start writing in bytes
       - data:
-          type: bytes
+          type: array
+          fill: u8
           desc: Data to write
