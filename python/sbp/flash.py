@@ -12,9 +12,10 @@
 from construct import *
 from sbp import SBP
 from sbp.utils import fmt_repr
+import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/flash.yaml
-# with generate.py at 2015-04-06 18:34:43.475923. Please do not hand edit!
+# with generate.py at 2015-04-06 23:40:11.126002. Please do not hand edit!
 
 
 SBP_MSG_FLASH_PROGRAM = 0x00E0
@@ -45,7 +46,7 @@ starting address.
   """
   _parser = Struct("MsgFlashProgram",
                    ULInt8('target'),
-                   OptionalGreedyRange(Struct('addr_start', ULInt8('addr_start'))),
+                   Struct('addr_start', Array(3, ULInt8('addr_start'))),
                    ULInt8('addr_len'),
                    OptionalGreedyRange(Struct('data', ULInt8('data'))),)
 
@@ -123,7 +124,7 @@ starting address.
   """
   _parser = Struct("MsgFlashRead",
                    ULInt8('target'),
-                   OptionalGreedyRange(Struct('addr_start', ULInt8('addr_start'))),
+                   Struct('addr_start', Array(3, ULInt8('addr_start'))),
                    ULInt8('addr_len'),)
 
   def __init__(self, sbp):
@@ -194,7 +195,7 @@ memory. The Piksi replies with a MSG_FLASH_DONE message.
 
   """
   _parser = Struct("MsgStmFlashLockSector",
-                   OptionalGreedyRange(Struct('sector', ULInt8('sector'))),)
+                   Struct('sector', Array(1, ULInt8('sector'))),)
 
   def __init__(self, sbp):
     self.__dict__.update(sbp.__dict__)
@@ -225,7 +226,7 @@ memory. The Piksi replies with a MSG_FLASH_DONE message.
 
   """
   _parser = Struct("MsgStmFlashUnlockSector",
-                   OptionalGreedyRange(Struct('sector', ULInt8('sector'))),)
+                   Struct('sector', Array(1, ULInt8('sector'))),)
 
   def __init__(self, sbp):
     self.__dict__.update(sbp.__dict__)
@@ -287,7 +288,7 @@ register. The Piksi replies with a MSG_FLASH_DONE message.
 
   """
   _parser = Struct("MsgM25FlashWriteStatus",
-                   OptionalGreedyRange(Struct('status', ULInt8('status'))),)
+                   Struct('status', Array(1, ULInt8('status'))),)
 
   def __init__(self, sbp):
     self.__dict__.update(sbp.__dict__)

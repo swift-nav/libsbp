@@ -12,9 +12,10 @@
 from construct import *
 from sbp import SBP
 from sbp.utils import fmt_repr
+import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/bootload.yaml
-# with generate.py at 2015-04-06 18:34:43.472237. Please do not hand edit!
+# with generate.py at 2015-04-06 23:40:11.121602. Please do not hand edit!
 
 
 SBP_MSG_BOOTLOADER_HANDSHAKE = 0x00B0
@@ -103,7 +104,7 @@ MSG_NAP_DEVICE_DNA message.
 
   """
   _parser = Struct("MsgNapDeviceDna",
-                   OptionalGreedyRange(Struct('dna', ULInt8('dna'))),)
+                   Struct('dna', Array(8, ULInt8('dna'))),)
 
   def __init__(self, sbp):
     self.__dict__.update(sbp.__dict__)

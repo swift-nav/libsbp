@@ -12,9 +12,10 @@
 from construct import *
 from sbp import SBP
 from sbp.utils import fmt_repr
+import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/acquisition.yaml
-# with generate.py at 2015-04-06 18:34:43.490547. Please do not hand edit!
+# with generate.py at 2015-04-06 23:40:11.138411. Please do not hand edit!
 
 
 SBP_MSG_ACQ_RESULT = 0x0015

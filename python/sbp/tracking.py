@@ -12,9 +12,10 @@
 from construct import *
 from sbp import SBP
 from sbp.utils import fmt_repr
+import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml
-# with generate.py at 2015-04-06 18:34:43.487727. Please do not hand edit!
+# with generate.py at 2015-04-06 23:40:11.135754. Please do not hand edit!
 
 
 class TrackingChannelState(object):
