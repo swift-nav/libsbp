@@ -14,7 +14,7 @@ from sbp.client.drivers.file_driver import FileDriver
 from sbp.client.loggers.base_logger import LogIterator
 from sbp.client.loggers.json_logger import JSONLogIterator
 from sbp.client.loggers.pickle_logger import PickleLogIterator
-from sbp.piksi import SBP_MSG_PRINT
+from sbp.logging import SBP_MSG_PRINT
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
 import pytest

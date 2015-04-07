@@ -32,7 +32,7 @@ class Framer(object):
   write : port
     Stream of bytes to write to.
   """
-  def __init__(self, read, write, verbose):
+  def __init__(self, read, write, verbose=False):
     self.read = read
     self.write = write
     self.verbose = verbose
@@ -256,4 +256,3 @@ class Handler(object):
     event.wait(timeout)
     self.remove(cb, msg_type)
     return payload
-

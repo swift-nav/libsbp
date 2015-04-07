@@ -12,16 +12,22 @@
 from construct import *
 from sbp import SBP
 from sbp.utils import fmt_repr
+import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/navigation.yaml
-# with generate.py at 2015-03-23 14:30:01.617263. Please do not hand edit!
+# with generate.py at 2015-04-06 23:40:11.131635. Please do not hand edit!
 
 
 SBP_MSG_GPS_TIME = 0x0100
 class MsgGPSTime(SBP):
   """SBP class for message MSG_GPS_TIME (0x0100).
   
-  GPS Time.
+  This message reports the GPS time, an integer time scale
+beginning at January 6, 1980 midnight. GPS time counts the weeks
+and seconds of the week. The weeks begin at the Saturday/Sunday
+transition. GPS week 0 began at the beginning of the GPS time
+scale. Within each week number, the GPS time of the week is
+between between 0 and 604800 seconds (=60*60*24*7).
 
 
   Parameters
@@ -29,7 +35,7 @@ class MsgGPSTime(SBP):
   wn : int
     GPS week number
   tow : int
-    GPS Time of Week rounded to the nearest ms
+    GPS time of week rounded to the nearest ms
   ns : int
     Nanosecond remainder of rounded tow
   flags : int
@@ -60,7 +66,9 @@ SBP_MSG_DOPS = 0x0206
 class MsgDops(SBP):
   """SBP class for message MSG_DOPS (0x0206).
   
-  Dilution of Precision.
+  This dilution of precision (DOP) message describes the effect of
+navigation satellite geometry on positional measurement
+precision.
 
 
   Parameters
@@ -105,8 +113,13 @@ SBP_MSG_POS_ECEF = 0x0200
 class MsgPosECEF(SBP):
   """SBP class for message MSG_POS_ECEF (0x0200).
   
-  Position solution in absolute Earth Centered Earth Fixed (ECEF)
-coordinates.
+  The single-point position solution message reports absolute
+Earth Centered Earth Fixed (ECEF) coordinates and the status
+(single point absolute vs RTK) of the position solution. If the
+rover receiver knows surveyed position of the base station and
+has an RTK solution, this reports a pseudo-absolute position
+solution using the base station position and the rover's RTK
+baseline vector.
 
 
   Parameters
@@ -154,7 +167,12 @@ SBP_MSG_POS_LLH = 0x0201
 class MsgPosLLH(SBP):
   """SBP class for message MSG_POS_LLH (0x0201).
   
-  Geodetic position solution.
+  This single-point position solution message reports the absolute
+geodetic coordinates and the status (single point absolute vs
+RTK) of the position solution. If the rover receiver knows the
+surveyed position of the base station and has an RTK solution,
+this reports a pseudo-absolute position solution using the base
+station position and the rover's RTK baseline vector.
 
 
   Parameters
@@ -205,7 +223,8 @@ SBP_MSG_BASELINE_ECEF = 0x0202
 class MsgBaselineECEF(SBP):
   """SBP class for message MSG_BASELINE_ECEF (0x0202).
   
-  Baseline in Earth Centered Earth Fixed (ECEF) coordinates.
+  This message reports the baseline position solution in Earth
+Centered Earth Fixed (ECEF) coordinates.
 
 
   Parameters
@@ -253,7 +272,8 @@ SBP_MSG_BASELINE_NED = 0x0203
 class MsgBaselineNED(SBP):
   """SBP class for message MSG_BASELINE_NED (0x0203).
   
-  Baseline in local North East Down (NED) coordinates.
+  This message reports the baseline position solution in North
+East Down (NED) coordinates.
 
 
   Parameters
@@ -304,7 +324,8 @@ SBP_MSG_VEL_ECEF = 0x0204
 class MsgVelECEF(SBP):
   """SBP class for message MSG_VEL_ECEF (0x0204).
   
-  Velocity in Earth Centered Earth Fixed (ECEF) coordinates.
+  This message reports the velocity in Earth Centered Earth Fixed
+(ECEF) coordinates.
 
 
   Parameters
@@ -352,7 +373,8 @@ SBP_MSG_VEL_NED = 0x0205
 class MsgVelNED(SBP):
   """SBP class for message MSG_VEL_NED (0x0205).
   
-  Velocity in local North East Down (NED) coordinates.
+  This message reports the velocity in local North East Down (NED)
+coordinates.
 
 
   Parameters
@@ -410,6 +432,3 @@ msg_classes = {
   0x0204: MsgVelECEF,
   0x0205: MsgVelNED,
 }
-
-def sbp_decode(t, d):
-  return msg_classes[t](d)
