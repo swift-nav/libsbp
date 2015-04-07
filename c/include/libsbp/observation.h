@@ -11,8 +11,8 @@
  */
 
 /*****************************************************************************
- * Automatically generated from piksi/yaml/
- * with generate.py at 2015-03-24 09:47:33.072248. Please do not hand edit!
+ * Automatically generated from yaml/swiftnav/sbp/observation.yaml
+ * with generate.py at 2015-04-02 12:08:48.412942. Please do not hand edit!
  *****************************************************************************/
 
 #ifndef LIBSBP_OBSERVATION_MESSAGES_H
@@ -21,8 +21,9 @@
 #include "common.h"
 
 
-/** None
-  * A wire-appropriate GPS time, defined as the number of
+/** Millisecond-accurate GPS time.
+ *
+ * A wire-appropriate GPS time, defined as the number of
  * milliseconds since beginning of the week on the Saturday/Sunday
  * transition.
  */
@@ -32,8 +33,9 @@ typedef struct __attribute__((packed)) {
 } obs_gps_time_t;
 
 
-/** None
-  * Carrier phase measurement in cycles represented as a 40-bit
+/** GPS carrier phase measurement.
+ *
+ * Carrier phase measurement in cycles represented as a 40-bit
  * fixed point number with Q32.8 layout, i.e. 32-bits of whole
  * cycles and 8-bits of fractional cycles.
  */
@@ -43,8 +45,9 @@ typedef struct __attribute__((packed)) {
 } carrier_phase_t;
 
 
-/** None
- 
+/** Header for observation message.
+ *
+
  */
 typedef struct __attribute__((packed)) {
   obs_gps_time_t t;        /**< GPS time of this observation. */
@@ -55,8 +58,10 @@ counter (ith packet of n)
 } observation_header_t;
 
 
-/** None
- 
+/** GPS observations for a particular satellite signal.
+ *
+ * Pseudorange and carrier phase observation for a satellite being
+ * tracked.
  */
 typedef struct __attribute__((packed)) {
   u32 P;       /**< Pseudorange observation. [cm] */
@@ -71,13 +76,27 @@ significance to the value of the lock indicator.
 } packed_obs_content_t;
 
 
+/** GPS satellite observations.
+ *
+ * The GPS observations message reports all the pseudo range and
+ * carrier phase observations for the satellites being tracked by
+ * the Piksi.
+ */
 #define SBP_MSG_OBS      0x0045
 typedef struct __attribute__((packed)) {
   observation_header_t header;    /**< Header of a GPS observation message */
-  packed_obs_content_t obs[0];       /**< Observations */
+  packed_obs_content_t obs[0];    /**< Pseudorange and carrier phase observation for a
+satellite being tracked.
+ */
 } msg_obs_t;
 
 
+/** Base station position.
+ *
+ * This may be the position as reported by the base station itself or the
+ * position obtained from doing a single point solution using the base
+ * station observations.
+ */
 #define SBP_MSG_BASE_POS 0x0044
 typedef struct __attribute__((packed)) {
   double lat;       /**< Latitude [deg] */
