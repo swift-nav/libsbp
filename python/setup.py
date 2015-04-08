@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-from sbp import __version__
 from setuptools import setup
 import os
+
+VERSION = "0.29"
 
 CLASSIFIERS = [
   'Intended Audience :: Developers',
@@ -39,7 +40,7 @@ with open(cwd + '/requirements.txt') as f:
 setup(name='sbp',
       description='Python bindings for Swift Binary Protocol',
       long_description=readme,
-      version=__version__,
+      version=VERSION,
       author='Swift Navigation',
       author_email='dev@swiftnav.com',
       url='https://github.com/swift-nav/libsbp',
