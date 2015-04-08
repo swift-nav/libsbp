@@ -49,7 +49,7 @@ class PackageSpecification(object):
 
   @property
   def max_msgid_len(self):
-    return max([0]+[len(d.identifier) for d in self.definitions if is_message(d)])
+    return max([0] + [len(d.identifier) for d in self.definitions if is_message(d)])
 
   def __repr__(self):
     return fmt_repr(self)

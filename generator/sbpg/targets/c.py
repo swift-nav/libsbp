@@ -13,11 +13,9 @@
 Generator for c target.
 """
 
-import jinja2
-import os
 from sbpg.targets.templating import *
-
 TEMPLATE_NAME = "sbp_messages_template.h"
+
 
 def commentify(value):
   """
@@ -25,10 +23,14 @@ def commentify(value):
   """
   if value is None:
     return
-  return '\n'.join([' * ' + l for l in value.split('\n')[:-1]])
+  if len(value.split('\n')) == 1:
+    return "* " + value
+  else:
+    return '\n'.join([' * ' + l for l in value.split('\n')[:-1]])
+
 
 def extensions(includes):
-  """
+  """Formats a list of header files to include.
   """
   return ["".join([i.split(".")[0], ".h"]) for i in includes if i.split(".")[0] != "types"]
 
@@ -37,14 +39,17 @@ import re
 CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double'])
 
+
 def convert(value):
-  """
+  """Converts to a C language appropriate identifier format.
+
   """
   s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', value)
-  return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()+"_t"
+  return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower() + "_t"
+
 
 def mk_id(field):
-  """
+  """Builds an identifier from a field.
   """
   name = field.type_id
   if name == "string" and field.options.get('size', None):
@@ -64,10 +69,9 @@ def mk_id(field):
     return name
 
 def mk_size(field):
-  """
+  """Builds an identifier for a container type.
   """
   name = field.type_id
-  print field
   if name == "string" and field.options.get('size', None):
     return "%s[%d];" % (field.identifier, field.options.get('size').value)
   elif name == "string":
@@ -86,7 +90,7 @@ JENV.filters['convert'] = convert
 
 def render_source(output_dir, package_spec):
   """
-  Render and output
+  Render and output to a directory given a package specification.
   """
   path, name = package_spec.filepath
   destination_filename = "%s/%s.h" % (output_dir, name)
@@ -94,7 +98,8 @@ def render_source(output_dir, package_spec):
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,
                                pkg_name=name,
-                               filepath="/".join(package_spec.filepath)+".yaml",
+                               filepath="/".join(package_spec.filepath) + ".yaml",
                                max_msgid_len=package_spec.max_msgid_len,
+                               description=package_spec.description,
                                timestamp=package_spec.creation_timestamp,
                                include=extensions(package_spec.includes)))

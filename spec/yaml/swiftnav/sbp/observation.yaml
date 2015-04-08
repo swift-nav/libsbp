@@ -44,11 +44,11 @@ definitions:
         - i:
             type: s32
             units: cycles
-            desc: Carrier phase whole cycles.
+            desc: Carrier phase whole cycles
         - f:
             type: u8
             units: cycles / 255
-            desc: Carrier phase fractional part.
+            desc: Carrier phase fractional part
 
  - ObservationHeader:
     public: True
@@ -57,7 +57,7 @@ definitions:
     fields:
         - t:
             type: ObsGPSTime
-            desc: GPS time of this observation.
+            desc: GPS time of this observation
         - n_obs:
             type: u8
             desc: |
@@ -75,10 +75,10 @@ definitions:
         - P:
             type: u32
             units: cm
-            desc: Pseudorange observation.
+            desc: Pseudorange observation
         - L:
             type: CarrierPhase
-            desc: Carrier phase observation.
+            desc: Carrier phase observation
         - cn0:
             type: u8
             units: dB Hz
@@ -89,7 +89,7 @@ definitions:
               Lock indicator. This value changes whenever a satellite
               signal has lost and regained lock, indicating that the
               carrier phase ambiguity may have changed. There is no
-              significance to the value of the lock indicator.
+              significance to the value of the lock indicator
         - prn:
             type: u8
             desc: PRN identifier of the satellite signal
@@ -112,7 +112,7 @@ definitions:
             map_by: prn
             desc: |
               Pseudorange and carrier phase observation for a
-              satellite being tracked.
+              satellite being tracked
 
  - MSG_BASE_POS:
     id: 0x0044

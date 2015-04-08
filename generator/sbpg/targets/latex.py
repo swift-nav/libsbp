@@ -10,7 +10,6 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 from operator import attrgetter
-from sbpg.specs.settings_list import SettingsList
 from sbpg.targets.templating import *
 from sbpg.utils import fmt_repr
 import re
@@ -20,7 +19,7 @@ import re
 NO_UNDERSCORE = re.compile(r'_')
 
 def no_us(value):
-  """
+  """Removes underscores from strings.
   """
   newval = value
   try:
@@ -41,22 +40,7 @@ LATEX_SUBS_ALLOW_EXPONENTS = (
     (re.compile(r'\n'), r'\\newline ')
 )
 
-def escape_tex_exp(value):
-  """
-  """
-  newval = value
-  try:
-    for pattern, replacement in LATEX_SUBS_ALLOW_EXPONENTS:
-      newval = pattern.sub(replacement, newval)
-    return newval
-  except TypeError:
-    pass
-  return None
-
-JENV.filters['escape_tex_exp'] = escape_tex_exp
-JENV.filters['no_us'] = no_us
-
-TEMPLATE_NAME = "sbp_settings.tex"
+TEMPLATE_NAME = "sbp_messages_desc.tex"
 
 LATEX_SUBS = (
     (re.compile(r'\\'), r'\\textbackslash'),
@@ -107,14 +91,6 @@ def removehost(v):
   """
   return re.sub('^[a-z]*\[N\]\.', '', v)
 
-re1 = '(\\()'
-re2 = '(Host)'
-re3 = '(.)'
-re4 = '(=)'
-re5 = '.*?'
-re6 = '(Piksi)'
-re7 = '(\\)).*'
-
 def remove_dir(v):
   """
   Clean up array name
@@ -134,6 +110,7 @@ JENV.filters['nobrackets'] = nobrackets
 JENV.filters['removearray'] = removearray
 JENV.filters['removedir'] = remove_dir
 JENV.filters['getsize'] = get_size
+JENV.filters['no_us'] = no_us
 
 field_sizes = {
     'u8'     : 1,
@@ -148,11 +125,12 @@ field_sizes = {
     'double' : 8,
 }
 
-CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8',
-                      's16', 's32', 's64', 'float', 'double'])
+CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16',
+                      's32', 's64', 'float', 'double'])
+
 
 class TableItem(object):
-  """
+  """Message
   """
 
   def __init__(self, pkg, name, sbp_id, short_desc,
@@ -169,7 +147,7 @@ class TableItem(object):
 
 
 class FieldItem (object):
-  """
+  """Field contents for a message in a LaTeX table.
   """
 
   def __init__(self, name, fmt, offset, size, units, desc, n_with_values, bitfields):
@@ -223,14 +201,14 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
       (new_items, new_offset, new_multiplier) \
         = handle_fields(definitions,
                         definition.fields,
-                        prefix_name + "[*N*]",
+                        prefix_name + "[N]",
                         offset,
                         multiplier)
       multiplier = new_offset - offset
       (newer_items, newer_offset, newer_multiplier) \
         = handle_fields(definitions,
                         definition.fields,
-                        prefix_name + "[*N*]", offset,
+                        prefix_name + "[N]", offset,
                         multiplier)
       items += newer_items
       offset = newer_offset
@@ -259,14 +237,10 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
       offset += size
   return (items, offset, multiplier)
 
-
-def render_source(output_dir, package_specs, settings_file):
+def render_source(output_dir, package_specs):
   """
   Render and output
   """
-  setting = SettingsList(settings_file)
-  groups = sorted(setting.return_groups())
-  setting = sorted(setting.list_of_dicts)
   destination_filename = "%s/sbp_out.tex" % output_dir
   py_template = JENV.get_template(TEMPLATE_NAME)
   stable_msgs = []
@@ -293,8 +267,6 @@ def render_source(output_dir, package_specs, settings_file):
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=stable_msgs,
                                umsgs=unstable_msgs,
-                               groups=groups,
-                               setting=setting,
                                prims=prims))
   import subprocess
   import os

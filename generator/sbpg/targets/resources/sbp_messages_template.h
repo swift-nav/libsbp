@@ -15,7 +15,8 @@
  * with generate.py at (((timestamp))). Please do not hand edit!
  *****************************************************************************/
 
-/** \defgroup (((pkg_name))) (((pkg_name)))
+/** \defgroup (((pkg_name))) (((pkg_name|capitalize)))
+ *
  * (((description|commentify)))
  * \{ */
 

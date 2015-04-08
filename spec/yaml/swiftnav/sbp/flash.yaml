@@ -35,10 +35,10 @@ definitions:
           type: u8
           desc: Target flags
           fields:
-            - 1-8:
+            - 1-7:
                 desc: Reserved
             - 0:
-                desc: Flash target to read.
+                desc: Flash target to read
                 values:
                   - 0: FLASH_STM
                   - 1: FLASH_M25
@@ -53,12 +53,12 @@ definitions:
           units: bytes
           desc: |
             Length of set of addresses to program, counting up from
-            starting address.
+            starting address
       - data:
           type: array
           fill: u8
           size_fn: addr_len
-          desc: Data to program addresses with, sized by addr_len.
+          desc: Data to program addresses with, sized by addr_len
 
  - MSG_FLASH_DONE:
     id: 0x00E0
@@ -103,10 +103,10 @@ definitions:
           type: u8
           desc: Target flags
           fields:
-            - 1-8:
+            - 1-7:
                 desc: Reserved
             - 0:
-                desc: Flash target to read.
+                desc: Flash target to read
                 values:
                   - 0: FLASH_STM
                   - 1: FLASH_M25
@@ -121,7 +121,7 @@ definitions:
           units: bytes
           desc: |
             Length of set of addresses to read, counting up from
-            starting address.
+            starting address
 
  - MSG_FLASH_ERASE:
     id: 0x00E2
@@ -138,7 +138,7 @@ definitions:
           type: u8
           desc: Target flags
           fields:
-            - 1-8:
+            - 1-7:
                 desc: Reserved
             - 0:
                 desc: Flash target to read
@@ -149,7 +149,7 @@ definitions:
           type: u8
           desc: |
             Flash sector number to erase (0-11 for the STM, 0-15 for
-            the M25).
+            the M25)
 
  - MSG_STM_FLASH_LOCK_SECTOR:
     id: 0x00E3
@@ -163,7 +163,7 @@ definitions:
           type: array
           size: 1
           fill: u8
-          desc: Flash sector number to lock.
+          desc: Flash sector number to lock
 
  - MSG_STM_FLASH_UNLOCK_SECTOR:
     id: 0x00E4
@@ -177,7 +177,7 @@ definitions:
           type: array
           fill: u8
           size: 1
-          desc: Flash sector number to unlock.
+          desc: Flash sector number to unlock
 
  - MSG_STM_UNIQUE_ID:
     id: 0x00E5
@@ -191,11 +191,11 @@ definitions:
       - stm_id:
           type: string
           size: 12
-          desc: STM32F4 unique ID.
+          desc: STM32F4 unique ID
 
  - MSG_M25_FLASH_WRITE_STATUS:
     id: 0x00F3
-    public: True
+    public: False
     short_desc: Write M25 flash status register (Host => Piksi).
     desc: |
       The flash status message writes to the 8-bit M25 flash status
@@ -205,4 +205,4 @@ definitions:
           type: array
           size: 1
           fill: u8
-          desc: Byte to write to the M25 flash status register.
+          desc: Byte to write to the M25 flash status register

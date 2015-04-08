@@ -31,7 +31,7 @@ definitions:
     fields:
       - text:
           type: string
-          desc: Informative, human-readable string.
+          desc: Informative, human-readable string
 
  - MSG_DEBUG_VAR:
     id: 0x0011

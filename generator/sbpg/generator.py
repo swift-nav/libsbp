@@ -43,11 +43,6 @@ def get_args():
   parser.add_argument('--latex',
                       action="store_true",
                       help='Target language: LaTeX.')
-  parser.add_argument('-s',
-                      '--settings',
-                      nargs=1,
-                      required=False,
-                      help='Path to settings, if generating LaTeX.')
   parser.add_argument('-v',
                       '--verbose',
                       action="store_true",
@@ -76,13 +71,9 @@ def main():
       pprint.pprint(file_index.keys())
       print "Writing to %s" % output_dir
     if args.latex:
-      print args.settings
-      assert len(args.settings) == 1, "Please pass a settings file."
       parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
-      tex.render_source(output_dir, parsed, args.settings[0])
+      tex.render_source(output_dir, parsed)
     else:
-      assert not args.settings, \
-        "Settings flag only used for target latex."
       for fname, spec in file_index.items():
         parsed = yaml.parse_spec(spec)
         if not parsed.render_source:

@@ -71,7 +71,7 @@ definitions:
           type: u8
           desc: Filter flags
           fields:
-            - 1-8:
+            - 1-7:
                 desc: Reserved
             - 0:
                 desc: Filter or process to reset
@@ -82,7 +82,7 @@ definitions:
  - MSG_INIT_BASE:
     id: 0x0023
     public: True
-    short_desc: Initialize IAR from known baseline (Host => Piksi).
+    short_desc: Initialize IAR from known baseline (Host => Piksi)
     desc: |
       This message initializes the Integer Ambiguity Resolution (IAR)
       process on the Piksi to use an assumed baseline position between
@@ -105,48 +105,48 @@ definitions:
             desc: Thread name (NULL terminated)
         - cpu:
             type: u16
-            units: Utilization percentage /1000.
+            units: Utilization percentage /1000
             desc: |
               Percentage cpu use for this thread. Ranges from 0 - 1000
-              and needs to be renormalized to 100.
+              and needs to be renormalized to 100
         - stack_free:
             type: u32
             units: kB
-            desc: Free stack space for this thread.
+            desc: Free stack space for this thread
 
  - UARTChannel:
     public: True
     short_desc: State of the UART channel
     desc: |
       Throughput, utilization, and error counts on the RX/TX buffers
-      of this UART channel. Values require renormalization.
+      of this UART channel. Values require renormalization
     fields:
         - tx_throughput:
             type: float
             units: kB/s
-            desc: UART transmit throughput.
+            desc: UART transmit throughput
         - rx_throughput:
             type: float
             units: kB/s
-            desc: UART receive throughput.
+            desc: UART receive throughput
         - crc_error_count:
             type: u16
-            desc: UART CRC error count.
+            desc: UART CRC error count
         - io_error_count:
             type: u16
-            desc: UART IO error count.
+            desc: UART IO error count
         - tx_buffer_level:
             type: u8
             units: Utilization /255
             desc: |
               UART transmit buffer percentage utilization. Ranges from
-              0 - 255 and needs to be renormalized to 100.
+              0 - 255 and needs to be renormalized to 100
         - rx_buffer_level:
             type: u8
             units: Utilization /255
             desc: |
               UART receive buffer percentage utilization. Ranges from
-              0 - 255 and needs to be renormalized to 100.
+              0 - 255 and needs to be renormalized to 100
 
  - Latency:
     public: True
@@ -161,19 +161,19 @@ definitions:
         - avg:
             type: s32
             units: ms
-            desc: Average latency.
+            desc: Average latency
         - lmin:
             type: s32
             units: ms
-            desc: Minimum latency.
+            desc: Minimum latency
         - lmax:
             type: s32
             units: ms
-            desc: Maximum latency.
+            desc: Maximum latency
         - current:
             type: s32
             units: ms
-            desc: Smoothed estimate of the current latency.
+            desc: Smoothed estimate of the current latency
 
  - MSG_UART_STATE:
     id: 0x0018
@@ -210,4 +210,4 @@ definitions:
     fields:
         - num_hyps:
             type: u32
-            desc: Number of integer ambiguity hypotheses remaining.
+            desc: Number of integer ambiguity hypotheses remaining

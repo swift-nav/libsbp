@@ -26,18 +26,18 @@ definitions:
     fields:
         - state:
             type: u8
-            desc: Status of tracking channel.
+            desc: Status of tracking channel
             fields:
                 - 2-7:
                     desc: Reserved
                 - 0-1:
-                    desc: Tracking mode.
+                    desc: Tracking mode
                     values:
                         - 0: Disabled
                         - 1: Running
         - prn:
             type: u8
-            desc: PRN being tracked.
+            desc: PRN being tracked
         - cn0:
             type: float
             units: dB Hz
@@ -55,7 +55,7 @@ definitions:
       - states:
           type: array
           fill: TrackingChannelState
-          desc: Satellite tracking channel state.
+          desc: Satellite tracking channel state
 
  - MSG_EPHEMERIS:
     id: 0x001A
@@ -66,8 +66,7 @@ definitions:
       parameters that is used to calculate GPS satellite position,
       velocity, and clock offset (WGS84). Please see the Navstar GPS
       Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-      20-III) for more details
-      (http://www.navcen.uscg.gov/pubs/gps/icd200/icd200cw1234.pdf).
+      20-III) for more details.
     fields:
       - tgd:
           type: double

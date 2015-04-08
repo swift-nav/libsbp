@@ -29,17 +29,17 @@ definitions:
     fields:
         - snr:
             type: float
-            desc: SNR of best point.
+            desc: SNR of best point
         - cp:
             type: float
             units: chips
-            desc: Code phase of best point.
+            desc: Code phase of best point
         - cf:
             type: float
             units: hz
-            desc: Carrier frequency of best point.
+            desc: Carrier frequency of best point
         - prn:
             type: u8
             desc: |
               PRN identifier of the satellite signal for which
-              acquisition was attempted.
+              acquisition was attempted

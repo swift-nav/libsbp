@@ -9,7 +9,7 @@
 (((m.pkg_desc)))
 \end{large}
 ((* endif *))
-\subsubsection*{(((m.name|escape_tex))) --- ((('0x%04X'|format(m.sbp_id))))}
+\subsubsection{(((m.name|escape_tex))) --- ((('0x%04X'|format(m.sbp_id))))}
 \label{sec:(((m.name)))}
 
 \begin{large}
@@ -86,7 +86,7 @@
 \newpage
 ((*- endfor *))
 
-\section{Unstable Message Definitions}
+\section{Draft Message Definitions}
 ((*- for m in umsgs *))
 ((*- if m.pkg *))
 \subsection{(((m.pkg|packagenameify|no_us)))}
@@ -168,6 +168,7 @@
 \end{table}
 ((*- endif *))
 ((*- endfor *))
+
 \newpage
 ((*- endfor *))
 ((* endblock *))
