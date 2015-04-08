@@ -13,7 +13,7 @@ from construct import *
 import base64
 import struct
 
-__version__ = "0.27"
+__version__ = "0.28"
 
 SBP_PREAMBLE = 0x55
 
