@@ -3,13 +3,12 @@
 SBP Bindings for Python
 ==============================================
 
-Python client for Swift Binary Protocol (SBP). The Swift Navigation
-Binary Protocol (SBP) is a fast, simple, and minimal binary protocol
-for communicating with Swift devices. It is the native binary protocol
-used by the Piksi GPS receiver to transmit solutions, observations,
-status and debugging messages, as well as receive messages from the
-host operating system, such as differential corrections and the
-almanac.
+Python client for Swift Binary Protocol (SBP). SBP is a fast, simple,
+and minimal binary protocol for communicating with Swift devices. It
+is the native binary protocol used by the Piksi GPS receiver to
+transmit solutions, observations, status and debugging messages, as
+well as receive messages from the host operating system, such as
+differential corrections and the almanac.
 
 Setup
 ------------------
@@ -45,9 +44,23 @@ API Reference
 -------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    sbp
+   sbp.client
+   sbp.acquisition
+   sbp.bootload
+   sbp.file_io
+   sbp.flash
+   sbp.logging
+   sbp.navigation
+   sbp.observation
+   sbp.piksi
+   sbp.settings
+   sbp.system
+   sbp.table
+   sbp.tracking
+   sbp.utils
 
 Indices and tables
 ------------------
