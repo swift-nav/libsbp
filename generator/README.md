@@ -27,11 +27,11 @@ For example,
 
 ```shell
 # Output C bindings:
-python sbp/generator.py -i ../spec/yaml/swift/sbp/ -o ../c/ --c
+python sbp/generator.py -i ../spec/yaml/swiftnav/sbp/ -o ../c/ --c
 
 # Output Python bindings:
-python sbp/generator.py -i ../spec/yaml/swift/sbp/ -o ../python/ --c
-python sbp/generator.py -i ../spec/yaml/swift/sbp/navigation.yaml -o ../python/ --c
+python sbp/generator.py -i ../spec/yaml/swiftnav/sbp/ -o ../python/ --c
+python sbp/generator.py -i ../spec/yaml/swiftnav/sbp/navigation.yaml -o ../python/ --c
 
 ```
 
@@ -42,7 +42,7 @@ python sbp/generator.py -i ../spec/yaml/swift/sbp/navigation.yaml -o ../python/ 
 pip install -r requirements.txt
 
 # Running tests
-py.test -q -vv test/
+py.test -q -vv tests/
 
 # Deploying to pypi
 
