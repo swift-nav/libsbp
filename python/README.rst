@@ -12,7 +12,7 @@ Install dependencies only::
 
 Install from repo::
 
-  $ sudo pip setup.py install
+  $ sudo python setup.py install
 
 Install package from pypi::
 
