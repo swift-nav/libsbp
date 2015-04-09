@@ -17,10 +17,10 @@ Main executable.
 import argparse
 import os
 import pprint
-import sbp.specs.yaml2 as yaml
-import sbp.targets.python as py
-import sbp.targets.c as c
-import sbp.targets.latex as tex
+import sbpg.specs.yaml2 as yaml
+import sbpg.targets.python as py
+import sbpg.targets.c as c
+import sbpg.targets.latex as tex
 
 def get_args():
   parser = argparse.ArgumentParser(description='Swift Navigation SBP generator.')
@@ -50,9 +50,6 @@ def get_args():
   return parser
 
 
-# f = '../spec/yaml/swift/sbp/'
-# file_index = yaml.resolve_deps(*yaml.get_files(f))
-
 def main():
   try:
     # Parse and validate arguments.
@@ -73,8 +70,6 @@ def main():
       print "Reading files..."
       pprint.pprint(file_index.keys())
       print "Writing to %s" % output_dir
-    # for fname, spec in file_index.items():
-    #   print yaml.parse_spec(spec)
     if args.latex:
       parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
       tex.render_source(output_dir, parsed)

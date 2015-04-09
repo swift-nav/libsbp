@@ -16,7 +16,7 @@ messages.
 
 """
 
-from sbp.utils import fmt_repr, rejig_bitfields
+from sbpg.utils import fmt_repr, rejig_bitfields
 import datetime
 
 ##############################################################################
@@ -49,7 +49,7 @@ class PackageSpecification(object):
 
   @property
   def max_msgid_len(self):
-    return max([0]+[len(d.identifier) for d in self.definitions if is_message(d)])
+    return max([0] + [len(d.identifier) for d in self.definitions if is_message(d)])
 
   def __repr__(self):
     return fmt_repr(self)
@@ -161,7 +161,7 @@ class Array(Field):
 
   @property
   def size(self):
-    return self.options.sys.getsizeof()
+    return self.options['fill'].value
 
   @property
   def static(self):

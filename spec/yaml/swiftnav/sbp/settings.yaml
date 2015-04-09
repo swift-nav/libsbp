@@ -32,10 +32,10 @@ definitions:
       - setting:
           type: string
           desc: |
-            A NULL delimited (and terminated) string, with a single
-            "<setting section>\0<setting>\0<value>\0" on writes or a
-            series of "<setting section>\0<setting>\0<value>\0" on
-            reads.
+            A NULL delimited (and terminated) string, with the A
+            NULL-terminated and delimited string with contents
+            [SECTION_SETTING, SETTING, VALUE] on writes or a series of
+            such strings on reads.
 
  - MSG_SETTINGS_SAVE:
     id: 0x00A1
@@ -48,13 +48,15 @@ definitions:
  - MSG_SETTINGS_READ_BY_INDEX:
     id: 0x00A2
     short_desc: Read setting by direct index (Host <=> Piksi)
+    public: False
     desc: |
       The settings message for iterating through the settings
-      values. It will read the setting at an index, returning
-      "<setting section>\0<setting>\0<value>\0" from the Piksi.
+      values. It will read the setting at an index, returning a
+      NULL-terminated and delimited string with contents
+      [SECTION_SETTING, SETTING, VALUE].
     fields:
       - index:
           type: u16
           desc: |
             An index into the Piksi settings, with values ranging from
-            0 to length(settings).
+            0 to length(settings)

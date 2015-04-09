@@ -16,12 +16,9 @@ This module consumes the
 """
 
 import os
-from sbp.targets.templating import JENV, ACRONYMS
+from sbpg.targets.templating import JENV, ACRONYMS
 
 from construct import *
-PascalString = Struct("PascalString", UBInt8("length"), Bytes("data", lambda ctx: ctx.length))
-PascalString.parse("\x05helloXXX")
-
 
 TEMPLATE_NAME = "sbp_construct_template.py.j2"
 
@@ -51,8 +48,10 @@ PYDOC_CODE = {
   'double': 'double',
 }
 
+
 def is_array():
   return False
+
 
 def construct_format(f, type_map=CONSTRUCT_CODE):
   """
@@ -61,19 +60,30 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
   formatted = ""
   if type_map.get(f.type_id, None):
     return "%s('%s')" % (type_map.get(f.type_id), f.identifier)
-  elif f.type_id == 'string':
+  elif f.type_id == 'string' and f.options.get('size', None):
     return "String('%s', %d)" % (f.identifier, f.options['size'].value)
+  elif f.type_id == 'string':
+    return "CString('%s', six.b('\\n'))" % (f.identifier)
+  elif f.type_id == 'array' and f.options.get('size', None):
+    fill = f.options['fill'].value
+    p = "%s('%s')" % (type_map.get(fill), f.identifier) if type_map.get(fill, None) else fill+'._parser'
+    s = f.options.get('size', None).value
+    return "Struct('%s', Array(%d, %s))" % (f.identifier, s, p)
   elif f.type_id == 'array':
-    return "Struct('%s', OptionalGreedyRange(%s._parser))" % (f.identifier, f.options['fill'].value)
+    fill = f.options['fill'].value
+    p = "%s('%s')" % (type_map.get(fill), f.identifier) if type_map.get(fill, None) else fill+'._parser'
+    return "OptionalGreedyRange(Struct('%s', %s))" % (f.identifier, p)
   else:
     return "Struct('%s', %s._parser)" % (f.identifier, f.type_id)
   return formatted
+
 
 def pydoc_format(type_id, pydoc=PYDOC_CODE):
   """
   Formats type for pydoc.
   """
   return pydoc.get(type_id, type_id)
+
 
 def classnameify(s):
   """
@@ -85,14 +95,13 @@ JENV.filters['construct'] = construct_format
 JENV.filters['classnameify'] = classnameify
 JENV.filters['pydoc'] = pydoc_format
 
+
 def render_source(output_dir, package_spec, jenv=JENV):
   """
   Render and output
   """
   path, name = package_spec.filepath
-  directory = "/".join([output_dir, path])
-  if not os.path.exists(directory):
-    os.makedirs(directory)
+  directory = output_dir
   destination_filename = "%s/%s.py" % (directory, name)
   py_template = jenv.get_template(TEMPLATE_NAME)
   module_path = ".".join(package_spec.identifier.split(".")[:-1])
@@ -101,7 +110,8 @@ def render_source(output_dir, package_spec, jenv=JENV):
   print destination_filename, includes
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,
-                               filepath="/".join(package_spec.filepath)+".yaml",
+                               filepath="/".join(package_spec.filepath) + ".yaml",
                                module_path=module_path,
                                include=includes,
-                               timestamp=package_spec.creation_timestamp))
+                               timestamp=package_spec.creation_timestamp,
+                               description=package_spec.description))

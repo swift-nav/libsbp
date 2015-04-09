@@ -34,20 +34,21 @@ definitions:
       from a given offset into a file, and returns the data in a
       MSG_FILEIO_READ message where the message length field indicates
       how many bytes were succesfully read. If the message is invalid,
-      a followup MsgPrint message will print "Invalid fileio read
+      a followup MSG_PRINT message will print "Invalid fileio read
       message".
     fields:
       - offset:
           type: u32
           units: bytes
-          desc: File offset.
+          desc: File offset
       - chunk_size:
           type: u8
           units: bytes
-          desc: Chunk size to read.
+          desc: Chunk size to read
       - filename:
           type: string
-          desc: Name of the file to read from (NULL terminated).
+          size: 20
+          desc: Name of the file to read from (NULL terminated)
 
  - MSG_FILEIO_READ_DIR:
     id: 0x00A9
@@ -61,16 +62,17 @@ definitions:
       a NULL delimited list. The listing is chunked over multiple SBP
       packets and the end of the list is identified by an entry
       containing just the character 0xFF. If message is invalid, a
-      followup MsgPrint message will print "Invalid fileio read
+      followup MSG_PRINT message will print "Invalid fileio read
       message".
     fields:
       - offset:
           type: u32
           desc: |
-            The offset to skip the first n elements of the file list.
+            The offset to skip the first n elements of the file list
       - dirname:
           type: string
-          desc: Name of the directory to list.
+          size: 20
+          desc: Name of the directory to list
 
  - MSG_FILEIO_REMOVE:
     id: 0x00AC
@@ -78,11 +80,12 @@ definitions:
     short_desc: Delete a file from the file system (Host => Piksi).
     desc: |
       The file remove message deletes a file from the file system. If
-      message is invalid, a followup MsgPrint message will print
+      message is invalid, a followup MSG_PRINT message will print
       "Invalid fileio remove message".
     fields:
       - filename:
           type: string
+          size: 20
           desc: Name of the file to delete (NULL terminated)
 
  - MSG_FILEIO_WRITE:
@@ -93,16 +96,18 @@ definitions:
       The file write message writes a certain length (up to 255 bytes)
       of data to a file at a given offset. Returns a copy of the
       original MSG_FILEIO_WRITE message to check integrity of the
-      write. If message is invalid, a followup MsgPrint message will
+      write. If message is invalid, a followup MSG_PRINT message will
       print "Invalid fileio write message".
     fields:
       - filename:
           type: string
+          size: 20
           desc: Name of the file to write to (NULL terminated)
       - offset:
           type: u32
           units: bytes
           desc: Offset into the file at which to start writing in bytes
       - data:
-          type: bytes
+          type: array
+          fill: u8
           desc: Data to write

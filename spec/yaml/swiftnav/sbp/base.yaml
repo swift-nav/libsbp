@@ -28,7 +28,7 @@ definitions:
     fields:
         - preamble:
             type: u8
-            desc: Denotes the start of frame transmission. For v1.0, always 0x55.
+            desc: Denotes the start of frame transmission. For v1.0, always 0x55
         - msg_type:
             type: u16
             desc: Uniquely identifies the type of the payload contents
@@ -41,17 +41,17 @@ definitions:
         - length:
             type: u8
             units: bytes
-            desc: Byte-length of the payload field.
+            desc: Byte-length of the payload field
         - payload:
             type: bytes
             size_fn: length
             desc: |
               Binary data of the message, as identified by Message Type and
               Length. Usually contains the in-memory binary representation of
-              a C struct (see documentation on individual message types).
+              a C struct (see documentation on individual message types)
         - crc:
             type: u16
             desc: |
               Cyclic Redundancy Check (CRC) of the packet's binary data from
               the Message Type up to the end of Payload (does not include the
-              Preamble).
+              Preamble)

@@ -1,0 +1,193 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{bytefield}
+\usepackage{caption}
+\usepackage{endnotes}
+\usepackage{fancyvrb}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{minibox}
+\usepackage{register}
+\usepackage{standalone}
+\usepackage{swiftnav}
+\usepackage{tabularx}
+\usepackage{tocloft}
+\usepackage{setspace}
+\usepackage{pbox}
+\usepackage{soul}
+\usepackage{hyperref}
+
+\hypersetup{bookmarks,bookmarksopen,bookmarksdepth=4}
+
+\setlength{\regWidth}{0.4\textwidth}
+
+\floatstyle{plain}
+\newfloat{field}{h}{fld}
+\floatname{field}{Field}
+
+\numberwithin{table}{subsection}
+\numberwithin{field}{subsection}
+
+\renewcommand{\thesubsubsection}{\hspace{-0.45cm}}
+%% \renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+%% \makeatletter
+%% \def\@seccntformat#1{\csname #1ignore\expandafter\endcsname\csname the#1\endcsname\quad}
+%% \let\sectionignore\@gobbletwo
+%% \let\latex@numberline\numberline
+%% \def\numberline#1{\if\relax#1\relax\else\latex@numberline{#1}\fi}
+%% \makeatother
+
+
+\renewcommand{\regLabelFamily}{}
+
+\cftsetindents{section}{0.5in}{0.5in}
+\cftsetindents{subsection}{0.5in}{0.5in}
+%%\setlength\cftparskip{-1.2pt}
+\setlength{\cftbeforetoctitleskip}{-1em}
+\setlength\cftbeforesecskip{1.3pt}
+\setlength\cftaftertoctitleskip{2pt}
+\renewcommand{\cftsecafterpnum}{\hspace*{7.5em}}
+\renewcommand{\cftsubsecafterpnum}{\hspace*{7.5em}}
+\renewcommand\tableofcontents{\@starttoc{toc}}
+
+\newcolumntype{a}{>{\hsize=.2\hsize}X}
+\newcolumntype{b}{>{\hsize=.4\hsize}X}
+\newcolumntype{c}{>{\hsize=.3\hsize}X}
+\newcolumntype{d}{>{\hsize=.7\hsize}X}
+
+\title{SwiftNav Binary Protocol}
+\version{0.15}
+\author{Swift Navigation}
+\mysubtitle{Protocol Specification v\theversion}
+\date{\today}
+
+\begin{document}
+\maketitle
+\begin{normalsize}
+\setcounter{tocdepth}{2}
+\begin{centering}
+\tableofcontents
+\end{centering}
+\end{normalsize}
+
+\thispagestyle{firstpage}
+\bigskip
+\bigskip
+\begin{large}
+The Swift Navigation Binary Protocol (SBP) is a fast, simple, and
+minimal binary protocol for communicating with Swift devices. It is
+the native binary protocol used by the Piksi GPS receiver to transmit
+solutions, observations, status and debugging messages, as well as
+receive messages from the host operating system, such as differential
+corrections and the almanac. As such, it is an important piece of
+interfacing with your Piksi receiver and integrating it with other
+systems.
+
+This document provides language-agnostic specification and
+documentation for messages used with SBP. SBP client libraries in a
+variety of programming languages are available at
+\url{http://docs.swiftnav.com/wiki/SwiftNav_Binary_Protocol}.
+\end{large}
+
+\newpage
+\section{Message Structure}
+\label{sec:Message}
+
+\begin{large}
+SBP consists of two pieces: (i) an over-the-wire message framing
+format and (ii) structured payload definitions. As of Version 1.0, the
+packet consists of a 6-byte binary header section, a variable-sized
+payload field, and a 16-bit CRC value. SBP uses the CCITT CRC16
+(XMODEM implementation) for error detection.
+\end{large}
+
+\begin{table}[h]
+  \centering
+  \begin{tabularx}{\textwidth}{aaX}
+    \toprule
+    Name & Size & Description \\
+    \midrule
+    {Preamble} & $1$ & Denotes the start of frame transmission. Always 0x55. \\
+    {Message Type} & $2$ & Identifies the payload contents. \\
+    {Sender} & $2$ & \hangindent=0.5em{A unique identifier of the sending hardware. Set to the 2 least significant bytes of the Piksi serial number.} \\
+    {Length} & $1$ & Length in bytes of the {Payload} field. \\
+    {Payload} & $N$ & Binary data of the message. \\
+    {CRC} & $2$ & \hangindent=0.5em{Cyclic Redundancy Check of the packet's binary data from the Message Type up to the end of Payload (does not include the Preamble).} \\
+    \midrule
+    & $N+8$ \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Swift Binary Protocol message structure}
+  \label{tab:message}
+\end{table}
+\newpage
+
+\section{Basic Formats and Payload Structure}
+\label{sec:Payload}
+\begin{large}
+The binary payload of an SBP message can be decoded into structured
+data based on the message type defined in the header. SBP uses several
+primitive numerical and collection types for defining the contents of
+these payloads:
+\end{large}
+\begin{table}[h]
+  \centering
+  \begin{tabularx}{0.80\textwidth}{aaX}
+    \toprule
+    Name & Size & Description \\
+    \midrule
+    ((*- for t in prims *))
+    (((t.identifier))) & (((t.identifier | getsize))) & \hangindent=0.5em{(((t.desc)))} \\
+    ((*- endfor *))
+    \bottomrule
+  \end{tabularx}
+  \caption{SBP primitive types}
+  \label{tab:types}
+\end{table}
+\begin{large}
+ \par As an example, consider this deframed series of bytes read
+from a serial port:
+\begin{verbatim}
+55 02 02 cc 04 14 70 3d d0 18 cf ef ff ff ef e8 ff ff f0 18 00 00 00 00 05 00 43 94
+\end{verbatim}
+This cryptic byte array decodes into a \texttt{MSG\_BASELINE\_ECEF}
+(see pg.~\pageref{sec:MSG_POS_ECEF}), which reports the baseline
+position solution of the rover receiver relative to the base station
+receiver in Earth Centered Earth Fixed (ECEF) coordinates. The
+segments of this byte array and its contents breakdown as follows:
+\end{large}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{llrl}
+    \toprule
+    Field Name & Type & Value & Bytestring Segment\\
+    \midrule
+    {Preamble} & u8 & 0x55 & \verb|55| \\
+    {Message Type}& u16 & 0x0202 & \verb|02 02| \\
+    {Sender}& u16 & 0x4cc & \verb!cc 04! \\
+    {Length}& u8 & 20 &  \verb!14! \\
+    {Payload}& & --- & \verb!70 3d d0 18 cf ef ff ff ef e8 ff ff f0 18 00 00 00 00 05 00! \\
+    \quad~\texttt{MSG\_BASELINE\_ECEF} & & & \\
+    \quad~.tow & u32 & $416300400~\textrm{sec}$  & \verb!70 3d d0 18! \\
+    \quad~.x & s32 & $-4145~\textrm{mm}$  & \verb!cf ef ff ff! \\
+    \quad~.y & s32 & $-5905~\textrm{mm}$  & \verb!ef e8 ff ff! \\
+    \quad~.z & s32 & $6384~\textrm{mm}$  & \verb!f0 18 00 00! \\
+    \quad~.accuracy & u16 & 0 & \verb!00 00! \\
+    \quad~.nsats & u8 & 5 & \verb!05! \\
+    \quad~.flags & u8 & 0 & \verb!00! \\
+    {CRC} & u16 & 0x9443 & \verb!43 94! \\
+    \bottomrule
+  \end{tabular}
+  \caption{SBP breakdown for \texttt{MSG\_BASELINE\_ECEF}}
+  \label{tab:example_breakdown}
+\end{table}
+
+((* block messages_table *))
+((* endblock *))
+
+((* block messages_desc *))
+((* endblock *))
+
+\end{document}

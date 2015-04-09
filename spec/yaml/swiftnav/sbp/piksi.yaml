@@ -23,14 +23,14 @@ definitions:
 
  - MSG_ALMANAC:
     id: 0x0069
-    short_desc: Legacy message to load satellite almanac (Host => Piksi).
+    short_desc: Legacy message to load satellite almanac (Host => Piksi)
     desc: |
       This is a legacy message for sending and loading a satellite
       alamanac onto the Piksi's flash memory from the host.
 
  - MSG_SET_TIME:
     id: 0x0068
-    short_desc: Send GPS time from host (Host => Piksi).
+    short_desc: Send GPS time from host (Host => Piksi)
     desc: |
       This message sets up timing functionality using a coarse GPS
       time estimate sent by the host.
@@ -38,7 +38,7 @@ definitions:
  - MSG_RESET:
     id: 0x00B2
     public: True
-    short_desc: Reset the device (Host => Piksi).
+    short_desc: Reset the device (Host => Piksi)
     desc: |
       This message from the host resets the Piksi back into the
       bootloader. It ensures that all outstanding memory accesses
@@ -46,7 +46,7 @@ definitions:
 
  - MSG_CW_RESULTS:
     id: 0x00C0
-    short_desc: Legacy message for CW interference channel (Piksi => Host).
+    short_desc: Legacy message for CW interference channel (Piksi => Host)
     desc: |
       This is an unused legacy message for result reporting from the
       CW interference channel on the SwiftNAP. This message will be
@@ -54,7 +54,7 @@ definitions:
 
  - MSG_CW_START:
     id: 0x00C1
-    short_desc: Legacy message for CW interference channel (Host => Piksi).
+    short_desc: Legacy message for CW interference channel (Host => Piksi)
     desc: |
       This is an unused legacy message from those host for starting
       the CW interference channel on the SwiftNAP. This message will
@@ -71,7 +71,7 @@ definitions:
           type: u8
           desc: Filter flags
           fields:
-            - 1-8:
+            - 1-7:
                 desc: Reserved
             - 0:
                 desc: Filter or process to reset
@@ -82,7 +82,7 @@ definitions:
  - MSG_INIT_BASE:
     id: 0x0023
     public: True
-    short_desc: Initialize IAR from known baseline (Host => Piksi).
+    short_desc: Initialize IAR from known baseline (Host => Piksi)
     desc: |
       This message initializes the Integer Ambiguity Resolution (IAR)
       process on the Piksi to use an assumed baseline position between
@@ -93,7 +93,7 @@ definitions:
  - MSG_THREAD_STATE:
     id: 0x0017
     public: True
-    short_desc: State of a CPU/RTOS thread.
+    short_desc: State of a CPU/RTOS thread
     desc: |
       The thread usage message from the Piksi reports RTOS thread
       usage statistics for the named thread. The reported values
@@ -105,52 +105,52 @@ definitions:
             desc: Thread name (NULL terminated)
         - cpu:
             type: u16
-            units: Utilization percentage /1000.
+            units: Utilization percentage /1000
             desc: |
               Percentage cpu use for this thread. Ranges from 0 - 1000
-              and needs to be renormalized to 100.
+              and needs to be renormalized to 100
         - stack_free:
             type: u32
             units: kB
-            desc: Free stack space for this thread.
+            desc: Free stack space for this thread
 
  - UARTChannel:
     public: True
-    short_desc: State of the UART channel.
+    short_desc: State of the UART channel
     desc: |
       Throughput, utilization, and error counts on the RX/TX buffers
-      of this UART channel. Values require renormalization.
+      of this UART channel. Values require renormalization
     fields:
         - tx_throughput:
             type: float
             units: kB/s
-            desc: UART transmit throughput.
+            desc: UART transmit throughput
         - rx_throughput:
             type: float
             units: kB/s
-            desc: UART receive throughput.
+            desc: UART receive throughput
         - crc_error_count:
             type: u16
-            desc: UART CRC error count.
+            desc: UART CRC error count
         - io_error_count:
             type: u16
-            desc: UART IO error count.
+            desc: UART IO error count
         - tx_buffer_level:
             type: u8
             units: Utilization /255
             desc: |
               UART transmit buffer percentage utilization. Ranges from
-              0 - 255 and needs to be renormalized to 100.
+              0 - 255 and needs to be renormalized to 100
         - rx_buffer_level:
             type: u8
             units: Utilization /255
             desc: |
               UART receive buffer percentage utilization. Ranges from
-              0 - 255 and needs to be renormalized to 100.
+              0 - 255 and needs to be renormalized to 100
 
  - Latency:
     public: True
-    short_desc: Receiver-to-base station latency.
+    short_desc: Receiver-to-base station latency
     desc: |
       Statistics on the latency of observations received from the base
       station. As observation packets are received their GPS time is
@@ -161,24 +161,24 @@ definitions:
         - avg:
             type: s32
             units: ms
-            desc: Average latency.
+            desc: Average latency
         - lmin:
             type: s32
             units: ms
-            desc: Minimum latency.
+            desc: Minimum latency
         - lmax:
             type: s32
             units: ms
-            desc: Maximum latency.
+            desc: Maximum latency
         - current:
             type: s32
             units: ms
-            desc: Smoothed estimate of the current latency.
+            desc: Smoothed estimate of the current latency
 
  - MSG_UART_STATE:
     id: 0x0018
     public: True
-    short_desc: State of the UART channels.
+    short_desc: State of the UART channels
     desc: |
       The UART message reports data latency and throughput of the UART
       channels providing SBP I/O. On the default Piksi configuration,
@@ -201,7 +201,7 @@ definitions:
 
  - MSG_IAR_STATE:
     id: 0x0019
-    short_desc: State of the Integer Ambiguity Resolution (IAR) process.
+    short_desc: State of the Integer Ambiguity Resolution (IAR) process
     desc: |
       This message reports the state of the Integer Ambiguity
       Resolution (IAR) process, which resolves unknown integer
@@ -210,4 +210,4 @@ definitions:
     fields:
         - num_hyps:
             type: u32
-            desc: Number of integer ambiguity hypotheses remaining.
+            desc: Number of integer ambiguity hypotheses remaining
