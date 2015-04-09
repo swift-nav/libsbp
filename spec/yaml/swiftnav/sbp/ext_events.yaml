@@ -1,5 +1,5 @@
 # Copyright (C) 2015 Swift Navigation Inc.
-# Contact: Fergus Noble <fergus@swiftnav.com>
+# Contact: Henry Hallam <henry@swiftnav.com>
 #
 # This source is subject to the license found in the file 'LICENSE' which must
 # be be distributed together with this source. All other rights reserved.
@@ -22,7 +22,7 @@ definitions:
  - MSG_EXT_EVENT:
     id: 0x0300
     public: True
-    short_desc: External event
+    short_desc: Reports timestamped external pin event
     desc: |
         Reports detection of an external event, the GPS time it occurred,
         which pin it was and whether it was rising or falling.
@@ -39,10 +39,18 @@ definitions:
             type: s32
             units: ns
             desc: Nanosecond remainder of rounded tow
-        - pin_edge:
+        - flags:
             type: u8
-            desc: |
-                Bit 7 (MSB) denotes the new level of the pin, i.e. 1 for
-                rising edge, 0 for falling edge.
-                Bits 6:4 reserved.
-                Bits 3:0 denote pin number, i.e. 0x0 for DEBUG0.
+            desc: Flags
+            fields:
+              - 1-7:
+                  desc: Reserved
+              - 0:
+                  desc: New level of pin
+                  values:
+                      - 0: Low (falling edge)
+                      - 1: High (rising edge)
+        - pin:
+            type: u8
+            desc: Pin number.  0..9 = DEBUG0..9.
+
