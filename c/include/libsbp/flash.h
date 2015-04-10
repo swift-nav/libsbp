@@ -12,8 +12,15 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/flash.yaml
- * with generate.py at 2015-04-02 12:08:48.484565. Please do not hand edit!
+ * with generate.py at 2015-04-10 12:07:06.174906. Please do not hand edit!
  *****************************************************************************/
+
+/** \defgroup flash Flash
+ *
+ *  * Messages for reading/writing the Piksi's onboard flash memory. These
+ * are in the implementation-defined range (0x0000-0x00FF), and largely
+ * intended for internal-use only.
+ * \{ */
 
 #ifndef LIBSBP_FLASH_MESSAGES_H
 #define LIBSBP_FLASH_MESSAGES_H
@@ -35,13 +42,13 @@ typedef struct __attribute__((packed)) {
   u8 target;        /**< Target flags */
   u8 addr_start[3]; /**< Starting address offset to program [bytes] */
   u8 addr_len;      /**< Length of set of addresses to program, counting up from
-starting address.
+starting address
  [bytes] */
-  u8 data[0];       /**< Data to program addresses with, sized by addr_len. */
+  u8 data[0];       /**< Data to program addresses with, sized by addr_len */
 } msg_flash_program_t;
 
 
-/** Flash response message (Piksi => Host).
+/** Flash response message (Host <= Piksi).
  *
  * This message defines success or failure codes for a variety of
  * flash memory requests from the host to the Piksi. Flash read and
@@ -69,7 +76,7 @@ typedef struct __attribute__((packed)) {
   u8 target;        /**< Target flags */
   u8 addr_start[3]; /**< Starting address offset to read from [bytes] */
   u8 addr_len;      /**< Length of set of addresses to read, counting up from
-starting address.
+starting address
  [bytes] */
 } msg_flash_read_t;
 
@@ -86,7 +93,7 @@ starting address.
 typedef struct __attribute__((packed)) {
   u8 target;        /**< Target flags */
   u8 sector_num;    /**< Flash sector number to erase (0-11 for the STM, 0-15 for
-the M25).
+the M25)
  */
 } msg_flash_erase_t;
 
@@ -98,7 +105,7 @@ the M25).
  */
 #define SBP_MSG_STM_FLASH_LOCK_SECTOR   0x00E3
 typedef struct __attribute__((packed)) {
-  u8 sector[1]; /**< Flash sector number to lock. */
+  u8 sector[1]; /**< Flash sector number to lock */
 } msg_stm_flash_lock_sector_t;
 
 
@@ -109,7 +116,7 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_STM_FLASH_UNLOCK_SECTOR 0x00E4
 typedef struct __attribute__((packed)) {
-  u8 sector[1]; /**< Flash sector number to unlock. */
+  u8 sector[1]; /**< Flash sector number to unlock */
 } msg_stm_flash_unlock_sector_t;
 
 
@@ -121,7 +128,7 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_STM_UNIQUE_ID           0x00E5
 typedef struct __attribute__((packed)) {
-  char stm_id[12]; /**< STM32F4 unique ID. */
+  char stm_id[12]; /**< STM32F4 unique ID */
 } msg_stm_unique_id_t;
 
 
@@ -132,8 +139,10 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_M25_FLASH_WRITE_STATUS  0x00F3
 typedef struct __attribute__((packed)) {
-  u8 status[1]; /**< Byte to write to the M25 flash status register. */
+  u8 status[1]; /**< Byte to write to the M25 flash status register */
 } msg_m25_flash_write_status_t;
 
+
+/** \} */
 
 #endif /* LIBSBP_FLASH_MESSAGES_H */

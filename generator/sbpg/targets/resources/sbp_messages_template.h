@@ -51,4 +51,6 @@ typedef struct __attribute__((packed)) {
 ((*- endif *))
 
 ((* endfor *))
+/** \} */
+
 #endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */

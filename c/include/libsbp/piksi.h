@@ -12,8 +12,17 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/piksi.yaml
- * with generate.py at 2015-04-02 12:08:48.499356. Please do not hand edit!
+ * with generate.py at 2015-04-10 12:07:06.183540. Please do not hand edit!
  *****************************************************************************/
+
+/** \defgroup piksi Piksi
+ *
+ *  * System health, configuration, and diagnostic messages specific to
+ * the Piksi L1 receiver, including a variety of legacy messages that
+ * may no longer be used. These messages are in the
+ * implementation-defined range (0x0000-0x00FF), and largely intended
+ * for internal-use only.
+ * \{ */
 
 #ifndef LIBSBP_PIKSI_MESSAGES_H
 #define LIBSBP_PIKSI_MESSAGES_H
@@ -21,7 +30,7 @@
 #include "common.h"
 
 
-/** Legacy message to load satellite almanac (Host => Piksi).
+/** Legacy message to load satellite almanac (Host => Piksi)
  *
  * This is a legacy message for sending and loading a satellite
  * alamanac onto the Piksi's flash memory from the host.
@@ -29,7 +38,7 @@
 #define SBP_MSG_ALMANAC       0x0069
 
 
-/** Send GPS time from host (Host => Piksi).
+/** Send GPS time from host (Host => Piksi)
  *
  * This message sets up timing functionality using a coarse GPS
  * time estimate sent by the host.
@@ -37,7 +46,7 @@
 #define SBP_MSG_SET_TIME      0x0068
 
 
-/** Reset the device (Host => Piksi).
+/** Reset the device (Host => Piksi)
  *
  * This message from the host resets the Piksi back into the
  * bootloader. It ensures that all outstanding memory accesses
@@ -46,7 +55,7 @@
 #define SBP_MSG_RESET         0x00B2
 
 
-/** Legacy message for CW interference channel (Piksi => Host).
+/** Legacy message for CW interference channel (Piksi => Host)
  *
  * This is an unused legacy message for result reporting from the
  * CW interference channel on the SwiftNAP. This message will be
@@ -55,7 +64,7 @@
 #define SBP_MSG_CW_RESULTS    0x00C0
 
 
-/** Legacy message for CW interference channel (Host => Piksi).
+/** Legacy message for CW interference channel (Host => Piksi)
  *
  * This is an unused legacy message from those host for starting
  * the CW interference channel on the SwiftNAP. This message will
@@ -75,7 +84,7 @@ typedef struct __attribute__((packed)) {
 } msg_reset_filters_t;
 
 
-/** Initialize IAR from known baseline (Host => Piksi).
+/** Initialize IAR from known baseline (Host => Piksi)
  *
  * This message initializes the Integer Ambiguity Resolution (IAR)
  * process on the Piksi to use an assumed baseline position between
@@ -86,7 +95,7 @@ typedef struct __attribute__((packed)) {
 #define SBP_MSG_INIT_BASE     0x0023
 
 
-/** State of a CPU/RTOS thread.
+/** State of a CPU/RTOS thread
  *
  * The thread usage message from the Piksi reports RTOS thread
  * usage statistics for the named thread. The reported values
@@ -96,32 +105,32 @@ typedef struct __attribute__((packed)) {
 typedef struct __attribute__((packed)) {
   char name[20];      /**< Thread name (NULL terminated) */
   u16 cpu;           /**< Percentage cpu use for this thread. Ranges from 0 - 1000
-and needs to be renormalized to 100.
- [Utilization percentage /1000.] */
-  u32 stack_free;    /**< Free stack space for this thread. [kB] */
+and needs to be renormalized to 100
+ [Utilization percentage /1000] */
+  u32 stack_free;    /**< Free stack space for this thread [kB] */
 } msg_thread_state_t;
 
 
-/** State of the UART channel.
+/** State of the UART channel
  *
  * Throughput, utilization, and error counts on the RX/TX buffers
- * of this UART channel. Values require renormalization.
+ * of this UART channel. Values require renormalization
  */
 typedef struct __attribute__((packed)) {
-  float tx_throughput;      /**< UART transmit throughput. [kB/s] */
-  float rx_throughput;      /**< UART receive throughput. [kB/s] */
-  u16 crc_error_count;    /**< UART CRC error count. */
-  u16 io_error_count;     /**< UART IO error count. */
+  float tx_throughput;      /**< UART transmit throughput [kB/s] */
+  float rx_throughput;      /**< UART receive throughput [kB/s] */
+  u16 crc_error_count;    /**< UART CRC error count */
+  u16 io_error_count;     /**< UART IO error count */
   u8 tx_buffer_level;    /**< UART transmit buffer percentage utilization. Ranges from
-0 - 255 and needs to be renormalized to 100.
+0 - 255 and needs to be renormalized to 100
  [Utilization /255] */
   u8 rx_buffer_level;    /**< UART receive buffer percentage utilization. Ranges from
-0 - 255 and needs to be renormalized to 100.
+0 - 255 and needs to be renormalized to 100
  [Utilization /255] */
 } uart_channel_t;
 
 
-/** Receiver-to-base station latency.
+/** Receiver-to-base station latency
  *
  * Statistics on the latency of observations received from the base
  * station. As observation packets are received their GPS time is
@@ -130,14 +139,14 @@ typedef struct __attribute__((packed)) {
  * communication latency in the system.
  */
 typedef struct __attribute__((packed)) {
-  s32 avg;        /**< Average latency. [ms] */
-  s32 lmin;       /**< Minimum latency. [ms] */
-  s32 lmax;       /**< Maximum latency. [ms] */
-  s32 current;    /**< Smoothed estimate of the current latency. [ms] */
+  s32 avg;        /**< Average latency [ms] */
+  s32 lmin;       /**< Minimum latency [ms] */
+  s32 lmax;       /**< Maximum latency [ms] */
+  s32 current;    /**< Smoothed estimate of the current latency [ms] */
 } latency_t;
 
 
-/** State of the UART channels.
+/** State of the UART channels
  *
  * The UART message reports data latency and throughput of the UART
  * channels providing SBP I/O. On the default Piksi configuration,
@@ -154,7 +163,7 @@ typedef struct __attribute__((packed)) {
 } msg_uart_state_t;
 
 
-/** State of the Integer Ambiguity Resolution (IAR) process.
+/** State of the Integer Ambiguity Resolution (IAR) process
  *
  * This message reports the state of the Integer Ambiguity
  * Resolution (IAR) process, which resolves unknown integer
@@ -163,8 +172,10 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_IAR_STATE     0x0019
 typedef struct __attribute__((packed)) {
-  u32 num_hyps;    /**< Number of integer ambiguity hypotheses remaining. */
+  u32 num_hyps;    /**< Number of integer ambiguity hypotheses remaining */
 } msg_iar_state_t;
 
+
+/** \} */
 
 #endif /* LIBSBP_PIKSI_MESSAGES_H */

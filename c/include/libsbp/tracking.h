@@ -12,8 +12,13 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/tracking.yaml
- * with generate.py at 2015-04-02 12:08:48.606597. Please do not hand edit!
+ * with generate.py at 2015-04-10 12:07:06.236392. Please do not hand edit!
  *****************************************************************************/
+
+/** \defgroup tracking Tracking
+ *
+ *  * Satellite code and carrier-phase tracking messages from the Piksi.
+ * \{ */
 
 #ifndef LIBSBP_TRACKING_MESSAGES_H
 #define LIBSBP_TRACKING_MESSAGES_H
@@ -21,19 +26,19 @@
 #include "common.h"
 
 
-/** Satellite tracking channel state.
+/** Satellite tracking channel state
  *
  * Tracking channel state for a specific satellite PRN and measured
  * signal power.
  */
 typedef struct __attribute__((packed)) {
-  u8 state;    /**< Status of tracking channel. */
-  u8 prn;      /**< PRN being tracked. */
+  u8 state;    /**< Status of tracking channel */
+  u8 prn;      /**< PRN being tracked */
   float cn0;      /**< Carrier-to-noise density [dB Hz] */
 } tracking_channel_state_t;
 
 
-/** Satellite tracking channel states.
+/** Satellite tracking channel states
  *
  * The tracking message returns a variable-length array of tracking
  * channel states. It reports status and code/carrier phase signal
@@ -41,7 +46,7 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_TRACKING_STATE 0x0016
 typedef struct __attribute__((packed)) {
-  tracking_channel_state_t states[0]; /**< Satellite tracking channel state. */
+  tracking_channel_state_t states[0]; /**< Satellite tracking channel state */
 } msg_tracking_state_t;
 
 
@@ -51,8 +56,7 @@ typedef struct __attribute__((packed)) {
  * parameters that is used to calculate GPS satellite position,
  * velocity, and clock offset (WGS84). Please see the Navstar GPS
  * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
- * 20-III) for more details
- * (http://www.navcen.uscg.gov/pubs/gps/icd200/icd200cw1234.pdf).
+ * 20-III) for more details.
  */
 #define SBP_MSG_EPHEMERIS      0x001A
 typedef struct __attribute__((packed)) {
@@ -84,5 +88,7 @@ typedef struct __attribute__((packed)) {
   u8 prn;         /**< PRN being tracked */
 } msg_ephemeris_t;
 
+
+/** \} */
 
 #endif /* LIBSBP_TRACKING_MESSAGES_H */

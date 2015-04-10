@@ -12,8 +12,14 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/navigation.yaml
- * with generate.py at 2015-04-02 12:08:48.537325. Please do not hand edit!
+ * with generate.py at 2015-04-10 12:07:06.223624. Please do not hand edit!
  *****************************************************************************/
+
+/** \defgroup navigation Navigation
+ *
+ *  * Geodetic navigation messages reporting GPS time, single-point
+ * position, and RTK baseline position solutions.
+ * \{ */
 
 #ifndef LIBSBP_NAVIGATION_MESSAGES_H
 #define LIBSBP_NAVIGATION_MESSAGES_H
@@ -23,12 +29,17 @@
 
 /** GPS Time
  *
- * This message reports the GPS Time.
+ * This message reports the GPS time, an integer time scale
+ * beginning at January 6, 1980 midnight. GPS time counts the weeks
+ * and seconds of the week. The weeks begin at the Saturday/Sunday
+ * transition. GPS week 0 began at the beginning of the GPS time
+ * scale. Within each week number, the GPS time of the week is
+ * between between 0 and 604800 seconds (=60*60*24*7).
  */
 #define SBP_MSG_GPS_TIME      0x0100
 typedef struct __attribute__((packed)) {
   u16 wn;       /**< GPS week number [weeks] */
-  u32 tow;      /**< GPS Time of Week rounded to the nearest ms [ms] */
+  u32 tow;      /**< GPS time of week rounded to the nearest ms [ms] */
   s32 ns;       /**< Nanosecond remainder of rounded tow [ns] */
   u8 flags;    /**< Status flags (reserved) */
 } msg_gps_time_t;
@@ -164,5 +175,7 @@ typedef struct __attribute__((packed)) {
   u8 flags;         /**< Status flags (reserved) */
 } msg_vel_ned_t;
 
+
+/** \} */
 
 #endif /* LIBSBP_NAVIGATION_MESSAGES_H */

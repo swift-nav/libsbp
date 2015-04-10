@@ -12,8 +12,13 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/system.yaml
- * with generate.py at 2015-04-02 12:08:48.603510. Please do not hand edit!
+ * with generate.py at 2015-04-10 12:07:06.229383. Please do not hand edit!
  *****************************************************************************/
+
+/** \defgroup system System
+ *
+ * * Standardized system messages from Swift Navigation devices.
+ * \{ */
 
 #ifndef LIBSBP_SYSTEM_MESSAGES_H
 #define LIBSBP_SYSTEM_MESSAGES_H
@@ -51,5 +56,7 @@ typedef struct __attribute__((packed)) {
   u32 flags;    /**< Status flags */
 } msg_heartbeat_t;
 
+
+/** \} */
 
 #endif /* LIBSBP_SYSTEM_MESSAGES_H */

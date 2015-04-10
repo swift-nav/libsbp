@@ -12,8 +12,13 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/acquisition.yaml
- * with generate.py at 2015-04-02 12:08:48.650967. Please do not hand edit!
+ * with generate.py at 2015-04-10 12:07:06.265810. Please do not hand edit!
  *****************************************************************************/
+
+/** \defgroup acquisition Acquisition
+ *
+ * * Satellite acquisition messages from the Piksi.
+ * \{ */
 
 #ifndef LIBSBP_ACQUISITION_MESSAGES_H
 #define LIBSBP_ACQUISITION_MESSAGES_H
@@ -21,7 +26,7 @@
 #include "common.h"
 
 
-/** Satellite acquisition result.
+/** Satellite acquisition result
  *
  * This message describes the results from an attempted GPS signal
  * acquisition search for a satellite PRN over a code phase/carrier
@@ -31,13 +36,15 @@
  */
 #define SBP_MSG_ACQ_RESULT 0x0015
 typedef struct __attribute__((packed)) {
-  float snr;    /**< SNR of best point. */
-  float cp;     /**< Code phase of best point. [chips] */
-  float cf;     /**< Carrier frequency of best point. [hz] */
+  float snr;    /**< SNR of best point */
+  float cp;     /**< Code phase of best point [chips] */
+  float cf;     /**< Carrier frequency of best point [hz] */
   u8 prn;    /**< PRN identifier of the satellite signal for which
-acquisition was attempted.
+acquisition was attempted
  */
 } msg_acq_result_t;
 
+
+/** \} */
 
 #endif /* LIBSBP_ACQUISITION_MESSAGES_H */
