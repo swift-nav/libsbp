@@ -12,8 +12,14 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/logging.yaml
- * with generate.py at 2015-04-02 12:08:48.482015. Please do not hand edit!
+ * with generate.py at 2015-04-10 12:07:06.163088. Please do not hand edit!
  *****************************************************************************/
+
+/** \defgroup logging Logging
+ *
+ *  * Logging and debugging messages from the Piksi. These are in the
+ * implementation-defined range (0x0000-0x00FF).
+ * \{ */
 
 #ifndef LIBSBP_LOGGING_MESSAGES_H
 #define LIBSBP_LOGGING_MESSAGES_H
@@ -21,7 +27,7 @@
 #include "common.h"
 
 
-/** Plaintext logging messages (Piksi => Host).
+/** Plaintext logging messages
  *
  * This message contains a human-reabable payload string from the
  * Piksi containing errors, warnings and informational messages at
@@ -31,16 +37,18 @@
  */
 #define SBP_MSG_PRINT     0x0010
 typedef struct __attribute__((packed)) {
-  char* text;    /**< Informative, human-readable string. */
+  char* text;    /**< Informative, human-readable string */
 } msg_print_t;
 
 
-/** Legacy message for tracing variable values (Piksi => Host).
+/** Legacy message for tracing variable values
  *
  * This is an unused legacy message for tracing variable values
  * within the Piksi firmware and streaming those back to the host.
  */
 #define SBP_MSG_DEBUG_VAR 0x0011
 
+
+/** \} */
 
 #endif /* LIBSBP_LOGGING_MESSAGES_H */

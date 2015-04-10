@@ -12,8 +12,21 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/file_io.yaml
- * with generate.py at 2015-04-02 12:08:48.473141. Please do not hand edit!
+ * with generate.py at 2015-04-10 12:07:06.147495. Please do not hand edit!
  *****************************************************************************/
+
+/** \defgroup file_io File_io
+ *
+ *  * Messges for using Piksi's onboard flash filesystem functionality
+ * from the Contiki project. This allows data to be stored persistently
+ * in the microcontroller's program flash with wear-levelling using a
+ * simple filesystem interface. The Contiki file system interface (CFS)
+ * defines an abstract API for reading directories and for reading and
+ * writing files. These are in the implementation-defined range
+ * (0x0000-0x00FF), and intended for internal-use only. Note that some
+ * of these messages taking a request from a host and a response from
+ * the Piksi share the same message type ID.
+ * \{ */
 
 #ifndef LIBSBP_FILE_IO_MESSAGES_H
 #define LIBSBP_FILE_IO_MESSAGES_H
@@ -27,14 +40,14 @@
  * from a given offset into a file, and returns the data in a
  * MSG_FILEIO_READ message where the message length field indicates
  * how many bytes were succesfully read. If the message is invalid,
- * a followup MsgPrint message will print "Invalid fileio read
+ * a followup MSG_PRINT message will print "Invalid fileio read
  * message".
  */
 #define SBP_MSG_FILEIO_READ     0x00A8
 typedef struct __attribute__((packed)) {
-  u32 offset;        /**< File offset. [bytes] */
-  u8 chunk_size;    /**< Chunk size to read. [bytes] */
-  char filename[20];  /**< Name of the file to read from (NULL terminated). */
+  u32 offset;        /**< File offset [bytes] */
+  u8 chunk_size;    /**< Chunk size to read [bytes] */
+  char filename[20];  /**< Name of the file to read from (NULL terminated) */
 } msg_fileio_read_t;
 
 
@@ -47,21 +60,21 @@ typedef struct __attribute__((packed)) {
  * a NULL delimited list. The listing is chunked over multiple SBP
  * packets and the end of the list is identified by an entry
  * containing just the character 0xFF. If message is invalid, a
- * followup MsgPrint message will print "Invalid fileio read
+ * followup MSG_PRINT message will print "Invalid fileio read
  * message".
  */
 #define SBP_MSG_FILEIO_READ_DIR 0x00A9
 typedef struct __attribute__((packed)) {
-  u32 offset;     /**< The offset to skip the first n elements of the file list.
+  u32 offset;     /**< The offset to skip the first n elements of the file list
  */
-  char dirname[20]; /**< Name of the directory to list. */
+  char dirname[20]; /**< Name of the directory to list */
 } msg_fileio_read_dir_t;
 
 
 /** Delete a file from the file system (Host => Piksi).
  *
  * The file remove message deletes a file from the file system. If
- * message is invalid, a followup MsgPrint message will print
+ * message is invalid, a followup MSG_PRINT message will print
  * "Invalid fileio remove message".
  */
 #define SBP_MSG_FILEIO_REMOVE   0x00AC
@@ -75,7 +88,7 @@ typedef struct __attribute__((packed)) {
  * The file write message writes a certain length (up to 255 bytes)
  * of data to a file at a given offset. Returns a copy of the
  * original MSG_FILEIO_WRITE message to check integrity of the
- * write. If message is invalid, a followup MsgPrint message will
+ * write. If message is invalid, a followup MSG_PRINT message will
  * print "Invalid fileio write message".
  */
 #define SBP_MSG_FILEIO_WRITE    0x00AD
@@ -85,5 +98,7 @@ typedef struct __attribute__((packed)) {
   u8 data[0];     /**< Data to write */
 } msg_fileio_write_t;
 
+
+/** \} */
 
 #endif /* LIBSBP_FILE_IO_MESSAGES_H */
