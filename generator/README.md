@@ -27,17 +27,24 @@ For example,
 
 ```shell
 # Output C bindings:
-python sbp/generator.py -i ../spec/yaml/swiftnav/sbp/ -o ../c/ --c
+python sbpg/generator.py -i ../spec/yaml/swiftnav/sbp/ -o ../c/ --c
 
 # Output Python bindings:
-python sbp/generator.py -i ../spec/yaml/swiftnav/sbp/ -o ../python/ --c
-python sbp/generator.py -i ../spec/yaml/swiftnav/sbp/navigation.yaml -o ../python/ --c
+python sbpg/generator.py -i ../spec/yaml/swiftnav/sbp/ -o ../python/ --python
+python sbpg/generator.py -i ../spec/yaml/swiftnav/sbp/navigation.yaml -o ../python/ --python
+
+# Output LaTeX documentation
+python sbpg/generator.py -i ../spec/yaml/swiftnav/sbp/ -o ../latex/ --latex
 
 ```
 
 ## Testing and Deployment
 
 ```shell
+# (Optional) Install LaTeX dependencies - ~2 GB!
+sudo apt-get install texlive-extra texlive-fonts-extra
+sudo pip install sphinx
+
 # Install dependencies
 pip install -r requirements.txt
 
