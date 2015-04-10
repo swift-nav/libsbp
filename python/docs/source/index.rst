@@ -50,6 +50,7 @@ API Reference
    sbp.client
    sbp.acquisition
    sbp.bootload
+   sbp.ext_events
    sbp.file_io
    sbp.flash
    sbp.logging
