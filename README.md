@@ -30,7 +30,7 @@ payload field, and a 16-bit CRC value. SBP uses the CCITT CRC16
 (XMODEM implementation) for error detection.
 
 Please see
-[the docs](https://github.com/swift-nav/libswiftnav/raw/master/docs/sbp.pdf)
+[the docs](https://github.com/swift-nav/libsbp/raw/master/docs/sbp.pdf)
 for a full description of the packet structure and the message types.
 
 ## LICENSE
