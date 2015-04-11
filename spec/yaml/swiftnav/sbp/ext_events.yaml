@@ -43,8 +43,13 @@ definitions:
             type: u8
             desc: Flags
             fields:
-              - 1-7:
+              - 2-7:
                   desc: Reserved
+              - 1:
+                  desc: Time quality
+                  values:
+                      - 0: Unknown - don't have nav solution
+                      - 1: Good (< 1 microsecond)
               - 0:
                   desc: New level of pin
                   values:

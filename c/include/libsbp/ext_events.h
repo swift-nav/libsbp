@@ -12,7 +12,7 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/ext_events.yaml
- * with generate.py at 2015-04-10 11:45:32.694320. Please do not hand edit!
+ * with generate.py at 2015-04-10 18:08:47.554362. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup ext_events Ext_events
@@ -41,5 +41,7 @@ typedef struct __attribute__((packed)) {
   u8 pin;      /**< Pin number.  0..9 = DEBUG0..9. */
 } msg_ext_event_t;
 
+
+/** \} */
 
 #endif /* LIBSBP_EXT_EVENTS_MESSAGES_H */
