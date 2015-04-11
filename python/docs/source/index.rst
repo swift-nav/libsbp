@@ -10,6 +10,11 @@ transmit solutions, observations, status and debugging messages, as
 well as receive messages from the host operating system, such as
 differential corrections and the almanac.
 
+Please see the message `docs`_ for a full description of the packet
+structure and the message types.
+
+.. _docs: https://github.com/swift-nav/libsbp/raw/master/docs/sbp.pdf
+
 Setup
 ------------------
 
