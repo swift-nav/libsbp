@@ -22,7 +22,7 @@ from sbp.utils import fmt_repr
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/ext_events.yaml
-# with generate.py at 2015-04-10 11:45:33.011582. Please do not hand edit!
+# with generate.py at 2015-04-10 18:08:47.870113. Please do not hand edit!
 
 
 SBP_MSG_EXT_EVENT = 0x0300
