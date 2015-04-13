@@ -9,18 +9,30 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+
+"""
+Geodetic navigation messages reporting GPS time, single-point
+position, and RTK baseline position solutions.
+
+"""
+
 from construct import *
 from sbp import SBP
-from sbp.utils import fmt_repr
+from sbp.utils import fmt_repr, exclude_fields
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/navigation.yaml
-# with generate.py at 2015-04-06 23:40:11.131635. Please do not hand edit!
+# with generate.py at 2015-04-12 20:54:10.828885. Please do not hand edit!
 
 
 SBP_MSG_GPS_TIME = 0x0100
 class MsgGPSTime(SBP):
   """SBP class for message MSG_GPS_TIME (0x0100).
+
+  You can have MSG_GPS_TIME inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This message reports the GPS time, an integer time scale
 beginning at January 6, 1980 midnight. GPS time counts the weeks
@@ -32,6 +44,8 @@ between between 0 and 604800 seconds (=60*60*24*7).
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   wn : int
     GPS week number
   tow : int
@@ -48,23 +62,43 @@ between between 0 and 604800 seconds (=60*60*24*7).
                    SLInt32('ns'),
                    ULInt8('flags'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.wn = kwargs.pop('wn')
+      self.tow = kwargs.pop('tow')
+      self.ns = kwargs.pop('ns')
+      self.flags = kwargs.pop('flags')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgGPSTime._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgGPSTime.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgGPSTime._parser.build(c)
+    return self.pack()
     
 SBP_MSG_DOPS = 0x0206
 class MsgDops(SBP):
   """SBP class for message MSG_DOPS (0x0206).
+
+  You can have MSG_DOPS inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This dilution of precision (DOP) message describes the effect of
 navigation satellite geometry on positional measurement
@@ -73,6 +107,8 @@ precision.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   tow : int
     GPS Time of Week
   gdop : int
@@ -95,23 +131,45 @@ precision.
                    ULInt16('hdop'),
                    ULInt16('vdop'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.tow = kwargs.pop('tow')
+      self.gdop = kwargs.pop('gdop')
+      self.pdop = kwargs.pop('pdop')
+      self.tdop = kwargs.pop('tdop')
+      self.hdop = kwargs.pop('hdop')
+      self.vdop = kwargs.pop('vdop')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgDops._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgDops.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgDops._parser.build(c)
+    return self.pack()
     
 SBP_MSG_POS_ECEF = 0x0200
 class MsgPosECEF(SBP):
   """SBP class for message MSG_POS_ECEF (0x0200).
+
+  You can have MSG_POS_ECEF inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The single-point position solution message reports absolute
 Earth Centered Earth Fixed (ECEF) coordinates and the status
@@ -124,6 +182,8 @@ baseline vector.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   tow : int
     GPS Time of Week
   x : double
@@ -149,23 +209,46 @@ baseline vector.
                    ULInt8('n_sats'),
                    ULInt8('flags'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.tow = kwargs.pop('tow')
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+      self.accuracy = kwargs.pop('accuracy')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgPosECEF._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgPosECEF.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgPosECEF._parser.build(c)
+    return self.pack()
     
 SBP_MSG_POS_LLH = 0x0201
 class MsgPosLLH(SBP):
   """SBP class for message MSG_POS_LLH (0x0201).
+
+  You can have MSG_POS_LLH inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This single-point position solution message reports the absolute
 geodetic coordinates and the status (single point absolute vs
@@ -177,6 +260,8 @@ station position and the rover's RTK baseline vector.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   tow : int
     GPS Time of Week
   lat : double
@@ -205,23 +290,47 @@ station position and the rover's RTK baseline vector.
                    ULInt8('n_sats'),
                    ULInt8('flags'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.tow = kwargs.pop('tow')
+      self.lat = kwargs.pop('lat')
+      self.lon = kwargs.pop('lon')
+      self.height = kwargs.pop('height')
+      self.h_accuracy = kwargs.pop('h_accuracy')
+      self.v_accuracy = kwargs.pop('v_accuracy')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgPosLLH._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgPosLLH.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgPosLLH._parser.build(c)
+    return self.pack()
     
 SBP_MSG_BASELINE_ECEF = 0x0202
 class MsgBaselineECEF(SBP):
   """SBP class for message MSG_BASELINE_ECEF (0x0202).
+
+  You can have MSG_BASELINE_ECEF inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This message reports the baseline position solution in Earth
 Centered Earth Fixed (ECEF) coordinates.
@@ -229,6 +338,8 @@ Centered Earth Fixed (ECEF) coordinates.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   tow : int
     GPS Time of Week
   x : int
@@ -254,23 +365,46 @@ Centered Earth Fixed (ECEF) coordinates.
                    ULInt8('n_sats'),
                    ULInt8('flags'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.tow = kwargs.pop('tow')
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+      self.accuracy = kwargs.pop('accuracy')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgBaselineECEF._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgBaselineECEF.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgBaselineECEF._parser.build(c)
+    return self.pack()
     
 SBP_MSG_BASELINE_NED = 0x0203
 class MsgBaselineNED(SBP):
   """SBP class for message MSG_BASELINE_NED (0x0203).
+
+  You can have MSG_BASELINE_NED inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This message reports the baseline position solution in North
 East Down (NED) coordinates.
@@ -278,6 +412,8 @@ East Down (NED) coordinates.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   tow : int
     GPS Time of Week
   n : int
@@ -306,23 +442,47 @@ East Down (NED) coordinates.
                    ULInt8('n_sats'),
                    ULInt8('flags'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.tow = kwargs.pop('tow')
+      self.n = kwargs.pop('n')
+      self.e = kwargs.pop('e')
+      self.d = kwargs.pop('d')
+      self.h_accuracy = kwargs.pop('h_accuracy')
+      self.v_accuracy = kwargs.pop('v_accuracy')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgBaselineNED._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgBaselineNED.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgBaselineNED._parser.build(c)
+    return self.pack()
     
 SBP_MSG_VEL_ECEF = 0x0204
 class MsgVelECEF(SBP):
   """SBP class for message MSG_VEL_ECEF (0x0204).
+
+  You can have MSG_VEL_ECEF inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This message reports the velocity in Earth Centered Earth Fixed
 (ECEF) coordinates.
@@ -330,6 +490,8 @@ class MsgVelECEF(SBP):
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   tow : int
     GPS Time of Week
   x : int
@@ -355,23 +517,46 @@ class MsgVelECEF(SBP):
                    ULInt8('n_sats'),
                    ULInt8('flags'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.tow = kwargs.pop('tow')
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+      self.accuracy = kwargs.pop('accuracy')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgVelECEF._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgVelECEF.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgVelECEF._parser.build(c)
+    return self.pack()
     
 SBP_MSG_VEL_NED = 0x0205
 class MsgVelNED(SBP):
   """SBP class for message MSG_VEL_NED (0x0205).
+
+  You can have MSG_VEL_NED inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This message reports the velocity in local North East Down (NED)
 coordinates.
@@ -379,6 +564,8 @@ coordinates.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   tow : int
     GPS Time of Week
   n : int
@@ -407,19 +594,38 @@ coordinates.
                    ULInt8('n_sats'),
                    ULInt8('flags'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.tow = kwargs.pop('tow')
+      self.n = kwargs.pop('n')
+      self.e = kwargs.pop('e')
+      self.d = kwargs.pop('d')
+      self.h_accuracy = kwargs.pop('h_accuracy')
+      self.v_accuracy = kwargs.pop('v_accuracy')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgVelNED._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgVelNED.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgVelNED._parser.build(c)
+    return self.pack()
     
 
 msg_classes = {

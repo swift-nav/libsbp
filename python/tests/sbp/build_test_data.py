@@ -96,7 +96,7 @@ def walk_json_dict(coll):
   else:
     return coll
 
-def dump_modules_to_yaml(test_map):
+def dump_modules_to_yaml(test_map, version):
   """
   Take unit test data data from test, format as YAML, and write to
   local files.
@@ -110,10 +110,9 @@ def dump_modules_to_yaml(test_map):
   """
   for k, v in test_map.iteritems():
     item = {'package': k,
-            'description': "Unit tests for swiftnav.%s v%s." \
-              % (k, sbp.__version__),
+            'description': "Unit tests for swiftnav.%s v%s." % (k, version),
             'generated_on': datetime.datetime.now(),
-            'version': sbp.__version__,
+            'version': version,
             'tests': v}
     d = yaml.dump(item, explicit_start=True,
                   default_flow_style=False,
@@ -193,6 +192,9 @@ def get_args():
   parser.add_argument("-j", "--json",
                       action="store_true",
                       help="JSON serialize SBP messages.")
+  parser.add_argument("-s", "--version",
+                      default=[None], nargs=1,
+                      help="SBP version number (e.g. 0.29).")
   parser.add_argument("-v", "--verbose",
                       action="store_true",
                       help="print extra debugging information.")
@@ -206,6 +208,7 @@ def main():
   """
   args = get_args()
   log_datafile = args.log_file[0]
+  version = args.version[0]
   json = args.json
   verbose = args.verbose
   if json:
@@ -224,7 +227,8 @@ def main():
         except TypeError as ex_info:
           # Note data errors as they come up, but don't crash the test
           # generation.
-          out = "Warning! %s for message 0x00%x." % (ex_info.message, msg.msg_type)
+          out = "Warning! %s for message 0x00%x." \
+                % (ex_info.message, msg.msg_type)
           warnings.warn(out, RuntimeWarning)
           continue
         # For a given SBP message type, sample only num_test_cases
@@ -236,7 +240,7 @@ def main():
             test_table[msg.msg_type].append(i)
           elif test_table[msg.msg_type][-1] != i:
             test_table[msg.msg_type].append(i)
-  dump_modules_to_yaml(gather_by_module(test_table))
+  dump_modules_to_yaml(gather_by_module(test_table), version)
 
 if __name__ == "__main__":
   main()

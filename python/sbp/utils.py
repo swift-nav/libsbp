@@ -13,15 +13,20 @@
 
 """
 
-import pprint
+EXCLUDE = ['sender', 'msg_type', 'crc', 'length', 'preamble', 'payload']
 
-TO_REMOVE = ['sender','msg_type','crc','length', 'preamble']
+
+def exclude_fields(obj, exclude=EXCLUDE):
+  """
+  Return dict of object without parent attrs.
+  """
+  return {k: v for k, v in obj.__dict__.items() if k not in exclude}
+
 
 def fmt_repr(obj):
   """Print a orphaned string representation of an object without the
   clutter of its parent object.
 
   """
-  items = {k: v for k, v in obj.__dict__.items() if k not in TO_REMOVE}
-  items = ["%s = %r" % (k, v) for k, v in items.items()]
+  items = ["%s = %r" % (k, v) for k, v in exclude_fields(obj).items()]
   return "<%s: {%s}>" % (obj.__class__.__name__, ', '.join(items))

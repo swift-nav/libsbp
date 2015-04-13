@@ -12,6 +12,6 @@
 from utils import assert_package
 
 def test_package():
-  FILEPATH = "../spec/tests/yaml/swiftnav/sbp/test_standard.yaml"
-  MODULE_NAME = "sbp.standard"
+  FILEPATH = "../spec/tests/yaml/swiftnav/sbp/test_acquisition.yaml"
+  MODULE_NAME = "sbp.acquisition"
   assert_package(FILEPATH, MODULE_NAME)

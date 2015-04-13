@@ -9,13 +9,18 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+
+"""
+Satellite observation messages from the Piksi.
+"""
+
 from construct import *
 from sbp import SBP
-from sbp.utils import fmt_repr
+from sbp.utils import fmt_repr, exclude_fields
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml
-# with generate.py at 2015-04-06 23:40:11.079832. Please do not hand edit!
+# with generate.py at 2015-04-12 20:54:10.763906. Please do not hand edit!
 
 
 class ObsGPSTime(object):
@@ -62,9 +67,9 @@ cycles and 8-bits of fractional cycles.
   Parameters
   ----------
   i : int
-    Carrier phase whole cycles.
+    Carrier phase whole cycles
   f : int
-    Carrier phase fractional part.
+    Carrier phase fractional part
 
   """
   _parser = Embedded(Struct("CarrierPhase",
@@ -92,7 +97,7 @@ class ObservationHeader(object):
   Parameters
   ----------
   t : ObsGPSTime
-    GPS time of this observation.
+    GPS time of this observation
   n_obs : int
     Total number of observations. First nibble is the size
 of the sequence (n), second nibble is the zero-indexed
@@ -127,16 +132,16 @@ tracked.
   Parameters
   ----------
   P : int
-    Pseudorange observation.
+    Pseudorange observation
   L : CarrierPhase
-    Carrier phase observation.
+    Carrier phase observation
   cn0 : int
     Carrier-to-Noise density
   lock : int
     Lock indicator. This value changes whenever a satellite
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed. There is no
-significance to the value of the lock indicator.
+significance to the value of the lock indicator
 
   prn : int
     PRN identifier of the satellite signal
@@ -165,6 +170,11 @@ significance to the value of the lock indicator.
 SBP_MSG_OBS = 0x0045
 class MsgObs(SBP):
   """SBP class for message MSG_OBS (0x0045).
+
+  You can have MSG_OBS inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The GPS observations message reports all the pseudo range and
 carrier phase observations for the satellites being tracked by
@@ -173,11 +183,13 @@ the Piksi.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   header : ObservationHeader
     Header of a GPS observation message
   obs : array
     Pseudorange and carrier phase observation for a
-satellite being tracked.
+satellite being tracked
 
 
   """
@@ -185,23 +197,41 @@ satellite being tracked.
                    Struct('header', ObservationHeader._parser),
                    OptionalGreedyRange(Struct('obs', PackedObsContent._parser)),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.header = kwargs.pop('header')
+      self.obs = kwargs.pop('obs')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgObs._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgObs.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgObs._parser.build(c)
+    return self.pack()
     
 SBP_MSG_BASE_POS = 0x0044
 class MsgBasePos(SBP):
   """SBP class for message MSG_BASE_POS (0x0044).
+
+  You can have MSG_BASE_POS inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This may be the position as reported by the base station itself or the
 position obtained from doing a single point solution using the base
@@ -210,6 +240,8 @@ station observations.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   lat : double
     Latitude
   lon : double
@@ -223,19 +255,33 @@ station observations.
                    LFloat64('lon'),
                    LFloat64('height'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.lat = kwargs.pop('lat')
+      self.lon = kwargs.pop('lon')
+      self.height = kwargs.pop('height')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgBasePos._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgBasePos.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgBasePos._parser.build(c)
+    return self.pack()
     
 
 msg_classes = {

@@ -9,18 +9,31 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+
+"""
+Messages for reading/writing the Piksi's onboard flash memory. These
+are in the implementation-defined range (0x0000-0x00FF), and largely
+intended for internal-use only.
+
+"""
+
 from construct import *
 from sbp import SBP
-from sbp.utils import fmt_repr
+from sbp.utils import fmt_repr, exclude_fields
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/flash.yaml
-# with generate.py at 2015-04-06 23:40:11.126002. Please do not hand edit!
+# with generate.py at 2015-04-12 20:54:10.817277. Please do not hand edit!
 
 
 SBP_MSG_FLASH_PROGRAM = 0x00E0
 class MsgFlashProgram(SBP):
   """SBP class for message MSG_FLASH_PROGRAM (0x00E0).
+
+  You can have MSG_FLASH_PROGRAM inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The flash program message programs a set of addresses of either
 the STM or M25 flash. The Piksi replies with either a
@@ -32,16 +45,18 @@ erased before addresses can be programmed.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   target : int
     Target flags
   addr_start : array
     Starting address offset to program
   addr_len : int
     Length of set of addresses to program, counting up from
-starting address.
+starting address
 
   data : array
-    Data to program addresses with, sized by addr_len.
+    Data to program addresses with, sized by addr_len
 
   """
   _parser = Struct("MsgFlashProgram",
@@ -50,23 +65,43 @@ starting address.
                    ULInt8('addr_len'),
                    OptionalGreedyRange(Struct('data', ULInt8('data'))),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.target = kwargs.pop('target')
+      self.addr_start = kwargs.pop('addr_start')
+      self.addr_len = kwargs.pop('addr_len')
+      self.data = kwargs.pop('data')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgFlashProgram._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgFlashProgram.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgFlashProgram._parser.build(c)
+    return self.pack()
     
 SBP_MSG_FLASH_DONE = 0x00E0
 class MsgFlashDone(SBP):
   """SBP class for message MSG_FLASH_DONE (0x00E0).
+
+  You can have MSG_FLASH_DONE inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This message defines success or failure codes for a variety of
 flash memory requests from the host to the Piksi. Flash read and
@@ -76,6 +111,8 @@ return this message on failure.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   response : int
     Response flags
 
@@ -83,23 +120,40 @@ return this message on failure.
   _parser = Struct("MsgFlashDone",
                    ULInt8('response'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.response = kwargs.pop('response')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgFlashDone._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgFlashDone.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgFlashDone._parser.build(c)
+    return self.pack()
     
 SBP_MSG_FLASH_READ = 0x00E1
 class MsgFlashRead(SBP):
   """SBP class for message MSG_FLASH_READ (0x00E1).
+
+  You can have MSG_FLASH_READ inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The flash read message reads a set of addresses of either the
 STM or M25 onboard flash. The Piksi replies with a
@@ -112,13 +166,15 @@ range.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   target : int
     Target flags
   addr_start : array
     Starting address offset to read from
   addr_len : int
     Length of set of addresses to read, counting up from
-starting address.
+starting address
 
 
   """
@@ -127,23 +183,42 @@ starting address.
                    Struct('addr_start', Array(3, ULInt8('addr_start'))),
                    ULInt8('addr_len'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.target = kwargs.pop('target')
+      self.addr_start = kwargs.pop('addr_start')
+      self.addr_len = kwargs.pop('addr_len')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgFlashRead._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgFlashRead.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgFlashRead._parser.build(c)
+    return self.pack()
     
 SBP_MSG_FLASH_ERASE = 0x00E2
 class MsgFlashErase(SBP):
   """SBP class for message MSG_FLASH_ERASE (0x00E2).
+
+  You can have MSG_FLASH_ERASE inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The flash erase message from the host erases a sector of either
 the STM or M25 onboard flash memory. The Piksi will reply with a
@@ -154,11 +229,13 @@ invalid.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   target : int
     Target flags
   sector_num : int
     Flash sector number to erase (0-11 for the STM, 0-15 for
-the M25).
+the M25)
 
 
   """
@@ -166,23 +243,41 @@ the M25).
                    ULInt8('target'),
                    ULInt8('sector_num'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.target = kwargs.pop('target')
+      self.sector_num = kwargs.pop('sector_num')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgFlashErase._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgFlashErase.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgFlashErase._parser.build(c)
+    return self.pack()
     
 SBP_MSG_STM_FLASH_LOCK_SECTOR = 0x00E3
 class MsgStmFlashLockSector(SBP):
   """SBP class for message MSG_STM_FLASH_LOCK_SECTOR (0x00E3).
+
+  You can have MSG_STM_FLASH_LOCK_SECTOR inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The flash lock message locks a sector of the STM flash
 memory. The Piksi replies with a MSG_FLASH_DONE message.
@@ -190,30 +285,49 @@ memory. The Piksi replies with a MSG_FLASH_DONE message.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   sector : array
-    Flash sector number to lock.
+    Flash sector number to lock
 
   """
   _parser = Struct("MsgStmFlashLockSector",
                    Struct('sector', Array(1, ULInt8('sector'))),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.sector = kwargs.pop('sector')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgStmFlashLockSector._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgStmFlashLockSector.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgStmFlashLockSector._parser.build(c)
+    return self.pack()
     
 SBP_MSG_STM_FLASH_UNLOCK_SECTOR = 0x00E4
 class MsgStmFlashUnlockSector(SBP):
   """SBP class for message MSG_STM_FLASH_UNLOCK_SECTOR (0x00E4).
+
+  You can have MSG_STM_FLASH_UNLOCK_SECTOR inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The flash unlock message unlocks a sector of the STM flash
 memory. The Piksi replies with a MSG_FLASH_DONE message.
@@ -221,30 +335,49 @@ memory. The Piksi replies with a MSG_FLASH_DONE message.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   sector : array
-    Flash sector number to unlock.
+    Flash sector number to unlock
 
   """
   _parser = Struct("MsgStmFlashUnlockSector",
                    Struct('sector', Array(1, ULInt8('sector'))),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.sector = kwargs.pop('sector')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgStmFlashUnlockSector._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgStmFlashUnlockSector.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgStmFlashUnlockSector._parser.build(c)
+    return self.pack()
     
 SBP_MSG_STM_UNIQUE_ID = 0x00E5
 class MsgStmUniqueId(SBP):
   """SBP class for message MSG_STM_UNIQUE_ID (0x00E5).
+
+  You can have MSG_STM_UNIQUE_ID inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This message reads the STM32F4's hardcoded unique ID. The Piksi
 returns STM32F4 unique ID (12 bytes) back to host.
@@ -252,30 +385,49 @@ returns STM32F4 unique ID (12 bytes) back to host.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   stm_id : string
-    STM32F4 unique ID.
+    STM32F4 unique ID
 
   """
   _parser = Struct("MsgStmUniqueId",
                    String('stm_id', 12),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.stm_id = kwargs.pop('stm_id')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgStmUniqueId._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgStmUniqueId.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgStmUniqueId._parser.build(c)
+    return self.pack()
     
 SBP_MSG_M25_FLASH_WRITE_STATUS = 0x00F3
 class MsgM25FlashWriteStatus(SBP):
   """SBP class for message MSG_M25_FLASH_WRITE_STATUS (0x00F3).
+
+  You can have MSG_M25_FLASH_WRITE_STATUS inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The flash status message writes to the 8-bit M25 flash status
 register. The Piksi replies with a MSG_FLASH_DONE message.
@@ -283,26 +435,40 @@ register. The Piksi replies with a MSG_FLASH_DONE message.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   status : array
-    Byte to write to the M25 flash status register.
+    Byte to write to the M25 flash status register
 
   """
   _parser = Struct("MsgM25FlashWriteStatus",
                    Struct('status', Array(1, ULInt8('status'))),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.status = kwargs.pop('status')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgM25FlashWriteStatus._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgM25FlashWriteStatus.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgM25FlashWriteStatus._parser.build(c)
+    return self.pack()
     
 
 msg_classes = {

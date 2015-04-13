@@ -9,13 +9,19 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+
+"""
+Satellite code and carrier-phase tracking messages from the Piksi.
+
+"""
+
 from construct import *
 from sbp import SBP
-from sbp.utils import fmt_repr
+from sbp.utils import fmt_repr, exclude_fields
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml
-# with generate.py at 2015-04-06 23:40:11.135754. Please do not hand edit!
+# with generate.py at 2015-04-12 20:54:10.835086. Please do not hand edit!
 
 
 class TrackingChannelState(object):
@@ -28,9 +34,9 @@ signal power.
   Parameters
   ----------
   state : int
-    Status of tracking channel.
+    Status of tracking channel
   prn : int
-    PRN being tracked.
+    PRN being tracked
   cn0 : float
     Carrier-to-noise density
 
@@ -56,6 +62,11 @@ signal power.
 SBP_MSG_TRACKING_STATE = 0x0016
 class MsgTrackingState(SBP):
   """SBP class for message MSG_TRACKING_STATE (0x0016).
+
+  You can have MSG_TRACKING_STATE inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The tracking message returns a variable-length array of tracking
 channel states. It reports status and code/carrier phase signal
@@ -64,41 +75,61 @@ power measurements for all tracked satellites.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   states : array
-    Satellite tracking channel state.
+    Satellite tracking channel state
 
   """
   _parser = Struct("MsgTrackingState",
                    OptionalGreedyRange(Struct('states', TrackingChannelState._parser)),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.states = kwargs.pop('states')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgTrackingState._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgTrackingState.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgTrackingState._parser.build(c)
+    return self.pack()
     
 SBP_MSG_EPHEMERIS = 0x001A
 class MsgEphemeris(SBP):
   """SBP class for message MSG_EPHEMERIS (0x001A).
+
+  You can have MSG_EPHEMERIS inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The ephemeris message returns a set of satellite orbit
 parameters that is used to calculate GPS satellite position,
 velocity, and clock offset (WGS84). Please see the Navstar GPS
 Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-20-III) for more details
-(http://www.navcen.uscg.gov/pubs/gps/icd200/icd200cw1234.pdf).
+20-III) for more details.
 
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   tgd : double
     Group delay differential between L1 and L2 (?)
   crs : double
@@ -181,19 +212,56 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    ULInt8('healthy'),
                    ULInt8('prn'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.tgd = kwargs.pop('tgd')
+      self.crs = kwargs.pop('crs')
+      self.crc = kwargs.pop('crc')
+      self.cuc = kwargs.pop('cuc')
+      self.cus = kwargs.pop('cus')
+      self.cic = kwargs.pop('cic')
+      self.cis = kwargs.pop('cis')
+      self.dn = kwargs.pop('dn')
+      self.m0 = kwargs.pop('m0')
+      self.ecc = kwargs.pop('ecc')
+      self.sqrta = kwargs.pop('sqrta')
+      self.omega0 = kwargs.pop('omega0')
+      self.omegadot = kwargs.pop('omegadot')
+      self.w = kwargs.pop('w')
+      self.inc = kwargs.pop('inc')
+      self.inc_dot = kwargs.pop('inc_dot')
+      self.af0 = kwargs.pop('af0')
+      self.af1 = kwargs.pop('af1')
+      self.af2 = kwargs.pop('af2')
+      self.toe_tow = kwargs.pop('toe_tow')
+      self.toe_wn = kwargs.pop('toe_wn')
+      self.toc_tow = kwargs.pop('toc_tow')
+      self.toc_wn = kwargs.pop('toc_wn')
+      self.valid = kwargs.pop('valid')
+      self.healthy = kwargs.pop('healthy')
+      self.prn = kwargs.pop('prn')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgEphemeris._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgEphemeris.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgEphemeris._parser.build(c)
+    return self.pack()
     
 
 msg_classes = {

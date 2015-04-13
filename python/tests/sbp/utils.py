@@ -55,13 +55,9 @@ def field_eq(p, e):
 
   """
   if isinstance(e, dict):
-    k = e.keys()[0]
-    if isinstance(e[k], list):
-      return k == p.keys()[0] and all(field_eq(i, j) for (i, j) in zip(p[k], e[k]))
-    elif isinstance(e[k], dict):
-      return k == p.keys()[0] and all(field_eq(p[k][i], j) for (i, j) in e[k].iteritems())
-    else:
-      return k == p.keys()[0] and all(field_eq(p[i], j) for (i, j) in e.iteritems())
+    return all(field_eq(p[i], j) for (i, j) in e.iteritems())
+  elif isinstance(e, list):
+    return all(field_eq(p[i], j) for (i, j) in enumerate(e))
   else:
     return p == e
 
@@ -84,6 +80,21 @@ def _assert_msg(msg, test_case):
       assert field_eq(msg.__dict__[field_name], field_value), \
         "Unequal field values: got %s, but expected %s!" \
         % (msg.__dict__[field_name], field_value)
+
+def _assert_msg_roundtrip(msg, raw_packet):
+  """
+  Asserts that a msg gets serialized back into binary with the
+  expected value.
+
+  Parameters
+  ----------
+  msg : Parsed SBP message.
+    Parsed SBP message.
+  raw_packet : dict
+    Unit test case for this message.
+
+  """
+  assert base64.standard_b64encode(msg.to_binary()) == raw_packet
 
 def _assert_sane_package(pkg_name, pkg):
   """
@@ -124,3 +135,4 @@ def assert_package(test_filename, pkg_name):
       sbp = SBP.unpack(base64.standard_b64decode(test_case['raw_packet']))
       _assert_sbp(sbp, test_case['sbp'])
       _assert_msg(dispatch(sbp), test_case['msg'])
+      _assert_msg_roundtrip(dispatch(sbp), test_case['raw_packet'])

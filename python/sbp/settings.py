@@ -9,52 +9,87 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+
+"""
+Messages for reading and writing the Piksi's device settings. These
+are in the implementation-defined range (0x0000-0x00FF), and
+intended for internal-use only. Please see the accompanying
+description of settings configurations for more details. Note that
+some of these messages taking a request from a host and a response
+from the Piksi share the same message type ID.
+
+"""
+
 from construct import *
 from sbp import SBP
-from sbp.utils import fmt_repr
+from sbp.utils import fmt_repr, exclude_fields
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/settings.yaml
-# with generate.py at 2015-04-06 23:40:11.129530. Please do not hand edit!
+# with generate.py at 2015-04-12 20:54:10.824989. Please do not hand edit!
 
 
 SBP_MSG_SETTINGS = 0x00A0
 class MsgSettings(SBP):
   """SBP class for message MSG_SETTINGS (0x00A0).
+
+  You can have MSG_SETTINGS inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The setting message reads and writes the Piksi's configuration.
 
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   setting : string
-    A NULL delimited (and terminated) string, with a single
-"<setting section>\0<setting>\0<value>\0" on writes or a
-series of "<setting section>\0<setting>\0<value>\0" on
-reads.
+    A NULL delimited (and terminated) string, with the A
+NULL-terminated and delimited string with contents
+[SECTION_SETTING, SETTING, VALUE] on writes or a series of
+such strings on reads.
 
 
   """
   _parser = Struct("MsgSettings",
                    CString('setting', six.b('\n')),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.setting = kwargs.pop('setting')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgSettings._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgSettings.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgSettings._parser.build(c)
+    return self.pack()
     
 SBP_MSG_SETTINGS_SAVE = 0x00A1
 class MsgSettingsSave(SBP):
   """SBP class for message MSG_SETTINGS_SAVE (0x00A1).
+
+  You can have MSG_SETTINGS_SAVE inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The save settings message persists the Piksi's current settings
 configuration to its onboard flash memory file system.
@@ -62,9 +97,10 @@ configuration to its onboard flash memory file system.
 
   """
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.payload = sbp.payload
 
   def __repr__(self):
     return fmt_repr(self)
@@ -73,36 +109,56 @@ configuration to its onboard flash memory file system.
 SBP_MSG_SETTINGS_READ_BY_INDEX = 0x00A2
 class MsgSettingsReadByIndex(SBP):
   """SBP class for message MSG_SETTINGS_READ_BY_INDEX (0x00A2).
+
+  You can have MSG_SETTINGS_READ_BY_INDEX inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The settings message for iterating through the settings
-values. It will read the setting at an index, returning
-"<setting section>\0<setting>\0<value>\0" from the Piksi.
+values. It will read the setting at an index, returning a
+NULL-terminated and delimited string with contents
+[SECTION_SETTING, SETTING, VALUE].
 
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   index : int
     An index into the Piksi settings, with values ranging from
-0 to length(settings).
+0 to length(settings)
 
 
   """
   _parser = Struct("MsgSettingsReadByIndex",
                    ULInt16('index'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.index = kwargs.pop('index')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgSettingsReadByIndex._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgSettingsReadByIndex.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgSettingsReadByIndex._parser.build(c)
+    return self.pack()
     
 
 msg_classes = {
