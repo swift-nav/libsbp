@@ -6,7 +6,7 @@ MAKEFLAGS += SWIFTNAV_ROOT=$(SWIFTNAV_ROOT)
 SBP_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/yaml/swiftnav/sbp/
 SBP_GEN_BIN := python sbpg/generator.py
 
-.PHONY: help all c python docs pdf html
+.PHONY: help all c python docs pdf html test
 
 help:
 	@echo
@@ -16,13 +16,14 @@ help:
 	@echo "  help      to display this help message"
 	@echo "  all       to make SBP clients across all languages"
 	@echo "  c         to make C headers"
-	@echo "  python    to make Python bindings"
+	@echo "  docs      to make HTML and pdf documentation"
 	@echo "  html      to make all HTML language docs"
 	@echo "  pdf       to make SBP LaTeX datasheet"
-	@echo "  docs      to make HTML and pdf documentation"
+	@echo "  python    to make Python bindings"
+	@echo "  test      to run all tests"
 	@echo
 
-all: c python docs
+all: c python test docs
 
 c:
 	@echo "Generating C headers..."
@@ -74,6 +75,24 @@ html:
 	@echo "Generating Python documentation..."
 	@echo
 	cd $(SWIFTNAV_ROOT)/python/docs/ && make html
+	cd $(SWIFTNAV_ROOT);
+	@echo
+	@echo "Finished!"
+
+test:
+	@echo
+	@echo "Run tests..."
+	@echo
+	@echo "Running C tests..."
+	@echo
+	cd $(SWIFTNAV_ROOT)/c; \
+	mkdir -p build/ && cd build/; \
+	cmake ../; \
+	make test;
+	@echo
+	@echo "Running Python tests..."
+	@echo
+	cd $(SWIFTNAV_ROOT)/python/ && tox
 	cd $(SWIFTNAV_ROOT);
 	@echo
 	@echo "Finished!"

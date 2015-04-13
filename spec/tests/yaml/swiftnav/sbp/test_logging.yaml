@@ -1,0 +1,97 @@
+---
+description: Unit tests for swiftnav.sbp.logging v0.29.
+generated_on: 2015-04-12 20:15:47.212229
+package: sbp.logging
+tests:
+
+- msg:
+    fields:
+      text: 'INFO: Piksi Starting...'
+    module: sbp.logging
+    name: MsgPrint
+  msg_type: '0x10'
+  raw_packet: VRAAwwQYSU5GTzogUGlrc2kgU3RhcnRpbmcuLi4KvoQ=
+  sbp:
+    crc: '0x84be'
+    length: 24
+    msg_type: '0x10'
+    payload: SU5GTzogUGlrc2kgU3RhcnRpbmcuLi4K
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      text: 'INFO: Firmware Version: v0.15-rc1'
+    module: sbp.logging
+    name: MsgPrint
+  msg_type: '0x10'
+  raw_packet: VRAAwwQiSU5GTzogRmlybXdhcmUgVmVyc2lvbjogdjAuMTUtcmMxCklr
+  sbp:
+    crc: '0x6b49'
+    length: 34
+    msg_type: '0x10'
+    payload: SU5GTzogRmlybXdhcmUgVmVyc2lvbjogdjAuMTUtcmMxCg==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      text: 'INFO: Built: Apr  2 2015 00:31:34'
+    module: sbp.logging
+    name: MsgPrint
+  msg_type: '0x10'
+  raw_packet: VRAAwwQiSU5GTzogQnVpbHQ6IEFwciAgMiAyMDE1IDAwOjMxOjM0CgQI
+  sbp:
+    crc: '0x804'
+    length: 34
+    msg_type: '0x10'
+    payload: SU5GTzogQnVpbHQ6IEFwciAgMiAyMDE1IDAwOjMxOjM0Cg==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      text: 'INFO: No telemetry radio found on UARTA, skipping configuration.'
+    module: sbp.logging
+    name: MsgPrint
+  msg_type: '0x10'
+  raw_packet: VRAAwwRBSU5GTzogTm8gdGVsZW1ldHJ5IHJhZGlvIGZvdW5kIG9uIFVBUlRBLCBza2lwcGluZyBjb25maWd1cmF0aW9uLgoOMw==
+  sbp:
+    crc: '0x330e'
+    length: 65
+    msg_type: '0x10'
+    payload: SU5GTzogTm8gdGVsZW1ldHJ5IHJhZGlvIGZvdW5kIG9uIFVBUlRBLCBza2lwcGluZyBjb25maWd1cmF0aW9uLgo=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      text: 'INFO: No telemetry radio found on UARTB, skipping configuration.'
+    module: sbp.logging
+    name: MsgPrint
+  msg_type: '0x10'
+  raw_packet: VRAAwwRBSU5GTzogTm8gdGVsZW1ldHJ5IHJhZGlvIGZvdW5kIG9uIFVBUlRCLCBza2lwcGluZyBjb25maWd1cmF0aW9uLgqkDA==
+  sbp:
+    crc: '0xca4'
+    length: 65
+    msg_type: '0x10'
+    payload: SU5GTzogTm8gdGVsZW1ldHJ5IHJhZGlvIGZvdW5kIG9uIFVBUlRCLCBza2lwcGluZyBjb25maWd1cmF0aW9uLgo=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      text: 'INFO: NAP firmware version: v0.11'
+    module: sbp.logging
+    name: MsgPrint
+  msg_type: '0x10'
+  raw_packet: VRAAwwQiSU5GTzogTkFQIGZpcm13YXJlIHZlcnNpb246IHYwLjExCvN1
+  sbp:
+    crc: '0x75f3'
+    length: 34
+    msg_type: '0x10'
+    payload: SU5GTzogTkFQIGZpcm13YXJlIHZlcnNpb246IHYwLjExCg==
+    preamble: '0x55'
+    sender: '0x4c3'
+version: '0.29'
+...

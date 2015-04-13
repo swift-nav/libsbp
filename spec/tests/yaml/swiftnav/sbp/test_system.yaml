@@ -1,37 +1,37 @@
 ---
-description: Unit tests for swiftnav.sbp.standard v0.23.
-generated_on: 2015-03-24 11:31:59.831529
-package: sbp.standard
+description: Unit tests for swiftnav.sbp.system v0.29.
+generated_on: 2015-04-12 20:15:47.087953
+package: sbp.system
 tests:
 
 - msg:
     fields:
       reserved: 0
-    module: sbp.standard
+    module: sbp.system
     name: MsgStartup
   msg_type: '0xff00'
-  raw_packet: VQD/zAQEAAAAAJY/
+  raw_packet: VQD/wwQEAAAAAH+1
   sbp:
-    crc: '0x3f96'
+    crc: '0xb57f'
     length: 4
     msg_type: '0xff00'
     payload: AAAAAA==
     preamble: '0x55'
-    sender: '0x4cc'
+    sender: '0x4c3'
 
 - msg:
     fields:
       flags: 0
-    module: sbp.standard
+    module: sbp.system
     name: MsgHeartbeat
   msg_type: '0xffff'
-  raw_packet: Vf//zAQEAAAAAKuz
+  raw_packet: Vf//wwQEAAAAAEI5
   sbp:
-    crc: '0xb3ab'
+    crc: '0x3942'
     length: 4
     msg_type: '0xffff'
     payload: AAAAAA==
     preamble: '0x55'
-    sender: '0x4cc'
-version: '0.23'
+    sender: '0x4c3'
+version: '0.29'
 ...

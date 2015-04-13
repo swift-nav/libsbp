@@ -9,18 +9,28 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+
+"""
+Standardized system messages from Swift Navigation devices.
+"""
+
 from construct import *
 from sbp import SBP
-from sbp.utils import fmt_repr
+from sbp.utils import fmt_repr, exclude_fields
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/system.yaml
-# with generate.py at 2015-04-06 23:40:11.134335. Please do not hand edit!
+# with generate.py at 2015-04-12 20:54:10.832345. Please do not hand edit!
 
 
 SBP_MSG_STARTUP = 0xFF00
 class MsgStartup(SBP):
   """SBP class for message MSG_STARTUP (0xFF00).
+
+  You can have MSG_STARTUP inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The system start-up message is sent once on system
 start-up. It is intended to be used to notify the host or
@@ -30,6 +40,8 @@ ready to respond to commands or configuration requests.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   reserved : int
     Reserved
 
@@ -37,23 +49,40 @@ ready to respond to commands or configuration requests.
   _parser = Struct("MsgStartup",
                    ULInt32('reserved'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.reserved = kwargs.pop('reserved')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgStartup._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgStartup.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgStartup._parser.build(c)
+    return self.pack()
     
 SBP_MSG_HEARTBEAT = 0xFFFF
 class MsgHeartbeat(SBP):
   """SBP class for message MSG_HEARTBEAT (0xFFFF).
+
+  You can have MSG_HEARTBEAT inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The heartbeat message is sent periodically to inform the host
 or other attached devices that the system is running. It is
@@ -68,6 +97,8 @@ the remaining error flags should be inspected.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   flags : int
     Status flags
 
@@ -75,19 +106,31 @@ the remaining error flags should be inspected.
   _parser = Struct("MsgHeartbeat",
                    ULInt32('flags'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.flags = kwargs.pop('flags')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgHeartbeat._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgHeartbeat.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgHeartbeat._parser.build(c)
+    return self.pack()
     
 
 msg_classes = {

@@ -1,0 +1,22 @@
+---
+description: Unit tests for swiftnav.sbp.bootload v0.29.
+generated_on: 2015-04-12 20:15:47.084788
+package: sbp.bootload
+tests:
+
+- msg:
+    fields:
+      handshake: 118
+    module: sbp.bootload
+    name: MsgBootloaderHandshake
+  msg_type: '0xb0'
+  raw_packet: VbAAwwQEdjEuMgHO
+  sbp:
+    crc: '0xce01'
+    length: 4
+    msg_type: '0xb0'
+    payload: djEuMg==
+    preamble: '0x55'
+    sender: '0x4c3'
+version: '0.29'
+...

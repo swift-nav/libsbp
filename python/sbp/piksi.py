@@ -9,39 +9,49 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+
+"""
+System health, configuration, and diagnostic messages specific to
+the Piksi L1 receiver, including a variety of legacy messages that
+may no longer be used. These messages are in the
+implementation-defined range (0x0000-0x00FF), and largely intended
+for internal-use only.
+
+"""
+
 from construct import *
 from sbp import SBP
-from sbp.utils import fmt_repr
+from sbp.utils import fmt_repr, exclude_fields
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml
-# with generate.py at 2015-04-06 23:40:11.127759. Please do not hand edit!
+# with generate.py at 2015-04-12 20:54:10.821815. Please do not hand edit!
 
 
 class UARTChannel(object):
   """UARTChannel.
   
   Throughput, utilization, and error counts on the RX/TX buffers
-of this UART channel. Values require renormalization.
+of this UART channel. Values require renormalization
 
   
   Parameters
   ----------
   tx_throughput : float
-    UART transmit throughput.
+    UART transmit throughput
   rx_throughput : float
-    UART receive throughput.
+    UART receive throughput
   crc_error_count : int
-    UART CRC error count.
+    UART CRC error count
   io_error_count : int
-    UART IO error count.
+    UART IO error count
   tx_buffer_level : int
     UART transmit buffer percentage utilization. Ranges from
-0 - 255 and needs to be renormalized to 100.
+0 - 255 and needs to be renormalized to 100
 
   rx_buffer_level : int
     UART receive buffer percentage utilization. Ranges from
-0 - 255 and needs to be renormalized to 100.
+0 - 255 and needs to be renormalized to 100
 
 
   """
@@ -79,13 +89,13 @@ communication latency in the system.
   Parameters
   ----------
   avg : int
-    Average latency.
+    Average latency
   lmin : int
-    Minimum latency.
+    Minimum latency
   lmax : int
-    Maximum latency.
+    Maximum latency
   current : int
-    Smoothed estimate of the current latency.
+    Smoothed estimate of the current latency
 
   """
   _parser = Embedded(Struct("Latency",
@@ -110,6 +120,11 @@ communication latency in the system.
 SBP_MSG_ALMANAC = 0x0069
 class MsgAlmanac(SBP):
   """SBP class for message MSG_ALMANAC (0x0069).
+
+  You can have MSG_ALMANAC inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This is a legacy message for sending and loading a satellite
 alamanac onto the Piksi's flash memory from the host.
@@ -117,9 +132,10 @@ alamanac onto the Piksi's flash memory from the host.
 
   """
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.payload = sbp.payload
 
   def __repr__(self):
     return fmt_repr(self)
@@ -128,6 +144,11 @@ alamanac onto the Piksi's flash memory from the host.
 SBP_MSG_SET_TIME = 0x0068
 class MsgSetTime(SBP):
   """SBP class for message MSG_SET_TIME (0x0068).
+
+  You can have MSG_SET_TIME inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This message sets up timing functionality using a coarse GPS
 time estimate sent by the host.
@@ -135,9 +156,10 @@ time estimate sent by the host.
 
   """
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.payload = sbp.payload
 
   def __repr__(self):
     return fmt_repr(self)
@@ -146,6 +168,11 @@ time estimate sent by the host.
 SBP_MSG_RESET = 0x00B2
 class MsgReset(SBP):
   """SBP class for message MSG_RESET (0x00B2).
+
+  You can have MSG_RESET inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This message from the host resets the Piksi back into the
 bootloader. It ensures that all outstanding memory accesses
@@ -154,9 +181,10 @@ including buffered writes are completed before reset begins.
 
   """
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.payload = sbp.payload
 
   def __repr__(self):
     return fmt_repr(self)
@@ -165,6 +193,11 @@ including buffered writes are completed before reset begins.
 SBP_MSG_CW_RESULTS = 0x00C0
 class MsgCwResults(SBP):
   """SBP class for message MSG_CW_RESULTS (0x00C0).
+
+  You can have MSG_CW_RESULTS inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This is an unused legacy message for result reporting from the
 CW interference channel on the SwiftNAP. This message will be
@@ -173,9 +206,10 @@ removed in a future release.
 
   """
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.payload = sbp.payload
 
   def __repr__(self):
     return fmt_repr(self)
@@ -184,6 +218,11 @@ removed in a future release.
 SBP_MSG_CW_START = 0x00C1
 class MsgCwStart(SBP):
   """SBP class for message MSG_CW_START (0x00C1).
+
+  You can have MSG_CW_START inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This is an unused legacy message from those host for starting
 the CW interference channel on the SwiftNAP. This message will
@@ -192,9 +231,10 @@ be removed in a future release.
 
   """
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.payload = sbp.payload
 
   def __repr__(self):
     return fmt_repr(self)
@@ -203,6 +243,11 @@ be removed in a future release.
 SBP_MSG_RESET_FILTERS = 0x0022
 class MsgResetFilters(SBP):
   """SBP class for message MSG_RESET_FILTERS (0x0022).
+
+  You can have MSG_RESET_FILTERS inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This message resets either the DGNSS Kalman filters or Integer
 Ambiguity Resolution (IAR) process.
@@ -210,6 +255,8 @@ Ambiguity Resolution (IAR) process.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   filter : int
     Filter flags
 
@@ -217,23 +264,40 @@ Ambiguity Resolution (IAR) process.
   _parser = Struct("MsgResetFilters",
                    ULInt8('filter'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.filter = kwargs.pop('filter')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgResetFilters._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgResetFilters.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgResetFilters._parser.build(c)
+    return self.pack()
     
 SBP_MSG_INIT_BASE = 0x0023
 class MsgInitBase(SBP):
   """SBP class for message MSG_INIT_BASE (0x0023).
+
+  You can have MSG_INIT_BASE inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This message initializes the Integer Ambiguity Resolution (IAR)
 process on the Piksi to use an assumed baseline position between
@@ -244,9 +308,10 @@ observations between the two.
 
   """
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.payload = sbp.payload
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.payload = sbp.payload
 
   def __repr__(self):
     return fmt_repr(self)
@@ -255,6 +320,11 @@ observations between the two.
 SBP_MSG_THREAD_STATE = 0x0017
 class MsgThreadState(SBP):
   """SBP class for message MSG_THREAD_STATE (0x0017).
+
+  You can have MSG_THREAD_STATE inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The thread usage message from the Piksi reports RTOS thread
 usage statistics for the named thread. The reported values
@@ -263,14 +333,16 @@ require renormalization.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   name : string
     Thread name (NULL terminated)
   cpu : int
     Percentage cpu use for this thread. Ranges from 0 - 1000
-and needs to be renormalized to 100.
+and needs to be renormalized to 100
 
   stack_free : int
-    Free stack space for this thread.
+    Free stack space for this thread
 
   """
   _parser = Struct("MsgThreadState",
@@ -278,23 +350,42 @@ and needs to be renormalized to 100.
                    ULInt16('cpu'),
                    ULInt32('stack_free'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.name = kwargs.pop('name')
+      self.cpu = kwargs.pop('cpu')
+      self.stack_free = kwargs.pop('stack_free')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgThreadState._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgThreadState.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgThreadState._parser.build(c)
+    return self.pack()
     
 SBP_MSG_UART_STATE = 0x0018
 class MsgUartState(SBP):
   """SBP class for message MSG_UART_STATE (0x0018).
+
+  You can have MSG_UART_STATE inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   The UART message reports data latency and throughput of the UART
 channels providing SBP I/O. On the default Piksi configuration,
@@ -305,6 +396,8 @@ future.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   uart_a : UARTChannel
     State of UART A
   uart_b : UARTChannel
@@ -321,23 +414,43 @@ future.
                    Struct('uart_ftdi', UARTChannel._parser),
                    Struct('latency', Latency._parser),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.uart_a = kwargs.pop('uart_a')
+      self.uart_b = kwargs.pop('uart_b')
+      self.uart_ftdi = kwargs.pop('uart_ftdi')
+      self.latency = kwargs.pop('latency')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgUartState._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgUartState.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgUartState._parser.build(c)
+    return self.pack()
     
 SBP_MSG_IAR_STATE = 0x0019
 class MsgIarState(SBP):
   """SBP class for message MSG_IAR_STATE (0x0019).
+
+  You can have MSG_IAR_STATE inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   This message reports the state of the Integer Ambiguity
 Resolution (IAR) process, which resolves unknown integer
@@ -347,26 +460,40 @@ from satellite observations.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   num_hyps : int
-    Number of integer ambiguity hypotheses remaining.
+    Number of integer ambiguity hypotheses remaining
 
   """
   _parser = Struct("MsgIarState",
                    ULInt32('num_hyps'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.num_hyps = kwargs.pop('num_hyps')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgIarState._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgIarState.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgIarState._parser.build(c)
+    return self.pack()
     
 
 msg_classes = {

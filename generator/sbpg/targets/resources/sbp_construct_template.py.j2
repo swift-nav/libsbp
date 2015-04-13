@@ -16,7 +16,7 @@
 
 from construct import *
 from sbp import SBP
-from sbp.utils import fmt_repr
+from sbp.utils import fmt_repr, exclude_fields
 import six
 
 ((*- for i in include *))
@@ -80,6 +80,11 @@ class ((( m.identifier )))(object):
 SBP_(((m.identifier))) = ((('0x%04X'|format(m.sbp_id))))
 class ((( m.identifier | classnameify )))(SBP):
   """SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).
+
+  You can have (((m.identifier))) inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   ((* if m.desc *))
   (((m.desc)))
   ((*- endif *))
@@ -88,6 +93,8 @@ class ((( m.identifier | classnameify )))(SBP):
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   ((*- for f in m.fields *))
   (((f.identifier))) : (((f.type_id|pydoc)))
   ((*- if f.desc *))
@@ -104,23 +111,39 @@ class ((( m.identifier | classnameify )))(SBP):
                    ((*- endfor *)))
   ((*- endif *))
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
       ((*- if m.fields *))
-    self.from_binary(sbp.payload)
+      self.from_binary(sbp.payload)
       ((*- else *))
-    self.payload = sbp.payload
+      self.payload = sbp.payload
       ((*- endif *))
+    ((*- if m.fields*))
+    else:
+      ((*- for f in m.fields *))
+      self.(((f.identifier))) = kwargs.pop('(((f.identifier)))')
+      ((*- endfor *))
+    ((*- endif *))
 
   def __repr__(self):
     return fmt_repr(self)
  ((* if m.fields *))
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = ((( m.identifier | classnameify )))._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return ((( m.identifier | classnameify ))).build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = ((( m.identifier | classnameify )))._parser.build(c)
+    return self.pack()
     ((*- endif *))
     ((* endif *))
   ((*- else *))
