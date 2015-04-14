@@ -17,12 +17,13 @@ e.g. camera shutter time
 """
 
 from construct import *
+import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/ext_events.yaml
-# with generate.py at 2015-04-14 13:57:47.706966. Please do not hand edit!
+# with generate.py at 2015-04-14 16:07:48.890750. Please do not hand edit!
 
 
 SBP_MSG_EXT_EVENT = 0x0101
@@ -90,6 +91,24 @@ which pin it was and whether it was rising or falling.
     c = Container(**exclude_fields(self))
     self.payload = MsgExtEvent._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgExtEvent, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgExtEvent(sbp)
     
 
 msg_classes = {
