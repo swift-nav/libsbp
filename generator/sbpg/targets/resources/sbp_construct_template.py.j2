@@ -15,8 +15,9 @@
 """
 
 from construct import *
+import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 ((*- for i in include *))
@@ -144,6 +145,19 @@ class ((( m.identifier | classnameify )))(SBP):
     c = Container(**exclude_fields(self))
     self.payload = ((( m.identifier | classnameify )))._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    return json.dumps(walk_json_dict(self.__dict__))
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    return ((( m.identifier | classnameify )))(**json.loads(data))
     ((*- endif *))
     ((* endif *))
   ((*- else *))

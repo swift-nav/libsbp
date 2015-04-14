@@ -96,6 +96,9 @@ def _assert_msg_roundtrip(msg, raw_packet):
   """
   assert base64.standard_b64encode(msg.to_binary()) == raw_packet
 
+def _assert_json(msg):
+  assert msg.from_json(msg.to_json()) == msg
+
 def _assert_sane_package(pkg_name, pkg):
   """
   Sanity check the package collection of tests before actually
@@ -136,3 +139,4 @@ def assert_package(test_filename, pkg_name):
       _assert_sbp(sbp, test_case['sbp'])
       _assert_msg(dispatch(sbp), test_case['msg'])
       _assert_msg_roundtrip(dispatch(sbp), test_case['raw_packet'])
+      _assert_json(dispatch(sbp))
