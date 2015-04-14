@@ -96,6 +96,15 @@ def _assert_msg_roundtrip(msg, raw_packet):
   """
   assert base64.standard_b64encode(msg.to_binary()) == raw_packet
 
+def _assert_msg_roundtrip_json(msg, raw_json):
+  """
+  Asserts that a msg gets serialized back into JSON with the
+  expected value, as well as gets serialized from JSON into
+  an expected object.
+  """
+  assert msg.to_json() == raw_json
+  assert msg == msg.from_json(raw_json)
+
 def _assert_sane_package(pkg_name, pkg):
   """
   Sanity check the package collection of tests before actually
@@ -136,3 +145,4 @@ def assert_package(test_filename, pkg_name):
       _assert_sbp(sbp, test_case['sbp'])
       _assert_msg(dispatch(sbp), test_case['msg'])
       _assert_msg_roundtrip(dispatch(sbp), test_case['raw_packet'])
+      _assert_msg_roundtrip_json(dispatch(sbp), test_case['raw_json'])

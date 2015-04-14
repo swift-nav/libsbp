@@ -13,6 +13,8 @@ tests:
     module: sbp.acquisition
     name: MsgAcqResult
   msg_type: '0x15'
+  raw_json: '{"sender": 1219, "msg_type": 21, "prn": 8, "cf": 8241.943359375, "crc":
+    17410, "length": 13, "snr": 14.5, "cp": 727.0, "preamble": 85, "payload": "AABoQQDANUTGxwBGCA=="}'
   raw_packet: VRUAwwQNAABoQQDANUTGxwBGCAJE
   sbp:
     crc: '0x4402'
@@ -31,6 +33,9 @@ tests:
     module: sbp.acquisition
     name: MsgAcqResult
   msg_type: '0x15'
+  raw_json: '{"sender": 1219, "msg_type": 21, "prn": 9, "cf": 749.2676391601562, "crc":
+    7131, "length": 13, "snr": 15.300000190734863, "cp": 359.5, "preamble": 85, "payload":
+    "zcx0QQDAs0MhUTtECQ=="}'
   raw_packet: VRUAwwQNzcx0QQDAs0MhUTtECdsb
   sbp:
     crc: '0x1bdb'
@@ -49,6 +54,9 @@ tests:
     module: sbp.acquisition
     name: MsgAcqResult
   msg_type: '0x15'
+  raw_json: '{"sender": 1219, "msg_type": 21, "prn": 11, "cf": -6493.65283203125,
+    "crc": 9110, "length": 13, "snr": 18.100000381469727, "cp": 40.5, "preamble":
+    85, "payload": "zcyQQQAAIkI57crFCw=="}'
   raw_packet: VRUAwwQNzcyQQQAAIkI57crFC5Yj
   sbp:
     crc: '0x2396'
@@ -67,6 +75,9 @@ tests:
     module: sbp.acquisition
     name: MsgAcqResult
   msg_type: '0x15'
+  raw_json: '{"sender": 1219, "msg_type": 21, "prn": 12, "cf": -999.0234985351562,
+    "crc": 30354, "length": 13, "snr": 15.300000190734863, "cp": 548.5, "preamble":
+    85, "payload": "zcx0QQAgCUSBwXnEDA=="}'
   raw_packet: VRUAwwQNzcx0QQAgCUSBwXnEDJJ2
   sbp:
     crc: '0x7692'
@@ -85,6 +96,9 @@ tests:
     module: sbp.acquisition
     name: MsgAcqResult
   msg_type: '0x15'
+  raw_json: '{"sender": 1219, "msg_type": 21, "prn": 14, "cf": 4745.361328125, "crc":
+    19223, "length": 13, "snr": 15.300000190734863, "cp": 780.5, "preamble": 85, "payload":
+    "zcx0QQAgQ0TkSpRFDg=="}'
   raw_packet: VRUAwwQNzcx0QQAgQ0TkSpRFDhdL
   sbp:
     crc: '0x4b17'
@@ -103,6 +117,9 @@ tests:
     module: sbp.acquisition
     name: MsgAcqResult
   msg_type: '0x15'
+  raw_json: '{"sender": 1219, "msg_type": 21, "prn": 0, "cf": -499.5117492675781,
+    "crc": 53196, "length": 13, "snr": 163.22222900390625, "cp": 584.5, "preamble":
+    85, "payload": "5DgjQwAgEkSBwfnDAA=="}'
   raw_packet: VRUAwwQN5DgjQwAgEkSBwfnDAMzP
   sbp:
     crc: '0xcfcc'

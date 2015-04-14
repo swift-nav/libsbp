@@ -20,12 +20,13 @@ message type ID.
 """
 
 from construct import *
+import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/bootload.yaml
-# with generate.py at 2015-04-12 20:54:10.809448. Please do not hand edit!
+# with generate.py at 2015-04-14 12:12:07.029893. Please do not hand edit!
 
 
 SBP_MSG_BOOTLOADER_HANDSHAKE = 0x00B0
@@ -84,6 +85,24 @@ build.
     c = Container(**exclude_fields(self))
     self.payload = MsgBootloaderHandshake._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgBootloaderHandshake, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgBootloaderHandshake(sbp)
     
 SBP_MSG_BOOTLOADER_JUMP_TO_APP = 0x00B1
 class MsgBootloaderJumpToApp(SBP):
@@ -133,6 +152,24 @@ class MsgBootloaderJumpToApp(SBP):
     c = Container(**exclude_fields(self))
     self.payload = MsgBootloaderJumpToApp._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgBootloaderJumpToApp, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgBootloaderJumpToApp(sbp)
     
 SBP_MSG_NAP_DEVICE_DNA = 0x00DD
 class MsgNapDeviceDna(SBP):
@@ -186,6 +223,24 @@ MSG_NAP_DEVICE_DNA message.
     c = Container(**exclude_fields(self))
     self.payload = MsgNapDeviceDna._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgNapDeviceDna, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgNapDeviceDna(sbp)
     
 
 msg_classes = {

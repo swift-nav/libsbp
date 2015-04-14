@@ -15,12 +15,13 @@ Standardized system messages from Swift Navigation devices.
 """
 
 from construct import *
+import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/system.yaml
-# with generate.py at 2015-04-12 20:54:10.832345. Please do not hand edit!
+# with generate.py at 2015-04-14 12:12:07.028810. Please do not hand edit!
 
 
 SBP_MSG_STARTUP = 0xFF00
@@ -74,6 +75,24 @@ ready to respond to commands or configuration requests.
     c = Container(**exclude_fields(self))
     self.payload = MsgStartup._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgStartup, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgStartup(sbp)
     
 SBP_MSG_HEARTBEAT = 0xFFFF
 class MsgHeartbeat(SBP):
@@ -131,6 +150,24 @@ the remaining error flags should be inspected.
     c = Container(**exclude_fields(self))
     self.payload = MsgHeartbeat._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgHeartbeat, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgHeartbeat(sbp)
     
 
 msg_classes = {

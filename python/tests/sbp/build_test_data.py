@@ -28,21 +28,23 @@ package: sbp.acquisition
 tests:
 - msg:
     fields:
-      cf: -7742.43212890625
-      cp: 272.0
-      prn: 24
-      snr: 18.77777862548828
+      cf: 8241.943359375
+      cp: 727.0
+      prn: 8
+      snr: 14.5
     module: sbp.acquisition
     name: MsgAcqResult
   msg_type: '0x15'
-  raw_packet: VRUAzAQN5DiWQQAAiEN18/HFGLWs
+  raw_json: '{"sender": 1219, "msg_type": 21, "prn": 8, "cf": 8241.943359375, "crc":
+    17410, "length": 13, "snr": 14.5, "cp": 727.0, "preamble": 85, "payload": "AABoQQDANUTGxwBGCA=="}'
+  raw_packet: VRUAwwQNAABoQQDANUTGxwBGCAJE
   sbp:
-    crc: '0xacb5'
+    crc: '0x4402'
     length: 13
     msg_type: '0x15'
-    payload: 5DiWQQAAiEN18/HFGA==
+    payload: AABoQQDANUTGxwBGCA==
     preamble: '0x55'
-    sender: '0x4cc'
+    sender: '0x4c3'
 
 For the sake of readability, some of the fields that are typically
 displayed as hex, such as SBP message type, crc, and preamble are cast
@@ -173,6 +175,7 @@ def mk_readable_msg(msg, keys=_TO_REMOVE):
   for k in keys:
     del f[k]
   i = {'raw_packet' : base64.standard_b64encode(msg.pack()),
+       'raw_json'   : msg.to_json(),
        'msg_type'   : hex(msg.msg_type),
        'sbp'        : _to_readable_dict(msg),
        'msg'        : { 'module' : msg.__class__.__module__,

@@ -17,12 +17,13 @@ position, and RTK baseline position solutions.
 """
 
 from construct import *
+import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/navigation.yaml
-# with generate.py at 2015-04-12 20:54:10.828885. Please do not hand edit!
+# with generate.py at 2015-04-14 12:12:06.978883. Please do not hand edit!
 
 
 SBP_MSG_GPS_TIME = 0x0100
@@ -90,6 +91,24 @@ between between 0 and 604800 seconds (=60*60*24*7).
     c = Container(**exclude_fields(self))
     self.payload = MsgGPSTime._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgGPSTime, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgGPSTime(sbp)
     
 SBP_MSG_DOPS = 0x0206
 class MsgDops(SBP):
@@ -161,6 +180,24 @@ precision.
     c = Container(**exclude_fields(self))
     self.payload = MsgDops._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgDops, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgDops(sbp)
     
 SBP_MSG_POS_ECEF = 0x0200
 class MsgPosECEF(SBP):
@@ -240,6 +277,24 @@ baseline vector.
     c = Container(**exclude_fields(self))
     self.payload = MsgPosECEF._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgPosECEF, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgPosECEF(sbp)
     
 SBP_MSG_POS_LLH = 0x0201
 class MsgPosLLH(SBP):
@@ -322,6 +377,24 @@ station position and the rover's RTK baseline vector.
     c = Container(**exclude_fields(self))
     self.payload = MsgPosLLH._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgPosLLH, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgPosLLH(sbp)
     
 SBP_MSG_BASELINE_ECEF = 0x0202
 class MsgBaselineECEF(SBP):
@@ -396,6 +469,24 @@ Centered Earth Fixed (ECEF) coordinates.
     c = Container(**exclude_fields(self))
     self.payload = MsgBaselineECEF._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgBaselineECEF, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgBaselineECEF(sbp)
     
 SBP_MSG_BASELINE_NED = 0x0203
 class MsgBaselineNED(SBP):
@@ -474,6 +565,24 @@ East Down (NED) coordinates.
     c = Container(**exclude_fields(self))
     self.payload = MsgBaselineNED._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgBaselineNED, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgBaselineNED(sbp)
     
 SBP_MSG_VEL_ECEF = 0x0204
 class MsgVelECEF(SBP):
@@ -548,6 +657,24 @@ class MsgVelECEF(SBP):
     c = Container(**exclude_fields(self))
     self.payload = MsgVelECEF._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgVelECEF, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgVelECEF(sbp)
     
 SBP_MSG_VEL_NED = 0x0205
 class MsgVelNED(SBP):
@@ -626,6 +753,24 @@ coordinates.
     c = Container(**exclude_fields(self))
     self.payload = MsgVelNED._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgVelNED, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgVelNED(sbp)
     
 
 msg_classes = {

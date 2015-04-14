@@ -16,12 +16,13 @@ Satellite code and carrier-phase tracking messages from the Piksi.
 """
 
 from construct import *
+import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml
-# with generate.py at 2015-04-12 20:54:10.835086. Please do not hand edit!
+# with generate.py at 2015-04-14 12:12:07.028186. Please do not hand edit!
 
 
 class TrackingChannelState(object):
@@ -109,6 +110,24 @@ power measurements for all tracked satellites.
     c = Container(**exclude_fields(self))
     self.payload = MsgTrackingState._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgTrackingState, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgTrackingState(sbp)
     
 SBP_MSG_EPHEMERIS = 0x001A
 class MsgEphemeris(SBP):
@@ -262,6 +281,24 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     c = Container(**exclude_fields(self))
     self.payload = MsgEphemeris._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgEphemeris, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgEphemeris(sbp)
     
 
 msg_classes = {
