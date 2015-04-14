@@ -64,6 +64,16 @@ tests:
     module: sbp.observation
     name: MsgObs
   msg_type: '0x45'
+  raw_json: '{"sender": 1219, "msg_type": 69, "header": {"n_obs": 32, "t": {"wn":
+    1838, "tow": 407084600}}, "obs": [{"P": 2046421816, "prn": 0, "L": {"i": -36108,
+    "f": 33}, "cn0": 46, "lock": 55875}, {"P": 2085014510, "prn": 2, "L": {"i": 203030,
+    "f": 98}, "cn0": 43, "lock": 40376}, {"P": 2110096816, "prn": 3, "L": {"i": -178306,
+    "f": 185}, "cn0": 39, "lock": 14148}, {"P": 2208476476, "prn": 10, "L": {"i":
+    -137374, "f": 139}, "cn0": 30, "lock": 4129}, {"P": 2298000000, "prn": 13, "L":
+    {"i": -167638, "f": 40}, "cn0": 20, "lock": 18218}, {"P": 2266101494, "prn": 22,
+    "L": {"i": 209919, "f": 64}, "cn0": 27, "lock": 63852}, {"P": 1987193298, "prn":
+    30, "L": {"i": -53117, "f": 31}, "cn0": 52, "lock": 15074}], "crc": 55575, "length":
+    98, "preamble": 85, "payload": "OJ5DGC4HIDjr+Xn0cv//IS5D2gDuy0Z8FhkDAGIruJ0CsIXFfX5H/f+5J0Q3AzytooNi5/3/ix4hEAqAsviIKnH9/ygUKkcN9vYRh/8zAwBAG2z5FtIpcnaDMP//HzTiOh4="}'
   raw_packet: VUUAwwRiOJ5DGC4HIDjr+Xn0cv//IS5D2gDuy0Z8FhkDAGIruJ0CsIXFfX5H/f+5J0Q3AzytooNi5/3/ix4hEAqAsviIKnH9/ygUKkcN9vYRh/8zAwBAG2z5FtIpcnaDMP//HzTiOh4X2Q==
   sbp:
     crc: '0xd917'
@@ -91,6 +101,10 @@ tests:
     module: sbp.observation
     name: MsgObs
   msg_type: '0x45'
+  raw_json: '{"sender": 1219, "msg_type": 69, "header": {"n_obs": 33, "t": {"wn":
+    1838, "tow": 407084600}}, "obs": [{"P": 1973695572, "prn": 31, "L": {"i": 8294,
+    "f": 147}, "cn0": 62, "lock": 64062}], "crc": 3818, "length": 20, "preamble":
+    85, "payload": "OJ5DGC4HIVQ0pHVmIAAAkz4++h8="}'
   raw_packet: VUUAwwQUOJ5DGC4HIVQ0pHVmIAAAkz4++h/qDg==
   sbp:
     crc: '0xeea'
@@ -160,6 +174,16 @@ tests:
     module: sbp.observation
     name: MsgObs
   msg_type: '0x45'
+  raw_json: '{"sender": 1219, "msg_type": 69, "header": {"n_obs": 32, "t": {"wn":
+    1838, "tow": 407084800}}, "obs": [{"P": 2046415136, "prn": 0, "L": {"i": -36207,
+    "f": 141}, "cn0": 45, "lock": 55875}, {"P": 2084995249, "prn": 2, "L": {"i": 203599,
+    "f": 159}, "cn0": 44, "lock": 40376}, {"P": 2110097211, "prn": 3, "L": {"i": -178769,
+    "f": 77}, "cn0": 40, "lock": 14148}, {"P": 2208476371, "prn": 10, "L": {"i": -137807,
+    "f": 20}, "cn0": 31, "lock": 4129}, {"P": 2298000000, "prn": 13, "L": {"i": -168076,
+    "f": 94}, "cn0": 21, "lock": 18218}, {"P": 2266082742, "prn": 22, "L": {"i": 210469,
+    "f": 214}, "cn0": 27, "lock": 63852}, {"P": 1987187803, "prn": 30, "L": {"i":
+    -53264, "f": 129}, "cn0": 52, "lock": 15074}], "crc": 30664, "length": 98, "preamble":
+    85, "payload": "AJ9DGC4HICDR+XmRcv//jS1D2gCxgEZ8TxsDAJ8suJ0CO4fFfa9F/f9NKEQ3A9OsooOx5f3/FB8hEAqAsviIdG/9/14VKkcNtq0RhyU2AwDWG2z5FlsUcnbwL///gTTiOh4="}'
   raw_packet: VUUAwwRiAJ9DGC4HICDR+XmRcv//jS1D2gCxgEZ8TxsDAJ8suJ0CO4fFfa9F/f9NKEQ3A9OsooOx5f3/FB8hEAqAsviIdG/9/14VKkcNtq0RhyU2AwDWG2z5FlsUcnbwL///gTTiOh7Idw==
   sbp:
     crc: '0x77c8'
@@ -187,6 +211,10 @@ tests:
     module: sbp.observation
     name: MsgObs
   msg_type: '0x45'
+  raw_json: '{"sender": 1219, "msg_type": 69, "header": {"n_obs": 33, "t": {"wn":
+    1838, "tow": 407084800}}, "obs": [{"P": 1973687089, "prn": 31, "L": {"i": 8312,
+    "f": 222}, "cn0": 63, "lock": 64062}], "crc": 59147, "length": 20, "preamble":
+    85, "payload": "AJ9DGC4HITETpHV4IAAA3j8++h8="}'
   raw_packet: VUUAwwQUAJ9DGC4HITETpHV4IAAA3j8++h8L5w==
   sbp:
     crc: '0xe70b'
@@ -242,6 +270,14 @@ tests:
     module: sbp.observation
     name: MsgObs
   msg_type: '0x45'
+  raw_json: '{"sender": 1219, "msg_type": 69, "header": {"n_obs": 16, "t": {"wn":
+    1838, "tow": 407151200}}, "obs": [{"P": 2044298327, "prn": 0, "L": {"i": -27527,
+    "f": 189}, "cn0": 43, "lock": 37807}, {"P": 2110275716, "prn": 3, "L": {"i": -123030,
+    "f": 1}, "cn0": 41, "lock": 45326}, {"P": 2298000000, "prn": 13, "L": {"i": -113594,
+    "f": 166}, "cn0": 18, "lock": 34232}, {"P": 2259844888, "prn": 22, "L": {"i":
+    137478, "f": 249}, "cn0": 28, "lock": 24609}, {"P": 1985374378, "prn": 30, "L":
+    {"i": -36797, "f": 203}, "cn0": 56, "lock": 22736}], "crc": 27435, "length": 72,
+    "preamble": 85, "payload": "YKJEGC4HEFeE2Xl5lP//vSuvkwCEQMh9ah/+/wEpDrEDgLL4iEZE/v+mEriFDRh/soYGGQIA+RwhYBaqaFZ2Q3D//8s40Fge"}'
   raw_packet: VUUAwwRIYKJEGC4HEFeE2Xl5lP//vSuvkwCEQMh9ah/+/wEpDrEDgLL4iEZE/v+mEriFDRh/soYGGQIA+RwhYBaqaFZ2Q3D//8s40FgeK2s=
   sbp:
     crc: '0x6b2b'
@@ -297,6 +333,14 @@ tests:
     module: sbp.observation
     name: MsgObs
   msg_type: '0x45'
+  raw_json: '{"sender": 1219, "msg_type": 69, "header": {"n_obs": 16, "t": {"wn":
+    1838, "tow": 407151400}}, "obs": [{"P": 2044291972, "prn": 0, "L": {"i": -27634,
+    "f": 1}, "cn0": 44, "lock": 37807}, {"P": 2110276225, "prn": 3, "L": {"i": -123500,
+    "f": 153}, "cn0": 41, "lock": 45326}, {"P": 2298000000, "prn": 13, "L": {"i":
+    -114033, "f": 222}, "cn0": 18, "lock": 34232}, {"P": 2259826078, "prn": 22, "L":
+    {"i": 138026, "f": 237}, "cn0": 30, "lock": 24609}, {"P": 1985368870, "prn": 30,
+    "L": {"i": -36952, "f": 45}, "cn0": 56, "lock": 22736}], "crc": 44801, "length":
+    72, "preamble": 85, "payload": "KKNEGC4HEIRr2XkOlP//ASyvkwCBQsh9lB3+/5kpDrEDgLL4iI9C/v/eEriFDZ41soYqGwIA7R4hYBYmU1Z2qG///y040Fge"}'
   raw_packet: VUUAwwRIKKNEGC4HEIRr2XkOlP//ASyvkwCBQsh9lB3+/5kpDrEDgLL4iI9C/v/eEriFDZ41soYqGwIA7R4hYBYmU1Z2qG///y040FgeAa8=
   sbp:
     crc: '0xaf01'

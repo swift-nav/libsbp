@@ -15,12 +15,13 @@ Satellite observation messages from the Piksi.
 """
 
 from construct import *
+import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml
-# with generate.py at 2015-04-12 20:54:10.763906. Please do not hand edit!
+# with generate.py at 2015-04-14 12:12:07.029389. Please do not hand edit!
 
 
 class ObsGPSTime(object):
@@ -223,6 +224,24 @@ satellite being tracked
     c = Container(**exclude_fields(self))
     self.payload = MsgObs._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgObs, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgObs(sbp)
     
 SBP_MSG_BASE_POS = 0x0044
 class MsgBasePos(SBP):
@@ -282,6 +301,24 @@ station observations.
     c = Container(**exclude_fields(self))
     self.payload = MsgBasePos._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgBasePos, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgBasePos(sbp)
     
 
 msg_classes = {

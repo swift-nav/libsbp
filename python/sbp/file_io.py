@@ -24,12 +24,13 @@ the Piksi share the same message type ID.
 """
 
 from construct import *
+import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/file_io.yaml
-# with generate.py at 2015-04-12 20:54:10.812817. Please do not hand edit!
+# with generate.py at 2015-04-14 12:12:07.031777. Please do not hand edit!
 
 
 SBP_MSG_FILEIO_READ = 0x00A8
@@ -93,6 +94,24 @@ message".
     c = Container(**exclude_fields(self))
     self.payload = MsgFileioRead._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgFileioRead, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgFileioRead(sbp)
     
 SBP_MSG_FILEIO_READ_DIR = 0x00A9
 class MsgFileioReadDir(SBP):
@@ -155,6 +174,24 @@ message".
     c = Container(**exclude_fields(self))
     self.payload = MsgFileioReadDir._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgFileioReadDir, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgFileioReadDir(sbp)
     
 SBP_MSG_FILEIO_REMOVE = 0x00AC
 class MsgFileioRemove(SBP):
@@ -206,6 +243,24 @@ message is invalid, a followup MSG_PRINT message will print
     c = Container(**exclude_fields(self))
     self.payload = MsgFileioRemove._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgFileioRemove, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgFileioRemove(sbp)
     
 SBP_MSG_FILEIO_WRITE = 0x00AD
 class MsgFileioWrite(SBP):
@@ -267,6 +322,24 @@ print "Invalid fileio write message".
     c = Container(**exclude_fields(self))
     self.payload = MsgFileioWrite._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgFileioWrite, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgFileioWrite(sbp)
     
 
 msg_classes = {

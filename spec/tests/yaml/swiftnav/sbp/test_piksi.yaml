@@ -12,6 +12,9 @@ tests:
     module: sbp.piksi
     name: MsgThreadState
   msg_type: '0x17'
+  raw_json: '{"sender": 1219, "msg_type": 23, "cpu": 0, "crc": 54467, "length": 26,
+    "stack_free": 2452, "preamble": 85, "payload": "bWFpbgAAAAAAAAAAAAAAAAAAAAAAAJQJAAA=",
+    "name": "main\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
   raw_packet: VRcAwwQabWFpbgAAAAAAAAAAAAAAAAAAAAAAAJQJAADD1A==
   sbp:
     crc: '0xd4c3'
@@ -29,6 +32,9 @@ tests:
     module: sbp.piksi
     name: MsgThreadState
   msg_type: '0x17'
+  raw_json: '{"sender": 1219, "msg_type": 23, "cpu": 484, "crc": 4833, "length": 26,
+    "stack_free": 36, "preamble": 85, "payload": "aWRsZQAAAAAAAAAAAAAAAAAAAADkASQAAAA=",
+    "name": "idle\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
   raw_packet: VRcAwwQaaWRsZQAAAAAAAAAAAAAAAAAAAADkASQAAADhEg==
   sbp:
     crc: '0x12e1'
@@ -46,6 +52,9 @@ tests:
     module: sbp.piksi
     name: MsgThreadState
   msg_type: '0x17'
+  raw_json: '{"sender": 1219, "msg_type": 23, "cpu": 394, "crc": 29862, "length":
+    26, "stack_free": 1884, "preamble": 85, "payload": "TkFQIElTUgAAAAAAAAAAAAAAAACKAVwHAAA=",
+    "name": "NAP ISR\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
   raw_packet: VRcAwwQaTkFQIElTUgAAAAAAAAAAAAAAAACKAVwHAACmdA==
   sbp:
     crc: '0x74a6'
@@ -63,6 +72,9 @@ tests:
     module: sbp.piksi
     name: MsgThreadState
   msg_type: '0x17'
+  raw_json: '{"sender": 1219, "msg_type": 23, "cpu": 1, "crc": 44773, "length": 26,
+    "stack_free": 3076, "preamble": 85, "payload": "U0JQAAAAAAAAAAAAAAAAAAAAAAABAAQMAAA=",
+    "name": "SBP\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
   raw_packet: VRcAwwQaU0JQAAAAAAAAAAAAAAAAAAAAAAABAAQMAADlrg==
   sbp:
     crc: '0xaee5'
@@ -80,6 +92,9 @@ tests:
     module: sbp.piksi
     name: MsgThreadState
   msg_type: '0x17'
+  raw_json: '{"sender": 1219, "msg_type": 23, "cpu": 10, "crc": 564, "length": 26,
+    "stack_free": 2428, "preamble": 85, "payload": "bWFuYWdlIGFjcQAAAAAAAAAAAAAKAHwJAAA=",
+    "name": "manage acq\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
   raw_packet: VRcAwwQabWFuYWdlIGFjcQAAAAAAAAAAAAAKAHwJAAA0Ag==
   sbp:
     crc: '0x234'
@@ -97,6 +112,9 @@ tests:
     module: sbp.piksi
     name: MsgThreadState
   msg_type: '0x17'
+  raw_json: '{"sender": 1219, "msg_type": 23, "cpu": 0, "crc": 13946, "length": 26,
+    "stack_free": 2332, "preamble": 85, "payload": "bWFuYWdlIHRyYWNrAAAAAAAAAAAAABwJAAA=",
+    "name": "manage track\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
   raw_packet: VRcAwwQabWFuYWdlIHRyYWNrAAAAAAAAAAAAABwJAAB6Ng==
   sbp:
     crc: '0x367a'
@@ -137,6 +155,14 @@ tests:
     module: sbp.piksi
     name: MsgUartState
   msg_type: '0x18'
+  raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
+    1219, "msg_type": 24, "crc": 1527, "length": 58, "uart_b": {"rx_buffer_level":
+    0, "tx_buffer_level": 0, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count":
+    0, "tx_throughput": 0.0}, "uart_a": {"rx_buffer_level": 0, "tx_buffer_level":
+    0, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count": 0, "tx_throughput":
+    0.0}, "preamble": 85, "payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJqZOUEAAAAAAAAAAA8A/////wAAAAAAAAAA/////w==",
+    "uart_ftdi": {"rx_buffer_level": 0, "tx_buffer_level": 15, "rx_throughput": 0.0,
+    "crc_error_count": 0, "io_error_count": 0, "tx_throughput": 11.600000381469727}}'
   raw_packet: VRgAwwQ6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJqZOUEAAAAAAAAAAA8A/////wAAAAAAAAAA//////cF
   sbp:
     crc: '0x5f7'
@@ -177,6 +203,14 @@ tests:
     module: sbp.piksi
     name: MsgUartState
   msg_type: '0x18'
+  raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
+    1219, "msg_type": 24, "crc": 28225, "length": 58, "uart_b": {"rx_buffer_level":
+    0, "tx_buffer_level": 0, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count":
+    0, "tx_throughput": 0.0}, "uart_a": {"rx_buffer_level": 0, "tx_buffer_level":
+    0, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count": 0, "tx_throughput":
+    0.0}, "preamble": 85, "payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIrhz0AAAAAAAAAAAAA/////wAAAAAAAAAA/////w==",
+    "uart_ftdi": {"rx_buffer_level": 0, "tx_buffer_level": 0, "rx_throughput": 0.0,
+    "crc_error_count": 0, "io_error_count": 0, "tx_throughput": 0.06599999964237213}}'
   raw_packet: VRgAwwQ6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIrhz0AAAAAAAAAAAAA/////wAAAAAAAAAA/////0Fu
   sbp:
     crc: '0x6e41'
@@ -217,6 +251,14 @@ tests:
     module: sbp.piksi
     name: MsgUartState
   msg_type: '0x18'
+  raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
+    1219, "msg_type": 24, "crc": 9414, "length": 58, "uart_b": {"rx_buffer_level":
+    0, "tx_buffer_level": 0, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count":
+    0, "tx_throughput": 0.0}, "uart_a": {"rx_buffer_level": 0, "tx_buffer_level":
+    0, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count": 0, "tx_throughput":
+    0.0}, "preamble": 85, "payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARWDj4AAAAAAAAAAAoA/////wAAAAAAAAAA/////w==",
+    "uart_ftdi": {"rx_buffer_level": 0, "tx_buffer_level": 10, "rx_throughput": 0.0,
+    "crc_error_count": 0, "io_error_count": 0, "tx_throughput": 0.13899999856948853}}'
   raw_packet: VRgAwwQ6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARWDj4AAAAAAAAAAAoA/////wAAAAAAAAAA/////8Yk
   sbp:
     crc: '0x24c6'
@@ -257,6 +299,14 @@ tests:
     module: sbp.piksi
     name: MsgUartState
   msg_type: '0x18'
+  raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
+    1219, "msg_type": 24, "crc": 28225, "length": 58, "uart_b": {"rx_buffer_level":
+    0, "tx_buffer_level": 0, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count":
+    0, "tx_throughput": 0.0}, "uart_a": {"rx_buffer_level": 0, "tx_buffer_level":
+    0, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count": 0, "tx_throughput":
+    0.0}, "preamble": 85, "payload": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIrhz0AAAAAAAAAAAAA/////wAAAAAAAAAA/////w==",
+    "uart_ftdi": {"rx_buffer_level": 0, "tx_buffer_level": 0, "rx_throughput": 0.0,
+    "crc_error_count": 0, "io_error_count": 0, "tx_throughput": 0.06599999964237213}}'
   raw_packet: VRgAwwQ6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIrhz0AAAAAAAAAAAAA/////wAAAAAAAAAA/////0Fu
   sbp:
     crc: '0x6e41'
@@ -297,6 +347,14 @@ tests:
     module: sbp.piksi
     name: MsgUartState
   msg_type: '0x18'
+  raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
+    1219, "msg_type": 24, "crc": 28528, "length": 58, "uart_b": {"rx_buffer_level":
+    0, "tx_buffer_level": 2, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count":
+    0, "tx_throughput": 0.09836065769195557}, "uart_a": {"rx_buffer_level": 0, "tx_buffer_level":
+    0, "rx_throughput": 0.008196720853447914, "crc_error_count": 0, "io_error_count":
+    0, "tx_throughput": 0.0}, "preamble": 85, "payload": "AAAAAIpLBjwAAAAAAABQcck9AAAAAAAAAAACAJHt/D4AAAAAAAAAACYA/////wAAAAAAAAAA/////w==",
+    "uart_ftdi": {"rx_buffer_level": 0, "tx_buffer_level": 38, "rx_throughput": 0.0,
+    "crc_error_count": 0, "io_error_count": 0, "tx_throughput": 0.49399998784065247}}'
   raw_packet: VRgAwwQ6AAAAAIpLBjwAAAAAAABQcck9AAAAAAAAAAACAJHt/D4AAAAAAAAAACYA/////wAAAAAAAAAA/////3Bv
   sbp:
     crc: '0x6f70'
@@ -337,6 +395,14 @@ tests:
     module: sbp.piksi
     name: MsgUartState
   msg_type: '0x18'
+  raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
+    1219, "msg_type": 24, "crc": 18454, "length": 58, "uart_b": {"rx_buffer_level":
+    0, "tx_buffer_level": 2, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count":
+    0, "tx_throughput": 0.012000000104308128}, "uart_a": {"rx_buffer_level": 0, "tx_buffer_level":
+    2, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count": 0, "tx_throughput":
+    0.012000000104308128}, "preamble": 85, "payload": "pptEPAAAAAAAAAAAAgCmm0Q8AAAAAAAAAAACAOxRqD8AAAAAAAAAADIA/////wAAAAAAAAAA/////w==",
+    "uart_ftdi": {"rx_buffer_level": 0, "tx_buffer_level": 50, "rx_throughput": 0.0,
+    "crc_error_count": 0, "io_error_count": 0, "tx_throughput": 1.315000057220459}}'
   raw_packet: VRgAwwQ6pptEPAAAAAAAAAAAAgCmm0Q8AAAAAAAAAAACAOxRqD8AAAAAAAAAADIA/////wAAAAAAAAAA/////xZI
   sbp:
     crc: '0x4816'
@@ -352,6 +418,8 @@ tests:
     module: sbp.piksi
     name: MsgIarState
   msg_type: '0x19'
+  raw_json: '{"sender": 1219, "msg_type": 25, "num_hyps": 0, "crc": 45074, "length":
+    4, "preamble": 85, "payload": "AAAAAA=="}'
   raw_packet: VRkAwwQEAAAAABKw
   sbp:
     crc: '0xb012'
@@ -367,6 +435,8 @@ tests:
     module: sbp.piksi
     name: MsgIarState
   msg_type: '0x19'
+  raw_json: '{"sender": 1219, "msg_type": 25, "num_hyps": 1, "crc": 50854, "length":
+    4, "preamble": 85, "payload": "AQAAAA=="}'
   raw_packet: VRkAwwQEAQAAAKbG
   sbp:
     crc: '0xc6a6'
@@ -382,6 +452,8 @@ tests:
     module: sbp.piksi
     name: MsgIarState
   msg_type: '0x19'
+  raw_json: '{"sender": 1219, "msg_type": 25, "num_hyps": 729, "crc": 34054, "length":
+    4, "preamble": 85, "payload": "2QIAAA=="}'
   raw_packet: VRkAwwQE2QIAAAaF
   sbp:
     crc: '0x8506'
@@ -397,6 +469,8 @@ tests:
     module: sbp.piksi
     name: MsgIarState
   msg_type: '0x19'
+  raw_json: '{"sender": 1219, "msg_type": 25, "num_hyps": 728, "crc": 62386, "length":
+    4, "preamble": 85, "payload": "2AIAAA=="}'
   raw_packet: VRkAwwQE2AIAALLz
   sbp:
     crc: '0xf3b2'
@@ -412,6 +486,8 @@ tests:
     module: sbp.piksi
     name: MsgIarState
   msg_type: '0x19'
+  raw_json: '{"sender": 1219, "msg_type": 25, "num_hyps": 727, "crc": 10076, "length":
+    4, "preamble": 85, "payload": "1wIAAA=="}'
   raw_packet: VRkAwwQE1wIAAFwn
   sbp:
     crc: '0x275c'
@@ -427,6 +503,8 @@ tests:
     module: sbp.piksi
     name: MsgIarState
   msg_type: '0x19'
+  raw_json: '{"sender": 1219, "msg_type": 25, "num_hyps": 723, "crc": 60845, "length":
+    4, "preamble": 85, "payload": "0wIAAA=="}'
   raw_packet: VRkAwwQE0wIAAK3t
   sbp:
     crc: '0xedad'

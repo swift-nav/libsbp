@@ -20,12 +20,13 @@ for internal-use only.
 """
 
 from construct import *
+import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml
-# with generate.py at 2015-04-12 20:54:10.821815. Please do not hand edit!
+# with generate.py at 2015-04-14 12:12:07.026493. Please do not hand edit!
 
 
 class UARTChannel(object):
@@ -289,6 +290,24 @@ Ambiguity Resolution (IAR) process.
     c = Container(**exclude_fields(self))
     self.payload = MsgResetFilters._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgResetFilters, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgResetFilters(sbp)
     
 SBP_MSG_INIT_BASE = 0x0023
 class MsgInitBase(SBP):
@@ -377,6 +396,24 @@ and needs to be renormalized to 100
     c = Container(**exclude_fields(self))
     self.payload = MsgThreadState._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgThreadState, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgThreadState(sbp)
     
 SBP_MSG_UART_STATE = 0x0018
 class MsgUartState(SBP):
@@ -442,6 +479,24 @@ future.
     c = Container(**exclude_fields(self))
     self.payload = MsgUartState._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgUartState, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgUartState(sbp)
     
 SBP_MSG_IAR_STATE = 0x0019
 class MsgIarState(SBP):
@@ -494,6 +549,24 @@ from satellite observations.
     c = Container(**exclude_fields(self))
     self.payload = MsgIarState._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgIarState, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgIarState(sbp)
     
 
 msg_classes = {

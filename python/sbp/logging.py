@@ -17,12 +17,13 @@ implementation-defined range (0x0000-0x00FF).
 """
 
 from construct import *
+import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/logging.yaml
-# with generate.py at 2015-04-12 20:54:10.815735. Please do not hand edit!
+# with generate.py at 2015-04-14 12:12:07.025289. Please do not hand edit!
 
 
 SBP_MSG_PRINT = 0x0010
@@ -77,6 +78,24 @@ info on function entry/exit when enabled within the firmware.
     c = Container(**exclude_fields(self))
     self.payload = MsgPrint._parser.build(c)
     return self.pack()
+
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = super( MsgPrint, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return json.dumps(d)
+
+  @staticmethod
+  def from_json(data):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(data)
+    sbp = SBP.from_json_dict(d)
+    return MsgPrint(sbp)
     
 SBP_MSG_DEBUG_VAR = 0x0011
 class MsgDebugVar(SBP):
