@@ -1,0 +1,29 @@
+---
+description: Unit tests for swiftnav.sbp.ext_events vNone.
+generated_on: 2015-04-14 16:07:52.589360
+package: sbp.ext_events
+tests:
+
+- msg:
+    fields:
+      flags: 3
+      ns: 999882
+      pin: 0
+      tow: 254924999
+      wn: 1840
+    module: sbp.ext_events
+    name: MsgExtEvent
+  msg_type: '0x101'
+  raw_json: '{"sender": 1781, "msg_type": 257, "wn": 1840, "tow": 254924999, "crc":
+    52286, "length": 12, "flags": 3, "pin": 0, "ns": 999882, "preamble": 85, "payload":
+    "MAfH2DEPykEPAAMA"}'
+  raw_packet: VQEB9QYMMAfH2DEPykEPAAMAPsw=
+  sbp:
+    crc: '0xcc3e'
+    length: 12
+    msg_type: '0x101'
+    payload: MAfH2DEPykEPAAMA
+    preamble: '0x55'
+    sender: '0x6f5'
+version: null
+...

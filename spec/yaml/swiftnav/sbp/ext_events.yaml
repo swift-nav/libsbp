@@ -1,0 +1,60 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Henry Hallam <henry@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.ext_events
+description: |
+  Messages reporting accurately-timestamped external events,
+  e.g. camera shutter time
+
+stable: False
+public: True
+include:
+  - types.yaml
+definitions:
+
+ - MSG_EXT_EVENT:
+    id: 0x0101
+    public: True
+    short_desc: Reports timestamped external pin event
+    desc: |
+        Reports detection of an external event, the GPS time it occurred,
+        which pin it was and whether it was rising or falling.
+    fields:
+        - wn:
+            type: u16
+            units: weeks
+            desc: GPS week number
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week rounded to the nearest ms
+        - ns:
+            type: s32
+            units: ns
+            desc: Nanosecond remainder of rounded tow
+        - flags:
+            type: u8
+            desc: Flags
+            fields:
+              - 2-7:
+                  desc: Reserved
+              - 1:
+                  desc: Time quality
+                  values:
+                      - 0: Unknown - don't have nav solution
+                      - 1: Good (< 1 microsecond)
+              - 0:
+                  desc: New level of pin
+                  values:
+                      - 0: Low (falling edge)
+                      - 1: High (rising edge)
+        - pin:
+            type: u8
+            desc: Pin number.  0..9 = DEBUG0..9.
