@@ -15,13 +15,28 @@
 
 EXCLUDE = ['sender', 'msg_type', 'crc', 'length', 'preamble', 'payload']
 
-
 def exclude_fields(obj, exclude=EXCLUDE):
   """
   Return dict of object without parent attrs.
   """
   return {k: v for k, v in obj.__dict__.items() if k not in exclude}
 
+def walk_json_dict(coll):
+  """
+  Flatten a parsed SBP object into a dicts and lists, which are
+  compatible for JSON output.
+
+  Parameters
+  ----------
+  coll : dict
+
+  """
+  if isinstance(coll, dict):
+    return dict((k, walk_json_dict(v)) for (k, v) in coll.iteritems())
+  elif hasattr(coll, '__iter__'):
+    return [walk_json_dict(dict(seq.items())) for seq in coll]
+  else:
+    return coll
 
 def fmt_repr(obj):
   """Print a orphaned string representation of an object without the
