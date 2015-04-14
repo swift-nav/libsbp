@@ -46,7 +46,8 @@ class PickleLogIterator(LogIterator):
     Return the next record tuple from log file containing
     Pickle SBP. If an unknown SBP message type is found,
     it'll return the raw SBP. If EOF, throws exception and then
-    returns to start of file.
+    returns to start of file. If unpickling error, it tells you
+    when and on what the error occured but keeps iterating.
 
     Returns
     -------
@@ -64,3 +65,9 @@ class PickleLogIterator(LogIterator):
     except EOFError:
       self.handle.seek(0, 0)
       raise StopIteration
+    except pickle.UnpicklingError:
+      import warnings 
+      error_string = ("Unpickling error for item {0} at delta time" +\
+                     " {1} and timestamp {2}.").format(item,delta,timestamp) 
+      warnings.warn(error_string)
+
