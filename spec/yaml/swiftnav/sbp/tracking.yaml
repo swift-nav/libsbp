@@ -10,7 +10,7 @@
 
 package: swiftnav.sbp.tracking
 description: |
-  Satellite code and carrier-phase tracking messages from the Piksi.
+  Satellite code and carrier-phase tracking messages from the device.
 stable: False
 public: True
 include:
@@ -37,7 +37,7 @@ definitions:
                         - 1: Running
         - prn:
             type: u8
-            desc: PRN being tracked
+            desc: PRN-1 being tracked
         - cn0:
             type: float
             units: dB Hz
@@ -49,8 +49,8 @@ definitions:
     short_desc: Satellite tracking channel states
     desc: |
       The tracking message returns a variable-length array of tracking
-      channel states. It reports status and code/carrier phase signal
-      power measurements for all tracked satellites.
+      channel states. It reports status and snr power measurements for
+      all tracked satellites.
     fields:
       - states:
           type: array
@@ -60,7 +60,7 @@ definitions:
  - MSG_EPHEMERIS:
     id: 0x001A
     public: True
-    short_desc: WGS84 satellite orbit ephemeris parameters
+    short_desc: WGS84 satellite ephemeris parameters
     desc: |
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate GPS satellite position,
@@ -71,7 +71,7 @@ definitions:
       - tgd:
           type: double
           units: s
-          desc: Group delay differential between L1 and L2 (?)
+          desc: Group delay differential between L1 and L2
       - crs:
           type: double
           units: m

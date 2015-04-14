@@ -6,7 +6,7 @@
 ((*- if m.pkg *))
 \subsection{(((m.pkg|packagenameify)))}
 \begin{large}
-(((m.pkg_desc)))
+(((m.pkg_desc | escape_tex | no_us)))
 \end{large}
 ((* endif *))
 \subsubsection{(((m.name|escape_tex))) --- ((('0x%04X'|format(m.sbp_id))))}
@@ -21,7 +21,7 @@
   \centering
   \begin{tabularx}{\textwidth}{ccaclX}
     \toprule
-    Offset & Size & Format & Units & Name & Description \\
+    Offset (bytes) & Size (bytes) & Format & Units & Name & Description \\
     \midrule
     ((*- for f in m.fields *))
       $(((f.offset)))$ &
@@ -32,7 +32,7 @@
       \hangindent=0.5em{(((f.desc|escape_tex)))} \\
       ((*- endfor *))
     \midrule
-    & $(((m.size)))$ \\
+    & $(((m.size)))$ & & & & Total Payload Length\\
     \bottomrule
   \end{tabularx}
   \caption{(((m.name|escape_tex))) (((('0x%04X'|format(m.sbp_id))))) message structure}
@@ -106,7 +106,7 @@
   \centering
   \begin{tabularx}{\textwidth}{ccaclX}
     \toprule
-    Offset & Size & Format & Units & Name & Description \\
+    Offset (bytes) & Size (bytes) & Format & Units & Name & Description \\
     \midrule
     ((*- for f in m.fields *))
       $(((f.offset)))$ &
@@ -117,7 +117,7 @@
       \hangindent=0.5em{(((f.desc|escape_tex)))} \\
       ((*- endfor *))
     \midrule
-    & $(((m.size)))$ \\
+    & $(((m.size)))$ & & & & Total Payload Length\\
     \bottomrule
   \end{tabularx}
   \caption{(((m.name|escape_tex))) (((('0x%04X'|format(m.sbp_id))))) message structure}

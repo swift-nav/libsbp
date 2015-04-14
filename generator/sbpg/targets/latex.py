@@ -95,7 +95,7 @@ def remove_dir(v):
   """
   Clean up array name
   """
-  return v.split("(Host")[0]
+  return v.split("(host")[0]
 
 def get_size(v):
   """
@@ -174,7 +174,16 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
       if 'size' in f.options:
         name = "%s[%s]" % (f.options['fill'].value, str(f.options['size'].value))
         size = field_sizes[f.options['fill'].value] * f.options['size'].value
-        item = FieldItem(prefix_name, name, offset, size, str(f.units), f.desc, n_with_values, bitfields)
+        item = FieldItem(prefix_name, name, offset, size,
+                         str(f.units), f.desc, n_with_values, bitfields)
+        items.append(item)
+        offset += size
+      else:
+        name = "%s[%s]" % (f.options['fill'].value, "N")
+        multiplier = field_sizes[f.options['fill'].value]
+        size = field_sizes[f.options['fill'].value] * 1
+        item = FieldItem(prefix_name, name, offset, "N",
+                         str(f.units), f.desc, n_with_values, bitfields)
         items.append(item)
         offset += size
     elif f.type_id == "string":
@@ -184,13 +193,15 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
       if 'size' in f.options:
         name = "string"
         size = field_sizes['u8'] * f.options['size'].value
-        item = FieldItem(prefix_name, name, offset, size, str(f.units), f.desc, n_with_values, bitfields)
+        item = FieldItem(prefix_name, name, offset, size,
+                         str(f.units), f.desc, n_with_values, bitfields)
         items.append(item)
         offset += size
       else:
         name = "string"
         size = field_sizes['u8']
-        item = FieldItem(prefix_name, name, offset, size,
+        multiplier = 1
+        item = FieldItem(prefix_name, name, offset, "N",
                          str(f.units), f.desc, n_with_values, bitfields)
         items.append(item)
         offset += size
@@ -255,7 +266,13 @@ def render_source(output_dir, package_specs):
       if d.public and d.static and d.sbp_id:
         items, size, multiplier \
           = handle_fields(p.definitions, d.fields, "", 0, None)
-        adj_size = "%dN+%d" % (multiplier, size) if multiplier else size
+        adj_size = ""
+        if multiplier == 1:
+          adj_size = "N+%d" % (size - 1) if size > 1 else "N"
+        elif multiplier:
+          adj_size = "%dN+%d" % (multiplier, size - multiplier)
+        else:
+          adj_size = "%d" % size
         ti = TableItem(pkg_name, d.identifier, d.sbp_id,
                        d.short_desc, d.desc, adj_size, items, p.stable,
                        p.description)

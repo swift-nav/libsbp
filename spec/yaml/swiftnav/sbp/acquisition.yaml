@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.acquisition
-description: Satellite acquisition messages from the Piksi.
+description: Satellite acquisition messages from the device.
 stable: False
 public: True
 include:
@@ -29,7 +29,9 @@ definitions:
     fields:
         - snr:
             type: float
-            desc: SNR of best point
+            desc: |
+              SNR of best point. Currently dimensonless, but will have
+              units of dB Hz in the revision of this message.
         - cp:
             type: float
             units: chips
@@ -41,5 +43,5 @@ definitions:
         - prn:
             type: u8
             desc: |
-              PRN identifier of the satellite signal for which
+              PRN-1 identifier of the satellite signal for which
               acquisition was attempted

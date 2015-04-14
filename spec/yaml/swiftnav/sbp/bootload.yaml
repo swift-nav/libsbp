@@ -10,11 +10,12 @@
 
 package: swiftnav.sbp.bootload
 description: |
-  Messages for the bootloading configuration on the Piksi. These are
-  in the implementation-defined range (0x0000-0x00FF), and intended
-  for internal-use only. Note that some of these messages taking a
-  request from a host and a response from the Piksi share the same
-  message type ID.
+  Messages for the bootloading configuration on the device.
+
+  These are in the implementation-defined range (0x0000-0x00FF), and
+  are intended for internal use only. Note that some of these messages
+  share the same message type ID for both the host request and the
+  device response.
 stable: False
 public: True
 include:
@@ -24,46 +25,45 @@ definitions:
  - MSG_BOOTLOADER_HANDSHAKE:
     id: 0x00B0
     public: True
-    short_desc: Bootloading handshake (Host <=> Piksi).
+    short_desc: Bootloading handshake (host <=> device)
     desc: |
-      The bootloader continually sends a handshake message to the host
-      for a short period of time, and then jumps to the firmware if it
-      doesn't receive a handshake from the host. If the host replies
-      with a handshake the bootloader doesn't jump to the firmware and
-      nwaits for flash programming messages, and the host has to send
-      a MSG_BOOTLOADER_JUMP_TO_APP when it's done programming. On old
-      versions of the bootloader (less than v0.1), hardcoded to 0. On
-      new versions, return the git describe string for the bootloader
-      build.
+      The handshake message establishes a handshake between the device
+      bootloader and the host.  The payload string contains the
+      bootloader version number, but returns an empty string for
+      earlier versions.
     fields:
       - handshake:
-          type: u8
-          desc: Handshake value
+          type: string
+          size: 20
+          desc: Version number (NULL padded)
 
  - MSG_BOOTLOADER_JUMP_TO_APP:
     id: 0x00B1
     public: False
-    short_desc: Bootloader jump to application (Host => Piksi)
+    short_desc: Bootloader jump to application (host => device)
     desc: |
       The host initiates the bootloader to jump to the application.
     fields:
       - jump:
           type: u8
-          desc: Ignored by the Piksi
+          desc: Ignored by the device
 
  - MSG_NAP_DEVICE_DNA:
     id: 0x00DD
     public: True
-    short_desc: Send FPGA device DNA over UART (Host <=> Piksi).
+    short_desc: Read FPGA device ID over UART (host <=> device)
     desc: |
-      The device DNA message from the host reads the unique device
-      DNA from the Swift Navigation Acceleration Peripheral
-      (SwiftNAP), a Spartan 6 FPGA. By convention, the host message
-      buffer is empty; the Piksi returns the device DNA in a
-      MSG_NAP_DEVICE_DNA message.
+      The device message from the host reads a unique device
+      identifier from the SwiftNAP, an FPGA. The host requests the ID
+      by sending a MSG_NAP_DEVICE_DNA with an empty payload. The
+      device responds with the same message with the device ID in the
+      payload. Note that this ID is tied to the FPGA, and not related
+      to the Piksi's serial number.
     fields:
       - dna:
           type: array
           fill: u8
           size: 8
-          desc: 57-bit SwiftNAP FPGA Device DNA
+          desc: |
+            57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
+            on the right.
