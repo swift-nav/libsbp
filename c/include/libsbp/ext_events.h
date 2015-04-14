@@ -12,7 +12,7 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/ext_events.yaml
- * with generate.py at 2015-04-10 18:08:47.554362. Please do not hand edit!
+ * with generate.py at 2015-04-14 13:57:47.376336. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup ext_events Ext_events
@@ -32,7 +32,7 @@
  * Reports detection of an external event, the GPS time it occurred,
  * which pin it was and whether it was rising or falling.
  */
-#define SBP_MSG_EXT_EVENT 0x0300
+#define SBP_MSG_EXT_EVENT 0x0101
 typedef struct __attribute__((packed)) {
   u16 wn;       /**< GPS week number [weeks] */
   u32 tow;      /**< GPS Time of Week rounded to the nearest ms [ms] */

@@ -18,16 +18,21 @@ e.g. camera shutter time
 
 from construct import *
 from sbp import SBP
-from sbp.utils import fmt_repr
+from sbp.utils import fmt_repr, exclude_fields
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/ext_events.yaml
-# with generate.py at 2015-04-10 18:08:47.870113. Please do not hand edit!
+# with generate.py at 2015-04-14 13:57:47.706966. Please do not hand edit!
 
 
-SBP_MSG_EXT_EVENT = 0x0300
+SBP_MSG_EXT_EVENT = 0x0101
 class MsgExtEvent(SBP):
-  """SBP class for message MSG_EXT_EVENT (0x0300).
+  """SBP class for message MSG_EXT_EVENT (0x0101).
+
+  You can have MSG_EXT_EVENT inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
   
   Reports detection of an external event, the GPS time it occurred,
 which pin it was and whether it was rising or falling.
@@ -35,6 +40,8 @@ which pin it was and whether it was rising or falling.
 
   Parameters
   ----------
+  sbp : SBP
+    SBP parent object to inherit from.
   wn : int
     GPS week number
   tow : int
@@ -54,21 +61,37 @@ which pin it was and whether it was rising or falling.
                    ULInt8('flags'),
                    ULInt8('pin'),)
 
-  def __init__(self, sbp):
-    self.__dict__.update(sbp.__dict__)
-    self.from_binary(sbp.payload)
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      self.wn = kwargs.pop('wn')
+      self.tow = kwargs.pop('tow')
+      self.ns = kwargs.pop('ns')
+      self.flags = kwargs.pop('flags')
+      self.pin = kwargs.pop('pin')
 
   def __repr__(self):
     return fmt_repr(self)
  
   def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
     p = MsgExtEvent._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
-    return MsgExtEvent.build(self.__dict__)
+    """Produce a framed/packed SBP message.
+
+    """
+    c = Container(**exclude_fields(self))
+    self.payload = MsgExtEvent._parser.build(c)
+    return self.pack()
     
 
 msg_classes = {
-  0x0300: MsgExtEvent,
+  0x0101: MsgExtEvent,
 }
