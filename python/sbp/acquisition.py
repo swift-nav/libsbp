@@ -21,7 +21,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/acquisition.yaml
-# with generate.py at 2015-04-15 15:29:39.013562. Please do not hand edit!
+# with generate.py at 2015-04-15 15:32:14.097072. Please do not hand edit!
 
 
 SBP_MSG_ACQ_RESULT = 0x0015
@@ -98,7 +98,7 @@ acquisition was attempted
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgAcqResult(sbp)
 

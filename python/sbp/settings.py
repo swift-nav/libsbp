@@ -28,7 +28,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/settings.yaml
-# with generate.py at 2015-04-15 15:29:39.014741. Please do not hand edit!
+# with generate.py at 2015-04-15 15:32:14.098659. Please do not hand edit!
 
 
 SBP_MSG_SETTINGS = 0x00A0
@@ -88,7 +88,7 @@ such strings on reads.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgSettings(sbp)
 
@@ -181,7 +181,7 @@ NULL-terminated and delimited string with contents
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgSettingsReadByIndex(sbp)
 

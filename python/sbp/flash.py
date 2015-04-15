@@ -28,7 +28,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/flash.yaml
-# with generate.py at 2015-04-15 15:29:39.018092. Please do not hand edit!
+# with generate.py at 2015-04-15 15:32:14.102092. Please do not hand edit!
 
 
 SBP_MSG_FLASH_PROGRAM = 0x00E0
@@ -104,7 +104,7 @@ starting address
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgFlashProgram(sbp)
 
@@ -171,7 +171,7 @@ return this message on failure.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgFlashDone(sbp)
 
@@ -251,7 +251,7 @@ starting address
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgFlashRead(sbp)
 
@@ -325,7 +325,7 @@ the M25)
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgFlashErase(sbp)
 
@@ -390,7 +390,7 @@ memory. The device replies with a MSG_FLASH_DONE message.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgStmFlashLockSector(sbp)
 
@@ -455,7 +455,7 @@ memory. The device replies with a MSG_FLASH_DONE message.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgStmFlashUnlockSector(sbp)
 
@@ -520,7 +520,7 @@ returns 12-byte unique ID back to host.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgStmUniqueId(sbp)
 
@@ -585,7 +585,7 @@ register. The device replies with a MSG_FLASH_DONE message.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgM25FlashWriteStatus(sbp)
 

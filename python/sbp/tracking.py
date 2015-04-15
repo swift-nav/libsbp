@@ -22,7 +22,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml
-# with generate.py at 2015-04-15 15:29:39.015502. Please do not hand edit!
+# with generate.py at 2015-04-15 15:32:14.099587. Please do not hand edit!
 
 
 class TrackingChannelState(object):
@@ -116,7 +116,7 @@ all tracked satellites.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgTrackingState(sbp)
 
@@ -284,7 +284,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgEphemeris(sbp)
 

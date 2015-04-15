@@ -23,7 +23,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/logging.yaml
-# with generate.py at 2015-04-15 15:29:39.013264. Please do not hand edit!
+# with generate.py at 2015-04-15 15:32:14.096660. Please do not hand edit!
 
 
 SBP_MSG_PRINT = 0x0010
@@ -82,7 +82,7 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgPrint(sbp)
 

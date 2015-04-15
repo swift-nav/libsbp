@@ -32,7 +32,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/navigation.yaml
-# with generate.py at 2015-04-15 15:29:38.983192. Please do not hand edit!
+# with generate.py at 2015-04-15 15:32:14.058948. Please do not hand edit!
 
 
 SBP_MSG_GPS_TIME = 0x0100
@@ -115,7 +115,7 @@ from -500000 to 500000)
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgGPSTime(sbp)
 
@@ -201,7 +201,7 @@ precision.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgDops(sbp)
 
@@ -298,7 +298,7 @@ to 0.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgPosECEF(sbp)
 
@@ -401,7 +401,7 @@ implemented). Defaults to 0.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgPosLLH(sbp)
 
@@ -495,7 +495,7 @@ to 0.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgBaselineECEF(sbp)
 
@@ -596,7 +596,7 @@ implemented). Defaults to 0.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgBaselineNED(sbp)
 
@@ -688,7 +688,7 @@ to 0.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgVelECEF(sbp)
 
@@ -786,7 +786,7 @@ implemented). Defaults to 0.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgVelNED(sbp)
 

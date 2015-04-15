@@ -21,7 +21,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml
-# with generate.py at 2015-04-15 15:29:39.016480. Please do not hand edit!
+# with generate.py at 2015-04-15 15:32:14.100611. Please do not hand edit!
 
 
 class ObsGPSTime(object):
@@ -231,7 +231,7 @@ satellite being tracked.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgObs(sbp)
 
@@ -307,7 +307,7 @@ error in the pseudo-absolute position output.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgBasePos(sbp)
 

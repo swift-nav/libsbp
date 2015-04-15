@@ -21,7 +21,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/system.yaml
-# with generate.py at 2015-04-15 15:29:39.016009. Please do not hand edit!
+# with generate.py at 2015-04-15 15:32:14.100125. Please do not hand edit!
 
 
 SBP_MSG_STARTUP = 0xFF00
@@ -81,7 +81,7 @@ or configuration requests.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgStartup(sbp)
 
@@ -154,7 +154,7 @@ the remaining error flags should be inspected.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgHeartbeat(sbp)
 

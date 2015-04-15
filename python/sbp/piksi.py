@@ -27,7 +27,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml
-# with generate.py at 2015-04-15 15:29:39.014062. Please do not hand edit!
+# with generate.py at 2015-04-15 15:32:14.097868. Please do not hand edit!
 
 
 class UARTChannel(object):
@@ -297,7 +297,7 @@ Ambiguity Resolution (IAR) process.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgResetFilters(sbp)
 
@@ -400,7 +400,7 @@ thread. The reported percentage values require to be normalized.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgThreadState(sbp)
 
@@ -480,7 +480,7 @@ future. The reported percentage values require to be normalized.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgUartState(sbp)
 
@@ -547,7 +547,7 @@ from satellite observations.
     """Given a JSON-encoded string s, build a message object.
 
     """
-    d = json.loads(data)
+    d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return MsgIarState(sbp)
 
