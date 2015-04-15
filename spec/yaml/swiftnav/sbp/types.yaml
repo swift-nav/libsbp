@@ -60,10 +60,6 @@ definitions:
     type: collection
     desc: |
       Fixed or variable length array of any fill type
- - bytes:
-    type: collection
-    desc: |
-      Fixed or variable length array of bytes
  - string:
     type: collection
     desc: |
