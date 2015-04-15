@@ -1,0 +1,1865 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp package &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="next" title="sbp.client package" href="sbp.client.html" />
+    <link rel="prev" title="sbp.client.examples.udp module" href="sbp.client.examples.udp.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sbp.client.html" title="sbp.client package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sbp.client.examples.udp.html" title="sbp.client.examples.udp module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sbp-package">
+<h1>sbp package<a class="headerlink" href="#sbp-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sbp.client.html">sbp.client package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sbp.client.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.drivers.html">sbp.client.drivers package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sbp.client.drivers.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="sbp.client.drivers.base_driver.html">sbp.client.drivers.base_driver module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sbp.client.drivers.file_driver.html">sbp.client.drivers.file_driver module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sbp.client.drivers.pyftdi_driver.html">sbp.client.drivers.pyftdi_driver module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sbp.client.drivers.pyserial_driver.html">sbp.client.drivers.pyserial_driver module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="sbp.client.drivers.html#module-sbp.client.drivers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.examples.html">sbp.client.examples package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sbp.client.examples.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="sbp.client.examples.simple.html">sbp.client.examples.simple module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sbp.client.examples.udp.html">sbp.client.examples.udp module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="sbp.client.examples.html#module-sbp.client.examples">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.loggers.html">sbp.client.loggers package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sbp.client.loggers.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="sbp.client.loggers.base_logger.html">sbp.client.loggers.base_logger module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sbp.client.loggers.byte_logger.html">sbp.client.loggers.byte_logger module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sbp.client.loggers.json_logger.html">sbp.client.loggers.json_logger module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sbp.client.loggers.null_logger.html">sbp.client.loggers.null_logger module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sbp.client.loggers.pickle_logger.html">sbp.client.loggers.pickle_logger module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="sbp.client.loggers.html#module-sbp.client.loggers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sbp.client.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.handler.html">sbp.client.handler module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.main.html">sbp.client.main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.watchdog.html">sbp.client.watchdog module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sbp.client.html#module-sbp.client">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-sbp.acquisition">
+<span id="sbp-acquisition-module"></span><h2>sbp.acquisition module<a class="headerlink" href="#module-sbp.acquisition" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sbp.acquisition.MsgAcqResult">
+<em class="property">class </em><code class="descclassname">sbp.acquisition.</code><code class="descname">MsgAcqResult</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_ACQ_RESULT (0x0015).</p>
+<blockquote>
+<div>This message describes the results from an attempted GPS signal</div></blockquote>
+<p>acquisition search for a satellite PRN over a code phase/carrier
+frequency range. It contains the parameters of the point in the
+acquisition search space with the best signal-to-noise (SNR)
+ratio.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>snr <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>SNR of best point.</dd>
+<dt>cp <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Code phase of best point.</dd>
+<dt>cf <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Carrier frequency of best point.</dd>
+<dt>prn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>PRN identifier of the satellite signal for which</dd>
+</dl>
+</div></blockquote>
+<p>acquisition was attempted.</p>
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqResult.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResult.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResult.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqResult.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResult.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResult.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sbp.bootload">
+<span id="sbp-bootload-module"></span><h2>sbp.bootload module<a class="headerlink" href="#module-sbp.bootload" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sbp.bootload.MsgBootloaderHandshake">
+<em class="property">class </em><code class="descclassname">sbp.bootload.</code><code class="descname">MsgBootloaderHandshake</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderHandshake"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderHandshake" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_BOOTLOADER_HANDSHAKE (0x00B0).</p>
+<blockquote>
+<div>The bootloader continually sends a handshake message to the host</div></blockquote>
+<p>for a short period of time, and then jumps to the firmware if it
+doesn&#8217;t receive a handshake from the host. If the host replies
+with a handshake the bootloader doesn&#8217;t jump to the firmware and
+nwaits for flash programming messages, and the host has to send a
+MSG_BOOTLOADER_JUMP_TO_APP when it&#8217;s done programming. On old
+versions of the bootloader (&lt;=v0.1), hardcoded u8=0. On new
+versions, return the git describe string for the bootloader
+build.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>handshake <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Handshake value</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.bootload.MsgBootloaderHandshake.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderHandshake.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderHandshake.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.bootload.MsgBootloaderHandshake.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderHandshake.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderHandshake.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.bootload.MsgBootloaderJumpToApp">
+<em class="property">class </em><code class="descclassname">sbp.bootload.</code><code class="descname">MsgBootloaderJumpToApp</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderJumpToApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderJumpToApp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_BOOTLOADER_JUMP_TO_APP (0x00B1).</p>
+<p>The host initiates the bootloader to jump to the application.</p>
+<dl class="docutils">
+<dt>jump <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Ignored by the Piksi.</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.bootload.MsgBootloaderJumpToApp.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderJumpToApp.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderJumpToApp.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.bootload.MsgBootloaderJumpToApp.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderJumpToApp.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderJumpToApp.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.bootload.MsgNapDeviceDna">
+<em class="property">class </em><code class="descclassname">sbp.bootload.</code><code class="descname">MsgNapDeviceDna</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgNapDeviceDna"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgNapDeviceDna" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_NAP_DEVICE_DNA (0x00DD).</p>
+<blockquote>
+<div>The device DNA message from the host reads the unique device</div></blockquote>
+<p>DNA from the Swift Navigation Acceleration Peripheral
+(SwiftNAP), a Spartan 6 FPGA. By convention, the host message
+buffer is empty; the Piksi returns the device DNA in a
+MSG_NAP_DEVICE_DNA message.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>dna <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>57-bit SwiftNAP FPGA Device DNA</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.bootload.MsgNapDeviceDna.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgNapDeviceDna.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgNapDeviceDna.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.bootload.MsgNapDeviceDna.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgNapDeviceDna.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgNapDeviceDna.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sbp.file_io">
+<span id="sbp-file-io-module"></span><h2>sbp.file_io module<a class="headerlink" href="#module-sbp.file_io" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sbp.file_io.MsgFileioRead">
+<em class="property">class </em><code class="descclassname">sbp.file_io.</code><code class="descname">MsgFileioRead</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRead"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRead" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_FILEIO_READ (0x00A8).</p>
+<blockquote>
+<div>The file read message reads a certain length (up to 255 bytes)</div></blockquote>
+<p>from a given offset into a file, and returns the data in a
+MSG_FILEIO_READ message where the message length field indicates
+how many bytes were succesfully read. If the message is invalid,
+a followup MsgPrint message will print &#8220;Invalid fileio read
+message&#8221;.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>offset <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>File offset.</dd>
+<dt>chunk_size <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Chunk size to read.</dd>
+<dt>filename <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Name of the file to read from (NULL terminated).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioRead.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRead.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRead.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioRead.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRead.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRead.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.file_io.MsgFileioReadDir">
+<em class="property">class </em><code class="descclassname">sbp.file_io.</code><code class="descname">MsgFileioReadDir</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioReadDir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioReadDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_FILEIO_READ_DIR (0x00A9).</p>
+<blockquote>
+<div>The read directory message lists the files in a directory on the</div></blockquote>
+<p>Piksi&#8217;s onboard flash file system.  The offset parameter can be
+used to skip the first n elements of the file list. Returns a
+MSG_FILEIO_READ_DIR message containing the directory listings as
+a NULL delimited list. The listing is chunked over multiple SBP
+packets and the end of the list is identified by an entry
+containing just the character 0xFF. If message is invalid, a
+followup MsgPrint message will print &#8220;Invalid fileio read
+message&#8221;.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>offset <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>The offset to skip the first n elements of the file list.</dd>
+<dt>dirname <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Name of the directory to list.</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioReadDir.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioReadDir.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioReadDir.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioReadDir.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioReadDir.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioReadDir.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.file_io.MsgFileioRemove">
+<em class="property">class </em><code class="descclassname">sbp.file_io.</code><code class="descname">MsgFileioRemove</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRemove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRemove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_FILEIO_REMOVE (0x00AC).</p>
+<blockquote>
+<div>The file remove message deletes a file from the file system. If</div></blockquote>
+<p>message is invalid, a followup MsgPrint message will print
+&#8220;Invalid fileio remove message&#8221;.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>filename <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Name of the file to delete (NULL terminated)</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioRemove.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRemove.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRemove.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioRemove.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRemove.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRemove.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.file_io.MsgFileioWrite">
+<em class="property">class </em><code class="descclassname">sbp.file_io.</code><code class="descname">MsgFileioWrite</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioWrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioWrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_FILEIO_WRITE (0x00AD).</p>
+<blockquote>
+<div>The file write message writes a certain length (up to 255 bytes)</div></blockquote>
+<p>of data to a file at a given offset. Returns a copy of the
+original MSG_FILEIO_WRITE message to check integrity of the
+write. If message is invalid, a followup MsgPrint message will
+print &#8220;Invalid fileio write message&#8221;.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>filename <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Name of the file to write to (NULL terminated)</dd>
+<dt>offset <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Offset into the file at which to start writing in bytes</dd>
+<dt>data <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>Data to write</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioWrite.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioWrite.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioWrite.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioWrite.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioWrite.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioWrite.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sbp.flash">
+<span id="sbp-flash-module"></span><h2>sbp.flash module<a class="headerlink" href="#module-sbp.flash" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sbp.flash.MsgFlashDone">
+<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgFlashDone</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashDone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashDone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_FLASH_DONE (0x00E0).</p>
+<blockquote>
+<div>This message defines success or failure codes for a variety of</div></blockquote>
+<p>flash memory requests from the host to the Piksi. Flash read and
+write messages, such as MSG_FLASH_READ or MSG_FLASH_WRITE, may
+return this message on failure.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>response <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Response flags</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.flash.MsgFlashDone.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashDone.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashDone.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.flash.MsgFlashDone.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashDone.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashDone.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.flash.MsgFlashErase">
+<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgFlashErase</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashErase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashErase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_FLASH_ERASE (0x00E2).</p>
+<blockquote>
+<div>The flash erase message from the host erases a sector of either</div></blockquote>
+<p>the STM or M25 onboard flash memory. The Piksi will reply with a
+MSG_FLASH_DONE message containing the return code - FLASH_OK (0)
+on success or FLASH_INVALID_FLASH (1) if the flash specified is
+invalid.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>target <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Target flags</dd>
+<dt>sector_num <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Flash sector number to erase (0-11 for the STM, 0-15 for</dd>
+</dl>
+</div></blockquote>
+<p>the M25).</p>
+<dl class="method">
+<dt id="sbp.flash.MsgFlashErase.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashErase.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashErase.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.flash.MsgFlashErase.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashErase.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashErase.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.flash.MsgFlashProgram">
+<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgFlashProgram</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashProgram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashProgram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_FLASH_PROGRAM (0x00E0).</p>
+<blockquote>
+<div>The flash program message programs a set of addresses of either</div></blockquote>
+<p>the STM or M25 flash. The Piksi replies with either a
+MSG_FLASH_DONE message containing the return code FLASH_OK (0)
+on success, or FLASH_INVALID_LEN (2) if the maximum write size
+is exceeded. Note that the sector-containing addresses must be
+erased before addresses can be programmed.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>target <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Target flags</dd>
+<dt>addr_start <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>Starting address offset to program</dd>
+<dt>addr_len <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Length of set of addresses to program, counting up from</dd>
+</dl>
+</div></blockquote>
+<p>starting address.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>data <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>Data to program addresses with, sized by addr_len.</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.flash.MsgFlashProgram.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashProgram.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashProgram.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.flash.MsgFlashProgram.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashProgram.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashProgram.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.flash.MsgFlashRead">
+<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgFlashRead</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashRead"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashRead" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_FLASH_READ (0x00E1).</p>
+<blockquote>
+<div>The flash read message reads a set of addresses of either the</div></blockquote>
+<p>STM or M25 onboard flash. The Piksi replies with a
+MSG_FLASH_READ message containing either the read data on
+success or a MSG_FLASH_DONE message containing the return code
+FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
+FLASH_INVALID_ADDR (3) if the address is outside of the allowed
+range.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>target <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Target flags</dd>
+<dt>addr_start <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>Starting address offset to read from</dd>
+<dt>addr_len <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Length of set of addresses to read, counting up from</dd>
+</dl>
+</div></blockquote>
+<p>starting address.</p>
+<dl class="method">
+<dt id="sbp.flash.MsgFlashRead.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashRead.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashRead.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.flash.MsgFlashRead.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashRead.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashRead.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.flash.MsgM25FlashWriteStatus">
+<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgM25FlashWriteStatus</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgM25FlashWriteStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgM25FlashWriteStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_M25_FLASH_WRITE_STATUS (0x00F3).</p>
+<blockquote>
+<div>The flash status message writes to the 8-bit M25 flash status</div></blockquote>
+<p>register. The Piksi replies with a MSG_FLASH_DONE message.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>status <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>Byte to write to the M25 flash status register.</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.flash.MsgM25FlashWriteStatus.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgM25FlashWriteStatus.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgM25FlashWriteStatus.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.flash.MsgM25FlashWriteStatus.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgM25FlashWriteStatus.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgM25FlashWriteStatus.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.flash.MsgStmFlashLockSector">
+<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgStmFlashLockSector</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashLockSector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashLockSector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_STM_FLASH_LOCK_SECTOR (0x00E3).</p>
+<blockquote>
+<div>The flash lock message locks a sector of the STM flash</div></blockquote>
+<p>memory. The Piksi replies with a MSG_FLASH_DONE message.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sector <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>Flash sector number to lock.</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.flash.MsgStmFlashLockSector.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashLockSector.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashLockSector.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.flash.MsgStmFlashLockSector.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashLockSector.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashLockSector.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.flash.MsgStmFlashUnlockSector">
+<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgStmFlashUnlockSector</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashUnlockSector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashUnlockSector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_STM_FLASH_UNLOCK_SECTOR (0x00E4).</p>
+<blockquote>
+<div>The flash unlock message unlocks a sector of the STM flash</div></blockquote>
+<p>memory. The Piksi replies with a MSG_FLASH_DONE message.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sector <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>Flash sector number to unlock.</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.flash.MsgStmFlashUnlockSector.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashUnlockSector.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashUnlockSector.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.flash.MsgStmFlashUnlockSector.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashUnlockSector.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashUnlockSector.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.flash.MsgStmUniqueId">
+<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgStmUniqueId</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_STM_UNIQUE_ID (0x00E5).</p>
+<blockquote>
+<div>This message reads the STM32F4&#8217;s hardcoded unique ID. The Piksi</div></blockquote>
+<p>returns STM32F4 unique ID (12 bytes) back to host.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>stm_id <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>STM32F4 unique ID.</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.flash.MsgStmUniqueId.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueId.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueId.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.flash.MsgStmUniqueId.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueId.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueId.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sbp.logging">
+<span id="sbp-logging-module"></span><h2>sbp.logging module<a class="headerlink" href="#module-sbp.logging" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sbp.logging.MsgDebugVar">
+<em class="property">class </em><code class="descclassname">sbp.logging.</code><code class="descname">MsgDebugVar</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgDebugVar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgDebugVar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_DEBUG_VAR (0x0011).</p>
+<blockquote>
+<div>This is an unused legacy message for tracing variable values</div></blockquote>
+<p>within the Piksi firmware and streaming those back to the host.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.logging.MsgPrint">
+<em class="property">class </em><code class="descclassname">sbp.logging.</code><code class="descname">MsgPrint</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_PRINT (0x0010).</p>
+<blockquote>
+<div>This message contains a human-reabable payload string from the</div></blockquote>
+<p>Piksi containing errors, warnings and informational messages at
+ERROR, WARNING, DEBUG, INFO logging levels. These message may
+also contain information tagged by filename, as well as debug
+info on function entry/exit when enabled within the firmware.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>text <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Informative, human-readable string.</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.logging.MsgPrint.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrint.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrint.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.logging.MsgPrint.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrint.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrint.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sbp.navigation">
+<span id="sbp-navigation-module"></span><h2>sbp.navigation module<a class="headerlink" href="#module-sbp.navigation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sbp.navigation.MsgBaselineECEF">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgBaselineECEF</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_BASELINE_ECEF (0x0202).</p>
+<blockquote>
+<div>This message reports the baseline position solution in Earth</div></blockquote>
+<p>Centered Earth Fixed (ECEF) coordinates.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>GPS Time of Week</dd>
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Baseline ECEF X coordinate</dd>
+<dt>y <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Baseline ECEF Y coordinate</dd>
+<dt>z <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Baseline ECEF Z coordinate</dd>
+<dt>accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Position accuracy estimate</dd>
+<dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of satellites used in solution</dd>
+<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Status flags</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.navigation.MsgBaselineECEF.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEF.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgBaselineECEF.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEF.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgBaselineNED">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgBaselineNED</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNED"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_BASELINE_NED (0x0203).</p>
+<blockquote>
+<div>This message reports the baseline position solution in North</div></blockquote>
+<p>East Down (NED) coordinates.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>GPS Time of Week</dd>
+<dt>n <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Baseline North coordinate</dd>
+<dt>e <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Baseline East coordinate</dd>
+<dt>d <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Baseline Down coordinate</dd>
+<dt>h_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Horizontal position accuracy estimate</dd>
+<dt>v_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Vertical position accuracy estimate</dd>
+<dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of satellites used in solution</dd>
+<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Status flags</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.navigation.MsgBaselineNED.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNED.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgBaselineNED.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNED.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgDops">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgDops</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_DOPS (0x0206).</p>
+<blockquote>
+<div>This dilution of precision (DOP) message describes the effect of</div></blockquote>
+<p>navigation satellite geometry on positional measurement
+precision.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>GPS Time of Week</dd>
+<dt>gdop <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Geometric Dilution of Precision</dd>
+<dt>pdop <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Position Dilution of Precision</dd>
+<dt>tdop <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Time Dilution of Precision</dd>
+<dt>hdop <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Horizontal Dilution of Precision</dd>
+<dt>vdop <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Vertical Dilution of Precision</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.navigation.MsgDops.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDops.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDops.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgDops.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDops.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDops.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgGPSTime">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgGPSTime</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_GPS_TIME (0x0100).</p>
+<blockquote>
+<div>This message reports the GPS time, an integer time scale</div></blockquote>
+<p>beginning at January 6, 1980 midnight. GPS time counts the weeks
+and seconds of the week. The weeks begin at the Saturday/Sunday
+transition. GPS week 0 began at the beginning of the GPS time
+scale. Within each week number, the GPS time of the week is
+between between 0 and 604800 seconds (=60*60*24*7).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>wn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>GPS week number</dd>
+<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>GPS time of week rounded to the nearest ms</dd>
+<dt>ns <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Nanosecond remainder of rounded tow</dd>
+<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Status flags (reserved)</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.navigation.MsgGPSTime.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTime.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTime.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgGPSTime.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTime.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTime.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgPosECEF">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgPosECEF</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_POS_ECEF (0x0200).</p>
+<blockquote>
+<div>The single-point position solution message reports absolute</div></blockquote>
+<p>Earth Centered Earth Fixed (ECEF) coordinates and the status
+(single point absolute vs RTK) of the position solution. If the
+rover receiver knows surveyed position of the base station and
+has an RTK solution, this reports a pseudo-absolute position
+solution using the base station position and the rover&#8217;s RTK
+baseline vector.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>GPS Time of Week</dd>
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>ECEF X coordinate</dd>
+<dt>y <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>ECEF Y coordinate</dd>
+<dt>z <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>ECEF Z coordinate</dd>
+<dt>accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Position accuracy estimate</dd>
+<dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of satellites used in solution</dd>
+<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Status flags</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.navigation.MsgPosECEF.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEF.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEF.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosECEF.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEF.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEF.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgPosLLH">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgPosLLH</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLH"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_POS_LLH (0x0201).</p>
+<blockquote>
+<div>This single-point position solution message reports the absolute</div></blockquote>
+<p>geodetic coordinates and the status (single point absolute vs
+RTK) of the position solution. If the rover receiver knows the
+surveyed position of the base station and has an RTK solution,
+this reports a pseudo-absolute position solution using the base
+station position and the rover&#8217;s RTK baseline vector.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>GPS Time of Week</dd>
+<dt>lat <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Latitude</dd>
+<dt>lon <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Longitude</dd>
+<dt>height <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Height</dd>
+<dt>h_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Horizontal position accuracy estimate</dd>
+<dt>v_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Vertical position accuracy estimate</dd>
+<dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of satellites used in solution</dd>
+<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Status flags</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.navigation.MsgPosLLH.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLH.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLH.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosLLH.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLH.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLH.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgVelECEF">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgVelECEF</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_VEL_ECEF (0x0204).</p>
+<blockquote>
+<div>This message reports the velocity in Earth Centered Earth Fixed</div></blockquote>
+<p>(ECEF) coordinates.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>GPS Time of Week</dd>
+<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Velocity ECEF X coordinate</dd>
+<dt>y <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Velocity ECEF Y coordinate</dd>
+<dt>z <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Velocity ECEF Z coordinate</dd>
+<dt>accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Velocity accuracy estimate</dd>
+<dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of satellites used in solution</dd>
+<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Status flags (reserved)</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.navigation.MsgVelECEF.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEF.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEF.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelECEF.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEF.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEF.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgVelNED">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgVelNED</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNED"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_VEL_NED (0x0205).</p>
+<blockquote>
+<div>This message reports the velocity in local North East Down (NED)</div></blockquote>
+<p>coordinates.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>GPS Time of Week</dd>
+<dt>n <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Velocity North coordinate</dd>
+<dt>e <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Velocity East coordinate</dd>
+<dt>d <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Velocity Down coordinate</dd>
+<dt>h_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Horizontal velocity accuracy estimate</dd>
+<dt>v_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Vertical velocity accuracy estimate</dd>
+<dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of satellites used in solution</dd>
+<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Status flags (reserved)</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.navigation.MsgVelNED.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNED.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNED.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelNED.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNED.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNED.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sbp.observation">
+<span id="sbp-observation-module"></span><h2>sbp.observation module<a class="headerlink" href="#module-sbp.observation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sbp.observation.CarrierPhase">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">CarrierPhase</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#CarrierPhase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.CarrierPhase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>CarrierPhase.</p>
+<blockquote>
+<div>Carrier phase measurement in cycles represented as a 40-bit</div></blockquote>
+<p>fixed point number with Q32.8 layout, i.e. 32-bits of whole
+cycles and 8-bits of fractional cycles.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>i <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Carrier phase whole cycles.</dd>
+<dt>f <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Carrier phase fractional part.</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.observation.CarrierPhase.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#CarrierPhase.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.CarrierPhase.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.CarrierPhase.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#CarrierPhase.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.CarrierPhase.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.observation.MsgBasePos">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">MsgBasePos</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgBasePos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgBasePos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_BASE_POS (0x0044).</p>
+<blockquote>
+<div>This may be the position as reported by the base station itself or the</div></blockquote>
+<p>position obtained from doing a single point solution using the base
+station observations.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>lat <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Latitude</dd>
+<dt>lon <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Longitude</dd>
+<dt>height <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Height</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.observation.MsgBasePos.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgBasePos.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgBasePos.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.MsgBasePos.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgBasePos.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgBasePos.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.observation.MsgObs">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">MsgObs</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgObs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgObs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_OBS (0x0045).</p>
+<blockquote>
+<div>The GPS observations message reports all the pseudo range and</div></blockquote>
+<p>carrier phase observations for the satellites being tracked by
+the Piksi.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>header <span class="classifier-delimiter">:</span> <span class="classifier">ObservationHeader</span></dt>
+<dd>Header of a GPS observation message</dd>
+<dt>obs <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>Pseudorange and carrier phase observation for a</dd>
+</dl>
+</div></blockquote>
+<p>satellite being tracked.</p>
+<dl class="method">
+<dt id="sbp.observation.MsgObs.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgObs.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgObs.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.MsgObs.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgObs.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgObs.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.observation.ObsGPSTime">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">ObsGPSTime</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#ObsGPSTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.ObsGPSTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>ObsGPSTime.</p>
+<blockquote>
+<div>A wire-appropriate GPS time, defined as the number of</div></blockquote>
+<p>milliseconds since beginning of the week on the Saturday/Sunday
+transition.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Milliseconds since start of GPS week</dd>
+<dt>wn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>GPS week number</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.observation.ObsGPSTime.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#ObsGPSTime.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.ObsGPSTime.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.ObsGPSTime.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#ObsGPSTime.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.ObsGPSTime.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.observation.ObservationHeader">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">ObservationHeader</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#ObservationHeader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.ObservationHeader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>ObservationHeader.</p>
+<blockquote>
+<div><p>Header of a GPS observation message.</p>
+<dl class="docutils">
+<dt>t <span class="classifier-delimiter">:</span> <span class="classifier">ObsGPSTime</span></dt>
+<dd>GPS time of this observation.</dd>
+<dt>n_obs <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Total number of observations. First nibble is the size</dd>
+</dl>
+</div></blockquote>
+<p>of the sequence (n), second nibble is the zero-indexed
+counter (ith packet of n)</p>
+<dl class="method">
+<dt id="sbp.observation.ObservationHeader.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#ObservationHeader.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.ObservationHeader.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.ObservationHeader.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#ObservationHeader.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.ObservationHeader.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.observation.PackedObsContent">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">PackedObsContent</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#PackedObsContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.PackedObsContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>PackedObsContent.</p>
+<blockquote>
+<div>Pseudorange and carrier phase observation for a satellite being</div></blockquote>
+<p>tracked.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>P <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Pseudorange observation.</dd>
+<dt>L <span class="classifier-delimiter">:</span> <span class="classifier">CarrierPhase</span></dt>
+<dd>Carrier phase observation.</dd>
+<dt>cn0 <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Carrier-to-Noise density</dd>
+<dt>lock <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Lock indicator. This value changes whenever a satellite</dd>
+</dl>
+</div></blockquote>
+<p>signal has lost and regained lock, indicating that the
+carrier phase ambiguity may have changed. There is no
+significance to the value of the lock indicator.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>prn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>PRN identifier of the satellite signal</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.observation.PackedObsContent.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#PackedObsContent.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.PackedObsContent.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.PackedObsContent.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#PackedObsContent.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.PackedObsContent.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sbp.piksi">
+<span id="sbp-piksi-module"></span><h2>sbp.piksi module<a class="headerlink" href="#module-sbp.piksi" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sbp.piksi.Latency">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">Latency</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#Latency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.Latency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Latency.</p>
+<blockquote>
+<div>Statistics on the latency of observations received from the base</div></blockquote>
+<p>station. As observation packets are received their GPS time is
+compared to the current GPS time calculated locally by the
+receiver to give a precise measurement of the end-to-end
+communication latency in the system.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>avg <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Average latency.</dd>
+<dt>lmin <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Minimum latency.</dd>
+<dt>lmax <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Maximum latency.</dd>
+<dt>current <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Smoothed estimate of the current latency.</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.piksi.Latency.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#Latency.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.Latency.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.Latency.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#Latency.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.Latency.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgAlmanac">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgAlmanac</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgAlmanac"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgAlmanac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_ALMANAC (0x0069).</p>
+<blockquote>
+<div>This is a legacy message for sending and loading a satellite</div></blockquote>
+<p>alamanac onto the Piksi&#8217;s flash memory from the host.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgCwResults">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgCwResults</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCwResults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCwResults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_CW_RESULTS (0x00C0).</p>
+<blockquote>
+<div>This is an unused legacy message for result reporting from the</div></blockquote>
+<p>CW interference channel on the SwiftNAP. This message will be
+removed in a future release.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgCwStart">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgCwStart</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCwStart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCwStart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_CW_START (0x00C1).</p>
+<blockquote>
+<div>This is an unused legacy message from those host for starting</div></blockquote>
+<p>the CW interference channel on the SwiftNAP. This message will
+be removed in a future release.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgIarState">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgIarState</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgIarState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgIarState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_IAR_STATE (0x0019).</p>
+<blockquote>
+<div>This message reports the state of the Integer Ambiguity</div></blockquote>
+<p>Resolution (IAR) process, which resolves unknown integer
+ambiguities from double-differenced carrier-phase measurements
+from satellite observations.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>num_hyps <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of integer ambiguity hypotheses remaining.</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.piksi.MsgIarState.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgIarState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgIarState.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgIarState.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgIarState.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgIarState.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgInitBase">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgInitBase</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgInitBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgInitBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_INIT_BASE (0x0023).</p>
+<blockquote>
+<div>This message initializes the Integer Ambiguity Resolution (IAR)</div></blockquote>
+<p>process on the Piksi to use an assumed baseline position between
+the base station and rover receivers. Warns via MsgPrint if
+there aren&#8217;t a shared minimum number (4) of satellite
+observations between the two.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgReset">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgReset</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgReset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgReset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_RESET (0x00B2).</p>
+<blockquote>
+<div>This message from the host resets the Piksi back into the</div></blockquote>
+<p>bootloader. It ensures that all outstanding memory accesses
+including buffered writes are completed before reset begins.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgResetFilters">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgResetFilters</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgResetFilters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgResetFilters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_RESET_FILTERS (0x0022).</p>
+<blockquote>
+<div>This message resets either the DGNSS Kalman filters or Integer</div></blockquote>
+<p>Ambiguity Resolution (IAR) process.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>filter <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Filter flags</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.piksi.MsgResetFilters.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgResetFilters.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgResetFilters.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgResetFilters.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgResetFilters.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgResetFilters.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgSetTime">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgSetTime</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSetTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSetTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_SET_TIME (0x0068).</p>
+<blockquote>
+<div>This message sets up timing functionality using a coarse GPS</div></blockquote>
+<p>time estimate sent by the host.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgThreadState">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgThreadState</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgThreadState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgThreadState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_THREAD_STATE (0x0017).</p>
+<blockquote>
+<div>The thread usage message from the Piksi reports RTOS thread</div></blockquote>
+<p>usage statistics for the named thread. The reported values
+require renormalization.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>name <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Thread name (NULL terminated)</dd>
+<dt>cpu <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Percentage cpu use for this thread. Ranges from 0 - 1000</dd>
+</dl>
+</div></blockquote>
+<p>and needs to be renormalized to 100.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>stack_free <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Free stack space for this thread.</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.piksi.MsgThreadState.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgThreadState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgThreadState.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgThreadState.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgThreadState.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgThreadState.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgUartState">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgUartState</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_UART_STATE (0x0018).</p>
+<blockquote>
+<div>The UART message reports data latency and throughput of the UART</div></blockquote>
+<p>channels providing SBP I/O. On the default Piksi configuration,
+UARTs A and B are used for telemetry radios, but can also be be
+host access ports for embedded hosts, or other interfaces in
+future.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>uart_a <span class="classifier-delimiter">:</span> <span class="classifier">UARTChannel</span></dt>
+<dd>State of UART A</dd>
+<dt>uart_b <span class="classifier-delimiter">:</span> <span class="classifier">UARTChannel</span></dt>
+<dd>State of UART B</dd>
+<dt>uart_ftdi <span class="classifier-delimiter">:</span> <span class="classifier">UARTChannel</span></dt>
+<dd>State of UART FTDI (USB logger)</dd>
+<dt>latency <span class="classifier-delimiter">:</span> <span class="classifier">Latency</span></dt>
+<dd>UART communication latency</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.piksi.MsgUartState.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartState.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgUartState.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartState.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartState.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.UARTChannel">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">UARTChannel</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#UARTChannel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.UARTChannel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>UARTChannel.</p>
+<blockquote>
+<div>Throughput, utilization, and error counts on the RX/TX buffers</div></blockquote>
+<p>of this UART channel. Values require renormalization.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>tx_throughput <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>UART transmit throughput.</dd>
+<dt>rx_throughput <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>UART receive throughput.</dd>
+<dt>crc_error_count <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>UART CRC error count.</dd>
+<dt>io_error_count <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>UART IO error count.</dd>
+<dt>tx_buffer_level <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>UART transmit buffer percentage utilization. Ranges from</dd>
+</dl>
+</div></blockquote>
+<p>0 - 255 and needs to be renormalized to 100.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>rx_buffer_level <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>UART receive buffer percentage utilization. Ranges from</dd>
+</dl>
+</div></blockquote>
+<p>0 - 255 and needs to be renormalized to 100.</p>
+<dl class="method">
+<dt id="sbp.piksi.UARTChannel.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#UARTChannel.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.UARTChannel.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.UARTChannel.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#UARTChannel.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.UARTChannel.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sbp.settings">
+<span id="sbp-settings-module"></span><h2>sbp.settings module<a class="headerlink" href="#module-sbp.settings" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sbp.settings.MsgSettings">
+<em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettings</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_SETTINGS (0x00A0).</p>
+<blockquote>
+<div><p>The setting message reads and writes the Piksi&#8217;s configuration.</p>
+<dl class="docutils">
+<dt>setting <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>A NULL delimited (and terminated) string, with a single</dd>
+</dl>
+</div></blockquote>
+<p>&#8220;&lt;setting section&gt;&lt;setting&gt;&lt;value&gt;&#8221; on writes or a
+series of &#8220;&lt;setting section&gt;&lt;setting&gt;&lt;value&gt;&#8221; on
+reads.</p>
+<dl class="method">
+<dt id="sbp.settings.MsgSettings.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettings.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettings.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettings.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettings.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettings.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.settings.MsgSettingsReadByIndex">
+<em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettingsReadByIndex</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_SETTINGS_READ_BY_INDEX (0x00A2).</p>
+<blockquote>
+<div>The settings message for iterating through the settings</div></blockquote>
+<p>values. It will read the setting at an index, returning
+&#8220;&lt;setting section&gt;&lt;setting&gt;&lt;value&gt;&#8221; from the Piksi.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>index <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>An index into the Piksi settings, with values ranging from</dd>
+</dl>
+</div></blockquote>
+<p>0 to length(settings).</p>
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsReadByIndex.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndex.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndex.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsReadByIndex.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndex.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndex.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.settings.MsgSettingsSave">
+<em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettingsSave</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsSave"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsSave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_SETTINGS_SAVE (0x00A1).</p>
+<blockquote>
+<div>The save settings message persists the Piksi&#8217;s current settings</div></blockquote>
+<p>configuration to its onboard flash memory file system.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sbp.system">
+<span id="sbp-system-module"></span><h2>sbp.system module<a class="headerlink" href="#module-sbp.system" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sbp.system.MsgHeartbeat">
+<em class="property">class </em><code class="descclassname">sbp.system.</code><code class="descname">MsgHeartbeat</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgHeartbeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgHeartbeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_HEARTBEAT (0xFFFF).</p>
+<blockquote>
+<div>The heartbeat message is sent periodically to inform the host</div></blockquote>
+<p>or other attached devices that the system is running. It is
+intended to be used to monitor for system malfunctions and
+also contains status flags that indicate to the host the
+status of the system and if it is operating correctly.</p>
+<p>The system error flag is used to indicate that an error has
+occurred in the system. To determine the source of the error
+the remaining error flags should be inspected.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Status flags</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.system.MsgHeartbeat.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgHeartbeat.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgHeartbeat.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.system.MsgHeartbeat.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgHeartbeat.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgHeartbeat.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.system.MsgStartup">
+<em class="property">class </em><code class="descclassname">sbp.system.</code><code class="descname">MsgStartup</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgStartup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgStartup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_STARTUP (0xFF00).</p>
+<blockquote>
+<div>The system start-up message is sent once on system</div></blockquote>
+<p>start-up. It is intended to be used to notify the host or
+other attached devices that the system has started and is now
+ready to respond to commands or configuration requests.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>reserved <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Reserved</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.system.MsgStartup.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgStartup.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgStartup.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.system.MsgStartup.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgStartup.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgStartup.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sbp.table">
+<span id="sbp-table-module"></span><h2>sbp.table module<a class="headerlink" href="#module-sbp.table" title="Permalink to this headline">¶</a></h2>
+<p>Single dispatch of available SBP messages, keyed by msg_type.</p>
+<dl class="exception">
+<dt id="sbp.table.InvalidSBPMessageType">
+<em class="property">exception </em><code class="descclassname">sbp.table.</code><code class="descname">InvalidSBPMessageType</code><a class="reference internal" href="_modules/sbp/table.html#InvalidSBPMessageType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.table.InvalidSBPMessageType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/exceptions.html#exceptions.NotImplementedError" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">exceptions.NotImplementedError</span></code></a></p>
+<p>Base exception for messages with invalid message types.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sbp.table.dispatch">
+<code class="descclassname">sbp.table.</code><code class="descname">dispatch</code><span class="sig-paren">(</span><em>msg</em>, <em>table={256: &lt;class 'sbp.navigation.MsgGPSTime'&gt;</em>, <em>512: &lt;class 'sbp.navigation.MsgPosECEF'&gt;</em>, <em>514: &lt;class 'sbp.navigation.MsgBaselineECEF'&gt;</em>, <em>515: &lt;class 'sbp.navigation.MsgBaselineNED'&gt;</em>, <em>516: &lt;class 'sbp.navigation.MsgVelECEF'&gt;</em>, <em>517: &lt;class 'sbp.navigation.MsgVelNED'&gt;</em>, <em>518: &lt;class 'sbp.navigation.MsgDops'&gt;</em>, <em>513: &lt;class 'sbp.navigation.MsgPosLLH'&gt;</em>, <em>16: &lt;class 'sbp.logging.MsgPrint'&gt;</em>, <em>17: &lt;class 'sbp.logging.MsgDebugVar'&gt;</em>, <em>21: &lt;class 'sbp.acquisition.MsgAcqResult'&gt;</em>, <em>22: &lt;class 'sbp.tracking.MsgTrackingState'&gt;</em>, <em>23: &lt;class 'sbp.piksi.MsgThreadState'&gt;</em>, <em>24: &lt;class 'sbp.piksi.MsgUartState'&gt;</em>, <em>25: &lt;class 'sbp.piksi.MsgIarState'&gt;</em>, <em>26: &lt;class 'sbp.tracking.MsgEphemeris'&gt;</em>, <em>160: &lt;class 'sbp.settings.MsgSettings'&gt;</em>, <em>161: &lt;class 'sbp.settings.MsgSettingsSave'&gt;</em>, <em>34: &lt;class 'sbp.piksi.MsgResetFilters'&gt;</em>, <em>35: &lt;class 'sbp.piksi.MsgInitBase'&gt;</em>, <em>168: &lt;class 'sbp.file_io.MsgFileioRead'&gt;</em>, <em>169: &lt;class 'sbp.file_io.MsgFileioReadDir'&gt;</em>, <em>172: &lt;class 'sbp.file_io.MsgFileioRemove'&gt;</em>, <em>173: &lt;class 'sbp.file_io.MsgFileioWrite'&gt;</em>, <em>176: &lt;class 'sbp.bootload.MsgBootloaderHandshake'&gt;</em>, <em>177: &lt;class 'sbp.bootload.MsgBootloaderJumpToApp'&gt;</em>, <em>178: &lt;class 'sbp.piksi.MsgReset'&gt;</em>, <em>192: &lt;class 'sbp.piksi.MsgCwResults'&gt;</em>, <em>193: &lt;class 'sbp.piksi.MsgCwStart'&gt;</em>, <em>68: &lt;class 'sbp.observation.MsgBasePos'&gt;</em>, <em>69: &lt;class 'sbp.observation.MsgObs'&gt;</em>, <em>162: &lt;class 'sbp.settings.MsgSettingsReadByIndex'&gt;</em>, <em>221: &lt;class 'sbp.bootload.MsgNapDeviceDna'&gt;</em>, <em>224: &lt;class 'sbp.flash.MsgFlashDone'&gt;</em>, <em>225: &lt;class 'sbp.flash.MsgFlashRead'&gt;</em>, <em>226: &lt;class 'sbp.flash.MsgFlashErase'&gt;</em>, <em>227: &lt;class 'sbp.flash.MsgStmFlashLockSector'&gt;</em>, <em>228: &lt;class 'sbp.flash.MsgStmFlashUnlockSector'&gt;</em>, <em>229: &lt;class 'sbp.flash.MsgStmUniqueId'&gt;</em>, <em>104: &lt;class 'sbp.piksi.MsgSetTime'&gt;</em>, <em>105: &lt;class 'sbp.piksi.MsgAlmanac'&gt;</em>, <em>243: &lt;class 'sbp.flash.MsgM25FlashWriteStatus'&gt;</em>, <em>65280: &lt;class 'sbp.system.MsgStartup'&gt;</em>, <em>65535: &lt;class 'sbp.system.MsgHeartbeat'&gt;}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/table.html#dispatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.table.dispatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispatch an SBP message type based on its <cite>msg_type</cite> and parse its
+payload.</p>
+<dl class="docutils">
+<dt>driver <span class="classifier-delimiter">:</span> <span class="classifier"><code class="xref py py-class docutils literal"><span class="pre">SBP</span></code></span></dt>
+<dd>A parsed SBP object.</dd>
+<dt>table <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd>Any table mapping unique SBP message type IDs to SBP message
+constructors.</dd>
+</dl>
+<p>SBP message with a parsed payload.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sbp.tracking">
+<span id="sbp-tracking-module"></span><h2>sbp.tracking module<a class="headerlink" href="#module-sbp.tracking" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sbp.tracking.MsgEphemeris">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgEphemeris</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_EPHEMERIS (0x001A).</p>
+<blockquote>
+<div>The ephemeris message returns a set of satellite orbit</div></blockquote>
+<p>parameters that is used to calculate GPS satellite position,
+velocity, and clock offset (WGS84). Please see the Navstar GPS
+Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+20-III) for more details
+(<a class="reference external" href="http://www.navcen.uscg.gov/pubs/gps/icd200/icd200cw1234.pdf">http://www.navcen.uscg.gov/pubs/gps/icd200/icd200cw1234.pdf</a>).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>tgd <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Group delay differential between L1 and L2 (?)</dd>
+<dt>crs <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Amplitude of the sine harmonic correction term to the orbit radius</dd>
+<dt>crc <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Amplitude of the cosine harmonic correction term to the orbit radius</dd>
+<dt>cuc <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Amplitude of the cosine harmonic correction term to the argument of latitude</dd>
+<dt>cus <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Amplitude of the sine harmonic correction term to the argument of latitude</dd>
+<dt>cic <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Amplitude of the cosine harmonic correction term to the angle of inclination</dd>
+<dt>cis <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Amplitude of the sine harmonic correction term to the angle of inclination</dd>
+<dt>dn <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Mean motion difference</dd>
+<dt>m0 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Mean anomaly at reference time</dd>
+<dt>ecc <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Eccentricity of satellite orbit</dd>
+<dt>sqrta <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Square root of the semi-major axis of orbit</dd>
+<dt>omega0 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Longitude of ascending node of orbit plane at weekly epoch</dd>
+<dt>omegadot <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Rate of right ascension</dd>
+<dt>w <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Argument of perigee</dd>
+<dt>inc <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Inclination</dd>
+<dt>inc_dot <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Inclination first derivative</dd>
+<dt>af0 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Polynomial clock correction coefficient (clock bias)</dd>
+<dt>af1 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Polynomial clock correction coefficient (clock drift)</dd>
+<dt>af2 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Polynomial clock correction coefficient (rate of clock drift)</dd>
+<dt>toe_tow <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Time of week</dd>
+<dt>toe_wn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Week number</dd>
+<dt>toc_tow <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Clock reference time of week</dd>
+<dt>toc_wn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Clock reference week number</dd>
+<dt>valid <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Is valid?</dd>
+<dt>healthy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Satellite is healthy?</dd>
+<dt>prn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>PRN being tracked</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.tracking.MsgEphemeris.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgEphemeris.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.MsgTrackingState">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgTrackingState</code><span class="sig-paren">(</span><em>sbp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_TRACKING_STATE (0x0016).</p>
+<blockquote>
+<div>The tracking message returns a variable-length array of tracking</div></blockquote>
+<p>channel states. It reports status and code/carrier phase signal
+power measurements for all tracked satellites.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>states <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>Satellite tracking channel state.</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingState.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingState.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.TrackingChannelState">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">TrackingChannelState</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>TrackingChannelState.</p>
+<blockquote>
+<div>Tracking channel state for a specific satellite PRN and measured</div></blockquote>
+<p>signal power.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>state <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Status of tracking channel.</dd>
+<dt>prn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>PRN being tracked.</dd>
+<dt>cn0 <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Carrier-to-noise density</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.tracking.TrackingChannelState.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelState.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.TrackingChannelState.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelState.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelState.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sbp.utils">
+<span id="sbp-utils-module"></span><h2>sbp.utils module<a class="headerlink" href="#module-sbp.utils" title="Permalink to this headline">¶</a></h2>
+<p>Shared utility functions.</p>
+<dl class="function">
+<dt id="sbp.utils.fmt_repr">
+<code class="descclassname">sbp.utils.</code><code class="descname">fmt_repr</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/utils.html#fmt_repr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.utils.fmt_repr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a orphaned string representation of an object without the
+clutter of its parent object.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sbp">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sbp" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sbp.SBP">
+<em class="property">class </em><code class="descclassname">sbp.</code><code class="descname">SBP</code><span class="sig-paren">(</span><em>msg_type=None</em>, <em>sender=None</em>, <em>length=None</em>, <em>payload=None</em>, <em>crc=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp.html#SBP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.SBP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Swift Binary Protocol container.</p>
+<dl class="staticmethod">
+<dt id="sbp.SBP.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp.html#SBP.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.SBP.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.SBP.pack">
+<code class="descname">pack</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp.html#SBP.pack"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.SBP.pack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pack to framed binary message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.SBP.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp.html#SBP.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.SBP.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.SBP.unpack">
+<em class="property">static </em><code class="descname">unpack</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp.html#SBP.unpack"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.SBP.unpack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpack and return a framed binary message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sbp.crc16">
+<code class="descclassname">sbp.</code><code class="descname">crc16</code><span class="sig-paren">(</span><em>s</em>, <em>crc=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp.html#crc16"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.crc16" title="Permalink to this definition">¶</a></dt>
+<dd><p>CRC16 implementation acording to CCITT standards.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">sbp package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-sbp.acquisition">sbp.acquisition module</a></li>
+<li><a class="reference internal" href="#module-sbp.bootload">sbp.bootload module</a></li>
+<li><a class="reference internal" href="#module-sbp.file_io">sbp.file_io module</a></li>
+<li><a class="reference internal" href="#module-sbp.flash">sbp.flash module</a></li>
+<li><a class="reference internal" href="#module-sbp.logging">sbp.logging module</a></li>
+<li><a class="reference internal" href="#module-sbp.navigation">sbp.navigation module</a></li>
+<li><a class="reference internal" href="#module-sbp.observation">sbp.observation module</a></li>
+<li><a class="reference internal" href="#module-sbp.piksi">sbp.piksi module</a></li>
+<li><a class="reference internal" href="#module-sbp.settings">sbp.settings module</a></li>
+<li><a class="reference internal" href="#module-sbp.system">sbp.system module</a></li>
+<li><a class="reference internal" href="#module-sbp.table">sbp.table module</a></li>
+<li><a class="reference internal" href="#module-sbp.tracking">sbp.tracking module</a></li>
+<li><a class="reference internal" href="#module-sbp.utils">sbp.utils module</a></li>
+<li><a class="reference internal" href="#module-sbp">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sbp.client.examples.udp.html"
+                        title="previous chapter">sbp.client.examples.udp module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sbp.client.html"
+                        title="next chapter">sbp.client package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/sbp.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

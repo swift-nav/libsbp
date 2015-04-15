@@ -1,0 +1,347 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.observation module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="next" title="sbp.piksi module" href="sbp.piksi.html" />
+    <link rel="prev" title="sbp.navigation module" href="sbp.navigation.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sbp.piksi.html" title="sbp.piksi module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sbp.navigation.html" title="sbp.navigation module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.observation">
+<span id="sbp-observation-module"></span><h1>sbp.observation module<a class="headerlink" href="#module-sbp.observation" title="Permalink to this headline">¶</a></h1>
+<p>Satellite observation messages from the Piksi.</p>
+<dl class="class">
+<dt id="sbp.observation.CarrierPhase">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">CarrierPhase</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#CarrierPhase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.CarrierPhase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>CarrierPhase.</p>
+<blockquote>
+<div>Carrier phase measurement in cycles represented as a 40-bit</div></blockquote>
+<p>fixed point number with Q32.8 layout, i.e. 32-bits of whole
+cycles and 8-bits of fractional cycles.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>i <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Carrier phase whole cycles</dd>
+<dt>f <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Carrier phase fractional part</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.observation.CarrierPhase.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#CarrierPhase.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.CarrierPhase.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.CarrierPhase.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#CarrierPhase.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.CarrierPhase.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.observation.MsgBasePos">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">MsgBasePos</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgBasePos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgBasePos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_BASE_POS (0x0044).</p>
+<blockquote>
+<div><p>You can have MSG_BASE_POS inherent its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This may be the position as reported by the base station itself or the</p>
+</div></blockquote>
+<p>position obtained from doing a single point solution using the base
+station observations.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
+<dd>SBP parent object to inherit from.</dd>
+<dt>lat <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Latitude</dd>
+<dt>lon <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Longitude</dd>
+<dt>height <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Height</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.observation.MsgBasePos.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgBasePos.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgBasePos.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.observation.MsgBasePos.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgBasePos.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgBasePos.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.MsgBasePos.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgBasePos.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgBasePos.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.MsgBasePos.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgBasePos.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgBasePos.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.observation.MsgObs">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">MsgObs</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgObs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgObs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_OBS (0x0045).</p>
+<blockquote>
+<div><p>You can have MSG_OBS inherent its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The GPS observations message reports all the pseudo range and</p>
+</div></blockquote>
+<p>carrier phase observations for the satellites being tracked by
+the Piksi.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
+<dd>SBP parent object to inherit from.</dd>
+<dt>header <span class="classifier-delimiter">:</span> <span class="classifier">ObservationHeader</span></dt>
+<dd>Header of a GPS observation message</dd>
+<dt>obs <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>Pseudorange and carrier phase observation for a</dd>
+</dl>
+</div></blockquote>
+<p>satellite being tracked</p>
+<dl class="method">
+<dt id="sbp.observation.MsgObs.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgObs.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgObs.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.observation.MsgObs.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgObs.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgObs.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.MsgObs.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgObs.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgObs.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.MsgObs.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgObs.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgObs.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.observation.ObsGPSTime">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">ObsGPSTime</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#ObsGPSTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.ObsGPSTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>ObsGPSTime.</p>
+<blockquote>
+<div>A wire-appropriate GPS time, defined as the number of</div></blockquote>
+<p>milliseconds since beginning of the week on the Saturday/Sunday
+transition.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Milliseconds since start of GPS week</dd>
+<dt>wn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>GPS week number</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.observation.ObsGPSTime.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#ObsGPSTime.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.ObsGPSTime.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.ObsGPSTime.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#ObsGPSTime.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.ObsGPSTime.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.observation.ObservationHeader">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">ObservationHeader</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#ObservationHeader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.ObservationHeader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>ObservationHeader.</p>
+<blockquote>
+<div><p>Header of a GPS observation message.</p>
+<dl class="docutils">
+<dt>t <span class="classifier-delimiter">:</span> <span class="classifier">ObsGPSTime</span></dt>
+<dd>GPS time of this observation</dd>
+<dt>n_obs <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Total number of observations. First nibble is the size</dd>
+</dl>
+</div></blockquote>
+<p>of the sequence (n), second nibble is the zero-indexed
+counter (ith packet of n)</p>
+<dl class="method">
+<dt id="sbp.observation.ObservationHeader.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#ObservationHeader.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.ObservationHeader.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.ObservationHeader.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#ObservationHeader.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.ObservationHeader.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.observation.PackedObsContent">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">PackedObsContent</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#PackedObsContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.PackedObsContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>PackedObsContent.</p>
+<blockquote>
+<div>Pseudorange and carrier phase observation for a satellite being</div></blockquote>
+<p>tracked.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>P <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Pseudorange observation</dd>
+<dt>L <span class="classifier-delimiter">:</span> <span class="classifier">CarrierPhase</span></dt>
+<dd>Carrier phase observation</dd>
+<dt>cn0 <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Carrier-to-Noise density</dd>
+<dt>lock <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Lock indicator. This value changes whenever a satellite</dd>
+</dl>
+</div></blockquote>
+<p>signal has lost and regained lock, indicating that the
+carrier phase ambiguity may have changed. There is no
+significance to the value of the lock indicator</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>prn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>PRN identifier of the satellite signal</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.observation.PackedObsContent.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#PackedObsContent.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.PackedObsContent.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.PackedObsContent.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#PackedObsContent.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.PackedObsContent.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sbp.navigation.html"
+                        title="previous chapter">sbp.navigation module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sbp.piksi.html"
+                        title="next chapter">sbp.piksi module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.observation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/sbp.observation.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

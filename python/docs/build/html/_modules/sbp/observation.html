@@ -1,0 +1,420 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.observation &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="../../index.html" />
+    <link rel="up" title="sbp" href="../sbp.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">sbp 0.27 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../sbp.html" accesskey="U">sbp</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sbp.observation</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># Copyright (C) 2015 Swift Navigation Inc.</span>
+<span class="c"># Contact: Fergus Noble &lt;fergus@swiftnav.com&gt;</span>
+<span class="c">#</span>
+<span class="c"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
+<span class="c"># be be distributed together with this source. All other rights reserved.</span>
+<span class="c">#</span>
+<span class="c"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
+<span class="c"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
+<span class="c"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Satellite observation messages from the Piksi.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">construct</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">sbp</span> <span class="kn">import</span> <span class="n">SBP</span>
+<span class="kn">from</span> <span class="nn">sbp.utils</span> <span class="kn">import</span> <span class="n">fmt_repr</span><span class="p">,</span> <span class="n">exclude_fields</span><span class="p">,</span> <span class="n">walk_json_dict</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+<span class="c"># Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml</span>
+<span class="c"># with generate.py at 2015-04-14 12:12:07.029389. Please do not hand edit!</span>
+
+
+<div class="viewcode-block" id="ObsGPSTime"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.ObsGPSTime">[docs]</a><span class="k">class</span> <span class="nc">ObsGPSTime</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;ObsGPSTime.</span>
+<span class="sd">  </span>
+<span class="sd">  A wire-appropriate GPS time, defined as the number of</span>
+<span class="sd">milliseconds since beginning of the week on the Saturday/Sunday</span>
+<span class="sd">transition.</span>
+
+<span class="sd">  </span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  tow : int</span>
+<span class="sd">    Milliseconds since start of GPS week</span>
+<span class="sd">  wn : int</span>
+<span class="sd">    GPS week number</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Embedded</span><span class="p">(</span><span class="n">Struct</span><span class="p">(</span><span class="s">&quot;ObsGPSTime&quot;</span><span class="p">,</span>
+                     <span class="n">ULInt32</span><span class="p">(</span><span class="s">&#39;tow&#39;</span><span class="p">),</span>
+                     <span class="n">ULInt16</span><span class="p">(</span><span class="s">&#39;wn&#39;</span><span class="p">),))</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  
+<div class="viewcode-block" id="ObsGPSTime.from_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.ObsGPSTime.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">ObsGPSTime</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="ObsGPSTime.to_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.ObsGPSTime.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">ObsGPSTime</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+    </div></div>
+<div class="viewcode-block" id="CarrierPhase"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.CarrierPhase">[docs]</a><span class="k">class</span> <span class="nc">CarrierPhase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;CarrierPhase.</span>
+<span class="sd">  </span>
+<span class="sd">  Carrier phase measurement in cycles represented as a 40-bit</span>
+<span class="sd">fixed point number with Q32.8 layout, i.e. 32-bits of whole</span>
+<span class="sd">cycles and 8-bits of fractional cycles.</span>
+
+<span class="sd">  </span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  i : int</span>
+<span class="sd">    Carrier phase whole cycles</span>
+<span class="sd">  f : int</span>
+<span class="sd">    Carrier phase fractional part</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Embedded</span><span class="p">(</span><span class="n">Struct</span><span class="p">(</span><span class="s">&quot;CarrierPhase&quot;</span><span class="p">,</span>
+                     <span class="n">SLInt32</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">),</span>
+                     <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;f&#39;</span><span class="p">),))</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  
+<div class="viewcode-block" id="CarrierPhase.from_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.CarrierPhase.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">CarrierPhase</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="CarrierPhase.to_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.CarrierPhase.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">CarrierPhase</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+    </div></div>
+<div class="viewcode-block" id="ObservationHeader"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.ObservationHeader">[docs]</a><span class="k">class</span> <span class="nc">ObservationHeader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;ObservationHeader.</span>
+<span class="sd">  </span>
+<span class="sd">  Header of a GPS observation message.</span>
+<span class="sd">  </span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  t : ObsGPSTime</span>
+<span class="sd">    GPS time of this observation</span>
+<span class="sd">  n_obs : int</span>
+<span class="sd">    Total number of observations. First nibble is the size</span>
+<span class="sd">of the sequence (n), second nibble is the zero-indexed</span>
+<span class="sd">counter (ith packet of n)</span>
+
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Embedded</span><span class="p">(</span><span class="n">Struct</span><span class="p">(</span><span class="s">&quot;ObservationHeader&quot;</span><span class="p">,</span>
+                     <span class="n">Struct</span><span class="p">(</span><span class="s">&#39;t&#39;</span><span class="p">,</span> <span class="n">ObsGPSTime</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                     <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;n_obs&#39;</span><span class="p">),))</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  
+<div class="viewcode-block" id="ObservationHeader.from_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.ObservationHeader.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">ObservationHeader</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="ObservationHeader.to_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.ObservationHeader.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">ObservationHeader</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+    </div></div>
+<div class="viewcode-block" id="PackedObsContent"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.PackedObsContent">[docs]</a><span class="k">class</span> <span class="nc">PackedObsContent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;PackedObsContent.</span>
+<span class="sd">  </span>
+<span class="sd">  Pseudorange and carrier phase observation for a satellite being</span>
+<span class="sd">tracked.</span>
+
+<span class="sd">  </span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  P : int</span>
+<span class="sd">    Pseudorange observation</span>
+<span class="sd">  L : CarrierPhase</span>
+<span class="sd">    Carrier phase observation</span>
+<span class="sd">  cn0 : int</span>
+<span class="sd">    Carrier-to-Noise density</span>
+<span class="sd">  lock : int</span>
+<span class="sd">    Lock indicator. This value changes whenever a satellite</span>
+<span class="sd">signal has lost and regained lock, indicating that the</span>
+<span class="sd">carrier phase ambiguity may have changed. There is no</span>
+<span class="sd">significance to the value of the lock indicator</span>
+
+<span class="sd">  prn : int</span>
+<span class="sd">    PRN identifier of the satellite signal</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Embedded</span><span class="p">(</span><span class="n">Struct</span><span class="p">(</span><span class="s">&quot;PackedObsContent&quot;</span><span class="p">,</span>
+                     <span class="n">ULInt32</span><span class="p">(</span><span class="s">&#39;P&#39;</span><span class="p">),</span>
+                     <span class="n">Struct</span><span class="p">(</span><span class="s">&#39;L&#39;</span><span class="p">,</span> <span class="n">CarrierPhase</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                     <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;cn0&#39;</span><span class="p">),</span>
+                     <span class="n">ULInt16</span><span class="p">(</span><span class="s">&#39;lock&#39;</span><span class="p">),</span>
+                     <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;prn&#39;</span><span class="p">),))</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  
+<div class="viewcode-block" id="PackedObsContent.from_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.PackedObsContent.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">PackedObsContent</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="PackedObsContent.to_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.PackedObsContent.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">PackedObsContent</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+    </div></div>
+<span class="n">SBP_MSG_OBS</span> <span class="o">=</span> <span class="mh">0x0045</span>
+<div class="viewcode-block" id="MsgObs"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgObs">[docs]</a><span class="k">class</span> <span class="nc">MsgObs</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_OBS (0x0045).</span>
+
+<span class="sd">  You can have MSG_OBS inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The GPS observations message reports all the pseudo range and</span>
+<span class="sd">carrier phase observations for the satellites being tracked by</span>
+<span class="sd">the Piksi.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  header : ObservationHeader</span>
+<span class="sd">    Header of a GPS observation message</span>
+<span class="sd">  obs : array</span>
+<span class="sd">    Pseudorange and carrier phase observation for a</span>
+<span class="sd">satellite being tracked</span>
+
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgObs&quot;</span><span class="p">,</span>
+                   <span class="n">Struct</span><span class="p">(</span><span class="s">&#39;header&#39;</span><span class="p">,</span> <span class="n">ObservationHeader</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="n">OptionalGreedyRange</span><span class="p">(</span><span class="n">Struct</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">,</span> <span class="n">PackedObsContent</span><span class="o">.</span><span class="n">_parser</span><span class="p">)),)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;header&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">obs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+<div class="viewcode-block" id="MsgObs.from_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgObs.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgObs</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="MsgObs.to_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgObs.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgObs</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="MsgObs.to_json"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgObs.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgObs</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</div>
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgObs.from_json"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgObs.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgObs</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
+    </div></div>
+<span class="n">SBP_MSG_BASE_POS</span> <span class="o">=</span> <span class="mh">0x0044</span>
+<div class="viewcode-block" id="MsgBasePos"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgBasePos">[docs]</a><span class="k">class</span> <span class="nc">MsgBasePos</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_BASE_POS (0x0044).</span>
+
+<span class="sd">  You can have MSG_BASE_POS inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  This may be the position as reported by the base station itself or the</span>
+<span class="sd">position obtained from doing a single point solution using the base</span>
+<span class="sd">station observations.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  lat : double</span>
+<span class="sd">    Latitude</span>
+<span class="sd">  lon : double</span>
+<span class="sd">    Longitude</span>
+<span class="sd">  height : double</span>
+<span class="sd">    Height</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgBasePos&quot;</span><span class="p">,</span>
+                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;lat&#39;</span><span class="p">),</span>
+                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;lon&#39;</span><span class="p">),</span>
+                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;height&#39;</span><span class="p">),)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lat</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;lat&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lon</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;lon&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;height&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+<div class="viewcode-block" id="MsgBasePos.from_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgBasePos.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgBasePos</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="MsgBasePos.to_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgBasePos.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgBasePos</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="MsgBasePos.to_json"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgBasePos.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgBasePos</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</div>
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgBasePos.from_json"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgBasePos.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgBasePos</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
+    
+</div></div>
+<span class="n">msg_classes</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="mh">0x0045</span><span class="p">:</span> <span class="n">MsgObs</span><span class="p">,</span>
+  <span class="mh">0x0044</span><span class="p">:</span> <span class="n">MsgBasePos</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
