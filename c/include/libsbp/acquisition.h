@@ -12,12 +12,12 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/acquisition.yaml
- * with generate.py at 2015-04-10 12:07:06.265810. Please do not hand edit!
+ * with generate.py at 2015-04-15 14:18:48.767063. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup acquisition Acquisition
  *
- * * Satellite acquisition messages from the Piksi.
+ * * Satellite acquisition messages from the device.
  * \{ */
 
 #ifndef LIBSBP_ACQUISITION_MESSAGES_H
@@ -36,10 +36,12 @@
  */
 #define SBP_MSG_ACQ_RESULT 0x0015
 typedef struct __attribute__((packed)) {
-  float snr;    /**< SNR of best point */
+  float snr;    /**< SNR of best point. Currently dimensonless, but will have
+units of dB Hz in the revision of this message.
+ */
   float cp;     /**< Code phase of best point [chips] */
   float cf;     /**< Carrier frequency of best point [hz] */
-  u8 prn;    /**< PRN identifier of the satellite signal for which
+  u8 prn;    /**< PRN-1 identifier of the satellite signal for which
 acquisition was attempted
  */
 } msg_acq_result_t;

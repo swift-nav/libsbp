@@ -12,12 +12,12 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/logging.yaml
- * with generate.py at 2015-04-10 12:07:06.163088. Please do not hand edit!
+ * with generate.py at 2015-04-15 14:18:48.753202. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup logging Logging
  *
- *  * Logging and debugging messages from the Piksi. These are in the
+ *  * Logging and debugging messages from the device. These are in the
  * implementation-defined range (0x0000-0x00FF).
  * \{ */
 
@@ -29,22 +29,20 @@
 
 /** Plaintext logging messages
  *
- * This message contains a human-reabable payload string from the
- * Piksi containing errors, warnings and informational messages at
- * ERROR, WARNING, DEBUG, INFO logging levels. These message may
- * also contain information tagged by filename, as well as debug
- * info on function entry/exit when enabled within the firmware.
+ * This message contains a human-readable payload string from the
+ * device containing errors, warnings and informational messages at
+ * ERROR, WARNING, DEBUG, INFO logging levels.
  */
 #define SBP_MSG_PRINT     0x0010
 typedef struct __attribute__((packed)) {
-  char* text;    /**< Informative, human-readable string */
+  char* text;    /**< Human-readable string */
 } msg_print_t;
 
 
 /** Legacy message for tracing variable values
  *
  * This is an unused legacy message for tracing variable values
- * within the Piksi firmware and streaming those back to the host.
+ * within the device firmware and streaming those back to the host.
  */
 #define SBP_MSG_DEBUG_VAR 0x0011
 

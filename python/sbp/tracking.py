@@ -11,7 +11,7 @@
 
 
 """
-Satellite code and carrier-phase tracking messages from the Piksi.
+Satellite code and carrier-phase tracking messages from the device.
 
 """
 
@@ -22,7 +22,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml
-# with generate.py at 2015-04-14 12:12:07.028186. Please do not hand edit!
+# with generate.py at 2015-04-15 12:17:09.629103. Please do not hand edit!
 
 
 class TrackingChannelState(object):
@@ -37,7 +37,7 @@ signal power.
   state : int
     Status of tracking channel
   prn : int
-    PRN being tracked
+    PRN-1 being tracked
   cn0 : float
     Carrier-to-noise density
 
@@ -70,8 +70,8 @@ class MsgTrackingState(SBP):
 
   
   The tracking message returns a variable-length array of tracking
-channel states. It reports status and code/carrier phase signal
-power measurements for all tracked satellites.
+channel states. It reports status and snr power measurements for
+all tracked satellites.
 
 
   Parameters
@@ -150,7 +150,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
   sbp : SBP
     SBP parent object to inherit from.
   tgd : double
-    Group delay differential between L1 and L2 (?)
+    Group delay differential between L1 and L2
   crs : double
     Amplitude of the sine harmonic correction term to the orbit radius
   crc : double

@@ -11,7 +11,7 @@
 
 
 """
-Satellite observation messages from the Piksi.
+Satellite observation messages from the device.
 """
 
 from construct import *
@@ -21,7 +21,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml
-# with generate.py at 2015-04-14 12:12:07.029389. Please do not hand edit!
+# with generate.py at 2015-04-15 12:17:09.558434. Please do not hand edit!
 
 
 class ObsGPSTime(object):
@@ -141,11 +141,10 @@ tracked.
   lock : int
     Lock indicator. This value changes whenever a satellite
 signal has lost and regained lock, indicating that the
-carrier phase ambiguity may have changed. There is no
-significance to the value of the lock indicator
+carrier phase ambiguity may have changed.
 
   prn : int
-    PRN identifier of the satellite signal
+    PRN-1 identifier of the satellite signal
 
   """
   _parser = Embedded(Struct("PackedObsContent",
@@ -177,9 +176,11 @@ class MsgObs(SBP):
   of its fields.
 
   
-  The GPS observations message reports all the pseudo range and
+  The GPS observations message reports all the raw pseudorange and
 carrier phase observations for the satellites being tracked by
-the Piksi.
+the device. Carrier phase observation here is represented as a
+40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
+whole cycles and 8-bits of fractional cycles).
 
 
   Parameters
@@ -190,7 +191,7 @@ the Piksi.
     Header of a GPS observation message
   obs : array
     Pseudorange and carrier phase observation for a
-satellite being tracked
+satellite being tracked.
 
 
   """
@@ -252,9 +253,11 @@ class MsgBasePos(SBP):
   of its fields.
 
   
-  This may be the position as reported by the base station itself or the
-position obtained from doing a single point solution using the base
-station observations.
+  The base station position message is the position reported by
+the base station itself. It is used for pseudo-absolute RTK
+positioning, and is required to be a high-accuracy surveyed
+location of the base station. Any error here will result in an
+error in the pseudo-absolute position output.
 
 
   Parameters

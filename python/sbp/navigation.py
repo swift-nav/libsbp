@@ -11,8 +11,17 @@
 
 
 """
-Geodetic navigation messages reporting GPS time, single-point
-position, and RTK baseline position solutions.
+Geodetic navigation messages reporting GPS time, position, velocity,
+and baseline position solutions. For position solutions, these
+messages define several different position solutions: single-point
+(SPP), RTK, and pseudo-absolute position solutions.
+
+The SPP is the standalone, absolute GPS position solution using only
+a single receiver. The RTK solution is the differential GPS
+solution, which can use either a fixed/integer or floating carrier
+phase ambiguity. The pseudo-absolute position solution uses a
+user-provided, well-surveyed base station position (if available)
+and the RTK solution in tandem.
 
 """
 
@@ -23,7 +32,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/navigation.yaml
-# with generate.py at 2015-04-14 12:12:06.978883. Please do not hand edit!
+# with generate.py at 2015-04-15 12:17:09.622689. Please do not hand edit!
 
 
 SBP_MSG_GPS_TIME = 0x0100
@@ -35,12 +44,19 @@ class MsgGPSTime(SBP):
   of its fields.
 
   
-  This message reports the GPS time, an integer time scale
-beginning at January 6, 1980 midnight. GPS time counts the weeks
-and seconds of the week. The weeks begin at the Saturday/Sunday
-transition. GPS week 0 began at the beginning of the GPS time
-scale. Within each week number, the GPS time of the week is
-between between 0 and 604800 seconds (=60*60*24*7).
+  This message reports the GPS time, representing the time since
+the GPS epoch began on midnight January 6, 1980 UTC. GPS time
+counts the weeks and seconds of the week. The weeks begin at the
+Saturday/Sunday transition. GPS week 0 began at the beginning of
+the GPS time scale.
+
+Within each week number, the GPS time of the week is between
+between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
+does not accumulate leap seconds, and as of now, has a small
+offset from UTC. In a message stream, this message precedes a
+set of other navigation messages referenced to the same time
+(but lacking the ns field) and indicates a more precise time of
+these messages.
 
 
   Parameters
@@ -50,9 +66,11 @@ between between 0 and 604800 seconds (=60*60*24*7).
   wn : int
     GPS week number
   tow : int
-    GPS time of week rounded to the nearest ms
+    GPS time of week rounded to the nearest millisecond
   ns : int
-    Nanosecond remainder of rounded tow
+    Nanosecond residual of millisecond-rounded TOW (ranges
+from -500000 to 500000)
+
   flags : int
     Status flags (reserved)
 
@@ -208,13 +226,14 @@ class MsgPosECEF(SBP):
   of its fields.
 
   
-  The single-point position solution message reports absolute
-Earth Centered Earth Fixed (ECEF) coordinates and the status
-(single point absolute vs RTK) of the position solution. If the
-rover receiver knows surveyed position of the base station and
-has an RTK solution, this reports a pseudo-absolute position
+  The position solution message reports absolute Earth Centered
+Earth Fixed (ECEF) coordinates and the status (single point vs
+pseudo-absolute RTK) of the position solution. If the rover
+receiver knows the surveyed position of the base station and has
+an RTK solution, this reports a pseudo-absolute position
 solution using the base station position and the rover's RTK
-baseline vector.
+baseline vector. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).
 
 
   Parameters
@@ -230,7 +249,9 @@ baseline vector.
   z : double
     ECEF Z coordinate
   accuracy : int
-    Position accuracy estimate
+    Position accuracy estimate (not implemented). Defaults
+to 0.
+
   n_sats : int
     Number of satellites used in solution
   flags : int
@@ -305,12 +326,14 @@ class MsgPosLLH(SBP):
   of its fields.
 
   
-  This single-point position solution message reports the absolute
-geodetic coordinates and the status (single point absolute vs
-RTK) of the position solution. If the rover receiver knows the
+  This position solution message reports the absolute geodetic
+coordinates and the status (single point vs pseudo-absolute RTK)
+of the position solution. If the rover receiver knows the
 surveyed position of the base station and has an RTK solution,
 this reports a pseudo-absolute position solution using the base
-station position and the rover's RTK baseline vector.
+station position and the rover's RTK baseline vector. The full
+GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow).
 
 
   Parameters
@@ -326,11 +349,15 @@ station position and the rover's RTK baseline vector.
   height : double
     Height
   h_accuracy : int
-    Horizontal position accuracy estimate
+    Horizontal position accuracy estimate (not
+implemented). Defaults to 0.
+
   v_accuracy : int
-    Vertical position accuracy estimate
+    Vertical position accuracy estimate (not
+implemented). Defaults to 0.
+
   n_sats : int
-    Number of satellites used in solution
+    Number of satellites used in solution.
   flags : int
     Status flags
 
@@ -405,8 +432,11 @@ class MsgBaselineECEF(SBP):
   of its fields.
 
   
-  This message reports the baseline position solution in Earth
-Centered Earth Fixed (ECEF) coordinates.
+  This message reports the baseline solution in Earth Centered
+Earth Fixed (ECEF) coordinates. This baseline is the relative
+vector distance from the base station to the rover receiver. The
+full GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow).
 
 
   Parameters
@@ -422,7 +452,9 @@ Centered Earth Fixed (ECEF) coordinates.
   z : int
     Baseline ECEF Z coordinate
   accuracy : int
-    Position accuracy estimate
+    Position accuracy estimate (not implemented). Defaults
+to 0.
+
   n_sats : int
     Number of satellites used in solution
   flags : int
@@ -497,8 +529,12 @@ class MsgBaselineNED(SBP):
   of its fields.
 
   
-  This message reports the baseline position solution in North
-East Down (NED) coordinates.
+  This message reports the baseline solution in North East Down
+(NED) coordinates. This baseline is the relative vector distance
+from the base station to the rover receiver, and NED coordinate
+system is defined at the local tangent plane centered at the
+base station position.  The full GPS time is given by the
+preceding MSG_GPS_TIME with the matching time-of-week (tow).
 
 
   Parameters
@@ -514,9 +550,13 @@ East Down (NED) coordinates.
   d : int
     Baseline Down coordinate
   h_accuracy : int
-    Horizontal position accuracy estimate
+    Horizontal position accuracy estimate (not
+implemented). Defaults to 0.
+
   v_accuracy : int
-    Vertical position accuracy estimate
+    Vertical position accuracy estimate (not
+implemented). Defaults to 0.
+
   n_sats : int
     Number of satellites used in solution
   flags : int
@@ -594,7 +634,8 @@ class MsgVelECEF(SBP):
 
   
   This message reports the velocity in Earth Centered Earth Fixed
-(ECEF) coordinates.
+(ECEF) coordinates. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).
 
 
   Parameters
@@ -610,7 +651,9 @@ class MsgVelECEF(SBP):
   z : int
     Velocity ECEF Z coordinate
   accuracy : int
-    Velocity accuracy estimate
+    Velocity accuracy estimate (not implemented). Defaults
+to 0.
+
   n_sats : int
     Number of satellites used in solution
   flags : int
@@ -686,7 +729,8 @@ class MsgVelNED(SBP):
 
   
   This message reports the velocity in local North East Down (NED)
-coordinates.
+coordinates. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).
 
 
   Parameters
@@ -702,9 +746,13 @@ coordinates.
   d : int
     Velocity Down coordinate
   h_accuracy : int
-    Horizontal velocity accuracy estimate
+    Horizontal velocity accuracy estimate (not
+implemented). Defaults to 0.
+
   v_accuracy : int
-    Vertical velocity accuracy estimate
+    Vertical velocity accuracy estimate (not
+implemented). Defaults to 0.
+
   n_sats : int
     Number of satellites used in solution
   flags : int

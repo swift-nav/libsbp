@@ -12,7 +12,7 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/system.yaml
- * with generate.py at 2015-04-10 12:07:06.229383. Please do not hand edit!
+ * with generate.py at 2015-04-15 14:18:48.764193. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup system System
@@ -29,9 +29,9 @@
 /** System start-up message
  *
  * The system start-up message is sent once on system
- * start-up. It is intended to be used to notify the host or
- * other attached devices that the system has started and is now
- * ready to respond to commands or configuration requests.
+ * start-up. It notifies the host or other attached devices that
+ * the system has started and is now ready to respond to commands
+ * or configuration requests.
  */
 #define SBP_MSG_STARTUP   0xFF00
 typedef struct __attribute__((packed)) {
@@ -43,12 +43,13 @@ typedef struct __attribute__((packed)) {
  *
  * The heartbeat message is sent periodically to inform the host
  * or other attached devices that the system is running. It is
- * intended to be used to monitor for system malfunctions and
- * also contains status flags that indicate to the host the
- * status of the system and if it is operating correctly.
+ * used to monitor system malfunctions. It also contains status
+ * flags that indicate to the host the status of the system and
+ * whether it is operating correctly. Currently, the expected
+ * heartbeat interval is 1 sec.
  * 
  * The system error flag is used to indicate that an error has
- * occurred in the system. To determine the source of the error
+ * occurred in the system. To determine the source of the error,
  * the remaining error flags should be inspected.
  */
 #define SBP_MSG_HEARTBEAT 0xFFFF

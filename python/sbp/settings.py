@@ -11,12 +11,13 @@
 
 
 """
-Messages for reading and writing the Piksi's device settings. These
-are in the implementation-defined range (0x0000-0x00FF), and
-intended for internal-use only. Please see the accompanying
-description of settings configurations for more details. Note that
-some of these messages taking a request from a host and a response
-from the Piksi share the same message type ID.
+Messages for reading and writing the device's device settings.
+
+These are in the implementation-defined range (0x0000-0x00FF). Note
+that some of these messages share the same message type ID for both
+the host request and the device response. See the accompanying
+document for descriptions of settings configurations and examples:
+https://github.com/swift-nav/piksi\_firmware/blob/master/docs/settings.pdf
 
 """
 
@@ -27,7 +28,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/settings.yaml
-# with generate.py at 2015-04-14 12:12:07.027259. Please do not hand edit!
+# with generate.py at 2015-04-15 12:17:09.621119. Please do not hand edit!
 
 
 SBP_MSG_SETTINGS = 0x00A0
@@ -39,7 +40,7 @@ class MsgSettings(SBP):
   of its fields.
 
   
-  The setting message reads and writes the Piksi's configuration.
+  The setting message reads and writes the device's configuration.
 
 
   Parameters
@@ -47,8 +48,7 @@ class MsgSettings(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   setting : string
-    A NULL delimited (and terminated) string, with the A
-NULL-terminated and delimited string with contents
+    A NULL-terminated and delimited string with contents
 [SECTION_SETTING, SETTING, VALUE] on writes or a series of
 such strings on reads.
 
@@ -110,7 +110,7 @@ class MsgSettingsSave(SBP):
   of its fields.
 
   
-  The save settings message persists the Piksi's current settings
+  The save settings message persists the device's current settings
 configuration to its onboard flash memory file system.
 
 
@@ -145,7 +145,7 @@ NULL-terminated and delimited string with contents
   sbp : SBP
     SBP parent object to inherit from.
   index : int
-    An index into the Piksi settings, with values ranging from
+    An index into the device settings, with values ranging from
 0 to length(settings)
 
 

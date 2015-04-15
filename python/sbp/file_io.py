@@ -11,15 +11,16 @@
 
 
 """
-Messges for using Piksi's onboard flash filesystem functionality
-from the Contiki project. This allows data to be stored persistently
-in the microcontroller's program flash with wear-levelling using a
-simple filesystem interface. The Contiki file system interface (CFS)
-defines an abstract API for reading directories and for reading and
-writing files. These are in the implementation-defined range
-(0x0000-0x00FF), and intended for internal-use only. Note that some
-of these messages taking a request from a host and a response from
-the Piksi share the same message type ID.
+Messages for using device's onboard flash filesystem
+functionality. This allows data to be stored persistently in the
+device's program flash with wear-levelling using a simple filesystem
+interface. The file system interface (CFS) defines an abstract API
+for reading directories and for reading and writing files.
+
+These are in the implementation-defined range (0x0000-0x00FF), and
+intended for internal-use only. Note that some of these messages
+share the same message type ID for both the host request and the
+device response.
 
 """
 
@@ -30,7 +31,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/file_io.yaml
-# with generate.py at 2015-04-14 12:12:07.031777. Please do not hand edit!
+# with generate.py at 2015-04-15 12:17:09.617442. Please do not hand edit!
 
 
 SBP_MSG_FILEIO_READ = 0x00A8
@@ -59,7 +60,7 @@ message".
   chunk_size : int
     Chunk size to read
   filename : string
-    Name of the file to read from (NULL terminated)
+    Name of the file to read from (NULL padded)
 
   """
   _parser = Struct("MsgFileioRead",
@@ -123,7 +124,7 @@ class MsgFileioReadDir(SBP):
 
   
   The read directory message lists the files in a directory on the
-Piksi's onboard flash file system.  The offset parameter can be
+device's onboard flash file system.  The offset parameter can be
 used to skip the first n elements of the file list. Returns a
 MSG_FILEIO_READ_DIR message containing the directory listings as
 a NULL delimited list. The listing is chunked over multiple SBP
@@ -141,7 +142,7 @@ message".
     The offset to skip the first n elements of the file list
 
   dirname : string
-    Name of the directory to list
+    Name of the directory to list (NULL padded)
 
   """
   _parser = Struct("MsgFileioReadDir",
@@ -212,7 +213,7 @@ message is invalid, a followup MSG_PRINT message will print
   sbp : SBP
     SBP parent object to inherit from.
   filename : string
-    Name of the file to delete (NULL terminated)
+    Name of the file to delete (NULL padded)
 
   """
   _parser = Struct("MsgFileioRemove",
@@ -283,11 +284,11 @@ print "Invalid fileio write message".
   sbp : SBP
     SBP parent object to inherit from.
   filename : string
-    Name of the file to write to (NULL terminated)
+    Name of the file to write to (NULL padded)
   offset : int
     Offset into the file at which to start writing in bytes
   data : array
-    Data to write
+    Variable-length array of data to write
 
   """
   _parser = Struct("MsgFileioWrite",

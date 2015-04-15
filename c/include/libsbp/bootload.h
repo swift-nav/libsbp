@@ -12,16 +12,17 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/bootload.yaml
- * with generate.py at 2015-04-10 12:07:06.130849. Please do not hand edit!
+ * with generate.py at 2015-04-15 14:18:48.751574. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup bootload Bootload
  *
- *  * Messages for the bootloading configuration on the Piksi. These are
- * in the implementation-defined range (0x0000-0x00FF), and intended
- * for internal-use only. Note that some of these messages taking a
- * request from a host and a response from the Piksi share the same
- * message type ID.
+ *  * Messages for the bootloading configuration on the device.
+ * 
+ * These are in the implementation-defined range (0x0000-0x00FF), and
+ * are intended for internal use only. Note that some of these messages
+ * share the same message type ID for both the host request and the
+ * device response.
  * \{ */
 
 #ifndef LIBSBP_BOOTLOAD_MESSAGES_H
@@ -30,45 +31,43 @@
 #include "common.h"
 
 
-/** Bootloading handshake (Host <=> Piksi).
+/** Bootloading handshake (host <=> device)
  *
- * The bootloader continually sends a handshake message to the host
- * for a short period of time, and then jumps to the firmware if it
- * doesn't receive a handshake from the host. If the host replies
- * with a handshake the bootloader doesn't jump to the firmware and
- * nwaits for flash programming messages, and the host has to send
- * a MSG_BOOTLOADER_JUMP_TO_APP when it's done programming. On old
- * versions of the bootloader (less than v0.1), hardcoded to 0. On
- * new versions, return the git describe string for the bootloader
- * build.
+ * The handshake message establishes a handshake between the device
+ * bootloader and the host.  The payload string contains the
+ * bootloader version number, but returns an empty string for
+ * earlier versions.
  */
 #define SBP_MSG_BOOTLOADER_HANDSHAKE   0x00B0
 typedef struct __attribute__((packed)) {
-  u8 handshake;    /**< Handshake value */
+  char* handshake;    /**< Version number (NULL terminated) */
 } msg_bootloader_handshake_t;
 
 
-/** Bootloader jump to application (Host => Piksi)
+/** Bootloader jump to application (host => device)
  *
  * The host initiates the bootloader to jump to the application.
  */
 #define SBP_MSG_BOOTLOADER_JUMP_TO_APP 0x00B1
 typedef struct __attribute__((packed)) {
-  u8 jump;    /**< Ignored by the Piksi */
+  u8 jump;    /**< Ignored by the device */
 } msg_bootloader_jump_to_app_t;
 
 
-/** Send FPGA device DNA over UART (Host <=> Piksi).
+/** Read FPGA device ID over UART (host <=> device)
  *
- * The device DNA message from the host reads the unique device
- * DNA from the Swift Navigation Acceleration Peripheral
- * (SwiftNAP), a Spartan 6 FPGA. By convention, the host message
- * buffer is empty; the Piksi returns the device DNA in a
- * MSG_NAP_DEVICE_DNA message.
+ * The device message from the host reads a unique device
+ * identifier from the SwiftNAP, an FPGA. The host requests the ID
+ * by sending a MSG_NAP_DEVICE_DNA with an empty payload. The
+ * device responds with the same message with the device ID in the
+ * payload. Note that this ID is tied to the FPGA, and not related
+ * to the Piksi's serial number.
  */
 #define SBP_MSG_NAP_DEVICE_DNA         0x00DD
 typedef struct __attribute__((packed)) {
-  u8 dna[8]; /**< 57-bit SwiftNAP FPGA Device DNA */
+  u8 dna[8]; /**< 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
+on the right.
+ */
 } msg_nap_device_dna_t;
 
 

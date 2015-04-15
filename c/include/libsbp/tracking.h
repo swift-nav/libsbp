@@ -12,12 +12,12 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/tracking.yaml
- * with generate.py at 2015-04-10 12:07:06.236392. Please do not hand edit!
+ * with generate.py at 2015-04-15 14:18:48.765412. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup tracking Tracking
  *
- *  * Satellite code and carrier-phase tracking messages from the Piksi.
+ *  * Satellite code and carrier-phase tracking messages from the device.
  * \{ */
 
 #ifndef LIBSBP_TRACKING_MESSAGES_H
@@ -33,7 +33,7 @@
  */
 typedef struct __attribute__((packed)) {
   u8 state;    /**< Status of tracking channel */
-  u8 prn;      /**< PRN being tracked */
+  u8 prn;      /**< PRN-1 being tracked */
   float cn0;      /**< Carrier-to-noise density [dB Hz] */
 } tracking_channel_state_t;
 
@@ -41,8 +41,8 @@ typedef struct __attribute__((packed)) {
 /** Satellite tracking channel states
  *
  * The tracking message returns a variable-length array of tracking
- * channel states. It reports status and code/carrier phase signal
- * power measurements for all tracked satellites.
+ * channel states. It reports status and snr power measurements for
+ * all tracked satellites.
  */
 #define SBP_MSG_TRACKING_STATE 0x0016
 typedef struct __attribute__((packed)) {
@@ -50,7 +50,7 @@ typedef struct __attribute__((packed)) {
 } msg_tracking_state_t;
 
 
-/** WGS84 satellite orbit ephemeris parameters
+/** WGS84 satellite ephemeris parameters
  *
  * The ephemeris message returns a set of satellite orbit
  * parameters that is used to calculate GPS satellite position,
@@ -60,7 +60,7 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_EPHEMERIS      0x001A
 typedef struct __attribute__((packed)) {
-  double tgd;         /**< Group delay differential between L1 and L2 (?) [s] */
+  double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double crs;         /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
   double crc;         /**< Amplitude of the cosine harmonic correction term to the orbit radius [m] */
   double cuc;         /**< Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */

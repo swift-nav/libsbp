@@ -11,7 +11,7 @@
 
 
 """
-Satellite acquisition messages from the Piksi.
+Satellite acquisition messages from the device.
 """
 
 from construct import *
@@ -21,7 +21,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/acquisition.yaml
-# with generate.py at 2015-04-14 12:12:07.025823. Please do not hand edit!
+# with generate.py at 2015-04-15 12:17:09.634778. Please do not hand edit!
 
 
 SBP_MSG_ACQ_RESULT = 0x0015
@@ -45,13 +45,15 @@ ratio.
   sbp : SBP
     SBP parent object to inherit from.
   snr : float
-    SNR of best point
+    SNR of best point. Currently dimensonless, but will have
+units of dB Hz in the revision of this message.
+
   cp : float
     Code phase of best point
   cf : float
     Carrier frequency of best point
   prn : int
-    PRN identifier of the satellite signal for which
+    PRN-1 identifier of the satellite signal for which
 acquisition was attempted
 
 
