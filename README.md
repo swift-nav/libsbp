@@ -75,3 +75,7 @@ Distributed under LGPLv3.0.
 
 [1]: https://travis-ci.org/swift-nav/libsbp.png
 [2]: https://travis-ci.org/swift-nav/libsbp
+=======
+## Source for libsbp homepage
+
+Source of the webpage for Swift Navigation's libsbp project.
