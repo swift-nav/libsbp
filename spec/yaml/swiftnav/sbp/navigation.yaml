@@ -37,11 +37,11 @@ definitions:
         - tow:
             type: u32
             units: ms
-            desc: GPS time of week rounded to the nearest ms
+            desc: GPS time of week rounded to the nearest millisecond
         - ns:
             type: s32
             units: ns
-            desc: Nanosecond remainder of rounded tow
+            desc: Nanosecond residual of millisecond-rounded TOW (range: -500000 ... 500000)
         - flags:
             type: u8
             desc: Status flags (reserved)
