@@ -1,0 +1,7 @@
+sbp.client.loggers.byte_logger module
+=====================================
+
+.. automodule:: sbp.client.loggers.byte_logger
+    :members:
+    :undoc-members:
+    :show-inheritance:

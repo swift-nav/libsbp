@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.tracking module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="next" title="sbp.utils module" href="sbp.utils.html" />
+    <link rel="prev" title="sbp.table module" href="sbp.table.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sbp.utils.html" title="sbp.utils module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sbp.table.html" title="sbp.table module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.tracking">
+<span id="sbp-tracking-module"></span><h1>sbp.tracking module<a class="headerlink" href="#module-sbp.tracking" title="Permalink to this headline">¶</a></h1>
+<p>Satellite code and carrier-phase tracking messages from the Piksi.</p>
+<dl class="class">
+<dt id="sbp.tracking.MsgEphemeris">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgEphemeris</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_EPHEMERIS (0x001A).</p>
+<blockquote>
+<div><p>You can have MSG_EPHEMERIS inherent its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The ephemeris message returns a set of satellite orbit</p>
+</div></blockquote>
+<p>parameters that is used to calculate GPS satellite position,
+velocity, and clock offset (WGS84). Please see the Navstar GPS
+Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+20-III) for more details.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
+<dd>SBP parent object to inherit from.</dd>
+<dt>tgd <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Group delay differential between L1 and L2 (?)</dd>
+<dt>crs <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Amplitude of the sine harmonic correction term to the orbit radius</dd>
+<dt>crc <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Amplitude of the cosine harmonic correction term to the orbit radius</dd>
+<dt>cuc <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Amplitude of the cosine harmonic correction term to the argument of latitude</dd>
+<dt>cus <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Amplitude of the sine harmonic correction term to the argument of latitude</dd>
+<dt>cic <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Amplitude of the cosine harmonic correction term to the angle of inclination</dd>
+<dt>cis <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Amplitude of the sine harmonic correction term to the angle of inclination</dd>
+<dt>dn <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Mean motion difference</dd>
+<dt>m0 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Mean anomaly at reference time</dd>
+<dt>ecc <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Eccentricity of satellite orbit</dd>
+<dt>sqrta <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Square root of the semi-major axis of orbit</dd>
+<dt>omega0 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Longitude of ascending node of orbit plane at weekly epoch</dd>
+<dt>omegadot <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Rate of right ascension</dd>
+<dt>w <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Argument of perigee</dd>
+<dt>inc <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Inclination</dd>
+<dt>inc_dot <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Inclination first derivative</dd>
+<dt>af0 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Polynomial clock correction coefficient (clock bias)</dd>
+<dt>af1 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Polynomial clock correction coefficient (clock drift)</dd>
+<dt>af2 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Polynomial clock correction coefficient (rate of clock drift)</dd>
+<dt>toe_tow <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Time of week</dd>
+<dt>toe_wn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Week number</dd>
+<dt>toc_tow <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
+<dd>Clock reference time of week</dd>
+<dt>toc_wn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Clock reference week number</dd>
+<dt>valid <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Is valid?</dd>
+<dt>healthy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Satellite is healthy?</dd>
+<dt>prn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>PRN being tracked</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.tracking.MsgEphemeris.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgEphemeris.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgEphemeris.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgEphemeris.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.MsgTrackingState">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgTrackingState</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_TRACKING_STATE (0x0016).</p>
+<blockquote>
+<div><p>You can have MSG_TRACKING_STATE inherent its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The tracking message returns a variable-length array of tracking</p>
+</div></blockquote>
+<p>channel states. It reports status and code/carrier phase signal
+power measurements for all tracked satellites.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
+<dd>SBP parent object to inherit from.</dd>
+<dt>states <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>Satellite tracking channel state</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingState.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingState.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingState.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingState.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.TrackingChannelState">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">TrackingChannelState</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>TrackingChannelState.</p>
+<blockquote>
+<div>Tracking channel state for a specific satellite PRN and measured</div></blockquote>
+<p>signal power.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>state <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Status of tracking channel</dd>
+<dt>prn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>PRN being tracked</dd>
+<dt>cn0 <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Carrier-to-noise density</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.tracking.TrackingChannelState.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelState.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.TrackingChannelState.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelState.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelState.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sbp.table.html"
+                        title="previous chapter">sbp.table module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sbp.utils.html"
+                        title="next chapter">sbp.utils module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.tracking.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/sbp.tracking.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

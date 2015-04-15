@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.client.drivers.file_driver module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp.client.drivers package" href="sbp.client.drivers.html" />
+    <link rel="next" title="sbp.client.drivers.pyftdi_driver module" href="sbp.client.drivers.pyftdi_driver.html" />
+    <link rel="prev" title="sbp.client.drivers.base_driver module" href="sbp.client.drivers.base_driver.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sbp.client.drivers.pyftdi_driver.html" title="sbp.client.drivers.pyftdi_driver module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sbp.client.drivers.base_driver.html" title="sbp.client.drivers.base_driver module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="sbp.client.html" >sbp.client package</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="sbp.client.drivers.html" accesskey="U">sbp.client.drivers package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.client.drivers.file_driver">
+<span id="sbp-client-drivers-file-driver-module"></span><h1>sbp.client.drivers.file_driver module<a class="headerlink" href="#module-sbp.client.drivers.file_driver" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sbp.client.drivers.file_driver.FileDriver">
+<em class="property">class </em><code class="descclassname">sbp.client.drivers.file_driver.</code><code class="descname">FileDriver</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/file_driver.html#FileDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.file_driver.FileDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.client.drivers.base_driver.html#sbp.client.drivers.base_driver.BaseDriver" title="sbp.client.drivers.base_driver.BaseDriver"><code class="xref py py-class docutils literal"><span class="pre">sbp.client.drivers.base_driver.BaseDriver</span></code></a></p>
+<p>The <a class="reference internal" href="#sbp.client.drivers.file_driver.FileDriver" title="sbp.client.drivers.file_driver.FileDriver"><code class="xref py py-class docutils literal"><span class="pre">FileDriver</span></code></a> class uses a file as an IO source of SBP messages.</p>
+<dl class="docutils">
+<dt>filename <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Path to file to read SBP messages from.</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.client.drivers.file_driver.FileDriver.next">
+<code class="descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/file_driver.html#FileDriver.next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.file_driver.FileDriver.next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call handle&#8217;s iterator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.file_driver.FileDriver.readline">
+<code class="descname">readline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/file_driver.html#FileDriver.readline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.file_driver.FileDriver.readline" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Readline wrapper: read a line which is terminated with end-of-line
+(EOL) character (&#8216;</div></blockquote>
+<p>&#8216; by default), or until timeout.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.file_driver.FileDriver.seek">
+<code class="descname">seek</code><span class="sig-paren">(</span><em>pos</em>, <em>whence=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/file_driver.html#FileDriver.seek"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.file_driver.FileDriver.seek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around file seek.</p>
+<dl class="docutils">
+<dt>pos <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Position of the read/write pointer within the file.</dd>
+<dt>whence <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Optional and defaults to 0 which means absolute file
+positioning, other values are 1 which means seek relative to the
+current position and 2 means seek relative to the file&#8217;s end</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sbp.client.drivers.base_driver.html"
+                        title="previous chapter">sbp.client.drivers.base_driver module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sbp.client.drivers.pyftdi_driver.html"
+                        title="next chapter">sbp.client.drivers.pyftdi_driver module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.client.drivers.file_driver.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/sbp.client.drivers.file_driver.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

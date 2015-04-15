@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.bootload module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="next" title="sbp.ext_events module" href="sbp.ext_events.html" />
+    <link rel="prev" title="sbp.acquisition module" href="sbp.acquisition.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sbp.ext_events.html" title="sbp.ext_events module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sbp.acquisition.html" title="sbp.acquisition module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.bootload">
+<span id="sbp-bootload-module"></span><h1>sbp.bootload module<a class="headerlink" href="#module-sbp.bootload" title="Permalink to this headline">¶</a></h1>
+<p>Messages for the bootloading configuration on the Piksi. These are
+in the implementation-defined range (0x0000-0x00FF), and intended
+for internal-use only. Note that some of these messages taking a
+request from a host and a response from the Piksi share the same
+message type ID.</p>
+<dl class="class">
+<dt id="sbp.bootload.MsgBootloaderHandshake">
+<em class="property">class </em><code class="descclassname">sbp.bootload.</code><code class="descname">MsgBootloaderHandshake</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderHandshake"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderHandshake" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_BOOTLOADER_HANDSHAKE (0x00B0).</p>
+<blockquote>
+<div><p>You can have MSG_BOOTLOADER_HANDSHAKE inherent its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The bootloader continually sends a handshake message to the host</p>
+</div></blockquote>
+<p>for a short period of time, and then jumps to the firmware if it
+doesn&#8217;t receive a handshake from the host. If the host replies
+with a handshake the bootloader doesn&#8217;t jump to the firmware and
+nwaits for flash programming messages, and the host has to send
+a MSG_BOOTLOADER_JUMP_TO_APP when it&#8217;s done programming. On old
+versions of the bootloader (less than v0.1), hardcoded to 0. On
+new versions, return the git describe string for the bootloader
+build.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
+<dd>SBP parent object to inherit from.</dd>
+<dt>handshake <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Handshake value</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.bootload.MsgBootloaderHandshake.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderHandshake.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderHandshake.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.bootload.MsgBootloaderHandshake.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderHandshake.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderHandshake.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.bootload.MsgBootloaderHandshake.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderHandshake.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderHandshake.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.bootload.MsgBootloaderHandshake.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderHandshake.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderHandshake.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.bootload.MsgBootloaderJumpToApp">
+<em class="property">class </em><code class="descclassname">sbp.bootload.</code><code class="descname">MsgBootloaderJumpToApp</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderJumpToApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderJumpToApp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_BOOTLOADER_JUMP_TO_APP (0x00B1).</p>
+<p>You can have MSG_BOOTLOADER_JUMP_TO_APP inherent its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The host initiates the bootloader to jump to the application.</p>
+<dl class="docutils">
+<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
+<dd>SBP parent object to inherit from.</dd>
+<dt>jump <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Ignored by the Piksi</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.bootload.MsgBootloaderJumpToApp.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderJumpToApp.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderJumpToApp.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.bootload.MsgBootloaderJumpToApp.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderJumpToApp.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderJumpToApp.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.bootload.MsgBootloaderJumpToApp.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderJumpToApp.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderJumpToApp.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.bootload.MsgBootloaderJumpToApp.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderJumpToApp.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderJumpToApp.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.bootload.MsgNapDeviceDna">
+<em class="property">class </em><code class="descclassname">sbp.bootload.</code><code class="descname">MsgNapDeviceDna</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgNapDeviceDna"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgNapDeviceDna" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_NAP_DEVICE_DNA (0x00DD).</p>
+<blockquote>
+<div><p>You can have MSG_NAP_DEVICE_DNA inherent its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The device DNA message from the host reads the unique device</p>
+</div></blockquote>
+<p>DNA from the Swift Navigation Acceleration Peripheral
+(SwiftNAP), a Spartan 6 FPGA. By convention, the host message
+buffer is empty; the Piksi returns the device DNA in a
+MSG_NAP_DEVICE_DNA message.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
+<dd>SBP parent object to inherit from.</dd>
+<dt>dna <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>57-bit SwiftNAP FPGA Device DNA</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.bootload.MsgNapDeviceDna.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgNapDeviceDna.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgNapDeviceDna.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.bootload.MsgNapDeviceDna.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgNapDeviceDna.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgNapDeviceDna.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.bootload.MsgNapDeviceDna.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgNapDeviceDna.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgNapDeviceDna.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.bootload.MsgNapDeviceDna.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgNapDeviceDna.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgNapDeviceDna.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sbp.acquisition.html"
+                        title="previous chapter">sbp.acquisition module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sbp.ext_events.html"
+                        title="next chapter">sbp.ext_events module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.bootload.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/sbp.bootload.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

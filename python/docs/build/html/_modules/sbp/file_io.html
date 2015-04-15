@@ -1,0 +1,443 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.file_io &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="../../index.html" />
+    <link rel="up" title="sbp" href="../sbp.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">sbp 0.27 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../sbp.html" accesskey="U">sbp</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sbp.file_io</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># Copyright (C) 2015 Swift Navigation Inc.</span>
+<span class="c"># Contact: Fergus Noble &lt;fergus@swiftnav.com&gt;</span>
+<span class="c">#</span>
+<span class="c"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
+<span class="c"># be be distributed together with this source. All other rights reserved.</span>
+<span class="c">#</span>
+<span class="c"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
+<span class="c"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
+<span class="c"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Messges for using Piksi&#39;s onboard flash filesystem functionality</span>
+<span class="sd">from the Contiki project. This allows data to be stored persistently</span>
+<span class="sd">in the microcontroller&#39;s program flash with wear-levelling using a</span>
+<span class="sd">simple filesystem interface. The Contiki file system interface (CFS)</span>
+<span class="sd">defines an abstract API for reading directories and for reading and</span>
+<span class="sd">writing files. These are in the implementation-defined range</span>
+<span class="sd">(0x0000-0x00FF), and intended for internal-use only. Note that some</span>
+<span class="sd">of these messages taking a request from a host and a response from</span>
+<span class="sd">the Piksi share the same message type ID.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">construct</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">sbp</span> <span class="kn">import</span> <span class="n">SBP</span>
+<span class="kn">from</span> <span class="nn">sbp.utils</span> <span class="kn">import</span> <span class="n">fmt_repr</span><span class="p">,</span> <span class="n">exclude_fields</span><span class="p">,</span> <span class="n">walk_json_dict</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+<span class="c"># Automatically generated from piksi/yaml/swiftnav/sbp/file_io.yaml</span>
+<span class="c"># with generate.py at 2015-04-14 12:12:07.031777. Please do not hand edit!</span>
+
+
+<span class="n">SBP_MSG_FILEIO_READ</span> <span class="o">=</span> <span class="mh">0x00A8</span>
+<div class="viewcode-block" id="MsgFileioRead"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioRead">[docs]</a><span class="k">class</span> <span class="nc">MsgFileioRead</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_FILEIO_READ (0x00A8).</span>
+
+<span class="sd">  You can have MSG_FILEIO_READ inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The file read message reads a certain length (up to 255 bytes)</span>
+<span class="sd">from a given offset into a file, and returns the data in a</span>
+<span class="sd">MSG_FILEIO_READ message where the message length field indicates</span>
+<span class="sd">how many bytes were succesfully read. If the message is invalid,</span>
+<span class="sd">a followup MSG_PRINT message will print &quot;Invalid fileio read</span>
+<span class="sd">message&quot;.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  offset : int</span>
+<span class="sd">    File offset</span>
+<span class="sd">  chunk_size : int</span>
+<span class="sd">    Chunk size to read</span>
+<span class="sd">  filename : string</span>
+<span class="sd">    Name of the file to read from (NULL terminated)</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgFileioRead&quot;</span><span class="p">,</span>
+                   <span class="n">ULInt32</span><span class="p">(</span><span class="s">&#39;offset&#39;</span><span class="p">),</span>
+                   <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;chunk_size&#39;</span><span class="p">),</span>
+                   <span class="n">String</span><span class="p">(</span><span class="s">&#39;filename&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">),)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;offset&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">chunk_size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;chunk_size&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;filename&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+<div class="viewcode-block" id="MsgFileioRead.from_binary"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioRead.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgFileioRead</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="MsgFileioRead.to_binary"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioRead.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgFileioRead</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="MsgFileioRead.to_json"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioRead.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgFileioRead</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</div>
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgFileioRead.from_json"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioRead.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgFileioRead</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
+    </div></div>
+<span class="n">SBP_MSG_FILEIO_READ_DIR</span> <span class="o">=</span> <span class="mh">0x00A9</span>
+<div class="viewcode-block" id="MsgFileioReadDir"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioReadDir">[docs]</a><span class="k">class</span> <span class="nc">MsgFileioReadDir</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_FILEIO_READ_DIR (0x00A9).</span>
+
+<span class="sd">  You can have MSG_FILEIO_READ_DIR inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The read directory message lists the files in a directory on the</span>
+<span class="sd">Piksi&#39;s onboard flash file system.  The offset parameter can be</span>
+<span class="sd">used to skip the first n elements of the file list. Returns a</span>
+<span class="sd">MSG_FILEIO_READ_DIR message containing the directory listings as</span>
+<span class="sd">a NULL delimited list. The listing is chunked over multiple SBP</span>
+<span class="sd">packets and the end of the list is identified by an entry</span>
+<span class="sd">containing just the character 0xFF. If message is invalid, a</span>
+<span class="sd">followup MSG_PRINT message will print &quot;Invalid fileio read</span>
+<span class="sd">message&quot;.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  offset : int</span>
+<span class="sd">    The offset to skip the first n elements of the file list</span>
+
+<span class="sd">  dirname : string</span>
+<span class="sd">    Name of the directory to list</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgFileioReadDir&quot;</span><span class="p">,</span>
+                   <span class="n">ULInt32</span><span class="p">(</span><span class="s">&#39;offset&#39;</span><span class="p">),</span>
+                   <span class="n">String</span><span class="p">(</span><span class="s">&#39;dirname&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">),)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;offset&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">dirname</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;dirname&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+<div class="viewcode-block" id="MsgFileioReadDir.from_binary"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioReadDir.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgFileioReadDir</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="MsgFileioReadDir.to_binary"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioReadDir.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgFileioReadDir</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="MsgFileioReadDir.to_json"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioReadDir.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgFileioReadDir</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</div>
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgFileioReadDir.from_json"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioReadDir.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgFileioReadDir</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
+    </div></div>
+<span class="n">SBP_MSG_FILEIO_REMOVE</span> <span class="o">=</span> <span class="mh">0x00AC</span>
+<div class="viewcode-block" id="MsgFileioRemove"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioRemove">[docs]</a><span class="k">class</span> <span class="nc">MsgFileioRemove</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_FILEIO_REMOVE (0x00AC).</span>
+
+<span class="sd">  You can have MSG_FILEIO_REMOVE inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The file remove message deletes a file from the file system. If</span>
+<span class="sd">message is invalid, a followup MSG_PRINT message will print</span>
+<span class="sd">&quot;Invalid fileio remove message&quot;.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  filename : string</span>
+<span class="sd">    Name of the file to delete (NULL terminated)</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgFileioRemove&quot;</span><span class="p">,</span>
+                   <span class="n">String</span><span class="p">(</span><span class="s">&#39;filename&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">),)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;filename&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+<div class="viewcode-block" id="MsgFileioRemove.from_binary"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioRemove.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgFileioRemove</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="MsgFileioRemove.to_binary"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioRemove.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgFileioRemove</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="MsgFileioRemove.to_json"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioRemove.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgFileioRemove</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</div>
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgFileioRemove.from_json"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioRemove.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgFileioRemove</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
+    </div></div>
+<span class="n">SBP_MSG_FILEIO_WRITE</span> <span class="o">=</span> <span class="mh">0x00AD</span>
+<div class="viewcode-block" id="MsgFileioWrite"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioWrite">[docs]</a><span class="k">class</span> <span class="nc">MsgFileioWrite</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_FILEIO_WRITE (0x00AD).</span>
+
+<span class="sd">  You can have MSG_FILEIO_WRITE inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The file write message writes a certain length (up to 255 bytes)</span>
+<span class="sd">of data to a file at a given offset. Returns a copy of the</span>
+<span class="sd">original MSG_FILEIO_WRITE message to check integrity of the</span>
+<span class="sd">write. If message is invalid, a followup MSG_PRINT message will</span>
+<span class="sd">print &quot;Invalid fileio write message&quot;.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  filename : string</span>
+<span class="sd">    Name of the file to write to (NULL terminated)</span>
+<span class="sd">  offset : int</span>
+<span class="sd">    Offset into the file at which to start writing in bytes</span>
+<span class="sd">  data : array</span>
+<span class="sd">    Data to write</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgFileioWrite&quot;</span><span class="p">,</span>
+                   <span class="n">String</span><span class="p">(</span><span class="s">&#39;filename&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+                   <span class="n">ULInt32</span><span class="p">(</span><span class="s">&#39;offset&#39;</span><span class="p">),</span>
+                   <span class="n">OptionalGreedyRange</span><span class="p">(</span><span class="n">Struct</span><span class="p">(</span><span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;data&#39;</span><span class="p">))),)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;filename&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;offset&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;data&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+<div class="viewcode-block" id="MsgFileioWrite.from_binary"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioWrite.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgFileioWrite</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="MsgFileioWrite.to_binary"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioWrite.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgFileioWrite</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="MsgFileioWrite.to_json"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioWrite.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgFileioWrite</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</div>
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgFileioWrite.from_json"><a class="viewcode-back" href="../../sbp.file_io.html#sbp.file_io.MsgFileioWrite.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgFileioWrite</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
+    
+</div></div>
+<span class="n">msg_classes</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="mh">0x00A8</span><span class="p">:</span> <span class="n">MsgFileioRead</span><span class="p">,</span>
+  <span class="mh">0x00A9</span><span class="p">:</span> <span class="n">MsgFileioReadDir</span><span class="p">,</span>
+  <span class="mh">0x00AC</span><span class="p">:</span> <span class="n">MsgFileioRemove</span><span class="p">,</span>
+  <span class="mh">0x00AD</span><span class="p">:</span> <span class="n">MsgFileioWrite</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

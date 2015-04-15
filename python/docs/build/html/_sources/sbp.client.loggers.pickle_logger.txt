@@ -1,0 +1,7 @@
+sbp.client.loggers.pickle_logger module
+=======================================
+
+.. automodule:: sbp.client.loggers.pickle_logger
+    :members:
+    :undoc-members:
+    :show-inheritance:

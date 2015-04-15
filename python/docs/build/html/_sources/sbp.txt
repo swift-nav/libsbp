@@ -1,0 +1,125 @@
+sbp package
+===========
+
+Subpackages
+-----------
+
+.. toctree::
+
+    sbp.client
+
+Submodules
+----------
+
+sbp.acquisition module
+----------------------
+
+.. automodule:: sbp.acquisition
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sbp.bootload module
+-------------------
+
+.. automodule:: sbp.bootload
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sbp.file_io module
+------------------
+
+.. automodule:: sbp.file_io
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sbp.flash module
+----------------
+
+.. automodule:: sbp.flash
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sbp.logging module
+------------------
+
+.. automodule:: sbp.logging
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sbp.navigation module
+---------------------
+
+.. automodule:: sbp.navigation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sbp.observation module
+----------------------
+
+.. automodule:: sbp.observation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sbp.piksi module
+----------------
+
+.. automodule:: sbp.piksi
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sbp.settings module
+-------------------
+
+.. automodule:: sbp.settings
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sbp.system module
+-----------------
+
+.. automodule:: sbp.system
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sbp.table module
+----------------
+
+.. automodule:: sbp.table
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sbp.tracking module
+-------------------
+
+.. automodule:: sbp.tracking
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sbp.utils module
+----------------
+
+.. automodule:: sbp.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: sbp
+    :members:
+    :undoc-members:
+    :show-inheritance:

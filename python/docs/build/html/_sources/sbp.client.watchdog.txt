@@ -1,0 +1,7 @@
+sbp.client.watchdog module
+==========================
+
+.. automodule:: sbp.client.watchdog
+    :members:
+    :undoc-members:
+    :show-inheritance:

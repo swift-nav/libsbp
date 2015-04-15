@@ -1,0 +1,7 @@
+sbp.client.main module
+======================
+
+.. automodule:: sbp.client.main
+    :members:
+    :undoc-members:
+    :show-inheritance:

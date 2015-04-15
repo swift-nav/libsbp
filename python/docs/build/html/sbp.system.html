@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.system module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="next" title="sbp.table module" href="sbp.table.html" />
+    <link rel="prev" title="sbp.settings module" href="sbp.settings.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sbp.table.html" title="sbp.table module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sbp.settings.html" title="sbp.settings module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.system">
+<span id="sbp-system-module"></span><h1>sbp.system module<a class="headerlink" href="#module-sbp.system" title="Permalink to this headline">¶</a></h1>
+<p>Standardized system messages from Swift Navigation devices.</p>
+<dl class="class">
+<dt id="sbp.system.MsgHeartbeat">
+<em class="property">class </em><code class="descclassname">sbp.system.</code><code class="descname">MsgHeartbeat</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgHeartbeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgHeartbeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_HEARTBEAT (0xFFFF).</p>
+<blockquote>
+<div><p>You can have MSG_HEARTBEAT inherent its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The heartbeat message is sent periodically to inform the host</p>
+</div></blockquote>
+<p>or other attached devices that the system is running. It is
+intended to be used to monitor for system malfunctions and
+also contains status flags that indicate to the host the
+status of the system and if it is operating correctly.</p>
+<p>The system error flag is used to indicate that an error has
+occurred in the system. To determine the source of the error
+the remaining error flags should be inspected.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
+<dd>SBP parent object to inherit from.</dd>
+<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Status flags</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.system.MsgHeartbeat.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgHeartbeat.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgHeartbeat.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.system.MsgHeartbeat.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgHeartbeat.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgHeartbeat.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.system.MsgHeartbeat.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgHeartbeat.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgHeartbeat.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.system.MsgHeartbeat.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgHeartbeat.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgHeartbeat.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.system.MsgStartup">
+<em class="property">class </em><code class="descclassname">sbp.system.</code><code class="descname">MsgStartup</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgStartup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgStartup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_STARTUP (0xFF00).</p>
+<blockquote>
+<div><p>You can have MSG_STARTUP inherent its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The system start-up message is sent once on system</p>
+</div></blockquote>
+<p>start-up. It is intended to be used to notify the host or
+other attached devices that the system has started and is now
+ready to respond to commands or configuration requests.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
+<dd>SBP parent object to inherit from.</dd>
+<dt>reserved <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Reserved</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.system.MsgStartup.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgStartup.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgStartup.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.system.MsgStartup.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgStartup.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgStartup.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.system.MsgStartup.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgStartup.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgStartup.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.system.MsgStartup.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgStartup.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgStartup.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sbp.settings.html"
+                        title="previous chapter">sbp.settings module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sbp.table.html"
+                        title="next chapter">sbp.table module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.system.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/sbp.system.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

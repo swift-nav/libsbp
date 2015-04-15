@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.system &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="../../index.html" />
+    <link rel="up" title="sbp" href="../sbp.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">sbp 0.27 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../sbp.html" accesskey="U">sbp</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sbp.system</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># Copyright (C) 2015 Swift Navigation Inc.</span>
+<span class="c"># Contact: Fergus Noble &lt;fergus@swiftnav.com&gt;</span>
+<span class="c">#</span>
+<span class="c"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
+<span class="c"># be be distributed together with this source. All other rights reserved.</span>
+<span class="c">#</span>
+<span class="c"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
+<span class="c"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
+<span class="c"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Standardized system messages from Swift Navigation devices.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">construct</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">sbp</span> <span class="kn">import</span> <span class="n">SBP</span>
+<span class="kn">from</span> <span class="nn">sbp.utils</span> <span class="kn">import</span> <span class="n">fmt_repr</span><span class="p">,</span> <span class="n">exclude_fields</span><span class="p">,</span> <span class="n">walk_json_dict</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+<span class="c"># Automatically generated from piksi/yaml/swiftnav/sbp/system.yaml</span>
+<span class="c"># with generate.py at 2015-04-14 12:12:07.028810. Please do not hand edit!</span>
+
+
+<span class="n">SBP_MSG_STARTUP</span> <span class="o">=</span> <span class="mh">0xFF00</span>
+<div class="viewcode-block" id="MsgStartup"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgStartup">[docs]</a><span class="k">class</span> <span class="nc">MsgStartup</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_STARTUP (0xFF00).</span>
+
+<span class="sd">  You can have MSG_STARTUP inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The system start-up message is sent once on system</span>
+<span class="sd">start-up. It is intended to be used to notify the host or</span>
+<span class="sd">other attached devices that the system has started and is now</span>
+<span class="sd">ready to respond to commands or configuration requests.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  reserved : int</span>
+<span class="sd">    Reserved</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgStartup&quot;</span><span class="p">,</span>
+                   <span class="n">ULInt32</span><span class="p">(</span><span class="s">&#39;reserved&#39;</span><span class="p">),)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">reserved</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;reserved&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+<div class="viewcode-block" id="MsgStartup.from_binary"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgStartup.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgStartup</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="MsgStartup.to_binary"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgStartup.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgStartup</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="MsgStartup.to_json"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgStartup.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgStartup</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</div>
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgStartup.from_json"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgStartup.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgStartup</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
+    </div></div>
+<span class="n">SBP_MSG_HEARTBEAT</span> <span class="o">=</span> <span class="mh">0xFFFF</span>
+<div class="viewcode-block" id="MsgHeartbeat"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgHeartbeat">[docs]</a><span class="k">class</span> <span class="nc">MsgHeartbeat</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_HEARTBEAT (0xFFFF).</span>
+
+<span class="sd">  You can have MSG_HEARTBEAT inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The heartbeat message is sent periodically to inform the host</span>
+<span class="sd">or other attached devices that the system is running. It is</span>
+<span class="sd">intended to be used to monitor for system malfunctions and</span>
+<span class="sd">also contains status flags that indicate to the host the</span>
+<span class="sd">status of the system and if it is operating correctly.</span>
+
+<span class="sd">The system error flag is used to indicate that an error has</span>
+<span class="sd">occurred in the system. To determine the source of the error</span>
+<span class="sd">the remaining error flags should be inspected.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  flags : int</span>
+<span class="sd">    Status flags</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgHeartbeat&quot;</span><span class="p">,</span>
+                   <span class="n">ULInt32</span><span class="p">(</span><span class="s">&#39;flags&#39;</span><span class="p">),)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;flags&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+<div class="viewcode-block" id="MsgHeartbeat.from_binary"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgHeartbeat.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgHeartbeat</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="MsgHeartbeat.to_binary"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgHeartbeat.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgHeartbeat</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="MsgHeartbeat.to_json"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgHeartbeat.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgHeartbeat</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</div>
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgHeartbeat.from_json"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgHeartbeat.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgHeartbeat</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
+    
+</div></div>
+<span class="n">msg_classes</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="mh">0xFF00</span><span class="p">:</span> <span class="n">MsgStartup</span><span class="p">,</span>
+  <span class="mh">0xFFFF</span><span class="p">:</span> <span class="n">MsgHeartbeat</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

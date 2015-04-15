@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.client.handler module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp.client package" href="sbp.client.html" />
+    <link rel="next" title="sbp.client.main module" href="sbp.client.main.html" />
+    <link rel="prev" title="sbp.client.loggers.pickle_logger module" href="sbp.client.loggers.pickle_logger.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sbp.client.main.html" title="sbp.client.main module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sbp.client.loggers.pickle_logger.html" title="sbp.client.loggers.pickle_logger module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="sbp.client.html" accesskey="U">sbp.client package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.client.handler">
+<span id="sbp-client-handler-module"></span><h1>sbp.client.handler module<a class="headerlink" href="#module-sbp.client.handler" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-sbp.client.handler" title="sbp.client.handler"><code class="xref py py-mod docutils literal"><span class="pre">sbp.client.handler</span></code></a> module contains classes related to
+SBP message handling.</p>
+<dl class="class">
+<dt id="sbp.client.handler.Framer">
+<em class="property">class </em><code class="descclassname">sbp.client.handler.</code><code class="descname">Framer</code><span class="sig-paren">(</span><em>read</em>, <em>write</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#Framer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.Framer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The <a class="reference internal" href="#sbp.client.handler.Framer" title="sbp.client.handler.Framer"><code class="xref py py-class docutils literal"><span class="pre">Framer</span></code></a> class frames bytes into SBP messages.</p>
+<dl class="docutils">
+<dt>read <span class="classifier-delimiter">:</span> <span class="classifier">port</span></dt>
+<dd>Stream of bytes to read from.</dd>
+<dt>write <span class="classifier-delimiter">:</span> <span class="classifier">port</span></dt>
+<dd>Stream of bytes to write to.</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.client.handler.Framer.readall">
+<code class="descname">readall</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#Framer.readall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.Framer.readall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read until all bytes are collected.</p>
+<dl class="docutils">
+<dt>size <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of bytes to read.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.handler.Framer.receive">
+<code class="descname">receive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#Framer.receive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.Framer.receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read and build SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.handler.Framer.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>msg_type</em>, <em>data</em>, <em>sender</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#Framer.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.Framer.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build and write SBP message.</p>
+<dl class="docutils">
+<dt>msg_type <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>SBP message type.</dd>
+<dt>data <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>SBP message payload.</dd>
+<dt>sender <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>SBP sender id.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.client.handler.Handler">
+<em class="property">class </em><code class="descclassname">sbp.client.handler.</code><code class="descname">Handler</code><span class="sig-paren">(</span><em>read</em>, <em>write</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.Handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The <a class="reference internal" href="#sbp.client.handler.Handler" title="sbp.client.handler.Handler"><code class="xref py py-class docutils literal"><span class="pre">Handler</span></code></a> class provides an interface for connecting handlers
+to a driver providing SBP messages.</p>
+<dl class="docutils">
+<dt>read <span class="classifier-delimiter">:</span> <span class="classifier">port</span></dt>
+<dd>Stream of bytes to read from.</dd>
+<dt>write <span class="classifier-delimiter">:</span> <span class="classifier">port</span></dt>
+<dd>Stream of bytes to write to.</dd>
+<dt>verbose <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>Print out errors.</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.client.handler.Handler.add_callback">
+<code class="descname">add_callback</code><span class="sig-paren">(</span><em>callback</em>, <em>msg_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#Handler.add_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.Handler.add_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add per message type or global callback.</p>
+<dl class="docutils">
+<dt>callback <span class="classifier-delimiter">:</span> <span class="classifier">fn</span></dt>
+<dd>Callback function</dd>
+<dt>msg_type <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Message type to register callback against. Default <cite>None</cite> means global callback.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.handler.Handler.call">
+<code class="descname">call</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#Handler.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.Handler.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process message with all callbacks (global and per message type).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.handler.Handler.get_callbacks">
+<code class="descname">get_callbacks</code><span class="sig-paren">(</span><em>msg_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#Handler.get_callbacks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.Handler.get_callbacks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all callbacks (global and per message type) for a message type.</p>
+<dl class="docutils">
+<dt>msg_type <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Message type to return callbacks for.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.handler.Handler.remove_callback">
+<code class="descname">remove_callback</code><span class="sig-paren">(</span><em>callback</em>, <em>msg_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#Handler.remove_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.Handler.remove_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove per message type of global callback.</p>
+<dl class="docutils">
+<dt>callback <span class="classifier-delimiter">:</span> <span class="classifier">fn</span></dt>
+<dd>Callback function</dd>
+<dt>msg_type <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Message type to remove callback from. Default <cite>None</cite> means global callback.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.handler.Handler.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>msg_type</em>, <em>data</em>, <em>sender=66</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#Handler.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.Handler.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build and write SBP message.</p>
+<dl class="docutils">
+<dt>msg_type <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>SBP message type.</dd>
+<dt>data <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>SBP message payload.</dd>
+<dt>sender <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>SBP sender id.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.handler.Handler.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#Handler.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.Handler.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start processing SBP messages with handlers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.handler.Handler.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#Handler.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.Handler.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop processing SBP messages.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.handler.Handler.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>msg_type</em>, <em>timeout</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#Handler.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.Handler.wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for a SBP message.</p>
+<dl class="docutils">
+<dt>msg_type <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>SBP message type.</dd>
+<dt>timeout <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Waiting period</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.client.handler.ReceiveThread">
+<em class="property">class </em><code class="descclassname">sbp.client.handler.</code><code class="descname">ReceiveThread</code><span class="sig-paren">(</span><em>receive</em>, <em>call</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#ReceiveThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.ReceiveThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/threading.html#threading.Thread" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">threading.Thread</span></code></a></p>
+<p>The <a class="reference internal" href="#sbp.client.handler.ReceiveThread" title="sbp.client.handler.ReceiveThread"><code class="xref py py-class docutils literal"><span class="pre">ReceiveThread</span></code></a> class provides a processing thread for
+framing and handling SBP messages.</p>
+<dl class="docutils">
+<dt>receive <span class="classifier-delimiter">:</span> <span class="classifier">fn</span></dt>
+<dd>Receiving function returns SBP messages.</dd>
+<dt>call <span class="classifier-delimiter">:</span> <span class="classifier">fn</span></dt>
+<dd>Callback functions.</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.client.handler.ReceiveThread.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#ReceiveThread.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.ReceiveThread.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reading and handling loop.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.handler.ReceiveThread.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/handler.html#ReceiveThread.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.handler.ReceiveThread.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the thread before the next message.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sbp.client.loggers.pickle_logger.html"
+                        title="previous chapter">sbp.client.loggers.pickle_logger module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sbp.client.main.html"
+                        title="next chapter">sbp.client.main module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.client.handler.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/sbp.client.handler.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

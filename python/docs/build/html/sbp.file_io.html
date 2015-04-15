@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.file_io module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="next" title="sbp.flash module" href="sbp.flash.html" />
+    <link rel="prev" title="sbp.ext_events module" href="sbp.ext_events.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sbp.flash.html" title="sbp.flash module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sbp.ext_events.html" title="sbp.ext_events module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.file_io">
+<span id="sbp-file-io-module"></span><h1>sbp.file_io module<a class="headerlink" href="#module-sbp.file_io" title="Permalink to this headline">¶</a></h1>
+<p>Messges for using Piksi&#8217;s onboard flash filesystem functionality
+from the Contiki project. This allows data to be stored persistently
+in the microcontroller&#8217;s program flash with wear-levelling using a
+simple filesystem interface. The Contiki file system interface (CFS)
+defines an abstract API for reading directories and for reading and
+writing files. These are in the implementation-defined range
+(0x0000-0x00FF), and intended for internal-use only. Note that some
+of these messages taking a request from a host and a response from
+the Piksi share the same message type ID.</p>
+<dl class="class">
+<dt id="sbp.file_io.MsgFileioRead">
+<em class="property">class </em><code class="descclassname">sbp.file_io.</code><code class="descname">MsgFileioRead</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRead"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRead" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_FILEIO_READ (0x00A8).</p>
+<blockquote>
+<div><p>You can have MSG_FILEIO_READ inherent its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The file read message reads a certain length (up to 255 bytes)</p>
+</div></blockquote>
+<p>from a given offset into a file, and returns the data in a
+MSG_FILEIO_READ message where the message length field indicates
+how many bytes were succesfully read. If the message is invalid,
+a followup MSG_PRINT message will print &#8220;Invalid fileio read
+message&#8221;.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
+<dd>SBP parent object to inherit from.</dd>
+<dt>offset <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>File offset</dd>
+<dt>chunk_size <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Chunk size to read</dd>
+<dt>filename <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Name of the file to read from (NULL terminated)</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioRead.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRead.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRead.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.file_io.MsgFileioRead.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRead.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRead.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioRead.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRead.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRead.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioRead.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRead.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRead.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.file_io.MsgFileioReadDir">
+<em class="property">class </em><code class="descclassname">sbp.file_io.</code><code class="descname">MsgFileioReadDir</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioReadDir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioReadDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_FILEIO_READ_DIR (0x00A9).</p>
+<blockquote>
+<div><p>You can have MSG_FILEIO_READ_DIR inherent its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The read directory message lists the files in a directory on the</p>
+</div></blockquote>
+<p>Piksi&#8217;s onboard flash file system.  The offset parameter can be
+used to skip the first n elements of the file list. Returns a
+MSG_FILEIO_READ_DIR message containing the directory listings as
+a NULL delimited list. The listing is chunked over multiple SBP
+packets and the end of the list is identified by an entry
+containing just the character 0xFF. If message is invalid, a
+followup MSG_PRINT message will print &#8220;Invalid fileio read
+message&#8221;.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
+<dd>SBP parent object to inherit from.</dd>
+<dt>offset <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>The offset to skip the first n elements of the file list</dd>
+<dt>dirname <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Name of the directory to list</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioReadDir.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioReadDir.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioReadDir.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.file_io.MsgFileioReadDir.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioReadDir.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioReadDir.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioReadDir.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioReadDir.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioReadDir.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioReadDir.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioReadDir.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioReadDir.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.file_io.MsgFileioRemove">
+<em class="property">class </em><code class="descclassname">sbp.file_io.</code><code class="descname">MsgFileioRemove</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRemove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRemove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_FILEIO_REMOVE (0x00AC).</p>
+<blockquote>
+<div><p>You can have MSG_FILEIO_REMOVE inherent its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The file remove message deletes a file from the file system. If</p>
+</div></blockquote>
+<p>message is invalid, a followup MSG_PRINT message will print
+&#8220;Invalid fileio remove message&#8221;.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
+<dd>SBP parent object to inherit from.</dd>
+<dt>filename <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Name of the file to delete (NULL terminated)</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioRemove.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRemove.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRemove.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.file_io.MsgFileioRemove.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRemove.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRemove.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioRemove.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRemove.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRemove.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioRemove.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRemove.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRemove.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.file_io.MsgFileioWrite">
+<em class="property">class </em><code class="descclassname">sbp.file_io.</code><code class="descname">MsgFileioWrite</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioWrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioWrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<p>SBP class for message MSG_FILEIO_WRITE (0x00AD).</p>
+<blockquote>
+<div><p>You can have MSG_FILEIO_WRITE inherent its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The file write message writes a certain length (up to 255 bytes)</p>
+</div></blockquote>
+<p>of data to a file at a given offset. Returns a copy of the
+original MSG_FILEIO_WRITE message to check integrity of the
+write. If message is invalid, a followup MSG_PRINT message will
+print &#8220;Invalid fileio write message&#8221;.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
+<dd>SBP parent object to inherit from.</dd>
+<dt>filename <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Name of the file to write to (NULL terminated)</dd>
+<dt>offset <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Offset into the file at which to start writing in bytes</dd>
+<dt>data <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>Data to write</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioWrite.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioWrite.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioWrite.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.file_io.MsgFileioWrite.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioWrite.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioWrite.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioWrite.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioWrite.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioWrite.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.file_io.MsgFileioWrite.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioWrite.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioWrite.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sbp.ext_events.html"
+                        title="previous chapter">sbp.ext_events module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sbp.flash.html"
+                        title="next chapter">sbp.flash module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.file_io.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/sbp.file_io.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.table module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="next" title="sbp.tracking module" href="sbp.tracking.html" />
+    <link rel="prev" title="sbp.system module" href="sbp.system.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sbp.tracking.html" title="sbp.tracking module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sbp.system.html" title="sbp.system module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.table">
+<span id="sbp-table-module"></span><h1>sbp.table module<a class="headerlink" href="#module-sbp.table" title="Permalink to this headline">¶</a></h1>
+<p>Single dispatch of available SBP messages, keyed by msg_type.</p>
+<dl class="exception">
+<dt id="sbp.table.InvalidSBPMessageType">
+<em class="property">exception </em><code class="descclassname">sbp.table.</code><code class="descname">InvalidSBPMessageType</code><a class="reference internal" href="_modules/sbp/table.html#InvalidSBPMessageType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.table.InvalidSBPMessageType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/exceptions.html#exceptions.NotImplementedError" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">exceptions.NotImplementedError</span></code></a></p>
+<p>Base exception for messages with invalid message types.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sbp.table.dispatch">
+<code class="descclassname">sbp.table.</code><code class="descname">dispatch</code><span class="sig-paren">(</span><em>msg</em>, <em>table={256: &lt;class 'sbp.navigation.MsgGPSTime'&gt;</em>, <em>512: &lt;class 'sbp.navigation.MsgPosECEF'&gt;</em>, <em>514: &lt;class 'sbp.navigation.MsgBaselineECEF'&gt;</em>, <em>515: &lt;class 'sbp.navigation.MsgBaselineNED'&gt;</em>, <em>516: &lt;class 'sbp.navigation.MsgVelECEF'&gt;</em>, <em>517: &lt;class 'sbp.navigation.MsgVelNED'&gt;</em>, <em>518: &lt;class 'sbp.navigation.MsgDops'&gt;</em>, <em>513: &lt;class 'sbp.navigation.MsgPosLLH'&gt;</em>, <em>16: &lt;class 'sbp.logging.MsgPrint'&gt;</em>, <em>17: &lt;class 'sbp.logging.MsgDebugVar'&gt;</em>, <em>21: &lt;class 'sbp.acquisition.MsgAcqResult'&gt;</em>, <em>22: &lt;class 'sbp.tracking.MsgTrackingState'&gt;</em>, <em>23: &lt;class 'sbp.piksi.MsgThreadState'&gt;</em>, <em>24: &lt;class 'sbp.piksi.MsgUartState'&gt;</em>, <em>25: &lt;class 'sbp.piksi.MsgIarState'&gt;</em>, <em>26: &lt;class 'sbp.tracking.MsgEphemeris'&gt;</em>, <em>160: &lt;class 'sbp.settings.MsgSettings'&gt;</em>, <em>161: &lt;class 'sbp.settings.MsgSettingsSave'&gt;</em>, <em>34: &lt;class 'sbp.piksi.MsgResetFilters'&gt;</em>, <em>35: &lt;class 'sbp.piksi.MsgInitBase'&gt;</em>, <em>168: &lt;class 'sbp.file_io.MsgFileioRead'&gt;</em>, <em>169: &lt;class 'sbp.file_io.MsgFileioReadDir'&gt;</em>, <em>172: &lt;class 'sbp.file_io.MsgFileioRemove'&gt;</em>, <em>173: &lt;class 'sbp.file_io.MsgFileioWrite'&gt;</em>, <em>176: &lt;class 'sbp.bootload.MsgBootloaderHandshake'&gt;</em>, <em>177: &lt;class 'sbp.bootload.MsgBootloaderJumpToApp'&gt;</em>, <em>178: &lt;class 'sbp.piksi.MsgReset'&gt;</em>, <em>192: &lt;class 'sbp.piksi.MsgCwResults'&gt;</em>, <em>193: &lt;class 'sbp.piksi.MsgCwStart'&gt;</em>, <em>68: &lt;class 'sbp.observation.MsgBasePos'&gt;</em>, <em>69: &lt;class 'sbp.observation.MsgObs'&gt;</em>, <em>162: &lt;class 'sbp.settings.MsgSettingsReadByIndex'&gt;</em>, <em>257: &lt;class 'sbp.ext_events.MsgExtEvent'&gt;</em>, <em>221: &lt;class 'sbp.bootload.MsgNapDeviceDna'&gt;</em>, <em>224: &lt;class 'sbp.flash.MsgFlashDone'&gt;</em>, <em>225: &lt;class 'sbp.flash.MsgFlashRead'&gt;</em>, <em>226: &lt;class 'sbp.flash.MsgFlashErase'&gt;</em>, <em>227: &lt;class 'sbp.flash.MsgStmFlashLockSector'&gt;</em>, <em>228: &lt;class 'sbp.flash.MsgStmFlashUnlockSector'&gt;</em>, <em>229: &lt;class 'sbp.flash.MsgStmUniqueId'&gt;</em>, <em>104: &lt;class 'sbp.piksi.MsgSetTime'&gt;</em>, <em>105: &lt;class 'sbp.piksi.MsgAlmanac'&gt;</em>, <em>243: &lt;class 'sbp.flash.MsgM25FlashWriteStatus'&gt;</em>, <em>65280: &lt;class 'sbp.system.MsgStartup'&gt;</em>, <em>65535: &lt;class 'sbp.system.MsgHeartbeat'&gt;}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/table.html#dispatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.table.dispatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispatch an SBP message type based on its <cite>msg_type</cite> and parse its
+payload.</p>
+<dl class="docutils">
+<dt>driver <span class="classifier-delimiter">:</span> <span class="classifier"><code class="xref py py-class docutils literal"><span class="pre">SBP</span></code></span></dt>
+<dd>A parsed SBP object.</dd>
+<dt>table <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd>Any table mapping unique SBP message type IDs to SBP message
+constructors.</dd>
+</dl>
+<p>SBP message with a parsed payload.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sbp.system.html"
+                        title="previous chapter">sbp.system module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sbp.tracking.html"
+                        title="next chapter">sbp.tracking module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.table.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/sbp.table.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

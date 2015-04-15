@@ -1,0 +1,6 @@
+<map id="msg_obs_t" name="msg_obs_t">
+<area shape="rect" id="node2" href="$structpacked__obs__content__t.html" title="GPS observations for a particular satellite signal. " alt="" coords="5,96,160,123"/>
+<area shape="rect" id="node3" href="$structcarrier__phase__t.html" title="GPS carrier phase measurement. " alt="" coords="25,5,140,32"/>
+<area shape="rect" id="node4" href="$structobservation__header__t.html" title="Header for observation message. " alt="" coords="185,96,335,123"/>
+<area shape="rect" id="node5" href="$structobs__gps__time__t.html" title="Millisecond&#45;accurate GPS time. " alt="" coords="202,5,317,32"/>
+</map>

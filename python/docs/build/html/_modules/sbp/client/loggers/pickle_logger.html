@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.client.loggers.pickle_logger &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="../../../../index.html" />
+    <link rel="up" title="sbp" href="../../../sbp.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">sbp 0.27 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../../../sbp.html" accesskey="U">sbp</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sbp.client.loggers.pickle_logger</h1><div class="highlight"><pre>
+<span class="c"># Copyright (C) 2015 Swift Navigation Inc.</span>
+<span class="c"># Contact: Mark Fine &lt;mark@swiftnav.com&gt;</span>
+<span class="c">#</span>
+<span class="c"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
+<span class="c"># be be distributed together with this source. All other rights reserved.</span>
+<span class="c">#</span>
+<span class="c"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
+<span class="c"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
+<span class="c"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
+
+<span class="kn">from</span> <span class="nn">.base_logger</span> <span class="kn">import</span> <span class="n">BaseLogger</span><span class="p">,</span> <span class="n">LogIterator</span>
+<span class="kn">import</span> <span class="nn">cPickle</span> <span class="kn">as</span> <span class="nn">pickle</span>
+
+<div class="viewcode-block" id="PickleLogger"><a class="viewcode-back" href="../../../../sbp.client.loggers.pickle_logger.html#sbp.client.loggers.pickle_logger.PickleLogger">[docs]</a><span class="k">class</span> <span class="nc">PickleLogger</span><span class="p">(</span><span class="n">BaseLogger</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  PickleLogger</span>
+
+<span class="sd">  The :class:`PickleLogger` logs pickled structures.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PickleLogger.fmt_msg"><a class="viewcode-back" href="../../../../sbp.client.loggers.pickle_logger.html#sbp.client.loggers.pickle_logger.PickleLogger.fmt_msg">[docs]</a>  <span class="k">def</span> <span class="nf">fmt_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(),</span> <span class="n">msg</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="PickleLogger.call"><a class="viewcode-back" href="../../../../sbp.client.loggers.pickle_logger.html#sbp.client.loggers.pickle_logger.PickleLogger.call">[docs]</a>  <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fmt_msg</span><span class="p">(</span><span class="n">msg</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="PickleLogIterator"><a class="viewcode-back" href="../../../../sbp.client.loggers.pickle_logger.html#sbp.client.loggers.pickle_logger.PickleLogIterator">[docs]</a><span class="k">class</span> <span class="nc">PickleLogIterator</span><span class="p">(</span><span class="n">LogIterator</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  PickleLogIterator</span>
+
+<span class="sd">  The :class:`PickleLogIterator` is an iterator for reading pickled logs</span>
+<span class="sd">  of SBP data.</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  handle : File-like handle</span>
+<span class="sd">    Any file-like handle providing SBP messages.</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PickleLogIterator.next"><a class="viewcode-back" href="../../../../sbp.client.loggers.pickle_logger.html#sbp.client.loggers.pickle_logger.PickleLogIterator.next">[docs]</a>  <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the next record tuple from log file containing</span>
+<span class="sd">    Pickle SBP. If an unknown SBP message type is found,</span>
+<span class="sd">    it&#39;ll return the raw SBP. If EOF, throws exception and then</span>
+<span class="sd">    returns to start of file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    (float, float, object)</span>
+<span class="sd">      (elapsed msec since beginning of log, UTC timestamp, msg)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">delta</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">item</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+          <span class="k">yield</span> <span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatcher</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+          <span class="k">yield</span> <span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="k">raise</span> <span class="ne">StopIteration</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

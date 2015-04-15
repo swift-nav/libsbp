@@ -1,0 +1,676 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.piksi &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="../../index.html" />
+    <link rel="up" title="sbp" href="../sbp.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">sbp 0.27 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../sbp.html" accesskey="U">sbp</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sbp.piksi</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># Copyright (C) 2015 Swift Navigation Inc.</span>
+<span class="c"># Contact: Fergus Noble &lt;fergus@swiftnav.com&gt;</span>
+<span class="c">#</span>
+<span class="c"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
+<span class="c"># be be distributed together with this source. All other rights reserved.</span>
+<span class="c">#</span>
+<span class="c"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
+<span class="c"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
+<span class="c"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">System health, configuration, and diagnostic messages specific to</span>
+<span class="sd">the Piksi L1 receiver, including a variety of legacy messages that</span>
+<span class="sd">may no longer be used. These messages are in the</span>
+<span class="sd">implementation-defined range (0x0000-0x00FF), and largely intended</span>
+<span class="sd">for internal-use only.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">construct</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">sbp</span> <span class="kn">import</span> <span class="n">SBP</span>
+<span class="kn">from</span> <span class="nn">sbp.utils</span> <span class="kn">import</span> <span class="n">fmt_repr</span><span class="p">,</span> <span class="n">exclude_fields</span><span class="p">,</span> <span class="n">walk_json_dict</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+<span class="c"># Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml</span>
+<span class="c"># with generate.py at 2015-04-14 12:12:07.026493. Please do not hand edit!</span>
+
+
+<div class="viewcode-block" id="UARTChannel"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.UARTChannel">[docs]</a><span class="k">class</span> <span class="nc">UARTChannel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;UARTChannel.</span>
+<span class="sd">  </span>
+<span class="sd">  Throughput, utilization, and error counts on the RX/TX buffers</span>
+<span class="sd">of this UART channel. Values require renormalization</span>
+
+<span class="sd">  </span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  tx_throughput : float</span>
+<span class="sd">    UART transmit throughput</span>
+<span class="sd">  rx_throughput : float</span>
+<span class="sd">    UART receive throughput</span>
+<span class="sd">  crc_error_count : int</span>
+<span class="sd">    UART CRC error count</span>
+<span class="sd">  io_error_count : int</span>
+<span class="sd">    UART IO error count</span>
+<span class="sd">  tx_buffer_level : int</span>
+<span class="sd">    UART transmit buffer percentage utilization. Ranges from</span>
+<span class="sd">0 - 255 and needs to be renormalized to 100</span>
+
+<span class="sd">  rx_buffer_level : int</span>
+<span class="sd">    UART receive buffer percentage utilization. Ranges from</span>
+<span class="sd">0 - 255 and needs to be renormalized to 100</span>
+
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Embedded</span><span class="p">(</span><span class="n">Struct</span><span class="p">(</span><span class="s">&quot;UARTChannel&quot;</span><span class="p">,</span>
+                     <span class="n">LFloat32</span><span class="p">(</span><span class="s">&#39;tx_throughput&#39;</span><span class="p">),</span>
+                     <span class="n">LFloat32</span><span class="p">(</span><span class="s">&#39;rx_throughput&#39;</span><span class="p">),</span>
+                     <span class="n">ULInt16</span><span class="p">(</span><span class="s">&#39;crc_error_count&#39;</span><span class="p">),</span>
+                     <span class="n">ULInt16</span><span class="p">(</span><span class="s">&#39;io_error_count&#39;</span><span class="p">),</span>
+                     <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;tx_buffer_level&#39;</span><span class="p">),</span>
+                     <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;rx_buffer_level&#39;</span><span class="p">),))</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  
+<div class="viewcode-block" id="UARTChannel.from_binary"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.UARTChannel.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">UARTChannel</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="UARTChannel.to_binary"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.UARTChannel.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">UARTChannel</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+    </div></div>
+<div class="viewcode-block" id="Latency"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.Latency">[docs]</a><span class="k">class</span> <span class="nc">Latency</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Latency.</span>
+<span class="sd">  </span>
+<span class="sd">  Statistics on the latency of observations received from the base</span>
+<span class="sd">station. As observation packets are received their GPS time is</span>
+<span class="sd">compared to the current GPS time calculated locally by the</span>
+<span class="sd">receiver to give a precise measurement of the end-to-end</span>
+<span class="sd">communication latency in the system.</span>
+
+<span class="sd">  </span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  avg : int</span>
+<span class="sd">    Average latency</span>
+<span class="sd">  lmin : int</span>
+<span class="sd">    Minimum latency</span>
+<span class="sd">  lmax : int</span>
+<span class="sd">    Maximum latency</span>
+<span class="sd">  current : int</span>
+<span class="sd">    Smoothed estimate of the current latency</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Embedded</span><span class="p">(</span><span class="n">Struct</span><span class="p">(</span><span class="s">&quot;Latency&quot;</span><span class="p">,</span>
+                     <span class="n">SLInt32</span><span class="p">(</span><span class="s">&#39;avg&#39;</span><span class="p">),</span>
+                     <span class="n">SLInt32</span><span class="p">(</span><span class="s">&#39;lmin&#39;</span><span class="p">),</span>
+                     <span class="n">SLInt32</span><span class="p">(</span><span class="s">&#39;lmax&#39;</span><span class="p">),</span>
+                     <span class="n">SLInt32</span><span class="p">(</span><span class="s">&#39;current&#39;</span><span class="p">),))</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  
+<div class="viewcode-block" id="Latency.from_binary"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.Latency.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Latency</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="Latency.to_binary"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.Latency.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Latency</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+    </div></div>
+<span class="n">SBP_MSG_ALMANAC</span> <span class="o">=</span> <span class="mh">0x0069</span>
+<div class="viewcode-block" id="MsgAlmanac"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgAlmanac">[docs]</a><span class="k">class</span> <span class="nc">MsgAlmanac</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_ALMANAC (0x0069).</span>
+
+<span class="sd">  You can have MSG_ALMANAC inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  This is a legacy message for sending and loading a satellite</span>
+<span class="sd">alamanac onto the Piksi&#39;s flash memory from the host.</span>
+
+
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+    </div>
+<span class="n">SBP_MSG_SET_TIME</span> <span class="o">=</span> <span class="mh">0x0068</span>
+<div class="viewcode-block" id="MsgSetTime"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgSetTime">[docs]</a><span class="k">class</span> <span class="nc">MsgSetTime</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_SET_TIME (0x0068).</span>
+
+<span class="sd">  You can have MSG_SET_TIME inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  This message sets up timing functionality using a coarse GPS</span>
+<span class="sd">time estimate sent by the host.</span>
+
+
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+    </div>
+<span class="n">SBP_MSG_RESET</span> <span class="o">=</span> <span class="mh">0x00B2</span>
+<div class="viewcode-block" id="MsgReset"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgReset">[docs]</a><span class="k">class</span> <span class="nc">MsgReset</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_RESET (0x00B2).</span>
+
+<span class="sd">  You can have MSG_RESET inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  This message from the host resets the Piksi back into the</span>
+<span class="sd">bootloader. It ensures that all outstanding memory accesses</span>
+<span class="sd">including buffered writes are completed before reset begins.</span>
+
+
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+    </div>
+<span class="n">SBP_MSG_CW_RESULTS</span> <span class="o">=</span> <span class="mh">0x00C0</span>
+<div class="viewcode-block" id="MsgCwResults"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgCwResults">[docs]</a><span class="k">class</span> <span class="nc">MsgCwResults</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_CW_RESULTS (0x00C0).</span>
+
+<span class="sd">  You can have MSG_CW_RESULTS inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  This is an unused legacy message for result reporting from the</span>
+<span class="sd">CW interference channel on the SwiftNAP. This message will be</span>
+<span class="sd">removed in a future release.</span>
+
+
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+    </div>
+<span class="n">SBP_MSG_CW_START</span> <span class="o">=</span> <span class="mh">0x00C1</span>
+<div class="viewcode-block" id="MsgCwStart"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgCwStart">[docs]</a><span class="k">class</span> <span class="nc">MsgCwStart</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_CW_START (0x00C1).</span>
+
+<span class="sd">  You can have MSG_CW_START inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  This is an unused legacy message from those host for starting</span>
+<span class="sd">the CW interference channel on the SwiftNAP. This message will</span>
+<span class="sd">be removed in a future release.</span>
+
+
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+    </div>
+<span class="n">SBP_MSG_RESET_FILTERS</span> <span class="o">=</span> <span class="mh">0x0022</span>
+<div class="viewcode-block" id="MsgResetFilters"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgResetFilters">[docs]</a><span class="k">class</span> <span class="nc">MsgResetFilters</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_RESET_FILTERS (0x0022).</span>
+
+<span class="sd">  You can have MSG_RESET_FILTERS inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  This message resets either the DGNSS Kalman filters or Integer</span>
+<span class="sd">Ambiguity Resolution (IAR) process.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  filter : int</span>
+<span class="sd">    Filter flags</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgResetFilters&quot;</span><span class="p">,</span>
+                   <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;filter&#39;</span><span class="p">),)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">filter</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;filter&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+<div class="viewcode-block" id="MsgResetFilters.from_binary"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgResetFilters.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgResetFilters</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="MsgResetFilters.to_binary"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgResetFilters.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgResetFilters</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="MsgResetFilters.to_json"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgResetFilters.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgResetFilters</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</div>
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgResetFilters.from_json"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgResetFilters.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgResetFilters</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
+    </div></div>
+<span class="n">SBP_MSG_INIT_BASE</span> <span class="o">=</span> <span class="mh">0x0023</span>
+<div class="viewcode-block" id="MsgInitBase"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgInitBase">[docs]</a><span class="k">class</span> <span class="nc">MsgInitBase</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_INIT_BASE (0x0023).</span>
+
+<span class="sd">  You can have MSG_INIT_BASE inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  This message initializes the Integer Ambiguity Resolution (IAR)</span>
+<span class="sd">process on the Piksi to use an assumed baseline position between</span>
+<span class="sd">the base station and rover receivers. Warns via MsgPrint if</span>
+<span class="sd">there aren&#39;t a shared minimum number (4) of satellite</span>
+<span class="sd">observations between the two.</span>
+
+
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+    </div>
+<span class="n">SBP_MSG_THREAD_STATE</span> <span class="o">=</span> <span class="mh">0x0017</span>
+<div class="viewcode-block" id="MsgThreadState"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgThreadState">[docs]</a><span class="k">class</span> <span class="nc">MsgThreadState</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_THREAD_STATE (0x0017).</span>
+
+<span class="sd">  You can have MSG_THREAD_STATE inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The thread usage message from the Piksi reports RTOS thread</span>
+<span class="sd">usage statistics for the named thread. The reported values</span>
+<span class="sd">require renormalization.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  name : string</span>
+<span class="sd">    Thread name (NULL terminated)</span>
+<span class="sd">  cpu : int</span>
+<span class="sd">    Percentage cpu use for this thread. Ranges from 0 - 1000</span>
+<span class="sd">and needs to be renormalized to 100</span>
+
+<span class="sd">  stack_free : int</span>
+<span class="sd">    Free stack space for this thread</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgThreadState&quot;</span><span class="p">,</span>
+                   <span class="n">String</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+                   <span class="n">ULInt16</span><span class="p">(</span><span class="s">&#39;cpu&#39;</span><span class="p">),</span>
+                   <span class="n">ULInt32</span><span class="p">(</span><span class="s">&#39;stack_free&#39;</span><span class="p">),)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cpu</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;cpu&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">stack_free</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;stack_free&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+<div class="viewcode-block" id="MsgThreadState.from_binary"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgThreadState.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgThreadState</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="MsgThreadState.to_binary"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgThreadState.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgThreadState</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="MsgThreadState.to_json"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgThreadState.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgThreadState</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</div>
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgThreadState.from_json"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgThreadState.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgThreadState</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
+    </div></div>
+<span class="n">SBP_MSG_UART_STATE</span> <span class="o">=</span> <span class="mh">0x0018</span>
+<div class="viewcode-block" id="MsgUartState"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgUartState">[docs]</a><span class="k">class</span> <span class="nc">MsgUartState</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_UART_STATE (0x0018).</span>
+
+<span class="sd">  You can have MSG_UART_STATE inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The UART message reports data latency and throughput of the UART</span>
+<span class="sd">channels providing SBP I/O. On the default Piksi configuration,</span>
+<span class="sd">UARTs A and B are used for telemetry radios, but can also be be</span>
+<span class="sd">host access ports for embedded hosts, or other interfaces in</span>
+<span class="sd">future.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  uart_a : UARTChannel</span>
+<span class="sd">    State of UART A</span>
+<span class="sd">  uart_b : UARTChannel</span>
+<span class="sd">    State of UART B</span>
+<span class="sd">  uart_ftdi : UARTChannel</span>
+<span class="sd">    State of UART FTDI (USB logger)</span>
+<span class="sd">  latency : Latency</span>
+<span class="sd">    UART communication latency</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgUartState&quot;</span><span class="p">,</span>
+                   <span class="n">Struct</span><span class="p">(</span><span class="s">&#39;uart_a&#39;</span><span class="p">,</span> <span class="n">UARTChannel</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="n">Struct</span><span class="p">(</span><span class="s">&#39;uart_b&#39;</span><span class="p">,</span> <span class="n">UARTChannel</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="n">Struct</span><span class="p">(</span><span class="s">&#39;uart_ftdi&#39;</span><span class="p">,</span> <span class="n">UARTChannel</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="n">Struct</span><span class="p">(</span><span class="s">&#39;latency&#39;</span><span class="p">,</span> <span class="n">Latency</span><span class="o">.</span><span class="n">_parser</span><span class="p">),)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">uart_a</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;uart_a&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">uart_b</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;uart_b&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">uart_ftdi</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;uart_ftdi&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">latency</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;latency&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+<div class="viewcode-block" id="MsgUartState.from_binary"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgUartState.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgUartState</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="MsgUartState.to_binary"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgUartState.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgUartState</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="MsgUartState.to_json"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgUartState.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgUartState</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</div>
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgUartState.from_json"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgUartState.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgUartState</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
+    </div></div>
+<span class="n">SBP_MSG_IAR_STATE</span> <span class="o">=</span> <span class="mh">0x0019</span>
+<div class="viewcode-block" id="MsgIarState"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgIarState">[docs]</a><span class="k">class</span> <span class="nc">MsgIarState</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_IAR_STATE (0x0019).</span>
+
+<span class="sd">  You can have MSG_IAR_STATE inherent its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  This message reports the state of the Integer Ambiguity</span>
+<span class="sd">Resolution (IAR) process, which resolves unknown integer</span>
+<span class="sd">ambiguities from double-differenced carrier-phase measurements</span>
+<span class="sd">from satellite observations.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  num_hyps : int</span>
+<span class="sd">    Number of integer ambiguity hypotheses remaining</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgIarState&quot;</span><span class="p">,</span>
+                   <span class="n">ULInt32</span><span class="p">(</span><span class="s">&#39;num_hyps&#39;</span><span class="p">),)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">num_hyps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;num_hyps&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ 
+<div class="viewcode-block" id="MsgIarState.from_binary"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgIarState.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgIarState</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
+</div>
+<div class="viewcode-block" id="MsgIarState.to_binary"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgIarState.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgIarState</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="MsgIarState.to_json"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgIarState.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgIarState</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</div>
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgIarState.from_json"><a class="viewcode-back" href="../../sbp.piksi.html#sbp.piksi.MsgIarState.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgIarState</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
+    
+</div></div>
+<span class="n">msg_classes</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="mh">0x0069</span><span class="p">:</span> <span class="n">MsgAlmanac</span><span class="p">,</span>
+  <span class="mh">0x0068</span><span class="p">:</span> <span class="n">MsgSetTime</span><span class="p">,</span>
+  <span class="mh">0x00B2</span><span class="p">:</span> <span class="n">MsgReset</span><span class="p">,</span>
+  <span class="mh">0x00C0</span><span class="p">:</span> <span class="n">MsgCwResults</span><span class="p">,</span>
+  <span class="mh">0x00C1</span><span class="p">:</span> <span class="n">MsgCwStart</span><span class="p">,</span>
+  <span class="mh">0x0022</span><span class="p">:</span> <span class="n">MsgResetFilters</span><span class="p">,</span>
+  <span class="mh">0x0023</span><span class="p">:</span> <span class="n">MsgInitBase</span><span class="p">,</span>
+  <span class="mh">0x0017</span><span class="p">:</span> <span class="n">MsgThreadState</span><span class="p">,</span>
+  <span class="mh">0x0018</span><span class="p">:</span> <span class="n">MsgUartState</span><span class="p">,</span>
+  <span class="mh">0x0019</span><span class="p">:</span> <span class="n">MsgIarState</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
