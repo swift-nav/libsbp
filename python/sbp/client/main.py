@@ -17,7 +17,7 @@ setting up and running SBP message handling.
 import sys
 import time
 
-from .. import logging        import SBP_MSG_PRINT
+from ..logging                import SBP_MSG_PRINT
 from .drivers.file_driver     import FileDriver
 from .drivers.pyserial_driver import PySerialDriver
 from .drivers.pyftdi_driver   import PyFTDIDriver
