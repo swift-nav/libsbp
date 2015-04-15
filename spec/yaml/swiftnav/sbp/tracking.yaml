@@ -58,7 +58,7 @@ definitions:
           desc: Satellite tracking channel state
 
  - MSG_EPHEMERIS:
-    id: 0x001A
+    id: 0x0046
     public: True
     short_desc: WGS84 satellite ephemeris parameters
     desc: |
