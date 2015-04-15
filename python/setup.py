@@ -3,7 +3,7 @@
 from setuptools import setup
 import os
 
-VERSION = "0.32"
+VERSION = "0.33"
 
 CLASSIFIERS = [
   'Intended Audience :: Developers',
