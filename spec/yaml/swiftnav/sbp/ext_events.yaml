@@ -38,7 +38,7 @@ definitions:
         - ns:
             type: s32
             units: ns
-            desc: Nanosecond residual of rounded TOW (range: -500000 ... 500000)
+            desc: Nanosecond residual of millisecond-rounded TOW (range: -500000 ... 500000)
         - flags:
             type: u8
             desc: Flags
