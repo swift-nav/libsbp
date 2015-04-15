@@ -13,9 +13,10 @@
 """
 System health, configuration, and diagnostic messages specific to
 the Piksi L1 receiver, including a variety of legacy messages that
-may no longer be used. These messages are in the
-implementation-defined range (0x0000-0x00FF), and largely intended
-for internal-use only.
+may no longer be used.
+
+These messages are in the implementation-defined range
+(0x0000-0x00FF), and largely intended for internal-use only.
 
 """
 
@@ -26,14 +27,15 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml
-# with generate.py at 2015-04-14 12:12:07.026493. Please do not hand edit!
+# with generate.py at 2015-04-15 12:17:09.624853. Please do not hand edit!
 
 
 class UARTChannel(object):
   """UARTChannel.
   
   Throughput, utilization, and error counts on the RX/TX buffers
-of this UART channel. Values require renormalization
+of this UART channel. The reported percentage values require to
+be normalized.
 
   
   Parameters
@@ -47,12 +49,12 @@ of this UART channel. Values require renormalization
   io_error_count : int
     UART IO error count
   tx_buffer_level : int
-    UART transmit buffer percentage utilization. Ranges from
-0 - 255 and needs to be renormalized to 100
+    UART transmit buffer percentage utilization (ranges from
+0 - 255)
 
   rx_buffer_level : int
-    UART receive buffer percentage utilization. Ranges from
-0 - 255 and needs to be renormalized to 100
+    UART receive buffer percentage utilization (ranges from
+0 to 255)
 
 
   """
@@ -176,8 +178,7 @@ class MsgReset(SBP):
 
   
   This message from the host resets the Piksi back into the
-bootloader. It ensures that all outstanding memory accesses
-including buffered writes are completed before reset begins.
+bootloader.
 
 
   """
@@ -318,9 +319,9 @@ class MsgInitBase(SBP):
   of its fields.
 
   
-  This message initializes the Integer Ambiguity Resolution (IAR)
+  This message initializes the integer ambiguity resolution (IAR)
 process on the Piksi to use an assumed baseline position between
-the base station and rover receivers. Warns via MsgPrint if
+the base station and rover receivers. Warns via MSG_PRINT if
 there aren't a shared minimum number (4) of satellite
 observations between the two.
 
@@ -345,9 +346,9 @@ class MsgThreadState(SBP):
   of its fields.
 
   
-  The thread usage message from the Piksi reports RTOS thread
-usage statistics for the named thread. The reported values
-require renormalization.
+  The thread usage message from the device reports real-time
+operating system (RTOS) thread usage statistics for the named
+thread. The reported percentage values require to be normalized.
 
 
   Parameters
@@ -357,8 +358,8 @@ require renormalization.
   name : string
     Thread name (NULL terminated)
   cpu : int
-    Percentage cpu use for this thread. Ranges from 0 - 1000
-and needs to be renormalized to 100
+    Percentage cpu use for this thread. Values range from 0
+- 1000 and needs to be renormalized to 100
 
   stack_free : int
     Free stack space for this thread
@@ -428,7 +429,7 @@ class MsgUartState(SBP):
 channels providing SBP I/O. On the default Piksi configuration,
 UARTs A and B are used for telemetry radios, but can also be be
 host access ports for embedded hosts, or other interfaces in
-future.
+future. The reported percentage values require to be normalized.
 
 
   Parameters

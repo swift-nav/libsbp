@@ -21,7 +21,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/system.yaml
-# with generate.py at 2015-04-14 12:12:07.028810. Please do not hand edit!
+# with generate.py at 2015-04-15 12:17:09.627642. Please do not hand edit!
 
 
 SBP_MSG_STARTUP = 0xFF00
@@ -34,9 +34,9 @@ class MsgStartup(SBP):
 
   
   The system start-up message is sent once on system
-start-up. It is intended to be used to notify the host or
-other attached devices that the system has started and is now
-ready to respond to commands or configuration requests.
+start-up. It notifies the host or other attached devices that
+the system has started and is now ready to respond to commands
+or configuration requests.
 
 
   Parameters
@@ -105,12 +105,13 @@ class MsgHeartbeat(SBP):
   
   The heartbeat message is sent periodically to inform the host
 or other attached devices that the system is running. It is
-intended to be used to monitor for system malfunctions and
-also contains status flags that indicate to the host the
-status of the system and if it is operating correctly.
+used to monitor system malfunctions. It also contains status
+flags that indicate to the host the status of the system and
+whether it is operating correctly. Currently, the expected
+heartbeat interval is 1 sec.
 
 The system error flag is used to indicate that an error has
-occurred in the system. To determine the source of the error
+occurred in the system. To determine the source of the error,
 the remaining error flags should be inspected.
 
 

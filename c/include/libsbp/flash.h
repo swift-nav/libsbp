@@ -12,14 +12,18 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/flash.yaml
- * with generate.py at 2015-04-10 12:07:06.174906. Please do not hand edit!
+ * with generate.py at 2015-04-15 14:18:48.754148. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup flash Flash
  *
- *  * Messages for reading/writing the Piksi's onboard flash memory. These
- * are in the implementation-defined range (0x0000-0x00FF), and largely
- * intended for internal-use only.
+ *  * Messages for reading/writing the device's onboard flash memory. Many
+ * of these messages target specific flash memory peripherals used in
+ * Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
+ * configuration flash.
+ * 
+ * These are in the implementation-defined range (0x0000-0x00FF), and
+ * are intended for internal-use only.
  * \{ */
 
 #ifndef LIBSBP_FLASH_MESSAGES_H
@@ -28,10 +32,10 @@
 #include "common.h"
 
 
-/** Program addresses of the STM or M25 flash (Host => Piksi).
+/** Program flash addresses
  *
  * The flash program message programs a set of addresses of either
- * the STM or M25 flash. The Piksi replies with either a
+ * the STM or M25 flash. The device replies with either a
  * MSG_FLASH_DONE message containing the return code FLASH_OK (0)
  * on success, or FLASH_INVALID_LEN (2) if the maximum write size
  * is exceeded. Note that the sector-containing addresses must be
@@ -44,14 +48,14 @@ typedef struct __attribute__((packed)) {
   u8 addr_len;      /**< Length of set of addresses to program, counting up from
 starting address
  [bytes] */
-  u8 data[0];       /**< Data to program addresses with, sized by addr_len */
+  u8 data[0];       /**< Data to program addresses with, with length N=addr_len */
 } msg_flash_program_t;
 
 
-/** Flash response message (Host <= Piksi).
+/** Flash response message (host <= device).
  *
  * This message defines success or failure codes for a variety of
- * flash memory requests from the host to the Piksi. Flash read and
+ * flash memory requests from the host to the device. Flash read and
  * write messages, such as MSG_FLASH_READ or MSG_FLASH_WRITE, may
  * return this message on failure.
  */
@@ -61,10 +65,10 @@ typedef struct __attribute__((packed)) {
 } msg_flash_done_t;
 
 
-/** Read STM or M25 flash address (Host <=> Piksi).
+/** Read STM or M25 flash address (host <=> device).
  *
  * The flash read message reads a set of addresses of either the
- * STM or M25 onboard flash. The Piksi replies with a
+ * STM or M25 onboard flash. The device replies with a
  * MSG_FLASH_READ message containing either the read data on
  * success or a MSG_FLASH_DONE message containing the return code
  * FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
@@ -81,10 +85,10 @@ starting address
 } msg_flash_read_t;
 
 
-/** Erase sector of Piksi flash memory (Host => Piksi).
+/** Erase sector of device flash memory (host => device).
  *
  * The flash erase message from the host erases a sector of either
- * the STM or M25 onboard flash memory. The Piksi will reply with a
+ * the STM or M25 onboard flash memory. The device will reply with a
  * MSG_FLASH_DONE message containing the return code - FLASH_OK (0)
  * on success or FLASH_INVALID_FLASH (1) if the flash specified is
  * invalid.
@@ -92,50 +96,50 @@ starting address
 #define SBP_MSG_FLASH_ERASE             0x00E2
 typedef struct __attribute__((packed)) {
   u8 target;        /**< Target flags */
-  u8 sector_num;    /**< Flash sector number to erase (0-11 for the STM, 0-15 for
+  u32 sector_num;    /**< Flash sector number to erase (0-11 for the STM, 0-15 for
 the M25)
  */
 } msg_flash_erase_t;
 
 
-/** Lock sector of STM flash memory (Host => Piksi).
+/** Lock sector of STM flash memory (host => device)
  *
  * The flash lock message locks a sector of the STM flash
- * memory. The Piksi replies with a MSG_FLASH_DONE message.
+ * memory. The device replies with a MSG_FLASH_DONE message.
  */
 #define SBP_MSG_STM_FLASH_LOCK_SECTOR   0x00E3
 typedef struct __attribute__((packed)) {
-  u8 sector[1]; /**< Flash sector number to lock */
+  u32 sector;    /**< Flash sector number to lock */
 } msg_stm_flash_lock_sector_t;
 
 
-/** Unlock sector of STM flash memory (Host => Piksi)
+/** Unlock sector of STM flash memory (host => device)
  *
  * The flash unlock message unlocks a sector of the STM flash
- * memory. The Piksi replies with a MSG_FLASH_DONE message.
+ * memory. The device replies with a MSG_FLASH_DONE message.
  */
 #define SBP_MSG_STM_FLASH_UNLOCK_SECTOR 0x00E4
 typedef struct __attribute__((packed)) {
-  u8 sector[1]; /**< Flash sector number to unlock */
+  u32 sector;    /**< Flash sector number to unlock */
 } msg_stm_flash_unlock_sector_t;
 
 
-/** Read STM32F4's hardcoded unique ID (Host <=> Piksi).
+/** Read device's hardcoded unique ID (host <=> device)
 
  *
- * This message reads the STM32F4's hardcoded unique ID. The Piksi
- * returns STM32F4 unique ID (12 bytes) back to host.
+ * This message reads the device's hardcoded unique ID. The device
+ * returns 12-byte unique ID back to host.
  */
 #define SBP_MSG_STM_UNIQUE_ID           0x00E5
 typedef struct __attribute__((packed)) {
-  char stm_id[12]; /**< STM32F4 unique ID */
+  u8 stm_id[12]; /**< Device unique ID */
 } msg_stm_unique_id_t;
 
 
-/** Write M25 flash status register (Host => Piksi).
+/** Write M25 flash status register (host => device)
  *
  * The flash status message writes to the 8-bit M25 flash status
- * register. The Piksi replies with a MSG_FLASH_DONE message.
+ * register. The device replies with a MSG_FLASH_DONE message.
  */
 #define SBP_MSG_M25_FLASH_WRITE_STATUS  0x00F3
 typedef struct __attribute__((packed)) {

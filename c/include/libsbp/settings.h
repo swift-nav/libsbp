@@ -12,17 +12,18 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/settings.yaml
- * with generate.py at 2015-04-10 12:07:06.198589. Please do not hand edit!
+ * with generate.py at 2015-04-15 14:18:48.756092. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup settings Settings
  *
- *  * Messages for reading and writing the Piksi's device settings. These
- * are in the implementation-defined range (0x0000-0x00FF), and
- * intended for internal-use only. Please see the accompanying
- * description of settings configurations for more details. Note that
- * some of these messages taking a request from a host and a response
- * from the Piksi share the same message type ID.
+ *  * Messages for reading and writing the device's device settings.
+ * 
+ * These are in the implementation-defined range (0x0000-0x00FF). Note
+ * that some of these messages share the same message type ID for both
+ * the host request and the device response. See the accompanying
+ * document for descriptions of settings configurations and examples:
+ * https://github.com/swift-nav/piksi\_firmware/blob/master/docs/settings.pdf
  * \{ */
 
 #ifndef LIBSBP_SETTINGS_MESSAGES_H
@@ -31,29 +32,29 @@
 #include "common.h"
 
 
-/** Read/write Piksi configuration settings (Host <=> Piksi).
+/** R/W device configuration settings (host <=> device)
+
  *
- * The setting message reads and writes the Piksi's configuration.
+ * The setting message reads and writes the device's configuration.
  */
 #define SBP_MSG_SETTINGS               0x00A0
 typedef struct __attribute__((packed)) {
-  char* setting;    /**< A NULL delimited (and terminated) string, with the A
-NULL-terminated and delimited string with contents
+  char* setting;    /**< A NULL-terminated and delimited string with contents
 [SECTION_SETTING, SETTING, VALUE] on writes or a series of
 such strings on reads.
  */
 } msg_settings_t;
 
 
-/** Save settings to flash (Host => Piksi)
+/** Save settings to flash (host => device)
  *
- * The save settings message persists the Piksi's current settings
+ * The save settings message persists the device's current settings
  * configuration to its onboard flash memory file system.
  */
 #define SBP_MSG_SETTINGS_SAVE          0x00A1
 
 
-/** Read setting by direct index (Host <=> Piksi)
+/** Read setting by direct index (host <=> device)
  *
  * The settings message for iterating through the settings
  * values. It will read the setting at an index, returning a
@@ -62,7 +63,7 @@ such strings on reads.
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX 0x00A2
 typedef struct __attribute__((packed)) {
-  u16 index;    /**< An index into the Piksi settings, with values ranging from
+  u16 index;    /**< An index into the device settings, with values ranging from
 0 to length(settings)
  */
 } msg_settings_read_by_index_t;

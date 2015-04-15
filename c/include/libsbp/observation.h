@@ -12,12 +12,12 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/observation.yaml
- * with generate.py at 2015-04-10 12:07:06.087199. Please do not hand edit!
+ * with generate.py at 2015-04-15 14:18:48.721393. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup observation Observation
  *
- * * Satellite observation messages from the Piksi.
+ * * Satellite observation messages from the device.
  * \{ */
 
 #ifndef LIBSBP_OBSERVATION_MESSAGES_H
@@ -46,7 +46,7 @@ typedef struct __attribute__((packed)) {
  */
 typedef struct __attribute__((packed)) {
   s32 i;    /**< Carrier phase whole cycles [cycles] */
-  u8 f;    /**< Carrier phase fractional part [cycles / 255] */
+  u8 f;    /**< Carrier phase fractional part [cycles] */
 } carrier_phase_t;
 
 
@@ -74,33 +74,36 @@ typedef struct __attribute__((packed)) {
   u8 cn0;     /**< Carrier-to-Noise density [dB Hz] */
   u16 lock;    /**< Lock indicator. This value changes whenever a satellite
 signal has lost and regained lock, indicating that the
-carrier phase ambiguity may have changed. There is no
-significance to the value of the lock indicator
+carrier phase ambiguity may have changed.
  */
-  u8 prn;     /**< PRN identifier of the satellite signal */
+  u8 prn;     /**< PRN-1 identifier of the satellite signal */
 } packed_obs_content_t;
 
 
 /** GPS satellite observations
  *
- * The GPS observations message reports all the pseudo range and
+ * The GPS observations message reports all the raw pseudorange and
  * carrier phase observations for the satellites being tracked by
- * the Piksi.
+ * the device. Carrier phase observation here is represented as a
+ * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
+ * whole cycles and 8-bits of fractional cycles).
  */
 #define SBP_MSG_OBS      0x0045
 typedef struct __attribute__((packed)) {
   observation_header_t header;    /**< Header of a GPS observation message */
   packed_obs_content_t obs[0];    /**< Pseudorange and carrier phase observation for a
-satellite being tracked
+satellite being tracked.
  */
 } msg_obs_t;
 
 
 /** Base station position
  *
- * This may be the position as reported by the base station itself or the
- * position obtained from doing a single point solution using the base
- * station observations.
+ * The base station position message is the position reported by
+ * the base station itself. It is used for pseudo-absolute RTK
+ * positioning, and is required to be a high-accuracy surveyed
+ * location of the base station. Any error here will result in an
+ * error in the pseudo-absolute position output.
  */
 #define SBP_MSG_BASE_POS 0x0044
 typedef struct __attribute__((packed)) {

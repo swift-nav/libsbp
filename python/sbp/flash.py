@@ -11,9 +11,13 @@
 
 
 """
-Messages for reading/writing the Piksi's onboard flash memory. These
-are in the implementation-defined range (0x0000-0x00FF), and largely
-intended for internal-use only.
+Messages for reading/writing the device's onboard flash memory. Many
+of these messages target specific flash memory peripherals used in
+Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
+configuration flash.
+
+These are in the implementation-defined range (0x0000-0x00FF), and
+are intended for internal-use only.
 
 """
 
@@ -24,7 +28,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/flash.yaml
-# with generate.py at 2015-04-14 12:12:07.030879. Please do not hand edit!
+# with generate.py at 2015-04-15 12:17:09.619220. Please do not hand edit!
 
 
 SBP_MSG_FLASH_PROGRAM = 0x00E0
@@ -37,7 +41,7 @@ class MsgFlashProgram(SBP):
 
   
   The flash program message programs a set of addresses of either
-the STM or M25 flash. The Piksi replies with either a
+the STM or M25 flash. The device replies with either a
 MSG_FLASH_DONE message containing the return code FLASH_OK (0)
 on success, or FLASH_INVALID_LEN (2) if the maximum write size
 is exceeded. Note that the sector-containing addresses must be
@@ -57,7 +61,7 @@ erased before addresses can be programmed.
 starting address
 
   data : array
-    Data to program addresses with, sized by addr_len
+    Data to program addresses with, with length N=addr_len
 
   """
   _parser = Struct("MsgFlashProgram",
@@ -123,7 +127,7 @@ class MsgFlashDone(SBP):
 
   
   This message defines success or failure codes for a variety of
-flash memory requests from the host to the Piksi. Flash read and
+flash memory requests from the host to the device. Flash read and
 write messages, such as MSG_FLASH_READ or MSG_FLASH_WRITE, may
 return this message on failure.
 
@@ -193,7 +197,7 @@ class MsgFlashRead(SBP):
 
   
   The flash read message reads a set of addresses of either the
-STM or M25 onboard flash. The Piksi replies with a
+STM or M25 onboard flash. The device replies with a
 MSG_FLASH_READ message containing either the read data on
 success or a MSG_FLASH_DONE message containing the return code
 FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
@@ -276,7 +280,7 @@ class MsgFlashErase(SBP):
 
   
   The flash erase message from the host erases a sector of either
-the STM or M25 onboard flash memory. The Piksi will reply with a
+the STM or M25 onboard flash memory. The device will reply with a
 MSG_FLASH_DONE message containing the return code - FLASH_OK (0)
 on success or FLASH_INVALID_FLASH (1) if the flash specified is
 invalid.
@@ -296,7 +300,7 @@ the M25)
   """
   _parser = Struct("MsgFlashErase",
                    ULInt8('target'),
-                   ULInt8('sector_num'),)
+                   ULInt32('sector_num'),)
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -353,19 +357,19 @@ class MsgStmFlashLockSector(SBP):
 
   
   The flash lock message locks a sector of the STM flash
-memory. The Piksi replies with a MSG_FLASH_DONE message.
+memory. The device replies with a MSG_FLASH_DONE message.
 
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  sector : array
+  sector : int
     Flash sector number to lock
 
   """
   _parser = Struct("MsgStmFlashLockSector",
-                   Struct('sector', Array(1, ULInt8('sector'))),)
+                   ULInt32('sector'),)
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -421,19 +425,19 @@ class MsgStmFlashUnlockSector(SBP):
 
   
   The flash unlock message unlocks a sector of the STM flash
-memory. The Piksi replies with a MSG_FLASH_DONE message.
+memory. The device replies with a MSG_FLASH_DONE message.
 
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  sector : array
+  sector : int
     Flash sector number to unlock
 
   """
   _parser = Struct("MsgStmFlashUnlockSector",
-                   Struct('sector', Array(1, ULInt8('sector'))),)
+                   ULInt32('sector'),)
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -488,20 +492,20 @@ class MsgStmUniqueId(SBP):
   of its fields.
 
   
-  This message reads the STM32F4's hardcoded unique ID. The Piksi
-returns STM32F4 unique ID (12 bytes) back to host.
+  This message reads the device's hardcoded unique ID. The device
+returns 12-byte unique ID back to host.
 
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  stm_id : string
-    STM32F4 unique ID
+  stm_id : array
+    Device unique ID
 
   """
   _parser = Struct("MsgStmUniqueId",
-                   String('stm_id', 12),)
+                   Struct('stm_id', Array(12, ULInt8('stm_id'))),)
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -557,7 +561,7 @@ class MsgM25FlashWriteStatus(SBP):
 
   
   The flash status message writes to the 8-bit M25 flash status
-register. The Piksi replies with a MSG_FLASH_DONE message.
+register. The device replies with a MSG_FLASH_DONE message.
 
 
   Parameters

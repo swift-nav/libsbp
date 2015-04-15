@@ -11,11 +11,12 @@
 
 
 """
-Messages for the bootloading configuration on the Piksi. These are
-in the implementation-defined range (0x0000-0x00FF), and intended
-for internal-use only. Note that some of these messages taking a
-request from a host and a response from the Piksi share the same
-message type ID.
+Messages for the bootloading configuration on the device.
+
+These are in the implementation-defined range (0x0000-0x00FF), and
+are intended for internal use only. Note that some of these messages
+share the same message type ID for both the host request and the
+device response.
 
 """
 
@@ -26,7 +27,17 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/bootload.yaml
-# with generate.py at 2015-04-14 12:12:07.029893. Please do not hand edit!
+# with generate.py at 2015-04-15 12:17:09.616516. Please do not hand edit!
+
+
+class StringAdapter(Adapter):
+  """
+  """
+  def _encode(self, obj, context):
+    return obj
+
+  def _decode(self, obj, context):
+    return obj
 
 
 SBP_MSG_BOOTLOADER_HANDSHAKE = 0x00B0
@@ -37,39 +48,33 @@ class MsgBootloaderHandshake(SBP):
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
-  
-  The bootloader continually sends a handshake message to the host
-for a short period of time, and then jumps to the firmware if it
-doesn't receive a handshake from the host. If the host replies
-with a handshake the bootloader doesn't jump to the firmware and
-nwaits for flash programming messages, and the host has to send
-a MSG_BOOTLOADER_JUMP_TO_APP when it's done programming. On old
-versions of the bootloader (less than v0.1), hardcoded to 0. On
-new versions, return the git describe string for the bootloader
-build.
+
+  The handshake message establishes a handshake between the device
+bootloader and the host.  The payload string contains the
+bootloader version number, but returns an empty string for
+earlier versions.
 
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  handshake : int
-    Handshake value
+  handshake : string
+    Version number (NULL padded)
 
   """
-  _parser = Struct("MsgBootloaderHandshake",
-                   ULInt8('handshake'),)
+  _parser = Struct("MsgBootloaderHandshake", CString('handshake'))
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
       self.__dict__.update(sbp.__dict__)
-      self.from_binary(sbp.payload)
+      self.from_binary(sbp.payload + '\x00')
     else:
       self.handshake = kwargs.pop('handshake')
 
   def __repr__(self):
     return fmt_repr(self)
- 
+
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
     the message.
@@ -103,7 +108,7 @@ build.
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgBootloaderHandshake(sbp)
-    
+
 SBP_MSG_BOOTLOADER_JUMP_TO_APP = 0x00B1
 class MsgBootloaderJumpToApp(SBP):
   """SBP class for message MSG_BOOTLOADER_JUMP_TO_APP (0x00B1).
@@ -112,7 +117,7 @@ class MsgBootloaderJumpToApp(SBP):
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
-  
+
   The host initiates the bootloader to jump to the application.
 
 
@@ -121,7 +126,7 @@ class MsgBootloaderJumpToApp(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   jump : int
-    Ignored by the Piksi
+    Ignored by the device
 
   """
   _parser = Struct("MsgBootloaderJumpToApp",
@@ -136,7 +141,7 @@ class MsgBootloaderJumpToApp(SBP):
 
   def __repr__(self):
     return fmt_repr(self)
- 
+
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
     the message.
@@ -170,7 +175,7 @@ class MsgBootloaderJumpToApp(SBP):
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgBootloaderJumpToApp(sbp)
-    
+
 SBP_MSG_NAP_DEVICE_DNA = 0x00DD
 class MsgNapDeviceDna(SBP):
   """SBP class for message MSG_NAP_DEVICE_DNA (0x00DD).
@@ -179,12 +184,13 @@ class MsgNapDeviceDna(SBP):
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
-  
-  The device DNA message from the host reads the unique device
-DNA from the Swift Navigation Acceleration Peripheral
-(SwiftNAP), a Spartan 6 FPGA. By convention, the host message
-buffer is empty; the Piksi returns the device DNA in a
-MSG_NAP_DEVICE_DNA message.
+
+  The device message from the host reads a unique device
+identifier from the SwiftNAP, an FPGA. The host requests the ID
+by sending a MSG_NAP_DEVICE_DNA with an empty payload. The
+device responds with the same message with the device ID in the
+payload. Note that this ID is tied to the FPGA, and not related
+to the Piksi's serial number.
 
 
   Parameters
@@ -192,7 +198,9 @@ MSG_NAP_DEVICE_DNA message.
   sbp : SBP
     SBP parent object to inherit from.
   dna : array
-    57-bit SwiftNAP FPGA Device DNA
+    57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
+on the right.
+
 
   """
   _parser = Struct("MsgNapDeviceDna",
@@ -207,7 +215,7 @@ MSG_NAP_DEVICE_DNA message.
 
   def __repr__(self):
     return fmt_repr(self)
- 
+
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
     the message.
@@ -241,7 +249,7 @@ MSG_NAP_DEVICE_DNA message.
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgNapDeviceDna(sbp)
-    
+
 
 msg_classes = {
   0x00B0: MsgBootloaderHandshake,

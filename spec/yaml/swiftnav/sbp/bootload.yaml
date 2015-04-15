@@ -34,8 +34,7 @@ definitions:
     fields:
       - handshake:
           type: string
-          size: 20
-          desc: Version number (NULL padded)
+          desc: Version number (NULL terminated)
 
  - MSG_BOOTLOADER_JUMP_TO_APP:
     id: 0x00B1

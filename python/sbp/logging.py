@@ -11,7 +11,7 @@
 
 
 """
-Logging and debugging messages from the Piksi. These are in the
+Logging and debugging messages from the device. These are in the
 implementation-defined range (0x0000-0x00FF).
 
 """
@@ -23,7 +23,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/logging.yaml
-# with generate.py at 2015-04-14 12:12:07.025289. Please do not hand edit!
+# with generate.py at 2015-04-15 12:17:09.618283. Please do not hand edit!
 
 
 SBP_MSG_PRINT = 0x0010
@@ -35,11 +35,9 @@ class MsgPrint(SBP):
   of its fields.
 
   
-  This message contains a human-reabable payload string from the
-Piksi containing errors, warnings and informational messages at
-ERROR, WARNING, DEBUG, INFO logging levels. These message may
-also contain information tagged by filename, as well as debug
-info on function entry/exit when enabled within the firmware.
+  This message contains a human-readable payload string from the
+device containing errors, warnings and informational messages at
+ERROR, WARNING, DEBUG, INFO logging levels.
 
 
   Parameters
@@ -47,7 +45,7 @@ info on function entry/exit when enabled within the firmware.
   sbp : SBP
     SBP parent object to inherit from.
   text : string
-    Informative, human-readable string
+    Human-readable string
 
   """
   _parser = Struct("MsgPrint",
@@ -107,7 +105,7 @@ class MsgDebugVar(SBP):
 
   
   This is an unused legacy message for tracing variable values
-within the Piksi firmware and streaming those back to the host.
+within the device firmware and streaming those back to the host.
 
 
   """

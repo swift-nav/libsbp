@@ -12,7 +12,7 @@
 
 """
 Messages reporting accurately-timestamped external events,
-e.g. camera shutter time
+e.g. camera shutter time.
 
 """
 
@@ -23,7 +23,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/ext_events.yaml
-# with generate.py at 2015-04-14 16:07:48.890750. Please do not hand edit!
+# with generate.py at 2015-04-15 12:17:09.620534. Please do not hand edit!
 
 
 SBP_MSG_EXT_EVENT = 0x0101
@@ -46,9 +46,11 @@ which pin it was and whether it was rising or falling.
   wn : int
     GPS week number
   tow : int
-    GPS Time of Week rounded to the nearest ms
+    GPS time of week rounded to the nearest millisecond
   ns : int
-    Nanosecond remainder of rounded tow
+    Nanosecond residual of millisecond-rounded TOW (ranges
+from -500000 to 500000)
+
   flags : int
     Flags
   pin : int

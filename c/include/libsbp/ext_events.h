@@ -12,13 +12,13 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/ext_events.yaml
- * with generate.py at 2015-04-14 13:57:47.376336. Please do not hand edit!
+ * with generate.py at 2015-04-15 14:18:48.755478. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup ext_events Ext_events
  *
  *  * Messages reporting accurately-timestamped external events,
- * e.g. camera shutter time
+ * e.g. camera shutter time.
  * \{ */
 
 #ifndef LIBSBP_EXT_EVENTS_MESSAGES_H
@@ -35,8 +35,10 @@
 #define SBP_MSG_EXT_EVENT 0x0101
 typedef struct __attribute__((packed)) {
   u16 wn;       /**< GPS week number [weeks] */
-  u32 tow;      /**< GPS Time of Week rounded to the nearest ms [ms] */
-  s32 ns;       /**< Nanosecond remainder of rounded tow [ns] */
+  u32 tow;      /**< GPS time of week rounded to the nearest millisecond [ms] */
+  s32 ns;       /**< Nanosecond residual of millisecond-rounded TOW (ranges
+from -500000 to 500000)
+ [ns] */
   u8 flags;    /**< Flags */
   u8 pin;      /**< Pin number.  0..9 = DEBUG0..9. */
 } msg_ext_event_t;
