@@ -28,7 +28,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/flash.yaml
-# with generate.py at 2015-04-15 12:17:09.619220. Please do not hand edit!
+# with generate.py at 2015-04-15 15:29:39.018092. Please do not hand edit!
 
 
 SBP_MSG_FLASH_PROGRAM = 0x00E0
@@ -99,23 +99,20 @@ starting address
     self.payload = MsgFlashProgram._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgFlashProgram, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgFlashProgram(sbp)
+
+  def to_json_dict(self):
+    d = super( MsgFlashProgram, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 SBP_MSG_FLASH_DONE = 0x00E0
 class MsgFlashDone(SBP):
@@ -169,23 +166,20 @@ return this message on failure.
     self.payload = MsgFlashDone._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgFlashDone, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgFlashDone(sbp)
+
+  def to_json_dict(self):
+    d = super( MsgFlashDone, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 SBP_MSG_FLASH_READ = 0x00E1
 class MsgFlashRead(SBP):
@@ -252,23 +246,20 @@ starting address
     self.payload = MsgFlashRead._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgFlashRead, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgFlashRead(sbp)
+
+  def to_json_dict(self):
+    d = super( MsgFlashRead, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 SBP_MSG_FLASH_ERASE = 0x00E2
 class MsgFlashErase(SBP):
@@ -329,23 +320,20 @@ the M25)
     self.payload = MsgFlashErase._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgFlashErase, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgFlashErase(sbp)
+
+  def to_json_dict(self):
+    d = super( MsgFlashErase, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 SBP_MSG_STM_FLASH_LOCK_SECTOR = 0x00E3
 class MsgStmFlashLockSector(SBP):
@@ -397,23 +385,20 @@ memory. The device replies with a MSG_FLASH_DONE message.
     self.payload = MsgStmFlashLockSector._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgStmFlashLockSector, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgStmFlashLockSector(sbp)
+
+  def to_json_dict(self):
+    d = super( MsgStmFlashLockSector, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 SBP_MSG_STM_FLASH_UNLOCK_SECTOR = 0x00E4
 class MsgStmFlashUnlockSector(SBP):
@@ -465,23 +450,20 @@ memory. The device replies with a MSG_FLASH_DONE message.
     self.payload = MsgStmFlashUnlockSector._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgStmFlashUnlockSector, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgStmFlashUnlockSector(sbp)
+
+  def to_json_dict(self):
+    d = super( MsgStmFlashUnlockSector, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 SBP_MSG_STM_UNIQUE_ID = 0x00E5
 class MsgStmUniqueId(SBP):
@@ -533,23 +515,20 @@ returns 12-byte unique ID back to host.
     self.payload = MsgStmUniqueId._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgStmUniqueId, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgStmUniqueId(sbp)
+
+  def to_json_dict(self):
+    d = super( MsgStmUniqueId, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 SBP_MSG_M25_FLASH_WRITE_STATUS = 0x00F3
 class MsgM25FlashWriteStatus(SBP):
@@ -601,23 +580,20 @@ register. The device replies with a MSG_FLASH_DONE message.
     self.payload = MsgM25FlashWriteStatus._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgM25FlashWriteStatus, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgM25FlashWriteStatus(sbp)
+
+  def to_json_dict(self):
+    d = super( MsgM25FlashWriteStatus, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 
 msg_classes = {

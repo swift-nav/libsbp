@@ -21,7 +21,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml
-# with generate.py at 2015-04-15 12:17:09.558434. Please do not hand edit!
+# with generate.py at 2015-04-15 15:29:39.016480. Please do not hand edit!
 
 
 class ObsGPSTime(object):
@@ -226,23 +226,20 @@ satellite being tracked.
     self.payload = MsgObs._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgObs, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgObs(sbp)
+
+  def to_json_dict(self):
+    d = super( MsgObs, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 SBP_MSG_BASE_POS = 0x0044
 class MsgBasePos(SBP):
@@ -305,23 +302,20 @@ error in the pseudo-absolute position output.
     self.payload = MsgBasePos._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgBasePos, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgBasePos(sbp)
+
+  def to_json_dict(self):
+    d = super( MsgBasePos, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 
 msg_classes = {

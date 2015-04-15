@@ -23,7 +23,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/ext_events.yaml
-# with generate.py at 2015-04-15 12:17:09.620534. Please do not hand edit!
+# with generate.py at 2015-04-15 15:29:39.012912. Please do not hand edit!
 
 
 SBP_MSG_EXT_EVENT = 0x0101
@@ -94,23 +94,20 @@ from -500000 to 500000)
     self.payload = MsgExtEvent._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgExtEvent, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgExtEvent(sbp)
+
+  def to_json_dict(self):
+    d = super( MsgExtEvent, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 
 msg_classes = {

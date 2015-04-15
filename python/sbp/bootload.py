@@ -27,17 +27,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/bootload.yaml
-# with generate.py at 2015-04-15 12:17:09.616516. Please do not hand edit!
-
-
-class StringAdapter(Adapter):
-  """
-  """
-  def _encode(self, obj, context):
-    return obj
-
-  def _decode(self, obj, context):
-    return obj
+# with generate.py at 2015-04-15 15:29:39.017297. Please do not hand edit!
 
 
 SBP_MSG_BOOTLOADER_HANDSHAKE = 0x00B0
@@ -48,7 +38,7 @@ class MsgBootloaderHandshake(SBP):
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
-
+  
   The handshake message establishes a handshake between the device
 bootloader and the host.  The payload string contains the
 bootloader version number, but returns an empty string for
@@ -60,21 +50,22 @@ earlier versions.
   sbp : SBP
     SBP parent object to inherit from.
   handshake : string
-    Version number (NULL padded)
+    Version number (NULL terminated)
 
   """
-  _parser = Struct("MsgBootloaderHandshake", CString('handshake'))
+  _parser = Struct("MsgBootloaderHandshake",
+                   CString('handshake', six.b('\n')),)
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
       self.__dict__.update(sbp.__dict__)
-      self.from_binary(sbp.payload + '\x00')
+      self.from_binary(sbp.payload)
     else:
       self.handshake = kwargs.pop('handshake')
 
   def __repr__(self):
     return fmt_repr(self)
-
+ 
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
     the message.
@@ -91,24 +82,21 @@ earlier versions.
     self.payload = MsgBootloaderHandshake._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgBootloaderHandshake, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgBootloaderHandshake(sbp)
 
+  def to_json_dict(self):
+    d = super( MsgBootloaderHandshake, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_BOOTLOADER_JUMP_TO_APP = 0x00B1
 class MsgBootloaderJumpToApp(SBP):
   """SBP class for message MSG_BOOTLOADER_JUMP_TO_APP (0x00B1).
@@ -117,7 +105,7 @@ class MsgBootloaderJumpToApp(SBP):
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
-
+  
   The host initiates the bootloader to jump to the application.
 
 
@@ -141,7 +129,7 @@ class MsgBootloaderJumpToApp(SBP):
 
   def __repr__(self):
     return fmt_repr(self)
-
+ 
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
     the message.
@@ -158,24 +146,21 @@ class MsgBootloaderJumpToApp(SBP):
     self.payload = MsgBootloaderJumpToApp._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgBootloaderJumpToApp, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgBootloaderJumpToApp(sbp)
 
+  def to_json_dict(self):
+    d = super( MsgBootloaderJumpToApp, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_NAP_DEVICE_DNA = 0x00DD
 class MsgNapDeviceDna(SBP):
   """SBP class for message MSG_NAP_DEVICE_DNA (0x00DD).
@@ -184,7 +169,7 @@ class MsgNapDeviceDna(SBP):
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
-
+  
   The device message from the host reads a unique device
 identifier from the SwiftNAP, an FPGA. The host requests the ID
 by sending a MSG_NAP_DEVICE_DNA with an empty payload. The
@@ -215,7 +200,7 @@ on the right.
 
   def __repr__(self):
     return fmt_repr(self)
-
+ 
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
     the message.
@@ -232,24 +217,21 @@ on the right.
     self.payload = MsgNapDeviceDna._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgNapDeviceDna, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgNapDeviceDna(sbp)
 
+  def to_json_dict(self):
+    d = super( MsgNapDeviceDna, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x00B0: MsgBootloaderHandshake,

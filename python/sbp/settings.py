@@ -28,7 +28,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/settings.yaml
-# with generate.py at 2015-04-15 12:17:09.621119. Please do not hand edit!
+# with generate.py at 2015-04-15 15:29:39.014741. Please do not hand edit!
 
 
 SBP_MSG_SETTINGS = 0x00A0
@@ -83,23 +83,20 @@ such strings on reads.
     self.payload = MsgSettings._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgSettings, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgSettings(sbp)
+
+  def to_json_dict(self):
+    d = super( MsgSettings, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 SBP_MSG_SETTINGS_SAVE = 0x00A1
 class MsgSettingsSave(SBP):
@@ -179,23 +176,20 @@ NULL-terminated and delimited string with contents
     self.payload = MsgSettingsReadByIndex._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
-
-    """
-    d = super( MsgSettingsReadByIndex, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return json.dumps(d)
-
   @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
     d = json.loads(data)
     sbp = SBP.from_json_dict(d)
     return MsgSettingsReadByIndex(sbp)
+
+  def to_json_dict(self):
+    d = super( MsgSettingsReadByIndex, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 
 msg_classes = {
