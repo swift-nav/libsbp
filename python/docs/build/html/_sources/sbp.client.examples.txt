@@ -1,0 +1,18 @@
+sbp.client.examples package
+===========================
+
+Submodules
+----------
+
+.. toctree::
+
+   sbp.client.examples.simple
+   sbp.client.examples.udp
+
+Module contents
+---------------
+
+.. automodule:: sbp.client.examples
+    :members:
+    :undoc-members:
+    :show-inheritance:

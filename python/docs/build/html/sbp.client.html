@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.client package &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="next" title="sbp.client.drivers package" href="sbp.client.drivers.html" />
+    <link rel="prev" title="sbp.client.watchdog module" href="sbp.client.watchdog.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sbp.client.drivers.html" title="sbp.client.drivers package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sbp.client.watchdog.html" title="sbp.client.watchdog module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sbp-client-package">
+<h1>sbp.client package<a class="headerlink" href="#sbp-client-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sbp.client.drivers.html">sbp.client.drivers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sbp.client.drivers.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.drivers.base_driver.html">sbp.client.drivers.base_driver module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.drivers.file_driver.html">sbp.client.drivers.file_driver module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.drivers.pyftdi_driver.html">sbp.client.drivers.pyftdi_driver module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.drivers.pyserial_driver.html">sbp.client.drivers.pyserial_driver module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sbp.client.drivers.html#module-sbp.client.drivers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sbp.client.examples.html">sbp.client.examples package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sbp.client.examples.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.examples.simple.html">sbp.client.examples.simple module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.examples.udp.html">sbp.client.examples.udp module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sbp.client.examples.html#module-sbp.client.examples">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sbp.client.loggers.html">sbp.client.loggers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sbp.client.loggers.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.loggers.base_logger.html">sbp.client.loggers.base_logger module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.loggers.byte_logger.html">sbp.client.loggers.byte_logger module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.loggers.json_logger.html">sbp.client.loggers.json_logger module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.loggers.null_logger.html">sbp.client.loggers.null_logger module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sbp.client.loggers.pickle_logger.html">sbp.client.loggers.pickle_logger module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sbp.client.loggers.html#module-sbp.client.loggers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sbp.client.handler.html">sbp.client.handler module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sbp.client.main.html">sbp.client.main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sbp.client.watchdog.html">sbp.client.watchdog module</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="module-sbp.client">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sbp.client" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">sbp.client package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-sbp.client">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sbp.client.watchdog.html"
+                        title="previous chapter">sbp.client.watchdog module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sbp.client.drivers.html"
+                        title="next chapter">sbp.client.drivers package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.client.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/sbp.client.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

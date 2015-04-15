@@ -1,0 +1,28 @@
+sbp.client package
+==================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    sbp.client.drivers
+    sbp.client.examples
+    sbp.client.loggers
+
+Submodules
+----------
+
+.. toctree::
+
+   sbp.client.handler
+   sbp.client.main
+   sbp.client.watchdog
+
+Module contents
+---------------
+
+.. automodule:: sbp.client
+    :members:
+    :undoc-members:
+    :show-inheritance:

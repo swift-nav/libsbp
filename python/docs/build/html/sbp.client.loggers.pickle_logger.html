@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.client.loggers.pickle_logger module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp.client.loggers package" href="sbp.client.loggers.html" />
+    <link rel="next" title="sbp.client.handler module" href="sbp.client.handler.html" />
+    <link rel="prev" title="sbp.client.loggers.null_logger module" href="sbp.client.loggers.null_logger.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sbp.client.handler.html" title="sbp.client.handler module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sbp.client.loggers.null_logger.html" title="sbp.client.loggers.null_logger module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="sbp.client.html" >sbp.client package</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="sbp.client.loggers.html" accesskey="U">sbp.client.loggers package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.client.loggers.pickle_logger">
+<span id="sbp-client-loggers-pickle-logger-module"></span><h1>sbp.client.loggers.pickle_logger module<a class="headerlink" href="#module-sbp.client.loggers.pickle_logger" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sbp.client.loggers.pickle_logger.PickleLogIterator">
+<em class="property">class </em><code class="descclassname">sbp.client.loggers.pickle_logger.</code><code class="descname">PickleLogIterator</code><span class="sig-paren">(</span><em>handle</em>, <em>dispatcher=&lt;function dispatch&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/pickle_logger.html#PickleLogIterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.pickle_logger.PickleLogIterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.client.loggers.base_logger.html#sbp.client.loggers.base_logger.LogIterator" title="sbp.client.loggers.base_logger.LogIterator"><code class="xref py py-class docutils literal"><span class="pre">sbp.client.loggers.base_logger.LogIterator</span></code></a></p>
+<p>The <a class="reference internal" href="#sbp.client.loggers.pickle_logger.PickleLogIterator" title="sbp.client.loggers.pickle_logger.PickleLogIterator"><code class="xref py py-class docutils literal"><span class="pre">PickleLogIterator</span></code></a> is an iterator for reading pickled logs
+of SBP data.</p>
+<dl class="docutils">
+<dt>handle <span class="classifier-delimiter">:</span> <span class="classifier">File-like handle</span></dt>
+<dd>Any file-like handle providing SBP messages.</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.client.loggers.pickle_logger.PickleLogIterator.next">
+<code class="descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/pickle_logger.html#PickleLogIterator.next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.pickle_logger.PickleLogIterator.next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the next record tuple from log file containing
+Pickle SBP. If an unknown SBP message type is found,
+it&#8217;ll return the raw SBP. If EOF, throws exception and then
+returns to start of file.</p>
+<dl class="docutils">
+<dt>(float, float, object)</dt>
+<dd>(elapsed msec since beginning of log, UTC timestamp, msg)</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.client.loggers.pickle_logger.PickleLogger">
+<em class="property">class </em><code class="descclassname">sbp.client.loggers.pickle_logger.</code><code class="descname">PickleLogger</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/pickle_logger.html#PickleLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.pickle_logger.PickleLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.client.loggers.base_logger.html#sbp.client.loggers.base_logger.BaseLogger" title="sbp.client.loggers.base_logger.BaseLogger"><code class="xref py py-class docutils literal"><span class="pre">sbp.client.loggers.base_logger.BaseLogger</span></code></a></p>
+<p>The <a class="reference internal" href="#sbp.client.loggers.pickle_logger.PickleLogger" title="sbp.client.loggers.pickle_logger.PickleLogger"><code class="xref py py-class docutils literal"><span class="pre">PickleLogger</span></code></a> logs pickled structures.</p>
+<dl class="method">
+<dt id="sbp.client.loggers.pickle_logger.PickleLogger.call">
+<code class="descname">call</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/pickle_logger.html#PickleLogger.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.pickle_logger.PickleLogger.call" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.loggers.pickle_logger.PickleLogger.fmt_msg">
+<code class="descname">fmt_msg</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/pickle_logger.html#PickleLogger.fmt_msg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.pickle_logger.PickleLogger.fmt_msg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sbp.client.loggers.null_logger.html"
+                        title="previous chapter">sbp.client.loggers.null_logger module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sbp.client.handler.html"
+                        title="next chapter">sbp.client.handler module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.client.loggers.pickle_logger.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/sbp.client.loggers.pickle_logger.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

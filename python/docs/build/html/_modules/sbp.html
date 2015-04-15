@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">sbp 0.27 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sbp</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># Copyright (C) 2011-2014 Swift Navigation Inc.</span>
+<span class="c"># Contact: Fergus Noble &lt;fergus@swiftnav.com&gt;</span>
+<span class="c">#</span>
+<span class="c"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
+<span class="c"># be be distributed together with this source. All other rights reserved.</span>
+<span class="c">#</span>
+<span class="c"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
+<span class="c"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
+<span class="c"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
+
+<span class="kn">from</span> <span class="nn">construct</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+
+<span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.27&quot;</span>
+
+<span class="n">SBP_PREAMBLE</span> <span class="o">=</span> <span class="mh">0x55</span>
+
+<span class="n">crc16_tab</span> <span class="o">=</span> <span class="p">[</span><span class="mh">0x0000</span><span class="p">,</span><span class="mh">0x1021</span><span class="p">,</span><span class="mh">0x2042</span><span class="p">,</span><span class="mh">0x3063</span><span class="p">,</span><span class="mh">0x4084</span><span class="p">,</span><span class="mh">0x50a5</span><span class="p">,</span><span class="mh">0x60c6</span><span class="p">,</span><span class="mh">0x70e7</span><span class="p">,</span>
+             <span class="mh">0x8108</span><span class="p">,</span><span class="mh">0x9129</span><span class="p">,</span><span class="mh">0xa14a</span><span class="p">,</span><span class="mh">0xb16b</span><span class="p">,</span><span class="mh">0xc18c</span><span class="p">,</span><span class="mh">0xd1ad</span><span class="p">,</span><span class="mh">0xe1ce</span><span class="p">,</span><span class="mh">0xf1ef</span><span class="p">,</span>
+             <span class="mh">0x1231</span><span class="p">,</span><span class="mh">0x0210</span><span class="p">,</span><span class="mh">0x3273</span><span class="p">,</span><span class="mh">0x2252</span><span class="p">,</span><span class="mh">0x52b5</span><span class="p">,</span><span class="mh">0x4294</span><span class="p">,</span><span class="mh">0x72f7</span><span class="p">,</span><span class="mh">0x62d6</span><span class="p">,</span>
+             <span class="mh">0x9339</span><span class="p">,</span><span class="mh">0x8318</span><span class="p">,</span><span class="mh">0xb37b</span><span class="p">,</span><span class="mh">0xa35a</span><span class="p">,</span><span class="mh">0xd3bd</span><span class="p">,</span><span class="mh">0xc39c</span><span class="p">,</span><span class="mh">0xf3ff</span><span class="p">,</span><span class="mh">0xe3de</span><span class="p">,</span>
+             <span class="mh">0x2462</span><span class="p">,</span><span class="mh">0x3443</span><span class="p">,</span><span class="mh">0x0420</span><span class="p">,</span><span class="mh">0x1401</span><span class="p">,</span><span class="mh">0x64e6</span><span class="p">,</span><span class="mh">0x74c7</span><span class="p">,</span><span class="mh">0x44a4</span><span class="p">,</span><span class="mh">0x5485</span><span class="p">,</span>
+             <span class="mh">0xa56a</span><span class="p">,</span><span class="mh">0xb54b</span><span class="p">,</span><span class="mh">0x8528</span><span class="p">,</span><span class="mh">0x9509</span><span class="p">,</span><span class="mh">0xe5ee</span><span class="p">,</span><span class="mh">0xf5cf</span><span class="p">,</span><span class="mh">0xc5ac</span><span class="p">,</span><span class="mh">0xd58d</span><span class="p">,</span>
+             <span class="mh">0x3653</span><span class="p">,</span><span class="mh">0x2672</span><span class="p">,</span><span class="mh">0x1611</span><span class="p">,</span><span class="mh">0x0630</span><span class="p">,</span><span class="mh">0x76d7</span><span class="p">,</span><span class="mh">0x66f6</span><span class="p">,</span><span class="mh">0x5695</span><span class="p">,</span><span class="mh">0x46b4</span><span class="p">,</span>
+             <span class="mh">0xb75b</span><span class="p">,</span><span class="mh">0xa77a</span><span class="p">,</span><span class="mh">0x9719</span><span class="p">,</span><span class="mh">0x8738</span><span class="p">,</span><span class="mh">0xf7df</span><span class="p">,</span><span class="mh">0xe7fe</span><span class="p">,</span><span class="mh">0xd79d</span><span class="p">,</span><span class="mh">0xc7bc</span><span class="p">,</span>
+             <span class="mh">0x48c4</span><span class="p">,</span><span class="mh">0x58e5</span><span class="p">,</span><span class="mh">0x6886</span><span class="p">,</span><span class="mh">0x78a7</span><span class="p">,</span><span class="mh">0x0840</span><span class="p">,</span><span class="mh">0x1861</span><span class="p">,</span><span class="mh">0x2802</span><span class="p">,</span><span class="mh">0x3823</span><span class="p">,</span>
+             <span class="mh">0xc9cc</span><span class="p">,</span><span class="mh">0xd9ed</span><span class="p">,</span><span class="mh">0xe98e</span><span class="p">,</span><span class="mh">0xf9af</span><span class="p">,</span><span class="mh">0x8948</span><span class="p">,</span><span class="mh">0x9969</span><span class="p">,</span><span class="mh">0xa90a</span><span class="p">,</span><span class="mh">0xb92b</span><span class="p">,</span>
+             <span class="mh">0x5af5</span><span class="p">,</span><span class="mh">0x4ad4</span><span class="p">,</span><span class="mh">0x7ab7</span><span class="p">,</span><span class="mh">0x6a96</span><span class="p">,</span><span class="mh">0x1a71</span><span class="p">,</span><span class="mh">0x0a50</span><span class="p">,</span><span class="mh">0x3a33</span><span class="p">,</span><span class="mh">0x2a12</span><span class="p">,</span>
+             <span class="mh">0xdbfd</span><span class="p">,</span><span class="mh">0xcbdc</span><span class="p">,</span><span class="mh">0xfbbf</span><span class="p">,</span><span class="mh">0xeb9e</span><span class="p">,</span><span class="mh">0x9b79</span><span class="p">,</span><span class="mh">0x8b58</span><span class="p">,</span><span class="mh">0xbb3b</span><span class="p">,</span><span class="mh">0xab1a</span><span class="p">,</span>
+             <span class="mh">0x6ca6</span><span class="p">,</span><span class="mh">0x7c87</span><span class="p">,</span><span class="mh">0x4ce4</span><span class="p">,</span><span class="mh">0x5cc5</span><span class="p">,</span><span class="mh">0x2c22</span><span class="p">,</span><span class="mh">0x3c03</span><span class="p">,</span><span class="mh">0x0c60</span><span class="p">,</span><span class="mh">0x1c41</span><span class="p">,</span>
+             <span class="mh">0xedae</span><span class="p">,</span><span class="mh">0xfd8f</span><span class="p">,</span><span class="mh">0xcdec</span><span class="p">,</span><span class="mh">0xddcd</span><span class="p">,</span><span class="mh">0xad2a</span><span class="p">,</span><span class="mh">0xbd0b</span><span class="p">,</span><span class="mh">0x8d68</span><span class="p">,</span><span class="mh">0x9d49</span><span class="p">,</span>
+             <span class="mh">0x7e97</span><span class="p">,</span><span class="mh">0x6eb6</span><span class="p">,</span><span class="mh">0x5ed5</span><span class="p">,</span><span class="mh">0x4ef4</span><span class="p">,</span><span class="mh">0x3e13</span><span class="p">,</span><span class="mh">0x2e32</span><span class="p">,</span><span class="mh">0x1e51</span><span class="p">,</span><span class="mh">0x0e70</span><span class="p">,</span>
+             <span class="mh">0xff9f</span><span class="p">,</span><span class="mh">0xefbe</span><span class="p">,</span><span class="mh">0xdfdd</span><span class="p">,</span><span class="mh">0xcffc</span><span class="p">,</span><span class="mh">0xbf1b</span><span class="p">,</span><span class="mh">0xaf3a</span><span class="p">,</span><span class="mh">0x9f59</span><span class="p">,</span><span class="mh">0x8f78</span><span class="p">,</span>
+             <span class="mh">0x9188</span><span class="p">,</span><span class="mh">0x81a9</span><span class="p">,</span><span class="mh">0xb1ca</span><span class="p">,</span><span class="mh">0xa1eb</span><span class="p">,</span><span class="mh">0xd10c</span><span class="p">,</span><span class="mh">0xc12d</span><span class="p">,</span><span class="mh">0xf14e</span><span class="p">,</span><span class="mh">0xe16f</span><span class="p">,</span>
+             <span class="mh">0x1080</span><span class="p">,</span><span class="mh">0x00a1</span><span class="p">,</span><span class="mh">0x30c2</span><span class="p">,</span><span class="mh">0x20e3</span><span class="p">,</span><span class="mh">0x5004</span><span class="p">,</span><span class="mh">0x4025</span><span class="p">,</span><span class="mh">0x7046</span><span class="p">,</span><span class="mh">0x6067</span><span class="p">,</span>
+             <span class="mh">0x83b9</span><span class="p">,</span><span class="mh">0x9398</span><span class="p">,</span><span class="mh">0xa3fb</span><span class="p">,</span><span class="mh">0xb3da</span><span class="p">,</span><span class="mh">0xc33d</span><span class="p">,</span><span class="mh">0xd31c</span><span class="p">,</span><span class="mh">0xe37f</span><span class="p">,</span><span class="mh">0xf35e</span><span class="p">,</span>
+             <span class="mh">0x02b1</span><span class="p">,</span><span class="mh">0x1290</span><span class="p">,</span><span class="mh">0x22f3</span><span class="p">,</span><span class="mh">0x32d2</span><span class="p">,</span><span class="mh">0x4235</span><span class="p">,</span><span class="mh">0x5214</span><span class="p">,</span><span class="mh">0x6277</span><span class="p">,</span><span class="mh">0x7256</span><span class="p">,</span>
+             <span class="mh">0xb5ea</span><span class="p">,</span><span class="mh">0xa5cb</span><span class="p">,</span><span class="mh">0x95a8</span><span class="p">,</span><span class="mh">0x8589</span><span class="p">,</span><span class="mh">0xf56e</span><span class="p">,</span><span class="mh">0xe54f</span><span class="p">,</span><span class="mh">0xd52c</span><span class="p">,</span><span class="mh">0xc50d</span><span class="p">,</span>
+             <span class="mh">0x34e2</span><span class="p">,</span><span class="mh">0x24c3</span><span class="p">,</span><span class="mh">0x14a0</span><span class="p">,</span><span class="mh">0x0481</span><span class="p">,</span><span class="mh">0x7466</span><span class="p">,</span><span class="mh">0x6447</span><span class="p">,</span><span class="mh">0x5424</span><span class="p">,</span><span class="mh">0x4405</span><span class="p">,</span>
+             <span class="mh">0xa7db</span><span class="p">,</span><span class="mh">0xb7fa</span><span class="p">,</span><span class="mh">0x8799</span><span class="p">,</span><span class="mh">0x97b8</span><span class="p">,</span><span class="mh">0xe75f</span><span class="p">,</span><span class="mh">0xf77e</span><span class="p">,</span><span class="mh">0xc71d</span><span class="p">,</span><span class="mh">0xd73c</span><span class="p">,</span>
+             <span class="mh">0x26d3</span><span class="p">,</span><span class="mh">0x36f2</span><span class="p">,</span><span class="mh">0x0691</span><span class="p">,</span><span class="mh">0x16b0</span><span class="p">,</span><span class="mh">0x6657</span><span class="p">,</span><span class="mh">0x7676</span><span class="p">,</span><span class="mh">0x4615</span><span class="p">,</span><span class="mh">0x5634</span><span class="p">,</span>
+             <span class="mh">0xd94c</span><span class="p">,</span><span class="mh">0xc96d</span><span class="p">,</span><span class="mh">0xf90e</span><span class="p">,</span><span class="mh">0xe92f</span><span class="p">,</span><span class="mh">0x99c8</span><span class="p">,</span><span class="mh">0x89e9</span><span class="p">,</span><span class="mh">0xb98a</span><span class="p">,</span><span class="mh">0xa9ab</span><span class="p">,</span>
+             <span class="mh">0x5844</span><span class="p">,</span><span class="mh">0x4865</span><span class="p">,</span><span class="mh">0x7806</span><span class="p">,</span><span class="mh">0x6827</span><span class="p">,</span><span class="mh">0x18c0</span><span class="p">,</span><span class="mh">0x08e1</span><span class="p">,</span><span class="mh">0x3882</span><span class="p">,</span><span class="mh">0x28a3</span><span class="p">,</span>
+             <span class="mh">0xcb7d</span><span class="p">,</span><span class="mh">0xdb5c</span><span class="p">,</span><span class="mh">0xeb3f</span><span class="p">,</span><span class="mh">0xfb1e</span><span class="p">,</span><span class="mh">0x8bf9</span><span class="p">,</span><span class="mh">0x9bd8</span><span class="p">,</span><span class="mh">0xabbb</span><span class="p">,</span><span class="mh">0xbb9a</span><span class="p">,</span>
+             <span class="mh">0x4a75</span><span class="p">,</span><span class="mh">0x5a54</span><span class="p">,</span><span class="mh">0x6a37</span><span class="p">,</span><span class="mh">0x7a16</span><span class="p">,</span><span class="mh">0x0af1</span><span class="p">,</span><span class="mh">0x1ad0</span><span class="p">,</span><span class="mh">0x2ab3</span><span class="p">,</span><span class="mh">0x3a92</span><span class="p">,</span>
+             <span class="mh">0xfd2e</span><span class="p">,</span><span class="mh">0xed0f</span><span class="p">,</span><span class="mh">0xdd6c</span><span class="p">,</span><span class="mh">0xcd4d</span><span class="p">,</span><span class="mh">0xbdaa</span><span class="p">,</span><span class="mh">0xad8b</span><span class="p">,</span><span class="mh">0x9de8</span><span class="p">,</span><span class="mh">0x8dc9</span><span class="p">,</span>
+             <span class="mh">0x7c26</span><span class="p">,</span><span class="mh">0x6c07</span><span class="p">,</span><span class="mh">0x5c64</span><span class="p">,</span><span class="mh">0x4c45</span><span class="p">,</span><span class="mh">0x3ca2</span><span class="p">,</span><span class="mh">0x2c83</span><span class="p">,</span><span class="mh">0x1ce0</span><span class="p">,</span><span class="mh">0x0cc1</span><span class="p">,</span>
+             <span class="mh">0xef1f</span><span class="p">,</span><span class="mh">0xff3e</span><span class="p">,</span><span class="mh">0xcf5d</span><span class="p">,</span><span class="mh">0xdf7c</span><span class="p">,</span><span class="mh">0xaf9b</span><span class="p">,</span><span class="mh">0xbfba</span><span class="p">,</span><span class="mh">0x8fd9</span><span class="p">,</span><span class="mh">0x9ff8</span><span class="p">,</span>
+             <span class="mh">0x6e17</span><span class="p">,</span><span class="mh">0x7e36</span><span class="p">,</span><span class="mh">0x4e55</span><span class="p">,</span><span class="mh">0x5e74</span><span class="p">,</span><span class="mh">0x2e93</span><span class="p">,</span><span class="mh">0x3eb2</span><span class="p">,</span><span class="mh">0x0ed1</span><span class="p">,</span><span class="mh">0x1ef0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="crc16"><a class="viewcode-back" href="../sbp.html#sbp.crc16">[docs]</a><span class="k">def</span> <span class="nf">crc16</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">crc</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;CRC16 implementation acording to CCITT standards.</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+    <span class="n">crc</span> <span class="o">=</span> <span class="p">((</span><span class="n">crc</span><span class="o">&lt;&lt;</span><span class="mi">8</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xFFFF</span><span class="p">)</span> <span class="o">^</span> <span class="n">crc16_tab</span><span class="p">[</span> <span class="p">((</span><span class="n">crc</span><span class="o">&gt;&gt;</span><span class="mi">8</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xFF</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xFF</span><span class="p">)</span> <span class="p">]</span>
+    <span class="n">crc</span> <span class="o">&amp;=</span> <span class="mh">0xFFFF</span>
+  <span class="k">return</span> <span class="n">crc</span>
+</div>
+<div class="viewcode-block" id="SBP"><a class="viewcode-back" href="../sbp.html#sbp.SBP">[docs]</a><span class="k">class</span> <span class="nc">SBP</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Swift Binary Protocol container.</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;SBP&quot;</span><span class="p">,</span>
+                   <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;preamble&#39;</span><span class="p">),</span>
+                   <span class="n">ULInt16</span><span class="p">(</span><span class="s">&#39;msg_type&#39;</span><span class="p">),</span>
+                   <span class="n">ULInt16</span><span class="p">(</span><span class="s">&#39;sender&#39;</span><span class="p">),</span>
+                   <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;length&#39;</span><span class="p">),</span>
+                   <span class="n">Bytes</span><span class="p">(</span><span class="s">&quot;payload&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">length</span><span class="p">),</span>
+                   <span class="n">ULInt16</span><span class="p">(</span><span class="s">&#39;crc&#39;</span><span class="p">),)</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg_type</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+               <span class="n">length</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">crc</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">preamble</span> <span class="o">=</span> <span class="n">SBP_PREAMBLE</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">msg_type</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">sender</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">payload</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">crc</span> <span class="o">=</span> <span class="n">crc</span>
+
+  <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">__dict__</span>
+
+<div class="viewcode-block" id="SBP.pack"><a class="viewcode-back" href="../sbp.html#sbp.SBP.pack">[docs]</a>  <span class="k">def</span> <span class="nf">pack</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Pack to framed binary message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">framed_msg</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s">&#39;&lt;BHHB&#39;</span><span class="p">,</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">preamble</span><span class="p">,</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span>
+                             <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">))</span>
+    <span class="n">framed_msg</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span>
+    <span class="n">crc</span> <span class="o">=</span> <span class="n">crc16</span><span class="p">(</span><span class="n">framed_msg</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">framed_msg</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s">&#39;&lt;H&#39;</span><span class="p">,</span> <span class="n">crc</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">framed_msg</span>
+</div>
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="SBP.unpack"><a class="viewcode-back" href="../sbp.html#sbp.SBP.unpack">[docs]</a>  <span class="k">def</span> <span class="nf">unpack</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Unpack and return a framed binary message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">p</span><span class="o">.</span><span class="n">preamble</span> <span class="o">==</span> <span class="n">SBP_PREAMBLE</span><span class="p">,</span> <span class="s">&quot;Invalid preamble 0x</span><span class="si">%x</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">p</span><span class="o">.</span><span class="n">preamble</span>
+    <span class="k">return</span> <span class="n">SBP</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+</div>
+  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preamble</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+    <span class="n">fmt</span> <span class="o">=</span> <span class="s">&quot;&lt;SBP (preamble=0x</span><span class="si">%X</span><span class="s">, msg_type=0x</span><span class="si">%X</span><span class="s">, sender=</span><span class="si">%s</span><span class="s">, length=</span><span class="si">%d</span><span class="s">, payload=</span><span class="si">%s</span><span class="s">, crc=0x</span><span class="si">%X</span><span class="s">)&gt;&quot;</span>
+    <span class="k">return</span> <span class="n">fmt</span> <span class="o">%</span> <span class="n">p</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="SBP.from_json_dict"><a class="viewcode-back" href="../sbp.html#sbp.SBP.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">msg_type</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;msg_type&#39;</span><span class="p">]</span>
+    <span class="n">sender</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;sender&#39;</span><span class="p">]</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;length&#39;</span><span class="p">]</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">standard_b64decode</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;payload&#39;</span><span class="p">])</span>
+    <span class="n">crc</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;crc&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">SBP</span><span class="p">(</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">crc</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SBP.to_json_dict"><a class="viewcode-back" href="../sbp.html#sbp.SBP.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;preamble&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">preamble</span><span class="p">,</span>
+            <span class="s">&#39;msg_type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span>
+            <span class="s">&#39;sender&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span>
+            <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+            <span class="s">&#39;payload&#39;</span><span class="p">:</span> <span class="n">base64</span><span class="o">.</span><span class="n">standard_b64encode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">),</span>
+            <span class="s">&#39;crc&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">crc</span><span class="p">}</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
