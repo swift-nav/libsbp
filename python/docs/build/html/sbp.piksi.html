@@ -61,9 +61,9 @@
 <span id="sbp-piksi-module"></span><h1>sbp.piksi module<a class="headerlink" href="#module-sbp.piksi" title="Permalink to this headline">¶</a></h1>
 <p>System health, configuration, and diagnostic messages specific to
 the Piksi L1 receiver, including a variety of legacy messages that
-may no longer be used. These messages are in the
-implementation-defined range (0x0000-0x00FF), and largely intended
-for internal-use only.</p>
+may no longer be used.</p>
+<p>These messages are in the implementation-defined range
+(0x0000-0x00FF), and largely intended for internal-use only.</p>
 <dl class="class">
 <dt id="sbp.piksi.Latency">
 <em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">Latency</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#Latency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.Latency" title="Permalink to this definition">¶</a></dt>
@@ -201,10 +201,10 @@ the message.</p>
 <div><p>You can have MSG_INIT_BASE inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>This message initializes the Integer Ambiguity Resolution (IAR)</p>
+<p>This message initializes the integer ambiguity resolution (IAR)</p>
 </div></blockquote>
 <p>process on the Piksi to use an assumed baseline position between
-the base station and rover receivers. Warns via MsgPrint if
+the base station and rover receivers. Warns via MSG_PRINT if
 there aren&#8217;t a shared minimum number (4) of satellite
 observations between the two.</p>
 </dd></dl>
@@ -220,8 +220,7 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message from the host resets the Piksi back into the</p>
 </div></blockquote>
-<p>bootloader. It ensures that all outstanding memory accesses
-including buffered writes are completed before reset begins.</p>
+<p>bootloader.</p>
 </dd></dl>
 
 <dl class="class">
@@ -294,10 +293,10 @@ of its fields.</p>
 <div><p>You can have MSG_THREAD_STATE inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>The thread usage message from the Piksi reports RTOS thread</p>
+<p>The thread usage message from the device reports real-time</p>
 </div></blockquote>
-<p>usage statistics for the named thread. The reported values
-require renormalization.</p>
+<p>operating system (RTOS) thread usage statistics for the named
+thread. The reported percentage values require to be normalized.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
@@ -305,16 +304,18 @@ require renormalization.</p>
 <dt>name <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
 <dd>Thread name (NULL terminated)</dd>
 <dt>cpu <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Percentage cpu use for this thread. Ranges from 0 - 1000</dd>
+<dd>Percentage cpu use for this thread. Values range from 0</dd>
 </dl>
 </div></blockquote>
-<p>and needs to be renormalized to 100</p>
-<blockquote>
-<div><dl class="docutils">
+<ul>
+<li><p class="first">1000 and needs to be renormalized to 100</p>
+<dl class="docutils">
 <dt>stack_free <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Free stack space for this thread</dd>
+<dd><p class="first last">Free stack space for this thread</p>
+</dd>
 </dl>
-</div></blockquote>
+</li>
+</ul>
 <dl class="method">
 <dt id="sbp.piksi.MsgThreadState.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgThreadState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgThreadState.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -356,7 +357,7 @@ of its fields.</p>
 <p>channels providing SBP I/O. On the default Piksi configuration,
 UARTs A and B are used for telemetry radios, but can also be be
 host access ports for embedded hosts, or other interfaces in
-future.</p>
+future. The reported percentage values require to be normalized.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
@@ -405,7 +406,8 @@ the message.</p>
 <p>UARTChannel.</p>
 <blockquote>
 <div>Throughput, utilization, and error counts on the RX/TX buffers</div></blockquote>
-<p>of this UART channel. Values require renormalization</p>
+<p>of this UART channel. The reported percentage values require to
+be normalized.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>tx_throughput <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
@@ -417,17 +419,17 @@ the message.</p>
 <dt>io_error_count <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>UART IO error count</dd>
 <dt>tx_buffer_level <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>UART transmit buffer percentage utilization. Ranges from</dd>
+<dd>UART transmit buffer percentage utilization (ranges from</dd>
 </dl>
 </div></blockquote>
-<p>0 - 255 and needs to be renormalized to 100</p>
+<p>0 - 255)</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>rx_buffer_level <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>UART receive buffer percentage utilization. Ranges from</dd>
+<dd>UART receive buffer percentage utilization (ranges from</dd>
 </dl>
 </div></blockquote>
-<p>0 - 255 and needs to be renormalized to 100</p>
+<p>0 to 255)</p>
 <dl class="method">
 <dt id="sbp.piksi.UARTChannel.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#UARTChannel.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.UARTChannel.from_binary" title="Permalink to this definition">¶</a></dt>

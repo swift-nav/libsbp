@@ -1625,11 +1625,11 @@
     <name>msg_bootloader_handshake_t</name>
     <filename>structmsg__bootloader__handshake__t.html</filename>
     <member kind="variable">
-      <type>u8</type>
+      <type>char</type>
       <name>handshake</name>
       <anchorfile>structmsg__bootloader__handshake__t.html</anchorfile>
-      <anchor>a21b84ca178875ec65916b3b0539c5ef8</anchor>
-      <arglist></arglist>
+      <anchor>aba1bf7bcc2fe6016cc9a507917ed0412</anchor>
+      <arglist>[20]</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -2015,10 +2015,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>u8</type>
+      <type>u32</type>
       <name>sector_num</name>
       <anchorfile>structmsg__flash__erase__t.html</anchorfile>
-      <anchor>a0866ba29f6df4666374b2efd6adf37de</anchor>
+      <anchor>abb04d753454ba34f0ca8eeb21c67dd1e</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -2345,32 +2345,32 @@
     <name>msg_stm_flash_lock_sector_t</name>
     <filename>structmsg__stm__flash__lock__sector__t.html</filename>
     <member kind="variable">
-      <type>u8</type>
+      <type>u32</type>
       <name>sector</name>
       <anchorfile>structmsg__stm__flash__lock__sector__t.html</anchorfile>
-      <anchor>a85c74e56db7f824e63716b67fc32750a</anchor>
-      <arglist>[1]</arglist>
+      <anchor>a2fd226114f901251c2985bae9924cbf6</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
     <name>msg_stm_flash_unlock_sector_t</name>
     <filename>structmsg__stm__flash__unlock__sector__t.html</filename>
     <member kind="variable">
-      <type>u8</type>
+      <type>u32</type>
       <name>sector</name>
       <anchorfile>structmsg__stm__flash__unlock__sector__t.html</anchorfile>
-      <anchor>a85c74e56db7f824e63716b67fc32750a</anchor>
-      <arglist>[1]</arglist>
+      <anchor>a2fd226114f901251c2985bae9924cbf6</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
     <name>msg_stm_unique_id_t</name>
     <filename>structmsg__stm__unique__id__t.html</filename>
     <member kind="variable">
-      <type>char</type>
+      <type>u8</type>
       <name>stm_id</name>
       <anchorfile>structmsg__stm__unique__id__t.html</anchorfile>
-      <anchor>a6ef808030652d37ec87719062f6b3772</anchor>
+      <anchor>a179a186e49f95c96c275a9f2b85954f3</anchor>
       <arglist>[12]</arglist>
     </member>
   </compound>

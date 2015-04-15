@@ -66,12 +66,13 @@
 
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Messages for reading and writing the Piksi&#39;s device settings. These</span>
-<span class="sd">are in the implementation-defined range (0x0000-0x00FF), and</span>
-<span class="sd">intended for internal-use only. Please see the accompanying</span>
-<span class="sd">description of settings configurations for more details. Note that</span>
-<span class="sd">some of these messages taking a request from a host and a response</span>
-<span class="sd">from the Piksi share the same message type ID.</span>
+<span class="sd">Messages for reading and writing the device&#39;s device settings.</span>
+
+<span class="sd">These are in the implementation-defined range (0x0000-0x00FF). Note</span>
+<span class="sd">that some of these messages share the same message type ID for both</span>
+<span class="sd">the host request and the device response. See the accompanying</span>
+<span class="sd">document for descriptions of settings configurations and examples:</span>
+<span class="sd">https://github.com/swift-nav/piksi\_firmware/blob/master/docs/settings.pdf</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -82,7 +83,7 @@
 <span class="kn">import</span> <span class="nn">six</span>
 
 <span class="c"># Automatically generated from piksi/yaml/swiftnav/sbp/settings.yaml</span>
-<span class="c"># with generate.py at 2015-04-14 12:12:07.027259. Please do not hand edit!</span>
+<span class="c"># with generate.py at 2015-04-15 12:17:09.621119. Please do not hand edit!</span>
 
 
 <span class="n">SBP_MSG_SETTINGS</span> <span class="o">=</span> <span class="mh">0x00A0</span>
@@ -94,7 +95,7 @@
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
-<span class="sd">  The setting message reads and writes the Piksi&#39;s configuration.</span>
+<span class="sd">  The setting message reads and writes the device&#39;s configuration.</span>
 
 
 <span class="sd">  Parameters</span>
@@ -102,8 +103,7 @@
 <span class="sd">  sbp : SBP</span>
 <span class="sd">    SBP parent object to inherit from.</span>
 <span class="sd">  setting : string</span>
-<span class="sd">    A NULL delimited (and terminated) string, with the A</span>
-<span class="sd">NULL-terminated and delimited string with contents</span>
+<span class="sd">    A NULL-terminated and delimited string with contents</span>
 <span class="sd">[SECTION_SETTING, SETTING, VALUE] on writes or a series of</span>
 <span class="sd">such strings on reads.</span>
 
@@ -165,7 +165,7 @@
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
-<span class="sd">  The save settings message persists the Piksi&#39;s current settings</span>
+<span class="sd">  The save settings message persists the device&#39;s current settings</span>
 <span class="sd">configuration to its onboard flash memory file system.</span>
 
 
@@ -200,7 +200,7 @@
 <span class="sd">  sbp : SBP</span>
 <span class="sd">    SBP parent object to inherit from.</span>
 <span class="sd">  index : int</span>
-<span class="sd">    An index into the Piksi settings, with values ranging from</span>
+<span class="sd">    An index into the device settings, with values ranging from</span>
 <span class="sd">0 to length(settings)</span>
 
 

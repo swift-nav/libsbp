@@ -66,7 +66,7 @@
 
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Satellite observation messages from the Piksi.</span>
+<span class="sd">Satellite observation messages from the device.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">construct</span> <span class="kn">import</span> <span class="o">*</span>
@@ -76,7 +76,7 @@
 <span class="kn">import</span> <span class="nn">six</span>
 
 <span class="c"># Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml</span>
-<span class="c"># with generate.py at 2015-04-14 12:12:07.029389. Please do not hand edit!</span>
+<span class="c"># with generate.py at 2015-04-15 12:17:09.558434. Please do not hand edit!</span>
 
 
 <div class="viewcode-block" id="ObsGPSTime"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.ObsGPSTime">[docs]</a><span class="k">class</span> <span class="nc">ObsGPSTime</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -196,11 +196,10 @@
 <span class="sd">  lock : int</span>
 <span class="sd">    Lock indicator. This value changes whenever a satellite</span>
 <span class="sd">signal has lost and regained lock, indicating that the</span>
-<span class="sd">carrier phase ambiguity may have changed. There is no</span>
-<span class="sd">significance to the value of the lock indicator</span>
+<span class="sd">carrier phase ambiguity may have changed.</span>
 
 <span class="sd">  prn : int</span>
-<span class="sd">    PRN identifier of the satellite signal</span>
+<span class="sd">    PRN-1 identifier of the satellite signal</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">_parser</span> <span class="o">=</span> <span class="n">Embedded</span><span class="p">(</span><span class="n">Struct</span><span class="p">(</span><span class="s">&quot;PackedObsContent&quot;</span><span class="p">,</span>
@@ -232,9 +231,11 @@
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
-<span class="sd">  The GPS observations message reports all the pseudo range and</span>
+<span class="sd">  The GPS observations message reports all the raw pseudorange and</span>
 <span class="sd">carrier phase observations for the satellites being tracked by</span>
-<span class="sd">the Piksi.</span>
+<span class="sd">the device. Carrier phase observation here is represented as a</span>
+<span class="sd">40-bit fixed point number with Q32.8 layout (i.e. 32-bits of</span>
+<span class="sd">whole cycles and 8-bits of fractional cycles).</span>
 
 
 <span class="sd">  Parameters</span>
@@ -245,7 +246,7 @@
 <span class="sd">    Header of a GPS observation message</span>
 <span class="sd">  obs : array</span>
 <span class="sd">    Pseudorange and carrier phase observation for a</span>
-<span class="sd">satellite being tracked</span>
+<span class="sd">satellite being tracked.</span>
 
 
 <span class="sd">  &quot;&quot;&quot;</span>
@@ -307,9 +308,11 @@
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
-<span class="sd">  This may be the position as reported by the base station itself or the</span>
-<span class="sd">position obtained from doing a single point solution using the base</span>
-<span class="sd">station observations.</span>
+<span class="sd">  The base station position message is the position reported by</span>
+<span class="sd">the base station itself. It is used for pseudo-absolute RTK</span>
+<span class="sd">positioning, and is required to be a high-accuracy surveyed</span>
+<span class="sd">location of the base station. Any error here will result in an</span>
+<span class="sd">error in the pseudo-absolute position output.</span>
 
 
 <span class="sd">  Parameters</span>

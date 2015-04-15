@@ -59,11 +59,11 @@
             
   <div class="section" id="module-sbp.bootload">
 <span id="sbp-bootload-module"></span><h1>sbp.bootload module<a class="headerlink" href="#module-sbp.bootload" title="Permalink to this headline">¶</a></h1>
-<p>Messages for the bootloading configuration on the Piksi. These are
-in the implementation-defined range (0x0000-0x00FF), and intended
-for internal-use only. Note that some of these messages taking a
-request from a host and a response from the Piksi share the same
-message type ID.</p>
+<p>Messages for the bootloading configuration on the device.</p>
+<p>These are in the implementation-defined range (0x0000-0x00FF), and
+are intended for internal use only. Note that some of these messages
+share the same message type ID for both the host request and the
+device response.</p>
 <dl class="class">
 <dt id="sbp.bootload.MsgBootloaderHandshake">
 <em class="property">class </em><code class="descclassname">sbp.bootload.</code><code class="descname">MsgBootloaderHandshake</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgBootloaderHandshake"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgBootloaderHandshake" title="Permalink to this definition">¶</a></dt>
@@ -73,22 +73,17 @@ message type ID.</p>
 <div><p>You can have MSG_BOOTLOADER_HANDSHAKE inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>The bootloader continually sends a handshake message to the host</p>
+<p>The handshake message establishes a handshake between the device</p>
 </div></blockquote>
-<p>for a short period of time, and then jumps to the firmware if it
-doesn&#8217;t receive a handshake from the host. If the host replies
-with a handshake the bootloader doesn&#8217;t jump to the firmware and
-nwaits for flash programming messages, and the host has to send
-a MSG_BOOTLOADER_JUMP_TO_APP when it&#8217;s done programming. On old
-versions of the bootloader (less than v0.1), hardcoded to 0. On
-new versions, return the git describe string for the bootloader
-build.</p>
+<p>bootloader and the host.  The payload string contains the
+bootloader version number, but returns an empty string for
+earlier versions.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
 <dd>SBP parent object to inherit from.</dd>
-<dt>handshake <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Handshake value</dd>
+<dt>handshake <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>Version number (NULL padded)</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
@@ -131,7 +126,7 @@ of its fields.</p>
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
 <dd>SBP parent object to inherit from.</dd>
 <dt>jump <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Ignored by the Piksi</dd>
+<dd>Ignored by the device</dd>
 </dl>
 <dl class="method">
 <dt id="sbp.bootload.MsgBootloaderJumpToApp.from_binary">
@@ -169,20 +164,22 @@ the message.</p>
 <div><p>You can have MSG_NAP_DEVICE_DNA inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>The device DNA message from the host reads the unique device</p>
+<p>The device message from the host reads a unique device</p>
 </div></blockquote>
-<p>DNA from the Swift Navigation Acceleration Peripheral
-(SwiftNAP), a Spartan 6 FPGA. By convention, the host message
-buffer is empty; the Piksi returns the device DNA in a
-MSG_NAP_DEVICE_DNA message.</p>
+<p>identifier from the SwiftNAP, an FPGA. The host requests the ID
+by sending a MSG_NAP_DEVICE_DNA with an empty payload. The
+device responds with the same message with the device ID in the
+payload. Note that this ID is tied to the FPGA, and not related
+to the Piksi&#8217;s serial number.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
 <dd>SBP parent object to inherit from.</dd>
 <dt>dna <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
-<dd>57-bit SwiftNAP FPGA Device DNA</dd>
+<dd>57-bit SwiftNAP FPGA Device ID. Remaining bits are padded</dd>
 </dl>
 </div></blockquote>
+<p>on the right.</p>
 <dl class="method">
 <dt id="sbp.bootload.MsgNapDeviceDna.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#MsgNapDeviceDna.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.MsgNapDeviceDna.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -208,6 +205,12 @@ the message.</p>
 <dd><p>Produce a JSON-encoded SBP message.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.bootload.StringAdapter">
+<em class="property">class </em><code class="descclassname">sbp.bootload.</code><code class="descname">StringAdapter</code><span class="sig-paren">(</span><em>subcon</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/bootload.html#StringAdapter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.bootload.StringAdapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">construct.core.Adapter</span></code></p>
 </dd></dl>
 
 </div>

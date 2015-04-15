@@ -36,7 +36,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">libsbp
-   &#160;<span id="projectnumber">v0.32-4-gf6efe28-dirty</span>
+   &#160;<span id="projectnumber">v0.32-6-g73c6eb1-dirty</span>
    </div>
   </td>
  </tr>
@@ -127,48 +127,47 @@ $(document).ready(function(){initNavTree('bootload_8h_source.html','');});
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">/*****************************************************************************</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> * Automatically generated from yaml/swiftnav/sbp/bootload.yaml</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"> * with generate.py at 2015-04-10 12:07:06.130849. Please do not hand edit!</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"> * with generate.py at 2015-04-15 12:05:58.457339. Please do not hand edit!</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> *****************************************************************************/</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#ifndef LIBSBP_BOOTLOAD_MESSAGES_H</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define LIBSBP_BOOTLOAD_MESSAGES_H</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="common_8h.html">common.h</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef LIBSBP_BOOTLOAD_MESSAGES_H</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define LIBSBP_BOOTLOAD_MESSAGES_H</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="common_8h.html">common.h</a>&quot;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="group__bootload.html#gad1cab8ba36be6929d79dcc69ef84132d">   45</a></span>&#160;<span class="preprocessor">#define SBP_MSG_BOOTLOADER_HANDSHAKE   0x00B0</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structmsg__bootloader__handshake__t.html">   46</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>__attribute__((packed)) {</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="structmsg__bootloader__handshake__t.html#a21b84ca178875ec65916b3b0539c5ef8">   47</a></span>&#160;  <a class="code" href="group__common__inttypes.html#ga92c50087ca0e64fa93fc59402c55f8ca">u8</a> <a class="code" href="structmsg__bootloader__handshake__t.html#a21b84ca178875ec65916b3b0539c5ef8">handshake</a>;    </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;} <a class="code" href="structmsg__bootloader__handshake__t.html">msg_bootloader_handshake_t</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="group__bootload.html#ga55bcdd971a9691e37e9ff3141351203a">   55</a></span>&#160;<span class="preprocessor">#define SBP_MSG_BOOTLOADER_JUMP_TO_APP 0x00B1</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="structmsg__bootloader__jump__to__app__t.html">   56</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>__attribute__((packed)) {</div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="structmsg__bootloader__jump__to__app__t.html#a07dbb4656441a891c6e7bdaf4afcea60">   57</a></span>&#160;  <a class="code" href="group__common__inttypes.html#ga92c50087ca0e64fa93fc59402c55f8ca">u8</a> <a class="code" href="structmsg__bootloader__jump__to__app__t.html#a07dbb4656441a891c6e7bdaf4afcea60">jump</a>;    </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;} <a class="code" href="structmsg__bootloader__jump__to__app__t.html">msg_bootloader_jump_to_app_t</a>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="group__bootload.html#gaee3d85334bcfe0dfd4c1b5f4cd16e5c5">   69</a></span>&#160;<span class="preprocessor">#define SBP_MSG_NAP_DEVICE_DNA         0x00DD</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="structmsg__nap__device__dna__t.html">   70</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>__attribute__((packed)) {</div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="structmsg__nap__device__dna__t.html#a92c318cc19eafe8805c3dda915d5d322">   71</a></span>&#160;  <a class="code" href="group__common__inttypes.html#ga92c50087ca0e64fa93fc59402c55f8ca">u8</a> dna[8]; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;} <a class="code" href="structmsg__nap__device__dna__t.html">msg_nap_device_dna_t</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="group__bootload.html#gad1cab8ba36be6929d79dcc69ef84132d">   41</a></span>&#160;<span class="preprocessor">#define SBP_MSG_BOOTLOADER_HANDSHAKE   0x00B0</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="structmsg__bootloader__handshake__t.html">   42</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>__attribute__((packed)) {</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="structmsg__bootloader__handshake__t.html#aba1bf7bcc2fe6016cc9a507917ed0412">   43</a></span>&#160;  <span class="keywordtype">char</span> handshake[20]; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;} <a class="code" href="structmsg__bootloader__handshake__t.html">msg_bootloader_handshake_t</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="group__bootload.html#ga55bcdd971a9691e37e9ff3141351203a">   51</a></span>&#160;<span class="preprocessor">#define SBP_MSG_BOOTLOADER_JUMP_TO_APP 0x00B1</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="structmsg__bootloader__jump__to__app__t.html">   52</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>__attribute__((packed)) {</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="structmsg__bootloader__jump__to__app__t.html#a07dbb4656441a891c6e7bdaf4afcea60">   53</a></span>&#160;  <a class="code" href="group__common__inttypes.html#ga92c50087ca0e64fa93fc59402c55f8ca">u8</a> <a class="code" href="structmsg__bootloader__jump__to__app__t.html#a07dbb4656441a891c6e7bdaf4afcea60">jump</a>;    </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;} <a class="code" href="structmsg__bootloader__jump__to__app__t.html">msg_bootloader_jump_to_app_t</a>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="group__bootload.html#gaee3d85334bcfe0dfd4c1b5f4cd16e5c5">   66</a></span>&#160;<span class="preprocessor">#define SBP_MSG_NAP_DEVICE_DNA         0x00DD</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="structmsg__nap__device__dna__t.html">   67</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>__attribute__((packed)) {</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="structmsg__nap__device__dna__t.html#a92c318cc19eafe8805c3dda915d5d322">   68</a></span>&#160;  <a class="code" href="group__common__inttypes.html#ga92c50087ca0e64fa93fc59402c55f8ca">u8</a> dna[8]; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;} <a class="code" href="structmsg__nap__device__dna__t.html">msg_nap_device_dna_t</a>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* LIBSBP_BOOTLOAD_MESSAGES_H */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="structmsg__bootloader__jump__to__app__t_html"><div class="ttname"><a href="structmsg__bootloader__jump__to__app__t.html">msg_bootloader_jump_to_app_t</a></div><div class="ttdef"><b>Definition:</b> <a href="bootload_8h_source.html#l00056">bootload.h:56</a></div></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* LIBSBP_BOOTLOAD_MESSAGES_H */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="structmsg__bootloader__jump__to__app__t_html"><div class="ttname"><a href="structmsg__bootloader__jump__to__app__t.html">msg_bootloader_jump_to_app_t</a></div><div class="ttdef"><b>Definition:</b> <a href="bootload_8h_source.html#l00052">bootload.h:52</a></div></div>
 <div class="ttc" id="group__common__inttypes_html_ga92c50087ca0e64fa93fc59402c55f8ca"><div class="ttname"><a href="group__common__inttypes.html#ga92c50087ca0e64fa93fc59402c55f8ca">u8</a></div><div class="ttdeci">uint8_t u8</div><div class="ttdoc">Unsigned 8-bit integer. </div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00037">common.h:37</a></div></div>
-<div class="ttc" id="structmsg__bootloader__handshake__t_html"><div class="ttname"><a href="structmsg__bootloader__handshake__t.html">msg_bootloader_handshake_t</a></div><div class="ttdef"><b>Definition:</b> <a href="bootload_8h_source.html#l00046">bootload.h:46</a></div></div>
+<div class="ttc" id="structmsg__bootloader__handshake__t_html"><div class="ttname"><a href="structmsg__bootloader__handshake__t.html">msg_bootloader_handshake_t</a></div><div class="ttdef"><b>Definition:</b> <a href="bootload_8h_source.html#l00042">bootload.h:42</a></div></div>
 <div class="ttc" id="common_8h_html"><div class="ttname"><a href="common_8h.html">common.h</a></div></div>
-<div class="ttc" id="structmsg__bootloader__handshake__t_html_a21b84ca178875ec65916b3b0539c5ef8"><div class="ttname"><a href="structmsg__bootloader__handshake__t.html#a21b84ca178875ec65916b3b0539c5ef8">msg_bootloader_handshake_t::handshake</a></div><div class="ttdeci">u8 handshake</div><div class="ttdoc">Handshake value. </div><div class="ttdef"><b>Definition:</b> <a href="bootload_8h_source.html#l00047">bootload.h:47</a></div></div>
-<div class="ttc" id="structmsg__nap__device__dna__t_html"><div class="ttname"><a href="structmsg__nap__device__dna__t.html">msg_nap_device_dna_t</a></div><div class="ttdef"><b>Definition:</b> <a href="bootload_8h_source.html#l00070">bootload.h:70</a></div></div>
-<div class="ttc" id="structmsg__bootloader__jump__to__app__t_html_a07dbb4656441a891c6e7bdaf4afcea60"><div class="ttname"><a href="structmsg__bootloader__jump__to__app__t.html#a07dbb4656441a891c6e7bdaf4afcea60">msg_bootloader_jump_to_app_t::jump</a></div><div class="ttdeci">u8 jump</div><div class="ttdoc">Ignored by the Piksi. </div><div class="ttdef"><b>Definition:</b> <a href="bootload_8h_source.html#l00057">bootload.h:57</a></div></div>
+<div class="ttc" id="structmsg__nap__device__dna__t_html"><div class="ttname"><a href="structmsg__nap__device__dna__t.html">msg_nap_device_dna_t</a></div><div class="ttdef"><b>Definition:</b> <a href="bootload_8h_source.html#l00067">bootload.h:67</a></div></div>
+<div class="ttc" id="structmsg__bootloader__jump__to__app__t_html_a07dbb4656441a891c6e7bdaf4afcea60"><div class="ttname"><a href="structmsg__bootloader__jump__to__app__t.html#a07dbb4656441a891c6e7bdaf4afcea60">msg_bootloader_jump_to_app_t::jump</a></div><div class="ttdeci">u8 jump</div><div class="ttdoc">Ignored by the device. </div><div class="ttdef"><b>Definition:</b> <a href="bootload_8h_source.html#l00053">bootload.h:53</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_4f207b46e8207587823dc5b4e3917e6e.html">libsbp</a></li><li class="navelem"><a class="el" href="bootload_8h.html">bootload.h</a></li>
-    <li class="footer">Generated on Wed Apr 15 2015 00:28:47 for libsbp by
+    <li class="footer">Generated on Wed Apr 15 2015 14:07:47 for libsbp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

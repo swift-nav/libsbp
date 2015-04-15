@@ -59,7 +59,7 @@
             
   <div class="section" id="module-sbp.tracking">
 <span id="sbp-tracking-module"></span><h1>sbp.tracking module<a class="headerlink" href="#module-sbp.tracking" title="Permalink to this headline">¶</a></h1>
-<p>Satellite code and carrier-phase tracking messages from the Piksi.</p>
+<p>Satellite code and carrier-phase tracking messages from the device.</p>
 <dl class="class">
 <dt id="sbp.tracking.MsgEphemeris">
 <em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgEphemeris</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris" title="Permalink to this definition">¶</a></dt>
@@ -80,7 +80,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
 <dd>SBP parent object to inherit from.</dd>
 <dt>tgd <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Group delay differential between L1 and L2 (?)</dd>
+<dd>Group delay differential between L1 and L2</dd>
 <dt>crs <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
 <dd>Amplitude of the sine harmonic correction term to the orbit radius</dd>
 <dt>crc <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
@@ -171,8 +171,8 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The tracking message returns a variable-length array of tracking</p>
 </div></blockquote>
-<p>channel states. It reports status and code/carrier phase signal
-power measurements for all tracked satellites.</p>
+<p>channel states. It reports status and snr power measurements for
+all tracked satellites.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
@@ -221,7 +221,7 @@ the message.</p>
 <dt>state <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Status of tracking channel</dd>
 <dt>prn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>PRN being tracked</dd>
+<dd>PRN-1 being tracked</dd>
 <dt>cn0 <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
 <dd>Carrier-to-noise density</dd>
 </dl>

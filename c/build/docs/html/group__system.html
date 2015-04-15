@@ -36,7 +36,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">libsbp
-   &#160;<span id="projectnumber">v0.32-4-gf6efe28-dirty</span>
+   &#160;<span id="projectnumber">v0.32-6-g73c6eb1-dirty</span>
    </div>
   </td>
  </tr>
@@ -143,10 +143,10 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>System heartbeat message. </p>
-<p>The heartbeat message is sent periodically to inform the host or other attached devices that the system is running. It is intended to be used to monitor for system malfunctions and also contains status flags that indicate to the host the status of the system and if it is operating correctly.</p>
-<p>The system error flag is used to indicate that an error has occurred in the system. To determine the source of the error the remaining error flags should be inspected. </p>
+<p>The heartbeat message is sent periodically to inform the host or other attached devices that the system is running. It is used to monitor system malfunctions. It also contains status flags that indicate to the host the status of the system and whether it is operating correctly. Currently, the expected heartbeat interval is 1 sec.</p>
+<p>The system error flag is used to indicate that an error has occurred in the system. To determine the source of the error, the remaining error flags should be inspected. </p>
 
-<p>Definition at line <a class="el" href="system_8h_source.html#l00054">54</a> of file <a class="el" href="system_8h_source.html">system.h</a>.</p>
+<p>Definition at line <a class="el" href="system_8h_source.html#l00055">55</a> of file <a class="el" href="system_8h_source.html">system.h</a>.</p>
 
 </div>
 </div>
@@ -161,7 +161,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>System start-up message. </p>
-<p>The system start-up message is sent once on system start-up. It is intended to be used to notify the host or other attached devices that the system has started and is now ready to respond to commands or configuration requests. </p>
+<p>The system start-up message is sent once on system start-up. It notifies the host or other attached devices that the system has started and is now ready to respond to commands or configuration requests. </p>
 
 <p>Definition at line <a class="el" href="system_8h_source.html#l00036">36</a> of file <a class="el" href="system_8h_source.html">system.h</a>.</p>
 
@@ -172,7 +172,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Apr 15 2015 00:28:47 for libsbp by
+    <li class="footer">Generated on Wed Apr 15 2015 14:07:48 for libsbp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

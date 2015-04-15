@@ -59,7 +59,7 @@
             
   <div class="section" id="module-sbp.logging">
 <span id="sbp-logging-module"></span><h1>sbp.logging module<a class="headerlink" href="#module-sbp.logging" title="Permalink to this headline">¶</a></h1>
-<p>Logging and debugging messages from the Piksi. These are in the
+<p>Logging and debugging messages from the device. These are in the
 implementation-defined range (0x0000-0x00FF).</p>
 <dl class="class">
 <dt id="sbp.logging.MsgDebugVar">
@@ -72,7 +72,7 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This is an unused legacy message for tracing variable values</p>
 </div></blockquote>
-<p>within the Piksi firmware and streaming those back to the host.</p>
+<p>within the device firmware and streaming those back to the host.</p>
 </dd></dl>
 
 <dl class="class">
@@ -84,18 +84,16 @@ of its fields.</p>
 <div><p>You can have MSG_PRINT inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>This message contains a human-reabable payload string from the</p>
+<p>This message contains a human-readable payload string from the</p>
 </div></blockquote>
-<p>Piksi containing errors, warnings and informational messages at
-ERROR, WARNING, DEBUG, INFO logging levels. These message may
-also contain information tagged by filename, as well as debug
-info on function entry/exit when enabled within the firmware.</p>
+<p>device containing errors, warnings and informational messages at
+ERROR, WARNING, DEBUG, INFO logging levels.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
 <dd>SBP parent object to inherit from.</dd>
 <dt>text <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>Informative, human-readable string</dd>
+<dd>Human-readable string</dd>
 </dl>
 </div></blockquote>
 <dl class="method">

@@ -66,9 +66,13 @@
 
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Messages for reading/writing the Piksi&#39;s onboard flash memory. These</span>
-<span class="sd">are in the implementation-defined range (0x0000-0x00FF), and largely</span>
-<span class="sd">intended for internal-use only.</span>
+<span class="sd">Messages for reading/writing the device&#39;s onboard flash memory. Many</span>
+<span class="sd">of these messages target specific flash memory peripherals used in</span>
+<span class="sd">Swift Navigation devices: the STM32 flash and the M25Pxx FPGA</span>
+<span class="sd">configuration flash.</span>
+
+<span class="sd">These are in the implementation-defined range (0x0000-0x00FF), and</span>
+<span class="sd">are intended for internal-use only.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -79,7 +83,7 @@
 <span class="kn">import</span> <span class="nn">six</span>
 
 <span class="c"># Automatically generated from piksi/yaml/swiftnav/sbp/flash.yaml</span>
-<span class="c"># with generate.py at 2015-04-14 12:12:07.030879. Please do not hand edit!</span>
+<span class="c"># with generate.py at 2015-04-15 12:17:09.619220. Please do not hand edit!</span>
 
 
 <span class="n">SBP_MSG_FLASH_PROGRAM</span> <span class="o">=</span> <span class="mh">0x00E0</span>
@@ -92,7 +96,7 @@
 
 <span class="sd">  </span>
 <span class="sd">  The flash program message programs a set of addresses of either</span>
-<span class="sd">the STM or M25 flash. The Piksi replies with either a</span>
+<span class="sd">the STM or M25 flash. The device replies with either a</span>
 <span class="sd">MSG_FLASH_DONE message containing the return code FLASH_OK (0)</span>
 <span class="sd">on success, or FLASH_INVALID_LEN (2) if the maximum write size</span>
 <span class="sd">is exceeded. Note that the sector-containing addresses must be</span>
@@ -112,7 +116,7 @@
 <span class="sd">starting address</span>
 
 <span class="sd">  data : array</span>
-<span class="sd">    Data to program addresses with, sized by addr_len</span>
+<span class="sd">    Data to program addresses with, with length N=addr_len</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgFlashProgram&quot;</span><span class="p">,</span>
@@ -178,7 +182,7 @@
 
 <span class="sd">  </span>
 <span class="sd">  This message defines success or failure codes for a variety of</span>
-<span class="sd">flash memory requests from the host to the Piksi. Flash read and</span>
+<span class="sd">flash memory requests from the host to the device. Flash read and</span>
 <span class="sd">write messages, such as MSG_FLASH_READ or MSG_FLASH_WRITE, may</span>
 <span class="sd">return this message on failure.</span>
 
@@ -248,7 +252,7 @@
 
 <span class="sd">  </span>
 <span class="sd">  The flash read message reads a set of addresses of either the</span>
-<span class="sd">STM or M25 onboard flash. The Piksi replies with a</span>
+<span class="sd">STM or M25 onboard flash. The device replies with a</span>
 <span class="sd">MSG_FLASH_READ message containing either the read data on</span>
 <span class="sd">success or a MSG_FLASH_DONE message containing the return code</span>
 <span class="sd">FLASH_INVALID_LEN (2) if the maximum read size is exceeded or</span>
@@ -331,7 +335,7 @@
 
 <span class="sd">  </span>
 <span class="sd">  The flash erase message from the host erases a sector of either</span>
-<span class="sd">the STM or M25 onboard flash memory. The Piksi will reply with a</span>
+<span class="sd">the STM or M25 onboard flash memory. The device will reply with a</span>
 <span class="sd">MSG_FLASH_DONE message containing the return code - FLASH_OK (0)</span>
 <span class="sd">on success or FLASH_INVALID_FLASH (1) if the flash specified is</span>
 <span class="sd">invalid.</span>
@@ -351,7 +355,7 @@
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgFlashErase&quot;</span><span class="p">,</span>
                    <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;target&#39;</span><span class="p">),</span>
-                   <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;sector_num&#39;</span><span class="p">),)</span>
+                   <span class="n">ULInt32</span><span class="p">(</span><span class="s">&#39;sector_num&#39;</span><span class="p">),)</span>
 
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
@@ -408,19 +412,19 @@
 
 <span class="sd">  </span>
 <span class="sd">  The flash lock message locks a sector of the STM flash</span>
-<span class="sd">memory. The Piksi replies with a MSG_FLASH_DONE message.</span>
+<span class="sd">memory. The device replies with a MSG_FLASH_DONE message.</span>
 
 
 <span class="sd">  Parameters</span>
 <span class="sd">  ----------</span>
 <span class="sd">  sbp : SBP</span>
 <span class="sd">    SBP parent object to inherit from.</span>
-<span class="sd">  sector : array</span>
+<span class="sd">  sector : int</span>
 <span class="sd">    Flash sector number to lock</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgStmFlashLockSector&quot;</span><span class="p">,</span>
-                   <span class="n">Struct</span><span class="p">(</span><span class="s">&#39;sector&#39;</span><span class="p">,</span> <span class="n">Array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;sector&#39;</span><span class="p">))),)</span>
+                   <span class="n">ULInt32</span><span class="p">(</span><span class="s">&#39;sector&#39;</span><span class="p">),)</span>
 
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
@@ -476,19 +480,19 @@
 
 <span class="sd">  </span>
 <span class="sd">  The flash unlock message unlocks a sector of the STM flash</span>
-<span class="sd">memory. The Piksi replies with a MSG_FLASH_DONE message.</span>
+<span class="sd">memory. The device replies with a MSG_FLASH_DONE message.</span>
 
 
 <span class="sd">  Parameters</span>
 <span class="sd">  ----------</span>
 <span class="sd">  sbp : SBP</span>
 <span class="sd">    SBP parent object to inherit from.</span>
-<span class="sd">  sector : array</span>
+<span class="sd">  sector : int</span>
 <span class="sd">    Flash sector number to unlock</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgStmFlashUnlockSector&quot;</span><span class="p">,</span>
-                   <span class="n">Struct</span><span class="p">(</span><span class="s">&#39;sector&#39;</span><span class="p">,</span> <span class="n">Array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;sector&#39;</span><span class="p">))),)</span>
+                   <span class="n">ULInt32</span><span class="p">(</span><span class="s">&#39;sector&#39;</span><span class="p">),)</span>
 
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
@@ -543,20 +547,20 @@
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
-<span class="sd">  This message reads the STM32F4&#39;s hardcoded unique ID. The Piksi</span>
-<span class="sd">returns STM32F4 unique ID (12 bytes) back to host.</span>
+<span class="sd">  This message reads the device&#39;s hardcoded unique ID. The device</span>
+<span class="sd">returns 12-byte unique ID back to host.</span>
 
 
 <span class="sd">  Parameters</span>
 <span class="sd">  ----------</span>
 <span class="sd">  sbp : SBP</span>
 <span class="sd">    SBP parent object to inherit from.</span>
-<span class="sd">  stm_id : string</span>
-<span class="sd">    STM32F4 unique ID</span>
+<span class="sd">  stm_id : array</span>
+<span class="sd">    Device unique ID</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgStmUniqueId&quot;</span><span class="p">,</span>
-                   <span class="n">String</span><span class="p">(</span><span class="s">&#39;stm_id&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">),)</span>
+                   <span class="n">Struct</span><span class="p">(</span><span class="s">&#39;stm_id&#39;</span><span class="p">,</span> <span class="n">Array</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;stm_id&#39;</span><span class="p">))),)</span>
 
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
@@ -612,7 +616,7 @@
 
 <span class="sd">  </span>
 <span class="sd">  The flash status message writes to the 8-bit M25 flash status</span>
-<span class="sd">register. The Piksi replies with a MSG_FLASH_DONE message.</span>
+<span class="sd">register. The device replies with a MSG_FLASH_DONE message.</span>
 
 
 <span class="sd">  Parameters</span>
