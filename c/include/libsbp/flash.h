@@ -12,7 +12,7 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/flash.yaml
- * with generate.py at 2015-04-15 14:18:48.754148. Please do not hand edit!
+ * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup flash Flash

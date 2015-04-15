@@ -12,7 +12,7 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/observation.yaml
- * with generate.py at 2015-04-15 14:18:48.721393. Please do not hand edit!
+ * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup observation Observation
@@ -88,7 +88,7 @@ carrier phase ambiguity may have changed.
  * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
  * whole cycles and 8-bits of fractional cycles).
  */
-#define SBP_MSG_OBS      0x0045
+#define SBP_MSG_OBS       0x0045
 typedef struct __attribute__((packed)) {
   observation_header_t header;    /**< Header of a GPS observation message */
   packed_obs_content_t obs[0];    /**< Pseudorange and carrier phase observation for a
@@ -105,12 +105,51 @@ satellite being tracked.
  * location of the base station. Any error here will result in an
  * error in the pseudo-absolute position output.
  */
-#define SBP_MSG_BASE_POS 0x0044
+#define SBP_MSG_BASE_POS  0x0044
 typedef struct __attribute__((packed)) {
   double lat;       /**< Latitude [deg] */
   double lon;       /**< Longitude [deg] */
   double height;    /**< Height [m] */
 } msg_base_pos_t;
+
+
+/** WGS84 satellite ephemeris parameters
+ *
+ * The ephemeris message returns a set of satellite orbit
+ * parameters that is used to calculate GPS satellite position,
+ * velocity, and clock offset (WGS84). Please see the Navstar GPS
+ * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+ * 20-III) for more details.
+ */
+#define SBP_MSG_EPHEMERIS 0x0046
+typedef struct __attribute__((packed)) {
+  double tgd;         /**< Group delay differential between L1 and L2 [s] */
+  double crs;         /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
+  double crc;         /**< Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+  double cuc;         /**< Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+  double cus;         /**< Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+  double cic;         /**< Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+  double cis;         /**< Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+  double dn;          /**< Mean motion difference [rad/s] */
+  double m0;          /**< Mean anomaly at reference time [radians] */
+  double ecc;         /**< Eccentricity of satellite orbit */
+  double sqrta;       /**< Square root of the semi-major axis of orbit [m^(1/2)] */
+  double omega0;      /**< Longitude of ascending node of orbit plane at weekly epoch [rad] */
+  double omegadot;    /**< Rate of right ascension [rad/s] */
+  double w;           /**< Argument of perigee [rad] */
+  double inc;         /**< Inclination [rad] */
+  double inc_dot;     /**< Inclination first derivative [rad/s] */
+  double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
+  double af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
+  double af2;         /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+  double toe_tow;     /**< Time of week [s] */
+  u16 toe_wn;      /**< Week number [week] */
+  double toc_tow;     /**< Clock reference time of week [s] */
+  u16 toc_wn;      /**< Clock reference week number [week] */
+  u8 valid;       /**< Is valid? */
+  u8 healthy;     /**< Satellite is healthy? */
+  u8 prn;         /**< PRN being tracked */
+} msg_ephemeris_t;
 
 
 /** \} */
