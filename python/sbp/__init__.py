@@ -11,6 +11,7 @@
 
 from construct import *
 import base64
+import json
 import struct
 
 SBP_PREAMBLE = 0x55
@@ -111,14 +112,31 @@ class SBP(object):
     fmt = "<SBP (preamble=0x%X, msg_type=0x%X, sender=%s, length=%d, payload=%s, crc=0x%X)>"
     return fmt % p
 
+  def to_json(self):
+    """Produce a JSON-encoded SBP message.
+
+    """
+    d = self.to_json_dict()
+    return json.dumps(d)
+
   @staticmethod
-  def from_json_dict(data):
-    msg_type = data['msg_type']
-    sender = data['sender']
-    length = data['length']
-    payload = base64.standard_b64decode(data['payload'])
-    crc = data['crc']
-    return SBP(msg_type, sender, length, payload, crc)
+  def from_json(s):
+    """Given a JSON-encoded message, build an object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return sbp
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP()
+    sbp.msg_type = d.pop('msg_type')
+    sbp.sender = d.pop('sender')
+    sbp.length = d.pop('length')
+    sbp.payload = base64.standard_b64decode(d.pop('payload'))
+    sbp.crc = d.pop('crc')
+    return sbp
 
   def to_json_dict(self):
     return {'preamble': self.preamble,
@@ -127,3 +145,4 @@ class SBP(object):
             'length': self.length,
             'payload': base64.standard_b64encode(self.payload),
             'crc': self.crc}
+
