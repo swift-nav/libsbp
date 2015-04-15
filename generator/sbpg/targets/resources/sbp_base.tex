@@ -60,7 +60,7 @@
 \newcolumntype{d}{>{\hsize=.7\hsize}X}
 
 \title{Swift Navigation Binary Protocol}
-\version{1.29}
+\version{0.32}
 \author{Swift Navigation}
 \mysubtitle{Protocol Specification v\theversion}
 \date{\today}
@@ -140,12 +140,12 @@ detection\footnote{CCITT 16-bit CRC Implementation uses parameters
 \end{table}
 
 \begin{large}
-Note that Swift devices, such as the Piksi, also support the standard
-NMEA-0183 protocol for single-point position solutions. Observations
-transmitted via SBP can be converted into RINEX. Note that NMEA
-doesn't define a standardized message string for RTK solutions. To
-make it possible to achieve RTK accuracy with legacy host hardware or
-software that can only read NMEA, recent firmware versions implement a
+Swift devices, such as the Piksi, also support the standard NMEA-0183
+protocol for single-point position solutions. Observations transmitted
+via SBP can also be converted into RINEX. Note that NMEA doesn't
+define a standardized message string for RTK solutions. To make it
+possible to achieve RTK accuracy with legacy host hardware or software
+that can only read NMEA, recent firmware versions implement a
 ``pseudo-absolute'' mode.
 
 \end{large}

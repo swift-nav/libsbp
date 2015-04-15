@@ -19,8 +19,8 @@ description: |
   a single receiver. The RTK solution is the differential GPS
   solution, which can use either a fixed/integer or floating carrier
   phase ambiguity. The pseudo-absolute position solution uses a
-  well-survey base station position (if available) and the RTK
-  solution in tandem.
+  user-provided, well-surveyed base station position (if available)
+  and the RTK solution in tandem.
 stable: True
 public: True
 include:

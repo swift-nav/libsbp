@@ -7,8 +7,8 @@
 \begin{large}
 Packages define a logical collection of SBP messages. The contents and
 layout of messages in packages marked \textbf{stable} are unlikely to
-change in the future. \textbf{Draft} messages \ul{will change with
-future development} and are detailed purely for \ul{informational
+change in the future. \textbf{Draft} messages \emph{will change with
+future development} and are detailed purely for \emph{informational
 purposes only}. Many draft messages are implementation-defined, and
 some collections, such as the acquisition package, are used for
 internal development.
@@ -22,7 +22,7 @@ internal development.
     \multicolumn{5}{c}{\textbf{Stable}} \\
     \midrule
     ((*- for m in msgs *))
-      (((m.pkg|packagenameify|escape_tex|no_us))) &
+      (((m.pkg|packagenameify|escape_tex|no_us|header_write))) &
       \hyperref[sec:(((m.name)))]{\texttt{((('0x%04X'|format(m.sbp_id))))}} &
       \hyperref[sec:(((m.name)))]{\texttt{(((m.name|escape_tex)))}} &
       $(((m.size)))$ &
@@ -32,7 +32,7 @@ internal development.
     \multicolumn{5}{c}{\textbf{Draft}} \\
     \midrule
     ((*- for m in umsgs *))
-      (((m.pkg|packagenameify|escape_tex|no_us))) &
+      (((m.pkg|packagenameify|escape_tex|no_us|header_write))) &
       \hyperref[sec:(((m.name)))]{\texttt{((('0x%04X'|format(m.sbp_id))))}} &
       \hyperref[sec:(((m.name)))]{\texttt{(((m.name|escape_tex)))}} &
       $(((m.size)))$ &

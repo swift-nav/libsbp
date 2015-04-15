@@ -4,7 +4,7 @@
 \section{Stable Message Definitions}
 ((*- for m in msgs *))
 ((*- if m.pkg *))
-\subsection{(((m.pkg|packagenameify)))}
+\subsection{(((m.pkg|packagenameify|header_write)))}
 \begin{large}
 (((m.pkg_desc | escape_tex | no_us)))
 \end{large}
@@ -89,18 +89,19 @@
 \section{Draft Message Definitions}
 ((*- for m in umsgs *))
 ((*- if m.pkg *))
-\subsection{(((m.pkg|packagenameify|no_us)))}
+\subsection{(((m.pkg|packagenameify|no_us|header_write)))}
+
 \begin{large}
 (((m.pkg_desc)))
 \end{large}
 ((* endif *))
 \subsubsection*{(((m.name|escape_tex))) --- ((('0x%04X'|format(m.sbp_id))))}
 \label{sec:(((m.name)))}
-
+\begin{minipage}{\textwidth}
 \begin{large}
 (((m.desc|escape_tex)))
 \end{large}
-
+\end{minipage}
 \vspace{3em}
 \begin{table}[h]
   \centering

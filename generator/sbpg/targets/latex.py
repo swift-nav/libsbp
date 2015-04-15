@@ -67,6 +67,9 @@ def classnameify(s):
   """
   return ''.join(w if w in ACRONYMS else w.title() for w in s.split('_'))
 
+def header_write(v):
+  return re.sub('Io', 'IO', v)
+
 def packagenameify(s):
   """
   Makes a package name
@@ -111,6 +114,7 @@ JENV.filters['removearray'] = removearray
 JENV.filters['removedir'] = remove_dir
 JENV.filters['getsize'] = get_size
 JENV.filters['no_us'] = no_us
+JENV.filters['header_write'] = header_write
 
 field_sizes = {
     'u8'     : 1,
@@ -270,7 +274,10 @@ def render_source(output_dir, package_specs):
         if multiplier == 1:
           adj_size = "N+%d" % (size - 1) if size > 1 else "N"
         elif multiplier:
-          adj_size = "%dN+%d" % (multiplier, size - multiplier)
+           if multiplier == size:
+             adj_size = "%dN" % multiplier
+           else:
+             adj_size = "%dN+%d" % (multiplier, size - multiplier)
         else:
           adj_size = "%d" % size
         ti = TableItem(pkg_name, d.identifier, d.sbp_id,
