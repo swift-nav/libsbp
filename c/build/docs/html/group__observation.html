@@ -36,7 +36,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">libsbp
-   &#160;<span id="projectnumber">v0.32-4-gf6efe28-dirty</span>
+   &#160;<span id="projectnumber">v0.32-6-g73c6eb1-dirty</span>
    </div>
   </td>
  </tr>
@@ -141,7 +141,7 @@ Macros</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <ul>
-<li>Satellite observation messages from the Piksi. </li>
+<li>Satellite observation messages from the device. </li>
 </ul>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ga393c0e479aee4032e2dfaecea5274c0e"></a>
@@ -155,9 +155,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Base station position. </p>
-<p>This may be the position as reported by the base station itself or the position obtained from doing a single point solution using the base station observations. </p>
+<p>The base station position message is the position reported by the base station itself. It is used for pseudo-absolute RTK positioning, and is required to be a high-accuracy surveyed location of the base station. Any error here will result in an error in the pseudo-absolute position output. </p>
 
-<p>Definition at line <a class="el" href="observation_8h_source.html#l00105">105</a> of file <a class="el" href="observation_8h_source.html">observation.h</a>.</p>
+<p>Definition at line <a class="el" href="observation_8h_source.html#l00108">108</a> of file <a class="el" href="observation_8h_source.html">observation.h</a>.</p>
 
 </div>
 </div>
@@ -172,9 +172,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>GPS satellite observations. </p>
-<p>The GPS observations message reports all the pseudo range and carrier phase observations for the satellites being tracked by the Piksi. </p>
+<p>The GPS observations message reports all the raw pseudorange and carrier phase observations for the satellites being tracked by the device. Carrier phase observation here is represented as a 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles). </p>
 
-<p>Definition at line <a class="el" href="observation_8h_source.html#l00090">90</a> of file <a class="el" href="observation_8h_source.html">observation.h</a>.</p>
+<p>Definition at line <a class="el" href="observation_8h_source.html#l00091">91</a> of file <a class="el" href="observation_8h_source.html">observation.h</a>.</p>
 
 </div>
 </div>
@@ -183,7 +183,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Apr 15 2015 00:28:47 for libsbp by
+    <li class="footer">Generated on Wed Apr 15 2015 14:07:47 for libsbp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

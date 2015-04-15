@@ -66,15 +66,16 @@
 
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Messges for using Piksi&#39;s onboard flash filesystem functionality</span>
-<span class="sd">from the Contiki project. This allows data to be stored persistently</span>
-<span class="sd">in the microcontroller&#39;s program flash with wear-levelling using a</span>
-<span class="sd">simple filesystem interface. The Contiki file system interface (CFS)</span>
-<span class="sd">defines an abstract API for reading directories and for reading and</span>
-<span class="sd">writing files. These are in the implementation-defined range</span>
-<span class="sd">(0x0000-0x00FF), and intended for internal-use only. Note that some</span>
-<span class="sd">of these messages taking a request from a host and a response from</span>
-<span class="sd">the Piksi share the same message type ID.</span>
+<span class="sd">Messages for using device&#39;s onboard flash filesystem</span>
+<span class="sd">functionality. This allows data to be stored persistently in the</span>
+<span class="sd">device&#39;s program flash with wear-levelling using a simple filesystem</span>
+<span class="sd">interface. The file system interface (CFS) defines an abstract API</span>
+<span class="sd">for reading directories and for reading and writing files.</span>
+
+<span class="sd">These are in the implementation-defined range (0x0000-0x00FF), and</span>
+<span class="sd">intended for internal-use only. Note that some of these messages</span>
+<span class="sd">share the same message type ID for both the host request and the</span>
+<span class="sd">device response.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -85,7 +86,7 @@
 <span class="kn">import</span> <span class="nn">six</span>
 
 <span class="c"># Automatically generated from piksi/yaml/swiftnav/sbp/file_io.yaml</span>
-<span class="c"># with generate.py at 2015-04-14 12:12:07.031777. Please do not hand edit!</span>
+<span class="c"># with generate.py at 2015-04-15 12:17:09.617442. Please do not hand edit!</span>
 
 
 <span class="n">SBP_MSG_FILEIO_READ</span> <span class="o">=</span> <span class="mh">0x00A8</span>
@@ -114,7 +115,7 @@
 <span class="sd">  chunk_size : int</span>
 <span class="sd">    Chunk size to read</span>
 <span class="sd">  filename : string</span>
-<span class="sd">    Name of the file to read from (NULL terminated)</span>
+<span class="sd">    Name of the file to read from (NULL padded)</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgFileioRead&quot;</span><span class="p">,</span>
@@ -178,7 +179,7 @@
 
 <span class="sd">  </span>
 <span class="sd">  The read directory message lists the files in a directory on the</span>
-<span class="sd">Piksi&#39;s onboard flash file system.  The offset parameter can be</span>
+<span class="sd">device&#39;s onboard flash file system.  The offset parameter can be</span>
 <span class="sd">used to skip the first n elements of the file list. Returns a</span>
 <span class="sd">MSG_FILEIO_READ_DIR message containing the directory listings as</span>
 <span class="sd">a NULL delimited list. The listing is chunked over multiple SBP</span>
@@ -196,7 +197,7 @@
 <span class="sd">    The offset to skip the first n elements of the file list</span>
 
 <span class="sd">  dirname : string</span>
-<span class="sd">    Name of the directory to list</span>
+<span class="sd">    Name of the directory to list (NULL padded)</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgFileioReadDir&quot;</span><span class="p">,</span>
@@ -267,7 +268,7 @@
 <span class="sd">  sbp : SBP</span>
 <span class="sd">    SBP parent object to inherit from.</span>
 <span class="sd">  filename : string</span>
-<span class="sd">    Name of the file to delete (NULL terminated)</span>
+<span class="sd">    Name of the file to delete (NULL padded)</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgFileioRemove&quot;</span><span class="p">,</span>
@@ -338,11 +339,11 @@
 <span class="sd">  sbp : SBP</span>
 <span class="sd">    SBP parent object to inherit from.</span>
 <span class="sd">  filename : string</span>
-<span class="sd">    Name of the file to write to (NULL terminated)</span>
+<span class="sd">    Name of the file to write to (NULL padded)</span>
 <span class="sd">  offset : int</span>
 <span class="sd">    Offset into the file at which to start writing in bytes</span>
 <span class="sd">  data : array</span>
-<span class="sd">    Data to write</span>
+<span class="sd">    Variable-length array of data to write</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgFileioWrite&quot;</span><span class="p">,</span>

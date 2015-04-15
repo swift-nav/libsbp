@@ -66,7 +66,7 @@
 
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Satellite code and carrier-phase tracking messages from the Piksi.</span>
+<span class="sd">Satellite code and carrier-phase tracking messages from the device.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -77,7 +77,7 @@
 <span class="kn">import</span> <span class="nn">six</span>
 
 <span class="c"># Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml</span>
-<span class="c"># with generate.py at 2015-04-14 12:12:07.028186. Please do not hand edit!</span>
+<span class="c"># with generate.py at 2015-04-15 12:17:09.629103. Please do not hand edit!</span>
 
 
 <div class="viewcode-block" id="TrackingChannelState"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelState">[docs]</a><span class="k">class</span> <span class="nc">TrackingChannelState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -92,7 +92,7 @@
 <span class="sd">  state : int</span>
 <span class="sd">    Status of tracking channel</span>
 <span class="sd">  prn : int</span>
-<span class="sd">    PRN being tracked</span>
+<span class="sd">    PRN-1 being tracked</span>
 <span class="sd">  cn0 : float</span>
 <span class="sd">    Carrier-to-noise density</span>
 
@@ -125,8 +125,8 @@
 
 <span class="sd">  </span>
 <span class="sd">  The tracking message returns a variable-length array of tracking</span>
-<span class="sd">channel states. It reports status and code/carrier phase signal</span>
-<span class="sd">power measurements for all tracked satellites.</span>
+<span class="sd">channel states. It reports status and snr power measurements for</span>
+<span class="sd">all tracked satellites.</span>
 
 
 <span class="sd">  Parameters</span>
@@ -205,7 +205,7 @@
 <span class="sd">  sbp : SBP</span>
 <span class="sd">    SBP parent object to inherit from.</span>
 <span class="sd">  tgd : double</span>
-<span class="sd">    Group delay differential between L1 and L2 (?)</span>
+<span class="sd">    Group delay differential between L1 and L2</span>
 <span class="sd">  crs : double</span>
 <span class="sd">    Amplitude of the sine harmonic correction term to the orbit radius</span>
 <span class="sd">  crc : double</span>

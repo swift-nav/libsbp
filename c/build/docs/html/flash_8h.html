@@ -36,7 +36,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">libsbp
-   &#160;<span id="projectnumber">v0.32-4-gf6efe28-dirty</span>
+   &#160;<span id="projectnumber">v0.32-6-g73c6eb1-dirty</span>
    </div>
   </td>
  </tr>
@@ -149,28 +149,28 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gaecf85438325ca7bdbbeea93e2169615a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__flash.html#gaecf85438325ca7bdbbeea93e2169615a">SBP_MSG_FLASH_PROGRAM</a>&#160;&#160;&#160;0x00E0</td></tr>
-<tr class="memdesc:gaecf85438325ca7bdbbeea93e2169615a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Program addresses of the STM or M25 flash (Host =&gt; Piksi).  <a href="group__flash.html#gaecf85438325ca7bdbbeea93e2169615a">More...</a><br /></td></tr>
+<tr class="memdesc:gaecf85438325ca7bdbbeea93e2169615a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Program flash addresses.  <a href="group__flash.html#gaecf85438325ca7bdbbeea93e2169615a">More...</a><br /></td></tr>
 <tr class="separator:gaecf85438325ca7bdbbeea93e2169615a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga75c2df866e4cc80408f2b9353af087fc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__flash.html#ga75c2df866e4cc80408f2b9353af087fc">SBP_MSG_FLASH_DONE</a>&#160;&#160;&#160;0x00E0</td></tr>
-<tr class="memdesc:ga75c2df866e4cc80408f2b9353af087fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flash response message (Host &lt;= Piksi).  <a href="group__flash.html#ga75c2df866e4cc80408f2b9353af087fc">More...</a><br /></td></tr>
+<tr class="memdesc:ga75c2df866e4cc80408f2b9353af087fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flash response message (host &lt;= device).  <a href="group__flash.html#ga75c2df866e4cc80408f2b9353af087fc">More...</a><br /></td></tr>
 <tr class="separator:ga75c2df866e4cc80408f2b9353af087fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga962eab7956a71a1e219c20df985a3f4e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__flash.html#ga962eab7956a71a1e219c20df985a3f4e">SBP_MSG_FLASH_READ</a>&#160;&#160;&#160;0x00E1</td></tr>
-<tr class="memdesc:ga962eab7956a71a1e219c20df985a3f4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read STM or M25 flash address (Host &lt;=&gt; Piksi).  <a href="group__flash.html#ga962eab7956a71a1e219c20df985a3f4e">More...</a><br /></td></tr>
+<tr class="memdesc:ga962eab7956a71a1e219c20df985a3f4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read STM or M25 flash address (host &lt;=&gt; device).  <a href="group__flash.html#ga962eab7956a71a1e219c20df985a3f4e">More...</a><br /></td></tr>
 <tr class="separator:ga962eab7956a71a1e219c20df985a3f4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga524c614e8b8112e456dddf3a58ef7842"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__flash.html#ga524c614e8b8112e456dddf3a58ef7842">SBP_MSG_FLASH_ERASE</a>&#160;&#160;&#160;0x00E2</td></tr>
-<tr class="memdesc:ga524c614e8b8112e456dddf3a58ef7842"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erase sector of Piksi flash memory (Host =&gt; Piksi).  <a href="group__flash.html#ga524c614e8b8112e456dddf3a58ef7842">More...</a><br /></td></tr>
+<tr class="memdesc:ga524c614e8b8112e456dddf3a58ef7842"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erase sector of device flash memory (host =&gt; device).  <a href="group__flash.html#ga524c614e8b8112e456dddf3a58ef7842">More...</a><br /></td></tr>
 <tr class="separator:ga524c614e8b8112e456dddf3a58ef7842"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa8b86b7c05775e2d0f02b052c24a48e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__flash.html#gaa8b86b7c05775e2d0f02b052c24a48e2">SBP_MSG_STM_FLASH_LOCK_SECTOR</a>&#160;&#160;&#160;0x00E3</td></tr>
-<tr class="memdesc:gaa8b86b7c05775e2d0f02b052c24a48e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock sector of STM flash memory (Host =&gt; Piksi).  <a href="group__flash.html#gaa8b86b7c05775e2d0f02b052c24a48e2">More...</a><br /></td></tr>
+<tr class="memdesc:gaa8b86b7c05775e2d0f02b052c24a48e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock sector of STM flash memory (host =&gt; device)  <a href="group__flash.html#gaa8b86b7c05775e2d0f02b052c24a48e2">More...</a><br /></td></tr>
 <tr class="separator:gaa8b86b7c05775e2d0f02b052c24a48e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9bd94f97e941ce6158d6cd3b37e879b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__flash.html#ga9bd94f97e941ce6158d6cd3b37e879b5">SBP_MSG_STM_FLASH_UNLOCK_SECTOR</a>&#160;&#160;&#160;0x00E4</td></tr>
-<tr class="memdesc:ga9bd94f97e941ce6158d6cd3b37e879b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlock sector of STM flash memory (Host =&gt; Piksi)  <a href="group__flash.html#ga9bd94f97e941ce6158d6cd3b37e879b5">More...</a><br /></td></tr>
+<tr class="memdesc:ga9bd94f97e941ce6158d6cd3b37e879b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlock sector of STM flash memory (host =&gt; device)  <a href="group__flash.html#ga9bd94f97e941ce6158d6cd3b37e879b5">More...</a><br /></td></tr>
 <tr class="separator:ga9bd94f97e941ce6158d6cd3b37e879b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga887365123a2dc2a948b75da0f5ed94ce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__flash.html#ga887365123a2dc2a948b75da0f5ed94ce">SBP_MSG_STM_UNIQUE_ID</a>&#160;&#160;&#160;0x00E5</td></tr>
-<tr class="memdesc:ga887365123a2dc2a948b75da0f5ed94ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read STM32F4's hardcoded unique ID (Host &lt;=&gt; Piksi).  <a href="group__flash.html#ga887365123a2dc2a948b75da0f5ed94ce">More...</a><br /></td></tr>
+<tr class="memdesc:ga887365123a2dc2a948b75da0f5ed94ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read device's hardcoded unique ID (host &lt;=&gt; device)  <a href="group__flash.html#ga887365123a2dc2a948b75da0f5ed94ce">More...</a><br /></td></tr>
 <tr class="separator:ga887365123a2dc2a948b75da0f5ed94ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga76b38d0a23317874830d0516e1b4dd0b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__flash.html#ga76b38d0a23317874830d0516e1b4dd0b">SBP_MSG_M25_FLASH_WRITE_STATUS</a>&#160;&#160;&#160;0x00F3</td></tr>
-<tr class="memdesc:ga76b38d0a23317874830d0516e1b4dd0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write M25 flash status register (Host =&gt; Piksi).  <a href="group__flash.html#ga76b38d0a23317874830d0516e1b4dd0b">More...</a><br /></td></tr>
+<tr class="memdesc:ga76b38d0a23317874830d0516e1b4dd0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write M25 flash status register (host =&gt; device)  <a href="group__flash.html#ga76b38d0a23317874830d0516e1b4dd0b">More...</a><br /></td></tr>
 <tr class="separator:ga76b38d0a23317874830d0516e1b4dd0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
@@ -179,7 +179,7 @@ Macros</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_4f207b46e8207587823dc5b4e3917e6e.html">libsbp</a></li><li class="navelem"><a class="el" href="flash_8h.html">flash.h</a></li>
-    <li class="footer">Generated on Wed Apr 15 2015 00:28:47 for libsbp by
+    <li class="footer">Generated on Wed Apr 15 2015 14:07:47 for libsbp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

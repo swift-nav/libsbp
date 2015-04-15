@@ -36,7 +36,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">libsbp
-   &#160;<span id="projectnumber">v0.32-4-gf6efe28-dirty</span>
+   &#160;<span id="projectnumber">v0.32-6-g73c6eb1-dirty</span>
    </div>
   </td>
  </tr>
@@ -122,18 +122,18 @@ $(document).ready(function(){initNavTree('structmsg__fileio__write__t.html','');
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:adcdd8de726cde3547da221fceaf70391"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmsg__fileio__write__t.html#adcdd8de726cde3547da221fceaf70391">filename</a> [20]</td></tr>
-<tr class="memdesc:adcdd8de726cde3547da221fceaf70391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the file to write to (NULL terminated)  <a href="#adcdd8de726cde3547da221fceaf70391">More...</a><br /></td></tr>
+<tr class="memdesc:adcdd8de726cde3547da221fceaf70391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the file to write to (NULL padded)  <a href="#adcdd8de726cde3547da221fceaf70391">More...</a><br /></td></tr>
 <tr class="separator:adcdd8de726cde3547da221fceaf70391"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ba37e6b40e12ce1d1e5dbee0323069d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__common__inttypes.html#gafaa62991928fb9fb18ff0db62a040aba">u32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmsg__fileio__write__t.html#a4ba37e6b40e12ce1d1e5dbee0323069d">offset</a></td></tr>
 <tr class="memdesc:a4ba37e6b40e12ce1d1e5dbee0323069d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset into the file at which to start writing in bytes [bytes].  <a href="#a4ba37e6b40e12ce1d1e5dbee0323069d">More...</a><br /></td></tr>
 <tr class="separator:a4ba37e6b40e12ce1d1e5dbee0323069d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2873fa0c210cc63894b6cbb14e1a1330"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__common__inttypes.html#ga92c50087ca0e64fa93fc59402c55f8ca">u8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmsg__fileio__write__t.html#a2873fa0c210cc63894b6cbb14e1a1330">data</a> [0]</td></tr>
-<tr class="memdesc:a2873fa0c210cc63894b6cbb14e1a1330"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data to write.  <a href="#a2873fa0c210cc63894b6cbb14e1a1330">More...</a><br /></td></tr>
+<tr class="memdesc:a2873fa0c210cc63894b6cbb14e1a1330"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable-length array of data to write.  <a href="#a2873fa0c210cc63894b6cbb14e1a1330">More...</a><br /></td></tr>
 <tr class="separator:a2873fa0c210cc63894b6cbb14e1a1330"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="file__io_8h_source.html#l00095">95</a> of file <a class="el" href="file__io_8h_source.html">file_io.h</a>.</p>
+<p>Definition at line <a class="el" href="file__io_8h_source.html#l00096">96</a> of file <a class="el" href="file__io_8h_source.html">file_io.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="a2873fa0c210cc63894b6cbb14e1a1330"></a>
 <div class="memitem">
@@ -145,9 +145,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Data to write. </p>
+<p>Variable-length array of data to write. </p>
 
-<p>Definition at line <a class="el" href="file__io_8h_source.html#l00098">98</a> of file <a class="el" href="file__io_8h_source.html">file_io.h</a>.</p>
+<p>Definition at line <a class="el" href="file__io_8h_source.html#l00099">99</a> of file <a class="el" href="file__io_8h_source.html">file_io.h</a>.</p>
 
 </div>
 </div>
@@ -161,9 +161,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Name of the file to write to (NULL terminated) </p>
+<p>Name of the file to write to (NULL padded) </p>
 
-<p>Definition at line <a class="el" href="file__io_8h_source.html#l00096">96</a> of file <a class="el" href="file__io_8h_source.html">file_io.h</a>.</p>
+<p>Definition at line <a class="el" href="file__io_8h_source.html#l00097">97</a> of file <a class="el" href="file__io_8h_source.html">file_io.h</a>.</p>
 
 </div>
 </div>
@@ -179,7 +179,7 @@ Data Fields</h2></td></tr>
 
 <p>Offset into the file at which to start writing in bytes [bytes]. </p>
 
-<p>Definition at line <a class="el" href="file__io_8h_source.html#l00097">97</a> of file <a class="el" href="file__io_8h_source.html">file_io.h</a>.</p>
+<p>Definition at line <a class="el" href="file__io_8h_source.html#l00098">98</a> of file <a class="el" href="file__io_8h_source.html">file_io.h</a>.</p>
 
 </div>
 </div>
@@ -192,7 +192,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structmsg__fileio__write__t.html">msg_fileio_write_t</a></li>
-    <li class="footer">Generated on Wed Apr 15 2015 00:28:47 for libsbp by
+    <li class="footer">Generated on Wed Apr 15 2015 14:07:48 for libsbp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

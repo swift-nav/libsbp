@@ -36,7 +36,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">libsbp
-   &#160;<span id="projectnumber">v0.32-4-gf6efe28-dirty</span>
+   &#160;<span id="projectnumber">v0.32-6-g73c6eb1-dirty</span>
    </div>
   </td>
  </tr>
@@ -159,8 +159,9 @@ Macros</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <ul>
-<li>Geodetic navigation messages reporting GPS time, single-point position, and RTK baseline position solutions. </li>
+<li>Geodetic navigation messages reporting GPS time, position, velocity, and baseline position solutions. For position solutions, these messages define several different position solutions: single-point (SPP), RTK, and pseudo-absolute position solutions.</li>
 </ul>
+<p>The SPP is the standalone, absolute GPS position solution using only a single receiver. The RTK solution is the differential GPS solution, which can use either a fixed/integer or floating carrier phase ambiguity. The pseudo-absolute position solution uses a user-provided, well-surveyed base station position (if available) and the RTK solution in tandem. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ga02cead2855631de486b2e4932370e385"></a>
 <div class="memitem">
@@ -173,9 +174,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Baseline Position in ECEF. </p>
-<p>This message reports the baseline position solution in Earth Centered Earth Fixed (ECEF) coordinates. </p>
+<p>This message reports the baseline solution in Earth Centered Earth Fixed (ECEF) coordinates. This baseline is the relative vector distance from the base station to the rover receiver. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). </p>
 
-<p>Definition at line <a class="el" href="navigation_8h_source.html#l00114">114</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
+<p>Definition at line <a class="el" href="navigation_8h_source.html#l00144">144</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
 
 </div>
 </div>
@@ -190,9 +191,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Baseline in NED. </p>
-<p>This message reports the baseline position solution in North East Down (NED) coordinates. </p>
+<p>This message reports the baseline solution in North East Down (NED) coordinates. This baseline is the relative vector distance from the base station to the rover receiver, and NED coordinate system is defined at the local tangent plane centered at the base station position. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). </p>
 
-<p>Definition at line <a class="el" href="navigation_8h_source.html#l00131">131</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
+<p>Definition at line <a class="el" href="navigation_8h_source.html#l00167">167</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
 
 </div>
 </div>
@@ -209,7 +210,7 @@ Macros</h2></td></tr>
 <p>Dilution of Precision. </p>
 <p>This dilution of precision (DOP) message describes the effect of navigation satellite geometry on positional measurement precision. </p>
 
-<p>Definition at line <a class="el" href="navigation_8h_source.html#l00054">54</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
+<p>Definition at line <a class="el" href="navigation_8h_source.html#l00072">72</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
 
 </div>
 </div>
@@ -224,9 +225,10 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>GPS Time. </p>
-<p>This message reports the GPS time, an integer time scale beginning at January 6, 1980 midnight. GPS time counts the weeks and seconds of the week. The weeks begin at the Saturday/Sunday transition. GPS week 0 began at the beginning of the GPS time scale. Within each week number, the GPS time of the week is between between 0 and 604800 seconds (=60*60*24*7). </p>
+<p>This message reports the GPS time, representing the time since the GPS epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks and seconds of the week. The weeks begin at the Saturday/Sunday transition. GPS week 0 began at the beginning of the GPS time scale.</p>
+<p>Within each week number, the GPS time of the week is between between 0 and 604800 seconds (=60*60*24*7). Note that GPS time does not accumulate leap seconds, and as of now, has a small offset from UTC. In a message stream, this message precedes a set of other navigation messages referenced to the same time (but lacking the ns field) and indicates a more precise time of these messages. </p>
 
-<p>Definition at line <a class="el" href="navigation_8h_source.html#l00039">39</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
+<p>Definition at line <a class="el" href="navigation_8h_source.html#l00055">55</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
 
 </div>
 </div>
@@ -241,9 +243,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Single-point position in ECEF. </p>
-<p>The single-point position solution message reports absolute Earth Centered Earth Fixed (ECEF) coordinates and the status (single point absolute vs RTK) of the position solution. If the rover receiver knows surveyed position of the base station and has an RTK solution, this reports a pseudo-absolute position solution using the base station position and the rover's RTK baseline vector. </p>
+<p>The position solution message reports absolute Earth Centered Earth Fixed (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of the position solution. If the rover receiver knows the surveyed position of the base station and has an RTK solution, this reports a pseudo-absolute position solution using the base station position and the rover's RTK baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). </p>
 
-<p>Definition at line <a class="el" href="navigation_8h_source.html#l00075">75</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
+<p>Definition at line <a class="el" href="navigation_8h_source.html#l00094">94</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
 
 </div>
 </div>
@@ -258,9 +260,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Geodetic Position. </p>
-<p>This single-point position solution message reports the absolute geodetic coordinates and the status (single point absolute vs RTK) of the position solution. If the rover receiver knows the surveyed position of the base station and has an RTK solution, this reports a pseudo-absolute position solution using the base station position and the rover's RTK baseline vector. </p>
+<p>This position solution message reports the absolute geodetic coordinates and the status (single point vs pseudo-absolute RTK) of the position solution. If the rover receiver knows the surveyed position of the base station and has an RTK solution, this reports a pseudo-absolute position solution using the base station position and the rover's RTK baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). </p>
 
-<p>Definition at line <a class="el" href="navigation_8h_source.html#l00096">96</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
+<p>Definition at line <a class="el" href="navigation_8h_source.html#l00119">119</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
 
 </div>
 </div>
@@ -275,9 +277,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Velocity in ECEF. </p>
-<p>This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. </p>
+<p>This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). </p>
 
-<p>Definition at line <a class="el" href="navigation_8h_source.html#l00149">149</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
+<p>Definition at line <a class="el" href="navigation_8h_source.html#l00190">190</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
 
 </div>
 </div>
@@ -292,9 +294,9 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Velocity in NED. </p>
-<p>This message reports the velocity in local North East Down (NED) coordinates. </p>
+<p>This message reports the velocity in local North East Down (NED) coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). </p>
 
-<p>Definition at line <a class="el" href="navigation_8h_source.html#l00166">166</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
+<p>Definition at line <a class="el" href="navigation_8h_source.html#l00210">210</a> of file <a class="el" href="navigation_8h_source.html">navigation.h</a>.</p>
 
 </div>
 </div>
@@ -303,7 +305,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Apr 15 2015 00:28:47 for libsbp by
+    <li class="footer">Generated on Wed Apr 15 2015 14:07:47 for libsbp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

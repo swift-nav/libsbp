@@ -1,7 +1,7 @@
 var group__bootload =
 [
     [ "msg_bootloader_handshake_t", "structmsg__bootloader__handshake__t.html", [
-      [ "handshake", "structmsg__bootloader__handshake__t.html#a21b84ca178875ec65916b3b0539c5ef8", null ]
+      [ "handshake", "structmsg__bootloader__handshake__t.html#aba1bf7bcc2fe6016cc9a507917ed0412", null ]
     ] ],
     [ "msg_bootloader_jump_to_app_t", "structmsg__bootloader__jump__to__app__t.html", [
       [ "jump", "structmsg__bootloader__jump__to__app__t.html#a07dbb4656441a891c6e7bdaf4afcea60", null ]

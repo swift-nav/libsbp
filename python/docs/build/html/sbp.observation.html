@@ -59,7 +59,7 @@
             
   <div class="section" id="module-sbp.observation">
 <span id="sbp-observation-module"></span><h1>sbp.observation module<a class="headerlink" href="#module-sbp.observation" title="Permalink to this headline">¶</a></h1>
-<p>Satellite observation messages from the Piksi.</p>
+<p>Satellite observation messages from the device.</p>
 <dl class="class">
 <dt id="sbp.observation.CarrierPhase">
 <em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">CarrierPhase</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#CarrierPhase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.CarrierPhase" title="Permalink to this definition">¶</a></dt>
@@ -98,10 +98,12 @@ cycles and 8-bits of fractional cycles.</p>
 <div><p>You can have MSG_BASE_POS inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>This may be the position as reported by the base station itself or the</p>
+<p>The base station position message is the position reported by</p>
 </div></blockquote>
-<p>position obtained from doing a single point solution using the base
-station observations.</p>
+<p>the base station itself. It is used for pseudo-absolute RTK
+positioning, and is required to be a high-accuracy surveyed
+location of the base station. Any error here will result in an
+error in the pseudo-absolute position output.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
@@ -150,10 +152,12 @@ the message.</p>
 <div><p>You can have MSG_OBS inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>The GPS observations message reports all the pseudo range and</p>
+<p>The GPS observations message reports all the raw pseudorange and</p>
 </div></blockquote>
 <p>carrier phase observations for the satellites being tracked by
-the Piksi.</p>
+the device. Carrier phase observation here is represented as a
+40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
+whole cycles and 8-bits of fractional cycles).</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
@@ -164,7 +168,7 @@ the Piksi.</p>
 <dd>Pseudorange and carrier phase observation for a</dd>
 </dl>
 </div></blockquote>
-<p>satellite being tracked</p>
+<p>satellite being tracked.</p>
 <dl class="method">
 <dt id="sbp.observation.MsgObs.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgObs.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgObs.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -270,12 +274,11 @@ counter (ith packet of n)</p>
 </dl>
 </div></blockquote>
 <p>signal has lost and regained lock, indicating that the
-carrier phase ambiguity may have changed. There is no
-significance to the value of the lock indicator</p>
+carrier phase ambiguity may have changed.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>prn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>PRN identifier of the satellite signal</dd>
+<dd>PRN-1 identifier of the satellite signal</dd>
 </dl>
 </div></blockquote>
 <dl class="method">

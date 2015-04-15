@@ -59,15 +59,15 @@
             
   <div class="section" id="module-sbp.file_io">
 <span id="sbp-file-io-module"></span><h1>sbp.file_io module<a class="headerlink" href="#module-sbp.file_io" title="Permalink to this headline">¶</a></h1>
-<p>Messges for using Piksi&#8217;s onboard flash filesystem functionality
-from the Contiki project. This allows data to be stored persistently
-in the microcontroller&#8217;s program flash with wear-levelling using a
-simple filesystem interface. The Contiki file system interface (CFS)
-defines an abstract API for reading directories and for reading and
-writing files. These are in the implementation-defined range
-(0x0000-0x00FF), and intended for internal-use only. Note that some
-of these messages taking a request from a host and a response from
-the Piksi share the same message type ID.</p>
+<p>Messages for using device&#8217;s onboard flash filesystem
+functionality. This allows data to be stored persistently in the
+device&#8217;s program flash with wear-levelling using a simple filesystem
+interface. The file system interface (CFS) defines an abstract API
+for reading directories and for reading and writing files.</p>
+<p>These are in the implementation-defined range (0x0000-0x00FF), and
+intended for internal-use only. Note that some of these messages
+share the same message type ID for both the host request and the
+device response.</p>
 <dl class="class">
 <dt id="sbp.file_io.MsgFileioRead">
 <em class="property">class </em><code class="descclassname">sbp.file_io.</code><code class="descname">MsgFileioRead</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/file_io.html#MsgFileioRead"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.file_io.MsgFileioRead" title="Permalink to this definition">¶</a></dt>
@@ -93,7 +93,7 @@ message&#8221;.</p>
 <dt>chunk_size <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Chunk size to read</dd>
 <dt>filename <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>Name of the file to read from (NULL terminated)</dd>
+<dd>Name of the file to read from (NULL padded)</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
@@ -134,7 +134,7 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The read directory message lists the files in a directory on the</p>
 </div></blockquote>
-<p>Piksi&#8217;s onboard flash file system.  The offset parameter can be
+<p>device&#8217;s onboard flash file system.  The offset parameter can be
 used to skip the first n elements of the file list. Returns a
 MSG_FILEIO_READ_DIR message containing the directory listings as
 a NULL delimited list. The listing is chunked over multiple SBP
@@ -149,7 +149,7 @@ message&#8221;.</p>
 <dt>offset <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>The offset to skip the first n elements of the file list</dd>
 <dt>dirname <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>Name of the directory to list</dd>
+<dd>Name of the directory to list (NULL padded)</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
@@ -197,7 +197,7 @@ of its fields.</p>
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
 <dd>SBP parent object to inherit from.</dd>
 <dt>filename <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>Name of the file to delete (NULL terminated)</dd>
+<dd>Name of the file to delete (NULL padded)</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
@@ -247,11 +247,11 @@ print &#8220;Invalid fileio write message&#8221;.</p>
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
 <dd>SBP parent object to inherit from.</dd>
 <dt>filename <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>Name of the file to write to (NULL terminated)</dd>
+<dd>Name of the file to write to (NULL padded)</dd>
 <dt>offset <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Offset into the file at which to start writing in bytes</dd>
 <dt>data <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
-<dd>Data to write</dd>
+<dd>Variable-length array of data to write</dd>
 </dl>
 </div></blockquote>
 <dl class="method">

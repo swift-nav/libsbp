@@ -59,9 +59,12 @@
             
   <div class="section" id="module-sbp.flash">
 <span id="sbp-flash-module"></span><h1>sbp.flash module<a class="headerlink" href="#module-sbp.flash" title="Permalink to this headline">¶</a></h1>
-<p>Messages for reading/writing the Piksi&#8217;s onboard flash memory. These
-are in the implementation-defined range (0x0000-0x00FF), and largely
-intended for internal-use only.</p>
+<p>Messages for reading/writing the device&#8217;s onboard flash memory. Many
+of these messages target specific flash memory peripherals used in
+Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
+configuration flash.</p>
+<p>These are in the implementation-defined range (0x0000-0x00FF), and
+are intended for internal-use only.</p>
 <dl class="class">
 <dt id="sbp.flash.MsgFlashDone">
 <em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgFlashDone</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashDone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashDone" title="Permalink to this definition">¶</a></dt>
@@ -73,7 +76,7 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message defines success or failure codes for a variety of</p>
 </div></blockquote>
-<p>flash memory requests from the host to the Piksi. Flash read and
+<p>flash memory requests from the host to the device. Flash read and
 write messages, such as MSG_FLASH_READ or MSG_FLASH_WRITE, may
 return this message on failure.</p>
 <blockquote>
@@ -122,7 +125,7 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The flash erase message from the host erases a sector of either</p>
 </div></blockquote>
-<p>the STM or M25 onboard flash memory. The Piksi will reply with a
+<p>the STM or M25 onboard flash memory. The device will reply with a
 MSG_FLASH_DONE message containing the return code - FLASH_OK (0)
 on success or FLASH_INVALID_FLASH (1) if the flash specified is
 invalid.</p>
@@ -175,7 +178,7 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The flash program message programs a set of addresses of either</p>
 </div></blockquote>
-<p>the STM or M25 flash. The Piksi replies with either a
+<p>the STM or M25 flash. The device replies with either a
 MSG_FLASH_DONE message containing the return code FLASH_OK (0)
 on success, or FLASH_INVALID_LEN (2) if the maximum write size
 is exceeded. Note that the sector-containing addresses must be
@@ -196,7 +199,7 @@ erased before addresses can be programmed.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>data <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
-<dd>Data to program addresses with, sized by addr_len</dd>
+<dd>Data to program addresses with, with length N=addr_len</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
@@ -237,7 +240,7 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The flash read message reads a set of addresses of either the</p>
 </div></blockquote>
-<p>STM or M25 onboard flash. The Piksi replies with a
+<p>STM or M25 onboard flash. The device replies with a
 MSG_FLASH_READ message containing either the read data on
 success or a MSG_FLASH_DONE message containing the return code
 FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
@@ -294,7 +297,7 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The flash status message writes to the 8-bit M25 flash status</p>
 </div></blockquote>
-<p>register. The Piksi replies with a MSG_FLASH_DONE message.</p>
+<p>register. The device replies with a MSG_FLASH_DONE message.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
@@ -341,12 +344,12 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The flash lock message locks a sector of the STM flash</p>
 </div></blockquote>
-<p>memory. The Piksi replies with a MSG_FLASH_DONE message.</p>
+<p>memory. The device replies with a MSG_FLASH_DONE message.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
 <dd>SBP parent object to inherit from.</dd>
-<dt>sector <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dt>sector <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Flash sector number to lock</dd>
 </dl>
 </div></blockquote>
@@ -388,12 +391,12 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The flash unlock message unlocks a sector of the STM flash</p>
 </div></blockquote>
-<p>memory. The Piksi replies with a MSG_FLASH_DONE message.</p>
+<p>memory. The device replies with a MSG_FLASH_DONE message.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
 <dd>SBP parent object to inherit from.</dd>
-<dt>sector <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dt>sector <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Flash sector number to unlock</dd>
 </dl>
 </div></blockquote>
@@ -433,15 +436,15 @@ the message.</p>
 <div><p>You can have MSG_STM_UNIQUE_ID inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>This message reads the STM32F4&#8217;s hardcoded unique ID. The Piksi</p>
+<p>This message reads the device&#8217;s hardcoded unique ID. The device</p>
 </div></blockquote>
-<p>returns STM32F4 unique ID (12 bytes) back to host.</p>
+<p>returns 12-byte unique ID back to host.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
 <dd>SBP parent object to inherit from.</dd>
-<dt>stm_id <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>STM32F4 unique ID</dd>
+<dt>stm_id <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
+<dd>Device unique ID</dd>
 </dl>
 </div></blockquote>
 <dl class="method">

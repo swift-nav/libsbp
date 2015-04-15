@@ -72,11 +72,12 @@ of its fields.</p>
 <p>The heartbeat message is sent periodically to inform the host</p>
 </div></blockquote>
 <p>or other attached devices that the system is running. It is
-intended to be used to monitor for system malfunctions and
-also contains status flags that indicate to the host the
-status of the system and if it is operating correctly.</p>
+used to monitor system malfunctions. It also contains status
+flags that indicate to the host the status of the system and
+whether it is operating correctly. Currently, the expected
+heartbeat interval is 1 sec.</p>
 <p>The system error flag is used to indicate that an error has
-occurred in the system. To determine the source of the error
+occurred in the system. To determine the source of the error,
 the remaining error flags should be inspected.</p>
 <blockquote>
 <div><dl class="docutils">
@@ -124,9 +125,9 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The system start-up message is sent once on system</p>
 </div></blockquote>
-<p>start-up. It is intended to be used to notify the host or
-other attached devices that the system has started and is now
-ready to respond to commands or configuration requests.</p>
+<p>start-up. It notifies the host or other attached devices that
+the system has started and is now ready to respond to commands
+or configuration requests.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>

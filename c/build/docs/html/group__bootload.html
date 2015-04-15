@@ -36,7 +36,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">libsbp
-   &#160;<span id="projectnumber">v0.32-4-gf6efe28-dirty</span>
+   &#160;<span id="projectnumber">v0.32-6-g73c6eb1-dirty</span>
    </div>
   </td>
  </tr>
@@ -123,19 +123,20 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gad1cab8ba36be6929d79dcc69ef84132d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bootload.html#gad1cab8ba36be6929d79dcc69ef84132d">SBP_MSG_BOOTLOADER_HANDSHAKE</a>&#160;&#160;&#160;0x00B0</td></tr>
-<tr class="memdesc:gad1cab8ba36be6929d79dcc69ef84132d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bootloading handshake (Host &lt;=&gt; Piksi).  <a href="#gad1cab8ba36be6929d79dcc69ef84132d">More...</a><br /></td></tr>
+<tr class="memdesc:gad1cab8ba36be6929d79dcc69ef84132d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bootloading handshake (host &lt;=&gt; device)  <a href="#gad1cab8ba36be6929d79dcc69ef84132d">More...</a><br /></td></tr>
 <tr class="separator:gad1cab8ba36be6929d79dcc69ef84132d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga55bcdd971a9691e37e9ff3141351203a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bootload.html#ga55bcdd971a9691e37e9ff3141351203a">SBP_MSG_BOOTLOADER_JUMP_TO_APP</a>&#160;&#160;&#160;0x00B1</td></tr>
-<tr class="memdesc:ga55bcdd971a9691e37e9ff3141351203a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bootloader jump to application (Host =&gt; Piksi)  <a href="#ga55bcdd971a9691e37e9ff3141351203a">More...</a><br /></td></tr>
+<tr class="memdesc:ga55bcdd971a9691e37e9ff3141351203a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bootloader jump to application (host =&gt; device)  <a href="#ga55bcdd971a9691e37e9ff3141351203a">More...</a><br /></td></tr>
 <tr class="separator:ga55bcdd971a9691e37e9ff3141351203a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaee3d85334bcfe0dfd4c1b5f4cd16e5c5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bootload.html#gaee3d85334bcfe0dfd4c1b5f4cd16e5c5">SBP_MSG_NAP_DEVICE_DNA</a>&#160;&#160;&#160;0x00DD</td></tr>
-<tr class="memdesc:gaee3d85334bcfe0dfd4c1b5f4cd16e5c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send FPGA device DNA over UART (Host &lt;=&gt; Piksi).  <a href="#gaee3d85334bcfe0dfd4c1b5f4cd16e5c5">More...</a><br /></td></tr>
+<tr class="memdesc:gaee3d85334bcfe0dfd4c1b5f4cd16e5c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read FPGA device ID over UART (host &lt;=&gt; device)  <a href="#gaee3d85334bcfe0dfd4c1b5f4cd16e5c5">More...</a><br /></td></tr>
 <tr class="separator:gaee3d85334bcfe0dfd4c1b5f4cd16e5c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <ul>
-<li>Messages for the bootloading configuration on the Piksi. These are in the implementation-defined range (0x0000-0x00FF), and intended for internal-use only. Note that some of these messages taking a request from a host and a response from the Piksi share the same message type ID. </li>
+<li>Messages for the bootloading configuration on the device.</li>
 </ul>
+<p>These are in the implementation-defined range (0x0000-0x00FF), and are intended for internal use only. Note that some of these messages share the same message type ID for both the host request and the device response. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="gad1cab8ba36be6929d79dcc69ef84132d"></a>
 <div class="memitem">
@@ -147,10 +148,10 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Bootloading handshake (Host &lt;=&gt; Piksi). </p>
-<p>The bootloader continually sends a handshake message to the host for a short period of time, and then jumps to the firmware if it doesn't receive a handshake from the host. If the host replies with a handshake the bootloader doesn't jump to the firmware and nwaits for flash programming messages, and the host has to send a MSG_BOOTLOADER_JUMP_TO_APP when it's done programming. On old versions of the bootloader (less than v0.1), hardcoded to 0. On new versions, return the git describe string for the bootloader build. </p>
+<p>Bootloading handshake (host &lt;=&gt; device) </p>
+<p>The handshake message establishes a handshake between the device bootloader and the host. The payload string contains the bootloader version number, but returns an empty string for earlier versions. </p>
 
-<p>Definition at line <a class="el" href="bootload_8h_source.html#l00045">45</a> of file <a class="el" href="bootload_8h_source.html">bootload.h</a>.</p>
+<p>Definition at line <a class="el" href="bootload_8h_source.html#l00041">41</a> of file <a class="el" href="bootload_8h_source.html">bootload.h</a>.</p>
 
 </div>
 </div>
@@ -164,10 +165,10 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Bootloader jump to application (Host =&gt; Piksi) </p>
+<p>Bootloader jump to application (host =&gt; device) </p>
 <p>The host initiates the bootloader to jump to the application. </p>
 
-<p>Definition at line <a class="el" href="bootload_8h_source.html#l00055">55</a> of file <a class="el" href="bootload_8h_source.html">bootload.h</a>.</p>
+<p>Definition at line <a class="el" href="bootload_8h_source.html#l00051">51</a> of file <a class="el" href="bootload_8h_source.html">bootload.h</a>.</p>
 
 </div>
 </div>
@@ -181,10 +182,10 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send FPGA device DNA over UART (Host &lt;=&gt; Piksi). </p>
-<p>The device DNA message from the host reads the unique device DNA from the Swift Navigation Acceleration Peripheral (SwiftNAP), a Spartan 6 FPGA. By convention, the host message buffer is empty; the Piksi returns the device DNA in a MSG_NAP_DEVICE_DNA message. </p>
+<p>Read FPGA device ID over UART (host &lt;=&gt; device) </p>
+<p>The device message from the host reads a unique device identifier from the SwiftNAP, an FPGA. The host requests the ID by sending a MSG_NAP_DEVICE_DNA with an empty payload. The device responds with the same message with the device ID in the payload. Note that this ID is tied to the FPGA, and not related to the Piksi's serial number. </p>
 
-<p>Definition at line <a class="el" href="bootload_8h_source.html#l00069">69</a> of file <a class="el" href="bootload_8h_source.html">bootload.h</a>.</p>
+<p>Definition at line <a class="el" href="bootload_8h_source.html#l00066">66</a> of file <a class="el" href="bootload_8h_source.html">bootload.h</a>.</p>
 
 </div>
 </div>
@@ -193,7 +194,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Apr 15 2015 00:28:47 for libsbp by
+    <li class="footer">Generated on Wed Apr 15 2015 14:07:47 for libsbp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

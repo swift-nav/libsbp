@@ -73,8 +73,8 @@ var searchData=
   ['sbp_5fstate_5finit',['sbp_state_init',['../group__sbp.html#ga973aa9691a5d5b04dddf4312637d9d53',1,'sbp_state_init(sbp_state_t *s):&#160;sbp.c'],['../group__sbp.html#ga973aa9691a5d5b04dddf4312637d9d53',1,'sbp_state_init(sbp_state_t *s):&#160;sbp.c']]],
   ['sbp_5fstate_5fset_5fio_5fcontext',['sbp_state_set_io_context',['../group__sbp.html#ga32004b9a1589b99a3066b9abeee09e7a',1,'sbp_state_set_io_context(sbp_state_t *s, void *context):&#160;sbp.c'],['../group__sbp.html#ga32004b9a1589b99a3066b9abeee09e7a',1,'sbp_state_set_io_context(sbp_state_t *s, void *context):&#160;sbp.c']]],
   ['sbp_5fstate_5ft',['sbp_state_t',['../structsbp__state__t.html',1,'']]],
-  ['sector',['sector',['../structmsg__stm__flash__lock__sector__t.html#a85c74e56db7f824e63716b67fc32750a',1,'msg_stm_flash_lock_sector_t::sector()'],['../structmsg__stm__flash__unlock__sector__t.html#a85c74e56db7f824e63716b67fc32750a',1,'msg_stm_flash_unlock_sector_t::sector()']]],
-  ['sector_5fnum',['sector_num',['../structmsg__flash__erase__t.html#a0866ba29f6df4666374b2efd6adf37de',1,'msg_flash_erase_t']]],
+  ['sector',['sector',['../structmsg__stm__flash__lock__sector__t.html#a2fd226114f901251c2985bae9924cbf6',1,'msg_stm_flash_lock_sector_t::sector()'],['../structmsg__stm__flash__unlock__sector__t.html#a2fd226114f901251c2985bae9924cbf6',1,'msg_stm_flash_unlock_sector_t::sector()']]],
+  ['sector_5fnum',['sector_num',['../structmsg__flash__erase__t.html#abb04d753454ba34f0ca8eeb21c67dd1e',1,'msg_flash_erase_t']]],
   ['sender_5fid',['sender_id',['../structsbp__state__t.html#a0cbfd514575db0c58c28820682201ef3',1,'sbp_state_t']]],
   ['setting',['setting',['../structmsg__settings__t.html#a17f469a7c8c353e987122ba53a6e7823',1,'msg_settings_t']]],
   ['settings',['Settings',['../group__settings.html',1,'']]],
@@ -85,7 +85,7 @@ var searchData=
   ['state',['state',['../structsbp__state__t.html#a401e908dfe3397a134e0b6a5fb9ef49f',1,'sbp_state_t::state()'],['../structtracking__channel__state__t.html#ad0bc4e4e6e6ffc52d9079b73afd73887',1,'tracking_channel_state_t::state()']]],
   ['states',['states',['../structmsg__tracking__state__t.html#ae826d3c584a78ec3a7dc6fd2d9214d9c',1,'msg_tracking_state_t']]],
   ['status',['status',['../structmsg__m25__flash__write__status__t.html#a0b815462138714153d77b864396b72bd',1,'msg_m25_flash_write_status_t']]],
-  ['stm_5fid',['stm_id',['../structmsg__stm__unique__id__t.html#a6ef808030652d37ec87719062f6b3772',1,'msg_stm_unique_id_t']]],
+  ['stm_5fid',['stm_id',['../structmsg__stm__unique__id__t.html#a179a186e49f95c96c275a9f2b85954f3',1,'msg_stm_unique_id_t']]],
   ['system',['System',['../group__system.html',1,'']]],
   ['system_2eh',['system.h',['../system_8h.html',1,'']]]
 ];

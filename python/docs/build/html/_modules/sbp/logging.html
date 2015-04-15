@@ -66,7 +66,7 @@
 
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Logging and debugging messages from the Piksi. These are in the</span>
+<span class="sd">Logging and debugging messages from the device. These are in the</span>
 <span class="sd">implementation-defined range (0x0000-0x00FF).</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -78,7 +78,7 @@
 <span class="kn">import</span> <span class="nn">six</span>
 
 <span class="c"># Automatically generated from piksi/yaml/swiftnav/sbp/logging.yaml</span>
-<span class="c"># with generate.py at 2015-04-14 12:12:07.025289. Please do not hand edit!</span>
+<span class="c"># with generate.py at 2015-04-15 12:17:09.618283. Please do not hand edit!</span>
 
 
 <span class="n">SBP_MSG_PRINT</span> <span class="o">=</span> <span class="mh">0x0010</span>
@@ -90,11 +90,9 @@
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
-<span class="sd">  This message contains a human-reabable payload string from the</span>
-<span class="sd">Piksi containing errors, warnings and informational messages at</span>
-<span class="sd">ERROR, WARNING, DEBUG, INFO logging levels. These message may</span>
-<span class="sd">also contain information tagged by filename, as well as debug</span>
-<span class="sd">info on function entry/exit when enabled within the firmware.</span>
+<span class="sd">  This message contains a human-readable payload string from the</span>
+<span class="sd">device containing errors, warnings and informational messages at</span>
+<span class="sd">ERROR, WARNING, DEBUG, INFO logging levels.</span>
 
 
 <span class="sd">  Parameters</span>
@@ -102,7 +100,7 @@
 <span class="sd">  sbp : SBP</span>
 <span class="sd">    SBP parent object to inherit from.</span>
 <span class="sd">  text : string</span>
-<span class="sd">    Informative, human-readable string</span>
+<span class="sd">    Human-readable string</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgPrint&quot;</span><span class="p">,</span>
@@ -162,7 +160,7 @@
 
 <span class="sd">  </span>
 <span class="sd">  This is an unused legacy message for tracing variable values</span>
-<span class="sd">within the Piksi firmware and streaming those back to the host.</span>
+<span class="sd">within the device firmware and streaming those back to the host.</span>
 
 
 <span class="sd">  &quot;&quot;&quot;</span>

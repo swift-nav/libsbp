@@ -60,7 +60,7 @@
   <div class="section" id="module-sbp.ext_events">
 <span id="sbp-ext-events-module"></span><h1>sbp.ext_events module<a class="headerlink" href="#module-sbp.ext_events" title="Permalink to this headline">¶</a></h1>
 <p>Messages reporting accurately-timestamped external events,
-e.g. camera shutter time</p>
+e.g. camera shutter time.</p>
 <dl class="class">
 <dt id="sbp.ext_events.MsgExtEvent">
 <em class="property">class </em><code class="descclassname">sbp.ext_events.</code><code class="descname">MsgExtEvent</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ext_events.html#MsgExtEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ext_events.MsgExtEvent" title="Permalink to this definition">¶</a></dt>
@@ -80,9 +80,14 @@ of its fields.</p>
 <dt>wn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>GPS week number</dd>
 <dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>GPS Time of Week rounded to the nearest ms</dd>
+<dd>GPS time of week rounded to the nearest millisecond</dd>
 <dt>ns <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Nanosecond remainder of rounded tow</dd>
+<dd>Nanosecond residual of millisecond-rounded TOW (ranges</dd>
+</dl>
+</div></blockquote>
+<p>from -500000 to 500000)</p>
+<blockquote>
+<div><dl class="docutils">
 <dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Flags</dd>
 <dt>pin <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>

@@ -36,7 +36,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">libsbp
-   &#160;<span id="projectnumber">v0.32-4-gf6efe28-dirty</span>
+   &#160;<span id="projectnumber">v0.32-6-g73c6eb1-dirty</span>
    </div>
   </td>
  </tr>
@@ -121,19 +121,20 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga272bac7b29641673c4f456661f949554"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__settings.html#ga272bac7b29641673c4f456661f949554">SBP_MSG_SETTINGS</a>&#160;&#160;&#160;0x00A0</td></tr>
-<tr class="memdesc:ga272bac7b29641673c4f456661f949554"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read/write Piksi configuration settings (Host &lt;=&gt; Piksi).  <a href="#ga272bac7b29641673c4f456661f949554">More...</a><br /></td></tr>
+<tr class="memdesc:ga272bac7b29641673c4f456661f949554"><td class="mdescLeft">&#160;</td><td class="mdescRight">R/W device configuration settings (host &lt;=&gt; device)  <a href="#ga272bac7b29641673c4f456661f949554">More...</a><br /></td></tr>
 <tr class="separator:ga272bac7b29641673c4f456661f949554"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga323b2bd9bd47442cf5977b6637c4e6fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__settings.html#ga323b2bd9bd47442cf5977b6637c4e6fe">SBP_MSG_SETTINGS_SAVE</a>&#160;&#160;&#160;0x00A1</td></tr>
-<tr class="memdesc:ga323b2bd9bd47442cf5977b6637c4e6fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save settings to flash (Host =&gt; Piksi)  <a href="#ga323b2bd9bd47442cf5977b6637c4e6fe">More...</a><br /></td></tr>
+<tr class="memdesc:ga323b2bd9bd47442cf5977b6637c4e6fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save settings to flash (host =&gt; device)  <a href="#ga323b2bd9bd47442cf5977b6637c4e6fe">More...</a><br /></td></tr>
 <tr class="separator:ga323b2bd9bd47442cf5977b6637c4e6fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafb7b9a6b540727b7ac569c90e12eb43f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__settings.html#gafb7b9a6b540727b7ac569c90e12eb43f">SBP_MSG_SETTINGS_READ_BY_INDEX</a>&#160;&#160;&#160;0x00A2</td></tr>
-<tr class="memdesc:gafb7b9a6b540727b7ac569c90e12eb43f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read setting by direct index (Host &lt;=&gt; Piksi)  <a href="#gafb7b9a6b540727b7ac569c90e12eb43f">More...</a><br /></td></tr>
+<tr class="memdesc:gafb7b9a6b540727b7ac569c90e12eb43f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read setting by direct index (host &lt;=&gt; device)  <a href="#gafb7b9a6b540727b7ac569c90e12eb43f">More...</a><br /></td></tr>
 <tr class="separator:gafb7b9a6b540727b7ac569c90e12eb43f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <ul>
-<li>Messages for reading and writing the Piksi's device settings. These are in the implementation-defined range (0x0000-0x00FF), and intended for internal-use only. Please see the accompanying description of settings configurations for more details. Note that some of these messages taking a request from a host and a response from the Piksi share the same message type ID. </li>
+<li>Messages for reading and writing the device's device settings.</li>
 </ul>
+<p>These are in the implementation-defined range (0x0000-0x00FF). Note that some of these messages share the same message type ID for both the host request and the device response. See the accompanying document for descriptions of settings configurations and examples: <a href="https://github.com/swift-nav/piksi_firmware/blob/master/docs/settings.pdf">https://github.com/swift-nav/piksi_firmware/blob/master/docs/settings.pdf</a> </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ga272bac7b29641673c4f456661f949554"></a>
 <div class="memitem">
@@ -145,10 +146,10 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Read/write Piksi configuration settings (Host &lt;=&gt; Piksi). </p>
-<p>The setting message reads and writes the Piksi's configuration. </p>
+<p>R/W device configuration settings (host &lt;=&gt; device) </p>
+<p>The setting message reads and writes the device's configuration. </p>
 
-<p>Definition at line <a class="el" href="settings_8h_source.html#l00038">38</a> of file <a class="el" href="settings_8h_source.html">settings.h</a>.</p>
+<p>Definition at line <a class="el" href="settings_8h_source.html#l00040">40</a> of file <a class="el" href="settings_8h_source.html">settings.h</a>.</p>
 
 </div>
 </div>
@@ -162,10 +163,10 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Read setting by direct index (Host &lt;=&gt; Piksi) </p>
+<p>Read setting by direct index (host &lt;=&gt; device) </p>
 <p>The settings message for iterating through the settings values. It will read the setting at an index, returning a NULL-terminated and delimited string with contents [SECTION_SETTING, SETTING, VALUE]. </p>
 
-<p>Definition at line <a class="el" href="settings_8h_source.html#l00063">63</a> of file <a class="el" href="settings_8h_source.html">settings.h</a>.</p>
+<p>Definition at line <a class="el" href="settings_8h_source.html#l00064">64</a> of file <a class="el" href="settings_8h_source.html">settings.h</a>.</p>
 
 </div>
 </div>
@@ -179,10 +180,10 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Save settings to flash (Host =&gt; Piksi) </p>
-<p>The save settings message persists the Piksi's current settings configuration to its onboard flash memory file system. </p>
+<p>Save settings to flash (host =&gt; device) </p>
+<p>The save settings message persists the device's current settings configuration to its onboard flash memory file system. </p>
 
-<p>Definition at line <a class="el" href="settings_8h_source.html#l00053">53</a> of file <a class="el" href="settings_8h_source.html">settings.h</a>.</p>
+<p>Definition at line <a class="el" href="settings_8h_source.html#l00054">54</a> of file <a class="el" href="settings_8h_source.html">settings.h</a>.</p>
 
 </div>
 </div>
@@ -191,7 +192,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Apr 15 2015 00:28:47 for libsbp by
+    <li class="footer">Generated on Wed Apr 15 2015 14:07:47 for libsbp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>
