@@ -59,8 +59,16 @@
             
   <div class="section" id="module-sbp.navigation">
 <span id="sbp-navigation-module"></span><h1>sbp.navigation module<a class="headerlink" href="#module-sbp.navigation" title="Permalink to this headline">¶</a></h1>
-<p>Geodetic navigation messages reporting GPS time, single-point
-position, and RTK baseline position solutions.</p>
+<p>Geodetic navigation messages reporting GPS time, position, velocity,
+and baseline position solutions. For position solutions, these
+messages define several different position solutions: single-point
+(SPP), RTK, and pseudo-absolute position solutions.</p>
+<p>The SPP is the standalone, absolute GPS position solution using only
+a single receiver. The RTK solution is the differential GPS
+solution, which can use either a fixed/integer or floating carrier
+phase ambiguity. The pseudo-absolute position solution uses a
+user-provided, well-surveyed base station position (if available)
+and the RTK solution in tandem.</p>
 <dl class="class">
 <dt id="sbp.navigation.MsgBaselineECEF">
 <em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgBaselineECEF</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF" title="Permalink to this definition">¶</a></dt>
@@ -70,9 +78,12 @@ position, and RTK baseline position solutions.</p>
 <div><p>You can have MSG_BASELINE_ECEF inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>This message reports the baseline position solution in Earth</p>
+<p>This message reports the baseline solution in Earth Centered</p>
 </div></blockquote>
-<p>Centered Earth Fixed (ECEF) coordinates.</p>
+<p>Earth Fixed (ECEF) coordinates. This baseline is the relative
+vector distance from the base station to the rover receiver. The
+full GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow).</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
@@ -86,7 +97,12 @@ of its fields.</p>
 <dt>z <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Baseline ECEF Z coordinate</dd>
 <dt>accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Position accuracy estimate</dd>
+<dd>Position accuracy estimate (not implemented). Defaults</dd>
+</dl>
+</div></blockquote>
+<p>to 0.</p>
+<blockquote>
+<div><dl class="docutils">
 <dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Number of satellites used in solution</dd>
 <dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
@@ -129,9 +145,13 @@ the message.</p>
 <div><p>You can have MSG_BASELINE_NED inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>This message reports the baseline position solution in North</p>
+<p>This message reports the baseline solution in North East Down</p>
 </div></blockquote>
-<p>East Down (NED) coordinates.</p>
+<p>(NED) coordinates. This baseline is the relative vector distance
+from the base station to the rover receiver, and NED coordinate
+system is defined at the local tangent plane centered at the
+base station position.  The full GPS time is given by the
+preceding MSG_GPS_TIME with the matching time-of-week (tow).</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
@@ -145,9 +165,19 @@ of its fields.</p>
 <dt>d <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Baseline Down coordinate</dd>
 <dt>h_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Horizontal position accuracy estimate</dd>
+<dd>Horizontal position accuracy estimate (not</dd>
+</dl>
+</div></blockquote>
+<p>implemented). Defaults to 0.</p>
+<blockquote>
+<div><dl class="docutils">
 <dt>v_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Vertical position accuracy estimate</dd>
+<dd>Vertical position accuracy estimate (not</dd>
+</dl>
+</div></blockquote>
+<p>implemented). Defaults to 0.</p>
+<blockquote>
+<div><dl class="docutils">
 <dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Number of satellites used in solution</dd>
 <dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
@@ -248,13 +278,19 @@ the message.</p>
 <div><p>You can have MSG_GPS_TIME inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>This message reports the GPS time, an integer time scale</p>
+<p>This message reports the GPS time, representing the time since</p>
 </div></blockquote>
-<p>beginning at January 6, 1980 midnight. GPS time counts the weeks
-and seconds of the week. The weeks begin at the Saturday/Sunday
-transition. GPS week 0 began at the beginning of the GPS time
-scale. Within each week number, the GPS time of the week is
-between between 0 and 604800 seconds (=60*60*24*7).</p>
+<p>the GPS epoch began on midnight January 6, 1980 UTC. GPS time
+counts the weeks and seconds of the week. The weeks begin at the
+Saturday/Sunday transition. GPS week 0 began at the beginning of
+the GPS time scale.</p>
+<p>Within each week number, the GPS time of the week is between
+between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
+does not accumulate leap seconds, and as of now, has a small
+offset from UTC. In a message stream, this message precedes a
+set of other navigation messages referenced to the same time
+(but lacking the ns field) and indicates a more precise time of
+these messages.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
@@ -262,9 +298,14 @@ between between 0 and 604800 seconds (=60*60*24*7).</p>
 <dt>wn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>GPS week number</dd>
 <dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>GPS time of week rounded to the nearest ms</dd>
+<dd>GPS time of week rounded to the nearest millisecond</dd>
 <dt>ns <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Nanosecond remainder of rounded tow</dd>
+<dd>Nanosecond residual of millisecond-rounded TOW (ranges</dd>
+</dl>
+</div></blockquote>
+<p>from -500000 to 500000)</p>
+<blockquote>
+<div><dl class="docutils">
 <dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Status flags (reserved)</dd>
 </dl>
@@ -305,14 +346,15 @@ the message.</p>
 <div><p>You can have MSG_POS_ECEF inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>The single-point position solution message reports absolute</p>
+<p>The position solution message reports absolute Earth Centered</p>
 </div></blockquote>
-<p>Earth Centered Earth Fixed (ECEF) coordinates and the status
-(single point absolute vs RTK) of the position solution. If the
-rover receiver knows surveyed position of the base station and
-has an RTK solution, this reports a pseudo-absolute position
+<p>Earth Fixed (ECEF) coordinates and the status (single point vs
+pseudo-absolute RTK) of the position solution. If the rover
+receiver knows the surveyed position of the base station and has
+an RTK solution, this reports a pseudo-absolute position
 solution using the base station position and the rover&#8217;s RTK
-baseline vector.</p>
+baseline vector. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
@@ -326,7 +368,12 @@ baseline vector.</p>
 <dt>z <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
 <dd>ECEF Z coordinate</dd>
 <dt>accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Position accuracy estimate</dd>
+<dd>Position accuracy estimate (not implemented). Defaults</dd>
+</dl>
+</div></blockquote>
+<p>to 0.</p>
+<blockquote>
+<div><dl class="docutils">
 <dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Number of satellites used in solution</dd>
 <dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
@@ -369,13 +416,15 @@ the message.</p>
 <div><p>You can have MSG_POS_LLH inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>This single-point position solution message reports the absolute</p>
+<p>This position solution message reports the absolute geodetic</p>
 </div></blockquote>
-<p>geodetic coordinates and the status (single point absolute vs
-RTK) of the position solution. If the rover receiver knows the
+<p>coordinates and the status (single point vs pseudo-absolute RTK)
+of the position solution. If the rover receiver knows the
 surveyed position of the base station and has an RTK solution,
 this reports a pseudo-absolute position solution using the base
-station position and the rover&#8217;s RTK baseline vector.</p>
+station position and the rover&#8217;s RTK baseline vector. The full
+GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow).</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
@@ -389,11 +438,21 @@ station position and the rover&#8217;s RTK baseline vector.</p>
 <dt>height <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
 <dd>Height</dd>
 <dt>h_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Horizontal position accuracy estimate</dd>
+<dd>Horizontal position accuracy estimate (not</dd>
+</dl>
+</div></blockquote>
+<p>implemented). Defaults to 0.</p>
+<blockquote>
+<div><dl class="docutils">
 <dt>v_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Vertical position accuracy estimate</dd>
+<dd>Vertical position accuracy estimate (not</dd>
+</dl>
+</div></blockquote>
+<p>implemented). Defaults to 0.</p>
+<blockquote>
+<div><dl class="docutils">
 <dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of satellites used in solution</dd>
+<dd>Number of satellites used in solution.</dd>
 <dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Status flags</dd>
 </dl>
@@ -436,7 +495,8 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message reports the velocity in Earth Centered Earth Fixed</p>
 </div></blockquote>
-<p>(ECEF) coordinates.</p>
+<p>(ECEF) coordinates. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
@@ -450,7 +510,12 @@ of its fields.</p>
 <dt>z <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Velocity ECEF Z coordinate</dd>
 <dt>accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Velocity accuracy estimate</dd>
+<dd>Velocity accuracy estimate (not implemented). Defaults</dd>
+</dl>
+</div></blockquote>
+<p>to 0.</p>
+<blockquote>
+<div><dl class="docutils">
 <dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Number of satellites used in solution</dd>
 <dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
@@ -495,7 +560,8 @@ from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message reports the velocity in local North East Down (NED)</p>
 </div></blockquote>
-<p>coordinates.</p>
+<p>coordinates. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
@@ -509,9 +575,19 @@ of its fields.</p>
 <dt>d <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Velocity Down coordinate</dd>
 <dt>h_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Horizontal velocity accuracy estimate</dd>
+<dd>Horizontal velocity accuracy estimate (not</dd>
+</dl>
+</div></blockquote>
+<p>implemented). Defaults to 0.</p>
+<blockquote>
+<div><dl class="docutils">
 <dt>v_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Vertical velocity accuracy estimate</dd>
+<dd>Vertical velocity accuracy estimate (not</dd>
+</dl>
+</div></blockquote>
+<p>implemented). Defaults to 0.</p>
+<blockquote>
+<div><dl class="docutils">
 <dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd>Number of satellites used in solution</dd>
 <dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>

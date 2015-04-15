@@ -59,7 +59,7 @@
             
   <div class="section" id="module-sbp.acquisition">
 <span id="sbp-acquisition-module"></span><h1>sbp.acquisition module<a class="headerlink" href="#module-sbp.acquisition" title="Permalink to this headline">¶</a></h1>
-<p>Satellite acquisition messages from the Piksi.</p>
+<p>Satellite acquisition messages from the device.</p>
 <dl class="class">
 <dt id="sbp.acquisition.MsgAcqResult">
 <em class="property">class </em><code class="descclassname">sbp.acquisition.</code><code class="descname">MsgAcqResult</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResult" title="Permalink to this definition">¶</a></dt>
@@ -80,13 +80,18 @@ ratio.</p>
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
 <dd>SBP parent object to inherit from.</dd>
 <dt>snr <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>SNR of best point</dd>
+<dd>SNR of best point. Currently dimensonless, but will have</dd>
+</dl>
+</div></blockquote>
+<p>units of dB Hz in the revision of this message.</p>
+<blockquote>
+<div><dl class="docutils">
 <dt>cp <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
 <dd>Code phase of best point</dd>
 <dt>cf <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
 <dd>Carrier frequency of best point</dd>
 <dt>prn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>PRN identifier of the satellite signal for which</dd>
+<dd>PRN-1 identifier of the satellite signal for which</dd>
 </dl>
 </div></blockquote>
 <p>acquisition was attempted</p>

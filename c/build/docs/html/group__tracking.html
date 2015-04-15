@@ -36,7 +36,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">libsbp
-   &#160;<span id="projectnumber">v0.32-4-gf6efe28-dirty</span>
+   &#160;<span id="projectnumber">v0.32-6-g73c6eb1-dirty</span>
    </div>
   </td>
  </tr>
@@ -127,12 +127,12 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga6735e7c95167331c9fa4341d6908c857"><td class="mdescLeft">&#160;</td><td class="mdescRight">Satellite tracking channel states.  <a href="#ga6735e7c95167331c9fa4341d6908c857">More...</a><br /></td></tr>
 <tr class="separator:ga6735e7c95167331c9fa4341d6908c857"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1966f368776c886dcedc047325cd2076"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__tracking.html#ga1966f368776c886dcedc047325cd2076">SBP_MSG_EPHEMERIS</a>&#160;&#160;&#160;0x001A</td></tr>
-<tr class="memdesc:ga1966f368776c886dcedc047325cd2076"><td class="mdescLeft">&#160;</td><td class="mdescRight">WGS84 satellite orbit ephemeris parameters.  <a href="#ga1966f368776c886dcedc047325cd2076">More...</a><br /></td></tr>
+<tr class="memdesc:ga1966f368776c886dcedc047325cd2076"><td class="mdescLeft">&#160;</td><td class="mdescRight">WGS84 satellite ephemeris parameters.  <a href="#ga1966f368776c886dcedc047325cd2076">More...</a><br /></td></tr>
 <tr class="separator:ga1966f368776c886dcedc047325cd2076"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <ul>
-<li>Satellite code and carrier-phase tracking messages from the Piksi. </li>
+<li>Satellite code and carrier-phase tracking messages from the device. </li>
 </ul>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ga1966f368776c886dcedc047325cd2076"></a>
@@ -145,7 +145,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>WGS84 satellite orbit ephemeris parameters. </p>
+<p>WGS84 satellite ephemeris parameters. </p>
 <p>The ephemeris message returns a set of satellite orbit parameters that is used to calculate GPS satellite position, velocity, and clock offset (WGS84). Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200, Table 20-III) for more details. </p>
 
 <p>Definition at line <a class="el" href="tracking_8h_source.html#l00061">61</a> of file <a class="el" href="tracking_8h_source.html">tracking.h</a>.</p>
@@ -163,7 +163,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Satellite tracking channel states. </p>
-<p>The tracking message returns a variable-length array of tracking channel states. It reports status and code/carrier phase signal power measurements for all tracked satellites. </p>
+<p>The tracking message returns a variable-length array of tracking channel states. It reports status and snr power measurements for all tracked satellites. </p>
 
 <p>Definition at line <a class="el" href="tracking_8h_source.html#l00047">47</a> of file <a class="el" href="tracking_8h_source.html">tracking.h</a>.</p>
 
@@ -174,7 +174,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Apr 15 2015 00:28:47 for libsbp by
+    <li class="footer">Generated on Wed Apr 15 2015 14:07:48 for libsbp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

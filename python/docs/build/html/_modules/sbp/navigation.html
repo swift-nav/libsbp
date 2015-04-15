@@ -66,8 +66,17 @@
 
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Geodetic navigation messages reporting GPS time, single-point</span>
-<span class="sd">position, and RTK baseline position solutions.</span>
+<span class="sd">Geodetic navigation messages reporting GPS time, position, velocity,</span>
+<span class="sd">and baseline position solutions. For position solutions, these</span>
+<span class="sd">messages define several different position solutions: single-point</span>
+<span class="sd">(SPP), RTK, and pseudo-absolute position solutions.</span>
+
+<span class="sd">The SPP is the standalone, absolute GPS position solution using only</span>
+<span class="sd">a single receiver. The RTK solution is the differential GPS</span>
+<span class="sd">solution, which can use either a fixed/integer or floating carrier</span>
+<span class="sd">phase ambiguity. The pseudo-absolute position solution uses a</span>
+<span class="sd">user-provided, well-surveyed base station position (if available)</span>
+<span class="sd">and the RTK solution in tandem.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -78,7 +87,7 @@
 <span class="kn">import</span> <span class="nn">six</span>
 
 <span class="c"># Automatically generated from piksi/yaml/swiftnav/sbp/navigation.yaml</span>
-<span class="c"># with generate.py at 2015-04-14 12:12:06.978883. Please do not hand edit!</span>
+<span class="c"># with generate.py at 2015-04-15 12:17:09.622689. Please do not hand edit!</span>
 
 
 <span class="n">SBP_MSG_GPS_TIME</span> <span class="o">=</span> <span class="mh">0x0100</span>
@@ -90,12 +99,19 @@
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
-<span class="sd">  This message reports the GPS time, an integer time scale</span>
-<span class="sd">beginning at January 6, 1980 midnight. GPS time counts the weeks</span>
-<span class="sd">and seconds of the week. The weeks begin at the Saturday/Sunday</span>
-<span class="sd">transition. GPS week 0 began at the beginning of the GPS time</span>
-<span class="sd">scale. Within each week number, the GPS time of the week is</span>
-<span class="sd">between between 0 and 604800 seconds (=60*60*24*7).</span>
+<span class="sd">  This message reports the GPS time, representing the time since</span>
+<span class="sd">the GPS epoch began on midnight January 6, 1980 UTC. GPS time</span>
+<span class="sd">counts the weeks and seconds of the week. The weeks begin at the</span>
+<span class="sd">Saturday/Sunday transition. GPS week 0 began at the beginning of</span>
+<span class="sd">the GPS time scale.</span>
+
+<span class="sd">Within each week number, the GPS time of the week is between</span>
+<span class="sd">between 0 and 604800 seconds (=60*60*24*7). Note that GPS time</span>
+<span class="sd">does not accumulate leap seconds, and as of now, has a small</span>
+<span class="sd">offset from UTC. In a message stream, this message precedes a</span>
+<span class="sd">set of other navigation messages referenced to the same time</span>
+<span class="sd">(but lacking the ns field) and indicates a more precise time of</span>
+<span class="sd">these messages.</span>
 
 
 <span class="sd">  Parameters</span>
@@ -105,9 +121,11 @@
 <span class="sd">  wn : int</span>
 <span class="sd">    GPS week number</span>
 <span class="sd">  tow : int</span>
-<span class="sd">    GPS time of week rounded to the nearest ms</span>
+<span class="sd">    GPS time of week rounded to the nearest millisecond</span>
 <span class="sd">  ns : int</span>
-<span class="sd">    Nanosecond remainder of rounded tow</span>
+<span class="sd">    Nanosecond residual of millisecond-rounded TOW (ranges</span>
+<span class="sd">from -500000 to 500000)</span>
+
 <span class="sd">  flags : int</span>
 <span class="sd">    Status flags (reserved)</span>
 
@@ -263,13 +281,14 @@
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
-<span class="sd">  The single-point position solution message reports absolute</span>
-<span class="sd">Earth Centered Earth Fixed (ECEF) coordinates and the status</span>
-<span class="sd">(single point absolute vs RTK) of the position solution. If the</span>
-<span class="sd">rover receiver knows surveyed position of the base station and</span>
-<span class="sd">has an RTK solution, this reports a pseudo-absolute position</span>
+<span class="sd">  The position solution message reports absolute Earth Centered</span>
+<span class="sd">Earth Fixed (ECEF) coordinates and the status (single point vs</span>
+<span class="sd">pseudo-absolute RTK) of the position solution. If the rover</span>
+<span class="sd">receiver knows the surveyed position of the base station and has</span>
+<span class="sd">an RTK solution, this reports a pseudo-absolute position</span>
 <span class="sd">solution using the base station position and the rover&#39;s RTK</span>
-<span class="sd">baseline vector.</span>
+<span class="sd">baseline vector. The full GPS time is given by the preceding</span>
+<span class="sd">MSG_GPS_TIME with the matching time-of-week (tow).</span>
 
 
 <span class="sd">  Parameters</span>
@@ -285,7 +304,9 @@
 <span class="sd">  z : double</span>
 <span class="sd">    ECEF Z coordinate</span>
 <span class="sd">  accuracy : int</span>
-<span class="sd">    Position accuracy estimate</span>
+<span class="sd">    Position accuracy estimate (not implemented). Defaults</span>
+<span class="sd">to 0.</span>
+
 <span class="sd">  n_sats : int</span>
 <span class="sd">    Number of satellites used in solution</span>
 <span class="sd">  flags : int</span>
@@ -360,12 +381,14 @@
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
-<span class="sd">  This single-point position solution message reports the absolute</span>
-<span class="sd">geodetic coordinates and the status (single point absolute vs</span>
-<span class="sd">RTK) of the position solution. If the rover receiver knows the</span>
+<span class="sd">  This position solution message reports the absolute geodetic</span>
+<span class="sd">coordinates and the status (single point vs pseudo-absolute RTK)</span>
+<span class="sd">of the position solution. If the rover receiver knows the</span>
 <span class="sd">surveyed position of the base station and has an RTK solution,</span>
 <span class="sd">this reports a pseudo-absolute position solution using the base</span>
-<span class="sd">station position and the rover&#39;s RTK baseline vector.</span>
+<span class="sd">station position and the rover&#39;s RTK baseline vector. The full</span>
+<span class="sd">GPS time is given by the preceding MSG_GPS_TIME with the</span>
+<span class="sd">matching time-of-week (tow).</span>
 
 
 <span class="sd">  Parameters</span>
@@ -381,11 +404,15 @@
 <span class="sd">  height : double</span>
 <span class="sd">    Height</span>
 <span class="sd">  h_accuracy : int</span>
-<span class="sd">    Horizontal position accuracy estimate</span>
+<span class="sd">    Horizontal position accuracy estimate (not</span>
+<span class="sd">implemented). Defaults to 0.</span>
+
 <span class="sd">  v_accuracy : int</span>
-<span class="sd">    Vertical position accuracy estimate</span>
+<span class="sd">    Vertical position accuracy estimate (not</span>
+<span class="sd">implemented). Defaults to 0.</span>
+
 <span class="sd">  n_sats : int</span>
-<span class="sd">    Number of satellites used in solution</span>
+<span class="sd">    Number of satellites used in solution.</span>
 <span class="sd">  flags : int</span>
 <span class="sd">    Status flags</span>
 
@@ -460,8 +487,11 @@
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
-<span class="sd">  This message reports the baseline position solution in Earth</span>
-<span class="sd">Centered Earth Fixed (ECEF) coordinates.</span>
+<span class="sd">  This message reports the baseline solution in Earth Centered</span>
+<span class="sd">Earth Fixed (ECEF) coordinates. This baseline is the relative</span>
+<span class="sd">vector distance from the base station to the rover receiver. The</span>
+<span class="sd">full GPS time is given by the preceding MSG_GPS_TIME with the</span>
+<span class="sd">matching time-of-week (tow).</span>
 
 
 <span class="sd">  Parameters</span>
@@ -477,7 +507,9 @@
 <span class="sd">  z : int</span>
 <span class="sd">    Baseline ECEF Z coordinate</span>
 <span class="sd">  accuracy : int</span>
-<span class="sd">    Position accuracy estimate</span>
+<span class="sd">    Position accuracy estimate (not implemented). Defaults</span>
+<span class="sd">to 0.</span>
+
 <span class="sd">  n_sats : int</span>
 <span class="sd">    Number of satellites used in solution</span>
 <span class="sd">  flags : int</span>
@@ -552,8 +584,12 @@
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
-<span class="sd">  This message reports the baseline position solution in North</span>
-<span class="sd">East Down (NED) coordinates.</span>
+<span class="sd">  This message reports the baseline solution in North East Down</span>
+<span class="sd">(NED) coordinates. This baseline is the relative vector distance</span>
+<span class="sd">from the base station to the rover receiver, and NED coordinate</span>
+<span class="sd">system is defined at the local tangent plane centered at the</span>
+<span class="sd">base station position.  The full GPS time is given by the</span>
+<span class="sd">preceding MSG_GPS_TIME with the matching time-of-week (tow).</span>
 
 
 <span class="sd">  Parameters</span>
@@ -569,9 +605,13 @@
 <span class="sd">  d : int</span>
 <span class="sd">    Baseline Down coordinate</span>
 <span class="sd">  h_accuracy : int</span>
-<span class="sd">    Horizontal position accuracy estimate</span>
+<span class="sd">    Horizontal position accuracy estimate (not</span>
+<span class="sd">implemented). Defaults to 0.</span>
+
 <span class="sd">  v_accuracy : int</span>
-<span class="sd">    Vertical position accuracy estimate</span>
+<span class="sd">    Vertical position accuracy estimate (not</span>
+<span class="sd">implemented). Defaults to 0.</span>
+
 <span class="sd">  n_sats : int</span>
 <span class="sd">    Number of satellites used in solution</span>
 <span class="sd">  flags : int</span>
@@ -649,7 +689,8 @@
 
 <span class="sd">  </span>
 <span class="sd">  This message reports the velocity in Earth Centered Earth Fixed</span>
-<span class="sd">(ECEF) coordinates.</span>
+<span class="sd">(ECEF) coordinates. The full GPS time is given by the preceding</span>
+<span class="sd">MSG_GPS_TIME with the matching time-of-week (tow).</span>
 
 
 <span class="sd">  Parameters</span>
@@ -665,7 +706,9 @@
 <span class="sd">  z : int</span>
 <span class="sd">    Velocity ECEF Z coordinate</span>
 <span class="sd">  accuracy : int</span>
-<span class="sd">    Velocity accuracy estimate</span>
+<span class="sd">    Velocity accuracy estimate (not implemented). Defaults</span>
+<span class="sd">to 0.</span>
+
 <span class="sd">  n_sats : int</span>
 <span class="sd">    Number of satellites used in solution</span>
 <span class="sd">  flags : int</span>
@@ -741,7 +784,8 @@
 
 <span class="sd">  </span>
 <span class="sd">  This message reports the velocity in local North East Down (NED)</span>
-<span class="sd">coordinates.</span>
+<span class="sd">coordinates. The full GPS time is given by the preceding</span>
+<span class="sd">MSG_GPS_TIME with the matching time-of-week (tow).</span>
 
 
 <span class="sd">  Parameters</span>
@@ -757,9 +801,13 @@
 <span class="sd">  d : int</span>
 <span class="sd">    Velocity Down coordinate</span>
 <span class="sd">  h_accuracy : int</span>
-<span class="sd">    Horizontal velocity accuracy estimate</span>
+<span class="sd">    Horizontal velocity accuracy estimate (not</span>
+<span class="sd">implemented). Defaults to 0.</span>
+
 <span class="sd">  v_accuracy : int</span>
-<span class="sd">    Vertical velocity accuracy estimate</span>
+<span class="sd">    Vertical velocity accuracy estimate (not</span>
+<span class="sd">implemented). Defaults to 0.</span>
+
 <span class="sd">  n_sats : int</span>
 <span class="sd">    Number of satellites used in solution</span>
 <span class="sd">  flags : int</span>

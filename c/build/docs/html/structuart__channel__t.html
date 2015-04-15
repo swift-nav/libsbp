@@ -36,7 +36,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">libsbp
-   &#160;<span id="projectnumber">v0.32-4-gf6efe28-dirty</span>
+   &#160;<span id="projectnumber">v0.32-6-g73c6eb1-dirty</span>
    </div>
   </td>
  </tr>
@@ -137,17 +137,17 @@ Data Fields</h2></td></tr>
 <tr class="memdesc:a8642df4c0de6948016f985b93fdc0cbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART IO error count.  <a href="#a8642df4c0de6948016f985b93fdc0cbe">More...</a><br /></td></tr>
 <tr class="separator:a8642df4c0de6948016f985b93fdc0cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0df3542de85a61f197e2864a682c3bc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__common__inttypes.html#ga92c50087ca0e64fa93fc59402c55f8ca">u8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structuart__channel__t.html#a0df3542de85a61f197e2864a682c3bc3">tx_buffer_level</a></td></tr>
-<tr class="memdesc:a0df3542de85a61f197e2864a682c3bc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART transmit buffer percentage utilization.  <a href="#a0df3542de85a61f197e2864a682c3bc3">More...</a><br /></td></tr>
+<tr class="memdesc:a0df3542de85a61f197e2864a682c3bc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART transmit buffer percentage utilization (ranges from 0 - 255)  <a href="#a0df3542de85a61f197e2864a682c3bc3">More...</a><br /></td></tr>
 <tr class="separator:a0df3542de85a61f197e2864a682c3bc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c21395c0e3cf1ae7dcfa475b41303de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__common__inttypes.html#ga92c50087ca0e64fa93fc59402c55f8ca">u8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structuart__channel__t.html#a7c21395c0e3cf1ae7dcfa475b41303de">rx_buffer_level</a></td></tr>
-<tr class="memdesc:a7c21395c0e3cf1ae7dcfa475b41303de"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART receive buffer percentage utilization.  <a href="#a7c21395c0e3cf1ae7dcfa475b41303de">More...</a><br /></td></tr>
+<tr class="memdesc:a7c21395c0e3cf1ae7dcfa475b41303de"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART receive buffer percentage utilization (ranges from 0 to 255)  <a href="#a7c21395c0e3cf1ae7dcfa475b41303de">More...</a><br /></td></tr>
 <tr class="separator:a7c21395c0e3cf1ae7dcfa475b41303de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>State of the UART channel. </p>
-<p>Throughput, utilization, and error counts on the RX/TX buffers of this UART channel. Values require renormalization </p>
+<p>Throughput, utilization, and error counts on the RX/TX buffers of this UART channel. The reported percentage values require to be normalized. </p>
 
-<p>Definition at line <a class="el" href="piksi_8h_source.html#l00119">119</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
+<p>Definition at line <a class="el" href="piksi_8h_source.html#l00120">120</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="a507d8e9ed16895f8f75a9a7d10ea30ad"></a>
 <div class="memitem">
@@ -161,7 +161,7 @@ Data Fields</h2></td></tr>
 
 <p>UART CRC error count. </p>
 
-<p>Definition at line <a class="el" href="piksi_8h_source.html#l00122">122</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
+<p>Definition at line <a class="el" href="piksi_8h_source.html#l00123">123</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
 
 </div>
 </div>
@@ -177,7 +177,7 @@ Data Fields</h2></td></tr>
 
 <p>UART IO error count. </p>
 
-<p>Definition at line <a class="el" href="piksi_8h_source.html#l00123">123</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
+<p>Definition at line <a class="el" href="piksi_8h_source.html#l00124">124</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
 
 </div>
 </div>
@@ -191,10 +191,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>UART receive buffer percentage utilization. </p>
-<p>Ranges from 0 - 255 and needs to be renormalized to 100 [Utilization /255] </p>
+<p>UART receive buffer percentage utilization (ranges from 0 to 255) </p>
 
-<p>Definition at line <a class="el" href="piksi_8h_source.html#l00127">127</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
+<p>Definition at line <a class="el" href="piksi_8h_source.html#l00128">128</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
 
 </div>
 </div>
@@ -210,7 +209,7 @@ Data Fields</h2></td></tr>
 
 <p>UART receive throughput [kB/s]. </p>
 
-<p>Definition at line <a class="el" href="piksi_8h_source.html#l00121">121</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
+<p>Definition at line <a class="el" href="piksi_8h_source.html#l00122">122</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
 
 </div>
 </div>
@@ -224,10 +223,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>UART transmit buffer percentage utilization. </p>
-<p>Ranges from 0 - 255 and needs to be renormalized to 100 [Utilization /255] </p>
+<p>UART transmit buffer percentage utilization (ranges from 0 - 255) </p>
 
-<p>Definition at line <a class="el" href="piksi_8h_source.html#l00124">124</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
+<p>Definition at line <a class="el" href="piksi_8h_source.html#l00125">125</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
 
 </div>
 </div>
@@ -243,7 +241,7 @@ Data Fields</h2></td></tr>
 
 <p>UART transmit throughput [kB/s]. </p>
 
-<p>Definition at line <a class="el" href="piksi_8h_source.html#l00120">120</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
+<p>Definition at line <a class="el" href="piksi_8h_source.html#l00121">121</a> of file <a class="el" href="piksi_8h_source.html">piksi.h</a>.</p>
 
 </div>
 </div>
@@ -256,7 +254,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structuart__channel__t.html">uart_channel_t</a></li>
-    <li class="footer">Generated on Wed Apr 15 2015 00:28:47 for libsbp by
+    <li class="footer">Generated on Wed Apr 15 2015 14:07:48 for libsbp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

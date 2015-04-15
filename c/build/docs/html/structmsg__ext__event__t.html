@@ -36,7 +36,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">libsbp
-   &#160;<span id="projectnumber">v0.32-4-gf6efe28-dirty</span>
+   &#160;<span id="projectnumber">v0.32-6-g73c6eb1-dirty</span>
    </div>
   </td>
  </tr>
@@ -125,10 +125,10 @@ Data Fields</h2></td></tr>
 <tr class="memdesc:a59f61aa9e3c1bff3ad921187b203837d"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPS week number [weeks].  <a href="#a59f61aa9e3c1bff3ad921187b203837d">More...</a><br /></td></tr>
 <tr class="separator:a59f61aa9e3c1bff3ad921187b203837d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd83f6a66dfc2964e1a24043b320974f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__common__inttypes.html#gafaa62991928fb9fb18ff0db62a040aba">u32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmsg__ext__event__t.html#afd83f6a66dfc2964e1a24043b320974f">tow</a></td></tr>
-<tr class="memdesc:afd83f6a66dfc2964e1a24043b320974f"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPS Time of Week rounded to the nearest ms [ms].  <a href="#afd83f6a66dfc2964e1a24043b320974f">More...</a><br /></td></tr>
+<tr class="memdesc:afd83f6a66dfc2964e1a24043b320974f"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPS time of week rounded to the nearest millisecond [ms].  <a href="#afd83f6a66dfc2964e1a24043b320974f">More...</a><br /></td></tr>
 <tr class="separator:afd83f6a66dfc2964e1a24043b320974f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2243410c86c2d8c302c8ecf246dccc8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__common__inttypes.html#gae9b1af5c037e57a98884758875d3a7c4">s32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmsg__ext__event__t.html#ab2243410c86c2d8c302c8ecf246dccc8">ns</a></td></tr>
-<tr class="memdesc:ab2243410c86c2d8c302c8ecf246dccc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nanosecond remainder of rounded tow [ns].  <a href="#ab2243410c86c2d8c302c8ecf246dccc8">More...</a><br /></td></tr>
+<tr class="memdesc:ab2243410c86c2d8c302c8ecf246dccc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000) [ns].  <a href="#ab2243410c86c2d8c302c8ecf246dccc8">More...</a><br /></td></tr>
 <tr class="separator:ab2243410c86c2d8c302c8ecf246dccc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa246fa433d167a7f6f8533227e40b76e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__common__inttypes.html#ga92c50087ca0e64fa93fc59402c55f8ca">u8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmsg__ext__event__t.html#aa246fa433d167a7f6f8533227e40b76e">flags</a></td></tr>
 <tr class="memdesc:aa246fa433d167a7f6f8533227e40b76e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags.  <a href="#aa246fa433d167a7f6f8533227e40b76e">More...</a><br /></td></tr>
@@ -153,7 +153,7 @@ Data Fields</h2></td></tr>
 
 <p>Flags. </p>
 
-<p>Definition at line <a class="el" href="ext__events_8h_source.html#l00040">40</a> of file <a class="el" href="ext__events_8h_source.html">ext_events.h</a>.</p>
+<p>Definition at line <a class="el" href="ext__events_8h_source.html#l00042">42</a> of file <a class="el" href="ext__events_8h_source.html">ext_events.h</a>.</p>
 
 </div>
 </div>
@@ -167,7 +167,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Nanosecond remainder of rounded tow [ns]. </p>
+<p>Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000) [ns]. </p>
 
 <p>Definition at line <a class="el" href="ext__events_8h_source.html#l00039">39</a> of file <a class="el" href="ext__events_8h_source.html">ext_events.h</a>.</p>
 
@@ -186,7 +186,7 @@ Data Fields</h2></td></tr>
 <p>Pin number. </p>
 <p>0..9 = DEBUG0..9. </p>
 
-<p>Definition at line <a class="el" href="ext__events_8h_source.html#l00041">41</a> of file <a class="el" href="ext__events_8h_source.html">ext_events.h</a>.</p>
+<p>Definition at line <a class="el" href="ext__events_8h_source.html#l00043">43</a> of file <a class="el" href="ext__events_8h_source.html">ext_events.h</a>.</p>
 
 </div>
 </div>
@@ -200,7 +200,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>GPS Time of Week rounded to the nearest ms [ms]. </p>
+<p>GPS time of week rounded to the nearest millisecond [ms]. </p>
 
 <p>Definition at line <a class="el" href="ext__events_8h_source.html#l00038">38</a> of file <a class="el" href="ext__events_8h_source.html">ext_events.h</a>.</p>
 
@@ -231,7 +231,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structmsg__ext__event__t.html">msg_ext_event_t</a></li>
-    <li class="footer">Generated on Wed Apr 15 2015 00:28:47 for libsbp by
+    <li class="footer">Generated on Wed Apr 15 2015 14:07:48 for libsbp by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

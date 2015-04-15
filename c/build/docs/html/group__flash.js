@@ -15,17 +15,17 @@ var group__flash =
       [ "target", "structmsg__flash__read__t.html#a6cd456c6c494c6164feefd0b7c1fc4e2", null ]
     ] ],
     [ "msg_flash_erase_t", "structmsg__flash__erase__t.html", [
-      [ "sector_num", "structmsg__flash__erase__t.html#a0866ba29f6df4666374b2efd6adf37de", null ],
+      [ "sector_num", "structmsg__flash__erase__t.html#abb04d753454ba34f0ca8eeb21c67dd1e", null ],
       [ "target", "structmsg__flash__erase__t.html#a6cd456c6c494c6164feefd0b7c1fc4e2", null ]
     ] ],
     [ "msg_stm_flash_lock_sector_t", "structmsg__stm__flash__lock__sector__t.html", [
-      [ "sector", "structmsg__stm__flash__lock__sector__t.html#a85c74e56db7f824e63716b67fc32750a", null ]
+      [ "sector", "structmsg__stm__flash__lock__sector__t.html#a2fd226114f901251c2985bae9924cbf6", null ]
     ] ],
     [ "msg_stm_flash_unlock_sector_t", "structmsg__stm__flash__unlock__sector__t.html", [
-      [ "sector", "structmsg__stm__flash__unlock__sector__t.html#a85c74e56db7f824e63716b67fc32750a", null ]
+      [ "sector", "structmsg__stm__flash__unlock__sector__t.html#a2fd226114f901251c2985bae9924cbf6", null ]
     ] ],
     [ "msg_stm_unique_id_t", "structmsg__stm__unique__id__t.html", [
-      [ "stm_id", "structmsg__stm__unique__id__t.html#a6ef808030652d37ec87719062f6b3772", null ]
+      [ "stm_id", "structmsg__stm__unique__id__t.html#a179a186e49f95c96c275a9f2b85954f3", null ]
     ] ],
     [ "msg_m25_flash_write_status_t", "structmsg__m25__flash__write__status__t.html", [
       [ "status", "structmsg__m25__flash__write__status__t.html#a0b815462138714153d77b864396b72bd", null ]

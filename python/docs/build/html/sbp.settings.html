@@ -59,12 +59,12 @@
             
   <div class="section" id="module-sbp.settings">
 <span id="sbp-settings-module"></span><h1>sbp.settings module<a class="headerlink" href="#module-sbp.settings" title="Permalink to this headline">¶</a></h1>
-<p>Messages for reading and writing the Piksi&#8217;s device settings. These
-are in the implementation-defined range (0x0000-0x00FF), and
-intended for internal-use only. Please see the accompanying
-description of settings configurations for more details. Note that
-some of these messages taking a request from a host and a response
-from the Piksi share the same message type ID.</p>
+<p>Messages for reading and writing the device&#8217;s device settings.</p>
+<p>These are in the implementation-defined range (0x0000-0x00FF). Note
+that some of these messages share the same message type ID for both
+the host request and the device response. See the accompanying
+document for descriptions of settings configurations and examples:
+<a class="reference external" href="https://github.com/swift-nav/piksi_firmware/blob/master/docs/settings.pdf">https://github.com/swift-nav/piksi_firmware/blob/master/docs/settings.pdf</a></p>
 <dl class="class">
 <dt id="sbp.settings.MsgSettings">
 <em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettings</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettings" title="Permalink to this definition">¶</a></dt>
@@ -74,16 +74,15 @@ from the Piksi share the same message type ID.</p>
 <div><p>You can have MSG_SETTINGS inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>The setting message reads and writes the Piksi&#8217;s configuration.</p>
+<p>The setting message reads and writes the device&#8217;s configuration.</p>
 <dl class="docutils">
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
 <dd>SBP parent object to inherit from.</dd>
 <dt>setting <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>A NULL delimited (and terminated) string, with the A</dd>
+<dd>A NULL-terminated and delimited string with contents</dd>
 </dl>
 </div></blockquote>
-<p>NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE] on writes or a series of
+<p>[SECTION_SETTING, SETTING, VALUE] on writes or a series of
 such strings on reads.</p>
 <dl class="method">
 <dt id="sbp.settings.MsgSettings.from_binary">
@@ -131,7 +130,7 @@ NULL-terminated and delimited string with contents
 <dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
 <dd>SBP parent object to inherit from.</dd>
 <dt>index <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>An index into the Piksi settings, with values ranging from</dd>
+<dd>An index into the device settings, with values ranging from</dd>
 </dl>
 </div></blockquote>
 <p>0 to length(settings)</p>
@@ -171,7 +170,7 @@ the message.</p>
 <div><p>You can have MSG_SETTINGS_SAVE inherent its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>The save settings message persists the Piksi&#8217;s current settings</p>
+<p>The save settings message persists the device&#8217;s current settings</p>
 </div></blockquote>
 <p>configuration to its onboard flash memory file system.</p>
 </dd></dl>
