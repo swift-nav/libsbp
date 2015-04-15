@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.observation
-description: Satellite observation messages from the Piksi.
+description: Satellite observation messages from the device.
 stable: False
 public: True
 include:
@@ -47,7 +47,7 @@ definitions:
             desc: Carrier phase whole cycles
         - f:
             type: u8
-            units: cycles / 255
+            units: cycles
             desc: Carrier phase fractional part
 
  - ObservationHeader:
@@ -88,20 +88,21 @@ definitions:
             desc: |
               Lock indicator. This value changes whenever a satellite
               signal has lost and regained lock, indicating that the
-              carrier phase ambiguity may have changed. There is no
-              significance to the value of the lock indicator
+              carrier phase ambiguity may have changed.
         - prn:
             type: u8
-            desc: PRN identifier of the satellite signal
+            desc: PRN-1 identifier of the satellite signal
 
  - MSG_OBS:
     id: 0x0045
     public: True
     short_desc: GPS satellite observations
     desc: |
-      The GPS observations message reports all the pseudo range and
+      The GPS observations message reports all the raw pseudorange and
       carrier phase observations for the satellites being tracked by
-      the Piksi.
+      the device. Carrier phase observation here is represented as a
+      40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
+      whole cycles and 8-bits of fractional cycles).
     fields:
         - header:
             type: ObservationHeader
@@ -112,16 +113,18 @@ definitions:
             map_by: prn
             desc: |
               Pseudorange and carrier phase observation for a
-              satellite being tracked
+              satellite being tracked.
 
  - MSG_BASE_POS:
     id: 0x0044
     public: True
     short_desc: Base station position
     desc: |
-      This may be the position as reported by the base station itself or the
-      position obtained from doing a single point solution using the base
-      station observations.
+      The base station position message is the position reported by
+      the base station itself. It is used for pseudo-absolute RTK
+      positioning, and is required to be a high-accuracy surveyed
+      location of the base station. Any error here will result in an
+      error in the pseudo-absolute position output.
     fields:
         - lat:
             type: double

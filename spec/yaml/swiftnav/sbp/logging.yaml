@@ -10,7 +10,7 @@
 
 package: swiftnav.sbp.logging
 description: |
-  Logging and debugging messages from the Piksi. These are in the
+  Logging and debugging messages from the device. These are in the
   implementation-defined range (0x0000-0x00FF).
 stable: False
 public: True
@@ -23,19 +23,17 @@ definitions:
     public: True
     short_desc: Plaintext logging messages
     desc: |
-      This message contains a human-reabable payload string from the
-      Piksi containing errors, warnings and informational messages at
-      ERROR, WARNING, DEBUG, INFO logging levels. These message may
-      also contain information tagged by filename, as well as debug
-      info on function entry/exit when enabled within the firmware.
+      This message contains a human-readable payload string from the
+      device containing errors, warnings and informational messages at
+      ERROR, WARNING, DEBUG, INFO logging levels.
     fields:
       - text:
           type: string
-          desc: Informative, human-readable string
+          desc: Human-readable string
 
  - MSG_DEBUG_VAR:
     id: 0x0011
     short_desc: Legacy message for tracing variable values
     desc: |
       This is an unused legacy message for tracing variable values
-      within the Piksi firmware and streaming those back to the host.
+      within the device firmware and streaming those back to the host.

@@ -4,9 +4,9 @@
 \section{Stable Message Definitions}
 ((*- for m in msgs *))
 ((*- if m.pkg *))
-\subsection{(((m.pkg|packagenameify)))}
+\subsection{(((m.pkg|packagenameify|header_write)))}
 \begin{large}
-(((m.pkg_desc)))
+(((m.pkg_desc | escape_tex | no_us)))
 \end{large}
 ((* endif *))
 \subsubsection{(((m.name|escape_tex))) --- ((('0x%04X'|format(m.sbp_id))))}
@@ -21,7 +21,7 @@
   \centering
   \begin{tabularx}{\textwidth}{ccaclX}
     \toprule
-    Offset & Size & Format & Units & Name & Description \\
+    Offset (bytes) & Size (bytes) & Format & Units & Name & Description \\
     \midrule
     ((*- for f in m.fields *))
       $(((f.offset)))$ &
@@ -32,7 +32,7 @@
       \hangindent=0.5em{(((f.desc|escape_tex)))} \\
       ((*- endfor *))
     \midrule
-    & $(((m.size)))$ \\
+    & $(((m.size)))$ & & & & Total Payload Length\\
     \bottomrule
   \end{tabularx}
   \caption{(((m.name|escape_tex))) (((('0x%04X'|format(m.sbp_id))))) message structure}
@@ -89,24 +89,25 @@
 \section{Draft Message Definitions}
 ((*- for m in umsgs *))
 ((*- if m.pkg *))
-\subsection{(((m.pkg|packagenameify|no_us)))}
+\subsection{(((m.pkg|packagenameify|no_us|header_write)))}
+
 \begin{large}
 (((m.pkg_desc)))
 \end{large}
 ((* endif *))
 \subsubsection*{(((m.name|escape_tex))) --- ((('0x%04X'|format(m.sbp_id))))}
 \label{sec:(((m.name)))}
-
+\begin{minipage}{\textwidth}
 \begin{large}
 (((m.desc|escape_tex)))
 \end{large}
-
+\end{minipage}
 \vspace{3em}
 \begin{table}[h]
   \centering
   \begin{tabularx}{\textwidth}{ccaclX}
     \toprule
-    Offset & Size & Format & Units & Name & Description \\
+    Offset (bytes) & Size (bytes) & Format & Units & Name & Description \\
     \midrule
     ((*- for f in m.fields *))
       $(((f.offset)))$ &
@@ -117,7 +118,7 @@
       \hangindent=0.5em{(((f.desc|escape_tex)))} \\
       ((*- endfor *))
     \midrule
-    & $(((m.size)))$ \\
+    & $(((m.size)))$ & & & & Total Payload Length\\
     \bottomrule
   \end{tabularx}
   \caption{(((m.name|escape_tex))) (((('0x%04X'|format(m.sbp_id))))) message structure}

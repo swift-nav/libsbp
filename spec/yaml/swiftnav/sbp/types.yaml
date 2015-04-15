@@ -48,17 +48,13 @@ definitions:
     type: primitive
     desc: Unsigned 64-bit integer
     size: 8
- - bool:
-    type: primitive
-    desc: Boolean
-    size: 1
  - float:
     type: primitive
-    desc: Single-precision float
+    desc: Single-precision float (IEEE-754)
     size: 4
  - double:
     type: primitive
-    desc: Double-precision float
+    desc: Double-precision float (IEEE-754)
     size: 8
  - array:
     type: collection
@@ -71,8 +67,9 @@ definitions:
  - string:
     type: collection
     desc: |
-      Fixed or variable length string (NULL terminated)
+      Fixed or variable length string (NULL padded/terminated)
  - bitfield:
     type: collection
     desc: |
-      A primitive type, such as a u8, can encode boolean status flags.
+      A primitive type, typically a u8, can encode boolean and
+      enumerated status flags.

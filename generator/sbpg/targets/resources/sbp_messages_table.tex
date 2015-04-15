@@ -1,28 +1,28 @@
 ((* extends "sbp_base.tex" *))
 ((* block messages_table *))
 \newpage
+\newpage
 \section{Message Types}
 \label{sec:Messages}
 \begin{large}
-Packages define a logical collection of SBP messages. By convention,
-the contents and layout of messages in packages marked \textbf{stable}
-are unlikely to change in the future. On the other hand, the contents
-of \textbf{draft} messages \ul{will change with future development},
-and are included here purely for \ul{informational purposes
-only}. Many draft messages are implementation-defined, and some
-collections, such as the bootloader package, are intended for internal
-development.
+Packages define a logical collection of SBP messages. The contents and
+layout of messages in packages marked \textbf{stable} are unlikely to
+change in the future. \textbf{Draft} messages \emph{will change with
+future development} and are detailed purely for \emph{informational
+purposes only}. Many draft messages are implementation-defined, and
+some collections, such as the acquisition package, are used for
+internal development.
 \end{large}
 \begin{table}[h]
   \centering
-  \begin{tabularx}{\textwidth}{badaX}
+  \begin{tabularx}{\textwidth}{badcX}
     \toprule
-    Package & Message & Name & Size & Description \\
+    Package & Msg ID & Name & Size (bytes) & Description \\
     \midrule
     \multicolumn{5}{c}{\textbf{Stable}} \\
     \midrule
     ((*- for m in msgs *))
-      (((m.pkg|packagenameify|escape_tex|no_us))) &
+      (((m.pkg|packagenameify|escape_tex|no_us|header_write))) &
       \hyperref[sec:(((m.name)))]{\texttt{((('0x%04X'|format(m.sbp_id))))}} &
       \hyperref[sec:(((m.name)))]{\texttt{(((m.name|escape_tex)))}} &
       $(((m.size)))$ &
@@ -32,7 +32,7 @@ development.
     \multicolumn{5}{c}{\textbf{Draft}} \\
     \midrule
     ((*- for m in umsgs *))
-      (((m.pkg|packagenameify|escape_tex|no_us))) &
+      (((m.pkg|packagenameify|escape_tex|no_us|header_write))) &
       \hyperref[sec:(((m.name)))]{\texttt{((('0x%04X'|format(m.sbp_id))))}} &
       \hyperref[sec:(((m.name)))]{\texttt{(((m.name|escape_tex)))}} &
       $(((m.size)))$ &
