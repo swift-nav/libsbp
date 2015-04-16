@@ -109,7 +109,12 @@ def test_pickle_log_missing():
   new_table.pop(SBP_MSG_PRINT, None)
   d = lambda msg: dispatch(msg, table=new_table)
   with PickleLogIterator(FileDriver(log_datafile), dispatcher=d) as log:
-    with pytest.raises(InvalidSBPMessageType) as exc_info:
+    with warnings.catch_warnings(record=True) as w:
       for delta, timestamp, msg in log.next():
         pass
-  assert str(exc_info.value).find("No message found for msg_type id 16*")
+    warnings.simplefilter("always")
+    assert len(w) == 13
+    for x in w:
+      assert issubclass(x.category, RuntimeWarning)
+      assert str(x.message).find("No message found for msg_type id 16*")
+
