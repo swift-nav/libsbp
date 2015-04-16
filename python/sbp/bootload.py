@@ -54,7 +54,7 @@ earlier versions.
 
   """
   _parser = Struct("MsgBootloaderHandshake",
-                   OptionalGreedyRange(Struct('handshake', ULInt8('handshake'))),)
+                   OptionalGreedyRange(ULInt8('handshake')),)
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

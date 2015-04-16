@@ -285,7 +285,7 @@ print "Invalid fileio write message".
   _parser = Struct("MsgFileioWrite",
                    String('filename', 20),
                    ULInt32('offset'),
-                   OptionalGreedyRange(Struct('data', ULInt8('data'))),)
+                   OptionalGreedyRange(ULInt8('data')),)
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

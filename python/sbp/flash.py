@@ -68,7 +68,7 @@ starting address
                    ULInt8('target'),
                    Struct('addr_start', Array(3, ULInt8('addr_start'))),
                    ULInt8('addr_len'),
-                   OptionalGreedyRange(Struct('data', ULInt8('data'))),)
+                   OptionalGreedyRange(ULInt8('data')),)
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
