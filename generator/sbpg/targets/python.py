@@ -17,6 +17,7 @@ This module consumes the
 
 import os
 from sbpg.targets.templating import JENV, ACRONYMS
+import copy
 
 from construct import *
 
@@ -66,13 +67,15 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
     return "CString('%s', six.b('\\n'))" % (f.identifier)
   elif f.type_id == 'array' and f.options.get('size', None):
     fill = f.options['fill'].value
-    p = "%s('%s')" % (type_map.get(fill), f.identifier) if type_map.get(fill, None) else fill+'._parser'
+    f_ = copy.copy(f)
+    f_.type_id = fill
     s = f.options.get('size', None).value
-    return "Struct('%s', Array(%d, %s))" % (f.identifier, s, p)
+    return "Struct('%s', Array(%d, %s))" % (f.identifier, s, construct_format(f_))
   elif f.type_id == 'array':
     fill = f.options['fill'].value
-    p = "%s('%s')" % (type_map.get(fill), f.identifier) if type_map.get(fill, None) else fill+'._parser'
-    return "OptionalGreedyRange(Struct('%s', %s))" % (f.identifier, p)
+    f_ = copy.copy(f)
+    f_.type_id = fill
+    return "OptionalGreedyRange(%s)" % construct_format(f_)
   else:
     return "Struct('%s', %s._parser)" % (f.identifier, f.type_id)
   return formatted
