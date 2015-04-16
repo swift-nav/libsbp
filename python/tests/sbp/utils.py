@@ -16,6 +16,7 @@ Utilities for running YAML-defined unit tests.
 from sbp import SBP
 from sbp.table import dispatch
 import base64
+import json
 import yaml
 
 def _assert_sbp(sbp, test_case):
@@ -102,7 +103,7 @@ def _assert_msg_roundtrip_json(msg, raw_json):
   expected value, as well as gets serialized from JSON into
   an expected object.
   """
-  assert msg.to_json() == raw_json
+  assert json.loads(msg.to_json()) == json.loads(raw_json)
   assert msg == msg.from_json(raw_json)
 
 def _assert_sane_package(pkg_name, pkg):

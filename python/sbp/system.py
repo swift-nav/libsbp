@@ -21,7 +21,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/system.yaml
-# with generate.py at 2015-04-15 12:17:09.627642. Please do not hand edit!
+# with generate.py at 2015-04-15 15:32:14.100125. Please do not hand edit!
 
 
 SBP_MSG_STARTUP = 0xFF00
@@ -76,23 +76,20 @@ or configuration requests.
     self.payload = MsgStartup._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgStartup(sbp)
+
+  def to_json_dict(self):
     d = super( MsgStartup, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
-    return json.dumps(d)
-
-  @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
-
-    """
-    d = json.loads(data)
-    sbp = SBP.from_json_dict(d)
-    return MsgStartup(sbp)
+    return d
     
 SBP_MSG_HEARTBEAT = 0xFFFF
 class MsgHeartbeat(SBP):
@@ -152,23 +149,20 @@ the remaining error flags should be inspected.
     self.payload = MsgHeartbeat._parser.build(c)
     return self.pack()
 
-  def to_json(self):
-    """Produce a JSON-encoded SBP message.
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
 
     """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgHeartbeat(sbp)
+
+  def to_json_dict(self):
     d = super( MsgHeartbeat, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
-    return json.dumps(d)
-
-  @staticmethod
-  def from_json(data):
-    """Given a JSON-encoded message, build an object.
-
-    """
-    d = json.loads(data)
-    sbp = SBP.from_json_dict(d)
-    return MsgHeartbeat(sbp)
+    return d
     
 
 msg_classes = {
