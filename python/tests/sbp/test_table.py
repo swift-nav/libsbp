@@ -14,6 +14,7 @@ from sbp.table import InvalidSBPMessageType
 import pytest
 import sbp.acquisition as acq
 import sbp.logging as log
+import warnings
 
 def test_table_count():
   """
@@ -37,6 +38,9 @@ def test_available_messages():
   # object.
   assert dispatch(msg, table) == acq.MsgAcqResult(msg)
   msg = SBP(msg_type=0xB0, sender=1219, length=4, payload='v1.2', crc=0xCE01)
-  with pytest.raises(InvalidSBPMessageType) as exc_info:
+  with warnings.catch_warnings(record=True) as w:
     dispatch(msg, table)
-  assert str(exc_info.value).find("No message found for msg_type id 176*")
+    warnings.simplefilter("always")
+    assert len(w) == 1
+    assert issubclass(w[0].category, RuntimeWarning)
+    assert str(w[0].message).find("No message found for msg_type id 176 for msg*")

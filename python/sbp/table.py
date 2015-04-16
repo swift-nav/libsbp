@@ -68,9 +68,10 @@ def dispatch(msg, table=_SBP_TABLE):
   try:
     return table[msg.msg_type](msg)
   except KeyError:
-    error_msg = "No message found for msg_type id %d for msg %s." \
-                % (msg.msg_type, msg)
-    raise InvalidSBPMessageType(error_msg)
+    warn = "No message found for msg_type id %d for msg %s." \
+           % (msg.msg_type, msg)
+    warnings.warn(warn, RuntimeWarning)
+    return msg
   except FieldError:
     warnings.warn("SBP payload deserialization error! 0x%x" % msg.msg_type,
                   RuntimeWarning)
