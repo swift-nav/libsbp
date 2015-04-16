@@ -12,7 +12,7 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/(((filepath)))
- * with generate.py at (((timestamp))). Please do not hand edit!
+ * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup (((pkg_name))) (((pkg_name|capitalize)))

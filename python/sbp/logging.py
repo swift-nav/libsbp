@@ -22,8 +22,8 @@ from sbp import SBP
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
-# Automatically generated from piksi/yaml/swiftnav/sbp/logging.yaml
-# with generate.py at 2015-04-15 15:32:14.096660. Please do not hand edit!
+# Automatically generated from piksi/yaml/swiftnav/sbp/logging.yaml with generate.py.
+# Please do not hand edit!
 
 
 SBP_MSG_PRINT = 0x0010

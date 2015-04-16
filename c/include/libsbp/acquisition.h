@@ -12,7 +12,7 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/acquisition.yaml
- * with generate.py at 2015-04-15 14:18:48.767063. Please do not hand edit!
+ * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup acquisition Acquisition

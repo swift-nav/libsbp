@@ -26,8 +26,8 @@ from sbp import SBP
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
 import six
 
-# Automatically generated from piksi/yaml/swiftnav/sbp/bootload.yaml
-# with generate.py at 2015-04-15 15:32:14.101381. Please do not hand edit!
+# Automatically generated from piksi/yaml/swiftnav/sbp/bootload.yaml with generate.py.
+# Please do not hand edit!
 
 
 SBP_MSG_BOOTLOADER_HANDSHAKE = 0x00B0
@@ -49,12 +49,12 @@ earlier versions.
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  handshake : string
-    Version number (NULL terminated)
+  handshake : array
+    Version number string (not NULL terminated)
 
   """
   _parser = Struct("MsgBootloaderHandshake",
-                   CString('handshake', six.b('\n')),)
+                   OptionalGreedyRange(Struct('handshake', ULInt8('handshake'))),)
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

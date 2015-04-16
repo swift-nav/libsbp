@@ -33,8 +33,9 @@ definitions:
       earlier versions.
     fields:
       - handshake:
-          type: string
-          desc: Version number (NULL terminated)
+          type: array
+          fill: u8
+          desc: Version number string (not NULL terminated)
 
  - MSG_BOOTLOADER_JUMP_TO_APP:
     id: 0x00B1

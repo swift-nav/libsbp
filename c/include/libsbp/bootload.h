@@ -12,7 +12,7 @@
 
 /*****************************************************************************
  * Automatically generated from yaml/swiftnav/sbp/bootload.yaml
- * with generate.py at 2015-04-15 14:18:48.751574. Please do not hand edit!
+ * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
 /** \defgroup bootload Bootload
@@ -40,7 +40,7 @@
  */
 #define SBP_MSG_BOOTLOADER_HANDSHAKE   0x00B0
 typedef struct __attribute__((packed)) {
-  char* handshake;    /**< Version number (NULL terminated) */
+  u8 handshake[0]; /**< Version number string (not NULL terminated) */
 } msg_bootloader_handshake_t;
 
 
