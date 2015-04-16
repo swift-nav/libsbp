@@ -65,22 +65,21 @@ def test_framer_ok():
   assert msg.length == 13
   assert msg.crc == 0x4feb
 
+def until(p, limit=1000):
+  for i in itertools.count():
+    if p():
+      break
+    assert i < limit
+
 def test_listener_thread_ok():
   sema = TestCallbackSemaphore()
   listener_thread = ReceiveThread(lambda: SBP(True, None, None, None, None), sema)
   listener_thread.start()
   assert listener_thread.is_alive()
-  for i in itertools.count():
-    if sema.sema.acquire(False):
-      break
-    assert i < 1000
+  until(lambda: sema.sema.acquire(False))
   listener_thread.stop()
-  while listener_thread.is_alive():
-    pass
-  for i in itertools.count():
-    if not sema.sema.acquire(False):
-      break
-    assert i < 1000
+  until(lambda: listener_thread.is_alive())
+  until(lambda: sema.sema.acquire(False))
 
 def test_handler_callbacks():
   handler = Handler(None, None)
