@@ -9,6 +9,8 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 import io
+import itertools
+import threading
 
 from sbp.client.handler import *
 from sbp                import SBP
@@ -25,6 +27,19 @@ class TestCallbackCounter(object):
 
   def call(self, msg):
     self.value += 1
+
+class TestCallbackSemaphore(object):
+  """
+  Callable semaphore for callbacks.
+  """
+  def __init__(self):
+    self.sema = threading.Semaphore(0)
+
+  def __call__(self, msg):
+    self.call(msg)
+
+  def call(self, msg):
+    self.sema.release()
 
 def test_framer_receive_empty():
   source = io.BytesIO(b"")
@@ -50,17 +65,21 @@ def test_framer_ok():
   assert msg.length == 13
   assert msg.crc == 0x4feb
 
+def until(p, limit=1000):
+  for i in itertools.count():
+    if p():
+      break
+    assert i < limit
+
 def test_listener_thread_ok():
-  counter = TestCallbackCounter()
-  listener_thread = ReceiveThread(lambda: SBP(True, None, None, None, None), counter)
+  sema = TestCallbackSemaphore()
+  listener_thread = ReceiveThread(lambda: SBP(True, None, None, None, None), sema)
   listener_thread.start()
   assert listener_thread.is_alive()
-  assert counter.value > 0
+  until(lambda: sema.sema.acquire(False))
   listener_thread.stop()
-  while listener_thread.is_alive():
-    pass
-  value = counter.value
-  assert counter.value == value
+  until(lambda: listener_thread.is_alive())
+  until(lambda: sema.sema.acquire(False))
 
 def test_handler_callbacks():
   handler = Handler(None, None)

@@ -46,7 +46,6 @@ def test_log():
         pass
   assert exc_info.value.message == "next() not implemented!"
 
-@pytest.mark.skipif(True, reason="missing terminator.")
 def test_pickle_log():
   """
   pickle log iterator sanity tests.
@@ -67,7 +66,6 @@ def test_pickle_log():
       assert "SBP payload deserialization error! 0x18" in w[0].message
     assert count == 1111
 
-@pytest.mark.skipif(True, reason="missing terminator.")
 def test_basic_pickle_log():
   """
   pickle log iterator sanity tests with a normal handle.
@@ -100,7 +98,6 @@ def test_json_log():
       assert len(w) == 0
   assert count == 2650
 
-@pytest.mark.skipif(True, reason="missing terminator.")
 def test_pickle_log_missing():
   """
   Remove a key from the dispatch and make sure that the iterator
