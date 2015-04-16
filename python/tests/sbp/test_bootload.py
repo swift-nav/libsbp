@@ -12,7 +12,6 @@
 from utils import assert_package
 import pytest
 
-@pytest.mark.skipif(True, reason="Unused serialization throwing error.")
 def test_package():
   FILEPATH = "../spec/tests/yaml/swiftnav/sbp/test_bootload.yaml"
   MODULE_NAME = "sbp.bootload"
