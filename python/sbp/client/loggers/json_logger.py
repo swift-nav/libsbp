@@ -23,13 +23,12 @@ class JSONLogger(BaseLogger):
 
   def fmt_msg(self, msg):
     try:
-      return {"delta": self.delta(),
-              "timestamp": self.timestamp(),
-              "data": self.dispatcher(msg).to_json_dict()}
+      data = self.dispatcher(msg).to_json_dict()
     except KeyError:
-      return {"delta": self.delta(),
-              "timestamp": self.timestamp(),
-              "data": msg.to_json_dict()}
+      data = msg.to_json_dict()
+    return {"delta": self.delta(),
+            "timestamp": self.timestamp(),
+            "data": data}
 
   def call(self, msg):
     self.handle.write(json.dumps(self.fmt_msg(msg)) + "\n")
