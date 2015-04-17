@@ -132,7 +132,7 @@ detection\footnote{CCITT 16-bit CRC Implementation uses parameters
     $6$ & $N$ & {Payload} & Binary message contents. \\
     $N+6$ & $2$ & {CRC} & \hangindent=0.5em{Cyclic Redundancy Check of the packet's binary data from the Message Type up to the end of Payload (does not include the Preamble).} \\
     \midrule
-    & $N+8$ & &Total Payload Length \\
+    & $N+8$ & &Total Packet Length \\
     \bottomrule
   \end{tabularx}
   \caption{Swift Binary Protocol message structure. $N$ denotes a variable-length size.}
