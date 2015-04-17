@@ -97,7 +97,7 @@ at~\url{http://docs.swiftnav.com/wiki/SwiftNav_Binary_Protocol}.
 \end{large}
 
 \newpage
-\section{Message Structure}
+\section{Message Framing Structure}
 \label{sec:Message}
 
 \begin{large}
@@ -106,7 +106,7 @@ SBP consists of two pieces:
   \item an over-the-wire message framing format
   \item structured payload definitions
 \end{itemize}
-As of Version~\theversion, the packet consists of a 6-byte binary
+As of Version~\theversion, the frame consists of a 6-byte binary
 header section, a variable-sized payload field, and a 16-bit CRC
 value. All multibyte values are ordered in \textbf{little-endian}
 format. SBP uses the CCITT CRC16 (XMODEM implementation) for error
@@ -130,9 +130,9 @@ detection\footnote{CCITT 16-bit CRC Implementation uses parameters
     $3$ & $2$ & {Sender} & \hangindent=0.5em{A unique identifier of the sender. On the Piksi, this is set to the 2 least significant bytes of the device serial number. A stream of SBP messages may also included sender IDs for forwarded messages.} \\
     $5$ & $1$ & {Length} & Length (bytes) of the {Payload} field. \\
     $6$ & $N$ & {Payload} & Binary message contents. \\
-    $N+6$ & $2$ & {CRC} & \hangindent=0.5em{Cyclic Redundancy Check of the packet's binary data from the Message Type up to the end of Payload (does not include the Preamble).} \\
+    $N+6$ & $2$ & {CRC} & \hangindent=0.5em{Cyclic Redundancy Check of the frame's binary data from the Message Type up to the end of Payload (does not include the Preamble).} \\
     \midrule
-    & $N+8$ & &Total Packet Length \\
+    & $N+8$ & &Total Frame Length \\
     \bottomrule
   \end{tabularx}
   \caption{Swift Binary Protocol message structure. $N$ denotes a variable-length size.}
