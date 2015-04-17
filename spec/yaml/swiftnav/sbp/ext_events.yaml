@@ -13,7 +13,7 @@ description: |
   Messages reporting accurately-timestamped external events,
   e.g. camera shutter time.
 stable: False
-public: False
+public: True
 include:
   - types.yaml
 definitions:
