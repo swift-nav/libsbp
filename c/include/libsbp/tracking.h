@@ -50,6 +50,41 @@ typedef struct __attribute__((packed)) {
 } msg_tracking_state_t;
 
 
+/** Deprecated, use MSG_EPHEMERIS (0x0046)
+ *
+ * Deprecated, use MSG_EPHEMERIS (0x0046).
+ */
+#define SBP_MSG_EPHEMERIS_OLD  0x001A
+typedef struct __attribute__((packed)) {
+  double tgd;         /**< Group delay differential between L1 and L2 [s] */
+  double crs;         /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
+  double crc;         /**< Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+  double cuc;         /**< Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+  double cus;         /**< Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+  double cic;         /**< Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+  double cis;         /**< Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+  double dn;          /**< Mean motion difference [rad/s] */
+  double m0;          /**< Mean anomaly at reference time [radians] */
+  double ecc;         /**< Eccentricity of satellite orbit */
+  double sqrta;       /**< Square root of the semi-major axis of orbit [m^(1/2)] */
+  double omega0;      /**< Longitude of ascending node of orbit plane at weekly epoch [rad] */
+  double omegadot;    /**< Rate of right ascension [rad/s] */
+  double w;           /**< Argument of perigee [rad] */
+  double inc;         /**< Inclination [rad] */
+  double inc_dot;     /**< Inclination first derivative [rad/s] */
+  double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
+  double af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
+  double af2;         /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+  double toe_tow;     /**< Time of week [s] */
+  u16 toe_wn;      /**< Week number [week] */
+  double toc_tow;     /**< Clock reference time of week [s] */
+  u16 toc_wn;      /**< Clock reference week number [week] */
+  u8 valid;       /**< Is valid? */
+  u8 healthy;     /**< Satellite is healthy? */
+  u8 prn;         /**< PRN being tracked */
+} msg_ephemeris_old_t;
+
+
 /** \} */
 
 #endif /* LIBSBP_TRACKING_MESSAGES_H */
