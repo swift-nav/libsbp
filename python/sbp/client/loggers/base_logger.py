@@ -24,8 +24,9 @@ class BaseLogger(object):
     File to log to.
 
   """
-  def __init__(self, filename):
+  def __init__(self, filename, dispatcher=dispatch):
     self.handle = open(filename, "w+")
+    self.dispatcher = dispatcher
     self.base_time = time.time()
 
   def __enter__(self):
