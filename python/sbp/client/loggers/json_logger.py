@@ -11,6 +11,7 @@
 from ... import SBP
 from .base_logger import BaseLogger, LogIterator
 import json
+import warnings
 
 class JSONLogger(BaseLogger):
   """
@@ -31,8 +32,12 @@ class JSONLogger(BaseLogger):
             "data": data}
 
   def call(self, msg):
-    self.handle.write(json.dumps(self.fmt_msg(msg)) + "\n")
-
+    try:
+      self.handle.write(json.dumps(self.fmt_msg(msg), allow_nan=False) + "\n")
+    except ValueError:
+      warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
+             % (msg.msg_type, msg)
+      warnings.warn(warn, RuntimeWarning)
 
 class JSONLogIterator(LogIterator):
   """
@@ -62,13 +67,17 @@ class JSONLogIterator(LogIterator):
 
     """
     for line in self.handle:
-      data = json.loads(line)
-      delta = data['delta']
-      timestamp = data['timestamp']
-      item = SBP.from_json_dict(data['data'])
       try:
-        yield (delta, timestamp, self.dispatcher(item))
-      except KeyError:
-        yield (delta, timestamp, item)
+        data = json.loads(line)
+        delta = data['delta']
+        timestamp = data['timestamp']
+        item = SBP.from_json_dict(data['data'])
+        try:
+          yield (delta, timestamp, self.dispatcher(item))
+        except KeyError:
+          yield (delta, timestamp, item)
+      except ValueError:
+        warn = "Bad JSON decoding for line %s" % line
+        warnings.warn(warn, RuntimeWarning)
     self.handle.seek(0, 0)
     raise StopIteration
