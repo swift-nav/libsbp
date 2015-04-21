@@ -67,13 +67,17 @@ class JSONLogIterator(LogIterator):
 
     """
     for line in self.handle:
-      data = json.loads(line)
-      delta = data['delta']
-      timestamp = data['timestamp']
-      item = SBP.from_json_dict(data['data'])
       try:
-        yield (delta, timestamp, self.dispatcher(item))
-      except KeyError:
-        yield (delta, timestamp, item)
+        data = json.loads(line)
+        delta = data['delta']
+        timestamp = data['timestamp']
+        item = SBP.from_json_dict(data['data'])
+        try:
+          yield (delta, timestamp, self.dispatcher(item))
+        except KeyError:
+          yield (delta, timestamp, item)
+      except ValueError:
+        warn = "Bad JSON decoding for line %s" % line
+        warnings.warn(warn, RuntimeWarning)
     self.handle.seek(0, 0)
     raise StopIteration
