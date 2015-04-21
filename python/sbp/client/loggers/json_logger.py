@@ -31,7 +31,7 @@ class JSONLogger(BaseLogger):
             "data": data}
 
   def call(self, msg):
-    self.handle.write(json.dumps(self.fmt_msg(msg)) + "\n")
+    self.handle.write(json.dumps(self.fmt_msg(msg), allow_nan=False) + "\n")
 
 
 class JSONLogIterator(LogIterator):

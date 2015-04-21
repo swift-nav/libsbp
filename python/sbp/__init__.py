@@ -117,7 +117,7 @@ class SBP(object):
 
     """
     d = self.to_json_dict()
-    return json.dumps(d)
+    return json.dumps(d, allow_nan=False)
 
   @staticmethod
   def from_json(s):
