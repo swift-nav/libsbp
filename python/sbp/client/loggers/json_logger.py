@@ -11,6 +11,7 @@
 from ... import SBP
 from .base_logger import BaseLogger, LogIterator
 import json
+import warnings
 
 class JSONLogger(BaseLogger):
   """
@@ -31,8 +32,12 @@ class JSONLogger(BaseLogger):
             "data": data}
 
   def call(self, msg):
-    self.handle.write(json.dumps(self.fmt_msg(msg), allow_nan=False) + "\n")
-
+    try:
+      self.handle.write(json.dumps(self.fmt_msg(msg), allow_nan=False) + "\n")
+    except ValueError:
+      warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
+             % (msg.msg_type, msg)
+      warnings.warn(warn, RuntimeWarning)
 
 class JSONLogIterator(LogIterator):
   """
