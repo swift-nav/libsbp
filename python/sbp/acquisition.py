@@ -17,7 +17,7 @@ Satellite acquisition messages from the device.
 from construct import *
 import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/acquisition.yaml with generate.py.
@@ -56,6 +56,8 @@ units of dB Hz in the revision of this message.
     PRN-1 identifier of the satellite signal for which
 acquisition was attempted
 
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgAcqResult",
@@ -69,6 +71,9 @@ acquisition was attempted
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgAcqResult, self).__init__()
+      self.msg_type = SBP_MSG_ACQ_RESULT
+      self.sender = kwargs.pop('sender', 0)
       self.snr = kwargs.pop('snr')
       self.cp = kwargs.pop('cp')
       self.cf = kwargs.pop('cf')
@@ -89,7 +94,7 @@ acquisition was attempted
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgAcqResult._parser.build(c)
     return self.pack()
 
@@ -103,6 +108,7 @@ acquisition was attempted
     return MsgAcqResult(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgAcqResult, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)

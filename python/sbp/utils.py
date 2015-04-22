@@ -15,11 +15,15 @@
 
 EXCLUDE = ['sender', 'msg_type', 'crc', 'length', 'preamble', 'payload']
 
+from construct import Container
+
+
 def exclude_fields(obj, exclude=EXCLUDE):
   """
   Return dict of object without parent attrs.
   """
   return {k: v for k, v in obj.__dict__.items() if k not in exclude}
+
 
 def walk_json_dict(coll):
   """
@@ -37,6 +41,31 @@ def walk_json_dict(coll):
     return [walk_json_dict(seq) for seq in coll]
   else:
     return coll
+
+
+def containerize(coll):
+  """Walk attribute fields passed from an SBP message and convert to
+  Containers where appropriate. Needed for Construct proper
+  serialization.
+
+  Parameters
+  ----------
+  coll : dict
+
+  """
+  if isinstance(coll, Container):
+    [setattr(coll, k, containerize(v)) for (k, v) in coll.iteritems()]
+    return coll
+  elif isinstance(coll, dict):
+    return containerize(Container(**coll))
+  elif isinstance(coll, list):
+    for j, i in enumerate(coll):
+      if isinstance(i, dict):
+        coll[j] = containerize(Container(**i))
+    return coll
+  else:
+    return coll
+
 
 def fmt_repr(obj):
   """Print a orphaned string representation of an object without the

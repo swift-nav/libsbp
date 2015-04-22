@@ -19,7 +19,7 @@ implementation-defined range (0x0000-0x00FF).
 from construct import *
 import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/logging.yaml with generate.py.
@@ -46,6 +46,8 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     SBP parent object to inherit from.
   text : string
     Human-readable string
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgPrint",
@@ -56,6 +58,9 @@ ERROR, WARNING, DEBUG, INFO logging levels.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgPrint, self).__init__()
+      self.msg_type = SBP_MSG_PRINT
+      self.sender = kwargs.pop('sender', 0)
       self.text = kwargs.pop('text')
 
   def __repr__(self):
@@ -73,7 +78,7 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgPrint._parser.build(c)
     return self.pack()
 
@@ -87,6 +92,7 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     return MsgPrint(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgPrint, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -111,6 +117,10 @@ within the device firmware and streaming those back to the host.
     if sbp:
       self.__dict__.update(sbp.__dict__)
       self.payload = sbp.payload
+    else:
+      super( MsgDebugVar, self).__init__()
+      self.msg_type = SBP_MSG_DEBUG_VAR
+      self.sender = kwargs.pop('sender', 0)
 
   def __repr__(self):
     return fmt_repr(self)

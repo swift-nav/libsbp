@@ -23,7 +23,7 @@ These messages are in the implementation-defined range
 from construct import *
 import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml with generate.py.
@@ -139,6 +139,10 @@ alamanac onto the Piksi's flash memory from the host.
     if sbp:
       self.__dict__.update(sbp.__dict__)
       self.payload = sbp.payload
+    else:
+      super( MsgAlmanac, self).__init__()
+      self.msg_type = SBP_MSG_ALMANAC
+      self.sender = kwargs.pop('sender', 0)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -163,6 +167,10 @@ time estimate sent by the host.
     if sbp:
       self.__dict__.update(sbp.__dict__)
       self.payload = sbp.payload
+    else:
+      super( MsgSetTime, self).__init__()
+      self.msg_type = SBP_MSG_SET_TIME
+      self.sender = kwargs.pop('sender', 0)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -187,6 +195,10 @@ bootloader.
     if sbp:
       self.__dict__.update(sbp.__dict__)
       self.payload = sbp.payload
+    else:
+      super( MsgReset, self).__init__()
+      self.msg_type = SBP_MSG_RESET
+      self.sender = kwargs.pop('sender', 0)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -212,6 +224,10 @@ removed in a future release.
     if sbp:
       self.__dict__.update(sbp.__dict__)
       self.payload = sbp.payload
+    else:
+      super( MsgCwResults, self).__init__()
+      self.msg_type = SBP_MSG_CW_RESULTS
+      self.sender = kwargs.pop('sender', 0)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -237,6 +253,10 @@ be removed in a future release.
     if sbp:
       self.__dict__.update(sbp.__dict__)
       self.payload = sbp.payload
+    else:
+      super( MsgCwStart, self).__init__()
+      self.msg_type = SBP_MSG_CW_START
+      self.sender = kwargs.pop('sender', 0)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -261,6 +281,8 @@ Ambiguity Resolution (IAR) process.
     SBP parent object to inherit from.
   filter : int
     Filter flags
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgResetFilters",
@@ -271,6 +293,9 @@ Ambiguity Resolution (IAR) process.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgResetFilters, self).__init__()
+      self.msg_type = SBP_MSG_RESET_FILTERS
+      self.sender = kwargs.pop('sender', 0)
       self.filter = kwargs.pop('filter')
 
   def __repr__(self):
@@ -288,7 +313,7 @@ Ambiguity Resolution (IAR) process.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgResetFilters._parser.build(c)
     return self.pack()
 
@@ -302,6 +327,7 @@ Ambiguity Resolution (IAR) process.
     return MsgResetFilters(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgResetFilters, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -329,6 +355,10 @@ observations between the two.
     if sbp:
       self.__dict__.update(sbp.__dict__)
       self.payload = sbp.payload
+    else:
+      super( MsgInitBase, self).__init__()
+      self.msg_type = SBP_MSG_INIT_BASE
+      self.sender = kwargs.pop('sender', 0)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -360,6 +390,8 @@ thread. The reported percentage values require to be normalized.
 
   stack_free : int
     Free stack space for this thread
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgThreadState",
@@ -372,6 +404,9 @@ thread. The reported percentage values require to be normalized.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgThreadState, self).__init__()
+      self.msg_type = SBP_MSG_THREAD_STATE
+      self.sender = kwargs.pop('sender', 0)
       self.name = kwargs.pop('name')
       self.cpu = kwargs.pop('cpu')
       self.stack_free = kwargs.pop('stack_free')
@@ -391,7 +426,7 @@ thread. The reported percentage values require to be normalized.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgThreadState._parser.build(c)
     return self.pack()
 
@@ -405,6 +440,7 @@ thread. The reported percentage values require to be normalized.
     return MsgThreadState(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgThreadState, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -438,6 +474,8 @@ future. The reported percentage values require to be normalized.
     State of UART FTDI (USB logger)
   latency : Latency
     UART communication latency
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgUartState",
@@ -451,6 +489,9 @@ future. The reported percentage values require to be normalized.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgUartState, self).__init__()
+      self.msg_type = SBP_MSG_UART_STATE
+      self.sender = kwargs.pop('sender', 0)
       self.uart_a = kwargs.pop('uart_a')
       self.uart_b = kwargs.pop('uart_b')
       self.uart_ftdi = kwargs.pop('uart_ftdi')
@@ -471,7 +512,7 @@ future. The reported percentage values require to be normalized.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgUartState._parser.build(c)
     return self.pack()
 
@@ -485,6 +526,7 @@ future. The reported percentage values require to be normalized.
     return MsgUartState(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgUartState, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -511,6 +553,8 @@ from satellite observations.
     SBP parent object to inherit from.
   num_hyps : int
     Number of integer ambiguity hypotheses remaining
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgIarState",
@@ -521,6 +565,9 @@ from satellite observations.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgIarState, self).__init__()
+      self.msg_type = SBP_MSG_IAR_STATE
+      self.sender = kwargs.pop('sender', 0)
       self.num_hyps = kwargs.pop('num_hyps')
 
   def __repr__(self):
@@ -538,7 +585,7 @@ from satellite observations.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgIarState._parser.build(c)
     return self.pack()
 
@@ -552,6 +599,7 @@ from satellite observations.
     return MsgIarState(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgIarState, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)

@@ -17,7 +17,7 @@ Satellite observation messages from the device.
 from construct import *
 import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml with generate.py.
@@ -193,6 +193,8 @@ whole cycles and 8-bits of fractional cycles).
     Pseudorange and carrier phase observation for a
 satellite being tracked.
 
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgObs",
@@ -204,6 +206,9 @@ satellite being tracked.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgObs, self).__init__()
+      self.msg_type = SBP_MSG_OBS
+      self.sender = kwargs.pop('sender', 0)
       self.header = kwargs.pop('header')
       self.obs = kwargs.pop('obs')
 
@@ -222,7 +227,7 @@ satellite being tracked.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgObs._parser.build(c)
     return self.pack()
 
@@ -236,6 +241,7 @@ satellite being tracked.
     return MsgObs(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgObs, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -267,6 +273,8 @@ error in the pseudo-absolute position output.
     Longitude
   height : double
     Height
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgBasePos",
@@ -279,6 +287,9 @@ error in the pseudo-absolute position output.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgBasePos, self).__init__()
+      self.msg_type = SBP_MSG_BASE_POS
+      self.sender = kwargs.pop('sender', 0)
       self.lat = kwargs.pop('lat')
       self.lon = kwargs.pop('lon')
       self.height = kwargs.pop('height')
@@ -298,7 +309,7 @@ error in the pseudo-absolute position output.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgBasePos._parser.build(c)
     return self.pack()
 
@@ -312,6 +323,7 @@ error in the pseudo-absolute position output.
     return MsgBasePos(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgBasePos, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -389,6 +401,8 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Satellite is healthy?
   prn : int
     PRN being tracked
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgEphemeris",
@@ -424,6 +438,9 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgEphemeris, self).__init__()
+      self.msg_type = SBP_MSG_EPHEMERIS
+      self.sender = kwargs.pop('sender', 0)
       self.tgd = kwargs.pop('tgd')
       self.crs = kwargs.pop('crs')
       self.crc = kwargs.pop('crc')
@@ -466,7 +483,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgEphemeris._parser.build(c)
     return self.pack()
 
@@ -480,6 +497,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     return MsgEphemeris(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgEphemeris, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)

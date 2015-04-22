@@ -27,7 +27,7 @@ device response.
 from construct import *
 import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/file_io.yaml with generate.py.
@@ -61,6 +61,8 @@ message".
     Chunk size to read
   filename : string
     Name of the file to read from (NULL padded)
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgFileioRead",
@@ -73,6 +75,9 @@ message".
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgFileioRead, self).__init__()
+      self.msg_type = SBP_MSG_FILEIO_READ
+      self.sender = kwargs.pop('sender', 0)
       self.offset = kwargs.pop('offset')
       self.chunk_size = kwargs.pop('chunk_size')
       self.filename = kwargs.pop('filename')
@@ -92,7 +97,7 @@ message".
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgFileioRead._parser.build(c)
     return self.pack()
 
@@ -106,6 +111,7 @@ message".
     return MsgFileioRead(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgFileioRead, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -140,6 +146,8 @@ message".
 
   dirname : string
     Name of the directory to list (NULL padded)
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgFileioReadDir",
@@ -151,6 +159,9 @@ message".
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgFileioReadDir, self).__init__()
+      self.msg_type = SBP_MSG_FILEIO_READ_DIR
+      self.sender = kwargs.pop('sender', 0)
       self.offset = kwargs.pop('offset')
       self.dirname = kwargs.pop('dirname')
 
@@ -169,7 +180,7 @@ message".
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgFileioReadDir._parser.build(c)
     return self.pack()
 
@@ -183,6 +194,7 @@ message".
     return MsgFileioReadDir(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgFileioReadDir, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -208,6 +220,8 @@ message is invalid, a followup MSG_PRINT message will print
     SBP parent object to inherit from.
   filename : string
     Name of the file to delete (NULL padded)
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgFileioRemove",
@@ -218,6 +232,9 @@ message is invalid, a followup MSG_PRINT message will print
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgFileioRemove, self).__init__()
+      self.msg_type = SBP_MSG_FILEIO_REMOVE
+      self.sender = kwargs.pop('sender', 0)
       self.filename = kwargs.pop('filename')
 
   def __repr__(self):
@@ -235,7 +252,7 @@ message is invalid, a followup MSG_PRINT message will print
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgFileioRemove._parser.build(c)
     return self.pack()
 
@@ -249,6 +266,7 @@ message is invalid, a followup MSG_PRINT message will print
     return MsgFileioRemove(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgFileioRemove, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -280,6 +298,8 @@ print "Invalid fileio write message".
     Offset into the file at which to start writing in bytes
   data : array
     Variable-length array of data to write
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgFileioWrite",
@@ -292,6 +312,9 @@ print "Invalid fileio write message".
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgFileioWrite, self).__init__()
+      self.msg_type = SBP_MSG_FILEIO_WRITE
+      self.sender = kwargs.pop('sender', 0)
       self.filename = kwargs.pop('filename')
       self.offset = kwargs.pop('offset')
       self.data = kwargs.pop('data')
@@ -311,7 +334,7 @@ print "Invalid fileio write message".
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgFileioWrite._parser.build(c)
     return self.pack()
 
@@ -325,6 +348,7 @@ print "Invalid fileio write message".
     return MsgFileioWrite(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgFileioWrite, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)

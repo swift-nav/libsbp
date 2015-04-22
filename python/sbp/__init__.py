@@ -83,19 +83,29 @@ class SBP(object):
   def __eq__(self, other):
     return self.__dict__ == other.__dict__
 
-  def pack(self):
-    """Pack to framed binary message.
+  def __update(self):
+    raise NotImplementedError("Internal update used by children.")
+
+  def _get_framed(self):
+    """Returns the framed message and updates the CRC.
 
     """
+    self.length = len(self.payload)
     framed_msg = struct.pack('<BHHB',
                              self.preamble,
                              self.msg_type,
                              self.sender,
-                             len(self.payload))
+                             self.length)
     framed_msg += self.payload
-    crc = crc16(framed_msg[1:], 0)
-    framed_msg += struct.pack('<H', crc)
+    self.crc = crc16(framed_msg[1:], 0)
+    framed_msg += struct.pack('<H', self.crc)
     return framed_msg
+
+  def pack(self):
+    """Pack to framed binary message.
+
+    """
+    return self._get_framed()
 
   @staticmethod
   def unpack(d):
@@ -145,4 +155,3 @@ class SBP(object):
             'length': self.length,
             'payload': base64.standard_b64encode(self.payload),
             'crc': self.crc}
-

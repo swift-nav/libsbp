@@ -23,7 +23,7 @@ device response.
 from construct import *
 import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/bootload.yaml with generate.py.
@@ -51,6 +51,8 @@ earlier versions.
     SBP parent object to inherit from.
   handshake : array
     Version number string (not NULL terminated)
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgBootloaderHandshake",
@@ -61,6 +63,9 @@ earlier versions.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgBootloaderHandshake, self).__init__()
+      self.msg_type = SBP_MSG_BOOTLOADER_HANDSHAKE
+      self.sender = kwargs.pop('sender', 0)
       self.handshake = kwargs.pop('handshake')
 
   def __repr__(self):
@@ -78,7 +83,7 @@ earlier versions.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgBootloaderHandshake._parser.build(c)
     return self.pack()
 
@@ -92,6 +97,7 @@ earlier versions.
     return MsgBootloaderHandshake(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgBootloaderHandshake, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -115,6 +121,8 @@ class MsgBootloaderJumpToApp(SBP):
     SBP parent object to inherit from.
   jump : int
     Ignored by the device
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgBootloaderJumpToApp",
@@ -125,6 +133,9 @@ class MsgBootloaderJumpToApp(SBP):
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgBootloaderJumpToApp, self).__init__()
+      self.msg_type = SBP_MSG_BOOTLOADER_JUMP_TO_APP
+      self.sender = kwargs.pop('sender', 0)
       self.jump = kwargs.pop('jump')
 
   def __repr__(self):
@@ -142,7 +153,7 @@ class MsgBootloaderJumpToApp(SBP):
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgBootloaderJumpToApp._parser.build(c)
     return self.pack()
 
@@ -156,6 +167,7 @@ class MsgBootloaderJumpToApp(SBP):
     return MsgBootloaderJumpToApp(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgBootloaderJumpToApp, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -186,6 +198,8 @@ to the Piksi's serial number.
     57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
 on the right.
 
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgNapDeviceDna",
@@ -196,6 +210,9 @@ on the right.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgNapDeviceDna, self).__init__()
+      self.msg_type = SBP_MSG_NAP_DEVICE_DNA
+      self.sender = kwargs.pop('sender', 0)
       self.dna = kwargs.pop('dna')
 
   def __repr__(self):
@@ -213,7 +230,7 @@ on the right.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgNapDeviceDna._parser.build(c)
     return self.pack()
 
@@ -227,6 +244,7 @@ on the right.
     return MsgNapDeviceDna(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgNapDeviceDna, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)

@@ -28,7 +28,7 @@ and the RTK solution in tandem.
 from construct import *
 import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/navigation.yaml with generate.py.
@@ -73,6 +73,8 @@ from -500000 to 500000)
 
   flags : int
     Status flags (reserved)
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgGPSTime",
@@ -86,6 +88,9 @@ from -500000 to 500000)
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgGPSTime, self).__init__()
+      self.msg_type = SBP_MSG_GPS_TIME
+      self.sender = kwargs.pop('sender', 0)
       self.wn = kwargs.pop('wn')
       self.tow = kwargs.pop('tow')
       self.ns = kwargs.pop('ns')
@@ -106,7 +111,7 @@ from -500000 to 500000)
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgGPSTime._parser.build(c)
     return self.pack()
 
@@ -120,6 +125,7 @@ from -500000 to 500000)
     return MsgGPSTime(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgGPSTime, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -155,6 +161,8 @@ precision.
     Horizontal Dilution of Precision
   vdop : int
     Vertical Dilution of Precision
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgDops",
@@ -170,6 +178,9 @@ precision.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgDops, self).__init__()
+      self.msg_type = SBP_MSG_DOPS
+      self.sender = kwargs.pop('sender', 0)
       self.tow = kwargs.pop('tow')
       self.gdop = kwargs.pop('gdop')
       self.pdop = kwargs.pop('pdop')
@@ -192,7 +203,7 @@ precision.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgDops._parser.build(c)
     return self.pack()
 
@@ -206,6 +217,7 @@ precision.
     return MsgDops(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgDops, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -250,6 +262,8 @@ to 0.
     Number of satellites used in solution
   flags : int
     Status flags
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgPosECEF",
@@ -266,6 +280,9 @@ to 0.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgPosECEF, self).__init__()
+      self.msg_type = SBP_MSG_POS_ECEF
+      self.sender = kwargs.pop('sender', 0)
       self.tow = kwargs.pop('tow')
       self.x = kwargs.pop('x')
       self.y = kwargs.pop('y')
@@ -289,7 +306,7 @@ to 0.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgPosECEF._parser.build(c)
     return self.pack()
 
@@ -303,6 +320,7 @@ to 0.
     return MsgPosECEF(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgPosECEF, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -351,6 +369,8 @@ implemented). Defaults to 0.
     Number of satellites used in solution.
   flags : int
     Status flags
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgPosLLH",
@@ -368,6 +388,9 @@ implemented). Defaults to 0.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgPosLLH, self).__init__()
+      self.msg_type = SBP_MSG_POS_LLH
+      self.sender = kwargs.pop('sender', 0)
       self.tow = kwargs.pop('tow')
       self.lat = kwargs.pop('lat')
       self.lon = kwargs.pop('lon')
@@ -392,7 +415,7 @@ implemented). Defaults to 0.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgPosLLH._parser.build(c)
     return self.pack()
 
@@ -406,6 +429,7 @@ implemented). Defaults to 0.
     return MsgPosLLH(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgPosLLH, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -447,6 +471,8 @@ to 0.
     Number of satellites used in solution
   flags : int
     Status flags
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgBaselineECEF",
@@ -463,6 +489,9 @@ to 0.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgBaselineECEF, self).__init__()
+      self.msg_type = SBP_MSG_BASELINE_ECEF
+      self.sender = kwargs.pop('sender', 0)
       self.tow = kwargs.pop('tow')
       self.x = kwargs.pop('x')
       self.y = kwargs.pop('y')
@@ -486,7 +515,7 @@ to 0.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgBaselineECEF._parser.build(c)
     return self.pack()
 
@@ -500,6 +529,7 @@ to 0.
     return MsgBaselineECEF(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgBaselineECEF, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -546,6 +576,8 @@ implemented). Defaults to 0.
     Number of satellites used in solution
   flags : int
     Status flags
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgBaselineNED",
@@ -563,6 +595,9 @@ implemented). Defaults to 0.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgBaselineNED, self).__init__()
+      self.msg_type = SBP_MSG_BASELINE_NED
+      self.sender = kwargs.pop('sender', 0)
       self.tow = kwargs.pop('tow')
       self.n = kwargs.pop('n')
       self.e = kwargs.pop('e')
@@ -587,7 +622,7 @@ implemented). Defaults to 0.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgBaselineNED._parser.build(c)
     return self.pack()
 
@@ -601,6 +636,7 @@ implemented). Defaults to 0.
     return MsgBaselineNED(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgBaselineNED, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -640,6 +676,8 @@ to 0.
     Number of satellites used in solution
   flags : int
     Status flags (reserved)
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgVelECEF",
@@ -656,6 +694,9 @@ to 0.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgVelECEF, self).__init__()
+      self.msg_type = SBP_MSG_VEL_ECEF
+      self.sender = kwargs.pop('sender', 0)
       self.tow = kwargs.pop('tow')
       self.x = kwargs.pop('x')
       self.y = kwargs.pop('y')
@@ -679,7 +720,7 @@ to 0.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgVelECEF._parser.build(c)
     return self.pack()
 
@@ -693,6 +734,7 @@ to 0.
     return MsgVelECEF(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgVelECEF, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -736,6 +778,8 @@ implemented). Defaults to 0.
     Number of satellites used in solution
   flags : int
     Status flags (reserved)
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgVelNED",
@@ -753,6 +797,9 @@ implemented). Defaults to 0.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgVelNED, self).__init__()
+      self.msg_type = SBP_MSG_VEL_NED
+      self.sender = kwargs.pop('sender', 0)
       self.tow = kwargs.pop('tow')
       self.n = kwargs.pop('n')
       self.e = kwargs.pop('e')
@@ -777,7 +824,7 @@ implemented). Defaults to 0.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgVelNED._parser.build(c)
     return self.pack()
 
@@ -791,6 +838,7 @@ implemented). Defaults to 0.
     return MsgVelNED(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgVelNED, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)

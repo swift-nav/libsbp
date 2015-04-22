@@ -14,7 +14,7 @@ Utilities for running YAML-defined unit tests.
 """
 
 from sbp import SBP
-from sbp.table import dispatch
+from sbp.table import dispatch, _SBP_TABLE
 import base64
 import json
 import yaml
@@ -106,6 +106,17 @@ def _assert_msg_roundtrip_json(msg, raw_json):
   assert json.loads(msg.to_json()) == json.loads(raw_json)
   assert msg == msg.from_json(raw_json)
 
+def _assert_materialization(msg, sbp, raw_json):
+  """Asserts that a message materialized will get serialized into the
+  right JSON object.
+
+  """
+  fields = msg['fields']
+  fields.update({'sender': sbp.sender})
+  live_msg = _SBP_TABLE[sbp.msg_type](**fields)
+  assert isinstance(live_msg.to_json_dict(), dict)
+  assert live_msg.to_json_dict() == json.loads(raw_json)
+
 def _assert_sane_package(pkg_name, pkg):
   """
   Sanity check the package collection of tests before actually
@@ -147,3 +158,4 @@ def assert_package(test_filename, pkg_name):
       _assert_msg(dispatch(sbp), test_case['msg'])
       _assert_msg_roundtrip(dispatch(sbp), test_case['raw_packet'])
       _assert_msg_roundtrip_json(dispatch(sbp), test_case['raw_json'])
+      _assert_materialization(test_case['msg'], sbp, test_case['raw_json'])

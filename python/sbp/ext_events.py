@@ -19,7 +19,7 @@ e.g. camera shutter time.
 from construct import *
 import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/ext_events.yaml with generate.py.
@@ -55,6 +55,8 @@ from -500000 to 500000)
     Flags
   pin : int
     Pin number.  0..9 = DEBUG0..9.
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgExtEvent",
@@ -69,6 +71,9 @@ from -500000 to 500000)
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgExtEvent, self).__init__()
+      self.msg_type = SBP_MSG_EXT_EVENT
+      self.sender = kwargs.pop('sender', 0)
       self.wn = kwargs.pop('wn')
       self.tow = kwargs.pop('tow')
       self.ns = kwargs.pop('ns')
@@ -90,7 +95,7 @@ from -500000 to 500000)
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgExtEvent._parser.build(c)
     return self.pack()
 
@@ -104,6 +109,7 @@ from -500000 to 500000)
     return MsgExtEvent(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgExtEvent, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
