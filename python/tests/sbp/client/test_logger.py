@@ -10,7 +10,6 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 from sbp import SBP
-from sbp.client.drivers.file_driver import FileDriver
 from sbp.client.loggers.base_logger import LogIterator
 from sbp.client.loggers.json_logger import JSONLogIterator
 from sbp.client.loggers.pickle_logger import PickleLogIterator
@@ -28,7 +27,7 @@ import warnings
 #   log_datafile = "./data/serial_link_log_20141125-150750_test1.log.dat"
 #   new_datafile = open("./data/serial_link_log_20141125-150750_test2.log.dat", 'w')
 #   protocol = 2
-#   with PickleLogIterator(FileDriver(log_datafile)) as log:
+#   with PickleLogIterator(log_datafile) as log:
 #     for delta, timestamp, msg in log.next():
 #       sbp = SBP(msg.msg_type, msg.sender, msg.length, msg.payload, msg.crc)
 #       pickle.dump((delta, timestamp, sbp), new_datafile, protocol)
@@ -40,7 +39,7 @@ def test_log():
   Abstract interface won't work
   """
   log_datafile = "./data/serial_link_log_20141125-150750_test2.log.dat"
-  with LogIterator(FileDriver(log_datafile)) as log:
+  with LogIterator(log_datafile) as log:
     with pytest.raises(NotImplementedError) as exc_info:
       for delta, timestamp, msg in log.next():
         pass
@@ -52,7 +51,7 @@ def test_pickle_log():
   """
   log_datafile = "./data/serial_link_log_20141125-150750_test2.log.dat"
   count = 0
-  with PickleLogIterator(FileDriver(log_datafile)) as log:
+  with PickleLogIterator(log_datafile) as log:
     with warnings.catch_warnings(record=True) as w:
       for delta, timestamp, msg in log.next():
         assert type(delta) == int
@@ -72,13 +71,12 @@ def test_basic_pickle_log():
   """
   log_datafile = "./data/serial_link_log_20141125-150750_test2.log.dat"
   count = 0
-  with open(log_datafile, 'r+') as f:
-    with PickleLogIterator(f) as log:
-      for delta, timestamp, msg in log.next():
-        assert type(delta) == int
-        assert type(timestamp) == int
-        assert isinstance(msg, SBP)
-        count += 1
+  with PickleLogIterator(log_datafile) as log:
+    for delta, timestamp, msg in log.next():
+      assert type(delta) == int
+      assert type(timestamp) == int
+      assert isinstance(msg, SBP)
+      count += 1
   assert count == 1111
 
 def test_json_log():
@@ -88,7 +86,7 @@ def test_json_log():
   log_datafile = "./data/serial_link_log_20150310-115522-test.log.dat"
   count = 0
   with warnings.catch_warnings(record=True) as w:
-    with JSONLogIterator(FileDriver(log_datafile)) as log:
+    with JSONLogIterator(log_datafile) as log:
       for delta, timestamp, msg in log.next():
         assert type(delta) == int
         assert type(timestamp) == int
@@ -108,7 +106,7 @@ def test_pickle_log_missing():
   new_table = _SBP_TABLE.copy()
   new_table.pop(SBP_MSG_PRINT, None)
   d = lambda msg: dispatch(msg, table=new_table)
-  with PickleLogIterator(FileDriver(log_datafile), dispatcher=d) as log:
+  with PickleLogIterator(log_datafile, dispatcher=d) as log:
     with warnings.catch_warnings(record=True) as w:
       for delta, timestamp, msg in log.next():
         pass
