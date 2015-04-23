@@ -17,7 +17,7 @@
 from construct import *
 import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
 ((*- for i in include *))
@@ -102,6 +102,8 @@ class ((( m.identifier | classnameify )))(SBP):
     (((f.desc)))
   ((*- endif *))
   ((*- endfor *))
+  sender : int
+    Optional sender ID, defaults to 0
   ((*- endif *))
 
   """
@@ -120,8 +122,11 @@ class ((( m.identifier | classnameify )))(SBP):
       ((*- else *))
       self.payload = sbp.payload
       ((*- endif *))
-    ((*- if m.fields*))
     else:
+      super( ((( m.identifier | classnameify ))), self).__init__()
+      self.msg_type = SBP_(((m.identifier)))
+      self.sender = kwargs.pop('sender', 0)
+    ((*- if m.fields*))
       ((*- for f in m.fields *))
       self.(((f.identifier))) = kwargs.pop('(((f.identifier)))')
       ((*- endfor *))
@@ -142,7 +147,7 @@ class ((( m.identifier | classnameify )))(SBP):
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = ((( m.identifier | classnameify )))._parser.build(c)
     return self.pack()
 
@@ -156,6 +161,7 @@ class ((( m.identifier | classnameify )))(SBP):
     return ((( m.identifier | classnameify )))(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( ((( m.identifier | classnameify ))), self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)

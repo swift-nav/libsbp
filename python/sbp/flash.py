@@ -24,7 +24,7 @@ are intended for internal-use only.
 from construct import *
 import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/flash.yaml with generate.py.
@@ -62,6 +62,8 @@ starting address
 
   data : array
     Data to program addresses with, with length N=addr_len
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgFlashProgram",
@@ -75,6 +77,9 @@ starting address
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgFlashProgram, self).__init__()
+      self.msg_type = SBP_MSG_FLASH_PROGRAM
+      self.sender = kwargs.pop('sender', 0)
       self.target = kwargs.pop('target')
       self.addr_start = kwargs.pop('addr_start')
       self.addr_len = kwargs.pop('addr_len')
@@ -95,7 +100,7 @@ starting address
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgFlashProgram._parser.build(c)
     return self.pack()
 
@@ -109,6 +114,7 @@ starting address
     return MsgFlashProgram(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgFlashProgram, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -135,6 +141,8 @@ return this message on failure.
     SBP parent object to inherit from.
   response : int
     Response flags
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgFlashDone",
@@ -145,6 +153,9 @@ return this message on failure.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgFlashDone, self).__init__()
+      self.msg_type = SBP_MSG_FLASH_DONE
+      self.sender = kwargs.pop('sender', 0)
       self.response = kwargs.pop('response')
 
   def __repr__(self):
@@ -162,7 +173,7 @@ return this message on failure.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgFlashDone._parser.build(c)
     return self.pack()
 
@@ -176,6 +187,7 @@ return this message on failure.
     return MsgFlashDone(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgFlashDone, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -211,6 +223,8 @@ range.
     Length of set of addresses to read, counting up from
 starting address
 
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgFlashRead",
@@ -223,6 +237,9 @@ starting address
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgFlashRead, self).__init__()
+      self.msg_type = SBP_MSG_FLASH_READ
+      self.sender = kwargs.pop('sender', 0)
       self.target = kwargs.pop('target')
       self.addr_start = kwargs.pop('addr_start')
       self.addr_len = kwargs.pop('addr_len')
@@ -242,7 +259,7 @@ starting address
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgFlashRead._parser.build(c)
     return self.pack()
 
@@ -256,6 +273,7 @@ starting address
     return MsgFlashRead(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgFlashRead, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -287,6 +305,8 @@ invalid.
     Flash sector number to erase (0-11 for the STM, 0-15 for
 the M25)
 
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgFlashErase",
@@ -298,6 +318,9 @@ the M25)
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgFlashErase, self).__init__()
+      self.msg_type = SBP_MSG_FLASH_ERASE
+      self.sender = kwargs.pop('sender', 0)
       self.target = kwargs.pop('target')
       self.sector_num = kwargs.pop('sector_num')
 
@@ -316,7 +339,7 @@ the M25)
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgFlashErase._parser.build(c)
     return self.pack()
 
@@ -330,6 +353,7 @@ the M25)
     return MsgFlashErase(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgFlashErase, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -354,6 +378,8 @@ memory. The device replies with a MSG_FLASH_DONE message.
     SBP parent object to inherit from.
   sector : int
     Flash sector number to lock
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgStmFlashLockSector",
@@ -364,6 +390,9 @@ memory. The device replies with a MSG_FLASH_DONE message.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgStmFlashLockSector, self).__init__()
+      self.msg_type = SBP_MSG_STM_FLASH_LOCK_SECTOR
+      self.sender = kwargs.pop('sender', 0)
       self.sector = kwargs.pop('sector')
 
   def __repr__(self):
@@ -381,7 +410,7 @@ memory. The device replies with a MSG_FLASH_DONE message.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgStmFlashLockSector._parser.build(c)
     return self.pack()
 
@@ -395,6 +424,7 @@ memory. The device replies with a MSG_FLASH_DONE message.
     return MsgStmFlashLockSector(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgStmFlashLockSector, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -419,6 +449,8 @@ memory. The device replies with a MSG_FLASH_DONE message.
     SBP parent object to inherit from.
   sector : int
     Flash sector number to unlock
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgStmFlashUnlockSector",
@@ -429,6 +461,9 @@ memory. The device replies with a MSG_FLASH_DONE message.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgStmFlashUnlockSector, self).__init__()
+      self.msg_type = SBP_MSG_STM_FLASH_UNLOCK_SECTOR
+      self.sender = kwargs.pop('sender', 0)
       self.sector = kwargs.pop('sector')
 
   def __repr__(self):
@@ -446,7 +481,7 @@ memory. The device replies with a MSG_FLASH_DONE message.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgStmFlashUnlockSector._parser.build(c)
     return self.pack()
 
@@ -460,6 +495,7 @@ memory. The device replies with a MSG_FLASH_DONE message.
     return MsgStmFlashUnlockSector(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgStmFlashUnlockSector, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -484,6 +520,8 @@ returns 12-byte unique ID back to host.
     SBP parent object to inherit from.
   stm_id : array
     Device unique ID
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgStmUniqueId",
@@ -494,6 +532,9 @@ returns 12-byte unique ID back to host.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgStmUniqueId, self).__init__()
+      self.msg_type = SBP_MSG_STM_UNIQUE_ID
+      self.sender = kwargs.pop('sender', 0)
       self.stm_id = kwargs.pop('stm_id')
 
   def __repr__(self):
@@ -511,7 +552,7 @@ returns 12-byte unique ID back to host.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgStmUniqueId._parser.build(c)
     return self.pack()
 
@@ -525,6 +566,7 @@ returns 12-byte unique ID back to host.
     return MsgStmUniqueId(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgStmUniqueId, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -549,6 +591,8 @@ register. The device replies with a MSG_FLASH_DONE message.
     SBP parent object to inherit from.
   status : array
     Byte to write to the M25 flash status register
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgM25FlashWriteStatus",
@@ -559,6 +603,9 @@ register. The device replies with a MSG_FLASH_DONE message.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgM25FlashWriteStatus, self).__init__()
+      self.msg_type = SBP_MSG_M25_FLASH_WRITE_STATUS
+      self.sender = kwargs.pop('sender', 0)
       self.status = kwargs.pop('status')
 
   def __repr__(self):
@@ -576,7 +623,7 @@ register. The device replies with a MSG_FLASH_DONE message.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgM25FlashWriteStatus._parser.build(c)
     return self.pack()
 
@@ -590,6 +637,7 @@ register. The device replies with a MSG_FLASH_DONE message.
     return MsgM25FlashWriteStatus(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgM25FlashWriteStatus, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)

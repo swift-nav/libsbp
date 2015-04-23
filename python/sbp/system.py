@@ -17,7 +17,7 @@ Standardized system messages from Swift Navigation devices.
 from construct import *
 import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/system.yaml with generate.py.
@@ -45,6 +45,8 @@ or configuration requests.
     SBP parent object to inherit from.
   reserved : int
     Reserved
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgStartup",
@@ -55,6 +57,9 @@ or configuration requests.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgStartup, self).__init__()
+      self.msg_type = SBP_MSG_STARTUP
+      self.sender = kwargs.pop('sender', 0)
       self.reserved = kwargs.pop('reserved')
 
   def __repr__(self):
@@ -72,7 +77,7 @@ or configuration requests.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgStartup._parser.build(c)
     return self.pack()
 
@@ -86,6 +91,7 @@ or configuration requests.
     return MsgStartup(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgStartup, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -118,6 +124,8 @@ the remaining error flags should be inspected.
     SBP parent object to inherit from.
   flags : int
     Status flags
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgHeartbeat",
@@ -128,6 +136,9 @@ the remaining error flags should be inspected.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgHeartbeat, self).__init__()
+      self.msg_type = SBP_MSG_HEARTBEAT
+      self.sender = kwargs.pop('sender', 0)
       self.flags = kwargs.pop('flags')
 
   def __repr__(self):
@@ -145,7 +156,7 @@ the remaining error flags should be inspected.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgHeartbeat._parser.build(c)
     return self.pack()
 
@@ -159,6 +170,7 @@ the remaining error flags should be inspected.
     return MsgHeartbeat(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgHeartbeat, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)

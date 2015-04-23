@@ -18,7 +18,7 @@ Satellite code and carrier-phase tracking messages from the device.
 from construct import *
 import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml with generate.py.
@@ -80,6 +80,8 @@ all tracked satellites.
     SBP parent object to inherit from.
   states : array
     Satellite tracking channel state
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgTrackingState",
@@ -90,6 +92,9 @@ all tracked satellites.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgTrackingState, self).__init__()
+      self.msg_type = SBP_MSG_TRACKING_STATE
+      self.sender = kwargs.pop('sender', 0)
       self.states = kwargs.pop('states')
 
   def __repr__(self):
@@ -107,7 +112,7 @@ all tracked satellites.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgTrackingState._parser.build(c)
     return self.pack()
 
@@ -121,6 +126,7 @@ all tracked satellites.
     return MsgTrackingState(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgTrackingState, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -194,6 +200,8 @@ class MsgEphemerisOld(SBP):
     Satellite is healthy?
   prn : int
     PRN being tracked
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgEphemerisOld",
@@ -229,6 +237,9 @@ class MsgEphemerisOld(SBP):
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgEphemerisOld, self).__init__()
+      self.msg_type = SBP_MSG_EPHEMERIS_OLD
+      self.sender = kwargs.pop('sender', 0)
       self.tgd = kwargs.pop('tgd')
       self.crs = kwargs.pop('crs')
       self.crc = kwargs.pop('crc')
@@ -271,7 +282,7 @@ class MsgEphemerisOld(SBP):
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisOld._parser.build(c)
     return self.pack()
 
@@ -285,6 +296,7 @@ class MsgEphemerisOld(SBP):
     return MsgEphemerisOld(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgEphemerisOld, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)

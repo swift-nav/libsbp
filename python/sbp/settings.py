@@ -24,7 +24,7 @@ https://github.com/swift-nav/piksi\_firmware/blob/master/docs/settings.pdf
 from construct import *
 import json
 from sbp import SBP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/settings.yaml with generate.py.
@@ -52,6 +52,8 @@ class MsgSettings(SBP):
 [SECTION_SETTING, SETTING, VALUE] on writes or a series of
 such strings on reads.
 
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgSettings",
@@ -62,6 +64,9 @@ such strings on reads.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgSettings, self).__init__()
+      self.msg_type = SBP_MSG_SETTINGS
+      self.sender = kwargs.pop('sender', 0)
       self.setting = kwargs.pop('setting')
 
   def __repr__(self):
@@ -79,7 +84,7 @@ such strings on reads.
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgSettings._parser.build(c)
     return self.pack()
 
@@ -93,6 +98,7 @@ such strings on reads.
     return MsgSettings(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgSettings, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
@@ -117,6 +123,10 @@ configuration to its onboard flash memory file system.
     if sbp:
       self.__dict__.update(sbp.__dict__)
       self.payload = sbp.payload
+    else:
+      super( MsgSettingsSave, self).__init__()
+      self.msg_type = SBP_MSG_SETTINGS_SAVE
+      self.sender = kwargs.pop('sender', 0)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -145,6 +155,8 @@ NULL-terminated and delimited string with contents
     An index into the device settings, with values ranging from
 0 to length(settings)
 
+  sender : int
+    Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgSettingsReadByIndex",
@@ -155,6 +167,9 @@ NULL-terminated and delimited string with contents
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
+      super( MsgSettingsReadByIndex, self).__init__()
+      self.msg_type = SBP_MSG_SETTINGS_READ_BY_INDEX
+      self.sender = kwargs.pop('sender', 0)
       self.index = kwargs.pop('index')
 
   def __repr__(self):
@@ -172,7 +187,7 @@ NULL-terminated and delimited string with contents
     """Produce a framed/packed SBP message.
 
     """
-    c = Container(**exclude_fields(self))
+    c = containerize(exclude_fields(self))
     self.payload = MsgSettingsReadByIndex._parser.build(c)
     return self.pack()
 
@@ -186,6 +201,7 @@ NULL-terminated and delimited string with contents
     return MsgSettingsReadByIndex(sbp)
 
   def to_json_dict(self):
+    self.to_binary()
     d = super( MsgSettingsReadByIndex, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
