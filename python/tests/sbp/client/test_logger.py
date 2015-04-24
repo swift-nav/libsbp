@@ -11,11 +11,12 @@
 
 from sbp import SBP
 from sbp.client.loggers.base_logger import LogIterator
-from sbp.client.loggers.json_logger import JSONLogIterator
+from sbp.client.loggers.json_logger import JSONLogIterator, MultiJSONLogIterator
 from sbp.client.loggers.pickle_logger import PickleLogIterator
 from sbp.logging import SBP_MSG_PRINT
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
+import mock
 import pytest
 import warnings
 
@@ -116,3 +117,24 @@ def test_pickle_log_missing():
       assert issubclass(x.category, RuntimeWarning)
       assert str(x.message).find("No message found for msg_type id 16*")
 
+def test_multi_json_log():
+  """
+  Multi JSON log iterator sanity tests.
+  """
+  log_datafiles = ['./data/serial_link_log_20150310-115522-test.log.dat',
+                   './data/serial_link_log_20150423-154336_test.log.dat']
+  handles = [open(f, 'r') for f in log_datafiles]
+  count = 0
+  past = 0
+  with warnings.catch_warnings(record=True) as w:
+    with MultiJSONLogIterator(handles) as log:
+      for delta, timestamp, msg in log.next():
+        assert type(delta) == int
+        assert type(timestamp) == int
+        assert isinstance(msg, SBP) or issubclass(type(msg), SBP)
+        assert timestamp >= past
+        past = timestamp
+        count += 1
+      warnings.simplefilter("always")
+      assert len(w) == 0
+  assert count == 2650 + 1451

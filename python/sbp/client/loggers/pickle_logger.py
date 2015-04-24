@@ -36,8 +36,8 @@ class PickleLogIterator(LogIterator):
 
   Parameters
   ----------
-  handle : File-like handle
-    Any file-like handle providing SBP messages.
+  filename : string
+    Path to file to read SBP messages from.
 
   """
 
