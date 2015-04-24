@@ -16,7 +16,7 @@ import warnings
 from boto.s3.connection import S3Connection
 from gzip import GzipFile
 from operator import itemgetter
-from StringIO import StringIO
+from cStringIO import StringIO
 
 class JSONLogger(BaseLogger):
   """
