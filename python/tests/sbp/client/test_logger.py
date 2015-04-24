@@ -16,7 +16,6 @@ from sbp.client.loggers.pickle_logger import PickleLogIterator
 from sbp.logging import SBP_MSG_PRINT
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
-import mock
 import pytest
 import warnings
 
