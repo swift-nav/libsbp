@@ -22,10 +22,9 @@ class BaseLogger(object):
   ----------
   filename : string
     File to log to.
-
   """
-  def __init__(self, filename, dispatcher=dispatch):
-    self.handle = open(filename, "w+")
+  def __init__(self, filename, mode="w", dispatcher=dispatch):
+    self.handle = open(filename, mode)
     self.dispatcher = dispatcher
     self.base_time = time.time()
 
@@ -64,12 +63,12 @@ class LogIterator(object):
 
   Parameters
   ----------
-  handle : File-like handle
-    Any file-like handle providing SBP messages.
+  filename : string
+    Path to file to read SBP messages from.
 
   """
-  def __init__(self, handle, dispatcher=dispatch):
-    self.handle = handle
+  def __init__(self, filename, dispatcher=dispatch):
+    self.handle = open(filename, "r")
     self.dispatcher = dispatcher
 
   def __enter__(self):

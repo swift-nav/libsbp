@@ -222,27 +222,26 @@ def main():
   num_test_cases = 5
   message_table = _SBP_TABLE
   test_table = dict((k, []) for (k, v) in message_table.copy().iteritems())
-  with open(log_datafile, 'r+') as f:
-    with PickleLogIterator(f) as log:
-      for delta, timestamp, msg in log.next():
-        try:
-          i = mk_readable_msg(msg)
-        except TypeError as ex_info:
-          # Note data errors as they come up, but don't crash the test
-          # generation.
-          out = "Warning! %s for message 0x00%x." \
-                % (ex_info.message, msg.msg_type)
-          warnings.warn(out, RuntimeWarning)
-          continue
-        # For a given SBP message type, sample only num_test_cases
-        # hopefully unique cases. Assume that messages that are likely
-        # to be identical are consecutive, so coompare any new message
-        # with the most recent one.
-        if len(test_table[msg.msg_type]) <= num_test_cases:
-          if len(test_table[msg.msg_type]) == 0:
-            test_table[msg.msg_type].append(i)
-          elif test_table[msg.msg_type][-1] != i:
-            test_table[msg.msg_type].append(i)
+  with PickleLogIterator(log_datafile) as log:
+    for delta, timestamp, msg in log.next():
+      try:
+        i = mk_readable_msg(msg)
+      except TypeError as ex_info:
+        # Note data errors as they come up, but don't crash the test
+        # generation.
+        out = "Warning! %s for message 0x00%x." \
+              % (ex_info.message, msg.msg_type)
+        warnings.warn(out, RuntimeWarning)
+        continue
+      # For a given SBP message type, sample only num_test_cases
+      # hopefully unique cases. Assume that messages that are likely
+      # to be identical are consecutive, so coompare any new message
+      # with the most recent one.
+      if len(test_table[msg.msg_type]) <= num_test_cases:
+        if len(test_table[msg.msg_type]) == 0:
+          test_table[msg.msg_type].append(i)
+        elif test_table[msg.msg_type][-1] != i:
+          test_table[msg.msg_type].append(i)
   dump_modules_to_yaml(gather_by_module(test_table), version)
 
 if __name__ == "__main__":

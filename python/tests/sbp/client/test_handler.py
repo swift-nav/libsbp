@@ -10,6 +10,7 @@
 
 import io
 import itertools
+import time
 import threading
 
 from sbp.client.handler import *
@@ -69,6 +70,7 @@ def until(p, limit=1000):
   for i in itertools.count():
     if p():
       break
+    time.sleep(0.1)
     assert i < limit
 
 def test_listener_thread_ok():
