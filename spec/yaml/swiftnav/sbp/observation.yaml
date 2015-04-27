@@ -154,27 +154,27 @@ definitions:
           type: double
           units: s
           desc: Group delay differential between L1 and L2
-      - crs:
+      - c_rs:
           type: double
           units: m
           desc: Amplitude of the sine harmonic correction term to the orbit radius
-      - crc:
+      - c_rc:
           type: double
           units: m
           desc: Amplitude of the cosine harmonic correction term to the orbit radius
-      - cuc:
+      - c_uc:
           type: double
           units: rad
           desc: Amplitude of the cosine harmonic correction term to the argument of latitude
-      - cus:
+      - c_us:
           type: double
           units: rad
           desc: Amplitude of the sine harmonic correction term to the argument of latitude
-      - cic:
+      - c_ic:
           type: double
           units: rad
           desc: Amplitude of the cosine harmonic correction term to the angle of inclination
-      - cis:
+      - c_is:
           type: double
           units: rad
           desc: Amplitude of the sine harmonic correction term to the angle of inclination
