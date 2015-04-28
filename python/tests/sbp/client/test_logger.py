@@ -142,8 +142,12 @@ def test_msg_print():
   """
   """
   log_datafile = "./data/serial_link_log_20150428-084729.log.dat"
-  with LogIterator(log_datafile) as log:
-    with pytest.raises(NotImplementedError) as exc_info:
+  with JSONLogIterator(log_datafile) as log:
+    with warnings.catch_warnings(record=True) as w:
       for delta, timestamp, msg in log.next():
         pass
-  assert exc_info.value.message == "next() not implemented!"
+      warnings.simplefilter("always")
+      # Check for warnings.
+      assert len(w) == 1
+      assert issubclass(w[0].category, RuntimeWarning)
+      assert str(w[0].message).startswith('Bad message parsing for line')
