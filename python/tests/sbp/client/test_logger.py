@@ -137,3 +137,13 @@ def test_multi_json_log():
       warnings.simplefilter("always")
       assert len(w) == 0
   assert count == 2650 + 1451
+
+def test_msg_print():
+  """
+  """
+  log_datafile = "./data/serial_link_log_20150428-084729.log.dat"
+  with LogIterator(log_datafile) as log:
+    with pytest.raises(NotImplementedError) as exc_info:
+      for delta, timestamp, msg in log.next():
+        pass
+  assert exc_info.value.message == "next() not implemented!"
