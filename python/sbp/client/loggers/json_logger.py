@@ -11,6 +11,7 @@
 from ... import SBP
 from ...table import dispatch
 from .base_logger import BaseLogger, LogIterator
+from construct.core import ConstructError
 import json
 import warnings
 from boto.s3.connection import S3Connection
@@ -87,7 +88,9 @@ class JSONLogIterator(LogIterator):
         item = SBP.from_json_dict(data['data'])
         try:
           yield (delta, timestamp, self.dispatcher(item))
-        except KeyError:
+        except (KeyError, ConstructError):
+          warn = "Bad message parsing for line %s" % line
+          warnings.warn(warn, RuntimeWarning)
           yield (delta, timestamp, item)
       except ValueError:
         warn = "Bad JSON decoding for line %s" % line
