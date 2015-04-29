@@ -351,17 +351,17 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     SBP parent object to inherit from.
   tgd : double
     Group delay differential between L1 and L2
-  crs : double
+  c_rs : double
     Amplitude of the sine harmonic correction term to the orbit radius
-  crc : double
+  c_rc : double
     Amplitude of the cosine harmonic correction term to the orbit radius
-  cuc : double
+  c_uc : double
     Amplitude of the cosine harmonic correction term to the argument of latitude
-  cus : double
+  c_us : double
     Amplitude of the sine harmonic correction term to the argument of latitude
-  cic : double
+  c_ic : double
     Amplitude of the cosine harmonic correction term to the angle of inclination
-  cis : double
+  c_is : double
     Amplitude of the sine harmonic correction term to the angle of inclination
   dn : double
     Mean motion difference
@@ -407,12 +407,12 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
   """
   _parser = Struct("MsgEphemeris",
                    LFloat64('tgd'),
-                   LFloat64('crs'),
-                   LFloat64('crc'),
-                   LFloat64('cuc'),
-                   LFloat64('cus'),
-                   LFloat64('cic'),
-                   LFloat64('cis'),
+                   LFloat64('c_rs'),
+                   LFloat64('c_rc'),
+                   LFloat64('c_uc'),
+                   LFloat64('c_us'),
+                   LFloat64('c_ic'),
+                   LFloat64('c_is'),
                    LFloat64('dn'),
                    LFloat64('m0'),
                    LFloat64('ecc'),
@@ -442,12 +442,12 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
       self.msg_type = SBP_MSG_EPHEMERIS
       self.sender = kwargs.pop('sender', 0)
       self.tgd = kwargs.pop('tgd')
-      self.crs = kwargs.pop('crs')
-      self.crc = kwargs.pop('crc')
-      self.cuc = kwargs.pop('cuc')
-      self.cus = kwargs.pop('cus')
-      self.cic = kwargs.pop('cic')
-      self.cis = kwargs.pop('cis')
+      self.c_rs = kwargs.pop('c_rs')
+      self.c_rc = kwargs.pop('c_rc')
+      self.c_uc = kwargs.pop('c_uc')
+      self.c_us = kwargs.pop('c_us')
+      self.c_ic = kwargs.pop('c_ic')
+      self.c_is = kwargs.pop('c_is')
       self.dn = kwargs.pop('dn')
       self.m0 = kwargs.pop('m0')
       self.ecc = kwargs.pop('ecc')

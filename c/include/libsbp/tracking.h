@@ -57,12 +57,12 @@ typedef struct __attribute__((packed)) {
 #define SBP_MSG_EPHEMERIS_OLD  0x001A
 typedef struct __attribute__((packed)) {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
-  double crs;         /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
-  double crc;         /**< Amplitude of the cosine harmonic correction term to the orbit radius [m] */
-  double cuc;         /**< Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
-  double cus;         /**< Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
-  double cic;         /**< Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
-  double cis;         /**< Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+  double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
+  double c_rc;        /**< Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+  double c_uc;        /**< Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+  double c_us;        /**< Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+  double c_ic;        /**< Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+  double c_is;        /**< Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
   double dn;          /**< Mean motion difference [rad/s] */
   double m0;          /**< Mean anomaly at reference time [radians] */
   double ecc;         /**< Eccentricity of satellite orbit */
