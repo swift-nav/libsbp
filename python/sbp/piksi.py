@@ -605,6 +605,81 @@ from satellite observations.
     d.update(j)
     return d
     
+SBP_MSG_MASK_SATELLITE = 0x001B
+class MsgMaskSatellite(SBP):
+  """SBP class for message MSG_MASK_SATELLITE (0x001B).
+
+  You can have MSG_MASK_SATELLITE inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message allows setting a mask to prevent a particular satellite
+from being used in various Piksi subsystems.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  mask : int
+    Mask of systems that should ignore this satellite.
+  prn : int
+    PRN for which the mask is applied
+  sender : int
+    Optional sender ID, defaults to 0
+
+  """
+  _parser = Struct("MsgMaskSatellite",
+                   ULInt8('mask'),
+                   ULInt8('prn'),)
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgMaskSatellite, self).__init__()
+      self.msg_type = SBP_MSG_MASK_SATELLITE
+      self.sender = kwargs.pop('sender', 0)
+      self.mask = kwargs.pop('mask')
+      self.prn = kwargs.pop('prn')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgMaskSatellite._parser.parse(d)
+    self.__dict__.update(dict(p.viewitems()))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgMaskSatellite._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgMaskSatellite(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgMaskSatellite, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0069: MsgAlmanac,
@@ -617,4 +692,5 @@ msg_classes = {
   0x0017: MsgThreadState,
   0x0018: MsgUartState,
   0x0019: MsgIarState,
+  0x001B: MsgMaskSatellite,
 }
