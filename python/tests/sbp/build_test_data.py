@@ -52,11 +52,11 @@ into hex strings.
 
 """
 
+import sbp
 from sbp.table import _SBP_TABLE
-from sbp.client.loggers.pickle_logger import PickleLogIterator
+from sbp.utils import walk_json_dict
 import base64
 import datetime
-import sbp
 import warnings
 import yaml
 
@@ -80,23 +80,6 @@ def _to_readable_dict(msg):
           'length': msg.length,
           'payload': base64.standard_b64encode(msg.payload),
           'crc': hex(msg.crc)}
-
-def walk_json_dict(coll):
-  """
-  Flatten a parsed SBP object into a dicts and lists, which are
-  compatible for YAML output.
-
-  Parameters
-  ----------
-  test_map : dict
-
-  """
-  if isinstance(coll, dict):
-    return dict((k, walk_json_dict(v)) for (k, v) in coll.iteritems())
-  elif hasattr(coll, '__iter__'):
-    return [walk_json_dict(dict(seq.items())) for seq in coll]
-  else:
-    return coll
 
 def dump_modules_to_yaml(test_map, version):
   """
@@ -192,9 +175,9 @@ def get_args():
   parser.add_argument("-l", "--log_file",
                       default=[None], nargs=1,
                       help="use input file to read SBP messages from.")
-  parser.add_argument("-j", "--json",
+  parser.add_argument("-p", "--pickle",
                       action="store_true",
-                      help="JSON serialize SBP messages.")
+                      help="use legacy pickle log functionality.")
   parser.add_argument("-s", "--version",
                       default=[None], nargs=1,
                       help="SBP version number (e.g. 0.29).")
@@ -212,17 +195,19 @@ def main():
   args = get_args()
   log_datafile = args.log_file[0]
   version = args.version[0]
-  json = args.json
+  pickle = args.pickle
   verbose = args.verbose
-  if json:
-    assert False, "JSON formatted log input not implemented yet."
+  if pickle:
+    from sbp.client.loggers.pickle_logger import PickleLogIterator as Iterator
+  else:
+    from sbp.client.loggers.json_logger import JSONLogIterator as Iterator
   if verbose:
     assert False, "Verbose output not implemented yet."
   # Build
   num_test_cases = 5
   message_table = _SBP_TABLE
   test_table = dict((k, []) for (k, v) in message_table.copy().iteritems())
-  with PickleLogIterator(log_datafile) as log:
+  with Iterator(log_datafile) as log:
     for delta, timestamp, msg in log.next():
       try:
         i = mk_readable_msg(msg)
