@@ -8,6 +8,8 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+import time
+
 from sbp.client.drivers.pyserial_driver import PySerialDriver
 from sbp.client.loggers.byte_logger     import ByteLogger
 from sbp.client.handler                 import Handler
@@ -15,7 +17,6 @@ from sbp.client.handler                 import Handler
 DEFAULT_SERIAL_PORT  = "/dev/ttyUSB0"
 DEFAULT_SERIAL_BAUD  = 1000000
 DEFAULT_LOG_FILENAME = time.strftime("sbp-%Y%m%d-%H%M%S.log")
-
 
 def get_args():
   """
