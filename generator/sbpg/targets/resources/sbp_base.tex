@@ -18,6 +18,8 @@
 \usepackage{pbox}
 \usepackage{soul}
 \usepackage{hyperref}
+\usepackage{ltxtable}
+\usepackage{caption}
 
 \hypersetup{bookmarks,bookmarksopen,bookmarksdepth=4}
 
@@ -31,13 +33,6 @@
 \numberwithin{field}{subsection}
 
 \renewcommand{\thesubsubsection}{\hspace{-0.45cm}}
-%% \renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
-%% \makeatletter
-%% \def\@seccntformat#1{\csname #1ignore\expandafter\endcsname\csname the#1\endcsname\quad}
-%% \let\sectionignore\@gobbletwo
-%% \let\latex@numberline\numberline
-%% \def\numberline#1{\if\relax#1\relax\else\latex@numberline{#1}\fi}
-%% \makeatother
 
 \newcommand{\specialcell}[2][c]{%
   \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
@@ -59,10 +54,14 @@
 \newcolumntype{c}{>{\hsize=.3\hsize}X}
 \newcolumntype{d}{>{\hsize=.7\hsize}X}
 
+% Shell out to git to get the most recent tag and pass it to the LateX
+% job name. Hopefully this doesn't screw with things.
+\immediate\write18{git describe --abbrev=0 --tags > \jobname.info }
+
 \title{Swift Navigation Binary Protocol}
-\version{0.33}
+\version{\input{\jobname.info}}
 \author{Swift Navigation}
-\mysubtitle{Protocol Specification v\theversion}
+\mysubtitle{Protocol Specification \theversion}
 \date{\today}
 
 \begin{document}

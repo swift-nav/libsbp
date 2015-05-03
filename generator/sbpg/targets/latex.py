@@ -295,5 +295,6 @@ def render_source(output_dir, package_specs):
   import subprocess
   import os
   os.chdir(output_dir)
-  subprocess.call(["pdflatex", "sbp_out.tex"])
+  subprocess.call(["pdflatex", "--enable-write18",
+                   "-shell-escape", "sbp_out.tex"])
   subprocess.call(["mv", "sbp_out.pdf", "../docs/sbp.pdf"])
