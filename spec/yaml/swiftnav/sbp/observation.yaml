@@ -250,4 +250,6 @@ definitions:
       - prn:
           type: u8
           desc: PRN being tracked
-
+      - iode:
+          type: u8
+          desc: Issue of ephemeris data
