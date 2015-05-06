@@ -149,6 +149,7 @@ typedef struct __attribute__((packed)) {
   u8 valid;       /**< Is valid? */
   u8 healthy;     /**< Satellite is healthy? */
   u8 prn;         /**< PRN being tracked */
+  u8 iode;        /**< Issue of ephemeris data */
 } msg_ephemeris_t;
 
 
