@@ -33,9 +33,10 @@ class JSONLogger(BaseLogger):
       data = self.dispatcher(msg).to_json_dict()
     except KeyError:
       data = msg.to_json_dict()
-    msg = {"delta": self.delta(), "timestamp": self.timestamp(), "data": data}
-    msg.update(self.tags)
-    return msg
+    return {"delta": self.delta(),
+            "timestamp": self.timestamp(),
+            "data": data,
+            "metadata": self.tags}
 
   def call(self, msg):
     try:
