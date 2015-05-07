@@ -23,10 +23,11 @@ class BaseLogger(object):
   filename : string
     File to log to.
   """
-  def __init__(self, filename, mode="w", dispatcher=dispatch):
+  def __init__(self, filename, mode="w", tags=None, dispatcher=dispatch):
     self.handle = open(filename, mode)
     self.dispatcher = dispatcher
     self.base_time = time.time()
+    self.tags = dict([tuple(t.split('=')) for t in tags.split(',')]) if tags else {}
 
   def __enter__(self):
     return self

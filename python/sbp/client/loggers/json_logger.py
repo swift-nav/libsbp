@@ -35,7 +35,8 @@ class JSONLogger(BaseLogger):
       data = msg.to_json_dict()
     return {"delta": self.delta(),
             "timestamp": self.timestamp(),
-            "data": data}
+            "data": data,
+            "metadata": self.tags}
 
   def call(self, msg):
     try:
