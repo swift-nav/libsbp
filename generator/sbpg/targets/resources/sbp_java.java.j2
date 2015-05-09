@@ -1,0 +1,112 @@
+/*
+ * Copyright (C) 2015 Swift Navigation Inc.
+ * Contact: Bhaskar Mookerji <mookerji@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+package (((module_path)));
+
+import org.codehaus.preon.annotation.BoundNumber;
+import org.codehaus.preon.buffer.ByteOrder;
+import swiftnav.sbp.SBP;
+((*- for i in include *))
+import (((module_path))).(((i)));
+((*- endfor *))
+
+((* if not m.sbp_id *))
+  ((* if m.desc *))
+/**
+  (((m.desc | commentify))) */
+  ((*- endif *))
+public class (((m.identifier))){
+
+    public (((m.identifier)))() {
+    }
+
+  ((* if m.fields *))
+  ((*- for f in m.fields *))
+  ((*- if f.desc *))
+    /** (((f.desc | commentify))) */
+  ((*- endif *))
+    @((( f | preon_format )))
+    private (((f.type_id | type_map))) (((f.identifier)));
+
+  ((* endfor *))
+  ((*- endif *))
+
+    /** Given a binary payload d, update the appropriate payload
+     *  fields of the message.
+    */
+    public void fromBinary() {
+      return;
+    }
+
+    /** Produce a framed/packed SBP message.
+     */
+    public int toBinary() {
+        return 0;
+    }
+
+    public String toString() {
+        return "Foo!";
+    }
+}
+((*- endif *))
+((* if m.sbp_id *))
+  ((* if m.desc *))
+/** SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).
+ *
+ * You can have (((m.identifier))) inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
+ *
+ (((m.desc | commentify))) */
+  ((*- endif *))
+public class (((m.identifier | classnameify))) extends SBP {
+
+    public static final int TYPE = ((('0x%04X'|format(m.sbp_id))));
+
+    public (((m.identifier | classnameify)))() {
+    }
+
+    ((* if m.fields *))
+    ((*- for f in m.fields *))
+    ((*- if f.desc *))
+    /** (((f.desc | commentify))) */
+    ((*- endif *))
+    @((( f | preon_format )))
+    private (((f.type_id | type_map))) (((f.identifier)));
+
+    ((* endfor *))
+    ((*- endif *))
+
+    /** Given a binary payload d, update the appropriate payload
+     *  fields of the message. */
+    public void fromBinary() {
+
+    }
+
+    /** Produce a framed/packed SBP message. */
+    public int toBinary() {
+        return 0;
+    }
+
+    /** Given a JSON-encoded string s, build a message object. */
+    public void fromJSON(String s) {
+
+    }
+
+    public void toJSONDict() {
+    }
+
+    public String toString() {
+        return "Foo!";
+    }
+}
+((*- endif *))

@@ -12,7 +12,7 @@ SBP_VERSION := $(shell PYTHONPATH=python python python/sbp/version.py)
 SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
 SBP_MINOR_VERSION := $(word 2, $(subst ., , $(SBP_VERSION)))
 
-.PHONY: help all c python docs pdf html test release dist silly
+.PHONY: help all c python docs pdf html test release dist silly java
 
 help:
 	@echo
@@ -29,6 +29,7 @@ help:
 	@echo "  html      to make all HTML language docs"
 	@echo "  pdf       to make SBP LaTeX datasheet"
 	@echo "  python    to make Python bindings"
+	@echo "  java      to make Java bindings"
 	@echo "  release   to handle some release tasks"
 	@echo "  test      to run all tests"
 	@echo
@@ -60,6 +61,19 @@ python:
 	cd $(SWIFTNAV_ROOT);
 	@echo
 	@echo "Finished! Please check $(SWIFTNAV_ROOT)/python/sbp."
+
+java:
+	@echo
+	@echo "Generating Java bindings..."
+	@echo
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
+		       -o $(SWIFTNAV_ROOT)/java/src/ \
+		       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
+		       --java;\
+	cd $(SWIFTNAV_ROOT);
+	@echo
+	@echo "Finished! Please check $(SWIFTNAV_ROOT)/java/src/sbp."
 
 dist:
 	@echo
