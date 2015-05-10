@@ -1,5 +1,111 @@
 # Change Log
 
+## [Unreleased](https://github.com/swift-nav/libsbp/tree/HEAD)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v0.39...HEAD)
+
+**Merged pull requests:**
+
+- Allow the logger to inject tags into the logs [\#145](https://github.com/swift-nav/libsbp/pull/145)
+
+## [v0.39](https://github.com/swift-nav/libsbp/tree/v0.39) (2015-05-05)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v0.38...v0.39)
+
+**Fixed bugs:**
+
+- 'make latex' fails with 'too many floats' [\#85](https://github.com/swift-nav/libsbp/issues/85)
+
+**Closed issues:**
+
+- Protocol version number in docs is hard-coded, should be same as sbp package version? [\#86](https://github.com/swift-nav/libsbp/issues/86)
+- Document process for adding new messages [\#78](https://github.com/swift-nav/libsbp/issues/78)
+
+**Merged pull requests:**
+
+- rev the version [\#143](https://github.com/swift-nav/libsbp/pull/143)
+- Latex datasheet fixes. [\#142](https://github.com/swift-nav/libsbp/pull/142)
+- Add an example byte logger. [\#140](https://github.com/swift-nav/libsbp/pull/140)
+- Crc namespace collision [\#133](https://github.com/swift-nav/libsbp/pull/133)
+- SBP doc: Table 2.0.1. s/Payload/Packet/ [\#126](https://github.com/swift-nav/libsbp/pull/126)
+- Release HOWTO and supporting Makefile tasks. [\#102](https://github.com/swift-nav/libsbp/pull/102)
+
+## [v0.38](https://github.com/swift-nav/libsbp/tree/v0.38) (2015-04-29)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v0.37...v0.38)
+
+**Implemented enhancements:**
+
+- Create Jenkins pull request builder [\#26](https://github.com/swift-nav/libsbp/issues/26)
+
+**Merged pull requests:**
+
+- Handle failing parsing [\#136](https://github.com/swift-nav/libsbp/pull/136)
+
+## [v0.37](https://github.com/swift-nav/libsbp/tree/v0.37) (2015-04-24)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v0.36...v0.37)
+
+**Fixed bugs:**
+
+- Disallow NaN in JSON [\#128](https://github.com/swift-nav/libsbp/issues/128)
+
+**Merged pull requests:**
+
+- Add file mode as a parameter - have log iterator take a filename [\#132](https://github.com/swift-nav/libsbp/pull/132)
+- Removes unused message template. [\#131](https://github.com/swift-nav/libsbp/pull/131)
+- Update SBP fields when materializing child objects. [\#130](https://github.com/swift-nav/libsbp/pull/130)
+- Suppress NaN in python JSON dump [\#129](https://github.com/swift-nav/libsbp/pull/129)
+- Remove the main from client - it's in piksi tools [\#127](https://github.com/swift-nav/libsbp/pull/127)
+
+## [v0.36](https://github.com/swift-nav/libsbp/tree/v0.36) (2015-04-17)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v0.35...v0.36)
+
+**Fixed bugs:**
+
+- MsgEphemeris ID change breaks sbp\_log\_analysis [\#119](https://github.com/swift-nav/libsbp/issues/119)
+
+**Merged pull requests:**
+
+- Reinstate MSG\_EPHEMERIS at 0x001A as MSG\_EPHEMERIS\_OLD [\#125](https://github.com/swift-nav/libsbp/pull/125)
+- Make ext\_events messages public [\#124](https://github.com/swift-nav/libsbp/pull/124)
+- Expand JSON messages before they go out [\#123](https://github.com/swift-nav/libsbp/pull/123)
+- handle unpickling error more gracefully [\#105](https://github.com/swift-nav/libsbp/pull/105)
+
+## [v0.35](https://github.com/swift-nav/libsbp/tree/v0.35) (2015-04-17)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v0.34...v0.35)
+
+**Closed issues:**
+
+- Remove init known baseline feature from console [\#116](https://github.com/swift-nav/libsbp/issues/116)
+- Update sbp integration tutorial? [\#27](https://github.com/swift-nav/libsbp/issues/27)
+
+**Merged pull requests:**
+
+- Catch message dispatch KeyErrors and make them warnings. [\#122](https://github.com/swift-nav/libsbp/pull/122)
+- Make the handler test more robust [\#121](https://github.com/swift-nav/libsbp/pull/121)
+- Bootload test fixes \(and more!\) [\#117](https://github.com/swift-nav/libsbp/pull/117)
+- Misc Fixes [\#114](https://github.com/swift-nav/libsbp/pull/114)
+
+## [v0.34](https://github.com/swift-nav/libsbp/tree/v0.34) (2015-04-16)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v0.33...v0.34)
+
+**Fixed bugs:**
+
+- SBP pickle framer might be stripping  [\#113](https://github.com/swift-nav/libsbp/issues/113)
+
+**Closed issues:**
+
+- Change MSG\_EPHEMERIS id to be in "over the radio" group [\#98](https://github.com/swift-nav/libsbp/issues/98)
+
+**Merged pull requests:**
+
+- Minor JSON fixes [\#110](https://github.com/swift-nav/libsbp/pull/110)
+- Release notes and changelog for v0.29 [\#100](https://github.com/swift-nav/libsbp/pull/100)
+
 ## [v0.33](https://github.com/swift-nav/libsbp/tree/v0.33) (2015-04-15)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v0.32...v0.33)
