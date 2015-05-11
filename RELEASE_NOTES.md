@@ -6,7 +6,36 @@ For a detailed index of changes, please see the
 
 Contents
 --------
+ * [v0.39](#v0.39)
  * [v0.33](#v0.33)
+
+v0.39 <a name="v0.39"></a>
+--------------------------
+
+Bug fixes, minor additions, and stability enhancements since
+[v0.33](#v0.33).
+
+#### Specifications
+
+- New external events trigger message.
+- The ephemeris message is now included in the list of messages to be
+  sent over the radio. The ephemeris' field names have been changed to
+  avoid clashing with existing SBP fields (e.g., 'crc' to 'c_rc').
+
+#### Python Library
+
+- Easier to actually materialize a message in place using fields and
+  create a new SBP packet to send over the wire. Previously, you
+  could only create message objects by deserializing from an existing
+  SBP message!
+- Robustness improvements for serializing message types to/from JSON.
+- Piksi serial link command line tool (`serial_link.py`) now lives in
+  [piksi_tools](https://github.com/swift-nav/piksi_tools/).
+
+#### Datasheet Documentation
+
+- More stable datasheet generation when adding new messages ("the
+  floats are too dang high!" and automatic versioning from git tags).
 
 v0.33 <a name="v0.33"></a>
 --------------------------
