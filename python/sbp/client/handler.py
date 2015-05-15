@@ -133,10 +133,14 @@ class ReceiveThread(threading.Thread):
     Reading and handling loop.
     """
     while not self.stopping:
-      msg = self.receive()
-      if msg is not None:
-        if msg.msg_type:
-          self.call(msg)
+      try:
+        msg = self.receive()
+        if msg is not None:
+          if msg.msg_type:
+            self.call(msg)
+      except:
+        import traceback
+        traceback.print_exc()
 
 class Handler(object):
   """
