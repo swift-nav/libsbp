@@ -138,6 +138,8 @@ class ReceiveThread(threading.Thread):
         if msg is not None:
           if msg.msg_type:
             self.call(msg)
+      except SystemExit:
+        break
       except:
         import traceback
         traceback.print_exc()
