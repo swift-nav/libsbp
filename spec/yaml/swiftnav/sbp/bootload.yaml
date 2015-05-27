@@ -54,13 +54,13 @@ definitions:
 
  - MSG_BOOTLOADER_HANDSHAKE_OLD:
     id: 0x00B0
-    public: True
-    short_desc: Bootloading handshake (host <=> device)
+    public: False
+    short_desc: |
+      Deprecated, use MSG_BOOTLOADER_HANDSHAKE_HOST (0x00B3) and
+      MSG_BOOTLOADER_HANDSHAKE_DEVICE (0x00B0)
     desc: |
-      The handshake message establishes a handshake between the device
-      bootloader and the host.  The payload string contains the
-      bootloader version number, but returns an empty string for
-      earlier versions.
+      Deprecated, use MSG_BOOTLOADER_HANDSHAKE_HOST (0x00B3) and
+      MSG_BOOTLOADER_HANDSHAKE_DEVICE (0x00B0).
     fields:
       - handshake:
           type: array
@@ -120,15 +120,13 @@ definitions:
 
  - MSG_NAP_DEVICE_DNA_OLD:
     id: 0x00DD
-    public: True
-    short_desc: Read FPGA device ID over UART (host <=> device)
+    public: False
+    short_desc: |
+      Deprecated, use MSG_NAP_DEVICE_DNA_HOST (0x00DE) and
+      MSG_NAP_DEVICE_DNA_DEVICE (0x00DD)
     desc: |
-      The device message from the host reads a unique device
-      identifier from the SwiftNAP, an FPGA. The host requests the ID
-      by sending a MSG_NAP_DEVICE_DNA with an empty payload. The
-      device responds with the same message with the device ID in the
-      payload. Note that this ID is tied to the FPGA, and not related
-      to the Piksi's serial number.
+      Deprecated, use MSG_NAP_DEVICE_DNA_HOST (0x00DE) and
+      MSG_NAP_DEVICE_DNA_DEVICE (0x00DD).
     fields:
       - dna:
           type: array

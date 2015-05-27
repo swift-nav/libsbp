@@ -66,15 +66,10 @@ definitions:
 
  - MSG_FLASH_PROGRAM_OLD:
     id: 0x00E0
-    public: True
-    short_desc: Program flash addresses
+    public: False
+    short_desc: Deprecated, use MSG_FLASH_PROGRAM (0x00E6)
     desc: |
-      The flash program message programs a set of addresses of either
-      the STM or M25 flash. The device replies with either a
-      MSG_FLASH_DONE message containing the return code FLASH_OK (0)
-      on success, or FLASH_INVALID_LEN (2) if the maximum write size
-      is exceeded. Note that the sector-containing addresses must be
-      erased before addresses can be programmed.
+      Deprecated, use MSG_FLASH_PROGRAM (0x00E6).
     fields:
       - target:
           type: u8
@@ -207,16 +202,11 @@ definitions:
 
  - MSG_FLASH_READ_OLD:
     id: 0x00E1
-    public: True
-    short_desc: Read STM or M25 flash address (host <=> device).
+    public: False
+    short_desc: |
+      Deprecated, use MSG_FLASH_READ_HOST (0x00E7) and MSG_FLASH_READ_DEVICE (0x00E1)
     desc: |
-      The flash read message reads a set of addresses of either the
-      STM or M25 onboard flash. The device replies with a
-      MSG_FLASH_READ message containing either the read data on
-      success or a MSG_FLASH_DONE message containing the return code
-      FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
-      FLASH_INVALID_ADDR (3) if the address is outside of the allowed
-      range.
+      Deprecated, use MSG_FLASH_READ_HOST (0x00E7) and MSG_FLASH_READ_DEVICE (0x00E1).
     fields:
       - target:
           type: u8
@@ -326,12 +316,13 @@ definitions:
 
  - MSG_STM_UNIQUE_ID_OLD:
     id: 0x00E5
-    public: True
+    public: False
     short_desc: |
-      Read device's hardcoded unique ID (host <=> device)
+      Deprecated, use MSG_STM_UNIQUE_ID_HOST (0x00E8) and
+      MSG_STM_UNIQUE_ID_DEVICE (0x00E5)
     desc: |
-      This message reads the device's hardcoded unique ID. The device
-      returns 12-byte unique ID back to host.
+      Deprecated, use MSG_STM_UNIQUE_ID_HOST (0x00E8) and
+      MSG_STM_UNIQUE_ID_DEVICE (0x00E5).
     fields:
       - stm_id:
           type: array
