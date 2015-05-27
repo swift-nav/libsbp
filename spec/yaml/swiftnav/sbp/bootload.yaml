@@ -25,27 +25,22 @@ definitions:
  - MSG_BOOTLOADER_HANDSHAKE_HOST:
     id: 0x00B3
     public: True
-    short_desc: Bootloading handshake (host => device)
+    short_desc: Bootloading handshake request (host => device)
     desc: |
-      The handshake message establishes a handshake between the device
-      bootloader and the host.  The payload string contains the
-      bootloader version number, but returns an empty string for
-      earlier versions.
-    fields:
-      - handshake:
-          type: array
-          fill: u8
-          desc: Version number string (not NULL terminated)
+      The handshake message request from the host establishes a
+      handshake between the device bootloader and the host. The
+      response from the device is MSG_BOOTLOADER_HANDSHAKE_DEVICE.
 
  - MSG_BOOTLOADER_HANDSHAKE_DEVICE:
     id: 0x00B0
     public: True
-    short_desc: Bootloading handshake (host <= device)
+    short_desc: Bootloading handshake response (host <= device)
     desc: |
-      The handshake message establishes a handshake between the device
-      bootloader and the host.  The payload string contains the
-      bootloader version number, but returns an empty string for
-      earlier versions.
+      The handshake message response from the device establishes a
+      handshake between the device bootloader and the host. The
+      request from the host is MSG_BOOTLOADER_HANDSHAKE_HOST.  The
+      payload string contains the bootloader version number, but
+      returns an empty string for earlier versions.
     fields:
       - handshake:
           type: array
@@ -81,34 +76,26 @@ definitions:
  - MSG_NAP_DEVICE_DNA_HOST:
     id: 0x00DE
     public: True
-    short_desc: Read FPGA device ID over UART (host => device)
+    short_desc: Read FPGA device ID over UART request (host => device)
     desc: |
       The device message from the host reads a unique device
       identifier from the SwiftNAP, an FPGA. The host requests the ID
-      by sending a MSG_NAP_DEVICE_DNA with an empty payload. The
-      device responds with the same message with the device ID in the
-      payload. Note that this ID is tied to the FPGA, and not related
-      to the Piksi's serial number.
-    fields:
-      - dna:
-          type: array
-          fill: u8
-          size: 8
-          desc: |
-            57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
-            on the right.
+      by sending a MSG_NAP_DEVICE_DNA_HOST message. The device
+      responds with a MSG_NAP_DEVICE_DNA_DEVICE message with the
+      device ID in the payload. Note that this ID is tied to the FPGA,
+      and not related to the Piksi's serial number.
 
  - MSG_NAP_DEVICE_DNA_DEVICE:
     id: 0x00DD
     public: True
-    short_desc: Read FPGA device ID over UART (host <= device)
+    short_desc: Read FPGA device ID over UART response (host <= device)
     desc: |
       The device message from the host reads a unique device
       identifier from the SwiftNAP, an FPGA. The host requests the ID
-      by sending a MSG_NAP_DEVICE_DNA with an empty payload. The
-      device responds with the same message with the device ID in the
-      payload. Note that this ID is tied to the FPGA, and not related
-      to the Piksi's serial number.
+      by sending a MSG_NAP_DEVICE_DNA_HOST message. The device
+      responds with a MSG_NAP_DEVICE_DNA_DEVICE messagage with the
+      device ID in the payload. Note that this ID is tied to the FPGA,
+      and not related to the Piksi's serial number.
     fields:
       - dna:
           type: array
