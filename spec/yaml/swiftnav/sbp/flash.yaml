@@ -64,42 +64,6 @@ definitions:
           size_fn: addr_len
           desc: Data to program addresses with, with length N=addr_len
 
- - MSG_FLASH_PROGRAM_OLD:
-    id: 0x00E0
-    public: False
-    short_desc: Deprecated, use MSG_FLASH_PROGRAM (0x00E6)
-    desc: |
-      Deprecated, use MSG_FLASH_PROGRAM (0x00E6).
-    fields:
-      - target:
-          type: u8
-          desc: Target flags
-          fields:
-            - 1-7:
-                desc: Reserved
-            - 0:
-                desc: Flash target to read
-                values:
-                  - 0: FLASH_STM
-                  - 1: FLASH_M25
-      - addr_start:
-          type: array
-          fill: u8
-          size: 3
-          units: bytes
-          desc: Starting address offset to program
-      - addr_len:
-          type: u8
-          units: bytes
-          desc: |
-            Length of set of addresses to program, counting up from
-            starting address
-      - data:
-          type: array
-          fill: u8
-          size_fn: addr_len
-          desc: Data to program addresses with, with length N=addr_len
-
  - MSG_FLASH_DONE:
     id: 0x00E0
     public: True
@@ -200,38 +164,6 @@ definitions:
             Length of set of addresses to read, counting up from
             starting address
 
- - MSG_FLASH_READ_OLD:
-    id: 0x00E1
-    public: False
-    short_desc: |
-      Deprecated, use MSG_FLASH_READ_HOST (0x00E7) and MSG_FLASH_READ_DEVICE (0x00E1)
-    desc: |
-      Deprecated, use MSG_FLASH_READ_HOST (0x00E7) and MSG_FLASH_READ_DEVICE (0x00E1).
-    fields:
-      - target:
-          type: u8
-          desc: Target flags
-          fields:
-            - 1-7:
-                desc: Reserved
-            - 0:
-                desc: Flash target to read
-                values:
-                  - 0: FLASH_STM
-                  - 1: FLASH_M25
-      - addr_start:
-          type: array
-          fill: u8
-          size: 3
-          units: bytes
-          desc: Starting address offset to read from
-      - addr_len:
-          type: u8
-          units: bytes
-          desc: |
-            Length of set of addresses to read, counting up from
-            starting address
-
  - MSG_FLASH_ERASE:
     id: 0x00E2
     public: True
@@ -305,22 +237,6 @@ definitions:
       requests the ID by sending a MSG_STM_UNIQUE_ID_HOST. The device
       responds with a MSG_STM_UNIQUE_ID_DEVICE with the 12-byte unique
       ID in the payload..
-    fields:
-      - stm_id:
-          type: array
-          fill: u8
-          size: 12
-          desc: Device unique ID
-
- - MSG_STM_UNIQUE_ID_OLD:
-    id: 0x00E5
-    public: False
-    short_desc: |
-      Deprecated, use MSG_STM_UNIQUE_ID_HOST (0x00E8) and
-      MSG_STM_UNIQUE_ID_DEVICE (0x00E5)
-    desc: |
-      Deprecated, use MSG_STM_UNIQUE_ID_HOST (0x00E8) and
-      MSG_STM_UNIQUE_ID_DEVICE (0x00E5).
     fields:
       - stm_id:
           type: array

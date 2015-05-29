@@ -47,21 +47,6 @@ definitions:
           fill: u8
           desc: Version number string (not NULL terminated)
 
- - MSG_BOOTLOADER_HANDSHAKE_OLD:
-    id: 0x00B0
-    public: False
-    short_desc: |
-      Deprecated, use MSG_BOOTLOADER_HANDSHAKE_HOST (0x00B3) and
-      MSG_BOOTLOADER_HANDSHAKE_DEVICE (0x00B0)
-    desc: |
-      Deprecated, use MSG_BOOTLOADER_HANDSHAKE_HOST (0x00B3) and
-      MSG_BOOTLOADER_HANDSHAKE_DEVICE (0x00B0).
-    fields:
-      - handshake:
-          type: array
-          fill: u8
-          desc: Version number string (not NULL terminated)
-
  - MSG_BOOTLOADER_JUMP_TO_APP:
     id: 0x00B1
     public: False
@@ -96,24 +81,6 @@ definitions:
       responds with a MSG_NAP_DEVICE_DNA_DEVICE messagage with the
       device ID in the payload. Note that this ID is tied to the FPGA,
       and not related to the Piksi's serial number.
-    fields:
-      - dna:
-          type: array
-          fill: u8
-          size: 8
-          desc: |
-            57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
-            on the right.
-
- - MSG_NAP_DEVICE_DNA_OLD:
-    id: 0x00DD
-    public: False
-    short_desc: |
-      Deprecated, use MSG_NAP_DEVICE_DNA_HOST (0x00DE) and
-      MSG_NAP_DEVICE_DNA_DEVICE (0x00DD)
-    desc: |
-      Deprecated, use MSG_NAP_DEVICE_DNA_HOST (0x00DE) and
-      MSG_NAP_DEVICE_DNA_DEVICE (0x00DD).
     fields:
       - dna:
           type: array
