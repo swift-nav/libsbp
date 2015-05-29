@@ -30,19 +30,49 @@ import six
 # Please do not hand edit!
 
 
-SBP_MSG_BOOTLOADER_HANDSHAKE = 0x00B0
-class MsgBootloaderHandshake(SBP):
-  """SBP class for message MSG_BOOTLOADER_HANDSHAKE (0x00B0).
+SBP_MSG_BOOTLOADER_HANDSHAKE_HOST = 0x00B3
+class MsgBootloaderHandshakeHost(SBP):
+  """SBP class for message MSG_BOOTLOADER_HANDSHAKE_HOST (0x00B3).
 
-  You can have MSG_BOOTLOADER_HANDSHAKE inherent its fields directly
+  You can have MSG_BOOTLOADER_HANDSHAKE_HOST inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  The handshake message establishes a handshake between the device
-bootloader and the host.  The payload string contains the
-bootloader version number, but returns an empty string for
-earlier versions.
+  The handshake message request from the host establishes a
+handshake between the device bootloader and the host. The
+response from the device is MSG_BOOTLOADER_HANDSHAKE_DEVICE.
+
+
+  """
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.payload = sbp.payload
+    else:
+      super( MsgBootloaderHandshakeHost, self).__init__()
+      self.msg_type = SBP_MSG_BOOTLOADER_HANDSHAKE_HOST
+      self.sender = kwargs.pop('sender', 0)
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+    
+SBP_MSG_BOOTLOADER_HANDSHAKE_DEVICE = 0x00B0
+class MsgBootloaderHandshakeDevice(SBP):
+  """SBP class for message MSG_BOOTLOADER_HANDSHAKE_DEVICE (0x00B0).
+
+  You can have MSG_BOOTLOADER_HANDSHAKE_DEVICE inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The handshake message response from the device establishes a
+handshake between the device bootloader and the host. The
+request from the host is MSG_BOOTLOADER_HANDSHAKE_HOST.  The
+payload string contains the bootloader version number, but
+returns an empty string for earlier versions.
 
 
   Parameters
@@ -55,7 +85,7 @@ earlier versions.
     Optional sender ID, defaults to 0
 
   """
-  _parser = Struct("MsgBootloaderHandshake",
+  _parser = Struct("MsgBootloaderHandshakeDevice",
                    OptionalGreedyRange(ULInt8('handshake')),)
 
   def __init__(self, sbp=None, **kwargs):
@@ -63,8 +93,8 @@ earlier versions.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
-      super( MsgBootloaderHandshake, self).__init__()
-      self.msg_type = SBP_MSG_BOOTLOADER_HANDSHAKE
+      super( MsgBootloaderHandshakeDevice, self).__init__()
+      self.msg_type = SBP_MSG_BOOTLOADER_HANDSHAKE_DEVICE
       self.sender = kwargs.pop('sender', 0)
       self.handshake = kwargs.pop('handshake')
 
@@ -76,7 +106,7 @@ earlier versions.
     the message.
 
     """
-    p = MsgBootloaderHandshake._parser.parse(d)
+    p = MsgBootloaderHandshakeDevice._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
@@ -84,7 +114,7 @@ earlier versions.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgBootloaderHandshake._parser.build(c)
+    self.payload = MsgBootloaderHandshakeDevice._parser.build(c)
     return self.pack()
 
   @staticmethod
@@ -94,11 +124,11 @@ earlier versions.
     """
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
-    return MsgBootloaderHandshake(sbp)
+    return MsgBootloaderHandshakeDevice(sbp)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgBootloaderHandshake, self).to_json_dict()
+    d = super( MsgBootloaderHandshakeDevice, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -173,21 +203,53 @@ class MsgBootloaderJumpToApp(SBP):
     d.update(j)
     return d
     
-SBP_MSG_NAP_DEVICE_DNA = 0x00DD
-class MsgNapDeviceDna(SBP):
-  """SBP class for message MSG_NAP_DEVICE_DNA (0x00DD).
+SBP_MSG_NAP_DEVICE_DNA_HOST = 0x00DE
+class MsgNapDeviceDnaHost(SBP):
+  """SBP class for message MSG_NAP_DEVICE_DNA_HOST (0x00DE).
 
-  You can have MSG_NAP_DEVICE_DNA inherent its fields directly
+  You can have MSG_NAP_DEVICE_DNA_HOST inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
   The device message from the host reads a unique device
 identifier from the SwiftNAP, an FPGA. The host requests the ID
-by sending a MSG_NAP_DEVICE_DNA with an empty payload. The
-device responds with the same message with the device ID in the
-payload. Note that this ID is tied to the FPGA, and not related
-to the Piksi's serial number.
+by sending a MSG_NAP_DEVICE_DNA_HOST message. The device
+responds with a MSG_NAP_DEVICE_DNA_DEVICE message with the
+device ID in the payload. Note that this ID is tied to the FPGA,
+and not related to the Piksi's serial number.
+
+
+  """
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.payload = sbp.payload
+    else:
+      super( MsgNapDeviceDnaHost, self).__init__()
+      self.msg_type = SBP_MSG_NAP_DEVICE_DNA_HOST
+      self.sender = kwargs.pop('sender', 0)
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+    
+SBP_MSG_NAP_DEVICE_DNA_DEVICE = 0x00DD
+class MsgNapDeviceDnaDevice(SBP):
+  """SBP class for message MSG_NAP_DEVICE_DNA_DEVICE (0x00DD).
+
+  You can have MSG_NAP_DEVICE_DNA_DEVICE inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The device message from the host reads a unique device
+identifier from the SwiftNAP, an FPGA. The host requests the ID
+by sending a MSG_NAP_DEVICE_DNA_HOST message. The device
+responds with a MSG_NAP_DEVICE_DNA_DEVICE messagage with the
+device ID in the payload. Note that this ID is tied to the FPGA,
+and not related to the Piksi's serial number.
 
 
   Parameters
@@ -202,7 +264,7 @@ on the right.
     Optional sender ID, defaults to 0
 
   """
-  _parser = Struct("MsgNapDeviceDna",
+  _parser = Struct("MsgNapDeviceDnaDevice",
                    Struct('dna', Array(8, ULInt8('dna'))),)
 
   def __init__(self, sbp=None, **kwargs):
@@ -210,8 +272,8 @@ on the right.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
-      super( MsgNapDeviceDna, self).__init__()
-      self.msg_type = SBP_MSG_NAP_DEVICE_DNA
+      super( MsgNapDeviceDnaDevice, self).__init__()
+      self.msg_type = SBP_MSG_NAP_DEVICE_DNA_DEVICE
       self.sender = kwargs.pop('sender', 0)
       self.dna = kwargs.pop('dna')
 
@@ -223,7 +285,7 @@ on the right.
     the message.
 
     """
-    p = MsgNapDeviceDna._parser.parse(d)
+    p = MsgNapDeviceDnaDevice._parser.parse(d)
     self.__dict__.update(dict(p.viewitems()))
 
   def to_binary(self):
@@ -231,7 +293,7 @@ on the right.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgNapDeviceDna._parser.build(c)
+    self.payload = MsgNapDeviceDnaDevice._parser.build(c)
     return self.pack()
 
   @staticmethod
@@ -241,18 +303,20 @@ on the right.
     """
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
-    return MsgNapDeviceDna(sbp)
+    return MsgNapDeviceDnaDevice(sbp)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgNapDeviceDna, self).to_json_dict()
+    d = super( MsgNapDeviceDnaDevice, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
 
 msg_classes = {
-  0x00B0: MsgBootloaderHandshake,
+  0x00B3: MsgBootloaderHandshakeHost,
+  0x00B0: MsgBootloaderHandshakeDevice,
   0x00B1: MsgBootloaderJumpToApp,
-  0x00DD: MsgNapDeviceDna,
+  0x00DE: MsgNapDeviceDnaHost,
+  0x00DD: MsgNapDeviceDnaDevice,
 }
