@@ -401,6 +401,8 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Satellite is healthy?
   prn : int
     PRN being tracked
+  iode : int
+    Issue of ephemeris data
   sender : int
     Optional sender ID, defaults to 0
 
@@ -431,7 +433,8 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    ULInt16('toc_wn'),
                    ULInt8('valid'),
                    ULInt8('healthy'),
-                   ULInt8('prn'),)
+                   ULInt8('prn'),
+                   ULInt8('iode'),)
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -467,6 +470,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
       self.valid = kwargs.pop('valid')
       self.healthy = kwargs.pop('healthy')
       self.prn = kwargs.pop('prn')
+      self.iode = kwargs.pop('iode')
 
   def __repr__(self):
     return fmt_repr(self)
