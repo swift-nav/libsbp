@@ -30,68 +30,7 @@
  *
 * Deprecated.
  */
-#define SBP_MSG_BOOTLOADER_HANDSHAKE_DEPRECATED 0x00B0
-typedef struct __attribute__((packed)) {
-  u8 handshake[0]; /**< Version number string (not NULL terminated) */
-} msg_bootloader_handshake_deprecated_t;
-
-
-/** Deprecated
- *
-* Deprecated.
- */
-#define SBP_MSG_NAP_DEVICE_DNA_DEPRECATED       0x00DD
-typedef struct __attribute__((packed)) {
-  u8 dna[8]; /**< 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
-on the right.
- */
-} msg_nap_device_dna_deprecated_t;
-
-
-/** Deprecated
- *
-* Deprecated.
- */
-#define SBP_MSG_FLASH_PROGRAM_DEPRECATED        0x00E0
-typedef struct __attribute__((packed)) {
-  u8 target;        /**< Target flags */
-  u8 addr_start[3]; /**< Starting address offset to program [bytes] */
-  u8 addr_len;      /**< Length of set of addresses to program, counting up from
-starting address
- [bytes] */
-  u8 data[0];       /**< Data to program addresses with, with length N=addr_len */
-} msg_flash_program_deprecated_t;
-
-
-/** Deprecated
- *
-* Deprecated.
- */
-#define SBP_MSG_FLASH_READ_DEPRECATED           0x00E1
-typedef struct __attribute__((packed)) {
-  u8 target;        /**< Target flags */
-  u8 addr_start[3]; /**< Starting address offset to read from [bytes] */
-  u8 addr_len;      /**< Length of set of addresses to read, counting up from
-starting address
- [bytes] */
-} msg_flash_read_deprecated_t;
-
-
-/** Deprecated
- *
-* Deprecated.
- */
-#define SBP_MSG_STM_UNIQUE_ID_DEPRECATED        0x00E5
-typedef struct __attribute__((packed)) {
-  u8 stm_id[12]; /**< Device unique ID */
-} msg_stm_unique_id_deprecated_t;
-
-
-/** Deprecated
- *
-* Deprecated.
- */
-#define SBP_MSG_EPHEMERIS_DEPRECATED            0x001A
+#define SBP_MSG_EPHEMERIS_DEPRECATED 0x001A
 typedef struct __attribute__((packed)) {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
