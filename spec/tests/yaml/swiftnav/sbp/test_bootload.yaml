@@ -8,7 +8,7 @@ tests:
     fields:
       handshake: [118, 49, 46, 50] # 'v1.2'
     module: sbp.bootload
-    name: MsgBootloaderHandshake
+    name: MsgBootloaderHandshakeDevice
   msg_type: '0xb0'
   raw_packet: VbAAwwQEdjEuMgHO
   raw_json: '{

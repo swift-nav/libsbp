@@ -31,44 +31,66 @@
 #include "common.h"
 
 
-/** Bootloading handshake (host <=> device)
+/** Bootloading handshake request (host => device)
  *
- * The handshake message establishes a handshake between the device
- * bootloader and the host.  The payload string contains the
- * bootloader version number, but returns an empty string for
- * earlier versions.
+ * The handshake message request from the host establishes a
+ * handshake between the device bootloader and the host. The
+ * response from the device is MSG_BOOTLOADER_HANDSHAKE_DEVICE.
  */
-#define SBP_MSG_BOOTLOADER_HANDSHAKE   0x00B0
+#define SBP_MSG_BOOTLOADER_HANDSHAKE_HOST   0x00B3
+
+
+/** Bootloading handshake response (host <= device)
+ *
+ * The handshake message response from the device establishes a
+ * handshake between the device bootloader and the host. The
+ * request from the host is MSG_BOOTLOADER_HANDSHAKE_HOST.  The
+ * payload string contains the bootloader version number, but
+ * returns an empty string for earlier versions.
+ */
+#define SBP_MSG_BOOTLOADER_HANDSHAKE_DEVICE 0x00B0
 typedef struct __attribute__((packed)) {
   u8 handshake[0]; /**< Version number string (not NULL terminated) */
-} msg_bootloader_handshake_t;
+} msg_bootloader_handshake_device_t;
 
 
 /** Bootloader jump to application (host => device)
  *
  * The host initiates the bootloader to jump to the application.
  */
-#define SBP_MSG_BOOTLOADER_JUMP_TO_APP 0x00B1
+#define SBP_MSG_BOOTLOADER_JUMP_TO_APP      0x00B1
 typedef struct __attribute__((packed)) {
   u8 jump;    /**< Ignored by the device */
 } msg_bootloader_jump_to_app_t;
 
 
-/** Read FPGA device ID over UART (host <=> device)
+/** Read FPGA device ID over UART request (host => device)
  *
  * The device message from the host reads a unique device
  * identifier from the SwiftNAP, an FPGA. The host requests the ID
- * by sending a MSG_NAP_DEVICE_DNA with an empty payload. The
- * device responds with the same message with the device ID in the
- * payload. Note that this ID is tied to the FPGA, and not related
- * to the Piksi's serial number.
+ * by sending a MSG_NAP_DEVICE_DNA_HOST message. The device
+ * responds with a MSG_NAP_DEVICE_DNA_DEVICE message with the
+ * device ID in the payload. Note that this ID is tied to the FPGA,
+ * and not related to the Piksi's serial number.
  */
-#define SBP_MSG_NAP_DEVICE_DNA         0x00DD
+#define SBP_MSG_NAP_DEVICE_DNA_HOST         0x00DE
+
+
+/** Read FPGA device ID over UART response (host <= device)
+ *
+ * The device message from the host reads a unique device
+ * identifier from the SwiftNAP, an FPGA. The host requests the ID
+ * by sending a MSG_NAP_DEVICE_DNA_HOST message. The device
+ * responds with a MSG_NAP_DEVICE_DNA_DEVICE messagage with the
+ * device ID in the payload. Note that this ID is tied to the FPGA,
+ * and not related to the Piksi's serial number.
+ */
+#define SBP_MSG_NAP_DEVICE_DNA_DEVICE       0x00DD
 typedef struct __attribute__((packed)) {
   u8 dna[8]; /**< 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
 on the right.
  */
-} msg_nap_device_dna_t;
+} msg_nap_device_dna_device_t;
 
 
 /** \} */

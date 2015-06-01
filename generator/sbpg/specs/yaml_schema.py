@@ -49,6 +49,7 @@ definition = Schema({identifier:
                      {Optional('id'): sbp_identifier,
                       Optional('short_desc'): description,
                       Optional('desc'): description,
+                      Optional('replaced_by'): [identifier],
                       Optional('public'): bool,
                       Optional('size'): size,
                       Optional('type'): type_identifier,

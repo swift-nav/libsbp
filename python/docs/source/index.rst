@@ -55,6 +55,7 @@ API Reference
    sbp.client
    sbp.acquisition
    sbp.bootload
+   sbp.deprecated
    sbp.ext_events
    sbp.file_io
    sbp.flash

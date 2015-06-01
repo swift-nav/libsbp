@@ -24,7 +24,7 @@ include:
 definitions:
 
  - MSG_FLASH_PROGRAM:
-    id: 0x00E0
+    id: 0x00E6
     public: True
     short_desc: Program flash addresses
     desc: |
@@ -70,9 +70,9 @@ definitions:
     short_desc: Flash response message (host <= device).
     desc: |
       This message defines success or failure codes for a variety of
-      flash memory requests from the host to the device. Flash read and
-      write messages, such as MSG_FLASH_READ or MSG_FLASH_WRITE, may
-      return this message on failure.
+      flash memory requests from the host to the device. Flash read
+      and write messages, such as MSG_FLASH_READ_HOST, or
+      MSG_FLASH_PROGRAM, may return this message on failure.
     fields:
       - response:
           type: u8
@@ -90,14 +90,51 @@ definitions:
                   - 4: FLASH_INVALID_RANGE
                   - 5: FLASH_INVALID_SECTOR
 
- - MSG_FLASH_READ:
-    id: 0x00E1
+ - MSG_FLASH_READ_HOST:
+    id: 0x00E7
     public: True
-    short_desc: Read STM or M25 flash address (host <=> device).
+    short_desc: Read STM or M25 flash address request (host => device).
     desc: |
       The flash read message reads a set of addresses of either the
       STM or M25 onboard flash. The device replies with a
-      MSG_FLASH_READ message containing either the read data on
+      MSG_FLASH_READ_DEVICE message containing either the read data on
+      success or a MSG_FLASH_DONE message containing the return code
+      FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
+      FLASH_INVALID_ADDR (3) if the address is outside of the allowed
+      range.
+    fields:
+      - target:
+          type: u8
+          desc: Target flags
+          fields:
+            - 1-7:
+                desc: Reserved
+            - 0:
+                desc: Flash target to read
+                values:
+                  - 0: FLASH_STM
+                  - 1: FLASH_M25
+      - addr_start:
+          type: array
+          fill: u8
+          size: 3
+          units: bytes
+          desc: Starting address offset to read from
+      - addr_len:
+          type: u8
+          units: bytes
+          desc: |
+            Length of set of addresses to read, counting up from
+            starting address
+
+ - MSG_FLASH_READ_DEVICE:
+    id: 0x00E1
+    public: True
+    short_desc: Read STM or M25 flash address response (host <= device).
+    desc: |
+      The flash read message reads a set of addresses of either the
+      STM or M25 onboard flash. The device replies with a
+      MSG_FLASH_READ_DEVICE message containing either the read data on
       success or a MSG_FLASH_DONE message containing the return code
       FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
       FLASH_INVALID_ADDR (3) if the address is outside of the allowed
@@ -179,14 +216,27 @@ definitions:
           type: u32
           desc: Flash sector number to unlock
 
- - MSG_STM_UNIQUE_ID:
+ - MSG_STM_UNIQUE_ID_HOST:
+    id: 0x00E8
+    public: True
+    short_desc: |
+      Read device's hardcoded unique ID request (host => device)
+    desc: |
+      This message reads the device's hardcoded unique ID. The host
+      requests the ID by sending a MSG_STM_UNIQUE_ID_HOST. The device
+      responds with a MSG_STM_UNIQUE_ID_DEVICE with the 12-byte unique
+      ID in the payload..
+
+ - MSG_STM_UNIQUE_ID_DEVICE:
     id: 0x00E5
     public: True
     short_desc: |
-      Read device's hardcoded unique ID (host <=> device)
+      Read device's hardcoded unique ID response (host <= device)
     desc: |
-      This message reads the device's hardcoded unique ID. The device
-      returns 12-byte unique ID back to host.
+      This message reads the device's hardcoded unique ID. The host
+      requests the ID by sending a MSG_STM_UNIQUE_ID_HOST. The device
+      responds with a MSG_STM_UNIQUE_ID_DEVICE with the 12-byte unique
+      ID in the payload..
     fields:
       - stm_id:
           type: array

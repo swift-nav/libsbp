@@ -11,6 +11,19 @@
 from sbp import SBP
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
+from sbp import acquisition as acq
+from sbp import bootload as boot
+from sbp import deprecated as deprecated
+from sbp import file_io as file_io
+from sbp import flash as flash
+from sbp import logging as log
+from sbp import navigation as nav
+from sbp import observation as obs
+from sbp import piksi as piksi
+from sbp import settings as settings
+from sbp import system as sys
+from sbp import tracking as trac
+from sbp import ext_events as ext_events
 import pytest
 import sbp.acquisition as acq
 import sbp.logging as log
@@ -21,7 +34,26 @@ def test_table_count():
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 46
+  number_of_messages = 51
+  assert len(_SBP_TABLE) == number_of_messages
+
+def test_table_unqiue_count():
+  """
+  Test number of messages in packages equals total number of messages.
+  """
+  number_of_messages = (len(acq.msg_classes)
+                        + len(boot.msg_classes)
+                        + len(deprecated.msg_classes)
+                        + len(file_io.msg_classes)
+                        + len(flash.msg_classes)
+                        + len(log.msg_classes)
+                        + len(nav.msg_classes)
+                        + len(obs.msg_classes)
+                        + len(piksi.msg_classes)
+                        + len(settings.msg_classes)
+                        + len(sys.msg_classes)
+                        + len(trac.msg_classes)
+                        + len(ext_events.msg_classes))
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_available_messages():
