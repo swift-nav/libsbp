@@ -130,10 +130,12 @@ def test_multi_json_log():
   past = 0
   with warnings.catch_warnings(record=True) as w:
     with MultiJSONLogIterator(handles) as log:
-      for delta, timestamp, msg in log.next():
+      for delta, timestamp, metadata, msg in log.next():
         assert type(delta) == int
         assert type(timestamp) == int
         assert isinstance(msg, SBP) or issubclass(type(msg), SBP)
+        assert type(metadata) == dict
+        assert not metadata
         assert timestamp >= past
         past = timestamp
         count += 1
