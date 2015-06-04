@@ -149,11 +149,12 @@ class MultiJSONLogIterator(JSONLogIterator):
     for data in sorted(datas, key=itemgetter('timestamp')):
       delta = data['delta']
       timestamp = data['timestamp']
+      metadata = data['metadata']
       item = SBP.from_json_dict(data['data'])
       try:
-        yield (delta, timestamp, self.dispatcher(item))
+        yield (delta, timestamp, metadata, self.dispatcher(item))
       except KeyError:
-        yield (delta, timestamp, item)
+        yield (delta, timestamp, metadata, item)
 
     for handle in self.handles:
       handle.seek(0, 0)
