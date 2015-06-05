@@ -42,9 +42,6 @@ definitions:
       payload contains the bootloader version number and the SBP
       protocol version number.
     fields:
-      - version:
-          type: string
-          desc: Bootloader version number
       - flags:
           type: u32
           desc: Bootloader flags
@@ -55,6 +52,9 @@ definitions:
                 desc: SBP minor protocol version number
             - 0-7:
                 desc: SBP major protocol version number
+      - version:
+          type: string
+          desc: Bootloader version number
 
  - MSG_BOOTLOADER_JUMP_TO_APP:
     id: 0x00B1

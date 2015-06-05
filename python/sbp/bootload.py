@@ -59,9 +59,9 @@ response from the device is MSG_BOOTLOADER_HANDSHAKE_DEVICE.
     return fmt_repr(self)
  
     
-SBP_MSG_BOOTLOADER_HANDSHAKE_DEVICE = 0x00B0
+SBP_MSG_BOOTLOADER_HANDSHAKE_DEVICE = 0x00B4
 class MsgBootloaderHandshakeDevice(SBP):
-  """SBP class for message MSG_BOOTLOADER_HANDSHAKE_DEVICE (0x00B0).
+  """SBP class for message MSG_BOOTLOADER_HANDSHAKE_DEVICE (0x00B4).
 
   You can have MSG_BOOTLOADER_HANDSHAKE_DEVICE inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -71,22 +71,25 @@ class MsgBootloaderHandshakeDevice(SBP):
   The handshake message response from the device establishes a
 handshake between the device bootloader and the host. The
 request from the host is MSG_BOOTLOADER_HANDSHAKE_HOST.  The
-payload string contains the bootloader version number, but
-returns an empty string for earlier versions.
+payload contains the bootloader version number and the SBP
+protocol version number.
 
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  handshake : array
-    Version number string (not NULL terminated)
+  flags : int
+    Bootloader flags
+  version : string
+    Bootloader version number
   sender : int
     Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgBootloaderHandshakeDevice",
-                   OptionalGreedyRange(ULInt8('handshake')),)
+                   ULInt32('flags'),
+                   CString('version', six.b('\n')),)
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -96,7 +99,8 @@ returns an empty string for earlier versions.
       super( MsgBootloaderHandshakeDevice, self).__init__()
       self.msg_type = SBP_MSG_BOOTLOADER_HANDSHAKE_DEVICE
       self.sender = kwargs.pop('sender', 0)
-      self.handshake = kwargs.pop('handshake')
+      self.flags = kwargs.pop('flags')
+      self.version = kwargs.pop('version')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -315,7 +319,7 @@ on the right.
 
 msg_classes = {
   0x00B3: MsgBootloaderHandshakeHost,
-  0x00B0: MsgBootloaderHandshakeDevice,
+  0x00B4: MsgBootloaderHandshakeDevice,
   0x00B1: MsgBootloaderJumpToApp,
   0x00DE: MsgNapDeviceDnaHost,
   0x00DD: MsgNapDeviceDnaDevice,

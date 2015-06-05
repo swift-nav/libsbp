@@ -45,12 +45,13 @@
  * The handshake message response from the device establishes a
  * handshake between the device bootloader and the host. The
  * request from the host is MSG_BOOTLOADER_HANDSHAKE_HOST.  The
- * payload string contains the bootloader version number, but
- * returns an empty string for earlier versions.
+ * payload contains the bootloader version number and the SBP
+ * protocol version number.
  */
-#define SBP_MSG_BOOTLOADER_HANDSHAKE_DEVICE 0x00B0
+#define SBP_MSG_BOOTLOADER_HANDSHAKE_DEVICE 0x00B4
 typedef struct __attribute__((packed)) {
-  u8 handshake[0]; /**< Version number string (not NULL terminated) */
+  u32 flags;      /**< Bootloader flags */
+  char* version;    /**< Bootloader version number */
 } msg_bootloader_handshake_device_t;
 
 

@@ -26,11 +26,25 @@
 #include "common.h"
 
 
+/** Bootloading handshake response (host <= device)
+ *
+ * The handshake message response from the device establishes a
+ * handshake between the device bootloader and the host. The
+ * request from the host is MSG_BOOTLOADER_HANDSHAKE_HOST.  The
+ * payload string contains the bootloader version number, but
+ * returns an empty string for earlier versions.
+ */
+#define SBP_MSG_BOOTLOADER_HANDSHAKE_DEPRECATED 0x00B0
+typedef struct __attribute__((packed)) {
+  u8 handshake[0]; /**< Version number string (not NULL terminated) */
+} msg_bootloader_handshake_deprecated_t;
+
+
 /** Deprecated
  *
 * Deprecated.
  */
-#define SBP_MSG_EPHEMERIS_DEPRECATED 0x001A
+#define SBP_MSG_EPHEMERIS_DEPRECATED            0x001A
 typedef struct __attribute__((packed)) {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
