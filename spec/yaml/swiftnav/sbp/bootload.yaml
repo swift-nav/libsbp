@@ -45,9 +45,14 @@ definitions:
       - version:
           type: string
           desc: Bootloader version number
-      - protocol:
-          type: string
-          desc: SBP protocol version number
+      - flags:
+          type: u32
+          desc: Bootloader flags
+          fields:
+            - 24-31:
+                desc: Reserved
+            - 0-23:
+                desc: SBP protocol version number
 
  - MSG_BOOTLOADER_JUMP_TO_APP:
     id: 0x00B1

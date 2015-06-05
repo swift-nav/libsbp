@@ -55,8 +55,10 @@ definitions:
                   values:
                       - 0: No external antenna detected
                       - 1: External antenna is present
-              - 3-30:
+              - 27-30:
                   desc: Reserved
+              - 3-26:
+                  desc: SBP protocol version number
               - 2:
                   desc: SwiftNAP Error
               - 1:
@@ -66,6 +68,3 @@ definitions:
                   values:
                       - 0: System Healthy
                       - 1: An error has occurred
-        - protocol:
-            type: string
-            desc: SBP protocol version number
