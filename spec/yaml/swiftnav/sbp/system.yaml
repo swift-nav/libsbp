@@ -55,10 +55,14 @@ definitions:
                   values:
                       - 0: No external antenna detected
                       - 1: External antenna is present
-              - 27-30:
+              - 24-30:
                   desc: Reserved
-              - 3-26:
-                  desc: SBP protocol version number
+              - 16-23:
+                  desc: SBP minor protocol version number
+              - 8-15:
+                  desc: SBP major protocol version number
+              - 3-7:
+                  desc: Reserved
               - 2:
                   desc: SwiftNAP Error
               - 1:

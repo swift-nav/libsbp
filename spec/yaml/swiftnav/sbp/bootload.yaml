@@ -49,10 +49,12 @@ definitions:
           type: u32
           desc: Bootloader flags
           fields:
-            - 24-31:
+            - 16-31:
                 desc: Reserved
-            - 0-23:
-                desc: SBP protocol version number
+            - 8-15:
+                desc: SBP minor protocol version number
+            - 0-7:
+                desc: SBP major protocol version number
 
  - MSG_BOOTLOADER_JUMP_TO_APP:
     id: 0x00B1
