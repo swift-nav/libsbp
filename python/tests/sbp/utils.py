@@ -13,7 +13,7 @@
 Utilities for running YAML-defined unit tests.
 """
 
-from sbp import SBP
+from sbp.msg import SBP
 from sbp.table import dispatch, _SBP_TABLE
 import base64
 import json
