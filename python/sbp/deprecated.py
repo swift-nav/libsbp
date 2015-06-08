@@ -24,6 +24,80 @@ import six
 # Please do not hand edit!
 
 
+SBP_MSG_BOOTLOADER_HANDSHAKE_DEPRECATED = 0x00B0
+class MsgBootloaderHandshakeDeprecated(SBP):
+  """SBP class for message MSG_BOOTLOADER_HANDSHAKE_DEPRECATED (0x00B0).
+
+  You can have MSG_BOOTLOADER_HANDSHAKE_DEPRECATED inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The handshake message response from the device establishes a
+handshake between the device bootloader and the host. The
+request from the host is MSG_BOOTLOADER_HANDSHAKE_HOST.  The
+payload string contains the bootloader version number, but
+returns an empty string for earlier versions.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  handshake : array
+    Version number string (not NULL terminated)
+  sender : int
+    Optional sender ID, defaults to 0
+
+  """
+  _parser = Struct("MsgBootloaderHandshakeDeprecated",
+                   OptionalGreedyRange(ULInt8('handshake')),)
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgBootloaderHandshakeDeprecated, self).__init__()
+      self.msg_type = SBP_MSG_BOOTLOADER_HANDSHAKE_DEPRECATED
+      self.sender = kwargs.pop('sender', 0)
+      self.handshake = kwargs.pop('handshake')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgBootloaderHandshakeDeprecated._parser.parse(d)
+    self.__dict__.update(dict(p.viewitems()))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgBootloaderHandshakeDeprecated._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgBootloaderHandshakeDeprecated(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgBootloaderHandshakeDeprecated, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_EPHEMERIS_DEPRECATED = 0x001A
 class MsgEphemerisDeprecated(SBP):
   """SBP class for message MSG_EPHEMERIS_DEPRECATED (0x001A).
@@ -195,5 +269,6 @@ class MsgEphemerisDeprecated(SBP):
     
 
 msg_classes = {
+  0x00B0: MsgBootloaderHandshakeDeprecated,
   0x001A: MsgEphemerisDeprecated,
 }

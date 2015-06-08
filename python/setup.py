@@ -2,8 +2,7 @@
 
 from setuptools import setup
 import os
-
-VERSION = "0.43"
+from sbp.version import VERSION
 
 CLASSIFIERS = [
   'Intended Audience :: Developers',
@@ -30,6 +29,10 @@ PLATFORMS = [
   'win32',
 ]
 
+PACKAGE_DATA = { 'sbp' : [
+  'RELEASE-VERSION',
+] }
+
 cwd = os.path.abspath(os.path.dirname(__file__))
 with open(cwd + '/README.rst') as f:
   readme = f.read()
@@ -47,6 +50,7 @@ setup(name='sbp',
       classifiers=CLASSIFIERS,
       packages=PACKAGES,
       platforms=PLATFORMS,
+      package_data=PACKAGE_DATA,
       install_requires=INSTALL_REQUIRES,
       use_2to3=False,
       zip_safe=False)

@@ -11,13 +11,30 @@
 package: swiftnav.sbp.deprecated
 description: Deprecated SBP messages.
 stable: False
-public: False
+public: True
 include:
   - types.yaml
 definitions:
 
+ - MSG_BOOTLOADER_HANDSHAKE_DEPRECATED:
+    id: 0x00B0
+    public: True
+    short_desc: Bootloading handshake response (host <= device)
+    desc: |
+      The handshake message response from the device establishes a
+      handshake between the device bootloader and the host. The
+      request from the host is MSG_BOOTLOADER_HANDSHAKE_HOST.  The
+      payload string contains the bootloader version number, but
+      returns an empty string for earlier versions.
+    fields:
+      - handshake:
+          type: array
+          fill: u8
+          desc: Version number string (not NULL terminated)
+
  - MSG_EPHEMERIS_DEPRECATED:
     id: 0x001A
+    public: False
     short_desc: Deprecated
     desc: Deprecated.
     replaced_by:
