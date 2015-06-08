@@ -62,3 +62,5 @@ sbp_out.*
 
 # Virtual Envs
 /*env
+
+RELEASE-VERSION
