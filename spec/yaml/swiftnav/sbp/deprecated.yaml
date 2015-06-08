@@ -11,7 +11,7 @@
 package: swiftnav.sbp.deprecated
 description: Deprecated SBP messages.
 stable: False
-public: False
+public: True
 include:
   - types.yaml
 definitions:
@@ -34,6 +34,7 @@ definitions:
 
  - MSG_EPHEMERIS_DEPRECATED:
     id: 0x001A
+    public: False
     short_desc: Deprecated
     desc: Deprecated.
     replaced_by:
