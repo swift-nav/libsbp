@@ -14,7 +14,7 @@ import time
 import threading
 
 from sbp.client.handler import *
-from sbp                import SBP
+from sbp.msg            import SBP
 
 class TestCallbackCounter(object):
   """

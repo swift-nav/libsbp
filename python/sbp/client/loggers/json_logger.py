@@ -8,7 +8,7 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-from ... import SBP
+from ...msg import SBP
 from ...table import dispatch
 from .base_logger import BaseLogger, LogIterator
 from construct.core import ConstructError

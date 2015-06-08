@@ -18,7 +18,7 @@ e.g. camera shutter time.
 
 from construct import *
 import json
-from sbp import SBP
+from sbp.msg import SBP
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
