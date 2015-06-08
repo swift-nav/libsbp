@@ -75,7 +75,7 @@ def get_git_version():
     version = call_git_describe()
 
     # Take off the leading if present.
-    if version[0] == 'v':
+    if version is not None and version[0] == 'v':
       version = version[1:]
 
     #adapt to PEP 386 compatible versioning scheme
