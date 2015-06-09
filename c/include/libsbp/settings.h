@@ -39,7 +39,7 @@
  */
 #define SBP_MSG_SETTINGS               0x00A0
 typedef struct __attribute__((packed)) {
-  char* setting;    /**< A NULL-terminated and delimited string with contents
+  char[0] setting;    /**< A NULL-terminated and delimited string with contents
 [SECTION_SETTING, SETTING, VALUE] on writes or a series of
 such strings on reads.
  */
