@@ -62,9 +62,12 @@ def read_release_version():
 
 
 def write_release_version(version):
-    f = open(os.path.join(os.path.dirname(__file__), 'RELEASE-VERSION'), "w")
-    f.write("%s\n" % version)
-    f.close()
+    try:
+        f = open(os.path.join(os.path.dirname(__file__), 'RELEASE-VERSION'), "w")
+        f.write("%s\n" % version)
+        f.close()
+    except:
+      pass
 
 
 def get_git_version():
@@ -92,7 +95,7 @@ def get_git_version():
 
     # If the current version is different from what's in the
     # RELEASE-VERSION file, update the file to be current.
-    if version != release_version:
+    if release_version is not None and version != release_version:
         write_release_version(version)
 
     # Finally, return the current version.
