@@ -55,7 +55,7 @@ def mk_id(field):
   if name == "string" and field.options.get('size', None):
     return "%s" % ("char")
   elif name == "string":
-    return "%s*" % ("char")
+    return "%s[0]" % ("char")
   elif name == "array" and field.size:
     if field.options['fill'].value not in CONSTRUCT_CODE:
       return "%s" % convert(field.options['fill'].value)
