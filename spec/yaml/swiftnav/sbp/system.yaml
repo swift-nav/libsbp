@@ -58,9 +58,9 @@ definitions:
               - 24-30:
                   desc: Reserved
               - 16-23:
-                  desc: SBP minor protocol version number
-              - 8-15:
                   desc: SBP major protocol version number
+              - 8-15:
+                  desc: SBP minor protocol version number
               - 3-7:
                   desc: Reserved
               - 2:
