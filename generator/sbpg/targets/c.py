@@ -14,8 +14,9 @@ Generator for c target.
 """
 
 from sbpg.targets.templating import *
-TEMPLATE_NAME = "sbp_messages_template.h"
 
+MESSAGES_TEMPLATE_NAME = "sbp_messages_template.h"
+VERSION_TEMPLATE_NAME = "sbp_version_template.h"
 
 def commentify(value):
   """
@@ -94,7 +95,7 @@ def render_source(output_dir, package_spec):
   """
   path, name = package_spec.filepath
   destination_filename = "%s/%s.h" % (output_dir, name)
-  py_template = JENV.get_template(TEMPLATE_NAME)
+  py_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,
                                pkg_name=name,
@@ -103,3 +104,10 @@ def render_source(output_dir, package_spec):
                                description=package_spec.description,
                                timestamp=package_spec.creation_timestamp,
                                include=extensions(package_spec.includes)))
+
+def render_version(output_dir, release):
+  destination_filename = "%s/version.h" % output_dir
+  major, minor = release.split('.')
+  py_template = JENV.get_template(VERSION_TEMPLATE_NAME)
+  with open(destination_filename, 'w') as f:
+    f.write(py_template.render(major=major, minor=minor))

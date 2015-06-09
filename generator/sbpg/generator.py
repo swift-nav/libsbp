@@ -43,6 +43,11 @@ def get_args():
   parser.add_argument('--latex',
                       action="store_true",
                       help='Target language: LaTeX.')
+  parser.add_argument('-r',
+                      '--release',
+                      nargs=1,
+                      required=True,
+                      help='Release version.')
   parser.add_argument('-v',
                       '--verbose',
                       action="store_true",
@@ -82,6 +87,8 @@ def main():
           py.render_source(output_dir, parsed)
         elif args.c:
           c.render_source(output_dir, parsed)
+      if args.c:
+        c.render_version(output_dir, args.release[0])
   except KeyboardInterrupt:
     pass
 
