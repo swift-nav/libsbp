@@ -35,7 +35,7 @@
  */
 #define SBP_MSG_PRINT     0x0010
 typedef struct __attribute__((packed)) {
-  char[0] text;    /**< Human-readable string */
+  char text[0]; /**< Human-readable string */
 } msg_print_t;
 
 

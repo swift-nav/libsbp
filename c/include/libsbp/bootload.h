@@ -51,7 +51,7 @@
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_DEVICE 0x00B4
 typedef struct __attribute__((packed)) {
   u32 flags;      /**< Bootloader flags */
-  char[0] version;    /**< Bootloader version number */
+  char version[0]; /**< Bootloader version number */
 } msg_bootloader_handshake_device_t;
 
 
