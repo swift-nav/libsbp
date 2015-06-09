@@ -53,10 +53,8 @@ def mk_id(field):
   """Builds an identifier from a field.
   """
   name = field.type_id
-  if name == "string" and field.options.get('size', None):
+  if name == "string":
     return "%s" % ("char")
-  elif name == "string":
-    return "%s[0]" % ("char")
   elif name == "array" and field.size:
     if field.options['fill'].value not in CONSTRUCT_CODE:
       return "%s" % convert(field.options['fill'].value)
@@ -76,7 +74,7 @@ def mk_size(field):
   if name == "string" and field.options.get('size', None):
     return "%s[%d];" % (field.identifier, field.options.get('size').value)
   elif name == "string":
-    return "%s;" % field.identifier
+    return "%s[0];" % field.identifier
   elif name == "array" and field.options.get('size', None):
     return "%s[%d];" % (field.identifier, field.options.get('size').value)
   elif name == "array":
