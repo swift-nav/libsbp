@@ -221,16 +221,18 @@ definitions:
             type: u8
             desc: Mask of systems that should ignore this satellite.
             fields:
-                - 0-1:
-                    desc: Acquisition channel
-                    values:
-                        - 0: Enabled
-                        - 1: Skip this satellite on future acquisitions
-                - 1-2:
+                - 2-7:
+                    desc: Reserved
+                - 1:
                     desc: Tracking channels
                     values:
                         - 0: Enabled
                         - 1: Drop this PRN if currently tracking
+                - 0:
+                    desc: Acquisition channel
+                    values:
+                        - 0: Enabled
+                        - 1: Skip this satellite on future acquisitions
         - prn:
             type: u8
             desc: PRN for which the mask is applied
