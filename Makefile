@@ -7,7 +7,11 @@ MAKEFLAGS += SWIFTNAV_ROOT=$(SWIFTNAV_ROOT)
 SBP_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/yaml/swiftnav/sbp/
 SBP_GEN_BIN := python sbpg/generator.py
 
-.PHONY: help all c python docs pdf html test release dist
+SBP_VERSION := $(shell PYTHONPATH=python python python/sbp/version.py)
+SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
+SBP_MINOR_VERSION := $(word 2, $(subst ., , $(SBP_VERSION)))
+
+.PHONY: help all c python docs pdf html test release dist silly
 
 help:
 	@echo
@@ -37,6 +41,7 @@ c:
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/c/include/libsbp \
+                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
 	               --c;\
 	cd $(SWIFTNAV_ROOT);
 	@echo
@@ -49,6 +54,7 @@ python:
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/python/sbp/ \
+                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
 		       --python;\
 	cd $(SWIFTNAV_ROOT);
 	@echo
@@ -73,6 +79,7 @@ pdf:
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/latex/ \
+                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
 	               --latex;\
 	cd $(SWIFTNAV_ROOT);
 	@echo
