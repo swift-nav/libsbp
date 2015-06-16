@@ -20,10 +20,10 @@
  * * Satellite acquisition messages from the device.
  * \{ */
 
-#ifndef LIBSBP_ACQUISITION_MESSAGES_H
-#define LIBSBP_ACQUISITION_MESSAGES_H
+#ifndef LIBSBP_V0_ACQUISITION_MESSAGES_H
+#define LIBSBP_V0_ACQUISITION_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 
 
 /** Satellite acquisition result
@@ -49,4 +49,4 @@ acquisition was attempted
 
 /** \} */
 
-#endif /* LIBSBP_ACQUISITION_MESSAGES_H */
+#endif /* LIBSBP_V0_ACQUISITION_MESSAGES_H */

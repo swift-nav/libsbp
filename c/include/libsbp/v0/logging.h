@@ -21,10 +21,10 @@
  * implementation-defined range (0x0000-0x00FF).
  * \{ */
 
-#ifndef LIBSBP_LOGGING_MESSAGES_H
-#define LIBSBP_LOGGING_MESSAGES_H
+#ifndef LIBSBP_V0_LOGGING_MESSAGES_H
+#define LIBSBP_V0_LOGGING_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 
 
 /** Plaintext logging messages
@@ -49,4 +49,4 @@ typedef struct __attribute__((packed)) {
 
 /** \} */
 
-#endif /* LIBSBP_LOGGING_MESSAGES_H */
+#endif /* LIBSBP_V0_LOGGING_MESSAGES_H */

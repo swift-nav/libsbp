@@ -20,10 +20,10 @@
  * * Satellite observation messages from the device.
  * \{ */
 
-#ifndef LIBSBP_OBSERVATION_MESSAGES_H
-#define LIBSBP_OBSERVATION_MESSAGES_H
+#ifndef LIBSBP_V0_OBSERVATION_MESSAGES_H
+#define LIBSBP_V0_OBSERVATION_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 
 
 /** Millisecond-accurate GPS time
@@ -155,4 +155,4 @@ typedef struct __attribute__((packed)) {
 
 /** \} */
 
-#endif /* LIBSBP_OBSERVATION_MESSAGES_H */
+#endif /* LIBSBP_V0_OBSERVATION_MESSAGES_H */

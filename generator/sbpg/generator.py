@@ -70,17 +70,17 @@ def main():
     output_dir = os.path.abspath(args.output_dir[0])
     major_output_dir = os.path.join(output_dir, "v" + major)
     assert len(args.output_dir) == 1, "Only 1 output directory at a time."
-    assert os.path.exists(major_output_dir), \
-      "Invalid output directory: %s. Exiting!" % major_output_dir
+    assert os.path.exists(output_dir), \
+      "Invalid output directory: %s. Exiting!" % output_dir
     # Ingest, parse, and validate.
-    file_index = yaml.resolve_deps(*yaml.get_files(input_file))
+    file_index = yaml.resolve_deps(*yaml.get_files(major_input_file))
     if verbose:
       print "Reading files..."
       pprint.pprint(file_index.keys())
       print "Writing to %s" % major_output_dir
     if args.latex:
       parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
-      tex.render_source(major_output_dir, parsed)
+      tex.render_source(output_dir, major, parsed)
     else:
       for fname, spec in file_index.items():
         parsed = yaml.parse_spec(spec)
@@ -89,7 +89,7 @@ def main():
         if args.python:
           py.render_source(major_output_dir, parsed)
         elif args.c:
-          c.render_source(major_output_dir, parsed)
+          c.render_source(major_output_dir, major, parsed)
       if args.c:
         c.render_version(output_dir, major, minor)
   except KeyboardInterrupt:

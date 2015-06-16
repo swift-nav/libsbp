@@ -252,7 +252,7 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
       offset += size
   return (items, offset, multiplier)
 
-def render_source(output_dir, package_specs):
+def render_source(output_dir, major, package_specs):
   """
   Render and output
   """
@@ -297,4 +297,4 @@ def render_source(output_dir, package_specs):
   os.chdir(output_dir)
   subprocess.call(["pdflatex", "--enable-write18",
                    "-shell-escape", "sbp_out.tex"])
-  subprocess.call(["mv", "sbp_out.pdf", "../docs/sbp.pdf"])
+  subprocess.call(["mv", "sbp_out.pdf", "../docs/v%s/sbp.pdf" % major])

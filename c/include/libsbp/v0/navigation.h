@@ -30,10 +30,10 @@
  * and the RTK solution in tandem.
  * \{ */
 
-#ifndef LIBSBP_NAVIGATION_MESSAGES_H
-#define LIBSBP_NAVIGATION_MESSAGES_H
+#ifndef LIBSBP_V0_NAVIGATION_MESSAGES_H
+#define LIBSBP_V0_NAVIGATION_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 
 
 /** GPS Time
@@ -226,4 +226,4 @@ implemented). Defaults to 0.
 
 /** \} */
 
-#endif /* LIBSBP_NAVIGATION_MESSAGES_H */
+#endif /* LIBSBP_V0_NAVIGATION_MESSAGES_H */

@@ -20,10 +20,10 @@
  * * Standardized system messages from Swift Navigation devices.
  * \{ */
 
-#ifndef LIBSBP_SYSTEM_MESSAGES_H
-#define LIBSBP_SYSTEM_MESSAGES_H
+#ifndef LIBSBP_V0_SYSTEM_MESSAGES_H
+#define LIBSBP_V0_SYSTEM_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 
 
 /** System start-up message
@@ -60,4 +60,4 @@ typedef struct __attribute__((packed)) {
 
 /** \} */
 
-#endif /* LIBSBP_SYSTEM_MESSAGES_H */
+#endif /* LIBSBP_V0_SYSTEM_MESSAGES_H */

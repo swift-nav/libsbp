@@ -87,7 +87,7 @@ JENV.filters['mk_id'] = mk_id
 JENV.filters['mk_size'] = mk_size
 JENV.filters['convert'] = convert
 
-def render_source(output_dir, package_spec):
+def render_source(output_dir, major, package_spec):
   """
   Render and output to a directory given a package specification.
   """
@@ -96,7 +96,7 @@ def render_source(output_dir, package_spec):
   py_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,
-                               pkg_name=name,
+                               pkg_name=name, major=major,
                                filepath="/".join(package_spec.filepath) + ".yaml",
                                max_msgid_len=package_spec.max_msgid_len,
                                description=package_spec.description,
