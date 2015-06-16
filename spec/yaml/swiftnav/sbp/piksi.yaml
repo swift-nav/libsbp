@@ -209,3 +209,31 @@ definitions:
         - num_hyps:
             type: u32
             desc: Number of integer ambiguity hypotheses remaining
+
+ - MSG_MASK_SATELLITE:
+    id: 0x001B
+    short_desc: Mask a satellite from use in Piksi subsystems
+    desc: |
+      This message allows setting a mask to prevent a particular satellite
+      from being used in various Piksi subsystems.
+    fields:
+        - mask:
+            type: u8
+            desc: Mask of systems that should ignore this satellite.
+            fields:
+                - 2-7:
+                    desc: Reserved
+                - 1:
+                    desc: Tracking channels
+                    values:
+                        - 0: Enabled
+                        - 1: Drop this PRN if currently tracking
+                - 0:
+                    desc: Acquisition channel
+                    values:
+                        - 0: Enabled
+                        - 1: Skip this satellite on future acquisitions
+        - prn:
+            type: u8
+            desc: PRN for which the mask is applied
+
