@@ -60,35 +60,38 @@ def main():
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
+    major, minor = args.release[0].split('.')
     assert args.python or args.c or args.latex, "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
+    major_input_file = os.path.join(input_file, "v" + major)
     assert len(args.input_file) == 1
     assert os.path.exists(input_file), \
       "Invalid input file: %s. Exiting!" % input_file
     output_dir = os.path.abspath(args.output_dir[0])
+    major_output_dir = os.path.join(output_dir, "v" + major)
     assert len(args.output_dir) == 1, "Only 1 output directory at a time."
     assert os.path.exists(output_dir), \
       "Invalid output directory: %s. Exiting!" % output_dir
     # Ingest, parse, and validate.
-    file_index = yaml.resolve_deps(*yaml.get_files(input_file))
+    file_index = yaml.resolve_deps(*yaml.get_files(major_input_file))
     if verbose:
       print "Reading files..."
       pprint.pprint(file_index.keys())
-      print "Writing to %s" % output_dir
+      print "Writing to %s" % major_output_dir
     if args.latex:
       parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
-      tex.render_source(output_dir, parsed)
+      tex.render_source(output_dir, major, parsed)
     else:
       for fname, spec in file_index.items():
         parsed = yaml.parse_spec(spec)
         if not parsed.render_source:
           continue
         if args.python:
-          py.render_source(output_dir, parsed)
+          py.render_source(major_output_dir, parsed)
         elif args.c:
-          c.render_source(output_dir, parsed)
+          c.render_source(major_output_dir, major, parsed)
       if args.c:
-        c.render_version(output_dir, args.release[0])
+        c.render_version(output_dir, major, minor)
   except KeyboardInterrupt:
     pass
 

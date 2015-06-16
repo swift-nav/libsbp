@@ -29,10 +29,10 @@
  * device response.
  * \{ */
 
-#ifndef LIBSBP_FILE_IO_MESSAGES_H
-#define LIBSBP_FILE_IO_MESSAGES_H
+#ifndef LIBSBP_V0_FILE_IO_MESSAGES_H
+#define LIBSBP_V0_FILE_IO_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 
 
 /** Read file from the file system (host <=> device)
@@ -102,4 +102,4 @@ typedef struct __attribute__((packed)) {
 
 /** \} */
 
-#endif /* LIBSBP_FILE_IO_MESSAGES_H */
+#endif /* LIBSBP_V0_FILE_IO_MESSAGES_H */

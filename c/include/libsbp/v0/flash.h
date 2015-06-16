@@ -26,10 +26,10 @@
  * are intended for internal-use only.
  * \{ */
 
-#ifndef LIBSBP_FLASH_MESSAGES_H
-#define LIBSBP_FLASH_MESSAGES_H
+#ifndef LIBSBP_V0_FLASH_MESSAGES_H
+#define LIBSBP_V0_FLASH_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 
 
 /** Program flash addresses
@@ -182,4 +182,4 @@ typedef struct __attribute__((packed)) {
 
 /** \} */
 
-#endif /* LIBSBP_FLASH_MESSAGES_H */
+#endif /* LIBSBP_V0_FLASH_MESSAGES_H */

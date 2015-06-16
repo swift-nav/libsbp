@@ -26,10 +26,10 @@
  * https://github.com/swift-nav/piksi\_firmware/blob/master/docs/settings.pdf
  * \{ */
 
-#ifndef LIBSBP_SETTINGS_MESSAGES_H
-#define LIBSBP_SETTINGS_MESSAGES_H
+#ifndef LIBSBP_V0_SETTINGS_MESSAGES_H
+#define LIBSBP_V0_SETTINGS_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 
 
 /** R/W device configuration settings (host <=> device)
@@ -71,4 +71,4 @@ typedef struct __attribute__((packed)) {
 
 /** \} */
 
-#endif /* LIBSBP_SETTINGS_MESSAGES_H */
+#endif /* LIBSBP_V0_SETTINGS_MESSAGES_H */

@@ -20,10 +20,10 @@
  *  * Satellite code and carrier-phase tracking messages from the device.
  * \{ */
 
-#ifndef LIBSBP_TRACKING_MESSAGES_H
-#define LIBSBP_TRACKING_MESSAGES_H
+#ifndef LIBSBP_V0_TRACKING_MESSAGES_H
+#define LIBSBP_V0_TRACKING_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 
 
 /** Satellite tracking channel state
@@ -52,4 +52,4 @@ typedef struct __attribute__((packed)) {
 
 /** \} */
 
-#endif /* LIBSBP_TRACKING_MESSAGES_H */
+#endif /* LIBSBP_V0_TRACKING_MESSAGES_H */

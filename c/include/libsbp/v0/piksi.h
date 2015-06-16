@@ -25,10 +25,10 @@
  * (0x0000-0x00FF), and largely intended for internal-use only.
  * \{ */
 
-#ifndef LIBSBP_PIKSI_MESSAGES_H
-#define LIBSBP_PIKSI_MESSAGES_H
+#ifndef LIBSBP_V0_PIKSI_MESSAGES_H
+#define LIBSBP_V0_PIKSI_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 
 
 /** Legacy message to load satellite almanac (host => Piksi)
@@ -179,4 +179,4 @@ typedef struct __attribute__((packed)) {
 
 /** \} */
 
-#endif /* LIBSBP_PIKSI_MESSAGES_H */
+#endif /* LIBSBP_V0_PIKSI_MESSAGES_H */

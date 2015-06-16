@@ -21,10 +21,10 @@
  * e.g. camera shutter time.
  * \{ */
 
-#ifndef LIBSBP_EXT_EVENTS_MESSAGES_H
-#define LIBSBP_EXT_EVENTS_MESSAGES_H
+#ifndef LIBSBP_V0_EXT_EVENTS_MESSAGES_H
+#define LIBSBP_V0_EXT_EVENTS_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 
 
 /** Reports timestamped external pin event
@@ -46,4 +46,4 @@ from -500000 to 500000)
 
 /** \} */
 
-#endif /* LIBSBP_EXT_EVENTS_MESSAGES_H */
+#endif /* LIBSBP_V0_EXT_EVENTS_MESSAGES_H */

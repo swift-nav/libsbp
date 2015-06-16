@@ -20,10 +20,10 @@
  * (((description|commentify)))
  * \{ */
 
-#ifndef LIBSBP_(((pkg_name|upper)))_MESSAGES_H
-#define LIBSBP_(((pkg_name|upper)))_MESSAGES_H
+#ifndef LIBSBP_V(((major)))_(((pkg_name|upper)))_MESSAGES_H
+#define LIBSBP_V(((major)))_(((pkg_name|upper)))_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 ((*- for i in include *))
 #include "(((i)))"
 ((*- endfor *))
@@ -53,4 +53,4 @@ typedef struct __attribute__((packed)) {
 ((* endfor *))
 /** \} */
 
-#endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */
+#endif /* LIBSBP_V(((major)))_(((pkg_name|upper)))_MESSAGES_H */

@@ -20,10 +20,10 @@
  * * Deprecated SBP messages.
  * \{ */
 
-#ifndef LIBSBP_DEPRECATED_MESSAGES_H
-#define LIBSBP_DEPRECATED_MESSAGES_H
+#ifndef LIBSBP_V0_DEPRECATED_MESSAGES_H
+#define LIBSBP_V0_DEPRECATED_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 
 
 /** Bootloading handshake response (host <= device)
@@ -77,4 +77,4 @@ typedef struct __attribute__((packed)) {
 
 /** \} */
 
-#endif /* LIBSBP_DEPRECATED_MESSAGES_H */
+#endif /* LIBSBP_V0_DEPRECATED_MESSAGES_H */

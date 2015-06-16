@@ -25,10 +25,10 @@
  * device response.
  * \{ */
 
-#ifndef LIBSBP_BOOTLOAD_MESSAGES_H
-#define LIBSBP_BOOTLOAD_MESSAGES_H
+#ifndef LIBSBP_V0_BOOTLOAD_MESSAGES_H
+#define LIBSBP_V0_BOOTLOAD_MESSAGES_H
 
-#include "common.h"
+#include "<libsbp/common.h>"
 
 
 /** Bootloading handshake request (host => device)
@@ -96,4 +96,4 @@ on the right.
 
 /** \} */
 
-#endif /* LIBSBP_BOOTLOAD_MESSAGES_H */
+#endif /* LIBSBP_V0_BOOTLOAD_MESSAGES_H */
