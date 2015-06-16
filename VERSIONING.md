@@ -12,3 +12,8 @@ major version. Message ID's are not guaranteed to be unique between
 major versions. Changes to a message in a major version are manifest
 by incrementing the minor version, adding a new message with the
 changes, and deprecating the old message.
+
+Stable messages are guaranteed to be available for all minor versions
+in a major version. The addition or deprecation of stable messages
+results in the incrementing of the major version.
+
