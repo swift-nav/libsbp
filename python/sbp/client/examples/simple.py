@@ -50,7 +50,6 @@ def main():
     with Handler(driver.read, driver.write, verbose=True) as handler:
       # Add a callback for BASELINE_NED messages
       handler.add_callback(baseline_callback, msg_type=SBP_MSG_BASELINE_NED)
-      handler.start()
 
       # Sleep until the user presses Ctrl-C
       try:

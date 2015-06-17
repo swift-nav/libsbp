@@ -66,7 +66,6 @@ def main():
     with Handler(driver.read, driver.write) as handler:
       with closing(socket.socket(socket.AF_INET, socket.SOCK_DGRAM)) as udp:
         handler.add_callback(send_udp_callback_generator(udp, args))
-        handler.start()
 
         try:
           while True:
