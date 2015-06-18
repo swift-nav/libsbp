@@ -166,6 +166,7 @@ class Handler(object):
     self.receive_thread = ReceiveThread(self.framer.receive, self.call)
 
   def __enter__(self):
+    self.start()
     return self
 
   def __exit__(self, *args):
