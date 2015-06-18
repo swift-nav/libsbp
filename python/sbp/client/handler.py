@@ -258,7 +258,7 @@ class Handler(object):
     payload = None
     def cb(sbp_msg):
       payload = sbp_msg.payload
-    self.add(cb, msg_type)
+    self.add_callback(cb, msg_type)
     event.wait(timeout)
     self.remove(cb, msg_type)
     return payload
