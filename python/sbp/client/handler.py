@@ -244,6 +244,19 @@ class Handler(object):
     """
     self.framer.send(msg_type, data, sender)
 
+  def send_msg(self, msg, sender=0x42):
+    """
+    Send materialized SBP messages.
+
+    Parameters
+    ----------
+    msg : sbp_msg
+      SBP message.
+    send : int
+      SBP sender id.
+    """
+    self.framer.write(msg.pack())
+
   def wait(self, msg_type, timeout):
     """
     Wait for a SBP message.
