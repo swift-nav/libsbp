@@ -255,7 +255,7 @@ class Handler(object):
     send : int
       SBP sender id.
     """
-    self.framer.write(msg.pack())
+    self.framer.write(msg.to_binary())
 
   def wait(self, msg_type, timeout):
     """
