@@ -198,7 +198,7 @@ class Handler(object):
     ----------
     callback : fn
       Callback function
-    msg_type : int | list
+    msg_type : int | iterable
       Message type to remove callback from. Default `None` means global callback.
       List type removes the callback from all the message types.
     """
