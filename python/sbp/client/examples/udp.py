@@ -14,10 +14,9 @@ messages from a serial port and sending them to a UDP socket.
 """
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
-from sbp.client.handler import Handler
+from sbp.client.handler            import Handler
+from sbp.client.loggers.udp_logger import UdpLogger
 
-from contextlib import closing
-import socket
 import struct
 import time
 
@@ -49,23 +48,15 @@ def get_args():
                       help="specify the baud rate to use.")
   return parser.parse_args()
 
-def send_udp_callback_generator(udp, args):
-  def send_udp_callback(msg):
-    s = ""
-    s += struct.pack("<BHHB", 0x55, msg.msg_type, msg.sender, msg.length)
-    s += msg.payload
-    s += struct.pack("<H", msg.crc)
-    udp.sendto(s, (args.address[0], args.udp_port[0]))
-
-  return send_udp_callback
-
 def main():
   args = get_args()
+  address = args.address[0]
+  udp_port = args.udp_port[0]
 
   with PySerialDriver(args.serial_port[0], args.baud[0]) as driver:
     with Handler(driver.read, driver.write) as handler:
-      with closing(socket.socket(socket.AF_INET, socket.SOCK_DGRAM)) as udp:
-        handler.add_callback(send_udp_callback_generator(udp, args))
+      with UdpLogger(address, udp_port) as udp:
+        handler.add_callback(udp)
 
         try:
           while True:
