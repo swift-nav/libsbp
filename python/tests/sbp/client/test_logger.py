@@ -14,12 +14,15 @@ from sbp.client.loggers.base_logger import LogIterator
 from sbp.client.loggers.json_logger import JSONLogIterator, MultiJSONLogIterator
 from sbp.client.loggers.pickle_logger import PickleLogIterator
 from sbp.client.loggers.device_iterator import DeviceIterator
+from sbp.client.loggers.udp_logger import UdpLogger
 from sbp.logging import SBP_MSG_PRINT
 from sbp.acquisition import SBP_MSG_ACQ_RESULT, MsgAcqResult
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
 from sbp.client.handler import Handler
 import pytest
+import SocketServer
+import threading
 import warnings
 
 # Apparently the log tests were actually saved in their dispatched
@@ -173,3 +176,27 @@ def test_device_iterator():
     assert delta > 0
     assert timestamp >0
     assert type(msg) == MsgAcqResult
+
+def udp_handler(data):
+  class MockRequestHandler(SocketServer.BaseRequestHandler):
+    def handle(self):
+      assert data == self.request[0].strip()
+  return MockRequestHandler
+
+class MockServer(SocketServer.ThreadingMixIn, SocketServer.UDPServer):
+  pass
+
+def udp_server(handler):
+  server = MockServer(("localhost", 0), handler)
+  ip, port = server.server_address
+  server_thread = threading.Thread(target=server.serve_forever)
+  server_thread.daemon = True
+  server_thread.start()
+  return (ip, port)
+
+def test_udp_logger():
+  msg = SBP(1, 2, 3, 'abc', 4)
+  handler = udp_handler(msg.pack())
+  ip, port = udp_server(handler)
+  with UdpLogger(ip, port) as udp:
+    udp(msg)
