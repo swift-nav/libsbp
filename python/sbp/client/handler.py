@@ -182,7 +182,7 @@ class Handler(object):
       Callback function
     msg_type : int | iterable
       Message type to register callback against. Default `None` means global callback.
-      List type adds the callback to all the message types.
+      Iterable type adds the callback to all the message types.
     """
     try:
       for mt in iter(msg_type):
@@ -200,7 +200,7 @@ class Handler(object):
       Callback function
     msg_type : int | iterable
       Message type to remove callback from. Default `None` means global callback.
-      List type removes the callback from all the message types.
+      Iterable type removes the callback from all the message types.
     """
     try:
       for mt in iter(msg_type):
