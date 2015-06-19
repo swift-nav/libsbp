@@ -185,7 +185,7 @@ class Handler(object):
       List type adds the callback to all the message types.
     """
     try:
-      for mt in msg_type:
+      for mt in iter(msg_type):
         self.callbacks[mt].add(callback)
     except TypeError:
       self.callbacks[msg_type].add(callback)
@@ -203,7 +203,7 @@ class Handler(object):
       List type removes the callback from all the message types.
     """
     try:
-      for mt in msg_type:
+      for mt in iter(msg_type):
         self.callbacks[mt].remove(callback)
     except TypeError:
       self.callbacks[msg_type].remove(callback)
