@@ -14,8 +14,8 @@ messages from a serial port and sending them to a UDP socket.
 """
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
-from sbp.client.handler import Handler
-from sbp.client.loggers import UdpLogger
+from sbp.client.handler            import Handler
+from sbp.client.loggers.udp_logger import UdpLogger
 
 import struct
 import time

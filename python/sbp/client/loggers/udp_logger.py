@@ -41,5 +41,8 @@ class UdpLogger(BaseLogger):
     s += struct.pack("<H", msg.crc)
     return s
 
+  def flush(self):
+    pass
+
   def call(self, msg):
     self.handle.sendto(self.fmt_msg(msg), (self.address, self.port))
