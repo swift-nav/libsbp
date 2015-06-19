@@ -37,3 +37,14 @@ definitions:
     desc: |
       This is an unused legacy message for tracing variable values
       within the device firmware and streaming those back to the host.
+
+ - MSG_TWEET:
+    id: 0x0012
+    public: False
+    short_desc: Tweet
+    desc: All the news fit to tweet.
+    fields:
+      - tweet:
+          type: string
+          size: 140
+          desc: Human-readable string
