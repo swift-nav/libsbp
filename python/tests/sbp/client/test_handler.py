@@ -101,3 +101,30 @@ def test_handler_callbacks():
   assert global_counter2.value == 2
   assert msg_type_counter1.value == 1
   assert msg_type_counter2.value == 0
+  handler.remove_callback(global_counter1)
+  handler.remove_callback(global_counter2)
+  handler.remove_callback(msg_type_counter1, 0x55)
+  handler.remove_callback(msg_type_counter2, 0x66)
+  handler.call(SBP(0x11, None, None, None, None))
+  handler.call(SBP(0x55, None, None, None, None))
+  assert global_counter1.value == 2
+  assert global_counter2.value == 2
+  assert msg_type_counter1.value == 1
+  assert msg_type_counter2.value == 0
+
+def test_multiple_handler_callbacks():
+  handler = Handler(None, None)
+  msg_type_counter1 = TestCallbackCounter()
+  msg_type_counter2 = TestCallbackCounter()
+  handler.add_callback(msg_type_counter1, [0x55, 0x66])
+  handler.add_callback(msg_type_counter2, [0x11, 0x55])
+  handler.call(SBP(0x11, None, None, None, None))
+  handler.call(SBP(0x55, None, None, None, None))
+  assert msg_type_counter1.value == 1
+  assert msg_type_counter2.value == 2
+  handler.remove_callback(msg_type_counter1, [0x55, 0x66])
+  handler.remove_callback(msg_type_counter2, [0x11, 0x55])
+  handler.call(SBP(0x11, None, None, None, None))
+  handler.call(SBP(0x55, None, None, None, None))
+  assert msg_type_counter1.value == 1
+  assert msg_type_counter2.value == 2

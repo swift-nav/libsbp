@@ -180,10 +180,15 @@ class Handler(object):
     ----------
     callback : fn
       Callback function
-    msg_type : int
+    msg_type : int | iterable
       Message type to register callback against. Default `None` means global callback.
+      Iterable type adds the callback to all the message types.
     """
-    self.callbacks[msg_type].add(callback)
+    try:
+      for mt in iter(msg_type):
+        self.callbacks[mt].add(callback)
+    except TypeError:
+      self.callbacks[msg_type].add(callback)
 
   def remove_callback(self, callback, msg_type=None):
     """
@@ -193,10 +198,15 @@ class Handler(object):
     ----------
     callback : fn
       Callback function
-    msg_type : int
+    msg_type : int | iterable
       Message type to remove callback from. Default `None` means global callback.
+      Iterable type removes the callback from all the message types.
     """
-    self.callbacks[msg_type].remove(callback)
+    try:
+      for mt in iter(msg_type):
+        self.callbacks[mt].remove(callback)
+    except TypeError:
+      self.callbacks[msg_type].remove(callback)
 
   def get_callbacks(self, msg_type):
     """
