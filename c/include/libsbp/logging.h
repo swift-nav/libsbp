@@ -47,6 +47,16 @@ typedef struct __attribute__((packed)) {
 #define SBP_MSG_DEBUG_VAR 0x0011
 
 
+/** Tweet
+ *
+* All the news fit to tweet.
+ */
+#define SBP_MSG_TWEET     0x0012
+typedef struct __attribute__((packed)) {
+  char tweet[140]; /**< Human-readable string */
+} msg_tweet_t;
+
+
 /** \} */
 
 #endif /* LIBSBP_LOGGING_MESSAGES_H */

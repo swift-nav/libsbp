@@ -126,8 +126,78 @@ within the device firmware and streaming those back to the host.
     return fmt_repr(self)
  
     
+SBP_MSG_TWEET = 0x0012
+class MsgTweet(SBP):
+  """SBP class for message MSG_TWEET (0x0012).
+
+  You can have MSG_TWEET inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  All the news fit to tweet.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tweet : string
+    Human-readable string
+  sender : int
+    Optional sender ID, defaults to 0
+
+  """
+  _parser = Struct("MsgTweet",
+                   String('tweet', 140),)
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgTweet, self).__init__()
+      self.msg_type = SBP_MSG_TWEET
+      self.sender = kwargs.pop('sender', 0)
+      self.tweet = kwargs.pop('tweet')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgTweet._parser.parse(d)
+    self.__dict__.update(dict(p.viewitems()))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgTweet._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgTweet(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgTweet, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0010: MsgPrint,
   0x0011: MsgDebugVar,
+  0x0012: MsgTweet,
 }
