@@ -9,7 +9,7 @@ tests:
       flags: 0
       version: v1.2
     module: sbp.bootload
-    name: MsgBootloaderHandshakeDevice
+    name: MsgBootloaderHandshakeResponse
   msg_type: '0xb4'
   raw_json: '{"sender": 0, "msg_type": 180, "crc": 457, "length": 9, "version": "v1.2",
     "flags": 0, "preamble": 85, "payload": "AAAAAHYxLjIK"}'

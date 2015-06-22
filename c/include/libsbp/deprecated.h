@@ -30,7 +30,7 @@
  *
  * The handshake message response from the device establishes a
  * handshake between the device bootloader and the host. The
- * request from the host is MSG_BOOTLOADER_HANDSHAKE_HOST.  The
+ * request from the host is MSG_BOOTLOADER_HANDSHAKE_REQUEST.  The
  * payload string contains the bootloader version number, but
  * returns an empty string for earlier versions.
  */

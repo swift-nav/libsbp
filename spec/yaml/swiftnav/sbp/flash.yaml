@@ -71,7 +71,7 @@ definitions:
     desc: |
       This message defines success or failure codes for a variety of
       flash memory requests from the host to the device. Flash read
-      and write messages, such as MSG_FLASH_READ_HOST, or
+      and write messages, such as MSG_FLASH_READ_REQUEST, or
       MSG_FLASH_PROGRAM, may return this message on failure.
     fields:
       - response:
@@ -90,14 +90,14 @@ definitions:
                   - 4: FLASH_INVALID_RANGE
                   - 5: FLASH_INVALID_SECTOR
 
- - MSG_FLASH_READ_HOST:
+ - MSG_FLASH_READ_REQUEST:
     id: 0x00E7
     public: True
     short_desc: Read STM or M25 flash address request (host => device).
     desc: |
       The flash read message reads a set of addresses of either the
       STM or M25 onboard flash. The device replies with a
-      MSG_FLASH_READ_DEVICE message containing either the read data on
+      MSG_FLASH_READ_RESPONSE message containing either the read data on
       success or a MSG_FLASH_DONE message containing the return code
       FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
       FLASH_INVALID_ADDR (3) if the address is outside of the allowed
@@ -127,14 +127,14 @@ definitions:
             Length of set of addresses to read, counting up from
             starting address
 
- - MSG_FLASH_READ_DEVICE:
+ - MSG_FLASH_READ_RESPONSE:
     id: 0x00E1
     public: True
     short_desc: Read STM or M25 flash address response (host <= device).
     desc: |
       The flash read message reads a set of addresses of either the
       STM or M25 onboard flash. The device replies with a
-      MSG_FLASH_READ_DEVICE message containing either the read data on
+      MSG_FLASH_READ_RESPONSE message containing either the read data on
       success or a MSG_FLASH_DONE message containing the return code
       FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
       FLASH_INVALID_ADDR (3) if the address is outside of the allowed
@@ -216,26 +216,26 @@ definitions:
           type: u32
           desc: Flash sector number to unlock
 
- - MSG_STM_UNIQUE_ID_HOST:
+ - MSG_STM_UNIQUE_ID_REQUEST:
     id: 0x00E8
     public: True
     short_desc: |
       Read device's hardcoded unique ID request (host => device)
     desc: |
       This message reads the device's hardcoded unique ID. The host
-      requests the ID by sending a MSG_STM_UNIQUE_ID_HOST. The device
-      responds with a MSG_STM_UNIQUE_ID_DEVICE with the 12-byte unique
+      requests the ID by sending a MSG_STM_UNIQUE_ID_REQUEST. The device
+      responds with a MSG_STM_UNIQUE_ID_RESPONSE with the 12-byte unique
       ID in the payload..
 
- - MSG_STM_UNIQUE_ID_DEVICE:
+ - MSG_STM_UNIQUE_ID_RESPONSE:
     id: 0x00E5
     public: True
     short_desc: |
       Read device's hardcoded unique ID response (host <= device)
     desc: |
       This message reads the device's hardcoded unique ID. The host
-      requests the ID by sending a MSG_STM_UNIQUE_ID_HOST. The device
-      responds with a MSG_STM_UNIQUE_ID_DEVICE with the 12-byte unique
+      requests the ID by sending a MSG_STM_UNIQUE_ID_REQUEST. The device
+      responds with a MSG_STM_UNIQUE_ID_RESPONSE with the 12-byte unique
       ID in the payload..
     fields:
       - stm_id:
