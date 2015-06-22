@@ -18,7 +18,6 @@ definitions:
 
  - MSG_ACQ_RESULT:
     id: 0x0015
-    public: True
     short_desc: Satellite acquisition result
     desc: |
       This message describes the results from an attempted GPS signal

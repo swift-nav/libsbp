@@ -20,7 +20,6 @@ definitions:
 
  - MSG_PRINT:
     id: 0x0010
-    public: True
     short_desc: Plaintext logging messages
     desc: |
       This message contains a human-readable payload string from the
@@ -31,16 +30,8 @@ definitions:
           type: string
           desc: Human-readable string
 
- - MSG_DEBUG_VAR:
-    id: 0x0011
-    short_desc: Legacy message for tracing variable values
-    desc: |
-      This is an unused legacy message for tracing variable values
-      within the device firmware and streaming those back to the host.
-
  - MSG_TWEET:
     id: 0x0012
-    public: False
     short_desc: Tweet
     desc: All the news fit to tweet.
     fields:

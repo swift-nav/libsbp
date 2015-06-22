@@ -17,39 +17,55 @@ description: |
   the host request and the device response. See the accompanying
   document for descriptions of settings configurations and examples:
   https://github.com/swift-nav/piksi\_firmware/blob/master/docs/settings.pdf
-stable: False
+stable: True
 public: True
 include:
   - types.yaml
 definitions:
 
- - MSG_SETTINGS:
-    id: 0x00A0
-    public: True
-    short_desc: |
-      R/W device configuration settings (host <=> device)
-    desc: |
-      The setting message reads and writes the device's configuration.
-    fields:
-      - setting:
-          type: string
-          desc: |
-            A NULL-terminated and delimited string with contents
-            [SECTION_SETTING, SETTING, VALUE] on writes or a series of
-            such strings on reads.
-
  - MSG_SETTINGS_SAVE:
     id: 0x00A1
-    public: True
     short_desc: Save settings to flash (host => device)
     desc: |
       The save settings message persists the device's current settings
       configuration to its onboard flash memory file system.
 
- - MSG_SETTINGS_READ_BY_INDEX:
+ - MSG_SETTINGS_WRITE:
+    id: 0x00A0
+    short_desc: Write device configuration settings (host => device)
+    desc: The setting message writes the device's configuration.
+    fields:
+      - setting:
+          type: string
+          desc: |
+            A NULL-terminated and delimited string with contents
+            [SECTION_SETTING, SETTING, VALUE].
+
+ - MSG_SETTINGS_READ_REQUEST:
+    id: 0x00A4
+    short_desc: Read device configuration settings (host => device)
+    desc: The setting message reads the device's configuration.
+    fields:
+      - setting:
+          type: string
+          desc: |
+            A NULL-terminated and delimited string with contents
+            [SECTION_SETTING, SETTING].
+
+ - MSG_SETTINGS_READ_RESPONSE:
+    id: 0x00A5
+    short_desc: Read device configuration settings (host <= device)
+    desc: The setting message reads the device's configuration.
+    fields:
+      - setting:
+          type: string
+          desc: |
+            A NULL-terminated and delimited string with contents
+            [SECTION_SETTING, SETTING, VALUE].
+
+ - MSG_SETTINGS_READ_BY_INDEX_REQUEST:
     id: 0x00A2
-    short_desc: Read setting by direct index (host <=> device)
-    public: False
+    short_desc: Read setting by direct index (host => device)
     desc: |
       The settings message for iterating through the settings
       values. It will read the setting at an index, returning a
@@ -61,3 +77,29 @@ definitions:
           desc: |
             An index into the device settings, with values ranging from
             0 to length(settings)
+
+ - MSG_SETTINGS_READ_BY_INDEX_RESPONSE:
+    id: 0x00A7
+    short_desc: Read setting by direct index (host <= device)
+    desc: |
+      The settings message for iterating through the settings
+      values. It will read the setting at an index, returning a
+      NULL-terminated and delimited string with contents
+      [SECTION_SETTING, SETTING, VALUE].
+    fields:
+      - index:
+          type: u16
+          desc: |
+            An index into the device settings, with values ranging from
+            0 to length(settings)
+      - setting:
+          type: string
+          desc: |
+            A NULL-terminated and delimited string with contents
+            [SECTION_SETTING, SETTING, VALUE].
+
+ - MSG_SETTINGS_READ_BY_INDEX_DONE:
+    id: 0x00A6
+    short_desc: Finished reading settings (host <= device)
+    desc: |
+      The settings message for indicating end of the settings values.

@@ -20,7 +20,6 @@ definitions:
 
  - MSG_EXT_EVENT:
     id: 0x0101
-    public: True
     short_desc: Reports timestamped external pin event
     desc: |
         Reports detection of an external event, the GPS time it occurred,

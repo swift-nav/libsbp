@@ -33,25 +33,17 @@
  * device containing errors, warnings and informational messages at
  * ERROR, WARNING, DEBUG, INFO logging levels.
  */
-#define SBP_MSG_PRINT     0x0010
+#define SBP_MSG_PRINT 0x0010
 typedef struct __attribute__((packed)) {
   char text[0]; /**< Human-readable string */
 } msg_print_t;
-
-
-/** Legacy message for tracing variable values
- *
- * This is an unused legacy message for tracing variable values
- * within the device firmware and streaming those back to the host.
- */
-#define SBP_MSG_DEBUG_VAR 0x0011
 
 
 /** Tweet
  *
 * All the news fit to tweet.
  */
-#define SBP_MSG_TWEET     0x0012
+#define SBP_MSG_TWEET 0x0012
 typedef struct __attribute__((packed)) {
   char tweet[140]; /**< Human-readable string */
 } msg_tweet_t;

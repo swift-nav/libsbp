@@ -25,6 +25,9 @@ definitions:
       request from the host is MSG_BOOTLOADER_HANDSHAKE_REQUEST.  The
       payload string contains the bootloader version number, but
       returns an empty string for earlier versions.
+    replaced_by:
+      - MSG_BOOTLOADER_HANDSHAKE_REQUEST
+      - MSG_BOOTLOADER_HANDSHAKE_RESPONSE
     fields:
       - handshake:
           type: array
@@ -140,3 +143,9 @@ definitions:
           type: u8
           desc: PRN being tracked
 
+ - MSG_DEBUG_VAR_DEPRECATED:
+    id: 0x0011
+    short_desc: Legacy message for tracing variable values
+    desc: |
+      This is an unused legacy message for tracing variable values
+      within the device firmware and streaming those back to the host.
