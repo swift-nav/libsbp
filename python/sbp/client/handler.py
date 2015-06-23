@@ -239,6 +239,12 @@ class Handler(object):
     """
     self.receive_thread.stop()
 
+  def is_alive(self):
+    """
+    Return whether the processes thread is alive.
+    """
+    self.receive_thread.is_alive()
+
   def send(self, msg_type, data, sender=0x42):
     """
     Build and write SBP message.
@@ -284,5 +290,5 @@ class Handler(object):
       payload = sbp_msg.payload
     self.add_callback(cb, msg_type)
     event.wait(timeout)
-    self.remove(cb, msg_type)
+    self.remove_callback(cb, msg_type)
     return payload
