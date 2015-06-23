@@ -243,7 +243,7 @@ class Handler(object):
     """
     Return whether the processes thread is alive.
     """
-    self.receive_thread.is_alive()
+    return self.receive_thread.is_alive()
 
   def send(self, msg_type, data, sender=0x42):
     """
