@@ -64,6 +64,7 @@ typedef struct __attribute__((packed)) {
   u32 offset;        /**< File offset [bytes] */
   u8 chunk_size;    /**< Chunk size read [bytes] */
   char filename[20];  /**< Name of the file read from (NULL padded) */
+  u8 contents[0];   /**< Contents of read file */
 } msg_fileio_read_response_t;
 
 
@@ -98,9 +99,10 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_FILEIO_READ_DIR_RESPONSE 0x00AA
 typedef struct __attribute__((packed)) {
-  u32 offset;     /**< The offset to skip the first n elements of the file list
+  u32 offset;      /**< The offset to skip the first n elements of the file list
  */
   char dirname[20]; /**< Name of the directory to list (NULL padded) */
+  u8 contents[0]; /**< Contents of read directory */
 } msg_fileio_read_dir_response_t;
 
 

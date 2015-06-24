@@ -71,6 +71,10 @@ definitions:
           type: string
           size: 20
           desc: Name of the file read from (NULL padded)
+      - contents:
+          type: array
+          fill: u8
+          desc: Contents of read file
 
  - MSG_FILEIO_READ_DIR_REQUEST:
     id: 0x00A9
@@ -114,6 +118,10 @@ definitions:
           type: string
           size: 20
           desc: Name of the directory to list (NULL padded)
+      - contents:
+          type: array
+          fill: u8
+          desc: Contents of read directory
 
  - MSG_FILEIO_REMOVE:
     id: 0x00AC

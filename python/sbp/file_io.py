@@ -142,6 +142,8 @@ were succesfully read.
     Chunk size read
   filename : string
     Name of the file read from (NULL padded)
+  contents : array
+    Contents of read file
   sender : int
     Optional sender ID, defaults to 0
 
@@ -149,7 +151,8 @@ were succesfully read.
   _parser = Struct("MsgFileioReadResponse",
                    ULInt32('offset'),
                    ULInt8('chunk_size'),
-                   String('filename', 20),)
+                   String('filename', 20),
+                   OptionalGreedyRange(ULInt8('contents')),)
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -162,6 +165,7 @@ were succesfully read.
       self.offset = kwargs.pop('offset')
       self.chunk_size = kwargs.pop('chunk_size')
       self.filename = kwargs.pop('filename')
+      self.contents = kwargs.pop('contents')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -313,13 +317,16 @@ identified by an entry containing just the character 0xFF.
 
   dirname : string
     Name of the directory to list (NULL padded)
+  contents : array
+    Contents of read directory
   sender : int
     Optional sender ID, defaults to 0
 
   """
   _parser = Struct("MsgFileioReadDirResponse",
                    ULInt32('offset'),
-                   String('dirname', 20),)
+                   String('dirname', 20),
+                   OptionalGreedyRange(ULInt8('contents')),)
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -331,6 +338,7 @@ identified by an entry containing just the character 0xFF.
       self.sender = kwargs.pop('sender', 0)
       self.offset = kwargs.pop('offset')
       self.dirname = kwargs.pop('dirname')
+      self.contents = kwargs.pop('contents')
 
   def __repr__(self):
     return fmt_repr(self)
