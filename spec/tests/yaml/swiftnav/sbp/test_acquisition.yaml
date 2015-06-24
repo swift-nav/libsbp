@@ -11,7 +11,7 @@ tests:
       prn: 8
       snr: 14.5
     module: sbp.acquisition
-    name: MsgAcqResult
+    name: MsgAcqResultDepA
   msg_type: '0x15'
   raw_json: '{"sender": 1219, "msg_type": 21, "prn": 8, "cf": 8241.943359375, "crc":
     17410, "length": 13, "snr": 14.5, "cp": 727.0, "preamble": 85, "payload": "AABoQQDANUTGxwBGCA=="}'
@@ -31,7 +31,7 @@ tests:
       prn: 9
       snr: 15.300000190734863
     module: sbp.acquisition
-    name: MsgAcqResult
+    name: MsgAcqResultDepA
   msg_type: '0x15'
   raw_json: '{"sender": 1219, "msg_type": 21, "prn": 9, "cf": 749.2676391601562, "crc":
     7131, "length": 13, "snr": 15.300000190734863, "cp": 359.5, "preamble": 85, "payload":
@@ -52,7 +52,7 @@ tests:
       prn: 11
       snr: 18.100000381469727
     module: sbp.acquisition
-    name: MsgAcqResult
+    name: MsgAcqResultDepA
   msg_type: '0x15'
   raw_json: '{"sender": 1219, "msg_type": 21, "prn": 11, "cf": -6493.65283203125,
     "crc": 9110, "length": 13, "snr": 18.100000381469727, "cp": 40.5, "preamble":
@@ -73,7 +73,7 @@ tests:
       prn: 12
       snr: 15.300000190734863
     module: sbp.acquisition
-    name: MsgAcqResult
+    name: MsgAcqResultDepA
   msg_type: '0x15'
   raw_json: '{"sender": 1219, "msg_type": 21, "prn": 12, "cf": -999.0234985351562,
     "crc": 30354, "length": 13, "snr": 15.300000190734863, "cp": 548.5, "preamble":
@@ -94,7 +94,7 @@ tests:
       prn: 14
       snr: 15.300000190734863
     module: sbp.acquisition
-    name: MsgAcqResult
+    name: MsgAcqResultDepA
   msg_type: '0x15'
   raw_json: '{"sender": 1219, "msg_type": 21, "prn": 14, "cf": 4745.361328125, "crc":
     19223, "length": 13, "snr": 15.300000190734863, "cp": 780.5, "preamble": 85, "payload":
@@ -115,7 +115,7 @@ tests:
       prn: 0
       snr: 163.22222900390625
     module: sbp.acquisition
-    name: MsgAcqResult
+    name: MsgAcqResultDepA
   msg_type: '0x15'
   raw_json: '{"sender": 1219, "msg_type": 21, "prn": 0, "cf": -499.5117492675781,
     "crc": 53196, "length": 13, "snr": 163.22222900390625, "cp": 584.5, "preamble":

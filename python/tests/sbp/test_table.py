@@ -13,7 +13,6 @@ from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
 from sbp import acquisition as acq
 from sbp import bootload as boot
-from sbp import deprecated as deprecated
 from sbp import file_io as file_io
 from sbp import flash as flash
 from sbp import logging as log
@@ -34,7 +33,7 @@ def test_table_count():
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 61
+  number_of_messages = 65
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_table_unqiue_count():
@@ -43,7 +42,6 @@ def test_table_unqiue_count():
   """
   number_of_messages = (len(acq.msg_classes)
                         + len(boot.msg_classes)
-                        + len(deprecated.msg_classes)
                         + len(file_io.msg_classes)
                         + len(flash.msg_classes)
                         + len(log.msg_classes)
@@ -61,14 +59,14 @@ def test_available_messages():
   Simple example with a limited dispatch table.
 
   """
-  table = {acq.SBP_MSG_ACQ_RESULT: acq.MsgAcqResult,
+  table = {acq.SBP_MSG_ACQ_RESULT_DEP_A: acq.MsgAcqResultDepA,
            log.SBP_MSG_PRINT: log.MsgPrint}
   msg = SBP(msg_type=0x15, sender=1219, length=13,
             payload='\x92$yA\x00\x00\xbcC\x81\xc1\xf9\xc5\x1d')
   # TODO (Buro): Replace this message constructor once generated SBP
   # can support kwargs for constructor, instead of requiring SBP
   # object.
-  assert dispatch(msg, table) == acq.MsgAcqResult(msg)
+  assert dispatch(msg, table) == acq.MsgAcqResultDepA(msg)
   msg = SBP(msg_type=0xB0, sender=1219, length=4, payload='v1.2', crc=0xCE01)
   with warnings.catch_warnings(record=True) as w:
     dispatch(msg, table)

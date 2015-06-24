@@ -696,18 +696,18 @@ from being used in various Piksi subsystems.
     SBP parent object to inherit from.
   mask : int
     Mask of systems that should ignore this satellite.
-  prn : int
-    PRN for which the mask is applied
+  sid : int
+    Signal identifier for which the mask is applied
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgMaskSatellite",
                    ULInt8('mask'),
-                   ULInt8('prn'),)
+                   ULInt32('sid'),)
   __slots__ = [
                'mask',
-               'prn',
+               'sid',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -721,7 +721,7 @@ from being used in various Piksi subsystems.
       self.msg_type = SBP_MSG_MASK_SATELLITE
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.mask = kwargs.pop('mask')
-      self.prn = kwargs.pop('prn')
+      self.sid = kwargs.pop('sid')
 
   def __repr__(self):
     return fmt_repr(self)

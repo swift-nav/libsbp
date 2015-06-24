@@ -23,9 +23,9 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, gr
 # Please do not hand edit!
 
 
-SBP_MSG_ACQ_RESULT = 0x0015
+SBP_MSG_ACQ_RESULT = 0x0014
 class MsgAcqResult(SBP):
-  """SBP class for message MSG_ACQ_RESULT (0x0015).
+  """SBP class for message MSG_ACQ_RESULT (0x0014).
 
   You can have MSG_ACQ_RESULT inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -51,9 +51,11 @@ units of dB Hz in the revision of this message.
     Code phase of best point
   cf : float
     Carrier frequency of best point
-  prn : int
-    PRN-1 identifier of the satellite signal for which
-acquisition was attempted
+  sid : int
+    Signal identifier of the satellite signal for which acquisition
+was attempted - values 0x00 through 0x1F represent GPS PRNs 1
+through 32 respectively (PRN-1 notation); other values reserved
+for future use.
 
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -63,12 +65,12 @@ acquisition was attempted
                    LFloat32('snr'),
                    LFloat32('cp'),
                    LFloat32('cf'),
-                   ULInt8('prn'),)
+                   ULInt32('sid'),)
   __slots__ = [
                'snr',
                'cp',
                'cf',
-               'prn',
+               'sid',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -84,7 +86,7 @@ acquisition was attempted
       self.snr = kwargs.pop('snr')
       self.cp = kwargs.pop('cp')
       self.cf = kwargs.pop('cf')
-      self.prn = kwargs.pop('prn')
+      self.sid = kwargs.pop('sid')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -122,7 +124,102 @@ acquisition was attempted
     d.update(j)
     return d
     
+SBP_MSG_ACQ_RESULT_DEP_A = 0x0015
+class MsgAcqResultDepA(SBP):
+  """SBP class for message MSG_ACQ_RESULT_DEP_A (0x0015).
+
+  You can have MSG_ACQ_RESULT_DEP_A inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Deprecated.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  snr : float
+    SNR of best point. Currently dimensonless, but will have
+units of dB Hz in the revision of this message.
+
+  cp : float
+    Code phase of best point
+  cf : float
+    Carrier frequency of best point
+  prn : int
+    PRN-1 identifier of the satellite signal for which
+acquisition was attempted
+
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgAcqResultDepA",
+                   LFloat32('snr'),
+                   LFloat32('cp'),
+                   LFloat32('cf'),
+                   ULInt8('prn'),)
+  __slots__ = [
+               'snr',
+               'cp',
+               'cf',
+               'prn',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgAcqResultDepA,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgAcqResultDepA, self).__init__()
+      self.msg_type = SBP_MSG_ACQ_RESULT_DEP_A
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.snr = kwargs.pop('snr')
+      self.cp = kwargs.pop('cp')
+      self.cf = kwargs.pop('cf')
+      self.prn = kwargs.pop('prn')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgAcqResultDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgAcqResultDepA._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgAcqResultDepA(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgAcqResultDepA, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
-  0x0015: MsgAcqResult,
+  0x0014: MsgAcqResult,
+  0x0015: MsgAcqResultDepA,
 }
