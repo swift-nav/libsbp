@@ -139,7 +139,7 @@ class MsgFlashDone(SBP):
   
   This message defines success or failure codes for a variety of
 flash memory requests from the host to the device. Flash read
-and write messages, such as MSG_FLASH_READ_REQUEST, or
+and write messages, such as MSG_FLASH_READ_REQ, or
 MSG_FLASH_PROGRAM, may return this message on failure.
 
 
@@ -207,18 +207,18 @@ MSG_FLASH_PROGRAM, may return this message on failure.
     d.update(j)
     return d
     
-SBP_MSG_FLASH_READ_REQUEST = 0x00E7
-class MsgFlashReadRequest(SBP):
-  """SBP class for message MSG_FLASH_READ_REQUEST (0x00E7).
+SBP_MSG_FLASH_READ_REQ = 0x00E7
+class MsgFlashReadReq(SBP):
+  """SBP class for message MSG_FLASH_READ_REQ (0x00E7).
 
-  You can have MSG_FLASH_READ_REQUEST inherent its fields directly
+  You can have MSG_FLASH_READ_REQ inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
   The flash read message reads a set of addresses of either the
 STM or M25 onboard flash. The device replies with a
-MSG_FLASH_READ_RESPONSE message containing either the read data on
+MSG_FLASH_READ_RESP message containing either the read data on
 success or a MSG_FLASH_DONE message containing the return code
 FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
 FLASH_INVALID_ADDR (3) if the address is outside of the allowed
@@ -241,7 +241,7 @@ starting address
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFlashReadRequest",
+  _parser = Struct("MsgFlashReadReq",
                    ULInt8('target'),
                    Struct('addr_start', Array(3, ULInt8('addr_start'))),
                    ULInt8('addr_len'),)
@@ -253,13 +253,13 @@ starting address
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgFlashReadRequest,
+      super( MsgFlashReadReq,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgFlashReadRequest, self).__init__()
-      self.msg_type = SBP_MSG_FLASH_READ_REQUEST
+      super( MsgFlashReadReq, self).__init__()
+      self.msg_type = SBP_MSG_FLASH_READ_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.target = kwargs.pop('target')
       self.addr_start = kwargs.pop('addr_start')
@@ -273,7 +273,7 @@ starting address
     the message.
 
     """
-    p = MsgFlashReadRequest._parser.parse(d)
+    p = MsgFlashReadReq._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -282,7 +282,7 @@ starting address
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgFlashReadRequest._parser.build(c)
+    self.payload = MsgFlashReadReq._parser.build(c)
     return self.pack()
 
   @staticmethod
@@ -292,27 +292,27 @@ starting address
     """
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
-    return MsgFlashReadRequest(sbp)
+    return MsgFlashReadReq(sbp)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgFlashReadRequest, self).to_json_dict()
+    d = super( MsgFlashReadReq, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
-SBP_MSG_FLASH_READ_RESPONSE = 0x00E1
-class MsgFlashReadResponse(SBP):
-  """SBP class for message MSG_FLASH_READ_RESPONSE (0x00E1).
+SBP_MSG_FLASH_READ_RESP = 0x00E1
+class MsgFlashReadResp(SBP):
+  """SBP class for message MSG_FLASH_READ_RESP (0x00E1).
 
-  You can have MSG_FLASH_READ_RESPONSE inherent its fields directly
+  You can have MSG_FLASH_READ_RESP inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
   The flash read message reads a set of addresses of either the
 STM or M25 onboard flash. The device replies with a
-MSG_FLASH_READ_RESPONSE message containing either the read data on
+MSG_FLASH_READ_RESP message containing either the read data on
 success or a MSG_FLASH_DONE message containing the return code
 FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
 FLASH_INVALID_ADDR (3) if the address is outside of the allowed
@@ -335,7 +335,7 @@ starting address
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFlashReadResponse",
+  _parser = Struct("MsgFlashReadResp",
                    ULInt8('target'),
                    Struct('addr_start', Array(3, ULInt8('addr_start'))),
                    ULInt8('addr_len'),)
@@ -347,13 +347,13 @@ starting address
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgFlashReadResponse,
+      super( MsgFlashReadResp,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgFlashReadResponse, self).__init__()
-      self.msg_type = SBP_MSG_FLASH_READ_RESPONSE
+      super( MsgFlashReadResp, self).__init__()
+      self.msg_type = SBP_MSG_FLASH_READ_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.target = kwargs.pop('target')
       self.addr_start = kwargs.pop('addr_start')
@@ -367,7 +367,7 @@ starting address
     the message.
 
     """
-    p = MsgFlashReadResponse._parser.parse(d)
+    p = MsgFlashReadResp._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -376,7 +376,7 @@ starting address
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgFlashReadResponse._parser.build(c)
+    self.payload = MsgFlashReadResp._parser.build(c)
     return self.pack()
 
   @staticmethod
@@ -386,11 +386,11 @@ starting address
     """
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
-    return MsgFlashReadResponse(sbp)
+    return MsgFlashReadResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgFlashReadResponse, self).to_json_dict()
+    d = super( MsgFlashReadResp, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -636,18 +636,18 @@ memory. The device replies with a MSG_FLASH_DONE message.
     d.update(j)
     return d
     
-SBP_MSG_STM_UNIQUE_ID_REQUEST = 0x00E8
-class MsgStmUniqueIdRequest(SBP):
-  """SBP class for message MSG_STM_UNIQUE_ID_REQUEST (0x00E8).
+SBP_MSG_STM_UNIQUE_ID_REQ = 0x00E8
+class MsgStmUniqueIdReq(SBP):
+  """SBP class for message MSG_STM_UNIQUE_ID_REQ (0x00E8).
 
-  You can have MSG_STM_UNIQUE_ID_REQUEST inherent its fields directly
+  You can have MSG_STM_UNIQUE_ID_REQ inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
   This message reads the device's hardcoded unique ID. The host
-requests the ID by sending a MSG_STM_UNIQUE_ID_REQUEST. The device
-responds with a MSG_STM_UNIQUE_ID_RESPONSE with the 12-byte unique
+requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
+responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
 ID in the payload.
 
 
@@ -655,31 +655,31 @@ ID in the payload.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgStmUniqueIdRequest,
+      super( MsgStmUniqueIdReq,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
-      super( MsgStmUniqueIdRequest, self).__init__()
-      self.msg_type = SBP_MSG_STM_UNIQUE_ID_REQUEST
+      super( MsgStmUniqueIdReq, self).__init__()
+      self.msg_type = SBP_MSG_STM_UNIQUE_ID_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
  
     
-SBP_MSG_STM_UNIQUE_ID_RESPONSE = 0x00E5
-class MsgStmUniqueIdResponse(SBP):
-  """SBP class for message MSG_STM_UNIQUE_ID_RESPONSE (0x00E5).
+SBP_MSG_STM_UNIQUE_ID_RESP = 0x00E5
+class MsgStmUniqueIdResp(SBP):
+  """SBP class for message MSG_STM_UNIQUE_ID_RESP (0x00E5).
 
-  You can have MSG_STM_UNIQUE_ID_RESPONSE inherent its fields directly
+  You can have MSG_STM_UNIQUE_ID_RESP inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
   This message reads the device's hardcoded unique ID. The host
-requests the ID by sending a MSG_STM_UNIQUE_ID_REQUEST. The device
-responds with a MSG_STM_UNIQUE_ID_RESPONSE with the 12-byte unique
+requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
+responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
 ID in the payload..
 
 
@@ -693,7 +693,7 @@ ID in the payload..
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgStmUniqueIdResponse",
+  _parser = Struct("MsgStmUniqueIdResp",
                    Struct('stm_id', Array(12, ULInt8('stm_id'))),)
   __slots__ = [
                'stm_id',
@@ -701,13 +701,13 @@ ID in the payload..
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgStmUniqueIdResponse,
+      super( MsgStmUniqueIdResp,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgStmUniqueIdResponse, self).__init__()
-      self.msg_type = SBP_MSG_STM_UNIQUE_ID_RESPONSE
+      super( MsgStmUniqueIdResp, self).__init__()
+      self.msg_type = SBP_MSG_STM_UNIQUE_ID_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.stm_id = kwargs.pop('stm_id')
 
@@ -719,7 +719,7 @@ ID in the payload..
     the message.
 
     """
-    p = MsgStmUniqueIdResponse._parser.parse(d)
+    p = MsgStmUniqueIdResp._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -728,7 +728,7 @@ ID in the payload..
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgStmUniqueIdResponse._parser.build(c)
+    self.payload = MsgStmUniqueIdResp._parser.build(c)
     return self.pack()
 
   @staticmethod
@@ -738,11 +738,11 @@ ID in the payload..
     """
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
-    return MsgStmUniqueIdResponse(sbp)
+    return MsgStmUniqueIdResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgStmUniqueIdResponse, self).to_json_dict()
+    d = super( MsgStmUniqueIdResp, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -828,12 +828,12 @@ register. The device replies with a MSG_FLASH_DONE message.
 msg_classes = {
   0x00E6: MsgFlashProgram,
   0x00E0: MsgFlashDone,
-  0x00E7: MsgFlashReadRequest,
-  0x00E1: MsgFlashReadResponse,
+  0x00E7: MsgFlashReadReq,
+  0x00E1: MsgFlashReadResp,
   0x00E2: MsgFlashErase,
   0x00E3: MsgStmFlashLockSector,
   0x00E4: MsgStmFlashUnlockSector,
-  0x00E8: MsgStmUniqueIdRequest,
-  0x00E5: MsgStmUniqueIdResponse,
+  0x00E8: MsgStmUniqueIdReq,
+  0x00E5: MsgStmUniqueIdResp,
   0x00F3: MsgM25FlashWriteStatus,
 }

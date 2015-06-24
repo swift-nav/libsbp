@@ -41,7 +41,7 @@ tests:
         prn: 6
         state: 1
     module: sbp.tracking
-    name: MsgTrackingState
+    name: MsgTrackingStateDepA
   msg_type: '0x16'
   raw_json: '{"sender": 1219, "msg_type": 22, "states": [{"state": 1, "prn": 0, "cn0":
     11.230907440185547}, {"state": 1, "prn": 2, "cn0": 10.438665390014648}, {"state":
@@ -97,7 +97,7 @@ tests:
         prn: 6
         state: 1
     module: sbp.tracking
-    name: MsgTrackingState
+    name: MsgTrackingStateDepA
   msg_type: '0x16'
   raw_json: '{"sender": 1219, "msg_type": 22, "states": [{"state": 1, "prn": 0, "cn0":
     11.014122009277344}, {"state": 1, "prn": 2, "cn0": 10.885148048400879}, {"state":
@@ -153,7 +153,7 @@ tests:
         prn: 6
         state: 1
     module: sbp.tracking
-    name: MsgTrackingState
+    name: MsgTrackingStateDepA
   msg_type: '0x16'
   raw_json: '{"sender": 1219, "msg_type": 22, "states": [{"state": 1, "prn": 0, "cn0":
     11.768689155578613}, {"state": 1, "prn": 2, "cn0": 10.909001350402832}, {"state":
@@ -209,7 +209,7 @@ tests:
         prn: 0
         state: 0
     module: sbp.tracking
-    name: MsgTrackingState
+    name: MsgTrackingStateDepA
   msg_type: '0x16'
   raw_json: '{"sender": 1219, "msg_type": 22, "states": [{"state": 1, "prn": 0, "cn0":
     62.13985824584961}, {"state": 0, "prn": 0, "cn0": -1.0}, {"state": 0, "prn": 0,
@@ -264,7 +264,7 @@ tests:
         prn: 0
         state: 0
     module: sbp.tracking
-    name: MsgTrackingState
+    name: MsgTrackingStateDepA
   msg_type: '0x16'
   raw_json: '{"sender": 1219, "msg_type": 22, "states": [{"state": 1, "prn": 0, "cn0":
     36.764503479003906}, {"state": 1, "prn": 2, "cn0": 9.313432693481445}, {"state":
@@ -319,7 +319,7 @@ tests:
         prn: 0
         state: 0
     module: sbp.tracking
-    name: MsgTrackingState
+    name: MsgTrackingStateDepA
   msg_type: '0x16'
   raw_json: '{"sender": 1219, "msg_type": 22, "states": [{"state": 1, "prn": 0, "cn0":
     27.394229888916016}, {"state": 1, "prn": 2, "cn0": 2.875}, {"state": 1, "prn":

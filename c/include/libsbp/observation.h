@@ -76,7 +76,10 @@ typedef struct __attribute__((packed)) {
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
  */
-  u8 prn;     /**< PRN-1 identifier of the satellite signal */
+  u32 sid;     /**< Signal identifier of the satellite signal - values 0x00
+through 0x1F represent GPS PRNs 1 through 32 respectively
+(PRN-1 notation); other values reserved for future use.
+ */
 } packed_obs_content_t;
 
 
@@ -88,7 +91,7 @@ carrier phase ambiguity may have changed.
  * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
  * whole cycles and 8-bits of fractional cycles).
  */
-#define SBP_MSG_OBS       0x0045
+#define SBP_MSG_OBS             0x0043
 typedef struct __attribute__((packed)) {
   observation_header_t header;    /**< Header of a GPS observation message */
   packed_obs_content_t obs[0];    /**< Pseudorange and carrier phase observation for a
@@ -105,7 +108,7 @@ satellite being tracked.
  * location of the base station. Any error here will result in an
  * error in the pseudo-absolute position output.
  */
-#define SBP_MSG_BASE_POS  0x0044
+#define SBP_MSG_BASE_POS        0x0044
 typedef struct __attribute__((packed)) {
   double lat;       /**< Latitude [deg] */
   double lon;       /**< Longitude [deg] */
@@ -113,15 +116,91 @@ typedef struct __attribute__((packed)) {
 } msg_base_pos_t;
 
 
-/** WGS84 satellite ephemeris parameters
+/** Satellite broadcast ephemeris
  *
  * The ephemeris message returns a set of satellite orbit
  * parameters that is used to calculate GPS satellite position,
- * velocity, and clock offset (WGS84). Please see the Navstar GPS
+ * velocity, and clock offset. Please see the Navstar GPS
  * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
  * 20-III) for more details.
  */
-#define SBP_MSG_EPHEMERIS 0x0046
+#define SBP_MSG_EPHEMERIS       0x0047
+typedef struct __attribute__((packed)) {
+  double tgd;         /**< Group delay differential between L1 and L2 [s] */
+  double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
+  double c_rc;        /**< Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+  double c_uc;        /**< Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+  double c_us;        /**< Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+  double c_ic;        /**< Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+  double c_is;        /**< Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+  double dn;          /**< Mean motion difference [rad/s] */
+  double m0;          /**< Mean anomaly at reference time [radians] */
+  double ecc;         /**< Eccentricity of satellite orbit */
+  double sqrta;       /**< Square root of the semi-major axis of orbit [m^(1/2)] */
+  double omega0;      /**< Longitude of ascending node of orbit plane at weekly epoch [rad] */
+  double omegadot;    /**< Rate of right ascension [rad/s] */
+  double w;           /**< Argument of perigee [rad] */
+  double inc;         /**< Inclination [rad] */
+  double inc_dot;     /**< Inclination first derivative [rad/s] */
+  double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
+  double af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
+  double af2;         /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+  double toe_tow;     /**< Time of week [s] */
+  u16 toe_wn;      /**< Week number [week] */
+  double toc_tow;     /**< Clock reference time of week [s] */
+  u16 toc_wn;      /**< Clock reference week number [week] */
+  u8 valid;       /**< Is valid? */
+  u8 healthy;     /**< Satellite is healthy? */
+  u32 sid;         /**< Signal identifier being tracked - values 0x00 through 0x1F represent
+GPS PRNs 1 through 32 respectively (PRN-1 notation); other values
+reserved for future use
+ */
+  u8 iode;        /**< Issue of ephemeris data */
+  u16 iodc;        /**< Issue of clock data */
+  u32 reserved;    /**< Reserved field */
+} msg_ephemeris_t;
+
+
+/** Deprecated
+ *
+* Deprecated.
+ */
+#define SBP_MSG_EPHEMERIS_DEP_A 0x001A
+typedef struct __attribute__((packed)) {
+  double tgd;         /**< Group delay differential between L1 and L2 [s] */
+  double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
+  double c_rc;        /**< Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+  double c_uc;        /**< Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+  double c_us;        /**< Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+  double c_ic;        /**< Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+  double c_is;        /**< Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+  double dn;          /**< Mean motion difference [rad/s] */
+  double m0;          /**< Mean anomaly at reference time [radians] */
+  double ecc;         /**< Eccentricity of satellite orbit */
+  double sqrta;       /**< Square root of the semi-major axis of orbit [m^(1/2)] */
+  double omega0;      /**< Longitude of ascending node of orbit plane at weekly epoch [rad] */
+  double omegadot;    /**< Rate of right ascension [rad/s] */
+  double w;           /**< Argument of perigee [rad] */
+  double inc;         /**< Inclination [rad] */
+  double inc_dot;     /**< Inclination first derivative [rad/s] */
+  double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
+  double af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
+  double af2;         /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+  double toe_tow;     /**< Time of week [s] */
+  u16 toe_wn;      /**< Week number [week] */
+  double toc_tow;     /**< Clock reference time of week [s] */
+  u16 toc_wn;      /**< Clock reference week number [week] */
+  u8 valid;       /**< Is valid? */
+  u8 healthy;     /**< Satellite is healthy? */
+  u8 prn;         /**< PRN being tracked */
+} msg_ephemeris_dep_a_t;
+
+
+/** Deprecated
+ *
+* Deprecated.
+ */
+#define SBP_MSG_EPHEMERIS_DEP_B 0x0046
 typedef struct __attribute__((packed)) {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
@@ -150,7 +229,36 @@ typedef struct __attribute__((packed)) {
   u8 healthy;     /**< Satellite is healthy? */
   u8 prn;         /**< PRN being tracked */
   u8 iode;        /**< Issue of ephemeris data */
-} msg_ephemeris_t;
+} msg_ephemeris_dep_b_t;
+
+
+/** Deprecated
+ *
+* Deprecated.
+ */
+typedef struct __attribute__((packed)) {
+  u32 P;       /**< Pseudorange observation [cm] */
+  carrier_phase_t L;       /**< Carrier phase observation */
+  u8 cn0;     /**< Carrier-to-Noise density [dB Hz] */
+  u16 lock;    /**< Lock indicator. This value changes whenever a satellite
+signal has lost and regained lock, indicating that the
+carrier phase ambiguity may have changed.
+ */
+  u8 prn;     /**< PRN-1 identifier of the satellite signal */
+} packed_obs_content_dep_a_t;
+
+
+/** Deprecated
+ *
+* Deprecated.
+ */
+#define SBP_MSG_OBS_DEP_A       0x0045
+typedef struct __attribute__((packed)) {
+  observation_header_t header;    /**< Header of a GPS observation message */
+  packed_obs_content_dep_a_t obs[0];    /**< Pseudorange and carrier phase observation for a
+satellite being tracked.
+ */
+} msg_obs_dep_a_t;
 
 
 /** \} */

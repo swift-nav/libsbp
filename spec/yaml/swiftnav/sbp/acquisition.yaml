@@ -17,7 +17,7 @@ include:
 definitions:
 
  - MSG_ACQ_RESULT:
-    id: 0x0015
+    id: 0x0014
     short_desc: Satellite acquisition result
     desc: |
       This message describes the results from an attempted GPS signal
@@ -25,6 +25,34 @@ definitions:
       frequency range. It contains the parameters of the point in the
       acquisition search space with the best signal-to-noise (SNR)
       ratio.
+    fields:
+        - snr:
+            type: float
+            desc: |
+              SNR of best point. Currently dimensonless, but will have
+              units of dB Hz in the revision of this message.
+        - cp:
+            type: float
+            units: chips
+            desc: Code phase of best point
+        - cf:
+            type: float
+            units: hz
+            desc: Carrier frequency of best point
+        - sid:
+            type: u32
+            desc: |
+              Signal identifier of the satellite signal for which acquisition
+              was attempted - values 0x00 through 0x1F represent GPS PRNs 1
+              through 32 respectively (PRN-1 notation); other values reserved
+              for future use.
+
+ - MSG_ACQ_RESULT_DEP_A:
+    id: 0x0015
+    short_desc: Deprecated
+    desc: Deprecated.
+    replaced_by:
+      - MSG_ACQ_RESULT
     fields:
         - snr:
             type: float

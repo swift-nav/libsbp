@@ -11,7 +11,7 @@ tests:
 
         '
     module: sbp.bootload
-    name: MsgBootloaderHandshakeResponse
+    name: MsgBootloaderHandshakeResp
   msg_type: '0xb4'
   raw_json: '{"sender": 0, "msg_type": 180, "crc": 457, "length": 9, "version": "v1.2\n",
     "flags": 0, "preamble": 85, "payload": "AAAAAHYxLjIK"}'
@@ -23,5 +23,28 @@ tests:
     payload: AAAAAHYxLjIK
     preamble: '0x55'
     sender: '0x0'
+- msg:
+    fields:
+      handshake: [118, 49, 46, 50] # 'v1.2'
+    module: sbp.bootload
+    name: MsgBootloaderHandshakeDepA
+  msg_type: '0xb0'
+  raw_packet: VbAAwwQEdjEuMgHO
+  raw_json: '{
+    "handshake": [118, 49, 46, 50],
+    "crc": 52737,
+    "length": 4,
+    "msg_type": 176,
+    "payload": "djEuMg==",
+    "preamble": 85,
+    "sender": 1219
+  }'
+  sbp:
+    crc: '0xce01'
+    length: 4
+    msg_type: '0xb0'
+    payload: djEuMg==
+    preamble: '0x55'
+    sender: '0x4c3'
 version: '0.42'
 ...

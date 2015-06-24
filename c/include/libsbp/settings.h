@@ -37,14 +37,14 @@
  * The save settings message persists the device's current settings
  * configuration to its onboard flash memory file system.
  */
-#define SBP_MSG_SETTINGS_SAVE                   0x00A1
+#define SBP_MSG_SETTINGS_SAVE               0x00A1
 
 
 /** Write device configuration settings (host => device)
  *
 * The setting message writes the device's configuration.
  */
-#define SBP_MSG_SETTINGS_WRITE                  0x00A0
+#define SBP_MSG_SETTINGS_WRITE              0x00A0
 typedef struct __attribute__((packed)) {
   char setting[0]; /**< A NULL-terminated and delimited string with contents
 [SECTION_SETTING, SETTING, VALUE].
@@ -56,24 +56,24 @@ typedef struct __attribute__((packed)) {
  *
 * The setting message reads the device's configuration.
  */
-#define SBP_MSG_SETTINGS_READ_REQUEST           0x00A4
+#define SBP_MSG_SETTINGS_READ_REQ           0x00A4
 typedef struct __attribute__((packed)) {
   char setting[0]; /**< A NULL-terminated and delimited string with contents
 [SECTION_SETTING, SETTING].
  */
-} msg_settings_read_request_t;
+} msg_settings_read_req_t;
 
 
 /** Read device configuration settings (host <= device)
  *
 * The setting message reads the device's configuration.
  */
-#define SBP_MSG_SETTINGS_READ_RESPONSE          0x00A5
+#define SBP_MSG_SETTINGS_READ_RESP          0x00A5
 typedef struct __attribute__((packed)) {
   char setting[0]; /**< A NULL-terminated and delimited string with contents
 [SECTION_SETTING, SETTING, VALUE].
  */
-} msg_settings_read_response_t;
+} msg_settings_read_resp_t;
 
 
 /** Read setting by direct index (host => device)
@@ -83,12 +83,12 @@ typedef struct __attribute__((packed)) {
  * NULL-terminated and delimited string with contents
  * [SECTION_SETTING, SETTING, VALUE].
  */
-#define SBP_MSG_SETTINGS_READ_BY_INDEX_REQUEST  0x00A2
+#define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ  0x00A2
 typedef struct __attribute__((packed)) {
   u16 index;    /**< An index into the device settings, with values ranging from
 0 to length(settings)
  */
-} msg_settings_read_by_index_request_t;
+} msg_settings_read_by_index_req_t;
 
 
 /** Read setting by direct index (host <= device)
@@ -98,7 +98,7 @@ typedef struct __attribute__((packed)) {
  * NULL-terminated and delimited string with contents
  * [SECTION_SETTING, SETTING, VALUE].
  */
-#define SBP_MSG_SETTINGS_READ_BY_INDEX_RESPONSE 0x00A7
+#define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP 0x00A7
 typedef struct __attribute__((packed)) {
   u16 index;      /**< An index into the device settings, with values ranging from
 0 to length(settings)
@@ -106,14 +106,14 @@ typedef struct __attribute__((packed)) {
   char setting[0]; /**< A NULL-terminated and delimited string with contents
 [SECTION_SETTING, SETTING, VALUE].
  */
-} msg_settings_read_by_index_response_t;
+} msg_settings_read_by_index_resp_t;
 
 
 /** Finished reading settings (host <= device)
  *
  * The settings message for indicating end of the settings values.
  */
-#define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE     0x00A6
+#define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE 0x00A6
 
 
 /** \} */

@@ -33,18 +33,18 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, gr
 # Please do not hand edit!
 
 
-SBP_MSG_FILEIO_READ_REQUEST = 0x00A8
-class MsgFileioReadRequest(SBP):
-  """SBP class for message MSG_FILEIO_READ_REQUEST (0x00A8).
+SBP_MSG_FILEIO_READ_REQ = 0x00A8
+class MsgFileioReadReq(SBP):
+  """SBP class for message MSG_FILEIO_READ_REQ (0x00A8).
 
-  You can have MSG_FILEIO_READ_REQUEST inherent its fields directly
+  You can have MSG_FILEIO_READ_REQ inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
   The file read message reads a certain length (up to 255 bytes)
 from a given offset into a file, and returns the data in a
-MSG_FILEIO_READ_RESPONSE message where the message length field
+MSG_FILEIO_READ_RESP message where the message length field
 indicates how many bytes were succesfully read. If the message is
 invalid, a followup MSG_PRINT message will print "Invalid fileio
 read message".
@@ -64,7 +64,7 @@ read message".
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioReadRequest",
+  _parser = Struct("MsgFileioReadReq",
                    ULInt32('offset'),
                    ULInt8('chunk_size'),
                    String('filename', 20),)
@@ -76,13 +76,13 @@ read message".
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgFileioReadRequest,
+      super( MsgFileioReadReq,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgFileioReadRequest, self).__init__()
-      self.msg_type = SBP_MSG_FILEIO_READ_REQUEST
+      super( MsgFileioReadReq, self).__init__()
+      self.msg_type = SBP_MSG_FILEIO_READ_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.offset = kwargs.pop('offset')
       self.chunk_size = kwargs.pop('chunk_size')
@@ -96,7 +96,7 @@ read message".
     the message.
 
     """
-    p = MsgFileioReadRequest._parser.parse(d)
+    p = MsgFileioReadReq._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -105,7 +105,7 @@ read message".
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgFileioReadRequest._parser.build(c)
+    self.payload = MsgFileioReadReq._parser.build(c)
     return self.pack()
 
   @staticmethod
@@ -115,20 +115,20 @@ read message".
     """
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
-    return MsgFileioReadRequest(sbp)
+    return MsgFileioReadReq(sbp)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgFileioReadRequest, self).to_json_dict()
+    d = super( MsgFileioReadReq, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
-SBP_MSG_FILEIO_READ_RESPONSE = 0x00A3
-class MsgFileioReadResponse(SBP):
-  """SBP class for message MSG_FILEIO_READ_RESPONSE (0x00A3).
+SBP_MSG_FILEIO_READ_RESP = 0x00A3
+class MsgFileioReadResp(SBP):
+  """SBP class for message MSG_FILEIO_READ_RESP (0x00A3).
 
-  You can have MSG_FILEIO_READ_RESPONSE inherent its fields directly
+  You can have MSG_FILEIO_READ_RESP inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -155,7 +155,7 @@ were succesfully read.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioReadResponse",
+  _parser = Struct("MsgFileioReadResp",
                    ULInt32('offset'),
                    ULInt8('chunk_size'),
                    String('filename', 20),
@@ -169,13 +169,13 @@ were succesfully read.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgFileioReadResponse,
+      super( MsgFileioReadResp,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgFileioReadResponse, self).__init__()
-      self.msg_type = SBP_MSG_FILEIO_READ_RESPONSE
+      super( MsgFileioReadResp, self).__init__()
+      self.msg_type = SBP_MSG_FILEIO_READ_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.offset = kwargs.pop('offset')
       self.chunk_size = kwargs.pop('chunk_size')
@@ -190,7 +190,7 @@ were succesfully read.
     the message.
 
     """
-    p = MsgFileioReadResponse._parser.parse(d)
+    p = MsgFileioReadResp._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -199,7 +199,7 @@ were succesfully read.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgFileioReadResponse._parser.build(c)
+    self.payload = MsgFileioReadResp._parser.build(c)
     return self.pack()
 
   @staticmethod
@@ -209,20 +209,20 @@ were succesfully read.
     """
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
-    return MsgFileioReadResponse(sbp)
+    return MsgFileioReadResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgFileioReadResponse, self).to_json_dict()
+    d = super( MsgFileioReadResp, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
-SBP_MSG_FILEIO_READ_DIR_REQUEST = 0x00A9
-class MsgFileioReadDirRequest(SBP):
-  """SBP class for message MSG_FILEIO_READ_DIR_REQUEST (0x00A9).
+SBP_MSG_FILEIO_READ_DIR_REQ = 0x00A9
+class MsgFileioReadDirReq(SBP):
+  """SBP class for message MSG_FILEIO_READ_DIR_REQ (0x00A9).
 
-  You can have MSG_FILEIO_READ_DIR_REQUEST inherent its fields directly
+  You can have MSG_FILEIO_READ_DIR_REQ inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -230,7 +230,7 @@ class MsgFileioReadDirRequest(SBP):
   The read directory message lists the files in a directory on the
 device's onboard flash file system.  The offset parameter can be
 used to skip the first n elements of the file list. Returns a
-MSG_FILEIO_READ_DIR_RESPONSE message containing the directory
+MSG_FILEIO_READ_DIR_RESP message containing the directory
 listings as a NULL delimited list. The listing is chunked over
 multiple SBP packets and the end of the list is identified by an
 entry containing just the character 0xFF. If message is invalid, a
@@ -251,7 +251,7 @@ message".
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioReadDirRequest",
+  _parser = Struct("MsgFileioReadDirReq",
                    ULInt32('offset'),
                    String('dirname', 20),)
   __slots__ = [
@@ -261,13 +261,13 @@ message".
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgFileioReadDirRequest,
+      super( MsgFileioReadDirReq,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgFileioReadDirRequest, self).__init__()
-      self.msg_type = SBP_MSG_FILEIO_READ_DIR_REQUEST
+      super( MsgFileioReadDirReq, self).__init__()
+      self.msg_type = SBP_MSG_FILEIO_READ_DIR_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.offset = kwargs.pop('offset')
       self.dirname = kwargs.pop('dirname')
@@ -280,7 +280,7 @@ message".
     the message.
 
     """
-    p = MsgFileioReadDirRequest._parser.parse(d)
+    p = MsgFileioReadDirReq._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -289,7 +289,7 @@ message".
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgFileioReadDirRequest._parser.build(c)
+    self.payload = MsgFileioReadDirReq._parser.build(c)
     return self.pack()
 
   @staticmethod
@@ -299,20 +299,20 @@ message".
     """
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
-    return MsgFileioReadDirRequest(sbp)
+    return MsgFileioReadDirReq(sbp)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgFileioReadDirRequest, self).to_json_dict()
+    d = super( MsgFileioReadDirReq, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
-SBP_MSG_FILEIO_READ_DIR_RESPONSE = 0x00AA
-class MsgFileioReadDirResponse(SBP):
-  """SBP class for message MSG_FILEIO_READ_DIR_RESPONSE (0x00AA).
+SBP_MSG_FILEIO_READ_DIR_RESP = 0x00AA
+class MsgFileioReadDirResp(SBP):
+  """SBP class for message MSG_FILEIO_READ_DIR_RESP (0x00AA).
 
-  You can have MSG_FILEIO_READ_DIR_RESPONSE inherent its fields directly
+  You can have MSG_FILEIO_READ_DIR_RESP inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -340,7 +340,7 @@ identified by an entry containing just the character 0xFF.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioReadDirResponse",
+  _parser = Struct("MsgFileioReadDirResp",
                    ULInt32('offset'),
                    String('dirname', 20),
                    OptionalGreedyRange(ULInt8('contents')),)
@@ -352,13 +352,13 @@ identified by an entry containing just the character 0xFF.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgFileioReadDirResponse,
+      super( MsgFileioReadDirResp,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgFileioReadDirResponse, self).__init__()
-      self.msg_type = SBP_MSG_FILEIO_READ_DIR_RESPONSE
+      super( MsgFileioReadDirResp, self).__init__()
+      self.msg_type = SBP_MSG_FILEIO_READ_DIR_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.offset = kwargs.pop('offset')
       self.dirname = kwargs.pop('dirname')
@@ -372,7 +372,7 @@ identified by an entry containing just the character 0xFF.
     the message.
 
     """
-    p = MsgFileioReadDirResponse._parser.parse(d)
+    p = MsgFileioReadDirResp._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -381,7 +381,7 @@ identified by an entry containing just the character 0xFF.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgFileioReadDirResponse._parser.build(c)
+    self.payload = MsgFileioReadDirResp._parser.build(c)
     return self.pack()
 
   @staticmethod
@@ -391,11 +391,11 @@ identified by an entry containing just the character 0xFF.
     """
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
-    return MsgFileioReadDirResponse(sbp)
+    return MsgFileioReadDirResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgFileioReadDirResponse, self).to_json_dict()
+    d = super( MsgFileioReadDirResp, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -478,18 +478,18 @@ message is invalid, a followup MSG_PRINT message will print
     d.update(j)
     return d
     
-SBP_MSG_FILEIO_WRITE_REQUEST = 0x00AD
-class MsgFileioWriteRequest(SBP):
-  """SBP class for message MSG_FILEIO_WRITE_REQUEST (0x00AD).
+SBP_MSG_FILEIO_WRITE_REQ = 0x00AD
+class MsgFileioWriteReq(SBP):
+  """SBP class for message MSG_FILEIO_WRITE_REQ (0x00AD).
 
-  You can have MSG_FILEIO_WRITE_REQUEST inherent its fields directly
+  You can have MSG_FILEIO_WRITE_REQ inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
   The file write message writes a certain length (up to 255 bytes)
 of data to a file at a given offset. Returns a copy of the
-original MSG_FILEIO_WRITE_RESPONSE message to check integrity of
+original MSG_FILEIO_WRITE_RESP message to check integrity of
 the write. If message is invalid, a followup MSG_PRINT message
 will print "Invalid fileio write message".
 
@@ -508,7 +508,7 @@ will print "Invalid fileio write message".
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioWriteRequest",
+  _parser = Struct("MsgFileioWriteReq",
                    String('filename', 20),
                    ULInt32('offset'),
                    OptionalGreedyRange(ULInt8('data')),)
@@ -520,13 +520,13 @@ will print "Invalid fileio write message".
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgFileioWriteRequest,
+      super( MsgFileioWriteReq,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgFileioWriteRequest, self).__init__()
-      self.msg_type = SBP_MSG_FILEIO_WRITE_REQUEST
+      super( MsgFileioWriteReq, self).__init__()
+      self.msg_type = SBP_MSG_FILEIO_WRITE_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.filename = kwargs.pop('filename')
       self.offset = kwargs.pop('offset')
@@ -540,7 +540,7 @@ will print "Invalid fileio write message".
     the message.
 
     """
-    p = MsgFileioWriteRequest._parser.parse(d)
+    p = MsgFileioWriteReq._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -549,7 +549,7 @@ will print "Invalid fileio write message".
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgFileioWriteRequest._parser.build(c)
+    self.payload = MsgFileioWriteReq._parser.build(c)
     return self.pack()
 
   @staticmethod
@@ -559,27 +559,27 @@ will print "Invalid fileio write message".
     """
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
-    return MsgFileioWriteRequest(sbp)
+    return MsgFileioWriteReq(sbp)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgFileioWriteRequest, self).to_json_dict()
+    d = super( MsgFileioWriteReq, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
-SBP_MSG_FILEIO_WRITE_RESPONSE = 0x00AB
-class MsgFileioWriteResponse(SBP):
-  """SBP class for message MSG_FILEIO_WRITE_RESPONSE (0x00AB).
+SBP_MSG_FILEIO_WRITE_RESP = 0x00AB
+class MsgFileioWriteResp(SBP):
+  """SBP class for message MSG_FILEIO_WRITE_RESP (0x00AB).
 
-  You can have MSG_FILEIO_WRITE_RESPONSE inherent its fields directly
+  You can have MSG_FILEIO_WRITE_RESP inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
   The file write message writes a certain length (up to 255 bytes)
 of data to a file at a given offset. The message is a copy of the
-original MSG_FILEIO_WRITE_REQUEST message to check integrity of the
+original MSG_FILEIO_WRITE_REQ message to check integrity of the
 write.
 
 
@@ -597,7 +597,7 @@ write.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioWriteResponse",
+  _parser = Struct("MsgFileioWriteResp",
                    String('filename', 20),
                    ULInt32('offset'),
                    OptionalGreedyRange(ULInt8('data')),)
@@ -609,13 +609,13 @@ write.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgFileioWriteResponse,
+      super( MsgFileioWriteResp,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgFileioWriteResponse, self).__init__()
-      self.msg_type = SBP_MSG_FILEIO_WRITE_RESPONSE
+      super( MsgFileioWriteResp, self).__init__()
+      self.msg_type = SBP_MSG_FILEIO_WRITE_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.filename = kwargs.pop('filename')
       self.offset = kwargs.pop('offset')
@@ -629,7 +629,7 @@ write.
     the message.
 
     """
-    p = MsgFileioWriteResponse._parser.parse(d)
+    p = MsgFileioWriteResp._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -638,7 +638,7 @@ write.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgFileioWriteResponse._parser.build(c)
+    self.payload = MsgFileioWriteResp._parser.build(c)
     return self.pack()
 
   @staticmethod
@@ -648,22 +648,22 @@ write.
     """
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
-    return MsgFileioWriteResponse(sbp)
+    return MsgFileioWriteResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgFileioWriteResponse, self).to_json_dict()
+    d = super( MsgFileioWriteResp, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
 
 msg_classes = {
-  0x00A8: MsgFileioReadRequest,
-  0x00A3: MsgFileioReadResponse,
-  0x00A9: MsgFileioReadDirRequest,
-  0x00AA: MsgFileioReadDirResponse,
+  0x00A8: MsgFileioReadReq,
+  0x00A3: MsgFileioReadResp,
+  0x00A9: MsgFileioReadDirReq,
+  0x00AA: MsgFileioReadDirResp,
   0x00AC: MsgFileioRemove,
-  0x00AD: MsgFileioWriteRequest,
-  0x00AB: MsgFileioWriteResponse,
+  0x00AD: MsgFileioWriteReq,
+  0x00AB: MsgFileioWriteResp,
 }

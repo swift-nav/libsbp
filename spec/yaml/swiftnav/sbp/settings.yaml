@@ -41,7 +41,7 @@ definitions:
             A NULL-terminated and delimited string with contents
             [SECTION_SETTING, SETTING, VALUE].
 
- - MSG_SETTINGS_READ_REQUEST:
+ - MSG_SETTINGS_READ_REQ:
     id: 0x00A4
     short_desc: Read device configuration settings (host => device)
     desc: The setting message reads the device's configuration.
@@ -52,7 +52,7 @@ definitions:
             A NULL-terminated and delimited string with contents
             [SECTION_SETTING, SETTING].
 
- - MSG_SETTINGS_READ_RESPONSE:
+ - MSG_SETTINGS_READ_RESP:
     id: 0x00A5
     short_desc: Read device configuration settings (host <= device)
     desc: The setting message reads the device's configuration.
@@ -63,7 +63,7 @@ definitions:
             A NULL-terminated and delimited string with contents
             [SECTION_SETTING, SETTING, VALUE].
 
- - MSG_SETTINGS_READ_BY_INDEX_REQUEST:
+ - MSG_SETTINGS_READ_BY_INDEX_REQ:
     id: 0x00A2
     short_desc: Read setting by direct index (host => device)
     desc: |
@@ -78,7 +78,7 @@ definitions:
             An index into the device settings, with values ranging from
             0 to length(settings)
 
- - MSG_SETTINGS_READ_BY_INDEX_RESPONSE:
+ - MSG_SETTINGS_READ_BY_INDEX_RESP:
     id: 0x00A7
     short_desc: Read setting by direct index (host <= device)
     desc: |
