@@ -225,7 +225,7 @@ definitions:
       This message reads the device's hardcoded unique ID. The host
       requests the ID by sending a MSG_STM_UNIQUE_ID_REQUEST. The device
       responds with a MSG_STM_UNIQUE_ID_RESPONSE with the 12-byte unique
-      ID in the payload..
+      ID in the payload.
 
  - MSG_STM_UNIQUE_ID_RESPONSE:
     id: 0x00E5
