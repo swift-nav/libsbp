@@ -50,13 +50,16 @@
 \renewcommand\tableofcontents{\@starttoc{toc}}
 
 \newcolumntype{a}{>{\hsize=.2\hsize}X}
-\newcolumntype{b}{>{\hsize=.4\hsize}X}
+\newcolumntype{b}{>{\hsize=.22\hsize}X}
 \newcolumntype{c}{>{\hsize=.3\hsize}X}
 \newcolumntype{d}{>{\hsize=.7\hsize}X}
+\newcolumntype{e}{>{\hsize=.13\hsize}X}
+\newcolumntype{f}{>{\hsize=.16\hsize}X}
+\newcolumntype{g}{>{\hsize=.77\hsize}X}
 
 % Shell out to git to get the most recent tag and pass it to the LateX
 % job name. Hopefully this doesn't screw with things.
-\immediate\write18{git describe --abbrev=0 --tags > \jobname.info }
+\immediate\write18{git describe --abbrev=0 --tags | cut -c 2-5 > \jobname.info }
 
 \title{Swift Navigation Binary Protocol}
 \version{\input{\jobname.info}}
