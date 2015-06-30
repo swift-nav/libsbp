@@ -63,10 +63,10 @@ definitions:
       Structure containing in-phase and quadrature correlation components.
     fields:
         - I:
-            type: u32
+            type: s32
             desc: In-phase correlation
         - Q:
-            type: u32
+            type: s32
             desc: Quadrature correlation
 
  - MSG_TRACKING_IQ:
@@ -79,9 +79,9 @@ definitions:
       - channel:
           type: u8
           desc: Tracking channel of origin
-      - prn:
-          type: u8
-          desc: PRN-1 being tracked
+      - sid:
+          type: u32
+          desc: Identifier of satellite signal being tracked
       - corrs:
           type: array
           fill: TrackingChannelCorrelation

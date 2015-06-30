@@ -75,8 +75,8 @@ class TrackingChannelCorrelation(object):
 
   """
   _parser = Embedded(Struct("TrackingChannelCorrelation",
-                     ULInt32('I'),
-                     ULInt32('Q'),))
+                     SLInt32('I'),
+                     SLInt32('Q'),))
 
   def __init__(self, payload):
     self.from_binary(payload)
@@ -182,8 +182,8 @@ update interval.
     SBP parent object to inherit from.
   channel : int
     Tracking channel of origin
-  prn : int
-    PRN-1 being tracked
+  sid : int
+    Identifier of satellite signal being tracked
   corrs : array
     Early, Prompt and Late correlations
   sender : int
@@ -192,7 +192,7 @@ update interval.
   """
   _parser = Struct("MsgTrackingIq",
                    ULInt8('channel'),
-                   ULInt8('prn'),
+                   ULInt32('sid'),
                    Struct('corrs', Array(3, Struct('corrs', TrackingChannelCorrelation._parser))),)
 
   def __init__(self, sbp=None, **kwargs):
@@ -204,7 +204,7 @@ update interval.
       self.msg_type = SBP_MSG_TRACKING_IQ
       self.sender = kwargs.pop('sender', 0)
       self.channel = kwargs.pop('channel')
-      self.prn = kwargs.pop('prn')
+      self.sid = kwargs.pop('sid')
       self.corrs = kwargs.pop('corrs')
 
   def __repr__(self):
