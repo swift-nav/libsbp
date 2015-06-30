@@ -50,6 +50,29 @@ typedef struct __attribute__((packed)) {
 } msg_tracking_state_t;
 
 
+/** Complex correlation structure
+ *
+ * Structure containing in-phase and quadrature correlation components.
+ */
+typedef struct __attribute__((packed)) {
+  u32 I;    /**< In-phase correlation */
+  u32 Q;    /**< Quadrature correlation */
+} tracking_channel_correlation_t;
+
+
+/** Tracking channel correlations
+ *
+ * When enabled, a tracking channel can output the correlations at each
+ * update interval.
+ */
+#define SBP_MSG_TRACKING_IQ    0x001C
+typedef struct __attribute__((packed)) {
+  u8 channel;    /**< Tracking channel of origin */
+  u8 prn;        /**< PRN-1 being tracked */
+  tracking_channel_correlation_t corrs[3];   /**< Early, Prompt and Late correlations */
+} msg_tracking_iq_t;
+
+
 /** \} */
 
 #endif /* LIBSBP_TRACKING_MESSAGES_H */

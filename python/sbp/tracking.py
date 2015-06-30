@@ -60,6 +60,37 @@ signal power.
   def to_binary(self):
     return TrackingChannelState.build(self.__dict__)
     
+class TrackingChannelCorrelation(object):
+  """TrackingChannelCorrelation.
+  
+  Structure containing in-phase and quadrature correlation components.
+
+  
+  Parameters
+  ----------
+  I : int
+    In-phase correlation
+  Q : int
+    Quadrature correlation
+
+  """
+  _parser = Embedded(Struct("TrackingChannelCorrelation",
+                     ULInt32('I'),
+                     ULInt32('Q'),))
+
+  def __init__(self, payload):
+    self.from_binary(payload)
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = TrackingChannelCorrelation._parser.parse(d)
+    self.__dict__.update(dict(p.viewitems()))
+
+  def to_binary(self):
+    return TrackingChannelCorrelation.build(self.__dict__)
+    
 SBP_MSG_TRACKING_STATE = 0x0016
 class MsgTrackingState(SBP):
   """SBP class for message MSG_TRACKING_STATE (0x0016).
@@ -132,7 +163,87 @@ all tracked satellites.
     d.update(j)
     return d
     
+SBP_MSG_TRACKING_IQ = 0x001C
+class MsgTrackingIq(SBP):
+  """SBP class for message MSG_TRACKING_IQ (0x001C).
+
+  You can have MSG_TRACKING_IQ inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  When enabled, a tracking channel can output the correlations at each
+update interval.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  channel : int
+    Tracking channel of origin
+  prn : int
+    PRN-1 being tracked
+  corrs : array
+    Early, Prompt and Late correlations
+  sender : int
+    Optional sender ID, defaults to 0
+
+  """
+  _parser = Struct("MsgTrackingIq",
+                   ULInt8('channel'),
+                   ULInt8('prn'),
+                   Struct('corrs', Array(3, Struct('corrs', TrackingChannelCorrelation._parser))),)
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgTrackingIq, self).__init__()
+      self.msg_type = SBP_MSG_TRACKING_IQ
+      self.sender = kwargs.pop('sender', 0)
+      self.channel = kwargs.pop('channel')
+      self.prn = kwargs.pop('prn')
+      self.corrs = kwargs.pop('corrs')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgTrackingIq._parser.parse(d)
+    self.__dict__.update(dict(p.viewitems()))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgTrackingIq._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgTrackingIq(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgTrackingIq, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0016: MsgTrackingState,
+  0x001C: MsgTrackingIq,
 }
