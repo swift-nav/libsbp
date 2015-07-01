@@ -56,3 +56,34 @@ definitions:
           type: array
           fill: TrackingChannelState
           desc: Satellite tracking channel state
+
+ - TrackingChannelCorrelation:
+    short_desc: Complex correlation structure
+    desc: |
+      Structure containing in-phase and quadrature correlation components.
+    fields:
+        - I:
+            type: s32
+            desc: In-phase correlation
+        - Q:
+            type: s32
+            desc: Quadrature correlation
+
+ - MSG_TRACKING_IQ:
+    id: 0x001C
+    short_desc: Tracking channel correlations
+    desc: |
+      When enabled, a tracking channel can output the correlations at each
+      update interval.
+    fields:
+      - channel:
+          type: u8
+          desc: Tracking channel of origin
+      - sid:
+          type: u32
+          desc: Identifier of satellite signal being tracked
+      - corrs:
+          type: array
+          fill: TrackingChannelCorrelation
+          size: 3
+          desc: Early, Prompt and Late correlations
