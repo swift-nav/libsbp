@@ -11,12 +11,21 @@
 from ...msg import SBP
 from ...table import dispatch
 from .base_logger import BaseLogger, LogIterator
-import json
-import warnings
 from boto.s3.connection import S3Connection
+from cStringIO import StringIO
 from gzip import GzipFile
 from operator import itemgetter
-from cStringIO import StringIO
+import json
+import warnings
+
+def _dump_msg(msg, fmt):
+  try:
+    return json.dumps(fmt(msg), allow_nan=False)
+  except ValueError:
+    warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
+           % (msg.msg_type, msg)
+    warnings.warn(warn, RuntimeWarning)
+    return json.dumps({})
 
 class JSONLogger(BaseLogger):
   """
@@ -34,13 +43,11 @@ class JSONLogger(BaseLogger):
             "data": data,
             "metadata": self.tags}
 
+  def dump(self, msg):
+    return _dump_msg(msg, self.fmt_msg)
+
   def call(self, msg):
-    try:
-      self.handle.write(json.dumps(self.fmt_msg(msg), allow_nan=False) + "\n")
-    except ValueError:
-      warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
-             % (msg.msg_type, msg)
-      warnings.warn(warn, RuntimeWarning)
+    self.handle.write(self.dump(msg) + "\n")
 
 class JSONLogIterator(LogIterator):
   """
