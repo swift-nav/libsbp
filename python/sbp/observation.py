@@ -44,8 +44,12 @@ transition.
                      ULInt32('tow'),
                      ULInt16('wn'),))
 
-  def __init__(self, payload):
-    self.from_binary(payload)
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.tow = kwargs.pop('tow')
+      self.wn = kwargs.pop('wn')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -77,8 +81,12 @@ cycles and 8-bits of fractional cycles.
                      SLInt32('i'),
                      ULInt8('f'),))
 
-  def __init__(self, payload):
-    self.from_binary(payload)
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.i = kwargs.pop('i')
+      self.f = kwargs.pop('f')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -110,8 +118,12 @@ counter (ith packet of n)
                      Struct('t', ObsGPSTime._parser),
                      ULInt8('n_obs'),))
 
-  def __init__(self, payload):
-    self.from_binary(payload)
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.t = kwargs.pop('t')
+      self.n_obs = kwargs.pop('n_obs')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -154,8 +166,15 @@ carrier phase ambiguity may have changed.
                      ULInt16('lock'),
                      ULInt8('prn'),))
 
-  def __init__(self, payload):
-    self.from_binary(payload)
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.P = kwargs.pop('P')
+      self.L = kwargs.pop('L')
+      self.cn0 = kwargs.pop('cn0')
+      self.lock = kwargs.pop('lock')
+      self.prn = kwargs.pop('prn')
 
   def __repr__(self):
     return fmt_repr(self)

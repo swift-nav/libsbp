@@ -66,8 +66,16 @@ be normalized.
                      ULInt8('tx_buffer_level'),
                      ULInt8('rx_buffer_level'),))
 
-  def __init__(self, payload):
-    self.from_binary(payload)
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.tx_throughput = kwargs.pop('tx_throughput')
+      self.rx_throughput = kwargs.pop('rx_throughput')
+      self.crc_error_count = kwargs.pop('crc_error_count')
+      self.io_error_count = kwargs.pop('io_error_count')
+      self.tx_buffer_level = kwargs.pop('tx_buffer_level')
+      self.rx_buffer_level = kwargs.pop('rx_buffer_level')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -107,8 +115,14 @@ communication latency in the system.
                      SLInt32('lmax'),
                      SLInt32('current'),))
 
-  def __init__(self, payload):
-    self.from_binary(payload)
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.avg = kwargs.pop('avg')
+      self.lmin = kwargs.pop('lmin')
+      self.lmax = kwargs.pop('lmax')
+      self.current = kwargs.pop('current')
 
   def __repr__(self):
     return fmt_repr(self)
