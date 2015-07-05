@@ -52,10 +52,15 @@ ERROR, WARNING, DEBUG, INFO logging levels.
   """
   _parser = Struct("MsgPrint",
                    CString('text', six.b('\n')),)
+  __slots__ = [
+               'text',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgPrint,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgPrint, self).__init__()
@@ -72,7 +77,8 @@ ERROR, WARNING, DEBUG, INFO logging levels.
 
     """
     p = MsgPrint._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -121,10 +127,15 @@ class MsgTweet(SBP):
   """
   _parser = Struct("MsgTweet",
                    String('tweet', 140),)
+  __slots__ = [
+               'tweet',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgTweet,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgTweet, self).__init__()
@@ -141,7 +152,8 @@ class MsgTweet(SBP):
 
     """
     p = MsgTweet._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

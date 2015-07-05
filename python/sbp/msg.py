@@ -11,6 +11,7 @@
 
 from construct import *
 import base64
+import copy
 import json
 import struct
 
@@ -74,6 +75,12 @@ class SBP(object):
                    ULInt8('length'),
                    Bytes("payload", lambda ctx: ctx.length),
                    ULInt16('crc'),)
+  __slots__ = ['preamble',
+               'msg_type',
+               'sender',
+               'length',
+               'payload',
+               'crc']
 
   def __init__(self, msg_type=None, sender=None,
                length=None, payload=None, crc=None):
@@ -85,7 +92,17 @@ class SBP(object):
     self.crc = crc
 
   def __eq__(self, other):
-    return self.__dict__ == other.__dict__
+    try:
+      if self is other:
+        return True
+      elif not isinstance(self, type(other)):
+        return False
+      elif self.__slots__ != other.__slots__:
+        return False
+      else:
+        return all(getattr(self, s) == getattr(other, s) for s in self.__slots__)
+    except AttributeError:
+      return False
 
   def __update(self):
     raise NotImplementedError("Internal update used by children.")
@@ -119,6 +136,9 @@ class SBP(object):
     p = SBP._parser.parse(d)
     assert p.preamble == SBP_PREAMBLE, "Invalid preamble 0x%x." % p.preamble
     return SBP(p.msg_type, p.sender, p.length, p.payload, p.crc)
+
+  def copy(self):
+    return copy.deepcopy(self)
 
   def __repr__(self):
     p = (self.preamble, self.msg_type, self.sender, self.length,

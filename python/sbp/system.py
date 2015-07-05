@@ -51,10 +51,15 @@ or configuration requests.
   """
   _parser = Struct("MsgStartup",
                    ULInt32('reserved'),)
+  __slots__ = [
+               'reserved',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgStartup,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgStartup, self).__init__()
@@ -71,7 +76,8 @@ or configuration requests.
 
     """
     p = MsgStartup._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -130,10 +136,15 @@ the remaining error flags should be inspected.
   """
   _parser = Struct("MsgHeartbeat",
                    ULInt32('flags'),)
+  __slots__ = [
+               'flags',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgHeartbeat,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgHeartbeat, self).__init__()
@@ -150,7 +161,8 @@ the remaining error flags should be inspected.
 
     """
     p = MsgHeartbeat._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

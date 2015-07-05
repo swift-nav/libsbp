@@ -65,10 +65,19 @@ from -500000 to 500000)
                    SLInt32('ns'),
                    ULInt8('flags'),
                    ULInt8('pin'),)
+  __slots__ = [
+               'wn',
+               'tow',
+               'ns',
+               'flags',
+               'pin',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgExtEvent,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgExtEvent, self).__init__()
@@ -89,7 +98,8 @@ from -500000 to 500000)
 
     """
     p = MsgExtEvent._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

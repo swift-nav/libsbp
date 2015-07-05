@@ -65,6 +65,14 @@ be normalized.
                      ULInt16('io_error_count'),
                      ULInt8('tx_buffer_level'),
                      ULInt8('rx_buffer_level'),))
+  __slots__ = [
+               'tx_throughput',
+               'rx_throughput',
+               'crc_error_count',
+               'io_error_count',
+               'tx_buffer_level',
+               'rx_buffer_level',
+              ]
 
   def __init__(self, payload=None, **kwargs):
     if payload:
@@ -82,10 +90,12 @@ be normalized.
   
   def from_binary(self, d):
     p = UARTChannel._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
-    return UARTChannel.build(self.__dict__)
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return UARTChannel.build(d)
     
 class Latency(object):
   """Latency.
@@ -114,6 +124,12 @@ communication latency in the system.
                      SLInt32('lmin'),
                      SLInt32('lmax'),
                      SLInt32('current'),))
+  __slots__ = [
+               'avg',
+               'lmin',
+               'lmax',
+               'current',
+              ]
 
   def __init__(self, payload=None, **kwargs):
     if payload:
@@ -129,10 +145,12 @@ communication latency in the system.
   
   def from_binary(self, d):
     p = Latency._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
-    return Latency.build(self.__dict__)
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return Latency.build(d)
     
 SBP_MSG_ALMANAC = 0x0069
 class MsgAlmanac(SBP):
@@ -151,7 +169,9 @@ alamanac onto the Piksi's flash memory from the host.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgAlmanac,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
       super( MsgAlmanac, self).__init__()
@@ -179,7 +199,9 @@ time estimate sent by the host.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgSetTime,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
       super( MsgSetTime, self).__init__()
@@ -207,7 +229,9 @@ bootloader.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgReset,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
       super( MsgReset, self).__init__()
@@ -236,7 +260,9 @@ removed in a future release.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgCwResults,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
       super( MsgCwResults, self).__init__()
@@ -265,7 +291,9 @@ be removed in a future release.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgCwStart,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
       super( MsgCwStart, self).__init__()
@@ -301,10 +329,15 @@ Ambiguity Resolution (IAR) process.
   """
   _parser = Struct("MsgResetFilters",
                    ULInt8('filter'),)
+  __slots__ = [
+               'filter',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgResetFilters,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgResetFilters, self).__init__()
@@ -321,7 +354,8 @@ Ambiguity Resolution (IAR) process.
 
     """
     p = MsgResetFilters._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -367,7 +401,9 @@ observations between the two.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgInitBase,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
       super( MsgInitBase, self).__init__()
@@ -412,10 +448,17 @@ thread. The reported percentage values require to be normalized.
                    String('name', 20),
                    ULInt16('cpu'),
                    ULInt32('stack_free'),)
+  __slots__ = [
+               'name',
+               'cpu',
+               'stack_free',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgThreadState,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgThreadState, self).__init__()
@@ -434,7 +477,8 @@ thread. The reported percentage values require to be normalized.
 
     """
     p = MsgThreadState._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -497,10 +541,18 @@ future. The reported percentage values require to be normalized.
                    Struct('uart_b', UARTChannel._parser),
                    Struct('uart_ftdi', UARTChannel._parser),
                    Struct('latency', Latency._parser),)
+  __slots__ = [
+               'uart_a',
+               'uart_b',
+               'uart_ftdi',
+               'latency',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgUartState,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgUartState, self).__init__()
@@ -520,7 +572,8 @@ future. The reported percentage values require to be normalized.
 
     """
     p = MsgUartState._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -573,10 +626,15 @@ from satellite observations.
   """
   _parser = Struct("MsgIarState",
                    ULInt32('num_hyps'),)
+  __slots__ = [
+               'num_hyps',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgIarState,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgIarState, self).__init__()
@@ -593,7 +651,8 @@ from satellite observations.
 
     """
     p = MsgIarState._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -647,10 +706,16 @@ from being used in various Piksi subsystems.
   _parser = Struct("MsgMaskSatellite",
                    ULInt8('mask'),
                    ULInt8('prn'),)
+  __slots__ = [
+               'mask',
+               'prn',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgMaskSatellite,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgMaskSatellite, self).__init__()
@@ -668,7 +733,8 @@ from being used in various Piksi subsystems.
 
     """
     p = MsgMaskSatellite._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

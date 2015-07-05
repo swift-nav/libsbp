@@ -46,6 +46,11 @@ signal power.
                      ULInt8('state'),
                      ULInt8('prn'),
                      LFloat32('cn0'),))
+  __slots__ = [
+               'state',
+               'prn',
+               'cn0',
+              ]
 
   def __init__(self, payload=None, **kwargs):
     if payload:
@@ -60,10 +65,12 @@ signal power.
   
   def from_binary(self, d):
     p = TrackingChannelState._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
-    return TrackingChannelState.build(self.__dict__)
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return TrackingChannelState.build(d)
     
 class TrackingChannelCorrelation(object):
   """TrackingChannelCorrelation.
@@ -82,6 +89,10 @@ class TrackingChannelCorrelation(object):
   _parser = Embedded(Struct("TrackingChannelCorrelation",
                      SLInt32('I'),
                      SLInt32('Q'),))
+  __slots__ = [
+               'I',
+               'Q',
+              ]
 
   def __init__(self, payload=None, **kwargs):
     if payload:
@@ -95,10 +106,12 @@ class TrackingChannelCorrelation(object):
   
   def from_binary(self, d):
     p = TrackingChannelCorrelation._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
-    return TrackingChannelCorrelation.build(self.__dict__)
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return TrackingChannelCorrelation.build(d)
     
 SBP_MSG_TRACKING_STATE = 0x0016
 class MsgTrackingState(SBP):
@@ -126,10 +139,15 @@ all tracked satellites.
   """
   _parser = Struct("MsgTrackingState",
                    OptionalGreedyRange(Struct('states', TrackingChannelState._parser)),)
+  __slots__ = [
+               'states',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgTrackingState,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgTrackingState, self).__init__()
@@ -146,7 +164,8 @@ all tracked satellites.
 
     """
     p = MsgTrackingState._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -203,10 +222,17 @@ update interval.
                    ULInt8('channel'),
                    ULInt32('sid'),
                    Struct('corrs', Array(3, Struct('corrs', TrackingChannelCorrelation._parser))),)
+  __slots__ = [
+               'channel',
+               'sid',
+               'corrs',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgTrackingIq,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgTrackingIq, self).__init__()
@@ -225,7 +251,8 @@ update interval.
 
     """
     p = MsgTrackingIq._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

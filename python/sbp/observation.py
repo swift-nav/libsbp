@@ -43,6 +43,10 @@ transition.
   _parser = Embedded(Struct("ObsGPSTime",
                      ULInt32('tow'),
                      ULInt16('wn'),))
+  __slots__ = [
+               'tow',
+               'wn',
+              ]
 
   def __init__(self, payload=None, **kwargs):
     if payload:
@@ -56,10 +60,12 @@ transition.
   
   def from_binary(self, d):
     p = ObsGPSTime._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
-    return ObsGPSTime.build(self.__dict__)
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return ObsGPSTime.build(d)
     
 class CarrierPhase(object):
   """CarrierPhase.
@@ -80,6 +86,10 @@ cycles and 8-bits of fractional cycles.
   _parser = Embedded(Struct("CarrierPhase",
                      SLInt32('i'),
                      ULInt8('f'),))
+  __slots__ = [
+               'i',
+               'f',
+              ]
 
   def __init__(self, payload=None, **kwargs):
     if payload:
@@ -93,10 +103,12 @@ cycles and 8-bits of fractional cycles.
   
   def from_binary(self, d):
     p = CarrierPhase._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
-    return CarrierPhase.build(self.__dict__)
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return CarrierPhase.build(d)
     
 class ObservationHeader(object):
   """ObservationHeader.
@@ -117,6 +129,10 @@ counter (ith packet of n)
   _parser = Embedded(Struct("ObservationHeader",
                      Struct('t', ObsGPSTime._parser),
                      ULInt8('n_obs'),))
+  __slots__ = [
+               't',
+               'n_obs',
+              ]
 
   def __init__(self, payload=None, **kwargs):
     if payload:
@@ -130,10 +146,12 @@ counter (ith packet of n)
   
   def from_binary(self, d):
     p = ObservationHeader._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
-    return ObservationHeader.build(self.__dict__)
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return ObservationHeader.build(d)
     
 class PackedObsContent(object):
   """PackedObsContent.
@@ -165,6 +183,13 @@ carrier phase ambiguity may have changed.
                      ULInt8('cn0'),
                      ULInt16('lock'),
                      ULInt8('prn'),))
+  __slots__ = [
+               'P',
+               'L',
+               'cn0',
+               'lock',
+               'prn',
+              ]
 
   def __init__(self, payload=None, **kwargs):
     if payload:
@@ -181,10 +206,12 @@ carrier phase ambiguity may have changed.
   
   def from_binary(self, d):
     p = PackedObsContent._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
-    return PackedObsContent.build(self.__dict__)
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return PackedObsContent.build(d)
     
 SBP_MSG_OBS = 0x0045
 class MsgObs(SBP):
@@ -219,10 +246,16 @@ satellite being tracked.
   _parser = Struct("MsgObs",
                    Struct('header', ObservationHeader._parser),
                    OptionalGreedyRange(Struct('obs', PackedObsContent._parser)),)
+  __slots__ = [
+               'header',
+               'obs',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgObs,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgObs, self).__init__()
@@ -240,7 +273,8 @@ satellite being tracked.
 
     """
     p = MsgObs._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -300,10 +334,17 @@ error in the pseudo-absolute position output.
                    LFloat64('lat'),
                    LFloat64('lon'),
                    LFloat64('height'),)
+  __slots__ = [
+               'lat',
+               'lon',
+               'height',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgBasePos,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgBasePos, self).__init__()
@@ -322,7 +363,8 @@ error in the pseudo-absolute position output.
 
     """
     p = MsgBasePos._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -454,10 +496,41 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    ULInt8('healthy'),
                    ULInt8('prn'),
                    ULInt8('iode'),)
+  __slots__ = [
+               'tgd',
+               'c_rs',
+               'c_rc',
+               'c_uc',
+               'c_us',
+               'c_ic',
+               'c_is',
+               'dn',
+               'm0',
+               'ecc',
+               'sqrta',
+               'omega0',
+               'omegadot',
+               'w',
+               'inc',
+               'inc_dot',
+               'af0',
+               'af1',
+               'af2',
+               'toe_tow',
+               'toe_wn',
+               'toc_tow',
+               'toc_wn',
+               'valid',
+               'healthy',
+               'prn',
+               'iode',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgEphemeris,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgEphemeris, self).__init__()
@@ -500,7 +573,8 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 
     """
     p = MsgEphemeris._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

@@ -22,7 +22,7 @@ def exclude_fields(obj, exclude=EXCLUDE):
   """
   Return dict of object without parent attrs.
   """
-  return {k: v for k, v in obj.__dict__.items() if k not in exclude}
+  return dict([(k, getattr(obj, k)) for k in obj.__slots__ if k not in exclude])
 
 
 def walk_json_dict(coll):

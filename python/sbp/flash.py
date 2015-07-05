@@ -71,10 +71,18 @@ starting address
                    Struct('addr_start', Array(3, ULInt8('addr_start'))),
                    ULInt8('addr_len'),
                    OptionalGreedyRange(ULInt8('data')),)
+  __slots__ = [
+               'target',
+               'addr_start',
+               'addr_len',
+               'data',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgFlashProgram,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgFlashProgram, self).__init__()
@@ -94,7 +102,8 @@ starting address
 
     """
     p = MsgFlashProgram._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -147,10 +156,15 @@ MSG_FLASH_PROGRAM, may return this message on failure.
   """
   _parser = Struct("MsgFlashDone",
                    ULInt8('response'),)
+  __slots__ = [
+               'response',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgFlashDone,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgFlashDone, self).__init__()
@@ -167,7 +181,8 @@ MSG_FLASH_PROGRAM, may return this message on failure.
 
     """
     p = MsgFlashDone._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -231,10 +246,17 @@ starting address
                    ULInt8('target'),
                    Struct('addr_start', Array(3, ULInt8('addr_start'))),
                    ULInt8('addr_len'),)
+  __slots__ = [
+               'target',
+               'addr_start',
+               'addr_len',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgFlashReadRequest,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgFlashReadRequest, self).__init__()
@@ -253,7 +275,8 @@ starting address
 
     """
     p = MsgFlashReadRequest._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -317,10 +340,17 @@ starting address
                    ULInt8('target'),
                    Struct('addr_start', Array(3, ULInt8('addr_start'))),
                    ULInt8('addr_len'),)
+  __slots__ = [
+               'target',
+               'addr_start',
+               'addr_len',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgFlashReadResponse,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgFlashReadResponse, self).__init__()
@@ -339,7 +369,8 @@ starting address
 
     """
     p = MsgFlashReadResponse._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -398,10 +429,16 @@ the M25)
   _parser = Struct("MsgFlashErase",
                    ULInt8('target'),
                    ULInt32('sector_num'),)
+  __slots__ = [
+               'target',
+               'sector_num',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgFlashErase,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgFlashErase, self).__init__()
@@ -419,7 +456,8 @@ the M25)
 
     """
     p = MsgFlashErase._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -470,10 +508,15 @@ memory. The device replies with a MSG_FLASH_DONE message.
   """
   _parser = Struct("MsgStmFlashLockSector",
                    ULInt32('sector'),)
+  __slots__ = [
+               'sector',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgStmFlashLockSector,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgStmFlashLockSector, self).__init__()
@@ -490,7 +533,8 @@ memory. The device replies with a MSG_FLASH_DONE message.
 
     """
     p = MsgStmFlashLockSector._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -541,10 +585,15 @@ memory. The device replies with a MSG_FLASH_DONE message.
   """
   _parser = Struct("MsgStmFlashUnlockSector",
                    ULInt32('sector'),)
+  __slots__ = [
+               'sector',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgStmFlashUnlockSector,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgStmFlashUnlockSector, self).__init__()
@@ -561,7 +610,8 @@ memory. The device replies with a MSG_FLASH_DONE message.
 
     """
     p = MsgStmFlashUnlockSector._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -606,7 +656,9 @@ ID in the payload.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgStmUniqueIdRequest,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
       super( MsgStmUniqueIdRequest, self).__init__()
@@ -644,10 +696,15 @@ ID in the payload..
   """
   _parser = Struct("MsgStmUniqueIdResponse",
                    Struct('stm_id', Array(12, ULInt8('stm_id'))),)
+  __slots__ = [
+               'stm_id',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgStmUniqueIdResponse,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgStmUniqueIdResponse, self).__init__()
@@ -664,7 +721,8 @@ ID in the payload..
 
     """
     p = MsgStmUniqueIdResponse._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -715,10 +773,15 @@ register. The device replies with a MSG_FLASH_DONE message.
   """
   _parser = Struct("MsgM25FlashWriteStatus",
                    Struct('status', Array(1, ULInt8('status'))),)
+  __slots__ = [
+               'status',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgM25FlashWriteStatus,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgM25FlashWriteStatus, self).__init__()
@@ -735,7 +798,8 @@ register. The device replies with a MSG_FLASH_DONE message.
 
     """
     p = MsgM25FlashWriteStatus._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

@@ -52,10 +52,15 @@ returns an empty string for earlier versions.
   """
   _parser = Struct("MsgBootloaderHandshakeDeprecated",
                    OptionalGreedyRange(ULInt8('handshake')),)
+  __slots__ = [
+               'handshake',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgBootloaderHandshakeDeprecated,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgBootloaderHandshakeDeprecated, self).__init__()
@@ -72,7 +77,8 @@ returns an empty string for earlier versions.
 
     """
     p = MsgBootloaderHandshakeDeprecated._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -196,10 +202,40 @@ class MsgEphemerisDeprecated(SBP):
                    ULInt8('valid'),
                    ULInt8('healthy'),
                    ULInt8('prn'),)
+  __slots__ = [
+               'tgd',
+               'c_rs',
+               'c_rc',
+               'c_uc',
+               'c_us',
+               'c_ic',
+               'c_is',
+               'dn',
+               'm0',
+               'ecc',
+               'sqrta',
+               'omega0',
+               'omegadot',
+               'w',
+               'inc',
+               'inc_dot',
+               'af0',
+               'af1',
+               'af2',
+               'toe_tow',
+               'toe_wn',
+               'toc_tow',
+               'toc_wn',
+               'valid',
+               'healthy',
+               'prn',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgEphemerisDeprecated,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgEphemerisDeprecated, self).__init__()
@@ -241,7 +277,8 @@ class MsgEphemerisDeprecated(SBP):
 
     """
     p = MsgEphemerisDeprecated._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

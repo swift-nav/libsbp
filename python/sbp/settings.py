@@ -48,7 +48,9 @@ configuration to its onboard flash memory file system.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgSettingsSave,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
       super( MsgSettingsSave, self).__init__()
@@ -84,10 +86,15 @@ class MsgSettingsWrite(SBP):
   """
   _parser = Struct("MsgSettingsWrite",
                    CString('setting', six.b('\n')),)
+  __slots__ = [
+               'setting',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgSettingsWrite,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgSettingsWrite, self).__init__()
@@ -104,7 +111,8 @@ class MsgSettingsWrite(SBP):
 
     """
     p = MsgSettingsWrite._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -155,10 +163,15 @@ class MsgSettingsReadRequest(SBP):
   """
   _parser = Struct("MsgSettingsReadRequest",
                    CString('setting', six.b('\n')),)
+  __slots__ = [
+               'setting',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgSettingsReadRequest,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgSettingsReadRequest, self).__init__()
@@ -175,7 +188,8 @@ class MsgSettingsReadRequest(SBP):
 
     """
     p = MsgSettingsReadRequest._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -226,10 +240,15 @@ class MsgSettingsReadResponse(SBP):
   """
   _parser = Struct("MsgSettingsReadResponse",
                    CString('setting', six.b('\n')),)
+  __slots__ = [
+               'setting',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgSettingsReadResponse,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgSettingsReadResponse, self).__init__()
@@ -246,7 +265,8 @@ class MsgSettingsReadResponse(SBP):
 
     """
     p = MsgSettingsReadResponse._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -301,10 +321,15 @@ NULL-terminated and delimited string with contents
   """
   _parser = Struct("MsgSettingsReadByIndexRequest",
                    ULInt16('index'),)
+  __slots__ = [
+               'index',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgSettingsReadByIndexRequest,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgSettingsReadByIndexRequest, self).__init__()
@@ -321,7 +346,8 @@ NULL-terminated and delimited string with contents
 
     """
     p = MsgSettingsReadByIndexRequest._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -381,10 +407,16 @@ NULL-terminated and delimited string with contents
   _parser = Struct("MsgSettingsReadByIndexResponse",
                    ULInt16('index'),
                    CString('setting', six.b('\n')),)
+  __slots__ = [
+               'index',
+               'setting',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgSettingsReadByIndexResponse,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgSettingsReadByIndexResponse, self).__init__()
@@ -402,7 +434,8 @@ NULL-terminated and delimited string with contents
 
     """
     p = MsgSettingsReadByIndexResponse._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -444,7 +477,9 @@ class MsgSettingsReadByIndexDone(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgSettingsReadByIndexDone,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
       super( MsgSettingsReadByIndexDone, self).__init__()
