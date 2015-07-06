@@ -26,17 +26,16 @@ include:
   - types.yaml
 definitions:
 
- - MSG_FILEIO_READ:
+ - MSG_FILEIO_READ_REQUEST:
     id: 0x00A8
-    public: True
-    short_desc: Read file from the file system (host <=> device)
+    short_desc: Read file from the file system (host => device)
     desc: |
       The file read message reads a certain length (up to 255 bytes)
       from a given offset into a file, and returns the data in a
-      MSG_FILEIO_READ message where the message length field indicates
-      how many bytes were succesfully read. If the message is invalid,
-      a followup MSG_PRINT message will print "Invalid fileio read
-      message".
+      MSG_FILEIO_READ_RESPONSE message where the message length field
+      indicates how many bytes were succesfully read. If the message is
+      invalid, a followup MSG_PRINT message will print "Invalid fileio
+      read message".
     fields:
       - offset:
           type: u32
@@ -51,18 +50,43 @@ definitions:
           size: 20
           desc: Name of the file to read from (NULL padded)
 
- - MSG_FILEIO_READ_DIR:
+ - MSG_FILEIO_READ_RESPONSE:
+    id: 0x00A3
+    short_desc: File read from the file system (host <= device)
+    desc: |
+      The file read message reads a certain length (up to 255 bytes)
+      from a given offset into a file, and returns the data in a
+      message where the message length field indicates how many bytes
+      were succesfully read.
+    fields:
+      - offset:
+          type: u32
+          units: bytes
+          desc: File offset
+      - chunk_size:
+          type: u8
+          units: bytes
+          desc: Chunk size read
+      - filename:
+          type: string
+          size: 20
+          desc: Name of the file read from (NULL padded)
+      - contents:
+          type: array
+          fill: u8
+          desc: Contents of read file
+
+ - MSG_FILEIO_READ_DIR_REQUEST:
     id: 0x00A9
-    public: True
-    short_desc: List files in a directory (host <=> device)
+    short_desc: List files in a directory (host => device)
     desc: |
       The read directory message lists the files in a directory on the
       device's onboard flash file system.  The offset parameter can be
       used to skip the first n elements of the file list. Returns a
-      MSG_FILEIO_READ_DIR message containing the directory listings as
-      a NULL delimited list. The listing is chunked over multiple SBP
-      packets and the end of the list is identified by an entry
-      containing just the character 0xFF. If message is invalid, a
+      MSG_FILEIO_READ_DIR_RESPONSE message containing the directory
+      listings as a NULL delimited list. The listing is chunked over
+      multiple SBP packets and the end of the list is identified by an
+      entry containing just the character 0xFF. If message is invalid, a
       followup MSG_PRINT message will print "Invalid fileio read
       message".
     fields:
@@ -75,9 +99,32 @@ definitions:
           size: 20
           desc: Name of the directory to list (NULL padded)
 
+ - MSG_FILEIO_READ_DIR_RESPONSE:
+    id: 0x00AA
+    short_desc: Files listed in a directory (host <= device)
+    desc: |
+      The read directory message lists the files in a directory on the
+      device's onboard flash file system.  The offset parameter can be
+      used to skip the first n elements of the file list. Message contains
+      the directory listings as a NULL delimited list. The listing is
+      chunked over multiple SBP packets and the end of the list is
+      identified by an entry containing just the character 0xFF.
+    fields:
+      - offset:
+          type: u32
+          desc: |
+            The offset to skip the first n elements of the file list
+      - dirname:
+          type: string
+          size: 20
+          desc: Name of the directory to list (NULL padded)
+      - contents:
+          type: array
+          fill: u8
+          desc: Contents of read directory
+
  - MSG_FILEIO_REMOVE:
     id: 0x00AC
-    public: True
     short_desc: Delete a file from the file system (host => device)
     desc: |
       The file remove message deletes a file from the file system. If
@@ -89,16 +136,37 @@ definitions:
           size: 20
           desc: Name of the file to delete (NULL padded)
 
- - MSG_FILEIO_WRITE:
+ - MSG_FILEIO_WRITE_REQUEST:
     id: 0x00AD
-    public: True
-    short_desc: Write to file (host <=> device)
+    short_desc: Write to file (host => device)
     desc: |
       The file write message writes a certain length (up to 255 bytes)
       of data to a file at a given offset. Returns a copy of the
-      original MSG_FILEIO_WRITE message to check integrity of the
-      write. If message is invalid, a followup MSG_PRINT message will
-      print "Invalid fileio write message".
+      original MSG_FILEIO_WRITE_RESPONSE message to check integrity of
+      the write. If message is invalid, a followup MSG_PRINT message
+      will print "Invalid fileio write message".
+    fields:
+      - filename:
+          type: string
+          size: 20
+          desc: Name of the file to write to (NULL padded)
+      - offset:
+          type: u32
+          units: bytes
+          desc: Offset into the file at which to start writing in bytes
+      - data:
+          type: array
+          fill: u8
+          desc: Variable-length array of data to write
+
+ - MSG_FILEIO_WRITE_RESPONSE:
+    id: 0x00AB
+    short_desc: File written to (host <= device)
+    desc: |
+      The file write message writes a certain length (up to 255 bytes)
+      of data to a file at a given offset. The message is a copy of the
+      original MSG_FILEIO_WRITE_REQUEST message to check integrity of the
+      write.
     fields:
       - filename:
           type: string
