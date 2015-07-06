@@ -75,14 +75,6 @@ typedef struct __attribute__((packed)) {
 } msg_ephemeris_deprecated_t;
 
 
-/** Legacy message for tracing variable values
- *
- * This is an unused legacy message for tracing variable values
- * within the device firmware and streaming those back to the host.
- */
-#define SBP_MSG_DEBUG_VAR_DEPRECATED            0x0011
-
-
 /** \} */
 
 #endif /* LIBSBP_DEPRECATED_MESSAGES_H */

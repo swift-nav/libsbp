@@ -142,10 +142,3 @@ definitions:
       - prn:
           type: u8
           desc: PRN being tracked
-
- - MSG_DEBUG_VAR_DEPRECATED:
-    id: 0x0011
-    short_desc: Legacy message for tracing variable values
-    desc: |
-      This is an unused legacy message for tracing variable values
-      within the device firmware and streaming those back to the host.
