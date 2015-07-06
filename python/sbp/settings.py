@@ -53,7 +53,7 @@ class MsgSettings(SBP):
 such strings on reads.
 
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgSettings",
@@ -156,7 +156,7 @@ NULL-terminated and delimited string with contents
 0 to length(settings)
 
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgSettingsReadByIndex",

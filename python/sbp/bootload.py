@@ -84,7 +84,7 @@ protocol version number.
   version : string
     Bootloader version number
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgBootloaderHandshakeResponse",
@@ -156,7 +156,7 @@ class MsgBootloaderJumpToApp(SBP):
   jump : int
     Ignored by the device
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgBootloaderJumpToApp",
@@ -265,7 +265,7 @@ and not related to the Piksi's serial number.
 on the right.
 
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgNapDeviceDnaResponse",

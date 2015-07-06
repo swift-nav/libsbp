@@ -47,7 +47,7 @@ returns an empty string for earlier versions.
   handshake : array
     Version number string (not NULL terminated)
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgBootloaderHandshakeDeprecated",
@@ -166,7 +166,7 @@ class MsgEphemerisDeprecated(SBP):
   prn : int
     PRN being tracked
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgEphemerisDeprecated",

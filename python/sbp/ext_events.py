@@ -56,7 +56,7 @@ from -500000 to 500000)
   pin : int
     Pin number.  0..9 = DEBUG0..9.
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgExtEvent",

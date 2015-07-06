@@ -46,7 +46,7 @@ or configuration requests.
   reserved : int
     Reserved
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgStartup",
@@ -125,7 +125,7 @@ the remaining error flags should be inspected.
   flags : int
     Status flags
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgHeartbeat",

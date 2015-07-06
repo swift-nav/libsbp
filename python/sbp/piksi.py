@@ -282,7 +282,7 @@ Ambiguity Resolution (IAR) process.
   filter : int
     Filter flags
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgResetFilters",
@@ -391,7 +391,7 @@ thread. The reported percentage values require to be normalized.
   stack_free : int
     Free stack space for this thread
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgThreadState",
@@ -475,7 +475,7 @@ future. The reported percentage values require to be normalized.
   latency : Latency
     UART communication latency
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgUartState",
@@ -554,7 +554,7 @@ from satellite observations.
   num_hyps : int
     Number of integer ambiguity hypotheses remaining
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgIarState",
@@ -627,7 +627,7 @@ from being used in various Piksi subsystems.
   prn : int
     PRN for which the mask is applied
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgMaskSatellite",
