@@ -16,7 +16,7 @@ Standardized system messages from Swift Navigation devices.
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -59,7 +59,7 @@ or configuration requests.
     else:
       super( MsgStartup, self).__init__()
       self.msg_type = SBP_MSG_STARTUP
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.reserved = kwargs.pop('reserved')
 
   def __repr__(self):
@@ -138,7 +138,7 @@ the remaining error flags should be inspected.
     else:
       super( MsgHeartbeat, self).__init__()
       self.msg_type = SBP_MSG_HEARTBEAT
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.flags = kwargs.pop('flags')
 
   def __repr__(self):

@@ -18,7 +18,7 @@ e.g. camera shutter time.
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -73,7 +73,7 @@ from -500000 to 500000)
     else:
       super( MsgExtEvent, self).__init__()
       self.msg_type = SBP_MSG_EXT_EVENT
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.wn = kwargs.pop('wn')
       self.tow = kwargs.pop('tow')
       self.ns = kwargs.pop('ns')

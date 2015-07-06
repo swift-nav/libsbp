@@ -16,7 +16,7 @@ Deprecated SBP messages.
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -60,7 +60,7 @@ returns an empty string for earlier versions.
     else:
       super( MsgBootloaderHandshakeDeprecated, self).__init__()
       self.msg_type = SBP_MSG_BOOTLOADER_HANDSHAKE_DEPRECATED
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.handshake = kwargs.pop('handshake')
 
   def __repr__(self):
@@ -204,7 +204,7 @@ class MsgEphemerisDeprecated(SBP):
     else:
       super( MsgEphemerisDeprecated, self).__init__()
       self.msg_type = SBP_MSG_EPHEMERIS_DEPRECATED
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.tgd = kwargs.pop('tgd')
       self.c_rs = kwargs.pop('c_rs')
       self.c_rc = kwargs.pop('c_rc')

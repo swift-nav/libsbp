@@ -26,7 +26,7 @@ device response.
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -77,7 +77,7 @@ message".
     else:
       super( MsgFileioRead, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_READ
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.offset = kwargs.pop('offset')
       self.chunk_size = kwargs.pop('chunk_size')
       self.filename = kwargs.pop('filename')
@@ -161,7 +161,7 @@ message".
     else:
       super( MsgFileioReadDir, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_READ_DIR
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.offset = kwargs.pop('offset')
       self.dirname = kwargs.pop('dirname')
 
@@ -234,7 +234,7 @@ message is invalid, a followup MSG_PRINT message will print
     else:
       super( MsgFileioRemove, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_REMOVE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.filename = kwargs.pop('filename')
 
   def __repr__(self):
@@ -314,7 +314,7 @@ print "Invalid fileio write message".
     else:
       super( MsgFileioWrite, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_WRITE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.filename = kwargs.pop('filename')
       self.offset = kwargs.pop('offset')
       self.data = kwargs.pop('data')
