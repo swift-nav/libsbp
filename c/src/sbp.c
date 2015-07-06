@@ -15,10 +15,6 @@
 
 #define SBP_PREAMBLE 0x55
 
-// Default sender ID. Intended for messages sent from the host to the
-// device.
-#define SENDER_ID 0x42
-
 /** \addtogroup io Input / Output
  * \{ */
 
