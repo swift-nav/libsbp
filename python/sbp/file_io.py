@@ -77,7 +77,7 @@ read message".
     else:
       super( MsgFileioReadRequest, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_READ_REQUEST
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.offset = kwargs.pop('offset')
       self.chunk_size = kwargs.pop('chunk_size')
       self.filename = kwargs.pop('filename')
@@ -244,15 +244,9 @@ message".
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
-<<<<<<< HEAD
-      super( MsgFileioReadDir, self).__init__()
-      self.msg_type = SBP_MSG_FILEIO_READ_DIR
-      self.sender = kwargs.pop('sender', SENDER_ID)
-=======
       super( MsgFileioReadDirRequest, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_READ_DIR_REQUEST
-      self.sender = kwargs.pop('sender', 0)
->>>>>>> New file_io messages remove bi-dir.
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.offset = kwargs.pop('offset')
       self.dirname = kwargs.pop('dirname')
 
@@ -335,7 +329,7 @@ identified by an entry containing just the character 0xFF.
     else:
       super( MsgFileioReadDirResponse, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_READ_DIR_RESPONSE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.offset = kwargs.pop('offset')
       self.dirname = kwargs.pop('dirname')
       self.contents = kwargs.pop('contents')
@@ -489,7 +483,7 @@ will print "Invalid fileio write message".
     else:
       super( MsgFileioWriteRequest, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_WRITE_REQUEST
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.filename = kwargs.pop('filename')
       self.offset = kwargs.pop('offset')
       self.data = kwargs.pop('data')
@@ -568,15 +562,9 @@ write.
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
-<<<<<<< HEAD
-      super( MsgFileioWrite, self).__init__()
-      self.msg_type = SBP_MSG_FILEIO_WRITE
-      self.sender = kwargs.pop('sender', SENDER_ID)
-=======
       super( MsgFileioWriteResponse, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_WRITE_RESPONSE
-      self.sender = kwargs.pop('sender', 0)
->>>>>>> New file_io messages remove bi-dir.
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.filename = kwargs.pop('filename')
       self.offset = kwargs.pop('offset')
       self.data = kwargs.pop('data')
