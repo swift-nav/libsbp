@@ -17,7 +17,7 @@ Satellite code and carrier-phase tracking messages from the device.
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -125,7 +125,7 @@ all tracked satellites.
     else:
       super( MsgTrackingState, self).__init__()
       self.msg_type = SBP_MSG_TRACKING_STATE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.states = kwargs.pop('states')
 
   def __repr__(self):
@@ -202,7 +202,7 @@ update interval.
     else:
       super( MsgTrackingIq, self).__init__()
       self.msg_type = SBP_MSG_TRACKING_IQ
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.channel = kwargs.pop('channel')
       self.sid = kwargs.pop('sid')
       self.corrs = kwargs.pop('corrs')

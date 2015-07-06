@@ -16,7 +16,7 @@ Satellite acquisition messages from the device.
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -73,7 +73,7 @@ acquisition was attempted
     else:
       super( MsgAcqResult, self).__init__()
       self.msg_type = SBP_MSG_ACQ_RESULT
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.snr = kwargs.pop('snr')
       self.cp = kwargs.pop('cp')
       self.cf = kwargs.pop('cf')

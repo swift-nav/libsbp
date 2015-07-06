@@ -23,7 +23,7 @@ https://github.com/swift-nav/piksi\_firmware/blob/master/docs/settings.pdf
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -66,7 +66,7 @@ such strings on reads.
     else:
       super( MsgSettings, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.setting = kwargs.pop('setting')
 
   def __repr__(self):
@@ -126,7 +126,7 @@ configuration to its onboard flash memory file system.
     else:
       super( MsgSettingsSave, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_SAVE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -169,7 +169,7 @@ NULL-terminated and delimited string with contents
     else:
       super( MsgSettingsReadByIndex, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_READ_BY_INDEX
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.index = kwargs.pop('index')
 
   def __repr__(self):

@@ -18,7 +18,7 @@ implementation-defined range (0x0000-0x00FF).
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -60,7 +60,7 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     else:
       super( MsgPrint, self).__init__()
       self.msg_type = SBP_MSG_PRINT
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.text = kwargs.pop('text')
 
   def __repr__(self):
@@ -120,7 +120,7 @@ within the device firmware and streaming those back to the host.
     else:
       super( MsgDebugVar, self).__init__()
       self.msg_type = SBP_MSG_DEBUG_VAR
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -157,7 +157,7 @@ class MsgTweet(SBP):
     else:
       super( MsgTweet, self).__init__()
       self.msg_type = SBP_MSG_TWEET
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.tweet = kwargs.pop('tweet')
 
   def __repr__(self):

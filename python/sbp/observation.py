@@ -16,7 +16,7 @@ Satellite observation messages from the device.
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -208,7 +208,7 @@ satellite being tracked.
     else:
       super( MsgObs, self).__init__()
       self.msg_type = SBP_MSG_OBS
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.header = kwargs.pop('header')
       self.obs = kwargs.pop('obs')
 
@@ -289,7 +289,7 @@ error in the pseudo-absolute position output.
     else:
       super( MsgBasePos, self).__init__()
       self.msg_type = SBP_MSG_BASE_POS
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.lat = kwargs.pop('lat')
       self.lon = kwargs.pop('lon')
       self.height = kwargs.pop('height')
@@ -443,7 +443,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     else:
       super( MsgEphemeris, self).__init__()
       self.msg_type = SBP_MSG_EPHEMERIS
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.tgd = kwargs.pop('tgd')
       self.c_rs = kwargs.pop('c_rs')
       self.c_rc = kwargs.pop('c_rc')

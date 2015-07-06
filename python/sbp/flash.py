@@ -23,7 +23,7 @@ are intended for internal-use only.
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -79,7 +79,7 @@ starting address
     else:
       super( MsgFlashProgram, self).__init__()
       self.msg_type = SBP_MSG_FLASH_PROGRAM
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.target = kwargs.pop('target')
       self.addr_start = kwargs.pop('addr_start')
       self.addr_len = kwargs.pop('addr_len')
@@ -155,7 +155,7 @@ MSG_FLASH_PROGRAM, may return this message on failure.
     else:
       super( MsgFlashDone, self).__init__()
       self.msg_type = SBP_MSG_FLASH_DONE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.response = kwargs.pop('response')
 
   def __repr__(self):
@@ -239,7 +239,7 @@ starting address
     else:
       super( MsgFlashReadRequest, self).__init__()
       self.msg_type = SBP_MSG_FLASH_READ_REQUEST
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.target = kwargs.pop('target')
       self.addr_start = kwargs.pop('addr_start')
       self.addr_len = kwargs.pop('addr_len')
@@ -325,7 +325,7 @@ starting address
     else:
       super( MsgFlashReadResponse, self).__init__()
       self.msg_type = SBP_MSG_FLASH_READ_RESPONSE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.target = kwargs.pop('target')
       self.addr_start = kwargs.pop('addr_start')
       self.addr_len = kwargs.pop('addr_len')
@@ -406,7 +406,7 @@ the M25)
     else:
       super( MsgFlashErase, self).__init__()
       self.msg_type = SBP_MSG_FLASH_ERASE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.target = kwargs.pop('target')
       self.sector_num = kwargs.pop('sector_num')
 
@@ -478,7 +478,7 @@ memory. The device replies with a MSG_FLASH_DONE message.
     else:
       super( MsgStmFlashLockSector, self).__init__()
       self.msg_type = SBP_MSG_STM_FLASH_LOCK_SECTOR
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.sector = kwargs.pop('sector')
 
   def __repr__(self):
@@ -549,7 +549,7 @@ memory. The device replies with a MSG_FLASH_DONE message.
     else:
       super( MsgStmFlashUnlockSector, self).__init__()
       self.msg_type = SBP_MSG_STM_FLASH_UNLOCK_SECTOR
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.sector = kwargs.pop('sector')
 
   def __repr__(self):
@@ -599,7 +599,7 @@ class MsgStmUniqueIdRequest(SBP):
   This message reads the device's hardcoded unique ID. The host
 requests the ID by sending a MSG_STM_UNIQUE_ID_REQUEST. The device
 responds with a MSG_STM_UNIQUE_ID_RESPONSE with the 12-byte unique
-ID in the payload..
+ID in the payload.
 
 
   """
@@ -611,7 +611,7 @@ ID in the payload..
     else:
       super( MsgStmUniqueIdRequest, self).__init__()
       self.msg_type = SBP_MSG_STM_UNIQUE_ID_REQUEST
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -652,7 +652,7 @@ ID in the payload..
     else:
       super( MsgStmUniqueIdResponse, self).__init__()
       self.msg_type = SBP_MSG_STM_UNIQUE_ID_RESPONSE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.stm_id = kwargs.pop('stm_id')
 
   def __repr__(self):
@@ -723,7 +723,7 @@ register. The device replies with a MSG_FLASH_DONE message.
     else:
       super( MsgM25FlashWriteStatus, self).__init__()
       self.msg_type = SBP_MSG_M25_FLASH_WRITE_STATUS
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.status = kwargs.pop('status')
 
   def __repr__(self):

@@ -22,7 +22,7 @@ device response.
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -53,7 +53,7 @@ response from the device is MSG_BOOTLOADER_HANDSHAKE_RESPONSE.
     else:
       super( MsgBootloaderHandshakeRequest, self).__init__()
       self.msg_type = SBP_MSG_BOOTLOADER_HANDSHAKE_REQUEST
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -98,7 +98,7 @@ protocol version number.
     else:
       super( MsgBootloaderHandshakeResponse, self).__init__()
       self.msg_type = SBP_MSG_BOOTLOADER_HANDSHAKE_RESPONSE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.flags = kwargs.pop('flags')
       self.version = kwargs.pop('version')
 
@@ -169,7 +169,7 @@ class MsgBootloaderJumpToApp(SBP):
     else:
       super( MsgBootloaderJumpToApp, self).__init__()
       self.msg_type = SBP_MSG_BOOTLOADER_JUMP_TO_APP
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.jump = kwargs.pop('jump')
 
   def __repr__(self):
@@ -233,7 +233,7 @@ and not related to the Piksi's serial number.
     else:
       super( MsgNapDeviceDnaRequest, self).__init__()
       self.msg_type = SBP_MSG_NAP_DEVICE_DNA_REQUEST
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -278,7 +278,7 @@ on the right.
     else:
       super( MsgNapDeviceDnaResponse, self).__init__()
       self.msg_type = SBP_MSG_NAP_DEVICE_DNA_RESPONSE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.dna = kwargs.pop('dna')
 
   def __repr__(self):

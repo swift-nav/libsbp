@@ -22,7 +22,7 @@ These messages are in the implementation-defined range
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -142,7 +142,7 @@ alamanac onto the Piksi's flash memory from the host.
     else:
       super( MsgAlmanac, self).__init__()
       self.msg_type = SBP_MSG_ALMANAC
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -170,7 +170,7 @@ time estimate sent by the host.
     else:
       super( MsgSetTime, self).__init__()
       self.msg_type = SBP_MSG_SET_TIME
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -198,7 +198,7 @@ bootloader.
     else:
       super( MsgReset, self).__init__()
       self.msg_type = SBP_MSG_RESET
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -227,7 +227,7 @@ removed in a future release.
     else:
       super( MsgCwResults, self).__init__()
       self.msg_type = SBP_MSG_CW_RESULTS
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -256,7 +256,7 @@ be removed in a future release.
     else:
       super( MsgCwStart, self).__init__()
       self.msg_type = SBP_MSG_CW_START
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -295,7 +295,7 @@ Ambiguity Resolution (IAR) process.
     else:
       super( MsgResetFilters, self).__init__()
       self.msg_type = SBP_MSG_RESET_FILTERS
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.filter = kwargs.pop('filter')
 
   def __repr__(self):
@@ -358,7 +358,7 @@ observations between the two.
     else:
       super( MsgInitBase, self).__init__()
       self.msg_type = SBP_MSG_INIT_BASE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -406,7 +406,7 @@ thread. The reported percentage values require to be normalized.
     else:
       super( MsgThreadState, self).__init__()
       self.msg_type = SBP_MSG_THREAD_STATE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.name = kwargs.pop('name')
       self.cpu = kwargs.pop('cpu')
       self.stack_free = kwargs.pop('stack_free')
@@ -457,7 +457,7 @@ class MsgUartState(SBP):
   
   The UART message reports data latency and throughput of the UART
 channels providing SBP I/O. On the default Piksi configuration,
-UARTs A and B are used for telemetry radios, but can also be be
+UARTs A and B are used for telemetry radios, but can also be
 host access ports for embedded hosts, or other interfaces in
 future. The reported percentage values require to be normalized.
 
@@ -491,7 +491,7 @@ future. The reported percentage values require to be normalized.
     else:
       super( MsgUartState, self).__init__()
       self.msg_type = SBP_MSG_UART_STATE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.uart_a = kwargs.pop('uart_a')
       self.uart_b = kwargs.pop('uart_b')
       self.uart_ftdi = kwargs.pop('uart_ftdi')
@@ -567,7 +567,7 @@ from satellite observations.
     else:
       super( MsgIarState, self).__init__()
       self.msg_type = SBP_MSG_IAR_STATE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.num_hyps = kwargs.pop('num_hyps')
 
   def __repr__(self):
@@ -641,7 +641,7 @@ from being used in various Piksi subsystems.
     else:
       super( MsgMaskSatellite, self).__init__()
       self.msg_type = SBP_MSG_MASK_SATELLITE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.mask = kwargs.pop('mask')
       self.prn = kwargs.pop('prn')
 

@@ -16,7 +16,7 @@
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -125,7 +125,7 @@ class ((( m.identifier | classnameify )))(SBP):
     else:
       super( ((( m.identifier | classnameify ))), self).__init__()
       self.msg_type = SBP_(((m.identifier)))
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
     ((*- if m.fields*))
       ((*- for f in m.fields *))
       self.(((f.identifier))) = kwargs.pop('(((f.identifier)))')

@@ -27,7 +27,7 @@ and the RTK solution in tandem.
 
 from construct import *
 import json
-from sbp.msg import SBP
+from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import six
 
@@ -90,7 +90,7 @@ from -500000 to 500000)
     else:
       super( MsgGPSTime, self).__init__()
       self.msg_type = SBP_MSG_GPS_TIME
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.wn = kwargs.pop('wn')
       self.tow = kwargs.pop('tow')
       self.ns = kwargs.pop('ns')
@@ -180,7 +180,7 @@ precision.
     else:
       super( MsgDops, self).__init__()
       self.msg_type = SBP_MSG_DOPS
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.tow = kwargs.pop('tow')
       self.gdop = kwargs.pop('gdop')
       self.pdop = kwargs.pop('pdop')
@@ -282,7 +282,7 @@ to 0.
     else:
       super( MsgPosECEF, self).__init__()
       self.msg_type = SBP_MSG_POS_ECEF
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.tow = kwargs.pop('tow')
       self.x = kwargs.pop('x')
       self.y = kwargs.pop('y')
@@ -390,7 +390,7 @@ implemented). Defaults to 0.
     else:
       super( MsgPosLLH, self).__init__()
       self.msg_type = SBP_MSG_POS_LLH
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.tow = kwargs.pop('tow')
       self.lat = kwargs.pop('lat')
       self.lon = kwargs.pop('lon')
@@ -491,7 +491,7 @@ to 0.
     else:
       super( MsgBaselineECEF, self).__init__()
       self.msg_type = SBP_MSG_BASELINE_ECEF
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.tow = kwargs.pop('tow')
       self.x = kwargs.pop('x')
       self.y = kwargs.pop('y')
@@ -597,7 +597,7 @@ implemented). Defaults to 0.
     else:
       super( MsgBaselineNED, self).__init__()
       self.msg_type = SBP_MSG_BASELINE_NED
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.tow = kwargs.pop('tow')
       self.n = kwargs.pop('n')
       self.e = kwargs.pop('e')
@@ -696,7 +696,7 @@ to 0.
     else:
       super( MsgVelECEF, self).__init__()
       self.msg_type = SBP_MSG_VEL_ECEF
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.tow = kwargs.pop('tow')
       self.x = kwargs.pop('x')
       self.y = kwargs.pop('y')
@@ -799,7 +799,7 @@ implemented). Defaults to 0.
     else:
       super( MsgVelNED, self).__init__()
       self.msg_type = SBP_MSG_VEL_NED
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
       self.tow = kwargs.pop('tow')
       self.n = kwargs.pop('n')
       self.e = kwargs.pop('e')
