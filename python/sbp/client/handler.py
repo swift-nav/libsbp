@@ -225,7 +225,12 @@ class Handler(object):
     """
     if msg.msg_type:
       for callback in self.get_callbacks(msg.msg_type):
-        callback(msg)
+        # Catch exceptions here, otherwise some callbacks may not be called.
+        try:
+          callback(msg)
+        except:
+          import traceback
+          traceback.print_exc()
 
   def start(self):
     """
