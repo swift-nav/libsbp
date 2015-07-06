@@ -33,6 +33,8 @@
 /** Return value indicating an error occured because an argument was NULL. */
 #define SBP_NULL_ERROR     -4
 
+/** Default sender ID. Intended for messages sent from the host to the device. */
+#define SBP_SENDER_ID 0x42
 
 /** SBP callback function prototype definition. */
 typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[], void *context);
