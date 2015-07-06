@@ -194,7 +194,7 @@ whole cycles and 8-bits of fractional cycles).
 satellite being tracked.
 
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgObs",
@@ -274,7 +274,7 @@ error in the pseudo-absolute position output.
   height : double
     Height
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgBasePos",
@@ -404,7 +404,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
   iode : int
     Issue of ephemeris data
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgEphemeris",

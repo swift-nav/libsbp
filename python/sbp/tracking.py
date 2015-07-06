@@ -112,7 +112,7 @@ all tracked satellites.
   states : array
     Satellite tracking channel state
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgTrackingState",
@@ -187,7 +187,7 @@ update interval.
   corrs : array
     Early, Prompt and Late correlations
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgTrackingIq",

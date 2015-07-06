@@ -47,7 +47,7 @@ ERROR, WARNING, DEBUG, INFO logging levels.
   text : string
     Human-readable string
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgPrint",
@@ -144,7 +144,7 @@ class MsgTweet(SBP):
   tweet : string
     Human-readable string
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgTweet",

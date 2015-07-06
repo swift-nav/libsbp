@@ -74,7 +74,7 @@ from -500000 to 500000)
   flags : int
     Status flags (reserved)
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgGPSTime",
@@ -162,7 +162,7 @@ precision.
   vdop : int
     Vertical Dilution of Precision
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgDops",
@@ -263,7 +263,7 @@ to 0.
   flags : int
     Status flags
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgPosECEF",
@@ -370,7 +370,7 @@ implemented). Defaults to 0.
   flags : int
     Status flags
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgPosLLH",
@@ -472,7 +472,7 @@ to 0.
   flags : int
     Status flags
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgBaselineECEF",
@@ -577,7 +577,7 @@ implemented). Defaults to 0.
   flags : int
     Status flags
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgBaselineNED",
@@ -677,7 +677,7 @@ to 0.
   flags : int
     Status flags (reserved)
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgVelECEF",
@@ -779,7 +779,7 @@ implemented). Defaults to 0.
   flags : int
     Status flags (reserved)
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgVelNED",

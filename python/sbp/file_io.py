@@ -62,7 +62,7 @@ message".
   filename : string
     Name of the file to read from (NULL padded)
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFileioRead",
@@ -147,7 +147,7 @@ message".
   dirname : string
     Name of the directory to list (NULL padded)
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFileioReadDir",
@@ -221,7 +221,7 @@ message is invalid, a followup MSG_PRINT message will print
   filename : string
     Name of the file to delete (NULL padded)
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFileioRemove",
@@ -299,7 +299,7 @@ print "Invalid fileio write message".
   data : array
     Variable-length array of data to write
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFileioWrite",

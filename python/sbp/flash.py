@@ -63,7 +63,7 @@ starting address
   data : array
     Data to program addresses with, with length N=addr_len
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFlashProgram",
@@ -142,7 +142,7 @@ MSG_FLASH_PROGRAM, may return this message on failure.
   response : int
     Response flags
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFlashDone",
@@ -224,7 +224,7 @@ range.
 starting address
 
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFlashReadRequest",
@@ -310,7 +310,7 @@ range.
 starting address
 
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFlashReadResponse",
@@ -392,7 +392,7 @@ invalid.
 the M25)
 
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFlashErase",
@@ -465,7 +465,7 @@ memory. The device replies with a MSG_FLASH_DONE message.
   sector : int
     Flash sector number to lock
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgStmFlashLockSector",
@@ -536,7 +536,7 @@ memory. The device replies with a MSG_FLASH_DONE message.
   sector : int
     Flash sector number to unlock
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgStmFlashUnlockSector",
@@ -639,7 +639,7 @@ ID in the payload..
   stm_id : array
     Device unique ID
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgStmUniqueIdResponse",
@@ -710,7 +710,7 @@ register. The device replies with a MSG_FLASH_DONE message.
   status : array
     Byte to write to the M25 flash status register
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgM25FlashWriteStatus",

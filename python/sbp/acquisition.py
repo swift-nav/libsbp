@@ -57,7 +57,7 @@ units of dB Hz in the revision of this message.
 acquisition was attempted
 
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgAcqResult",
