@@ -151,7 +151,7 @@ typedef struct __attribute__((packed)) {
  *
  * The UART message reports data latency and throughput of the UART
  * channels providing SBP I/O. On the default Piksi configuration,
- * UARTs A and B are used for telemetry radios, but can also be be
+ * UARTs A and B are used for telemetry radios, but can also be
  * host access ports for embedded hosts, or other interfaces in
  * future. The reported percentage values require to be normalized.
  */

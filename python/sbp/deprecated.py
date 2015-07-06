@@ -289,7 +289,7 @@ within the device firmware and streaming those back to the host.
     else:
       super( MsgDebugVarDeprecated, self).__init__()
       self.msg_type = SBP_MSG_DEBUG_VAR_DEPRECATED
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)

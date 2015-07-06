@@ -53,7 +53,7 @@ configuration to its onboard flash memory file system.
     else:
       super( MsgSettingsSave, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_SAVE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -90,8 +90,8 @@ class MsgSettingsWrite(SBP):
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
-      super( MsgSettings, self).__init__()
-      self.msg_type = SBP_MSG_SETTINGS
+      super( MsgSettingsWrite, self).__init__()
+      self.msg_type = SBP_MSG_SETTINGS_WRITE
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.setting = kwargs.pop('setting')
 
@@ -150,7 +150,7 @@ class MsgSettingsReadRequest(SBP):
 [SECTION_SETTING, SETTING].
 
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgSettingsReadRequest",
@@ -161,9 +161,81 @@ class MsgSettingsReadRequest(SBP):
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
-      super( MsgSettingsSave, self).__init__()
-      self.msg_type = SBP_MSG_SETTINGS_SAVE
+      super( MsgSettingsReadRequest, self).__init__()
+      self.msg_type = SBP_MSG_SETTINGS_READ_REQUEST
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.setting = kwargs.pop('setting')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSettingsReadRequest._parser.parse(d)
+    self.__dict__.update(dict(p.viewitems()))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSettingsReadRequest._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgSettingsReadRequest(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSettingsReadRequest, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SETTINGS_READ_RESPONSE = 0x00A5
+class MsgSettingsReadResponse(SBP):
+  """SBP class for message MSG_SETTINGS_READ_RESPONSE (0x00A5).
+
+  You can have MSG_SETTINGS_READ_RESPONSE inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The setting message reads the device's configuration.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  setting : string
+    A NULL-terminated and delimited string with contents
+[SECTION_SETTING, SETTING, VALUE].
+
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgSettingsReadResponse",
+                   CString('setting', six.b('\n')),)
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSettingsReadResponse, self).__init__()
+      self.msg_type = SBP_MSG_SETTINGS_READ_RESPONSE
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.setting = kwargs.pop('setting')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -235,8 +307,88 @@ NULL-terminated and delimited string with contents
       self.__dict__.update(sbp.__dict__)
       self.from_binary(sbp.payload)
     else:
-      super( MsgSettingsReadByIndex, self).__init__()
-      self.msg_type = SBP_MSG_SETTINGS_READ_BY_INDEX
+      super( MsgSettingsReadByIndexRequest, self).__init__()
+      self.msg_type = SBP_MSG_SETTINGS_READ_BY_INDEX_REQUEST
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.index = kwargs.pop('index')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSettingsReadByIndexRequest._parser.parse(d)
+    self.__dict__.update(dict(p.viewitems()))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSettingsReadByIndexRequest._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgSettingsReadByIndexRequest(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSettingsReadByIndexRequest, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SETTINGS_READ_BY_INDEX_RESPONSE = 0x00A7
+class MsgSettingsReadByIndexResponse(SBP):
+  """SBP class for message MSG_SETTINGS_READ_BY_INDEX_RESPONSE (0x00A7).
+
+  You can have MSG_SETTINGS_READ_BY_INDEX_RESPONSE inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The settings message for iterating through the settings
+values. It will read the setting at an index, returning a
+NULL-terminated and delimited string with contents
+[SECTION_SETTING, SETTING, VALUE].
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  index : int
+    An index into the device settings, with values ranging from
+0 to length(settings)
+
+  setting : string
+    A NULL-terminated and delimited string with contents
+[SECTION_SETTING, SETTING, VALUE].
+
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgSettingsReadByIndexResponse",
+                   ULInt16('index'),
+                   CString('setting', six.b('\n')),)
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      self.__dict__.update(sbp.__dict__)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSettingsReadByIndexResponse, self).__init__()
+      self.msg_type = SBP_MSG_SETTINGS_READ_BY_INDEX_RESPONSE
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.index = kwargs.pop('index')
       self.setting = kwargs.pop('setting')
@@ -297,7 +449,7 @@ class MsgSettingsReadByIndexDone(SBP):
     else:
       super( MsgSettingsReadByIndexDone, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_READ_BY_INDEX_DONE
-      self.sender = kwargs.pop('sender', 0)
+      self.sender = kwargs.pop('sender', SENDER_ID)
 
   def __repr__(self):
     return fmt_repr(self)
