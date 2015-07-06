@@ -287,7 +287,7 @@ class Handler(object):
     event = threading.Event()
     payload = {'data': None}
     def cb(sbp_msg):
-      payload['data'] = sbp_msg.payload
+      payload['data'] = sbp_msg
       event.set()
     self.add_callback(cb, msg_type)
     event.wait(timeout)
