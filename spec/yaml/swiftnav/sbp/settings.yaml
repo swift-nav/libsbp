@@ -39,7 +39,9 @@ definitions:
           type: string
           desc: |
             A NULL-terminated and delimited string with contents
-            [SECTION_SETTING, SETTING, VALUE].
+            [SECTION_SETTING, SETTING, VALUE]. A device will only
+            process to this message when it is received from
+            sender ID 0x42.
 
  - MSG_SETTINGS_READ_REQ:
     id: 0x00A4
@@ -50,7 +52,8 @@ definitions:
           type: string
           desc: |
             A NULL-terminated and delimited string with contents
-            [SECTION_SETTING, SETTING].
+            [SECTION_SETTING, SETTING]. A device will only
+            respond to this message when it is received from sender ID 0x42.
 
  - MSG_SETTINGS_READ_RESP:
     id: 0x00A5
@@ -70,7 +73,8 @@ definitions:
       The settings message for iterating through the settings
       values. It will read the setting at an index, returning a
       NULL-terminated and delimited string with contents
-      [SECTION_SETTING, SETTING, VALUE].
+      [SECTION_SETTING, SETTING, VALUE]. A device will only respond to this message
+      when it is received from sender ID 0x42.
     fields:
       - index:
           type: u16
