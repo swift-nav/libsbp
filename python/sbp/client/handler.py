@@ -285,10 +285,11 @@ class Handler(object):
       Waiting period
     """
     event = threading.Event()
-    payload = None
+    payload = {'data': None}
     def cb(sbp_msg):
-      payload = sbp_msg.payload
+      payload['data'] = sbp_msg.payload
+      event.set()
     self.add_callback(cb, msg_type)
     event.wait(timeout)
     self.remove_callback(cb, msg_type)
-    return payload
+    return payload['data']
