@@ -17,7 +17,6 @@ include:
 definitions:
 
  - ObsGPSTime:
-    public: True
     short_desc: Millisecond-accurate GPS time
     desc: |
       A wire-appropriate GPS time, defined as the number of
@@ -34,7 +33,6 @@ definitions:
             desc: GPS week number
 
  - CarrierPhase:
-    public: True
     short_desc: GPS carrier phase measurement.
     desc: |
       Carrier phase measurement in cycles represented as a 40-bit
@@ -51,7 +49,6 @@ definitions:
             desc: Carrier phase fractional part
 
  - ObservationHeader:
-    public: True
     short_desc: Header for observation message.
     desc: Header of a GPS observation message.
     fields:
@@ -66,7 +63,6 @@ definitions:
               counter (ith packet of n)
 
  - PackedObsContent:
-    public: True
     short_desc: GPS observations for a particular satellite signal.
     desc: |
       Pseudorange and carrier phase observation for a satellite being
@@ -95,7 +91,6 @@ definitions:
 
  - MSG_OBS:
     id: 0x0045
-    public: True
     short_desc: GPS satellite observations
     desc: |
       The GPS observations message reports all the raw pseudorange and
@@ -117,7 +112,6 @@ definitions:
 
  - MSG_BASE_POS:
     id: 0x0044
-    public: True
     short_desc: Base station position
     desc: |
       The base station position message is the position reported by
@@ -141,7 +135,6 @@ definitions:
 
  - MSG_EPHEMERIS:
     id: 0x0046
-    public: True
     short_desc: WGS84 satellite ephemeris parameters
     desc: |
       The ephemeris message returns a set of satellite orbit

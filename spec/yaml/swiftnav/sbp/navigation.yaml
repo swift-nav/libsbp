@@ -29,7 +29,6 @@ definitions:
 
  - MSG_GPS_TIME:
     id: 0x0100
-    public: True
     short_desc: GPS Time
     desc: |
       This message reports the GPS time, representing the time since
@@ -66,7 +65,6 @@ definitions:
 
  - MSG_DOPS:
     id: 0x0206
-    public: True
     short_desc: Dilution of Precision
     desc: |
       This dilution of precision (DOP) message describes the effect of
@@ -96,7 +94,6 @@ definitions:
 
  - MSG_POS_ECEF:
     id: 0x0200
-    public: True
     short_desc: Single-point position in ECEF
     desc: |
       The position solution message reports absolute Earth Centered
@@ -148,7 +145,6 @@ definitions:
 
  - MSG_POS_LLH:
     id: 0x0201
-    public: True
     short_desc: Geodetic Position
     desc: |
       This position solution message reports the absolute geodetic
@@ -211,7 +207,6 @@ definitions:
 
  - MSG_BASELINE_ECEF:
     id: 0x0202
-    public: True
     short_desc: Baseline Position in ECEF
     desc: |
       This message reports the baseline solution in Earth Centered
@@ -259,7 +254,6 @@ definitions:
 
  - MSG_BASELINE_NED:
     id: 0x0203
-    public: True
     short_desc: Baseline in NED
     desc: |
       This message reports the baseline solution in North East Down
@@ -314,7 +308,6 @@ definitions:
 
  - MSG_VEL_ECEF:
     id: 0x0204
-    public: True
     short_desc: Velocity in ECEF
     desc: |
       This message reports the velocity in Earth Centered Earth Fixed
@@ -352,7 +345,6 @@ definitions:
 
  - MSG_VEL_NED:
     id: 0x0205
-    public: True
     short_desc: Velocity in NED
     desc: |
       This message reports the velocity in local North East Down (NED)

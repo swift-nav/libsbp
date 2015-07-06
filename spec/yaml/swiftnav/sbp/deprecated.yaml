@@ -25,6 +25,9 @@ definitions:
       request from the host is MSG_BOOTLOADER_HANDSHAKE_REQUEST.  The
       payload string contains the bootloader version number, but
       returns an empty string for earlier versions.
+    replaced_by:
+      - MSG_BOOTLOADER_HANDSHAKE_REQUEST
+      - MSG_BOOTLOADER_HANDSHAKE_RESPONSE
     fields:
       - handshake:
           type: array
@@ -139,4 +142,3 @@ definitions:
       - prn:
           type: u8
           desc: PRN being tracked
-

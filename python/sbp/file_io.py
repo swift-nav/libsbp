@@ -145,7 +145,7 @@ were succesfully read.
   contents : array
     Contents of read file
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFileioReadResponse",
@@ -314,7 +314,7 @@ identified by an entry containing just the character 0xFF.
   contents : array
     Contents of read directory
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFileioReadDirResponse",
@@ -468,7 +468,7 @@ will print "Invalid fileio write message".
   data : array
     Variable-length array of data to write
   sender : int
-    Optional sender ID, defaults to 0
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFileioWriteRequest",

@@ -25,7 +25,6 @@ definitions:
 
  - MSG_FLASH_PROGRAM:
     id: 0x00E6
-    public: True
     short_desc: Program flash addresses
     desc: |
       The flash program message programs a set of addresses of either
@@ -66,7 +65,6 @@ definitions:
 
  - MSG_FLASH_DONE:
     id: 0x00E0
-    public: True
     short_desc: Flash response message (host <= device).
     desc: |
       This message defines success or failure codes for a variety of
@@ -92,7 +90,6 @@ definitions:
 
  - MSG_FLASH_READ_REQUEST:
     id: 0x00E7
-    public: True
     short_desc: Read STM or M25 flash address request (host => device).
     desc: |
       The flash read message reads a set of addresses of either the
@@ -129,7 +126,6 @@ definitions:
 
  - MSG_FLASH_READ_RESPONSE:
     id: 0x00E1
-    public: True
     short_desc: Read STM or M25 flash address response (host <= device).
     desc: |
       The flash read message reads a set of addresses of either the
@@ -166,7 +162,6 @@ definitions:
 
  - MSG_FLASH_ERASE:
     id: 0x00E2
-    public: True
     short_desc: Erase sector of device flash memory (host => device).
     desc: |
       The flash erase message from the host erases a sector of either
@@ -194,7 +189,6 @@ definitions:
 
  - MSG_STM_FLASH_LOCK_SECTOR:
     id: 0x00E3
-    public: True
     short_desc: Lock sector of STM flash memory (host => device)
     desc: |
       The flash lock message locks a sector of the STM flash
@@ -206,7 +200,6 @@ definitions:
 
  - MSG_STM_FLASH_UNLOCK_SECTOR:
     id: 0x00E4
-    public: True
     short_desc: Unlock sector of STM flash memory (host => device)
     desc: |
       The flash unlock message unlocks a sector of the STM flash
@@ -218,7 +211,6 @@ definitions:
 
  - MSG_STM_UNIQUE_ID_REQUEST:
     id: 0x00E8
-    public: True
     short_desc: |
       Read device's hardcoded unique ID request (host => device)
     desc: |
@@ -229,7 +221,6 @@ definitions:
 
  - MSG_STM_UNIQUE_ID_RESPONSE:
     id: 0x00E5
-    public: True
     short_desc: |
       Read device's hardcoded unique ID response (host <= device)
     desc: |
@@ -246,7 +237,6 @@ definitions:
 
  - MSG_M25_FLASH_WRITE_STATUS:
     id: 0x00F3
-    public: False
     short_desc: Write M25 flash status register (host => device)
     desc: |
       The flash status message writes to the 8-bit M25 flash status

@@ -18,7 +18,6 @@ definitions:
 
  - MSG_STARTUP:
     id: 0xFF00
-    public: True
     short_desc: System start-up message
     desc: |
         The system start-up message is sent once on system
@@ -32,7 +31,6 @@ definitions:
 
  - MSG_HEARTBEAT:
     id: 0xFFFF
-    public: True
     short_desc: System heartbeat message
     desc: |
         The heartbeat message is sent periodically to inform the host

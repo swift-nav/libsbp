@@ -98,34 +98,6 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     d.update(j)
     return d
     
-SBP_MSG_DEBUG_VAR = 0x0011
-class MsgDebugVar(SBP):
-  """SBP class for message MSG_DEBUG_VAR (0x0011).
-
-  You can have MSG_DEBUG_VAR inherent its fields directly
-  from an inherited SBP object, or construct it inline using a dict
-  of its fields.
-
-  
-  This is an unused legacy message for tracing variable values
-within the device firmware and streaming those back to the host.
-
-
-  """
-
-  def __init__(self, sbp=None, **kwargs):
-    if sbp:
-      self.__dict__.update(sbp.__dict__)
-      self.payload = sbp.payload
-    else:
-      super( MsgDebugVar, self).__init__()
-      self.msg_type = SBP_MSG_DEBUG_VAR
-      self.sender = kwargs.pop('sender', SENDER_ID)
-
-  def __repr__(self):
-    return fmt_repr(self)
- 
-    
 SBP_MSG_TWEET = 0x0012
 class MsgTweet(SBP):
   """SBP class for message MSG_TWEET (0x0012).
@@ -198,6 +170,5 @@ class MsgTweet(SBP):
 
 msg_classes = {
   0x0010: MsgPrint,
-  0x0011: MsgDebugVar,
   0x0012: MsgTweet,
 }

@@ -38,7 +38,6 @@ definitions:
 
  - MSG_RESET:
     id: 0x00B2
-    public: True
     short_desc: Reset the device (host => Piksi)
     desc: |
       This message from the host resets the Piksi back into the
@@ -81,7 +80,6 @@ definitions:
 
  - MSG_INIT_BASE:
     id: 0x0023
-    public: True
     short_desc: Initialize IAR from known baseline (host => device)
     desc: |
       This message initializes the integer ambiguity resolution (IAR)
@@ -92,7 +90,6 @@ definitions:
 
  - MSG_THREAD_STATE:
     id: 0x0017
-    public: True
     short_desc: State of an RTOS thread
     desc: |
       The thread usage message from the device reports real-time
@@ -114,7 +111,6 @@ definitions:
             desc: Free stack space for this thread
 
  - UARTChannel:
-    public: True
     short_desc: State of the UART channel
     desc: |
       Throughput, utilization, and error counts on the RX/TX buffers
@@ -147,7 +143,6 @@ definitions:
               0 to 255)
 
  - Latency:
-    public: True
     short_desc: Receiver-to-base station latency
     desc: |
       Statistics on the latency of observations received from the base
@@ -175,7 +170,6 @@ definitions:
 
  - MSG_UART_STATE:
     id: 0x0018
-    public: True
     short_desc: State of the UART channels
     desc: |
       The UART message reports data latency and throughput of the UART
