@@ -54,11 +54,18 @@ class ((( m.identifier )))(object):
                      ((*- endfor *))))
   ((*- endif *))
 
-  def __init__(self, payload):
+  def __init__(self, payload=None, **kwargs):
+    if payload:
       ((*- if m.fields *))
-    self.from_binary(payload)
+      self.from_binary(payload)
       ((*- else *))
-    self.payload = payload
+      self.payload = payload
+      ((*- endif *))
+      ((*- if m.fields *))
+    else:
+        ((*- for f in m.fields *))
+      self.(((f.identifier))) = kwargs.pop('(((f.identifier)))')
+        ((*- endfor *))
       ((*- endif *))
 
   def __repr__(self):

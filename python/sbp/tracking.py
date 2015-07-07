@@ -47,8 +47,13 @@ signal power.
                      ULInt8('prn'),
                      LFloat32('cn0'),))
 
-  def __init__(self, payload):
-    self.from_binary(payload)
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.state = kwargs.pop('state')
+      self.prn = kwargs.pop('prn')
+      self.cn0 = kwargs.pop('cn0')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -78,8 +83,12 @@ class TrackingChannelCorrelation(object):
                      SLInt32('I'),
                      SLInt32('Q'),))
 
-  def __init__(self, payload):
-    self.from_binary(payload)
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.I = kwargs.pop('I')
+      self.Q = kwargs.pop('Q')
 
   def __repr__(self):
     return fmt_repr(self)
