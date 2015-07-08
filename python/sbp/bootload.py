@@ -48,7 +48,9 @@ response from the device is MSG_BOOTLOADER_HANDSHAKE_RESPONSE.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgBootloaderHandshakeRequest,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
       super( MsgBootloaderHandshakeRequest, self).__init__()
@@ -90,10 +92,16 @@ protocol version number.
   _parser = Struct("MsgBootloaderHandshakeResponse",
                    ULInt32('flags'),
                    CString('version', six.b('\n')),)
+  __slots__ = [
+               'flags',
+               'version',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgBootloaderHandshakeResponse,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgBootloaderHandshakeResponse, self).__init__()
@@ -111,7 +119,8 @@ protocol version number.
 
     """
     p = MsgBootloaderHandshakeResponse._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -161,10 +170,15 @@ class MsgBootloaderJumpToApp(SBP):
   """
   _parser = Struct("MsgBootloaderJumpToApp",
                    ULInt8('jump'),)
+  __slots__ = [
+               'jump',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgBootloaderJumpToApp,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgBootloaderJumpToApp, self).__init__()
@@ -181,7 +195,8 @@ class MsgBootloaderJumpToApp(SBP):
 
     """
     p = MsgBootloaderJumpToApp._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -228,7 +243,9 @@ and not related to the Piksi's serial number.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgNapDeviceDnaRequest,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
       super( MsgNapDeviceDnaRequest, self).__init__()
@@ -270,10 +287,15 @@ on the right.
   """
   _parser = Struct("MsgNapDeviceDnaResponse",
                    Struct('dna', Array(8, ULInt8('dna'))),)
+  __slots__ = [
+               'dna',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgNapDeviceDnaResponse,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgNapDeviceDnaResponse, self).__init__()
@@ -290,7 +312,8 @@ on the right.
 
     """
     p = MsgNapDeviceDnaResponse._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

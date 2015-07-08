@@ -82,10 +82,18 @@ from -500000 to 500000)
                    ULInt32('tow'),
                    SLInt32('ns'),
                    ULInt8('flags'),)
+  __slots__ = [
+               'wn',
+               'tow',
+               'ns',
+               'flags',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgGPSTime,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgGPSTime, self).__init__()
@@ -105,7 +113,8 @@ from -500000 to 500000)
 
     """
     p = MsgGPSTime._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -172,10 +181,20 @@ precision.
                    ULInt16('tdop'),
                    ULInt16('hdop'),
                    ULInt16('vdop'),)
+  __slots__ = [
+               'tow',
+               'gdop',
+               'pdop',
+               'tdop',
+               'hdop',
+               'vdop',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgDops,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgDops, self).__init__()
@@ -197,7 +216,8 @@ precision.
 
     """
     p = MsgDops._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -274,10 +294,21 @@ to 0.
                    ULInt16('accuracy'),
                    ULInt8('n_sats'),
                    ULInt8('flags'),)
+  __slots__ = [
+               'tow',
+               'x',
+               'y',
+               'z',
+               'accuracy',
+               'n_sats',
+               'flags',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgPosECEF,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgPosECEF, self).__init__()
@@ -300,7 +331,8 @@ to 0.
 
     """
     p = MsgPosECEF._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -382,10 +414,22 @@ implemented). Defaults to 0.
                    ULInt16('v_accuracy'),
                    ULInt8('n_sats'),
                    ULInt8('flags'),)
+  __slots__ = [
+               'tow',
+               'lat',
+               'lon',
+               'height',
+               'h_accuracy',
+               'v_accuracy',
+               'n_sats',
+               'flags',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgPosLLH,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgPosLLH, self).__init__()
@@ -409,7 +453,8 @@ implemented). Defaults to 0.
 
     """
     p = MsgPosLLH._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -483,10 +528,21 @@ to 0.
                    ULInt16('accuracy'),
                    ULInt8('n_sats'),
                    ULInt8('flags'),)
+  __slots__ = [
+               'tow',
+               'x',
+               'y',
+               'z',
+               'accuracy',
+               'n_sats',
+               'flags',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgBaselineECEF,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgBaselineECEF, self).__init__()
@@ -509,7 +565,8 @@ to 0.
 
     """
     p = MsgBaselineECEF._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -589,10 +646,22 @@ implemented). Defaults to 0.
                    ULInt16('v_accuracy'),
                    ULInt8('n_sats'),
                    ULInt8('flags'),)
+  __slots__ = [
+               'tow',
+               'n',
+               'e',
+               'd',
+               'h_accuracy',
+               'v_accuracy',
+               'n_sats',
+               'flags',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgBaselineNED,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgBaselineNED, self).__init__()
@@ -616,7 +685,8 @@ implemented). Defaults to 0.
 
     """
     p = MsgBaselineNED._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -688,10 +758,21 @@ to 0.
                    ULInt16('accuracy'),
                    ULInt8('n_sats'),
                    ULInt8('flags'),)
+  __slots__ = [
+               'tow',
+               'x',
+               'y',
+               'z',
+               'accuracy',
+               'n_sats',
+               'flags',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgVelECEF,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgVelECEF, self).__init__()
@@ -714,7 +795,8 @@ to 0.
 
     """
     p = MsgVelECEF._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -791,10 +873,22 @@ implemented). Defaults to 0.
                    ULInt16('v_accuracy'),
                    ULInt8('n_sats'),
                    ULInt8('flags'),)
+  __slots__ = [
+               'tow',
+               'n',
+               'e',
+               'd',
+               'h_accuracy',
+               'v_accuracy',
+               'n_sats',
+               'flags',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgVelNED,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgVelNED, self).__init__()
@@ -818,7 +912,8 @@ implemented). Defaults to 0.
 
     """
     p = MsgVelNED._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

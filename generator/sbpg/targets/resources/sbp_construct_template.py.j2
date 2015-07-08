@@ -52,6 +52,10 @@ class ((( m.identifier )))(object):
                      ((*- for f in m.fields *))
                      ((( f | construct ))),
                      ((*- endfor *))))
+  __slots__ = [((* for f in m.fields *))
+               '((( f.identifier )))',
+               ((*- endfor *))
+              ]
   ((*- endif *))
 
   def __init__(self, payload=None, **kwargs):
@@ -73,10 +77,12 @@ class ((( m.identifier )))(object):
   ((* if m.fields *))
   def from_binary(self, d):
     p = ((( m.identifier )))._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
-    return ((( m.identifier ))).build(self.__dict__)
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return ((( m.identifier ))).build(d)
   ((*- endif *))
     ((* endif *))
   ((*- endif *))
@@ -119,11 +125,17 @@ class ((( m.identifier | classnameify )))(SBP):
                    ((*- for f in m.fields *))
                    ((( f | construct ))),
                    ((*- endfor *)))
+  __slots__ = [((* for f in m.fields *))
+               '((( f.identifier )))',
+               ((*- endfor *))
+              ]
   ((*- endif *))
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( ((( m.identifier | classnameify ))),
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       ((*- if m.fields *))
       self.from_binary(sbp.payload)
       ((*- else *))
@@ -148,7 +160,8 @@ class ((( m.identifier | classnameify )))(SBP):
 
     """
     p = ((( m.identifier | classnameify )))._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

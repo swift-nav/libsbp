@@ -69,10 +69,17 @@ read message".
                    ULInt32('offset'),
                    ULInt8('chunk_size'),
                    String('filename', 20),)
+  __slots__ = [
+               'offset',
+               'chunk_size',
+               'filename',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgFileioReadRequest,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgFileioReadRequest, self).__init__()
@@ -91,7 +98,8 @@ read message".
 
     """
     p = MsgFileioReadRequest._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -153,10 +161,18 @@ were succesfully read.
                    ULInt8('chunk_size'),
                    String('filename', 20),
                    OptionalGreedyRange(ULInt8('contents')),)
+  __slots__ = [
+               'offset',
+               'chunk_size',
+               'filename',
+               'contents',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgFileioReadResponse,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgFileioReadResponse, self).__init__()
@@ -176,7 +192,8 @@ were succesfully read.
 
     """
     p = MsgFileioReadResponse._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -238,10 +255,16 @@ message".
   _parser = Struct("MsgFileioReadDirRequest",
                    ULInt32('offset'),
                    String('dirname', 20),)
+  __slots__ = [
+               'offset',
+               'dirname',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgFileioReadDirRequest,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgFileioReadDirRequest, self).__init__()
@@ -259,7 +282,8 @@ message".
 
     """
     p = MsgFileioReadDirRequest._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -321,10 +345,17 @@ identified by an entry containing just the character 0xFF.
                    ULInt32('offset'),
                    String('dirname', 20),
                    OptionalGreedyRange(ULInt8('contents')),)
+  __slots__ = [
+               'offset',
+               'dirname',
+               'contents',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgFileioReadDirResponse,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgFileioReadDirResponse, self).__init__()
@@ -343,7 +374,8 @@ identified by an entry containing just the character 0xFF.
 
     """
     p = MsgFileioReadDirResponse._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -395,10 +427,15 @@ message is invalid, a followup MSG_PRINT message will print
   """
   _parser = Struct("MsgFileioRemove",
                    String('filename', 20),)
+  __slots__ = [
+               'filename',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgFileioRemove,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgFileioRemove, self).__init__()
@@ -415,7 +452,8 @@ message is invalid, a followup MSG_PRINT message will print
 
     """
     p = MsgFileioRemove._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -475,10 +513,17 @@ will print "Invalid fileio write message".
                    String('filename', 20),
                    ULInt32('offset'),
                    OptionalGreedyRange(ULInt8('data')),)
+  __slots__ = [
+               'filename',
+               'offset',
+               'data',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgFileioWriteRequest,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgFileioWriteRequest, self).__init__()
@@ -497,7 +542,8 @@ will print "Invalid fileio write message".
 
     """
     p = MsgFileioWriteRequest._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -556,10 +602,17 @@ write.
                    String('filename', 20),
                    ULInt32('offset'),
                    OptionalGreedyRange(ULInt8('data')),)
+  __slots__ = [
+               'filename',
+               'offset',
+               'data',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgFileioWriteResponse,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgFileioWriteResponse, self).__init__()
@@ -578,7 +631,8 @@ write.
 
     """
     p = MsgFileioWriteResponse._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

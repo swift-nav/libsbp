@@ -65,10 +65,18 @@ acquisition was attempted
                    LFloat32('cp'),
                    LFloat32('cf'),
                    ULInt8('prn'),)
+  __slots__ = [
+               'snr',
+               'cp',
+               'cf',
+               'prn',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      self.__dict__.update(sbp.__dict__)
+      super( MsgAcqResult,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
       super( MsgAcqResult, self).__init__()
@@ -88,7 +96,8 @@ acquisition was attempted
 
     """
     p = MsgAcqResult._parser.parse(d)
-    self.__dict__.update(dict(p.viewitems()))
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
