@@ -140,9 +140,6 @@ class ReceiveThread(threading.Thread):
             self.call(msg)
       except SystemExit:
         break
-      except:
-        import traceback
-        traceback.print_exc()
 
 class Handler(object):
   """
@@ -225,7 +222,13 @@ class Handler(object):
     """
     if msg.msg_type:
       for callback in self.get_callbacks(msg.msg_type):
-        callback(msg)
+        try:
+          callback(msg)
+        except SystemExit:
+          raise
+        except:
+          import traceback
+          traceback.print_exc()
 
   def start(self):
     """

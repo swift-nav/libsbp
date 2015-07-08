@@ -57,10 +57,8 @@ class PickleLogIterator(LogIterator):
     try:
       while True:
         delta, timestamp, item = pickle.load(self.handle)
-        try:
-          yield (delta, timestamp, self.dispatcher(item))
-        except KeyError:
-          yield (delta, timestamp, item)
+        msg = self.dispatch(item)
+        yield (delta, timestamp, msg)
     except EOFError:
       self.handle.seek(0, 0)
       raise StopIteration

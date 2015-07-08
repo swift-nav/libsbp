@@ -11,7 +11,6 @@
 from ...msg import SBP
 from ...table import dispatch
 from .base_logger import BaseLogger, LogIterator
-from construct.core import ConstructError
 import json
 import warnings
 from boto.s3.connection import S3Connection
@@ -29,10 +28,7 @@ class JSONLogger(BaseLogger):
     self.call(msg)
 
   def fmt_msg(self, msg):
-    try:
-      data = self.dispatcher(msg).to_json_dict()
-    except KeyError:
-      data = msg.to_json_dict()
+    data = self.dispatch(msg).to_json_dict()
     return {"delta": self.delta(),
             "timestamp": self.timestamp(),
             "data": data,
@@ -63,10 +59,8 @@ class JSONLogIterator(LogIterator):
     delta = data['delta']
     timestamp = data['timestamp']
     item = SBP.from_json_dict(data['data'])
-    try:
-      yield (delta, timestamp, self.dispatcher(item))
-    except KeyError:
-      yield (delta, timestamp, item)
+    msg = self.dispatch(msg)
+    yield (delta, timestamp, msg)
 
   def next(self):
     """
@@ -87,12 +81,8 @@ class JSONLogIterator(LogIterator):
         delta = data['delta']
         timestamp = data['timestamp']
         item = SBP.from_json_dict(data['data'])
-        try:
-          yield (delta, timestamp, self.dispatcher(item))
-        except (KeyError, ConstructError):
-          warn = "Bad message parsing for line %s" % line
-          warnings.warn(warn, RuntimeWarning)
-          yield (delta, timestamp, item)
+        msg = self.dispatch(item, line)
+        yield (delta, timestamp, msg)
       except ValueError:
         warn = "Bad JSON decoding for line %s" % line
         warnings.warn(warn, RuntimeWarning)
@@ -151,10 +141,8 @@ class MultiJSONLogIterator(JSONLogIterator):
       timestamp = data['timestamp']
       metadata = data['metadata']
       item = SBP.from_json_dict(data['data'])
-      try:
-        yield (delta, timestamp, metadata, self.dispatcher(item))
-      except KeyError:
-        yield (delta, timestamp, metadata, item)
+      msg = self.dispatch(item)
+      yield (delta, timestamp, metadata, msg)
 
     for handle in self.handles:
       handle.seek(0, 0)
