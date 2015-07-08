@@ -38,7 +38,7 @@ class DeviceIterator(LogIterator):
     Called with each receipt of the message
     Note: dispatch is necessary but perhaps should be handled in handler
     """
-    data = self.dispatch_msg(msg)
+    data = self.dispatch(msg)
     self.queue.put(data, True)
 
   def __init__(self, handler, timeout=0, maxsize=0, dispatcher=dispatch):

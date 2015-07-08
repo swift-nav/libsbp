@@ -9,8 +9,10 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 from ...table import dispatch
+from construct.core import ConstructError
 import calendar
 import time
+import warnings
 
 class BaseLogger(object):
   """
@@ -42,10 +44,16 @@ class BaseLogger(object):
   def close(self):
     self.handle.close()
 
-  def dispatch_msg(self, msg):
+  def dispatch(self, msg):
     try:
       data = self.dispatcher(msg)
     except KeyError:
+      warn = "Unknown message type"
+      warnings.warn(warn, RuntimeWarning)
+      data = msg
+    except ConstructError:
+      warn = "Bad message parsing"
+      warnings.warn(warn, RuntimeWarning)
       data = msg
     return data
 
@@ -94,6 +102,23 @@ class LogIterator(object):
 
   def close(self):
     self.handle.close()
+
+  def dispatch(self, msg, line=None):
+    try:
+      data = self.dispatcher(msg)
+    except KeyError:
+      warn = "Unknown message type"
+      if line is not None:
+        warn += " for line %s" % line
+      warnings.warn(warn, RuntimeWarning)
+      data = msg
+    except ConstructError:
+      warn = "Bad message parsing"
+      if line is not None:
+        warn += " for line %s" % line
+      warnings.warn(warn, RuntimeWarning)
+      data = msg
+    return data
 
   def next(self):
     """Return the next record tuple from the log file. If an unknown SBP
