@@ -42,6 +42,13 @@ class BaseLogger(object):
   def close(self):
     self.handle.close()
 
+  def dispatch_msg(self, msg):
+    try:
+      data = self.dispatcher(msg)
+    except KeyError:
+      data = msg
+    return data
+
   def timestamp(self):
     """
     Timestamp generator.
