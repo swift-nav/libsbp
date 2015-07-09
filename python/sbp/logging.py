@@ -19,8 +19,7 @@ implementation-defined range (0x0000-0x00FF).
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
-import six
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/logging.yaml with generate.py.
 # Please do not hand edit!
@@ -51,7 +50,7 @@ ERROR, WARNING, DEBUG, INFO logging levels.
 
   """
   _parser = Struct("MsgPrint",
-                   CString('text', six.b('\n')),)
+                   greedy_string('text'),)
   __slots__ = [
                'text',
               ]

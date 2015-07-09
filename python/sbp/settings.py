@@ -24,8 +24,7 @@ https://github.com/swift-nav/piksi\_firmware/blob/master/docs/settings.pdf
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
-import six
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/settings.yaml with generate.py.
 # Please do not hand edit!
@@ -85,7 +84,7 @@ class MsgSettingsWrite(SBP):
 
   """
   _parser = Struct("MsgSettingsWrite",
-                   CString('setting', six.b('\n')),)
+                   greedy_string('setting'),)
   __slots__ = [
                'setting',
               ]
@@ -162,7 +161,7 @@ class MsgSettingsReadRequest(SBP):
 
   """
   _parser = Struct("MsgSettingsReadRequest",
-                   CString('setting', six.b('\n')),)
+                   greedy_string('setting'),)
   __slots__ = [
                'setting',
               ]
@@ -239,7 +238,7 @@ class MsgSettingsReadResponse(SBP):
 
   """
   _parser = Struct("MsgSettingsReadResponse",
-                   CString('setting', six.b('\n')),)
+                   greedy_string('setting'),)
   __slots__ = [
                'setting',
               ]
@@ -406,7 +405,7 @@ NULL-terminated and delimited string with contents
   """
   _parser = Struct("MsgSettingsReadByIndexResponse",
                    ULInt16('index'),
-                   CString('setting', six.b('\n')),)
+                   greedy_string('setting'),)
   __slots__ = [
                'index',
                'setting',

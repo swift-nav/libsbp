@@ -132,9 +132,7 @@ def gather_by_module(test_table):
       output[module] = v
   return output
 
-_TO_REMOVE=['preamble', 'msg_type', 'sender', 'length', 'payload', 'crc']
-
-def mk_readable_msg(msg, keys=_TO_REMOVE):
+def mk_readable_msg(msg):
   """
   Produces a unit test case from a parsed SBP message. The case
   includes the raw output, the SBP message with unparsed payload, and
@@ -152,11 +150,9 @@ def mk_readable_msg(msg, keys=_TO_REMOVE):
   A dict formatted for a unit test case.
 
   """
-  f = walk_json_dict(msg.__dict__)
+  f = walk_json_dict(dict([(k, getattr(msg, k)) for k in msg.__slots__]))
   # Message includes fields from the SBP message it inherits from, so
   # remove those.
-  for k in keys:
-    del f[k]
   i = {'raw_packet' : base64.standard_b64encode(msg.pack()),
        'raw_json'   : msg.to_json(),
        'msg_type'   : hex(msg.msg_type),
