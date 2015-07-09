@@ -24,8 +24,7 @@ are intended for internal-use only.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
-import six
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/flash.yaml with generate.py.
 # Please do not hand edit!
