@@ -15,7 +15,7 @@
 
 EXCLUDE = ['sender', 'msg_type', 'crc', 'length', 'preamble', 'payload']
 
-from construct import Container
+from construct import Container, Field, OptionalGreedyRange, Rename, StringAdapter
 
 
 def exclude_fields(obj, exclude=EXCLUDE):
@@ -74,3 +74,9 @@ def fmt_repr(obj):
   """
   items = ["%s = %r" % (k, v) for k, v in exclude_fields(obj).items()]
   return "<%s: {%s}>" % (obj.__class__.__name__, ', '.join(items))
+
+def greedy_string(name):
+  """
+  Variable-length string field.
+  """
+  return Rename(name, StringAdapter(OptionalGreedyRange(Field(None, 1))))
