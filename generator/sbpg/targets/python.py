@@ -64,7 +64,7 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
   elif f.type_id == 'string' and f.options.get('size', None):
     return "String('%s', %d)" % (f.identifier, f.options['size'].value)
   elif f.type_id == 'string':
-    return "CString('%s', six.b('\\n'))" % (f.identifier)
+    return "greedy_string('%s')" % (f.identifier)
   elif f.type_id == 'array' and f.options.get('size', None):
     fill = f.options['fill'].value
     f_ = copy.copy(f)
