@@ -33,10 +33,12 @@ definitions:
       The file read message reads a certain length (up to 255 bytes)
       from a given offset into a file, and returns the data in a
       MSG_FILEIO_READ_RESPONSE message where the message length field
-      indicates how many bytes were succesfully read. If the message is
-      invalid, a followup MSG_PRINT message will print "Invalid fileio
-      read message".
+      indicates how many bytes were succesfully read.The sequence
+      number in the request will be returned in the response.
     fields:
+      - sequence:
+          type: u32
+          desc: Read sequence number
       - offset:
           type: u32
           units: bytes
@@ -47,8 +49,7 @@ definitions:
           desc: Chunk size to read
       - filename:
           type: string
-          size: 20
-          desc: Name of the file to read from (NULL padded)
+          desc: Name of the file to read from
 
  - MSG_FILEIO_READ_RESPONSE:
     id: 0x00A3
@@ -57,20 +58,12 @@ definitions:
       The file read message reads a certain length (up to 255 bytes)
       from a given offset into a file, and returns the data in a
       message where the message length field indicates how many bytes
-      were succesfully read.
+      were succesfully read. The sequence number in the response is
+      preserved from the request.
     fields:
-      - offset:
+      - sequence:
           type: u32
-          units: bytes
-          desc: File offset
-      - chunk_size:
-          type: u8
-          units: bytes
-          desc: Chunk size read
-      - filename:
-          type: string
-          size: 20
-          desc: Name of the file read from (NULL padded)
+          desc: Read sequence number
       - contents:
           type: array
           fill: u8
@@ -86,38 +79,34 @@ definitions:
       MSG_FILEIO_READ_DIR_RESPONSE message containing the directory
       listings as a NULL delimited list. The listing is chunked over
       multiple SBP packets and the end of the list is identified by an
-      entry containing just the character 0xFF. If message is invalid, a
-      followup MSG_PRINT message will print "Invalid fileio read
-      message".
+      entry containing just the character 0xFF. The sequence number in
+      the request will be returned in the response.
     fields:
+      - sequence:
+          type: u32
+          desc: Read sequence number
       - offset:
           type: u32
           desc: |
             The offset to skip the first n elements of the file list
       - dirname:
           type: string
-          size: 20
-          desc: Name of the directory to list (NULL padded)
+          desc: Name of the directory to list
 
  - MSG_FILEIO_READ_DIR_RESPONSE:
     id: 0x00AA
     short_desc: Files listed in a directory (host <= device)
     desc: |
       The read directory message lists the files in a directory on the
-      device's onboard flash file system.  The offset parameter can be
-      used to skip the first n elements of the file list. Message contains
-      the directory listings as a NULL delimited list. The listing is
-      chunked over multiple SBP packets and the end of the list is
-      identified by an entry containing just the character 0xFF.
+      device's onboard flash file system. Message contains the directory
+      listings as a NULL delimited list. The listing is chunked over
+      multiple SBP packets and the end of the list is identified by an
+      entry containing just the character 0xFF. The sequence number in
+      the response is preserved from the request.
     fields:
-      - offset:
+      - sequence:
           type: u32
-          desc: |
-            The offset to skip the first n elements of the file list
-      - dirname:
-          type: string
-          size: 20
-          desc: Name of the directory to list (NULL padded)
+          desc: Read sequence number
       - contents:
           type: array
           fill: u8
@@ -127,14 +116,11 @@ definitions:
     id: 0x00AC
     short_desc: Delete a file from the file system (host => device)
     desc: |
-      The file remove message deletes a file from the file system. If
-      message is invalid, a followup MSG_PRINT message will print
-      "Invalid fileio remove message".
+      The file remove message deletes a file from the file system.
     fields:
       - filename:
           type: string
-          size: 20
-          desc: Name of the file to delete (NULL padded)
+          desc: Name of the file to delete
 
  - MSG_FILEIO_WRITE_REQUEST:
     id: 0x00AD
@@ -143,17 +129,19 @@ definitions:
       The file write message writes a certain length (up to 255 bytes)
       of data to a file at a given offset. Returns a copy of the
       original MSG_FILEIO_WRITE_RESPONSE message to check integrity of
-      the write. If message is invalid, a followup MSG_PRINT message
-      will print "Invalid fileio write message".
+      the write. The sequence number in the request will be returned
+      in the response.
     fields:
-      - filename:
-          type: string
-          size: 20
-          desc: Name of the file to write to (NULL padded)
+      - sequence:
+          type: u32
+          desc: Write sequence number
       - offset:
           type: u32
           units: bytes
           desc: Offset into the file at which to start writing in bytes
+      - filename:
+          type: string
+          desc: Name of the file to write to
       - data:
           type: array
           fill: u8
@@ -166,17 +154,8 @@ definitions:
       The file write message writes a certain length (up to 255 bytes)
       of data to a file at a given offset. The message is a copy of the
       original MSG_FILEIO_WRITE_REQUEST message to check integrity of the
-      write.
+      write. The sequence number in the response is preserved from the request.
     fields:
-      - filename:
-          type: string
-          size: 20
-          desc: Name of the file to write to (NULL padded)
-      - offset:
+      - sequence:
           type: u32
-          units: bytes
-          desc: Offset into the file at which to start writing in bytes
-      - data:
-          type: array
-          fill: u8
-          desc: Variable-length array of data to write
+          desc: Write sequence number
