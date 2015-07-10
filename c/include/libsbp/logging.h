@@ -27,6 +27,19 @@
 #include "common.h"
 
 
+/** Plaintext logging messages with levels
+ *
+ * This message contains a human-readable payload string from the
+ * device containing errors, warnings and informational messages at
+ * ERROR, WARNING, DEBUG, INFO logging levels.
+ */
+#define SBP_MSG_LOG   0x0102
+typedef struct __attribute__((packed)) {
+  u8 level;    /**< Logging level */
+  char text[0];  /**< Human-readable string */
+} msg_log_t;
+
+
 /** Plaintext logging messages
  *
  * This message contains a human-readable payload string from the

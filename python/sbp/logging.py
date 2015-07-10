@@ -25,6 +25,89 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, gr
 # Please do not hand edit!
 
 
+SBP_MSG_LOG = 0x0102
+class MsgLog(SBP):
+  """SBP class for message MSG_LOG (0x0102).
+
+  You can have MSG_LOG inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message contains a human-readable payload string from the
+device containing errors, warnings and informational messages at
+ERROR, WARNING, DEBUG, INFO logging levels.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  level : int
+    Logging level
+  text : string
+    Human-readable string
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgLog",
+                   ULInt8('level'),
+                   greedy_string('text'),)
+  __slots__ = [
+               'level',
+               'text',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgLog,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgLog, self).__init__()
+      self.msg_type = SBP_MSG_LOG
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.level = kwargs.pop('level')
+      self.text = kwargs.pop('text')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgLog._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgLog._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgLog(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgLog, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_PRINT = 0x0010
 class MsgPrint(SBP):
   """SBP class for message MSG_PRINT (0x0010).
@@ -180,6 +263,7 @@ class MsgTweet(SBP):
     
 
 msg_classes = {
+  0x0102: MsgLog,
   0x0010: MsgPrint,
   0x0012: MsgTweet,
 }
