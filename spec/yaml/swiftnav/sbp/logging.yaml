@@ -12,7 +12,7 @@ package: swiftnav.sbp.logging
 description: |
   Logging and debugging messages from the device. These are in the
   implementation-defined range (0x0000-0x00FF).
-stable: False
+stable: True
 public: True
 include:
   - types.yaml
@@ -43,18 +43,6 @@ definitions:
           type: string
           desc: Human-readable string
 
- - MSG_PRINT:
-    id: 0x0010
-    short_desc: Plaintext logging messages
-    desc: |
-      This message contains a human-readable payload string from the
-      device containing errors, warnings and informational messages at
-      ERROR, WARNING, DEBUG, INFO logging levels.
-    fields:
-      - text:
-          type: string
-          desc: Human-readable string
-
  - MSG_TWEET:
     id: 0x0012
     short_desc: Tweet
@@ -64,3 +52,13 @@ definitions:
           type: string
           size: 140
           desc: Human-readable string
+
+ - MSG_PRINT_DEP:
+    id: 0x0010
+    short_desc: Deprecated
+    desc: Deprecated.
+    fields:
+      - text:
+          type: string
+          desc: Human-readable string
+
