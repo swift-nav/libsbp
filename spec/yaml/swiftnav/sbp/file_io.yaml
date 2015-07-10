@@ -26,13 +26,13 @@ include:
   - types.yaml
 definitions:
 
- - MSG_FILEIO_READ_REQUEST:
+ - MSG_FILEIO_READ_REQ:
     id: 0x00A8
     short_desc: Read file from the file system (host => device)
     desc: |
       The file read message reads a certain length (up to 255 bytes)
       from a given offset into a file, and returns the data in a
-      MSG_FILEIO_READ_RESPONSE message where the message length field
+      MSG_FILEIO_READ_RESP message where the message length field
       indicates how many bytes were succesfully read.The sequence
       number in the request will be returned in the response.
     fields:
@@ -51,7 +51,7 @@ definitions:
           type: string
           desc: Name of the file to read from
 
- - MSG_FILEIO_READ_RESPONSE:
+ - MSG_FILEIO_READ_RESP:
     id: 0x00A3
     short_desc: File read from the file system (host <= device)
     desc: |
@@ -69,14 +69,14 @@ definitions:
           fill: u8
           desc: Contents of read file
 
- - MSG_FILEIO_READ_DIR_REQUEST:
+ - MSG_FILEIO_READ_DIR_REQ:
     id: 0x00A9
     short_desc: List files in a directory (host => device)
     desc: |
       The read directory message lists the files in a directory on the
       device's onboard flash file system.  The offset parameter can be
       used to skip the first n elements of the file list. Returns a
-      MSG_FILEIO_READ_DIR_RESPONSE message containing the directory
+      MSG_FILEIO_READ_DIR_RESP message containing the directory
       listings as a NULL delimited list. The listing is chunked over
       multiple SBP packets and the end of the list is identified by an
       entry containing just the character 0xFF. The sequence number in
@@ -93,7 +93,7 @@ definitions:
           type: string
           desc: Name of the directory to list
 
- - MSG_FILEIO_READ_DIR_RESPONSE:
+ - MSG_FILEIO_READ_DIR_RESP:
     id: 0x00AA
     short_desc: Files listed in a directory (host <= device)
     desc: |
@@ -122,13 +122,13 @@ definitions:
           type: string
           desc: Name of the file to delete
 
- - MSG_FILEIO_WRITE_REQUEST:
+ - MSG_FILEIO_WRITE_REQ:
     id: 0x00AD
     short_desc: Write to file (host => device)
     desc: |
       The file write message writes a certain length (up to 255 bytes)
       of data to a file at a given offset. Returns a copy of the
-      original MSG_FILEIO_WRITE_RESPONSE message to check integrity of
+      original MSG_FILEIO_WRITE_RESP message to check integrity of
       the write. The sequence number in the request will be returned
       in the response.
     fields:
@@ -147,14 +147,15 @@ definitions:
           fill: u8
           desc: Variable-length array of data to write
 
- - MSG_FILEIO_WRITE_RESPONSE:
+ - MSG_FILEIO_WRITE_RESP:
     id: 0x00AB
     short_desc: File written to (host <= device)
     desc: |
       The file write message writes a certain length (up to 255 bytes)
       of data to a file at a given offset. The message is a copy of the
-      original MSG_FILEIO_WRITE_REQUEST message to check integrity of the
-      write. The sequence number in the response is preserved from the request.
+      original MSG_FILEIO_WRITE_REQ message to check integrity of the
+      write. The sequence number in the response is preserved from the
+      request.
     fields:
       - sequence:
           type: u32

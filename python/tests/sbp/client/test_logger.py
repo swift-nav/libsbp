@@ -16,7 +16,7 @@ from sbp.client.loggers.pickle_logger import PickleLogIterator
 from sbp.client.loggers.device_iterator import DeviceIterator
 from sbp.client.loggers.udp_logger import UdpLogger
 from sbp.logging import SBP_MSG_PRINT
-from sbp.acquisition import SBP_MSG_ACQ_RESULT, MsgAcqResult
+from sbp.acquisition import MsgAcqResultDepA
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
 from sbp.client.handler import Handler
@@ -176,7 +176,7 @@ def test_device_iterator():
   for delta, timestamp, msg in mydevice_iterator:
     assert delta > 0
     assert timestamp >0
-    assert type(msg) == MsgAcqResult
+    assert type(msg) == MsgAcqResultDepA
 
 def udp_handler(data):
   class MockRequestHandler(SocketServer.BaseRequestHandler):

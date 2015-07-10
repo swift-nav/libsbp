@@ -34,16 +34,19 @@ definitions:
                     values:
                         - 0: Disabled
                         - 1: Running
-        - prn:
-            type: u8
-            desc: PRN-1 being tracked
+        - sid:
+            type: u32
+            desc: |
+              Signal identifier being tracked - values 0x00 through 0x1F
+              represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
+              other values reserved for future use
         - cn0:
             type: float
             units: dB Hz
             desc: Carrier-to-noise density
 
  - MSG_TRACKING_STATE:
-    id: 0x0016
+    id: 0x0013
     short_desc: Satellite tracking channel states
     desc: |
       The tracking message returns a variable-length array of tracking
@@ -79,9 +82,50 @@ definitions:
           desc: Tracking channel of origin
       - sid:
           type: u32
-          desc: Identifier of satellite signal being tracked
+          desc: |
+            Signal identifier being tracked - values 0x00 through 0x1F
+            represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
+            other values reserved for future use
       - corrs:
           type: array
           fill: TrackingChannelCorrelation
           size: 3
           desc: Early, Prompt and Late correlations
+
+ - TrackingChannelStateDepA:
+    short_desc: Deprecated
+    desc: Deprecated.
+    replaced_by:
+      - TrackingChannelState
+    fields:
+        - state:
+            type: u8
+            desc: Status of tracking channel
+            fields:
+                - 2-7:
+                    desc: Reserved
+                - 0-1:
+                    desc: Tracking mode
+                    values:
+                        - 0: Disabled
+                        - 1: Running
+        - prn:
+            type: u8
+            desc: PRN-1 being tracked
+        - cn0:
+            type: float
+            units: dB Hz
+            desc: Carrier-to-noise density
+
+ - MSG_TRACKING_STATE_DEP_A:
+    id: 0x0016
+    short_desc: Deprecated
+    desc: Deprecated.
+    replaced_by:
+      - MSG_TRACKING_STATE
+    fields:
+      - states:
+          type: array
+          fill: TrackingChannelStateDepA
+          desc: Satellite tracking channel state
+

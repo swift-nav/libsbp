@@ -227,7 +227,7 @@ definitions:
                     values:
                         - 0: Enabled
                         - 1: Skip this satellite on future acquisitions
-        - prn:
-            type: u8
-            desc: PRN for which the mask is applied
+        - sid:
+            type: u32
+            desc: Signal identifier for which the mask is applied
 

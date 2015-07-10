@@ -62,7 +62,7 @@ tests:
         lock: 15074
         prn: 30
     module: sbp.observation
-    name: MsgObs
+    name: MsgObsDepA
   msg_type: '0x45'
   raw_json: '{"sender": 1219, "msg_type": 69, "header": {"n_obs": 32, "t": {"wn":
     1838, "tow": 407084600}}, "obs": [{"P": 2046421816, "prn": 0, "L": {"i": -36108,
@@ -99,7 +99,7 @@ tests:
         lock: 64062
         prn: 31
     module: sbp.observation
-    name: MsgObs
+    name: MsgObsDepA
   msg_type: '0x45'
   raw_json: '{"sender": 1219, "msg_type": 69, "header": {"n_obs": 33, "t": {"wn":
     1838, "tow": 407084600}}, "obs": [{"P": 1973695572, "prn": 31, "L": {"i": 8294,
@@ -172,7 +172,7 @@ tests:
         lock: 15074
         prn: 30
     module: sbp.observation
-    name: MsgObs
+    name: MsgObsDepA
   msg_type: '0x45'
   raw_json: '{"sender": 1219, "msg_type": 69, "header": {"n_obs": 32, "t": {"wn":
     1838, "tow": 407084800}}, "obs": [{"P": 2046415136, "prn": 0, "L": {"i": -36207,
@@ -209,7 +209,7 @@ tests:
         lock: 64062
         prn: 31
     module: sbp.observation
-    name: MsgObs
+    name: MsgObsDepA
   msg_type: '0x45'
   raw_json: '{"sender": 1219, "msg_type": 69, "header": {"n_obs": 33, "t": {"wn":
     1838, "tow": 407084800}}, "obs": [{"P": 1973687089, "prn": 31, "L": {"i": 8312,
@@ -268,7 +268,7 @@ tests:
         lock: 22736
         prn: 30
     module: sbp.observation
-    name: MsgObs
+    name: MsgObsDepA
   msg_type: '0x45'
   raw_json: '{"sender": 1219, "msg_type": 69, "header": {"n_obs": 16, "t": {"wn":
     1838, "tow": 407151200}}, "obs": [{"P": 2044298327, "prn": 0, "L": {"i": -27527,
@@ -331,7 +331,7 @@ tests:
         lock: 22736
         prn: 30
     module: sbp.observation
-    name: MsgObs
+    name: MsgObsDepA
   msg_type: '0x45'
   raw_json: '{"sender": 1219, "msg_type": 69, "header": {"n_obs": 16, "t": {"wn":
     1838, "tow": 407151400}}, "obs": [{"P": 2044291972, "prn": 0, "L": {"i": -27634,
@@ -380,7 +380,7 @@ tests:
       valid: 1
       w: 1.0525047200405302
     module: sbp.observation
-    name: MsgEphemeris
+    name: MsgEphemerisDepB
   msg_type: '0x46'
   raw_json: '{"msg_type": 70, "c_rs": -74.90625, "toe_wn": 1838, "prn": 3, "inc_dot":
     -3.296565886629854e-10, "tgd": -6.51925802230835e-09, "c_rc": 234.375, "ecc":
@@ -431,7 +431,7 @@ tests:
       valid: 1
       w: -1.9736022837941165
     module: sbp.observation
-    name: MsgEphemeris
+    name: MsgEphemerisDepB
   msg_type: '0x46'
   raw_json: '{"msg_type": 70, "c_rs": 36.5625, "toe_wn": 1838, "prn": 13, "inc_dot":
     2.6251093463412166e-10, "tgd": -9.313225746154785e-09, "c_rc": 315.78125, "ecc":
@@ -482,7 +482,7 @@ tests:
       valid: 1
       w: 0.37873566614641857
     module: sbp.observation
-    name: MsgEphemeris
+    name: MsgEphemerisDepB
   msg_type: '0x46'
   raw_json: '{"msg_type": 70, "c_rs": -68.625, "toe_wn": 1838, "prn": 0, "inc_dot":
     -3.3644258561271105e-10, "tgd": 5.587935447692871e-09, "c_rc": 236.03125, "ecc":
@@ -533,7 +533,7 @@ tests:
       valid: 1
       w: -1.9736022837941165
     module: sbp.observation
-    name: MsgEphemeris
+    name: MsgEphemerisDepB
   msg_type: '0x46'
   raw_json: '{"msg_type": 70, "c_rs": 36.5625, "toe_wn": 1838, "prn": 13, "inc_dot":
     2.6251093463412166e-10, "tgd": -9.313225746154785e-09, "c_rc": 315.78125, "ecc":
@@ -584,7 +584,7 @@ tests:
       valid: 1
       w: -2.7021241452652935
     module: sbp.observation
-    name: MsgEphemeris
+    name: MsgEphemerisDepB
   msg_type: '0x46'
   raw_json: '{"msg_type": 70, "c_rs": 43.21875, "toe_wn": 1838, "prn": 22, "inc_dot":
     3.000124967247105e-10, "tgd": -2.0023435354232788e-08, "c_rc": 305.21875, "ecc":
@@ -635,7 +635,7 @@ tests:
       valid: 1
       w: -0.5237901716088061
     module: sbp.observation
-    name: MsgEphemeris
+    name: MsgEphemerisDepB
   msg_type: '0x46'
   raw_json: '{"msg_type": 70, "c_rs": -77.90625, "toe_wn": 1838, "prn": 30, "inc_dot":
     -5.882387882209502e-10, "tgd": -1.3504177331924438e-08, "c_rc": 247.28125, "ecc":
