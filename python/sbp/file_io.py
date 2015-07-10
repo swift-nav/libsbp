@@ -47,28 +47,33 @@ from a given offset into a file, and returns the data in a
 MSG_FILEIO_READ_RESPONSE message where the message length field
 indicates how many bytes were succesfully read. If the message is
 invalid, a followup MSG_PRINT message will print "Invalid fileio
-read message".
+read message". The sequence number in the request will be returned
+in the response.
 
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
+  sequence : int
+    Read sequence number
   offset : int
     File offset
   chunk_size : int
     Chunk size to read
   filename : string
-    Name of the file to read from (NULL padded)
+    Name of the file to read from
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFileioReadRequest",
+                   ULInt32('sequence'),
                    ULInt32('offset'),
                    ULInt8('chunk_size'),
-                   String('filename', 20),)
+                   greedy_string('filename'),)
   __slots__ = [
+               'sequence',
                'offset',
                'chunk_size',
                'filename',
@@ -84,6 +89,7 @@ read message".
       super( MsgFileioReadRequest, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_READ_REQUEST
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.sequence = kwargs.pop('sequence')
       self.offset = kwargs.pop('offset')
       self.chunk_size = kwargs.pop('chunk_size')
       self.filename = kwargs.pop('filename')
@@ -136,19 +142,16 @@ class MsgFileioReadResponse(SBP):
   The file read message reads a certain length (up to 255 bytes)
 from a given offset into a file, and returns the data in a
 message where the message length field indicates how many bytes
-were succesfully read.
+were succesfully read. The sequence number in the response is
+preserved from the request.
 
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  offset : int
-    File offset
-  chunk_size : int
-    Chunk size read
-  filename : string
-    Name of the file read from (NULL padded)
+  sequence : int
+    Read sequence number
   contents : array
     Contents of read file
   sender : int
@@ -156,14 +159,10 @@ were succesfully read.
 
   """
   _parser = Struct("MsgFileioReadResponse",
-                   ULInt32('offset'),
-                   ULInt8('chunk_size'),
-                   String('filename', 20),
+                   ULInt32('sequence'),
                    OptionalGreedyRange(ULInt8('contents')),)
   __slots__ = [
-               'offset',
-               'chunk_size',
-               'filename',
+               'sequence',
                'contents',
               ]
 
@@ -177,9 +176,7 @@ were succesfully read.
       super( MsgFileioReadResponse, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_READ_RESPONSE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.offset = kwargs.pop('offset')
-      self.chunk_size = kwargs.pop('chunk_size')
-      self.filename = kwargs.pop('filename')
+      self.sequence = kwargs.pop('sequence')
       self.contents = kwargs.pop('contents')
 
   def __repr__(self):
@@ -235,26 +232,31 @@ listings as a NULL delimited list. The listing is chunked over
 multiple SBP packets and the end of the list is identified by an
 entry containing just the character 0xFF. If message is invalid, a
 followup MSG_PRINT message will print "Invalid fileio read
-message".
+message". The sequence number in the request will be returned in
+the response.
 
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
+  sequence : int
+    Read sequence number
   offset : int
     The offset to skip the first n elements of the file list
 
   dirname : string
-    Name of the directory to list (NULL padded)
+    Name of the directory to list
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFileioReadDirRequest",
+                   ULInt32('sequence'),
                    ULInt32('offset'),
-                   String('dirname', 20),)
+                   greedy_string('dirname'),)
   __slots__ = [
+               'sequence',
                'offset',
                'dirname',
               ]
@@ -269,6 +271,7 @@ message".
       super( MsgFileioReadDirRequest, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_READ_DIR_REQUEST
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.sequence = kwargs.pop('sequence')
       self.offset = kwargs.pop('offset')
       self.dirname = kwargs.pop('dirname')
 
@@ -318,22 +321,19 @@ class MsgFileioReadDirResponse(SBP):
 
   
   The read directory message lists the files in a directory on the
-device's onboard flash file system.  The offset parameter can be
-used to skip the first n elements of the file list. Message contains
-the directory listings as a NULL delimited list. The listing is
-chunked over multiple SBP packets and the end of the list is
-identified by an entry containing just the character 0xFF.
+device's onboard flash file system. Message contains the directory
+listings as a NULL delimited list. The listing is chunked over
+multiple SBP packets and the end of the list is identified by an
+entry containing just the character 0xFF. The sequence number in
+the response is preserved from the request.
 
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  offset : int
-    The offset to skip the first n elements of the file list
-
-  dirname : string
-    Name of the directory to list (NULL padded)
+  sequence : int
+    Read sequence number
   contents : array
     Contents of read directory
   sender : int
@@ -341,12 +341,10 @@ identified by an entry containing just the character 0xFF.
 
   """
   _parser = Struct("MsgFileioReadDirResponse",
-                   ULInt32('offset'),
-                   String('dirname', 20),
+                   ULInt32('sequence'),
                    OptionalGreedyRange(ULInt8('contents')),)
   __slots__ = [
-               'offset',
-               'dirname',
+               'sequence',
                'contents',
               ]
 
@@ -360,8 +358,7 @@ identified by an entry containing just the character 0xFF.
       super( MsgFileioReadDirResponse, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_READ_DIR_RESPONSE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.offset = kwargs.pop('offset')
-      self.dirname = kwargs.pop('dirname')
+      self.sequence = kwargs.pop('sequence')
       self.contents = kwargs.pop('contents')
 
   def __repr__(self):
@@ -419,13 +416,13 @@ message is invalid, a followup MSG_PRINT message will print
   sbp : SBP
     SBP parent object to inherit from.
   filename : string
-    Name of the file to delete (NULL padded)
+    Name of the file to delete
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFileioRemove",
-                   String('filename', 20),)
+                   greedy_string('filename'),)
   __slots__ = [
                'filename',
               ]
@@ -491,17 +488,20 @@ class MsgFileioWriteRequest(SBP):
 of data to a file at a given offset. Returns a copy of the
 original MSG_FILEIO_WRITE_RESPONSE message to check integrity of
 the write. If message is invalid, a followup MSG_PRINT message
-will print "Invalid fileio write message".
+will print "Invalid fileio write message". The sequence number in
+the request will be returned in the response.
 
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  filename : string
-    Name of the file to write to (NULL padded)
+  sequence : int
+    Write sequence number
   offset : int
     Offset into the file at which to start writing in bytes
+  filename : string
+    Name of the file to write to
   data : array
     Variable-length array of data to write
   sender : int
@@ -509,12 +509,14 @@ will print "Invalid fileio write message".
 
   """
   _parser = Struct("MsgFileioWriteRequest",
-                   String('filename', 20),
+                   ULInt32('sequence'),
                    ULInt32('offset'),
+                   greedy_string('filename'),
                    OptionalGreedyRange(ULInt8('data')),)
   __slots__ = [
-               'filename',
+               'sequence',
                'offset',
+               'filename',
                'data',
               ]
 
@@ -528,8 +530,9 @@ will print "Invalid fileio write message".
       super( MsgFileioWriteRequest, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_WRITE_REQUEST
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.filename = kwargs.pop('filename')
+      self.sequence = kwargs.pop('sequence')
       self.offset = kwargs.pop('offset')
+      self.filename = kwargs.pop('filename')
       self.data = kwargs.pop('data')
 
   def __repr__(self):
@@ -580,31 +583,23 @@ class MsgFileioWriteResponse(SBP):
   The file write message writes a certain length (up to 255 bytes)
 of data to a file at a given offset. The message is a copy of the
 original MSG_FILEIO_WRITE_REQUEST message to check integrity of the
-write.
+write. The sequence number in the response is preserved from the request.
 
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  filename : string
-    Name of the file to write to (NULL padded)
-  offset : int
-    Offset into the file at which to start writing in bytes
-  data : array
-    Variable-length array of data to write
+  sequence : int
+    Write sequence number
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgFileioWriteResponse",
-                   String('filename', 20),
-                   ULInt32('offset'),
-                   OptionalGreedyRange(ULInt8('data')),)
+                   ULInt32('sequence'),)
   __slots__ = [
-               'filename',
-               'offset',
-               'data',
+               'sequence',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -617,9 +612,7 @@ write.
       super( MsgFileioWriteResponse, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_WRITE_RESPONSE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.filename = kwargs.pop('filename')
-      self.offset = kwargs.pop('offset')
-      self.data = kwargs.pop('data')
+      self.sequence = kwargs.pop('sequence')
 
   def __repr__(self):
     return fmt_repr(self)
