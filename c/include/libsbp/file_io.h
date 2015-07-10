@@ -74,9 +74,8 @@ typedef struct __attribute__((packed)) {
  * used to skip the first n elements of the file list. Returns a
  * MSG_FILEIO_READ_DIR_RESP message containing the directory
  * listings as a NULL delimited list. The listing is chunked over
- * multiple SBP packets and the end of the list is identified by an
- * entry containing just the character 0xFF. The sequence number in
- * the request will be returned in the response.
+ * multiple SBP packets. The sequence number in the request will be
+ * returned in the response.
  */
 #define SBP_MSG_FILEIO_READ_DIR_REQ  0x00A9
 typedef struct __attribute__((packed)) {
