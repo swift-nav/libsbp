@@ -33,10 +33,8 @@ definitions:
       The file read message reads a certain length (up to 255 bytes)
       from a given offset into a file, and returns the data in a
       MSG_FILEIO_READ_RESPONSE message where the message length field
-      indicates how many bytes were succesfully read. If the message is
-      invalid, a followup MSG_PRINT message will print "Invalid fileio
-      read message". The sequence number in the request will be returned
-      in the response.
+      indicates how many bytes were succesfully read.The sequence
+      number in the request will be returned in the response.
     fields:
       - sequence:
           type: u32
@@ -81,10 +79,8 @@ definitions:
       MSG_FILEIO_READ_DIR_RESPONSE message containing the directory
       listings as a NULL delimited list. The listing is chunked over
       multiple SBP packets and the end of the list is identified by an
-      entry containing just the character 0xFF. If message is invalid, a
-      followup MSG_PRINT message will print "Invalid fileio read
-      message". The sequence number in the request will be returned in
-      the response.
+      entry containing just the character 0xFF. The sequence number in
+      the request will be returned in the response.
     fields:
       - sequence:
           type: u32
@@ -120,9 +116,7 @@ definitions:
     id: 0x00AC
     short_desc: Delete a file from the file system (host => device)
     desc: |
-      The file remove message deletes a file from the file system. If
-      message is invalid, a followup MSG_PRINT message will print
-      "Invalid fileio remove message".
+      The file remove message deletes a file from the file system.
     fields:
       - filename:
           type: string
@@ -135,9 +129,8 @@ definitions:
       The file write message writes a certain length (up to 255 bytes)
       of data to a file at a given offset. Returns a copy of the
       original MSG_FILEIO_WRITE_RESPONSE message to check integrity of
-      the write. If message is invalid, a followup MSG_PRINT message
-      will print "Invalid fileio write message". The sequence number in
-      the request will be returned in the response.
+      the write. The sequence number in the request will be returned
+      in the response.
     fields:
       - sequence:
           type: u32
