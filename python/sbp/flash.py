@@ -663,6 +663,7 @@ ID in the payload.
       super( MsgStmUniqueIdReq, self).__init__()
       self.msg_type = SBP_MSG_STM_UNIQUE_ID_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.payload = ""
 
   def __repr__(self):
     return fmt_repr(self)

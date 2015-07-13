@@ -55,6 +55,7 @@ configuration to its onboard flash memory file system.
       super( MsgSettingsSave, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_SAVE
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.payload = ""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -484,6 +485,7 @@ class MsgSettingsReadByIndexDone(SBP):
       super( MsgSettingsReadByIndexDone, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_READ_BY_INDEX_DONE
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.payload = ""
 
   def __repr__(self):
     return fmt_repr(self)
