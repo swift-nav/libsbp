@@ -29,7 +29,7 @@ def test_log():
   """
   Abstract interface won't work
   """
-  log_datafile = "./data/serial_link_log_20141125-150750_test2.log.dat"
+  log_datafile = "./data/serial_link_log_20150310-115522-test.log.dat"
   with LogIterator(log_datafile) as log:
     with pytest.raises(NotImplementedError) as exc_info:
       for delta, timestamp, msg in log.next():
