@@ -13,7 +13,6 @@ from sbp.msg import SBP
 from sbp.client.loggers.base_logger import LogIterator
 from sbp.client.loggers.json_logger import JSONLogIterator, MultiJSONLogIterator
 from sbp.client.loggers.rotating_logger import RotatingFileLogger
-from sbp.client.loggers.pickle_logger import PickleLogIterator
 from sbp.client.loggers.device_iterator import DeviceIterator
 from sbp.client.loggers.udp_logger import UdpLogger
 from sbp.acquisition import MsgAcqResultDepA
@@ -26,21 +25,6 @@ import SocketServer
 import threading
 import warnings
 
-# Apparently the log tests were actually saved in their dispatched
-# types instead of raw SBP objects.
-#
-# def rewrite():
-#   import cPickle as pickle
-#   log_datafile = "./data/serial_link_log_20141125-150750_test1.log.dat"
-#   new_datafile = open("./data/serial_link_log_20141125-150750_test2.log.dat", 'w')
-#   protocol = 2
-#   with PickleLogIterator(log_datafile) as log:
-#     for delta, timestamp, msg in log.next():
-#       sbp = SBP(msg.msg_type, msg.sender, msg.length, msg.payload, msg.crc)
-#       pickle.dump((delta, timestamp, sbp), new_datafile, protocol)
-#   print "Done!"
-# rewrite()
-
 def test_log():
   """
   Abstract interface won't work
@@ -51,42 +35,6 @@ def test_log():
       for delta, timestamp, msg in log.next():
         pass
   assert exc_info.value.message == "next() not implemented!"
-
-@pytest.mark.xfail
-def test_pickle_log():
-  """
-  pickle log iterator sanity tests.
-  """
-  log_datafile = "./data/serial_link_log_20141125-150750_test2.log.dat"
-  count = 0
-  with PickleLogIterator(log_datafile) as log:
-    with warnings.catch_warnings(record=True) as w:
-      for delta, timestamp, msg in log.next():
-        assert type(delta) == int
-        assert type(timestamp) == int
-        assert isinstance(msg, SBP)
-        count += 1
-      warnings.simplefilter("always")
-      # Check for warnings.
-      assert len(w) == 1
-      assert issubclass(w[0].category, RuntimeWarning)
-      assert "SBP payload deserialization error! 0x18" in w[0].message
-    assert count == 1111
-
-@pytest.mark.xfail
-def test_basic_pickle_log():
-  """
-  pickle log iterator sanity tests with a normal handle.
-  """
-  log_datafile = "./data/serial_link_log_20141125-150750_test2.log.dat"
-  count = 0
-  with PickleLogIterator(log_datafile) as log:
-    for delta, timestamp, msg in log.next():
-      assert type(delta) == int
-      assert type(timestamp) == int
-      assert isinstance(msg, SBP)
-      count += 1
-  assert count == 1111
 
 def test_json_log():
   """
@@ -104,27 +52,6 @@ def test_json_log():
       warnings.simplefilter("always")
       assert len(w) == 0
   assert count == 2650
-
-@pytest.mark.xfail
-def test_pickle_log_missing():
-  """
-  Remove a key from the dispatch and make sure that the iterator
-  chokes.
-
-  """
-  log_datafile = "./data/serial_link_log_20141125-150750_test2.log.dat"
-  new_table = _SBP_TABLE.copy()
-  new_table.pop(SBP_MSG_PRINT, None)
-  d = lambda msg: dispatch(msg, table=new_table)
-  with PickleLogIterator(log_datafile, dispatcher=d) as log:
-    with warnings.catch_warnings(record=True) as w:
-      for delta, timestamp, msg in log.next():
-        pass
-    warnings.simplefilter("always")
-    assert len(w) == 13
-    for x in w:
-      assert issubclass(x.category, RuntimeWarning)
-      assert str(x.message).find("No message found for msg_type id 16*")
 
 def test_multi_json_log():
   """
