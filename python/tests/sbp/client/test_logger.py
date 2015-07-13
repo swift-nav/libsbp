@@ -12,11 +12,12 @@
 from sbp.msg import SBP
 from sbp.client.loggers.base_logger import LogIterator
 from sbp.client.loggers.json_logger import JSONLogIterator, MultiJSONLogIterator
+from sbp.client.loggers.rotating_logger import RotatingFileLogger
 from sbp.client.loggers.pickle_logger import PickleLogIterator
 from sbp.client.loggers.device_iterator import DeviceIterator
 from sbp.client.loggers.udp_logger import UdpLogger
-from sbp.logging import SBP_MSG_PRINT
 from sbp.acquisition import MsgAcqResultDepA
+from sbp.logging import SBP_MSG_PRINT, MsgPrint
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
 from sbp.client.handler import Handler
@@ -201,3 +202,40 @@ def test_udp_logger():
   ip, port = udp_server(handler)
   with UdpLogger(ip, port) as udp:
     udp(msg)
+
+@pytest.mark.slow
+def test_rolling_json_log():
+  """
+  Rolling JSON log iterator sanity tests.
+  """
+  count = 0
+  import os, tempfile, time
+  # Duration of test
+  test_interval = 6
+  # Rotating interval
+  r_interval = 2
+  try:
+    with tempfile.NamedTemporaryFile(mode='w', delete=False) as tf:
+      #print tf.name
+      with RotatingFileLogger(tf.name, when='S', interval=r_interval) as log:
+        t0 = time.time()
+        t = time.time()
+        msg = SBP(0x10, 2, 3, 'abc\n', 4)
+        msgs = []
+        while t - t0 < test_interval:
+          log(msg)
+          if t - t0 <= r_interval:
+            msgs.append(msg)
+          t = time.time()
+      i = 0
+      with JSONLogIterator(tf.name) as log:
+        for delta, timestamp, msg in log.next():
+          assert isinstance(msg, MsgPrint)
+          assert msg.text == "abc\n"
+          i += 1
+      assert i > 0
+      assert i <= len(msgs)
+  except Exception:
+    raise
+  finally:
+    os.unlink(tf.name)
