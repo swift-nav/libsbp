@@ -62,12 +62,6 @@ class JSONLogIterator(LogIterator):
     Path to file to read SBP messages from.
 
   """
-  def _process(self, data):
-    delta = data['delta']
-    timestamp = data['timestamp']
-    item = SBP.from_json_dict(data['data'])
-    msg = self.dispatch(msg)
-    yield (delta, timestamp, msg)
 
   def next(self):
     """

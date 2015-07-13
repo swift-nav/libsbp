@@ -18,6 +18,7 @@ import struct
 import threading
 
 from ..msg import crc16, SBP, SBP_PREAMBLE
+from sbp.piksi import MsgReset
 
 class Framer(object):
   """
@@ -63,16 +64,13 @@ class Framer(object):
       if self.verbose:
         print "Host Side Unhandled byte: 0x%02x" % ord(preamble)
       return None
-
     # hdr
     hdr = self.readall(5)
     msg_crc = crc16(hdr)
     msg_type, sender, msg_len = struct.unpack("<HHB", hdr)
-
     # data
     data = self.readall(msg_len)
     msg_crc = crc16(data, msg_crc)
-
     # crc
     crc = self.readall(2)
     crc, = struct.unpack("<H", crc)
@@ -247,6 +245,12 @@ class Handler(object):
     Return whether the processes thread is alive.
     """
     return self.receive_thread.is_alive()
+
+  def reset(self):
+    """
+    Reset the Piksi via a MSG_RESET.
+    """
+    self.send_msg(MsgReset())
 
   def send(self, msg_type, data, sender=0x42):
     """

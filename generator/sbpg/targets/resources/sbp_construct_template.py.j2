@@ -148,6 +148,8 @@ class ((( m.identifier | classnameify )))(SBP):
       ((*- for f in m.fields *))
       self.(((f.identifier))) = kwargs.pop('(((f.identifier)))')
       ((*- endfor *))
+    ((*- else *))
+      self.payload = ""
     ((*- endif *))
 
   def __repr__(self):
