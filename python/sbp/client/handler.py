@@ -18,6 +18,7 @@ import struct
 import threading
 
 from ..msg import crc16, SBP, SBP_PREAMBLE
+from sbp.client.drivers.base_driver import BaseDriver
 from sbp.piksi import MsgReset
 
 class Framer(object):
@@ -77,7 +78,6 @@ class Framer(object):
     if crc != msg_crc:
       print "crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc)
       return None
-
     return SBP(msg_type, sender, msg_len, data, crc)
 
   def send(self, msg_type, data, sender):
@@ -300,3 +300,47 @@ class Handler(object):
     event.wait(timeout)
     self.remove_callback(cb, msg_type)
     return payload['data']
+
+
+class LoggerDriver(BaseDriver):
+  """LoggerDriver
+
+  The :class:`LoggerDriver` class connects a logger (typically a
+  TCP/UDP "logger") and a driver (typically a serial port driver).
+
+  """
+  def __init__(self, logger, driver):
+    print "startup here logger driver here thing"
+    self.driver = driver
+    self.logger = self.handle = logger
+    super(LoggerDriver, self).__init__(self.handle)
+
+  def read(self, size):
+    """
+    Read wrapper.
+
+    Parameters
+    ----------
+    size : int
+      Number of bytes to read.
+    """
+    data = self.driver.read(size)
+    if data is not None:
+      self.logger.write(data)
+    s = self.logger.read()
+    if s:
+      self.driver.write(s)
+    return data
+
+  def write(self, s=None):
+    """Write wrapper. Will first write any bytes s, if needed, and then
+    bridge any writes from the logger.
+
+    Parameters
+    ----------
+    s : bytes
+      Bytes to write
+
+    """
+    if s is not None:
+      self.driver.write(s)
