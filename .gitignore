@@ -64,3 +64,10 @@ sbp_out.*
 /*env
 
 RELEASE-VERSION
+
+# Haskell
+.stack-work/
+.cabal-sandbox/
+cabal.sandbox.config
+dist/
+

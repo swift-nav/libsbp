@@ -3,13 +3,11 @@ version:             0.49.0
 synopsis:            SwiftNav's SBP Library
 homepage:            https://github.com/swift-nav/libsbp
 license:             MIT
-license-file:        LICENSE
 author:              Swift Navigation Inc.
 maintainer:          Mark Fine <dev@swiftnav.com>
 copyright:           Copyright (C) 2015 Swift Navigation, Inc.
 category:            Network
 build-type:          Simple
-extra-source-files:  README.md
 cabal-version:       >= 1.10
 
 description:
@@ -35,3 +33,4 @@ library
   default-language:  Haskell2010
   hs-source-dirs:    src
   build-depends:     base >= 4.7 && < 5
+                   , text
