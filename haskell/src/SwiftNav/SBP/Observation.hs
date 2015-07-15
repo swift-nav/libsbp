@@ -1,24 +1,42 @@
 module SwiftNav.SBP.Observation where
 
+import Data.Binary
 import Data.Int
 import Data.Text
 import Data.Word
-
 
 data ObsGPSTime = ObsGPSTime
   { obsGPSTimeTow :: Word32
   , obsGPSTimeWn  :: Word16
   } deriving ( Show, Read, Eq )
 
+instance Binary ObsGPSTime where
+  get =
+    undefined
+  put ObsGPSTime {..} =
+    undefined
+
 data CarrierPhase = CarrierPhase
   { carrierPhaseI :: Int32
   , carrierPhaseF :: Word8
   } deriving ( Show, Read, Eq )
 
+instance Binary CarrierPhase where
+  get =
+    undefined
+  put CarrierPhase {..} =
+    undefined
+
 data ObservationHeader = ObservationHeader
   { observationHeaderT     :: ObsGPSTime
   , observationHeaderNObs  :: Word8
   } deriving ( Show, Read, Eq )
+
+instance Binary ObservationHeader where
+  get =
+    undefined
+  put ObservationHeader {..} =
+    undefined
 
 data PackedObsContent = PackedObsContent
   { packedObsContentP    :: Word32
@@ -28,23 +46,44 @@ data PackedObsContent = PackedObsContent
   , packedObsContentSid  :: Word32
   } deriving ( Show, Read, Eq )
 
+instance Binary PackedObsContent where
+  get =
+    undefined
+  put PackedObsContent {..} =
+    undefined
+
 msgObs :: Word16
 msgObs = 0x0043
+
 data MsgObs = MsgObs
   { msgObsHeader :: ObservationHeader
   , msgObsObs    :: [PackedObsContent]
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgObs where
+  get =
+    undefined
+  put MsgObs {..} =
+    undefined
+
 msgBasePos :: Word16
 msgBasePos = 0x0044
+
 data MsgBasePos = MsgBasePos
   { msgBasePosLat    :: Double
   , msgBasePosLon    :: Double
   , msgBasePosHeight :: Double
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgBasePos where
+  get =
+    undefined
+  put MsgBasePos {..} =
+    undefined
+
 msgEphemeris :: Word16
 msgEphemeris = 0x0047
+
 data MsgEphemeris = MsgEphemeris
   { msgEphemerisTgd      :: Double
   , msgEphemerisCRs      :: Double
@@ -77,8 +116,15 @@ data MsgEphemeris = MsgEphemeris
   , msgEphemerisReserved :: Word32
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgEphemeris where
+  get =
+    undefined
+  put MsgEphemeris {..} =
+    undefined
+
 msgEphemerisDepA :: Word16
 msgEphemerisDepA = 0x001A
+
 data MsgEphemerisDepA = MsgEphemerisDepA
   { msgEphemerisDepATgd      :: Double
   , msgEphemerisDepACRs      :: Double
@@ -108,8 +154,15 @@ data MsgEphemerisDepA = MsgEphemerisDepA
   , msgEphemerisDepAPrn      :: Word8
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgEphemerisDepA where
+  get =
+    undefined
+  put MsgEphemerisDepA {..} =
+    undefined
+
 msgEphemerisDepB :: Word16
 msgEphemerisDepB = 0x0046
+
 data MsgEphemerisDepB = MsgEphemerisDepB
   { msgEphemerisDepBTgd      :: Double
   , msgEphemerisDepBCRs      :: Double
@@ -140,6 +193,12 @@ data MsgEphemerisDepB = MsgEphemerisDepB
   , msgEphemerisDepBIode     :: Word8
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgEphemerisDepB where
+  get =
+    undefined
+  put MsgEphemerisDepB {..} =
+    undefined
+
 data PackedObsContentDepA = PackedObsContentDepA
   { packedObsContentDepAP    :: Word32
   , packedObsContentDepAL    :: CarrierPhase
@@ -148,9 +207,22 @@ data PackedObsContentDepA = PackedObsContentDepA
   , packedObsContentDepAPrn  :: Word8
   } deriving ( Show, Read, Eq )
 
+instance Binary PackedObsContentDepA where
+  get =
+    undefined
+  put PackedObsContentDepA {..} =
+    undefined
+
 msgObsDepA :: Word16
 msgObsDepA = 0x0045
+
 data MsgObsDepA = MsgObsDepA
   { msgObsDepAHeader :: ObservationHeader
   , msgObsDepAObs    :: [PackedObsContentDepA]
   } deriving ( Show, Read, Eq )
+
+instance Binary MsgObsDepA where
+  get =
+    undefined
+  put MsgObsDepA {..} =
+    undefined

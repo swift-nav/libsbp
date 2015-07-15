@@ -1,12 +1,13 @@
 module SwiftNav.SBP.Navigation where
 
+import Data.Binary
 import Data.Int
 import Data.Text
 import Data.Word
 
-
 msgGpsTime :: Word16
 msgGpsTime = 0x0100
+
 data MsgGpsTime = MsgGpsTime
   { msgGpsTimeWn    :: Word16
   , msgGpsTimeTow   :: Word32
@@ -14,8 +15,15 @@ data MsgGpsTime = MsgGpsTime
   , msgGpsTimeFlags :: Word8
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgGpsTime where
+  get =
+    undefined
+  put MsgGpsTime {..} =
+    undefined
+
 msgDops :: Word16
 msgDops = 0x0206
+
 data MsgDops = MsgDops
   { msgDopsTow  :: Word32
   , msgDopsGdop :: Word16
@@ -25,8 +33,15 @@ data MsgDops = MsgDops
   , msgDopsVdop :: Word16
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgDops where
+  get =
+    undefined
+  put MsgDops {..} =
+    undefined
+
 msgPosEcef :: Word16
 msgPosEcef = 0x0200
+
 data MsgPosEcef = MsgPosEcef
   { msgPosEcefTow      :: Word32
   , msgPosEcefX        :: Double
@@ -37,8 +52,15 @@ data MsgPosEcef = MsgPosEcef
   , msgPosEcefFlags    :: Word8
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgPosEcef where
+  get =
+    undefined
+  put MsgPosEcef {..} =
+    undefined
+
 msgPosLlh :: Word16
 msgPosLlh = 0x0201
+
 data MsgPosLlh = MsgPosLlh
   { msgPosLlhTow        :: Word32
   , msgPosLlhLat        :: Double
@@ -50,8 +72,15 @@ data MsgPosLlh = MsgPosLlh
   , msgPosLlhFlags      :: Word8
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgPosLlh where
+  get =
+    undefined
+  put MsgPosLlh {..} =
+    undefined
+
 msgBaselineEcef :: Word16
 msgBaselineEcef = 0x0202
+
 data MsgBaselineEcef = MsgBaselineEcef
   { msgBaselineEcefTow      :: Word32
   , msgBaselineEcefX        :: Int32
@@ -62,8 +91,15 @@ data MsgBaselineEcef = MsgBaselineEcef
   , msgBaselineEcefFlags    :: Word8
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgBaselineEcef where
+  get =
+    undefined
+  put MsgBaselineEcef {..} =
+    undefined
+
 msgBaselineNed :: Word16
 msgBaselineNed = 0x0203
+
 data MsgBaselineNed = MsgBaselineNed
   { msgBaselineNedTow        :: Word32
   , msgBaselineNedN          :: Int32
@@ -75,8 +111,15 @@ data MsgBaselineNed = MsgBaselineNed
   , msgBaselineNedFlags      :: Word8
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgBaselineNed where
+  get =
+    undefined
+  put MsgBaselineNed {..} =
+    undefined
+
 msgVelEcef :: Word16
 msgVelEcef = 0x0204
+
 data MsgVelEcef = MsgVelEcef
   { msgVelEcefTow      :: Word32
   , msgVelEcefX        :: Int32
@@ -87,8 +130,15 @@ data MsgVelEcef = MsgVelEcef
   , msgVelEcefFlags    :: Word8
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgVelEcef where
+  get =
+    undefined
+  put MsgVelEcef {..} =
+    undefined
+
 msgVelNed :: Word16
 msgVelNed = 0x0205
+
 data MsgVelNed = MsgVelNed
   { msgVelNedTow        :: Word32
   , msgVelNedN          :: Int32
@@ -99,3 +149,9 @@ data MsgVelNed = MsgVelNed
   , msgVelNedNSats      :: Word8
   , msgVelNedFlags      :: Word8
   } deriving ( Show, Read, Eq )
+
+instance Binary MsgVelNed where
+  get =
+    undefined
+  put MsgVelNed {..} =
+    undefined

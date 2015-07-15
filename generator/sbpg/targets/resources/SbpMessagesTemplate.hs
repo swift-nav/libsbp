@@ -1,15 +1,15 @@
 module (((module_name))) where
 
+import Data.Binary
 import Data.Int
 import Data.Text
 import Data.Word
-
 ((* for m in msgs *))
 ((*- if m.static *))
 ((*- if m.sbp_id *))
 (((m.identifier|to_global))) :: Word16
 (((m.identifier|to_global))) = ((('0x%04X'|format(m.sbp_id))))
-((*- endif *))
+((* endif *))
 data (((m.identifier|to_data))) = (((m.identifier|to_data)))
 ((*- if not m.fields *))
   deriving ( Show, Read, Eq )
@@ -24,5 +24,11 @@ data (((m.identifier|to_data))) = (((m.identifier|to_data)))
   } deriving ( Show, Read, Eq )
 ((*- endif *))
 ((*- endfor *))
+
+instance Binary (((m.identifier|to_data))) where
+  get =
+    undefined
+  put (((m.identifier|to_data))) {..} =
+    undefined
 ((*- endif *))
 ((* endfor *))
