@@ -5,24 +5,20 @@ import Data.Text
 import Data.Word
 
 
-
 data ObsGPSTime = ObsGPSTime
   { obsGPSTimeTow :: Word32
   , obsGPSTimeWn  :: Word16
   } deriving ( Show, Read, Eq )
-
 
 data CarrierPhase = CarrierPhase
   { carrierPhaseI :: Int32
   , carrierPhaseF :: Word8
   } deriving ( Show, Read, Eq )
 
-
 data ObservationHeader = ObservationHeader
   { observationHeaderT     :: ObsGPSTime
   , observationHeaderNObs  :: Word8
   } deriving ( Show, Read, Eq )
-
 
 data PackedObsContent = PackedObsContent
   { packedObsContentP    :: Word32
@@ -34,7 +30,6 @@ data PackedObsContent = PackedObsContent
 
 msgObs :: Word16
 msgObs = 0x0043
-
 data MsgObs = MsgObs
   { msgObsHeader :: ObservationHeader
   , msgObsObs    :: [PackedObsContent]
@@ -42,7 +37,6 @@ data MsgObs = MsgObs
 
 msgBasePos :: Word16
 msgBasePos = 0x0044
-
 data MsgBasePos = MsgBasePos
   { msgBasePosLat    :: Double
   , msgBasePosLon    :: Double
@@ -51,7 +45,6 @@ data MsgBasePos = MsgBasePos
 
 msgEphemeris :: Word16
 msgEphemeris = 0x0047
-
 data MsgEphemeris = MsgEphemeris
   { msgEphemerisTgd      :: Double
   , msgEphemerisCRs      :: Double
@@ -86,7 +79,6 @@ data MsgEphemeris = MsgEphemeris
 
 msgEphemerisDepA :: Word16
 msgEphemerisDepA = 0x001A
-
 data MsgEphemerisDepA = MsgEphemerisDepA
   { msgEphemerisDepATgd      :: Double
   , msgEphemerisDepACRs      :: Double
@@ -118,7 +110,6 @@ data MsgEphemerisDepA = MsgEphemerisDepA
 
 msgEphemerisDepB :: Word16
 msgEphemerisDepB = 0x0046
-
 data MsgEphemerisDepB = MsgEphemerisDepB
   { msgEphemerisDepBTgd      :: Double
   , msgEphemerisDepBCRs      :: Double
@@ -149,7 +140,6 @@ data MsgEphemerisDepB = MsgEphemerisDepB
   , msgEphemerisDepBIode     :: Word8
   } deriving ( Show, Read, Eq )
 
-
 data PackedObsContentDepA = PackedObsContentDepA
   { packedObsContentDepAP    :: Word32
   , packedObsContentDepAL    :: CarrierPhase
@@ -160,7 +150,6 @@ data PackedObsContentDepA = PackedObsContentDepA
 
 msgObsDepA :: Word16
 msgObsDepA = 0x0045
-
 data MsgObsDepA = MsgObsDepA
   { msgObsDepAHeader :: ObservationHeader
   , msgObsDepAObs    :: [PackedObsContentDepA]

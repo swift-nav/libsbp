@@ -112,4 +112,4 @@ def render_cabal(output_dir, package_specs, release):
   destination_filename = "%s/sbp.cabal" % output_dir
   py_template = JENV.get_template(CABAL_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
-    f.write(py_template.render(modules=modules, release=release))
+    f.write(py_template.render(modules=sorted(modules), release=release))

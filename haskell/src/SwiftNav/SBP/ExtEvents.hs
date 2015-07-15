@@ -7,7 +7,6 @@ import Data.Word
 
 msgExtEvent :: Word16
 msgExtEvent = 0x0101
-
 data MsgExtEvent = MsgExtEvent
   { msgExtEventWn    :: Word16
   , msgExtEventTow   :: Word32

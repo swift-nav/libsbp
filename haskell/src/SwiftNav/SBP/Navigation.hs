@@ -7,7 +7,6 @@ import Data.Word
 
 msgGpsTime :: Word16
 msgGpsTime = 0x0100
-
 data MsgGpsTime = MsgGpsTime
   { msgGpsTimeWn    :: Word16
   , msgGpsTimeTow   :: Word32
@@ -17,7 +16,6 @@ data MsgGpsTime = MsgGpsTime
 
 msgDops :: Word16
 msgDops = 0x0206
-
 data MsgDops = MsgDops
   { msgDopsTow  :: Word32
   , msgDopsGdop :: Word16
@@ -29,7 +27,6 @@ data MsgDops = MsgDops
 
 msgPosEcef :: Word16
 msgPosEcef = 0x0200
-
 data MsgPosEcef = MsgPosEcef
   { msgPosEcefTow      :: Word32
   , msgPosEcefX        :: Double
@@ -42,7 +39,6 @@ data MsgPosEcef = MsgPosEcef
 
 msgPosLlh :: Word16
 msgPosLlh = 0x0201
-
 data MsgPosLlh = MsgPosLlh
   { msgPosLlhTow        :: Word32
   , msgPosLlhLat        :: Double
@@ -56,7 +52,6 @@ data MsgPosLlh = MsgPosLlh
 
 msgBaselineEcef :: Word16
 msgBaselineEcef = 0x0202
-
 data MsgBaselineEcef = MsgBaselineEcef
   { msgBaselineEcefTow      :: Word32
   , msgBaselineEcefX        :: Int32
@@ -69,7 +64,6 @@ data MsgBaselineEcef = MsgBaselineEcef
 
 msgBaselineNed :: Word16
 msgBaselineNed = 0x0203
-
 data MsgBaselineNed = MsgBaselineNed
   { msgBaselineNedTow        :: Word32
   , msgBaselineNedN          :: Int32
@@ -83,7 +77,6 @@ data MsgBaselineNed = MsgBaselineNed
 
 msgVelEcef :: Word16
 msgVelEcef = 0x0204
-
 data MsgVelEcef = MsgVelEcef
   { msgVelEcefTow      :: Word32
   , msgVelEcefX        :: Int32
@@ -96,7 +89,6 @@ data MsgVelEcef = MsgVelEcef
 
 msgVelNed :: Word16
 msgVelNed = 0x0205
-
 data MsgVelNed = MsgVelNed
   { msgVelNedTow        :: Word32
   , msgVelNedN          :: Int32

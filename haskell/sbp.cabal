@@ -18,18 +18,18 @@ source-repository head
   location:          git@github.com:swift-nav/libsbp.git
 
 library
-  exposed-modules:   SwiftNav.SBP.Navigation
+  exposed-modules:   SwiftNav.SBP.Acquisition
+                   , SwiftNav.SBP.Bootload
                    , SwiftNav.SBP.ExtEvents
+                   , SwiftNav.SBP.FileIo
+                   , SwiftNav.SBP.Flash
                    , SwiftNav.SBP.Logging
-                   , SwiftNav.SBP.Acquisition
+                   , SwiftNav.SBP.Navigation
+                   , SwiftNav.SBP.Observation
                    , SwiftNav.SBP.Piksi
                    , SwiftNav.SBP.Settings
-                   , SwiftNav.SBP.Tracking
                    , SwiftNav.SBP.System
-                   , SwiftNav.SBP.Observation
-                   , SwiftNav.SBP.Bootload
-                   , SwiftNav.SBP.Flash
-                   , SwiftNav.SBP.FileIo
+                   , SwiftNav.SBP.Tracking
   default-language:  Haskell2010
   hs-source-dirs:    src
   build-depends:     base >= 4.7 && < 5

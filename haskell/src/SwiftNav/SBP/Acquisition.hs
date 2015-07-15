@@ -7,7 +7,6 @@ import Data.Word
 
 msgAcqResult :: Word16
 msgAcqResult = 0x0014
-
 data MsgAcqResult = MsgAcqResult
   { msgAcqResultSnr :: Float
   , msgAcqResultCp  :: Float
@@ -17,7 +16,6 @@ data MsgAcqResult = MsgAcqResult
 
 msgAcqResultDepA :: Word16
 msgAcqResultDepA = 0x0015
-
 data MsgAcqResultDepA = MsgAcqResultDepA
   { msgAcqResultDepASnr :: Float
   , msgAcqResultDepACp  :: Float
