@@ -169,7 +169,6 @@ class SBP(object):
     sbp.sender = d.pop('sender')
     sbp.length = d.pop('length')
     sbp.payload = base64.standard_b64decode(d.pop('payload'))
-    sbp.crc = d.pop('crc')
     return sbp
 
   def to_json_dict(self):
