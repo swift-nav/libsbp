@@ -20,5 +20,17 @@ class NullLogger(object):
   def __enter__(self):
     return self
 
+  def flush(self):
+    pass
+
+  def read(self, s=None):
+    pass
+
+  def write(self, s=None):
+    pass
+
+  def close(self):
+    pass
+
   def __exit__(self, *args):
     pass
