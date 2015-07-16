@@ -327,9 +327,6 @@ class LoggerDriver(BaseDriver):
     data = self.driver.read(size)
     if data is not None:
       self.logger.write(data)
-    s = self.logger.read()
-    if s:
-      self.driver.write(s)
     return data
 
   def write(self, s=None):
@@ -344,3 +341,6 @@ class LoggerDriver(BaseDriver):
     """
     if s is not None:
       self.driver.write(s)
+    s = self.logger.read()
+    if s:
+     self.driver.write(s)
