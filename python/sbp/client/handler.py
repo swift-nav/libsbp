@@ -280,7 +280,7 @@ class Handler(object):
     """
     self.framer.write(msg.to_binary())
 
-  def wait(self, msg_type, timeout):
+  def wait(self, msg_type, timeout=1.0):
     """
     Wait for a SBP message.
 
@@ -301,6 +301,27 @@ class Handler(object):
     self.remove_callback(cb, msg_type)
     return payload['data']
 
+  def wait_callback(self, callback, msg_type=None, timeout=1.0):
+    """
+    Wait for a SBP message with a callback.
+
+    Parameters
+    ----------
+    callback : fn
+      Callback function
+    msg_type : int | iterable
+      Message type to register callback against. Default `None` means global callback.
+      Iterable type adds the callback to all the message types.
+    timeout : float
+      Waiting period
+    """
+    event = threading.Event()
+    def cb(sbp_msg):
+      callback(sbp_msg)
+      event.set()
+    self.add_callback(cb, msg_type)
+    event.wait(timeout)
+    self.remove_callback(cb, msg_type)
 
 class LoggerDriver(BaseDriver):
   """LoggerDriver
@@ -344,3 +365,4 @@ class LoggerDriver(BaseDriver):
     s = self.logger.read()
     if s:
      self.driver.write(s)
+
