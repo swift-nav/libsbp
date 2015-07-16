@@ -27,7 +27,10 @@ library
 ((*- endfor *))
   default-language:    Haskell2010
   hs-source-dirs:      src
+  ghc-options:         -Wall -fno-warn-unused-imports
   build-depends:       base >= 4.7 && < 5
                      , binary
-                     , text
+                     , bytestring
+                     , data-binary-ieee754
+                     , monad-loops
   default-extensions:  RecordWildCards

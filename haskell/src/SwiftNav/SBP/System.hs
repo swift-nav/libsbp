@@ -1,8 +1,14 @@
 module SwiftNav.SBP.System where
 
+import Control.Monad
+import Control.Monad.Loops
 import Data.Binary
+import Data.Binary.Get
+import Data.Binary.IEEE754
+import Data.Binary.Put
+import Data.ByteString
+import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
-import Data.Text
 import Data.Word
 
 msgStartup :: Word16
@@ -13,10 +19,12 @@ data MsgStartup = MsgStartup
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgStartup where
-  get =
-    undefined
-  put MsgStartup {..} =
-    undefined
+  get = do
+    msgStartupReserved <- getWord32le
+    return MsgStartup {..}
+
+  put MsgStartup {..} = do
+    putWord32le msgStartupReserved
 
 msgHeartbeat :: Word16
 msgHeartbeat = 0xFFFF
@@ -26,7 +34,9 @@ data MsgHeartbeat = MsgHeartbeat
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgHeartbeat where
-  get =
-    undefined
-  put MsgHeartbeat {..} =
-    undefined
+  get = do
+    msgHeartbeatFlags <- getWord32le
+    return MsgHeartbeat {..}
+
+  put MsgHeartbeat {..} = do
+    putWord32le msgHeartbeatFlags

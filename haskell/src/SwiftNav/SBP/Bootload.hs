@@ -1,8 +1,14 @@
 module SwiftNav.SBP.Bootload where
 
+import Control.Monad
+import Control.Monad.Loops
 import Data.Binary
+import Data.Binary.Get
+import Data.Binary.IEEE754
+import Data.Binary.Put
+import Data.ByteString
+import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
-import Data.Text
 import Data.Word
 
 msgBootloaderHandshakeReq :: Word16
@@ -13,23 +19,28 @@ data MsgBootloaderHandshakeReq = MsgBootloaderHandshakeReq
 
 instance Binary MsgBootloaderHandshakeReq where
   get =
-    undefined
-  put MsgBootloaderHandshakeReq {..} =
-    undefined
+    return MsgBootloaderHandshakeReq
+
+  put MsgBootloaderHandshakeReq =
+    return ()
 
 msgBootloaderHandshakeResp :: Word16
 msgBootloaderHandshakeResp = 0x00B4
 
 data MsgBootloaderHandshakeResp = MsgBootloaderHandshakeResp
   { msgBootloaderHandshakeRespFlags   :: Word32
-  , msgBootloaderHandshakeRespVersion :: Text
+  , msgBootloaderHandshakeRespVersion :: ByteString
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBootloaderHandshakeResp where
-  get =
-    undefined
-  put MsgBootloaderHandshakeResp {..} =
-    undefined
+  get = do
+    msgBootloaderHandshakeRespFlags <- getWord32le
+    msgBootloaderHandshakeRespVersion <- liftM toStrict getRemainingLazyByteString
+    return MsgBootloaderHandshakeResp {..}
+
+  put MsgBootloaderHandshakeResp {..} = do
+    putWord32le msgBootloaderHandshakeRespFlags
+    putByteString msgBootloaderHandshakeRespVersion
 
 msgBootloaderJumpToApp :: Word16
 msgBootloaderJumpToApp = 0x00B1
@@ -39,10 +50,12 @@ data MsgBootloaderJumpToApp = MsgBootloaderJumpToApp
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBootloaderJumpToApp where
-  get =
-    undefined
-  put MsgBootloaderJumpToApp {..} =
-    undefined
+  get = do
+    msgBootloaderJumpToAppJump <- getWord8
+    return MsgBootloaderJumpToApp {..}
+
+  put MsgBootloaderJumpToApp {..} = do
+    putWord8 msgBootloaderJumpToAppJump
 
 msgNapDeviceDnaReq :: Word16
 msgNapDeviceDnaReq = 0x00DE
@@ -52,9 +65,10 @@ data MsgNapDeviceDnaReq = MsgNapDeviceDnaReq
 
 instance Binary MsgNapDeviceDnaReq where
   get =
-    undefined
-  put MsgNapDeviceDnaReq {..} =
-    undefined
+    return MsgNapDeviceDnaReq
+
+  put MsgNapDeviceDnaReq =
+    return ()
 
 msgNapDeviceDnaResp :: Word16
 msgNapDeviceDnaResp = 0x00DD
@@ -64,10 +78,12 @@ data MsgNapDeviceDnaResp = MsgNapDeviceDnaResp
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgNapDeviceDnaResp where
-  get =
-    undefined
-  put MsgNapDeviceDnaResp {..} =
-    undefined
+  get = do
+    msgNapDeviceDnaRespDna <- replicateM 8 getWord8
+    return MsgNapDeviceDnaResp {..}
+
+  put MsgNapDeviceDnaResp {..} = do
+    put msgNapDeviceDnaRespDna
 
 msgBootloaderHandshakeDepA :: Word16
 msgBootloaderHandshakeDepA = 0x00B0
@@ -77,7 +93,9 @@ data MsgBootloaderHandshakeDepA = MsgBootloaderHandshakeDepA
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBootloaderHandshakeDepA where
-  get =
-    undefined
-  put MsgBootloaderHandshakeDepA {..} =
-    undefined
+  get = do
+    msgBootloaderHandshakeDepAHandshake <- whileM (liftM not isEmpty) getWord8
+    return MsgBootloaderHandshakeDepA {..}
+
+  put MsgBootloaderHandshakeDepA {..} = do
+    put msgBootloaderHandshakeDepAHandshake

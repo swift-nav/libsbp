@@ -1,8 +1,14 @@
 module (((module_name))) where
 
+import Control.Monad
+import Control.Monad.Loops
 import Data.Binary
+import Data.Binary.Get
+import Data.Binary.IEEE754
+import Data.Binary.Put
+import Data.ByteString
+import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
-import Data.Text
 import Data.Word
 ((* for m in msgs *))
 ((*- if m.static *))
@@ -26,9 +32,23 @@ data (((m.identifier|to_data))) = (((m.identifier|to_data)))
 ((*- endfor *))
 
 instance Binary (((m.identifier|to_data))) where
+((*- if not m.fields *))
   get =
-    undefined
-  put (((m.identifier|to_data))) {..} =
-    undefined
+    return (((m.identifier|to_data)))
+
+  put (((m.identifier|to_data))) =
+    return ()
+((*- else *))
+  get = do
+((*- for f in m.fields *))
+    ((((m.identifier|to_global)+(f.identifier|camel_case)))) <- (((f|to_get)))
+((*- endfor *))
+    return (((m.identifier|to_data))) {..}
+
+  put (((m.identifier|to_data))) {..} = do
+((*- for f in m.fields *))
+    (((f|to_put))) ((((m.identifier|to_global)+(f.identifier|camel_case))))
+((*- endfor *))
+((*- endif *))
 ((*- endif *))
 ((* endfor *))

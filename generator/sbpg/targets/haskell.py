@@ -31,7 +31,34 @@ CONSTRUCT_CODE = {
   's64': 'Int64',
   'float': 'Float',
   'double': 'Double',
-  'string': 'Text',
+  'string': 'ByteString',
+}
+
+GET_CONSTRUCT_CODE = {
+  'u8': 'getWord8',
+  'u16': 'getWord16le',
+  'u32': 'getWord32le',
+  'u64': 'getWord64le',
+  's8': 'liftM fromIntegral getWord8',
+  's16': 'liftM fromIntegral getWord16le',
+  's32': 'liftM fromIntegral getWord32le',
+  's64': 'liftM fromIntegral getWord64le',
+  'float': 'getFloat32le',
+  'double': 'getFloat64le',
+}
+
+PUT_CONSTRUCT_CODE = {
+  'u8': 'putWord8',
+  'u16': 'putWord16le',
+  'u32': 'putWord32le',
+  'u64': 'putWord64le',
+  's8': 'putWord8 $ fromIntegral',
+  's16': 'putWord16le $ fromIntegral',
+  's32': 'putWord32le $ fromIntegral',
+  's64': 'putWord64le $ fromIntegral',
+  'float': 'putFloat32le',
+  'double': 'putFloat64le',
+  'string': 'putByteString',
 }
 
 def camel_case(s):
@@ -70,6 +97,31 @@ def to_type(f, type_map=CONSTRUCT_CODE):
     return "[%s]" % to_type(f_)
   return name
 
+def to_get(f, type_map=GET_CONSTRUCT_CODE):
+  name = f.type_id
+  if type_map.get(name, None):
+    return type_map.get(name, None)
+  elif name == 'string' and f.options.get('size', None):
+    return "getByteString %s" % f.options.get('size').value
+  elif name == 'string':
+    return "liftM toStrict getRemainingLazyByteString"
+  elif name == 'array' and f.options.get('size', None):
+    fill = f.options['fill'].value
+    f_ = copy.copy(f)
+    f_.type_id = fill
+    s = f.options.get('size', None).value
+    return "replicateM %d %s" % (s, to_get(f_, type_map))
+  elif name == 'array':
+    fill = f.options['fill'].value
+    f_ = copy.copy(f)
+    f_.type_id = fill
+    return "whileM (liftM not isEmpty) %s" % to_get(f_, type_map)
+  return type_map.get(name, "get")
+
+def to_put(f, type_map=PUT_CONSTRUCT_CODE):
+  name = f.type_id
+  return type_map.get(name, "put")
+
 def max_fid_len(m):
   """
   Max field id length.
@@ -79,6 +131,8 @@ def max_fid_len(m):
 JENV.filters['to_global'] = to_global
 JENV.filters['to_data'] = to_data
 JENV.filters['to_type'] = to_type
+JENV.filters['to_get'] = to_get
+JENV.filters['to_put'] = to_put
 JENV.filters['max_fid_len'] = max_fid_len
 JENV.filters['camel_case'] = camel_case
 

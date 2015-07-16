@@ -1,8 +1,14 @@
 module SwiftNav.SBP.Piksi where
 
+import Control.Monad
+import Control.Monad.Loops
 import Data.Binary
+import Data.Binary.Get
+import Data.Binary.IEEE754
+import Data.Binary.Put
+import Data.ByteString
+import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
-import Data.Text
 import Data.Word
 
 msgAlmanac :: Word16
@@ -13,9 +19,10 @@ data MsgAlmanac = MsgAlmanac
 
 instance Binary MsgAlmanac where
   get =
-    undefined
-  put MsgAlmanac {..} =
-    undefined
+    return MsgAlmanac
+
+  put MsgAlmanac =
+    return ()
 
 msgSetTime :: Word16
 msgSetTime = 0x0068
@@ -25,9 +32,10 @@ data MsgSetTime = MsgSetTime
 
 instance Binary MsgSetTime where
   get =
-    undefined
-  put MsgSetTime {..} =
-    undefined
+    return MsgSetTime
+
+  put MsgSetTime =
+    return ()
 
 msgReset :: Word16
 msgReset = 0x00B2
@@ -37,9 +45,10 @@ data MsgReset = MsgReset
 
 instance Binary MsgReset where
   get =
-    undefined
-  put MsgReset {..} =
-    undefined
+    return MsgReset
+
+  put MsgReset =
+    return ()
 
 msgCwResults :: Word16
 msgCwResults = 0x00C0
@@ -49,9 +58,10 @@ data MsgCwResults = MsgCwResults
 
 instance Binary MsgCwResults where
   get =
-    undefined
-  put MsgCwResults {..} =
-    undefined
+    return MsgCwResults
+
+  put MsgCwResults =
+    return ()
 
 msgCwStart :: Word16
 msgCwStart = 0x00C1
@@ -61,9 +71,10 @@ data MsgCwStart = MsgCwStart
 
 instance Binary MsgCwStart where
   get =
-    undefined
-  put MsgCwStart {..} =
-    undefined
+    return MsgCwStart
+
+  put MsgCwStart =
+    return ()
 
 msgResetFilters :: Word16
 msgResetFilters = 0x0022
@@ -73,10 +84,12 @@ data MsgResetFilters = MsgResetFilters
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgResetFilters where
-  get =
-    undefined
-  put MsgResetFilters {..} =
-    undefined
+  get = do
+    msgResetFiltersFilter <- getWord8
+    return MsgResetFilters {..}
+
+  put MsgResetFilters {..} = do
+    putWord8 msgResetFiltersFilter
 
 msgInitBase :: Word16
 msgInitBase = 0x0023
@@ -86,24 +99,31 @@ data MsgInitBase = MsgInitBase
 
 instance Binary MsgInitBase where
   get =
-    undefined
-  put MsgInitBase {..} =
-    undefined
+    return MsgInitBase
+
+  put MsgInitBase =
+    return ()
 
 msgThreadState :: Word16
 msgThreadState = 0x0017
 
 data MsgThreadState = MsgThreadState
-  { msgThreadStateName       :: Text
+  { msgThreadStateName       :: ByteString
   , msgThreadStateCpu        :: Word16
   , msgThreadStateStackFree  :: Word32
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgThreadState where
-  get =
-    undefined
-  put MsgThreadState {..} =
-    undefined
+  get = do
+    msgThreadStateName <- getByteString 20
+    msgThreadStateCpu <- getWord16le
+    msgThreadStateStackFree <- getWord32le
+    return MsgThreadState {..}
+
+  put MsgThreadState {..} = do
+    putByteString msgThreadStateName
+    putWord16le msgThreadStateCpu
+    putWord32le msgThreadStateStackFree
 
 data UARTChannel = UARTChannel
   { uARTChannelTxThroughput    :: Float
@@ -115,10 +135,22 @@ data UARTChannel = UARTChannel
   } deriving ( Show, Read, Eq )
 
 instance Binary UARTChannel where
-  get =
-    undefined
-  put UARTChannel {..} =
-    undefined
+  get = do
+    uARTChannelTxThroughput <- getFloat32le
+    uARTChannelRxThroughput <- getFloat32le
+    uARTChannelCrcErrorCount <- getWord16le
+    uARTChannelIoErrorCount <- getWord16le
+    uARTChannelTxBufferLevel <- getWord8
+    uARTChannelRxBufferLevel <- getWord8
+    return UARTChannel {..}
+
+  put UARTChannel {..} = do
+    putFloat32le uARTChannelTxThroughput
+    putFloat32le uARTChannelRxThroughput
+    putWord16le uARTChannelCrcErrorCount
+    putWord16le uARTChannelIoErrorCount
+    putWord8 uARTChannelTxBufferLevel
+    putWord8 uARTChannelRxBufferLevel
 
 data Latency = Latency
   { latencyAvg     :: Int32
@@ -128,10 +160,18 @@ data Latency = Latency
   } deriving ( Show, Read, Eq )
 
 instance Binary Latency where
-  get =
-    undefined
-  put Latency {..} =
-    undefined
+  get = do
+    latencyAvg <- liftM fromIntegral getWord32le
+    latencyLmin <- liftM fromIntegral getWord32le
+    latencyLmax <- liftM fromIntegral getWord32le
+    latencyCurrent <- liftM fromIntegral getWord32le
+    return Latency {..}
+
+  put Latency {..} = do
+    putWord32le $ fromIntegral latencyAvg
+    putWord32le $ fromIntegral latencyLmin
+    putWord32le $ fromIntegral latencyLmax
+    putWord32le $ fromIntegral latencyCurrent
 
 msgUartState :: Word16
 msgUartState = 0x0018
@@ -144,10 +184,18 @@ data MsgUartState = MsgUartState
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgUartState where
-  get =
-    undefined
-  put MsgUartState {..} =
-    undefined
+  get = do
+    msgUartStateUartA <- get
+    msgUartStateUartB <- get
+    msgUartStateUartFtdi <- get
+    msgUartStateLatency <- get
+    return MsgUartState {..}
+
+  put MsgUartState {..} = do
+    put msgUartStateUartA
+    put msgUartStateUartB
+    put msgUartStateUartFtdi
+    put msgUartStateLatency
 
 msgIarState :: Word16
 msgIarState = 0x0019
@@ -157,10 +205,12 @@ data MsgIarState = MsgIarState
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgIarState where
-  get =
-    undefined
-  put MsgIarState {..} =
-    undefined
+  get = do
+    msgIarStateNumHyps <- getWord32le
+    return MsgIarState {..}
+
+  put MsgIarState {..} = do
+    putWord32le msgIarStateNumHyps
 
 msgMaskSatellite :: Word16
 msgMaskSatellite = 0x001B
@@ -171,7 +221,11 @@ data MsgMaskSatellite = MsgMaskSatellite
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgMaskSatellite where
-  get =
-    undefined
-  put MsgMaskSatellite {..} =
-    undefined
+  get = do
+    msgMaskSatelliteMask <- getWord8
+    msgMaskSatelliteSid <- getWord32le
+    return MsgMaskSatellite {..}
+
+  put MsgMaskSatellite {..} = do
+    putWord8 msgMaskSatelliteMask
+    putWord32le msgMaskSatelliteSid
