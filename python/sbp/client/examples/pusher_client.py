@@ -1,9 +1,11 @@
 import pusher
+import pusherclient
 import time
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
 from sbp.client.handler                 import Handler
-from sbp.observation                    import SBP_MSG_OBS, SBP_MSG_BASE_POS
+from sbp.observation                    import *
+from sbp.msg                            import SBP
 
 DEFAULT_SERIAL_PORT = "/dev/ttyUSB0"
 DEFAULT_SERIAL_BAUD = 1000000
@@ -29,9 +31,12 @@ def get_args():
   parser.add_argument("-b", "--baud",
                       default=[DEFAULT_SERIAL_BAUD], nargs=1,
                       help="specify the baud rate to use.")
-  parser.add_argument("-c", "--channel",
+  parser.add_argument("-r", "--rx-channel-event",
                       default=[None], nargs=1,
-                      help="pusher channel.")
+                      help="pusher receive channel event.")
+  parser.add_argument("-t", "--tx-channel-event",
+                      default=[None], nargs=1,
+                      help="pusher transmit channel event.")
   return parser.parse_args()
 
 def main():
@@ -41,19 +46,26 @@ def main():
   secret = args.secret[0]
   port = args.port[0]
   baud = args.baud[0]
-  channel = args.channel[0]
+  rx_channel, rx_event = args.rx_channel_event[0].split(':')
+  tx_channel, tx_event = args.tx_channel_event[0].split(':')
   push = pusher.Pusher(app_id=app, key=key, secret=secret, ssl=True, port=443)
+  push_client = pusherclient.Pusher(key, secret=secret)
   with PySerialDriver(port, baud) as driver:
     with Handler(driver.read, driver.write) as handler:
 
-      def pushit(sbp_msg):
-        try:
-          push.trigger(channel, str(sbp_msg.msg_type), sbp_msg.to_json_dict())
-        except:
-          import traceback
-          traceback.print_exc()
+      def push_it(sbp_msg):
+        push.trigger(tx_channel, tx_event, sbp_msg.to_json_dict())
 
-      handler.add_callback(pushit, [SBP_MSG_OBS, SBP_MSG_BASE_POS])
+      def pull_it(data):
+        handler.framer.write(SBP.from_json(data).pack())
+
+      def connect_it(data):
+        push_client.subscribe(rx_channel).bind(rx_event, pull_it)
+
+      push_client.connection.bind('pusher:connection_established', connect_it)
+      push_client.connect()
+
+      handler.add_callback(push_it, [SBP_MSG_OBS, SBP_MSG_BASE_POS, SBP_MSG_OBS_DEP_A])
 
       try:
         while True:
