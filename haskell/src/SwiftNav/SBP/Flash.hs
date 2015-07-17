@@ -31,9 +31,9 @@ instance Binary MsgFlashProgram where
 
   put MsgFlashProgram {..} = do
     putWord8 msgFlashProgramTarget
-    put msgFlashProgramAddrStart
+    mapM_ putWord8 msgFlashProgramAddrStart
     putWord8 msgFlashProgramAddrLen
-    put msgFlashProgramData
+    mapM_ putWord8 msgFlashProgramData
 
 msgFlashDone :: Word16
 msgFlashDone = 0x00E0
@@ -68,7 +68,7 @@ instance Binary MsgFlashReadReq where
 
   put MsgFlashReadReq {..} = do
     putWord8 msgFlashReadReqTarget
-    put msgFlashReadReqAddrStart
+    mapM_ putWord8 msgFlashReadReqAddrStart
     putWord8 msgFlashReadReqAddrLen
 
 msgFlashReadResp :: Word16
@@ -89,7 +89,7 @@ instance Binary MsgFlashReadResp where
 
   put MsgFlashReadResp {..} = do
     putWord8 msgFlashReadRespTarget
-    put msgFlashReadRespAddrStart
+    mapM_ putWord8 msgFlashReadRespAddrStart
     putWord8 msgFlashReadRespAddrLen
 
 msgFlashErase :: Word16
@@ -166,7 +166,7 @@ instance Binary MsgStmUniqueIdResp where
     return MsgStmUniqueIdResp {..}
 
   put MsgStmUniqueIdResp {..} = do
-    put msgStmUniqueIdRespStmId
+    mapM_ putWord8 msgStmUniqueIdRespStmId
 
 msgM25FlashWriteStatus :: Word16
 msgM25FlashWriteStatus = 0x00F3
@@ -181,4 +181,4 @@ instance Binary MsgM25FlashWriteStatus where
     return MsgM25FlashWriteStatus {..}
 
   put MsgM25FlashWriteStatus {..} = do
-    put msgM25FlashWriteStatusStatus
+    mapM_ putWord8 msgM25FlashWriteStatusStatus

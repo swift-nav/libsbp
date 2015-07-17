@@ -51,7 +51,7 @@ instance Binary MsgFileioReadResp where
 
   put MsgFileioReadResp {..} = do
     putWord32le msgFileioReadRespSequence
-    put msgFileioReadRespContents
+    mapM_ putWord8 msgFileioReadRespContents
 
 msgFileioReadDirReq :: Word16
 msgFileioReadDirReq = 0x00A9
@@ -90,7 +90,7 @@ instance Binary MsgFileioReadDirResp where
 
   put MsgFileioReadDirResp {..} = do
     putWord32le msgFileioReadDirRespSequence
-    put msgFileioReadDirRespContents
+    mapM_ putWord8 msgFileioReadDirRespContents
 
 msgFileioRemove :: Word16
 msgFileioRemove = 0x00AC
@@ -129,7 +129,7 @@ instance Binary MsgFileioWriteReq where
     putWord32le msgFileioWriteReqSequence
     putWord32le msgFileioWriteReqOffset
     putByteString msgFileioWriteReqFilename
-    put msgFileioWriteReqData
+    mapM_ putWord8 msgFileioWriteReqData
 
 msgFileioWriteResp :: Word16
 msgFileioWriteResp = 0x00AB

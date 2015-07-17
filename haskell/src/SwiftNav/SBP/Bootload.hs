@@ -83,7 +83,7 @@ instance Binary MsgNapDeviceDnaResp where
     return MsgNapDeviceDnaResp {..}
 
   put MsgNapDeviceDnaResp {..} = do
-    put msgNapDeviceDnaRespDna
+    mapM_ putWord8 msgNapDeviceDnaRespDna
 
 msgBootloaderHandshakeDepA :: Word16
 msgBootloaderHandshakeDepA = 0x00B0
@@ -98,4 +98,4 @@ instance Binary MsgBootloaderHandshakeDepA where
     return MsgBootloaderHandshakeDepA {..}
 
   put MsgBootloaderHandshakeDepA {..} = do
-    put msgBootloaderHandshakeDepAHandshake
+    mapM_ putWord8 msgBootloaderHandshakeDepAHandshake

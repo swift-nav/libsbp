@@ -96,7 +96,7 @@ instance Binary MsgObs where
 
   put MsgObs {..} = do
     put msgObsHeader
-    put msgObsObs
+    mapM_ put msgObsObs
 
 msgBasePos :: Word16
 msgBasePos = 0x0044
@@ -441,4 +441,4 @@ instance Binary MsgObsDepA where
 
   put MsgObsDepA {..} = do
     put msgObsDepAHeader
-    put msgObsDepAObs
+    mapM_ put msgObsDepAObs

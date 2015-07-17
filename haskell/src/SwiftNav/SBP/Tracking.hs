@@ -42,7 +42,7 @@ instance Binary MsgTrackingState where
     return MsgTrackingState {..}
 
   put MsgTrackingState {..} = do
-    put msgTrackingStateStates
+    mapM_ put msgTrackingStateStates
 
 data TrackingChannelCorrelation = TrackingChannelCorrelation
   { trackingChannelCorrelationI :: Int32
@@ -78,7 +78,7 @@ instance Binary MsgTrackingIq where
   put MsgTrackingIq {..} = do
     putWord8 msgTrackingIqChannel
     putWord32le msgTrackingIqSid
-    put msgTrackingIqCorrs
+    mapM_ put msgTrackingIqCorrs
 
 data TrackingChannelStateDepA = TrackingChannelStateDepA
   { trackingChannelStateDepAState :: Word8
@@ -111,4 +111,4 @@ instance Binary MsgTrackingStateDepA where
     return MsgTrackingStateDepA {..}
 
   put MsgTrackingStateDepA {..} = do
-    put msgTrackingStateDepAStates
+    mapM_ put msgTrackingStateDepAStates

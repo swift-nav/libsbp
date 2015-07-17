@@ -120,6 +120,13 @@ def to_get(f, type_map=GET_CONSTRUCT_CODE):
 
 def to_put(f, type_map=PUT_CONSTRUCT_CODE):
   name = f.type_id
+  if type_map.get(name, None):
+    return type_map.get(name, None)
+  elif name == 'array':
+    fill = f.options['fill'].value
+    f_ = copy.copy(f)
+    f_.type_id = fill
+    return "mapM_ %s" % to_put(f_, type_map)
   return type_map.get(name, "put")
 
 def max_fid_len(m):
