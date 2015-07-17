@@ -35,12 +35,11 @@ class TCPDriver(BaseDriver):
   def __init__(self, host, port, size=DEFAULT_RECV_SIZE):
     self.handle = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     self.handle.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    self.handle.setblocking(0)
     try:
       self.handle.connect((host, port))
     except socket.error, msg:
-      err = "%s for %s:%s!\n" % (msg.strerror, host, port)
-      sys.stderr.write(err)
-      raise SystemExit
+      pass
     super(TCPDriver, self).__init__(self.handle)
     self._write_lock = threading.Lock()
     self.recv_size = size
@@ -58,9 +57,7 @@ class TCPDriver(BaseDriver):
       data = self.handle.recv(self.recv_size)
       return data
     except socket.error, msg:
-      sys.stderr.write(msg.strerror)
-      sys.stderr.write("\n")
-      raise SystemExit
+      pass
 
   def flush(self):
     pass
@@ -78,8 +75,6 @@ class TCPDriver(BaseDriver):
       self._write_lock.acquire()
       self.handle.sendall(s)
     except socket.error, msg:
-      sys.stderr.write(msg.strerror)
-      sys.stderr.write("\n")
-      raise SystemExit
+      pass
     finally:
       self._write_lock.release()
