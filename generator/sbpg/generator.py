@@ -98,6 +98,7 @@ def main():
       elif args.haskell:
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
         hs.render_cabal(output_dir, parsed, args.release[0])
+        hs.render_sbp(output_dir, parsed)
   except KeyboardInterrupt:
     pass
 
