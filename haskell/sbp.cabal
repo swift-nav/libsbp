@@ -18,7 +18,8 @@ source-repository head
   location:            git@github.com:swift-nav/libsbp.git
 
 library
-  exposed-modules:     SwiftNav.SBP.Acquisition
+  exposed-modules:     SwiftNav.SBP
+                     , SwiftNav.SBP.Acquisition
                      , SwiftNav.SBP.Bootload
                      , SwiftNav.SBP.ExtEvents
                      , SwiftNav.SBP.FileIo
