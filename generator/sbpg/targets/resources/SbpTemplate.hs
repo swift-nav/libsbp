@@ -45,9 +45,14 @@ putMsg :: Msg -> Put
 putMsg msg = do
   putWord8 msgPreamble
   put msg
-
-((*- for m in msgs *))
+((* for m in msgs *))
 ((*- if loop.first *))
-  SBP(((m)))
+data SBPMsg =
+     SBP(((m))) (((m)))
+((*- else *))
+   | SBP(((m))) (((m)))
+((*- endif *))
+((*- if loop.last *))
+  deriving ( Show, Read, Eq )
 ((*- endif *))
 ((*- endfor *))
