@@ -11,7 +11,7 @@
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
 from sbp.client.handler import Handler
-from sbp.logging import MsgPrint
+from sbp.logging import MsgPrintDep
 import SocketServer
 import threading
 import time
@@ -34,7 +34,7 @@ def tcp_server(handler):
   return (ip, port)
 
 def test_tcp_logger():
-  handler = tcp_handler(MsgPrint(text='abc').to_binary())
+  handler = tcp_handler(MsgPrintDep(text='abc').to_binary())
   ip, port = tcp_server(handler)
   port = "socket://%s:%s" % (ip, port)
   baud = 115200

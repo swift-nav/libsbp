@@ -25,11 +25,11 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, gr
 # Please do not hand edit!
 
 
-SBP_MSG_PRINT = 0x0010
-class MsgPrint(SBP):
-  """SBP class for message MSG_PRINT (0x0010).
+SBP_MSG_LOG = 0x0401
+class MsgLog(SBP):
+  """SBP class for message MSG_LOG (0x0401).
 
-  You can have MSG_PRINT inherent its fields directly
+  You can have MSG_LOG inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -43,28 +43,33 @@ ERROR, WARNING, DEBUG, INFO logging levels.
   ----------
   sbp : SBP
     SBP parent object to inherit from.
+  level : int
+    Logging level
   text : string
     Human-readable string
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgPrint",
+  _parser = Struct("MsgLog",
+                   ULInt8('level'),
                    greedy_string('text'),)
   __slots__ = [
+               'level',
                'text',
               ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgPrint,
+      super( MsgLog,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgPrint, self).__init__()
-      self.msg_type = SBP_MSG_PRINT
+      super( MsgLog, self).__init__()
+      self.msg_type = SBP_MSG_LOG
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.level = kwargs.pop('level')
       self.text = kwargs.pop('text')
 
   def __repr__(self):
@@ -75,7 +80,7 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     the message.
 
     """
-    p = MsgPrint._parser.parse(d)
+    p = MsgLog._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -84,7 +89,7 @@ ERROR, WARNING, DEBUG, INFO logging levels.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgPrint._parser.build(c)
+    self.payload = MsgLog._parser.build(c)
     return self.pack()
 
   @staticmethod
@@ -94,11 +99,11 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     """
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
-    return MsgPrint(sbp)
+    return MsgLog(sbp)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgPrint, self).to_json_dict()
+    d = super( MsgLog, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -178,8 +183,84 @@ class MsgTweet(SBP):
     d.update(j)
     return d
     
+SBP_MSG_PRINT_DEP = 0x0010
+class MsgPrintDep(SBP):
+  """SBP class for message MSG_PRINT_DEP (0x0010).
+
+  You can have MSG_PRINT_DEP inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Deprecated.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  text : string
+    Human-readable string
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgPrintDep",
+                   greedy_string('text'),)
+  __slots__ = [
+               'text',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgPrintDep,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgPrintDep, self).__init__()
+      self.msg_type = SBP_MSG_PRINT_DEP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.text = kwargs.pop('text')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgPrintDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgPrintDep._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgPrintDep(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgPrintDep, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
-  0x0010: MsgPrint,
+  0x0401: MsgLog,
   0x0012: MsgTweet,
+  0x0010: MsgPrintDep,
 }

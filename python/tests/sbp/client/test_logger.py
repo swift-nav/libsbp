@@ -16,7 +16,7 @@ from sbp.client.loggers.rotating_logger import RotatingFileLogger
 from sbp.client.loggers.device_iterator import DeviceIterator
 from sbp.client.loggers.udp_logger import UdpLogger
 from sbp.acquisition import MsgAcqResultDepA
-from sbp.logging import SBP_MSG_PRINT, MsgPrint
+from sbp.logging import MsgPrintDep
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
 from sbp.client.handler import Handler
@@ -157,7 +157,7 @@ def test_rolling_json_log():
       i = 0
       with JSONLogIterator(tf.name) as log:
         for delta, timestamp, msg in log.next():
-          assert isinstance(msg, MsgPrint)
+          assert isinstance(msg, MsgPrintDep)
           assert msg.text == "abc\n"
           i += 1
       assert i > 0
