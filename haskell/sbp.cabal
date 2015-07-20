@@ -1,0 +1,42 @@
+name:                  sbp
+version:               0.49.0
+synopsis:              SwiftNav's SBP Library
+homepage:              https://github.com/swift-nav/libsbp
+license:               MIT
+author:                Swift Navigation Inc.
+maintainer:            Mark Fine <dev@swiftnav.com>
+copyright:             Copyright (C) 2015 Swift Navigation, Inc.
+category:              Network
+build-type:            Simple
+cabal-version:         >= 1.10
+
+description:
+  SwiftNav's SBP Library.
+
+source-repository head
+  type:                git
+  location:            git@github.com:swift-nav/libsbp.git
+
+library
+  exposed-modules:     SwiftNav.SBP
+                     , SwiftNav.SBP.Acquisition
+                     , SwiftNav.SBP.Bootload
+                     , SwiftNav.SBP.ExtEvents
+                     , SwiftNav.SBP.FileIo
+                     , SwiftNav.SBP.Flash
+                     , SwiftNav.SBP.Logging
+                     , SwiftNav.SBP.Navigation
+                     , SwiftNav.SBP.Observation
+                     , SwiftNav.SBP.Piksi
+                     , SwiftNav.SBP.Settings
+                     , SwiftNav.SBP.System
+                     , SwiftNav.SBP.Tracking
+  default-language:    Haskell2010
+  hs-source-dirs:      src
+  ghc-options:         -Wall -fno-warn-unused-imports
+  build-depends:       base >= 4.7 && < 5
+                     , binary
+                     , bytestring
+                     , data-binary-ieee754
+                     , monad-loops
+  default-extensions:  RecordWildCards

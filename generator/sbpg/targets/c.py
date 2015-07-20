@@ -105,7 +105,7 @@ def render_source(output_dir, package_spec):
 
 def render_version(output_dir, release):
   destination_filename = "%s/version.h" % output_dir
-  major, minor = release.split('.')
+  major, minor = release.split('.')[:2]
   py_template = JENV.get_template(VERSION_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(major=major, minor=minor))
