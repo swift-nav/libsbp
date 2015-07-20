@@ -10,7 +10,7 @@ tests:
 
         '
     module: sbp.logging
-    name: MsgPrint
+    name: MsgPrintDep
   msg_type: '0x10'
   raw_json: '{"sender": 8738, "msg_type": 16, "text": "INFO: acq: PRN 15 found @ -2497
     Hz, 20 SNR\n", "crc": 26484, "length": 43, "preamble": 85, "payload": "SU5GTzogYWNxOiBQUk4gMTUgZm91bmQgQCAtMjQ5NyBIeiwgMjAgU05SCg=="}'
@@ -29,7 +29,7 @@ tests:
 
         '
     module: sbp.logging
-    name: MsgPrint
+    name: MsgPrintDep
   msg_type: '0x10'
   raw_json: '{"sender": 8738, "msg_type": 16, "text": "INFO: acq: PRN 31 found @ 4245
     Hz, 21 SNR\n", "crc": 11148, "length": 42, "preamble": 85, "payload": "SU5GTzogYWNxOiBQUk4gMzEgZm91bmQgQCA0MjQ1IEh6LCAyMSBTTlIK"}'
@@ -48,7 +48,7 @@ tests:
 
         '
     module: sbp.logging
-    name: MsgPrint
+    name: MsgPrintDep
   msg_type: '0x10'
   raw_json: '{"sender": 8738, "msg_type": 16, "text": "INFO: Disabling channel 0 (PRN
     11)\n", "crc": 36631, "length": 35, "preamble": 85, "payload": "SU5GTzogRGlzYWJsaW5nIGNoYW5uZWwgMCAoUFJOIDExKQo="}'
@@ -67,7 +67,7 @@ tests:
 
         '
     module: sbp.logging
-    name: MsgPrint
+    name: MsgPrintDep
   msg_type: '0x10'
   raw_json: '{"sender": 8738, "msg_type": 16, "text": "INFO: acq: PRN 2 found @ 3996
     Hz, 20 SNR\n", "crc": 12527, "length": 41, "preamble": 85, "payload": "SU5GTzogYWNxOiBQUk4gMiBmb3VuZCBAIDM5OTYgSHosIDIwIFNOUgo="}'
@@ -86,7 +86,7 @@ tests:
 
         '
     module: sbp.logging
-    name: MsgPrint
+    name: MsgPrintDep
   msg_type: '0x10'
   raw_json: '{"sender": 8738, "msg_type": 16, "text": "INFO: acq: PRN 4 found @ -7492
     Hz, 20 SNR\n", "crc": 63535, "length": 42, "preamble": 85, "payload": "SU5GTzogYWNxOiBQUk4gNCBmb3VuZCBAIC03NDkyIEh6LCAyMCBTTlIK"}'
@@ -105,7 +105,7 @@ tests:
 
         '
     module: sbp.logging
-    name: MsgPrint
+    name: MsgPrintDep
   msg_type: '0x10'
   raw_json: '{"sender": 8738, "msg_type": 16, "text": "INFO: Disabling channel 1 (PRN
     15)\n", "crc": 35742, "length": 35, "preamble": 85, "payload": "SU5GTzogRGlzYWJsaW5nIGNoYW5uZWwgMSAoUFJOIDE1KQo="}'
