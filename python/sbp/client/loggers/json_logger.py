@@ -76,6 +76,8 @@ class JSONLogIterator(LogIterator):
     for line in self.handle:
       try:
         data = json.loads(line)
+        if not data:
+          continue
         delta = data['delta']
         timestamp = data['timestamp']
         item = SBP.from_json_dict(data['data'])
