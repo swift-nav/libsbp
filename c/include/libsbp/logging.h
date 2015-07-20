@@ -33,33 +33,31 @@
  * device containing errors, warnings and informational messages at
  * ERROR, WARNING, DEBUG, INFO logging levels.
  */
-#define SBP_MSG_LOG   0x0102
+#define SBP_MSG_LOG       0x0401
 typedef struct __attribute__((packed)) {
   u8 level;    /**< Logging level */
   char text[0];  /**< Human-readable string */
 } msg_log_t;
 
 
-/** Plaintext logging messages
- *
- * This message contains a human-readable payload string from the
- * device containing errors, warnings and informational messages at
- * ERROR, WARNING, DEBUG, INFO logging levels.
- */
-#define SBP_MSG_PRINT 0x0010
-typedef struct __attribute__((packed)) {
-  char text[0]; /**< Human-readable string */
-} msg_print_t;
-
-
 /** Tweet
  *
 * All the news fit to tweet.
  */
-#define SBP_MSG_TWEET 0x0012
+#define SBP_MSG_TWEET     0x0012
 typedef struct __attribute__((packed)) {
   char tweet[140]; /**< Human-readable string */
 } msg_tweet_t;
+
+
+/** Deprecated
+ *
+* Deprecated.
+ */
+#define SBP_MSG_PRINT_DEP 0x0010
+typedef struct __attribute__((packed)) {
+  char text[0]; /**< Human-readable string */
+} msg_print_dep_t;
 
 
 /** \} */

@@ -19,7 +19,7 @@ include:
 definitions:
 
  - MSG_LOG:
-    id: 0x0102
+    id: 0x0401
     short_desc: Plaintext logging messages with levels
     desc: |
       This message contains a human-readable payload string from the
