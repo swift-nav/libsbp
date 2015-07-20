@@ -18,15 +18,6 @@ from operator import itemgetter
 import json
 import warnings
 
-def _dump_msg(msg, fmt):
-  try:
-    return json.dumps(fmt(msg), allow_nan=False)
-  except ValueError:
-    warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
-           % (msg.msg_type, msg)
-    warnings.warn(warn, RuntimeWarning)
-    return json.dumps({})
-
 class JSONLogger(BaseLogger):
   """
   JSONLogger
@@ -36,15 +27,21 @@ class JSONLogger(BaseLogger):
   def __call__(self, msg):
     self.call(msg)
 
-  def fmt_msg(self, msg):
-    data = self.dispatch(msg).to_json_dict()
+  def fmt_msg(self, data):
     return {"delta": self.delta(),
             "timestamp": self.timestamp(),
             "data": data,
             "metadata": self.tags}
 
   def dump(self, msg):
-    return _dump_msg(msg, self.fmt_msg)
+    try:
+      data = self.dispatch(msg).to_json_dict()
+      return json.dumps(self.fmt_msg(data), allow_nan=False)
+    except ValueError:
+      warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
+             % (msg.msg_type, msg)
+      warnings.warn(warn, RuntimeWarning)
+      return json.dumps(self.fmt_msg(msg.to_json_dict()))
 
   def call(self, msg):
     self.handle.write(self.dump(msg) + "\n")
