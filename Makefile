@@ -6,6 +6,7 @@ SWIFTNAV_ROOT := $(shell pwd)
 MAKEFLAGS += SWIFTNAV_ROOT=$(SWIFTNAV_ROOT)
 SBP_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/yaml/swiftnav/sbp/
 SBP_GEN_BIN := python sbpg/generator.py
+export PYTHONPATH := .
 
 SBP_VERSION := $(shell PYTHONPATH=python python python/sbp/version.py)
 SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
