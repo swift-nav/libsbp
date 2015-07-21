@@ -1,49 +1,33 @@
 SBP Bindings for Java
 =======================
 
-Java client for Swift Binary Protocol (SBP). Packaging and testing are
-mediated through Clojure.
+Java client for Swift Binary Protocol (SBP).
+Supports standard Java and Android.
 
 Setup
 -----
 
-Install package with Maven::
+Generate message classes from the toplevel:
+  $ make java
 
-  <dependency>
-    <groupId>org.swiftnav</groupId>
-    <artifactId>sbp</artifactId>
-    <version>0.1.0</version>
-  </dependency>
+Build Java library:
+  $ cd java; gradle build
+Find the JAR in java/build/libs/sbp.jar
+
+Build Javadoc documentation:
+  $ cd java; gradle javadoc
+Find compiled documentation in java/build/docs/javadoc
 
 Usage Examples
 --------------
 
-Simple example
-~~~~~~~~~~~~~~
+A simple example is provided to read from a serial port, log received
+messages to a JSON logfile, and write log messages and tracking state to
+stdout.
 
-Receives SBP messages over a serial port, decodes MSG_BASELINE
-messages and prints them out.
-
-Run this example with::
-
-  $ python -m sbp.client.examples.simple -p /path/to/serial/port
-
-Sending SBP messages over UDP
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Receives SBP messages over a serial port and sends all incoming
-messages to a UDP socket. See
-
-Run this example with::
-
-  $ python -m sbp.client.examples.udp -s /path/to/serial/port
-
-Testing
---------------
-
-To run the tests and check for coverage::
-
-  $  lein test
+  $ cd java/example
+  $ javac -cp ../build/libs/sbp.jar:/path/to/jssc.jar:/path/to/json.jar SerialLink.java
+  $ java -cp ../build/libs/sbp.jar:/path/to/jssc.jar:/path/to/json.jar SerialLink /dev/ttyUSB0
 
 License
 -------
@@ -51,3 +35,4 @@ License
 Copyright © 2015 Swift Navigation
 
 Distributed under LGPLv3.0.
+

@@ -1,3 +1,5 @@
+*.rst
+.*.sw*
 .DS_Store
 *.*~
 limbo/

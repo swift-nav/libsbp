@@ -119,7 +119,7 @@ html:
 	@echo
 	@echo "Finished!"
 
-test:
+test:	java
 	@echo
 	@echo "Run tests..."
 	@echo
@@ -133,6 +133,11 @@ test:
 	@echo "Running Python tests..."
 	@echo
 	cd $(SWIFTNAV_ROOT)/python/ && tox
+	cd $(SWIFTNAV_ROOT);
+	@echo
+	@echo "Running Java tests..."
+	@echo
+	cd $(SWIFTNAV_ROOT)/java/ && gradle test
 	cd $(SWIFTNAV_ROOT);
 	@echo
 	@echo "Finished!"
