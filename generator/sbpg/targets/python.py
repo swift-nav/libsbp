@@ -9,13 +9,13 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-"""
-Generator for Python target.
+"""Generator for Python target.
 
-This module consumes the
+This module consumes the YAML spec and generates some message class
+files.
+
 """
 
-import os
 from sbpg.targets.templating import JENV, ACRONYMS
 import copy
 

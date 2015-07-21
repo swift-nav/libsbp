@@ -1,0 +1,17 @@
+src/com/swiftnav/sbp/acquisition
+src/com/swiftnav/sbp/bootload
+src/com/swiftnav/sbp/ext_events
+src/com/swiftnav/sbp/file_io
+src/com/swiftnav/sbp/flash
+src/com/swiftnav/sbp/logging
+src/com/swiftnav/sbp/navigation
+src/com/swiftnav/sbp/observation
+src/com/swiftnav/sbp/piksi
+src/com/swiftnav/sbp/settings
+src/com/swiftnav/sbp/system
+src/com/swiftnav/sbp/tracking
+src/com/swiftnav/sbp/client/MessageTable.java
+.gradle
+.idea
+*.class
+
