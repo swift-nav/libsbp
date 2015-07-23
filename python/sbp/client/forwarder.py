@@ -8,25 +8,25 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-import struct
+from threading import Thread
 
-from .base_logger import BaseLogger
+class Forwarder(Thread):
+  def __init__(self, source, sink):
+    Thread.__init__(self, name="SBP Forwarder")
+    self.daemon = True
+    self._broken = False
+    self._source = source
+    self._sink = sink
 
-class ByteLogger(BaseLogger):
-  """
-  ByteLogger
+  def run(self):
+    for msg in self._source:
+      if self._broken:
+        break
+      self._sink(*msg)
 
-  The :class:`ByteLogger` logs SBP messages to bytes.
-  """
-  def __call__(self, msg):
-    self.call(msg)
+  def stop():
+    self._broken = True
+    try:
+      self._source.breakiter()
+    except: pass
 
-  def fmt_msg(self, msg):
-    s = ""
-    s += struct.pack("<BHHB", 0x55, msg.msg_type, msg.sender, msg.length)
-    s += msg.payload
-    s += struct.pack("<H", msg.crc)
-    return s
-
-  def call(self, msg):
-    self.handle.write(self.fmt_msg(msg))

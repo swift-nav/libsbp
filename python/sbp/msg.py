@@ -146,6 +146,14 @@ class SBP(object):
     fmt = "<SBP (preamble=0x%X, msg_type=0x%X, sender=%s, length=%d, payload=%s, crc=0x%X)>"
     return fmt % p
 
+  def to_binary(self):
+    ret = struct.pack("<BHHB", SBP_PREAMBLE,
+                      self.msg_type, self.sender, len(self.payload))
+    ret += self.payload
+    crc = crc16(ret[1:])
+    ret += struct.pack("<H", crc)
+    return ret
+
   def to_json(self):
     """Produce a JSON-encoded SBP message.
 

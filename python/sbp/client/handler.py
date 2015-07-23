@@ -14,151 +14,42 @@ SBP message handling.
 """
 
 import collections
-import struct
 import threading
+import weakref
+from Queue import Queue
 
-from ..msg import crc16, SBP, SBP_PREAMBLE
-from sbp.client.drivers.base_driver import BaseDriver
-from sbp.piksi import MsgReset
-
-class Framer(object):
+class ReceiveHandler(object):
   """
-  Framer
+  ReceiveHandler
 
-  The :class:`Framer` class frames bytes into SBP messages.
+  The :class:`ReceiveHandler` class provides an interface for connecting handlers
+  to a driver providing SBP messages.  Also provides queued and filtered
+  iterators for synchronous, blocking use in other threads.
 
   Parameters
   ----------
-  read : port
-    Stream of bytes to read from.
-  write : port
-    Stream of bytes to write to.
+  source : Iterable of tuple(delta, time, SBP message)
+    Stream of SBP messages
   """
-  def __init__(self, read, write, verbose=False):
-    self.read = read
-    self.write = write
-    self.verbose = verbose
+  def __init__(self, source):
+    self._source = source
+    self._callbacks = collections.defaultdict(set)
+    self._receive_thread = threading.Thread(target=self._recv_thread, name="ReceiveHandler")
+    self._receive_thread.daemon = True
+    self._sinks = [] # This is a list of weakrefs to upstream iterators
 
-  def readall(self, size):
+  def _recv_thread(self):
     """
-    Read until all bytes are collected.
-
-    Parameters
-    ----------
-    size : int
-      Number of bytes to read.
+    Internal thread to iterate over source messages and dispatch callbacks.
     """
-    data = ""
-    while len(data) < size:
-      data += self.read(size - len(data))
-    return data
-
-  def receive(self):
-    """
-    Read and build SBP message.
-    """
-    # preamble - not readall(1) to allow breaking before messages, empty input
-    preamble = self.read(1)
-    if not preamble:
-      return None
-    elif ord(preamble) != SBP_PREAMBLE:
-      if self.verbose:
-        print "Host Side Unhandled byte: 0x%02x" % ord(preamble)
-      return None
-    # hdr
-    hdr = self.readall(5)
-    msg_crc = crc16(hdr)
-    msg_type, sender, msg_len = struct.unpack("<HHB", hdr)
-    # data
-    data = self.readall(msg_len)
-    msg_crc = crc16(data, msg_crc)
-    # crc
-    crc = self.readall(2)
-    crc, = struct.unpack("<H", crc)
-    if crc != msg_crc:
-      print "crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc)
-      return None
-    return SBP(msg_type, sender, msg_len, data, crc)
-
-  def send(self, msg_type, data, sender):
-    """
-    Build and write SBP message.
-
-    Parameters
-    ----------
-    msg_type : int
-      SBP message type.
-    data : string
-      SBP message payload.
-    sender : int
-      SBP sender id.
-    """
-    msg = struct.pack("<BHHB", SBP_PREAMBLE, msg_type, sender, len(data))
-    msg += data
-    crc = crc16(msg[1:])
-    msg += struct.pack("<H", crc)
-    self.write(msg)
-
-class ReceiveThread(threading.Thread):
-  """
-  ReceiveThread
-
-  The :class:`ReceiveThread` class provides a processing thread for
-  framing and handling SBP messages.
-
-  Parameters
-  ----------
-  receive : fn
-    Receiving function returns SBP messages.
-  call : fn
-    Callback functions.
-  """
-  def __init__(self, receive, call):
-    super(ReceiveThread, self).__init__()
-    self.receive = receive
-    self.call = call
-    self.daemon = True
-    self.stopping = False
-
-  def stop(self):
-    """
-    Stop the thread before the next message.
-    """
-    self.stopping = True
-
-  def run(self):
-    """
-    Reading and handling loop.
-    """
-    while not self.stopping:
-      try:
-        msg = self.receive()
-        if msg is not None:
-          if msg.msg_type:
-            self.call(msg)
-      except SystemExit:
-        break
-
-class Handler(object):
-  """
-  Handler
-
-  The :class:`Handler` class provides an interface for connecting handlers
-  to a driver providing SBP messages.
-
-  Parameters
-  ----------
-  read : port
-    Stream of bytes to read from.
-  write : port
-    Stream of bytes to write to.
-  verbose : bool
-    Print out errors.
-  """
-  def __init__(self, read, write, verbose=False):
-    self.callbacks = collections.defaultdict(set)
-    self.framer = Framer(read, write, verbose)
-    self.receive_thread = ReceiveThread(self.framer.receive, self.call)
+    for delta, timestamp, msg in self._source:
+      if msg.msg_type:
+        self._call(delta, timestamp, msg)
+    # Break any upstream iterators
+    for sink in self._sinks:
+      i = sink()
+      if i is not None:
+        i.breakiter()
 
   def __enter__(self):
     self.start()
@@ -166,6 +57,36 @@ class Handler(object):
 
   def __exit__(self, *args):
     self.stop()
+
+  # This exception is raised when a message is dispatched to a garbage
+  # collected upstream iterator.
+  class _DeadCallbackException(Exception): pass
+
+  def filter(self, msg_type=None, maxsize=0):
+    """
+    Get a filtered iterator of messages for synchronous, blocking use in
+    another thread.
+    """
+    iterator = ReceiveHandler._SBPQueueIterator(maxsize)
+    # We use a weakref so that the iterator may be garbage collected if it's
+    # consumer no longer has a reference.
+    ref = weakref.ref(iterator)
+    self._sinks.append(ref)
+    def feediter(*args):
+      i = ref()
+      if i is not None:
+        i(*args)
+      else:
+        raise ReceiveHandler._DeadCallbackException
+    self.add_callback(feediter, msg_type)
+    return iterator
+
+  def __iter__(self):
+    """
+    Get a queued iterator that will provide the same unfiltered messages
+    read from the source iterator.
+    """
+    return self.filter()
 
   def add_callback(self, callback, msg_type=None):
     """
@@ -181,9 +102,9 @@ class Handler(object):
     """
     try:
       for mt in iter(msg_type):
-        self.callbacks[mt].add(callback)
+        self._callbacks[mt].add(callback)
     except TypeError:
-      self.callbacks[msg_type].add(callback)
+      self._callbacks[msg_type].add(callback)
 
   def remove_callback(self, callback, msg_type=None):
     """
@@ -197,13 +118,29 @@ class Handler(object):
       Message type to remove callback from. Default `None` means global callback.
       Iterable type removes the callback from all the message types.
     """
+    if msg_type is None:
+      msg_type = self._callbacks.keys()
+
     try:
       for mt in iter(msg_type):
-        self.callbacks[mt].remove(callback)
-    except TypeError:
-      self.callbacks[msg_type].remove(callback)
+        try:
+          self._callbacks[mt].remove(callback)
+        except KeyError: pass
+    except TypeError as e:
+      self._callbacks[msg_type].remove(callback)
 
-  def get_callbacks(self, msg_type):
+  def _gc_dead_sinks(self):
+    """
+    Remove any dead weakrefs.
+    """
+    deadsinks = []
+    for i in self._sinks:
+      if i() is None:
+        deadsinks.append(i)
+    for i in deadsinks:
+      self._sinks.remove(i)
+
+  def _get_callbacks(self, msg_type):
     """
     Return all callbacks (global and per message type) for a message type.
 
@@ -212,16 +149,21 @@ class Handler(object):
     msg_type : int
       Message type to return callbacks for.
     """
-    return self.callbacks[None] | self.callbacks[msg_type]
+    return self._callbacks[None] | self._callbacks[msg_type]
 
-  def call(self, msg):
+  def _call(self, delta, timestamp, msg):
     """
     Process message with all callbacks (global and per message type).
     """
     if msg.msg_type:
-      for callback in self.get_callbacks(msg.msg_type):
+      for callback in self._get_callbacks(msg.msg_type):
         try:
-          callback(msg)
+          callback(delta, timestamp, msg)
+        except ReceiveHandler._DeadCallbackException:
+          # The callback was an upstream iterator that has been garbage
+          # collected.  Remove it from our internal structures.
+          self.remove_callback(callback)
+          self._gc_dead_sinks()
         except SystemExit:
           raise
         except:
@@ -232,53 +174,23 @@ class Handler(object):
     """
     Start processing SBP messages with handlers.
     """
-    self.receive_thread.start()
+    self._receive_thread.start()
 
   def stop(self):
     """
     Stop processing SBP messages.
     """
-    self.receive_thread.stop()
+    try:
+      self._source.breakiter()
+      self._receive_thread.join(0.1)
+    except:
+      pass
 
   def is_alive(self):
     """
     Return whether the processes thread is alive.
     """
-    return self.receive_thread.is_alive()
-
-  def reset(self):
-    """
-    Reset the Piksi via a MSG_RESET.
-    """
-    self.send_msg(MsgReset())
-
-  def send(self, msg_type, data, sender=0x42):
-    """
-    Build and write SBP message.
-
-    Parameters
-    ----------
-    msg_type : int
-      SBP message type.
-    data : string
-      SBP message payload.
-    sender : int
-      SBP sender id.
-    """
-    self.framer.send(msg_type, data, sender)
-
-  def send_msg(self, msg, sender=0x42):
-    """
-    Send materialized SBP messages.
-
-    Parameters
-    ----------
-    msg : sbp_msg
-      SBP message.
-    send : int
-      SBP sender id.
-    """
-    self.framer.write(msg.to_binary())
+    return self._receive_thread.is_alive()
 
   def wait(self, msg_type, timeout=1.0):
     """
@@ -293,7 +205,7 @@ class Handler(object):
     """
     event = threading.Event()
     payload = {'data': None}
-    def cb(sbp_msg):
+    def cb(d, t, sbp_msg):
       payload['data'] = sbp_msg
       event.set()
     self.add_callback(cb, msg_type)
@@ -316,54 +228,35 @@ class Handler(object):
       Waiting period
     """
     event = threading.Event()
-    def cb(sbp_msg):
-      callback(sbp_msg)
+    def cb(*args):
+      callback(*args)
       event.set()
     self.add_callback(cb, msg_type)
     event.wait(timeout)
     self.remove_callback(cb, msg_type)
 
-class LoggerDriver(BaseDriver):
-  """LoggerDriver
-
-  The :class:`LoggerDriver` class connects a logger (typically a
-  TCP/UDP "logger") and a driver (typically a serial port driver).
-
-  """
-  def __init__(self, logger, driver):
-    print "startup here logger driver here thing"
-    self.driver = driver
-    self.logger = self.handle = logger
-    super(LoggerDriver, self).__init__(self.handle)
-
-  def read(self, size):
+  class _SBPQueueIterator(object):
     """
-    Read wrapper.
-
-    Parameters
-    ----------
-    size : int
-      Number of bytes to read.
+    Class for upstream iterators.  Implements callable interface for adding
+    messages into the queue, and iterable interface for getting them out.
     """
-    data = self.driver.read(size)
-    if data is not None:
-      self.logger.write(data)
-    self.write()
-    return data
+    def __init__(self, maxsize):
+      self._queue = Queue(maxsize)
+      self._broken = False
 
-  def write(self, s=None):
-    """Write wrapper. Will first write any bytes s, if needed, and then
-    bridge any writes from the logger.
+    def __iter__(self):
+      return self
 
-    Parameters
-    ----------
-    s : bytes
-      Bytes to write
+    def __call__(self, *args):
+      self._queue.put(args, False)
 
-    """
-    if s is not None:
-      self.driver.write(s)
-    s = self.logger.read()
-    if s:
-     self.driver.write(s)
+    def breakiter(self):
+      self._broken = True
+      self._queue.put(None, True, 1.0)
+
+    def next(self):
+       m = self._queue.get(True)
+       if self._broken:
+         raise StopIteration
+       return m
 

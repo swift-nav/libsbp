@@ -18,7 +18,8 @@ class PySerialDriver(BaseDriver):
   PySerialDriver
 
   The :class:`PySerialDriver` class reads SBP messages from a serial port
-  using the pyserial driver.
+  using the pyserial driver.  This is mostly redundant, is the Serial object's
+  read and write methods can be used directly.
 
   Parameters
   ----------
@@ -71,7 +72,7 @@ class PySerialDriver(BaseDriver):
       print
       print "Piksi disconnected"
       print
-      raise SystemExit
+      raise IOError
 
   def write(self, s):
     """
@@ -88,4 +89,4 @@ class PySerialDriver(BaseDriver):
       print
       print "Piksi disconnected"
       print
-      raise SystemExit
+      raise IOError

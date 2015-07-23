@@ -3,12 +3,14 @@ import pusherclient
 import time
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
-from sbp.client.handler                 import Handler
+from sbp.client import ReceiveHandler, FrameReceiver, FrameSender
 from sbp.observation                    import *
 from sbp.msg                            import SBP
 
 DEFAULT_SERIAL_PORT = "/dev/ttyUSB0"
 DEFAULT_SERIAL_BAUD = 1000000
+
+OBS_MSG_LIST = [SBP_MSG_OBS, SBP_MSG_BASE_POS, SBP_MSG_OBS_DEP_A]
 
 def get_args():
   """
@@ -51,13 +53,14 @@ def main():
   push = pusher.Pusher(app_id=app, key=key, secret=secret, ssl=True, port=443)
   push_client = pusherclient.Pusher(key, secret=secret)
   with PySerialDriver(port, baud) as driver:
-    with Handler(driver.read, driver.write) as handler:
+    sender = FrameSender(driver.write)
+    with ReceiveHandler(FrameReceiver(driver.read)) as handler:
 
       def push_it(sbp_msg):
         push.trigger(tx_channel, tx_event, sbp_msg.to_json_dict())
 
       def pull_it(data):
-        handler.framer.write(SBP.from_json(data).pack())
+        sender(0, 0, SBP.from_json(data))
 
       def connect_it(data):
         push_client.subscribe(rx_channel).bind(rx_event, pull_it)
@@ -65,13 +68,12 @@ def main():
       push_client.connection.bind('pusher:connection_established', connect_it)
       push_client.connect()
 
-      handler.add_callback(push_it, [SBP_MSG_OBS, SBP_MSG_BASE_POS, SBP_MSG_OBS_DEP_A])
-
       try:
-        while True:
-          time.sleep(0.1)
+        for delta, time, msg in handler.filter(OBS_MSG_LIST):
+          push_it(msg)
       except KeyboardInterrupt:
         pass
 
 if __name__ == "__main__":
   main()
+

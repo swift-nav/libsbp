@@ -24,27 +24,24 @@ class JSONLogger(BaseLogger):
 
   The :class:`JSONLogger` logs JSON records.
   """
-  def __call__(self, msg):
-    self.call(msg)
-
-  def fmt_msg(self, data):
-    return {"delta": self.delta(),
-            "timestamp": self.timestamp(),
+  def fmt_msg(self, delta, time, data):
+    return {"delta": delta,
+            "timestamp": time,
             "data": data,
             "metadata": self.tags}
 
-  def dump(self, msg):
+  def dump(self, delta, time, msg):
     try:
       data = self.dispatch(msg).to_json_dict()
-      return json.dumps(self.fmt_msg(data), allow_nan=False)
+      return json.dumps(self.fmt_msg(delta, time, data), allow_nan=False)
     except ValueError:
       warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
              % (msg.msg_type, msg)
       warnings.warn(warn, RuntimeWarning)
-      return json.dumps(self.fmt_msg(msg.to_json_dict()))
+      return json.dumps(self.fmt_msg(delta, time, msg.to_json_dict()))
 
-  def call(self, msg):
-    self.handle.write(self.dump(msg) + "\n")
+  def __call__(self, delta, time, msg):
+    self.handle.write(self.dump(delta, time, msg) + "\n")
 
 class JSONLogIterator(LogIterator):
   """

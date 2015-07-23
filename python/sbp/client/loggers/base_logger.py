@@ -25,7 +25,7 @@ class BaseLogger(object):
   filename : string
     File to log to.
   """
-  def __init__(self, filename, mode="w", tags={}, dispatcher=dispatch):
+  def __init__(self, filename, mode="w", tags={}, dispatcher=None):
     self.handle = open(filename, mode)
     self.dispatcher = dispatcher
     self.base_time = time.time()
@@ -45,6 +45,8 @@ class BaseLogger(object):
     self.handle.close()
 
   def dispatch(self, msg):
+    if self.dispatcher is None:
+      return msg
     try:
       data = self.dispatcher(msg)
     except KeyError:

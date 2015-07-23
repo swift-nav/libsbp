@@ -16,40 +16,7 @@ import logging
 import threading
 import time
 
-# TODO (Buro): Replace _mk_async_emit with a function using from
-# logutils.queue: QueueHandler, QueueListener.
 # TODO (Buro): Add a real benchmark after integration testing.
-
-def _mk_async_emit(handler):
-  """Make a synchronous handler asynchronous.
-
-  Parameters
-  ----------
-  handler : logging.handlers Handler
-
-  Returns
-  ----------
-  Async logging.handlers Handler
-
-  """
-  emit = handler.emit
-  # Yes, the queue size is unbounded (Buro)
-  queue = Queue.Queue(maxsize=-1)
-  def loop():
-    while True:
-      record = queue.get(True)
-      try :
-        emit(record)
-      except:
-        pass
-  thread = threading.Thread(target=loop)
-  thread.daemon = True
-  thread.start()
-  def async_emit(record):
-    queue.put(record)
-  handler.emit = async_emit
-  return handler
-
 
 class RotatingFileLogger(JSONLogger):
   """RotatingFileLogger
@@ -77,18 +44,18 @@ class RotatingFileLogger(JSONLogger):
   """
 
   def __init__(self, filename, when='M', interval=30, backupCount=3,
-               tags={}, dispatcher=dispatch):
+               tags={}, dispatcher=None):
     self.handler = TimedRotatingFileHandler(filename, when, interval,
                                             backupCount)
     self.logger = logging.getLogger("Rotating Log")
     self.logger.setLevel(logging.INFO)
-    self.logger.addHandler(_mk_async_emit(self.handler))
+    self.logger.addHandler(self.handler)
     self.dispatcher = dispatcher
     self.base_time = time.time()
     self.tags = tags
 
-  def __call__(self, msg):
-    self.call(msg)
+  def __call__(self, *args):
+    self.call(*args)
 
   def flush(self):
     self.handler.flush()
@@ -96,5 +63,6 @@ class RotatingFileLogger(JSONLogger):
   def close(self):
     self.handler.close()
 
-  def call(self, msg):
-    self.logger.info(self.dump(msg))
+  def call(self, *args):
+    self.logger.info(self.dump(*args))
+

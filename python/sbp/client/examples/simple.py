@@ -15,29 +15,12 @@ printing them out.
 """
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
-from sbp.client.handler import Handler
+from sbp.client import ReceiveHandler, FrameReceiver
+from sbp.client.loggers.json_logger import JSONLogger
 from sbp.navigation import SBP_MSG_BASELINE_NED, MsgBaselineNED
-
-import time
-
-def baseline_callback(msg):
-  # This function is called every time we receive a BASELINE_NED message
-
-  # First decode the SBP message in "msg" into a python object, the sbp library
-  # has functions that do this for all the message types defined in the
-  # specification.
-  b = MsgBaselineNED(msg)
-
-  # b now contains the decoded baseline information and
-  # has fields with the same names as in the SBP docs
-
-  # Print out the N, E, D coordinates of the baseline
-  print "%.4f,%.4f,%.4f" % \
-    (b.n * 1e-3, b.e * 1e-3, b.d * 1e-3)
+import argparse
 
 def main():
-
-  import argparse
   parser = argparse.ArgumentParser(description="Swift Navigation SBP Example.")
   parser.add_argument("-p", "--port",
                       default=['/dev/ttyUSB0'], nargs=1,
@@ -46,15 +29,11 @@ def main():
 
   # Open a connection to Piksi using the default baud rate (1Mbaud)
   with PySerialDriver(args.port[0], baud=1000000) as driver:
-    # Create a handler to connect our Piksi driver to our callbacks
-    with Handler(driver.read, driver.write, verbose=True) as handler:
-      # Add a callback for BASELINE_NED messages
-      handler.add_callback(baseline_callback, msg_type=SBP_MSG_BASELINE_NED)
-
-      # Sleep until the user presses Ctrl-C
+    with ReceiveHandler(FrameReceiver(driver.read, verbose=True)) as source:
       try:
-        while True:
-          time.sleep(0.1)
+        for time, delta, msg in source.filter(SBP_MSG_BASELINE_NED):
+          # Print out the N, E, D coordinates of the baseline
+          print "%.4f,%.4f,%.4f" % (msg.n * 1e-3, msg.e * 1e-3, msg.d * 1e-3)
       except KeyboardInterrupt:
         pass
 
