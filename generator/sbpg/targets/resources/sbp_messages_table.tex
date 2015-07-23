@@ -2,6 +2,7 @@
 ((* block messages_table *))
 \newpage
 \newpage
+\setcounter{LTchunksize}{100}
 \section{Message Types}
 \label{sec:Messages}
 \begin{large}
@@ -15,11 +16,11 @@ internal development.
 \end{large}\\
 
 \begin{center}
-  \begin{tabularx}{\textwidth}{begfX}
+  \begin{longtable}{{llllp{7cm}}}
     \toprule
     Package & Msg ID & Name & Size (bytes) & Description \\
     \midrule
-    \multicolumn{5}{c}{\textbf{Stable}} \\
+      \textbf{Stable} & & & & \\
     \midrule
     ((*- for m in msgs *))
       (((m.pkg|packagenameify|escape_tex|no_us|header_write))) &
@@ -29,7 +30,7 @@ internal development.
       (((m.short_desc|removedir|escape_tex))) \\
     ((*- endfor *))
     \midrule
-    \multicolumn{5}{c}{\textbf{Draft}} \\
+      \textbf{Draft} & & & & \\
     \midrule
     ((*- for m in umsgs *))
       (((m.pkg|packagenameify|escape_tex|no_us|header_write))) &
@@ -40,7 +41,7 @@ internal development.
     ((*- endfor *))
     \bottomrule
   \label{tab:messages}
-  \end{tabularx}
+  \end{longtable}
 \captionof{table}{SBP message types}
 \end{center}
 
