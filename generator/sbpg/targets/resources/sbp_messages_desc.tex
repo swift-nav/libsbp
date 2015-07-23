@@ -17,9 +17,9 @@
 \end{large}
 
 \vspace{3em}
-\begin{table}[h]
+\begin{table}[H]
   \centering
-  \begin{tabularx}{\textwidth}{ccaclX}
+  \begin{tabularx}{\textwidth}{ccaccX}
     \toprule
     Offset (bytes) & Size (bytes) & Format & Units & Name & Description \\
     \midrule
@@ -41,7 +41,7 @@
 
 ((*- for f in m.fields *))
 ((*- if f.bitfields *))
-\begin{table}[h]
+\begin{table}[H]
   \centering
   ((*- if f.n_with_values == 1 *))
   \begin{minipage}[b][][b]{.48\textwidth}
@@ -85,7 +85,6 @@
 ((*- endfor *))
 \newpage
 ((*- endfor *))
-
 \section{Draft Message Definitions}
 ((*- for m in umsgs *))
 ((*- if m.pkg *))
@@ -127,7 +126,7 @@
 
 ((*- for f in m.fields *))
 ((*- if f.bitfields *))
-\begin{table}[h]
+\begin{table}[H]
   \centering
   ((*- if f.n_with_values == 1 *))
   \begin{minipage}[b][][b]{.48\textwidth}
@@ -169,6 +168,7 @@
 \end{table}
 ((*- endif *))
 ((*- endfor *))
+\clearpage
 
 \newpage
 ((*- endfor *))
