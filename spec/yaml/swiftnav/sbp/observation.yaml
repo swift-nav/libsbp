@@ -263,6 +263,7 @@ definitions:
     id: 0x001A
     short_desc: Deprecated
     desc: Deprecated.
+    public: False
     replaced_by:
       - MSG_EPHEMERIS
     fields:
@@ -372,6 +373,7 @@ definitions:
     id: 0x0046
     short_desc: Deprecated
     desc: Deprecated.
+    public: False
     replaced_by:
       - MSG_EPHEMERIS
     fields:
@@ -508,6 +510,9 @@ definitions:
     id: 0x0045
     short_desc: Deprecated
     desc: Deprecated.
+    public: False
+    replaced_by:
+      - MSG_OBS
     fields:
         - header:
             type: ObservationHeader

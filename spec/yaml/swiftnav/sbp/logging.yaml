@@ -47,6 +47,7 @@ definitions:
     id: 0x0012
     short_desc: Tweet
     desc: All the news fit to tweet.
+    public: False
     fields:
       - tweet:
           type: string
@@ -57,6 +58,9 @@ definitions:
     id: 0x0010
     short_desc: Deprecated
     desc: Deprecated.
+    public: False
+    replaced_by:
+      - MSG_LOG
     fields:
       - text:
           type: string

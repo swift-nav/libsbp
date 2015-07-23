@@ -129,7 +129,7 @@ def mk_package(contents):
                                   definitions=resolved,
                                   render_source=contents.get('render_source', True),
                                   stable=contents.get('stable', False),
-                                  public=contents.get('public', False))
+                                  public=contents.get('public', True))
 def mk_definition(defn):
   """Instantiates a struct or SBP message specification from a parsed
   "AST" of a struct or message.
@@ -152,7 +152,7 @@ def mk_definition(defn):
                                          desc=contents.get('desc', None),
                                          type_id=contents.get('type'),
                                          fields=fs,
-                                         public=contents.get('public', False)))
+                                         public=contents.get('public', True)))
 
 def mk_field(field):
   """Instantiates a field specification from a parsed "AST" of a

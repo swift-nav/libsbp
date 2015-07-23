@@ -98,6 +98,7 @@ definitions:
     id: 0x00B0
     short_desc: Deprecated
     desc: Deprecated.
+    public: False
     replaced_by:
       - MSG_BOOTLOADER_HANDSHAKE_REQ
       - MSG_BOOTLOADER_HANDSHAKE_RESP

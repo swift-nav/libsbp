@@ -121,6 +121,7 @@ definitions:
     id: 0x0016
     short_desc: Deprecated
     desc: Deprecated.
+    public: False
     replaced_by:
       - MSG_TRACKING_STATE
     fields:

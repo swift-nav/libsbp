@@ -51,6 +51,7 @@ definitions:
     id: 0x0015
     short_desc: Deprecated
     desc: Deprecated.
+    public: False
     replaced_by:
       - MSG_ACQ_RESULT
     fields:
