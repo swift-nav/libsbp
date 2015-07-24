@@ -134,8 +134,18 @@ definitions:
             type: u8
             desc: Status flags
             fields:
-              - 3-7:
+              - 5-7:
                   desc: Reserved
+              - 4:
+                  desc: RAIM repair flag
+                  values:
+                      - 0: No repair
+                      - 1: Solution came from RAIM repair
+              - 3:
+                  desc: RAIM availability flag
+                  values:
+                      - 0: RAIM check was explicitly disabled or unavailable
+                      - 1: RAIM check was available
               - 0-2:
                   desc: Fix mode
                   values:
@@ -191,8 +201,18 @@ definitions:
             type: u8
             desc: Status flags
             fields:
-              - 4-7:
+              - 6-7:
                   desc: Reserved
+              - 5:
+                  desc: RAIM repair flag
+                  values:
+                      - 0: No repair
+                      - 1: Solution came from RAIM repair
+              - 4:
+                  desc: RAIM availability flag
+                  values:
+                      - 0: RAIM check was explicitly disabled or unavailable
+                      - 1: RAIM check was available
               - 3:
                   desc: Height Mode
                   values:
@@ -244,8 +264,18 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 3-7:
+                - 5-7:
                     desc: Reserved
+                - 4:
+                    desc: RAIM repair flag
+                    values:
+                        - 0: No repair
+                        - 1: Solution came from RAIM repair
+                - 3:
+                    desc: RAIM availability flag
+                    values:
+                        - 0: RAIM check was explicitly disabled or unavailable
+                        - 1: RAIM check was available
                 - 0-2:
                     desc: Fix mode
                     values:
@@ -298,8 +328,18 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 3-7:
+                - 5-7:
                     desc: Reserved
+                - 4:
+                    desc: RAIM repair flag
+                    values:
+                        - 0: No repair
+                        - 1: Solution came from RAIM repair
+                - 3:
+                    desc: RAIM availability flag
+                    values:
+                        - 0: RAIM check was explicitly disabled or unavailable
+                        - 1: RAIM check was available
                 - 0-2:
                     desc: Fix mode
                     values:
