@@ -37,6 +37,7 @@ class ReceiveHandler(object):
     self._receive_thread = threading.Thread(target=self._recv_thread, name="ReceiveHandler")
     self._receive_thread.daemon = True
     self._sinks = [] # This is a list of weakrefs to upstream iterators
+    self._dead = False
 
   def _recv_thread(self):
     """
@@ -50,6 +51,7 @@ class ReceiveHandler(object):
       i = sink()
       if i is not None:
         i.breakiter()
+    self._dead = True
 
   def __enter__(self):
     self.start()
@@ -67,6 +69,8 @@ class ReceiveHandler(object):
     Get a filtered iterator of messages for synchronous, blocking use in
     another thread.
     """
+    if self._dead:
+      return iter(())
     iterator = ReceiveHandler._SBPQueueIterator(maxsize)
     # We use a weakref so that the iterator may be garbage collected if it's
     # consumer no longer has a reference.
@@ -255,8 +259,10 @@ class ReceiveHandler(object):
       self._queue.put(None, True, 1.0)
 
     def next(self):
+       if self._broken and self._queue.empty():
+         raise StopIteration
        m = self._queue.get(True)
-       if self._broken:
+       if self._broken and m is None:
          raise StopIteration
        return m
 

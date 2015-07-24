@@ -12,9 +12,11 @@ import io
 import itertools
 import time
 import threading
+import gc
 
 from sbp.client import *
 from sbp.msg            import SBP
+from sbp.logging import MsgLog
 
 class TestCallbackCounter(object):
   """
@@ -118,3 +120,48 @@ def test_multiple_handler_callbacks():
   handler._call(0, 0, SBP(0x55, None, None, None, None))
   assert msg_type_counter1.value == 1
   assert msg_type_counter2.value == 2
+
+def test_child_iter():
+  msgs = ((0, 0, MsgLog(level=1, text="Hello")),
+          (0, 0, MsgLog(level=1, text="Hello")),
+          (0, 0, MsgLog(level=1, text="Hello")))
+  handler = ReceiveHandler(msgs)
+  def latestart():
+    time.sleep(0.1)
+    handler.start()
+  threading.Thread(target=latestart).start()
+  recvd = tuple(handler)
+  assert recvd == msgs
+
+def test_filter():
+  msgs = ((0, 0, SBP(0x11, None, None, None, None)),
+          (0, 0, SBP(0x33, None, None, None, None)),
+          (0, 0, SBP(0x55, None, None, None, None)))
+  handler = ReceiveHandler(msgs)
+  def latestart():
+    time.sleep(0.1)
+    handler.start()
+  threading.Thread(target=latestart).start()
+  middle = tuple(handler.filter(0x33))
+  assert len(middle) == 1
+  assert middle[0] == msgs[1]
+
+def test_dead_gc():
+  handler = ReceiveHandler(((0, 0, SBP(0x11, None, None, None, None)),))
+  def latestart():
+    time.sleep(0.1)
+    handler.start()
+  thread = threading.Thread(target=latestart)
+  thread.start()
+  iter(handler) # Dead iterator, should be gc'd
+  xx = iter(handler)
+  thread.join()
+  handler._receive_thread.join()
+  gc.collect()
+  assert [sink() for sink in handler._sinks] == [xx]
+
+def test_late_iter():
+  handler = ReceiveHandler(())
+  handler.start()
+  assert tuple(handler) == ()
+
