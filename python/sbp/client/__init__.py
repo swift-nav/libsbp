@@ -8,7 +8,7 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-from handler import ReceiveHandler
-from framer import FrameReceiver, FrameSender
+from handler import Handler
+from framer import Framer
 from forwarder import Forwarder
 

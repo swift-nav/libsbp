@@ -15,7 +15,7 @@ them to the twitter API.
 """
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
-from sbp.client.handler import ReceiveHandler, FrameReceiver
+from sbp.client.handler import Handler, Framer
 from sbp.logging import SBP_MSG_TWEET, MsgTweet
 
 import time
@@ -45,7 +45,7 @@ def main():
     # Create a handler to connect our Piksi driver to our callbacks
     with Handler(driver.read, driver.write, verbose=True) as handler:
       try:
-        for delta, time, msg in handler.filter(SBP_MSG_TWEET):
+        for msg, metadata in handler.filter(SBP_MSG_TWEET):
           if twit is not None:
             twit.statuses.update(msg)
       except KeyboardInterrupt:

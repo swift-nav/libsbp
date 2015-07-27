@@ -14,7 +14,7 @@ class NullLogger(object):
 
   The :class:`NullLogger` does not log records.
   """
-  def __call__(self, *args):
+  def __call__(self, msg, **metadata):
     pass
 
   def __enter__(self):

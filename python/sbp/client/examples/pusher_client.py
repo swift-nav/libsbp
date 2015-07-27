@@ -3,7 +3,7 @@ import pusherclient
 import time
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
-from sbp.client import ReceiveHandler, FrameReceiver, FrameSender
+from sbp.client                         import Handler, Framer
 from sbp.observation                    import *
 from sbp.msg                            import SBP
 
@@ -53,14 +53,13 @@ def main():
   push = pusher.Pusher(app_id=app, key=key, secret=secret, ssl=True, port=443)
   push_client = pusherclient.Pusher(key, secret=secret)
   with PySerialDriver(port, baud) as driver:
-    sender = FrameSender(driver.write)
-    with ReceiveHandler(FrameReceiver(driver.read)) as handler:
+    with Handler(Framer(driver.read, driver.write)) as handler:
 
       def push_it(sbp_msg):
         push.trigger(tx_channel, tx_event, sbp_msg.to_json_dict())
 
       def pull_it(data):
-        sender(0, 0, SBP.from_json(data))
+        handler(SBP.from_json(data))
 
       def connect_it(data):
         push_client.subscribe(rx_channel).bind(rx_event, pull_it)
@@ -69,7 +68,7 @@ def main():
       push_client.connect()
 
       try:
-        for delta, time, msg in handler.filter(OBS_MSG_LIST):
+        for msg, metadata in handler.filter(OBS_MSG_LIST):
           push_it(msg)
       except KeyboardInterrupt:
         pass

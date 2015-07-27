@@ -15,7 +15,7 @@ printing them out.
 """
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
-from sbp.client import ReceiveHandler, FrameReceiver
+from sbp.client import Handler, Framer
 from sbp.client.loggers.json_logger import JSONLogger
 from sbp.navigation import SBP_MSG_BASELINE_NED, MsgBaselineNED
 import argparse
@@ -29,9 +29,9 @@ def main():
 
   # Open a connection to Piksi using the default baud rate (1Mbaud)
   with PySerialDriver(args.port[0], baud=1000000) as driver:
-    with ReceiveHandler(FrameReceiver(driver.read, verbose=True)) as source:
+    with Handler(Framer(driver.read, None, verbose=True)) as source:
       try:
-        for time, delta, msg in source.filter(SBP_MSG_BASELINE_NED):
+        for msg, metadata in source.filter(SBP_MSG_BASELINE_NED):
           # Print out the N, E, D coordinates of the baseline
           print "%.4f,%.4f,%.4f" % (msg.n * 1e-3, msg.e * 1e-3, msg.d * 1e-3)
       except KeyboardInterrupt:

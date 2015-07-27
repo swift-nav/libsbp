@@ -15,7 +15,7 @@ import struct
 import calendar
 import time
 
-class FrameReceiver(object):
+class Framer(object):
   """
   Framer
 
@@ -29,8 +29,9 @@ class FrameReceiver(object):
   write : port
     Stream of bytes to write to.
   """
-  def __init__(self, read, verbose=False, dispatcher=dispatch):
+  def __init__(self, read, write, verbose=False, dispatcher=dispatch):
     self._read = read
+    self._write = write
     self._verbose = verbose
     self._broken = False
     self._base_time = self._timestamp()
@@ -68,7 +69,7 @@ class FrameReceiver(object):
           raise StopIteration
       except IOError:
         raise StopIteration
-    return (self._delta(), self._timestamp(), msg)
+    return (msg, {'delta':self._delta(), 'timestamp':self._timestamp()})
 
   def _readall(self, size):
     """
@@ -117,11 +118,7 @@ class FrameReceiver(object):
     except: pass
     return msg
 
-class FrameSender(object):
-  def __init__(self, write):
-    self._write = write
-
-  def __call__(self, delta, time, msg):
+  def __call__(self, msg, **metadata):
     """
     Build and write SBP message.
 

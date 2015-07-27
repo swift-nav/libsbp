@@ -42,9 +42,9 @@ def test_json_log():
   count = 0
   with warnings.catch_warnings(record=True) as w:
     with JSONLogIterator(log_datafile) as log:
-      for delta, timestamp, msg in log.next():
-        assert type(delta) == int
-        assert type(timestamp) == int
+      for msg, metadata in log.next():
+        assert type(metadata['delta']) == int
+        assert type(metadata['timestamp']) == int
         assert isinstance(msg, SBP) or issubclass(type(msg), SBP)
         count += 1
       warnings.simplefilter("always")
@@ -62,14 +62,14 @@ def test_multi_json_log():
   past = 0
   with warnings.catch_warnings(record=True) as w:
     with MultiJSONLogIterator(handles) as log:
-      for delta, timestamp, metadata, msg in log.next():
-        assert type(delta) == int
-        assert type(timestamp) == int
+      for msg, metadata in log.next():
+        assert type(metadata['delta']) == int
+        assert type(metadata['timestamp']) == int
         assert isinstance(msg, SBP) or issubclass(type(msg), SBP)
-        assert type(metadata) == dict
-        assert not metadata
-        assert timestamp >= past
-        past = timestamp
+        assert type(metadata['metadata']) == dict
+        assert not metadata['metadata']
+        assert metadata['timestamp'] >= past
+        past = metadata['timestamp']
         count += 1
       warnings.simplefilter("always")
       assert len(w) == 0
@@ -134,13 +134,13 @@ def test_rolling_json_log():
         msg = SBP(0x10, 2, 3, 'abc\n', 4)
         msgs = []
         while t - t0 < test_interval:
-          log(t - t0, t, msg)
+          log(msg, delta=t-t0, timestamp=t)
           if t - t0 <= r_interval:
             msgs.append(msg)
           t = time.time()
       i = 0
       with JSONLogIterator(tf.name) as log:
-        for delta, timestamp, msg in log.next():
+        for msg, metadata in log.next():
           assert isinstance(msg, MsgPrintDep)
           assert msg.text == "abc\n"
           i += 1

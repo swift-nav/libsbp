@@ -18,11 +18,11 @@ import threading
 import weakref
 from Queue import Queue
 
-class ReceiveHandler(object):
+class Handler(object):
   """
-  ReceiveHandler
+  Handler
 
-  The :class:`ReceiveHandler` class provides an interface for connecting handlers
+  The :class:`Handler` class provides an interface for connecting handlers
   to a driver providing SBP messages.  Also provides queued and filtered
   iterators for synchronous, blocking use in other threads.
 
@@ -34,7 +34,7 @@ class ReceiveHandler(object):
   def __init__(self, source):
     self._source = source
     self._callbacks = collections.defaultdict(set)
-    self._receive_thread = threading.Thread(target=self._recv_thread, name="ReceiveHandler")
+    self._receive_thread = threading.Thread(target=self._recv_thread, name="Handler")
     self._receive_thread.daemon = True
     self._sinks = [] # This is a list of weakrefs to upstream iterators
     self._dead = False
@@ -43,9 +43,9 @@ class ReceiveHandler(object):
     """
     Internal thread to iterate over source messages and dispatch callbacks.
     """
-    for delta, timestamp, msg in self._source:
+    for msg, metadata in self._source:
       if msg.msg_type:
-        self._call(delta, timestamp, msg)
+        self._call(msg, **metadata)
     # Break any upstream iterators
     for sink in self._sinks:
       i = sink()
@@ -71,17 +71,17 @@ class ReceiveHandler(object):
     """
     if self._dead:
       return iter(())
-    iterator = ReceiveHandler._SBPQueueIterator(maxsize)
+    iterator = Handler._SBPQueueIterator(maxsize)
     # We use a weakref so that the iterator may be garbage collected if it's
     # consumer no longer has a reference.
     ref = weakref.ref(iterator)
     self._sinks.append(ref)
-    def feediter(*args):
+    def feediter(msg, **metadata):
       i = ref()
       if i is not None:
-        i(*args)
+        i(msg, **metadata)
       else:
-        raise ReceiveHandler._DeadCallbackException
+        raise Handler._DeadCallbackException
     self.add_callback(feediter, msg_type)
     return iterator
 
@@ -155,15 +155,15 @@ class ReceiveHandler(object):
     """
     return self._callbacks[None] | self._callbacks[msg_type]
 
-  def _call(self, delta, timestamp, msg):
+  def _call(self, msg, **metadata):
     """
     Process message with all callbacks (global and per message type).
     """
     if msg.msg_type:
       for callback in self._get_callbacks(msg.msg_type):
         try:
-          callback(delta, timestamp, msg)
-        except ReceiveHandler._DeadCallbackException:
+          callback(msg, **metadata)
+        except Handler._DeadCallbackException:
           # The callback was an upstream iterator that has been garbage
           # collected.  Remove it from our internal structures.
           self.remove_callback(callback)
@@ -232,8 +232,8 @@ class ReceiveHandler(object):
       Waiting period
     """
     event = threading.Event()
-    def cb(*args):
-      callback(*args)
+    def cb(msg, **metadata):
+      callback(msg, **metadata)
       event.set()
     self.add_callback(cb, msg_type)
     event.wait(timeout)
@@ -251,8 +251,8 @@ class ReceiveHandler(object):
     def __iter__(self):
       return self
 
-    def __call__(self, *args):
-      self._queue.put(args, False)
+    def __call__(self, msg, **metadata):
+      self._queue.put((msg, metadata), False)
 
     def breakiter(self):
       self._broken = True

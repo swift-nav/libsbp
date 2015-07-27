@@ -10,7 +10,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
-from sbp.client import ReceiveHandler, FrameReceiver
+from sbp.client import Handler, Framer
 from sbp.logging import MsgPrintDep
 import SocketServer
 import threading
@@ -48,7 +48,7 @@ def test_tcp_logger():
     assert s.payload=='abc'
     assert s.crc==0xDAEE
   with PySerialDriver(port, baud) as driver:
-    with ReceiveHandler(FrameReceiver(driver.read, verbose=False)) as link:
+    with Handler(Framer(driver.read, None, verbose=False)) as link:
       link.add_callback(assert_logger)
       while True:
         if (time.time() - t0) < sleep:

@@ -54,8 +54,8 @@ class RotatingFileLogger(JSONLogger):
     self.base_time = time.time()
     self.tags = tags
 
-  def __call__(self, *args):
-    self.call(*args)
+  def __call__(self, msg, **metadata):
+    self.call(msg, **metadata)
 
   def flush(self):
     self.handler.flush()
@@ -63,6 +63,6 @@ class RotatingFileLogger(JSONLogger):
   def close(self):
     self.handler.close()
 
-  def call(self, *args):
-    self.logger.info(self.dump(*args))
+  def call(self, msg, **metadata):
+    self.logger.info(self.dump(msg, **metadata))
 

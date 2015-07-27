@@ -19,10 +19,10 @@ class Forwarder(Thread):
     self._sink = sink
 
   def run(self):
-    for msg in self._source:
+    for msg, metadata in self._source:
       if self._broken:
         break
-      self._sink(*msg)
+      self._sink(msg, **metadata)
 
   def stop():
     self._broken = True
