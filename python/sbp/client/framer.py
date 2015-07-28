@@ -115,7 +115,8 @@ class Framer(object):
     msg = SBP(msg_type, sender, msg_len, data, crc)
     try:
       msg = self._dispatch(msg)
-    except: pass
+    except:
+      pass
     return msg
 
   def __call__(self, msg, **metadata):

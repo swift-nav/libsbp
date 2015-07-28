@@ -209,7 +209,7 @@ class Handler(object):
     """
     event = threading.Event()
     payload = {'data': None}
-    def cb(d, t, sbp_msg):
+    def cb(sbp_msg, **metadata):
       payload['data'] = sbp_msg
       event.set()
     self.add_callback(cb, msg_type)

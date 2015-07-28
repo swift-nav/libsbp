@@ -16,8 +16,6 @@ import logging
 import threading
 import time
 
-# TODO (Buro): Add a real benchmark after integration testing.
-
 class RotatingFileLogger(JSONLogger):
   """RotatingFileLogger
 
