@@ -39,7 +39,6 @@ class TCPDriver(BaseDriver):
       pass
     super(TCPDriver, self).__init__(self.handle)
     self._write_lock = threading.Lock()
-    self.recv_size = size
 
   def read(self, size):
     """
