@@ -62,7 +62,8 @@ class Handler(object):
 
   # This exception is raised when a message is dispatched to a garbage
   # collected upstream iterator.
-  class _DeadCallbackException(Exception): pass
+  class _DeadCallbackException(Exception):
+    pass
 
   def filter(self, msg_type=None, maxsize=0):
     """
@@ -238,6 +239,9 @@ class Handler(object):
     self.add_callback(cb, msg_type)
     event.wait(timeout)
     self.remove_callback(cb, msg_type)
+
+  def __call__(self, msg, **metadata):
+    self._source(msg, **metadata)
 
   class _SBPQueueIterator(object):
     """
