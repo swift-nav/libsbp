@@ -41,16 +41,13 @@ class RotatingFileLogger(JSONLogger):
 
   """
 
-  def __init__(self, filename, when='M', interval=30, backupCount=3,
-               tags={}, dispatcher=None):
+  def __init__(self, filename, when='M', interval=30, backupCount=3, **kwargs):
+    super(RotatingFileLogger, self).__init__(None, **kwargs)
     self.handler = TimedRotatingFileHandler(filename, when, interval,
                                             backupCount)
     self.logger = logging.getLogger("Rotating Log")
     self.logger.setLevel(logging.INFO)
     self.logger.addHandler(self.handler)
-    self.dispatcher = dispatcher
-    self.base_time = time.time()
-    self.tags = tags
 
   def __call__(self, msg, **metadata):
     self.call(msg, **metadata)
