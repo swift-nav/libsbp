@@ -82,7 +82,7 @@ class SBP(object):
                'payload',
                'crc']
 
-  def __init__(self, msg_type=None, sender=None,
+  def __init__(self, msg_type=None, sender=SENDER_ID,
                length=None, payload=None, crc=None):
     self.preamble = SBP_PREAMBLE
     self.msg_type = msg_type
