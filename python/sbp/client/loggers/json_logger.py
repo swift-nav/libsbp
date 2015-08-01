@@ -24,27 +24,23 @@ class JSONLogger(BaseLogger):
 
   The :class:`JSONLogger` logs JSON records.
   """
-  def __call__(self, msg):
-    self.call(msg)
+  def fmt_msg(self, data, **metadata):
+    metadata.update(self.tags)
+    metadata['data'] = data
+    return metadata
 
-  def fmt_msg(self, data):
-    return {"delta": self.delta(),
-            "timestamp": self.timestamp(),
-            "data": data,
-            "metadata": self.tags}
-
-  def dump(self, msg):
+  def dump(self, msg, **metadata):
     try:
       data = self.dispatch(msg).to_json_dict()
-      return json.dumps(self.fmt_msg(data), allow_nan=False)
+      return json.dumps(self.fmt_msg(data, **metadata), allow_nan=False)
     except ValueError:
       warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
              % (msg.msg_type, msg)
       warnings.warn(warn, RuntimeWarning)
-      return json.dumps(self.fmt_msg(msg.to_json_dict()))
+      return json.dumps(self.fmt_msg(msg.to_json_dict(), **metadata))
 
-  def call(self, msg):
-    self.handle.write(self.dump(msg) + "\n")
+  def __call__(self, msg, **metadata):
+    self.handle.write(self.dump(msg, **metadata) + "\n")
 
 class JSONLogIterator(LogIterator):
   """
@@ -76,11 +72,9 @@ class JSONLogIterator(LogIterator):
     for line in self.handle:
       try:
         data = json.loads(line)
-        delta = data['delta']
-        timestamp = data['timestamp']
-        item = SBP.from_json_dict(data['data'])
+        item = SBP.from_json_dict(data.pop('data'))
         msg = self.dispatch(item, line)
-        yield (delta, timestamp, msg)
+        yield (msg, data)
       except ValueError:
         warn = "Bad JSON decoding for line %s" % line
         warnings.warn(warn, RuntimeWarning)
@@ -135,12 +129,9 @@ class MultiJSONLogIterator(JSONLogIterator):
           warnings.warn(warn, RuntimeWarning)
 
     for data in sorted(datas, key=itemgetter('timestamp')):
-      delta = data['delta']
-      timestamp = data['timestamp']
-      metadata = data['metadata']
-      item = SBP.from_json_dict(data['data'])
+      item = SBP.from_json_dict(data.pop('data'))
       msg = self.dispatch(item)
-      yield (delta, timestamp, metadata, msg)
+      yield (msg, data)
 
     for handle in self.handles:
       handle.seek(0, 0)

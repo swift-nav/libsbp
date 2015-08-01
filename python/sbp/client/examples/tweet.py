@@ -15,18 +15,13 @@ them to the twitter API.
 """
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
-from sbp.client.handler import Handler
+from sbp.client.handler import Handler, Framer
 from sbp.logging import SBP_MSG_TWEET, MsgTweet
 
 import time
 import twitter
 
 twit = None
-
-def tweet_callback(msg):
-  # This function is called every time we receive a TWEET message
-  if twit is not None:
-    twit.statuses.update(status=MsgTweet(msg).tweet)
 
 def main():
 
@@ -49,13 +44,10 @@ def main():
   with PySerialDriver(args.port[0], baud=1000000) as driver:
     # Create a handler to connect our Piksi driver to our callbacks
     with Handler(driver.read, driver.write, verbose=True) as handler:
-      # Add a callback for BASELINE_NED messages
-      handler.add_callback(baseline_callback, msg_type=SBP_MSG_BASELINE_NED)
-
-      # Sleep until the user presses Ctrl-C
       try:
-        while True:
-          time.sleep(0.1)
+        for msg, metadata in handler.filter(SBP_MSG_TWEET):
+          if twit is not None:
+            twit.statuses.update(msg)
       except KeyboardInterrupt:
         pass
 

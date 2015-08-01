@@ -16,8 +16,6 @@ import threading
 # TODO (Buro): Consider making a basic, standard library async tcp
 # client: http://pymotw.com/2/asyncore/.
 
-DEFAULT_RECV_SIZE = 1024
-
 class TCPDriver(BaseDriver):
   """TCPDriver
 
@@ -32,19 +30,17 @@ class TCPDriver(BaseDriver):
     Baud rate of serial port.
 
   """
-  def __init__(self, host, port, size=DEFAULT_RECV_SIZE):
+  def __init__(self, host, port):
     self.handle = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     self.handle.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    self.handle.setblocking(0)
     try:
       self.handle.connect((host, port))
     except socket.error, msg:
       pass
     super(TCPDriver, self).__init__(self.handle)
     self._write_lock = threading.Lock()
-    self.recv_size = size
 
-  def read(self, size=None):
+  def read(self, size):
     """
     Read wrapper.
 
@@ -54,10 +50,12 @@ class TCPDriver(BaseDriver):
       Number of bytes to read
     """
     try:
-      data = self.handle.recv(self.recv_size)
+      data = self.handle.recv(size)
+      if not data:
+        raise IOError
       return data
     except socket.error, msg:
-      pass
+      raise IOError
 
   def flush(self):
     pass
@@ -75,6 +73,7 @@ class TCPDriver(BaseDriver):
       self._write_lock.acquire()
       self.handle.sendall(s)
     except socket.error, msg:
-      pass
+      raise IOError
     finally:
       self._write_lock.release()
+

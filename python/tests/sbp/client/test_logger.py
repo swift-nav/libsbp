@@ -13,13 +13,11 @@ from sbp.msg import SBP
 from sbp.client.loggers.base_logger import LogIterator
 from sbp.client.loggers.json_logger import JSONLogIterator, MultiJSONLogIterator
 from sbp.client.loggers.rotating_logger import RotatingFileLogger
-from sbp.client.loggers.device_iterator import DeviceIterator
 from sbp.client.loggers.udp_logger import UdpLogger
 from sbp.acquisition import MsgAcqResultDepA
 from sbp.logging import MsgPrintDep
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
-from sbp.client.handler import Handler
 import pytest
 import SocketServer
 import threading
@@ -44,9 +42,9 @@ def test_json_log():
   count = 0
   with warnings.catch_warnings(record=True) as w:
     with JSONLogIterator(log_datafile) as log:
-      for delta, timestamp, msg in log.next():
-        assert type(delta) == int
-        assert type(timestamp) == int
+      for msg, metadata in log.next():
+        assert type(metadata['delta']) == int
+        assert type(metadata['timestamp']) == int
         assert isinstance(msg, SBP) or issubclass(type(msg), SBP)
         count += 1
       warnings.simplefilter("always")
@@ -64,14 +62,14 @@ def test_multi_json_log():
   past = 0
   with warnings.catch_warnings(record=True) as w:
     with MultiJSONLogIterator(handles) as log:
-      for delta, timestamp, metadata, msg in log.next():
-        assert type(delta) == int
-        assert type(timestamp) == int
+      for msg, metadata in log.next():
+        assert type(metadata['delta']) == int
+        assert type(metadata['timestamp']) == int
         assert isinstance(msg, SBP) or issubclass(type(msg), SBP)
-        assert type(metadata) == dict
-        assert not metadata
-        assert timestamp >= past
-        past = timestamp
+        assert type(metadata['metadata']) == dict
+        assert not metadata['metadata']
+        assert metadata['timestamp'] >= past
+        past = metadata['timestamp']
         count += 1
       warnings.simplefilter("always")
       assert len(w) == 0
@@ -91,20 +89,6 @@ def test_msg_print():
       assert len(w) == 1
       assert issubclass(w[0].category, RuntimeWarning)
       assert str(w[0].message).startswith('Bad message parsing for line')
-
-def test_device_iterator():
-  """
-  device iterator sanity tests.
-  """
-  log_datafile = "data/one_msg.bin"
-  handle = open(log_datafile, 'r')
-  myhandler = Handler(handle.read, None, verbose=True)
-  mydevice_iterator = DeviceIterator(myhandler, 0.5)
-  myhandler.start()
-  for delta, timestamp, msg in mydevice_iterator:
-    assert delta > 0
-    assert timestamp >0
-    assert type(msg) == MsgAcqResultDepA
 
 def udp_handler(data):
   class MockRequestHandler(SocketServer.BaseRequestHandler):
@@ -150,13 +134,13 @@ def test_rolling_json_log():
         msg = SBP(0x10, 2, 3, 'abc\n', 4)
         msgs = []
         while t - t0 < test_interval:
-          log(msg)
+          log(msg, delta=t-t0, timestamp=t)
           if t - t0 <= r_interval:
             msgs.append(msg)
           t = time.time()
       i = 0
       with JSONLogIterator(tf.name) as log:
-        for delta, timestamp, msg in log.next():
+        for msg, metadata in log.next():
           assert isinstance(msg, MsgPrintDep)
           assert msg.text == "abc\n"
           i += 1

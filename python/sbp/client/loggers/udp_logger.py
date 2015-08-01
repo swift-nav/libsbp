@@ -30,14 +30,14 @@ class UdpLogger(BaseLogger):
     self.address = address
     self.port = port
 
-  def __call__(self, msg):
-    self.call(msg)
+  def __call__(self, msg, **metadata):
+    self.call(msg, **metadata)
 
-  def fmt_msg(self, msg):
+  def fmt_msg(self, msg, **metadata):
     return msg.pack()
 
   def flush(self):
     pass
 
-  def call(self, msg):
-    self.handle.sendto(self.fmt_msg(msg), (self.address, self.port))
+  def call(self, msg, **metadata):
+    self.handle.sendto(self.fmt_msg(msg, **metadata), (self.address, self.port))
