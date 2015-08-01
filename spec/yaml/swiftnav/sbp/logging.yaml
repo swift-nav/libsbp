@@ -35,10 +35,14 @@ definitions:
               - 0-2:
                     desc: Logging level
                     values:
-                        - 0: DEBUG
-                        - 1: INFO
-                        - 2: WARN
+                        - 0: EMERG
+                        - 1: ALERT
+                        - 2: CRIT
                         - 3: ERROR
+                        - 4: WARN
+                        - 5: NOTICE
+                        - 6: INFO
+                        - 7: DEBUG
       - text:
           type: string
           desc: Human-readable string
