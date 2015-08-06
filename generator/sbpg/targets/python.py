@@ -107,7 +107,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
   directory = output_dir
   destination_filename = "%s/%s.py" % (directory, name)
   py_template = jenv.get_template(TEMPLATE_NAME)
-  module_path = ".".join(package_spec.identifier.split(".")[:-1])
+  module_path = ".".join(package_spec.identifier.split(".")[1:-1])
   includes = [".".join(i.split(".")[:-1]) for i in package_spec.includes]
   includes = [i for i in includes if i != "types"]
   print destination_filename, includes
