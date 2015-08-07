@@ -35,6 +35,7 @@ library
                      , SwiftNav.SBP.Observation
                      , SwiftNav.SBP.Piksi
                      , SwiftNav.SBP.Settings
+                     , SwiftNav.SBP.Signal
                      , SwiftNav.SBP.System
                      , SwiftNav.SBP.Tracking
                      , SwiftNav.SBP.Encoding

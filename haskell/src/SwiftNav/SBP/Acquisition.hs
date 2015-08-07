@@ -43,10 +43,8 @@ data MsgAcqResult = MsgAcqResult
     -- ^ Code phase of best point
   , _msgAcqResult_cf :: Float
     -- ^ Carrier frequency of best point
-  , _msgAcqResult_sid :: Word32
-    -- ^ Signal identifier of the satellite signal for which acquisition was
-    -- attempted - values 0x00 through 0x1F represent GPS PRNs 1 through 32
-    -- respectively (PRN-1 notation); other values reserved for future use.
+  , _msgAcqResult_sid :: SBPSignal
+    -- ^ Signal identifier (constellation / satellite / band)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgAcqResult where
@@ -54,14 +52,14 @@ instance Binary MsgAcqResult where
     _msgAcqResult_snr <- getFloat32le
     _msgAcqResult_cp <- getFloat32le
     _msgAcqResult_cf <- getFloat32le
-    _msgAcqResult_sid <- getWord32le
+    _msgAcqResult_sid <- get
     return MsgAcqResult {..}
 
   put MsgAcqResult {..} = do
     putFloat32le _msgAcqResult_snr
     putFloat32le _msgAcqResult_cp
     putFloat32le _msgAcqResult_cf
-    putWord32le _msgAcqResult_sid
+    put _msgAcqResult_sid
 
 $(deriveSBP 'msgAcqResult ''MsgAcqResult)
 

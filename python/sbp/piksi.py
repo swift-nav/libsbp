@@ -24,6 +24,7 @@ from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.signal import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml with generate.py.
 # Please do not hand edit!
@@ -708,7 +709,7 @@ from being used in various Piksi subsystems.
     SBP parent object to inherit from.
   mask : int
     Mask of systems that should ignore this satellite.
-  sid : int
+  sid : SBPSignal
     Signal identifier for which the mask is applied
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -716,7 +717,7 @@ from being used in various Piksi subsystems.
   """
   _parser = Struct("MsgMaskSatellite",
                    ULInt8('mask'),
-                   ULInt32('sid'),)
+                   Struct('sid', SBPSignal._parser),)
   __slots__ = [
                'mask',
                'sid',

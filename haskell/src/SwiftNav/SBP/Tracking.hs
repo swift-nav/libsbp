@@ -33,10 +33,8 @@ import SwiftNav.SBP.Types
 data TrackingChannelState = TrackingChannelState
   { _trackingChannelState_state :: Word8
     -- ^ Status of tracking channel
-  , _trackingChannelState_sid :: Word32
-    -- ^ Signal identifier being tracked - values 0x00 through 0x1F represent GPS
-    -- PRNs 1 through 32 respectively (PRN-1 notation); other values reserved
-    -- for future use
+  , _trackingChannelState_sid :: SBPSignal
+    -- ^ Identifier of signal being tracked
   , _trackingChannelState_cn0 :: Float
     -- ^ Carrier-to-noise density
   } deriving ( Show, Read, Eq )
@@ -44,13 +42,13 @@ data TrackingChannelState = TrackingChannelState
 instance Binary TrackingChannelState where
   get = do
     _trackingChannelState_state <- getWord8
-    _trackingChannelState_sid <- getWord32le
+    _trackingChannelState_sid <- get
     _trackingChannelState_cn0 <- getFloat32le
     return TrackingChannelState {..}
 
   put TrackingChannelState {..} = do
     putWord8 _trackingChannelState_state
-    putWord32le _trackingChannelState_sid
+    put _trackingChannelState_sid
     putFloat32le _trackingChannelState_cn0
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_trackingChannelState_" . stripPrefix "_trackingChannelState_"}
              ''TrackingChannelState)
@@ -116,10 +114,8 @@ msgTrackingIq = 0x001C
 data MsgTrackingIq = MsgTrackingIq
   { _msgTrackingIq_channel :: Word8
     -- ^ Tracking channel of origin
-  , _msgTrackingIq_sid   :: Word32
-    -- ^ Signal identifier being tracked - values 0x00 through 0x1F represent GPS
-    -- PRNs 1 through 32 respectively (PRN-1 notation); other values reserved
-    -- for future use
+  , _msgTrackingIq_sid   :: SBPSignal
+    -- ^ Identifier of signal being tracked
   , _msgTrackingIq_corrs :: [TrackingChannelCorrelation]
     -- ^ Early, Prompt and Late correlations
   } deriving ( Show, Read, Eq )
@@ -127,13 +123,13 @@ data MsgTrackingIq = MsgTrackingIq
 instance Binary MsgTrackingIq where
   get = do
     _msgTrackingIq_channel <- getWord8
-    _msgTrackingIq_sid <- getWord32le
+    _msgTrackingIq_sid <- get
     _msgTrackingIq_corrs <- replicateM 3 get
     return MsgTrackingIq {..}
 
   put MsgTrackingIq {..} = do
     putWord8 _msgTrackingIq_channel
-    putWord32le _msgTrackingIq_sid
+    put _msgTrackingIq_sid
     mapM_ put _msgTrackingIq_corrs
 
 $(deriveSBP 'msgTrackingIq ''MsgTrackingIq)

@@ -1,0 +1,32 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Vlad Ungureanu <vvu@vdev.ro>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.signal
+description: Struct to represent the signal (constellation, band, satellite identifier).
+stable: True
+public: True
+include:
+  - types.yaml
+definitions:
+
+ - SBPSignal:
+    short_desc: Represents all the relevant information about the signal
+    desc: |
+        Signal identifier containing constellation, band, and satellite identifier
+    fields:
+        - sat:
+            type: u16
+            desc: Constellation-specific satellite identifier
+        - band:
+            type: u8
+            desc: Signal band      
+        - constellation:
+            type: u8
+            desc: Constellation to which the satellite belongs

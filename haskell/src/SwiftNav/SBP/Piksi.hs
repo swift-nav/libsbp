@@ -384,19 +384,19 @@ msgMaskSatellite = 0x001B
 data MsgMaskSatellite = MsgMaskSatellite
   { _msgMaskSatellite_mask :: Word8
     -- ^ Mask of systems that should ignore this satellite.
-  , _msgMaskSatellite_sid :: Word32
+  , _msgMaskSatellite_sid :: SBPSignal
     -- ^ Signal identifier for which the mask is applied
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgMaskSatellite where
   get = do
     _msgMaskSatellite_mask <- getWord8
-    _msgMaskSatellite_sid <- getWord32le
+    _msgMaskSatellite_sid <- get
     return MsgMaskSatellite {..}
 
   put MsgMaskSatellite {..} = do
     putWord8 _msgMaskSatellite_mask
-    putWord32le _msgMaskSatellite_sid
+    put _msgMaskSatellite_sid
 
 $(deriveSBP 'msgMaskSatellite ''MsgMaskSatellite)
 
