@@ -24,6 +24,7 @@
 #define LIBSBP_OBSERVATION_MESSAGES_H
 
 #include "common.h"
+#include "signal.h"
 
 
 /** Millisecond-accurate GPS time
@@ -76,9 +77,7 @@ typedef struct __attribute__((packed)) {
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
  */
-  u32 sid;     /**< Signal identifier of the satellite signal - values 0x00
-through 0x1F represent GPS PRNs 1 through 32 respectively
-(PRN-1 notation); other values reserved for future use.
+  sbp_signal_t sid;     /**< Signal identifier of the satellite signal.
  */
 } packed_obs_content_t;
 
@@ -151,9 +150,7 @@ typedef struct __attribute__((packed)) {
   u16 toc_wn;      /**< Clock reference week number [week] */
   u8 valid;       /**< Is valid? */
   u8 healthy;     /**< Satellite is healthy? */
-  u32 sid;         /**< Signal identifier being tracked - values 0x00 through 0x1F represent
-GPS PRNs 1 through 32 respectively (PRN-1 notation); other values
-reserved for future use
+  sbp_signal_t sid;         /**< Signal identifier of the satellite beign tracked.
  */
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */

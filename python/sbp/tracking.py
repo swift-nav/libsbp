@@ -19,6 +19,7 @@ from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.signal import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml with generate.py.
 # Please do not hand edit!
@@ -35,10 +36,8 @@ signal power.
   ----------
   state : int
     Status of tracking channel
-  sid : int
-    Signal identifier being tracked - values 0x00 through 0x1F
-represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
-other values reserved for future use
+  sid : sbp_signal
+    Signal identifier being tracked.
 
   cn0 : float
     Carrier-to-noise density
@@ -46,7 +45,7 @@ other values reserved for future use
   """
   _parser = Embedded(Struct("TrackingChannelState",
                      ULInt8('state'),
-                     ULInt32('sid'),
+                     Struct('sid', sbp_signal._parser),
                      LFloat32('cn0'),))
   __slots__ = [
                'state',
@@ -257,10 +256,8 @@ update interval.
     SBP parent object to inherit from.
   channel : int
     Tracking channel of origin
-  sid : int
-    Signal identifier being tracked - values 0x00 through 0x1F
-represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
-other values reserved for future use
+  sid : sbp_signal
+    Signal identifier being tracked.
 
   corrs : array
     Early, Prompt and Late correlations
@@ -270,7 +267,7 @@ other values reserved for future use
   """
   _parser = Struct("MsgTrackingIq",
                    ULInt8('channel'),
-                   ULInt32('sid'),
+                   Struct('sid', sbp_signal._parser),
                    Struct('corrs', Array(3, Struct('corrs', TrackingChannelCorrelation._parser))),)
   __slots__ = [
                'channel',

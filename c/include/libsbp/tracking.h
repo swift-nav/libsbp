@@ -24,6 +24,7 @@
 #define LIBSBP_TRACKING_MESSAGES_H
 
 #include "common.h"
+#include "signal.h"
 
 
 /** Satellite tracking channel state
@@ -33,9 +34,7 @@
  */
 typedef struct __attribute__((packed)) {
   u8 state;    /**< Status of tracking channel */
-  u32 sid;      /**< Signal identifier being tracked - values 0x00 through 0x1F
-represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
-other values reserved for future use
+  sbp_signal_t sid;      /**< Signal identifier being tracked.
  */
   float cn0;      /**< Carrier-to-noise density [dB Hz] */
 } tracking_channel_state_t;
@@ -71,9 +70,7 @@ typedef struct __attribute__((packed)) {
 #define SBP_MSG_TRACKING_IQ          0x001C
 typedef struct __attribute__((packed)) {
   u8 channel;    /**< Tracking channel of origin */
-  u32 sid;        /**< Signal identifier being tracked - values 0x00 through 0x1F
-represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
-other values reserved for future use
+  sbp_signal_t sid;        /**< Signal identifier being tracked.
  */
   tracking_channel_correlation_t corrs[3];   /**< Early, Prompt and Late correlations */
 } msg_tracking_iq_t;

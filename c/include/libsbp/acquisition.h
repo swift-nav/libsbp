@@ -24,6 +24,7 @@
 #define LIBSBP_ACQUISITION_MESSAGES_H
 
 #include "common.h"
+#include "signal.h"
 
 
 /** Satellite acquisition result
@@ -41,10 +42,7 @@ units of dB Hz in the revision of this message.
  */
   float cp;     /**< Code phase of best point [chips] */
   float cf;     /**< Carrier frequency of best point [hz] */
-  u32 sid;    /**< Signal identifier of the satellite signal for which acquisition
-was attempted - values 0x00 through 0x1F represent GPS PRNs 1
-through 32 respectively (PRN-1 notation); other values reserved
-for future use.
+  sbp_signal_t sid;    /**< Signal identifier of the satellite.
  */
 } msg_acq_result_t;
 

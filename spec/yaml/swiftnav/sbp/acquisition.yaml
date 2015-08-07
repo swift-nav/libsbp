@@ -14,6 +14,7 @@ stable: False
 public: True
 include:
   - types.yaml
+  - signal.yaml
 definitions:
 
  - MSG_ACQ_RESULT:
@@ -40,12 +41,9 @@ definitions:
             units: hz
             desc: Carrier frequency of best point
         - sid:
-            type: u32
+            type: sbp_signal
             desc: |
-              Signal identifier of the satellite signal for which acquisition
-              was attempted - values 0x00 through 0x1F represent GPS PRNs 1
-              through 32 respectively (PRN-1 notation); other values reserved
-              for future use.
+              Signal identifier of the satellite.
 
  - MSG_ACQ_RESULT_DEP_A:
     id: 0x0015
