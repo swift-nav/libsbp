@@ -17,6 +17,10 @@ import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 
+((*- for i in include *))
+import com.swiftnav.sbp.(((i))).*;
+((*- endfor *))
+
 import org.json.JSONObject;
 import org.json.JSONArray;
 ((*- if m.sbp_id *))
@@ -91,7 +95,7 @@ public class (((m.identifier))) extends SBPStruct {
     public (((m.identifier))) () {}
 
     @Override
-    protected (((m.identifier))) parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public (((m.identifier))) parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         ((*- if m.fields *)) ((*- for f in m.fields *))
         (((f.identifier))) = (((f | parse_type)));
@@ -100,7 +104,7 @@ public class (((m.identifier))) extends SBPStruct {
     }
 
     @Override
-    protected void build(SBPMessage.Builder builder) {
+    public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
         ((*- if m.fields *)) ((*- for f in m.fields *))
         (((f | build_type)));
@@ -108,7 +112,7 @@ public class (((m.identifier))) extends SBPStruct {
     }
 
     @Override
-    protected JSONObject toJSON() {
+    public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
         ((*- if m.fields *)) ((*- for f in m.fields *))
         obj.put("(((f.identifier)))", (((f|jsonify))));

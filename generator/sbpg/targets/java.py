@@ -162,6 +162,8 @@ def render_source(output_dir, package_spec, jenv=JENV):
   java_template = jenv.get_template(TEMPLATE_NAME)
   module_path = "com." + package_spec.identifier
   yaml_filepath = "/".join(package_spec.filepath) + ".yaml"
+  includes = [".".join(i.split(".")[:-1]) for i in package_spec.includes]
+  includes = [i for i in includes if i != "types"]
   for msg in package_spec.definitions:
     msg_name = classnameify(msg.identifier) if msg.sbp_id else msg.identifier
     l = "/".join(package_spec.filepath)
@@ -176,6 +178,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
         f.write(java_template.render(m=msg,
                                      filepath=yaml_filepath,
                                      module_path=module_path,
+                                     include=includes,
                                      description=package_spec.description))
 
 def render_table(output_dir, packages, jenv=JENV):
