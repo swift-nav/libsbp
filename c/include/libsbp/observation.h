@@ -90,7 +90,7 @@ carrier phase ambiguity may have changed.
  * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
  * whole cycles and 8-bits of fractional cycles).
  */
-#define SBP_MSG_OBS             0x0043
+#define SBP_MSG_OBS              0x0043
 typedef struct __attribute__((packed)) {
   observation_header_t header;    /**< Header of a GPS observation message */
   packed_obs_content_t obs[0];    /**< Pseudorange and carrier phase observation for a
@@ -107,12 +107,36 @@ satellite being tracked.
  * location of the base station. Any error here will result in an
  * error in the pseudo-absolute position output.
  */
-#define SBP_MSG_BASE_POS        0x0044
+#define SBP_MSG_BASE_POS         0x0044
 typedef struct __attribute__((packed)) {
   double lat;       /**< Latitude [deg] */
   double lon;       /**< Longitude [deg] */
   double height;    /**< Height [m] */
 } msg_base_pos_t;
+
+
+/** Geosynchronous satellite broadcast ephemeris
+ *
+ * The ephemeris message returns a set of satellite orbit
+ * parameters that is used to calculate GPS satellite position,
+ * velocity, and clock offset.
+ */
+#define SBP_MSG_EPHEMERIS_XYZ    0x0099
+typedef struct __attribute__((packed)) {
+  double toe_tow;    /**< Time of week [s] */
+  u16 toe_wn;     /**< Week number [week] */
+  u8 iod;        /**< Issue of data */
+  u16 toa;        /**< Time of Applicability [s] */
+  u8 ura;        /**< User Range Accuracy */
+  double pos[3];     /**< Position of the satellite [m] */
+  double rate[3];    /**< Velocity of the satellite [m/s] */
+  double acc[3];     /**< Acceleration of the satellite [m/s^2] */
+  u16 a_gf0;      /**< Time offset with respect of network time [s] */
+  u8 a_gf1;      /**< Time drift with respect of network time [s/s] */
+  u8 valid;      /**< Is valid? */
+  u8 healthy;    /**< Satellite is healthy? */
+  sbp_signal_t sid;        /**< Signal identifier of the satellite beign tracked. */
+} msg_ephemeris_xyz_t;
 
 
 /** Satellite broadcast ephemeris
@@ -123,7 +147,7 @@ typedef struct __attribute__((packed)) {
  * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
  * 20-III) for more details.
  */
-#define SBP_MSG_EPHEMERIS       0x0047
+#define SBP_MSG_EPHEMERIS_KEPLER 0x0047
 typedef struct __attribute__((packed)) {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
@@ -155,14 +179,14 @@ typedef struct __attribute__((packed)) {
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
   u32 reserved;    /**< Reserved field */
-} msg_ephemeris_t;
+} msg_ephemeris_kepler_t;
 
 
 /** Deprecated
  *
 * Deprecated.
  */
-#define SBP_MSG_EPHEMERIS_DEP_A 0x001A
+#define SBP_MSG_EPHEMERIS_DEP_A  0x001A
 typedef struct __attribute__((packed)) {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
@@ -197,7 +221,7 @@ typedef struct __attribute__((packed)) {
  *
 * Deprecated.
  */
-#define SBP_MSG_EPHEMERIS_DEP_B 0x0046
+#define SBP_MSG_EPHEMERIS_DEP_B  0x0046
 typedef struct __attribute__((packed)) {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
@@ -249,7 +273,7 @@ carrier phase ambiguity may have changed.
  *
 * Deprecated.
  */
-#define SBP_MSG_OBS_DEP_A       0x0045
+#define SBP_MSG_OBS_DEP_A        0x0045
 typedef struct __attribute__((packed)) {
   observation_header_t header;    /**< Header of a GPS observation message */
   packed_obs_content_dep_a_t obs[0];    /**< Pseudorange and carrier phase observation for a

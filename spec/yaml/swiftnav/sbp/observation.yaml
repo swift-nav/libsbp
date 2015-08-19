@@ -135,7 +135,69 @@ definitions:
             units: m
             desc: Height
 
- - MSG_EPHEMERIS:
+ - MSG_EPHEMERIS_XYZ:
+    id: 0x0099
+    short_desc: Geosynchronous satellite broadcast ephemeris
+    desc: |
+      The ephemeris message returns a set of satellite orbit
+      parameters that is used to calculate GPS satellite position,
+      velocity, and clock offset.
+    fields:
+        - toe_tow:
+            type: double
+            units: s
+            desc: Time of week
+        - toe_wn:
+            type: u16
+            units: week
+            desc: Week number
+        - iod:
+            type: u8
+            desc: Issue of data
+        - toa:
+            type: u16
+            units: s
+            desc: Time of Applicability
+        - ura:
+            type: u8
+            desc: User Range Accuracy
+        - pos:
+            type: array
+            fill: double
+            size: 3
+            units: m
+            desc: Position of the satellite
+        - rate:
+            type: array
+            fill: double
+            size: 3
+            units: m/s
+            desc: Velocity of the satellite
+        - acc:
+            type: array
+            fill: double
+            size: 3
+            units: m/s^2
+            desc: Acceleration of the satellite
+        - a_gf0:
+            type: u16
+            units: s
+            desc: Time offset with respect of network time
+        - a_gf1:
+            type: u8
+            units: s/s
+            desc: Time drift with respect of network time
+        - valid:
+            type: u8
+            desc: Is valid?
+        - healthy:
+            type: u8
+            desc: Satellite is healthy?
+        - sid:
+            type: sbp_signal
+            desc: Signal identifier of the satellite beign tracked.
+
+ - MSG_EPHEMERIS_KEPLER:
     id: 0x0047
     short_desc: Satellite broadcast ephemeris
     desc: |
@@ -262,7 +324,7 @@ definitions:
     desc: Deprecated.
     public: False
     replaced_by:
-      - MSG_EPHEMERIS
+      - MSG_EPHEMERIS_KEPLER
     fields:
       - tgd:
           type: double
@@ -372,7 +434,7 @@ definitions:
     desc: Deprecated.
     public: False
     replaced_by:
-      - MSG_EPHEMERIS
+      - MSG_EPHEMERIS_KEPLER
     fields:
       - tgd:
           type: double
