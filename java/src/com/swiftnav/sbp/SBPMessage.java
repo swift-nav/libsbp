@@ -138,6 +138,13 @@ public class SBPMessage {
             return ret;
         }
 
+        public double[] getArrayofDouble(int n) {
+            double [] ret = new double[n];
+            for (int i = 0; i < n; i++)
+                ret[i] = getDouble();
+            return ret;
+        }
+
         public <T extends SBPStruct> T[] getArray(Class<T> t) {
             LinkedList<T> l = new LinkedList<>();
             while (true) {
@@ -219,6 +226,15 @@ public class SBPMessage {
         public void putArrayofU8(int[] data, int n) {
             assert(n == data.length);
             putArrayofU8(data);
+        }
+
+        public void putArrayofDouble(double[] data) {
+            for (double x: data)
+                putDouble(x);
+        }
+        public void putArrayofDouble(double[] data, int n) {
+            assert(n == data.length);
+            putArrayofDouble(data);
         }
 
         public <T extends SBPStruct> void putArray(T[] structs) {
