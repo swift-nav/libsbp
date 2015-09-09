@@ -159,6 +159,7 @@ def render_source(output_dir, package_spec):
   print module_name, module_includes
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,
+                               description=package_spec.description,
                                module_name=full_module_name))
 
 def render_cabal(output_dir, package_specs, release):
@@ -174,7 +175,8 @@ def render_cabal(output_dir, package_specs, release):
   destination_filename = "%s/sbp.cabal" % output_dir
   py_template = JENV.get_template(CABAL_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
-    f.write(py_template.render(modules=sorted(modules), release=release))
+    f.write(py_template.render(modules=sorted(modules),
+                               release=release))
 
 def render_sbp(output_dir, package_specs):
   modules = []
@@ -197,4 +199,3 @@ def render_sbp(output_dir, package_specs):
     f.write(py_template.render(modules=sorted(modules),
                                pkgs=package_specs,
                                msgs=sorted(msgs)))
-

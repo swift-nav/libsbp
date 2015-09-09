@@ -89,6 +89,7 @@ data SBPMsg =
    | SBPMsgHeartbeat MsgHeartbeat
    | SBPMsgIarState MsgIarState
    | SBPMsgInitBase MsgInitBase
+   | SBPMsgLog MsgLog
    | SBPMsgM25FlashWriteStatus MsgM25FlashWriteStatus
    | SBPMsgMaskSatellite MsgMaskSatellite
    | SBPMsgNapDeviceDnaReq MsgNapDeviceDnaReq
@@ -97,7 +98,7 @@ data SBPMsg =
    | SBPMsgObsDepA MsgObsDepA
    | SBPMsgPosEcef MsgPosEcef
    | SBPMsgPosLlh MsgPosLlh
-   | SBPMsgPrint MsgPrint
+   | SBPMsgPrintDep MsgPrintDep
    | SBPMsgReset MsgReset
    | SBPMsgResetFilters MsgResetFilters
    | SBPMsgSetTime MsgSetTime
