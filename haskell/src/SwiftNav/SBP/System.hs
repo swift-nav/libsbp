@@ -10,8 +10,10 @@
 
 module SwiftNav.SBP.System where
 
+import BasicPrelude
 import Control.Monad
 import Control.Monad.Loops
+import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -20,6 +22,7 @@ import Data.ByteString
 import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
+import SwiftNav.SBP.Encoding
 
 msgStartup :: Word16
 msgStartup = 0xFF00
@@ -30,17 +33,20 @@ msgStartup = 0xFF00
 -- host or other attached devices that the system has started and is now ready
 -- to respond to commands or configuration requests.
 data MsgStartup = MsgStartup
-  { msgStartupReserved :: Word32
+  { msgStartup_reserved :: Word32
     -- ^ Reserved
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgStartup where
   get = do
-    msgStartupReserved <- getWord32le
+    msgStartup_reserved <- getWord32le
     return MsgStartup {..}
 
   put MsgStartup {..} = do
-    putWord32le msgStartupReserved
+    putWord32le msgStartup_reserved
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgStartup_" . stripPrefix "msgStartup_"}
+             ''MsgStartup)
 
 msgHeartbeat :: Word16
 msgHeartbeat = 0xFFFF
@@ -55,14 +61,17 @@ msgHeartbeat = 0xFFFF
 -- indicate that an error has occurred in the system. To determine the source
 -- of the error, the remaining error flags should be inspected.
 data MsgHeartbeat = MsgHeartbeat
-  { msgHeartbeatFlags :: Word32
+  { msgHeartbeat_flags :: Word32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgHeartbeat where
   get = do
-    msgHeartbeatFlags <- getWord32le
+    msgHeartbeat_flags <- getWord32le
     return MsgHeartbeat {..}
 
   put MsgHeartbeat {..} = do
-    putWord32le msgHeartbeatFlags
+    putWord32le msgHeartbeat_flags
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgHeartbeat_" . stripPrefix "msgHeartbeat_"}
+             ''MsgHeartbeat)

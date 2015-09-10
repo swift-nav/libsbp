@@ -15,8 +15,10 @@
 
 module SwiftNav.SBP.Settings where
 
+import BasicPrelude
 import Control.Monad
 import Control.Monad.Loops
+import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -25,6 +27,7 @@ import Data.ByteString
 import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
+import SwiftNav.SBP.Encoding
 
 msgSettingsSave :: Word16
 msgSettingsSave = 0x00A1
@@ -50,18 +53,21 @@ msgSettingsWrite = 0x00A0
 --
 -- The setting message writes the device's configuration.
 data MsgSettingsWrite = MsgSettingsWrite
-  { msgSettingsWriteSetting :: ByteString
+  { msgSettingsWrite_setting :: ByteString
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING, VALUE].
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSettingsWrite where
   get = do
-    msgSettingsWriteSetting <- liftM toStrict getRemainingLazyByteString
+    msgSettingsWrite_setting <- liftM toStrict getRemainingLazyByteString
     return MsgSettingsWrite {..}
 
   put MsgSettingsWrite {..} = do
-    putByteString msgSettingsWriteSetting
+    putByteString msgSettingsWrite_setting
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgSettingsWrite_" . stripPrefix "msgSettingsWrite_"}
+             ''MsgSettingsWrite)
 
 msgSettingsReadReq :: Word16
 msgSettingsReadReq = 0x00A4
@@ -70,18 +76,21 @@ msgSettingsReadReq = 0x00A4
 --
 -- The setting message reads the device's configuration.
 data MsgSettingsReadReq = MsgSettingsReadReq
-  { msgSettingsReadReqSetting :: ByteString
+  { msgSettingsReadReq_setting :: ByteString
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING].
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSettingsReadReq where
   get = do
-    msgSettingsReadReqSetting <- liftM toStrict getRemainingLazyByteString
+    msgSettingsReadReq_setting <- liftM toStrict getRemainingLazyByteString
     return MsgSettingsReadReq {..}
 
   put MsgSettingsReadReq {..} = do
-    putByteString msgSettingsReadReqSetting
+    putByteString msgSettingsReadReq_setting
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgSettingsReadReq_" . stripPrefix "msgSettingsReadReq_"}
+             ''MsgSettingsReadReq)
 
 msgSettingsReadResp :: Word16
 msgSettingsReadResp = 0x00A5
@@ -90,18 +99,21 @@ msgSettingsReadResp = 0x00A5
 --
 -- The setting message reads the device's configuration.
 data MsgSettingsReadResp = MsgSettingsReadResp
-  { msgSettingsReadRespSetting :: ByteString
+  { msgSettingsReadResp_setting :: ByteString
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING, VALUE].
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSettingsReadResp where
   get = do
-    msgSettingsReadRespSetting <- liftM toStrict getRemainingLazyByteString
+    msgSettingsReadResp_setting <- liftM toStrict getRemainingLazyByteString
     return MsgSettingsReadResp {..}
 
   put MsgSettingsReadResp {..} = do
-    putByteString msgSettingsReadRespSetting
+    putByteString msgSettingsReadResp_setting
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgSettingsReadResp_" . stripPrefix "msgSettingsReadResp_"}
+             ''MsgSettingsReadResp)
 
 msgSettingsReadByIndexReq :: Word16
 msgSettingsReadByIndexReq = 0x00A2
@@ -112,18 +124,21 @@ msgSettingsReadByIndexReq = 0x00A2
 -- the setting at an index, returning a NULL-terminated and delimited string
 -- with contents [SECTION_SETTING, SETTING, VALUE].
 data MsgSettingsReadByIndexReq = MsgSettingsReadByIndexReq
-  { msgSettingsReadByIndexReqIndex :: Word16
+  { msgSettingsReadByIndexReq_index :: Word16
     -- ^ An index into the device settings, with values ranging from 0 to
     -- length(settings)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSettingsReadByIndexReq where
   get = do
-    msgSettingsReadByIndexReqIndex <- getWord16le
+    msgSettingsReadByIndexReq_index <- getWord16le
     return MsgSettingsReadByIndexReq {..}
 
   put MsgSettingsReadByIndexReq {..} = do
-    putWord16le msgSettingsReadByIndexReqIndex
+    putWord16le msgSettingsReadByIndexReq_index
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgSettingsReadByIndexReq_" . stripPrefix "msgSettingsReadByIndexReq_"}
+             ''MsgSettingsReadByIndexReq)
 
 msgSettingsReadByIndexResp :: Word16
 msgSettingsReadByIndexResp = 0x00A7
@@ -134,23 +149,26 @@ msgSettingsReadByIndexResp = 0x00A7
 -- the setting at an index, returning a NULL-terminated and delimited string
 -- with contents [SECTION_SETTING, SETTING, VALUE].
 data MsgSettingsReadByIndexResp = MsgSettingsReadByIndexResp
-  { msgSettingsReadByIndexRespIndex   :: Word16
+  { msgSettingsReadByIndexResp_index  :: Word16
     -- ^ An index into the device settings, with values ranging from 0 to
     -- length(settings)
-  , msgSettingsReadByIndexRespSetting :: ByteString
+  , msgSettingsReadByIndexResp_setting :: ByteString
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING, VALUE].
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSettingsReadByIndexResp where
   get = do
-    msgSettingsReadByIndexRespIndex <- getWord16le
-    msgSettingsReadByIndexRespSetting <- liftM toStrict getRemainingLazyByteString
+    msgSettingsReadByIndexResp_index <- getWord16le
+    msgSettingsReadByIndexResp_setting <- liftM toStrict getRemainingLazyByteString
     return MsgSettingsReadByIndexResp {..}
 
   put MsgSettingsReadByIndexResp {..} = do
-    putWord16le msgSettingsReadByIndexRespIndex
-    putByteString msgSettingsReadByIndexRespSetting
+    putWord16le msgSettingsReadByIndexResp_index
+    putByteString msgSettingsReadByIndexResp_setting
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgSettingsReadByIndexResp_" . stripPrefix "msgSettingsReadByIndexResp_"}
+             ''MsgSettingsReadByIndexResp)
 
 msgSettingsReadByIndexDone :: Word16
 msgSettingsReadByIndexDone = 0x00A6

@@ -13,8 +13,10 @@
 
 module SwiftNav.SBP.Bootload where
 
+import BasicPrelude
 import Control.Monad
 import Control.Monad.Loops
+import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -23,6 +25,7 @@ import Data.ByteString
 import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
+import SwiftNav.SBP.Encoding
 
 msgBootloaderHandshakeReq :: Word16
 msgBootloaderHandshakeReq = 0x00B3
@@ -52,21 +55,24 @@ msgBootloaderHandshakeResp = 0x00B4
 -- MSG_BOOTLOADER_HANDSHAKE_REQ.  The payload contains the bootloader version
 -- number and the SBP protocol version number.
 data MsgBootloaderHandshakeResp = MsgBootloaderHandshakeResp
-  { msgBootloaderHandshakeRespFlags   :: Word32
+  { msgBootloaderHandshakeResp_flags  :: Word32
     -- ^ Bootloader flags
-  , msgBootloaderHandshakeRespVersion :: ByteString
+  , msgBootloaderHandshakeResp_version :: ByteString
     -- ^ Bootloader version number
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBootloaderHandshakeResp where
   get = do
-    msgBootloaderHandshakeRespFlags <- getWord32le
-    msgBootloaderHandshakeRespVersion <- liftM toStrict getRemainingLazyByteString
+    msgBootloaderHandshakeResp_flags <- getWord32le
+    msgBootloaderHandshakeResp_version <- liftM toStrict getRemainingLazyByteString
     return MsgBootloaderHandshakeResp {..}
 
   put MsgBootloaderHandshakeResp {..} = do
-    putWord32le msgBootloaderHandshakeRespFlags
-    putByteString msgBootloaderHandshakeRespVersion
+    putWord32le msgBootloaderHandshakeResp_flags
+    putByteString msgBootloaderHandshakeResp_version
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBootloaderHandshakeResp_" . stripPrefix "msgBootloaderHandshakeResp_"}
+             ''MsgBootloaderHandshakeResp)
 
 msgBootloaderJumpToApp :: Word16
 msgBootloaderJumpToApp = 0x00B1
@@ -75,17 +81,20 @@ msgBootloaderJumpToApp = 0x00B1
 --
 -- The host initiates the bootloader to jump to the application.
 data MsgBootloaderJumpToApp = MsgBootloaderJumpToApp
-  { msgBootloaderJumpToAppJump :: Word8
+  { msgBootloaderJumpToApp_jump :: Word8
     -- ^ Ignored by the device
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBootloaderJumpToApp where
   get = do
-    msgBootloaderJumpToAppJump <- getWord8
+    msgBootloaderJumpToApp_jump <- getWord8
     return MsgBootloaderJumpToApp {..}
 
   put MsgBootloaderJumpToApp {..} = do
-    putWord8 msgBootloaderJumpToAppJump
+    putWord8 msgBootloaderJumpToApp_jump
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBootloaderJumpToApp_" . stripPrefix "msgBootloaderJumpToApp_"}
+             ''MsgBootloaderJumpToApp)
 
 msgNapDeviceDnaReq :: Word16
 msgNapDeviceDnaReq = 0x00DE
@@ -119,17 +128,20 @@ msgNapDeviceDnaResp = 0x00DD
 -- that this ID is tied to the FPGA, and not related to the Piksi's serial
 -- number.
 data MsgNapDeviceDnaResp = MsgNapDeviceDnaResp
-  { msgNapDeviceDnaRespDna :: [Word8]
+  { msgNapDeviceDnaResp_dna :: [Word8]
     -- ^ 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgNapDeviceDnaResp where
   get = do
-    msgNapDeviceDnaRespDna <- replicateM 8 getWord8
+    msgNapDeviceDnaResp_dna <- replicateM 8 getWord8
     return MsgNapDeviceDnaResp {..}
 
   put MsgNapDeviceDnaResp {..} = do
-    mapM_ putWord8 msgNapDeviceDnaRespDna
+    mapM_ putWord8 msgNapDeviceDnaResp_dna
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgNapDeviceDnaResp_" . stripPrefix "msgNapDeviceDnaResp_"}
+             ''MsgNapDeviceDnaResp)
 
 msgBootloaderHandshakeDepA :: Word16
 msgBootloaderHandshakeDepA = 0x00B0
@@ -138,14 +150,17 @@ msgBootloaderHandshakeDepA = 0x00B0
 --
 -- Deprecated.
 data MsgBootloaderHandshakeDepA = MsgBootloaderHandshakeDepA
-  { msgBootloaderHandshakeDepAHandshake :: [Word8]
+  { msgBootloaderHandshakeDepA_handshake :: [Word8]
     -- ^ Version number string (not NULL terminated)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBootloaderHandshakeDepA where
   get = do
-    msgBootloaderHandshakeDepAHandshake <- whileM (liftM not isEmpty) getWord8
+    msgBootloaderHandshakeDepA_handshake <- whileM (liftM not isEmpty) getWord8
     return MsgBootloaderHandshakeDepA {..}
 
   put MsgBootloaderHandshakeDepA {..} = do
-    mapM_ putWord8 msgBootloaderHandshakeDepAHandshake
+    mapM_ putWord8 msgBootloaderHandshakeDepA_handshake
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBootloaderHandshakeDepA_" . stripPrefix "msgBootloaderHandshakeDepA_"}
+             ''MsgBootloaderHandshakeDepA)

@@ -11,8 +11,10 @@
 
 module SwiftNav.SBP.Logging where
 
+import BasicPrelude
 import Control.Monad
 import Control.Monad.Loops
+import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -21,6 +23,7 @@ import Data.ByteString
 import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
+import SwiftNav.SBP.Encoding
 
 msgLog :: Word16
 msgLog = 0x0401
@@ -31,21 +34,24 @@ msgLog = 0x0401
 -- containing errors, warnings and informational messages at ERROR, WARNING,
 -- DEBUG, INFO logging levels.
 data MsgLog = MsgLog
-  { msgLogLevel :: Word8
+  { msgLog_level :: Word8
     -- ^ Logging level
-  , msgLogText  :: ByteString
+  , msgLog_text :: ByteString
     -- ^ Human-readable string
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgLog where
   get = do
-    msgLogLevel <- getWord8
-    msgLogText <- liftM toStrict getRemainingLazyByteString
+    msgLog_level <- getWord8
+    msgLog_text <- liftM toStrict getRemainingLazyByteString
     return MsgLog {..}
 
   put MsgLog {..} = do
-    putWord8 msgLogLevel
-    putByteString msgLogText
+    putWord8 msgLog_level
+    putByteString msgLog_text
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgLog_" . stripPrefix "msgLog_"}
+             ''MsgLog)
 
 msgTweet :: Word16
 msgTweet = 0x0012
@@ -54,17 +60,20 @@ msgTweet = 0x0012
 --
 -- All the news fit to tweet.
 data MsgTweet = MsgTweet
-  { msgTweetTweet :: ByteString
+  { msgTweet_tweet :: ByteString
     -- ^ Human-readable string
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgTweet where
   get = do
-    msgTweetTweet <- getByteString 140
+    msgTweet_tweet <- getByteString 140
     return MsgTweet {..}
 
   put MsgTweet {..} = do
-    putByteString msgTweetTweet
+    putByteString msgTweet_tweet
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgTweet_" . stripPrefix "msgTweet_"}
+             ''MsgTweet)
 
 msgPrintDep :: Word16
 msgPrintDep = 0x0010
@@ -73,14 +82,17 @@ msgPrintDep = 0x0010
 --
 -- Deprecated.
 data MsgPrintDep = MsgPrintDep
-  { msgPrintDepText :: ByteString
+  { msgPrintDep_text :: ByteString
     -- ^ Human-readable string
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgPrintDep where
   get = do
-    msgPrintDepText <- liftM toStrict getRemainingLazyByteString
+    msgPrintDep_text <- liftM toStrict getRemainingLazyByteString
     return MsgPrintDep {..}
 
   put MsgPrintDep {..} = do
-    putByteString msgPrintDepText
+    putByteString msgPrintDep_text
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgPrintDep_" . stripPrefix "msgPrintDep_"}
+             ''MsgPrintDep)
