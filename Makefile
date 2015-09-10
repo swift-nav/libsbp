@@ -11,8 +11,9 @@ export PYTHONPATH := .
 SBP_VERSION := $(shell PYTHONPATH=python python python/sbp/version.py)
 SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
 SBP_MINOR_VERSION := $(word 2, $(subst ., , $(SBP_VERSION)))
+SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
 
-.PHONY: help all c python docs pdf html test release dist silly java
+.PHONY: help all c python docs pdf html test release dist silly java haskell
 
 help:
 	@echo
@@ -29,12 +30,13 @@ help:
 	@echo "  html      to make all HTML language docs"
 	@echo "  pdf       to make SBP LaTeX datasheet"
 	@echo "  python    to make Python bindings"
+	@echo "  haskell   to make Haskell bindings"
 	@echo "  java      to make Java bindings"
 	@echo "  release   to handle some release tasks"
 	@echo "  test      to run all tests"
 	@echo
 
-all: c python test docs
+all: c python haskell test docs
 
 c:
 	@echo
@@ -74,6 +76,19 @@ java:
 	cd $(SWIFTNAV_ROOT);
 	@echo
 	@echo "Finished! Please check $(SWIFTNAV_ROOT)/java/src/sbp."
+
+haskell:
+	@echo
+	@echo "Generating Haskell bindings..."
+	@echo
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
+					-o $(SWIFTNAV_ROOT)/haskell/ \
+					-r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+					--haskell;\
+	cd $(SWIFTNAV_ROOT);
+	@echo
+	@echo "Finished! Please check $(SWIFTNAV_ROOT)/haskell."
 
 dist:
 	@echo

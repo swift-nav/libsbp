@@ -2,16 +2,21 @@ name:                  sbp
 version:               (((release)))
 synopsis:              SwiftNav's SBP Library
 homepage:              https://github.com/swift-nav/libsbp
-license:               MIT
+license:               LGPL-3
 author:                Swift Navigation Inc.
 maintainer:            Mark Fine <dev@swiftnav.com>
 copyright:             Copyright (C) 2015 Swift Navigation, Inc.
 category:              Network
 build-type:            Simple
 cabal-version:         >= 1.10
-
+extra-source-files:    README.md
 description:
-  SwiftNav's SBP Library.
+  Haskell bindings for Swift Navigation Binary Protocol (SBP), a fast,
+  simple, and minimal binary protocol for communicating with Swift
+  devices. It is the native binary protocol used by the Piksi GPS
+  receiver to transmit solutions, observations, status and debugging
+  messages, as well as receive messages from the host operating
+  system, such as differential corrections and the almanac.
 
 source-repository head
   type:                git

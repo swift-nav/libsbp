@@ -1,3 +1,14 @@
+-- |
+-- Module:      SwiftNav.SBP.Logging
+-- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
+-- License:     LGPL-3
+-- Maintainer:  Mark Fine <dev@swiftnav.com>
+-- Stability:   experimental
+-- Portability: portable
+--
+-- Logging and debugging messages from the device. These are in the
+-- implementation-defined range (0x0000-0x00FF).
+
 module SwiftNav.SBP.Logging where
 
 import Control.Monad
@@ -11,26 +22,40 @@ import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
 
-msgPrint :: Word16
-msgPrint = 0x0010
+msgLog :: Word16
+msgLog = 0x0401
 
-data MsgPrint = MsgPrint
-  { msgPrintText :: ByteString
+-- | SBP class for message MSG_LOG (0x0401).
+--
+-- This message contains a human-readable payload string from the device
+-- containing errors, warnings and informational messages at ERROR, WARNING,
+-- DEBUG, INFO logging levels.
+data MsgLog = MsgLog
+  { msgLogLevel :: Word8
+    -- ^ Logging level
+  , msgLogText  :: ByteString
+    -- ^ Human-readable string
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgPrint where
+instance Binary MsgLog where
   get = do
-    msgPrintText <- liftM toStrict getRemainingLazyByteString
-    return MsgPrint {..}
+    msgLogLevel <- getWord8
+    msgLogText <- liftM toStrict getRemainingLazyByteString
+    return MsgLog {..}
 
-  put MsgPrint {..} = do
-    putByteString msgPrintText
+  put MsgLog {..} = do
+    putWord8 msgLogLevel
+    putByteString msgLogText
 
 msgTweet :: Word16
 msgTweet = 0x0012
 
+-- | SBP class for message MSG_TWEET (0x0012).
+--
+-- All the news fit to tweet.
 data MsgTweet = MsgTweet
   { msgTweetTweet :: ByteString
+    -- ^ Human-readable string
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgTweet where
@@ -40,3 +65,22 @@ instance Binary MsgTweet where
 
   put MsgTweet {..} = do
     putByteString msgTweetTweet
+
+msgPrintDep :: Word16
+msgPrintDep = 0x0010
+
+-- | SBP class for message MSG_PRINT_DEP (0x0010).
+--
+-- Deprecated.
+data MsgPrintDep = MsgPrintDep
+  { msgPrintDepText :: ByteString
+    -- ^ Human-readable string
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgPrintDep where
+  get = do
+    msgPrintDepText <- liftM toStrict getRemainingLazyByteString
+    return MsgPrintDep {..}
+
+  put MsgPrintDep {..} = do
+    putByteString msgPrintDepText

@@ -1,3 +1,13 @@
+-- |
+-- Module:      SwiftNav.SBP.Tracking
+-- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
+-- License:     LGPL-3
+-- Maintainer:  Mark Fine <dev@swiftnav.com>
+-- Stability:   experimental
+-- Portability: portable
+--
+-- Satellite code and carrier-phase tracking messages from the device.
+
 module SwiftNav.SBP.Tracking where
 
 import Control.Monad
@@ -11,10 +21,19 @@ import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
 
+-- | TrackingChannelState.
+--
+-- Tracking channel state for a specific satellite PRN and measured signal
+-- power.
 data TrackingChannelState = TrackingChannelState
   { trackingChannelStateState :: Word8
+    -- ^ Status of tracking channel
   , trackingChannelStateSid   :: Word32
+    -- ^ Signal identifier being tracked - values 0x00 through 0x1F represent GPS
+    -- PRNs 1 through 32 respectively (PRN-1 notation); other values reserved
+    -- for future use
   , trackingChannelStateCn0   :: Float
+    -- ^ Carrier-to-noise density
   } deriving ( Show, Read, Eq )
 
 instance Binary TrackingChannelState where
@@ -32,8 +51,14 @@ instance Binary TrackingChannelState where
 msgTrackingState :: Word16
 msgTrackingState = 0x0013
 
+-- | SBP class for message MSG_TRACKING_STATE (0x0013).
+--
+-- The tracking message returns a variable-length array of tracking channel
+-- states. It reports status and snr power measurements for all tracked
+-- satellites.
 data MsgTrackingState = MsgTrackingState
   { msgTrackingStateStates :: [TrackingChannelState]
+    -- ^ Satellite tracking channel state
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgTrackingState where
@@ -44,9 +69,14 @@ instance Binary MsgTrackingState where
   put MsgTrackingState {..} = do
     mapM_ put msgTrackingStateStates
 
+-- | TrackingChannelCorrelation.
+--
+-- Structure containing in-phase and quadrature correlation components.
 data TrackingChannelCorrelation = TrackingChannelCorrelation
   { trackingChannelCorrelationI :: Int32
+    -- ^ In-phase correlation
   , trackingChannelCorrelationQ :: Int32
+    -- ^ Quadrature correlation
   } deriving ( Show, Read, Eq )
 
 instance Binary TrackingChannelCorrelation where
@@ -62,10 +92,19 @@ instance Binary TrackingChannelCorrelation where
 msgTrackingIq :: Word16
 msgTrackingIq = 0x001C
 
+-- | SBP class for message MSG_TRACKING_IQ (0x001C).
+--
+-- When enabled, a tracking channel can output the correlations at each update
+-- interval.
 data MsgTrackingIq = MsgTrackingIq
   { msgTrackingIqChannel :: Word8
+    -- ^ Tracking channel of origin
   , msgTrackingIqSid     :: Word32
+    -- ^ Signal identifier being tracked - values 0x00 through 0x1F represent GPS
+    -- PRNs 1 through 32 respectively (PRN-1 notation); other values reserved
+    -- for future use
   , msgTrackingIqCorrs   :: [TrackingChannelCorrelation]
+    -- ^ Early, Prompt and Late correlations
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgTrackingIq where
@@ -80,10 +119,16 @@ instance Binary MsgTrackingIq where
     putWord32le msgTrackingIqSid
     mapM_ put msgTrackingIqCorrs
 
+-- | TrackingChannelStateDepA.
+--
+-- Deprecated.
 data TrackingChannelStateDepA = TrackingChannelStateDepA
   { trackingChannelStateDepAState :: Word8
+    -- ^ Status of tracking channel
   , trackingChannelStateDepAPrn   :: Word8
+    -- ^ PRN-1 being tracked
   , trackingChannelStateDepACn0   :: Float
+    -- ^ Carrier-to-noise density
   } deriving ( Show, Read, Eq )
 
 instance Binary TrackingChannelStateDepA where
@@ -101,8 +146,12 @@ instance Binary TrackingChannelStateDepA where
 msgTrackingStateDepA :: Word16
 msgTrackingStateDepA = 0x0016
 
+-- | SBP class for message MSG_TRACKING_STATE_DEP_A (0x0016).
+--
+-- Deprecated.
 data MsgTrackingStateDepA = MsgTrackingStateDepA
   { msgTrackingStateDepAStates :: [TrackingChannelStateDepA]
+    -- ^ Satellite tracking channel state
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgTrackingStateDepA where
