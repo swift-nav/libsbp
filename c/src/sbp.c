@@ -10,8 +10,8 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#include "edc.h"
-#include "sbp.h"
+#include "libsbp/edc.h"
+#include "libsbp/sbp.h"
 
 #define SBP_PREAMBLE 0x55
 
