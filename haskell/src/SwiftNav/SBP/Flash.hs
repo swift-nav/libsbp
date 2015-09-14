@@ -14,8 +14,10 @@
 
 module SwiftNav.SBP.Flash where
 
+import BasicPrelude
 import Control.Monad
 import Control.Monad.Loops
+import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -24,6 +26,7 @@ import Data.ByteString
 import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
+import SwiftNav.SBP.Encoding
 
 msgFlashProgram :: Word16
 msgFlashProgram = 0x00E6
@@ -36,29 +39,32 @@ msgFlashProgram = 0x00E6
 -- if the maximum write size is exceeded. Note that the sector-containing
 -- addresses must be erased before addresses can be programmed.
 data MsgFlashProgram = MsgFlashProgram
-  { msgFlashProgramTarget     :: Word8
+  { msgFlashProgram_target    :: Word8
     -- ^ Target flags
-  , msgFlashProgramAddrStart  :: [Word8]
+  , msgFlashProgram_addr_start :: [Word8]
     -- ^ Starting address offset to program
-  , msgFlashProgramAddrLen    :: Word8
+  , msgFlashProgram_addr_len  :: Word8
     -- ^ Length of set of addresses to program, counting up from starting address
-  , msgFlashProgramData       :: [Word8]
+  , msgFlashProgram_data      :: [Word8]
     -- ^ Data to program addresses with, with length N=addr_len
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgFlashProgram where
   get = do
-    msgFlashProgramTarget <- getWord8
-    msgFlashProgramAddrStart <- replicateM 3 getWord8
-    msgFlashProgramAddrLen <- getWord8
-    msgFlashProgramData <- whileM (liftM not isEmpty) getWord8
+    msgFlashProgram_target <- getWord8
+    msgFlashProgram_addr_start <- replicateM 3 getWord8
+    msgFlashProgram_addr_len <- getWord8
+    msgFlashProgram_data <- whileM (liftM not isEmpty) getWord8
     return MsgFlashProgram {..}
 
   put MsgFlashProgram {..} = do
-    putWord8 msgFlashProgramTarget
-    mapM_ putWord8 msgFlashProgramAddrStart
-    putWord8 msgFlashProgramAddrLen
-    mapM_ putWord8 msgFlashProgramData
+    putWord8 msgFlashProgram_target
+    mapM_ putWord8 msgFlashProgram_addr_start
+    putWord8 msgFlashProgram_addr_len
+    mapM_ putWord8 msgFlashProgram_data
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFlashProgram_" . stripPrefix "msgFlashProgram_"}
+             ''MsgFlashProgram)
 
 msgFlashDone :: Word16
 msgFlashDone = 0x00E0
@@ -70,17 +76,20 @@ msgFlashDone = 0x00E0
 -- MSG_FLASH_READ_REQ, or MSG_FLASH_PROGRAM, may return this message on
 -- failure.
 data MsgFlashDone = MsgFlashDone
-  { msgFlashDoneResponse :: Word8
+  { msgFlashDone_response :: Word8
     -- ^ Response flags
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgFlashDone where
   get = do
-    msgFlashDoneResponse <- getWord8
+    msgFlashDone_response <- getWord8
     return MsgFlashDone {..}
 
   put MsgFlashDone {..} = do
-    putWord8 msgFlashDoneResponse
+    putWord8 msgFlashDone_response
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFlashDone_" . stripPrefix "msgFlashDone_"}
+             ''MsgFlashDone)
 
 msgFlashReadReq :: Word16
 msgFlashReadReq = 0x00E7
@@ -94,25 +103,28 @@ msgFlashReadReq = 0x00E7
 -- exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the allowed
 -- range.
 data MsgFlashReadReq = MsgFlashReadReq
-  { msgFlashReadReqTarget     :: Word8
+  { msgFlashReadReq_target    :: Word8
     -- ^ Target flags
-  , msgFlashReadReqAddrStart  :: [Word8]
+  , msgFlashReadReq_addr_start :: [Word8]
     -- ^ Starting address offset to read from
-  , msgFlashReadReqAddrLen    :: Word8
+  , msgFlashReadReq_addr_len  :: Word8
     -- ^ Length of set of addresses to read, counting up from starting address
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgFlashReadReq where
   get = do
-    msgFlashReadReqTarget <- getWord8
-    msgFlashReadReqAddrStart <- replicateM 3 getWord8
-    msgFlashReadReqAddrLen <- getWord8
+    msgFlashReadReq_target <- getWord8
+    msgFlashReadReq_addr_start <- replicateM 3 getWord8
+    msgFlashReadReq_addr_len <- getWord8
     return MsgFlashReadReq {..}
 
   put MsgFlashReadReq {..} = do
-    putWord8 msgFlashReadReqTarget
-    mapM_ putWord8 msgFlashReadReqAddrStart
-    putWord8 msgFlashReadReqAddrLen
+    putWord8 msgFlashReadReq_target
+    mapM_ putWord8 msgFlashReadReq_addr_start
+    putWord8 msgFlashReadReq_addr_len
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFlashReadReq_" . stripPrefix "msgFlashReadReq_"}
+             ''MsgFlashReadReq)
 
 msgFlashReadResp :: Word16
 msgFlashReadResp = 0x00E1
@@ -126,25 +138,28 @@ msgFlashReadResp = 0x00E1
 -- exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the allowed
 -- range.
 data MsgFlashReadResp = MsgFlashReadResp
-  { msgFlashReadRespTarget     :: Word8
+  { msgFlashReadResp_target    :: Word8
     -- ^ Target flags
-  , msgFlashReadRespAddrStart  :: [Word8]
+  , msgFlashReadResp_addr_start :: [Word8]
     -- ^ Starting address offset to read from
-  , msgFlashReadRespAddrLen    :: Word8
+  , msgFlashReadResp_addr_len  :: Word8
     -- ^ Length of set of addresses to read, counting up from starting address
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgFlashReadResp where
   get = do
-    msgFlashReadRespTarget <- getWord8
-    msgFlashReadRespAddrStart <- replicateM 3 getWord8
-    msgFlashReadRespAddrLen <- getWord8
+    msgFlashReadResp_target <- getWord8
+    msgFlashReadResp_addr_start <- replicateM 3 getWord8
+    msgFlashReadResp_addr_len <- getWord8
     return MsgFlashReadResp {..}
 
   put MsgFlashReadResp {..} = do
-    putWord8 msgFlashReadRespTarget
-    mapM_ putWord8 msgFlashReadRespAddrStart
-    putWord8 msgFlashReadRespAddrLen
+    putWord8 msgFlashReadResp_target
+    mapM_ putWord8 msgFlashReadResp_addr_start
+    putWord8 msgFlashReadResp_addr_len
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFlashReadResp_" . stripPrefix "msgFlashReadResp_"}
+             ''MsgFlashReadResp)
 
 msgFlashErase :: Word16
 msgFlashErase = 0x00E2
@@ -156,21 +171,24 @@ msgFlashErase = 0x00E2
 -- message containing the return code - FLASH_OK (0) on success or
 -- FLASH_INVALID_FLASH (1) if the flash specified is invalid.
 data MsgFlashErase = MsgFlashErase
-  { msgFlashEraseTarget     :: Word8
+  { msgFlashErase_target    :: Word8
     -- ^ Target flags
-  , msgFlashEraseSectorNum  :: Word32
+  , msgFlashErase_sector_num :: Word32
     -- ^ Flash sector number to erase (0-11 for the STM, 0-15 for the M25)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgFlashErase where
   get = do
-    msgFlashEraseTarget <- getWord8
-    msgFlashEraseSectorNum <- getWord32le
+    msgFlashErase_target <- getWord8
+    msgFlashErase_sector_num <- getWord32le
     return MsgFlashErase {..}
 
   put MsgFlashErase {..} = do
-    putWord8 msgFlashEraseTarget
-    putWord32le msgFlashEraseSectorNum
+    putWord8 msgFlashErase_target
+    putWord32le msgFlashErase_sector_num
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFlashErase_" . stripPrefix "msgFlashErase_"}
+             ''MsgFlashErase)
 
 msgStmFlashLockSector :: Word16
 msgStmFlashLockSector = 0x00E3
@@ -180,17 +198,20 @@ msgStmFlashLockSector = 0x00E3
 -- The flash lock message locks a sector of the STM flash memory. The device
 -- replies with a MSG_FLASH_DONE message.
 data MsgStmFlashLockSector = MsgStmFlashLockSector
-  { msgStmFlashLockSectorSector :: Word32
+  { msgStmFlashLockSector_sector :: Word32
     -- ^ Flash sector number to lock
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgStmFlashLockSector where
   get = do
-    msgStmFlashLockSectorSector <- getWord32le
+    msgStmFlashLockSector_sector <- getWord32le
     return MsgStmFlashLockSector {..}
 
   put MsgStmFlashLockSector {..} = do
-    putWord32le msgStmFlashLockSectorSector
+    putWord32le msgStmFlashLockSector_sector
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgStmFlashLockSector_" . stripPrefix "msgStmFlashLockSector_"}
+             ''MsgStmFlashLockSector)
 
 msgStmFlashUnlockSector :: Word16
 msgStmFlashUnlockSector = 0x00E4
@@ -200,17 +221,20 @@ msgStmFlashUnlockSector = 0x00E4
 -- The flash unlock message unlocks a sector of the STM flash memory. The
 -- device replies with a MSG_FLASH_DONE message.
 data MsgStmFlashUnlockSector = MsgStmFlashUnlockSector
-  { msgStmFlashUnlockSectorSector :: Word32
+  { msgStmFlashUnlockSector_sector :: Word32
     -- ^ Flash sector number to unlock
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgStmFlashUnlockSector where
   get = do
-    msgStmFlashUnlockSectorSector <- getWord32le
+    msgStmFlashUnlockSector_sector <- getWord32le
     return MsgStmFlashUnlockSector {..}
 
   put MsgStmFlashUnlockSector {..} = do
-    putWord32le msgStmFlashUnlockSectorSector
+    putWord32le msgStmFlashUnlockSector_sector
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgStmFlashUnlockSector_" . stripPrefix "msgStmFlashUnlockSector_"}
+             ''MsgStmFlashUnlockSector)
 
 msgStmUniqueIdReq :: Word16
 msgStmUniqueIdReq = 0x00E8
@@ -239,17 +263,20 @@ msgStmUniqueIdResp = 0x00E5
 -- ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
 -- MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload..
 data MsgStmUniqueIdResp = MsgStmUniqueIdResp
-  { msgStmUniqueIdRespStmId  :: [Word8]
+  { msgStmUniqueIdResp_stm_id :: [Word8]
     -- ^ Device unique ID
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgStmUniqueIdResp where
   get = do
-    msgStmUniqueIdRespStmId <- replicateM 12 getWord8
+    msgStmUniqueIdResp_stm_id <- replicateM 12 getWord8
     return MsgStmUniqueIdResp {..}
 
   put MsgStmUniqueIdResp {..} = do
-    mapM_ putWord8 msgStmUniqueIdRespStmId
+    mapM_ putWord8 msgStmUniqueIdResp_stm_id
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgStmUniqueIdResp_" . stripPrefix "msgStmUniqueIdResp_"}
+             ''MsgStmUniqueIdResp)
 
 msgM25FlashWriteStatus :: Word16
 msgM25FlashWriteStatus = 0x00F3
@@ -259,14 +286,17 @@ msgM25FlashWriteStatus = 0x00F3
 -- The flash status message writes to the 8-bit M25 flash status register. The
 -- device replies with a MSG_FLASH_DONE message.
 data MsgM25FlashWriteStatus = MsgM25FlashWriteStatus
-  { msgM25FlashWriteStatusStatus :: [Word8]
+  { msgM25FlashWriteStatus_status :: [Word8]
     -- ^ Byte to write to the M25 flash status register
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgM25FlashWriteStatus where
   get = do
-    msgM25FlashWriteStatusStatus <- replicateM 1 getWord8
+    msgM25FlashWriteStatus_status <- replicateM 1 getWord8
     return MsgM25FlashWriteStatus {..}
 
   put MsgM25FlashWriteStatus {..} = do
-    mapM_ putWord8 msgM25FlashWriteStatusStatus
+    mapM_ putWord8 msgM25FlashWriteStatus_status
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgM25FlashWriteStatus_" . stripPrefix "msgM25FlashWriteStatus_"}
+             ''MsgM25FlashWriteStatus)

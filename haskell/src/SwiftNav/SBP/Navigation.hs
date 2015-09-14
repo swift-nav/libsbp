@@ -18,8 +18,10 @@
 
 module SwiftNav.SBP.Navigation where
 
+import BasicPrelude
 import Control.Monad
 import Control.Monad.Loops
+import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -28,6 +30,7 @@ import Data.ByteString
 import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
+import SwiftNav.SBP.Encoding
 
 msgGpsTime :: Word16
 msgGpsTime = 0x0100
@@ -44,30 +47,33 @@ msgGpsTime = 0x0100
 -- other navigation messages referenced to the same time (but lacking the ns
 -- field) and indicates a more precise time of these messages.
 data MsgGpsTime = MsgGpsTime
-  { msgGpsTimeWn    :: Word16
+  { msgGpsTime_wn   :: Word16
     -- ^ GPS week number
-  , msgGpsTimeTow   :: Word32
+  , msgGpsTime_tow  :: Word32
     -- ^ GPS time of week rounded to the nearest millisecond
-  , msgGpsTimeNs    :: Int32
+  , msgGpsTime_ns   :: Int32
     -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     -- 500000)
-  , msgGpsTimeFlags :: Word8
+  , msgGpsTime_flags :: Word8
     -- ^ Status flags (reserved)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgGpsTime where
   get = do
-    msgGpsTimeWn <- getWord16le
-    msgGpsTimeTow <- getWord32le
-    msgGpsTimeNs <- liftM fromIntegral getWord32le
-    msgGpsTimeFlags <- getWord8
+    msgGpsTime_wn <- getWord16le
+    msgGpsTime_tow <- getWord32le
+    msgGpsTime_ns <- liftM fromIntegral getWord32le
+    msgGpsTime_flags <- getWord8
     return MsgGpsTime {..}
 
   put MsgGpsTime {..} = do
-    putWord16le msgGpsTimeWn
-    putWord32le msgGpsTimeTow
-    putWord32le $ fromIntegral msgGpsTimeNs
-    putWord8 msgGpsTimeFlags
+    putWord16le msgGpsTime_wn
+    putWord32le msgGpsTime_tow
+    putWord32le $ fromIntegral msgGpsTime_ns
+    putWord8 msgGpsTime_flags
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgGpsTime_" . stripPrefix "msgGpsTime_"}
+             ''MsgGpsTime)
 
 msgDops :: Word16
 msgDops = 0x0206
@@ -77,37 +83,40 @@ msgDops = 0x0206
 -- This dilution of precision (DOP) message describes the effect of navigation
 -- satellite geometry on positional measurement precision.
 data MsgDops = MsgDops
-  { msgDopsTow  :: Word32
+  { msgDops_tow :: Word32
     -- ^ GPS Time of Week
-  , msgDopsGdop :: Word16
+  , msgDops_gdop :: Word16
     -- ^ Geometric Dilution of Precision
-  , msgDopsPdop :: Word16
+  , msgDops_pdop :: Word16
     -- ^ Position Dilution of Precision
-  , msgDopsTdop :: Word16
+  , msgDops_tdop :: Word16
     -- ^ Time Dilution of Precision
-  , msgDopsHdop :: Word16
+  , msgDops_hdop :: Word16
     -- ^ Horizontal Dilution of Precision
-  , msgDopsVdop :: Word16
+  , msgDops_vdop :: Word16
     -- ^ Vertical Dilution of Precision
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgDops where
   get = do
-    msgDopsTow <- getWord32le
-    msgDopsGdop <- getWord16le
-    msgDopsPdop <- getWord16le
-    msgDopsTdop <- getWord16le
-    msgDopsHdop <- getWord16le
-    msgDopsVdop <- getWord16le
+    msgDops_tow <- getWord32le
+    msgDops_gdop <- getWord16le
+    msgDops_pdop <- getWord16le
+    msgDops_tdop <- getWord16le
+    msgDops_hdop <- getWord16le
+    msgDops_vdop <- getWord16le
     return MsgDops {..}
 
   put MsgDops {..} = do
-    putWord32le msgDopsTow
-    putWord16le msgDopsGdop
-    putWord16le msgDopsPdop
-    putWord16le msgDopsTdop
-    putWord16le msgDopsHdop
-    putWord16le msgDopsVdop
+    putWord32le msgDops_tow
+    putWord16le msgDops_gdop
+    putWord16le msgDops_pdop
+    putWord16le msgDops_tdop
+    putWord16le msgDops_hdop
+    putWord16le msgDops_vdop
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgDops_" . stripPrefix "msgDops_"}
+             ''MsgDops)
 
 msgPosEcef :: Word16
 msgPosEcef = 0x0200
@@ -122,41 +131,44 @@ msgPosEcef = 0x0200
 -- baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
 -- with the matching time-of-week (tow).
 data MsgPosEcef = MsgPosEcef
-  { msgPosEcefTow      :: Word32
+  { msgPosEcef_tow     :: Word32
     -- ^ GPS Time of Week
-  , msgPosEcefX        :: Double
+  , msgPosEcef_x       :: Double
     -- ^ ECEF X coordinate
-  , msgPosEcefY        :: Double
+  , msgPosEcef_y       :: Double
     -- ^ ECEF Y coordinate
-  , msgPosEcefZ        :: Double
+  , msgPosEcef_z       :: Double
     -- ^ ECEF Z coordinate
-  , msgPosEcefAccuracy :: Word16
+  , msgPosEcef_accuracy :: Word16
     -- ^ Position accuracy estimate (not implemented). Defaults to 0.
-  , msgPosEcefNSats    :: Word8
+  , msgPosEcef_n_sats  :: Word8
     -- ^ Number of satellites used in solution
-  , msgPosEcefFlags    :: Word8
+  , msgPosEcef_flags   :: Word8
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgPosEcef where
   get = do
-    msgPosEcefTow <- getWord32le
-    msgPosEcefX <- getFloat64le
-    msgPosEcefY <- getFloat64le
-    msgPosEcefZ <- getFloat64le
-    msgPosEcefAccuracy <- getWord16le
-    msgPosEcefNSats <- getWord8
-    msgPosEcefFlags <- getWord8
+    msgPosEcef_tow <- getWord32le
+    msgPosEcef_x <- getFloat64le
+    msgPosEcef_y <- getFloat64le
+    msgPosEcef_z <- getFloat64le
+    msgPosEcef_accuracy <- getWord16le
+    msgPosEcef_n_sats <- getWord8
+    msgPosEcef_flags <- getWord8
     return MsgPosEcef {..}
 
   put MsgPosEcef {..} = do
-    putWord32le msgPosEcefTow
-    putFloat64le msgPosEcefX
-    putFloat64le msgPosEcefY
-    putFloat64le msgPosEcefZ
-    putWord16le msgPosEcefAccuracy
-    putWord8 msgPosEcefNSats
-    putWord8 msgPosEcefFlags
+    putWord32le msgPosEcef_tow
+    putFloat64le msgPosEcef_x
+    putFloat64le msgPosEcef_y
+    putFloat64le msgPosEcef_z
+    putWord16le msgPosEcef_accuracy
+    putWord8 msgPosEcef_n_sats
+    putWord8 msgPosEcef_flags
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgPosEcef_" . stripPrefix "msgPosEcef_"}
+             ''MsgPosEcef)
 
 msgPosLlh :: Word16
 msgPosLlh = 0x0201
@@ -171,45 +183,48 @@ msgPosLlh = 0x0201
 -- time is given by the preceding MSG_GPS_TIME with the matching time-of-week
 -- (tow).
 data MsgPosLlh = MsgPosLlh
-  { msgPosLlhTow        :: Word32
+  { msgPosLlh_tow       :: Word32
     -- ^ GPS Time of Week
-  , msgPosLlhLat        :: Double
+  , msgPosLlh_lat       :: Double
     -- ^ Latitude
-  , msgPosLlhLon        :: Double
+  , msgPosLlh_lon       :: Double
     -- ^ Longitude
-  , msgPosLlhHeight     :: Double
+  , msgPosLlh_height    :: Double
     -- ^ Height
-  , msgPosLlhHAccuracy  :: Word16
+  , msgPosLlh_h_accuracy :: Word16
     -- ^ Horizontal position accuracy estimate (not implemented). Defaults to 0.
-  , msgPosLlhVAccuracy  :: Word16
+  , msgPosLlh_v_accuracy :: Word16
     -- ^ Vertical position accuracy estimate (not implemented). Defaults to 0.
-  , msgPosLlhNSats      :: Word8
+  , msgPosLlh_n_sats    :: Word8
     -- ^ Number of satellites used in solution.
-  , msgPosLlhFlags      :: Word8
+  , msgPosLlh_flags     :: Word8
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgPosLlh where
   get = do
-    msgPosLlhTow <- getWord32le
-    msgPosLlhLat <- getFloat64le
-    msgPosLlhLon <- getFloat64le
-    msgPosLlhHeight <- getFloat64le
-    msgPosLlhHAccuracy <- getWord16le
-    msgPosLlhVAccuracy <- getWord16le
-    msgPosLlhNSats <- getWord8
-    msgPosLlhFlags <- getWord8
+    msgPosLlh_tow <- getWord32le
+    msgPosLlh_lat <- getFloat64le
+    msgPosLlh_lon <- getFloat64le
+    msgPosLlh_height <- getFloat64le
+    msgPosLlh_h_accuracy <- getWord16le
+    msgPosLlh_v_accuracy <- getWord16le
+    msgPosLlh_n_sats <- getWord8
+    msgPosLlh_flags <- getWord8
     return MsgPosLlh {..}
 
   put MsgPosLlh {..} = do
-    putWord32le msgPosLlhTow
-    putFloat64le msgPosLlhLat
-    putFloat64le msgPosLlhLon
-    putFloat64le msgPosLlhHeight
-    putWord16le msgPosLlhHAccuracy
-    putWord16le msgPosLlhVAccuracy
-    putWord8 msgPosLlhNSats
-    putWord8 msgPosLlhFlags
+    putWord32le msgPosLlh_tow
+    putFloat64le msgPosLlh_lat
+    putFloat64le msgPosLlh_lon
+    putFloat64le msgPosLlh_height
+    putWord16le msgPosLlh_h_accuracy
+    putWord16le msgPosLlh_v_accuracy
+    putWord8 msgPosLlh_n_sats
+    putWord8 msgPosLlh_flags
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgPosLlh_" . stripPrefix "msgPosLlh_"}
+             ''MsgPosLlh)
 
 msgBaselineEcef :: Word16
 msgBaselineEcef = 0x0202
@@ -221,41 +236,44 @@ msgBaselineEcef = 0x0202
 -- base station to the rover receiver. The full GPS time is given by the
 -- preceding MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgBaselineEcef = MsgBaselineEcef
-  { msgBaselineEcefTow      :: Word32
+  { msgBaselineEcef_tow     :: Word32
     -- ^ GPS Time of Week
-  , msgBaselineEcefX        :: Int32
+  , msgBaselineEcef_x       :: Int32
     -- ^ Baseline ECEF X coordinate
-  , msgBaselineEcefY        :: Int32
+  , msgBaselineEcef_y       :: Int32
     -- ^ Baseline ECEF Y coordinate
-  , msgBaselineEcefZ        :: Int32
+  , msgBaselineEcef_z       :: Int32
     -- ^ Baseline ECEF Z coordinate
-  , msgBaselineEcefAccuracy :: Word16
+  , msgBaselineEcef_accuracy :: Word16
     -- ^ Position accuracy estimate (not implemented). Defaults to 0.
-  , msgBaselineEcefNSats    :: Word8
+  , msgBaselineEcef_n_sats  :: Word8
     -- ^ Number of satellites used in solution
-  , msgBaselineEcefFlags    :: Word8
+  , msgBaselineEcef_flags   :: Word8
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBaselineEcef where
   get = do
-    msgBaselineEcefTow <- getWord32le
-    msgBaselineEcefX <- liftM fromIntegral getWord32le
-    msgBaselineEcefY <- liftM fromIntegral getWord32le
-    msgBaselineEcefZ <- liftM fromIntegral getWord32le
-    msgBaselineEcefAccuracy <- getWord16le
-    msgBaselineEcefNSats <- getWord8
-    msgBaselineEcefFlags <- getWord8
+    msgBaselineEcef_tow <- getWord32le
+    msgBaselineEcef_x <- liftM fromIntegral getWord32le
+    msgBaselineEcef_y <- liftM fromIntegral getWord32le
+    msgBaselineEcef_z <- liftM fromIntegral getWord32le
+    msgBaselineEcef_accuracy <- getWord16le
+    msgBaselineEcef_n_sats <- getWord8
+    msgBaselineEcef_flags <- getWord8
     return MsgBaselineEcef {..}
 
   put MsgBaselineEcef {..} = do
-    putWord32le msgBaselineEcefTow
-    putWord32le $ fromIntegral msgBaselineEcefX
-    putWord32le $ fromIntegral msgBaselineEcefY
-    putWord32le $ fromIntegral msgBaselineEcefZ
-    putWord16le msgBaselineEcefAccuracy
-    putWord8 msgBaselineEcefNSats
-    putWord8 msgBaselineEcefFlags
+    putWord32le msgBaselineEcef_tow
+    putWord32le $ fromIntegral msgBaselineEcef_x
+    putWord32le $ fromIntegral msgBaselineEcef_y
+    putWord32le $ fromIntegral msgBaselineEcef_z
+    putWord16le msgBaselineEcef_accuracy
+    putWord8 msgBaselineEcef_n_sats
+    putWord8 msgBaselineEcef_flags
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBaselineEcef_" . stripPrefix "msgBaselineEcef_"}
+             ''MsgBaselineEcef)
 
 msgBaselineNed :: Word16
 msgBaselineNed = 0x0203
@@ -269,45 +287,48 @@ msgBaselineNed = 0x0203
 -- time is given by the preceding MSG_GPS_TIME with the matching time-of-week
 -- (tow).
 data MsgBaselineNed = MsgBaselineNed
-  { msgBaselineNedTow        :: Word32
+  { msgBaselineNed_tow       :: Word32
     -- ^ GPS Time of Week
-  , msgBaselineNedN          :: Int32
+  , msgBaselineNed_n         :: Int32
     -- ^ Baseline North coordinate
-  , msgBaselineNedE          :: Int32
+  , msgBaselineNed_e         :: Int32
     -- ^ Baseline East coordinate
-  , msgBaselineNedD          :: Int32
+  , msgBaselineNed_d         :: Int32
     -- ^ Baseline Down coordinate
-  , msgBaselineNedHAccuracy  :: Word16
+  , msgBaselineNed_h_accuracy :: Word16
     -- ^ Horizontal position accuracy estimate (not implemented). Defaults to 0.
-  , msgBaselineNedVAccuracy  :: Word16
+  , msgBaselineNed_v_accuracy :: Word16
     -- ^ Vertical position accuracy estimate (not implemented). Defaults to 0.
-  , msgBaselineNedNSats      :: Word8
+  , msgBaselineNed_n_sats    :: Word8
     -- ^ Number of satellites used in solution
-  , msgBaselineNedFlags      :: Word8
+  , msgBaselineNed_flags     :: Word8
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBaselineNed where
   get = do
-    msgBaselineNedTow <- getWord32le
-    msgBaselineNedN <- liftM fromIntegral getWord32le
-    msgBaselineNedE <- liftM fromIntegral getWord32le
-    msgBaselineNedD <- liftM fromIntegral getWord32le
-    msgBaselineNedHAccuracy <- getWord16le
-    msgBaselineNedVAccuracy <- getWord16le
-    msgBaselineNedNSats <- getWord8
-    msgBaselineNedFlags <- getWord8
+    msgBaselineNed_tow <- getWord32le
+    msgBaselineNed_n <- liftM fromIntegral getWord32le
+    msgBaselineNed_e <- liftM fromIntegral getWord32le
+    msgBaselineNed_d <- liftM fromIntegral getWord32le
+    msgBaselineNed_h_accuracy <- getWord16le
+    msgBaselineNed_v_accuracy <- getWord16le
+    msgBaselineNed_n_sats <- getWord8
+    msgBaselineNed_flags <- getWord8
     return MsgBaselineNed {..}
 
   put MsgBaselineNed {..} = do
-    putWord32le msgBaselineNedTow
-    putWord32le $ fromIntegral msgBaselineNedN
-    putWord32le $ fromIntegral msgBaselineNedE
-    putWord32le $ fromIntegral msgBaselineNedD
-    putWord16le msgBaselineNedHAccuracy
-    putWord16le msgBaselineNedVAccuracy
-    putWord8 msgBaselineNedNSats
-    putWord8 msgBaselineNedFlags
+    putWord32le msgBaselineNed_tow
+    putWord32le $ fromIntegral msgBaselineNed_n
+    putWord32le $ fromIntegral msgBaselineNed_e
+    putWord32le $ fromIntegral msgBaselineNed_d
+    putWord16le msgBaselineNed_h_accuracy
+    putWord16le msgBaselineNed_v_accuracy
+    putWord8 msgBaselineNed_n_sats
+    putWord8 msgBaselineNed_flags
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBaselineNed_" . stripPrefix "msgBaselineNed_"}
+             ''MsgBaselineNed)
 
 msgVelEcef :: Word16
 msgVelEcef = 0x0204
@@ -318,41 +339,44 @@ msgVelEcef = 0x0204
 -- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 -- the matching time-of-week (tow).
 data MsgVelEcef = MsgVelEcef
-  { msgVelEcefTow      :: Word32
+  { msgVelEcef_tow     :: Word32
     -- ^ GPS Time of Week
-  , msgVelEcefX        :: Int32
+  , msgVelEcef_x       :: Int32
     -- ^ Velocity ECEF X coordinate
-  , msgVelEcefY        :: Int32
+  , msgVelEcef_y       :: Int32
     -- ^ Velocity ECEF Y coordinate
-  , msgVelEcefZ        :: Int32
+  , msgVelEcef_z       :: Int32
     -- ^ Velocity ECEF Z coordinate
-  , msgVelEcefAccuracy :: Word16
+  , msgVelEcef_accuracy :: Word16
     -- ^ Velocity accuracy estimate (not implemented). Defaults to 0.
-  , msgVelEcefNSats    :: Word8
+  , msgVelEcef_n_sats  :: Word8
     -- ^ Number of satellites used in solution
-  , msgVelEcefFlags    :: Word8
+  , msgVelEcef_flags   :: Word8
     -- ^ Status flags (reserved)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgVelEcef where
   get = do
-    msgVelEcefTow <- getWord32le
-    msgVelEcefX <- liftM fromIntegral getWord32le
-    msgVelEcefY <- liftM fromIntegral getWord32le
-    msgVelEcefZ <- liftM fromIntegral getWord32le
-    msgVelEcefAccuracy <- getWord16le
-    msgVelEcefNSats <- getWord8
-    msgVelEcefFlags <- getWord8
+    msgVelEcef_tow <- getWord32le
+    msgVelEcef_x <- liftM fromIntegral getWord32le
+    msgVelEcef_y <- liftM fromIntegral getWord32le
+    msgVelEcef_z <- liftM fromIntegral getWord32le
+    msgVelEcef_accuracy <- getWord16le
+    msgVelEcef_n_sats <- getWord8
+    msgVelEcef_flags <- getWord8
     return MsgVelEcef {..}
 
   put MsgVelEcef {..} = do
-    putWord32le msgVelEcefTow
-    putWord32le $ fromIntegral msgVelEcefX
-    putWord32le $ fromIntegral msgVelEcefY
-    putWord32le $ fromIntegral msgVelEcefZ
-    putWord16le msgVelEcefAccuracy
-    putWord8 msgVelEcefNSats
-    putWord8 msgVelEcefFlags
+    putWord32le msgVelEcef_tow
+    putWord32le $ fromIntegral msgVelEcef_x
+    putWord32le $ fromIntegral msgVelEcef_y
+    putWord32le $ fromIntegral msgVelEcef_z
+    putWord16le msgVelEcef_accuracy
+    putWord8 msgVelEcef_n_sats
+    putWord8 msgVelEcef_flags
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgVelEcef_" . stripPrefix "msgVelEcef_"}
+             ''MsgVelEcef)
 
 msgVelNed :: Word16
 msgVelNed = 0x0205
@@ -363,42 +387,45 @@ msgVelNed = 0x0205
 -- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 -- the matching time-of-week (tow).
 data MsgVelNed = MsgVelNed
-  { msgVelNedTow        :: Word32
+  { msgVelNed_tow       :: Word32
     -- ^ GPS Time of Week
-  , msgVelNedN          :: Int32
+  , msgVelNed_n         :: Int32
     -- ^ Velocity North coordinate
-  , msgVelNedE          :: Int32
+  , msgVelNed_e         :: Int32
     -- ^ Velocity East coordinate
-  , msgVelNedD          :: Int32
+  , msgVelNed_d         :: Int32
     -- ^ Velocity Down coordinate
-  , msgVelNedHAccuracy  :: Word16
+  , msgVelNed_h_accuracy :: Word16
     -- ^ Horizontal velocity accuracy estimate (not implemented). Defaults to 0.
-  , msgVelNedVAccuracy  :: Word16
+  , msgVelNed_v_accuracy :: Word16
     -- ^ Vertical velocity accuracy estimate (not implemented). Defaults to 0.
-  , msgVelNedNSats      :: Word8
+  , msgVelNed_n_sats    :: Word8
     -- ^ Number of satellites used in solution
-  , msgVelNedFlags      :: Word8
+  , msgVelNed_flags     :: Word8
     -- ^ Status flags (reserved)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgVelNed where
   get = do
-    msgVelNedTow <- getWord32le
-    msgVelNedN <- liftM fromIntegral getWord32le
-    msgVelNedE <- liftM fromIntegral getWord32le
-    msgVelNedD <- liftM fromIntegral getWord32le
-    msgVelNedHAccuracy <- getWord16le
-    msgVelNedVAccuracy <- getWord16le
-    msgVelNedNSats <- getWord8
-    msgVelNedFlags <- getWord8
+    msgVelNed_tow <- getWord32le
+    msgVelNed_n <- liftM fromIntegral getWord32le
+    msgVelNed_e <- liftM fromIntegral getWord32le
+    msgVelNed_d <- liftM fromIntegral getWord32le
+    msgVelNed_h_accuracy <- getWord16le
+    msgVelNed_v_accuracy <- getWord16le
+    msgVelNed_n_sats <- getWord8
+    msgVelNed_flags <- getWord8
     return MsgVelNed {..}
 
   put MsgVelNed {..} = do
-    putWord32le msgVelNedTow
-    putWord32le $ fromIntegral msgVelNedN
-    putWord32le $ fromIntegral msgVelNedE
-    putWord32le $ fromIntegral msgVelNedD
-    putWord16le msgVelNedHAccuracy
-    putWord16le msgVelNedVAccuracy
-    putWord8 msgVelNedNSats
-    putWord8 msgVelNedFlags
+    putWord32le msgVelNed_tow
+    putWord32le $ fromIntegral msgVelNed_n
+    putWord32le $ fromIntegral msgVelNed_e
+    putWord32le $ fromIntegral msgVelNed_d
+    putWord16le msgVelNed_h_accuracy
+    putWord16le msgVelNed_v_accuracy
+    putWord8 msgVelNed_n_sats
+    putWord8 msgVelNed_flags
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgVelNed_" . stripPrefix "msgVelNed_"}
+             ''MsgVelNed)

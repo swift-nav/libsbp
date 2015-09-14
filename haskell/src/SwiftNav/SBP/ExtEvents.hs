@@ -11,8 +11,10 @@
 
 module SwiftNav.SBP.ExtEvents where
 
+import BasicPrelude
 import Control.Monad
 import Control.Monad.Loops
+import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -21,6 +23,7 @@ import Data.ByteString
 import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
+import SwiftNav.SBP.Encoding
 
 msgExtEvent :: Word16
 msgExtEvent = 0x0101
@@ -30,31 +33,34 @@ msgExtEvent = 0x0101
 -- Reports detection of an external event, the GPS time it occurred, which pin
 -- it was and whether it was rising or falling.
 data MsgExtEvent = MsgExtEvent
-  { msgExtEventWn    :: Word16
+  { msgExtEvent_wn   :: Word16
     -- ^ GPS week number
-  , msgExtEventTow   :: Word32
+  , msgExtEvent_tow  :: Word32
     -- ^ GPS time of week rounded to the nearest millisecond
-  , msgExtEventNs    :: Int32
+  , msgExtEvent_ns   :: Int32
     -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     -- 500000)
-  , msgExtEventFlags :: Word8
+  , msgExtEvent_flags :: Word8
     -- ^ Flags
-  , msgExtEventPin   :: Word8
+  , msgExtEvent_pin  :: Word8
     -- ^ Pin number.  0..9 = DEBUG0..9.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgExtEvent where
   get = do
-    msgExtEventWn <- getWord16le
-    msgExtEventTow <- getWord32le
-    msgExtEventNs <- liftM fromIntegral getWord32le
-    msgExtEventFlags <- getWord8
-    msgExtEventPin <- getWord8
+    msgExtEvent_wn <- getWord16le
+    msgExtEvent_tow <- getWord32le
+    msgExtEvent_ns <- liftM fromIntegral getWord32le
+    msgExtEvent_flags <- getWord8
+    msgExtEvent_pin <- getWord8
     return MsgExtEvent {..}
 
   put MsgExtEvent {..} = do
-    putWord16le msgExtEventWn
-    putWord32le msgExtEventTow
-    putWord32le $ fromIntegral msgExtEventNs
-    putWord8 msgExtEventFlags
-    putWord8 msgExtEventPin
+    putWord16le msgExtEvent_wn
+    putWord32le msgExtEvent_tow
+    putWord32le $ fromIntegral msgExtEvent_ns
+    putWord8 msgExtEvent_flags
+    putWord8 msgExtEvent_pin
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgExtEvent_" . stripPrefix "msgExtEvent_"}
+             ''MsgExtEvent)

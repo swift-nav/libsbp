@@ -1,5 +1,14 @@
+-- |
+-- Module:      SwiftNav.SBP
+-- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
+-- License:     LGPL-3
+-- Maintainer:  Mark Fine <dev@swiftnav.com>
+-- Stability:   experimental
+-- Portability: portable
+
 module SwiftNav.SBP where
 
+import BasicPrelude
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.Put

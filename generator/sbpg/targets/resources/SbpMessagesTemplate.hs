@@ -10,8 +10,10 @@
 
 module (((module_name))) where
 
+import BasicPrelude
 import Control.Monad
 import Control.Monad.Loops
+import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -20,6 +22,7 @@ import Data.ByteString
 import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
+import SwiftNav.SBP.Encoding
 ((* for m in msgs *))
 ((*- if m.static *))
 ((*- if m.sbp_id *))
@@ -41,12 +44,12 @@ data (((m.identifier|to_data))) = (((m.identifier|to_data)))
 ((*- endif *))
 ((*- for f in m.fields *))
 ((*- if loop.first *))
-  { (((((m.identifier|to_global)+(f.identifier|camel_case)).ljust(m|max_fid_len)))) :: (((f|to_type)))
+  { (((((m.identifier|to_global)+"_"+(f.identifier)).ljust(m|max_fid_len)))) :: (((f|to_type)))
     ((*- if f.desc *))
     -- ^ (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n    -- "))))
     ((*- endif *))
 ((*- else *))
-  , (((((m.identifier|to_global)+(f.identifier|camel_case)).ljust(m|max_fid_len)))) :: (((f|to_type)))
+  , (((((m.identifier|to_global)+"_"+(f.identifier)).ljust(m|max_fid_len)))) :: (((f|to_type)))
     ((*- if f.desc *))
     -- ^ (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n    -- "))))
     ((*- endif *))
@@ -66,14 +69,17 @@ instance Binary (((m.identifier|to_data))) where
 ((*- else *))
   get = do
 ((*- for f in m.fields *))
-    ((((m.identifier|to_global)+(f.identifier|camel_case)))) <- (((f|to_get)))
+    ((((m.identifier|to_global)+"_"+(f.identifier)))) <- (((f|to_get)))
 ((*- endfor *))
     return (((m.identifier|to_data))) {..}
 
   put (((m.identifier|to_data))) {..} = do
 ((*- for f in m.fields *))
-    (((f|to_put))) ((((m.identifier|to_global)+(f.identifier|camel_case))))
+    (((f|to_put))) ((((m.identifier|to_global)+"_"+(f.identifier))))
 ((*- endfor *))
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "(((m.identifier|to_global)))_" . stripPrefix "(((m.identifier|to_global)))_"}
+             ''(((m.identifier|to_data))))
 ((*- endif *))
 ((*- endif *))
 ((* endfor *))

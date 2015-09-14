@@ -10,8 +10,10 @@
 
 module SwiftNav.SBP.Observation where
 
+import BasicPrelude
 import Control.Monad
 import Control.Monad.Loops
+import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -20,27 +22,31 @@ import Data.ByteString
 import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
+import SwiftNav.SBP.Encoding
 
 -- | ObsGPSTime.
 --
 -- A wire-appropriate GPS time, defined as the number of milliseconds since
 -- beginning of the week on the Saturday/Sunday transition.
 data ObsGPSTime = ObsGPSTime
-  { obsGPSTimeTow :: Word32
+  { obsGPSTime_tow :: Word32
     -- ^ Milliseconds since start of GPS week
-  , obsGPSTimeWn  :: Word16
+  , obsGPSTime_wn :: Word16
     -- ^ GPS week number
   } deriving ( Show, Read, Eq )
 
 instance Binary ObsGPSTime where
   get = do
-    obsGPSTimeTow <- getWord32le
-    obsGPSTimeWn <- getWord16le
+    obsGPSTime_tow <- getWord32le
+    obsGPSTime_wn <- getWord16le
     return ObsGPSTime {..}
 
   put ObsGPSTime {..} = do
-    putWord32le obsGPSTimeTow
-    putWord16le obsGPSTimeWn
+    putWord32le obsGPSTime_tow
+    putWord16le obsGPSTime_wn
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "obsGPSTime_" . stripPrefix "obsGPSTime_"}
+             ''ObsGPSTime)
 
 -- | CarrierPhase.
 --
@@ -48,58 +54,64 @@ instance Binary ObsGPSTime where
 -- number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
 -- fractional cycles.
 data CarrierPhase = CarrierPhase
-  { carrierPhaseI :: Int32
+  { carrierPhase_i :: Int32
     -- ^ Carrier phase whole cycles
-  , carrierPhaseF :: Word8
+  , carrierPhase_f :: Word8
     -- ^ Carrier phase fractional part
   } deriving ( Show, Read, Eq )
 
 instance Binary CarrierPhase where
   get = do
-    carrierPhaseI <- liftM fromIntegral getWord32le
-    carrierPhaseF <- getWord8
+    carrierPhase_i <- liftM fromIntegral getWord32le
+    carrierPhase_f <- getWord8
     return CarrierPhase {..}
 
   put CarrierPhase {..} = do
-    putWord32le $ fromIntegral carrierPhaseI
-    putWord8 carrierPhaseF
+    putWord32le $ fromIntegral carrierPhase_i
+    putWord8 carrierPhase_f
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "carrierPhase_" . stripPrefix "carrierPhase_"}
+             ''CarrierPhase)
 
 -- | ObservationHeader.
 --
 -- Header of a GPS observation message.
 data ObservationHeader = ObservationHeader
-  { observationHeaderT     :: ObsGPSTime
+  { observationHeader_t    :: ObsGPSTime
     -- ^ GPS time of this observation
-  , observationHeaderNObs  :: Word8
+  , observationHeader_n_obs :: Word8
     -- ^ Total number of observations. First nibble is the size of the sequence
     -- (n), second nibble is the zero-indexed counter (ith packet of n)
   } deriving ( Show, Read, Eq )
 
 instance Binary ObservationHeader where
   get = do
-    observationHeaderT <- get
-    observationHeaderNObs <- getWord8
+    observationHeader_t <- get
+    observationHeader_n_obs <- getWord8
     return ObservationHeader {..}
 
   put ObservationHeader {..} = do
-    put observationHeaderT
-    putWord8 observationHeaderNObs
+    put observationHeader_t
+    putWord8 observationHeader_n_obs
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "observationHeader_" . stripPrefix "observationHeader_"}
+             ''ObservationHeader)
 
 -- | PackedObsContent.
 --
 -- Pseudorange and carrier phase observation for a satellite being tracked.
 data PackedObsContent = PackedObsContent
-  { packedObsContentP    :: Word32
+  { packedObsContent_P   :: Word32
     -- ^ Pseudorange observation
-  , packedObsContentL    :: CarrierPhase
+  , packedObsContent_L   :: CarrierPhase
     -- ^ Carrier phase observation
-  , packedObsContentCn0  :: Word8
+  , packedObsContent_cn0 :: Word8
     -- ^ Carrier-to-Noise density
-  , packedObsContentLock :: Word16
+  , packedObsContent_lock :: Word16
     -- ^ Lock indicator. This value changes whenever a satellite signal has lost
     -- and regained lock, indicating that the carrier phase ambiguity may have
     -- changed.
-  , packedObsContentSid  :: Word32
+  , packedObsContent_sid :: Word32
     -- ^ Signal identifier of the satellite signal - values 0x00 through 0x1F
     -- represent GPS PRNs 1 through 32 respectively (PRN-1 notation); other
     -- values reserved for future use.
@@ -107,19 +119,22 @@ data PackedObsContent = PackedObsContent
 
 instance Binary PackedObsContent where
   get = do
-    packedObsContentP <- getWord32le
-    packedObsContentL <- get
-    packedObsContentCn0 <- getWord8
-    packedObsContentLock <- getWord16le
-    packedObsContentSid <- getWord32le
+    packedObsContent_P <- getWord32le
+    packedObsContent_L <- get
+    packedObsContent_cn0 <- getWord8
+    packedObsContent_lock <- getWord16le
+    packedObsContent_sid <- getWord32le
     return PackedObsContent {..}
 
   put PackedObsContent {..} = do
-    putWord32le packedObsContentP
-    put packedObsContentL
-    putWord8 packedObsContentCn0
-    putWord16le packedObsContentLock
-    putWord32le packedObsContentSid
+    putWord32le packedObsContent_P
+    put packedObsContent_L
+    putWord8 packedObsContent_cn0
+    putWord16le packedObsContent_lock
+    putWord32le packedObsContent_sid
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "packedObsContent_" . stripPrefix "packedObsContent_"}
+             ''PackedObsContent)
 
 msgObs :: Word16
 msgObs = 0x0043
@@ -131,21 +146,24 @@ msgObs = 0x0043
 -- phase observation here is represented as a 40-bit fixed point number with
 -- Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).
 data MsgObs = MsgObs
-  { msgObsHeader :: ObservationHeader
+  { msgObs_header :: ObservationHeader
     -- ^ Header of a GPS observation message
-  , msgObsObs    :: [PackedObsContent]
+  , msgObs_obs   :: [PackedObsContent]
     -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgObs where
   get = do
-    msgObsHeader <- get
-    msgObsObs <- whileM (liftM not isEmpty) get
+    msgObs_header <- get
+    msgObs_obs <- whileM (liftM not isEmpty) get
     return MsgObs {..}
 
   put MsgObs {..} = do
-    put msgObsHeader
-    mapM_ put msgObsObs
+    put msgObs_header
+    mapM_ put msgObs_obs
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgObs_" . stripPrefix "msgObs_"}
+             ''MsgObs)
 
 msgBasePos :: Word16
 msgBasePos = 0x0044
@@ -157,25 +175,28 @@ msgBasePos = 0x0044
 -- required to be a high-accuracy surveyed location of the base station. Any
 -- error here will result in an error in the pseudo-absolute position output.
 data MsgBasePos = MsgBasePos
-  { msgBasePosLat    :: Double
+  { msgBasePos_lat   :: Double
     -- ^ Latitude
-  , msgBasePosLon    :: Double
+  , msgBasePos_lon   :: Double
     -- ^ Longitude
-  , msgBasePosHeight :: Double
+  , msgBasePos_height :: Double
     -- ^ Height
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBasePos where
   get = do
-    msgBasePosLat <- getFloat64le
-    msgBasePosLon <- getFloat64le
-    msgBasePosHeight <- getFloat64le
+    msgBasePos_lat <- getFloat64le
+    msgBasePos_lon <- getFloat64le
+    msgBasePos_height <- getFloat64le
     return MsgBasePos {..}
 
   put MsgBasePos {..} = do
-    putFloat64le msgBasePosLat
-    putFloat64le msgBasePosLon
-    putFloat64le msgBasePosHeight
+    putFloat64le msgBasePos_lat
+    putFloat64le msgBasePos_lon
+    putFloat64le msgBasePos_height
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBasePos_" . stripPrefix "msgBasePos_"}
+             ''MsgBasePos)
 
 msgEphemeris :: Word16
 msgEphemeris = 0x0047
@@ -187,135 +208,138 @@ msgEphemeris = 0x0047
 -- see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
 -- Table 20-III) for more details.
 data MsgEphemeris = MsgEphemeris
-  { msgEphemerisTgd      :: Double
+  { msgEphemeris_tgd     :: Double
     -- ^ Group delay differential between L1 and L2
-  , msgEphemerisCRs      :: Double
+  , msgEphemeris_c_rs    :: Double
     -- ^ Amplitude of the sine harmonic correction term to the orbit radius
-  , msgEphemerisCRc      :: Double
+  , msgEphemeris_c_rc    :: Double
     -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
-  , msgEphemerisCUc      :: Double
+  , msgEphemeris_c_uc    :: Double
     -- ^ Amplitude of the cosine harmonic correction term to the argument of
     -- latitude
-  , msgEphemerisCUs      :: Double
+  , msgEphemeris_c_us    :: Double
     -- ^ Amplitude of the sine harmonic correction term to the argument of
     -- latitude
-  , msgEphemerisCIc      :: Double
+  , msgEphemeris_c_ic    :: Double
     -- ^ Amplitude of the cosine harmonic correction term to the angle of
     -- inclination
-  , msgEphemerisCIs      :: Double
+  , msgEphemeris_c_is    :: Double
     -- ^ Amplitude of the sine harmonic correction term to the angle of
     -- inclination
-  , msgEphemerisDn       :: Double
+  , msgEphemeris_dn      :: Double
     -- ^ Mean motion difference
-  , msgEphemerisM0       :: Double
+  , msgEphemeris_m0      :: Double
     -- ^ Mean anomaly at reference time
-  , msgEphemerisEcc      :: Double
+  , msgEphemeris_ecc     :: Double
     -- ^ Eccentricity of satellite orbit
-  , msgEphemerisSqrta    :: Double
+  , msgEphemeris_sqrta   :: Double
     -- ^ Square root of the semi-major axis of orbit
-  , msgEphemerisOmega0   :: Double
+  , msgEphemeris_omega0  :: Double
     -- ^ Longitude of ascending node of orbit plane at weekly epoch
-  , msgEphemerisOmegadot :: Double
+  , msgEphemeris_omegadot :: Double
     -- ^ Rate of right ascension
-  , msgEphemerisW        :: Double
+  , msgEphemeris_w       :: Double
     -- ^ Argument of perigee
-  , msgEphemerisInc      :: Double
+  , msgEphemeris_inc     :: Double
     -- ^ Inclination
-  , msgEphemerisIncDot   :: Double
+  , msgEphemeris_inc_dot :: Double
     -- ^ Inclination first derivative
-  , msgEphemerisAf0      :: Double
+  , msgEphemeris_af0     :: Double
     -- ^ Polynomial clock correction coefficient (clock bias)
-  , msgEphemerisAf1      :: Double
+  , msgEphemeris_af1     :: Double
     -- ^ Polynomial clock correction coefficient (clock drift)
-  , msgEphemerisAf2      :: Double
+  , msgEphemeris_af2     :: Double
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
-  , msgEphemerisToeTow   :: Double
+  , msgEphemeris_toe_tow :: Double
     -- ^ Time of week
-  , msgEphemerisToeWn    :: Word16
+  , msgEphemeris_toe_wn  :: Word16
     -- ^ Week number
-  , msgEphemerisTocTow   :: Double
+  , msgEphemeris_toc_tow :: Double
     -- ^ Clock reference time of week
-  , msgEphemerisTocWn    :: Word16
+  , msgEphemeris_toc_wn  :: Word16
     -- ^ Clock reference week number
-  , msgEphemerisValid    :: Word8
+  , msgEphemeris_valid   :: Word8
     -- ^ Is valid?
-  , msgEphemerisHealthy  :: Word8
+  , msgEphemeris_healthy :: Word8
     -- ^ Satellite is healthy?
-  , msgEphemerisSid      :: Word32
+  , msgEphemeris_sid     :: Word32
     -- ^ Signal identifier being tracked - values 0x00 through 0x1F represent GPS
     -- PRNs 1 through 32 respectively (PRN-1 notation); other values reserved
     -- for future use
-  , msgEphemerisIode     :: Word8
+  , msgEphemeris_iode    :: Word8
     -- ^ Issue of ephemeris data
-  , msgEphemerisIodc     :: Word16
+  , msgEphemeris_iodc    :: Word16
     -- ^ Issue of clock data
-  , msgEphemerisReserved :: Word32
+  , msgEphemeris_reserved :: Word32
     -- ^ Reserved field
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgEphemeris where
   get = do
-    msgEphemerisTgd <- getFloat64le
-    msgEphemerisCRs <- getFloat64le
-    msgEphemerisCRc <- getFloat64le
-    msgEphemerisCUc <- getFloat64le
-    msgEphemerisCUs <- getFloat64le
-    msgEphemerisCIc <- getFloat64le
-    msgEphemerisCIs <- getFloat64le
-    msgEphemerisDn <- getFloat64le
-    msgEphemerisM0 <- getFloat64le
-    msgEphemerisEcc <- getFloat64le
-    msgEphemerisSqrta <- getFloat64le
-    msgEphemerisOmega0 <- getFloat64le
-    msgEphemerisOmegadot <- getFloat64le
-    msgEphemerisW <- getFloat64le
-    msgEphemerisInc <- getFloat64le
-    msgEphemerisIncDot <- getFloat64le
-    msgEphemerisAf0 <- getFloat64le
-    msgEphemerisAf1 <- getFloat64le
-    msgEphemerisAf2 <- getFloat64le
-    msgEphemerisToeTow <- getFloat64le
-    msgEphemerisToeWn <- getWord16le
-    msgEphemerisTocTow <- getFloat64le
-    msgEphemerisTocWn <- getWord16le
-    msgEphemerisValid <- getWord8
-    msgEphemerisHealthy <- getWord8
-    msgEphemerisSid <- getWord32le
-    msgEphemerisIode <- getWord8
-    msgEphemerisIodc <- getWord16le
-    msgEphemerisReserved <- getWord32le
+    msgEphemeris_tgd <- getFloat64le
+    msgEphemeris_c_rs <- getFloat64le
+    msgEphemeris_c_rc <- getFloat64le
+    msgEphemeris_c_uc <- getFloat64le
+    msgEphemeris_c_us <- getFloat64le
+    msgEphemeris_c_ic <- getFloat64le
+    msgEphemeris_c_is <- getFloat64le
+    msgEphemeris_dn <- getFloat64le
+    msgEphemeris_m0 <- getFloat64le
+    msgEphemeris_ecc <- getFloat64le
+    msgEphemeris_sqrta <- getFloat64le
+    msgEphemeris_omega0 <- getFloat64le
+    msgEphemeris_omegadot <- getFloat64le
+    msgEphemeris_w <- getFloat64le
+    msgEphemeris_inc <- getFloat64le
+    msgEphemeris_inc_dot <- getFloat64le
+    msgEphemeris_af0 <- getFloat64le
+    msgEphemeris_af1 <- getFloat64le
+    msgEphemeris_af2 <- getFloat64le
+    msgEphemeris_toe_tow <- getFloat64le
+    msgEphemeris_toe_wn <- getWord16le
+    msgEphemeris_toc_tow <- getFloat64le
+    msgEphemeris_toc_wn <- getWord16le
+    msgEphemeris_valid <- getWord8
+    msgEphemeris_healthy <- getWord8
+    msgEphemeris_sid <- getWord32le
+    msgEphemeris_iode <- getWord8
+    msgEphemeris_iodc <- getWord16le
+    msgEphemeris_reserved <- getWord32le
     return MsgEphemeris {..}
 
   put MsgEphemeris {..} = do
-    putFloat64le msgEphemerisTgd
-    putFloat64le msgEphemerisCRs
-    putFloat64le msgEphemerisCRc
-    putFloat64le msgEphemerisCUc
-    putFloat64le msgEphemerisCUs
-    putFloat64le msgEphemerisCIc
-    putFloat64le msgEphemerisCIs
-    putFloat64le msgEphemerisDn
-    putFloat64le msgEphemerisM0
-    putFloat64le msgEphemerisEcc
-    putFloat64le msgEphemerisSqrta
-    putFloat64le msgEphemerisOmega0
-    putFloat64le msgEphemerisOmegadot
-    putFloat64le msgEphemerisW
-    putFloat64le msgEphemerisInc
-    putFloat64le msgEphemerisIncDot
-    putFloat64le msgEphemerisAf0
-    putFloat64le msgEphemerisAf1
-    putFloat64le msgEphemerisAf2
-    putFloat64le msgEphemerisToeTow
-    putWord16le msgEphemerisToeWn
-    putFloat64le msgEphemerisTocTow
-    putWord16le msgEphemerisTocWn
-    putWord8 msgEphemerisValid
-    putWord8 msgEphemerisHealthy
-    putWord32le msgEphemerisSid
-    putWord8 msgEphemerisIode
-    putWord16le msgEphemerisIodc
-    putWord32le msgEphemerisReserved
+    putFloat64le msgEphemeris_tgd
+    putFloat64le msgEphemeris_c_rs
+    putFloat64le msgEphemeris_c_rc
+    putFloat64le msgEphemeris_c_uc
+    putFloat64le msgEphemeris_c_us
+    putFloat64le msgEphemeris_c_ic
+    putFloat64le msgEphemeris_c_is
+    putFloat64le msgEphemeris_dn
+    putFloat64le msgEphemeris_m0
+    putFloat64le msgEphemeris_ecc
+    putFloat64le msgEphemeris_sqrta
+    putFloat64le msgEphemeris_omega0
+    putFloat64le msgEphemeris_omegadot
+    putFloat64le msgEphemeris_w
+    putFloat64le msgEphemeris_inc
+    putFloat64le msgEphemeris_inc_dot
+    putFloat64le msgEphemeris_af0
+    putFloat64le msgEphemeris_af1
+    putFloat64le msgEphemeris_af2
+    putFloat64le msgEphemeris_toe_tow
+    putWord16le msgEphemeris_toe_wn
+    putFloat64le msgEphemeris_toc_tow
+    putWord16le msgEphemeris_toc_wn
+    putWord8 msgEphemeris_valid
+    putWord8 msgEphemeris_healthy
+    putWord32le msgEphemeris_sid
+    putWord8 msgEphemeris_iode
+    putWord16le msgEphemeris_iodc
+    putWord32le msgEphemeris_reserved
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgEphemeris_" . stripPrefix "msgEphemeris_"}
+             ''MsgEphemeris)
 
 msgEphemerisDepA :: Word16
 msgEphemerisDepA = 0x001A
@@ -324,121 +348,124 @@ msgEphemerisDepA = 0x001A
 --
 -- Deprecated.
 data MsgEphemerisDepA = MsgEphemerisDepA
-  { msgEphemerisDepATgd      :: Double
+  { msgEphemerisDepA_tgd     :: Double
     -- ^ Group delay differential between L1 and L2
-  , msgEphemerisDepACRs      :: Double
+  , msgEphemerisDepA_c_rs    :: Double
     -- ^ Amplitude of the sine harmonic correction term to the orbit radius
-  , msgEphemerisDepACRc      :: Double
+  , msgEphemerisDepA_c_rc    :: Double
     -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
-  , msgEphemerisDepACUc      :: Double
+  , msgEphemerisDepA_c_uc    :: Double
     -- ^ Amplitude of the cosine harmonic correction term to the argument of
     -- latitude
-  , msgEphemerisDepACUs      :: Double
+  , msgEphemerisDepA_c_us    :: Double
     -- ^ Amplitude of the sine harmonic correction term to the argument of
     -- latitude
-  , msgEphemerisDepACIc      :: Double
+  , msgEphemerisDepA_c_ic    :: Double
     -- ^ Amplitude of the cosine harmonic correction term to the angle of
     -- inclination
-  , msgEphemerisDepACIs      :: Double
+  , msgEphemerisDepA_c_is    :: Double
     -- ^ Amplitude of the sine harmonic correction term to the angle of
     -- inclination
-  , msgEphemerisDepADn       :: Double
+  , msgEphemerisDepA_dn      :: Double
     -- ^ Mean motion difference
-  , msgEphemerisDepAM0       :: Double
+  , msgEphemerisDepA_m0      :: Double
     -- ^ Mean anomaly at reference time
-  , msgEphemerisDepAEcc      :: Double
+  , msgEphemerisDepA_ecc     :: Double
     -- ^ Eccentricity of satellite orbit
-  , msgEphemerisDepASqrta    :: Double
+  , msgEphemerisDepA_sqrta   :: Double
     -- ^ Square root of the semi-major axis of orbit
-  , msgEphemerisDepAOmega0   :: Double
+  , msgEphemerisDepA_omega0  :: Double
     -- ^ Longitude of ascending node of orbit plane at weekly epoch
-  , msgEphemerisDepAOmegadot :: Double
+  , msgEphemerisDepA_omegadot :: Double
     -- ^ Rate of right ascension
-  , msgEphemerisDepAW        :: Double
+  , msgEphemerisDepA_w       :: Double
     -- ^ Argument of perigee
-  , msgEphemerisDepAInc      :: Double
+  , msgEphemerisDepA_inc     :: Double
     -- ^ Inclination
-  , msgEphemerisDepAIncDot   :: Double
+  , msgEphemerisDepA_inc_dot :: Double
     -- ^ Inclination first derivative
-  , msgEphemerisDepAAf0      :: Double
+  , msgEphemerisDepA_af0     :: Double
     -- ^ Polynomial clock correction coefficient (clock bias)
-  , msgEphemerisDepAAf1      :: Double
+  , msgEphemerisDepA_af1     :: Double
     -- ^ Polynomial clock correction coefficient (clock drift)
-  , msgEphemerisDepAAf2      :: Double
+  , msgEphemerisDepA_af2     :: Double
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
-  , msgEphemerisDepAToeTow   :: Double
+  , msgEphemerisDepA_toe_tow :: Double
     -- ^ Time of week
-  , msgEphemerisDepAToeWn    :: Word16
+  , msgEphemerisDepA_toe_wn  :: Word16
     -- ^ Week number
-  , msgEphemerisDepATocTow   :: Double
+  , msgEphemerisDepA_toc_tow :: Double
     -- ^ Clock reference time of week
-  , msgEphemerisDepATocWn    :: Word16
+  , msgEphemerisDepA_toc_wn  :: Word16
     -- ^ Clock reference week number
-  , msgEphemerisDepAValid    :: Word8
+  , msgEphemerisDepA_valid   :: Word8
     -- ^ Is valid?
-  , msgEphemerisDepAHealthy  :: Word8
+  , msgEphemerisDepA_healthy :: Word8
     -- ^ Satellite is healthy?
-  , msgEphemerisDepAPrn      :: Word8
+  , msgEphemerisDepA_prn     :: Word8
     -- ^ PRN being tracked
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgEphemerisDepA where
   get = do
-    msgEphemerisDepATgd <- getFloat64le
-    msgEphemerisDepACRs <- getFloat64le
-    msgEphemerisDepACRc <- getFloat64le
-    msgEphemerisDepACUc <- getFloat64le
-    msgEphemerisDepACUs <- getFloat64le
-    msgEphemerisDepACIc <- getFloat64le
-    msgEphemerisDepACIs <- getFloat64le
-    msgEphemerisDepADn <- getFloat64le
-    msgEphemerisDepAM0 <- getFloat64le
-    msgEphemerisDepAEcc <- getFloat64le
-    msgEphemerisDepASqrta <- getFloat64le
-    msgEphemerisDepAOmega0 <- getFloat64le
-    msgEphemerisDepAOmegadot <- getFloat64le
-    msgEphemerisDepAW <- getFloat64le
-    msgEphemerisDepAInc <- getFloat64le
-    msgEphemerisDepAIncDot <- getFloat64le
-    msgEphemerisDepAAf0 <- getFloat64le
-    msgEphemerisDepAAf1 <- getFloat64le
-    msgEphemerisDepAAf2 <- getFloat64le
-    msgEphemerisDepAToeTow <- getFloat64le
-    msgEphemerisDepAToeWn <- getWord16le
-    msgEphemerisDepATocTow <- getFloat64le
-    msgEphemerisDepATocWn <- getWord16le
-    msgEphemerisDepAValid <- getWord8
-    msgEphemerisDepAHealthy <- getWord8
-    msgEphemerisDepAPrn <- getWord8
+    msgEphemerisDepA_tgd <- getFloat64le
+    msgEphemerisDepA_c_rs <- getFloat64le
+    msgEphemerisDepA_c_rc <- getFloat64le
+    msgEphemerisDepA_c_uc <- getFloat64le
+    msgEphemerisDepA_c_us <- getFloat64le
+    msgEphemerisDepA_c_ic <- getFloat64le
+    msgEphemerisDepA_c_is <- getFloat64le
+    msgEphemerisDepA_dn <- getFloat64le
+    msgEphemerisDepA_m0 <- getFloat64le
+    msgEphemerisDepA_ecc <- getFloat64le
+    msgEphemerisDepA_sqrta <- getFloat64le
+    msgEphemerisDepA_omega0 <- getFloat64le
+    msgEphemerisDepA_omegadot <- getFloat64le
+    msgEphemerisDepA_w <- getFloat64le
+    msgEphemerisDepA_inc <- getFloat64le
+    msgEphemerisDepA_inc_dot <- getFloat64le
+    msgEphemerisDepA_af0 <- getFloat64le
+    msgEphemerisDepA_af1 <- getFloat64le
+    msgEphemerisDepA_af2 <- getFloat64le
+    msgEphemerisDepA_toe_tow <- getFloat64le
+    msgEphemerisDepA_toe_wn <- getWord16le
+    msgEphemerisDepA_toc_tow <- getFloat64le
+    msgEphemerisDepA_toc_wn <- getWord16le
+    msgEphemerisDepA_valid <- getWord8
+    msgEphemerisDepA_healthy <- getWord8
+    msgEphemerisDepA_prn <- getWord8
     return MsgEphemerisDepA {..}
 
   put MsgEphemerisDepA {..} = do
-    putFloat64le msgEphemerisDepATgd
-    putFloat64le msgEphemerisDepACRs
-    putFloat64le msgEphemerisDepACRc
-    putFloat64le msgEphemerisDepACUc
-    putFloat64le msgEphemerisDepACUs
-    putFloat64le msgEphemerisDepACIc
-    putFloat64le msgEphemerisDepACIs
-    putFloat64le msgEphemerisDepADn
-    putFloat64le msgEphemerisDepAM0
-    putFloat64le msgEphemerisDepAEcc
-    putFloat64le msgEphemerisDepASqrta
-    putFloat64le msgEphemerisDepAOmega0
-    putFloat64le msgEphemerisDepAOmegadot
-    putFloat64le msgEphemerisDepAW
-    putFloat64le msgEphemerisDepAInc
-    putFloat64le msgEphemerisDepAIncDot
-    putFloat64le msgEphemerisDepAAf0
-    putFloat64le msgEphemerisDepAAf1
-    putFloat64le msgEphemerisDepAAf2
-    putFloat64le msgEphemerisDepAToeTow
-    putWord16le msgEphemerisDepAToeWn
-    putFloat64le msgEphemerisDepATocTow
-    putWord16le msgEphemerisDepATocWn
-    putWord8 msgEphemerisDepAValid
-    putWord8 msgEphemerisDepAHealthy
-    putWord8 msgEphemerisDepAPrn
+    putFloat64le msgEphemerisDepA_tgd
+    putFloat64le msgEphemerisDepA_c_rs
+    putFloat64le msgEphemerisDepA_c_rc
+    putFloat64le msgEphemerisDepA_c_uc
+    putFloat64le msgEphemerisDepA_c_us
+    putFloat64le msgEphemerisDepA_c_ic
+    putFloat64le msgEphemerisDepA_c_is
+    putFloat64le msgEphemerisDepA_dn
+    putFloat64le msgEphemerisDepA_m0
+    putFloat64le msgEphemerisDepA_ecc
+    putFloat64le msgEphemerisDepA_sqrta
+    putFloat64le msgEphemerisDepA_omega0
+    putFloat64le msgEphemerisDepA_omegadot
+    putFloat64le msgEphemerisDepA_w
+    putFloat64le msgEphemerisDepA_inc
+    putFloat64le msgEphemerisDepA_inc_dot
+    putFloat64le msgEphemerisDepA_af0
+    putFloat64le msgEphemerisDepA_af1
+    putFloat64le msgEphemerisDepA_af2
+    putFloat64le msgEphemerisDepA_toe_tow
+    putWord16le msgEphemerisDepA_toe_wn
+    putFloat64le msgEphemerisDepA_toc_tow
+    putWord16le msgEphemerisDepA_toc_wn
+    putWord8 msgEphemerisDepA_valid
+    putWord8 msgEphemerisDepA_healthy
+    putWord8 msgEphemerisDepA_prn
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgEphemerisDepA_" . stripPrefix "msgEphemerisDepA_"}
+             ''MsgEphemerisDepA)
 
 msgEphemerisDepB :: Word16
 msgEphemerisDepB = 0x0046
@@ -447,159 +474,165 @@ msgEphemerisDepB = 0x0046
 --
 -- Deprecated.
 data MsgEphemerisDepB = MsgEphemerisDepB
-  { msgEphemerisDepBTgd      :: Double
+  { msgEphemerisDepB_tgd     :: Double
     -- ^ Group delay differential between L1 and L2
-  , msgEphemerisDepBCRs      :: Double
+  , msgEphemerisDepB_c_rs    :: Double
     -- ^ Amplitude of the sine harmonic correction term to the orbit radius
-  , msgEphemerisDepBCRc      :: Double
+  , msgEphemerisDepB_c_rc    :: Double
     -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
-  , msgEphemerisDepBCUc      :: Double
+  , msgEphemerisDepB_c_uc    :: Double
     -- ^ Amplitude of the cosine harmonic correction term to the argument of
     -- latitude
-  , msgEphemerisDepBCUs      :: Double
+  , msgEphemerisDepB_c_us    :: Double
     -- ^ Amplitude of the sine harmonic correction term to the argument of
     -- latitude
-  , msgEphemerisDepBCIc      :: Double
+  , msgEphemerisDepB_c_ic    :: Double
     -- ^ Amplitude of the cosine harmonic correction term to the angle of
     -- inclination
-  , msgEphemerisDepBCIs      :: Double
+  , msgEphemerisDepB_c_is    :: Double
     -- ^ Amplitude of the sine harmonic correction term to the angle of
     -- inclination
-  , msgEphemerisDepBDn       :: Double
+  , msgEphemerisDepB_dn      :: Double
     -- ^ Mean motion difference
-  , msgEphemerisDepBM0       :: Double
+  , msgEphemerisDepB_m0      :: Double
     -- ^ Mean anomaly at reference time
-  , msgEphemerisDepBEcc      :: Double
+  , msgEphemerisDepB_ecc     :: Double
     -- ^ Eccentricity of satellite orbit
-  , msgEphemerisDepBSqrta    :: Double
+  , msgEphemerisDepB_sqrta   :: Double
     -- ^ Square root of the semi-major axis of orbit
-  , msgEphemerisDepBOmega0   :: Double
+  , msgEphemerisDepB_omega0  :: Double
     -- ^ Longitude of ascending node of orbit plane at weekly epoch
-  , msgEphemerisDepBOmegadot :: Double
+  , msgEphemerisDepB_omegadot :: Double
     -- ^ Rate of right ascension
-  , msgEphemerisDepBW        :: Double
+  , msgEphemerisDepB_w       :: Double
     -- ^ Argument of perigee
-  , msgEphemerisDepBInc      :: Double
+  , msgEphemerisDepB_inc     :: Double
     -- ^ Inclination
-  , msgEphemerisDepBIncDot   :: Double
+  , msgEphemerisDepB_inc_dot :: Double
     -- ^ Inclination first derivative
-  , msgEphemerisDepBAf0      :: Double
+  , msgEphemerisDepB_af0     :: Double
     -- ^ Polynomial clock correction coefficient (clock bias)
-  , msgEphemerisDepBAf1      :: Double
+  , msgEphemerisDepB_af1     :: Double
     -- ^ Polynomial clock correction coefficient (clock drift)
-  , msgEphemerisDepBAf2      :: Double
+  , msgEphemerisDepB_af2     :: Double
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
-  , msgEphemerisDepBToeTow   :: Double
+  , msgEphemerisDepB_toe_tow :: Double
     -- ^ Time of week
-  , msgEphemerisDepBToeWn    :: Word16
+  , msgEphemerisDepB_toe_wn  :: Word16
     -- ^ Week number
-  , msgEphemerisDepBTocTow   :: Double
+  , msgEphemerisDepB_toc_tow :: Double
     -- ^ Clock reference time of week
-  , msgEphemerisDepBTocWn    :: Word16
+  , msgEphemerisDepB_toc_wn  :: Word16
     -- ^ Clock reference week number
-  , msgEphemerisDepBValid    :: Word8
+  , msgEphemerisDepB_valid   :: Word8
     -- ^ Is valid?
-  , msgEphemerisDepBHealthy  :: Word8
+  , msgEphemerisDepB_healthy :: Word8
     -- ^ Satellite is healthy?
-  , msgEphemerisDepBPrn      :: Word8
+  , msgEphemerisDepB_prn     :: Word8
     -- ^ PRN being tracked
-  , msgEphemerisDepBIode     :: Word8
+  , msgEphemerisDepB_iode    :: Word8
     -- ^ Issue of ephemeris data
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgEphemerisDepB where
   get = do
-    msgEphemerisDepBTgd <- getFloat64le
-    msgEphemerisDepBCRs <- getFloat64le
-    msgEphemerisDepBCRc <- getFloat64le
-    msgEphemerisDepBCUc <- getFloat64le
-    msgEphemerisDepBCUs <- getFloat64le
-    msgEphemerisDepBCIc <- getFloat64le
-    msgEphemerisDepBCIs <- getFloat64le
-    msgEphemerisDepBDn <- getFloat64le
-    msgEphemerisDepBM0 <- getFloat64le
-    msgEphemerisDepBEcc <- getFloat64le
-    msgEphemerisDepBSqrta <- getFloat64le
-    msgEphemerisDepBOmega0 <- getFloat64le
-    msgEphemerisDepBOmegadot <- getFloat64le
-    msgEphemerisDepBW <- getFloat64le
-    msgEphemerisDepBInc <- getFloat64le
-    msgEphemerisDepBIncDot <- getFloat64le
-    msgEphemerisDepBAf0 <- getFloat64le
-    msgEphemerisDepBAf1 <- getFloat64le
-    msgEphemerisDepBAf2 <- getFloat64le
-    msgEphemerisDepBToeTow <- getFloat64le
-    msgEphemerisDepBToeWn <- getWord16le
-    msgEphemerisDepBTocTow <- getFloat64le
-    msgEphemerisDepBTocWn <- getWord16le
-    msgEphemerisDepBValid <- getWord8
-    msgEphemerisDepBHealthy <- getWord8
-    msgEphemerisDepBPrn <- getWord8
-    msgEphemerisDepBIode <- getWord8
+    msgEphemerisDepB_tgd <- getFloat64le
+    msgEphemerisDepB_c_rs <- getFloat64le
+    msgEphemerisDepB_c_rc <- getFloat64le
+    msgEphemerisDepB_c_uc <- getFloat64le
+    msgEphemerisDepB_c_us <- getFloat64le
+    msgEphemerisDepB_c_ic <- getFloat64le
+    msgEphemerisDepB_c_is <- getFloat64le
+    msgEphemerisDepB_dn <- getFloat64le
+    msgEphemerisDepB_m0 <- getFloat64le
+    msgEphemerisDepB_ecc <- getFloat64le
+    msgEphemerisDepB_sqrta <- getFloat64le
+    msgEphemerisDepB_omega0 <- getFloat64le
+    msgEphemerisDepB_omegadot <- getFloat64le
+    msgEphemerisDepB_w <- getFloat64le
+    msgEphemerisDepB_inc <- getFloat64le
+    msgEphemerisDepB_inc_dot <- getFloat64le
+    msgEphemerisDepB_af0 <- getFloat64le
+    msgEphemerisDepB_af1 <- getFloat64le
+    msgEphemerisDepB_af2 <- getFloat64le
+    msgEphemerisDepB_toe_tow <- getFloat64le
+    msgEphemerisDepB_toe_wn <- getWord16le
+    msgEphemerisDepB_toc_tow <- getFloat64le
+    msgEphemerisDepB_toc_wn <- getWord16le
+    msgEphemerisDepB_valid <- getWord8
+    msgEphemerisDepB_healthy <- getWord8
+    msgEphemerisDepB_prn <- getWord8
+    msgEphemerisDepB_iode <- getWord8
     return MsgEphemerisDepB {..}
 
   put MsgEphemerisDepB {..} = do
-    putFloat64le msgEphemerisDepBTgd
-    putFloat64le msgEphemerisDepBCRs
-    putFloat64le msgEphemerisDepBCRc
-    putFloat64le msgEphemerisDepBCUc
-    putFloat64le msgEphemerisDepBCUs
-    putFloat64le msgEphemerisDepBCIc
-    putFloat64le msgEphemerisDepBCIs
-    putFloat64le msgEphemerisDepBDn
-    putFloat64le msgEphemerisDepBM0
-    putFloat64le msgEphemerisDepBEcc
-    putFloat64le msgEphemerisDepBSqrta
-    putFloat64le msgEphemerisDepBOmega0
-    putFloat64le msgEphemerisDepBOmegadot
-    putFloat64le msgEphemerisDepBW
-    putFloat64le msgEphemerisDepBInc
-    putFloat64le msgEphemerisDepBIncDot
-    putFloat64le msgEphemerisDepBAf0
-    putFloat64le msgEphemerisDepBAf1
-    putFloat64le msgEphemerisDepBAf2
-    putFloat64le msgEphemerisDepBToeTow
-    putWord16le msgEphemerisDepBToeWn
-    putFloat64le msgEphemerisDepBTocTow
-    putWord16le msgEphemerisDepBTocWn
-    putWord8 msgEphemerisDepBValid
-    putWord8 msgEphemerisDepBHealthy
-    putWord8 msgEphemerisDepBPrn
-    putWord8 msgEphemerisDepBIode
+    putFloat64le msgEphemerisDepB_tgd
+    putFloat64le msgEphemerisDepB_c_rs
+    putFloat64le msgEphemerisDepB_c_rc
+    putFloat64le msgEphemerisDepB_c_uc
+    putFloat64le msgEphemerisDepB_c_us
+    putFloat64le msgEphemerisDepB_c_ic
+    putFloat64le msgEphemerisDepB_c_is
+    putFloat64le msgEphemerisDepB_dn
+    putFloat64le msgEphemerisDepB_m0
+    putFloat64le msgEphemerisDepB_ecc
+    putFloat64le msgEphemerisDepB_sqrta
+    putFloat64le msgEphemerisDepB_omega0
+    putFloat64le msgEphemerisDepB_omegadot
+    putFloat64le msgEphemerisDepB_w
+    putFloat64le msgEphemerisDepB_inc
+    putFloat64le msgEphemerisDepB_inc_dot
+    putFloat64le msgEphemerisDepB_af0
+    putFloat64le msgEphemerisDepB_af1
+    putFloat64le msgEphemerisDepB_af2
+    putFloat64le msgEphemerisDepB_toe_tow
+    putWord16le msgEphemerisDepB_toe_wn
+    putFloat64le msgEphemerisDepB_toc_tow
+    putWord16le msgEphemerisDepB_toc_wn
+    putWord8 msgEphemerisDepB_valid
+    putWord8 msgEphemerisDepB_healthy
+    putWord8 msgEphemerisDepB_prn
+    putWord8 msgEphemerisDepB_iode
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgEphemerisDepB_" . stripPrefix "msgEphemerisDepB_"}
+             ''MsgEphemerisDepB)
 
 -- | PackedObsContentDepA.
 --
 -- Deprecated.
 data PackedObsContentDepA = PackedObsContentDepA
-  { packedObsContentDepAP    :: Word32
+  { packedObsContentDepA_P   :: Word32
     -- ^ Pseudorange observation
-  , packedObsContentDepAL    :: CarrierPhase
+  , packedObsContentDepA_L   :: CarrierPhase
     -- ^ Carrier phase observation
-  , packedObsContentDepACn0  :: Word8
+  , packedObsContentDepA_cn0 :: Word8
     -- ^ Carrier-to-Noise density
-  , packedObsContentDepALock :: Word16
+  , packedObsContentDepA_lock :: Word16
     -- ^ Lock indicator. This value changes whenever a satellite signal has lost
     -- and regained lock, indicating that the carrier phase ambiguity may have
     -- changed.
-  , packedObsContentDepAPrn  :: Word8
+  , packedObsContentDepA_prn :: Word8
     -- ^ PRN-1 identifier of the satellite signal
   } deriving ( Show, Read, Eq )
 
 instance Binary PackedObsContentDepA where
   get = do
-    packedObsContentDepAP <- getWord32le
-    packedObsContentDepAL <- get
-    packedObsContentDepACn0 <- getWord8
-    packedObsContentDepALock <- getWord16le
-    packedObsContentDepAPrn <- getWord8
+    packedObsContentDepA_P <- getWord32le
+    packedObsContentDepA_L <- get
+    packedObsContentDepA_cn0 <- getWord8
+    packedObsContentDepA_lock <- getWord16le
+    packedObsContentDepA_prn <- getWord8
     return PackedObsContentDepA {..}
 
   put PackedObsContentDepA {..} = do
-    putWord32le packedObsContentDepAP
-    put packedObsContentDepAL
-    putWord8 packedObsContentDepACn0
-    putWord16le packedObsContentDepALock
-    putWord8 packedObsContentDepAPrn
+    putWord32le packedObsContentDepA_P
+    put packedObsContentDepA_L
+    putWord8 packedObsContentDepA_cn0
+    putWord16le packedObsContentDepA_lock
+    putWord8 packedObsContentDepA_prn
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "packedObsContentDepA_" . stripPrefix "packedObsContentDepA_"}
+             ''PackedObsContentDepA)
 
 msgObsDepA :: Word16
 msgObsDepA = 0x0045
@@ -608,18 +641,21 @@ msgObsDepA = 0x0045
 --
 -- Deprecated.
 data MsgObsDepA = MsgObsDepA
-  { msgObsDepAHeader :: ObservationHeader
+  { msgObsDepA_header :: ObservationHeader
     -- ^ Header of a GPS observation message
-  , msgObsDepAObs    :: [PackedObsContentDepA]
+  , msgObsDepA_obs   :: [PackedObsContentDepA]
     -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgObsDepA where
   get = do
-    msgObsDepAHeader <- get
-    msgObsDepAObs <- whileM (liftM not isEmpty) get
+    msgObsDepA_header <- get
+    msgObsDepA_obs <- whileM (liftM not isEmpty) get
     return MsgObsDepA {..}
 
   put MsgObsDepA {..} = do
-    put msgObsDepAHeader
-    mapM_ put msgObsDepAObs
+    put msgObsDepA_header
+    mapM_ put msgObsDepA_obs
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgObsDepA_" . stripPrefix "msgObsDepA_"}
+             ''MsgObsDepA)
