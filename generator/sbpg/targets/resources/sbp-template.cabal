@@ -41,7 +41,6 @@ library
                      , bytestring
                      , data-binary-ieee754
                      , monad-loops
-                     , scientific
                      , text
                      , unordered-containers
   default-extensions:  RecordWildCards

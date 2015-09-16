@@ -12,7 +12,6 @@
 module SwiftNav.SBP.Logging where
 
 import BasicPrelude
-import Control.Monad
 import Control.Monad.Loops
 import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary

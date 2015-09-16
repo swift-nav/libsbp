@@ -11,16 +11,13 @@
 module SwiftNav.SBP where
 
 import BasicPrelude hiding (lookup)
-import Data.Aeson hiding (decode)
+import Data.Aeson hiding (decode, decode')
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.Put
-import Data.ByteString
 import Data.ByteString.Lazy hiding (ByteString)
 import Data.ByteString.Builder
 import Data.HashMap.Strict
-import Data.Scientific
-import Data.Word
 import SwiftNav.CRC16
 ((*- for m in modules *))
 import (((m)))
@@ -76,13 +73,14 @@ instance FromJSON Msg where
   parseJSON _ = mzero
 
 instance ToJSON Msg where
-  toJSON Msg {..} = object [ "preamble" .= msgPreamble
-                           , "msg_type" .= msgSBPType
-                           , "sender" .= msgSBPSender
-                           , "length" .= msgSBPLen
-                           , "payload" .= msgSBPPayload
-                           , "crc" .= msgSBPCrc
-                           ]
+  toJSON Msg {..} = object
+    [ "preamble" .= msgPreamble
+    , "msg_type" .= msgSBPType
+    , "sender" .= msgSBPSender
+    , "length" .= msgSBPLen
+    , "payload" .= msgSBPPayload
+    , "crc" .= msgSBPCrc
+    ]
 ((* for m in msgs *))
 ((*- if loop.first *))
 data SBPMsg =
@@ -121,25 +119,23 @@ instance Binary SBPMsg where
       encode' (SBPMsgBadCrc  sbp) = sbp
 
 instance FromJSON SBPMsg where
-  parseJSON (Object o) = case lookup "msg_type" o of
-    Nothing         -> mzero
-    Just (Number msgType) -> decode' (toBoundedInteger msgType) where
-                               decode' Nothing = mzero
-                               decode' (Just t)
-                         ((*- for m in msgs *))
-                                 | t == (((m | to_global))) = SBP(((m))) <$> parseJSON (Object o) <*> parseJSON (Object o)
-                         ((*- endfor *))
-                                 | otherwise = SBPMsgUnknown <$> parseJSON (Object o)
-    Just _ -> mzero
-  parseJSON (_) = mzero
+  parseJSON obj@(Object o) = do
+    msgType <- o .: "msg_type"
+    decode' msgType where
+      decode' msgType
+((*- for m in msgs *))
+        | msgType == (((m | to_global))) = SBP(((m))) <$> parseJSON obj <*> parseJSON obj
+((*- endfor *))
+        | otherwise = SBPMsgUnknown <$> parseJSON obj
+  parseJSON _ = mzero
 
 merge :: Value -> Value -> Value
-merge (Object one) (Object two) = Object $ one <> two
-merge _ _ = undefined
+merge (Object one) (Object two) = Object (one <> two)
+merge _ _ = Null
 
 instance ToJSON SBPMsg where
-  ((*- for m in msgs *))
-   toJSON (SBP(((m))) msg sbp) = merge (toJSON msg) (toJSON sbp)
-  ((*- endfor *))
+((*- for m in msgs *))
+   toJSON (SBP(((m))) msg sbp) = toJSON msg `merge` toJSON sbp
+((*- endfor *))
    toJSON (SBPMsgBadCrc sbp) = toJSON sbp
    toJSON (SBPMsgUnknown sbp) = toJSON sbp

@@ -11,16 +11,13 @@
 module SwiftNav.SBP where
 
 import BasicPrelude hiding (lookup)
-import Data.Aeson hiding (decode)
+import Data.Aeson hiding (decode, decode')
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.Put
-import Data.ByteString
 import Data.ByteString.Lazy hiding (ByteString)
 import Data.ByteString.Builder
 import Data.HashMap.Strict
-import Data.Scientific
-import Data.Word
 import SwiftNav.CRC16
 import SwiftNav.SBP.Acquisition
 import SwiftNav.SBP.Bootload
@@ -85,13 +82,14 @@ instance FromJSON Msg where
   parseJSON _ = mzero
 
 instance ToJSON Msg where
-  toJSON Msg {..} = object [ "preamble" .= msgPreamble
-                           , "msg_type" .= msgSBPType
-                           , "sender" .= msgSBPSender
-                           , "length" .= msgSBPLen
-                           , "payload" .= msgSBPPayload
-                           , "crc" .= msgSBPCrc
-                           ]
+  toJSON Msg {..} = object
+    [ "preamble" .= msgPreamble
+    , "msg_type" .= msgSBPType
+    , "sender" .= msgSBPSender
+    , "length" .= msgSBPLen
+    , "payload" .= msgSBPPayload
+    , "crc" .= msgSBPCrc
+    ]
 
 data SBPMsg =
      SBPMsgAcqResult MsgAcqResult Msg
@@ -314,151 +312,149 @@ instance Binary SBPMsg where
       encode' (SBPMsgBadCrc  sbp) = sbp
 
 instance FromJSON SBPMsg where
-  parseJSON (Object o) = case lookup "msg_type" o of
-    Nothing         -> mzero
-    Just (Number msgType) -> decode' (toBoundedInteger msgType) where
-                               decode' Nothing = mzero
-                               decode' (Just t)
-                                 | t == msgAcqResult = SBPMsgAcqResult <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgAcqResultDepA = SBPMsgAcqResultDepA <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgAlmanac = SBPMsgAlmanac <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgBasePos = SBPMsgBasePos <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgBaselineEcef = SBPMsgBaselineEcef <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgBaselineNed = SBPMsgBaselineNed <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgCwResults = SBPMsgCwResults <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgCwStart = SBPMsgCwStart <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgDops = SBPMsgDops <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgEphemeris = SBPMsgEphemeris <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgEphemerisDepA = SBPMsgEphemerisDepA <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgEphemerisDepB = SBPMsgEphemerisDepB <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgExtEvent = SBPMsgExtEvent <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgFileioReadDirReq = SBPMsgFileioReadDirReq <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgFileioReadDirResp = SBPMsgFileioReadDirResp <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgFileioReadReq = SBPMsgFileioReadReq <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgFileioReadResp = SBPMsgFileioReadResp <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgFileioRemove = SBPMsgFileioRemove <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgFileioWriteReq = SBPMsgFileioWriteReq <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgFileioWriteResp = SBPMsgFileioWriteResp <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgFlashDone = SBPMsgFlashDone <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgFlashErase = SBPMsgFlashErase <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgFlashProgram = SBPMsgFlashProgram <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgFlashReadReq = SBPMsgFlashReadReq <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgFlashReadResp = SBPMsgFlashReadResp <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgGpsTime = SBPMsgGpsTime <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgHeartbeat = SBPMsgHeartbeat <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgIarState = SBPMsgIarState <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgInitBase = SBPMsgInitBase <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgLog = SBPMsgLog <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgMaskSatellite = SBPMsgMaskSatellite <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgObs = SBPMsgObs <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgObsDepA = SBPMsgObsDepA <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgPosEcef = SBPMsgPosEcef <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgPosLlh = SBPMsgPosLlh <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgPrintDep = SBPMsgPrintDep <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgReset = SBPMsgReset <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgResetFilters = SBPMsgResetFilters <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgSetTime = SBPMsgSetTime <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgSettingsReadReq = SBPMsgSettingsReadReq <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgSettingsReadResp = SBPMsgSettingsReadResp <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgSettingsSave = SBPMsgSettingsSave <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgSettingsWrite = SBPMsgSettingsWrite <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgStartup = SBPMsgStartup <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgStmFlashLockSector = SBPMsgStmFlashLockSector <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgThreadState = SBPMsgThreadState <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgTrackingIq = SBPMsgTrackingIq <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgTrackingState = SBPMsgTrackingState <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgTrackingStateDepA = SBPMsgTrackingStateDepA <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgTweet = SBPMsgTweet <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgUartState = SBPMsgUartState <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgVelEcef = SBPMsgVelEcef <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | t == msgVelNed = SBPMsgVelNed <$> parseJSON (Object o) <*> parseJSON (Object o)
-                                 | otherwise = SBPMsgUnknown <$> parseJSON (Object o)
-    Just _ -> mzero
-  parseJSON (_) = mzero
+  parseJSON obj@(Object o) = do
+    msgType <- o .: "msg_type"
+    decode' msgType where
+      decode' msgType
+        | msgType == msgAcqResult = SBPMsgAcqResult <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgAcqResultDepA = SBPMsgAcqResultDepA <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgAlmanac = SBPMsgAlmanac <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgBasePos = SBPMsgBasePos <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgBaselineEcef = SBPMsgBaselineEcef <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgBaselineNed = SBPMsgBaselineNed <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgCwResults = SBPMsgCwResults <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgCwStart = SBPMsgCwStart <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgDops = SBPMsgDops <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgEphemeris = SBPMsgEphemeris <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgExtEvent = SBPMsgExtEvent <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgFileioReadDirReq = SBPMsgFileioReadDirReq <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgFileioReadDirResp = SBPMsgFileioReadDirResp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgFileioReadReq = SBPMsgFileioReadReq <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgFileioReadResp = SBPMsgFileioReadResp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgFileioRemove = SBPMsgFileioRemove <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgFileioWriteReq = SBPMsgFileioWriteReq <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgFileioWriteResp = SBPMsgFileioWriteResp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgFlashDone = SBPMsgFlashDone <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgFlashErase = SBPMsgFlashErase <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgFlashProgram = SBPMsgFlashProgram <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgFlashReadReq = SBPMsgFlashReadReq <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgFlashReadResp = SBPMsgFlashReadResp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgGpsTime = SBPMsgGpsTime <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgHeartbeat = SBPMsgHeartbeat <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgIarState = SBPMsgIarState <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgInitBase = SBPMsgInitBase <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgLog = SBPMsgLog <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgMaskSatellite = SBPMsgMaskSatellite <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgObs = SBPMsgObs <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgObsDepA = SBPMsgObsDepA <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgPosEcef = SBPMsgPosEcef <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgPosLlh = SBPMsgPosLlh <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgPrintDep = SBPMsgPrintDep <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgReset = SBPMsgReset <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgResetFilters = SBPMsgResetFilters <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgSetTime = SBPMsgSetTime <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgSettingsReadReq = SBPMsgSettingsReadReq <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgSettingsReadResp = SBPMsgSettingsReadResp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgSettingsSave = SBPMsgSettingsSave <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgSettingsWrite = SBPMsgSettingsWrite <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgStartup = SBPMsgStartup <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgStmFlashLockSector = SBPMsgStmFlashLockSector <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgThreadState = SBPMsgThreadState <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgTrackingIq = SBPMsgTrackingIq <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgTrackingState = SBPMsgTrackingState <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgTrackingStateDepA = SBPMsgTrackingStateDepA <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgTweet = SBPMsgTweet <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgUartState = SBPMsgUartState <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgVelEcef = SBPMsgVelEcef <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgVelNed = SBPMsgVelNed <$> parseJSON obj <*> parseJSON obj
+        | otherwise = SBPMsgUnknown <$> parseJSON obj
+  parseJSON _ = mzero
 
 merge :: Value -> Value -> Value
-merge (Object one) (Object two) = Object $ one <> two
-merge _ _ = undefined
+merge (Object one) (Object two) = Object (one <> two)
+merge _ _ = Null
 
 instance ToJSON SBPMsg where
-   toJSON (SBPMsgAcqResult msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgAcqResultDepA msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgAlmanac msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgBasePos msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgBaselineEcef msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgBaselineNed msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgBootloaderHandshakeDepA msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgBootloaderHandshakeReq msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgBootloaderHandshakeResp msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgBootloaderJumpToApp msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgCwResults msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgCwStart msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgDops msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgEphemeris msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgEphemerisDepA msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgEphemerisDepB msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgExtEvent msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgFileioReadDirReq msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgFileioReadDirResp msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgFileioReadReq msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgFileioReadResp msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgFileioRemove msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgFileioWriteReq msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgFileioWriteResp msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgFlashDone msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgFlashErase msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgFlashProgram msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgFlashReadReq msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgFlashReadResp msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgGpsTime msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgHeartbeat msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgIarState msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgInitBase msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgLog msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgM25FlashWriteStatus msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgMaskSatellite msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgNapDeviceDnaReq msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgNapDeviceDnaResp msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgObs msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgObsDepA msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgPosEcef msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgPosLlh msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgPrintDep msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgReset msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgResetFilters msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgSetTime msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgSettingsReadByIndexDone msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgSettingsReadByIndexReq msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgSettingsReadByIndexResp msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgSettingsReadReq msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgSettingsReadResp msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgSettingsSave msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgSettingsWrite msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgStartup msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgStmFlashLockSector msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgStmFlashUnlockSector msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgStmUniqueIdReq msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgStmUniqueIdResp msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgThreadState msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgTrackingIq msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgTrackingState msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgTrackingStateDepA msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgTweet msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgUartState msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgVelEcef msg sbp) = merge (toJSON msg) (toJSON sbp)
-   toJSON (SBPMsgVelNed msg sbp) = merge (toJSON msg) (toJSON sbp)
+   toJSON (SBPMsgAcqResult msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgAcqResultDepA msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgAlmanac msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgBasePos msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgBaselineEcef msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgBaselineNed msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgBootloaderHandshakeDepA msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgBootloaderHandshakeReq msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgBootloaderHandshakeResp msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgBootloaderJumpToApp msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgCwResults msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgCwStart msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgDops msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgEphemeris msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgEphemerisDepA msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgEphemerisDepB msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgExtEvent msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgFileioReadDirReq msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgFileioReadDirResp msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgFileioReadReq msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgFileioReadResp msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgFileioRemove msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgFileioWriteReq msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgFileioWriteResp msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgFlashDone msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgFlashErase msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgFlashProgram msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgFlashReadReq msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgFlashReadResp msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgGpsTime msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgHeartbeat msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgIarState msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgInitBase msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgLog msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgM25FlashWriteStatus msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgMaskSatellite msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgNapDeviceDnaReq msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgNapDeviceDnaResp msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgObs msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgObsDepA msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgPosEcef msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgPosLlh msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgPrintDep msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgReset msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgResetFilters msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgSetTime msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgSettingsReadByIndexDone msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgSettingsReadByIndexReq msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgSettingsReadByIndexResp msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgSettingsReadReq msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgSettingsReadResp msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgSettingsSave msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgSettingsWrite msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgStartup msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgStmFlashLockSector msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgStmFlashUnlockSector msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgStmUniqueIdReq msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgStmUniqueIdResp msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgThreadState msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgTrackingIq msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgTrackingState msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgTrackingStateDepA msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgTweet msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgUartState msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgVelEcef msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgVelNed msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgBadCrc sbp) = toJSON sbp
    toJSON (SBPMsgUnknown sbp) = toJSON sbp
