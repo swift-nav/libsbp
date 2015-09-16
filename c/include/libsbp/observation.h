@@ -115,6 +115,14 @@ typedef struct __attribute__((packed)) {
 } msg_base_pos_t;
 
 
+#define SBP_MSG_SBAS_DEC         0x01EE
+typedef struct __attribute__((packed)) {
+  sbp_signal_t sid;           /**< Signal identifier of the satellite beign tracked. */
+  u8 off_by_one;    /**< 0 if the input was shifted left by 1 when feed into the decoder, 0 if not. */
+  u8 raw[93];       /**< Raw data after being decoded. */
+} msg_sbas_dec_t;
+
+
 /** Geosynchronous satellite broadcast ephemeris
  *
  * The ephemeris message returns a set of satellite orbit
@@ -129,7 +137,7 @@ typedef struct __attribute__((packed)) {
   u16 toa;        /**< Time of Applicability [s] */
   u8 ura;        /**< User Range Accuracy */
   double pos[3];     /**< Position of the satellite [m] */
-  double vel[3];     /**< Velocity of the satellite [m/s] */
+  double rate[3];    /**< Velocity of the satellite [m/s] */
   double acc[3];     /**< Acceleration of the satellite [m/s^2] */
   u16 a_gf0;      /**< Time offset with respect of network time [s] */
   u8 a_gf1;      /**< Time drift with respect of network time [s/s] */

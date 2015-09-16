@@ -135,6 +135,22 @@ definitions:
             units: m
             desc: Height
 
+ - MSG_SBAS_DEC:
+    id: 0x01EE
+    short_desc: Raw bits from Viterbi decoder.
+    fields:
+        - sid:
+            type: sbp_signal
+            desc: Signal identifier of the satellite beign tracked.
+        - off_by_one:
+            type: u8
+            desc: 0 if the input was shifted left by 1 when feed into the decoder, 0 if not.
+        - raw:
+            type: array
+            fill: u8
+            size: 93
+            desc: Raw data after being decoded.
+
  - MSG_EPHEMERIS_XYZ:
     id: 0x0099
     short_desc: Geosynchronous satellite broadcast ephemeris
@@ -167,7 +183,7 @@ definitions:
             size: 3
             units: m
             desc: Position of the satellite
-        - vel:
+        - rate:
             type: array
             fill: double
             size: 3

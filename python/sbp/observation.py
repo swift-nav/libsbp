@@ -449,6 +449,90 @@ error in the pseudo-absolute position output.
     d.update(j)
     return d
     
+SBP_MSG_SBAS_DEC = 0x01EE
+class MsgSbasDec(SBP):
+  """SBP class for message MSG_SBAS_DEC (0x01EE).
+
+  You can have MSG_SBAS_DEC inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  sid : sbp_signal
+    Signal identifier of the satellite beign tracked.
+  off_by_one : int
+    0 if the input was shifted left by 1 when feed into the decoder, 0 if not.
+  raw : array
+    Raw data after being decoded.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgSbasDec",
+                   Struct('sid', sbp_signal._parser),
+                   ULInt8('off_by_one'),
+                   Struct('raw', Array(93, ULInt8('raw'))),)
+  __slots__ = [
+               'sid',
+               'off_by_one',
+               'raw',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSbasDec,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSbasDec, self).__init__()
+      self.msg_type = SBP_MSG_SBAS_DEC
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.sid = kwargs.pop('sid')
+      self.off_by_one = kwargs.pop('off_by_one')
+      self.raw = kwargs.pop('raw')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSbasDec._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSbasDec._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgSbasDec(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSbasDec, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_EPHEMERIS_XYZ = 0x0099
 class MsgEphemerisXyz(SBP):
   """SBP class for message MSG_EPHEMERIS_XYZ (0x0099).
@@ -479,7 +563,7 @@ velocity, and clock offset.
     User Range Accuracy
   pos : array
     Position of the satellite
-  vel : array
+  rate : array
     Velocity of the satellite
   acc : array
     Acceleration of the satellite
@@ -504,7 +588,7 @@ velocity, and clock offset.
                    ULInt16('toa'),
                    ULInt8('ura'),
                    Struct('pos', Array(3, LFloat64('pos'))),
-                   Struct('vel', Array(3, LFloat64('vel'))),
+                   Struct('rate', Array(3, LFloat64('rate'))),
                    Struct('acc', Array(3, LFloat64('acc'))),
                    ULInt16('a_gf0'),
                    ULInt8('a_gf1'),
@@ -518,7 +602,7 @@ velocity, and clock offset.
                'toa',
                'ura',
                'pos',
-               'vel',
+               'rate',
                'acc',
                'a_gf0',
                'a_gf1',
@@ -543,7 +627,7 @@ velocity, and clock offset.
       self.toa = kwargs.pop('toa')
       self.ura = kwargs.pop('ura')
       self.pos = kwargs.pop('pos')
-      self.vel = kwargs.pop('vel')
+      self.rate = kwargs.pop('rate')
       self.acc = kwargs.pop('acc')
       self.a_gf0 = kwargs.pop('a_gf0')
       self.a_gf1 = kwargs.pop('a_gf1')
@@ -1299,6 +1383,7 @@ satellite being tracked.
 msg_classes = {
   0x0043: MsgObs,
   0x0044: MsgBasePos,
+  0x01EE: MsgSbasDec,
   0x0099: MsgEphemerisXyz,
   0x0047: MsgEphemerisKepler,
   0x001A: MsgEphemerisDepA,
