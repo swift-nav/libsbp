@@ -27,4 +27,4 @@ instance ToJSON B.ByteString where
   toJSON = toJSON . decodeUtf8With ignore . Base64.encode
 
 instance FromJSON B.ByteString where
-  parseJSON v = withText "ByteString" (pure . Base64.decodeLenient . encodeUtf8) v
+  parseJSON = withText "ByteString" (pure . Base64.decodeLenient . encodeUtf8)

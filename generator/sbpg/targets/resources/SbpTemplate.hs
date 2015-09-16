@@ -65,11 +65,11 @@ instance Binary SBPMsg where
     preamble <- getWord8
     if preamble /= msgSBPPreamble then get else do
       sbp <- get
-      if crc16 (msgSBPPayload sbp) /= msgSBPCrc sbp then get else do
+      if crc16 (msgSBPPayload sbp) /= msgSBPCrc sbp then get else
         return $ decode' sbp where
           decode' sbp
             ((*- for m in msgs *))
-            | (msgSBPType sbp) == (((m | to_global))) = SBP(((m))) (decode (fromStrict (msgSBPPayload sbp))) sbp
+            | msgSBPType sbp == (((m | to_global))) = SBP(((m))) (decode (fromStrict (msgSBPPayload sbp))) sbp
             ((*- endfor *))
             | otherwise = SBPMsgUnknown sbp
 
