@@ -89,6 +89,15 @@ definitions:
           size: 3
           desc: Early, Prompt and Late correlations
 
+ - MSG_TRACKING_BIT:
+    id: 0x001F
+    short_desc: Tracking bit
+    fields:
+      - sid:
+          type: sbp_signal
+      - bit_val:
+          type: u8
+
  - TrackingChannelStateDepA:
     short_desc: Deprecated
     desc: Deprecated.

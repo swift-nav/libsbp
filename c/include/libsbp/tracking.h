@@ -76,6 +76,13 @@ typedef struct __attribute__((packed)) {
 } msg_tracking_iq_t;
 
 
+#define SBP_MSG_TRACKING_BIT         0x001F
+typedef struct __attribute__((packed)) {
+  sbp_signal_t sid;       
+  u8 bit_val;   
+} msg_tracking_bit_t;
+
+
 /** Deprecated
  *
 * Deprecated.
