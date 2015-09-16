@@ -14,6 +14,7 @@ import Data.Binary.Get
 import Data.Binary.Put
 import Data.ByteString
 import Data.ByteString.Lazy hiding (ByteString)
+import Data.ByteString.Builder
 import Data.Word
 import SwiftNav.CRC16
 ((*- for m in modules *))
@@ -47,6 +48,14 @@ instance Binary Msg where
     putByteString msgSBPPayload
     putWord16le msgSBPCrc
 
+checkCrc :: Msg -> Word16
+checkCrc Msg {..} =
+  crc16 $ toLazyByteString $
+    word16LE msgSBPType   <>
+    word16LE msgSBPSender <>
+    word8 msgSBPLen       <>
+    byteString msgSBPPayload
+
 ((* for m in msgs *))
 ((*- if loop.first *))
 data SBPMsg =
@@ -65,7 +74,7 @@ instance Binary SBPMsg where
     preamble <- getWord8
     if preamble /= msgSBPPreamble then get else do
       sbp <- get
-      if crc16 (msgSBPPayload sbp) /= msgSBPCrc sbp then get else
+      if checkCrc sbp /= msgSBPCrc sbp then get else
         return $ decode' sbp where
           decode' sbp
             ((*- for m in msgs *))
