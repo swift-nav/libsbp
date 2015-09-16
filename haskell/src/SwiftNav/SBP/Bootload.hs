@@ -45,6 +45,9 @@ instance Binary MsgBootloaderHandshakeReq where
   put MsgBootloaderHandshakeReq =
     return ()
 
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBootloaderHandshakeReq_" . stripPrefix "msgBootloaderHandshakeReq_"}
+             ''MsgBootloaderHandshakeReq)
+
 msgBootloaderHandshakeResp :: Word16
 msgBootloaderHandshakeResp = 0x00B4
 
@@ -115,6 +118,9 @@ instance Binary MsgNapDeviceDnaReq where
 
   put MsgNapDeviceDnaReq =
     return ()
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgNapDeviceDnaReq_" . stripPrefix "msgNapDeviceDnaReq_"}
+             ''MsgNapDeviceDnaReq)
 
 msgNapDeviceDnaResp :: Word16
 msgNapDeviceDnaResp = 0x00DD

@@ -44,6 +44,9 @@ instance Binary MsgAlmanac where
   put MsgAlmanac =
     return ()
 
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgAlmanac_" . stripPrefix "msgAlmanac_"}
+             ''MsgAlmanac)
+
 msgSetTime :: Word16
 msgSetTime = 0x0068
 
@@ -61,6 +64,9 @@ instance Binary MsgSetTime where
   put MsgSetTime =
     return ()
 
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgSetTime_" . stripPrefix "msgSetTime_"}
+             ''MsgSetTime)
+
 msgReset :: Word16
 msgReset = 0x00B2
 
@@ -76,6 +82,9 @@ instance Binary MsgReset where
 
   put MsgReset =
     return ()
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgReset_" . stripPrefix "msgReset_"}
+             ''MsgReset)
 
 msgCwResults :: Word16
 msgCwResults = 0x00C0
@@ -95,6 +104,9 @@ instance Binary MsgCwResults where
   put MsgCwResults =
     return ()
 
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgCwResults_" . stripPrefix "msgCwResults_"}
+             ''MsgCwResults)
+
 msgCwStart :: Word16
 msgCwStart = 0x00C1
 
@@ -112,6 +124,9 @@ instance Binary MsgCwStart where
 
   put MsgCwStart =
     return ()
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgCwStart_" . stripPrefix "msgCwStart_"}
+             ''MsgCwStart)
 
 msgResetFilters :: Word16
 msgResetFilters = 0x0022
@@ -154,6 +169,9 @@ instance Binary MsgInitBase where
 
   put MsgInitBase =
     return ()
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgInitBase_" . stripPrefix "msgInitBase_"}
+             ''MsgInitBase)
 
 msgThreadState :: Word16
 msgThreadState = 0x0017

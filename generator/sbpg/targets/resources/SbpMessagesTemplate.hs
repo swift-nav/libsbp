@@ -77,9 +77,9 @@ instance Binary (((m.identifier|to_data))) where
 ((*- for f in m.fields *))
     (((f|to_put))) ((((m.identifier|to_global)+"_"+(f.identifier))))
 ((*- endfor *))
+((*- endif *))
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "(((m.identifier|to_global)))_" . stripPrefix "(((m.identifier|to_global)))_"}
              ''(((m.identifier|to_data))))
-((*- endif *))
 ((*- endif *))
 ((* endfor *))

@@ -46,6 +46,9 @@ instance Binary MsgSettingsSave where
   put MsgSettingsSave =
     return ()
 
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgSettingsSave_" . stripPrefix "msgSettingsSave_"}
+             ''MsgSettingsSave)
+
 msgSettingsWrite :: Word16
 msgSettingsWrite = 0x00A0
 
@@ -185,3 +188,6 @@ instance Binary MsgSettingsReadByIndexDone where
 
   put MsgSettingsReadByIndexDone =
     return ()
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgSettingsReadByIndexDone_" . stripPrefix "msgSettingsReadByIndexDone_"}
+             ''MsgSettingsReadByIndexDone)

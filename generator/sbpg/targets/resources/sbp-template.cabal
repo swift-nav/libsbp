@@ -41,10 +41,13 @@ library
                      , bytestring
                      , data-binary-ieee754
                      , monad-loops
+                     , scientific
                      , text
+                     , unordered-containers
   default-extensions:  RecordWildCards
                        TemplateHaskell
                        NoImplicitPrelude
+                       OverloadedStrings
 
 test-suite test
   type:                exitcode-stdio-1.0

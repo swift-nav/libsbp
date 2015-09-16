@@ -254,6 +254,9 @@ instance Binary MsgStmUniqueIdReq where
   put MsgStmUniqueIdReq =
     return ()
 
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgStmUniqueIdReq_" . stripPrefix "msgStmUniqueIdReq_"}
+             ''MsgStmUniqueIdReq)
+
 msgStmUniqueIdResp :: Word16
 msgStmUniqueIdResp = 0x00E5
 
