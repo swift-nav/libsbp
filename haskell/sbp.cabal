@@ -23,7 +23,8 @@ source-repository head
   location:            git@github.com:swift-nav/libsbp.git
 
 library
-  exposed-modules:     SwiftNav.SBP
+  exposed-modules:     SwiftNav.CRC16
+                     , SwiftNav.SBP
                      , SwiftNav.SBP.Acquisition
                      , SwiftNav.SBP.Bootload
                      , SwiftNav.SBP.ExtEvents
@@ -41,6 +42,7 @@ library
   hs-source-dirs:      src
   ghc-options:         -Wall -fno-warn-unused-imports
   build-depends:       aeson
+                     , array
                      , base >= 4.7 && < 5
                      , base64-bytestring
                      , basic-prelude
