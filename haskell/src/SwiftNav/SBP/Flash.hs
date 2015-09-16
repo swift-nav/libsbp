@@ -63,7 +63,7 @@ instance Binary MsgFlashProgram where
     putWord8 _msgFlashProgram_addr_len
     mapM_ putWord8 _msgFlashProgram_data
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFlashProgram_" . stripPrefix "msgFlashProgram_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashProgram_" . stripPrefix "_msgFlashProgram_"}
              ''MsgFlashProgram)
 $(makeLenses ''MsgFlashProgram)
 
@@ -89,7 +89,7 @@ instance Binary MsgFlashDone where
   put MsgFlashDone {..} = do
     putWord8 _msgFlashDone_response
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFlashDone_" . stripPrefix "msgFlashDone_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashDone_" . stripPrefix "_msgFlashDone_"}
              ''MsgFlashDone)
 $(makeLenses ''MsgFlashDone)
 
@@ -125,7 +125,7 @@ instance Binary MsgFlashReadReq where
     mapM_ putWord8 _msgFlashReadReq_addr_start
     putWord8 _msgFlashReadReq_addr_len
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFlashReadReq_" . stripPrefix "msgFlashReadReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashReadReq_" . stripPrefix "_msgFlashReadReq_"}
              ''MsgFlashReadReq)
 $(makeLenses ''MsgFlashReadReq)
 
@@ -161,7 +161,7 @@ instance Binary MsgFlashReadResp where
     mapM_ putWord8 _msgFlashReadResp_addr_start
     putWord8 _msgFlashReadResp_addr_len
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFlashReadResp_" . stripPrefix "msgFlashReadResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashReadResp_" . stripPrefix "_msgFlashReadResp_"}
              ''MsgFlashReadResp)
 $(makeLenses ''MsgFlashReadResp)
 
@@ -191,7 +191,7 @@ instance Binary MsgFlashErase where
     putWord8 _msgFlashErase_target
     putWord32le _msgFlashErase_sector_num
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFlashErase_" . stripPrefix "msgFlashErase_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashErase_" . stripPrefix "_msgFlashErase_"}
              ''MsgFlashErase)
 $(makeLenses ''MsgFlashErase)
 
@@ -215,7 +215,7 @@ instance Binary MsgStmFlashLockSector where
   put MsgStmFlashLockSector {..} = do
     putWord32le _msgStmFlashLockSector_sector
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgStmFlashLockSector_" . stripPrefix "msgStmFlashLockSector_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmFlashLockSector_" . stripPrefix "_msgStmFlashLockSector_"}
              ''MsgStmFlashLockSector)
 $(makeLenses ''MsgStmFlashLockSector)
 
@@ -239,7 +239,7 @@ instance Binary MsgStmFlashUnlockSector where
   put MsgStmFlashUnlockSector {..} = do
     putWord32le _msgStmFlashUnlockSector_sector
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgStmFlashUnlockSector_" . stripPrefix "msgStmFlashUnlockSector_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmFlashUnlockSector_" . stripPrefix "_msgStmFlashUnlockSector_"}
              ''MsgStmFlashUnlockSector)
 $(makeLenses ''MsgStmFlashUnlockSector)
 
@@ -261,7 +261,7 @@ instance Binary MsgStmUniqueIdReq where
   put MsgStmUniqueIdReq =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgStmUniqueIdReq_" . stripPrefix "msgStmUniqueIdReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmUniqueIdReq_" . stripPrefix "_msgStmUniqueIdReq_"}
              ''MsgStmUniqueIdReq)
 $(makeLenses ''MsgStmUniqueIdReq)
 
@@ -286,7 +286,7 @@ instance Binary MsgStmUniqueIdResp where
   put MsgStmUniqueIdResp {..} = do
     mapM_ putWord8 _msgStmUniqueIdResp_stm_id
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgStmUniqueIdResp_" . stripPrefix "msgStmUniqueIdResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmUniqueIdResp_" . stripPrefix "_msgStmUniqueIdResp_"}
              ''MsgStmUniqueIdResp)
 $(makeLenses ''MsgStmUniqueIdResp)
 
@@ -310,6 +310,6 @@ instance Binary MsgM25FlashWriteStatus where
   put MsgM25FlashWriteStatus {..} = do
     mapM_ putWord8 _msgM25FlashWriteStatus_status
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgM25FlashWriteStatus_" . stripPrefix "msgM25FlashWriteStatus_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgM25FlashWriteStatus_" . stripPrefix "_msgM25FlashWriteStatus_"}
              ''MsgM25FlashWriteStatus)
 $(makeLenses ''MsgM25FlashWriteStatus)

@@ -61,7 +61,7 @@ instance Binary MsgAcqResult where
     putFloat32le _msgAcqResult_cf
     putWord32le _msgAcqResult_sid
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgAcqResult_" . stripPrefix "msgAcqResult_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResult_" . stripPrefix "_msgAcqResult_"}
              ''MsgAcqResult)
 $(makeLenses ''MsgAcqResult)
 
@@ -98,6 +98,6 @@ instance Binary MsgAcqResultDepA where
     putFloat32le _msgAcqResultDepA_cf
     putWord8 _msgAcqResultDepA_prn
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgAcqResultDepA_" . stripPrefix "msgAcqResultDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResultDepA_" . stripPrefix "_msgAcqResultDepA_"}
              ''MsgAcqResultDepA)
 $(makeLenses ''MsgAcqResultDepA)

@@ -51,7 +51,7 @@ instance Binary TrackingChannelState where
     putWord32le _trackingChannelState_sid
     putFloat32le _trackingChannelState_cn0
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "trackingChannelState_" . stripPrefix "trackingChannelState_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_trackingChannelState_" . stripPrefix "_trackingChannelState_"}
              ''TrackingChannelState)
 $(makeLenses ''TrackingChannelState)
 
@@ -76,7 +76,7 @@ instance Binary MsgTrackingState where
   put MsgTrackingState {..} = do
     mapM_ put _msgTrackingState_states
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgTrackingState_" . stripPrefix "msgTrackingState_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTrackingState_" . stripPrefix "_msgTrackingState_"}
              ''MsgTrackingState)
 $(makeLenses ''MsgTrackingState)
 
@@ -100,7 +100,7 @@ instance Binary TrackingChannelCorrelation where
     putWord32le $ fromIntegral _trackingChannelCorrelation_I
     putWord32le $ fromIntegral _trackingChannelCorrelation_Q
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "trackingChannelCorrelation_" . stripPrefix "trackingChannelCorrelation_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_trackingChannelCorrelation_" . stripPrefix "_trackingChannelCorrelation_"}
              ''TrackingChannelCorrelation)
 $(makeLenses ''TrackingChannelCorrelation)
 
@@ -134,7 +134,7 @@ instance Binary MsgTrackingIq where
     putWord32le _msgTrackingIq_sid
     mapM_ put _msgTrackingIq_corrs
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgTrackingIq_" . stripPrefix "msgTrackingIq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTrackingIq_" . stripPrefix "_msgTrackingIq_"}
              ''MsgTrackingIq)
 $(makeLenses ''MsgTrackingIq)
 
@@ -162,7 +162,7 @@ instance Binary TrackingChannelStateDepA where
     putWord8 _trackingChannelStateDepA_prn
     putFloat32le _trackingChannelStateDepA_cn0
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "trackingChannelStateDepA_" . stripPrefix "trackingChannelStateDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_trackingChannelStateDepA_" . stripPrefix "_trackingChannelStateDepA_"}
              ''TrackingChannelStateDepA)
 $(makeLenses ''TrackingChannelStateDepA)
 
@@ -185,6 +185,6 @@ instance Binary MsgTrackingStateDepA where
   put MsgTrackingStateDepA {..} = do
     mapM_ put _msgTrackingStateDepA_states
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgTrackingStateDepA_" . stripPrefix "msgTrackingStateDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTrackingStateDepA_" . stripPrefix "_msgTrackingStateDepA_"}
              ''MsgTrackingStateDepA)
 $(makeLenses ''MsgTrackingStateDepA)

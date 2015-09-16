@@ -45,7 +45,7 @@ instance Binary MsgBootloaderHandshakeReq where
   put MsgBootloaderHandshakeReq =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBootloaderHandshakeReq_" . stripPrefix "msgBootloaderHandshakeReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeReq_" . stripPrefix "_msgBootloaderHandshakeReq_"}
              ''MsgBootloaderHandshakeReq)
 $(makeLenses ''MsgBootloaderHandshakeReq)
 
@@ -75,7 +75,7 @@ instance Binary MsgBootloaderHandshakeResp where
     putWord32le _msgBootloaderHandshakeResp_flags
     putByteString _msgBootloaderHandshakeResp_version
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBootloaderHandshakeResp_" . stripPrefix "msgBootloaderHandshakeResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeResp_" . stripPrefix "_msgBootloaderHandshakeResp_"}
              ''MsgBootloaderHandshakeResp)
 $(makeLenses ''MsgBootloaderHandshakeResp)
 
@@ -98,7 +98,7 @@ instance Binary MsgBootloaderJumpToApp where
   put MsgBootloaderJumpToApp {..} = do
     putWord8 _msgBootloaderJumpToApp_jump
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBootloaderJumpToApp_" . stripPrefix "msgBootloaderJumpToApp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderJumpToApp_" . stripPrefix "_msgBootloaderJumpToApp_"}
              ''MsgBootloaderJumpToApp)
 $(makeLenses ''MsgBootloaderJumpToApp)
 
@@ -122,7 +122,7 @@ instance Binary MsgNapDeviceDnaReq where
   put MsgNapDeviceDnaReq =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgNapDeviceDnaReq_" . stripPrefix "msgNapDeviceDnaReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNapDeviceDnaReq_" . stripPrefix "_msgNapDeviceDnaReq_"}
              ''MsgNapDeviceDnaReq)
 $(makeLenses ''MsgNapDeviceDnaReq)
 
@@ -150,7 +150,7 @@ instance Binary MsgNapDeviceDnaResp where
   put MsgNapDeviceDnaResp {..} = do
     mapM_ putWord8 _msgNapDeviceDnaResp_dna
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgNapDeviceDnaResp_" . stripPrefix "msgNapDeviceDnaResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNapDeviceDnaResp_" . stripPrefix "_msgNapDeviceDnaResp_"}
              ''MsgNapDeviceDnaResp)
 $(makeLenses ''MsgNapDeviceDnaResp)
 
@@ -173,6 +173,6 @@ instance Binary MsgBootloaderHandshakeDepA where
   put MsgBootloaderHandshakeDepA {..} = do
     mapM_ putWord8 _msgBootloaderHandshakeDepA_handshake
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBootloaderHandshakeDepA_" . stripPrefix "msgBootloaderHandshakeDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeDepA_" . stripPrefix "_msgBootloaderHandshakeDepA_"}
              ''MsgBootloaderHandshakeDepA)
 $(makeLenses ''MsgBootloaderHandshakeDepA)

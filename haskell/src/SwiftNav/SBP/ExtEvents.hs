@@ -62,6 +62,6 @@ instance Binary MsgExtEvent where
     putWord8 _msgExtEvent_flags
     putWord8 _msgExtEvent_pin
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgExtEvent_" . stripPrefix "msgExtEvent_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgExtEvent_" . stripPrefix "_msgExtEvent_"}
              ''MsgExtEvent)
 $(makeLenses ''MsgExtEvent)

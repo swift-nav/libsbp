@@ -65,7 +65,7 @@ instance Binary MsgFileioReadReq where
     putWord8 _msgFileioReadReq_chunk_size
     putByteString _msgFileioReadReq_filename
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFileioReadReq_" . stripPrefix "msgFileioReadReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadReq_" . stripPrefix "_msgFileioReadReq_"}
              ''MsgFileioReadReq)
 $(makeLenses ''MsgFileioReadReq)
 
@@ -95,7 +95,7 @@ instance Binary MsgFileioReadResp where
     putWord32le _msgFileioReadResp_sequence
     mapM_ putWord8 _msgFileioReadResp_contents
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFileioReadResp_" . stripPrefix "msgFileioReadResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadResp_" . stripPrefix "_msgFileioReadResp_"}
              ''MsgFileioReadResp)
 $(makeLenses ''MsgFileioReadResp)
 
@@ -131,7 +131,7 @@ instance Binary MsgFileioReadDirReq where
     putWord32le _msgFileioReadDirReq_offset
     putByteString _msgFileioReadDirReq_dirname
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFileioReadDirReq_" . stripPrefix "msgFileioReadDirReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadDirReq_" . stripPrefix "_msgFileioReadDirReq_"}
              ''MsgFileioReadDirReq)
 $(makeLenses ''MsgFileioReadDirReq)
 
@@ -162,7 +162,7 @@ instance Binary MsgFileioReadDirResp where
     putWord32le _msgFileioReadDirResp_sequence
     mapM_ putWord8 _msgFileioReadDirResp_contents
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFileioReadDirResp_" . stripPrefix "msgFileioReadDirResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadDirResp_" . stripPrefix "_msgFileioReadDirResp_"}
              ''MsgFileioReadDirResp)
 $(makeLenses ''MsgFileioReadDirResp)
 
@@ -185,7 +185,7 @@ instance Binary MsgFileioRemove where
   put MsgFileioRemove {..} = do
     putByteString _msgFileioRemove_filename
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFileioRemove_" . stripPrefix "msgFileioRemove_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioRemove_" . stripPrefix "_msgFileioRemove_"}
              ''MsgFileioRemove)
 $(makeLenses ''MsgFileioRemove)
 
@@ -223,7 +223,7 @@ instance Binary MsgFileioWriteReq where
     putByteString _msgFileioWriteReq_filename
     mapM_ putWord8 _msgFileioWriteReq_data
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFileioWriteReq_" . stripPrefix "msgFileioWriteReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioWriteReq_" . stripPrefix "_msgFileioWriteReq_"}
              ''MsgFileioWriteReq)
 $(makeLenses ''MsgFileioWriteReq)
 
@@ -249,6 +249,6 @@ instance Binary MsgFileioWriteResp where
   put MsgFileioWriteResp {..} = do
     putWord32le _msgFileioWriteResp_sequence
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgFileioWriteResp_" . stripPrefix "msgFileioWriteResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioWriteResp_" . stripPrefix "_msgFileioWriteResp_"}
              ''MsgFileioWriteResp)
 $(makeLenses ''MsgFileioWriteResp)

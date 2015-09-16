@@ -44,7 +44,7 @@ instance Binary MsgAlmanac where
   put MsgAlmanac =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgAlmanac_" . stripPrefix "msgAlmanac_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAlmanac_" . stripPrefix "_msgAlmanac_"}
              ''MsgAlmanac)
 $(makeLenses ''MsgAlmanac)
 
@@ -65,7 +65,7 @@ instance Binary MsgSetTime where
   put MsgSetTime =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgSetTime_" . stripPrefix "msgSetTime_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSetTime_" . stripPrefix "_msgSetTime_"}
              ''MsgSetTime)
 $(makeLenses ''MsgSetTime)
 
@@ -85,7 +85,7 @@ instance Binary MsgReset where
   put MsgReset =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgReset_" . stripPrefix "msgReset_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgReset_" . stripPrefix "_msgReset_"}
              ''MsgReset)
 $(makeLenses ''MsgReset)
 
@@ -107,7 +107,7 @@ instance Binary MsgCwResults where
   put MsgCwResults =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgCwResults_" . stripPrefix "msgCwResults_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCwResults_" . stripPrefix "_msgCwResults_"}
              ''MsgCwResults)
 $(makeLenses ''MsgCwResults)
 
@@ -129,7 +129,7 @@ instance Binary MsgCwStart where
   put MsgCwStart =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgCwStart_" . stripPrefix "msgCwStart_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCwStart_" . stripPrefix "_msgCwStart_"}
              ''MsgCwStart)
 $(makeLenses ''MsgCwStart)
 
@@ -153,7 +153,7 @@ instance Binary MsgResetFilters where
   put MsgResetFilters {..} = do
     putWord8 _msgResetFilters_filter
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgResetFilters_" . stripPrefix "msgResetFilters_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgResetFilters_" . stripPrefix "_msgResetFilters_"}
              ''MsgResetFilters)
 $(makeLenses ''MsgResetFilters)
 
@@ -176,7 +176,7 @@ instance Binary MsgInitBase where
   put MsgInitBase =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgInitBase_" . stripPrefix "msgInitBase_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgInitBase_" . stripPrefix "_msgInitBase_"}
              ''MsgInitBase)
 $(makeLenses ''MsgInitBase)
 
@@ -210,7 +210,7 @@ instance Binary MsgThreadState where
     putWord16le _msgThreadState_cpu
     putWord32le _msgThreadState_stack_free
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgThreadState_" . stripPrefix "msgThreadState_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgThreadState_" . stripPrefix "_msgThreadState_"}
              ''MsgThreadState)
 $(makeLenses ''MsgThreadState)
 
@@ -251,7 +251,7 @@ instance Binary UARTChannel where
     putWord8 _uARTChannel_tx_buffer_level
     putWord8 _uARTChannel_rx_buffer_level
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "uARTChannel_" . stripPrefix "uARTChannel_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_uARTChannel_" . stripPrefix "_uARTChannel_"}
              ''UARTChannel)
 $(makeLenses ''UARTChannel)
 
@@ -286,7 +286,7 @@ instance Binary Latency where
     putWord32le $ fromIntegral _latency_lmax
     putWord32le $ fromIntegral _latency_current
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "latency_" . stripPrefix "latency_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_latency_" . stripPrefix "_latency_"}
              ''Latency)
 $(makeLenses ''Latency)
 
@@ -325,7 +325,7 @@ instance Binary MsgUartState where
     put _msgUartState_uart_ftdi
     put _msgUartState_latency
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgUartState_" . stripPrefix "msgUartState_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUartState_" . stripPrefix "_msgUartState_"}
              ''MsgUartState)
 $(makeLenses ''MsgUartState)
 
@@ -350,7 +350,7 @@ instance Binary MsgIarState where
   put MsgIarState {..} = do
     putWord32le _msgIarState_num_hyps
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgIarState_" . stripPrefix "msgIarState_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgIarState_" . stripPrefix "_msgIarState_"}
              ''MsgIarState)
 $(makeLenses ''MsgIarState)
 
@@ -378,6 +378,6 @@ instance Binary MsgMaskSatellite where
     putWord8 _msgMaskSatellite_mask
     putWord32le _msgMaskSatellite_sid
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgMaskSatellite_" . stripPrefix "msgMaskSatellite_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgMaskSatellite_" . stripPrefix "_msgMaskSatellite_"}
              ''MsgMaskSatellite)
 $(makeLenses ''MsgMaskSatellite)

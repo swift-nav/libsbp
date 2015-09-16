@@ -79,7 +79,7 @@ instance Binary (((m.identifier|to_data))) where
 ((*- endfor *))
 ((*- endif *))
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "(((m.identifier|to_global)))_" . stripPrefix "(((m.identifier|to_global)))_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_(((m.identifier|to_global)))_" . stripPrefix "_(((m.identifier|to_global)))_"}
              ''(((m.identifier|to_data))))
 $(makeLenses ''(((m.identifier|to_data))))
 ((*- endif *))

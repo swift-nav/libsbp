@@ -45,7 +45,7 @@ instance Binary MsgStartup where
   put MsgStartup {..} = do
     putWord32le _msgStartup_reserved
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgStartup_" . stripPrefix "msgStartup_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStartup_" . stripPrefix "_msgStartup_"}
              ''MsgStartup)
 $(makeLenses ''MsgStartup)
 
@@ -74,6 +74,6 @@ instance Binary MsgHeartbeat where
   put MsgHeartbeat {..} = do
     putWord32le _msgHeartbeat_flags
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgHeartbeat_" . stripPrefix "msgHeartbeat_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgHeartbeat_" . stripPrefix "_msgHeartbeat_"}
              ''MsgHeartbeat)
 $(makeLenses ''MsgHeartbeat)
