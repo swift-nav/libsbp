@@ -11,6 +11,7 @@
 module SwiftNav.SBP.Tracking where
 
 import BasicPrelude
+import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
@@ -28,30 +29,31 @@ import SwiftNav.SBP.Encoding
 -- Tracking channel state for a specific satellite PRN and measured signal
 -- power.
 data TrackingChannelState = TrackingChannelState
-  { trackingChannelState_state :: Word8
+  { _trackingChannelState_state :: Word8
     -- ^ Status of tracking channel
-  , trackingChannelState_sid  :: Word32
+  , _trackingChannelState_sid :: Word32
     -- ^ Signal identifier being tracked - values 0x00 through 0x1F represent GPS
     -- PRNs 1 through 32 respectively (PRN-1 notation); other values reserved
     -- for future use
-  , trackingChannelState_cn0  :: Float
+  , _trackingChannelState_cn0 :: Float
     -- ^ Carrier-to-noise density
   } deriving ( Show, Read, Eq )
 
 instance Binary TrackingChannelState where
   get = do
-    trackingChannelState_state <- getWord8
-    trackingChannelState_sid <- getWord32le
-    trackingChannelState_cn0 <- getFloat32le
+    _trackingChannelState_state <- getWord8
+    _trackingChannelState_sid <- getWord32le
+    _trackingChannelState_cn0 <- getFloat32le
     return TrackingChannelState {..}
 
   put TrackingChannelState {..} = do
-    putWord8 trackingChannelState_state
-    putWord32le trackingChannelState_sid
-    putFloat32le trackingChannelState_cn0
+    putWord8 _trackingChannelState_state
+    putWord32le _trackingChannelState_sid
+    putFloat32le _trackingChannelState_cn0
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "trackingChannelState_" . stripPrefix "trackingChannelState_"}
              ''TrackingChannelState)
+$(makeLenses ''TrackingChannelState)
 
 msgTrackingState :: Word16
 msgTrackingState = 0x0013
@@ -62,43 +64,45 @@ msgTrackingState = 0x0013
 -- states. It reports status and snr power measurements for all tracked
 -- satellites.
 data MsgTrackingState = MsgTrackingState
-  { msgTrackingState_states :: [TrackingChannelState]
+  { _msgTrackingState_states :: [TrackingChannelState]
     -- ^ Satellite tracking channel state
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgTrackingState where
   get = do
-    msgTrackingState_states <- whileM (liftM not isEmpty) get
+    _msgTrackingState_states <- whileM (liftM not isEmpty) get
     return MsgTrackingState {..}
 
   put MsgTrackingState {..} = do
-    mapM_ put msgTrackingState_states
+    mapM_ put _msgTrackingState_states
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgTrackingState_" . stripPrefix "msgTrackingState_"}
              ''MsgTrackingState)
+$(makeLenses ''MsgTrackingState)
 
 -- | TrackingChannelCorrelation.
 --
 -- Structure containing in-phase and quadrature correlation components.
 data TrackingChannelCorrelation = TrackingChannelCorrelation
-  { trackingChannelCorrelation_I :: Int32
+  { _trackingChannelCorrelation_I :: Int32
     -- ^ In-phase correlation
-  , trackingChannelCorrelation_Q :: Int32
+  , _trackingChannelCorrelation_Q :: Int32
     -- ^ Quadrature correlation
   } deriving ( Show, Read, Eq )
 
 instance Binary TrackingChannelCorrelation where
   get = do
-    trackingChannelCorrelation_I <- liftM fromIntegral getWord32le
-    trackingChannelCorrelation_Q <- liftM fromIntegral getWord32le
+    _trackingChannelCorrelation_I <- liftM fromIntegral getWord32le
+    _trackingChannelCorrelation_Q <- liftM fromIntegral getWord32le
     return TrackingChannelCorrelation {..}
 
   put TrackingChannelCorrelation {..} = do
-    putWord32le $ fromIntegral trackingChannelCorrelation_I
-    putWord32le $ fromIntegral trackingChannelCorrelation_Q
+    putWord32le $ fromIntegral _trackingChannelCorrelation_I
+    putWord32le $ fromIntegral _trackingChannelCorrelation_Q
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "trackingChannelCorrelation_" . stripPrefix "trackingChannelCorrelation_"}
              ''TrackingChannelCorrelation)
+$(makeLenses ''TrackingChannelCorrelation)
 
 msgTrackingIq :: Word16
 msgTrackingIq = 0x001C
@@ -108,57 +112,59 @@ msgTrackingIq = 0x001C
 -- When enabled, a tracking channel can output the correlations at each update
 -- interval.
 data MsgTrackingIq = MsgTrackingIq
-  { msgTrackingIq_channel :: Word8
+  { _msgTrackingIq_channel :: Word8
     -- ^ Tracking channel of origin
-  , msgTrackingIq_sid    :: Word32
+  , _msgTrackingIq_sid   :: Word32
     -- ^ Signal identifier being tracked - values 0x00 through 0x1F represent GPS
     -- PRNs 1 through 32 respectively (PRN-1 notation); other values reserved
     -- for future use
-  , msgTrackingIq_corrs  :: [TrackingChannelCorrelation]
+  , _msgTrackingIq_corrs :: [TrackingChannelCorrelation]
     -- ^ Early, Prompt and Late correlations
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgTrackingIq where
   get = do
-    msgTrackingIq_channel <- getWord8
-    msgTrackingIq_sid <- getWord32le
-    msgTrackingIq_corrs <- replicateM 3 get
+    _msgTrackingIq_channel <- getWord8
+    _msgTrackingIq_sid <- getWord32le
+    _msgTrackingIq_corrs <- replicateM 3 get
     return MsgTrackingIq {..}
 
   put MsgTrackingIq {..} = do
-    putWord8 msgTrackingIq_channel
-    putWord32le msgTrackingIq_sid
-    mapM_ put msgTrackingIq_corrs
+    putWord8 _msgTrackingIq_channel
+    putWord32le _msgTrackingIq_sid
+    mapM_ put _msgTrackingIq_corrs
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgTrackingIq_" . stripPrefix "msgTrackingIq_"}
              ''MsgTrackingIq)
+$(makeLenses ''MsgTrackingIq)
 
 -- | TrackingChannelStateDepA.
 --
 -- Deprecated.
 data TrackingChannelStateDepA = TrackingChannelStateDepA
-  { trackingChannelStateDepA_state :: Word8
+  { _trackingChannelStateDepA_state :: Word8
     -- ^ Status of tracking channel
-  , trackingChannelStateDepA_prn  :: Word8
+  , _trackingChannelStateDepA_prn :: Word8
     -- ^ PRN-1 being tracked
-  , trackingChannelStateDepA_cn0  :: Float
+  , _trackingChannelStateDepA_cn0 :: Float
     -- ^ Carrier-to-noise density
   } deriving ( Show, Read, Eq )
 
 instance Binary TrackingChannelStateDepA where
   get = do
-    trackingChannelStateDepA_state <- getWord8
-    trackingChannelStateDepA_prn <- getWord8
-    trackingChannelStateDepA_cn0 <- getFloat32le
+    _trackingChannelStateDepA_state <- getWord8
+    _trackingChannelStateDepA_prn <- getWord8
+    _trackingChannelStateDepA_cn0 <- getFloat32le
     return TrackingChannelStateDepA {..}
 
   put TrackingChannelStateDepA {..} = do
-    putWord8 trackingChannelStateDepA_state
-    putWord8 trackingChannelStateDepA_prn
-    putFloat32le trackingChannelStateDepA_cn0
+    putWord8 _trackingChannelStateDepA_state
+    putWord8 _trackingChannelStateDepA_prn
+    putFloat32le _trackingChannelStateDepA_cn0
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "trackingChannelStateDepA_" . stripPrefix "trackingChannelStateDepA_"}
              ''TrackingChannelStateDepA)
+$(makeLenses ''TrackingChannelStateDepA)
 
 msgTrackingStateDepA :: Word16
 msgTrackingStateDepA = 0x0016
@@ -167,17 +173,18 @@ msgTrackingStateDepA = 0x0016
 --
 -- Deprecated.
 data MsgTrackingStateDepA = MsgTrackingStateDepA
-  { msgTrackingStateDepA_states :: [TrackingChannelStateDepA]
+  { _msgTrackingStateDepA_states :: [TrackingChannelStateDepA]
     -- ^ Satellite tracking channel state
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgTrackingStateDepA where
   get = do
-    msgTrackingStateDepA_states <- whileM (liftM not isEmpty) get
+    _msgTrackingStateDepA_states <- whileM (liftM not isEmpty) get
     return MsgTrackingStateDepA {..}
 
   put MsgTrackingStateDepA {..} = do
-    mapM_ put msgTrackingStateDepA_states
+    mapM_ put _msgTrackingStateDepA_states
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgTrackingStateDepA_" . stripPrefix "msgTrackingStateDepA_"}
              ''MsgTrackingStateDepA)
+$(makeLenses ''MsgTrackingStateDepA)

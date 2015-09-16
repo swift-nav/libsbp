@@ -11,6 +11,7 @@
 module SwiftNav.SBP.System where
 
 import BasicPrelude
+import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
@@ -32,20 +33,21 @@ msgStartup = 0xFF00
 -- host or other attached devices that the system has started and is now ready
 -- to respond to commands or configuration requests.
 data MsgStartup = MsgStartup
-  { msgStartup_reserved :: Word32
+  { _msgStartup_reserved :: Word32
     -- ^ Reserved
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgStartup where
   get = do
-    msgStartup_reserved <- getWord32le
+    _msgStartup_reserved <- getWord32le
     return MsgStartup {..}
 
   put MsgStartup {..} = do
-    putWord32le msgStartup_reserved
+    putWord32le _msgStartup_reserved
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgStartup_" . stripPrefix "msgStartup_"}
              ''MsgStartup)
+$(makeLenses ''MsgStartup)
 
 msgHeartbeat :: Word16
 msgHeartbeat = 0xFFFF
@@ -60,17 +62,18 @@ msgHeartbeat = 0xFFFF
 -- indicate that an error has occurred in the system. To determine the source
 -- of the error, the remaining error flags should be inspected.
 data MsgHeartbeat = MsgHeartbeat
-  { msgHeartbeat_flags :: Word32
+  { _msgHeartbeat_flags :: Word32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgHeartbeat where
   get = do
-    msgHeartbeat_flags <- getWord32le
+    _msgHeartbeat_flags <- getWord32le
     return MsgHeartbeat {..}
 
   put MsgHeartbeat {..} = do
-    putWord32le msgHeartbeat_flags
+    putWord32le _msgHeartbeat_flags
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgHeartbeat_" . stripPrefix "msgHeartbeat_"}
              ''MsgHeartbeat)
+$(makeLenses ''MsgHeartbeat)

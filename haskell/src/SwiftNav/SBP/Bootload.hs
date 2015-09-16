@@ -14,6 +14,7 @@
 module SwiftNav.SBP.Bootload where
 
 import BasicPrelude
+import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
@@ -46,6 +47,7 @@ instance Binary MsgBootloaderHandshakeReq where
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBootloaderHandshakeReq_" . stripPrefix "msgBootloaderHandshakeReq_"}
              ''MsgBootloaderHandshakeReq)
+$(makeLenses ''MsgBootloaderHandshakeReq)
 
 msgBootloaderHandshakeResp :: Word16
 msgBootloaderHandshakeResp = 0x00B4
@@ -57,24 +59,25 @@ msgBootloaderHandshakeResp = 0x00B4
 -- MSG_BOOTLOADER_HANDSHAKE_REQ.  The payload contains the bootloader version
 -- number and the SBP protocol version number.
 data MsgBootloaderHandshakeResp = MsgBootloaderHandshakeResp
-  { msgBootloaderHandshakeResp_flags  :: Word32
+  { _msgBootloaderHandshakeResp_flags :: Word32
     -- ^ Bootloader flags
-  , msgBootloaderHandshakeResp_version :: ByteString
+  , _msgBootloaderHandshakeResp_version :: ByteString
     -- ^ Bootloader version number
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBootloaderHandshakeResp where
   get = do
-    msgBootloaderHandshakeResp_flags <- getWord32le
-    msgBootloaderHandshakeResp_version <- liftM toStrict getRemainingLazyByteString
+    _msgBootloaderHandshakeResp_flags <- getWord32le
+    _msgBootloaderHandshakeResp_version <- liftM toStrict getRemainingLazyByteString
     return MsgBootloaderHandshakeResp {..}
 
   put MsgBootloaderHandshakeResp {..} = do
-    putWord32le msgBootloaderHandshakeResp_flags
-    putByteString msgBootloaderHandshakeResp_version
+    putWord32le _msgBootloaderHandshakeResp_flags
+    putByteString _msgBootloaderHandshakeResp_version
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBootloaderHandshakeResp_" . stripPrefix "msgBootloaderHandshakeResp_"}
              ''MsgBootloaderHandshakeResp)
+$(makeLenses ''MsgBootloaderHandshakeResp)
 
 msgBootloaderJumpToApp :: Word16
 msgBootloaderJumpToApp = 0x00B1
@@ -83,20 +86,21 @@ msgBootloaderJumpToApp = 0x00B1
 --
 -- The host initiates the bootloader to jump to the application.
 data MsgBootloaderJumpToApp = MsgBootloaderJumpToApp
-  { msgBootloaderJumpToApp_jump :: Word8
+  { _msgBootloaderJumpToApp_jump :: Word8
     -- ^ Ignored by the device
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBootloaderJumpToApp where
   get = do
-    msgBootloaderJumpToApp_jump <- getWord8
+    _msgBootloaderJumpToApp_jump <- getWord8
     return MsgBootloaderJumpToApp {..}
 
   put MsgBootloaderJumpToApp {..} = do
-    putWord8 msgBootloaderJumpToApp_jump
+    putWord8 _msgBootloaderJumpToApp_jump
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBootloaderJumpToApp_" . stripPrefix "msgBootloaderJumpToApp_"}
              ''MsgBootloaderJumpToApp)
+$(makeLenses ''MsgBootloaderJumpToApp)
 
 msgNapDeviceDnaReq :: Word16
 msgNapDeviceDnaReq = 0x00DE
@@ -120,6 +124,7 @@ instance Binary MsgNapDeviceDnaReq where
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgNapDeviceDnaReq_" . stripPrefix "msgNapDeviceDnaReq_"}
              ''MsgNapDeviceDnaReq)
+$(makeLenses ''MsgNapDeviceDnaReq)
 
 msgNapDeviceDnaResp :: Word16
 msgNapDeviceDnaResp = 0x00DD
@@ -133,20 +138,21 @@ msgNapDeviceDnaResp = 0x00DD
 -- that this ID is tied to the FPGA, and not related to the Piksi's serial
 -- number.
 data MsgNapDeviceDnaResp = MsgNapDeviceDnaResp
-  { msgNapDeviceDnaResp_dna :: [Word8]
+  { _msgNapDeviceDnaResp_dna :: [Word8]
     -- ^ 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgNapDeviceDnaResp where
   get = do
-    msgNapDeviceDnaResp_dna <- replicateM 8 getWord8
+    _msgNapDeviceDnaResp_dna <- replicateM 8 getWord8
     return MsgNapDeviceDnaResp {..}
 
   put MsgNapDeviceDnaResp {..} = do
-    mapM_ putWord8 msgNapDeviceDnaResp_dna
+    mapM_ putWord8 _msgNapDeviceDnaResp_dna
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgNapDeviceDnaResp_" . stripPrefix "msgNapDeviceDnaResp_"}
              ''MsgNapDeviceDnaResp)
+$(makeLenses ''MsgNapDeviceDnaResp)
 
 msgBootloaderHandshakeDepA :: Word16
 msgBootloaderHandshakeDepA = 0x00B0
@@ -155,17 +161,18 @@ msgBootloaderHandshakeDepA = 0x00B0
 --
 -- Deprecated.
 data MsgBootloaderHandshakeDepA = MsgBootloaderHandshakeDepA
-  { msgBootloaderHandshakeDepA_handshake :: [Word8]
+  { _msgBootloaderHandshakeDepA_handshake :: [Word8]
     -- ^ Version number string (not NULL terminated)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBootloaderHandshakeDepA where
   get = do
-    msgBootloaderHandshakeDepA_handshake <- whileM (liftM not isEmpty) getWord8
+    _msgBootloaderHandshakeDepA_handshake <- whileM (liftM not isEmpty) getWord8
     return MsgBootloaderHandshakeDepA {..}
 
   put MsgBootloaderHandshakeDepA {..} = do
-    mapM_ putWord8 msgBootloaderHandshakeDepA_handshake
+    mapM_ putWord8 _msgBootloaderHandshakeDepA_handshake
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgBootloaderHandshakeDepA_" . stripPrefix "msgBootloaderHandshakeDepA_"}
              ''MsgBootloaderHandshakeDepA)
+$(makeLenses ''MsgBootloaderHandshakeDepA)

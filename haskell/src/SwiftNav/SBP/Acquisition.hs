@@ -11,6 +11,7 @@
 module SwiftNav.SBP.Acquisition where
 
 import BasicPrelude
+import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
@@ -33,14 +34,14 @@ msgAcqResult = 0x0014
 -- contains the parameters of the point in the acquisition search space with
 -- the best signal-to-noise (SNR) ratio.
 data MsgAcqResult = MsgAcqResult
-  { msgAcqResult_snr :: Float
+  { _msgAcqResult_snr :: Float
     -- ^ SNR of best point. Currently dimensonless, but will have units of dB Hz
     -- in the revision of this message.
-  , msgAcqResult_cp :: Float
+  , _msgAcqResult_cp :: Float
     -- ^ Code phase of best point
-  , msgAcqResult_cf :: Float
+  , _msgAcqResult_cf :: Float
     -- ^ Carrier frequency of best point
-  , msgAcqResult_sid :: Word32
+  , _msgAcqResult_sid :: Word32
     -- ^ Signal identifier of the satellite signal for which acquisition was
     -- attempted - values 0x00 through 0x1F represent GPS PRNs 1 through 32
     -- respectively (PRN-1 notation); other values reserved for future use.
@@ -48,20 +49,21 @@ data MsgAcqResult = MsgAcqResult
 
 instance Binary MsgAcqResult where
   get = do
-    msgAcqResult_snr <- getFloat32le
-    msgAcqResult_cp <- getFloat32le
-    msgAcqResult_cf <- getFloat32le
-    msgAcqResult_sid <- getWord32le
+    _msgAcqResult_snr <- getFloat32le
+    _msgAcqResult_cp <- getFloat32le
+    _msgAcqResult_cf <- getFloat32le
+    _msgAcqResult_sid <- getWord32le
     return MsgAcqResult {..}
 
   put MsgAcqResult {..} = do
-    putFloat32le msgAcqResult_snr
-    putFloat32le msgAcqResult_cp
-    putFloat32le msgAcqResult_cf
-    putWord32le msgAcqResult_sid
+    putFloat32le _msgAcqResult_snr
+    putFloat32le _msgAcqResult_cp
+    putFloat32le _msgAcqResult_cf
+    putWord32le _msgAcqResult_sid
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgAcqResult_" . stripPrefix "msgAcqResult_"}
              ''MsgAcqResult)
+$(makeLenses ''MsgAcqResult)
 
 msgAcqResultDepA :: Word16
 msgAcqResultDepA = 0x0015
@@ -70,31 +72,32 @@ msgAcqResultDepA = 0x0015
 --
 -- Deprecated.
 data MsgAcqResultDepA = MsgAcqResultDepA
-  { msgAcqResultDepA_snr :: Float
+  { _msgAcqResultDepA_snr :: Float
     -- ^ SNR of best point. Currently dimensonless, but will have units of dB Hz
     -- in the revision of this message.
-  , msgAcqResultDepA_cp :: Float
+  , _msgAcqResultDepA_cp :: Float
     -- ^ Code phase of best point
-  , msgAcqResultDepA_cf :: Float
+  , _msgAcqResultDepA_cf :: Float
     -- ^ Carrier frequency of best point
-  , msgAcqResultDepA_prn :: Word8
+  , _msgAcqResultDepA_prn :: Word8
     -- ^ PRN-1 identifier of the satellite signal for which acquisition was
     -- attempted
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgAcqResultDepA where
   get = do
-    msgAcqResultDepA_snr <- getFloat32le
-    msgAcqResultDepA_cp <- getFloat32le
-    msgAcqResultDepA_cf <- getFloat32le
-    msgAcqResultDepA_prn <- getWord8
+    _msgAcqResultDepA_snr <- getFloat32le
+    _msgAcqResultDepA_cp <- getFloat32le
+    _msgAcqResultDepA_cf <- getFloat32le
+    _msgAcqResultDepA_prn <- getWord8
     return MsgAcqResultDepA {..}
 
   put MsgAcqResultDepA {..} = do
-    putFloat32le msgAcqResultDepA_snr
-    putFloat32le msgAcqResultDepA_cp
-    putFloat32le msgAcqResultDepA_cf
-    putWord8 msgAcqResultDepA_prn
+    putFloat32le _msgAcqResultDepA_snr
+    putFloat32le _msgAcqResultDepA_cp
+    putFloat32le _msgAcqResultDepA_cf
+    putWord8 _msgAcqResultDepA_prn
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgAcqResultDepA_" . stripPrefix "msgAcqResultDepA_"}
              ''MsgAcqResultDepA)
+$(makeLenses ''MsgAcqResultDepA)

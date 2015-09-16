@@ -49,6 +49,7 @@ library
                      , binary
                      , bytestring
                      , data-binary-ieee754
+                     , lens
                      , monad-loops
                      , text
                      , unordered-containers
