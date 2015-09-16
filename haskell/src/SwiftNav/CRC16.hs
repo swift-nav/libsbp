@@ -10,10 +10,10 @@ module SwiftNav.CRC16
   ( crc16
   ) where
 
-import BasicPrelude hiding ( foldl' )
+import BasicPrelude hiding (ByteString, foldl' )
 import Data.Array
 import Data.Bits
-import Data.ByteString
+import Data.ByteString.Lazy ( ByteString, foldl' )
 import Data.Word
 
 table :: Array Word16 Word16
