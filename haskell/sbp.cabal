@@ -59,7 +59,8 @@ test-suite test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Test.hs
-  other-modules:       Test.SwiftNav.SBP.Acquisition
+  other-modules:       Test.SwiftNav.CRC16
+                     , Test.SwiftNav.SBP.Acquisition
                      , Test.SwiftNav.SBP.Bootload
                      , Test.SwiftNav.SBP.Encoding
                      , Test.SwiftNav.SBP.ExtEvents
