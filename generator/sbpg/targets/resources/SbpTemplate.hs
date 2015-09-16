@@ -64,6 +64,7 @@ data SBPMsg =
    | SBP(((m))) (((m))) Msg
 ((*- endif *))
 ((*- if loop.last *))
+   | SBPMsgBadCrc Msg
    | SBPMsgUnknown Msg
   deriving ( Show, Read, Eq )
 ((*- endif *))
@@ -74,13 +75,13 @@ instance Binary SBPMsg where
     preamble <- getWord8
     if preamble /= msgSBPPreamble then get else do
       sbp <- get
-      if checkCrc sbp /= msgSBPCrc sbp then get else
-        return $ decode' sbp where
-          decode' sbp
-            ((*- for m in msgs *))
-            | msgSBPType sbp == (((m | to_global))) = SBP(((m))) (decode (fromStrict (msgSBPPayload sbp))) sbp
-            ((*- endfor *))
-            | otherwise = SBPMsgUnknown sbp
+      return $ decode' sbp where
+        decode' sbp
+          | checkCrc sbp /= msgSBPCrc sbp = SBPMsgBadCrc sbp
+          ((*- for m in msgs *))
+          | msgSBPType sbp == (((m | to_global))) = SBP(((m))) (decode (fromStrict (msgSBPPayload sbp))) sbp
+          ((*- endfor *))
+          | otherwise = SBPMsgUnknown sbp
 
   put msg = do
     putWord8 msgSBPPreamble
