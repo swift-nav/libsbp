@@ -1,4 +1,5 @@
 import           BasicPrelude
+import qualified Test.SwiftNav.CRC16 as CRC16
 import qualified Test.SwiftNav.SBP.Acquisition as Acquisition
 import qualified Test.SwiftNav.SBP.Bootload as Bootload
 import qualified Test.SwiftNav.SBP.Encoding as Encoding
@@ -15,7 +16,8 @@ import           Test.Tasty
 tests :: TestTree
 tests =
   testGroup "Tests"
-    [ Acquisition.tests
+    [ CRC16.tests
+    , Acquisition.tests
     , Bootload.tests
     , Encoding.tests
     , ExtEvents.tests
