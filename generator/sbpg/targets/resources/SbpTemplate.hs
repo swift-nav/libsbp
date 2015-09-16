@@ -15,12 +15,13 @@ import Data.Binary.Put
 import Data.ByteString
 import Data.ByteString.Lazy hiding (ByteString)
 import Data.Word
+import SwiftNav.CRC16
 ((*- for m in modules *))
 import (((m)))
 ((*- endfor *))
 
-msgPreamble :: Word8
-msgPreamble = 0x55
+msgSBPPreamble :: Word8
+msgSBPPreamble = 0x55
 
 data Msg = Msg
   { msgSBPType    :: Word16
@@ -46,15 +47,6 @@ instance Binary Msg where
     putByteString msgSBPPayload
     putWord16le msgSBPCrc
 
-getMsg :: Get Msg
-getMsg = do
-  preamble <- getWord8
-  if preamble /= msgPreamble then getMsg else get
-
-putMsg :: Msg -> Put
-putMsg msg = do
-  putWord8 msgPreamble
-  put msg
 ((* for m in msgs *))
 ((*- if loop.first *))
 data SBPMsg =
@@ -71,25 +63,21 @@ data SBPMsg =
 instance Binary SBPMsg where
   get = do
     preamble <- getWord8
-    if preamble /= msgPreamble then get else do
-      t <- getWord16le
-      s <- getWord16le
-      l <- getWord8
-      p <- getByteString $ fromIntegral l
-      crc <- getWord16le
-      let sbp = Msg t s l p crc
-      return $ decode' t p sbp where
-        decode' t p sbp
-          ((*- for m in msgs *))
-          | t == (((m | to_global))) = SBP(((m))) (decode (fromStrict p)) sbp
-          ((*- endfor *))
-          | otherwise = SBPMsgUnknown sbp
+    if preamble /= msgSBPPreamble then get else do
+      sbp <- get
+      if crc16 (msgSBPPayload sbp) /= msgSBPCrc sbp then get else
+        return $ decode' sbp where
+          decode' sbp
+            ((*- for m in msgs *))
+            | msgSBPType sbp == (((m | to_global))) = SBP(((m))) (decode (fromStrict (msgSBPPayload sbp))) sbp
+            ((*- endfor *))
+            | otherwise = SBPMsgUnknown sbp
 
   put msg = do
-    putWord8 msgPreamble
-    put $ t msg
+    putWord8 msgSBPPreamble
+    put $ encode' msg
     where
       ((*- for m in msgs *))
-      t (SBP(((m))) _ sbp) = sbp
+      encode' (SBP(((m))) _ sbp) = sbp
       ((*- endfor *))
-      t (SBPMsgUnknown sbp) = sbp
+      encode' (SBPMsgUnknown sbp) = sbp

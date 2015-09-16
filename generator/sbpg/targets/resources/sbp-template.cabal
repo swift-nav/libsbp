@@ -23,15 +23,17 @@ source-repository head
   location:            git@github.com:swift-nav/libsbp.git
 
 library
-  exposed-modules:     SwiftNav.SBP
+  exposed-modules:     SwiftNav.CRC16
+                     , SwiftNav.SBP
 ((*- for m in modules *))
                      , (((m)))
 ((*- endfor *))
                      , SwiftNav.SBP.Encoding
   default-language:    Haskell2010
   hs-source-dirs:      src
-  ghc-options:         -Wall -fno-warn-unused-imports
+  ghc-options:         -Wall -fno-warn-unused-imports -fno-warn-orphans
   build-depends:       aeson
+                     , array
                      , base >= 4.7 && < 5
                      , base64-bytestring
                      , basic-prelude
@@ -48,7 +50,8 @@ test-suite test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Test.hs
-  other-modules:       Test.SwiftNav.SBP.Acquisition
+  other-modules:       Test.SwiftNav.CRC16
+                     , Test.SwiftNav.SBP.Acquisition
                      , Test.SwiftNav.SBP.Bootload
                      , Test.SwiftNav.SBP.Encoding
                      , Test.SwiftNav.SBP.ExtEvents
