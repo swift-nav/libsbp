@@ -152,11 +152,11 @@ communication latency in the system.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return Latency.build(d)
     
-SBP_MSG_ALMANAC = 0x0069
-class MsgAlmanac(SBP):
-  """SBP class for message MSG_ALMANAC (0x0069).
+SBP_MSG_GPS_ALMANAC = 0x0069
+class MsgGPSAlmanac(SBP):
+  """SBP class for message MSG_GPS_ALMANAC (0x0069).
 
-  You can have MSG_ALMANAC inherent its fields directly
+  You can have MSG_GPS_ALMANAC inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -169,13 +169,44 @@ alamanac onto the Piksi's flash memory from the host.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgAlmanac,
+      super( MsgGPSAlmanac,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
-      super( MsgAlmanac, self).__init__()
-      self.msg_type = SBP_MSG_ALMANAC
+      super( MsgGPSAlmanac, self).__init__()
+      self.msg_type = SBP_MSG_GPS_ALMANAC
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.payload = ""
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+    
+SBP_MSG_SBAS_ALMANAC = 0x00E9
+class MsgSbasAlmanac(SBP):
+  """SBP class for message MSG_SBAS_ALMANAC (0x00E9).
+
+  You can have MSG_SBAS_ALMANAC inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This is a legacy message for sending and loading a SBAS satellite
+alamanac onto the Piksi's flash memory from the host.
+
+
+  """
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSbasAlmanac,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.payload = sbp.payload
+    else:
+      super( MsgSbasAlmanac, self).__init__()
+      self.msg_type = SBP_MSG_SBAS_ALMANAC
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.payload = ""
 
@@ -768,7 +799,8 @@ from being used in various Piksi subsystems.
     
 
 msg_classes = {
-  0x0069: MsgAlmanac,
+  0x0069: MsgGPSAlmanac,
+  0x00E9: MsgSbasAlmanac,
   0x0068: MsgSetTime,
   0x00B2: MsgReset,
   0x00C0: MsgCwResults,

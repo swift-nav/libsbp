@@ -23,11 +23,18 @@ include:
   - signal.yaml
 definitions:
 
- - MSG_ALMANAC:
+ - MSG_GPS_ALMANAC:
     id: 0x0069
     short_desc: Legacy message to load satellite almanac (host => Piksi)
     desc: |
       This is a legacy message for sending and loading a satellite
+      alamanac onto the Piksi's flash memory from the host.
+
+ - MSG_SBAS_ALMANAC:
+    id: 0x00E9
+    short_desc: Legacy message to load SBAS satellite almanac (host => Piksi)
+    desc: |
+      This is a legacy message for sending and loading a SBAS satellite
       alamanac onto the Piksi's flash memory from the host.
 
  - MSG_SET_TIME:

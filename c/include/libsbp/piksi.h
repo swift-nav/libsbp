@@ -37,7 +37,15 @@
  * This is a legacy message for sending and loading a satellite
  * alamanac onto the Piksi's flash memory from the host.
  */
-#define SBP_MSG_ALMANAC        0x0069
+#define SBP_MSG_GPS_ALMANAC    0x0069
+
+
+/** Legacy message to load SBAS satellite almanac (host => Piksi)
+ *
+ * This is a legacy message for sending and loading a SBAS satellite
+ * alamanac onto the Piksi's flash memory from the host.
+ */
+#define SBP_MSG_SBAS_ALMANAC   0x00E9
 
 
 /** Send GPS time from host (host => Piksi)
