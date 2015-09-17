@@ -5,6 +5,8 @@
 -- Maintainer:  Mark Fine <dev@swiftnav.com>
 -- Stability:   experimental
 -- Portability: portable
+--
+-- Error detection functions.
 
 module SwiftNav.CRC16
   ( crc16
@@ -52,6 +54,7 @@ table = listArray (0, 255)
   , 0x6e17, 0x7e36, 0x4e55, 0x5e74, 0x2e93, 0x3eb2, 0x0ed1, 0x1ef0
   ]
 
+-- | Calculate CCITT 16-bit Cyclical Redundancy Check (CRC16).
 crc16 :: ByteString -> Word16
 crc16 =
   (.&. 0xffff) . foldl' f 0 where
