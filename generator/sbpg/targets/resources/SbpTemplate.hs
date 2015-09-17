@@ -8,7 +8,13 @@
 --
 -- SBP message containers and serialization utilities.
 
-module SwiftNav.SBP where
+module SwiftNav.SBP
+  ( Msg
+  , SBPMsg (..)
+((*- for m in modules *))
+  , module (((m)))
+((*- endfor *))
+  ) where
 
 import BasicPrelude hiding (lookup)
 import Control.Lens hiding ((.=))
