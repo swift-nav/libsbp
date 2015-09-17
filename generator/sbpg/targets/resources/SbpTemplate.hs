@@ -11,6 +11,7 @@
 module SwiftNav.SBP where
 
 import BasicPrelude hiding (lookup)
+import Control.Lens hiding ((.=))
 import Data.Aeson hiding (decode, decode')
 import Data.Binary
 import Data.Binary.Get
@@ -32,36 +33,38 @@ defaultSenderID :: Word16
 defaultSenderID = 0x42
 
 data Msg = Msg
-  { msgSBPType    :: Word16
-  , msgSBPSender  :: Word16
-  , msgSBPLen     :: Word8
-  , msgSBPPayload :: !ByteString
-  , msgSBPCrc     :: Word16
+  { _msgSBPType    :: Word16
+  , _msgSBPSender  :: Word16
+  , _msgSBPLen     :: Word8
+  , _msgSBPPayload :: !ByteString
+  , _msgSBPCrc     :: Word16
   } deriving ( Show, Read, Eq )
+
+$(makeLenses ''Msg)
 
 instance Binary Msg where
   get = do
-    msgSBPType <- getWord16le
-    msgSBPSender <- getWord16le
-    msgSBPLen <- getWord8
-    msgSBPPayload <- getByteString $ fromIntegral msgSBPLen
-    msgSBPCrc <- getWord16le
+    _msgSBPType <- getWord16le
+    _msgSBPSender <- getWord16le
+    _msgSBPLen <- getWord8
+    _msgSBPPayload <- getByteString $ fromIntegral _msgSBPLen
+    _msgSBPCrc <- getWord16le
     return Msg {..}
 
   put Msg {..} = do
-    putWord16le msgSBPType
-    putWord16le msgSBPSender
-    putWord8 msgSBPLen
-    putByteString msgSBPPayload
-    putWord16le msgSBPCrc
+    putWord16le _msgSBPType
+    putWord16le _msgSBPSender
+    putWord8 _msgSBPLen
+    putByteString _msgSBPPayload
+    putWord16le _msgSBPCrc
 
 checkCrc :: Msg -> Word16
 checkCrc Msg {..} =
   crc16 $ toLazyByteString $
-    word16LE msgSBPType   <>
-    word16LE msgSBPSender <>
-    word8 msgSBPLen       <>
-    byteString msgSBPPayload
+    word16LE _msgSBPType   <>
+    word16LE _msgSBPSender <>
+    word8 _msgSBPLen       <>
+    byteString _msgSBPPayload
 
 instance FromJSON Msg where
   parseJSON (Object v) = do
@@ -75,11 +78,11 @@ instance FromJSON Msg where
 instance ToJSON Msg where
   toJSON Msg {..} = object
     [ "preamble" .= msgPreamble
-    , "msg_type" .= msgSBPType
-    , "sender" .= msgSBPSender
-    , "length" .= msgSBPLen
-    , "payload" .= msgSBPPayload
-    , "crc" .= msgSBPCrc
+    , "msg_type" .= _msgSBPType
+    , "sender" .= _msgSBPSender
+    , "length" .= _msgSBPLen
+    , "payload" .= _msgSBPPayload
+    , "crc" .= _msgSBPCrc
     ]
 ((* for m in msgs *))
 ((*- if loop.first *))
@@ -102,9 +105,9 @@ instance Binary SBPMsg where
       sbp <- get
       return $ decode' sbp where
         decode' sbp@Msg {..}
-          | checkCrc sbp /= msgSBPCrc = SBPMsgBadCrc sbp
+          | checkCrc sbp /= _msgSBPCrc = SBPMsgBadCrc sbp
           ((*- for m in msgs *))
-          | msgSBPType == (((m | to_global))) = SBP(((m))) (decode (fromStrict msgSBPPayload)) sbp
+          | _msgSBPType == (((m | to_global))) = SBP(((m))) (decode (fromStrict _msgSBPPayload)) sbp
           ((*- endfor *))
           | otherwise = SBPMsgUnknown sbp
 

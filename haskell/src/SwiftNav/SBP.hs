@@ -11,6 +11,7 @@
 module SwiftNav.SBP where
 
 import BasicPrelude hiding (lookup)
+import Control.Lens hiding ((.=))
 import Data.Aeson hiding (decode, decode')
 import Data.Binary
 import Data.Binary.Get
@@ -41,36 +42,38 @@ defaultSenderID :: Word16
 defaultSenderID = 0x42
 
 data Msg = Msg
-  { msgSBPType    :: Word16
-  , msgSBPSender  :: Word16
-  , msgSBPLen     :: Word8
-  , msgSBPPayload :: !ByteString
-  , msgSBPCrc     :: Word16
+  { _msgSBPType    :: Word16
+  , _msgSBPSender  :: Word16
+  , _msgSBPLen     :: Word8
+  , _msgSBPPayload :: !ByteString
+  , _msgSBPCrc     :: Word16
   } deriving ( Show, Read, Eq )
+
+$(makeLenses ''Msg)
 
 instance Binary Msg where
   get = do
-    msgSBPType <- getWord16le
-    msgSBPSender <- getWord16le
-    msgSBPLen <- getWord8
-    msgSBPPayload <- getByteString $ fromIntegral msgSBPLen
-    msgSBPCrc <- getWord16le
+    _msgSBPType <- getWord16le
+    _msgSBPSender <- getWord16le
+    _msgSBPLen <- getWord8
+    _msgSBPPayload <- getByteString $ fromIntegral _msgSBPLen
+    _msgSBPCrc <- getWord16le
     return Msg {..}
 
   put Msg {..} = do
-    putWord16le msgSBPType
-    putWord16le msgSBPSender
-    putWord8 msgSBPLen
-    putByteString msgSBPPayload
-    putWord16le msgSBPCrc
+    putWord16le _msgSBPType
+    putWord16le _msgSBPSender
+    putWord8 _msgSBPLen
+    putByteString _msgSBPPayload
+    putWord16le _msgSBPCrc
 
 checkCrc :: Msg -> Word16
 checkCrc Msg {..} =
   crc16 $ toLazyByteString $
-    word16LE msgSBPType   <>
-    word16LE msgSBPSender <>
-    word8 msgSBPLen       <>
-    byteString msgSBPPayload
+    word16LE _msgSBPType   <>
+    word16LE _msgSBPSender <>
+    word8 _msgSBPLen       <>
+    byteString _msgSBPPayload
 
 instance FromJSON Msg where
   parseJSON (Object v) = do
@@ -84,11 +87,11 @@ instance FromJSON Msg where
 instance ToJSON Msg where
   toJSON Msg {..} = object
     [ "preamble" .= msgPreamble
-    , "msg_type" .= msgSBPType
-    , "sender" .= msgSBPSender
-    , "length" .= msgSBPLen
-    , "payload" .= msgSBPPayload
-    , "crc" .= msgSBPCrc
+    , "msg_type" .= _msgSBPType
+    , "sender" .= _msgSBPSender
+    , "length" .= _msgSBPLen
+    , "payload" .= _msgSBPPayload
+    , "crc" .= _msgSBPCrc
     ]
 
 data SBPMsg =
@@ -169,73 +172,73 @@ instance Binary SBPMsg where
       sbp <- get
       return $ decode' sbp where
         decode' sbp@Msg {..}
-          | checkCrc sbp /= msgSBPCrc = SBPMsgBadCrc sbp
-          | msgSBPType == msgAcqResult = SBPMsgAcqResult (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgAcqResultDepA = SBPMsgAcqResultDepA (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgAlmanac = SBPMsgAlmanac (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgBasePos = SBPMsgBasePos (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgBaselineEcef = SBPMsgBaselineEcef (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgBaselineNed = SBPMsgBaselineNed (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgCwResults = SBPMsgCwResults (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgCwStart = SBPMsgCwStart (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgDops = SBPMsgDops (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgEphemeris = SBPMsgEphemeris (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgExtEvent = SBPMsgExtEvent (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgFileioReadDirReq = SBPMsgFileioReadDirReq (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgFileioReadDirResp = SBPMsgFileioReadDirResp (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgFileioReadReq = SBPMsgFileioReadReq (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgFileioReadResp = SBPMsgFileioReadResp (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgFileioRemove = SBPMsgFileioRemove (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgFileioWriteReq = SBPMsgFileioWriteReq (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgFileioWriteResp = SBPMsgFileioWriteResp (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgFlashDone = SBPMsgFlashDone (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgFlashErase = SBPMsgFlashErase (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgFlashProgram = SBPMsgFlashProgram (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgFlashReadReq = SBPMsgFlashReadReq (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgFlashReadResp = SBPMsgFlashReadResp (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgGpsTime = SBPMsgGpsTime (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgHeartbeat = SBPMsgHeartbeat (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgIarState = SBPMsgIarState (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgInitBase = SBPMsgInitBase (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgLog = SBPMsgLog (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgMaskSatellite = SBPMsgMaskSatellite (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgObs = SBPMsgObs (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgObsDepA = SBPMsgObsDepA (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgPosEcef = SBPMsgPosEcef (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgPosLlh = SBPMsgPosLlh (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgReset = SBPMsgReset (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgResetFilters = SBPMsgResetFilters (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgSetTime = SBPMsgSetTime (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgSettingsReadReq = SBPMsgSettingsReadReq (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgSettingsReadResp = SBPMsgSettingsReadResp (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgSettingsSave = SBPMsgSettingsSave (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgSettingsWrite = SBPMsgSettingsWrite (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgStmFlashLockSector = SBPMsgStmFlashLockSector (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgThreadState = SBPMsgThreadState (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgTrackingIq = SBPMsgTrackingIq (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgTrackingState = SBPMsgTrackingState (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgTrackingStateDepA = SBPMsgTrackingStateDepA (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgTweet = SBPMsgTweet (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict msgSBPPayload)) sbp
-          | msgSBPType == msgVelNed = SBPMsgVelNed (decode (fromStrict msgSBPPayload)) sbp
+          | checkCrc sbp /= _msgSBPCrc = SBPMsgBadCrc sbp
+          | _msgSBPType == msgAcqResult = SBPMsgAcqResult (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgAcqResultDepA = SBPMsgAcqResultDepA (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgAlmanac = SBPMsgAlmanac (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgBasePos = SBPMsgBasePos (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgBaselineEcef = SBPMsgBaselineEcef (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgBaselineNed = SBPMsgBaselineNed (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgCwResults = SBPMsgCwResults (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgCwStart = SBPMsgCwStart (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgDops = SBPMsgDops (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgEphemeris = SBPMsgEphemeris (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgExtEvent = SBPMsgExtEvent (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgFileioReadDirReq = SBPMsgFileioReadDirReq (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgFileioReadDirResp = SBPMsgFileioReadDirResp (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgFileioReadReq = SBPMsgFileioReadReq (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgFileioReadResp = SBPMsgFileioReadResp (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgFileioRemove = SBPMsgFileioRemove (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgFileioWriteReq = SBPMsgFileioWriteReq (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgFileioWriteResp = SBPMsgFileioWriteResp (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgFlashDone = SBPMsgFlashDone (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgFlashErase = SBPMsgFlashErase (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgFlashProgram = SBPMsgFlashProgram (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgFlashReadReq = SBPMsgFlashReadReq (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgFlashReadResp = SBPMsgFlashReadResp (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgGpsTime = SBPMsgGpsTime (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgHeartbeat = SBPMsgHeartbeat (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgIarState = SBPMsgIarState (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgInitBase = SBPMsgInitBase (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgLog = SBPMsgLog (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgMaskSatellite = SBPMsgMaskSatellite (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgObs = SBPMsgObs (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgObsDepA = SBPMsgObsDepA (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgPosEcef = SBPMsgPosEcef (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgPosLlh = SBPMsgPosLlh (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgReset = SBPMsgReset (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgResetFilters = SBPMsgResetFilters (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgSetTime = SBPMsgSetTime (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgSettingsReadReq = SBPMsgSettingsReadReq (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgSettingsReadResp = SBPMsgSettingsReadResp (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgSettingsSave = SBPMsgSettingsSave (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgSettingsWrite = SBPMsgSettingsWrite (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgStmFlashLockSector = SBPMsgStmFlashLockSector (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgThreadState = SBPMsgThreadState (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgTrackingIq = SBPMsgTrackingIq (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgTrackingState = SBPMsgTrackingState (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgTrackingStateDepA = SBPMsgTrackingStateDepA (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgTweet = SBPMsgTweet (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgVelNed = SBPMsgVelNed (decode (fromStrict _msgSBPPayload)) sbp
           | otherwise = SBPMsgUnknown sbp
 
   put msg = do
