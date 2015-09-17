@@ -9,8 +9,10 @@
 -- SBP message containers and serialization utilities.
 
 module SwiftNav.SBP
-  ( Msg
+  ( Msg (..)
   , SBPMsg (..)
+  , msgPreamble
+  , defaultSenderID
 ((*- for m in modules *))
   , module (((m)))
 ((*- endfor *))
