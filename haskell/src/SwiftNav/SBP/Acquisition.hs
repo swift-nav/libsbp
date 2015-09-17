@@ -23,6 +23,8 @@ import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
 import SwiftNav.SBP.Encoding
+import SwiftNav.SBP.TH
+import SwiftNav.SBP.Types
 
 msgAcqResult :: Word16
 msgAcqResult = 0x0014
@@ -61,6 +63,8 @@ instance Binary MsgAcqResult where
     putFloat32le _msgAcqResult_cf
     putWord32le _msgAcqResult_sid
 
+$(deriveSBP 'msgAcqResult ''MsgAcqResult)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResult_" . stripPrefix "_msgAcqResult_"}
              ''MsgAcqResult)
 $(makeLenses ''MsgAcqResult)
@@ -97,6 +101,8 @@ instance Binary MsgAcqResultDepA where
     putFloat32le _msgAcqResultDepA_cp
     putFloat32le _msgAcqResultDepA_cf
     putWord8 _msgAcqResultDepA_prn
+
+$(deriveSBP 'msgAcqResultDepA ''MsgAcqResultDepA)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResultDepA_" . stripPrefix "_msgAcqResultDepA_"}
              ''MsgAcqResultDepA)

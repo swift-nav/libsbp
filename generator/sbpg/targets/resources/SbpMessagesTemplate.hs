@@ -23,6 +23,8 @@ import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
 import SwiftNav.SBP.Encoding
+import SwiftNav.SBP.TH
+import SwiftNav.SBP.Types
 ((* for m in msgs *))
 ((*- if m.static *))
 ((*- if m.sbp_id *))
@@ -79,8 +81,13 @@ instance Binary (((m.identifier|to_data))) where
 ((*- endfor *))
 ((*- endif *))
 
+((*- if m.sbp_id *))
+
+$(deriveSBP '(((m.identifier|to_global))) ''(((m.identifier|to_data))))
+((* endif *))
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_(((m.identifier|to_global)))_" . stripPrefix "_(((m.identifier|to_global)))_"}
              ''(((m.identifier|to_data))))
 $(makeLenses ''(((m.identifier|to_data))))
+
 ((*- endif *))
 ((* endfor *))

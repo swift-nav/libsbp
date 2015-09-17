@@ -24,6 +24,8 @@ import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
 import SwiftNav.SBP.Encoding
+import SwiftNav.SBP.TH
+import SwiftNav.SBP.Types
 
 msgExtEvent :: Word16
 msgExtEvent = 0x0101
@@ -61,6 +63,8 @@ instance Binary MsgExtEvent where
     putWord32le $ fromIntegral _msgExtEvent_ns
     putWord8 _msgExtEvent_flags
     putWord8 _msgExtEvent_pin
+
+$(deriveSBP 'msgExtEvent ''MsgExtEvent)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgExtEvent_" . stripPrefix "_msgExtEvent_"}
              ''MsgExtEvent)

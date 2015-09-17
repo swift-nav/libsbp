@@ -26,6 +26,8 @@ import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
 import SwiftNav.SBP.Encoding
+import SwiftNav.SBP.TH
+import SwiftNav.SBP.Types
 
 msgBootloaderHandshakeReq :: Word16
 msgBootloaderHandshakeReq = 0x00B3
@@ -44,6 +46,8 @@ instance Binary MsgBootloaderHandshakeReq where
 
   put MsgBootloaderHandshakeReq =
     return ()
+
+$(deriveSBP 'msgBootloaderHandshakeReq ''MsgBootloaderHandshakeReq)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeReq_" . stripPrefix "_msgBootloaderHandshakeReq_"}
              ''MsgBootloaderHandshakeReq)
@@ -75,6 +79,8 @@ instance Binary MsgBootloaderHandshakeResp where
     putWord32le _msgBootloaderHandshakeResp_flags
     putByteString _msgBootloaderHandshakeResp_version
 
+$(deriveSBP 'msgBootloaderHandshakeResp ''MsgBootloaderHandshakeResp)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeResp_" . stripPrefix "_msgBootloaderHandshakeResp_"}
              ''MsgBootloaderHandshakeResp)
 $(makeLenses ''MsgBootloaderHandshakeResp)
@@ -97,6 +103,8 @@ instance Binary MsgBootloaderJumpToApp where
 
   put MsgBootloaderJumpToApp {..} = do
     putWord8 _msgBootloaderJumpToApp_jump
+
+$(deriveSBP 'msgBootloaderJumpToApp ''MsgBootloaderJumpToApp)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderJumpToApp_" . stripPrefix "_msgBootloaderJumpToApp_"}
              ''MsgBootloaderJumpToApp)
@@ -121,6 +129,8 @@ instance Binary MsgNapDeviceDnaReq where
 
   put MsgNapDeviceDnaReq =
     return ()
+
+$(deriveSBP 'msgNapDeviceDnaReq ''MsgNapDeviceDnaReq)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNapDeviceDnaReq_" . stripPrefix "_msgNapDeviceDnaReq_"}
              ''MsgNapDeviceDnaReq)
@@ -150,6 +160,8 @@ instance Binary MsgNapDeviceDnaResp where
   put MsgNapDeviceDnaResp {..} = do
     mapM_ putWord8 _msgNapDeviceDnaResp_dna
 
+$(deriveSBP 'msgNapDeviceDnaResp ''MsgNapDeviceDnaResp)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNapDeviceDnaResp_" . stripPrefix "_msgNapDeviceDnaResp_"}
              ''MsgNapDeviceDnaResp)
 $(makeLenses ''MsgNapDeviceDnaResp)
@@ -172,6 +184,8 @@ instance Binary MsgBootloaderHandshakeDepA where
 
   put MsgBootloaderHandshakeDepA {..} = do
     mapM_ putWord8 _msgBootloaderHandshakeDepA_handshake
+
+$(deriveSBP 'msgBootloaderHandshakeDepA ''MsgBootloaderHandshakeDepA)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeDepA_" . stripPrefix "_msgBootloaderHandshakeDepA_"}
              ''MsgBootloaderHandshakeDepA)

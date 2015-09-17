@@ -26,6 +26,8 @@ import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
 import SwiftNav.SBP.Encoding
+import SwiftNav.SBP.TH
+import SwiftNav.SBP.Types
 
 msgAlmanac :: Word16
 msgAlmanac = 0x0069
@@ -43,6 +45,8 @@ instance Binary MsgAlmanac where
 
   put MsgAlmanac =
     return ()
+
+$(deriveSBP 'msgAlmanac ''MsgAlmanac)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAlmanac_" . stripPrefix "_msgAlmanac_"}
              ''MsgAlmanac)
@@ -65,6 +69,8 @@ instance Binary MsgSetTime where
   put MsgSetTime =
     return ()
 
+$(deriveSBP 'msgSetTime ''MsgSetTime)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSetTime_" . stripPrefix "_msgSetTime_"}
              ''MsgSetTime)
 $(makeLenses ''MsgSetTime)
@@ -84,6 +90,8 @@ instance Binary MsgReset where
 
   put MsgReset =
     return ()
+
+$(deriveSBP 'msgReset ''MsgReset)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgReset_" . stripPrefix "_msgReset_"}
              ''MsgReset)
@@ -107,6 +115,8 @@ instance Binary MsgCwResults where
   put MsgCwResults =
     return ()
 
+$(deriveSBP 'msgCwResults ''MsgCwResults)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCwResults_" . stripPrefix "_msgCwResults_"}
              ''MsgCwResults)
 $(makeLenses ''MsgCwResults)
@@ -128,6 +138,8 @@ instance Binary MsgCwStart where
 
   put MsgCwStart =
     return ()
+
+$(deriveSBP 'msgCwStart ''MsgCwStart)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCwStart_" . stripPrefix "_msgCwStart_"}
              ''MsgCwStart)
@@ -153,6 +165,8 @@ instance Binary MsgResetFilters where
   put MsgResetFilters {..} = do
     putWord8 _msgResetFilters_filter
 
+$(deriveSBP 'msgResetFilters ''MsgResetFilters)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgResetFilters_" . stripPrefix "_msgResetFilters_"}
              ''MsgResetFilters)
 $(makeLenses ''MsgResetFilters)
@@ -175,6 +189,8 @@ instance Binary MsgInitBase where
 
   put MsgInitBase =
     return ()
+
+$(deriveSBP 'msgInitBase ''MsgInitBase)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgInitBase_" . stripPrefix "_msgInitBase_"}
              ''MsgInitBase)
@@ -209,6 +225,8 @@ instance Binary MsgThreadState where
     putByteString _msgThreadState_name
     putWord16le _msgThreadState_cpu
     putWord32le _msgThreadState_stack_free
+
+$(deriveSBP 'msgThreadState ''MsgThreadState)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgThreadState_" . stripPrefix "_msgThreadState_"}
              ''MsgThreadState)
@@ -250,7 +268,6 @@ instance Binary UARTChannel where
     putWord16le _uARTChannel_io_error_count
     putWord8 _uARTChannel_tx_buffer_level
     putWord8 _uARTChannel_rx_buffer_level
-
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_uARTChannel_" . stripPrefix "_uARTChannel_"}
              ''UARTChannel)
 $(makeLenses ''UARTChannel)
@@ -285,7 +302,6 @@ instance Binary Latency where
     putWord32le $ fromIntegral _latency_lmin
     putWord32le $ fromIntegral _latency_lmax
     putWord32le $ fromIntegral _latency_current
-
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_latency_" . stripPrefix "_latency_"}
              ''Latency)
 $(makeLenses ''Latency)
@@ -325,6 +341,8 @@ instance Binary MsgUartState where
     put _msgUartState_uart_ftdi
     put _msgUartState_latency
 
+$(deriveSBP 'msgUartState ''MsgUartState)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUartState_" . stripPrefix "_msgUartState_"}
              ''MsgUartState)
 $(makeLenses ''MsgUartState)
@@ -349,6 +367,8 @@ instance Binary MsgIarState where
 
   put MsgIarState {..} = do
     putWord32le _msgIarState_num_hyps
+
+$(deriveSBP 'msgIarState ''MsgIarState)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgIarState_" . stripPrefix "_msgIarState_"}
              ''MsgIarState)
@@ -377,6 +397,8 @@ instance Binary MsgMaskSatellite where
   put MsgMaskSatellite {..} = do
     putWord8 _msgMaskSatellite_mask
     putWord32le _msgMaskSatellite_sid
+
+$(deriveSBP 'msgMaskSatellite ''MsgMaskSatellite)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgMaskSatellite_" . stripPrefix "_msgMaskSatellite_"}
              ''MsgMaskSatellite)

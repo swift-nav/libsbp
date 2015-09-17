@@ -24,6 +24,8 @@ import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
 import SwiftNav.SBP.Encoding
+import SwiftNav.SBP.TH
+import SwiftNav.SBP.Types
 
 msgLog :: Word16
 msgLog = 0x0401
@@ -50,6 +52,8 @@ instance Binary MsgLog where
     putWord8 _msgLog_level
     putByteString _msgLog_text
 
+$(deriveSBP 'msgLog ''MsgLog)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgLog_" . stripPrefix "_msgLog_"}
              ''MsgLog)
 $(makeLenses ''MsgLog)
@@ -73,6 +77,8 @@ instance Binary MsgTweet where
   put MsgTweet {..} = do
     putByteString _msgTweet_tweet
 
+$(deriveSBP 'msgTweet ''MsgTweet)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTweet_" . stripPrefix "_msgTweet_"}
              ''MsgTweet)
 $(makeLenses ''MsgTweet)
@@ -95,6 +101,8 @@ instance Binary MsgPrintDep where
 
   put MsgPrintDep {..} = do
     putByteString _msgPrintDep_text
+
+$(deriveSBP 'msgPrintDep ''MsgPrintDep)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPrintDep_" . stripPrefix "_msgPrintDep_"}
              ''MsgPrintDep)
