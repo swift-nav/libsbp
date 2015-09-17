@@ -11,7 +11,7 @@
 module (((module_name))) where
 
 import BasicPrelude
-import Control.Monad
+import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
@@ -44,12 +44,12 @@ data (((m.identifier|to_data))) = (((m.identifier|to_data)))
 ((*- endif *))
 ((*- for f in m.fields *))
 ((*- if loop.first *))
-  { (((((m.identifier|to_global)+"_"+(f.identifier)).ljust(m|max_fid_len)))) :: (((f|to_type)))
+  { (((("_"+(m.identifier|to_global)+"_"+(f.identifier)).ljust(m|max_fid_len)))) :: (((f|to_type)))
     ((*- if f.desc *))
     -- ^ (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n    -- "))))
     ((*- endif *))
 ((*- else *))
-  , (((((m.identifier|to_global)+"_"+(f.identifier)).ljust(m|max_fid_len)))) :: (((f|to_type)))
+  , (((("_"+(m.identifier|to_global)+"_"+(f.identifier)).ljust(m|max_fid_len)))) :: (((f|to_type)))
     ((*- if f.desc *))
     -- ^ (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n    -- "))))
     ((*- endif *))
@@ -69,17 +69,18 @@ instance Binary (((m.identifier|to_data))) where
 ((*- else *))
   get = do
 ((*- for f in m.fields *))
-    ((((m.identifier|to_global)+"_"+(f.identifier)))) <- (((f|to_get)))
+    ((("_"+(m.identifier|to_global)+"_"+(f.identifier)))) <- (((f|to_get)))
 ((*- endfor *))
     return (((m.identifier|to_data))) {..}
 
   put (((m.identifier|to_data))) {..} = do
 ((*- for f in m.fields *))
-    (((f|to_put))) ((((m.identifier|to_global)+"_"+(f.identifier))))
+    (((f|to_put))) ((("_"+(m.identifier|to_global)+"_"+(f.identifier))))
 ((*- endfor *))
 ((*- endif *))
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "(((m.identifier|to_global)))_" . stripPrefix "(((m.identifier|to_global)))_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_(((m.identifier|to_global)))_" . stripPrefix "_(((m.identifier|to_global)))_"}
              ''(((m.identifier|to_data))))
+$(makeLenses ''(((m.identifier|to_data))))
 ((*- endif *))
 ((* endfor *))

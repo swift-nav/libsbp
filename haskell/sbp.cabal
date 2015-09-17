@@ -49,8 +49,8 @@ library
                      , binary
                      , bytestring
                      , data-binary-ieee754
+                     , lens
                      , monad-loops
-                     , scientific
                      , text
                      , unordered-containers
   default-extensions:  RecordWildCards

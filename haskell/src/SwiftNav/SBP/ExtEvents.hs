@@ -12,7 +12,7 @@
 module SwiftNav.SBP.ExtEvents where
 
 import BasicPrelude
-import Control.Monad
+import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
@@ -33,34 +33,35 @@ msgExtEvent = 0x0101
 -- Reports detection of an external event, the GPS time it occurred, which pin
 -- it was and whether it was rising or falling.
 data MsgExtEvent = MsgExtEvent
-  { msgExtEvent_wn   :: Word16
+  { _msgExtEvent_wn  :: Word16
     -- ^ GPS week number
-  , msgExtEvent_tow  :: Word32
+  , _msgExtEvent_tow :: Word32
     -- ^ GPS time of week rounded to the nearest millisecond
-  , msgExtEvent_ns   :: Int32
+  , _msgExtEvent_ns  :: Int32
     -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     -- 500000)
-  , msgExtEvent_flags :: Word8
+  , _msgExtEvent_flags :: Word8
     -- ^ Flags
-  , msgExtEvent_pin  :: Word8
+  , _msgExtEvent_pin :: Word8
     -- ^ Pin number.  0..9 = DEBUG0..9.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgExtEvent where
   get = do
-    msgExtEvent_wn <- getWord16le
-    msgExtEvent_tow <- getWord32le
-    msgExtEvent_ns <- liftM fromIntegral getWord32le
-    msgExtEvent_flags <- getWord8
-    msgExtEvent_pin <- getWord8
+    _msgExtEvent_wn <- getWord16le
+    _msgExtEvent_tow <- getWord32le
+    _msgExtEvent_ns <- liftM fromIntegral getWord32le
+    _msgExtEvent_flags <- getWord8
+    _msgExtEvent_pin <- getWord8
     return MsgExtEvent {..}
 
   put MsgExtEvent {..} = do
-    putWord16le msgExtEvent_wn
-    putWord32le msgExtEvent_tow
-    putWord32le $ fromIntegral msgExtEvent_ns
-    putWord8 msgExtEvent_flags
-    putWord8 msgExtEvent_pin
+    putWord16le _msgExtEvent_wn
+    putWord32le _msgExtEvent_tow
+    putWord32le $ fromIntegral _msgExtEvent_ns
+    putWord8 _msgExtEvent_flags
+    putWord8 _msgExtEvent_pin
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgExtEvent_" . stripPrefix "msgExtEvent_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgExtEvent_" . stripPrefix "_msgExtEvent_"}
              ''MsgExtEvent)
+$(makeLenses ''MsgExtEvent)

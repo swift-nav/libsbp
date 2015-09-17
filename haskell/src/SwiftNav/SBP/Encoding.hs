@@ -11,11 +11,10 @@
 module SwiftNav.SBP.Encoding where
 
 import BasicPrelude
-import Control.Applicative
 import Data.Aeson
 import qualified Data.ByteString as B
 import Data.ByteString.Base64 as Base64
-import Data.Text.Encoding (encodeUtf8, decodeUtf8With)
+import Data.Text.Encoding (decodeUtf8With)
 import Data.Text.Encoding.Error
 
 -- ByteString doesn't have Aeson instances defined for it since

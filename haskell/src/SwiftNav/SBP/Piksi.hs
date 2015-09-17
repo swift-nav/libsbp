@@ -14,7 +14,7 @@
 module SwiftNav.SBP.Piksi where
 
 import BasicPrelude
-import Control.Monad
+import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
 import Data.Binary
@@ -44,8 +44,9 @@ instance Binary MsgAlmanac where
   put MsgAlmanac =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgAlmanac_" . stripPrefix "msgAlmanac_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAlmanac_" . stripPrefix "_msgAlmanac_"}
              ''MsgAlmanac)
+$(makeLenses ''MsgAlmanac)
 
 msgSetTime :: Word16
 msgSetTime = 0x0068
@@ -64,8 +65,9 @@ instance Binary MsgSetTime where
   put MsgSetTime =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgSetTime_" . stripPrefix "msgSetTime_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSetTime_" . stripPrefix "_msgSetTime_"}
              ''MsgSetTime)
+$(makeLenses ''MsgSetTime)
 
 msgReset :: Word16
 msgReset = 0x00B2
@@ -83,8 +85,9 @@ instance Binary MsgReset where
   put MsgReset =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgReset_" . stripPrefix "msgReset_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgReset_" . stripPrefix "_msgReset_"}
              ''MsgReset)
+$(makeLenses ''MsgReset)
 
 msgCwResults :: Word16
 msgCwResults = 0x00C0
@@ -104,8 +107,9 @@ instance Binary MsgCwResults where
   put MsgCwResults =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgCwResults_" . stripPrefix "msgCwResults_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCwResults_" . stripPrefix "_msgCwResults_"}
              ''MsgCwResults)
+$(makeLenses ''MsgCwResults)
 
 msgCwStart :: Word16
 msgCwStart = 0x00C1
@@ -125,8 +129,9 @@ instance Binary MsgCwStart where
   put MsgCwStart =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgCwStart_" . stripPrefix "msgCwStart_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCwStart_" . stripPrefix "_msgCwStart_"}
              ''MsgCwStart)
+$(makeLenses ''MsgCwStart)
 
 msgResetFilters :: Word16
 msgResetFilters = 0x0022
@@ -136,20 +141,21 @@ msgResetFilters = 0x0022
 -- This message resets either the DGNSS Kalman filters or Integer Ambiguity
 -- Resolution (IAR) process.
 data MsgResetFilters = MsgResetFilters
-  { msgResetFilters_filter :: Word8
+  { _msgResetFilters_filter :: Word8
     -- ^ Filter flags
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgResetFilters where
   get = do
-    msgResetFilters_filter <- getWord8
+    _msgResetFilters_filter <- getWord8
     return MsgResetFilters {..}
 
   put MsgResetFilters {..} = do
-    putWord8 msgResetFilters_filter
+    putWord8 _msgResetFilters_filter
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgResetFilters_" . stripPrefix "msgResetFilters_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgResetFilters_" . stripPrefix "_msgResetFilters_"}
              ''MsgResetFilters)
+$(makeLenses ''MsgResetFilters)
 
 msgInitBase :: Word16
 msgInitBase = 0x0023
@@ -170,8 +176,9 @@ instance Binary MsgInitBase where
   put MsgInitBase =
     return ()
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgInitBase_" . stripPrefix "msgInitBase_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgInitBase_" . stripPrefix "_msgInitBase_"}
              ''MsgInitBase)
+$(makeLenses ''MsgInitBase)
 
 msgThreadState :: Word16
 msgThreadState = 0x0017
@@ -182,69 +189,71 @@ msgThreadState = 0x0017
 -- (RTOS) thread usage statistics for the named thread. The reported percentage
 -- values require to be normalized.
 data MsgThreadState = MsgThreadState
-  { msgThreadState_name      :: ByteString
+  { _msgThreadState_name     :: ByteString
     -- ^ Thread name (NULL terminated)
-  , msgThreadState_cpu       :: Word16
+  , _msgThreadState_cpu      :: Word16
     -- ^ Percentage cpu use for this thread. Values range from 0 - 1000 and needs
     -- to be renormalized to 100
-  , msgThreadState_stack_free :: Word32
+  , _msgThreadState_stack_free :: Word32
     -- ^ Free stack space for this thread
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgThreadState where
   get = do
-    msgThreadState_name <- getByteString 20
-    msgThreadState_cpu <- getWord16le
-    msgThreadState_stack_free <- getWord32le
+    _msgThreadState_name <- getByteString 20
+    _msgThreadState_cpu <- getWord16le
+    _msgThreadState_stack_free <- getWord32le
     return MsgThreadState {..}
 
   put MsgThreadState {..} = do
-    putByteString msgThreadState_name
-    putWord16le msgThreadState_cpu
-    putWord32le msgThreadState_stack_free
+    putByteString _msgThreadState_name
+    putWord16le _msgThreadState_cpu
+    putWord32le _msgThreadState_stack_free
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgThreadState_" . stripPrefix "msgThreadState_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgThreadState_" . stripPrefix "_msgThreadState_"}
              ''MsgThreadState)
+$(makeLenses ''MsgThreadState)
 
 -- | UARTChannel.
 --
 -- Throughput, utilization, and error counts on the RX/TX buffers of this UART
 -- channel. The reported percentage values require to be normalized.
 data UARTChannel = UARTChannel
-  { uARTChannel_tx_throughput  :: Float
+  { _uARTChannel_tx_throughput :: Float
     -- ^ UART transmit throughput
-  , uARTChannel_rx_throughput  :: Float
+  , _uARTChannel_rx_throughput :: Float
     -- ^ UART receive throughput
-  , uARTChannel_crc_error_count :: Word16
+  , _uARTChannel_crc_error_count :: Word16
     -- ^ UART CRC error count
-  , uARTChannel_io_error_count :: Word16
+  , _uARTChannel_io_error_count :: Word16
     -- ^ UART IO error count
-  , uARTChannel_tx_buffer_level :: Word8
+  , _uARTChannel_tx_buffer_level :: Word8
     -- ^ UART transmit buffer percentage utilization (ranges from 0 - 255)
-  , uARTChannel_rx_buffer_level :: Word8
+  , _uARTChannel_rx_buffer_level :: Word8
     -- ^ UART receive buffer percentage utilization (ranges from 0 to 255)
   } deriving ( Show, Read, Eq )
 
 instance Binary UARTChannel where
   get = do
-    uARTChannel_tx_throughput <- getFloat32le
-    uARTChannel_rx_throughput <- getFloat32le
-    uARTChannel_crc_error_count <- getWord16le
-    uARTChannel_io_error_count <- getWord16le
-    uARTChannel_tx_buffer_level <- getWord8
-    uARTChannel_rx_buffer_level <- getWord8
+    _uARTChannel_tx_throughput <- getFloat32le
+    _uARTChannel_rx_throughput <- getFloat32le
+    _uARTChannel_crc_error_count <- getWord16le
+    _uARTChannel_io_error_count <- getWord16le
+    _uARTChannel_tx_buffer_level <- getWord8
+    _uARTChannel_rx_buffer_level <- getWord8
     return UARTChannel {..}
 
   put UARTChannel {..} = do
-    putFloat32le uARTChannel_tx_throughput
-    putFloat32le uARTChannel_rx_throughput
-    putWord16le uARTChannel_crc_error_count
-    putWord16le uARTChannel_io_error_count
-    putWord8 uARTChannel_tx_buffer_level
-    putWord8 uARTChannel_rx_buffer_level
+    putFloat32le _uARTChannel_tx_throughput
+    putFloat32le _uARTChannel_rx_throughput
+    putWord16le _uARTChannel_crc_error_count
+    putWord16le _uARTChannel_io_error_count
+    putWord8 _uARTChannel_tx_buffer_level
+    putWord8 _uARTChannel_rx_buffer_level
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "uARTChannel_" . stripPrefix "uARTChannel_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_uARTChannel_" . stripPrefix "_uARTChannel_"}
              ''UARTChannel)
+$(makeLenses ''UARTChannel)
 
 -- | Latency.
 --
@@ -253,32 +262,33 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "uARTChannel_" . str
 -- GPS time calculated locally by the receiver to give a precise measurement of
 -- the end-to-end communication latency in the system.
 data Latency = Latency
-  { latency_avg    :: Int32
+  { _latency_avg   :: Int32
     -- ^ Average latency
-  , latency_lmin   :: Int32
+  , _latency_lmin  :: Int32
     -- ^ Minimum latency
-  , latency_lmax   :: Int32
+  , _latency_lmax  :: Int32
     -- ^ Maximum latency
-  , latency_current :: Int32
+  , _latency_current :: Int32
     -- ^ Smoothed estimate of the current latency
   } deriving ( Show, Read, Eq )
 
 instance Binary Latency where
   get = do
-    latency_avg <- liftM fromIntegral getWord32le
-    latency_lmin <- liftM fromIntegral getWord32le
-    latency_lmax <- liftM fromIntegral getWord32le
-    latency_current <- liftM fromIntegral getWord32le
+    _latency_avg <- liftM fromIntegral getWord32le
+    _latency_lmin <- liftM fromIntegral getWord32le
+    _latency_lmax <- liftM fromIntegral getWord32le
+    _latency_current <- liftM fromIntegral getWord32le
     return Latency {..}
 
   put Latency {..} = do
-    putWord32le $ fromIntegral latency_avg
-    putWord32le $ fromIntegral latency_lmin
-    putWord32le $ fromIntegral latency_lmax
-    putWord32le $ fromIntegral latency_current
+    putWord32le $ fromIntegral _latency_avg
+    putWord32le $ fromIntegral _latency_lmin
+    putWord32le $ fromIntegral _latency_lmax
+    putWord32le $ fromIntegral _latency_current
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "latency_" . stripPrefix "latency_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_latency_" . stripPrefix "_latency_"}
              ''Latency)
+$(makeLenses ''Latency)
 
 msgUartState :: Word16
 msgUartState = 0x0018
@@ -291,32 +301,33 @@ msgUartState = 0x0018
 -- hosts, or other interfaces in future. The reported percentage values require
 -- to be normalized.
 data MsgUartState = MsgUartState
-  { msgUartState_uart_a   :: UARTChannel
+  { _msgUartState_uart_a  :: UARTChannel
     -- ^ State of UART A
-  , msgUartState_uart_b   :: UARTChannel
+  , _msgUartState_uart_b  :: UARTChannel
     -- ^ State of UART B
-  , msgUartState_uart_ftdi :: UARTChannel
+  , _msgUartState_uart_ftdi :: UARTChannel
     -- ^ State of UART FTDI (USB logger)
-  , msgUartState_latency  :: Latency
+  , _msgUartState_latency :: Latency
     -- ^ UART communication latency
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgUartState where
   get = do
-    msgUartState_uart_a <- get
-    msgUartState_uart_b <- get
-    msgUartState_uart_ftdi <- get
-    msgUartState_latency <- get
+    _msgUartState_uart_a <- get
+    _msgUartState_uart_b <- get
+    _msgUartState_uart_ftdi <- get
+    _msgUartState_latency <- get
     return MsgUartState {..}
 
   put MsgUartState {..} = do
-    put msgUartState_uart_a
-    put msgUartState_uart_b
-    put msgUartState_uart_ftdi
-    put msgUartState_latency
+    put _msgUartState_uart_a
+    put _msgUartState_uart_b
+    put _msgUartState_uart_ftdi
+    put _msgUartState_latency
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgUartState_" . stripPrefix "msgUartState_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUartState_" . stripPrefix "_msgUartState_"}
              ''MsgUartState)
+$(makeLenses ''MsgUartState)
 
 msgIarState :: Word16
 msgIarState = 0x0019
@@ -327,20 +338,21 @@ msgIarState = 0x0019
 -- process, which resolves unknown integer ambiguities from double-differenced
 -- carrier-phase measurements from satellite observations.
 data MsgIarState = MsgIarState
-  { msgIarState_num_hyps :: Word32
+  { _msgIarState_num_hyps :: Word32
     -- ^ Number of integer ambiguity hypotheses remaining
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgIarState where
   get = do
-    msgIarState_num_hyps <- getWord32le
+    _msgIarState_num_hyps <- getWord32le
     return MsgIarState {..}
 
   put MsgIarState {..} = do
-    putWord32le msgIarState_num_hyps
+    putWord32le _msgIarState_num_hyps
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgIarState_" . stripPrefix "msgIarState_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgIarState_" . stripPrefix "_msgIarState_"}
              ''MsgIarState)
+$(makeLenses ''MsgIarState)
 
 msgMaskSatellite :: Word16
 msgMaskSatellite = 0x001B
@@ -350,21 +362,22 @@ msgMaskSatellite = 0x001B
 -- This message allows setting a mask to prevent a particular satellite from
 -- being used in various Piksi subsystems.
 data MsgMaskSatellite = MsgMaskSatellite
-  { msgMaskSatellite_mask :: Word8
+  { _msgMaskSatellite_mask :: Word8
     -- ^ Mask of systems that should ignore this satellite.
-  , msgMaskSatellite_sid :: Word32
+  , _msgMaskSatellite_sid :: Word32
     -- ^ Signal identifier for which the mask is applied
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgMaskSatellite where
   get = do
-    msgMaskSatellite_mask <- getWord8
-    msgMaskSatellite_sid <- getWord32le
+    _msgMaskSatellite_mask <- getWord8
+    _msgMaskSatellite_sid <- getWord32le
     return MsgMaskSatellite {..}
 
   put MsgMaskSatellite {..} = do
-    putWord8 msgMaskSatellite_mask
-    putWord32le msgMaskSatellite_sid
+    putWord8 _msgMaskSatellite_mask
+    putWord32le _msgMaskSatellite_sid
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "msgMaskSatellite_" . stripPrefix "msgMaskSatellite_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgMaskSatellite_" . stripPrefix "_msgMaskSatellite_"}
              ''MsgMaskSatellite)
+$(makeLenses ''MsgMaskSatellite)
