@@ -6,13 +6,13 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- SBP message containers and serialization utilities.
+-- SBP message containers.
 
 module SwiftNav.SBP
   ( Msg (..)
   , SBPMsg (..)
-  , msgPreamble
-  , defaultSenderID
+  , msgSBPPreamble
+  , defaultSender
 ((*- for m in modules *))
   , module (((m)))
 ((*- endfor *))
@@ -32,20 +32,40 @@ import SwiftNav.CRC16
 import (((m)))
 ((*- endfor *))
 
-msgPreamble :: Word8
-msgPreamble = 0x55
+-- | Denotes the start of frame transmission. For v1.0, always 0x55.
+msgSBPPreamble :: Word8
+msgSBPPreamble = 0x55
 
 -- | Default sender ID. Intended for messages sent from the host to
 -- the device.
-defaultSenderID :: Word16
-defaultSenderID = 0x42
+defaultSender :: Word16
+defaultSender = 0x42
 
+-- | Packet structure for Swift Navigation Binary Protocol (SBP).
+--
+-- Definition of the over-the-wire message framing format and packet
+-- structure for Swift Navigation Binary Protocol (SBP), a minimal
+-- binary protocol for communicating with Swift devices. It is used
+-- to transmit solutions, observations, status and debugging
+-- messages, as well as receive messages from the host operating
+-- system.
 data Msg = Msg
   { _msgSBPType    :: Word16
+    -- ^ Uniquely identifies the type of the payload contents
   , _msgSBPSender  :: Word16
+    -- ^ A unique identifier of the sending hardware. For v1.0,
+    -- set to the 2 least significant bytes of the device serial
+    -- number
   , _msgSBPLen     :: Word8
+    -- ^ Byte-length of the payload field
   , _msgSBPPayload :: !ByteString
+    -- ^ Binary data of the message, as identified by Message Type and
+    -- Length. Usually contains the in-memory binary representation of
+    -- a C struct (see documentation on individual message types)
   , _msgSBPCrc     :: Word16
+    -- ^ Cyclic Redundancy Check (CRC) of the packet's binary data from
+    -- the Message Type up to the end of Payload (does not include the
+    -- Preamble)
   } deriving ( Show, Read, Eq )
 
 $(makeLenses ''Msg)
@@ -85,7 +105,7 @@ instance FromJSON Msg where
 
 instance ToJSON Msg where
   toJSON Msg {..} = object
-    [ "preamble" .= msgPreamble
+    [ "preamble" .= msgSBPPreamble
     , "msg_type" .= _msgSBPType
     , "sender" .= _msgSBPSender
     , "length" .= _msgSBPLen
@@ -94,6 +114,10 @@ instance ToJSON Msg where
     ]
 ((* for m in msgs *))
 ((*- if loop.first *))
+-- | An SBP message ADT composed of all defined SBP messages.
+--
+-- Includes SBPMsgUnknown for valid SBP messages with undefined message
+-- types and SBPMsgBadCRC for SBP messages with invalid CRC checksums.
 data SBPMsg =
      SBP(((m))) (((m))) Msg
 ((*- else *))
@@ -109,7 +133,7 @@ data SBPMsg =
 instance Binary SBPMsg where
   get = do
     preamble <- getWord8
-    if preamble /= msgPreamble then get else do
+    if preamble /= msgSBPPreamble then get else do
       sbp <- get
       return $ decode' sbp where
         decode' sbp@Msg {..}
@@ -120,7 +144,7 @@ instance Binary SBPMsg where
           | otherwise = SBPMsgUnknown sbp
 
   put msg = do
-    putWord8 msgPreamble
+    putWord8 msgSBPPreamble
     put $ encode' msg
     where
       ((*- for m in msgs *))
