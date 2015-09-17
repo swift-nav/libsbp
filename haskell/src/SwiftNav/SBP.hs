@@ -390,7 +390,9 @@ instance FromJSON SBPMsg where
 
 merge :: Value -> Value -> Value
 merge (Object one) (Object two) = Object (one <> two)
-merge _ _ = Null
+merge _ (Object two) = Object two
+merge (Object one) _ = Object one
+merge _ v = v
 
 instance ToJSON SBPMsg where
    toJSON (SBPMsgAcqResult msg sbp) = toJSON msg `merge` toJSON sbp
