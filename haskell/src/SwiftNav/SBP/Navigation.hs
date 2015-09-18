@@ -31,6 +31,8 @@ import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
 import SwiftNav.SBP.Encoding
+import SwiftNav.SBP.TH
+import SwiftNav.SBP.Types
 
 msgGpsTime :: Word16
 msgGpsTime = 0x0100
@@ -71,6 +73,8 @@ instance Binary MsgGpsTime where
     putWord32le _msgGpsTime_tow
     putWord32le $ fromIntegral _msgGpsTime_ns
     putWord8 _msgGpsTime_flags
+
+$(deriveSBP 'msgGpsTime ''MsgGpsTime)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGpsTime_" . stripPrefix "_msgGpsTime_"}
              ''MsgGpsTime)
@@ -115,6 +119,8 @@ instance Binary MsgDops where
     putWord16le _msgDops_tdop
     putWord16le _msgDops_hdop
     putWord16le _msgDops_vdop
+
+$(deriveSBP 'msgDops ''MsgDops)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDops_" . stripPrefix "_msgDops_"}
              ''MsgDops)
@@ -168,6 +174,8 @@ instance Binary MsgPosEcef where
     putWord16le _msgPosEcef_accuracy
     putWord8 _msgPosEcef_n_sats
     putWord8 _msgPosEcef_flags
+
+$(deriveSBP 'msgPosEcef ''MsgPosEcef)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosEcef_" . stripPrefix "_msgPosEcef_"}
              ''MsgPosEcef)
@@ -226,6 +234,8 @@ instance Binary MsgPosLlh where
     putWord8 _msgPosLlh_n_sats
     putWord8 _msgPosLlh_flags
 
+$(deriveSBP 'msgPosLlh ''MsgPosLlh)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosLlh_" . stripPrefix "_msgPosLlh_"}
              ''MsgPosLlh)
 $(makeLenses ''MsgPosLlh)
@@ -275,6 +285,8 @@ instance Binary MsgBaselineEcef where
     putWord16le _msgBaselineEcef_accuracy
     putWord8 _msgBaselineEcef_n_sats
     putWord8 _msgBaselineEcef_flags
+
+$(deriveSBP 'msgBaselineEcef ''MsgBaselineEcef)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineEcef_" . stripPrefix "_msgBaselineEcef_"}
              ''MsgBaselineEcef)
@@ -332,6 +344,8 @@ instance Binary MsgBaselineNed where
     putWord8 _msgBaselineNed_n_sats
     putWord8 _msgBaselineNed_flags
 
+$(deriveSBP 'msgBaselineNed ''MsgBaselineNed)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineNed_" . stripPrefix "_msgBaselineNed_"}
              ''MsgBaselineNed)
 $(makeLenses ''MsgBaselineNed)
@@ -380,6 +394,8 @@ instance Binary MsgVelEcef where
     putWord16le _msgVelEcef_accuracy
     putWord8 _msgVelEcef_n_sats
     putWord8 _msgVelEcef_flags
+
+$(deriveSBP 'msgVelEcef ''MsgVelEcef)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelEcef_" . stripPrefix "_msgVelEcef_"}
              ''MsgVelEcef)
@@ -433,6 +449,8 @@ instance Binary MsgVelNed where
     putWord16le _msgVelNed_v_accuracy
     putWord8 _msgVelNed_n_sats
     putWord8 _msgVelNed_flags
+
+$(deriveSBP 'msgVelNed ''MsgVelNed)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelNed_" . stripPrefix "_msgVelNed_"}
              ''MsgVelNed)

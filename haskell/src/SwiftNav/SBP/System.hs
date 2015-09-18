@@ -23,6 +23,8 @@ import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
 import SwiftNav.SBP.Encoding
+import SwiftNav.SBP.TH
+import SwiftNav.SBP.Types
 
 msgStartup :: Word16
 msgStartup = 0xFF00
@@ -44,6 +46,8 @@ instance Binary MsgStartup where
 
   put MsgStartup {..} = do
     putWord32le _msgStartup_reserved
+
+$(deriveSBP 'msgStartup ''MsgStartup)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStartup_" . stripPrefix "_msgStartup_"}
              ''MsgStartup)
@@ -73,6 +77,8 @@ instance Binary MsgHeartbeat where
 
   put MsgHeartbeat {..} = do
     putWord32le _msgHeartbeat_flags
+
+$(deriveSBP 'msgHeartbeat ''MsgHeartbeat)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgHeartbeat_" . stripPrefix "_msgHeartbeat_"}
              ''MsgHeartbeat)

@@ -27,6 +27,8 @@ import Data.ByteString.Lazy hiding ( ByteString )
 import Data.Int
 import Data.Word
 import SwiftNav.SBP.Encoding
+import SwiftNav.SBP.TH
+import SwiftNav.SBP.Types
 
 msgFlashProgram :: Word16
 msgFlashProgram = 0x00E6
@@ -63,6 +65,8 @@ instance Binary MsgFlashProgram where
     putWord8 _msgFlashProgram_addr_len
     mapM_ putWord8 _msgFlashProgram_data
 
+$(deriveSBP 'msgFlashProgram ''MsgFlashProgram)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashProgram_" . stripPrefix "_msgFlashProgram_"}
              ''MsgFlashProgram)
 $(makeLenses ''MsgFlashProgram)
@@ -88,6 +92,8 @@ instance Binary MsgFlashDone where
 
   put MsgFlashDone {..} = do
     putWord8 _msgFlashDone_response
+
+$(deriveSBP 'msgFlashDone ''MsgFlashDone)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashDone_" . stripPrefix "_msgFlashDone_"}
              ''MsgFlashDone)
@@ -125,6 +131,8 @@ instance Binary MsgFlashReadReq where
     mapM_ putWord8 _msgFlashReadReq_addr_start
     putWord8 _msgFlashReadReq_addr_len
 
+$(deriveSBP 'msgFlashReadReq ''MsgFlashReadReq)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashReadReq_" . stripPrefix "_msgFlashReadReq_"}
              ''MsgFlashReadReq)
 $(makeLenses ''MsgFlashReadReq)
@@ -161,6 +169,8 @@ instance Binary MsgFlashReadResp where
     mapM_ putWord8 _msgFlashReadResp_addr_start
     putWord8 _msgFlashReadResp_addr_len
 
+$(deriveSBP 'msgFlashReadResp ''MsgFlashReadResp)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashReadResp_" . stripPrefix "_msgFlashReadResp_"}
              ''MsgFlashReadResp)
 $(makeLenses ''MsgFlashReadResp)
@@ -191,6 +201,8 @@ instance Binary MsgFlashErase where
     putWord8 _msgFlashErase_target
     putWord32le _msgFlashErase_sector_num
 
+$(deriveSBP 'msgFlashErase ''MsgFlashErase)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashErase_" . stripPrefix "_msgFlashErase_"}
              ''MsgFlashErase)
 $(makeLenses ''MsgFlashErase)
@@ -214,6 +226,8 @@ instance Binary MsgStmFlashLockSector where
 
   put MsgStmFlashLockSector {..} = do
     putWord32le _msgStmFlashLockSector_sector
+
+$(deriveSBP 'msgStmFlashLockSector ''MsgStmFlashLockSector)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmFlashLockSector_" . stripPrefix "_msgStmFlashLockSector_"}
              ''MsgStmFlashLockSector)
@@ -239,6 +253,8 @@ instance Binary MsgStmFlashUnlockSector where
   put MsgStmFlashUnlockSector {..} = do
     putWord32le _msgStmFlashUnlockSector_sector
 
+$(deriveSBP 'msgStmFlashUnlockSector ''MsgStmFlashUnlockSector)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmFlashUnlockSector_" . stripPrefix "_msgStmFlashUnlockSector_"}
              ''MsgStmFlashUnlockSector)
 $(makeLenses ''MsgStmFlashUnlockSector)
@@ -260,6 +276,8 @@ instance Binary MsgStmUniqueIdReq where
 
   put MsgStmUniqueIdReq =
     return ()
+
+$(deriveSBP 'msgStmUniqueIdReq ''MsgStmUniqueIdReq)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmUniqueIdReq_" . stripPrefix "_msgStmUniqueIdReq_"}
              ''MsgStmUniqueIdReq)
@@ -286,6 +304,8 @@ instance Binary MsgStmUniqueIdResp where
   put MsgStmUniqueIdResp {..} = do
     mapM_ putWord8 _msgStmUniqueIdResp_stm_id
 
+$(deriveSBP 'msgStmUniqueIdResp ''MsgStmUniqueIdResp)
+
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmUniqueIdResp_" . stripPrefix "_msgStmUniqueIdResp_"}
              ''MsgStmUniqueIdResp)
 $(makeLenses ''MsgStmUniqueIdResp)
@@ -309,6 +329,8 @@ instance Binary MsgM25FlashWriteStatus where
 
   put MsgM25FlashWriteStatus {..} = do
     mapM_ putWord8 _msgM25FlashWriteStatus_status
+
+$(deriveSBP 'msgM25FlashWriteStatus ''MsgM25FlashWriteStatus)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgM25FlashWriteStatus_" . stripPrefix "_msgM25FlashWriteStatus_"}
              ''MsgM25FlashWriteStatus)
