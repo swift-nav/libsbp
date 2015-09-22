@@ -59,11 +59,12 @@ msgSettingsWrite = 0x00A0
 
 -- | SBP class for message MSG_SETTINGS_WRITE (0x00A0).
 --
--- The setting message writes the device's configuration.
+-- The setting message writes the device configuration.
 data MsgSettingsWrite = MsgSettingsWrite
   { _msgSettingsWrite_setting :: ByteString
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
-    -- SETTING, VALUE].
+    -- SETTING, VALUE]. A device will only process to this message when it is
+    -- received from sender ID 0x42.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSettingsWrite where
@@ -85,11 +86,12 @@ msgSettingsReadReq = 0x00A4
 
 -- | SBP class for message MSG_SETTINGS_READ_REQ (0x00A4).
 --
--- The setting message reads the device's configuration.
+-- The setting message reads the devices configuration.
 data MsgSettingsReadReq = MsgSettingsReadReq
   { _msgSettingsReadReq_setting :: ByteString
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
-    -- SETTING].
+    -- SETTING]. A device will only respond to this message when it is received
+    -- from sender ID 0x42.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSettingsReadReq where
@@ -111,7 +113,7 @@ msgSettingsReadResp = 0x00A5
 
 -- | SBP class for message MSG_SETTINGS_READ_RESP (0x00A5).
 --
--- The setting message reads the device's configuration.
+-- The setting message reads the devices configuration.
 data MsgSettingsReadResp = MsgSettingsReadResp
   { _msgSettingsReadResp_setting :: ByteString
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
@@ -139,7 +141,8 @@ msgSettingsReadByIndexReq = 0x00A2
 --
 -- The settings message for iterating through the settings values. It will read
 -- the setting at an index, returning a NULL-terminated and delimited string
--- with contents [SECTION_SETTING, SETTING, VALUE].
+-- with contents [SECTION_SETTING, SETTING, VALUE]. A device will only respond
+-- to this message when it is received from sender ID 0x42.
 data MsgSettingsReadByIndexReq = MsgSettingsReadByIndexReq
   { _msgSettingsReadByIndexReq_index :: Word16
     -- ^ An index into the device settings, with values ranging from 0 to

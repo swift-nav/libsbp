@@ -42,31 +42,34 @@
 
 /** Write device configuration settings (host => device)
  *
-* The setting message writes the device's configuration.
+* The setting message writes the device configuration.
  */
 #define SBP_MSG_SETTINGS_WRITE              0x00A0
 typedef struct __attribute__((packed)) {
   char setting[0]; /**< A NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE].
+[SECTION_SETTING, SETTING, VALUE]. A device will only
+process to this message when it is received from sender ID
+0x42.
  */
 } msg_settings_write_t;
 
 
 /** Read device configuration settings (host => device)
  *
-* The setting message reads the device's configuration.
+* The setting message reads the devices configuration.
  */
 #define SBP_MSG_SETTINGS_READ_REQ           0x00A4
 typedef struct __attribute__((packed)) {
   char setting[0]; /**< A NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING].
+[SECTION_SETTING, SETTING]. A device will only respond to
+this message when it is received from sender ID 0x42.
  */
 } msg_settings_read_req_t;
 
 
 /** Read device configuration settings (host <= device)
  *
-* The setting message reads the device's configuration.
+* The setting message reads the devices configuration.
  */
 #define SBP_MSG_SETTINGS_READ_RESP          0x00A5
 typedef struct __attribute__((packed)) {
@@ -81,7 +84,8 @@ typedef struct __attribute__((packed)) {
  * The settings message for iterating through the settings
  * values. It will read the setting at an index, returning a
  * NULL-terminated and delimited string with contents
- * [SECTION_SETTING, SETTING, VALUE].
+ * [SECTION_SETTING, SETTING, VALUE]. A device will only respond to
+ * this message when it is received from sender ID 0x42.
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ  0x00A2
 typedef struct __attribute__((packed)) {

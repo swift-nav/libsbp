@@ -70,7 +70,7 @@ class MsgSettingsWrite(SBP):
   of its fields.
 
   
-  The setting message writes the device's configuration.
+  The setting message writes the device configuration.
 
   Parameters
   ----------
@@ -78,7 +78,9 @@ class MsgSettingsWrite(SBP):
     SBP parent object to inherit from.
   setting : string
     A NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE].
+[SECTION_SETTING, SETTING, VALUE]. A device will only
+process to this message when it is received from sender ID
+0x42.
 
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -147,7 +149,7 @@ class MsgSettingsReadReq(SBP):
   of its fields.
 
   
-  The setting message reads the device's configuration.
+  The setting message reads the devices configuration.
 
   Parameters
   ----------
@@ -155,7 +157,8 @@ class MsgSettingsReadReq(SBP):
     SBP parent object to inherit from.
   setting : string
     A NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING].
+[SECTION_SETTING, SETTING]. A device will only respond to
+this message when it is received from sender ID 0x42.
 
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -224,7 +227,7 @@ class MsgSettingsReadResp(SBP):
   of its fields.
 
   
-  The setting message reads the device's configuration.
+  The setting message reads the devices configuration.
 
   Parameters
   ----------
@@ -304,7 +307,8 @@ class MsgSettingsReadByIndexReq(SBP):
   The settings message for iterating through the settings
 values. It will read the setting at an index, returning a
 NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE].
+[SECTION_SETTING, SETTING, VALUE]. A device will only respond to
+this message when it is received from sender ID 0x42.
 
 
   Parameters

@@ -42,6 +42,9 @@
  * MSG_FILEIO_READ_RESP message where the message length field
  * indicates how many bytes were succesfully read.The sequence
  * number in the request will be returned in the response.
+ * If the message is invalid, a followup MSG_PRINT message will
+ * print "Invalid fileio read message". A device will only respond
+ * to this message when it is received from sender ID 0x42.
  */
 #define SBP_MSG_FILEIO_READ_REQ      0x00A8
 typedef struct __attribute__((packed)) {
@@ -75,7 +78,10 @@ typedef struct __attribute__((packed)) {
  * MSG_FILEIO_READ_DIR_RESP message containing the directory
  * listings as a NULL delimited list. The listing is chunked over
  * multiple SBP packets. The sequence number in the request will be
- * returned in the response.
+ * returned in the response.  If message is invalid, a followup
+ * MSG_PRINT message will print "Invalid fileio read message".
+ * A device will only respond to this message when it is received
+ * from sender ID 0x42.
  */
 #define SBP_MSG_FILEIO_READ_DIR_REQ  0x00A9
 typedef struct __attribute__((packed)) {
@@ -105,6 +111,9 @@ typedef struct __attribute__((packed)) {
 /** Delete a file from the file system (host => device)
  *
  * The file remove message deletes a file from the file system.
+ * If the message is invalid, a followup MSG_PRINT message will
+ * print "Invalid fileio remove message". A device will only
+ * process this message when it is received from sender ID 0x42.
  */
 #define SBP_MSG_FILEIO_REMOVE        0x00AC
 typedef struct __attribute__((packed)) {
@@ -118,7 +127,10 @@ typedef struct __attribute__((packed)) {
  * of data to a file at a given offset. Returns a copy of the
  * original MSG_FILEIO_WRITE_RESP message to check integrity of
  * the write. The sequence number in the request will be returned
- * in the response.
+ * in the response. If message is invalid, a followup MSG_PRINT
+ * message will print "Invalid fileio write message". A device will
+ * only  process this message when it is received from sender ID
+ * 0x42.
  */
 #define SBP_MSG_FILEIO_WRITE_REQ     0x00AD
 typedef struct __attribute__((packed)) {
