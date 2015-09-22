@@ -47,6 +47,9 @@ from a given offset into a file, and returns the data in a
 MSG_FILEIO_READ_RESP message where the message length field
 indicates how many bytes were succesfully read.The sequence
 number in the request will be returned in the response.
+If the message is invalid, a followup MSG_PRINT message will
+print "Invalid fileio read message". A device will only respond
+to this message when it is received from sender ID 0x42.
 
 
   Parameters
@@ -228,7 +231,10 @@ used to skip the first n elements of the file list. Returns a
 MSG_FILEIO_READ_DIR_RESP message containing the directory
 listings as a NULL delimited list. The listing is chunked over
 multiple SBP packets. The sequence number in the request will be
-returned in the response.
+returned in the response.  If message is invalid, a followup
+MSG_PRINT message will print "Invalid fileio read message".
+A device will only respond to this message when it is received
+from sender ID 0x42.
 
 
   Parameters
@@ -402,6 +408,9 @@ class MsgFileioRemove(SBP):
 
   
   The file remove message deletes a file from the file system.
+If the message is invalid, a followup MSG_PRINT message will
+print "Invalid fileio remove message". A device will only
+process this message when it is received from sender ID 0x42.
 
 
   Parameters
@@ -481,7 +490,10 @@ class MsgFileioWriteReq(SBP):
 of data to a file at a given offset. Returns a copy of the
 original MSG_FILEIO_WRITE_RESP message to check integrity of
 the write. The sequence number in the request will be returned
-in the response.
+in the response. If message is invalid, a followup MSG_PRINT
+message will print "Invalid fileio write message". A device will
+only  process this message when it is received from sender ID
+0x42.
 
 
   Parameters

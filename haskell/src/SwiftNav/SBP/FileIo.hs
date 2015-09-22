@@ -41,7 +41,10 @@ msgFileioReadReq = 0x00A8
 -- The file read message reads a certain length (up to 255 bytes) from a given
 -- offset into a file, and returns the data in a MSG_FILEIO_READ_RESP message
 -- where the message length field indicates how many bytes were succesfully
--- read.The sequence number in the request will be returned in the response.
+-- read.The sequence number in the request will be returned in the response. If
+-- the message is invalid, a followup MSG_PRINT message will print "Invalid
+-- fileio read message". A device will only respond to this message when it is
+-- received from sender ID 0x42.
 data MsgFileioReadReq = MsgFileioReadReq
   { _msgFileioReadReq_sequence :: Word32
     -- ^ Read sequence number
@@ -115,7 +118,9 @@ msgFileioReadDirReq = 0x00A9
 -- first n elements of the file list. Returns a MSG_FILEIO_READ_DIR_RESP
 -- message containing the directory listings as a NULL delimited list. The
 -- listing is chunked over multiple SBP packets. The sequence number in the
--- request will be returned in the response.
+-- request will be returned in the response.  If message is invalid, a followup
+-- MSG_PRINT message will print "Invalid fileio read message". A device will
+-- only respond to this message when it is received from sender ID 0x42.
 data MsgFileioReadDirReq = MsgFileioReadDirReq
   { _msgFileioReadDirReq_sequence :: Word32
     -- ^ Read sequence number
@@ -181,7 +186,10 @@ msgFileioRemove = 0x00AC
 
 -- | SBP class for message MSG_FILEIO_REMOVE (0x00AC).
 --
--- The file remove message deletes a file from the file system.
+-- The file remove message deletes a file from the file system. If the message
+-- is invalid, a followup MSG_PRINT message will print "Invalid fileio remove
+-- message". A device will only process this message when it is received from
+-- sender ID 0x42.
 data MsgFileioRemove = MsgFileioRemove
   { _msgFileioRemove_filename :: ByteString
     -- ^ Name of the file to delete
@@ -209,7 +217,10 @@ msgFileioWriteReq = 0x00AD
 -- The file write message writes a certain length (up to 255 bytes) of data to
 -- a file at a given offset. Returns a copy of the original
 -- MSG_FILEIO_WRITE_RESP message to check integrity of the write. The sequence
--- number in the request will be returned in the response.
+-- number in the request will be returned in the response. If message is
+-- invalid, a followup MSG_PRINT message will print "Invalid fileio write
+-- message". A device will only  process this message when it is received from
+-- sender ID 0x42.
 data MsgFileioWriteReq = MsgFileioWriteReq
   { _msgFileioWriteReq_sequence :: Word32
     -- ^ Write sequence number

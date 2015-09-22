@@ -33,32 +33,32 @@ definitions:
  - MSG_SETTINGS_WRITE:
     id: 0x00A0
     short_desc: Write device configuration settings (host => device)
-    desc: The setting message writes the device's configuration.
+    desc: The setting message writes the device configuration.
     fields:
       - setting:
           type: string
           desc: |
             A NULL-terminated and delimited string with contents
             [SECTION_SETTING, SETTING, VALUE]. A device will only
-            process to this message when it is received from
-            sender ID 0x42.
+            process to this message when it is received from sender ID
+            0x42.
 
  - MSG_SETTINGS_READ_REQ:
     id: 0x00A4
     short_desc: Read device configuration settings (host => device)
-    desc: The setting message reads the device's configuration.
+    desc: The setting message reads the devices configuration.
     fields:
       - setting:
           type: string
           desc: |
             A NULL-terminated and delimited string with contents
-            [SECTION_SETTING, SETTING]. A device will only
-            respond to this message when it is received from sender ID 0x42.
+            [SECTION_SETTING, SETTING]. A device will only respond to
+            this message when it is received from sender ID 0x42.
 
  - MSG_SETTINGS_READ_RESP:
     id: 0x00A5
     short_desc: Read device configuration settings (host <= device)
-    desc: The setting message reads the device's configuration.
+    desc: The setting message reads the devices configuration.
     fields:
       - setting:
           type: string
@@ -73,8 +73,8 @@ definitions:
       The settings message for iterating through the settings
       values. It will read the setting at an index, returning a
       NULL-terminated and delimited string with contents
-      [SECTION_SETTING, SETTING, VALUE]. A device will only respond to this message
-      when it is received from sender ID 0x42.
+      [SECTION_SETTING, SETTING, VALUE]. A device will only respond to
+      this message when it is received from sender ID 0x42.
     fields:
       - index:
           type: u16
