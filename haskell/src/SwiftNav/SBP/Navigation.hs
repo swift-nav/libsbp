@@ -455,3 +455,34 @@ $(deriveSBP 'msgVelNed ''MsgVelNed)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelNed_" . stripPrefix "_msgVelNed_"}
              ''MsgVelNed)
 $(makeLenses ''MsgVelNed)
+
+msgBaselineHeading :: Word16
+msgBaselineHeading = 0x0207
+
+-- | SBP class for message MSG_BASELINE_HEADING (0x0207).
+--
+-- This message reports the baseline heading pointing from the base station to
+-- the rover relative to North. The full GPS time is given by the preceding
+-- MSG_GPS_TIME with the matching time-of-week (tow).
+data MsgBaselineHeading = MsgBaselineHeading
+  { _msgBaselineHeading_tow   :: Word32
+    -- ^ GPS Time of Week
+  , _msgBaselineHeading_heading :: Word32
+    -- ^ Heading
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgBaselineHeading where
+  get = do
+    _msgBaselineHeading_tow <- getWord32le
+    _msgBaselineHeading_heading <- getWord32le
+    return MsgBaselineHeading {..}
+
+  put MsgBaselineHeading {..} = do
+    putWord32le _msgBaselineHeading_tow
+    putWord32le _msgBaselineHeading_heading
+
+$(deriveSBP 'msgBaselineHeading ''MsgBaselineHeading)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineHeading_" . stripPrefix "_msgBaselineHeading_"}
+             ''MsgBaselineHeading)
+$(makeLenses ''MsgBaselineHeading)

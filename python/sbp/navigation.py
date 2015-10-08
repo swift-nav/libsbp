@@ -938,6 +938,89 @@ implemented). Defaults to 0.
     d.update(j)
     return d
     
+SBP_MSG_BASELINE_HEADING = 0x0207
+class MsgBaselineHeading(SBP):
+  """SBP class for message MSG_BASELINE_HEADING (0x0207).
+
+  You can have MSG_BASELINE_HEADING inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the baseline heading pointing from the base station
+to the rover relative to North. The full GPS time is given by the
+preceding MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  heading : int
+    Heading
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgBaselineHeading",
+                   ULInt32('tow'),
+                   ULInt32('heading'),)
+  __slots__ = [
+               'tow',
+               'heading',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgBaselineHeading,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgBaselineHeading, self).__init__()
+      self.msg_type = SBP_MSG_BASELINE_HEADING
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.heading = kwargs.pop('heading')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgBaselineHeading._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgBaselineHeading._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgBaselineHeading(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgBaselineHeading, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0100: MsgGPSTime,
@@ -948,4 +1031,5 @@ msg_classes = {
   0x0203: MsgBaselineNED,
   0x0204: MsgVelECEF,
   0x0205: MsgVelNED,
+  0x0207: MsgBaselineHeading,
 }
