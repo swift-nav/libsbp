@@ -39,7 +39,7 @@ public class SBPHandler {
 
     public SBPHandler(SBPDriver driver_) {
         driver = driver_;
-        callbacks = new HashMap<>();
+        callbacks = new HashMap<Integer, LinkedList<SBPCallback>>();
     }
 
     /** Start the listener/dispatch thread */
@@ -116,7 +116,7 @@ public class SBPHandler {
         if (callbacks.containsKey(id)) {
             cblist = callbacks.get(id);
         } else {
-            cblist = new LinkedList<>();
+            cblist = new LinkedList<SBPCallback>();
             callbacks.put(id, cblist);
         }
         cblist.add(cb);
@@ -134,7 +134,7 @@ public class SBPHandler {
         if (callbacks.containsKey(null)) {
             cblist = callbacks.get(null);
         } else {
-            cblist = new LinkedList<>();
+            cblist = new LinkedList<SBPCallback>();
             callbacks.put(null, cblist);
         }
         cblist.add(cb);
