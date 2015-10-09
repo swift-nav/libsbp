@@ -469,17 +469,25 @@ data MsgBaselineHeading = MsgBaselineHeading
     -- ^ GPS Time of Week
   , _msgBaselineHeading_heading :: Word32
     -- ^ Heading
+  , _msgBaselineHeading_n_sats :: Word8
+    -- ^ Number of satellites used in solution
+  , _msgBaselineHeading_flags :: Word8
+    -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBaselineHeading where
   get = do
     _msgBaselineHeading_tow <- getWord32le
     _msgBaselineHeading_heading <- getWord32le
+    _msgBaselineHeading_n_sats <- getWord8
+    _msgBaselineHeading_flags <- getWord8
     return MsgBaselineHeading {..}
 
   put MsgBaselineHeading {..} = do
     putWord32le _msgBaselineHeading_tow
     putWord32le _msgBaselineHeading_heading
+    putWord8 _msgBaselineHeading_n_sats
+    putWord8 _msgBaselineHeading_flags
 
 $(deriveSBP 'msgBaselineHeading ''MsgBaselineHeading)
 

@@ -960,16 +960,24 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     GPS Time of Week
   heading : int
     Heading
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = Struct("MsgBaselineHeading",
                    ULInt32('tow'),
-                   ULInt32('heading'),)
+                   ULInt32('heading'),
+                   ULInt8('n_sats'),
+                   ULInt8('flags'),)
   __slots__ = [
                'tow',
                'heading',
+               'n_sats',
+               'flags',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -984,6 +992,8 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.tow = kwargs.pop('tow')
       self.heading = kwargs.pop('heading')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
 
   def __repr__(self):
     return fmt_repr(self)

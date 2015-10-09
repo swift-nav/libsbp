@@ -234,6 +234,8 @@ implemented). Defaults to 0.
 typedef struct __attribute__((packed)) {
   u32 tow;        /**< GPS Time of Week [ms] */
   u32 heading;    /**< Heading [mdeg] */
+  u8 n_sats;     /**< Number of satellites used in solution */
+  u8 flags;      /**< Status flags */
 } msg_baseline_heading_t;
 
 
