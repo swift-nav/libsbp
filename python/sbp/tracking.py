@@ -19,6 +19,7 @@ from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.signal import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml with generate.py.
 # Please do not hand edit!
@@ -35,10 +36,8 @@ signal power.
   ----------
   state : int
     Status of tracking channel
-  sid : int
-    Signal identifier being tracked - values 0x00 through 0x1F
-represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
-other values reserved for future use
+  sid : sbp_signal
+    Signal identifier being tracked.
 
   cn0 : float
     Carrier-to-noise density
@@ -46,7 +45,7 @@ other values reserved for future use
   """
   _parser = Embedded(Struct("TrackingChannelState",
                      ULInt8('state'),
-                     ULInt32('sid'),
+                     Struct('sid', sbp_signal._parser),
                      LFloat32('cn0'),))
   __slots__ = [
                'state',
@@ -257,10 +256,8 @@ update interval.
     SBP parent object to inherit from.
   channel : int
     Tracking channel of origin
-  sid : int
-    Signal identifier being tracked - values 0x00 through 0x1F
-represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
-other values reserved for future use
+  sid : sbp_signal
+    Signal identifier being tracked.
 
   corrs : array
     Early, Prompt and Late correlations
@@ -270,7 +267,7 @@ other values reserved for future use
   """
   _parser = Struct("MsgTrackingIq",
                    ULInt8('channel'),
-                   ULInt32('sid'),
+                   Struct('sid', sbp_signal._parser),
                    Struct('corrs', Array(3, Struct('corrs', TrackingChannelCorrelation._parser))),)
   __slots__ = [
                'channel',
@@ -324,6 +321,83 @@ other values reserved for future use
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgTrackingIq, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_TRACKING_BIT = 0x001F
+class MsgTrackingBit(SBP):
+  """SBP class for message MSG_TRACKING_BIT (0x001F).
+
+  You can have MSG_TRACKING_BIT inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  sid : sbp_signal
+  bit_val : int
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgTrackingBit",
+                   Struct('sid', sbp_signal._parser),
+                   ULInt8('bit_val'),)
+  __slots__ = [
+               'sid',
+               'bit_val',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgTrackingBit,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgTrackingBit, self).__init__()
+      self.msg_type = SBP_MSG_TRACKING_BIT
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.sid = kwargs.pop('sid')
+      self.bit_val = kwargs.pop('bit_val')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgTrackingBit._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgTrackingBit._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgTrackingBit(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgTrackingBit, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -407,5 +481,6 @@ class MsgTrackingStateDepA(SBP):
 msg_classes = {
   0x0013: MsgTrackingState,
   0x001C: MsgTrackingIq,
+  0x001F: MsgTrackingBit,
   0x0016: MsgTrackingStateDepA,
 }

@@ -18,6 +18,7 @@ from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.signal import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml with generate.py.
 # Please do not hand edit!
@@ -172,10 +173,8 @@ tracked.
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
 
-  sid : int
-    Signal identifier of the satellite signal - values 0x00
-through 0x1F represent GPS PRNs 1 through 32 respectively
-(PRN-1 notation); other values reserved for future use.
+  sid : sbp_signal
+    Signal identifier of the satellite signal.
 
 
   """
@@ -184,7 +183,7 @@ through 0x1F represent GPS PRNs 1 through 32 respectively
                      Struct('L', CarrierPhase._parser),
                      ULInt8('cn0'),
                      ULInt16('lock'),
-                     ULInt32('sid'),))
+                     Struct('sid', sbp_signal._parser),))
   __slots__ = [
                'P',
                'L',
@@ -450,11 +449,233 @@ error in the pseudo-absolute position output.
     d.update(j)
     return d
     
-SBP_MSG_EPHEMERIS = 0x0047
-class MsgEphemeris(SBP):
-  """SBP class for message MSG_EPHEMERIS (0x0047).
+SBP_MSG_SBAS_DEC = 0x01EE
+class MsgSbasDec(SBP):
+  """SBP class for message MSG_SBAS_DEC (0x01EE).
 
-  You can have MSG_EPHEMERIS inherent its fields directly
+  You can have MSG_SBAS_DEC inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  sid : sbp_signal
+    Signal identifier of the satellite beign tracked.
+  off_by_one : int
+    0 if the input was shifted left by 1 when feed into the decoder, 0 if not.
+  raw : array
+    Raw data after being decoded.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgSbasDec",
+                   Struct('sid', sbp_signal._parser),
+                   ULInt8('off_by_one'),
+                   Struct('raw', Array(93, ULInt8('raw'))),)
+  __slots__ = [
+               'sid',
+               'off_by_one',
+               'raw',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSbasDec,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSbasDec, self).__init__()
+      self.msg_type = SBP_MSG_SBAS_DEC
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.sid = kwargs.pop('sid')
+      self.off_by_one = kwargs.pop('off_by_one')
+      self.raw = kwargs.pop('raw')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSbasDec._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSbasDec._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgSbasDec(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSbasDec, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_EPHEMERIS_XYZ = 0x0099
+class MsgEphemerisXyz(SBP):
+  """SBP class for message MSG_EPHEMERIS_XYZ (0x0099).
+
+  You can have MSG_EPHEMERIS_XYZ inherent its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The ephemeris message returns a set of satellite orbit
+parameters that is used to calculate GPS satellite position,
+velocity, and clock offset.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  toe_tow : double
+    Time of week
+  toe_wn : int
+    Week number
+  iod : int
+    Issue of data
+  toa : int
+    Time of Applicability
+  ura : int
+    User Range Accuracy
+  pos : array
+    Position of the satellite
+  rate : array
+    Velocity of the satellite
+  acc : array
+    Acceleration of the satellite
+  a_gf0 : int
+    Time offset with respect of network time
+  a_gf1 : int
+    Time drift with respect of network time
+  valid : int
+    Is valid?
+  healthy : int
+    Satellite is healthy?
+  sid : sbp_signal
+    Signal identifier of the satellite beign tracked.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgEphemerisXyz",
+                   LFloat64('toe_tow'),
+                   ULInt16('toe_wn'),
+                   ULInt8('iod'),
+                   ULInt16('toa'),
+                   ULInt8('ura'),
+                   Struct('pos', Array(3, LFloat64('pos'))),
+                   Struct('rate', Array(3, LFloat64('rate'))),
+                   Struct('acc', Array(3, LFloat64('acc'))),
+                   ULInt16('a_gf0'),
+                   ULInt8('a_gf1'),
+                   ULInt8('valid'),
+                   ULInt8('healthy'),
+                   Struct('sid', sbp_signal._parser),)
+  __slots__ = [
+               'toe_tow',
+               'toe_wn',
+               'iod',
+               'toa',
+               'ura',
+               'pos',
+               'rate',
+               'acc',
+               'a_gf0',
+               'a_gf1',
+               'valid',
+               'healthy',
+               'sid',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgEphemerisXyz,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgEphemerisXyz, self).__init__()
+      self.msg_type = SBP_MSG_EPHEMERIS_XYZ
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.toe_tow = kwargs.pop('toe_tow')
+      self.toe_wn = kwargs.pop('toe_wn')
+      self.iod = kwargs.pop('iod')
+      self.toa = kwargs.pop('toa')
+      self.ura = kwargs.pop('ura')
+      self.pos = kwargs.pop('pos')
+      self.rate = kwargs.pop('rate')
+      self.acc = kwargs.pop('acc')
+      self.a_gf0 = kwargs.pop('a_gf0')
+      self.a_gf1 = kwargs.pop('a_gf1')
+      self.valid = kwargs.pop('valid')
+      self.healthy = kwargs.pop('healthy')
+      self.sid = kwargs.pop('sid')
+
+  def __repr__(self):
+    return fmt_repr(self)
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgEphemerisXyz._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgEphemerisXyz._parser.build(c)
+    return self.pack()
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    sbp = SBP.from_json_dict(d)
+    return MsgEphemerisXyz(sbp)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgEphemerisXyz, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_EPHEMERIS_KEPLER = 0x0047
+class MsgEphemerisKepler(SBP):
+  """SBP class for message MSG_EPHEMERIS_KEPLER (0x0047).
+
+  You can have MSG_EPHEMERIS_KEPLER inherent its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -520,10 +741,8 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Is valid?
   healthy : int
     Satellite is healthy?
-  sid : int
-    Signal identifier being tracked - values 0x00 through 0x1F represent
-GPS PRNs 1 through 32 respectively (PRN-1 notation); other values
-reserved for future use
+  sid : sbp_signal
+    Signal identifier of the satellite beign tracked.
 
   iode : int
     Issue of ephemeris data
@@ -535,7 +754,7 @@ reserved for future use
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgEphemeris",
+  _parser = Struct("MsgEphemerisKepler",
                    LFloat64('tgd'),
                    LFloat64('c_rs'),
                    LFloat64('c_rc'),
@@ -561,7 +780,7 @@ reserved for future use
                    ULInt16('toc_wn'),
                    ULInt8('valid'),
                    ULInt8('healthy'),
-                   ULInt32('sid'),
+                   Struct('sid', sbp_signal._parser),
                    ULInt8('iode'),
                    ULInt16('iodc'),
                    ULInt32('reserved'),)
@@ -599,13 +818,13 @@ reserved for future use
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgEphemeris,
+      super( MsgEphemerisKepler,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgEphemeris, self).__init__()
-      self.msg_type = SBP_MSG_EPHEMERIS
+      super( MsgEphemerisKepler, self).__init__()
+      self.msg_type = SBP_MSG_EPHEMERIS_KEPLER
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.tgd = kwargs.pop('tgd')
       self.c_rs = kwargs.pop('c_rs')
@@ -645,7 +864,7 @@ reserved for future use
     the message.
 
     """
-    p = MsgEphemeris._parser.parse(d)
+    p = MsgEphemerisKepler._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -654,7 +873,7 @@ reserved for future use
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgEphemeris._parser.build(c)
+    self.payload = MsgEphemerisKepler._parser.build(c)
     return self.pack()
 
   @staticmethod
@@ -664,11 +883,11 @@ reserved for future use
     """
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
-    return MsgEphemeris(sbp)
+    return MsgEphemerisKepler(sbp)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgEphemeris, self).to_json_dict()
+    d = super( MsgEphemerisKepler, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -1164,7 +1383,9 @@ satellite being tracked.
 msg_classes = {
   0x0043: MsgObs,
   0x0044: MsgBasePos,
-  0x0047: MsgEphemeris,
+  0x01EE: MsgSbasDec,
+  0x0099: MsgEphemerisXyz,
+  0x0047: MsgEphemerisKepler,
   0x001A: MsgEphemerisDepA,
   0x0046: MsgEphemerisDepB,
   0x0045: MsgObsDepA,
