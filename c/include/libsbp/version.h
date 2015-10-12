@@ -23,7 +23,7 @@
 /** Protocol major version. */
 #define SBP_MAJOR_VERSION 0
 /** Protocol minor version. */
-#define SBP_MINOR_VERSION 50
+#define SBP_MINOR_VERSION 51
 
 /** \} */
 
