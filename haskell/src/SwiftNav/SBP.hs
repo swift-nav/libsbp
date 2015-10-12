@@ -60,6 +60,7 @@ data SBPMsg =
    | SBPMsgAlmanac MsgAlmanac Msg
    | SBPMsgBasePos MsgBasePos Msg
    | SBPMsgBaselineEcef MsgBaselineEcef Msg
+   | SBPMsgBaselineHeading MsgBaselineHeading Msg
    | SBPMsgBaselineNed MsgBaselineNed Msg
    | SBPMsgBootloaderHandshakeDepA MsgBootloaderHandshakeDepA Msg
    | SBPMsgBootloaderHandshakeReq MsgBootloaderHandshakeReq Msg
@@ -138,6 +139,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgAlmanac = SBPMsgAlmanac (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgBasePos = SBPMsgBasePos (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgBaselineEcef = SBPMsgBaselineEcef (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgBaselineHeading = SBPMsgBaselineHeading (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgBaselineNed = SBPMsgBaselineNed (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq (decode (fromStrict _msgSBPPayload)) sbp
@@ -210,6 +212,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgAlmanac _ sbp) = sbp
       encode' (SBPMsgBasePos _ sbp) = sbp
       encode' (SBPMsgBaselineEcef _ sbp) = sbp
+      encode' (SBPMsgBaselineHeading _ sbp) = sbp
       encode' (SBPMsgBaselineNed _ sbp) = sbp
       encode' (SBPMsgBootloaderHandshakeDepA _ sbp) = sbp
       encode' (SBPMsgBootloaderHandshakeReq _ sbp) = sbp
@@ -284,6 +287,7 @@ instance FromJSON SBPMsg where
         | msgType == msgAlmanac = SBPMsgAlmanac <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBasePos = SBPMsgBasePos <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBaselineEcef = SBPMsgBaselineEcef <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgBaselineHeading = SBPMsgBaselineHeading <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBaselineNed = SBPMsgBaselineNed <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq <$> parseJSON obj <*> parseJSON obj
@@ -360,6 +364,7 @@ instance ToJSON SBPMsg where
    toJSON (SBPMsgAlmanac msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgBasePos msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgBaselineEcef msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgBaselineHeading msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgBaselineNed msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgBootloaderHandshakeDepA msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgBootloaderHandshakeReq msg sbp) = toJSON msg `merge` toJSON sbp

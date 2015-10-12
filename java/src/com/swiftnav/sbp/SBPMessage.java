@@ -146,7 +146,7 @@ public class SBPMessage {
         }
 
         public <T extends SBPStruct> T[] getArray(Class<T> t) {
-            LinkedList<T> l = new LinkedList<>();
+            LinkedList<T> l = new LinkedList<T>();
             while (true) {
                 try {
                     T tmp = t.newInstance();
