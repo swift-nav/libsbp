@@ -95,10 +95,12 @@ class HTTPDriver(BaseDriver):
 
   """
 
-  def __init__(self, device_uid, url='http://skylark.swiftnav.com'):
+  def __init__(self,
+               device_uid,
+               url="http://broker.testing.skylark.swiftnav.com"):
     self.device_uid = device_uid
     headers = {'Device-Uid': self.device_uid,
-               'Accept': 'application/sbp'}
+               'Accept': 'application/vnd.swiftnav.broker.v1+sbp'}
     self.read_response = requests.get(url, stream=True, headers=headers)
 
   def flush(self):
