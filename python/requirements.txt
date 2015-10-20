@@ -3,6 +3,8 @@ construct==2.5.2
 cov-core==1.15.0
 coverage==3.7.1
 flake8==2.3.0
+httpretty
+requests
 futures==2.2.0
 pep8==1.5.7
 pyftdi==0.6.3
