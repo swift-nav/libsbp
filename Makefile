@@ -25,6 +25,7 @@ help:
 	@echo "  help      to display this help message"
 	@echo "  all       to make SBP clients across all languages"
 	@echo "  c         to make C headers"
+	@echo "  deps      to install dependencies"
 	@echo "  dist      to distribute packages"
 	@echo "  docs      to make HTML and pdf documentation"
 	@echo "  html      to make all HTML language docs"
@@ -36,7 +37,7 @@ help:
 	@echo "  test      to run all tests"
 	@echo
 
-all: c python haskell test docs
+all: deps c python haskell test docs
 
 c:
 	@echo
@@ -50,6 +51,16 @@ c:
 	cd $(SWIFTNAV_ROOT);
 	@echo
 	@echo "Finished. Please check $(SWIFTNAV_ROOT)/c/include/libsbp."
+
+deps:
+	@echo
+	@echo "Installing dependencies..."
+	@echo
+	cd $(SWIFTNAV_ROOT)/generator; \
+	sudo pip install -r requirements.txt; \
+	cd ../
+	@echo
+	@echo "Finished!"
 
 python:
 	@echo
@@ -148,11 +159,6 @@ test:	java
 	@echo "Running Python tests..."
 	@echo
 	cd $(SWIFTNAV_ROOT)/python/ && tox
-	cd $(SWIFTNAV_ROOT);
-	@echo
-	@echo "Running Java tests..."
-	@echo
-	cd $(SWIFTNAV_ROOT)/java/ && gradle test
 	cd $(SWIFTNAV_ROOT);
 	@echo
 	@echo "Finished!"

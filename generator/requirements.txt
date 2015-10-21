@@ -10,5 +10,6 @@ pylint
 pytest
 tox
 voluptuous
+construct
 pytest-cov
 pytest-xdist
