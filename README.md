@@ -1,5 +1,7 @@
 ## Specification and Bindings for Swift Binary Protocol
 
+[![Build status][1]][2]
+
 The Swift Navigation Binary Protocol (SBP) is a fast, simple, and
 minimal binary protocol for communicating with Swift devices. It is
 the native binary protocol used by the
@@ -42,3 +44,6 @@ libraries is [here](http://swift-nav.github.io/libsbp/).
 Copyright © 2015 Swift Navigation
 
 Distributed under LGPLv3.0.
+
+[1]: https://travis-ci.org/swift-nav/libsbp.png
+[2]: https://travis-ci.org/swift-nav/libsbp
