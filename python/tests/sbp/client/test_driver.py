@@ -9,9 +9,13 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+from httpretty import activate, is_enabled, GET, register_uri, Response
+from sbp.client.drivers.network_drivers import HTTPDriver
+from sbp.client.drivers.network_drivers import HTTPException
 from sbp.client.drivers.pyserial_driver import PySerialDriver
 from sbp.client import Handler, Framer
 from sbp.logging import MsgPrintDep
+import pytest
 import SocketServer
 import threading
 import time
@@ -51,5 +55,65 @@ def test_tcp_logger():
     with Handler(Framer(driver.read, None, verbose=False)) as link:
       link.add_callback(assert_logger)
       while True:
-        if (time.time() - t0) < sleep:
+        if time.time() - t0 < sleep:
           break
+
+BASE_STATION_URI = "http://broker.testing.skylark.swiftnav.com"
+
+@activate
+def test_http_test_pass():
+  assert is_enabled()
+  msg = MsgPrintDep(text='abcd')
+  register_uri(GET,
+               BASE_STATION_URI,
+               msg.to_binary(),
+               content_type="application/vnd.swiftnav.broker.v1+sbp")
+  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
+    assert driver.read(size=255) == msg.to_binary()
+
+@activate
+def test_http_test_fail():
+  assert is_enabled()
+  msg = MsgPrintDep(text='abcd')
+  register_uri(GET,
+               BASE_STATION_URI,
+               msg.to_binary(),
+               content_type="application/vnd.swiftnav.broker.v1+sbp",
+               status=400)
+  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
+    with pytest.raises(RuntimeError) as exc_info:
+      driver.read(size=255)
+  assert exc_info.value.message.startswith("Request failed! With code 400:")
+
+def mock_streaming_msgs(msgs, interval=0.1):
+  for m in msgs:
+    time.sleep(interval)
+    yield m
+
+@activate
+def test_http_test_pass_streaming():
+  assert is_enabled()
+  msgs = [MsgPrintDep(text='foo'),
+          MsgPrintDep(text='bar'),
+          MsgPrintDep(text='baz')]
+  register_uri(GET,
+               BASE_STATION_URI,
+               mock_streaming_msgs([m.to_binary() for m in msgs]),
+               content_type="application/vnd.swiftnav.broker.v1+sbp",
+               streaming=True)
+  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
+    assert driver.read(size=255) == ''.join([m.to_binary() for m in msgs])
+
+@activate
+def test_http_test_pass_retry():
+  assert is_enabled()
+  msg = MsgPrintDep(text='abcd')
+  responses = [Response(body="first response",
+                        status=500,
+                        content_type="application/vnd.swiftnav.broker.v1+sbp"),
+               Response(body='second and last response',
+                        status=200,
+                        content_type="application/vnd.swiftnav.broker.v1+sbp")]
+  register_uri(GET, BASE_STATION_URI, responses)
+  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
+    driver.read(size=255)

@@ -8,15 +8,16 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+"""TCP and HTTP networking client components.
+
+"""
+
 from .base_driver import BaseDriver
+from requests.adapters import DEFAULT_POOLBLOCK, DEFAULT_POOLSIZE, HTTPAdapter
+from requests.packages.urllib3.util import Retry
 import requests
 import socket
-import sys
 import threading
-import warnings
-
-# TODO (Buro): Consider making a basic, standard library async tcp
-# client: http://pymotw.com/2/asyncore/.
 
 class TCPDriver(BaseDriver):
   """TCPDriver
@@ -80,6 +81,18 @@ class TCPDriver(BaseDriver):
       self._write_lock.release()
 
 
+class HTTPException(Exception):
+  pass
+
+DEFAULT_CONNECT_TIMEOUT = 10
+DEFAULT_READ_TIMEOUT = 10
+DEFAULT_TIMEOUT = (DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT)
+MAX_CONNECT_RETRIES = 10
+MAX_READ_RETRIES = 10
+DEFAULT_RETRIES = (MAX_CONNECT_RETRIES, MAX_READ_RETRIES)
+MAX_REDIRECTS = 0
+DEFAULT_BACKOFF_FACTOR = 0.2
+
 class HTTPDriver(BaseDriver):
   """HTTPDriver
 
@@ -92,16 +105,50 @@ class HTTPDriver(BaseDriver):
     Device unique id
   url : str
     HTTP endpoint
+  retries : tuple
+    Configure connect and read retry count. Defaults to
+    (MAX_CONNECT_RETRIES, MAX_READ_RETRIES).
+  timeout : tuple
+    Configure connect and read timeouts. Defaults to
+    (DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT).
 
   """
 
   def __init__(self,
                device_uid,
-               url="http://broker.testing.skylark.swiftnav.com"):
+               url="http://broker.testing.skylark.swiftnav.com",
+               retries=DEFAULT_RETRIES,
+               timeout=DEFAULT_TIMEOUT):
+    self.session = requests.Session()
+    retry = Retry(connect=DEFAULT_RETRIES[0],
+                  read=DEFAULT_RETRIES[1],
+                  redirect=MAX_REDIRECTS,
+                  status_forcelist=[500],
+                  backoff_factor=DEFAULT_BACKOFF_FACTOR)
+    self.session.mount("http://",
+                       HTTPAdapter(pool_connections=DEFAULT_POOLSIZE,
+                                   pool_maxsize=DEFAULT_POOLSIZE,
+                                   pool_block=DEFAULT_POOLBLOCK,
+                                   max_retries=retry))
     self.device_uid = device_uid
+    self.timeout = timeout
     headers = {'Device-Uid': self.device_uid,
                'Accept': 'application/vnd.swiftnav.broker.v1+sbp'}
-    self.read_response = requests.get(url, stream=True, headers=headers)
+    try:
+      self.read_response = self.session.get(url,
+                                            stream=True,
+                                            headers=headers,
+                                            timeout=self.timeout)
+    except requests.exceptions.ConnectionError:
+      msg = "Invalid request to %s with headers %s." % (url, headers)
+      raise HTTPException(msg)
+    except requests.exceptions.ConnectTimeout:
+      raise HTTPException(msg)
+    except requests.exceptions.RetryError:
+      raise HTTPException(msg)
+    except requests.exceptions.ReadTimeout:
+      msg = "Invalid request to %s with headers %s." % (url, headers)
+      raise HTTPException(msg)
 
   def flush(self):
     """
@@ -131,7 +178,8 @@ class HTTPDriver(BaseDriver):
       Size to read (in bytes).
     """
     if not self.read_response.ok:
-      warnings.warn("Request failed! With code %s: %s " \
-                    % (self.read_response.status_code, self.read_response.text))
-      return
+      msg = "Request failed! With code %s: %s " \
+            % (self.read_response.status_code, self.read_response.text)
+      raise RuntimeError(msg)
+    print self.read_response.status_code
     return self.read_response.raw.read(size)
