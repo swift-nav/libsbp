@@ -181,5 +181,4 @@ class HTTPDriver(BaseDriver):
       msg = "Request failed! With code %s: %s " \
             % (self.read_response.status_code, self.read_response.text)
       raise RuntimeError(msg)
-    print self.read_response.status_code
     return self.read_response.raw.read(size)
