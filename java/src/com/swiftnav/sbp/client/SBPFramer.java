@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class SBPFramer extends SBPIterable {
+public class SBPFramer extends SBPIterable implements SBPSender {
     private static final byte PREAMBLE = 0x55;
 
     private static final int PREAMBLE_SIZE = 1;
@@ -73,7 +73,7 @@ public class SBPFramer extends SBPIterable {
     }
 
     /** Send an SBPMessage using the driver */
-    public void send(SBPMessage msg) throws IOException {
+    public void sendMessage(SBPMessage msg) throws IOException {
         byte[] payload = msg.getPayload();
         byte[] binmsg = new byte[PREAMBLE_SIZE + HEADER_SIZE + payload.length + CRC_SIZE];
         ByteBuffer bb = ByteBuffer.wrap(binmsg).order(ByteOrder.LITTLE_ENDIAN);
