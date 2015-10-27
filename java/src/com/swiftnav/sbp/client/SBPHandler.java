@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -184,7 +185,11 @@ public class SBPHandler implements Iterable<SBPMessage> {
 
         @Override
         protected SBPMessage getNext() {
-            return queue.poll();
+            try {
+                return queue.take();
+            } catch (InterruptedException e) {
+                throw new NoSuchElementException();
+            }
         }
     }
 }
