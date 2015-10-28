@@ -19,10 +19,6 @@ public class SBPForwarder extends Thread {
         for (SBPMessage msg : source) {
             System.out.println(msg.toString());
             try {
-                if (msg.type == MsgEphemeris.TYPE) {
-                    System.out.println(msg.toJSON());
-                    System.out.println(msg.getPayload().toString());
-                }
                 sink.sendMessage(msg);
             } catch (IOException e) {
                 e.printStackTrace();

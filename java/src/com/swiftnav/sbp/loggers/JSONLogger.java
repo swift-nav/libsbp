@@ -11,8 +11,8 @@
  */
 package com.swiftnav.sbp.loggers;
 
-import com.swiftnav.sbp.client.SBPCallback;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.client.SBPSender;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +22,7 @@ import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class JSONLogger implements SBPCallback {
+public class JSONLogger implements SBPSender {
     private OutputStream stream;
     private long starttime;
 
@@ -41,7 +41,7 @@ public class JSONLogger implements SBPCallback {
     }
 
     @Override
-    public void receiveCallback(SBPMessage msg) {
+    public void sendMessage(SBPMessage msg) throws IOException {
         JSONObject logobj = new JSONObject();
         try {
             logobj.put("delta", delta());
