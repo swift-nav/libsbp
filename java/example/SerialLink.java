@@ -10,26 +10,28 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 import com.swiftnav.sbp.SBPMessage;
-import com.swiftnav.sbp.client.SBPCallback;
+import com.swiftnav.sbp.client.SBPDriver;
+import com.swiftnav.sbp.client.SBPForwarder;
+import com.swiftnav.sbp.client.SBPFramer;
 import com.swiftnav.sbp.client.SBPHandler;
 import com.swiftnav.sbp.drivers.SBPDriverJSSC;
-import com.swiftnav.sbp.loggers.JSONLogger;
+import com.swiftnav.sbp.drivers.SBPDriverHTTP;
 import com.swiftnav.sbp.logging.MsgLog;
 import com.swiftnav.sbp.tracking.MsgTrackingState;
 import com.swiftnav.sbp.tracking.TrackingChannelState;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.lang.Integer;
 import java.lang.NumberFormatException;
 import java.lang.System;
-import java.util.Calendar;
+import java.net.MalformedURLException;
 
 import jssc.SerialPortException;
 
 public class SerialLink {
+    public static final String SKYLARK_OBS_URL = "http://broker.testing.skylark.swiftnav.com";
+    public static final String PIKSI_UUID = "6762d1d5-6282-5874-8557-b80ae55d9a84";
     private SBPHandler handler;
+    private SBPFramer framer;
 
     public static void main(String[] args) {
         if (args.length == 1) {
@@ -52,54 +54,64 @@ public class SerialLink {
         System.exit(-1);
     }
 
+    private Iterable<SBPMessage> connectObsServer() {
+        try {
+            SBPDriver driver = new SBPDriverHTTP(PIKSI_UUID, SKYLARK_OBS_URL);
+            return new SBPFramer(driver);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     SerialLink(String port) {
         this(port, SBPDriverJSSC.BAUDRATE_DEFAULT);
     }
     SerialLink(String port, int baudrate) {
         try {
-            handler = new SBPHandler(new SBPDriverJSSC(port, baudrate));
+            framer = new SBPFramer(new SBPDriverJSSC(port, baudrate));
+            handler = new SBPHandler(framer);
+            handler.start();
         } catch (SerialPortException e) {
             System.err.println("Failed to open serial port: " + e.toString());
             System.exit(-2);
         }
-        handler.addCallback(MsgLog.TYPE, logHandler);
-        handler.addCallback(MsgTrackingState.TYPE, trackingHandler);
-        try {
-            Calendar cal = Calendar.getInstance();
-            String logfile = String.format("serial-link-%1$tY%1$tm%1$td-%1$tH%1$tM%1$tS.log.json", cal);
-            handler.addCallback(new JSONLogger(new FileOutputStream(logfile)));
-        } catch (FileNotFoundException e) {
-            System.err.println("Error opening logfile: " + e.toString());
+        Iterable<SBPMessage> obsServer = connectObsServer();
+        if (obsServer != null)
+            new SBPForwarder(obsServer, framer).start();
+
+        for (SBPMessage msg : handler) {
+            switch (msg.type) {
+                case MsgLog.TYPE:
+                    logHandler(msg);
+                    break;
+                case MsgTrackingState.TYPE:
+                    trackingHandler(msg);
+                    break;
+            }
         }
-        handler.start();
     }
 
-    SBPCallback logHandler = new SBPCallback() {
-        @Override
-        public void receiveCallback(SBPMessage msg_) {
-            MsgLog msg = (MsgLog)msg_;
-            System.out.print(msg.text);
-        }
-    };
+    public void logHandler(SBPMessage msg_) {
+        MsgLog msg = (MsgLog) msg_;
+        System.out.print(msg.text);
+    }
 
-    SBPCallback trackingHandler = new SBPCallback() {
-        @Override
-        public void receiveCallback(SBPMessage msg_) {
-            MsgTrackingState msg = (MsgTrackingState)msg_;
-            
-            boolean tracking = false;
-            for (TrackingChannelState state : msg.states)
-                if (state.state != 0)
-                    tracking = true;
-            if (!tracking)
-                return;
+    public void trackingHandler(SBPMessage msg_) {
+        MsgTrackingState msg = (MsgTrackingState) msg_;
 
-            System.out.print("Tracking: ");
-            for (TrackingChannelState state : msg.states) {
-                if (state.state != 0)
-                    System.out.printf("PRN%d(%.1f) ", state.sid + 1, state.cn0);
-            }
-            System.out.println();
+        boolean tracking = false;
+        for (TrackingChannelState state : msg.states)
+            if (state.state != 0)
+                tracking = true;
+        if (!tracking)
+            return;
+
+        System.out.print("Tracking: ");
+        for (TrackingChannelState state : msg.states) {
+            if (state.state != 0)
+                System.out.printf("PRN%d(%.1f) ", state.sid + 1, state.cn0);
         }
-    };
+        System.out.println();
+    }
 }

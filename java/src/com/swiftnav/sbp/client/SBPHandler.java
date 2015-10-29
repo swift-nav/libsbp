@@ -11,35 +11,49 @@
  */
 package com.swiftnav.sbp.client;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Arrays;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
-/** Provide an interface for sending and receiving SBP messages through an
- * SBPDriver.  Implements the details of message framing.
+/** Provide an interface for queueing and filtering messages.
  */
-public class SBPHandler {
-    private static final byte PREAMBLE = 0x55;
-
-    private static final int PREAMBLE_SIZE = 1;
-    private static final int HEADER_SIZE = 5;
-    private static final int CRC_SIZE = 2;
-
+public class SBPHandler implements Iterable<SBPMessage> {
+    private Iterable<SBPMessage> source;
     private static final int THREAD_WAIT_TIMEOUT = 1000;
+    private static final int DEFAULT_QUEUE_SIZE = 0;
 
-    private SBPDriver driver;
-    private HashMap<Integer, LinkedList<SBPCallback>> callbacks;
+    private final HashMap<Integer, List<Reference<SBPCallback>>> callbacks;
+    private final List<SBPCallback> strongCallbacks;
     private ReceiveThread receiveThread;
 
-    public SBPHandler(SBPDriver driver_) {
-        driver = driver_;
-        callbacks = new HashMap<Integer, LinkedList<SBPCallback>>();
+    public SBPHandler(Iterable<SBPMessage> source_) {
+        source = source_;
+        callbacks = new HashMap<>();
+        strongCallbacks = new LinkedList<>();
+    }
+
+    public Iterable<SBPMessage> filter(int id, int queue_size) {
+        return filter(new int[] {id}, queue_size);
+    }
+
+    public Iterable<SBPMessage> filter(int[] ids, int queue_size) {
+        SBPQueueIterator iter = new SBPQueueIterator(queue_size);
+        addCallbackMulti(ids, new WeakReference<SBPCallback>(iter));
+        return iter;
+    }
+
+    @Override
+    public Iterator<SBPMessage> iterator() {
+        return filter(null, DEFAULT_QUEUE_SIZE).iterator();
     }
 
     /** Start the listener/dispatch thread */
@@ -63,81 +77,56 @@ public class SBPHandler {
         receiveThread = null;
     }
 
-    private SBPMessage receive() throws IOException {
-        /* Wait for a preamble to be received */
-        byte[] preamble;
-        do {
-            preamble = driver.read(PREAMBLE_SIZE);
-            if (preamble == null) {
-                throw new IOException("SBPDriver read() returned null!");
-            }
-        } while (preamble[0] != PREAMBLE);
 
-        /* Read the header */
-        byte[] header = driver.read(HEADER_SIZE);
-        int calccrc = CRC16.crc16(header);
-        /* Unpack fields from received header */
-        ByteBuffer bb = ByteBuffer.wrap(header).order(ByteOrder.LITTLE_ENDIAN);
-        int type = bb.getShort() & 0xffff;
-        int sender = bb.getShort() & 0xffff;
-        int len = bb.get() & 0xff;
-
-        byte[] payload = driver.read(len);
-        calccrc = CRC16.crc16(payload, calccrc);
-
-        int crc = ByteBuffer.wrap(driver.read(CRC_SIZE))
-                .order(ByteOrder.LITTLE_ENDIAN).getShort() & 0xffff;
-        if (crc != calccrc) {
-            System.err.println("CRC error in received SBPMessage");
-            return null;
+    public void addCallback(Integer id, SBPCallback cb) {
+        synchronized (callbacks) {
+            addCallback(id, new WeakReference<>(cb));
+            strongCallbacks.add(cb);
         }
-
-        return new SBPMessage(sender, type, payload);
-    }
-
-    /** Send an SBPMessage using the driver */
-    public void send(SBPMessage msg) throws IOException {
-        byte[] payload = msg.getPayload();
-        byte[] binmsg = new byte[PREAMBLE_SIZE + HEADER_SIZE + payload.length + CRC_SIZE];
-        ByteBuffer bb = ByteBuffer.wrap(binmsg).order(ByteOrder.LITTLE_ENDIAN);
-        bb.put(PREAMBLE);
-        bb.putShort((short) msg.type);
-        bb.putShort((short) msg.sender);
-        bb.put((byte)payload.length);
-        bb.put(payload);
-        int crc = CRC16.crc16(Arrays.copyOfRange(binmsg, 1, payload.length + 6));
-        bb.putShort((short) crc);
-        driver.write(bb.array());
     }
 
     /** Register a message handler for a specific message ID. */
-    public void addCallback(Integer id, SBPCallback cb) {
-        LinkedList<SBPCallback> cblist;
-        if (callbacks.containsKey(id)) {
-            cblist = callbacks.get(id);
-        } else {
-            cblist = new LinkedList<SBPCallback>();
-            callbacks.put(id, cblist);
+    public void addCallback(Integer id, Reference<SBPCallback> cb) {
+        synchronized (callbacks) {
+            List<Reference<SBPCallback>> cblist;
+            if (callbacks.containsKey(id)) {
+                cblist = callbacks.get(id);
+            } else {
+                cblist = new LinkedList<>();
+                callbacks.put(id, cblist);
+            }
+            cblist.add(cb);
         }
-        cblist.add(cb);
+    }
+
+    public void addCallbackMulti(int[] ids, SBPCallback cb) {
+        synchronized (callbacks) {
+            addCallbackMulti(ids, new WeakReference<>(cb));
+            strongCallbacks.add(cb);
+        }
     }
 
     /** Register a message handler for a list of message IDs */
-    public void addCallback(Iterable<Integer> ids, SBPCallback cb) {
+    public void addCallbackMulti(int[] ids, Reference<SBPCallback> cb) {
+        if (ids == null) {
+            addCallback(null, cb);
+            return;
+        }
         for (int id : ids)
             addCallback(id, cb);
     }
 
-    /** Register a message handler for all messages */
-    public void addCallback(SBPCallback cb) {
-        LinkedList<SBPCallback> cblist;
-        if (callbacks.containsKey(null)) {
-            cblist = callbacks.get(null);
-        } else {
-            cblist = new LinkedList<SBPCallback>();
-            callbacks.put(null, cblist);
+    public void removeCallback(SBPCallback cb) {
+        synchronized (callbacks) {
+            for (List<Reference<SBPCallback>> cblist : callbacks.values()) {
+                for (Reference<SBPCallback> ref : cblist) {
+                    if (ref.get() == cb) {
+                        cblist.remove(ref);
+                    }
+                }
+            }
+            strongCallbacks.remove(cb);
         }
-        cblist.add(cb);
     }
 
     private class ReceiveThread extends Thread {
@@ -145,32 +134,19 @@ public class SBPHandler {
 
         @Override
         public void run() {
-            while (!stopFlag) {
-                SBPMessage msg;
-                try {
-                    msg = receive();
-                } catch (IOException e) {
-                    System.err.println("SBP Listener thread exiting");
+            for (SBPMessage msg : source) {
+                if (stopFlag)
                     break;
-                }
 
                 if (msg == null)
                     continue;
 
-                try {
-                    msg = MessageTable.dispatch(msg);
-                } catch (SBPBinaryException e) {
-                    System.err.print("Error decoding binary payload");
-                    e.printStackTrace();
-                    continue;
+                synchronized (callbacks) {
+                    if (callbacks.containsKey(msg.type))
+                        dispatch(msg.type, msg);
+                    if (callbacks.containsKey(null))
+                        dispatch(null, msg);
                 }
-
-                if (callbacks.containsKey(msg.type))
-                    for (SBPCallback cb : callbacks.get(msg.type))
-                        cb.receiveCallback(msg);
-                if (callbacks.containsKey(null))
-                    for (SBPCallback cb : callbacks.get(null))
-                        cb.receiveCallback(msg);
             }
         }
 
@@ -178,5 +154,42 @@ public class SBPHandler {
             stopFlag = true;
         }
     }
-}
 
+    private void dispatch(Integer type, SBPMessage msg) {
+        List<Reference<SBPCallback>> cblist = callbacks.get(type);
+        for (Reference<SBPCallback> wr : cblist) {
+            SBPCallback cb = wr.get();
+            if (cb != null) {
+                cb.receiveCallback(msg);
+            } else {
+                cblist.remove(wr);
+            }
+        }
+    }
+
+    class SBPQueueIterator extends SBPIterable implements SBPCallback {
+        private BlockingQueue<SBPMessage> queue;
+
+        private SBPQueueIterator(int queue_size) {
+            if (queue_size <= 0) {
+                queue = new LinkedBlockingQueue<>();
+            } else {
+                queue = new ArrayBlockingQueue<>(queue_size);
+            }
+        }
+
+        @Override
+        public void receiveCallback(SBPMessage msg) {
+            queue.add(msg);
+        }
+
+        @Override
+        protected SBPMessage getNext() {
+            try {
+                return queue.take();
+            } catch (InterruptedException e) {
+                throw new NoSuchElementException();
+            }
+        }
+    }
+}

@@ -18,6 +18,7 @@ import java.lang.reflect.Array;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /** Superclass of all SBP messages. */
@@ -188,9 +189,7 @@ public class SBPMessage {
         }
 
         private byte[] getPayload() {
-            byte[] payload = new byte[buf.position()];
-            buf.get(payload, 0, buf.position());
-            return payload;
+            return Arrays.copyOf(buf.array(), buf.position());
         }
 
         public void putU8(int x) {
