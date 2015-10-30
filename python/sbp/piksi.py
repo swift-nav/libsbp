@@ -165,6 +165,7 @@ alamanac onto the Piksi's flash memory from the host.
 
 
   """
+  __slots__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -196,6 +197,7 @@ time estimate sent by the host.
 
 
   """
+  __slots__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -227,6 +229,7 @@ bootloader.
 
 
   """
+  __slots__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -259,6 +262,7 @@ removed in a future release.
 
 
   """
+  __slots__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -291,6 +295,7 @@ be removed in a future release.
 
 
   """
+  __slots__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -402,6 +407,7 @@ observations between the two.
 
 
   """
+  __slots__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

@@ -652,6 +652,7 @@ ID in the payload.
 
 
   """
+  __slots__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

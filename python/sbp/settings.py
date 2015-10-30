@@ -44,6 +44,7 @@ configuration to its onboard flash memory file system.
 
 
   """
+  __slots__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -478,6 +479,7 @@ class MsgSettingsReadByIndexDone(SBP):
 
 
   """
+  __slots__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

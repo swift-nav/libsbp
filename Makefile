@@ -145,23 +145,35 @@ html:
 	@echo
 	@echo "Finished!"
 
-test:	java
+test: test-all-begin test-c test-java test-python test-all-end
+
+test-all-begin:
 	@echo
-	@echo "Run tests..."
+	@echo "Running all tests..."
+
+test-all-end:
+	@echo
+	@echo "Finished!"
+
+test-c: c
 	@echo
 	@echo "Running C tests..."
 	@echo
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
 	cmake ../; \
-	make test;
+	make test
+
+test-java: java
+	@echo
+	@echo "No Java tests - TODO"
+
+test-python: python
 	@echo
 	@echo "Running Python tests..."
 	@echo
 	cd $(SWIFTNAV_ROOT)/python/ && tox
-	cd $(SWIFTNAV_ROOT);
-	@echo
-	@echo "Finished!"
+	cd $(SWIFTNAV_ROOT)
 
 release:
 	@echo

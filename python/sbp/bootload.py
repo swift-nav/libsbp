@@ -44,6 +44,7 @@ response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
 
 
   """
+  __slots__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -240,6 +241,7 @@ and not related to the Piksi's serial number.
 
 
   """
+  __slots__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
