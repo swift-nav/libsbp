@@ -264,12 +264,22 @@ def render_source(output_dir, package_specs):
   for p in sorted(package_specs, key=attrgetter('identifier')):
     pkg_name = p.identifier
     stable = p.stable
+
+    # build list of required definitions (this package plus includes)
+    # TODO: recursively include files
+    definitions = p.definitions
+    for inc in p.includes:
+      inc_basename = inc.split(".")[0]
+      for pkg in package_specs:
+        if pkg.identifier.endswith(inc_basename):
+          definitions += pkg.definitions
+
     if pkg_name == "swiftnav.sbp.types":
       prims = p.definitions
     for d in p.definitions:
       if d.public and d.static and d.sbp_id:
         items, size, multiplier \
-          = handle_fields(p.definitions, d.fields, "", 0, None)
+          = handle_fields(definitions, d.fields, "", 0, None)
         adj_size = ""
         if multiplier == 1:
           adj_size = "N+%d" % (size - 1) if size > 1 else "N"
