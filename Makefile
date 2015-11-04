@@ -47,8 +47,7 @@ c:
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/c/include/libsbp \
                        -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
-	               --c;\
-	cd $(SWIFTNAV_ROOT);
+	               --c
 	@echo
 	@echo "Finished. Please check $(SWIFTNAV_ROOT)/c/include/libsbp."
 
@@ -57,8 +56,7 @@ deps:
 	@echo "Installing dependencies..."
 	@echo
 	cd $(SWIFTNAV_ROOT)/generator; \
-	sudo pip install -r requirements.txt; \
-	cd ../
+	sudo pip install -r requirements.txt
 	@echo
 	@echo "Finished!"
 
@@ -70,8 +68,7 @@ python:
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/python/sbp/ \
                        -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
-		       --python;\
-	cd $(SWIFTNAV_ROOT);
+		       --python
 	@echo
 	@echo "Finished! Please check $(SWIFTNAV_ROOT)/python/sbp."
 
@@ -83,8 +80,7 @@ java:
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/java/src/ \
 		       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
-		       --java;\
-	cd $(SWIFTNAV_ROOT);
+		       --java
 	@echo
 	@echo "Finished! Please check $(SWIFTNAV_ROOT)/java/src/sbp."
 
@@ -96,8 +92,7 @@ haskell:
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 					-o $(SWIFTNAV_ROOT)/haskell/ \
 					-r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
-					--haskell;\
-	cd $(SWIFTNAV_ROOT);
+					--haskell
 	@echo
 	@echo "Finished! Please check $(SWIFTNAV_ROOT)/haskell."
 
@@ -106,8 +101,7 @@ dist:
 	@echo "Deploy packages ..."
 	@echo
 	cd $(SWIFTNAV_ROOT)/python; \
-	python setup.py sdist upload -r pypi; \
-	cd $(SWIFTNAV_ROOT);
+	python setup.py sdist upload -r pypi
 	@echo
 	@echo "Finished! Please check $(SWIFTNAV_ROOT)/python/sbp."
 
@@ -121,8 +115,7 @@ pdf:
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/latex/ \
                        -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
-	               --latex;\
-	cd $(SWIFTNAV_ROOT);
+	               --latex
 	@echo
 	@echo "Finished!"
 	@echo "Please check $(SWIFTNAV_ROOT)/latex and $(SWIFTNAV_ROOT)/docs."
@@ -136,12 +129,11 @@ html:
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
 	cmake ../; \
-	make docs;
+	make docs
 	@echo
 	@echo "Generating Python documentation..."
 	@echo
 	cd $(SWIFTNAV_ROOT)/python/docs/ && make html
-	cd $(SWIFTNAV_ROOT);
 	@echo
 	@echo "Finished!"
 
@@ -173,7 +165,6 @@ test-python: python
 	@echo "Running Python tests..."
 	@echo
 	cd $(SWIFTNAV_ROOT)/python/ && tox
-	cd $(SWIFTNAV_ROOT)
 
 release:
 	@echo

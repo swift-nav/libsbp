@@ -2,9 +2,13 @@ sudo: required
 
 before_install:
   - sudo add-apt-repository --yes ppa:kalakris/cmake
+  - sudo add-apt-repository --yes ppa:texlive-backports/ppa
   - sudo apt-get update -qq
   - sudo apt-get install cmake gradle
+  - sudo apt-get install texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-science
+  - sudo pip install -U Sphinx
 
 script:
   - make deps
   - make test
+  - make docs
