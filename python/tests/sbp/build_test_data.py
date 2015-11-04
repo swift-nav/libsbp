@@ -204,7 +204,7 @@ def main():
   message_table = _SBP_TABLE
   test_table = dict((k, []) for (k, v) in message_table.copy().iteritems())
   with Iterator(log_datafile) as log:
-    for delta, timestamp, msg in log.next():
+    for msg, metadata in log.next():
       try:
         i = mk_readable_msg(msg)
       except TypeError as ex_info:
