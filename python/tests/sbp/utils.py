@@ -130,8 +130,6 @@ def _assert_sane_package(pkg_name, pkg):
     Parsed contents of YAML file.
 
   """
-  assert pkg_name in pkg['description'], "Not the right package!"
-  assert pkg_name in pkg['package'], "Not the right package!"
   assert len(pkg['tests']) > 0, "Package has no tests!"
 
 def assert_package(test_filename, pkg_name):
