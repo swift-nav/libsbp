@@ -1,0 +1,77 @@
+/**
+ * Copyright (C) 2015 Swift Navigation Inc.
+ * Contact: Joshua Gross <josh@swift-nav.com>
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**********************
+ * Automatically generated from piksi/yaml/(((filepath))) with generate.py.
+ * Don't edit this by hand!
+ **********************
+ * Package description:
+ *
+ * (((description | starWordWrap)))
+***********************/
+
+var SBP = require('./sbp');
+var Parser = require('binary-parser').Parser;
+((*- for i in include *))
+//var dep = require("(((module_path))).(((i)))");
+((*- endfor *))
+
+((*- for m in msgs *))
+
+/**
+ * ((* if m.sbp_id *))SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).((* else *))SBP class for message fragment (((m.identifier))) ((*- endif *))
+ *
+ ((* if m.desc *))* (((m.desc | starWordWrap )))
+ *((*- endif *))
+((*- if m.fields*))
+ * Fields in the SBP payload (`sbp.payload`):
+((*- for f in m.fields *))
+ * @field (((f.identifier))) (((f.type_id | jsdoc))) ((*- if f.desc *)) (((f.desc | starWordWrapIndent )))((*- endif *))((*- endfor *))
+ *((*- endif *))
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var ((( m.identifier | js_classnameify ))) = function (sbp) {
+  SBP.call(this, sbp);
+  this.messageType = "(((m.identifier)))";
+  this.fields = this.parser.parse(sbp.payload);
+
+  return this;
+};
+((( m.identifier | js_classnameify ))).prototype = Object.create(SBP.prototype);
+((( m.identifier | js_classnameify ))).prototype.constructor = ((( m.identifier | js_classnameify )));
+((( m.identifier | js_classnameify ))).prototype.parser = new Parser()
+  .endianess('little')
+  ((*- for f in m.fields *))
+  .((( f | construct_js )))((*- endfor *));
+((( m.identifier | js_classnameify ))).prototype.fieldSpec = [];
+((*- for f in m.fields *))
+((*- if f.type_id is builtinType *))
+((( m.identifier | js_classnameify ))).prototype.fieldSpec.push(['(((f.identifier)))', '(((f.type_id | writeBuffer)))', (((f.type_id | bufferSize)))]);
+((*- elif f.type_id == 'array' and f.options['fill'].value is builtinType *))
+((( m.identifier | js_classnameify ))).prototype.fieldSpec.push(['(((f.identifier)))', 'array', '(((f.options['fill'].value | writeBuffer)))', function () { return (((f.options['fill'].value | bufferSize))); }]);
+((*- elif f.type_id == 'array' *))
+((( m.identifier | js_classnameify ))).prototype.fieldSpec.push(['(((f.identifier)))', 'array', ((( f.options['fill'].value ))).prototype.fieldSpec, function () { return (((f.type_id | bufferSize))); }]);
+((*- elif f.type_id == 'string' *))
+((( m.identifier | js_classnameify ))).prototype.fieldSpec.push(['(((f.identifier)))', 'string']);
+((*- else *))
+((( m.identifier | js_classnameify ))).prototype.fieldSpec.push(['(((f.identifier)))', ((( f.type_id ))).prototype.fieldSpec]);
+((*- endif *))
+((*- endfor *))
+
+((*- endfor *))
+
+module.exports = {
+((*- for m in msgs *))
+  ((*- if m.sbp_id *))
+  ((('0x%04X'|format(m.sbp_id)))): ((( m.identifier | js_classnameify ))),
+  ((*- endif*))
+((*- endfor *))
+}
