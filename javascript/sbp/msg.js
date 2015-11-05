@@ -199,6 +199,13 @@ module.exports = {
       try {
         streamBuffer = Buffer.concat([streamBuffer, data]);
         callback(null, getFramedMessage());
+
+        // If there is data left to process after a successful parse, process again
+        if (streamBuffer.length > 0) {
+          setTimeout(function () {
+            processData(new Buffer(0));
+          }, 0);
+        }
       } catch (e) {
         // If the buffer was corrupt but there's more in the stream, try again immediately
         if (e instanceof BufferCorruptError && streamBuffer.length > 0) {

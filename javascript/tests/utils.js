@@ -23,8 +23,10 @@ module.exports = {
         v = new Buffer(v, 'base64');
       }
 
-      if (msg[k] instanceof Buffer) {
-        assert.equal(v.compare(msg[k]), 0);
+      if (msg[k] instanceof Buffer && v.compare) {
+        assert.equal(v.compare(msg[k]), 0); // Node v4ish
+      } else if (msg[k] instanceof Buffer) {
+        assert.equal(v.toString(), msg[k].toString()); // Node v0.10ish
       } else {
         assert.deepEqual(v, msg[k]);
       }

@@ -43,7 +43,7 @@ SBP.prototype.payloadToBuffer = function payloadToBuffer (fieldSpec, data) {
     if (typeof dataType === 'string' && dataType.indexOf('write') === 0) {
       var dataSize = fieldSize(field[2]);
       var b = new Buffer(dataSize);
-      b[dataType](data[fieldName]);
+      b[dataType](data[fieldName], 0);
       buffers.push(b);
     } else if (dataType === 'string') {
       var b = new Buffer(data[fieldName].length);
@@ -59,7 +59,7 @@ SBP.prototype.payloadToBuffer = function payloadToBuffer (fieldSpec, data) {
         } else {
           // Built-in type
           var b = new Buffer(fieldSize(field[3]));
-          b[dataFill](iData);
+          b[dataFill](iData, 0);
           buffers.push(b);
         }
       }
@@ -81,23 +81,23 @@ SBP.prototype.toBuffer = function toBuffer () {
   var b;
 
   b = new Buffer(1);
-  b.writeUInt8(this.sbp.preamble);
+  b.writeUInt8(this.sbp.preamble, 0);
   buffers.push(b);
 
   b = new Buffer(2);
-  b.writeUInt16LE(this.sbp.msg_type);
+  b.writeUInt16LE(this.sbp.msg_type, 0);
   buffers.push(b);
 
   b = new Buffer(2);
-  b.writeUInt16LE(this.sbp.sender);
+  b.writeUInt16LE(this.sbp.sender, 0);
   buffers.push(b);
 
   b = new Buffer(1);
-  b.writeUInt8(this.sbp.length);
+  b.writeUInt8(this.sbp.length, 0);
   buffers.push(b);
 
   b = new Buffer(2);
-  b.writeUInt16LE(this.sbp.crc);
+  b.writeUInt16LE(this.sbp.crc, 0);
 
   return Buffer.concat(buffers.concat(payload).concat(b));
 };

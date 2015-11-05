@@ -27,20 +27,26 @@ describe('test packages based on YAML descriptors', function () {
       var yamlConfig = yaml.safeLoad(fs.readFileSync(fullpath));
       yamlConfig.tests.map(function (testSpec, i) {
         describe('test spec '+i, function () {
-          var msg;
+          var decodeMsg = function () {
+            return decode(new Buffer(testSpec['raw_packet'], 'base64'));
+          };
           it('should parse binary sbp and payload', function () {
-            msg = decode(new Buffer(testSpec['raw_packet'], 'base64'));
+            decodeMsg();
           });
           it('should have correct SBP fields', function () {
+            var msg = decodeMsg();
             utils.verifyFields(testSpec.sbp, msg.sbp);
           });
           it('should have correct payload fields', function () {
+            var msg = decodeMsg();
             utils.verifyFields(testSpec.msg.fields, msg.fields);
           });
           it('should serialize back to binary properly', function () {
+            var msg = decodeMsg();
             assert.equal(msg.toBase64(), testSpec['raw_packet']);
           });
           it('should serialize back to JSON properly', function () {
+            var msg = decodeMsg();
             assert.deepEqual(JSON.parse(msg.toJSON()), JSON.parse(testSpec['raw_json']));
           });
         });
