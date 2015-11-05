@@ -19,7 +19,7 @@ Running this command from the top level,
 
   python tests/sbp/build_test_data.py --log_file <log_file>,
 
-produces test_<module name>.yaml files in directory the command is
+produces <module_name>/test_<message_name>.yaml files in directory the command is
 written. The produced file looks like:
 
 description: Unit tests for swiftnav.sbp.acquisition v0.23.
@@ -59,6 +59,7 @@ import base64
 import datetime
 import warnings
 import yaml
+import os
 
 def _to_readable_dict(msg):
   """
@@ -84,7 +85,9 @@ def _to_readable_dict(msg):
 def dump_modules_to_yaml(test_map, version):
   """
   Take unit test data data from test, format as YAML, and write to
-  local files.
+  local files. Each file is stored in a directory structure consisting
+  of components of its package name, 
+  e.g. sbp/acquisition/test_MsgAcqResult.yaml
 
   Parameters
   ----------
@@ -105,8 +108,18 @@ def dump_modules_to_yaml(test_map, version):
     d = yaml.dump(item, explicit_start=True,
                   default_flow_style=False,
                   explicit_end=True)
+
+    path = ""
+    components = package.split(".")
+    for component in components:
+      path = os.path.join(path, component)
+      if not os.path.isdir(path):
+        os.makedirs(path)
+
+
     filename = "test_"+k+".yaml"
-    with open(filename, 'w') as f:
+    filepath = os.path.join(path, filename)
+    with open(filepath, 'w') as f:
       f.write(d.replace('\n- ', '\n\n- '))
 
 def mk_readable_msg(msg):
