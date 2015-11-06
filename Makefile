@@ -37,7 +37,7 @@ help:
 	@echo "  test      to run all tests"
 	@echo
 
-all: deps c python haskell test docs
+all: deps c python javascript haskell test docs
 
 c:
 	@echo
@@ -56,7 +56,7 @@ deps:
 	@echo "Installing dependencies..."
 	@echo
 	cd $(SWIFTNAV_ROOT)/generator; \
-	sudo pip install -r requirements.txt
+	pip install --user -r requirements.txt
 	@echo
 	@echo "Finished!"
 

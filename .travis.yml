@@ -1,12 +1,20 @@
-sudo: required
+sudo: false
+
+addons:
+  apt:
+    packages:
+    - cmake
+    - gradle
 
 before_install:
-  - sudo add-apt-repository --yes ppa:kalakris/cmake
-  - sudo add-apt-repository --yes ppa:texlive-backports/ppa
-  - sudo apt-get update -qq
-  - sudo apt-get install cmake gradle
-  - sudo apt-get install texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-science
-  - sudo pip install -U Sphinx
+  - mkdir -p $HOME/texlive && curl -L https://github.com/urdh/texlive-blob/releases/download/20150712/texlive.tar.xz | tar -JxC $HOME/texlive
+  - export PATH="$PATH:$HOME/texlive/bin/x86_64-linux"
+
+install:
+  - tlmgr update --self
+  - tlmgr install standalone #standalone.sty
+  - tlmgr install cmbright #cmbright font
+  - pip install --upgrade --user Sphinx
   - npm install -g mocha
   - npm install
 
