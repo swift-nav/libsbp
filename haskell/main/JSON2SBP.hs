@@ -30,7 +30,7 @@ instance FromJSON SBPMsgData where
 
 -- | Decode a SBPMsg from JSON.
 decodeSBPMsg :: ByteString -> Maybe SBPMsg
-decodeSBPMsg v = decodeStrict v <|> (fmap sbpMsgData $ decodeStrict v)
+decodeSBPMsg v = decodeStrict v <|> sbpMsgData <$> decodeStrict v
 
 main :: IO ()
 main = runResourceT $
