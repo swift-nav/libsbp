@@ -37,7 +37,7 @@ help:
 	@echo "  test      to run all tests"
 	@echo
 
-all: deps c python haskell test docs
+all: deps c python javascript haskell test docs
 
 c:
 	@echo
