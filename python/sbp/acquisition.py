@@ -27,7 +27,7 @@ SBP_MSG_ACQ_RESULT = 0x0014
 class MsgAcqResult(SBP):
   """SBP class for message MSG_ACQ_RESULT (0x0014).
 
-  You can have MSG_ACQ_RESULT inherent its fields directly
+  You can have MSG_ACQ_RESULT inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -128,7 +128,7 @@ SBP_MSG_ACQ_RESULT_DEP_A = 0x0015
 class MsgAcqResultDepA(SBP):
   """SBP class for message MSG_ACQ_RESULT_DEP_A (0x0015).
 
-  You can have MSG_ACQ_RESULT_DEP_A inherent its fields directly
+  You can have MSG_ACQ_RESULT_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 

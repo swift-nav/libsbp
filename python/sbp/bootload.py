@@ -33,7 +33,7 @@ SBP_MSG_BOOTLOADER_HANDSHAKE_REQ = 0x00B3
 class MsgBootloaderHandshakeReq(SBP):
   """SBP class for message MSG_BOOTLOADER_HANDSHAKE_REQ (0x00B3).
 
-  You can have MSG_BOOTLOADER_HANDSHAKE_REQ inherent its fields directly
+  You can have MSG_BOOTLOADER_HANDSHAKE_REQ inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -66,7 +66,7 @@ SBP_MSG_BOOTLOADER_HANDSHAKE_RESP = 0x00B4
 class MsgBootloaderHandshakeResp(SBP):
   """SBP class for message MSG_BOOTLOADER_HANDSHAKE_RESP (0x00B4).
 
-  You can have MSG_BOOTLOADER_HANDSHAKE_RESP inherent its fields directly
+  You can have MSG_BOOTLOADER_HANDSHAKE_RESP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -151,7 +151,7 @@ SBP_MSG_BOOTLOADER_JUMP_TO_APP = 0x00B1
 class MsgBootloaderJumpToApp(SBP):
   """SBP class for message MSG_BOOTLOADER_JUMP_TO_APP (0x00B1).
 
-  You can have MSG_BOOTLOADER_JUMP_TO_APP inherent its fields directly
+  You can have MSG_BOOTLOADER_JUMP_TO_APP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -227,7 +227,7 @@ SBP_MSG_NAP_DEVICE_DNA_REQ = 0x00DE
 class MsgNapDeviceDnaReq(SBP):
   """SBP class for message MSG_NAP_DEVICE_DNA_REQ (0x00DE).
 
-  You can have MSG_NAP_DEVICE_DNA_REQ inherent its fields directly
+  You can have MSG_NAP_DEVICE_DNA_REQ inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -263,7 +263,7 @@ SBP_MSG_NAP_DEVICE_DNA_RESP = 0x00DD
 class MsgNapDeviceDnaResp(SBP):
   """SBP class for message MSG_NAP_DEVICE_DNA_RESP (0x00DD).
 
-  You can have MSG_NAP_DEVICE_DNA_RESP inherent its fields directly
+  You can have MSG_NAP_DEVICE_DNA_RESP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -346,7 +346,7 @@ SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A = 0x00B0
 class MsgBootloaderHandshakeDepA(SBP):
   """SBP class for message MSG_BOOTLOADER_HANDSHAKE_DEP_A (0x00B0).
 
-  You can have MSG_BOOTLOADER_HANDSHAKE_DEP_A inherent its fields directly
+  You can have MSG_BOOTLOADER_HANDSHAKE_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 

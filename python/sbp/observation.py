@@ -277,7 +277,7 @@ SBP_MSG_OBS = 0x0043
 class MsgObs(SBP):
   """SBP class for message MSG_OBS (0x0043).
 
-  You can have MSG_OBS inherent its fields directly
+  You can have MSG_OBS inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -364,7 +364,7 @@ SBP_MSG_BASE_POS = 0x0044
 class MsgBasePos(SBP):
   """SBP class for message MSG_BASE_POS (0x0044).
 
-  You can have MSG_BASE_POS inherent its fields directly
+  You can have MSG_BASE_POS inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -454,7 +454,7 @@ SBP_MSG_EPHEMERIS = 0x0047
 class MsgEphemeris(SBP):
   """SBP class for message MSG_EPHEMERIS (0x0047).
 
-  You can have MSG_EPHEMERIS inherent its fields directly
+  You can have MSG_EPHEMERIS inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -677,7 +677,7 @@ SBP_MSG_EPHEMERIS_DEP_A = 0x001A
 class MsgEphemerisDepA(SBP):
   """SBP class for message MSG_EPHEMERIS_DEP_A (0x001A).
 
-  You can have MSG_EPHEMERIS_DEP_A inherent its fields directly
+  You can have MSG_EPHEMERIS_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -877,7 +877,7 @@ SBP_MSG_EPHEMERIS_DEP_B = 0x0046
 class MsgEphemerisDepB(SBP):
   """SBP class for message MSG_EPHEMERIS_DEP_B (0x0046).
 
-  You can have MSG_EPHEMERIS_DEP_B inherent its fields directly
+  You can have MSG_EPHEMERIS_DEP_B inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -1082,7 +1082,7 @@ SBP_MSG_OBS_DEP_A = 0x0045
 class MsgObsDepA(SBP):
   """SBP class for message MSG_OBS_DEP_A (0x0045).
 
-  You can have MSG_OBS_DEP_A inherent its fields directly
+  You can have MSG_OBS_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 

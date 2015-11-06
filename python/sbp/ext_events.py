@@ -29,7 +29,7 @@ SBP_MSG_EXT_EVENT = 0x0101
 class MsgExtEvent(SBP):
   """SBP class for message MSG_EXT_EVENT (0x0101).
 
-  You can have MSG_EXT_EVENT inherent its fields directly
+  You can have MSG_EXT_EVENT inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 

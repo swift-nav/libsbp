@@ -34,7 +34,7 @@ SBP_MSG_SETTINGS_SAVE = 0x00A1
 class MsgSettingsSave(SBP):
   """SBP class for message MSG_SETTINGS_SAVE (0x00A1).
 
-  You can have MSG_SETTINGS_SAVE inherent its fields directly
+  You can have MSG_SETTINGS_SAVE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -66,7 +66,7 @@ SBP_MSG_SETTINGS_WRITE = 0x00A0
 class MsgSettingsWrite(SBP):
   """SBP class for message MSG_SETTINGS_WRITE (0x00A0).
 
-  You can have MSG_SETTINGS_WRITE inherent its fields directly
+  You can have MSG_SETTINGS_WRITE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -145,7 +145,7 @@ SBP_MSG_SETTINGS_READ_REQ = 0x00A4
 class MsgSettingsReadReq(SBP):
   """SBP class for message MSG_SETTINGS_READ_REQ (0x00A4).
 
-  You can have MSG_SETTINGS_READ_REQ inherent its fields directly
+  You can have MSG_SETTINGS_READ_REQ inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -223,7 +223,7 @@ SBP_MSG_SETTINGS_READ_RESP = 0x00A5
 class MsgSettingsReadResp(SBP):
   """SBP class for message MSG_SETTINGS_READ_RESP (0x00A5).
 
-  You can have MSG_SETTINGS_READ_RESP inherent its fields directly
+  You can have MSG_SETTINGS_READ_RESP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -300,7 +300,7 @@ SBP_MSG_SETTINGS_READ_BY_INDEX_REQ = 0x00A2
 class MsgSettingsReadByIndexReq(SBP):
   """SBP class for message MSG_SETTINGS_READ_BY_INDEX_REQ (0x00A2).
 
-  You can have MSG_SETTINGS_READ_BY_INDEX_REQ inherent its fields directly
+  You can have MSG_SETTINGS_READ_BY_INDEX_REQ inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -382,7 +382,7 @@ SBP_MSG_SETTINGS_READ_BY_INDEX_RESP = 0x00A7
 class MsgSettingsReadByIndexResp(SBP):
   """SBP class for message MSG_SETTINGS_READ_BY_INDEX_RESP (0x00A7).
 
-  You can have MSG_SETTINGS_READ_BY_INDEX_RESP inherent its fields directly
+  You can have MSG_SETTINGS_READ_BY_INDEX_RESP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -470,7 +470,7 @@ SBP_MSG_SETTINGS_READ_BY_INDEX_DONE = 0x00A6
 class MsgSettingsReadByIndexDone(SBP):
   """SBP class for message MSG_SETTINGS_READ_BY_INDEX_DONE (0x00A6).
 
-  You can have MSG_SETTINGS_READ_BY_INDEX_DONE inherent its fields directly
+  You can have MSG_SETTINGS_READ_BY_INDEX_DONE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 

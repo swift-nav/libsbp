@@ -38,7 +38,7 @@ SBP_MSG_GPS_TIME = 0x0100
 class MsgGPSTime(SBP):
   """SBP class for message MSG_GPS_TIME (0x0100).
 
-  You can have MSG_GPS_TIME inherent its fields directly
+  You can have MSG_GPS_TIME inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -143,7 +143,7 @@ SBP_MSG_DOPS = 0x0206
 class MsgDops(SBP):
   """SBP class for message MSG_DOPS (0x0206).
 
-  You can have MSG_DOPS inherent its fields directly
+  You can have MSG_DOPS inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -246,7 +246,7 @@ SBP_MSG_POS_ECEF = 0x0200
 class MsgPosECEF(SBP):
   """SBP class for message MSG_POS_ECEF (0x0200).
 
-  You can have MSG_POS_ECEF inherent its fields directly
+  You can have MSG_POS_ECEF inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -361,7 +361,7 @@ SBP_MSG_POS_LLH = 0x0201
 class MsgPosLLH(SBP):
   """SBP class for message MSG_POS_LLH (0x0201).
 
-  You can have MSG_POS_LLH inherent its fields directly
+  You can have MSG_POS_LLH inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -483,7 +483,7 @@ SBP_MSG_BASELINE_ECEF = 0x0202
 class MsgBaselineECEF(SBP):
   """SBP class for message MSG_BASELINE_ECEF (0x0202).
 
-  You can have MSG_BASELINE_ECEF inherent its fields directly
+  You can have MSG_BASELINE_ECEF inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -595,7 +595,7 @@ SBP_MSG_BASELINE_NED = 0x0203
 class MsgBaselineNED(SBP):
   """SBP class for message MSG_BASELINE_NED (0x0203).
 
-  You can have MSG_BASELINE_NED inherent its fields directly
+  You can have MSG_BASELINE_NED inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -715,7 +715,7 @@ SBP_MSG_VEL_ECEF = 0x0204
 class MsgVelECEF(SBP):
   """SBP class for message MSG_VEL_ECEF (0x0204).
 
-  You can have MSG_VEL_ECEF inherent its fields directly
+  You can have MSG_VEL_ECEF inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -825,7 +825,7 @@ SBP_MSG_VEL_NED = 0x0205
 class MsgVelNED(SBP):
   """SBP class for message MSG_VEL_NED (0x0205).
 
-  You can have MSG_VEL_NED inherent its fields directly
+  You can have MSG_VEL_NED inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -942,7 +942,7 @@ SBP_MSG_BASELINE_HEADING = 0x0207
 class MsgBaselineHeading(SBP):
   """SBP class for message MSG_BASELINE_HEADING (0x0207).
 
-  You can have MSG_BASELINE_HEADING inherent its fields directly
+  You can have MSG_BASELINE_HEADING inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
