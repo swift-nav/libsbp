@@ -24,6 +24,7 @@ repository is organized into the following directory structure:
 * [`c`](c): C client library and examples.
 * [`haskell`](haskell): Haskell client and examples.
 * [`java`](java): Java client library and examples.
+* [`javascript`](javascript): JavaScript client library and examples.
 
 ## SBP Protocol Specification
 
