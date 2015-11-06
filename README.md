@@ -15,16 +15,16 @@ documentation for messages used with SBP, a compiler for generating
 message bindings, and client libraries in a variety of languages. This
 repository is organized into the following directory structure:
 
-* [`docs`](docs): Protocol documentation and message definitions.
-* [`spec`](spec): Machine readable protocol specification in
+* [`docs`](https://github.com/swift-nav/libsbp/tree/HEAD/docs): Protocol documentation and message definitions.
+* [`spec`](https://github.com/swift-nav/libsbp/tree/HEAD/spec): Machine readable protocol specification in
   [YAML](http://en.wikipedia.org/wiki/YAML).
-* [`generator`](generator): Simple, template-based generator for
+* [`generator`](https://github.com/swift-nav/libsbp/tree/HEAD/generator): Simple, template-based generator for
   different languages.
-* [`python`](python): Python client and examples.
-* [`c`](c): C client library and examples.
-* [`haskell`](haskell): Haskell client and examples.
-* [`java`](java): Java client library and examples.
-* [`javascript`](javascript): JavaScript client library and examples.
+* [`python`](https://github.com/swift-nav/libsbp/tree/HEAD/python): Python client and examples.
+* [`c`](https://github.com/swift-nav/libsbp/tree/HEAD/c): C client library and examples.
+* [`haskell`](https://github.com/swift-nav/libsbp/tree/HEAD/haskell): Haskell client and examples.
+* [`java`](https://github.com/swift-nav/libsbp/tree/HEAD/java): Java client library and examples.
+* [`javascript`](https://github.com/swift-nav/libsbp/tree/HEAD/javascript): JavaScript client library and examples.
 
 ## SBP Protocol Specification
 
