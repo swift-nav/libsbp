@@ -13,7 +13,7 @@ SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
 SBP_MINOR_VERSION := $(word 2, $(subst ., , $(SBP_VERSION)))
 SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
 
-.PHONY: help all c python docs pdf html test release dist silly java haskell
+.PHONY: help all c python javascript docs pdf html test release dist silly java haskell
 
 help:
 	@echo
@@ -71,6 +71,19 @@ python:
 		       --python
 	@echo
 	@echo "Finished! Please check $(SWIFTNAV_ROOT)/python/sbp."
+
+javascript:
+	@echo
+	@echo "Generating JavaScript bindings..."
+	@echo
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
+		       -o $(SWIFTNAV_ROOT)/javascript/sbp/ \
+                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
+		       --javascript;\
+	cd $(SWIFTNAV_ROOT);
+	@echo
+	@echo "Finished! Please check $(SWIFTNAV_ROOT)/javascript/sbp."
 
 java:
 	@echo
@@ -137,7 +150,7 @@ html:
 	@echo
 	@echo "Finished!"
 
-test: test-all-begin test-c test-java test-python test-all-end
+test: test-all-begin test-c test-java test-python test-javascript test-all-end
 
 test-all-begin:
 	@echo
@@ -165,6 +178,12 @@ test-python: python
 	@echo "Running Python tests..."
 	@echo
 	cd $(SWIFTNAV_ROOT)/python/ && tox
+
+test-javascript: javascript
+	@echo
+	@echo "Running JavaScript tests..."
+	@echo
+	npm test
 
 release:
 	@echo

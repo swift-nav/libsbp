@@ -94,7 +94,7 @@ def classnameify(s):
   """
   return ''.join(w if w in ACRONYMS else w.title() for w in s.split('_'))
 
-JENV.filters['construct'] = construct_format
+JENV.filters['construct_py'] = construct_format
 JENV.filters['classnameify'] = classnameify
 JENV.filters['pydoc'] = pydoc_format
 

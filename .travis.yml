@@ -7,8 +7,13 @@ before_install:
   - sudo apt-get install cmake gradle
   - sudo apt-get install texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-science
   - sudo pip install -U Sphinx
+  - npm install -g mocha
+  - npm install
 
 script:
   - make deps
   - make test
   - make docs
+
+node_js:
+  - "4.1"

@@ -49,7 +49,7 @@ class ((( m.identifier )))(object):
   ((*- if m.fields *))
   _parser = Embedded(Struct("(((m.identifier )))",
                      ((*- for f in m.fields *))
-                     ((( f | construct ))),
+                     ((( f | construct_py ))),
                      ((*- endfor *))))
   __slots__ = [((* for f in m.fields *))
                '((( f.identifier )))',
@@ -94,7 +94,7 @@ SBP_(((m.identifier))) = ((('0x%04X'|format(m.sbp_id))))
 class ((( m.identifier | classnameify )))(SBP):
   """SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).
 
-  You can have (((m.identifier))) inherent its fields directly
+  You can have (((m.identifier))) inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -122,7 +122,7 @@ class ((( m.identifier | classnameify )))(SBP):
   ((*- if m.fields *))
   _parser = Struct("(((m.identifier | classnameify )))",
                    ((*- for f in m.fields *))
-                   ((( f | construct ))),
+                   ((( f | construct_py ))),
                    ((*- endfor *)))
   __slots__ = [((* for f in m.fields *))
                '((( f.identifier )))',
