@@ -164,7 +164,7 @@ SBP_MSG_TRACKING_STATE = 0x0013
 class MsgTrackingState(SBP):
   """SBP class for message MSG_TRACKING_STATE (0x0013).
 
-  You can have MSG_TRACKING_STATE inherent its fields directly
+  You can have MSG_TRACKING_STATE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -242,7 +242,7 @@ SBP_MSG_TRACKING_IQ = 0x001C
 class MsgTrackingIq(SBP):
   """SBP class for message MSG_TRACKING_IQ (0x001C).
 
-  You can have MSG_TRACKING_IQ inherent its fields directly
+  You can have MSG_TRACKING_IQ inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -332,7 +332,7 @@ SBP_MSG_TRACKING_STATE_DEP_A = 0x0016
 class MsgTrackingStateDepA(SBP):
   """SBP class for message MSG_TRACKING_STATE_DEP_A (0x0016).
 
-  You can have MSG_TRACKING_STATE_DEP_A inherent its fields directly
+  You can have MSG_TRACKING_STATE_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 

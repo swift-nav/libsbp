@@ -155,7 +155,7 @@ SBP_MSG_ALMANAC = 0x0069
 class MsgAlmanac(SBP):
   """SBP class for message MSG_ALMANAC (0x0069).
 
-  You can have MSG_ALMANAC inherent its fields directly
+  You can have MSG_ALMANAC inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -187,7 +187,7 @@ SBP_MSG_SET_TIME = 0x0068
 class MsgSetTime(SBP):
   """SBP class for message MSG_SET_TIME (0x0068).
 
-  You can have MSG_SET_TIME inherent its fields directly
+  You can have MSG_SET_TIME inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -219,7 +219,7 @@ SBP_MSG_RESET = 0x00B2
 class MsgReset(SBP):
   """SBP class for message MSG_RESET (0x00B2).
 
-  You can have MSG_RESET inherent its fields directly
+  You can have MSG_RESET inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -251,7 +251,7 @@ SBP_MSG_CW_RESULTS = 0x00C0
 class MsgCwResults(SBP):
   """SBP class for message MSG_CW_RESULTS (0x00C0).
 
-  You can have MSG_CW_RESULTS inherent its fields directly
+  You can have MSG_CW_RESULTS inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -284,7 +284,7 @@ SBP_MSG_CW_START = 0x00C1
 class MsgCwStart(SBP):
   """SBP class for message MSG_CW_START (0x00C1).
 
-  You can have MSG_CW_START inherent its fields directly
+  You can have MSG_CW_START inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -317,7 +317,7 @@ SBP_MSG_RESET_FILTERS = 0x0022
 class MsgResetFilters(SBP):
   """SBP class for message MSG_RESET_FILTERS (0x0022).
 
-  You can have MSG_RESET_FILTERS inherent its fields directly
+  You can have MSG_RESET_FILTERS inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -394,7 +394,7 @@ SBP_MSG_INIT_BASE = 0x0023
 class MsgInitBase(SBP):
   """SBP class for message MSG_INIT_BASE (0x0023).
 
-  You can have MSG_INIT_BASE inherent its fields directly
+  You can have MSG_INIT_BASE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -429,7 +429,7 @@ SBP_MSG_THREAD_STATE = 0x0017
 class MsgThreadState(SBP):
   """SBP class for message MSG_THREAD_STATE (0x0017).
 
-  You can have MSG_THREAD_STATE inherent its fields directly
+  You can have MSG_THREAD_STATE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -519,7 +519,7 @@ SBP_MSG_UART_STATE = 0x0018
 class MsgUartState(SBP):
   """SBP class for message MSG_UART_STATE (0x0018).
 
-  You can have MSG_UART_STATE inherent its fields directly
+  You can have MSG_UART_STATE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -614,7 +614,7 @@ SBP_MSG_IAR_STATE = 0x0019
 class MsgIarState(SBP):
   """SBP class for message MSG_IAR_STATE (0x0019).
 
-  You can have MSG_IAR_STATE inherent its fields directly
+  You can have MSG_IAR_STATE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -693,7 +693,7 @@ SBP_MSG_MASK_SATELLITE = 0x001B
 class MsgMaskSatellite(SBP):
   """SBP class for message MSG_MASK_SATELLITE (0x001B).
 
-  You can have MSG_MASK_SATELLITE inherent its fields directly
+  You can have MSG_MASK_SATELLITE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 

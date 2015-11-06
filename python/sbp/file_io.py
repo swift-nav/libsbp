@@ -37,7 +37,7 @@ SBP_MSG_FILEIO_READ_REQ = 0x00A8
 class MsgFileioReadReq(SBP):
   """SBP class for message MSG_FILEIO_READ_REQ (0x00A8).
 
-  You can have MSG_FILEIO_READ_REQ inherent its fields directly
+  You can have MSG_FILEIO_READ_REQ inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -135,7 +135,7 @@ SBP_MSG_FILEIO_READ_RESP = 0x00A3
 class MsgFileioReadResp(SBP):
   """SBP class for message MSG_FILEIO_READ_RESP (0x00A3).
 
-  You can have MSG_FILEIO_READ_RESP inherent its fields directly
+  You can have MSG_FILEIO_READ_RESP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -220,7 +220,7 @@ SBP_MSG_FILEIO_READ_DIR_REQ = 0x00A9
 class MsgFileioReadDirReq(SBP):
   """SBP class for message MSG_FILEIO_READ_DIR_REQ (0x00A9).
 
-  You can have MSG_FILEIO_READ_DIR_REQ inherent its fields directly
+  You can have MSG_FILEIO_READ_DIR_REQ inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -316,7 +316,7 @@ SBP_MSG_FILEIO_READ_DIR_RESP = 0x00AA
 class MsgFileioReadDirResp(SBP):
   """SBP class for message MSG_FILEIO_READ_DIR_RESP (0x00AA).
 
-  You can have MSG_FILEIO_READ_DIR_RESP inherent its fields directly
+  You can have MSG_FILEIO_READ_DIR_RESP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -402,7 +402,7 @@ SBP_MSG_FILEIO_REMOVE = 0x00AC
 class MsgFileioRemove(SBP):
   """SBP class for message MSG_FILEIO_REMOVE (0x00AC).
 
-  You can have MSG_FILEIO_REMOVE inherent its fields directly
+  You can have MSG_FILEIO_REMOVE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -481,7 +481,7 @@ SBP_MSG_FILEIO_WRITE_REQ = 0x00AD
 class MsgFileioWriteReq(SBP):
   """SBP class for message MSG_FILEIO_WRITE_REQ (0x00AD).
 
-  You can have MSG_FILEIO_WRITE_REQ inherent its fields directly
+  You can have MSG_FILEIO_WRITE_REQ inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -579,7 +579,7 @@ SBP_MSG_FILEIO_WRITE_RESP = 0x00AB
 class MsgFileioWriteResp(SBP):
   """SBP class for message MSG_FILEIO_WRITE_RESP (0x00AB).
 
-  You can have MSG_FILEIO_WRITE_RESP inherent its fields directly
+  You can have MSG_FILEIO_WRITE_RESP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 

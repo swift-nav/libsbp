@@ -27,7 +27,7 @@ SBP_MSG_STARTUP = 0xFF00
 class MsgStartup(SBP):
   """SBP class for message MSG_STARTUP (0xFF00).
 
-  You can have MSG_STARTUP inherent its fields directly
+  You can have MSG_STARTUP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -106,7 +106,7 @@ SBP_MSG_HEARTBEAT = 0xFFFF
 class MsgHeartbeat(SBP):
   """SBP class for message MSG_HEARTBEAT (0xFFFF).
 
-  You can have MSG_HEARTBEAT inherent its fields directly
+  You can have MSG_HEARTBEAT inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 

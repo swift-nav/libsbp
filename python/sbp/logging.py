@@ -29,7 +29,7 @@ SBP_MSG_LOG = 0x0401
 class MsgLog(SBP):
   """SBP class for message MSG_LOG (0x0401).
 
-  You can have MSG_LOG inherent its fields directly
+  You can have MSG_LOG inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -112,7 +112,7 @@ SBP_MSG_TWEET = 0x0012
 class MsgTweet(SBP):
   """SBP class for message MSG_TWEET (0x0012).
 
-  You can have MSG_TWEET inherent its fields directly
+  You can have MSG_TWEET inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -187,7 +187,7 @@ SBP_MSG_PRINT_DEP = 0x0010
 class MsgPrintDep(SBP):
   """SBP class for message MSG_PRINT_DEP (0x0010).
 
-  You can have MSG_PRINT_DEP inherent its fields directly
+  You can have MSG_PRINT_DEP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 

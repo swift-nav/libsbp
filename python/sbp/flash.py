@@ -34,7 +34,7 @@ SBP_MSG_FLASH_PROGRAM = 0x00E6
 class MsgFlashProgram(SBP):
   """SBP class for message MSG_FLASH_PROGRAM (0x00E6).
 
-  You can have MSG_FLASH_PROGRAM inherent its fields directly
+  You can have MSG_FLASH_PROGRAM inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -132,7 +132,7 @@ SBP_MSG_FLASH_DONE = 0x00E0
 class MsgFlashDone(SBP):
   """SBP class for message MSG_FLASH_DONE (0x00E0).
 
-  You can have MSG_FLASH_DONE inherent its fields directly
+  You can have MSG_FLASH_DONE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -211,7 +211,7 @@ SBP_MSG_FLASH_READ_REQ = 0x00E7
 class MsgFlashReadReq(SBP):
   """SBP class for message MSG_FLASH_READ_REQ (0x00E7).
 
-  You can have MSG_FLASH_READ_REQ inherent its fields directly
+  You can have MSG_FLASH_READ_REQ inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -305,7 +305,7 @@ SBP_MSG_FLASH_READ_RESP = 0x00E1
 class MsgFlashReadResp(SBP):
   """SBP class for message MSG_FLASH_READ_RESP (0x00E1).
 
-  You can have MSG_FLASH_READ_RESP inherent its fields directly
+  You can have MSG_FLASH_READ_RESP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -399,7 +399,7 @@ SBP_MSG_FLASH_ERASE = 0x00E2
 class MsgFlashErase(SBP):
   """SBP class for message MSG_FLASH_ERASE (0x00E2).
 
-  You can have MSG_FLASH_ERASE inherent its fields directly
+  You can have MSG_FLASH_ERASE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -486,7 +486,7 @@ SBP_MSG_STM_FLASH_LOCK_SECTOR = 0x00E3
 class MsgStmFlashLockSector(SBP):
   """SBP class for message MSG_STM_FLASH_LOCK_SECTOR (0x00E3).
 
-  You can have MSG_STM_FLASH_LOCK_SECTOR inherent its fields directly
+  You can have MSG_STM_FLASH_LOCK_SECTOR inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -563,7 +563,7 @@ SBP_MSG_STM_FLASH_UNLOCK_SECTOR = 0x00E4
 class MsgStmFlashUnlockSector(SBP):
   """SBP class for message MSG_STM_FLASH_UNLOCK_SECTOR (0x00E4).
 
-  You can have MSG_STM_FLASH_UNLOCK_SECTOR inherent its fields directly
+  You can have MSG_STM_FLASH_UNLOCK_SECTOR inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -640,7 +640,7 @@ SBP_MSG_STM_UNIQUE_ID_REQ = 0x00E8
 class MsgStmUniqueIdReq(SBP):
   """SBP class for message MSG_STM_UNIQUE_ID_REQ (0x00E8).
 
-  You can have MSG_STM_UNIQUE_ID_REQ inherent its fields directly
+  You can have MSG_STM_UNIQUE_ID_REQ inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -674,7 +674,7 @@ SBP_MSG_STM_UNIQUE_ID_RESP = 0x00E5
 class MsgStmUniqueIdResp(SBP):
   """SBP class for message MSG_STM_UNIQUE_ID_RESP (0x00E5).
 
-  You can have MSG_STM_UNIQUE_ID_RESP inherent its fields directly
+  You can have MSG_STM_UNIQUE_ID_RESP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -753,7 +753,7 @@ SBP_MSG_M25_FLASH_WRITE_STATUS = 0x00F3
 class MsgM25FlashWriteStatus(SBP):
   """SBP class for message MSG_M25_FLASH_WRITE_STATUS (0x00F3).
 
-  You can have MSG_M25_FLASH_WRITE_STATUS inherent its fields directly
+  You can have MSG_M25_FLASH_WRITE_STATUS inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
