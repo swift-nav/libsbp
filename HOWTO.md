@@ -81,7 +81,7 @@ Oh boy, so you've decided to release a new version of libsbp.
     ```
 
 1. Verify that package dependencies, their version numbers, and the
-   libsbp version number in the C, Python, and LaTeX developer
+   libsbp version number in the C, Python, JavaScript, and LaTeX developer
    documentation are consistent.
 
 2. Add to RELEASE_NOTES.md and update the CHANGELOG details with `make

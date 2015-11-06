@@ -82,6 +82,7 @@ javascript:
                        -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
 		       --javascript;\
 	cd $(SWIFTNAV_ROOT);
+	- npm version "v$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" --no-git-tag-version
 	@echo
 	@echo "Finished! Please check $(SWIFTNAV_ROOT)/javascript/sbp."
 
@@ -115,6 +116,7 @@ dist:
 	@echo
 	cd $(SWIFTNAV_ROOT)/python; \
 	python setup.py sdist upload -r pypi
+	npm publish
 	@echo
 	@echo "Finished! Please check $(SWIFTNAV_ROOT)/python/sbp."
 
