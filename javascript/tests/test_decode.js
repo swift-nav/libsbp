@@ -16,15 +16,12 @@ var yaml = require('js-yaml');
 var decode = require(path.resolve(__dirname, '../sbp/')).decode;
 var utils = require('./utils');
 
-var yamlDir = path.resolve(__dirname, '../../spec/tests/yaml/swiftnav/sbp');
-var yamlFiles = fs.readdirSync(yamlDir);
+var yamlFiles = utils.getYamlSpecs();
 
 describe('test packages based on YAML descriptors', function () {
   yamlFiles.map(function (filename) {
-    var fullpath = path.resolve(yamlDir, filename);
-
     describe(filename, function () {
-      var yamlConfig = yaml.safeLoad(fs.readFileSync(fullpath));
+      var yamlConfig = yaml.safeLoad(fs.readFileSync(filename));
       yamlConfig.tests.map(function (testSpec, i) {
         describe('test spec '+i, function () {
           var decodeMsg = function () {

@@ -10,8 +10,28 @@
  */
 
 var assert = require('assert');
+var path = require('path');
+var fs = require('fs');
 
 module.exports = {
+  getYamlSpecs: function () {
+    var walk = function(dir) {
+      var results = [];
+      var list = fs.readdirSync(dir);
+      list.forEach(function(file) {
+        file = dir + '/' + file;
+        var stat = fs.statSync(file);
+        if (stat && stat.isDirectory()) {
+          results = results.concat(walk(file));
+        } else if (file.match(/\.yaml$/)) {
+          results.push(path.resolve(dir, file));
+        }
+      });
+      return results;
+    };
+    var yamlDir = path.resolve(__dirname, '../../spec/tests/yaml');
+    return walk(yamlDir);
+  },
   verifyFields: function (spec, msg) {
     for (var k in spec) {
       var v = spec[k];
