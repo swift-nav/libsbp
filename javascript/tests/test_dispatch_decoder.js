@@ -37,16 +37,60 @@ describe('test packages based on YAML descriptors, through the dispatcher', func
             });
           });
 
+          // For both "corrupt preamble" tests, the corrupt "length" field could be much longer than the actual message.
+          // In a real-world case we will have a constant stream of data which will allow us to read that
+          //  full length, and reframe after discovering that it's a corrupt preamble.
+          // In these cases, we just repeat the message several times to create an arbitrarily long stream.
           it('should parse binary sbp and payload with leading extra preamble', function (done) {
             var rs = new Readable();
             rs.push(new Buffer([0x55]));
             rs.push(new Buffer(testSpec['raw_packet'], 'base64'));
+            rs.push(new Buffer(testSpec['raw_packet'], 'base64'));
+            rs.push(new Buffer(testSpec['raw_packet'], 'base64'));
+            rs.push(new Buffer(testSpec['raw_packet'], 'base64'));
+            rs.push(new Buffer(testSpec['raw_packet'], 'base64'));
+            rs.push(new Buffer(testSpec['raw_packet'], 'base64'));
+            rs.push(new Buffer(testSpec['raw_packet'], 'base64'));
             rs.push(null);
+
+            var calls = 0;
             dispatch(rs, function (err, msg) {
+              calls++;
               assert.equal(err, null);
               utils.verifyFields(testSpec.sbp, msg.sbp);
               utils.verifyFields(testSpec.msg.fields, msg.fields);
-              done();
+              if (calls === 7) {
+                done();
+              }
+            });
+          });
+
+          // For both "corrupt preamble" tests, the corrupt "length" field could be much longer than the actual message.
+          // In a real-world case we will have a constant stream of data which will allow us to read that
+          //  full length, and reframe after discovering that it's a corrupt preamble.
+          // In these cases, we just repeat the message several times to create an arbitrarily long stream.
+          it('should parse binary sbp and payload with leading extra preamble (2)', function (done) {
+            var rs = new Readable();
+            rs.push(Buffer.concat([new Buffer([0x55]),
+              new Buffer(testSpec['raw_packet'], 'base64'),
+              new Buffer(testSpec['raw_packet'], 'base64'),
+              new Buffer(testSpec['raw_packet'], 'base64'),
+              new Buffer(testSpec['raw_packet'], 'base64'),
+              new Buffer(testSpec['raw_packet'], 'base64'),
+              new Buffer(testSpec['raw_packet'], 'base64'),
+              new Buffer(testSpec['raw_packet'], 'base64')
+            ]));
+            rs.push(null);
+
+            var calls = 0;
+            dispatch(rs, function (err, msg) {
+              calls++;
+              assert.equal(err, null);
+              utils.verifyFields(testSpec.sbp, msg.sbp);
+              utils.verifyFields(testSpec.msg.fields, msg.fields);
+              if (calls === 7) {
+                done();
+              }
             });
           });
 
