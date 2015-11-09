@@ -29,7 +29,7 @@ module.exports = {
       });
       return results;
     };
-    var yamlDir = path.resolve(__dirname, '../../spec/tests/yaml/swiftnav/sbp');
+    var yamlDir = path.resolve(__dirname, '../../spec/tests/yaml');
     return walk(yamlDir);
   },
   verifyFields: function (spec, msg) {
