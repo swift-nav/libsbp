@@ -89,13 +89,30 @@ describe('test packages based on YAML descriptors, through the dispatcher', func
             var rs = new Readable();
             var packetBuf = new Buffer(testSpec['raw_packet'], 'base64');
             rs.push(packetBuf.slice(0,packetBuf.length-5));
-            rs.push(packetBuf);
+
+            var requiredCalls = 1;
+
+            // `length` is longer than one full buffer for these corrupted messages
+            // similar issue to the above tests
+            if (filename.indexOf('test_MsgUartState.yaml') !== -1) {
+              requiredCalls = 10;
+            }
+
+            var expectedCalls;
+            for (expectedCalls = 0; expectedCalls < requiredCalls; expectedCalls++) {
+              rs.push(packetBuf);
+            }
             rs.push(null);
+
+            var calls = 0;
             dispatch(rs, function (err, msg) {
+              calls++;
               assert.equal(err, null);
               utils.verifyFields(testSpec.sbp, msg.sbp);
               utils.verifyFields(testSpec.msg.fields, msg.fields);
-              done();
+              if (calls === expectedCalls) {
+                done();
+              }
             });
           });
         });

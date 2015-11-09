@@ -84,7 +84,13 @@ var packages = ["acquisition", "bootload", "ext_events", "file_io", "flash", "lo
 var sbpTable = packages.map(function (pkg) {
   return require(path.resolve(__dirname, "./" + pkg + ".js"));
 }).reduce(function (prev, curr) {
-  return mergeDict(prev, curr);
+  var numericKeysDict = {};
+  Object.keys(curr).map(function (key) {
+    if (parseInt(key) == key) {
+      numericKeysDict[key] = curr[key];
+    }
+  });
+  return mergeDict(prev, numericKeysDict);
 }, {});
 
 var parser = new Parser()
