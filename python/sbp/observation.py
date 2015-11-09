@@ -326,6 +326,20 @@ satellite being tracked.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgObs.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgObs(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -343,15 +357,6 @@ satellite being tracked.
     c = containerize(exclude_fields(self))
     self.payload = MsgObs._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgObs(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -416,6 +421,20 @@ error in the pseudo-absolute position output.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgBasePos.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgBasePos(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -433,15 +452,6 @@ error in the pseudo-absolute position output.
     c = containerize(exclude_fields(self))
     self.payload = MsgBasePos._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgBasePos(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -639,6 +649,20 @@ reserved for future use
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgEphemeris.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgEphemeris(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -656,15 +680,6 @@ reserved for future use
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemeris._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgEphemeris(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -839,6 +854,20 @@ class MsgEphemerisDepA(SBP):
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgEphemerisDepA.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgEphemerisDepA(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -856,15 +885,6 @@ class MsgEphemerisDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisDepA._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgEphemerisDepA(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -1044,6 +1064,20 @@ class MsgEphemerisDepB(SBP):
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgEphemerisDepB.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgEphemerisDepB(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -1061,15 +1095,6 @@ class MsgEphemerisDepB(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisDepB._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgEphemerisDepB(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -1126,6 +1151,20 @@ satellite being tracked.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgObsDepA.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgObsDepA(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -1143,15 +1182,6 @@ satellite being tracked.
     c = containerize(exclude_fields(self))
     self.payload = MsgObsDepA._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgObsDepA(sbp)
 
   def to_json_dict(self):
     self.to_binary()

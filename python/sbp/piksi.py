@@ -181,6 +181,20 @@ alamanac onto the Piksi's flash memory from the host.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgAlmanac.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgAlmanac(sbp, **d)
+
  
     
 SBP_MSG_SET_TIME = 0x0068
@@ -213,6 +227,20 @@ time estimate sent by the host.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSetTime.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSetTime(sbp, **d)
+
  
     
 SBP_MSG_RESET = 0x00B2
@@ -245,6 +273,20 @@ bootloader.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgReset.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgReset(sbp, **d)
+
  
     
 SBP_MSG_CW_RESULTS = 0x00C0
@@ -278,6 +320,20 @@ removed in a future release.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgCwResults.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgCwResults(sbp, **d)
+
  
     
 SBP_MSG_CW_START = 0x00C1
@@ -311,6 +367,20 @@ be removed in a future release.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgCwStart.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgCwStart(sbp, **d)
+
  
     
 SBP_MSG_RESET_FILTERS = 0x0022
@@ -356,6 +426,20 @@ Ambiguity Resolution (IAR) process.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgResetFilters.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgResetFilters(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -373,15 +457,6 @@ Ambiguity Resolution (IAR) process.
     c = containerize(exclude_fields(self))
     self.payload = MsgResetFilters._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgResetFilters(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -423,6 +498,20 @@ observations between the two.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgInitBase.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgInitBase(sbp, **d)
+
  
     
 SBP_MSG_THREAD_STATE = 0x0017
@@ -481,6 +570,20 @@ thread. The reported percentage values require to be normalized.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgThreadState.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgThreadState(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -498,15 +601,6 @@ thread. The reported percentage values require to be normalized.
     c = containerize(exclude_fields(self))
     self.payload = MsgThreadState._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgThreadState(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -576,6 +670,20 @@ future. The reported percentage values require to be normalized.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgUartState.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgUartState(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -593,15 +701,6 @@ future. The reported percentage values require to be normalized.
     c = containerize(exclude_fields(self))
     self.payload = MsgUartState._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgUartState(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -655,6 +754,20 @@ from satellite observations.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgIarState.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgIarState(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -672,15 +785,6 @@ from satellite observations.
     c = containerize(exclude_fields(self))
     self.payload = MsgIarState._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgIarState(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -737,6 +841,20 @@ from being used in various Piksi subsystems.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgMaskSatellite.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgMaskSatellite(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -754,15 +872,6 @@ from being used in various Piksi subsystems.
     c = containerize(exclude_fields(self))
     self.payload = MsgMaskSatellite._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgMaskSatellite(sbp)
 
   def to_json_dict(self):
     self.to_binary()

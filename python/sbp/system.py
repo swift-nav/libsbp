@@ -68,6 +68,20 @@ or configuration requests.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgStartup.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgStartup(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -85,15 +99,6 @@ or configuration requests.
     c = containerize(exclude_fields(self))
     self.payload = MsgStartup._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgStartup(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -153,6 +158,20 @@ the remaining error flags should be inspected.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgHeartbeat.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgHeartbeat(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -170,15 +189,6 @@ the remaining error flags should be inspected.
     c = containerize(exclude_fields(self))
     self.payload = MsgHeartbeat._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgHeartbeat(sbp)
 
   def to_json_dict(self):
     self.to_binary()

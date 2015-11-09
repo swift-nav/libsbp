@@ -105,6 +105,20 @@ from -500000 to 500000)
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgGPSTime.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgGPSTime(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -122,15 +136,6 @@ from -500000 to 500000)
     c = containerize(exclude_fields(self))
     self.payload = MsgGPSTime._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgGPSTime(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -208,6 +213,20 @@ precision.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgDops.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgDops(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -225,15 +244,6 @@ precision.
     c = containerize(exclude_fields(self))
     self.payload = MsgDops._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgDops(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -323,6 +333,20 @@ to 0.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgPosECEF.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgPosECEF(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -340,15 +364,6 @@ to 0.
     c = containerize(exclude_fields(self))
     self.payload = MsgPosECEF._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgPosECEF(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -445,6 +460,20 @@ implemented). Defaults to 0.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgPosLLH.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgPosLLH(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -462,15 +491,6 @@ implemented). Defaults to 0.
     c = containerize(exclude_fields(self))
     self.payload = MsgPosLLH._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgPosLLH(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -557,6 +577,20 @@ to 0.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgBaselineECEF.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgBaselineECEF(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -574,15 +608,6 @@ to 0.
     c = containerize(exclude_fields(self))
     self.payload = MsgBaselineECEF._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgBaselineECEF(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -677,6 +702,20 @@ implemented). Defaults to 0.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgBaselineNED.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgBaselineNED(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -694,15 +733,6 @@ implemented). Defaults to 0.
     c = containerize(exclude_fields(self))
     self.payload = MsgBaselineNED._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgBaselineNED(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -787,6 +817,20 @@ to 0.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgVelECEF.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgVelECEF(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -804,15 +848,6 @@ to 0.
     c = containerize(exclude_fields(self))
     self.payload = MsgVelECEF._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgVelECEF(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -904,6 +939,20 @@ implemented). Defaults to 0.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgVelNED.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgVelNED(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -921,15 +970,6 @@ implemented). Defaults to 0.
     c = containerize(exclude_fields(self))
     self.payload = MsgVelNED._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgVelNED(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -997,6 +1037,20 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgBaselineHeading.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgBaselineHeading(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -1014,15 +1068,6 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     c = containerize(exclude_fields(self))
     self.payload = MsgBaselineHeading._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgBaselineHeading(sbp)
 
   def to_json_dict(self):
     self.to_binary()

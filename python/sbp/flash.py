@@ -94,6 +94,20 @@ starting address
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFlashProgram.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFlashProgram(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -111,15 +125,6 @@ starting address
     c = containerize(exclude_fields(self))
     self.payload = MsgFlashProgram._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgFlashProgram(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -173,6 +178,20 @@ MSG_FLASH_PROGRAM, may return this message on failure.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFlashDone.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFlashDone(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -190,15 +209,6 @@ MSG_FLASH_PROGRAM, may return this message on failure.
     c = containerize(exclude_fields(self))
     self.payload = MsgFlashDone._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgFlashDone(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -267,6 +277,20 @@ starting address
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFlashReadReq.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFlashReadReq(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -284,15 +308,6 @@ starting address
     c = containerize(exclude_fields(self))
     self.payload = MsgFlashReadReq._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgFlashReadReq(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -361,6 +376,20 @@ starting address
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFlashReadResp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFlashReadResp(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -378,15 +407,6 @@ starting address
     c = containerize(exclude_fields(self))
     self.payload = MsgFlashReadResp._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgFlashReadResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -448,6 +468,20 @@ the M25)
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFlashErase.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFlashErase(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -465,15 +499,6 @@ the M25)
     c = containerize(exclude_fields(self))
     self.payload = MsgFlashErase._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgFlashErase(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -525,6 +550,20 @@ memory. The device replies with a MSG_FLASH_DONE message.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgStmFlashLockSector.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgStmFlashLockSector(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -542,15 +581,6 @@ memory. The device replies with a MSG_FLASH_DONE message.
     c = containerize(exclude_fields(self))
     self.payload = MsgStmFlashLockSector._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgStmFlashLockSector(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -602,6 +632,20 @@ memory. The device replies with a MSG_FLASH_DONE message.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgStmFlashUnlockSector.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgStmFlashUnlockSector(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -619,15 +663,6 @@ memory. The device replies with a MSG_FLASH_DONE message.
     c = containerize(exclude_fields(self))
     self.payload = MsgStmFlashUnlockSector._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgStmFlashUnlockSector(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -668,6 +703,20 @@ ID in the payload.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgStmUniqueIdReq.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgStmUniqueIdReq(sbp, **d)
+
  
     
 SBP_MSG_STM_UNIQUE_ID_RESP = 0x00E5
@@ -715,6 +764,20 @@ ID in the payload..
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgStmUniqueIdResp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgStmUniqueIdResp(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -732,15 +795,6 @@ ID in the payload..
     c = containerize(exclude_fields(self))
     self.payload = MsgStmUniqueIdResp._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgStmUniqueIdResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -792,6 +846,20 @@ register. The device replies with a MSG_FLASH_DONE message.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgM25FlashWriteStatus.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgM25FlashWriteStatus(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -809,15 +877,6 @@ register. The device replies with a MSG_FLASH_DONE message.
     c = containerize(exclude_fields(self))
     self.payload = MsgM25FlashWriteStatus._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgM25FlashWriteStatus(sbp)
 
   def to_json_dict(self):
     self.to_binary()

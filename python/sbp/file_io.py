@@ -97,6 +97,20 @@ to this message when it is received from sender ID 0x42.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFileioReadReq.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFileioReadReq(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -114,15 +128,6 @@ to this message when it is received from sender ID 0x42.
     c = containerize(exclude_fields(self))
     self.payload = MsgFileioReadReq._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgFileioReadReq(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -182,6 +187,20 @@ preserved from the request.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFileioReadResp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFileioReadResp(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -199,15 +218,6 @@ preserved from the request.
     c = containerize(exclude_fields(self))
     self.payload = MsgFileioReadResp._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgFileioReadResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -278,6 +288,20 @@ from sender ID 0x42.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFileioReadDirReq.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFileioReadDirReq(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -295,15 +319,6 @@ from sender ID 0x42.
     c = containerize(exclude_fields(self))
     self.payload = MsgFileioReadDirReq._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgFileioReadDirReq(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -364,6 +379,20 @@ the response is preserved from the request.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFileioReadDirResp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFileioReadDirResp(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -381,15 +410,6 @@ the response is preserved from the request.
     c = containerize(exclude_fields(self))
     self.payload = MsgFileioReadDirResp._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgFileioReadDirResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -443,6 +463,20 @@ process this message when it is received from sender ID 0x42.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFileioRemove.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFileioRemove(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -460,15 +494,6 @@ process this message when it is received from sender ID 0x42.
     c = containerize(exclude_fields(self))
     self.payload = MsgFileioRemove._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgFileioRemove(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -541,6 +566,20 @@ only  process this message when it is received from sender ID
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFileioWriteReq.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFileioWriteReq(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -558,15 +597,6 @@ only  process this message when it is received from sender ID
     c = containerize(exclude_fields(self))
     self.payload = MsgFileioWriteReq._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgFileioWriteReq(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -621,6 +651,20 @@ request.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFileioWriteResp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFileioWriteResp(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -638,15 +682,6 @@ request.
     c = containerize(exclude_fields(self))
     self.payload = MsgFileioWriteResp._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgFileioWriteResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()

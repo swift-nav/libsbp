@@ -60,6 +60,20 @@ response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgBootloaderHandshakeReq.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgBootloaderHandshakeReq(sbp, **d)
+
  
     
 SBP_MSG_BOOTLOADER_HANDSHAKE_RESP = 0x00B4
@@ -113,6 +127,20 @@ protocol version number.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgBootloaderHandshakeResp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgBootloaderHandshakeResp(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -130,15 +158,6 @@ protocol version number.
     c = containerize(exclude_fields(self))
     self.payload = MsgBootloaderHandshakeResp._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgBootloaderHandshakeResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -189,6 +208,20 @@ class MsgBootloaderJumpToApp(SBP):
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgBootloaderJumpToApp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgBootloaderJumpToApp(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -206,15 +239,6 @@ class MsgBootloaderJumpToApp(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgBootloaderJumpToApp._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgBootloaderJumpToApp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -257,6 +281,20 @@ and not related to the Piksi's serial number.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgNapDeviceDnaReq.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgNapDeviceDnaReq(sbp, **d)
+
  
     
 SBP_MSG_NAP_DEVICE_DNA_RESP = 0x00DD
@@ -308,6 +346,20 @@ on the right.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgNapDeviceDnaResp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgNapDeviceDnaResp(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -325,15 +377,6 @@ on the right.
     c = containerize(exclude_fields(self))
     self.payload = MsgNapDeviceDnaResp._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgNapDeviceDnaResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -383,6 +426,20 @@ class MsgBootloaderHandshakeDepA(SBP):
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgBootloaderHandshakeDepA.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgBootloaderHandshakeDepA(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -400,15 +457,6 @@ class MsgBootloaderHandshakeDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgBootloaderHandshakeDepA._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgBootloaderHandshakeDepA(sbp)
 
   def to_json_dict(self):
     self.to_binary()
