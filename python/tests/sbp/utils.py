@@ -111,9 +111,8 @@ def _assert_materialization(msg, sbp, raw_json):
   right JSON object.
 
   """
-  fields = msg['fields']
-  fields.update({'sender': sbp.sender})
-  live_msg = _SBP_TABLE[sbp.msg_type](**fields)
+  fields = msg['fields'] or dict()
+  live_msg = _SBP_TABLE[sbp.msg_type](sbp, **fields)
   assert isinstance(live_msg.to_json_dict(), dict)
   assert live_msg.to_json_dict() == json.loads(raw_json)
 
