@@ -9,6 +9,11 @@ You can include the `javascript/sbp` directory. Two objects are exported - `disp
 (see `msg.js`). `dispatch` is used to connect to a stream of binary data and `decode` can be used
 to parse individual binary messages.packets.
 
+## Requirements
+brew install nodejs
+npm install -g mocha
+npm install -g
+
 ## Examples
 See `test_http_stream.js` for connecting an HTTP stream to the dispatcher.
 
