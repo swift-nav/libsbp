@@ -60,6 +60,20 @@ configuration to its onboard flash memory file system.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSettingsSave.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSettingsSave(sbp, **d)
+
  
     
 SBP_MSG_SETTINGS_WRITE = 0x00A0
@@ -107,6 +121,20 @@ process to this message when it is received from sender ID
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSettingsWrite.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSettingsWrite(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -124,15 +152,6 @@ process to this message when it is received from sender ID
     c = containerize(exclude_fields(self))
     self.payload = MsgSettingsWrite._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgSettingsWrite(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -185,6 +204,20 @@ this message when it is received from sender ID 0x42.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSettingsReadReq.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSettingsReadReq(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -202,15 +235,6 @@ this message when it is received from sender ID 0x42.
     c = containerize(exclude_fields(self))
     self.payload = MsgSettingsReadReq._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgSettingsReadReq(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -262,6 +286,20 @@ class MsgSettingsReadResp(SBP):
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSettingsReadResp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSettingsReadResp(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -279,15 +317,6 @@ class MsgSettingsReadResp(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSettingsReadResp._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgSettingsReadResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -344,6 +373,20 @@ this message when it is received from sender ID 0x42.
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSettingsReadByIndexReq.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSettingsReadByIndexReq(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -361,15 +404,6 @@ this message when it is received from sender ID 0x42.
     c = containerize(exclude_fields(self))
     self.payload = MsgSettingsReadByIndexReq._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgSettingsReadByIndexReq(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -432,6 +466,20 @@ NULL-terminated and delimited string with contents
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSettingsReadByIndexResp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSettingsReadByIndexResp(sbp, **d)
+
  
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
@@ -449,15 +497,6 @@ NULL-terminated and delimited string with contents
     c = containerize(exclude_fields(self))
     self.payload = MsgSettingsReadByIndexResp._parser.build(c)
     return self.pack()
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    sbp = SBP.from_json_dict(d)
-    return MsgSettingsReadByIndexResp(sbp)
 
   def to_json_dict(self):
     self.to_binary()
@@ -495,6 +534,20 @@ class MsgSettingsReadByIndexDone(SBP):
 
   def __repr__(self):
     return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSettingsReadByIndexDone.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSettingsReadByIndexDone(sbp, **d)
+
  
     
 
