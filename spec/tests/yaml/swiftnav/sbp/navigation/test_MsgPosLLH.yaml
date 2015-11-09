@@ -1,0 +1,137 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgPosLLH v0.51.
+generated_on: 2015-11-09 11:34:21.360715
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      flags: 0
+      h_accuracy: 0
+      height: 69.80437675175607
+      lat: 37.42906890908121
+      lon: -122.17338662202773
+      n_sats: 9
+      tow: 2567700
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgPosLLH
+  msg_type: '0x201'
+  raw_json: '{"v_accuracy": 0, "n_sats": 9, "sender": 55286, "msg_type": 513, "lon":
+    -122.17338662202773, "tow": 2567700, "height": 69.80437675175607, "crc": 35820,
+    "length": 34, "flags": 0, "h_accuracy": 0, "lat": 37.42906890908121, "preamble":
+    85, "payload": "FC4nAPod4rrrtkJAE8szxBiLXsAfnaDoenNRQAAAAAAJAA=="}'
+  raw_packet: VQEC9tciFC4nAPod4rrrtkJAE8szxBiLXsAfnaDoenNRQAAAAAAJAOyL
+  sbp:
+    crc: '0x8bec'
+    length: 34
+    msg_type: '0x201'
+    payload: FC4nAPod4rrrtkJAE8szxBiLXsAfnaDoenNRQAAAAAAJAA==
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      flags: 1
+      h_accuracy: 0
+      height: 69.68814067715354
+      lat: 37.42906430885274
+      lon: -122.17340826071865
+      n_sats: 9
+      tow: 2567700
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgPosLLH
+  msg_type: '0x201'
+  raw_json: '{"v_accuracy": 0, "n_sats": 9, "sender": 55286, "msg_type": 513, "lon":
+    -122.17340826071865, "tow": 2567700, "height": 69.68814067715354, "crc": 29977,
+    "length": 34, "flags": 1, "h_accuracy": 0, "lat": 37.42906430885274, "preamble":
+    85, "payload": "FC4nAKEzS5TrtkJAJCn2HhmLXsD+2jF/CmxRQAAAAAAJAQ=="}'
+  raw_packet: VQEC9tciFC4nAKEzS5TrtkJAJCn2HhmLXsD+2jF/CmxRQAAAAAAJARl1
+  sbp:
+    crc: '0x7519'
+    length: 34
+    msg_type: '0x201'
+    payload: FC4nAKEzS5TrtkJAJCn2HhmLXsD+2jF/CmxRQAAAAAAJAQ==
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      flags: 0
+      h_accuracy: 0
+      height: 69.49608854815264
+      lat: 37.42905447764173
+      lon: -122.17342007549469
+      n_sats: 9
+      tow: 2567800
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgPosLLH
+  msg_type: '0x201'
+  raw_json: '{"v_accuracy": 0, "n_sats": 9, "sender": 55286, "msg_type": 513, "lon":
+    -122.17342007549469, "tow": 2567800, "height": 69.49608854815264, "crc": 27054,
+    "length": 34, "flags": 0, "h_accuracy": 0, "lat": 37.42905447764173, "preamble":
+    85, "payload": "eC4nADjW0kHrtkJADS6EUBmLXsAWjy7qv19RQAAAAAAJAA=="}'
+  raw_packet: VQEC9tcieC4nADjW0kHrtkJADS6EUBmLXsAWjy7qv19RQAAAAAAJAK5p
+  sbp:
+    crc: '0x69ae'
+    length: 34
+    msg_type: '0x201'
+    payload: eC4nADjW0kHrtkJADS6EUBmLXsAWjy7qv19RQAAAAAAJAA==
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      flags: 1
+      h_accuracy: 0
+      height: 69.68780458819901
+      lat: 37.429063373925565
+      lon: -122.17340389594972
+      n_sats: 9
+      tow: 2567800
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgPosLLH
+  msg_type: '0x201'
+  raw_json: '{"v_accuracy": 0, "n_sats": 9, "sender": 55286, "msg_type": 513, "lon":
+    -122.17340389594972, "tow": 2567800, "height": 69.68780458819901, "crc": 32634,
+    "length": 34, "flags": 1, "h_accuracy": 0, "lat": 37.429063373925565, "preamble":
+    85, "payload": "eC4nAPt1c4zrtkJAmIanDBmLXsCgFon9BGxRQAAAAAAJAQ=="}'
+  raw_packet: VQEC9tcieC4nAPt1c4zrtkJAmIanDBmLXsCgFon9BGxRQAAAAAAJAXp/
+  sbp:
+    crc: '0x7f7a'
+    length: 34
+    msg_type: '0x201'
+    payload: eC4nAPt1c4zrtkJAmIanDBmLXsCgFon9BGxRQAAAAAAJAQ==
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      flags: 0
+      h_accuracy: 0
+      height: 70.5249547317965
+      lat: 37.42907659359516
+      lon: -122.17340492645452
+      n_sats: 9
+      tow: 2567900
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgPosLLH
+  msg_type: '0x201'
+  raw_json: '{"v_accuracy": 0, "n_sats": 9, "sender": 55286, "msg_type": 513, "lon":
+    -122.17340492645452, "tow": 2567900, "height": 70.5249547317965, "crc": 40642,
+    "length": 34, "flags": 0, "h_accuracy": 0, "lat": 37.42907659359516, "preamble":
+    85, "payload": "3C4nADN8WPvrtkJAmQX6EBmLXsCSPLvbmKFRQAAAAAAJAA=="}'
+  raw_packet: VQEC9tci3C4nADN8WPvrtkJAmQX6EBmLXsCSPLvbmKFRQAAAAAAJAMKe
+  sbp:
+    crc: '0x9ec2'
+    length: 34
+    msg_type: '0x201'
+    payload: 3C4nADN8WPvrtkJAmQX6EBmLXsCSPLvbmKFRQAAAAAAJAA==
+    preamble: '0x55'
+    sender: '0xd7f6'
+version: '0.51'
+...

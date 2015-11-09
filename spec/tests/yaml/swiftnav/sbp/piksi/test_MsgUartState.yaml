@@ -1,0 +1,103 @@
+---
+description: Unit tests for swiftnav.sbp.piksi MsgUartState v0.51.
+generated_on: 2015-11-09 11:34:21.429274
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      latency:
+        avg: -1
+        current: -1
+        lmax: 0
+        lmin: 0
+      uart_a:
+        crc_error_count: 0
+        io_error_count: 0
+        rx_buffer_level: 0
+        rx_throughput: 0.0
+        tx_buffer_level: 24
+        tx_throughput: 0.8661972284317017
+      uart_b:
+        crc_error_count: 0
+        io_error_count: 0
+        rx_buffer_level: 0
+        rx_throughput: 0.0
+        tx_buffer_level: 40
+        tx_throughput: 2.9718310832977295
+      uart_ftdi:
+        crc_error_count: 0
+        io_error_count: 0
+        rx_buffer_level: 1
+        rx_throughput: 0.035211268812417984
+        tx_buffer_level: 81
+        tx_throughput: 5.063380241394043
+    module: sbp.piksi
+    name: MsgUartState
+  msg_type: '0x18'
+  raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
+    55286, "msg_type": 24, "crc": 31815, "length": 58, "uart_b": {"rx_buffer_level":
+    0, "tx_buffer_level": 40, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count":
+    0, "tx_throughput": 2.9718310832977295}, "uart_a": {"rx_buffer_level": 0, "tx_buffer_level":
+    24, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count": 0, "tx_throughput":
+    0.8661972284317017}, "preamble": 85, "payload": "Gr9dPwAAAAAAAAAAGAB7Mj5AAAAAAAAAAAAoADYHokCxORA9AAAAAFEB/////wAAAAAAAAAA/////w==",
+    "uart_ftdi": {"rx_buffer_level": 1, "tx_buffer_level": 81, "rx_throughput": 0.035211268812417984,
+    "crc_error_count": 0, "io_error_count": 0, "tx_throughput": 5.063380241394043}}'
+  raw_packet: VRgA9tc6Gr9dPwAAAAAAAAAAGAB7Mj5AAAAAAAAAAAAoADYHokCxORA9AAAAAFEB/////wAAAAAAAAAA/////0d8
+  sbp:
+    crc: '0x7c47'
+    length: 58
+    msg_type: '0x18'
+    payload: Gr9dPwAAAAAAAAAAGAB7Mj5AAAAAAAAAAAAoADYHokCxORA9AAAAAFEB/////wAAAAAAAAAA/////w==
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      latency:
+        avg: -1
+        current: -1
+        lmax: 0
+        lmin: 0
+      uart_a:
+        crc_error_count: 0
+        io_error_count: 0
+        rx_buffer_level: 0
+        rx_throughput: 0.0
+        tx_buffer_level: 24
+        tx_throughput: 0.8746479153633118
+      uart_b:
+        crc_error_count: 0
+        io_error_count: 0
+        rx_buffer_level: 0
+        rx_throughput: 0.0
+        tx_buffer_level: 40
+        tx_throughput: 2.995774745941162
+      uart_ftdi:
+        crc_error_count: 0
+        io_error_count: 0
+        rx_buffer_level: 1
+        rx_throughput: 0.35211268067359924
+        tx_buffer_level: 85
+        tx_throughput: 6.7901411056518555
+    module: sbp.piksi
+    name: MsgUartState
+  msg_type: '0x18'
+  raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
+    55286, "msg_type": 24, "crc": 63641, "length": 58, "uart_b": {"rx_buffer_level":
+    0, "tx_buffer_level": 40, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count":
+    0, "tx_throughput": 2.995774745941162}, "uart_a": {"rx_buffer_level": 0, "tx_buffer_level":
+    24, "rx_throughput": 0.0, "crc_error_count": 0, "io_error_count": 0, "tx_throughput":
+    0.8746479153633118}, "preamble": 85, "payload": "7ehfPwAAAAAAAAAAGADGuj9AAAAAAAAAAAAoANZI2UAdSLQ+AAAAAFUB/////wAAAAAAAAAA/////w==",
+    "uart_ftdi": {"rx_buffer_level": 1, "tx_buffer_level": 85, "rx_throughput": 0.35211268067359924,
+    "crc_error_count": 0, "io_error_count": 0, "tx_throughput": 6.7901411056518555}}'
+  raw_packet: VRgA9tc67ehfPwAAAAAAAAAAGADGuj9AAAAAAAAAAAAoANZI2UAdSLQ+AAAAAFUB/////wAAAAAAAAAA/////5n4
+  sbp:
+    crc: '0xf899'
+    length: 58
+    msg_type: '0x18'
+    payload: 7ehfPwAAAAAAAAAAGADGuj9AAAAAAAAAAAAoANZI2UAdSLQ+AAAAAFUB/////wAAAAAAAAAA/////w==
+    preamble: '0x55'
+    sender: '0xd7f6'
+version: '0.51'
+...

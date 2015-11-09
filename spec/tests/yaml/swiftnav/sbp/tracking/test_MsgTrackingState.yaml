@@ -1,0 +1,291 @@
+---
+description: Unit tests for swiftnav.sbp.tracking MsgTrackingState v0.51.
+generated_on: 2015-11-09 11:34:21.401841
+package: sbp.tracking
+tests:
+
+- msg:
+    fields:
+      states:
+      - cn0: 39.24782180786133
+        sid: 202
+        state: 1
+      - cn0: 36.09756088256836
+        sid: 203
+        state: 1
+      - cn0: 37.62678527832031
+        sid: 208
+        state: 1
+      - cn0: 39.020729064941406
+        sid: 212
+        state: 1
+      - cn0: 42.03290557861328
+        sid: 217
+        state: 1
+      - cn0: 37.43546676635742
+        sid: 218
+        state: 1
+      - cn0: 38.4229621887207
+        sid: 220
+        state: 1
+      - cn0: 38.91520309448242
+        sid: 222
+        state: 1
+      - cn0: 42.62259292602539
+        sid: 225
+        state: 1
+      - cn0: -1.0
+        sid: 0
+        state: 0
+      - cn0: -1.0
+        sid: 0
+        state: 0
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x13'
+  raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 39.24782180786133,
+    "sid": 202}, {"state": 1, "cn0": 36.09756088256836, "sid": 203}, {"state": 1,
+    "cn0": 37.62678527832031, "sid": 208}, {"state": 1, "cn0": 39.020729064941406,
+    "sid": 212}, {"state": 1, "cn0": 42.03290557861328, "sid": 217}, {"state": 1,
+    "cn0": 37.43546676635742, "sid": 218}, {"state": 1, "cn0": 38.4229621887207, "sid":
+    220}, {"state": 1, "cn0": 38.91520309448242, "sid": 222}, {"state": 1, "cn0":
+    42.62259292602539, "sid": 225}, {"state": 0, "cn0": -1.0, "sid": 0}, {"state":
+    0, "cn0": -1.0, "sid": 0}], "crc": 25054, "length": 99, "preamble": 85, "payload":
+    "AcoAAADF/RxCAcsAAADnYxBCAdAAAADUgRZCAdQAAAA6FRxCAdkAAACyIShCAdoAAADrvRVCAdwAAAAdsRlCAd4AAAArqRtCAeEAAACJfSpCAAAAAAAAAIC/AAAAAAAAAIC/"}'
+  raw_packet: VRMA9tdjAcoAAADF/RxCAcsAAADnYxBCAdAAAADUgRZCAdQAAAA6FRxCAdkAAACyIShCAdoAAADrvRVCAdwAAAAdsRlCAd4AAAArqRtCAeEAAACJfSpCAAAAAAAAAIC/AAAAAAAAAIC/3mE=
+  sbp:
+    crc: '0x61de'
+    length: 99
+    msg_type: '0x13'
+    payload: AcoAAADF/RxCAcsAAADnYxBCAdAAAADUgRZCAdQAAAA6FRxCAdkAAACyIShCAdoAAADrvRVCAdwAAAAdsRlCAd4AAAArqRtCAeEAAACJfSpCAAAAAAAAAIC/AAAAAAAAAIC/
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      states:
+      - cn0: 38.994117736816406
+        sid: 202
+        state: 1
+      - cn0: 34.889801025390625
+        sid: 203
+        state: 1
+      - cn0: 37.44603729248047
+        sid: 208
+        state: 1
+      - cn0: 38.72849655151367
+        sid: 212
+        state: 1
+      - cn0: 41.983219146728516
+        sid: 217
+        state: 1
+      - cn0: 37.46448516845703
+        sid: 218
+        state: 1
+      - cn0: 38.44300079345703
+        sid: 220
+        state: 1
+      - cn0: 39.03423309326172
+        sid: 222
+        state: 1
+      - cn0: 42.89944839477539
+        sid: 225
+        state: 1
+      - cn0: -1.0
+        sid: 0
+        state: 0
+      - cn0: -1.0
+        sid: 0
+        state: 0
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x13'
+  raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 38.994117736816406,
+    "sid": 202}, {"state": 1, "cn0": 34.889801025390625, "sid": 203}, {"state": 1,
+    "cn0": 37.44603729248047, "sid": 208}, {"state": 1, "cn0": 38.72849655151367,
+    "sid": 212}, {"state": 1, "cn0": 41.983219146728516, "sid": 217}, {"state": 1,
+    "cn0": 37.46448516845703, "sid": 218}, {"state": 1, "cn0": 38.44300079345703,
+    "sid": 220}, {"state": 1, "cn0": 39.03423309326172, "sid": 222}, {"state": 1,
+    "cn0": 42.89944839477539, "sid": 225}, {"state": 0, "cn0": -1.0, "sid": 0}, {"state":
+    0, "cn0": -1.0, "sid": 0}], "crc": 7956, "length": 99, "preamble": 85, "payload":
+    "AcoAAAD6+RtCAcsAAAAojwtCAdAAAAC+yBVCAdQAAAD76RpCAdkAAADR7idCAdoAAACi2xVCAdwAAACixRlCAd4AAAAOIxxCAeEAAAAJmStCAAAAAAAAAIC/AAAAAAAAAIC/"}'
+  raw_packet: VRMA9tdjAcoAAAD6+RtCAcsAAAAojwtCAdAAAAC+yBVCAdQAAAD76RpCAdkAAADR7idCAdoAAACi2xVCAdwAAACixRlCAd4AAAAOIxxCAeEAAAAJmStCAAAAAAAAAIC/AAAAAAAAAIC/FB8=
+  sbp:
+    crc: '0x1f14'
+    length: 99
+    msg_type: '0x13'
+    payload: AcoAAAD6+RtCAcsAAAAojwtCAdAAAAC+yBVCAdQAAAD76RpCAdkAAADR7idCAdoAAACi2xVCAdwAAACixRlCAd4AAAAOIxxCAeEAAAAJmStCAAAAAAAAAIC/AAAAAAAAAIC/
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      states:
+      - cn0: 38.95457077026367
+        sid: 202
+        state: 1
+      - cn0: 35.813316345214844
+        sid: 203
+        state: 1
+      - cn0: 37.553924560546875
+        sid: 208
+        state: 1
+      - cn0: 38.88901901245117
+        sid: 212
+        state: 1
+      - cn0: 42.4013557434082
+        sid: 217
+        state: 1
+      - cn0: 37.63916015625
+        sid: 218
+        state: 1
+      - cn0: 37.919986724853516
+        sid: 220
+        state: 1
+      - cn0: 39.25254440307617
+        sid: 222
+        state: 1
+      - cn0: 42.59827423095703
+        sid: 225
+        state: 1
+      - cn0: -1.0
+        sid: 0
+        state: 0
+      - cn0: -1.0
+        sid: 0
+        state: 0
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x13'
+  raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 38.95457077026367,
+    "sid": 202}, {"state": 1, "cn0": 35.813316345214844, "sid": 203}, {"state": 1,
+    "cn0": 37.553924560546875, "sid": 208}, {"state": 1, "cn0": 38.88901901245117,
+    "sid": 212}, {"state": 1, "cn0": 42.4013557434082, "sid": 217}, {"state": 1, "cn0":
+    37.63916015625, "sid": 218}, {"state": 1, "cn0": 37.919986724853516, "sid": 220},
+    {"state": 1, "cn0": 39.25254440307617, "sid": 222}, {"state": 1, "cn0": 42.59827423095703,
+    "sid": 225}, {"state": 0, "cn0": -1.0, "sid": 0}, {"state": 0, "cn0": -1.0, "sid":
+    0}], "crc": 18409, "length": 99, "preamble": 85, "payload": "AcoAAAB70RtCAcsAAADWQA9CAdAAAAA4NxZCAdQAAABbjhtCAdkAAAD9milCAdoAAACAjhZCAdwAAAARrhdCAd4AAACbAh1CAeEAAACiZCpCAAAAAAAAAIC/AAAAAAAAAIC/"}'
+  raw_packet: VRMA9tdjAcoAAAB70RtCAcsAAADWQA9CAdAAAAA4NxZCAdQAAABbjhtCAdkAAAD9milCAdoAAACAjhZCAdwAAAARrhdCAd4AAACbAh1CAeEAAACiZCpCAAAAAAAAAIC/AAAAAAAAAIC/6Uc=
+  sbp:
+    crc: '0x47e9'
+    length: 99
+    msg_type: '0x13'
+    payload: AcoAAAB70RtCAcsAAADWQA9CAdAAAAA4NxZCAdQAAABbjhtCAdkAAAD9milCAdoAAACAjhZCAdwAAAARrhdCAd4AAACbAh1CAeEAAACiZCpCAAAAAAAAAIC/AAAAAAAAAIC/
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      states:
+      - cn0: 39.369598388671875
+        sid: 202
+        state: 1
+      - cn0: 36.52173614501953
+        sid: 203
+        state: 1
+      - cn0: 38.15976333618164
+        sid: 208
+        state: 1
+      - cn0: 39.19989776611328
+        sid: 212
+        state: 1
+      - cn0: 41.55845642089844
+        sid: 217
+        state: 1
+      - cn0: 37.026981353759766
+        sid: 218
+        state: 1
+      - cn0: 38.1049690246582
+        sid: 220
+        state: 1
+      - cn0: 39.04584503173828
+        sid: 222
+        state: 1
+      - cn0: 42.37783432006836
+        sid: 225
+        state: 1
+      - cn0: -1.0
+        sid: 0
+        state: 0
+      - cn0: -1.0
+        sid: 0
+        state: 0
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x13'
+  raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 39.369598388671875,
+    "sid": 202}, {"state": 1, "cn0": 36.52173614501953, "sid": 203}, {"state": 1,
+    "cn0": 38.15976333618164, "sid": 208}, {"state": 1, "cn0": 39.19989776611328,
+    "sid": 212}, {"state": 1, "cn0": 41.55845642089844, "sid": 217}, {"state": 1,
+    "cn0": 37.026981353759766, "sid": 218}, {"state": 1, "cn0": 38.1049690246582,
+    "sid": 220}, {"state": 1, "cn0": 39.04584503173828, "sid": 222}, {"state": 1,
+    "cn0": 42.37783432006836, "sid": 225}, {"state": 0, "cn0": -1.0, "sid": 0}, {"state":
+    0, "cn0": -1.0, "sid": 0}], "crc": 49481, "length": 99, "preamble": 85, "payload":
+    "AcoAAAB4eh1CAcsAAABCFhJCAdAAAACZoxhCAdQAAACyzBxCAdkAAADcOyZCAdoAAAChGxRCAdwAAAB9axhCAd4AAADyLhxCAeEAAADngilCAAAAAAAAAIC/AAAAAAAAAIC/"}'
+  raw_packet: VRMA9tdjAcoAAAB4eh1CAcsAAABCFhJCAdAAAACZoxhCAdQAAACyzBxCAdkAAADcOyZCAdoAAAChGxRCAdwAAAB9axhCAd4AAADyLhxCAeEAAADngilCAAAAAAAAAIC/AAAAAAAAAIC/ScE=
+  sbp:
+    crc: '0xc149'
+    length: 99
+    msg_type: '0x13'
+    payload: AcoAAAB4eh1CAcsAAABCFhJCAdAAAACZoxhCAdQAAACyzBxCAdkAAADcOyZCAdoAAAChGxRCAdwAAAB9axhCAd4AAADyLhxCAeEAAADngilCAAAAAAAAAIC/AAAAAAAAAIC/
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      states:
+      - cn0: 39.70351791381836
+        sid: 202
+        state: 1
+      - cn0: 36.52388381958008
+        sid: 203
+        state: 1
+      - cn0: 37.169708251953125
+        sid: 208
+        state: 1
+      - cn0: 38.81692886352539
+        sid: 212
+        state: 1
+      - cn0: 42.05073165893555
+        sid: 217
+        state: 1
+      - cn0: 37.807498931884766
+        sid: 218
+        state: 1
+      - cn0: 37.71632385253906
+        sid: 220
+        state: 1
+      - cn0: 38.5289192199707
+        sid: 222
+        state: 1
+      - cn0: 42.27101516723633
+        sid: 225
+        state: 1
+      - cn0: -1.0
+        sid: 0
+        state: 0
+      - cn0: -1.0
+        sid: 0
+        state: 0
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x13'
+  raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 39.70351791381836,
+    "sid": 202}, {"state": 1, "cn0": 36.52388381958008, "sid": 203}, {"state": 1,
+    "cn0": 37.169708251953125, "sid": 208}, {"state": 1, "cn0": 38.81692886352539,
+    "sid": 212}, {"state": 1, "cn0": 42.05073165893555, "sid": 217}, {"state": 1,
+    "cn0": 37.807498931884766, "sid": 218}, {"state": 1, "cn0": 37.71632385253906,
+    "sid": 220}, {"state": 1, "cn0": 38.5289192199707, "sid": 222}, {"state": 1, "cn0":
+    42.27101516723633, "sid": 225}, {"state": 0, "cn0": -1.0, "sid": 0}, {"state":
+    0, "cn0": -1.0, "sid": 0}], "crc": 12158, "length": 99, "preamble": 85, "payload":
+    "AcoAAABn0B5CAcsAAAB1GBJCAdAAAADIrRRCAdQAAACJRBtCAdkAAADzMyhCAdoAAADhOhdCAdwAAACE3RZCAd4AAACdHRpCAeEAAACFFSlCAAAAAAAAAIC/AAAAAAAAAIC/"}'
+  raw_packet: VRMA9tdjAcoAAABn0B5CAcsAAAB1GBJCAdAAAADIrRRCAdQAAACJRBtCAdkAAADzMyhCAdoAAADhOhdCAdwAAACE3RZCAd4AAACdHRpCAeEAAACFFSlCAAAAAAAAAIC/AAAAAAAAAIC/fi8=
+  sbp:
+    crc: '0x2f7e'
+    length: 99
+    msg_type: '0x13'
+    payload: AcoAAABn0B5CAcsAAAB1GBJCAdAAAADIrRRCAdQAAACJRBtCAdkAAADzMyhCAdoAAADhOhdCAdwAAACE3RZCAd4AAACdHRpCAeEAAACFFSlCAAAAAAAAAIC/AAAAAAAAAIC/
+    preamble: '0x55'
+    sender: '0xd7f6'
+version: '0.51'
+...

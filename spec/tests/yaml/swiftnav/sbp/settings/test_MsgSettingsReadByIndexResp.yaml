@@ -1,0 +1,102 @@
+---
+description: Unit tests for swiftnav.sbp.settings MsgSettingsReadByIndexResp v0.51.
+generated_on: 2015-11-09 11:34:21.351510
+package: sbp.settings
+tests:
+
+- msg:
+    fields:
+      index: 0
+      setting: "telemetry_radio\0configuration_string\0AT&F,ATS1=115,ATS2=128,ATS5=0,AT&W,ATZ\0"
+    module: sbp.settings
+    name: MsgSettingsReadByIndexResp
+  msg_type: '0xa7'
+  raw_json: '{"index": 0, "sender": 55286, "msg_type": 167, "crc": 59896, "length":
+    78, "setting": "telemetry_radio\u0000configuration_string\u0000AT&F,ATS1=115,ATS2=128,ATS5=0,AT&W,ATZ\u0000",
+    "preamble": 85, "payload": "AAB0ZWxlbWV0cnlfcmFkaW8AY29uZmlndXJhdGlvbl9zdHJpbmcAQVQmRixBVFMxPTExNSxBVFMyPTEyOCxBVFM1PTAsQVQmVyxBVFoA"}'
+  raw_packet: VacA9tdOAAB0ZWxlbWV0cnlfcmFkaW8AY29uZmlndXJhdGlvbl9zdHJpbmcAQVQmRixBVFMxPTExNSxBVFMyPTEyOCxBVFM1PTAsQVQmVyxBVFoA+Ok=
+  sbp:
+    crc: '0xe9f8'
+    length: 78
+    msg_type: '0xa7'
+    payload: AAB0ZWxlbWV0cnlfcmFkaW8AY29uZmlndXJhdGlvbl9zdHJpbmcAQVQmRixBVFMxPTExNSxBVFMyPTEyOCxBVFM1PTAsQVQmVyxBVFoA
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      index: 1
+      setting: "uart_ftdi\0mode\0SBP\0enum:SBP,NMEA\0"
+    module: sbp.settings
+    name: MsgSettingsReadByIndexResp
+  msg_type: '0xa7'
+  raw_json: '{"index": 1, "sender": 55286, "msg_type": 167, "crc": 62375, "length":
+    35, "setting": "uart_ftdi\u0000mode\u0000SBP\u0000enum:SBP,NMEA\u0000", "preamble":
+    85, "payload": "AQB1YXJ0X2Z0ZGkAbW9kZQBTQlAAZW51bTpTQlAsTk1FQQA="}'
+  raw_packet: VacA9tcjAQB1YXJ0X2Z0ZGkAbW9kZQBTQlAAZW51bTpTQlAsTk1FQQCn8w==
+  sbp:
+    crc: '0xf3a7'
+    length: 35
+    msg_type: '0xa7'
+    payload: AQB1YXJ0X2Z0ZGkAbW9kZQBTQlAAZW51bTpTQlAsTk1FQQA=
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      index: 2
+      setting: "uart_ftdi\0sbp_message_mask\065535\0"
+    module: sbp.settings
+    name: MsgSettingsReadByIndexResp
+  msg_type: '0xa7'
+  raw_json: '{"index": 2, "sender": 55286, "msg_type": 167, "crc": 14340, "length":
+    35, "setting": "uart_ftdi\u0000sbp_message_mask\u000065535\u0000", "preamble":
+    85, "payload": "AgB1YXJ0X2Z0ZGkAc2JwX21lc3NhZ2VfbWFzawA2NTUzNQA="}'
+  raw_packet: VacA9tcjAgB1YXJ0X2Z0ZGkAc2JwX21lc3NhZ2VfbWFzawA2NTUzNQAEOA==
+  sbp:
+    crc: '0x3804'
+    length: 35
+    msg_type: '0xa7'
+    payload: AgB1YXJ0X2Z0ZGkAc2JwX21lc3NhZ2VfbWFzawA2NTUzNQA=
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      index: 3
+      setting: "uart_ftdi\0baudrate\01000000\0"
+    module: sbp.settings
+    name: MsgSettingsReadByIndexResp
+  msg_type: '0xa7'
+  raw_json: '{"index": 3, "sender": 55286, "msg_type": 167, "crc": 37618, "length":
+    29, "setting": "uart_ftdi\u0000baudrate\u00001000000\u0000", "preamble": 85, "payload":
+    "AwB1YXJ0X2Z0ZGkAYmF1ZHJhdGUAMTAwMDAwMAA="}'
+  raw_packet: VacA9tcdAwB1YXJ0X2Z0ZGkAYmF1ZHJhdGUAMTAwMDAwMADykg==
+  sbp:
+    crc: '0x92f2'
+    length: 29
+    msg_type: '0xa7'
+    payload: AwB1YXJ0X2Z0ZGkAYmF1ZHJhdGUAMTAwMDAwMAA=
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      index: 4
+      setting: "uart_uarta\0mode\0SBP\0enum:SBP,NMEA\0"
+    module: sbp.settings
+    name: MsgSettingsReadByIndexResp
+  msg_type: '0xa7'
+  raw_json: '{"index": 4, "sender": 55286, "msg_type": 167, "crc": 1046, "length":
+    36, "setting": "uart_uarta\u0000mode\u0000SBP\u0000enum:SBP,NMEA\u0000", "preamble":
+    85, "payload": "BAB1YXJ0X3VhcnRhAG1vZGUAU0JQAGVudW06U0JQLE5NRUEA"}'
+  raw_packet: VacA9tckBAB1YXJ0X3VhcnRhAG1vZGUAU0JQAGVudW06U0JQLE5NRUEAFgQ=
+  sbp:
+    crc: '0x416'
+    length: 36
+    msg_type: '0xa7'
+    payload: BAB1YXJ0X3VhcnRhAG1vZGUAU0JQAGVudW06U0JQLE5NRUEA
+    preamble: '0x55'
+    sender: '0xd7f6'
+version: '0.51'
+...

@@ -1,0 +1,23 @@
+---
+description: Unit tests for swiftnav.sbp.settings MsgSettingsReadByIndexDone v0.51.
+generated_on: 2015-11-09 11:34:21.382905
+package: sbp.settings
+tests:
+
+- msg:
+    fields: null
+    module: sbp.settings
+    name: MsgSettingsReadByIndexDone
+  msg_type: '0xa6'
+  raw_json: '{"sender": 55286, "msg_type": 166, "crc": 15011, "length": 0, "preamble":
+    85, "payload": ""}'
+  raw_packet: VaYA9tcAozo=
+  sbp:
+    crc: '0x3aa3'
+    length: 0
+    msg_type: '0xa6'
+    payload: ''
+    preamble: '0x55'
+    sender: '0xd7f6'
+version: '0.51'
+...
