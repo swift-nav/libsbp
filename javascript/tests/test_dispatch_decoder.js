@@ -17,15 +17,12 @@ var Readable = require('stream').Readable;
 var dispatch = require(path.resolve(__dirname, '../sbp/')).dispatch;
 var utils = require('./utils');
 
-var yamlDir = path.resolve(__dirname, '../../spec/tests/yaml/swiftnav/sbp');
-var yamlFiles = fs.readdirSync(yamlDir);
+var yamlFiles = utils.getYamlSpecs();
 
 describe('test packages based on YAML descriptors, through the dispatcher', function () {
   yamlFiles.map(function (filename) {
-    var fullpath = path.resolve(yamlDir, filename);
-
     describe(filename, function () {
-      var yamlConfig = yaml.safeLoad(fs.readFileSync(fullpath));
+      var yamlConfig = yaml.safeLoad(fs.readFileSync(filename));
       yamlConfig.tests.map(function (testSpec, i) {
         describe('test spec '+i, function () {
           it('should parse binary sbp and payload', function (done) {
