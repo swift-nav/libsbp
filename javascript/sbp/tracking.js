@@ -197,7 +197,10 @@ MsgTrackingStateDepA.prototype.fieldSpec = [];
 MsgTrackingStateDepA.prototype.fieldSpec.push(['states', 'array', TrackingChannelStateDepA.prototype.fieldSpec, function () { return this.fields.array.length; }]);
 
 module.exports = {
+  TrackingChannelState: TrackingChannelState,
   0x0013: MsgTrackingState,
+  TrackingChannelCorrelation: TrackingChannelCorrelation,
   0x001C: MsgTrackingIq,
+  TrackingChannelStateDepA: TrackingChannelStateDepA,
   0x0016: MsgTrackingStateDepA,
 }

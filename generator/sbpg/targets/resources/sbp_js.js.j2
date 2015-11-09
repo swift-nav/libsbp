@@ -20,8 +20,8 @@
 
 var SBP = require('./sbp');
 var Parser = require('binary-parser').Parser;
-((*- for i in include *))
-//var dep = require("(((module_path))).(((i)))");
+((*- for (file, ident) in include *))
+var (((ident))) = require("./(((file)))").(((ident)));
 ((*- endfor *))
 
 ((*- for m in msgs *))
@@ -72,6 +72,8 @@ module.exports = {
 ((*- for m in msgs *))
   ((*- if m.sbp_id *))
   ((('0x%04X'|format(m.sbp_id)))): ((( m.identifier | js_classnameify ))),
+  ((*- else *))
+  ((( m.identifier | js_classnameify ))): ((( m.identifier | js_classnameify ))),
   ((*- endif*))
 ((*- endfor *))
 }

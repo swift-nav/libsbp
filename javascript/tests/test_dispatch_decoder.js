@@ -40,13 +40,48 @@ describe('test packages based on YAML descriptors, through the dispatcher', func
           it('should parse binary sbp and payload with leading extra preamble', function (done) {
             var rs = new Readable();
             rs.push(new Buffer([0x55]));
-            rs.push(new Buffer(testSpec['raw_packet'], 'base64'));
+            var expectedCalls, bufLength = 0;
+            for (expectedCalls = 0; bufLength < 500; expectedCalls++) {
+              var buf = new Buffer(testSpec['raw_packet'], 'base64');
+              rs.push(buf);
+              bufLength += buf.length;
+            }
             rs.push(null);
+
+            var calls = 0;
             dispatch(rs, function (err, msg) {
+              calls++;
               assert.equal(err, null);
               utils.verifyFields(testSpec.sbp, msg.sbp);
               utils.verifyFields(testSpec.msg.fields, msg.fields);
-              done();
+              if (calls === expectedCalls) {
+                done();
+              }
+            });
+          });
+
+          // For both "corrupt preamble" tests, the corrupt "length" field could be much longer than the actual message.
+          // In a real-world case we will have a constant stream of data which will allow us to read that
+          //  full length, and reframe after discovering that it's a corrupt preamble.
+          // In these cases, we just repeat the message several times to create an arbitrarily long stream.
+          it('should parse binary sbp and payload with leading extra preamble (2)', function (done) {
+            var rs = new Readable();
+            var bigBuf = new Buffer(0);
+            var expectedCalls;
+            for (expectedCalls = 0; bigBuf.length < 500; expectedCalls++) {
+              bigBuf = Buffer.concat([bigBuf, new Buffer(testSpec['raw_packet'], 'base64')]);
+            }
+            rs.push(Buffer.concat([new Buffer([0x55]), bigBuf]));
+            rs.push(null);
+            var calls = 0;
+            dispatch(rs, function (err, msg) {
+              calls++;
+              assert.equal(err, null);
+              utils.verifyFields(testSpec.sbp, msg.sbp);
+              utils.verifyFields(testSpec.msg.fields, msg.fields);
+              if (calls === expectedCalls) {
+                done();
+              }
             });
           });
 

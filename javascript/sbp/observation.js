@@ -596,10 +596,15 @@ MsgObsDepA.prototype.fieldSpec.push(['header', ObservationHeader.prototype.field
 MsgObsDepA.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepA.prototype.fieldSpec, function () { return this.fields.array.length; }]);
 
 module.exports = {
+  ObsGPSTime: ObsGPSTime,
+  CarrierPhase: CarrierPhase,
+  ObservationHeader: ObservationHeader,
+  PackedObsContent: PackedObsContent,
   0x0043: MsgObs,
   0x0044: MsgBasePos,
   0x0047: MsgEphemeris,
   0x001A: MsgEphemerisDepA,
   0x0046: MsgEphemerisDepB,
+  PackedObsContentDepA: PackedObsContentDepA,
   0x0045: MsgObsDepA,
 }
