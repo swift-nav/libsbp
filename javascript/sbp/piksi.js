@@ -110,9 +110,8 @@ MsgCwResults.prototype.fieldSpec = [];
 /**
  * SBP class for message MSG_CW_START (0x00C1).
  *
- * This is an unused legacy message from those host for starting the CW
- * interference channel on the SwiftNAP. This message will be removed in a future
- * release.
+ * This is an unused legacy message from the host for starting the CW interference
+ * channel on the SwiftNAP. This message will be removed in a future release.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -183,7 +182,7 @@ MsgInitBase.prototype.fieldSpec = [];
  *
  * The thread usage message from the device reports real-time operating system
  * (RTOS) thread usage statistics for the named thread. The reported percentage
- * values require to be normalized.
+ * values must be normalized.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field name string Thread name (NULL terminated)
@@ -216,14 +215,14 @@ MsgThreadState.prototype.fieldSpec.push(['stack_free', 'writeUInt32LE', 4]);
  * SBP class for message fragment UARTChannel
  *
  * Throughput, utilization, and error counts on the RX/TX buffers of this UART
- * channel. The reported percentage values require to be normalized.
+ * channel. The reported percentage values must be normalized.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tx_throughput number (float, 4 bytes) UART transmit throughput
  * @field rx_throughput number (float, 4 bytes) UART receive throughput
  * @field crc_error_count number (unsigned 16-bit int, 2 bytes) UART CRC error count
  * @field io_error_count number (unsigned 16-bit int, 2 bytes) UART IO error count
- * @field tx_buffer_level number (unsigned 8-bit int, 1 byte) UART transmit buffer percentage utilization (ranges from 0 - 255)
+ * @field tx_buffer_level number (unsigned 8-bit int, 1 byte) UART transmit buffer percentage utilization (ranges from 0 to 255)
  * @field rx_buffer_level number (unsigned 8-bit int, 1 byte) UART receive buffer percentage utilization (ranges from 0 to 255)
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -296,8 +295,7 @@ Latency.prototype.fieldSpec.push(['current', 'writeInt32LE', 4]);
  * The UART message reports data latency and throughput of the UART channels
  * providing SBP I/O. On the default Piksi configuration, UARTs A and B are used
  * for telemetry radios, but can also be host access ports for embedded hosts, or
- * other interfaces in future. The reported percentage values require to be
- * normalized.
+ * other interfaces in future. The reported percentage values must be normalized.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field uart_a UARTChannel State of UART A

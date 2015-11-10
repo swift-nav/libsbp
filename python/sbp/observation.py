@@ -175,7 +175,7 @@ carrier phase ambiguity may have changed.
   sid : int
     Signal identifier of the satellite signal - values 0x00
 through 0x1F represent GPS PRNs 1 through 32 respectively
-(PRN-1 notation); other values reserved for future use.
+(PRN-minus-1 notation); other values reserved for future use.
 
 
   """
@@ -532,7 +532,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Satellite is healthy?
   sid : int
     Signal identifier being tracked - values 0x00 through 0x1F represent
-GPS PRNs 1 through 32 respectively (PRN-1 notation); other values
+GPS PRNs 1 through 32 respectively (PRN-minus-1 notation); other values
 reserved for future use
 
   iode : int

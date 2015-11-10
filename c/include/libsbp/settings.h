@@ -56,7 +56,7 @@ process to this message when it is received from sender ID
 
 /** Read device configuration settings (host => device)
  *
-* The setting message reads the devices configuration.
+* The setting message reads the device configuration.
  */
 #define SBP_MSG_SETTINGS_READ_REQ           0x00A4
 typedef struct __attribute__((packed)) {
@@ -69,7 +69,7 @@ this message when it is received from sender ID 0x42.
 
 /** Read device configuration settings (host <= device)
  *
-* The setting message reads the devices configuration.
+* The setting message reads the device configuration.
  */
 #define SBP_MSG_SETTINGS_READ_RESP          0x00A5
 typedef struct __attribute__((packed)) {

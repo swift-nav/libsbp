@@ -29,7 +29,8 @@ var Parser = require('binary-parser').Parser;
  * Fields in the SBP payload (`sbp.payload`):
  * @field state number (unsigned 8-bit int, 1 byte) Status of tracking channel
  * @field sid number (unsigned 32-bit int, 4 bytes) Signal identifier being tracked - values 0x00 through 0x1F represent GPS PRNs 1
- *   through 32 respectively (PRN-1 notation); other values reserved for future use
+ *   through 32 respectively (PRN-minus-1 notation); other values reserved for future
+ *   use
  * @field cn0 number (float, 4 bytes) Carrier-to-noise density
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -57,7 +58,8 @@ TrackingChannelState.prototype.fieldSpec.push(['cn0', 'writeFloatLE', 4]);
  * SBP class for message MSG_TRACKING_STATE (0x0013).
  *
  * The tracking message returns a variable-length array of tracking channel states.
- * It reports status and snr power measurements for all tracked satellites.
+ * It reports status and carrier-to-noise density measurements for all tracked
+ * satellites.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field states array Satellite tracking channel state
@@ -116,7 +118,8 @@ TrackingChannelCorrelation.prototype.fieldSpec.push(['Q', 'writeInt32LE', 4]);
  * Fields in the SBP payload (`sbp.payload`):
  * @field channel number (unsigned 8-bit int, 1 byte) Tracking channel of origin
  * @field sid number (unsigned 32-bit int, 4 bytes) Signal identifier being tracked - values 0x00 through 0x1F represent GPS PRNs 1
- *   through 32 respectively (PRN-1 notation); other values reserved for future use
+ *   through 32 respectively (PRN-minus-1 notation); other values reserved for future
+ *   use
  * @field corrs array Early, Prompt and Late correlations
  *
  * @param sbp An SBP object with a payload to be decoded.

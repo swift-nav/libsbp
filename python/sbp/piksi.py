@@ -33,7 +33,7 @@ class UARTChannel(object):
   """UARTChannel.
   
   Throughput, utilization, and error counts on the RX/TX buffers
-of this UART channel. The reported percentage values require to
+of this UART channel. The reported percentage values must
 be normalized.
 
   
@@ -49,7 +49,7 @@ be normalized.
     UART IO error count
   tx_buffer_level : int
     UART transmit buffer percentage utilization (ranges from
-0 - 255)
+0 to 255)
 
   rx_buffer_level : int
     UART receive buffer percentage utilization (ranges from
@@ -345,7 +345,7 @@ class MsgCwStart(SBP):
   of its fields.
 
   
-  This is an unused legacy message from those host for starting
+  This is an unused legacy message from the host for starting
 the CW interference channel on the SwiftNAP. This message will
 be removed in a future release.
 
@@ -525,7 +525,7 @@ class MsgThreadState(SBP):
   
   The thread usage message from the device reports real-time
 operating system (RTOS) thread usage statistics for the named
-thread. The reported percentage values require to be normalized.
+thread. The reported percentage values must be normalized.
 
 
   Parameters
@@ -622,7 +622,7 @@ class MsgUartState(SBP):
 channels providing SBP I/O. On the default Piksi configuration,
 UARTs A and B are used for telemetry radios, but can also be
 host access ports for embedded hosts, or other interfaces in
-future. The reported percentage values require to be normalized.
+future. The reported percentage values must be normalized.
 
 
   Parameters

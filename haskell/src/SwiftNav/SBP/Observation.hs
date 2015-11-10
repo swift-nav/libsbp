@@ -115,8 +115,8 @@ data PackedObsContent = PackedObsContent
     -- changed.
   , _packedObsContent_sid :: Word32
     -- ^ Signal identifier of the satellite signal - values 0x00 through 0x1F
-    -- represent GPS PRNs 1 through 32 respectively (PRN-1 notation); other
-    -- values reserved for future use.
+    -- represent GPS PRNs 1 through 32 respectively (PRN-minus-1 notation);
+    -- other values reserved for future use.
   } deriving ( Show, Read, Eq )
 
 instance Binary PackedObsContent where
@@ -272,8 +272,8 @@ data MsgEphemeris = MsgEphemeris
     -- ^ Satellite is healthy?
   , _msgEphemeris_sid    :: Word32
     -- ^ Signal identifier being tracked - values 0x00 through 0x1F represent GPS
-    -- PRNs 1 through 32 respectively (PRN-1 notation); other values reserved
-    -- for future use
+    -- PRNs 1 through 32 respectively (PRN-minus-1 notation); other values
+    -- reserved for future use
   , _msgEphemeris_iode   :: Word8
     -- ^ Issue of ephemeris data
   , _msgEphemeris_iodc   :: Word16

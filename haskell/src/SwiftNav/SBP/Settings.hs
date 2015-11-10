@@ -86,7 +86,7 @@ msgSettingsReadReq = 0x00A4
 
 -- | SBP class for message MSG_SETTINGS_READ_REQ (0x00A4).
 --
--- The setting message reads the devices configuration.
+-- The setting message reads the device configuration.
 data MsgSettingsReadReq = MsgSettingsReadReq
   { _msgSettingsReadReq_setting :: ByteString
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
@@ -113,7 +113,7 @@ msgSettingsReadResp = 0x00A5
 
 -- | SBP class for message MSG_SETTINGS_READ_RESP (0x00A5).
 --
--- The setting message reads the devices configuration.
+-- The setting message reads the device configuration.
 data MsgSettingsReadResp = MsgSettingsReadResp
   { _msgSettingsReadResp_setting :: ByteString
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,

@@ -120,8 +120,8 @@ ObservationHeader.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
  * @field lock number (unsigned 16-bit int, 2 bytes) Lock indicator. This value changes whenever a satellite signal has lost and
  *   regained lock, indicating that the carrier phase ambiguity may have changed.
  * @field sid number (unsigned 32-bit int, 4 bytes) Signal identifier of the satellite signal - values 0x00 through 0x1F represent
- *   GPS PRNs 1 through 32 respectively (PRN-1 notation); other values reserved for
- *   future use.
+ *   GPS PRNs 1 through 32 respectively (PRN-minus-1 notation); other values reserved
+ *   for future use.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -248,7 +248,8 @@ MsgBasePos.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
  * @field valid number (unsigned 8-bit int, 1 byte) Is valid?
  * @field healthy number (unsigned 8-bit int, 1 byte) Satellite is healthy?
  * @field sid number (unsigned 32-bit int, 4 bytes) Signal identifier being tracked - values 0x00 through 0x1F represent GPS PRNs 1
- *   through 32 respectively (PRN-1 notation); other values reserved for future use
+ *   through 32 respectively (PRN-minus-1 notation); other values reserved for future
+ *   use
  * @field iode number (unsigned 8-bit int, 1 byte) Issue of ephemeris data
  * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data
  * @field reserved number (unsigned 32-bit int, 4 bytes) Reserved field
