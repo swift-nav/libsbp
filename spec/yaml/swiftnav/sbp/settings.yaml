@@ -46,7 +46,7 @@ definitions:
  - MSG_SETTINGS_READ_REQ:
     id: 0x00A4
     short_desc: Read device configuration settings (host => device)
-    desc: The setting message reads the devices configuration.
+    desc: The setting message reads the device configuration.
     fields:
       - setting:
           type: string
@@ -58,7 +58,7 @@ definitions:
  - MSG_SETTINGS_READ_RESP:
     id: 0x00A5
     short_desc: Read device configuration settings (host <= device)
-    desc: The setting message reads the devices configuration.
+    desc: The setting message reads the device configuration.
     fields:
       - setting:
           type: string

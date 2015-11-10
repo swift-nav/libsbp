@@ -38,7 +38,7 @@ definitions:
             type: u32
             desc: |
               Signal identifier being tracked - values 0x00 through 0x1F
-              represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
+              represent GPS PRNs 1 through 32 respectively (PRN-minus-1 notation);
               other values reserved for future use
         - cn0:
             type: float
@@ -50,8 +50,8 @@ definitions:
     short_desc: Satellite tracking channel states
     desc: |
       The tracking message returns a variable-length array of tracking
-      channel states. It reports status and snr power measurements for
-      all tracked satellites.
+      channel states. It reports status and carrier-to-noise density
+      measurements for all tracked satellites.
     fields:
       - states:
           type: array
@@ -84,7 +84,7 @@ definitions:
           type: u32
           desc: |
             Signal identifier being tracked - values 0x00 through 0x1F
-            represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
+            represent GPS PRNs 1 through 32 respectively (PRN-minus-1 notation);
             other values reserved for future use
       - corrs:
           type: array

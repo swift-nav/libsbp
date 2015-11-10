@@ -129,7 +129,7 @@ detection\footnote{CCITT 16-bit CRC Implementation uses parameters
     \midrule
     $0$ & $1$ & {Preamble} & Denotes the start of frame transmission. Always 0x55. \\
     $1$ & $2$ & {Message Type} & Identifies the payload contents. \\
-    $3$ & $2$ & {Sender} & \hangindent=0.5em{A unique identifier of the sender. On the Piksi, this is set to the 2 least significant bytes of the device serial number. A stream of SBP messages may also included sender IDs for forwarded messages. By default, clients of `libsbp` use a sender id value of `0x42`.  Sender id '0x42' is used to represent device controllers such as the Piksi Console.} \\
+    $3$ & $2$ & {Sender} & \hangindent=0.5em{A unique identifier of the sender. On the Piksi, this is set to the 2 least significant bytes of the device serial number. A stream of SBP messages may also include sender IDs for forwarded messages. By default, clients of `libsbp` use a sender id value of `0x42`.  Sender id '0x42' is used to represent device controllers such as the Piksi Console.} \\
     $5$ & $1$ & {Length} & Length (bytes) of the {Payload} field. \\
     $6$ & $N$ & {Payload} & Binary message contents. \\
     $N+6$ & $2$ & {CRC} & \hangindent=0.5em{Cyclic Redundancy Check of the frame's binary data from the Message Type up to the end of Payload (does not include the Preamble).} \\
@@ -185,10 +185,10 @@ contents.
 55 02 02 cc 04 14 70 3d d0 18 cf ef ff ff ef e8 ff ff f0 18 00 00 00 00 05 00 43 94
 \end{verbatim}
 This byte array decodes into a \texttt{MSG\_BASELINE\_ECEF} (see
-pg.~\pageref{sec:MSG_POS_ECEF}), that reports the baseline position
+pg.~\pageref{sec:MSG_POS_ECEF}), which reports the baseline position
 solution of the rover receiver relative to the base station receiver
 in Earth Centered Earth Fixed (ECEF) coordinates. The segments of this
-byte array and its contents breakdown as follows:
+byte array and its contents break down as follows:
 \end{large}
 \begin{table}[h]
   \centering
