@@ -48,6 +48,10 @@ To run the tests and check for coverage::
 
   $  py.test -v --cov sbp tests/
 
+To run the tests without suppressing stdout output:
+
+  $  py.test -v -s --cov sbp tests/
+
 License
 -------
 

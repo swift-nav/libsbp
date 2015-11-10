@@ -82,7 +82,8 @@ javascript:
                        -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
 		       --javascript;\
 	cd $(SWIFTNAV_ROOT);
-	- npm version "v$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" --no-git-tag-version
+	@echo "Bumping NPM version. You can ignore the following error, if any."
+	@- npm version "v$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" --no-git-tag-version >/dev/null 2>&1
 	@echo
 	@echo "Finished! Please check $(SWIFTNAV_ROOT)/javascript/sbp."
 

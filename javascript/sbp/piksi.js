@@ -393,6 +393,8 @@ module.exports = {
   0x0022: MsgResetFilters,
   0x0023: MsgInitBase,
   0x0017: MsgThreadState,
+  UARTChannel: UARTChannel,
+  Latency: Latency,
   0x0018: MsgUartState,
   0x0019: MsgIarState,
   0x001B: MsgMaskSatellite,

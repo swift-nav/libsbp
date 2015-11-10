@@ -84,7 +84,13 @@ var packages = ["acquisition", "bootload", "ext_events", "file_io", "flash", "lo
 var sbpTable = packages.map(function (pkg) {
   return require(path.resolve(__dirname, "./" + pkg + ".js"));
 }).reduce(function (prev, curr) {
-  return mergeDict(prev, curr);
+  var numericKeysDict = {};
+  Object.keys(curr).map(function (key) {
+    if (parseInt(key) == key) {
+      numericKeysDict[key] = curr[key];
+    }
+  });
+  return mergeDict(prev, numericKeysDict);
 }, {});
 
 var parser = new Parser()
@@ -198,7 +204,10 @@ module.exports = {
       stream.pause();
       try {
         streamBuffer = Buffer.concat([streamBuffer, data]);
-        callback(null, getFramedMessage());
+        if (streamBuffer.length < 2) {
+          return;
+        }
+        var framedMessage = getFramedMessage();
 
         // If there is data left to process after a successful parse, process again
         if (streamBuffer.length > 0) {
@@ -206,6 +215,8 @@ module.exports = {
             processData(new Buffer(0));
           }, 0);
         }
+
+        callback(null, framedMessage);
       } catch (e) {
         // If the buffer was corrupt but there's more in the stream, try again immediately
         if (e instanceof BufferCorruptError && streamBuffer.length > 0) {
