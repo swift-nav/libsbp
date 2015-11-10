@@ -1,0 +1,76 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgDops v0.51.
+generated_on: 2015-11-09 11:34:21.395837
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      gdop: 180
+      hdop: 160
+      pdop: 190
+      tdop: 170
+      tow: 2568200
+      vdop: 150
+    module: sbp.navigation
+    name: MsgDops
+  msg_type: '0x206'
+  raw_json: '{"gdop": 180, "tdop": 170, "vdop": 150, "sender": 55286, "msg_type":
+    518, "pdop": 190, "tow": 2568200, "crc": 43641, "length": 14, "preamble": 85,
+    "payload": "CDAnALQAvgCqAKAAlgA=", "hdop": 160}'
+  raw_packet: VQYC9tcOCDAnALQAvgCqAKAAlgB5qg==
+  sbp:
+    crc: '0xaa79'
+    length: 14
+    msg_type: '0x206'
+    payload: CDAnALQAvgCqAKAAlgA=
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      gdop: 180
+      hdop: 160
+      pdop: 190
+      tdop: 170
+      tow: 2569200
+      vdop: 150
+    module: sbp.navigation
+    name: MsgDops
+  msg_type: '0x206'
+  raw_json: '{"gdop": 180, "tdop": 170, "vdop": 150, "sender": 55286, "msg_type":
+    518, "pdop": 190, "tow": 2569200, "crc": 43342, "length": 14, "preamble": 85,
+    "payload": "8DMnALQAvgCqAKAAlgA=", "hdop": 160}'
+  raw_packet: VQYC9tcO8DMnALQAvgCqAKAAlgBOqQ==
+  sbp:
+    crc: '0xa94e'
+    length: 14
+    msg_type: '0x206'
+    payload: 8DMnALQAvgCqAKAAlgA=
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      gdop: 180
+      hdop: 160
+      pdop: 190
+      tdop: 170
+      tow: 2570200
+      vdop: 150
+    module: sbp.navigation
+    name: MsgDops
+  msg_type: '0x206'
+  raw_json: '{"gdop": 180, "tdop": 170, "vdop": 150, "sender": 55286, "msg_type":
+    518, "pdop": 190, "tow": 2570200, "crc": 55879, "length": 14, "preamble": 85,
+    "payload": "2DcnALQAvgCqAKAAlgA=", "hdop": 160}'
+  raw_packet: VQYC9tcO2DcnALQAvgCqAKAAlgBH2g==
+  sbp:
+    crc: '0xda47'
+    length: 14
+    msg_type: '0x206'
+    payload: 2DcnALQAvgCqAKAAlgA=
+    preamble: '0x55'
+    sender: '0xd7f6'
+version: '0.51'
+...

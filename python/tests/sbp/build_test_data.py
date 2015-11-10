@@ -19,7 +19,7 @@ Running this command from the top level,
 
   python tests/sbp/build_test_data.py --log_file <log_file>,
 
-produces test_<module name>.yaml files in directory the command is
+produces <module_name>/test_<message_name>.yaml files in directory the command is
 written. The produced file looks like:
 
 description: Unit tests for swiftnav.sbp.acquisition v0.23.
@@ -59,6 +59,7 @@ import base64
 import datetime
 import warnings
 import yaml
+import os
 
 def _to_readable_dict(msg):
   """
@@ -84,53 +85,42 @@ def _to_readable_dict(msg):
 def dump_modules_to_yaml(test_map, version):
   """
   Take unit test data data from test, format as YAML, and write to
-  local files.
+  local files. Each file is stored in a directory structure consisting
+  of components of its package name, 
+  e.g. sbp/acquisition/test_MsgAcqResult.yaml
 
   Parameters
   ----------
   test_map : dict
-    Dictionary mapping SBP message type to instances of SBP object to be used
+    Dictionary mapping SBP message name to instances of SBP object to be used
     for making unit test cases.
 
   """
   for k, v in test_map.iteritems():
-    item = {'package': k,
-            'description': "Unit tests for swiftnav.%s v%s." % (k, version),
+    if not v:
+      continue
+    package = v[0]['msg']['module']
+    item = {'package': package,
+            'description': "Unit tests for swiftnav.%s %s v%s." % (package, k, version),
             'generated_on': datetime.datetime.now(),
             'version': version,
             'tests': v}
     d = yaml.dump(item, explicit_start=True,
                   default_flow_style=False,
                   explicit_end=True)
-    filename = "test_"+k.split(".")[-1]+".yaml"
-    with open(filename, 'w') as f:
+
+    path = ""
+    components = package.split(".")
+    for component in components:
+      path = os.path.join(path, component)
+      if not os.path.isdir(path):
+        os.makedirs(path)
+
+
+    filename = "test_"+k+".yaml"
+    filepath = os.path.join(path, filename)
+    with open(filepath, 'w') as f:
       f.write(d.replace('\n- ', '\n\n- '))
-
-def gather_by_module(test_table):
-  """
-  Join accumulated unit test data by module.
-
-  Parameters
-  ----------
-  test_table : dict
-    A dict mapping an SBP message type to a list of parsed SBP
-    objects.
-
-  Returns
-  ----------
-  A dict mapping an SBP module to a list of parsed SBP objects.
-
-  """
-  output = {}
-  for k, v in test_table.iteritems():
-    if not v:
-      continue
-    module = v[0]['msg']['module']
-    if output.get(module, None):
-      output[module] += v
-    else:
-      output[module] = v
-  return output
 
 def mk_readable_msg(msg):
   """
@@ -218,12 +208,12 @@ def main():
       # hopefully unique cases. Assume that messages that are likely
       # to be identical are consecutive, so coompare any new message
       # with the most recent one.
-      if len(test_table[msg.msg_type]) <= num_test_cases:
-        if len(test_table[msg.msg_type]) == 0:
-          test_table[msg.msg_type].append(i)
-        elif test_table[msg.msg_type][-1] != i:
-          test_table[msg.msg_type].append(i)
-  dump_modules_to_yaml(gather_by_module(test_table), version)
+      name = i['msg']['name']
+      if not name in test_table:
+        test_table[name] = [i];      
+      elif len(test_table[name]) < num_test_cases and test_table[name][-1] != i:
+        test_table[name].append(i)
+  dump_modules_to_yaml(test_table, version)
 
 if __name__ == "__main__":
   main()

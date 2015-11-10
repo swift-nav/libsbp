@@ -1,0 +1,107 @@
+---
+description: Unit tests for swiftnav.sbp.piksi MsgThreadState v0.51.
+generated_on: 2015-11-09 11:34:21.327613
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      cpu: 0
+      name: "main\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      stack_free: 2460
+    module: sbp.piksi
+    name: MsgThreadState
+  msg_type: '0x17'
+  raw_json: '{"sender": 55286, "msg_type": 23, "cpu": 0, "crc": 35401, "length": 26,
+    "stack_free": 2460, "preamble": 85, "payload": "bWFpbgAAAAAAAAAAAAAAAAAAAAAAAJwJAAA=",
+    "name": "main\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
+  raw_packet: VRcA9tcabWFpbgAAAAAAAAAAAAAAAAAAAAAAAJwJAABJig==
+  sbp:
+    crc: '0x8a49'
+    length: 26
+    msg_type: '0x17'
+    payload: bWFpbgAAAAAAAAAAAAAAAAAAAAAAAJwJAAA=
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      cpu: 595
+      name: "idle\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      stack_free: 36
+    module: sbp.piksi
+    name: MsgThreadState
+  msg_type: '0x17'
+  raw_json: '{"sender": 55286, "msg_type": 23, "cpu": 595, "crc": 5271, "length":
+    26, "stack_free": 36, "preamble": 85, "payload": "aWRsZQAAAAAAAAAAAAAAAAAAAABTAiQAAAA=",
+    "name": "idle\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
+  raw_packet: VRcA9tcaaWRsZQAAAAAAAAAAAAAAAAAAAABTAiQAAACXFA==
+  sbp:
+    crc: '0x1497'
+    length: 26
+    msg_type: '0x17'
+    payload: aWRsZQAAAAAAAAAAAAAAAAAAAABTAiQAAAA=
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      cpu: 14
+      name: "NAP ISR\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      stack_free: 1140
+    module: sbp.piksi
+    name: MsgThreadState
+  msg_type: '0x17'
+  raw_json: '{"sender": 55286, "msg_type": 23, "cpu": 14, "crc": 15586, "length":
+    26, "stack_free": 1140, "preamble": 85, "payload": "TkFQIElTUgAAAAAAAAAAAAAAAAAOAHQEAAA=",
+    "name": "NAP ISR\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
+  raw_packet: VRcA9tcaTkFQIElTUgAAAAAAAAAAAAAAAAAOAHQEAADiPA==
+  sbp:
+    crc: '0x3ce2'
+    length: 26
+    msg_type: '0x17'
+    payload: TkFQIElTUgAAAAAAAAAAAAAAAAAOAHQEAAA=
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      cpu: 1
+      name: "SBP\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      stack_free: 5060
+    module: sbp.piksi
+    name: MsgThreadState
+  msg_type: '0x17'
+  raw_json: '{"sender": 55286, "msg_type": 23, "cpu": 1, "crc": 43354, "length": 26,
+    "stack_free": 5060, "preamble": 85, "payload": "U0JQAAAAAAAAAAAAAAAAAAAAAAABAMQTAAA=",
+    "name": "SBP\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
+  raw_packet: VRcA9tcaU0JQAAAAAAAAAAAAAAAAAAAAAAABAMQTAABaqQ==
+  sbp:
+    crc: '0xa95a'
+    length: 26
+    msg_type: '0x17'
+    payload: U0JQAAAAAAAAAAAAAAAAAAAAAAABAMQTAAA=
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      cpu: 7
+      name: "manage acq\0\0\0\0\0\0\0\0\0\0"
+      stack_free: 2324
+    module: sbp.piksi
+    name: MsgThreadState
+  msg_type: '0x17'
+  raw_json: '{"sender": 55286, "msg_type": 23, "cpu": 7, "crc": 19247, "length": 26,
+    "stack_free": 2324, "preamble": 85, "payload": "bWFuYWdlIGFjcQAAAAAAAAAAAAAHABQJAAA=",
+    "name": "manage acq\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
+  raw_packet: VRcA9tcabWFuYWdlIGFjcQAAAAAAAAAAAAAHABQJAAAvSw==
+  sbp:
+    crc: '0x4b2f'
+    length: 26
+    msg_type: '0x17'
+    payload: bWFuYWdlIGFjcQAAAAAAAAAAAAAHABQJAAA=
+    preamble: '0x55'
+    sender: '0xd7f6'
+version: '0.51'
+...

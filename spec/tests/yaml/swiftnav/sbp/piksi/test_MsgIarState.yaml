@@ -1,0 +1,24 @@
+---
+description: Unit tests for swiftnav.sbp.piksi MsgIarState v0.51.
+generated_on: 2015-11-09 11:34:21.337881
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      num_hyps: 1
+    module: sbp.piksi
+    name: MsgIarState
+  msg_type: '0x19'
+  raw_json: '{"sender": 55286, "msg_type": 25, "num_hyps": 1, "crc": 36056, "length":
+    4, "preamble": 85, "payload": "AQAAAA=="}'
+  raw_packet: VRkA9tcEAQAAANiM
+  sbp:
+    crc: '0x8cd8'
+    length: 4
+    msg_type: '0x19'
+    payload: AQAAAA==
+    preamble: '0x55'
+    sender: '0xd7f6'
+version: '0.51'
+...
