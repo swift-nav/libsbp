@@ -21,6 +21,7 @@ module SwiftNav.SBP
   , module SwiftNav.SBP.Observation
   , module SwiftNav.SBP.Piksi
   , module SwiftNav.SBP.Settings
+  , module SwiftNav.SBP.Signal
   , module SwiftNav.SBP.System
   , module SwiftNav.SBP.Tracking
   ) where
@@ -45,6 +46,7 @@ import SwiftNav.SBP.Navigation
 import SwiftNav.SBP.Observation
 import SwiftNav.SBP.Piksi
 import SwiftNav.SBP.Settings
+import SwiftNav.SBP.Signal
 import SwiftNav.SBP.System
 import SwiftNav.SBP.Tracking
 import SwiftNav.SBP.Types
