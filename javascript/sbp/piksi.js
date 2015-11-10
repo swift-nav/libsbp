@@ -23,6 +23,7 @@
 
 var SBP = require('./sbp');
 var Parser = require('binary-parser').Parser;
+var SBPGnssSignal = require("./gnss_signal").SBPGnssSignal;
 
 /**
  * SBP class for message MSG_ALMANAC (0x0069).
@@ -361,7 +362,7 @@ MsgIarState.prototype.fieldSpec.push(['num_hyps', 'writeUInt32LE', 4]);
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field mask number (unsigned 8-bit int, 1 byte) Mask of systems that should ignore this satellite.
- * @field sid number (unsigned 32-bit int, 4 bytes) Signal identifier for which the mask is applied
+ * @field sid SBPGnssSignal GNSS signal for which the mask is applied
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -377,10 +378,10 @@ MsgMaskSatellite.prototype.constructor = MsgMaskSatellite;
 MsgMaskSatellite.prototype.parser = new Parser()
   .endianess('little')
   .uint8('mask')
-  .uint32('sid');
+  .nest('sid', { type: SBPGnssSignal.prototype.parser });
 MsgMaskSatellite.prototype.fieldSpec = [];
 MsgMaskSatellite.prototype.fieldSpec.push(['mask', 'writeUInt8', 1]);
-MsgMaskSatellite.prototype.fieldSpec.push(['sid', 'writeUInt32LE', 4]);
+MsgMaskSatellite.prototype.fieldSpec.push(['sid', SBPGnssSignal.prototype.fieldSpec]);
 
 module.exports = {
   0x0069: MsgAlmanac,

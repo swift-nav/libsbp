@@ -20,6 +20,7 @@
 
 var SBP = require('./sbp');
 var Parser = require('binary-parser').Parser;
+var SBPGnssSignal = require("./gnss_signal").SBPGnssSignal;
 
 /**
  * SBP class for message fragment ObsGPSTime
@@ -119,9 +120,7 @@ ObservationHeader.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
  * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density
  * @field lock number (unsigned 16-bit int, 2 bytes) Lock indicator. This value changes whenever a satellite signal has lost and
  *   regained lock, indicating that the carrier phase ambiguity may have changed.
- * @field sid number (unsigned 32-bit int, 4 bytes) Signal identifier of the satellite signal - values 0x00 through 0x1F represent
- *   GPS PRNs 1 through 32 respectively (PRN-minus-1 notation); other values reserved
- *   for future use.
+ * @field sid SBPGnssSignal GNSS signal identifier
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -140,13 +139,13 @@ PackedObsContent.prototype.parser = new Parser()
   .nest('L', { type: CarrierPhase.prototype.parser })
   .uint8('cn0')
   .uint16('lock')
-  .uint32('sid');
+  .nest('sid', { type: SBPGnssSignal.prototype.parser });
 PackedObsContent.prototype.fieldSpec = [];
 PackedObsContent.prototype.fieldSpec.push(['P', 'writeUInt32LE', 4]);
 PackedObsContent.prototype.fieldSpec.push(['L', CarrierPhase.prototype.fieldSpec]);
 PackedObsContent.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
 PackedObsContent.prototype.fieldSpec.push(['lock', 'writeUInt16LE', 2]);
-PackedObsContent.prototype.fieldSpec.push(['sid', 'writeUInt32LE', 4]);
+PackedObsContent.prototype.fieldSpec.push(['sid', SBPGnssSignal.prototype.fieldSpec]);
 
 /**
  * SBP class for message MSG_OBS (0x0043).
@@ -247,9 +246,7 @@ MsgBasePos.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
  * @field toc_wn number (unsigned 16-bit int, 2 bytes) Clock reference week number
  * @field valid number (unsigned 8-bit int, 1 byte) Is valid?
  * @field healthy number (unsigned 8-bit int, 1 byte) Satellite is healthy?
- * @field sid number (unsigned 32-bit int, 4 bytes) Signal identifier being tracked - values 0x00 through 0x1F represent GPS PRNs 1
- *   through 32 respectively (PRN-minus-1 notation); other values reserved for future
- *   use
+ * @field sid SBPGnssSignal GNSS signal identifier
  * @field iode number (unsigned 8-bit int, 1 byte) Issue of ephemeris data
  * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data
  * @field reserved number (unsigned 32-bit int, 4 bytes) Reserved field
@@ -292,7 +289,7 @@ MsgEphemeris.prototype.parser = new Parser()
   .uint16('toc_wn')
   .uint8('valid')
   .uint8('healthy')
-  .uint32('sid')
+  .nest('sid', { type: SBPGnssSignal.prototype.parser })
   .uint8('iode')
   .uint16('iodc')
   .uint32('reserved');
@@ -322,7 +319,7 @@ MsgEphemeris.prototype.fieldSpec.push(['toc_tow', 'writeDoubleLE', 8]);
 MsgEphemeris.prototype.fieldSpec.push(['toc_wn', 'writeUInt16LE', 2]);
 MsgEphemeris.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
 MsgEphemeris.prototype.fieldSpec.push(['healthy', 'writeUInt8', 1]);
-MsgEphemeris.prototype.fieldSpec.push(['sid', 'writeUInt32LE', 4]);
+MsgEphemeris.prototype.fieldSpec.push(['sid', SBPGnssSignal.prototype.fieldSpec]);
 MsgEphemeris.prototype.fieldSpec.push(['iode', 'writeUInt8', 1]);
 MsgEphemeris.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
 MsgEphemeris.prototype.fieldSpec.push(['reserved', 'writeUInt32LE', 4]);

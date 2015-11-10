@@ -18,6 +18,7 @@ from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.gnss_signal import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/acquisition.yaml with generate.py.
 # Please do not hand edit!
@@ -51,12 +52,8 @@ units of dB Hz in the revision of this message.
     Code phase of best point
   cf : float
     Carrier frequency of best point
-  sid : int
-    Signal identifier of the satellite signal for which acquisition
-was attempted - values 0x00 through 0x1F represent GPS PRNs 1
-through 32 respectively (PRN-minus-1 notation); other values reserved
-for future use.
-
+  sid : SBPGnssSignal
+    GNSS signal for which acquisition was attempted
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -65,7 +62,7 @@ for future use.
                    LFloat32('snr'),
                    LFloat32('cp'),
                    LFloat32('cf'),
-                   ULInt32('sid'),)
+                   Struct('sid', SBPGnssSignal._parser),)
   __slots__ = [
                'snr',
                'cp',

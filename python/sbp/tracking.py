@@ -19,6 +19,7 @@ from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.gnss_signal import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml with generate.py.
 # Please do not hand edit!
@@ -27,26 +28,23 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, gr
 class TrackingChannelState(object):
   """TrackingChannelState.
   
-  Tracking channel state for a specific satellite PRN and measured
-signal power.
+  Tracking channel state for a specific satellite signal and
+measured signal power.
 
   
   Parameters
   ----------
   state : int
     Status of tracking channel
-  sid : int
-    Signal identifier being tracked - values 0x00 through 0x1F
-represent GPS PRNs 1 through 32 respectively (PRN-minus-1 notation);
-other values reserved for future use
-
+  sid : SBPGnssSignal
+    GNSS signal being tracked
   cn0 : float
     Carrier-to-noise density
 
   """
   _parser = Embedded(Struct("TrackingChannelState",
                      ULInt8('state'),
-                     ULInt32('sid'),
+                     Struct('sid', SBPGnssSignal._parser),
                      LFloat32('cn0'),))
   __slots__ = [
                'state',
@@ -262,11 +260,8 @@ update interval.
     SBP parent object to inherit from.
   channel : int
     Tracking channel of origin
-  sid : int
-    Signal identifier being tracked - values 0x00 through 0x1F
-represent GPS PRNs 1 through 32 respectively (PRN-minus-1 notation);
-other values reserved for future use
-
+  sid : SBPGnssSignal
+    GNSS signal identifier
   corrs : array
     Early, Prompt and Late correlations
   sender : int
@@ -275,7 +270,7 @@ other values reserved for future use
   """
   _parser = Struct("MsgTrackingIq",
                    ULInt8('channel'),
-                   ULInt32('sid'),
+                   Struct('sid', SBPGnssSignal._parser),
                    Struct('corrs', Array(3, Struct('corrs', TrackingChannelCorrelation._parser))),)
   __slots__ = [
                'channel',

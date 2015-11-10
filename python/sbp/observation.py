@@ -18,6 +18,7 @@ from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.gnss_signal import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml with generate.py.
 # Please do not hand edit!
@@ -172,11 +173,8 @@ tracked.
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
 
-  sid : int
-    Signal identifier of the satellite signal - values 0x00
-through 0x1F represent GPS PRNs 1 through 32 respectively
-(PRN-minus-1 notation); other values reserved for future use.
-
+  sid : SBPGnssSignal
+    GNSS signal identifier
 
   """
   _parser = Embedded(Struct("PackedObsContent",
@@ -184,7 +182,7 @@ through 0x1F represent GPS PRNs 1 through 32 respectively
                      Struct('L', CarrierPhase._parser),
                      ULInt8('cn0'),
                      ULInt16('lock'),
-                     ULInt32('sid'),))
+                     Struct('sid', SBPGnssSignal._parser),))
   __slots__ = [
                'P',
                'L',
@@ -530,11 +528,8 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Is valid?
   healthy : int
     Satellite is healthy?
-  sid : int
-    Signal identifier being tracked - values 0x00 through 0x1F represent
-GPS PRNs 1 through 32 respectively (PRN-minus-1 notation); other values
-reserved for future use
-
+  sid : SBPGnssSignal
+    GNSS signal identifier
   iode : int
     Issue of ephemeris data
   iodc : int
@@ -571,7 +566,7 @@ reserved for future use
                    ULInt16('toc_wn'),
                    ULInt8('valid'),
                    ULInt8('healthy'),
-                   ULInt32('sid'),
+                   Struct('sid', SBPGnssSignal._parser),
                    ULInt8('iode'),
                    ULInt16('iodc'),
                    ULInt32('reserved'),)

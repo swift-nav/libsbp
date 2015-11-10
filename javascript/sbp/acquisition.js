@@ -20,6 +20,7 @@
 
 var SBP = require('./sbp');
 var Parser = require('binary-parser').Parser;
+var SBPGnssSignal = require("./gnss_signal").SBPGnssSignal;
 
 /**
  * SBP class for message MSG_ACQ_RESULT (0x0014).
@@ -34,9 +35,7 @@ var Parser = require('binary-parser').Parser;
  *   revision of this message.
  * @field cp number (float, 4 bytes) Code phase of best point
  * @field cf number (float, 4 bytes) Carrier frequency of best point
- * @field sid number (unsigned 32-bit int, 4 bytes) Signal identifier of the satellite signal for which acquisition was attempted -
- *   values 0x00 through 0x1F represent GPS PRNs 1 through 32 respectively (PRN-
- *   minus-1 notation); other values reserved for future use.
+ * @field sid SBPGnssSignal GNSS signal for which acquisition was attempted
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -54,12 +53,12 @@ MsgAcqResult.prototype.parser = new Parser()
   .floatle('snr')
   .floatle('cp')
   .floatle('cf')
-  .uint32('sid');
+  .nest('sid', { type: SBPGnssSignal.prototype.parser });
 MsgAcqResult.prototype.fieldSpec = [];
 MsgAcqResult.prototype.fieldSpec.push(['snr', 'writeFloatLE', 4]);
 MsgAcqResult.prototype.fieldSpec.push(['cp', 'writeFloatLE', 4]);
 MsgAcqResult.prototype.fieldSpec.push(['cf', 'writeFloatLE', 4]);
-MsgAcqResult.prototype.fieldSpec.push(['sid', 'writeUInt32LE', 4]);
+MsgAcqResult.prototype.fieldSpec.push(['sid', SBPGnssSignal.prototype.fieldSpec]);
 
 /**
  * SBP class for message MSG_ACQ_RESULT_DEP_A (0x0015).
