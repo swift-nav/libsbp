@@ -15,13 +15,14 @@ stable: False
 public: True
 include:
   - types.yaml
+  - gnss_signal.yaml
 definitions:
 
  - TrackingChannelState:
     short_desc: Satellite tracking channel state
     desc: |
-      Tracking channel state for a specific satellite PRN and measured
-      signal power.
+      Tracking channel state for a specific satellite signal and
+      measured signal power.
     fields:
         - state:
             type: u8
@@ -35,11 +36,8 @@ definitions:
                         - 0: Disabled
                         - 1: Running
         - sid:
-            type: u32
-            desc: |
-              Signal identifier being tracked - values 0x00 through 0x1F
-              represent GPS PRNs 1 through 32 respectively (PRN-minus-1 notation);
-              other values reserved for future use
+            type: SBPGnssSignal
+            desc: GNSS signal being tracked
         - cn0:
             type: float
             units: dB Hz
@@ -81,11 +79,8 @@ definitions:
           type: u8
           desc: Tracking channel of origin
       - sid:
-          type: u32
-          desc: |
-            Signal identifier being tracked - values 0x00 through 0x1F
-            represent GPS PRNs 1 through 32 respectively (PRN-minus-1 notation);
-            other values reserved for future use
+          type: SBPGnssSignal
+          desc: GNSS signal identifier
       - corrs:
           type: array
           fill: TrackingChannelCorrelation
