@@ -34,7 +34,7 @@
 typedef struct __attribute__((packed)) {
   u8 state;    /**< Status of tracking channel */
   u32 sid;      /**< Signal identifier being tracked - values 0x00 through 0x1F
-represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
+represent GPS PRNs 1 through 32 respectively (PRN-minus-1 notation);
 other values reserved for future use
  */
   float cn0;      /**< Carrier-to-noise density [dB Hz] */
@@ -44,8 +44,8 @@ other values reserved for future use
 /** Satellite tracking channel states
  *
  * The tracking message returns a variable-length array of tracking
- * channel states. It reports status and snr power measurements for
- * all tracked satellites.
+ * channel states. It reports status and carrier-to-noise density
+ * measurements for all tracked satellites.
  */
 #define SBP_MSG_TRACKING_STATE       0x0013
 typedef struct __attribute__((packed)) {
@@ -72,7 +72,7 @@ typedef struct __attribute__((packed)) {
 typedef struct __attribute__((packed)) {
   u8 channel;    /**< Tracking channel of origin */
   u32 sid;        /**< Signal identifier being tracked - values 0x00 through 0x1F
-represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
+represent GPS PRNs 1 through 32 respectively (PRN-minus-1 notation);
 other values reserved for future use
  */
   tracking_channel_correlation_t corrs[3];   /**< Early, Prompt and Late correlations */

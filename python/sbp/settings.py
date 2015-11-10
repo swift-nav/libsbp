@@ -169,7 +169,7 @@ class MsgSettingsReadReq(SBP):
   of its fields.
 
   
-  The setting message reads the devices configuration.
+  The setting message reads the device configuration.
 
   Parameters
   ----------
@@ -252,7 +252,7 @@ class MsgSettingsReadResp(SBP):
   of its fields.
 
   
-  The setting message reads the devices configuration.
+  The setting message reads the device configuration.
 
   Parameters
   ----------

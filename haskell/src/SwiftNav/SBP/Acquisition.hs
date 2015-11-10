@@ -46,7 +46,8 @@ data MsgAcqResult = MsgAcqResult
   , _msgAcqResult_sid :: Word32
     -- ^ Signal identifier of the satellite signal for which acquisition was
     -- attempted - values 0x00 through 0x1F represent GPS PRNs 1 through 32
-    -- respectively (PRN-1 notation); other values reserved for future use.
+    -- respectively (PRN-minus-1 notation); other values reserved for future
+    -- use.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgAcqResult where

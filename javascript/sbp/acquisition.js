@@ -35,8 +35,8 @@ var Parser = require('binary-parser').Parser;
  * @field cp number (float, 4 bytes) Code phase of best point
  * @field cf number (float, 4 bytes) Carrier frequency of best point
  * @field sid number (unsigned 32-bit int, 4 bytes) Signal identifier of the satellite signal for which acquisition was attempted -
- *   values 0x00 through 0x1F represent GPS PRNs 1 through 32 respectively (PRN-1
- *   notation); other values reserved for future use.
+ *   values 0x00 through 0x1F represent GPS PRNs 1 through 32 respectively (PRN-
+ *   minus-1 notation); other values reserved for future use.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */

@@ -126,7 +126,7 @@ msgCwStart = 0x00C1
 
 -- | SBP class for message MSG_CW_START (0x00C1).
 --
--- This is an unused legacy message from those host for starting the CW
+-- This is an unused legacy message from the host for starting the CW
 -- interference channel on the SwiftNAP. This message will be removed in a
 -- future release.
 data MsgCwStart = MsgCwStart
@@ -203,7 +203,7 @@ msgThreadState = 0x0017
 --
 -- The thread usage message from the device reports real-time operating system
 -- (RTOS) thread usage statistics for the named thread. The reported percentage
--- values require to be normalized.
+-- values must be normalized.
 data MsgThreadState = MsgThreadState
   { _msgThreadState_name     :: ByteString
     -- ^ Thread name (NULL terminated)
@@ -235,7 +235,7 @@ $(makeLenses ''MsgThreadState)
 -- | UARTChannel.
 --
 -- Throughput, utilization, and error counts on the RX/TX buffers of this UART
--- channel. The reported percentage values require to be normalized.
+-- channel. The reported percentage values must be normalized.
 data UARTChannel = UARTChannel
   { _uARTChannel_tx_throughput :: Float
     -- ^ UART transmit throughput
@@ -246,7 +246,7 @@ data UARTChannel = UARTChannel
   , _uARTChannel_io_error_count :: Word16
     -- ^ UART IO error count
   , _uARTChannel_tx_buffer_level :: Word8
-    -- ^ UART transmit buffer percentage utilization (ranges from 0 - 255)
+    -- ^ UART transmit buffer percentage utilization (ranges from 0 to 255)
   , _uARTChannel_rx_buffer_level :: Word8
     -- ^ UART receive buffer percentage utilization (ranges from 0 to 255)
   } deriving ( Show, Read, Eq )
@@ -314,8 +314,8 @@ msgUartState = 0x0018
 -- The UART message reports data latency and throughput of the UART channels
 -- providing SBP I/O. On the default Piksi configuration, UARTs A and B are
 -- used for telemetry radios, but can also be host access ports for embedded
--- hosts, or other interfaces in future. The reported percentage values require
--- to be normalized.
+-- hosts, or other interfaces in future. The reported percentage values must be
+-- normalized.
 data MsgUartState = MsgUartState
   { _msgUartState_uart_a  :: UARTChannel
     -- ^ State of UART A

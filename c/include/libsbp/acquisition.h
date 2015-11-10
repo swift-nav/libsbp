@@ -43,7 +43,7 @@ units of dB Hz in the revision of this message.
   float cf;     /**< Carrier frequency of best point [hz] */
   u32 sid;    /**< Signal identifier of the satellite signal for which acquisition
 was attempted - values 0x00 through 0x1F represent GPS PRNs 1
-through 32 respectively (PRN-1 notation); other values reserved
+through 32 respectively (PRN-minus-1 notation); other values reserved
 for future use.
  */
 } msg_acq_result_t;

@@ -66,7 +66,7 @@
 
 /** Legacy message for CW interference channel (host => Piksi)
  *
- * This is an unused legacy message from those host for starting
+ * This is an unused legacy message from the host for starting
  * the CW interference channel on the SwiftNAP. This message will
  * be removed in a future release.
  */
@@ -99,7 +99,7 @@ typedef struct __attribute__((packed)) {
  *
  * The thread usage message from the device reports real-time
  * operating system (RTOS) thread usage statistics for the named
- * thread. The reported percentage values require to be normalized.
+ * thread. The reported percentage values must be normalized.
  */
 #define SBP_MSG_THREAD_STATE   0x0017
 typedef struct __attribute__((packed)) {
@@ -114,7 +114,7 @@ typedef struct __attribute__((packed)) {
 /** State of the UART channel
  *
  * Throughput, utilization, and error counts on the RX/TX buffers
- * of this UART channel. The reported percentage values require to
+ * of this UART channel. The reported percentage values must
  * be normalized.
  */
 typedef struct __attribute__((packed)) {
@@ -123,7 +123,7 @@ typedef struct __attribute__((packed)) {
   u16 crc_error_count;    /**< UART CRC error count */
   u16 io_error_count;     /**< UART IO error count */
   u8 tx_buffer_level;    /**< UART transmit buffer percentage utilization (ranges from
-0 - 255)
+0 to 255)
  */
   u8 rx_buffer_level;    /**< UART receive buffer percentage utilization (ranges from
 0 to 255)
@@ -153,7 +153,7 @@ typedef struct __attribute__((packed)) {
  * channels providing SBP I/O. On the default Piksi configuration,
  * UARTs A and B are used for telemetry radios, but can also be
  * host access ports for embedded hosts, or other interfaces in
- * future. The reported percentage values require to be normalized.
+ * future. The reported percentage values must be normalized.
  */
 #define SBP_MSG_UART_STATE     0x0018
 typedef struct __attribute__((packed)) {

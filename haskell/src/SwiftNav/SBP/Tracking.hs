@@ -35,8 +35,8 @@ data TrackingChannelState = TrackingChannelState
     -- ^ Status of tracking channel
   , _trackingChannelState_sid :: Word32
     -- ^ Signal identifier being tracked - values 0x00 through 0x1F represent GPS
-    -- PRNs 1 through 32 respectively (PRN-1 notation); other values reserved
-    -- for future use
+    -- PRNs 1 through 32 respectively (PRN-minus-1 notation); other values
+    -- reserved for future use
   , _trackingChannelState_cn0 :: Float
     -- ^ Carrier-to-noise density
   } deriving ( Show, Read, Eq )
@@ -62,8 +62,8 @@ msgTrackingState = 0x0013
 -- | SBP class for message MSG_TRACKING_STATE (0x0013).
 --
 -- The tracking message returns a variable-length array of tracking channel
--- states. It reports status and snr power measurements for all tracked
--- satellites.
+-- states. It reports status and carrier-to-noise density measurements for all
+-- tracked satellites.
 data MsgTrackingState = MsgTrackingState
   { _msgTrackingState_states :: [TrackingChannelState]
     -- ^ Satellite tracking channel state
@@ -118,8 +118,8 @@ data MsgTrackingIq = MsgTrackingIq
     -- ^ Tracking channel of origin
   , _msgTrackingIq_sid   :: Word32
     -- ^ Signal identifier being tracked - values 0x00 through 0x1F represent GPS
-    -- PRNs 1 through 32 respectively (PRN-1 notation); other values reserved
-    -- for future use
+    -- PRNs 1 through 32 respectively (PRN-minus-1 notation); other values
+    -- reserved for future use
   , _msgTrackingIq_corrs :: [TrackingChannelCorrelation]
     -- ^ Early, Prompt and Late correlations
   } deriving ( Show, Read, Eq )

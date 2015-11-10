@@ -37,7 +37,7 @@ signal power.
     Status of tracking channel
   sid : int
     Signal identifier being tracked - values 0x00 through 0x1F
-represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
+represent GPS PRNs 1 through 32 respectively (PRN-minus-1 notation);
 other values reserved for future use
 
   cn0 : float
@@ -170,8 +170,8 @@ class MsgTrackingState(SBP):
 
   
   The tracking message returns a variable-length array of tracking
-channel states. It reports status and snr power measurements for
-all tracked satellites.
+channel states. It reports status and carrier-to-noise density
+measurements for all tracked satellites.
 
 
   Parameters
@@ -264,7 +264,7 @@ update interval.
     Tracking channel of origin
   sid : int
     Signal identifier being tracked - values 0x00 through 0x1F
-represent GPS PRNs 1 through 32 respectively (PRN-1 notation);
+represent GPS PRNs 1 through 32 respectively (PRN-minus-1 notation);
 other values reserved for future use
 
   corrs : array

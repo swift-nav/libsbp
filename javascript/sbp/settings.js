@@ -77,7 +77,7 @@ MsgSettingsWrite.prototype.fieldSpec.push(['setting', 'string']);
 /**
  * SBP class for message MSG_SETTINGS_READ_REQ (0x00A4).
  *
- * The setting message reads the devices configuration.
+ * The setting message reads the device configuration.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field setting string A NULL-terminated and delimited string with contents [SECTION_SETTING, SETTING].
@@ -104,7 +104,7 @@ MsgSettingsReadReq.prototype.fieldSpec.push(['setting', 'string']);
 /**
  * SBP class for message MSG_SETTINGS_READ_RESP (0x00A5).
  *
- * The setting message reads the devices configuration.
+ * The setting message reads the device configuration.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field setting string A NULL-terminated and delimited string with contents [SECTION_SETTING, SETTING,
