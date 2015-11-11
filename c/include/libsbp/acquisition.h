@@ -36,8 +36,8 @@
  */
 #define SBP_MSG_ACQ_RESULT       0x0014
 typedef struct __attribute__((packed)) {
-  float snr;    /**< SNR of best point. Currently dimensonless, but will have
-units of dB Hz in the revision of this message.
+  float snr;    /**< SNR of best point. Currently in arbitrary SNR points, but will
+be in units of dB Hz in a later revision of this message.
  */
   float cp;     /**< Code phase of best point [chips] */
   float cf;     /**< Carrier frequency of best point [hz] */

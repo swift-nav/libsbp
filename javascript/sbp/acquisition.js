@@ -30,8 +30,8 @@ var Parser = require('binary-parser').Parser;
  * best signal-to-noise (SNR) ratio.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field snr number (float, 4 bytes) SNR of best point. Currently dimensonless, but will have units of dB Hz in the
- *   revision of this message.
+ * @field snr number (float, 4 bytes) SNR of best point. Currently in arbitrary SNR points, but will be in units of dB
+ *   Hz in a later revision of this message.
  * @field cp number (float, 4 bytes) Code phase of best point
  * @field cf number (float, 4 bytes) Carrier frequency of best point
  * @field sid number (unsigned 32-bit int, 4 bytes) Signal identifier of the satellite signal for which acquisition was attempted -

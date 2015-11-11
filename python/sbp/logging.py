@@ -11,8 +11,7 @@
 
 
 """
-Logging and debugging messages from the device. These are in the
-implementation-defined range (0x0000-0x00FF).
+Logging and debugging messages from the device.
 
 """
 

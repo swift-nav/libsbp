@@ -300,9 +300,9 @@ msgBaselineNed = 0x0203
 -- This message reports the baseline solution in North East Down (NED)
 -- coordinates. This baseline is the relative vector distance from the base
 -- station to the rover receiver, and NED coordinate system is defined at the
--- local tangent plane centered at the base station position.  The full GPS
--- time is given by the preceding MSG_GPS_TIME with the matching time-of-week
--- (tow).
+-- local WGS84 tangent plane centered at the base station position.  The full
+-- GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
+-- week (tow).
 data MsgBaselineNed = MsgBaselineNed
   { _msgBaselineNed_tow      :: Word32
     -- ^ GPS Time of Week
@@ -407,8 +407,9 @@ msgVelNed = 0x0205
 -- | SBP class for message MSG_VEL_NED (0x0205).
 --
 -- This message reports the velocity in local North East Down (NED)
--- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
--- the matching time-of-week (tow).
+-- coordinates. The NED coordinate system is defined as the local WGS84 tangent
+-- plane centered at the current position. The full GPS time is given by the
+-- preceding MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgVelNed = MsgVelNed
   { _msgVelNed_tow      :: Word32
     -- ^ GPS Time of Week
@@ -462,8 +463,8 @@ msgBaselineHeading = 0x0207
 -- | SBP class for message MSG_BASELINE_HEADING (0x0207).
 --
 -- This message reports the baseline heading pointing from the base station to
--- the rover relative to North. The full GPS time is given by the preceding
--- MSG_GPS_TIME with the matching time-of-week (tow).
+-- the rover relative to True North. The full GPS time is given by the
+-- preceding MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgBaselineHeading = MsgBaselineHeading
   { _msgBaselineHeading_tow   :: Word32
     -- ^ GPS Time of Week
