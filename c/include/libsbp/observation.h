@@ -47,7 +47,7 @@ typedef struct __attribute__((packed)) {
  */
 typedef struct __attribute__((packed)) {
   s32 i;    /**< Carrier phase whole cycles [cycles] */
-  u8 f;    /**< Carrier phase fractional part [cycles] */
+  u8 f;    /**< Carrier phase fractional part [cycles / 256] */
 } carrier_phase_t;
 
 
@@ -72,7 +72,7 @@ counter (ith packet of n)
 typedef struct __attribute__((packed)) {
   u32 P;       /**< Pseudorange observation [cm] */
   carrier_phase_t L;       /**< Carrier phase observation */
-  u8 cn0;     /**< Carrier-to-Noise density [dB Hz] */
+  u8 cn0;     /**< Carrier-to-Noise density [dB Hz * 4] */
   u16 lock;    /**< Lock indicator. This value changes whenever a satellite
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
@@ -234,7 +234,7 @@ typedef struct __attribute__((packed)) {
 typedef struct __attribute__((packed)) {
   u32 P;       /**< Pseudorange observation [cm] */
   carrier_phase_t L;       /**< Carrier phase observation */
-  u8 cn0;     /**< Carrier-to-Noise density [dB Hz] */
+  u8 cn0;     /**< Carrier-to-Noise density [dB Hz * 4] */
   u16 lock;    /**< Lock indicator. This value changes whenever a satellite
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.

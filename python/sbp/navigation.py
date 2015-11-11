@@ -628,7 +628,7 @@ class MsgBaselineNED(SBP):
   This message reports the baseline solution in North East Down
 (NED) coordinates. This baseline is the relative vector distance
 from the base station to the rover receiver, and NED coordinate
-system is defined at the local tangent plane centered at the
+system is defined at the local WGS84 tangent plane centered at the
 base station position.  The full GPS time is given by the
 preceding MSG_GPS_TIME with the matching time-of-week (tow).
 
@@ -866,8 +866,9 @@ class MsgVelNED(SBP):
 
   
   This message reports the velocity in local North East Down (NED)
-coordinates. The full GPS time is given by the preceding
-MSG_GPS_TIME with the matching time-of-week (tow).
+coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 
 
   Parameters
@@ -988,7 +989,7 @@ class MsgBaselineHeading(SBP):
 
   
   This message reports the baseline heading pointing from the base station
-to the rover relative to North. The full GPS time is given by the
+to the rover relative to True North. The full GPS time is given by the
 preceding MSG_GPS_TIME with the matching time-of-week (tow).
 
 
