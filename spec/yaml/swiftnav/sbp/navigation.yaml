@@ -77,18 +77,23 @@ definitions:
             desc: GPS Time of Week
         - gdop:
             type: u16
+            units: 0.01
             desc: Geometric Dilution of Precision
         - pdop:
             type: u16
+            units: 0.01
             desc: Position Dilution of Precision
         - tdop:
             type: u16
+            units: 0.01
             desc: Time Dilution of Precision
         - hdop:
             type: u16
+            units: 0.01
             desc: Horizontal Dilution of Precision
         - vdop:
             type: u16
+            units: 0.01
             desc: Vertical Dilution of Precision
 
 
