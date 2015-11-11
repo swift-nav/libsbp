@@ -46,7 +46,7 @@ definitions:
             desc: Carrier phase whole cycles
         - f:
             type: u8
-            units: cycles
+            units: cycles / 256
             desc: Carrier phase fractional part
 
  - ObservationHeader:
