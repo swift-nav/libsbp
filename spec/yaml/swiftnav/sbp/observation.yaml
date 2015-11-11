@@ -78,7 +78,7 @@ definitions:
             desc: Carrier phase observation
         - cn0:
             type: u8
-            units: dB Hz
+            units: dB Hz * 4
             desc: Carrier-to-Noise density
         - lock:
             type: u16
@@ -489,7 +489,7 @@ definitions:
             desc: Carrier phase observation
         - cn0:
             type: u8
-            units: dB Hz
+            units: dB Hz * 4
             desc: Carrier-to-Noise density
         - lock:
             type: u16
