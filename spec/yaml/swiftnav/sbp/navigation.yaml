@@ -221,7 +221,7 @@ definitions:
               - 3:
                   desc: Height Mode
                   values:
-                      - 0: Height above Ellipsoid
+                      - 0: Height above WGS84 ellipsoid
                       - 1: Height above mean sea level
               - 0-2:
                   desc: Fix mode
