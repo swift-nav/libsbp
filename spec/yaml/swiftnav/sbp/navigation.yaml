@@ -434,10 +434,10 @@ definitions:
 
  - MSG_BASELINE_HEADING:
     id: 0x0207
-    short_desc: Heading relative to North
+    short_desc: Heading relative to True North
     desc: |
       This message reports the baseline heading pointing from the base station
-      to the rover relative to North. The full GPS time is given by the
+      to the rover relative to True North. The full GPS time is given by the
       preceding MSG_GPS_TIME with the matching time-of-week (tow).
     fields:
           - tow:
