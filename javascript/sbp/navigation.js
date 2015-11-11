@@ -261,7 +261,7 @@ MsgBaselineEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * This message reports the baseline solution in North East Down (NED) coordinates.
  * This baseline is the relative vector distance from the base station to the rover
- * receiver, and NED coordinate system is defined at the local tangent plane
+ * receiver, and NED coordinate system is defined at the local WGS84 tangent plane
  * centered at the base station position.  The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  *
@@ -355,8 +355,9 @@ MsgVelEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * SBP class for message MSG_VEL_NED (0x0205).
  *
  * This message reports the velocity in local North East Down (NED) coordinates.
- * The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-
- * of-week (tow).
+ * The NED coordinate system is defined as the local WGS84 tangent plane centered
+ * at the current position. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -403,7 +404,7 @@ MsgVelNed.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * SBP class for message MSG_BASELINE_HEADING (0x0207).
  *
  * This message reports the baseline heading pointing from the base station to the
- * rover relative to North. The full GPS time is given by the preceding
+ * rover relative to True North. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  *
  * Fields in the SBP payload (`sbp.payload`):

@@ -20,9 +20,6 @@
  *  * System health, configuration, and diagnostic messages specific to
  * the Piksi L1 receiver, including a variety of legacy messages that
  * may no longer be used.
- * 
- * These messages are in the implementation-defined range
- * (0x0000-0x00FF), and largely intended for internal-use only.
  * \{ */
 
 #ifndef LIBSBP_PIKSI_MESSAGES_H

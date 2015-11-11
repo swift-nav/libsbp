@@ -44,8 +44,8 @@ ratio.
   sbp : SBP
     SBP parent object to inherit from.
   snr : float
-    SNR of best point. Currently dimensonless, but will have
-units of dB Hz in the revision of this message.
+    SNR of best point. Currently in arbitrary SNR points, but will
+be in units of dB Hz in a later revision of this message.
 
   cp : float
     Code phase of best point
