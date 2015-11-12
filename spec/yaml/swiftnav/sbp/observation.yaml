@@ -14,6 +14,7 @@ stable: True
 public: True
 include:
   - types.yaml
+  - gnss_signal.yaml
 definitions:
 
  - ObsGPSTime:
@@ -86,11 +87,8 @@ definitions:
               signal has lost and regained lock, indicating that the
               carrier phase ambiguity may have changed.
         - sid:
-            type: u32
-            desc: |
-              Signal identifier of the satellite signal - values 0x00
-              through 0x1F represent GPS PRNs 1 through 32 respectively
-              (PRN-minus-1 notation); other values reserved for future use.
+            type: SBPGnssSignal
+            desc: GNSS signal identifier
 
  - MSG_OBS:
     id: 0x0043
@@ -244,11 +242,8 @@ definitions:
           type: u8
           desc: Satellite is healthy?
       - sid:
-          type: u32
-          desc: |
-            Signal identifier being tracked - values 0x00 through 0x1F represent
-            GPS PRNs 1 through 32 respectively (PRN-minus-1 notation); other values
-            reserved for future use
+          type: SBPGnssSignal
+          desc: GNSS signal identifier
       - iode:
           type: u8
           desc: Issue of ephemeris data

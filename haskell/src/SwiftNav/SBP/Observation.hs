@@ -113,10 +113,8 @@ data PackedObsContent = PackedObsContent
     -- ^ Lock indicator. This value changes whenever a satellite signal has lost
     -- and regained lock, indicating that the carrier phase ambiguity may have
     -- changed.
-  , _packedObsContent_sid :: Word32
-    -- ^ Signal identifier of the satellite signal - values 0x00 through 0x1F
-    -- represent GPS PRNs 1 through 32 respectively (PRN-minus-1 notation);
-    -- other values reserved for future use.
+  , _packedObsContent_sid :: SBPGnssSignal
+    -- ^ GNSS signal identifier
   } deriving ( Show, Read, Eq )
 
 instance Binary PackedObsContent where
@@ -125,7 +123,7 @@ instance Binary PackedObsContent where
     _packedObsContent_L <- get
     _packedObsContent_cn0 <- getWord8
     _packedObsContent_lock <- getWord16le
-    _packedObsContent_sid <- getWord32le
+    _packedObsContent_sid <- get
     return PackedObsContent {..}
 
   put PackedObsContent {..} = do
@@ -133,7 +131,7 @@ instance Binary PackedObsContent where
     put _packedObsContent_L
     putWord8 _packedObsContent_cn0
     putWord16le _packedObsContent_lock
-    putWord32le _packedObsContent_sid
+    put _packedObsContent_sid
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContent_" . stripPrefix "_packedObsContent_"}
              ''PackedObsContent)
 $(makeLenses ''PackedObsContent)
@@ -270,10 +268,8 @@ data MsgEphemeris = MsgEphemeris
     -- ^ Is valid?
   , _msgEphemeris_healthy :: Word8
     -- ^ Satellite is healthy?
-  , _msgEphemeris_sid    :: Word32
-    -- ^ Signal identifier being tracked - values 0x00 through 0x1F represent GPS
-    -- PRNs 1 through 32 respectively (PRN-minus-1 notation); other values
-    -- reserved for future use
+  , _msgEphemeris_sid    :: SBPGnssSignal
+    -- ^ GNSS signal identifier
   , _msgEphemeris_iode   :: Word8
     -- ^ Issue of ephemeris data
   , _msgEphemeris_iodc   :: Word16
@@ -309,7 +305,7 @@ instance Binary MsgEphemeris where
     _msgEphemeris_toc_wn <- getWord16le
     _msgEphemeris_valid <- getWord8
     _msgEphemeris_healthy <- getWord8
-    _msgEphemeris_sid <- getWord32le
+    _msgEphemeris_sid <- get
     _msgEphemeris_iode <- getWord8
     _msgEphemeris_iodc <- getWord16le
     _msgEphemeris_reserved <- getWord32le
@@ -341,7 +337,7 @@ instance Binary MsgEphemeris where
     putWord16le _msgEphemeris_toc_wn
     putWord8 _msgEphemeris_valid
     putWord8 _msgEphemeris_healthy
-    putWord32le _msgEphemeris_sid
+    put _msgEphemeris_sid
     putWord8 _msgEphemeris_iode
     putWord16le _msgEphemeris_iodc
     putWord32le _msgEphemeris_reserved

@@ -20,6 +20,7 @@ stable: False
 public: True
 include:
   - types.yaml
+  - gnss_signal.yaml
 definitions:
 
  - MSG_ALMANAC:
@@ -228,6 +229,6 @@ definitions:
                         - 0: Enabled
                         - 1: Skip this satellite on future acquisitions
         - sid:
-            type: u32
-            desc: Signal identifier for which the mask is applied
+            type: SBPGnssSignal
+            desc: GNSS signal for which the mask is applied
 

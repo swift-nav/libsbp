@@ -30,6 +30,7 @@ library
                      , SwiftNav.SBP.ExtEvents
                      , SwiftNav.SBP.FileIo
                      , SwiftNav.SBP.Flash
+                     , SwiftNav.SBP.GnssSignal
                      , SwiftNav.SBP.Logging
                      , SwiftNav.SBP.Navigation
                      , SwiftNav.SBP.Observation
