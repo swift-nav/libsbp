@@ -15,9 +15,12 @@
 from .base_driver import BaseDriver
 from requests.adapters import DEFAULT_POOLBLOCK, DEFAULT_POOLSIZE, HTTPAdapter
 from requests.packages.urllib3.util import Retry
+from requests_futures.sessions import FuturesSession
 import requests
 import socket
 import threading
+import time
+import warnings
 
 class TCPDriver(BaseDriver):
   """TCPDriver
@@ -92,12 +95,15 @@ MAX_READ_RETRIES = 10
 DEFAULT_RETRIES = (MAX_CONNECT_RETRIES, MAX_READ_RETRIES)
 MAX_REDIRECTS = 0
 DEFAULT_BACKOFF_FACTOR = 0.2
+BROKER_SBP_TYPE = 'application/vnd.swiftnav.broker.v1+sbp'
 
 class HTTPDriver(BaseDriver):
   """HTTPDriver
 
   The :class:`HTTPDriver` class reads SBP messages from an HTTP
-  service for a device.
+  service for a device and writes out to a stream. This driver is like
+  a file-handle with read and writes over two separately HTTP
+  connections, but can also be enabled and disabled by its consumer.
 
   Parameters
   ----------
@@ -115,58 +121,145 @@ class HTTPDriver(BaseDriver):
   """
 
   def __init__(self,
-               device_uid,
+               device_uid=None,
                url="http://broker.testing.skylark.swiftnav.com",
                retries=DEFAULT_RETRIES,
-               timeout=DEFAULT_TIMEOUT):
-    self.session = requests.Session()
+               timeout=DEFAULT_TIMEOUT,):
     retry = Retry(connect=DEFAULT_RETRIES[0],
                   read=DEFAULT_RETRIES[1],
                   redirect=MAX_REDIRECTS,
                   status_forcelist=[500],
                   backoff_factor=DEFAULT_BACKOFF_FACTOR)
-    self.session.mount("http://",
-                       HTTPAdapter(pool_connections=DEFAULT_POOLSIZE,
-                                   pool_maxsize=DEFAULT_POOLSIZE,
-                                   pool_block=DEFAULT_POOLBLOCK,
-                                   max_retries=retry))
+    self.url = url
+    self.read_session = requests.Session()
+    self.read_session.mount("http://",
+                            HTTPAdapter(pool_connections=DEFAULT_POOLSIZE,
+                                        pool_maxsize=DEFAULT_POOLSIZE,
+                                        pool_block=DEFAULT_POOLBLOCK,
+                                        max_retries=retry))
+    self.write_session = FuturesSession()
     self.device_uid = device_uid
     self.timeout = timeout
-    headers = {'Device-Uid': self.device_uid,
-               'Accept': 'application/vnd.swiftnav.broker.v1+sbp'}
-    try:
-      self.read_response = self.session.get(url,
-                                            stream=True,
-                                            headers=headers,
-                                            timeout=self.timeout)
-    except requests.exceptions.ConnectionError:
-      msg = "Invalid request to %s with headers %s." % (url, headers)
-      raise HTTPException(msg)
-    except requests.exceptions.ConnectTimeout:
-      raise HTTPException(msg)
-    except requests.exceptions.RetryError:
-      raise HTTPException(msg)
-    except requests.exceptions.ReadTimeout:
-      msg = "Invalid request to %s with headers %s." % (url, headers)
-      raise HTTPException(msg)
+    self.read_response = None
+    self.write_response = None
 
   def flush(self):
-    """
-    File-flush wrapper (noop).
+    """File-flush wrapper (noop).
+
     """
     pass
 
   def close(self):
+    """File-handle close wrapper (noop).
+
     """
-    File-handle close wrapper (noop).
+    try:
+      self.read_close()
+      self.write_close()
+    except:
+      pass
+
+  @property
+  def write_ok(self):
+    """
+    Are we connected for writes?
+    """
+    # Note that self.write_response is either None or a Response
+    # object, which cast to False for 4xx and 5xx HTTP codes.
+    return bool(self.write_response)
+
+  def connect_write(self, source, whitelist, passive=True):
+    """Initialize a streaming write HTTP response. Manually connects the
+    underlying file-handle. In the event of a network disconnection,
+    use to manually reinitiate an HTTP session.
+
+    Parameters
+    ----------
+    source : sbp.client.handler.Handler
+      Iterable source of SBP messages.
+    whitelist : [int]
+      Whitelist of messages to write
+    passive : bool
+      Adds a passive Pragma to header, which keeps broadcast
+      observations private.
+
+    """
+    headers = {'Device-Uid': self.device_uid,
+               'Accept': BROKER_SBP_TYPE,
+               'Content-Type': BROKER_SBP_TYPE,
+               'Pragma': 'passive'}
+    if not passive:
+      del headers['Pragma']
+    try:
+      gen = (msg.pack() for msg, _ in source.filter(whitelist))
+      self.write_session.put(self.url, data=gen, headers=headers)
+      self.write_response = True
+    except requests.exceptions.ConnectionError:
+      msg = "Invalid request to %s with headers %s." % (self.url, headers)
+      warnings.warn(msg)
+    except requests.exceptions.ConnectTimeout:
+      pass
+    except requests.exceptions.RetryError:
+      pass
+    except requests.exceptions.ReadTimeout:
+      msg = "Invalid request to %s with headers %s." % (self.url, headers)
+      warnings.warn(msg)
+    return self.write_ok
+
+  def write(self, data):
+    """Write wrapper (noop). Actual stream is initiated by the write
+    connection.
+
+    Parameters
+    ----------
+    data : object
+      Data to write.
+
     """
     pass
 
-  def write(self, data):
+  def write_close(self):
+    """File-handle close wrapper (noop).
+
     """
-    Write wrapper (noop).
+    try:
+      self.write_session.close()
+      # TODO (Buro): Do something smarter once we understand how
+      # FuturesSession really works.
+      self.write_session = FuturesSession()
+    except:
+      pass
+
+  @property
+  def read_ok(self):
     """
-    pass
+    Are we connected for reads?
+    """
+    return bool(self.read_response)
+
+  def connect_read(self):
+    """Initialize a streaming read/write HTTP response. Manually connects
+    the underlying file-handle. In the event of a network
+    disconnection, use to manually reinitiate an HTTP session.
+
+    """
+    headers = {'Device-Uid': self.device_uid, 'Accept': BROKER_SBP_TYPE}
+    try:
+      self.read_response = self.read_session.get(self.url,
+                                                 stream=True,
+                                                 headers=headers,
+                                                 timeout=self.timeout)
+    except requests.exceptions.ConnectionError:
+      msg = "Invalid request to %s with headers %s." % (self.url, headers)
+      warnings.warn(msg)
+    except requests.exceptions.ConnectTimeout:
+      pass
+    except requests.exceptions.RetryError:
+      pass
+    except requests.exceptions.ReadTimeout:
+      msg = "Invalid request to %s with headers %s." % (self.url, headers)
+      warnings.warn(msg)
+    return self.read_ok
 
   def read(self, size):
     """
@@ -176,9 +269,33 @@ class HTTPDriver(BaseDriver):
     ----------
     size : int
       Size to read (in bytes).
+
+    Returns
+    ----------
+    bytearray, or None
+
     """
-    if not self.read_response.ok:
-      msg = "Request failed! With code %s: %s " \
-            % (self.read_response.status_code, self.read_response.text)
-      raise RuntimeError(msg)
-    return self.read_response.raw.read(size)
+    if self.read_response is None or not self.device_uid:
+      # NOTE (Buro/jgross): Force a yield here to another thread. The
+      # spinning here causes the UI thread to lock up.
+      time.sleep(0)
+      pass
+    elif not self.read_ok:
+      msg = "HTTP GET Request failed! With code %s." % (self.read_response.status_code)
+      warnings.warn(msg, RuntimeWarning)
+      return
+    else:
+      try:
+        return self.read_response.raw.read(size)
+      except:
+        pass
+
+  def read_close(self):
+    """File-handle close wrapper (noop).
+
+    """
+    try:
+      self.read_response.close()
+      self.read_response = None
+    except:
+      pass

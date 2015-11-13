@@ -69,7 +69,7 @@ class Framer(object):
           raise StopIteration
       except IOError:
         raise StopIteration
-    return (msg, {'delta':self._delta(), 'timestamp':self._timestamp()})
+    return (msg, {'delta': self._delta(), 'timestamp': self._timestamp()})
 
   def _readall(self, size):
     """
@@ -82,16 +82,24 @@ class Framer(object):
     """
     data = ""
     while len(data) < size:
-      data += self._read(size - len(data))
+      d = self._read(size - len(data))
       if self._broken:
         return data
+      if not d:
+        # NOTE (Buro/jgross): Force a yield here to another thread. In
+        # case the stream fails midstream, the spinning here causes
+        # the UI thread to lock up without yielding.
+        time.sleep(0)
+        continue
+      data += d
     return data
 
   def _receive(self):
     """
     Read and build SBP message.
     """
-    # preamble - not readall(1) to allow breaking before messages, empty input
+    # preamble - not readall(1) to allow breaking before messages,
+    # empty input
     preamble = self._read(1)
     if not preamble:
       return None
@@ -133,4 +141,3 @@ class Framer(object):
       SBP message to send.
     """
     self._write(msg.to_binary())
-
