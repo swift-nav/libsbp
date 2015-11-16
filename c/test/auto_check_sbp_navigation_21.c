@@ -121,27 +121,18 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for v_accuracy, expected 0, is %d %f", (int)msg->v_accuracy, (float)msg->v_accuracy);
-    fail_unless(msg->v_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for n_sats, expected 9, is %d %f", (int)msg->n_sats, (float)msg->n_sats);
-    fail_unless(msg->n_sats == 9, errStr);
-    sprintf(errStr, "incorrect value for d, expected 0, is %d %f", (int)msg->d, (float)msg->d);
-    fail_unless(msg->d == 0, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2567700, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2567700, errStr);
-    sprintf(errStr, "incorrect value for n, expected -96525, is %d %f", (int)msg->n, (float)msg->n);
-    fail_unless(msg->n == -96525, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 1, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 1, errStr);
-    sprintf(errStr, "incorrect value for h_accuracy, expected 0, is %d %f", (int)msg->h_accuracy, (float)msg->h_accuracy);
-    fail_unless(msg->h_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for e, expected -26134, is %d %f", (int)msg->e, (float)msg->e);
-    fail_unless(msg->e == -26134, errStr);
-    free(errStr);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless(msg->d == 0, "incorrect value for d, expected 0, is %d", msg->d);
+    fail_unless(msg->tow == 2567700, "incorrect value for tow, expected 2567700, is %d", msg->tow);
+    fail_unless(msg->n == -96525, "incorrect value for n, expected -96525, is %d", msg->n);
+    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless(msg->e == -26134, "incorrect value for e, expected -26134, is %d", msg->e);
   }
   // Test successful parsing of a message
   {
@@ -178,27 +169,18 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for v_accuracy, expected 0, is %d %f", (int)msg->v_accuracy, (float)msg->v_accuracy);
-    fail_unless(msg->v_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for n_sats, expected 9, is %d %f", (int)msg->n_sats, (float)msg->n_sats);
-    fail_unless(msg->n_sats == 9, errStr);
-    sprintf(errStr, "incorrect value for d, expected 0, is %d %f", (int)msg->d, (float)msg->d);
-    fail_unless(msg->d == 0, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2567800, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2567800, errStr);
-    sprintf(errStr, "incorrect value for n, expected -96629, is %d %f", (int)msg->n, (float)msg->n);
-    fail_unless(msg->n == -96629, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 1, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 1, errStr);
-    sprintf(errStr, "incorrect value for h_accuracy, expected 0, is %d %f", (int)msg->h_accuracy, (float)msg->h_accuracy);
-    fail_unless(msg->h_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for e, expected -25747, is %d %f", (int)msg->e, (float)msg->e);
-    fail_unless(msg->e == -25747, errStr);
-    free(errStr);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless(msg->d == 0, "incorrect value for d, expected 0, is %d", msg->d);
+    fail_unless(msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", msg->tow);
+    fail_unless(msg->n == -96629, "incorrect value for n, expected -96629, is %d", msg->n);
+    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless(msg->e == -25747, "incorrect value for e, expected -25747, is %d", msg->e);
   }
   // Test successful parsing of a message
   {
@@ -235,27 +217,18 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for v_accuracy, expected 0, is %d %f", (int)msg->v_accuracy, (float)msg->v_accuracy);
-    fail_unless(msg->v_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for n_sats, expected 9, is %d %f", (int)msg->n_sats, (float)msg->n_sats);
-    fail_unless(msg->n_sats == 9, errStr);
-    sprintf(errStr, "incorrect value for d, expected 0, is %d %f", (int)msg->d, (float)msg->d);
-    fail_unless(msg->d == 0, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2567900, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2567900, errStr);
-    sprintf(errStr, "incorrect value for n, expected -96731, is %d %f", (int)msg->n, (float)msg->n);
-    fail_unless(msg->n == -96731, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 1, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 1, errStr);
-    sprintf(errStr, "incorrect value for h_accuracy, expected 0, is %d %f", (int)msg->h_accuracy, (float)msg->h_accuracy);
-    fail_unless(msg->h_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for e, expected -25360, is %d %f", (int)msg->e, (float)msg->e);
-    fail_unless(msg->e == -25360, errStr);
-    free(errStr);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless(msg->d == 0, "incorrect value for d, expected 0, is %d", msg->d);
+    fail_unless(msg->tow == 2567900, "incorrect value for tow, expected 2567900, is %d", msg->tow);
+    fail_unless(msg->n == -96731, "incorrect value for n, expected -96731, is %d", msg->n);
+    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless(msg->e == -25360, "incorrect value for e, expected -25360, is %d", msg->e);
   }
   // Test successful parsing of a message
   {
@@ -292,27 +265,18 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for v_accuracy, expected 0, is %d %f", (int)msg->v_accuracy, (float)msg->v_accuracy);
-    fail_unless(msg->v_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for n_sats, expected 9, is %d %f", (int)msg->n_sats, (float)msg->n_sats);
-    fail_unless(msg->n_sats == 9, errStr);
-    sprintf(errStr, "incorrect value for d, expected 0, is %d %f", (int)msg->d, (float)msg->d);
-    fail_unless(msg->d == 0, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2568000, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2568000, errStr);
-    sprintf(errStr, "incorrect value for n, expected -96831, is %d %f", (int)msg->n, (float)msg->n);
-    fail_unless(msg->n == -96831, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 1, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 1, errStr);
-    sprintf(errStr, "incorrect value for h_accuracy, expected 0, is %d %f", (int)msg->h_accuracy, (float)msg->h_accuracy);
-    fail_unless(msg->h_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for e, expected -24973, is %d %f", (int)msg->e, (float)msg->e);
-    fail_unless(msg->e == -24973, errStr);
-    free(errStr);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless(msg->d == 0, "incorrect value for d, expected 0, is %d", msg->d);
+    fail_unless(msg->tow == 2568000, "incorrect value for tow, expected 2568000, is %d", msg->tow);
+    fail_unless(msg->n == -96831, "incorrect value for n, expected -96831, is %d", msg->n);
+    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless(msg->e == -24973, "incorrect value for e, expected -24973, is %d", msg->e);
   }
   // Test successful parsing of a message
   {
@@ -349,27 +313,18 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for v_accuracy, expected 0, is %d %f", (int)msg->v_accuracy, (float)msg->v_accuracy);
-    fail_unless(msg->v_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for n_sats, expected 9, is %d %f", (int)msg->n_sats, (float)msg->n_sats);
-    fail_unless(msg->n_sats == 9, errStr);
-    sprintf(errStr, "incorrect value for d, expected 0, is %d %f", (int)msg->d, (float)msg->d);
-    fail_unless(msg->d == 0, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2568100, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2568100, errStr);
-    sprintf(errStr, "incorrect value for n, expected -96931, is %d %f", (int)msg->n, (float)msg->n);
-    fail_unless(msg->n == -96931, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 1, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 1, errStr);
-    sprintf(errStr, "incorrect value for h_accuracy, expected 0, is %d %f", (int)msg->h_accuracy, (float)msg->h_accuracy);
-    fail_unless(msg->h_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for e, expected -24586, is %d %f", (int)msg->e, (float)msg->e);
-    fail_unless(msg->e == -24586, errStr);
-    free(errStr);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless(msg->d == 0, "incorrect value for d, expected 0, is %d", msg->d);
+    fail_unless(msg->tow == 2568100, "incorrect value for tow, expected 2568100, is %d", msg->tow);
+    fail_unless(msg->n == -96931, "incorrect value for n, expected -96931, is %d", msg->n);
+    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless(msg->e == -24586, "incorrect value for e, expected -24586, is %d", msg->e);
   }
 }
 END_TEST

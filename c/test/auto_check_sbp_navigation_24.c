@@ -121,23 +121,16 @@ START_TEST( test_auto_check_sbp_navigation_24 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_dops_t* msg = ( msg_dops_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for gdop, expected 180, is %d %f", (int)msg->gdop, (float)msg->gdop);
-    fail_unless(msg->gdop == 180, errStr);
-    sprintf(errStr, "incorrect value for tdop, expected 170, is %d %f", (int)msg->tdop, (float)msg->tdop);
-    fail_unless(msg->tdop == 170, errStr);
-    sprintf(errStr, "incorrect value for vdop, expected 150, is %d %f", (int)msg->vdop, (float)msg->vdop);
-    fail_unless(msg->vdop == 150, errStr);
-    sprintf(errStr, "incorrect value for hdop, expected 160, is %d %f", (int)msg->hdop, (float)msg->hdop);
-    fail_unless(msg->hdop == 160, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2568200, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2568200, errStr);
-    sprintf(errStr, "incorrect value for pdop, expected 190, is %d %f", (int)msg->pdop, (float)msg->pdop);
-    fail_unless(msg->pdop == 190, errStr);
-    free(errStr);
+    fail_unless(msg->gdop == 180, "incorrect value for gdop, expected 180, is %d", msg->gdop);
+    fail_unless(msg->tdop == 170, "incorrect value for tdop, expected 170, is %d", msg->tdop);
+    fail_unless(msg->vdop == 150, "incorrect value for vdop, expected 150, is %d", msg->vdop);
+    fail_unless(msg->hdop == 160, "incorrect value for hdop, expected 160, is %d", msg->hdop);
+    fail_unless(msg->tow == 2568200, "incorrect value for tow, expected 2568200, is %d", msg->tow);
+    fail_unless(msg->pdop == 190, "incorrect value for pdop, expected 190, is %d", msg->pdop);
   }
   // Test successful parsing of a message
   {
@@ -174,23 +167,16 @@ START_TEST( test_auto_check_sbp_navigation_24 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_dops_t* msg = ( msg_dops_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for gdop, expected 180, is %d %f", (int)msg->gdop, (float)msg->gdop);
-    fail_unless(msg->gdop == 180, errStr);
-    sprintf(errStr, "incorrect value for tdop, expected 170, is %d %f", (int)msg->tdop, (float)msg->tdop);
-    fail_unless(msg->tdop == 170, errStr);
-    sprintf(errStr, "incorrect value for vdop, expected 150, is %d %f", (int)msg->vdop, (float)msg->vdop);
-    fail_unless(msg->vdop == 150, errStr);
-    sprintf(errStr, "incorrect value for hdop, expected 160, is %d %f", (int)msg->hdop, (float)msg->hdop);
-    fail_unless(msg->hdop == 160, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2569200, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2569200, errStr);
-    sprintf(errStr, "incorrect value for pdop, expected 190, is %d %f", (int)msg->pdop, (float)msg->pdop);
-    fail_unless(msg->pdop == 190, errStr);
-    free(errStr);
+    fail_unless(msg->gdop == 180, "incorrect value for gdop, expected 180, is %d", msg->gdop);
+    fail_unless(msg->tdop == 170, "incorrect value for tdop, expected 170, is %d", msg->tdop);
+    fail_unless(msg->vdop == 150, "incorrect value for vdop, expected 150, is %d", msg->vdop);
+    fail_unless(msg->hdop == 160, "incorrect value for hdop, expected 160, is %d", msg->hdop);
+    fail_unless(msg->tow == 2569200, "incorrect value for tow, expected 2569200, is %d", msg->tow);
+    fail_unless(msg->pdop == 190, "incorrect value for pdop, expected 190, is %d", msg->pdop);
   }
   // Test successful parsing of a message
   {
@@ -227,23 +213,16 @@ START_TEST( test_auto_check_sbp_navigation_24 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_dops_t* msg = ( msg_dops_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for gdop, expected 180, is %d %f", (int)msg->gdop, (float)msg->gdop);
-    fail_unless(msg->gdop == 180, errStr);
-    sprintf(errStr, "incorrect value for tdop, expected 170, is %d %f", (int)msg->tdop, (float)msg->tdop);
-    fail_unless(msg->tdop == 170, errStr);
-    sprintf(errStr, "incorrect value for vdop, expected 150, is %d %f", (int)msg->vdop, (float)msg->vdop);
-    fail_unless(msg->vdop == 150, errStr);
-    sprintf(errStr, "incorrect value for hdop, expected 160, is %d %f", (int)msg->hdop, (float)msg->hdop);
-    fail_unless(msg->hdop == 160, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2570200, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2570200, errStr);
-    sprintf(errStr, "incorrect value for pdop, expected 190, is %d %f", (int)msg->pdop, (float)msg->pdop);
-    fail_unless(msg->pdop == 190, errStr);
-    free(errStr);
+    fail_unless(msg->gdop == 180, "incorrect value for gdop, expected 180, is %d", msg->gdop);
+    fail_unless(msg->tdop == 170, "incorrect value for tdop, expected 170, is %d", msg->tdop);
+    fail_unless(msg->vdop == 150, "incorrect value for vdop, expected 150, is %d", msg->vdop);
+    fail_unless(msg->hdop == 160, "incorrect value for hdop, expected 160, is %d", msg->hdop);
+    fail_unless(msg->tow == 2570200, "incorrect value for tow, expected 2570200, is %d", msg->tow);
+    fail_unless(msg->pdop == 190, "incorrect value for pdop, expected 190, is %d", msg->pdop);
   }
 }
 END_TEST

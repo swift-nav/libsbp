@@ -121,19 +121,14 @@ START_TEST( test_auto_check_sbp_acquisition_11 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_acq_result_dep_a_t* msg = ( msg_acq_result_dep_a_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_acq_result_dep_a_t* msg = ( msg_acq_result_dep_a_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for cp, expected 727.0, is %d %f", (int)msg->cp, (float)msg->cp);
-    fail_unless(msg->cp == 727.0, errStr);
-    sprintf(errStr, "incorrect value for snr, expected 14.5, is %d %f", (int)msg->snr, (float)msg->snr);
-    fail_unless(msg->snr == 14.5, errStr);
-    sprintf(errStr, "incorrect value for cf, expected 8241.94335938, is %d %f", (int)msg->cf, (float)msg->cf);
-    fail_unless(msg->cf == 8241.94335938, errStr);
-    sprintf(errStr, "incorrect value for prn, expected 8, is %d %f", (int)msg->prn, (float)msg->prn);
-    fail_unless(msg->prn == 8, errStr);
-    free(errStr);
+    fail_unless((msg->cp*100 - 727.0*100) < 0.05, "incorrect value for cp, expected 727.0, is %f", msg->cp);
+    fail_unless((msg->snr*100 - 14.5*100) < 0.05, "incorrect value for snr, expected 14.5, is %f", msg->snr);
+    fail_unless((msg->cf*100 - 8241.94335938*100) < 0.05, "incorrect value for cf, expected 8241.94335938, is %f", msg->cf);
+    fail_unless(msg->prn == 8, "incorrect value for prn, expected 8, is %d", msg->prn);
   }
   // Test successful parsing of a message
   {
@@ -170,19 +165,14 @@ START_TEST( test_auto_check_sbp_acquisition_11 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_acq_result_dep_a_t* msg = ( msg_acq_result_dep_a_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_acq_result_dep_a_t* msg = ( msg_acq_result_dep_a_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for cp, expected 359.5, is %d %f", (int)msg->cp, (float)msg->cp);
-    fail_unless(msg->cp == 359.5, errStr);
-    sprintf(errStr, "incorrect value for snr, expected 15.3000001907, is %d %f", (int)msg->snr, (float)msg->snr);
-    fail_unless(msg->snr == 15.3000001907, errStr);
-    sprintf(errStr, "incorrect value for cf, expected 749.26763916, is %d %f", (int)msg->cf, (float)msg->cf);
-    fail_unless(msg->cf == 749.26763916, errStr);
-    sprintf(errStr, "incorrect value for prn, expected 9, is %d %f", (int)msg->prn, (float)msg->prn);
-    fail_unless(msg->prn == 9, errStr);
-    free(errStr);
+    fail_unless((msg->cp*100 - 359.5*100) < 0.05, "incorrect value for cp, expected 359.5, is %f", msg->cp);
+    fail_unless((msg->snr*100 - 15.3000001907*100) < 0.05, "incorrect value for snr, expected 15.3000001907, is %f", msg->snr);
+    fail_unless((msg->cf*100 - 749.26763916*100) < 0.05, "incorrect value for cf, expected 749.26763916, is %f", msg->cf);
+    fail_unless(msg->prn == 9, "incorrect value for prn, expected 9, is %d", msg->prn);
   }
   // Test successful parsing of a message
   {
@@ -219,19 +209,14 @@ START_TEST( test_auto_check_sbp_acquisition_11 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_acq_result_dep_a_t* msg = ( msg_acq_result_dep_a_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_acq_result_dep_a_t* msg = ( msg_acq_result_dep_a_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for cp, expected 40.5, is %d %f", (int)msg->cp, (float)msg->cp);
-    fail_unless(msg->cp == 40.5, errStr);
-    sprintf(errStr, "incorrect value for snr, expected 18.1000003815, is %d %f", (int)msg->snr, (float)msg->snr);
-    fail_unless(msg->snr == 18.1000003815, errStr);
-    sprintf(errStr, "incorrect value for cf, expected -6493.65283203, is %d %f", (int)msg->cf, (float)msg->cf);
-    fail_unless(msg->cf == -6493.65283203, errStr);
-    sprintf(errStr, "incorrect value for prn, expected 11, is %d %f", (int)msg->prn, (float)msg->prn);
-    fail_unless(msg->prn == 11, errStr);
-    free(errStr);
+    fail_unless((msg->cp*100 - 40.5*100) < 0.05, "incorrect value for cp, expected 40.5, is %f", msg->cp);
+    fail_unless((msg->snr*100 - 18.1000003815*100) < 0.05, "incorrect value for snr, expected 18.1000003815, is %f", msg->snr);
+    fail_unless((msg->cf*100 - -6493.65283203*100) < 0.05, "incorrect value for cf, expected -6493.65283203, is %f", msg->cf);
+    fail_unless(msg->prn == 11, "incorrect value for prn, expected 11, is %d", msg->prn);
   }
   // Test successful parsing of a message
   {
@@ -268,19 +253,14 @@ START_TEST( test_auto_check_sbp_acquisition_11 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_acq_result_dep_a_t* msg = ( msg_acq_result_dep_a_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_acq_result_dep_a_t* msg = ( msg_acq_result_dep_a_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for cp, expected 548.5, is %d %f", (int)msg->cp, (float)msg->cp);
-    fail_unless(msg->cp == 548.5, errStr);
-    sprintf(errStr, "incorrect value for snr, expected 15.3000001907, is %d %f", (int)msg->snr, (float)msg->snr);
-    fail_unless(msg->snr == 15.3000001907, errStr);
-    sprintf(errStr, "incorrect value for cf, expected -999.023498535, is %d %f", (int)msg->cf, (float)msg->cf);
-    fail_unless(msg->cf == -999.023498535, errStr);
-    sprintf(errStr, "incorrect value for prn, expected 12, is %d %f", (int)msg->prn, (float)msg->prn);
-    fail_unless(msg->prn == 12, errStr);
-    free(errStr);
+    fail_unless((msg->cp*100 - 548.5*100) < 0.05, "incorrect value for cp, expected 548.5, is %f", msg->cp);
+    fail_unless((msg->snr*100 - 15.3000001907*100) < 0.05, "incorrect value for snr, expected 15.3000001907, is %f", msg->snr);
+    fail_unless((msg->cf*100 - -999.023498535*100) < 0.05, "incorrect value for cf, expected -999.023498535, is %f", msg->cf);
+    fail_unless(msg->prn == 12, "incorrect value for prn, expected 12, is %d", msg->prn);
   }
   // Test successful parsing of a message
   {
@@ -317,19 +297,14 @@ START_TEST( test_auto_check_sbp_acquisition_11 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_acq_result_dep_a_t* msg = ( msg_acq_result_dep_a_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_acq_result_dep_a_t* msg = ( msg_acq_result_dep_a_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for cp, expected 780.5, is %d %f", (int)msg->cp, (float)msg->cp);
-    fail_unless(msg->cp == 780.5, errStr);
-    sprintf(errStr, "incorrect value for snr, expected 15.3000001907, is %d %f", (int)msg->snr, (float)msg->snr);
-    fail_unless(msg->snr == 15.3000001907, errStr);
-    sprintf(errStr, "incorrect value for cf, expected 4745.36132812, is %d %f", (int)msg->cf, (float)msg->cf);
-    fail_unless(msg->cf == 4745.36132812, errStr);
-    sprintf(errStr, "incorrect value for prn, expected 14, is %d %f", (int)msg->prn, (float)msg->prn);
-    fail_unless(msg->prn == 14, errStr);
-    free(errStr);
+    fail_unless((msg->cp*100 - 780.5*100) < 0.05, "incorrect value for cp, expected 780.5, is %f", msg->cp);
+    fail_unless((msg->snr*100 - 15.3000001907*100) < 0.05, "incorrect value for snr, expected 15.3000001907, is %f", msg->snr);
+    fail_unless((msg->cf*100 - 4745.36132812*100) < 0.05, "incorrect value for cf, expected 4745.36132812, is %f", msg->cf);
+    fail_unless(msg->prn == 14, "incorrect value for prn, expected 14, is %d", msg->prn);
   }
   // Test successful parsing of a message
   {
@@ -366,19 +341,14 @@ START_TEST( test_auto_check_sbp_acquisition_11 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_acq_result_dep_a_t* msg = ( msg_acq_result_dep_a_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_acq_result_dep_a_t* msg = ( msg_acq_result_dep_a_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for cp, expected 584.5, is %d %f", (int)msg->cp, (float)msg->cp);
-    fail_unless(msg->cp == 584.5, errStr);
-    sprintf(errStr, "incorrect value for snr, expected 163.222229004, is %d %f", (int)msg->snr, (float)msg->snr);
-    fail_unless(msg->snr == 163.222229004, errStr);
-    sprintf(errStr, "incorrect value for cf, expected -499.511749268, is %d %f", (int)msg->cf, (float)msg->cf);
-    fail_unless(msg->cf == -499.511749268, errStr);
-    sprintf(errStr, "incorrect value for prn, expected 0, is %d %f", (int)msg->prn, (float)msg->prn);
-    fail_unless(msg->prn == 0, errStr);
-    free(errStr);
+    fail_unless((msg->cp*100 - 584.5*100) < 0.05, "incorrect value for cp, expected 584.5, is %f", msg->cp);
+    fail_unless((msg->snr*100 - 163.222229004*100) < 0.05, "incorrect value for snr, expected 163.222229004, is %f", msg->snr);
+    fail_unless((msg->cf*100 - -499.511749268*100) < 0.05, "incorrect value for cf, expected -499.511749268, is %f", msg->cf);
+    fail_unless(msg->prn == 0, "incorrect value for prn, expected 0, is %d", msg->prn);
   }
 }
 END_TEST

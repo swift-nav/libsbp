@@ -121,13 +121,11 @@ START_TEST( test_auto_check_sbp_system_4 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_startup_t* msg = ( msg_startup_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_startup_t* msg = ( msg_startup_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for reserved, expected 0, is %d %f", (int)msg->reserved, (float)msg->reserved);
-    fail_unless(msg->reserved == 0, errStr);
-    free(errStr);
+    fail_unless(msg->reserved == 0, "incorrect value for reserved, expected 0, is %d", msg->reserved);
   }
   // Test successful parsing of a message
   {
@@ -164,13 +162,11 @@ START_TEST( test_auto_check_sbp_system_4 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_heartbeat_t* msg = ( msg_heartbeat_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_heartbeat_t* msg = ( msg_heartbeat_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for flags, expected 0, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 0, errStr);
-    free(errStr);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
   }
 }
 END_TEST

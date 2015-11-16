@@ -121,19 +121,14 @@ START_TEST( test_auto_check_sbp_navigation_1 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_gps_time_t* msg = ( msg_gps_time_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for wn, expected 1787, is %d %f", (int)msg->wn, (float)msg->wn);
-    fail_unless(msg->wn == 1787, errStr);
-    sprintf(errStr, "incorrect value for ns, expected 0, is %d %f", (int)msg->ns, (float)msg->ns);
-    fail_unless(msg->ns == 0, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 0, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 0, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2567800, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2567800, errStr);
-    free(errStr);
+    fail_unless(msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", msg->wn);
+    fail_unless(msg->ns == 0, "incorrect value for ns, expected 0, is %d", msg->ns);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", msg->tow);
   }
   // Test successful parsing of a message
   {
@@ -170,19 +165,14 @@ START_TEST( test_auto_check_sbp_navigation_1 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_gps_time_t* msg = ( msg_gps_time_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for wn, expected 1787, is %d %f", (int)msg->wn, (float)msg->wn);
-    fail_unless(msg->wn == 1787, errStr);
-    sprintf(errStr, "incorrect value for ns, expected 0, is %d %f", (int)msg->ns, (float)msg->ns);
-    fail_unless(msg->ns == 0, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 0, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 0, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2567900, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2567900, errStr);
-    free(errStr);
+    fail_unless(msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", msg->wn);
+    fail_unless(msg->ns == 0, "incorrect value for ns, expected 0, is %d", msg->ns);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 2567900, "incorrect value for tow, expected 2567900, is %d", msg->tow);
   }
   // Test successful parsing of a message
   {
@@ -219,19 +209,14 @@ START_TEST( test_auto_check_sbp_navigation_1 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_gps_time_t* msg = ( msg_gps_time_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for wn, expected 1787, is %d %f", (int)msg->wn, (float)msg->wn);
-    fail_unless(msg->wn == 1787, errStr);
-    sprintf(errStr, "incorrect value for ns, expected 0, is %d %f", (int)msg->ns, (float)msg->ns);
-    fail_unless(msg->ns == 0, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 0, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 0, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2568000, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2568000, errStr);
-    free(errStr);
+    fail_unless(msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", msg->wn);
+    fail_unless(msg->ns == 0, "incorrect value for ns, expected 0, is %d", msg->ns);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 2568000, "incorrect value for tow, expected 2568000, is %d", msg->tow);
   }
   // Test successful parsing of a message
   {
@@ -268,19 +253,14 @@ START_TEST( test_auto_check_sbp_navigation_1 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_gps_time_t* msg = ( msg_gps_time_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for wn, expected 1787, is %d %f", (int)msg->wn, (float)msg->wn);
-    fail_unless(msg->wn == 1787, errStr);
-    sprintf(errStr, "incorrect value for ns, expected 0, is %d %f", (int)msg->ns, (float)msg->ns);
-    fail_unless(msg->ns == 0, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 0, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 0, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2568100, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2568100, errStr);
-    free(errStr);
+    fail_unless(msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", msg->wn);
+    fail_unless(msg->ns == 0, "incorrect value for ns, expected 0, is %d", msg->ns);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 2568100, "incorrect value for tow, expected 2568100, is %d", msg->tow);
   }
   // Test successful parsing of a message
   {
@@ -317,19 +297,14 @@ START_TEST( test_auto_check_sbp_navigation_1 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_gps_time_t* msg = ( msg_gps_time_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for wn, expected 1787, is %d %f", (int)msg->wn, (float)msg->wn);
-    fail_unless(msg->wn == 1787, errStr);
-    sprintf(errStr, "incorrect value for ns, expected 0, is %d %f", (int)msg->ns, (float)msg->ns);
-    fail_unless(msg->ns == 0, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 0, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 0, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2568200, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2568200, errStr);
-    free(errStr);
+    fail_unless(msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", msg->wn);
+    fail_unless(msg->ns == 0, "incorrect value for ns, expected 0, is %d", msg->ns);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 2568200, "incorrect value for tow, expected 2568200, is %d", msg->tow);
   }
 }
 END_TEST

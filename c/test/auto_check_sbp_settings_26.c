@@ -121,7 +121,7 @@ START_TEST( test_auto_check_sbp_settings_26 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
+    // Cast to expected message type - the +6 byte offset is where the payload starts
   }
 }
 END_TEST

@@ -121,20 +121,16 @@ START_TEST( test_auto_check_sbp_acquisition_10 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_acq_result_t* msg = ( msg_acq_result_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_acq_result_t* msg = ( msg_acq_result_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for cp, expected 322.0, is %d %f", (int)msg->cp, (float)msg->cp);
-    fail_unless(msg->cp == 322.0, errStr);
-    sprintf(errStr, "incorrect value for snr, expected 36.663608551, is %d %f", (int)msg->snr, (float)msg->snr);
-    fail_unless(msg->snr == 36.663608551, errStr);
-    sprintf(errStr, "incorrect value for cf, expected 4995.1171875, is %d %f", (int)msg->cf, (float)msg->cf);
-    fail_unless(msg->cf == 4995.1171875, errStr);
-    fail_unless(msg->sid.band == 0, "incorrect value for sid->band, expected 0");
-    fail_unless(msg->sid.constellation == 0, "incorrect value for sid->constellation, expected 0");
-    fail_unless(msg->sid.sat == 9, "incorrect value for sid->sat, expected 9");
-    free(errStr);
+    fail_unless((msg->cp*100 - 322.0*100) < 0.05, "incorrect value for cp, expected 322.0, is %f", msg->cp);
+    fail_unless((msg->snr*100 - 36.663608551*100) < 0.05, "incorrect value for snr, expected 36.663608551, is %f", msg->snr);
+    fail_unless((msg->cf*100 - 4995.1171875*100) < 0.05, "incorrect value for cf, expected 4995.1171875, is %f", msg->cf);
+    fail_unless(msg->sid.band == 0, "incorrect value for sid.band, expected 0, is %d", msg->sid.band);
+    fail_unless(msg->sid.constellation == 0, "incorrect value for sid.constellation, expected 0, is %d", msg->sid.constellation);
+    fail_unless(msg->sid.sat == 9, "incorrect value for sid.sat, expected 9, is %d", msg->sid.sat);
   }
   // Test successful parsing of a message
   {
@@ -171,20 +167,16 @@ START_TEST( test_auto_check_sbp_acquisition_10 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_acq_result_t* msg = ( msg_acq_result_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_acq_result_t* msg = ( msg_acq_result_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for cp, expected 843.0, is %d %f", (int)msg->cp, (float)msg->cp);
-    fail_unless(msg->cp == 843.0, errStr);
-    sprintf(errStr, "incorrect value for snr, expected 36.1687545776, is %d %f", (int)msg->snr, (float)msg->snr);
-    fail_unless(msg->snr == 36.1687545776, errStr);
-    sprintf(errStr, "incorrect value for cf, expected -8241.94335938, is %d %f", (int)msg->cf, (float)msg->cf);
-    fail_unless(msg->cf == -8241.94335938, errStr);
-    fail_unless(msg->sid.band == 0, "incorrect value for sid->band, expected 0");
-    fail_unless(msg->sid.constellation == 0, "incorrect value for sid->constellation, expected 0");
-    fail_unless(msg->sid.sat == 3, "incorrect value for sid->sat, expected 3");
-    free(errStr);
+    fail_unless((msg->cp*100 - 843.0*100) < 0.05, "incorrect value for cp, expected 843.0, is %f", msg->cp);
+    fail_unless((msg->snr*100 - 36.1687545776*100) < 0.05, "incorrect value for snr, expected 36.1687545776, is %f", msg->snr);
+    fail_unless((msg->cf*100 - -8241.94335938*100) < 0.05, "incorrect value for cf, expected -8241.94335938, is %f", msg->cf);
+    fail_unless(msg->sid.band == 0, "incorrect value for sid.band, expected 0, is %d", msg->sid.band);
+    fail_unless(msg->sid.constellation == 0, "incorrect value for sid.constellation, expected 0, is %d", msg->sid.constellation);
+    fail_unless(msg->sid.sat == 3, "incorrect value for sid.sat, expected 3, is %d", msg->sid.sat);
   }
   // Test successful parsing of a message
   {
@@ -221,20 +213,16 @@ START_TEST( test_auto_check_sbp_acquisition_10 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_acq_result_t* msg = ( msg_acq_result_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_acq_result_t* msg = ( msg_acq_result_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for cp, expected 794.0, is %d %f", (int)msg->cp, (float)msg->cp);
-    fail_unless(msg->cp == 794.0, errStr);
-    sprintf(errStr, "incorrect value for snr, expected 35.7772369385, is %d %f", (int)msg->snr, (float)msg->snr);
-    fail_unless(msg->snr == 35.7772369385, errStr);
-    sprintf(errStr, "incorrect value for cf, expected 4745.36132812, is %d %f", (int)msg->cf, (float)msg->cf);
-    fail_unless(msg->cf == 4745.36132812, errStr);
-    fail_unless(msg->sid.band == 0, "incorrect value for sid->band, expected 0");
-    fail_unless(msg->sid.constellation == 0, "incorrect value for sid->constellation, expected 0");
-    fail_unless(msg->sid.sat == 18, "incorrect value for sid->sat, expected 18");
-    free(errStr);
+    fail_unless((msg->cp*100 - 794.0*100) < 0.05, "incorrect value for cp, expected 794.0, is %f", msg->cp);
+    fail_unless((msg->snr*100 - 35.7772369385*100) < 0.05, "incorrect value for snr, expected 35.7772369385, is %f", msg->snr);
+    fail_unless((msg->cf*100 - 4745.36132812*100) < 0.05, "incorrect value for cf, expected 4745.36132812, is %f", msg->cf);
+    fail_unless(msg->sid.band == 0, "incorrect value for sid.band, expected 0, is %d", msg->sid.band);
+    fail_unless(msg->sid.constellation == 0, "incorrect value for sid.constellation, expected 0, is %d", msg->sid.constellation);
+    fail_unless(msg->sid.sat == 18, "incorrect value for sid.sat, expected 18, is %d", msg->sid.sat);
   }
   // Test successful parsing of a message
   {
@@ -271,20 +259,16 @@ START_TEST( test_auto_check_sbp_acquisition_10 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_acq_result_t* msg = ( msg_acq_result_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_acq_result_t* msg = ( msg_acq_result_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for cp, expected 258.5, is %d %f", (int)msg->cp, (float)msg->cp);
-    fail_unless(msg->cp == 258.5, errStr);
-    sprintf(errStr, "incorrect value for snr, expected 35.6945114136, is %d %f", (int)msg->snr, (float)msg->snr);
-    fail_unless(msg->snr == 35.6945114136, errStr);
-    sprintf(errStr, "incorrect value for cf, expected 2497.55859375, is %d %f", (int)msg->cf, (float)msg->cf);
-    fail_unless(msg->cf == 2497.55859375, errStr);
-    fail_unless(msg->sid.band == 0, "incorrect value for sid->band, expected 0");
-    fail_unless(msg->sid.constellation == 0, "incorrect value for sid->constellation, expected 0");
-    fail_unless(msg->sid.sat == 17, "incorrect value for sid->sat, expected 17");
-    free(errStr);
+    fail_unless((msg->cp*100 - 258.5*100) < 0.05, "incorrect value for cp, expected 258.5, is %f", msg->cp);
+    fail_unless((msg->snr*100 - 35.6945114136*100) < 0.05, "incorrect value for snr, expected 35.6945114136, is %f", msg->snr);
+    fail_unless((msg->cf*100 - 2497.55859375*100) < 0.05, "incorrect value for cf, expected 2497.55859375, is %f", msg->cf);
+    fail_unless(msg->sid.band == 0, "incorrect value for sid.band, expected 0, is %d", msg->sid.band);
+    fail_unless(msg->sid.constellation == 0, "incorrect value for sid.constellation, expected 0, is %d", msg->sid.constellation);
+    fail_unless(msg->sid.sat == 17, "incorrect value for sid.sat, expected 17, is %d", msg->sid.sat);
   }
   // Test successful parsing of a message
   {
@@ -321,20 +305,16 @@ START_TEST( test_auto_check_sbp_acquisition_10 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_acq_result_t* msg = ( msg_acq_result_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_acq_result_t* msg = ( msg_acq_result_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for cp, expected 522.0, is %d %f", (int)msg->cp, (float)msg->cp);
-    fail_unless(msg->cp == 522.0, errStr);
-    sprintf(errStr, "incorrect value for snr, expected 35.5241775513, is %d %f", (int)msg->snr, (float)msg->snr);
-    fail_unless(msg->snr == 35.5241775513, errStr);
-    sprintf(errStr, "incorrect value for cf, expected -499.511749268, is %d %f", (int)msg->cf, (float)msg->cf);
-    fail_unless(msg->cf == -499.511749268, errStr);
-    fail_unless(msg->sid.band == 0, "incorrect value for sid->band, expected 0");
-    fail_unless(msg->sid.constellation == 0, "incorrect value for sid->constellation, expected 0");
-    fail_unless(msg->sid.sat == 5, "incorrect value for sid->sat, expected 5");
-    free(errStr);
+    fail_unless((msg->cp*100 - 522.0*100) < 0.05, "incorrect value for cp, expected 522.0, is %f", msg->cp);
+    fail_unless((msg->snr*100 - 35.5241775513*100) < 0.05, "incorrect value for snr, expected 35.5241775513, is %f", msg->snr);
+    fail_unless((msg->cf*100 - -499.511749268*100) < 0.05, "incorrect value for cf, expected -499.511749268, is %f", msg->cf);
+    fail_unless(msg->sid.band == 0, "incorrect value for sid.band, expected 0, is %d", msg->sid.band);
+    fail_unless(msg->sid.constellation == 0, "incorrect value for sid.constellation, expected 0, is %d", msg->sid.constellation);
+    fail_unless(msg->sid.sat == 5, "incorrect value for sid.sat, expected 5, is %d", msg->sid.sat);
   }
 }
 END_TEST

@@ -121,14 +121,12 @@ START_TEST( test_auto_check_sbp_bootload_14 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_bootloader_handshake_resp_t* msg = ( msg_bootloader_handshake_resp_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_bootloader_handshake_resp_t* msg = ( msg_bootloader_handshake_resp_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(strcmp(msg->version, ((char []){(char)118,(char)49,(char)46,(char)50,(char)10})) == 0, "incorrect value for version");
-    sprintf(errStr, "incorrect value for flags, expected 0, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 0, errStr);
-    free(errStr);
+    fail_unless(strstr(msg->version, ((char []){(char)118,(char)49,(char)46,(char)50,(char)10,0})) != NULL, "incorrect value for msg->version, expected string '%s', is '%s'", ((char []){(char)118,(char)49,(char)46,(char)50,(char)10,0}), msg->version);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
   }
   // Test successful parsing of a message
   {
@@ -165,11 +163,14 @@ START_TEST( test_auto_check_sbp_bootload_14 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_bootloader_handshake_dep_a_t* msg = ( msg_bootloader_handshake_dep_a_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_bootloader_handshake_dep_a_t* msg = ( msg_bootloader_handshake_dep_a_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    free(errStr);
+    fail_unless(msg->handshake[0] == 118, "incorrect value for handshake[0], expected 118, is %d", msg->handshake[0]);
+    fail_unless(msg->handshake[1] == 49, "incorrect value for handshake[1], expected 49, is %d", msg->handshake[1]);
+    fail_unless(msg->handshake[2] == 46, "incorrect value for handshake[2], expected 46, is %d", msg->handshake[2]);
+    fail_unless(msg->handshake[3] == 50, "incorrect value for handshake[3], expected 50, is %d", msg->handshake[3]);
   }
 }
 END_TEST

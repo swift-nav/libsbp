@@ -121,16 +121,13 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_thread_state_t* msg = ( msg_thread_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_thread_state_t* msg = ( msg_thread_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for stack_free, expected 2452, is %d %f", (int)msg->stack_free, (float)msg->stack_free);
-    fail_unless(msg->stack_free == 2452, errStr);
-    sprintf(errStr, "incorrect value for cpu, expected 0, is %d %f", (int)msg->cpu, (float)msg->cpu);
-    fail_unless(msg->cpu == 0, errStr);
-    fail_unless(strcmp(msg->name, ((char []){(char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0})) == 0, "incorrect value for name");
-    free(errStr);
+    fail_unless(msg->stack_free == 2452, "incorrect value for stack_free, expected 2452, is %d", msg->stack_free);
+    fail_unless(msg->cpu == 0, "incorrect value for cpu, expected 0, is %d", msg->cpu);
+    fail_unless(strstr(msg->name, ((char []){(char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
   }
   // Test successful parsing of a message
   {
@@ -167,16 +164,13 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_thread_state_t* msg = ( msg_thread_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_thread_state_t* msg = ( msg_thread_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for stack_free, expected 36, is %d %f", (int)msg->stack_free, (float)msg->stack_free);
-    fail_unless(msg->stack_free == 36, errStr);
-    sprintf(errStr, "incorrect value for cpu, expected 484, is %d %f", (int)msg->cpu, (float)msg->cpu);
-    fail_unless(msg->cpu == 484, errStr);
-    fail_unless(strcmp(msg->name, ((char []){(char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0})) == 0, "incorrect value for name");
-    free(errStr);
+    fail_unless(msg->stack_free == 36, "incorrect value for stack_free, expected 36, is %d", msg->stack_free);
+    fail_unless(msg->cpu == 484, "incorrect value for cpu, expected 484, is %d", msg->cpu);
+    fail_unless(strstr(msg->name, ((char []){(char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
   }
   // Test successful parsing of a message
   {
@@ -213,16 +207,13 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_thread_state_t* msg = ( msg_thread_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_thread_state_t* msg = ( msg_thread_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for stack_free, expected 1884, is %d %f", (int)msg->stack_free, (float)msg->stack_free);
-    fail_unless(msg->stack_free == 1884, errStr);
-    sprintf(errStr, "incorrect value for cpu, expected 394, is %d %f", (int)msg->cpu, (float)msg->cpu);
-    fail_unless(msg->cpu == 394, errStr);
-    fail_unless(strcmp(msg->name, ((char []){(char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0})) == 0, "incorrect value for name");
-    free(errStr);
+    fail_unless(msg->stack_free == 1884, "incorrect value for stack_free, expected 1884, is %d", msg->stack_free);
+    fail_unless(msg->cpu == 394, "incorrect value for cpu, expected 394, is %d", msg->cpu);
+    fail_unless(strstr(msg->name, ((char []){(char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
   }
   // Test successful parsing of a message
   {
@@ -259,16 +250,13 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_thread_state_t* msg = ( msg_thread_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_thread_state_t* msg = ( msg_thread_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for stack_free, expected 3076, is %d %f", (int)msg->stack_free, (float)msg->stack_free);
-    fail_unless(msg->stack_free == 3076, errStr);
-    sprintf(errStr, "incorrect value for cpu, expected 1, is %d %f", (int)msg->cpu, (float)msg->cpu);
-    fail_unless(msg->cpu == 1, errStr);
-    fail_unless(strcmp(msg->name, ((char []){(char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0})) == 0, "incorrect value for name");
-    free(errStr);
+    fail_unless(msg->stack_free == 3076, "incorrect value for stack_free, expected 3076, is %d", msg->stack_free);
+    fail_unless(msg->cpu == 1, "incorrect value for cpu, expected 1, is %d", msg->cpu);
+    fail_unless(strstr(msg->name, ((char []){(char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
   }
   // Test successful parsing of a message
   {
@@ -305,16 +293,13 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_thread_state_t* msg = ( msg_thread_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_thread_state_t* msg = ( msg_thread_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for stack_free, expected 2428, is %d %f", (int)msg->stack_free, (float)msg->stack_free);
-    fail_unless(msg->stack_free == 2428, errStr);
-    sprintf(errStr, "incorrect value for cpu, expected 10, is %d %f", (int)msg->cpu, (float)msg->cpu);
-    fail_unless(msg->cpu == 10, errStr);
-    fail_unless(strcmp(msg->name, ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0})) == 0, "incorrect value for name");
-    free(errStr);
+    fail_unless(msg->stack_free == 2428, "incorrect value for stack_free, expected 2428, is %d", msg->stack_free);
+    fail_unless(msg->cpu == 10, "incorrect value for cpu, expected 10, is %d", msg->cpu);
+    fail_unless(strstr(msg->name, ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
   }
   // Test successful parsing of a message
   {
@@ -351,16 +336,13 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_thread_state_t* msg = ( msg_thread_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_thread_state_t* msg = ( msg_thread_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for stack_free, expected 2332, is %d %f", (int)msg->stack_free, (float)msg->stack_free);
-    fail_unless(msg->stack_free == 2332, errStr);
-    sprintf(errStr, "incorrect value for cpu, expected 0, is %d %f", (int)msg->cpu, (float)msg->cpu);
-    fail_unless(msg->cpu == 0, errStr);
-    fail_unless(strcmp(msg->name, ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)116,(char)114,(char)97,(char)99,(char)107,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0})) == 0, "incorrect value for name");
-    free(errStr);
+    fail_unless(msg->stack_free == 2332, "incorrect value for stack_free, expected 2332, is %d", msg->stack_free);
+    fail_unless(msg->cpu == 0, "incorrect value for cpu, expected 0, is %d", msg->cpu);
+    fail_unless(strstr(msg->name, ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)116,(char)114,(char)97,(char)99,(char)107,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)116,(char)114,(char)97,(char)99,(char)107,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
   }
   // Test successful parsing of a message
   {
@@ -397,33 +379,32 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_uart_state_t* msg = ( msg_uart_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_uart_state_t* msg = ( msg_uart_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->latency.current == -1, "incorrect value for latency->current, expected -1");
-    fail_unless(msg->latency.lmax == 0, "incorrect value for latency->lmax, expected 0");
-    fail_unless(msg->latency.avg == -1, "incorrect value for latency->avg, expected -1");
-    fail_unless(msg->latency.lmin == 0, "incorrect value for latency->lmin, expected 0");
-    fail_unless(msg->uart_b.rx_throughput == 0.0, "incorrect value for uart_b->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_b.crc_error_count == 0, "incorrect value for uart_b->crc_error_count, expected 0");
-    fail_unless(msg->uart_b.io_error_count == 0, "incorrect value for uart_b->io_error_count, expected 0");
-    fail_unless(msg->uart_b.rx_buffer_level == 0, "incorrect value for uart_b->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_b.tx_throughput == 0.0, "incorrect value for uart_b->tx_throughput, expected 0.0");
-    fail_unless(msg->uart_b.tx_buffer_level == 0, "incorrect value for uart_b->tx_buffer_level, expected 0");
-    fail_unless(msg->uart_a.rx_throughput == 0.0, "incorrect value for uart_a->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_a.crc_error_count == 0, "incorrect value for uart_a->crc_error_count, expected 0");
-    fail_unless(msg->uart_a.io_error_count == 0, "incorrect value for uart_a->io_error_count, expected 0");
-    fail_unless(msg->uart_a.rx_buffer_level == 0, "incorrect value for uart_a->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_a.tx_throughput == 0.0, "incorrect value for uart_a->tx_throughput, expected 0.0");
-    fail_unless(msg->uart_a.tx_buffer_level == 0, "incorrect value for uart_a->tx_buffer_level, expected 0");
-    fail_unless(msg->uart_ftdi.rx_throughput == 0.0, "incorrect value for uart_ftdi->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_ftdi.crc_error_count == 0, "incorrect value for uart_ftdi->crc_error_count, expected 0");
-    fail_unless(msg->uart_ftdi.io_error_count == 0, "incorrect value for uart_ftdi->io_error_count, expected 0");
-    fail_unless(msg->uart_ftdi.rx_buffer_level == 0, "incorrect value for uart_ftdi->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_ftdi.tx_throughput == 11.6000003815, "incorrect value for uart_ftdi->tx_throughput, expected 11.6000003815");
-    fail_unless(msg->uart_ftdi.tx_buffer_level == 15, "incorrect value for uart_ftdi->tx_buffer_level, expected 15");
-    free(errStr);
+    fail_unless(msg->latency.current == -1, "incorrect value for latency.current, expected -1, is %d", msg->latency.current);
+    fail_unless(msg->latency.lmax == 0, "incorrect value for latency.lmax, expected 0, is %d", msg->latency.lmax);
+    fail_unless(msg->latency.avg == -1, "incorrect value for latency.avg, expected -1, is %d", msg->latency.avg);
+    fail_unless(msg->latency.lmin == 0, "incorrect value for latency.lmin, expected 0, is %d", msg->latency.lmin);
+    fail_unless((msg->uart_b.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_b.rx_throughput, expected 0.0, is %f", msg->uart_b.rx_throughput);
+    fail_unless(msg->uart_b.crc_error_count == 0, "incorrect value for uart_b.crc_error_count, expected 0, is %d", msg->uart_b.crc_error_count);
+    fail_unless(msg->uart_b.io_error_count == 0, "incorrect value for uart_b.io_error_count, expected 0, is %d", msg->uart_b.io_error_count);
+    fail_unless(msg->uart_b.rx_buffer_level == 0, "incorrect value for uart_b.rx_buffer_level, expected 0, is %d", msg->uart_b.rx_buffer_level);
+    fail_unless((msg->uart_b.tx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_b.tx_throughput, expected 0.0, is %f", msg->uart_b.tx_throughput);
+    fail_unless(msg->uart_b.tx_buffer_level == 0, "incorrect value for uart_b.tx_buffer_level, expected 0, is %d", msg->uart_b.tx_buffer_level);
+    fail_unless((msg->uart_a.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_a.rx_throughput, expected 0.0, is %f", msg->uart_a.rx_throughput);
+    fail_unless(msg->uart_a.crc_error_count == 0, "incorrect value for uart_a.crc_error_count, expected 0, is %d", msg->uart_a.crc_error_count);
+    fail_unless(msg->uart_a.io_error_count == 0, "incorrect value for uart_a.io_error_count, expected 0, is %d", msg->uart_a.io_error_count);
+    fail_unless(msg->uart_a.rx_buffer_level == 0, "incorrect value for uart_a.rx_buffer_level, expected 0, is %d", msg->uart_a.rx_buffer_level);
+    fail_unless((msg->uart_a.tx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_a.tx_throughput, expected 0.0, is %f", msg->uart_a.tx_throughput);
+    fail_unless(msg->uart_a.tx_buffer_level == 0, "incorrect value for uart_a.tx_buffer_level, expected 0, is %d", msg->uart_a.tx_buffer_level);
+    fail_unless((msg->uart_ftdi.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is %f", msg->uart_ftdi.rx_throughput);
+    fail_unless(msg->uart_ftdi.crc_error_count == 0, "incorrect value for uart_ftdi.crc_error_count, expected 0, is %d", msg->uart_ftdi.crc_error_count);
+    fail_unless(msg->uart_ftdi.io_error_count == 0, "incorrect value for uart_ftdi.io_error_count, expected 0, is %d", msg->uart_ftdi.io_error_count);
+    fail_unless(msg->uart_ftdi.rx_buffer_level == 0, "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is %d", msg->uart_ftdi.rx_buffer_level);
+    fail_unless((msg->uart_ftdi.tx_throughput*100 - 11.6000003815*100) < 0.05, "incorrect value for uart_ftdi.tx_throughput, expected 11.6000003815, is %f", msg->uart_ftdi.tx_throughput);
+    fail_unless(msg->uart_ftdi.tx_buffer_level == 15, "incorrect value for uart_ftdi.tx_buffer_level, expected 15, is %d", msg->uart_ftdi.tx_buffer_level);
   }
   // Test successful parsing of a message
   {
@@ -460,33 +441,32 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_uart_state_t* msg = ( msg_uart_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_uart_state_t* msg = ( msg_uart_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->latency.current == -1, "incorrect value for latency->current, expected -1");
-    fail_unless(msg->latency.lmax == 0, "incorrect value for latency->lmax, expected 0");
-    fail_unless(msg->latency.avg == -1, "incorrect value for latency->avg, expected -1");
-    fail_unless(msg->latency.lmin == 0, "incorrect value for latency->lmin, expected 0");
-    fail_unless(msg->uart_b.rx_throughput == 0.0, "incorrect value for uart_b->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_b.crc_error_count == 0, "incorrect value for uart_b->crc_error_count, expected 0");
-    fail_unless(msg->uart_b.io_error_count == 0, "incorrect value for uart_b->io_error_count, expected 0");
-    fail_unless(msg->uart_b.rx_buffer_level == 0, "incorrect value for uart_b->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_b.tx_throughput == 0.0, "incorrect value for uart_b->tx_throughput, expected 0.0");
-    fail_unless(msg->uart_b.tx_buffer_level == 0, "incorrect value for uart_b->tx_buffer_level, expected 0");
-    fail_unless(msg->uart_a.rx_throughput == 0.0, "incorrect value for uart_a->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_a.crc_error_count == 0, "incorrect value for uart_a->crc_error_count, expected 0");
-    fail_unless(msg->uart_a.io_error_count == 0, "incorrect value for uart_a->io_error_count, expected 0");
-    fail_unless(msg->uart_a.rx_buffer_level == 0, "incorrect value for uart_a->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_a.tx_throughput == 0.0, "incorrect value for uart_a->tx_throughput, expected 0.0");
-    fail_unless(msg->uart_a.tx_buffer_level == 0, "incorrect value for uart_a->tx_buffer_level, expected 0");
-    fail_unless(msg->uart_ftdi.rx_throughput == 0.0, "incorrect value for uart_ftdi->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_ftdi.crc_error_count == 0, "incorrect value for uart_ftdi->crc_error_count, expected 0");
-    fail_unless(msg->uart_ftdi.io_error_count == 0, "incorrect value for uart_ftdi->io_error_count, expected 0");
-    fail_unless(msg->uart_ftdi.rx_buffer_level == 0, "incorrect value for uart_ftdi->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_ftdi.tx_throughput == 0.0659999996424, "incorrect value for uart_ftdi->tx_throughput, expected 0.0659999996424");
-    fail_unless(msg->uart_ftdi.tx_buffer_level == 0, "incorrect value for uart_ftdi->tx_buffer_level, expected 0");
-    free(errStr);
+    fail_unless(msg->latency.current == -1, "incorrect value for latency.current, expected -1, is %d", msg->latency.current);
+    fail_unless(msg->latency.lmax == 0, "incorrect value for latency.lmax, expected 0, is %d", msg->latency.lmax);
+    fail_unless(msg->latency.avg == -1, "incorrect value for latency.avg, expected -1, is %d", msg->latency.avg);
+    fail_unless(msg->latency.lmin == 0, "incorrect value for latency.lmin, expected 0, is %d", msg->latency.lmin);
+    fail_unless((msg->uart_b.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_b.rx_throughput, expected 0.0, is %f", msg->uart_b.rx_throughput);
+    fail_unless(msg->uart_b.crc_error_count == 0, "incorrect value for uart_b.crc_error_count, expected 0, is %d", msg->uart_b.crc_error_count);
+    fail_unless(msg->uart_b.io_error_count == 0, "incorrect value for uart_b.io_error_count, expected 0, is %d", msg->uart_b.io_error_count);
+    fail_unless(msg->uart_b.rx_buffer_level == 0, "incorrect value for uart_b.rx_buffer_level, expected 0, is %d", msg->uart_b.rx_buffer_level);
+    fail_unless((msg->uart_b.tx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_b.tx_throughput, expected 0.0, is %f", msg->uart_b.tx_throughput);
+    fail_unless(msg->uart_b.tx_buffer_level == 0, "incorrect value for uart_b.tx_buffer_level, expected 0, is %d", msg->uart_b.tx_buffer_level);
+    fail_unless((msg->uart_a.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_a.rx_throughput, expected 0.0, is %f", msg->uart_a.rx_throughput);
+    fail_unless(msg->uart_a.crc_error_count == 0, "incorrect value for uart_a.crc_error_count, expected 0, is %d", msg->uart_a.crc_error_count);
+    fail_unless(msg->uart_a.io_error_count == 0, "incorrect value for uart_a.io_error_count, expected 0, is %d", msg->uart_a.io_error_count);
+    fail_unless(msg->uart_a.rx_buffer_level == 0, "incorrect value for uart_a.rx_buffer_level, expected 0, is %d", msg->uart_a.rx_buffer_level);
+    fail_unless((msg->uart_a.tx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_a.tx_throughput, expected 0.0, is %f", msg->uart_a.tx_throughput);
+    fail_unless(msg->uart_a.tx_buffer_level == 0, "incorrect value for uart_a.tx_buffer_level, expected 0, is %d", msg->uart_a.tx_buffer_level);
+    fail_unless((msg->uart_ftdi.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is %f", msg->uart_ftdi.rx_throughput);
+    fail_unless(msg->uart_ftdi.crc_error_count == 0, "incorrect value for uart_ftdi.crc_error_count, expected 0, is %d", msg->uart_ftdi.crc_error_count);
+    fail_unless(msg->uart_ftdi.io_error_count == 0, "incorrect value for uart_ftdi.io_error_count, expected 0, is %d", msg->uart_ftdi.io_error_count);
+    fail_unless(msg->uart_ftdi.rx_buffer_level == 0, "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is %d", msg->uart_ftdi.rx_buffer_level);
+    fail_unless((msg->uart_ftdi.tx_throughput*100 - 0.0659999996424*100) < 0.05, "incorrect value for uart_ftdi.tx_throughput, expected 0.0659999996424, is %f", msg->uart_ftdi.tx_throughput);
+    fail_unless(msg->uart_ftdi.tx_buffer_level == 0, "incorrect value for uart_ftdi.tx_buffer_level, expected 0, is %d", msg->uart_ftdi.tx_buffer_level);
   }
   // Test successful parsing of a message
   {
@@ -523,33 +503,32 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_uart_state_t* msg = ( msg_uart_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_uart_state_t* msg = ( msg_uart_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->latency.current == -1, "incorrect value for latency->current, expected -1");
-    fail_unless(msg->latency.lmax == 0, "incorrect value for latency->lmax, expected 0");
-    fail_unless(msg->latency.avg == -1, "incorrect value for latency->avg, expected -1");
-    fail_unless(msg->latency.lmin == 0, "incorrect value for latency->lmin, expected 0");
-    fail_unless(msg->uart_b.rx_throughput == 0.0, "incorrect value for uart_b->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_b.crc_error_count == 0, "incorrect value for uart_b->crc_error_count, expected 0");
-    fail_unless(msg->uart_b.io_error_count == 0, "incorrect value for uart_b->io_error_count, expected 0");
-    fail_unless(msg->uart_b.rx_buffer_level == 0, "incorrect value for uart_b->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_b.tx_throughput == 0.0, "incorrect value for uart_b->tx_throughput, expected 0.0");
-    fail_unless(msg->uart_b.tx_buffer_level == 0, "incorrect value for uart_b->tx_buffer_level, expected 0");
-    fail_unless(msg->uart_a.rx_throughput == 0.0, "incorrect value for uart_a->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_a.crc_error_count == 0, "incorrect value for uart_a->crc_error_count, expected 0");
-    fail_unless(msg->uart_a.io_error_count == 0, "incorrect value for uart_a->io_error_count, expected 0");
-    fail_unless(msg->uart_a.rx_buffer_level == 0, "incorrect value for uart_a->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_a.tx_throughput == 0.0, "incorrect value for uart_a->tx_throughput, expected 0.0");
-    fail_unless(msg->uart_a.tx_buffer_level == 0, "incorrect value for uart_a->tx_buffer_level, expected 0");
-    fail_unless(msg->uart_ftdi.rx_throughput == 0.0, "incorrect value for uart_ftdi->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_ftdi.crc_error_count == 0, "incorrect value for uart_ftdi->crc_error_count, expected 0");
-    fail_unless(msg->uart_ftdi.io_error_count == 0, "incorrect value for uart_ftdi->io_error_count, expected 0");
-    fail_unless(msg->uart_ftdi.rx_buffer_level == 0, "incorrect value for uart_ftdi->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_ftdi.tx_throughput == 0.138999998569, "incorrect value for uart_ftdi->tx_throughput, expected 0.138999998569");
-    fail_unless(msg->uart_ftdi.tx_buffer_level == 10, "incorrect value for uart_ftdi->tx_buffer_level, expected 10");
-    free(errStr);
+    fail_unless(msg->latency.current == -1, "incorrect value for latency.current, expected -1, is %d", msg->latency.current);
+    fail_unless(msg->latency.lmax == 0, "incorrect value for latency.lmax, expected 0, is %d", msg->latency.lmax);
+    fail_unless(msg->latency.avg == -1, "incorrect value for latency.avg, expected -1, is %d", msg->latency.avg);
+    fail_unless(msg->latency.lmin == 0, "incorrect value for latency.lmin, expected 0, is %d", msg->latency.lmin);
+    fail_unless((msg->uart_b.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_b.rx_throughput, expected 0.0, is %f", msg->uart_b.rx_throughput);
+    fail_unless(msg->uart_b.crc_error_count == 0, "incorrect value for uart_b.crc_error_count, expected 0, is %d", msg->uart_b.crc_error_count);
+    fail_unless(msg->uart_b.io_error_count == 0, "incorrect value for uart_b.io_error_count, expected 0, is %d", msg->uart_b.io_error_count);
+    fail_unless(msg->uart_b.rx_buffer_level == 0, "incorrect value for uart_b.rx_buffer_level, expected 0, is %d", msg->uart_b.rx_buffer_level);
+    fail_unless((msg->uart_b.tx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_b.tx_throughput, expected 0.0, is %f", msg->uart_b.tx_throughput);
+    fail_unless(msg->uart_b.tx_buffer_level == 0, "incorrect value for uart_b.tx_buffer_level, expected 0, is %d", msg->uart_b.tx_buffer_level);
+    fail_unless((msg->uart_a.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_a.rx_throughput, expected 0.0, is %f", msg->uart_a.rx_throughput);
+    fail_unless(msg->uart_a.crc_error_count == 0, "incorrect value for uart_a.crc_error_count, expected 0, is %d", msg->uart_a.crc_error_count);
+    fail_unless(msg->uart_a.io_error_count == 0, "incorrect value for uart_a.io_error_count, expected 0, is %d", msg->uart_a.io_error_count);
+    fail_unless(msg->uart_a.rx_buffer_level == 0, "incorrect value for uart_a.rx_buffer_level, expected 0, is %d", msg->uart_a.rx_buffer_level);
+    fail_unless((msg->uart_a.tx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_a.tx_throughput, expected 0.0, is %f", msg->uart_a.tx_throughput);
+    fail_unless(msg->uart_a.tx_buffer_level == 0, "incorrect value for uart_a.tx_buffer_level, expected 0, is %d", msg->uart_a.tx_buffer_level);
+    fail_unless((msg->uart_ftdi.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is %f", msg->uart_ftdi.rx_throughput);
+    fail_unless(msg->uart_ftdi.crc_error_count == 0, "incorrect value for uart_ftdi.crc_error_count, expected 0, is %d", msg->uart_ftdi.crc_error_count);
+    fail_unless(msg->uart_ftdi.io_error_count == 0, "incorrect value for uart_ftdi.io_error_count, expected 0, is %d", msg->uart_ftdi.io_error_count);
+    fail_unless(msg->uart_ftdi.rx_buffer_level == 0, "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is %d", msg->uart_ftdi.rx_buffer_level);
+    fail_unless((msg->uart_ftdi.tx_throughput*100 - 0.138999998569*100) < 0.05, "incorrect value for uart_ftdi.tx_throughput, expected 0.138999998569, is %f", msg->uart_ftdi.tx_throughput);
+    fail_unless(msg->uart_ftdi.tx_buffer_level == 10, "incorrect value for uart_ftdi.tx_buffer_level, expected 10, is %d", msg->uart_ftdi.tx_buffer_level);
   }
   // Test successful parsing of a message
   {
@@ -586,33 +565,32 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_uart_state_t* msg = ( msg_uart_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_uart_state_t* msg = ( msg_uart_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->latency.current == -1, "incorrect value for latency->current, expected -1");
-    fail_unless(msg->latency.lmax == 0, "incorrect value for latency->lmax, expected 0");
-    fail_unless(msg->latency.avg == -1, "incorrect value for latency->avg, expected -1");
-    fail_unless(msg->latency.lmin == 0, "incorrect value for latency->lmin, expected 0");
-    fail_unless(msg->uart_b.rx_throughput == 0.0, "incorrect value for uart_b->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_b.crc_error_count == 0, "incorrect value for uart_b->crc_error_count, expected 0");
-    fail_unless(msg->uart_b.io_error_count == 0, "incorrect value for uart_b->io_error_count, expected 0");
-    fail_unless(msg->uart_b.rx_buffer_level == 0, "incorrect value for uart_b->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_b.tx_throughput == 0.0, "incorrect value for uart_b->tx_throughput, expected 0.0");
-    fail_unless(msg->uart_b.tx_buffer_level == 0, "incorrect value for uart_b->tx_buffer_level, expected 0");
-    fail_unless(msg->uart_a.rx_throughput == 0.0, "incorrect value for uart_a->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_a.crc_error_count == 0, "incorrect value for uart_a->crc_error_count, expected 0");
-    fail_unless(msg->uart_a.io_error_count == 0, "incorrect value for uart_a->io_error_count, expected 0");
-    fail_unless(msg->uart_a.rx_buffer_level == 0, "incorrect value for uart_a->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_a.tx_throughput == 0.0, "incorrect value for uart_a->tx_throughput, expected 0.0");
-    fail_unless(msg->uart_a.tx_buffer_level == 0, "incorrect value for uart_a->tx_buffer_level, expected 0");
-    fail_unless(msg->uart_ftdi.rx_throughput == 0.0, "incorrect value for uart_ftdi->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_ftdi.crc_error_count == 0, "incorrect value for uart_ftdi->crc_error_count, expected 0");
-    fail_unless(msg->uart_ftdi.io_error_count == 0, "incorrect value for uart_ftdi->io_error_count, expected 0");
-    fail_unless(msg->uart_ftdi.rx_buffer_level == 0, "incorrect value for uart_ftdi->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_ftdi.tx_throughput == 0.0659999996424, "incorrect value for uart_ftdi->tx_throughput, expected 0.0659999996424");
-    fail_unless(msg->uart_ftdi.tx_buffer_level == 0, "incorrect value for uart_ftdi->tx_buffer_level, expected 0");
-    free(errStr);
+    fail_unless(msg->latency.current == -1, "incorrect value for latency.current, expected -1, is %d", msg->latency.current);
+    fail_unless(msg->latency.lmax == 0, "incorrect value for latency.lmax, expected 0, is %d", msg->latency.lmax);
+    fail_unless(msg->latency.avg == -1, "incorrect value for latency.avg, expected -1, is %d", msg->latency.avg);
+    fail_unless(msg->latency.lmin == 0, "incorrect value for latency.lmin, expected 0, is %d", msg->latency.lmin);
+    fail_unless((msg->uart_b.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_b.rx_throughput, expected 0.0, is %f", msg->uart_b.rx_throughput);
+    fail_unless(msg->uart_b.crc_error_count == 0, "incorrect value for uart_b.crc_error_count, expected 0, is %d", msg->uart_b.crc_error_count);
+    fail_unless(msg->uart_b.io_error_count == 0, "incorrect value for uart_b.io_error_count, expected 0, is %d", msg->uart_b.io_error_count);
+    fail_unless(msg->uart_b.rx_buffer_level == 0, "incorrect value for uart_b.rx_buffer_level, expected 0, is %d", msg->uart_b.rx_buffer_level);
+    fail_unless((msg->uart_b.tx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_b.tx_throughput, expected 0.0, is %f", msg->uart_b.tx_throughput);
+    fail_unless(msg->uart_b.tx_buffer_level == 0, "incorrect value for uart_b.tx_buffer_level, expected 0, is %d", msg->uart_b.tx_buffer_level);
+    fail_unless((msg->uart_a.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_a.rx_throughput, expected 0.0, is %f", msg->uart_a.rx_throughput);
+    fail_unless(msg->uart_a.crc_error_count == 0, "incorrect value for uart_a.crc_error_count, expected 0, is %d", msg->uart_a.crc_error_count);
+    fail_unless(msg->uart_a.io_error_count == 0, "incorrect value for uart_a.io_error_count, expected 0, is %d", msg->uart_a.io_error_count);
+    fail_unless(msg->uart_a.rx_buffer_level == 0, "incorrect value for uart_a.rx_buffer_level, expected 0, is %d", msg->uart_a.rx_buffer_level);
+    fail_unless((msg->uart_a.tx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_a.tx_throughput, expected 0.0, is %f", msg->uart_a.tx_throughput);
+    fail_unless(msg->uart_a.tx_buffer_level == 0, "incorrect value for uart_a.tx_buffer_level, expected 0, is %d", msg->uart_a.tx_buffer_level);
+    fail_unless((msg->uart_ftdi.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is %f", msg->uart_ftdi.rx_throughput);
+    fail_unless(msg->uart_ftdi.crc_error_count == 0, "incorrect value for uart_ftdi.crc_error_count, expected 0, is %d", msg->uart_ftdi.crc_error_count);
+    fail_unless(msg->uart_ftdi.io_error_count == 0, "incorrect value for uart_ftdi.io_error_count, expected 0, is %d", msg->uart_ftdi.io_error_count);
+    fail_unless(msg->uart_ftdi.rx_buffer_level == 0, "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is %d", msg->uart_ftdi.rx_buffer_level);
+    fail_unless((msg->uart_ftdi.tx_throughput*100 - 0.0659999996424*100) < 0.05, "incorrect value for uart_ftdi.tx_throughput, expected 0.0659999996424, is %f", msg->uart_ftdi.tx_throughput);
+    fail_unless(msg->uart_ftdi.tx_buffer_level == 0, "incorrect value for uart_ftdi.tx_buffer_level, expected 0, is %d", msg->uart_ftdi.tx_buffer_level);
   }
   // Test successful parsing of a message
   {
@@ -649,33 +627,32 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_uart_state_t* msg = ( msg_uart_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_uart_state_t* msg = ( msg_uart_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->latency.current == -1, "incorrect value for latency->current, expected -1");
-    fail_unless(msg->latency.lmax == 0, "incorrect value for latency->lmax, expected 0");
-    fail_unless(msg->latency.avg == -1, "incorrect value for latency->avg, expected -1");
-    fail_unless(msg->latency.lmin == 0, "incorrect value for latency->lmin, expected 0");
-    fail_unless(msg->uart_b.rx_throughput == 0.0, "incorrect value for uart_b->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_b.crc_error_count == 0, "incorrect value for uart_b->crc_error_count, expected 0");
-    fail_unless(msg->uart_b.io_error_count == 0, "incorrect value for uart_b->io_error_count, expected 0");
-    fail_unless(msg->uart_b.rx_buffer_level == 0, "incorrect value for uart_b->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_b.tx_throughput == 0.098360657692, "incorrect value for uart_b->tx_throughput, expected 0.098360657692");
-    fail_unless(msg->uart_b.tx_buffer_level == 2, "incorrect value for uart_b->tx_buffer_level, expected 2");
-    fail_unless(msg->uart_a.rx_throughput == 0.00819672085345, "incorrect value for uart_a->rx_throughput, expected 0.00819672085345");
-    fail_unless(msg->uart_a.crc_error_count == 0, "incorrect value for uart_a->crc_error_count, expected 0");
-    fail_unless(msg->uart_a.io_error_count == 0, "incorrect value for uart_a->io_error_count, expected 0");
-    fail_unless(msg->uart_a.rx_buffer_level == 0, "incorrect value for uart_a->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_a.tx_throughput == 0.0, "incorrect value for uart_a->tx_throughput, expected 0.0");
-    fail_unless(msg->uart_a.tx_buffer_level == 0, "incorrect value for uart_a->tx_buffer_level, expected 0");
-    fail_unless(msg->uart_ftdi.rx_throughput == 0.0, "incorrect value for uart_ftdi->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_ftdi.crc_error_count == 0, "incorrect value for uart_ftdi->crc_error_count, expected 0");
-    fail_unless(msg->uart_ftdi.io_error_count == 0, "incorrect value for uart_ftdi->io_error_count, expected 0");
-    fail_unless(msg->uart_ftdi.rx_buffer_level == 0, "incorrect value for uart_ftdi->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_ftdi.tx_throughput == 0.493999987841, "incorrect value for uart_ftdi->tx_throughput, expected 0.493999987841");
-    fail_unless(msg->uart_ftdi.tx_buffer_level == 38, "incorrect value for uart_ftdi->tx_buffer_level, expected 38");
-    free(errStr);
+    fail_unless(msg->latency.current == -1, "incorrect value for latency.current, expected -1, is %d", msg->latency.current);
+    fail_unless(msg->latency.lmax == 0, "incorrect value for latency.lmax, expected 0, is %d", msg->latency.lmax);
+    fail_unless(msg->latency.avg == -1, "incorrect value for latency.avg, expected -1, is %d", msg->latency.avg);
+    fail_unless(msg->latency.lmin == 0, "incorrect value for latency.lmin, expected 0, is %d", msg->latency.lmin);
+    fail_unless((msg->uart_b.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_b.rx_throughput, expected 0.0, is %f", msg->uart_b.rx_throughput);
+    fail_unless(msg->uart_b.crc_error_count == 0, "incorrect value for uart_b.crc_error_count, expected 0, is %d", msg->uart_b.crc_error_count);
+    fail_unless(msg->uart_b.io_error_count == 0, "incorrect value for uart_b.io_error_count, expected 0, is %d", msg->uart_b.io_error_count);
+    fail_unless(msg->uart_b.rx_buffer_level == 0, "incorrect value for uart_b.rx_buffer_level, expected 0, is %d", msg->uart_b.rx_buffer_level);
+    fail_unless((msg->uart_b.tx_throughput*100 - 0.098360657692*100) < 0.05, "incorrect value for uart_b.tx_throughput, expected 0.098360657692, is %f", msg->uart_b.tx_throughput);
+    fail_unless(msg->uart_b.tx_buffer_level == 2, "incorrect value for uart_b.tx_buffer_level, expected 2, is %d", msg->uart_b.tx_buffer_level);
+    fail_unless((msg->uart_a.rx_throughput*100 - 0.00819672085345*100) < 0.05, "incorrect value for uart_a.rx_throughput, expected 0.00819672085345, is %f", msg->uart_a.rx_throughput);
+    fail_unless(msg->uart_a.crc_error_count == 0, "incorrect value for uart_a.crc_error_count, expected 0, is %d", msg->uart_a.crc_error_count);
+    fail_unless(msg->uart_a.io_error_count == 0, "incorrect value for uart_a.io_error_count, expected 0, is %d", msg->uart_a.io_error_count);
+    fail_unless(msg->uart_a.rx_buffer_level == 0, "incorrect value for uart_a.rx_buffer_level, expected 0, is %d", msg->uart_a.rx_buffer_level);
+    fail_unless((msg->uart_a.tx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_a.tx_throughput, expected 0.0, is %f", msg->uart_a.tx_throughput);
+    fail_unless(msg->uart_a.tx_buffer_level == 0, "incorrect value for uart_a.tx_buffer_level, expected 0, is %d", msg->uart_a.tx_buffer_level);
+    fail_unless((msg->uart_ftdi.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is %f", msg->uart_ftdi.rx_throughput);
+    fail_unless(msg->uart_ftdi.crc_error_count == 0, "incorrect value for uart_ftdi.crc_error_count, expected 0, is %d", msg->uart_ftdi.crc_error_count);
+    fail_unless(msg->uart_ftdi.io_error_count == 0, "incorrect value for uart_ftdi.io_error_count, expected 0, is %d", msg->uart_ftdi.io_error_count);
+    fail_unless(msg->uart_ftdi.rx_buffer_level == 0, "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is %d", msg->uart_ftdi.rx_buffer_level);
+    fail_unless((msg->uart_ftdi.tx_throughput*100 - 0.493999987841*100) < 0.05, "incorrect value for uart_ftdi.tx_throughput, expected 0.493999987841, is %f", msg->uart_ftdi.tx_throughput);
+    fail_unless(msg->uart_ftdi.tx_buffer_level == 38, "incorrect value for uart_ftdi.tx_buffer_level, expected 38, is %d", msg->uart_ftdi.tx_buffer_level);
   }
   // Test successful parsing of a message
   {
@@ -712,33 +689,32 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_uart_state_t* msg = ( msg_uart_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_uart_state_t* msg = ( msg_uart_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->latency.current == -1, "incorrect value for latency->current, expected -1");
-    fail_unless(msg->latency.lmax == 0, "incorrect value for latency->lmax, expected 0");
-    fail_unless(msg->latency.avg == -1, "incorrect value for latency->avg, expected -1");
-    fail_unless(msg->latency.lmin == 0, "incorrect value for latency->lmin, expected 0");
-    fail_unless(msg->uart_b.rx_throughput == 0.0, "incorrect value for uart_b->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_b.crc_error_count == 0, "incorrect value for uart_b->crc_error_count, expected 0");
-    fail_unless(msg->uart_b.io_error_count == 0, "incorrect value for uart_b->io_error_count, expected 0");
-    fail_unless(msg->uart_b.rx_buffer_level == 0, "incorrect value for uart_b->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_b.tx_throughput == 0.0120000001043, "incorrect value for uart_b->tx_throughput, expected 0.0120000001043");
-    fail_unless(msg->uart_b.tx_buffer_level == 2, "incorrect value for uart_b->tx_buffer_level, expected 2");
-    fail_unless(msg->uart_a.rx_throughput == 0.0, "incorrect value for uart_a->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_a.crc_error_count == 0, "incorrect value for uart_a->crc_error_count, expected 0");
-    fail_unless(msg->uart_a.io_error_count == 0, "incorrect value for uart_a->io_error_count, expected 0");
-    fail_unless(msg->uart_a.rx_buffer_level == 0, "incorrect value for uart_a->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_a.tx_throughput == 0.0120000001043, "incorrect value for uart_a->tx_throughput, expected 0.0120000001043");
-    fail_unless(msg->uart_a.tx_buffer_level == 2, "incorrect value for uart_a->tx_buffer_level, expected 2");
-    fail_unless(msg->uart_ftdi.rx_throughput == 0.0, "incorrect value for uart_ftdi->rx_throughput, expected 0.0");
-    fail_unless(msg->uart_ftdi.crc_error_count == 0, "incorrect value for uart_ftdi->crc_error_count, expected 0");
-    fail_unless(msg->uart_ftdi.io_error_count == 0, "incorrect value for uart_ftdi->io_error_count, expected 0");
-    fail_unless(msg->uart_ftdi.rx_buffer_level == 0, "incorrect value for uart_ftdi->rx_buffer_level, expected 0");
-    fail_unless(msg->uart_ftdi.tx_throughput == 1.31500005722, "incorrect value for uart_ftdi->tx_throughput, expected 1.31500005722");
-    fail_unless(msg->uart_ftdi.tx_buffer_level == 50, "incorrect value for uart_ftdi->tx_buffer_level, expected 50");
-    free(errStr);
+    fail_unless(msg->latency.current == -1, "incorrect value for latency.current, expected -1, is %d", msg->latency.current);
+    fail_unless(msg->latency.lmax == 0, "incorrect value for latency.lmax, expected 0, is %d", msg->latency.lmax);
+    fail_unless(msg->latency.avg == -1, "incorrect value for latency.avg, expected -1, is %d", msg->latency.avg);
+    fail_unless(msg->latency.lmin == 0, "incorrect value for latency.lmin, expected 0, is %d", msg->latency.lmin);
+    fail_unless((msg->uart_b.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_b.rx_throughput, expected 0.0, is %f", msg->uart_b.rx_throughput);
+    fail_unless(msg->uart_b.crc_error_count == 0, "incorrect value for uart_b.crc_error_count, expected 0, is %d", msg->uart_b.crc_error_count);
+    fail_unless(msg->uart_b.io_error_count == 0, "incorrect value for uart_b.io_error_count, expected 0, is %d", msg->uart_b.io_error_count);
+    fail_unless(msg->uart_b.rx_buffer_level == 0, "incorrect value for uart_b.rx_buffer_level, expected 0, is %d", msg->uart_b.rx_buffer_level);
+    fail_unless((msg->uart_b.tx_throughput*100 - 0.0120000001043*100) < 0.05, "incorrect value for uart_b.tx_throughput, expected 0.0120000001043, is %f", msg->uart_b.tx_throughput);
+    fail_unless(msg->uart_b.tx_buffer_level == 2, "incorrect value for uart_b.tx_buffer_level, expected 2, is %d", msg->uart_b.tx_buffer_level);
+    fail_unless((msg->uart_a.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_a.rx_throughput, expected 0.0, is %f", msg->uart_a.rx_throughput);
+    fail_unless(msg->uart_a.crc_error_count == 0, "incorrect value for uart_a.crc_error_count, expected 0, is %d", msg->uart_a.crc_error_count);
+    fail_unless(msg->uart_a.io_error_count == 0, "incorrect value for uart_a.io_error_count, expected 0, is %d", msg->uart_a.io_error_count);
+    fail_unless(msg->uart_a.rx_buffer_level == 0, "incorrect value for uart_a.rx_buffer_level, expected 0, is %d", msg->uart_a.rx_buffer_level);
+    fail_unless((msg->uart_a.tx_throughput*100 - 0.0120000001043*100) < 0.05, "incorrect value for uart_a.tx_throughput, expected 0.0120000001043, is %f", msg->uart_a.tx_throughput);
+    fail_unless(msg->uart_a.tx_buffer_level == 2, "incorrect value for uart_a.tx_buffer_level, expected 2, is %d", msg->uart_a.tx_buffer_level);
+    fail_unless((msg->uart_ftdi.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is %f", msg->uart_ftdi.rx_throughput);
+    fail_unless(msg->uart_ftdi.crc_error_count == 0, "incorrect value for uart_ftdi.crc_error_count, expected 0, is %d", msg->uart_ftdi.crc_error_count);
+    fail_unless(msg->uart_ftdi.io_error_count == 0, "incorrect value for uart_ftdi.io_error_count, expected 0, is %d", msg->uart_ftdi.io_error_count);
+    fail_unless(msg->uart_ftdi.rx_buffer_level == 0, "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is %d", msg->uart_ftdi.rx_buffer_level);
+    fail_unless((msg->uart_ftdi.tx_throughput*100 - 1.31500005722*100) < 0.05, "incorrect value for uart_ftdi.tx_throughput, expected 1.31500005722, is %f", msg->uart_ftdi.tx_throughput);
+    fail_unless(msg->uart_ftdi.tx_buffer_level == 50, "incorrect value for uart_ftdi.tx_buffer_level, expected 50, is %d", msg->uart_ftdi.tx_buffer_level);
   }
   // Test successful parsing of a message
   {
@@ -775,13 +751,11 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_iar_state_t* msg = ( msg_iar_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_iar_state_t* msg = ( msg_iar_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for num_hyps, expected 0, is %d %f", (int)msg->num_hyps, (float)msg->num_hyps);
-    fail_unless(msg->num_hyps == 0, errStr);
-    free(errStr);
+    fail_unless(msg->num_hyps == 0, "incorrect value for num_hyps, expected 0, is %d", msg->num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -818,13 +792,11 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_iar_state_t* msg = ( msg_iar_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_iar_state_t* msg = ( msg_iar_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for num_hyps, expected 1, is %d %f", (int)msg->num_hyps, (float)msg->num_hyps);
-    fail_unless(msg->num_hyps == 1, errStr);
-    free(errStr);
+    fail_unless(msg->num_hyps == 1, "incorrect value for num_hyps, expected 1, is %d", msg->num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -861,13 +833,11 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_iar_state_t* msg = ( msg_iar_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_iar_state_t* msg = ( msg_iar_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for num_hyps, expected 729, is %d %f", (int)msg->num_hyps, (float)msg->num_hyps);
-    fail_unless(msg->num_hyps == 729, errStr);
-    free(errStr);
+    fail_unless(msg->num_hyps == 729, "incorrect value for num_hyps, expected 729, is %d", msg->num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -904,13 +874,11 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_iar_state_t* msg = ( msg_iar_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_iar_state_t* msg = ( msg_iar_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for num_hyps, expected 728, is %d %f", (int)msg->num_hyps, (float)msg->num_hyps);
-    fail_unless(msg->num_hyps == 728, errStr);
-    free(errStr);
+    fail_unless(msg->num_hyps == 728, "incorrect value for num_hyps, expected 728, is %d", msg->num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -947,13 +915,11 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_iar_state_t* msg = ( msg_iar_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_iar_state_t* msg = ( msg_iar_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for num_hyps, expected 727, is %d %f", (int)msg->num_hyps, (float)msg->num_hyps);
-    fail_unless(msg->num_hyps == 727, errStr);
-    free(errStr);
+    fail_unless(msg->num_hyps == 727, "incorrect value for num_hyps, expected 727, is %d", msg->num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -990,13 +956,11 @@ START_TEST( test_auto_check_sbp_piksi_23 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_iar_state_t* msg = ( msg_iar_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_iar_state_t* msg = ( msg_iar_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for num_hyps, expected 723, is %d %f", (int)msg->num_hyps, (float)msg->num_hyps);
-    fail_unless(msg->num_hyps == 723, errStr);
-    free(errStr);
+    fail_unless(msg->num_hyps == 723, "incorrect value for num_hyps, expected 723, is %d", msg->num_hyps);
   }
 }
 END_TEST

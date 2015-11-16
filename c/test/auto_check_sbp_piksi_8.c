@@ -121,13 +121,11 @@ START_TEST( test_auto_check_sbp_piksi_8 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_iar_state_t* msg = ( msg_iar_state_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_iar_state_t* msg = ( msg_iar_state_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for num_hyps, expected 1, is %d %f", (int)msg->num_hyps, (float)msg->num_hyps);
-    fail_unless(msg->num_hyps == 1, errStr);
-    free(errStr);
+    fail_unless(msg->num_hyps == 1, "incorrect value for num_hyps, expected 1, is %d", msg->num_hyps);
   }
 }
 END_TEST

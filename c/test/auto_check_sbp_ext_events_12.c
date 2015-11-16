@@ -121,21 +121,15 @@ START_TEST( test_auto_check_sbp_ext_events_12 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_ext_event_t* msg = ( msg_ext_event_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_ext_event_t* msg = ( msg_ext_event_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for wn, expected 1840, is %d %f", (int)msg->wn, (float)msg->wn);
-    fail_unless(msg->wn == 1840, errStr);
-    sprintf(errStr, "incorrect value for ns, expected 999882, is %d %f", (int)msg->ns, (float)msg->ns);
-    fail_unless(msg->ns == 999882, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 3, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 3, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 254924999, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 254924999, errStr);
-    sprintf(errStr, "incorrect value for pin, expected 0, is %d %f", (int)msg->pin, (float)msg->pin);
-    fail_unless(msg->pin == 0, errStr);
-    free(errStr);
+    fail_unless(msg->wn == 1840, "incorrect value for wn, expected 1840, is %d", msg->wn);
+    fail_unless(msg->ns == 999882, "incorrect value for ns, expected 999882, is %d", msg->ns);
+    fail_unless(msg->flags == 3, "incorrect value for flags, expected 3, is %d", msg->flags);
+    fail_unless(msg->tow == 254924999, "incorrect value for tow, expected 254924999, is %d", msg->tow);
+    fail_unless(msg->pin == 0, "incorrect value for pin, expected 0, is %d", msg->pin);
   }
 }
 END_TEST

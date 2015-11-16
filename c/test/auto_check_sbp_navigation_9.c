@@ -121,27 +121,18 @@ START_TEST( test_auto_check_sbp_navigation_9 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_pos_llh_t* msg = ( msg_pos_llh_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for v_accuracy, expected 0, is %d %f", (int)msg->v_accuracy, (float)msg->v_accuracy);
-    fail_unless(msg->v_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for n_sats, expected 9, is %d %f", (int)msg->n_sats, (float)msg->n_sats);
-    fail_unless(msg->n_sats == 9, errStr);
-    sprintf(errStr, "incorrect value for lon, expected -122.173386622, is %d %f", (int)msg->lon, (float)msg->lon);
-    fail_unless(msg->lon == -122.173386622, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2567700, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2567700, errStr);
-    sprintf(errStr, "incorrect value for height, expected 69.8043767518, is %d %f", (int)msg->height, (float)msg->height);
-    fail_unless(msg->height == 69.8043767518, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 0, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 0, errStr);
-    sprintf(errStr, "incorrect value for h_accuracy, expected 0, is %d %f", (int)msg->h_accuracy, (float)msg->h_accuracy);
-    fail_unless(msg->h_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for lat, expected 37.4290689091, is %d %f", (int)msg->lat, (float)msg->lat);
-    fail_unless(msg->lat == 37.4290689091, errStr);
-    free(errStr);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->lon*100 - -122.173386622*100) < 0.05, "incorrect value for lon, expected -122.173386622, is %f", msg->lon);
+    fail_unless(msg->tow == 2567700, "incorrect value for tow, expected 2567700, is %d", msg->tow);
+    fail_unless((msg->height*100 - 69.8043767518*100) < 0.05, "incorrect value for height, expected 69.8043767518, is %f", msg->height);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless((msg->lat*100 - 37.4290689091*100) < 0.05, "incorrect value for lat, expected 37.4290689091, is %f", msg->lat);
   }
   // Test successful parsing of a message
   {
@@ -178,27 +169,18 @@ START_TEST( test_auto_check_sbp_navigation_9 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_pos_llh_t* msg = ( msg_pos_llh_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for v_accuracy, expected 0, is %d %f", (int)msg->v_accuracy, (float)msg->v_accuracy);
-    fail_unless(msg->v_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for n_sats, expected 9, is %d %f", (int)msg->n_sats, (float)msg->n_sats);
-    fail_unless(msg->n_sats == 9, errStr);
-    sprintf(errStr, "incorrect value for lon, expected -122.173408261, is %d %f", (int)msg->lon, (float)msg->lon);
-    fail_unless(msg->lon == -122.173408261, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2567700, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2567700, errStr);
-    sprintf(errStr, "incorrect value for height, expected 69.6881406772, is %d %f", (int)msg->height, (float)msg->height);
-    fail_unless(msg->height == 69.6881406772, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 1, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 1, errStr);
-    sprintf(errStr, "incorrect value for h_accuracy, expected 0, is %d %f", (int)msg->h_accuracy, (float)msg->h_accuracy);
-    fail_unless(msg->h_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for lat, expected 37.4290643089, is %d %f", (int)msg->lat, (float)msg->lat);
-    fail_unless(msg->lat == 37.4290643089, errStr);
-    free(errStr);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->lon*100 - -122.173408261*100) < 0.05, "incorrect value for lon, expected -122.173408261, is %f", msg->lon);
+    fail_unless(msg->tow == 2567700, "incorrect value for tow, expected 2567700, is %d", msg->tow);
+    fail_unless((msg->height*100 - 69.6881406772*100) < 0.05, "incorrect value for height, expected 69.6881406772, is %f", msg->height);
+    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless((msg->lat*100 - 37.4290643089*100) < 0.05, "incorrect value for lat, expected 37.4290643089, is %f", msg->lat);
   }
   // Test successful parsing of a message
   {
@@ -235,27 +217,18 @@ START_TEST( test_auto_check_sbp_navigation_9 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_pos_llh_t* msg = ( msg_pos_llh_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for v_accuracy, expected 0, is %d %f", (int)msg->v_accuracy, (float)msg->v_accuracy);
-    fail_unless(msg->v_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for n_sats, expected 9, is %d %f", (int)msg->n_sats, (float)msg->n_sats);
-    fail_unless(msg->n_sats == 9, errStr);
-    sprintf(errStr, "incorrect value for lon, expected -122.173420075, is %d %f", (int)msg->lon, (float)msg->lon);
-    fail_unless(msg->lon == -122.173420075, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2567800, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2567800, errStr);
-    sprintf(errStr, "incorrect value for height, expected 69.4960885482, is %d %f", (int)msg->height, (float)msg->height);
-    fail_unless(msg->height == 69.4960885482, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 0, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 0, errStr);
-    sprintf(errStr, "incorrect value for h_accuracy, expected 0, is %d %f", (int)msg->h_accuracy, (float)msg->h_accuracy);
-    fail_unless(msg->h_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for lat, expected 37.4290544776, is %d %f", (int)msg->lat, (float)msg->lat);
-    fail_unless(msg->lat == 37.4290544776, errStr);
-    free(errStr);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->lon*100 - -122.173420075*100) < 0.05, "incorrect value for lon, expected -122.173420075, is %f", msg->lon);
+    fail_unless(msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", msg->tow);
+    fail_unless((msg->height*100 - 69.4960885482*100) < 0.05, "incorrect value for height, expected 69.4960885482, is %f", msg->height);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless((msg->lat*100 - 37.4290544776*100) < 0.05, "incorrect value for lat, expected 37.4290544776, is %f", msg->lat);
   }
   // Test successful parsing of a message
   {
@@ -292,27 +265,18 @@ START_TEST( test_auto_check_sbp_navigation_9 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_pos_llh_t* msg = ( msg_pos_llh_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for v_accuracy, expected 0, is %d %f", (int)msg->v_accuracy, (float)msg->v_accuracy);
-    fail_unless(msg->v_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for n_sats, expected 9, is %d %f", (int)msg->n_sats, (float)msg->n_sats);
-    fail_unless(msg->n_sats == 9, errStr);
-    sprintf(errStr, "incorrect value for lon, expected -122.173403896, is %d %f", (int)msg->lon, (float)msg->lon);
-    fail_unless(msg->lon == -122.173403896, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2567800, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2567800, errStr);
-    sprintf(errStr, "incorrect value for height, expected 69.6878045882, is %d %f", (int)msg->height, (float)msg->height);
-    fail_unless(msg->height == 69.6878045882, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 1, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 1, errStr);
-    sprintf(errStr, "incorrect value for h_accuracy, expected 0, is %d %f", (int)msg->h_accuracy, (float)msg->h_accuracy);
-    fail_unless(msg->h_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for lat, expected 37.4290633739, is %d %f", (int)msg->lat, (float)msg->lat);
-    fail_unless(msg->lat == 37.4290633739, errStr);
-    free(errStr);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->lon*100 - -122.173403896*100) < 0.05, "incorrect value for lon, expected -122.173403896, is %f", msg->lon);
+    fail_unless(msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", msg->tow);
+    fail_unless((msg->height*100 - 69.6878045882*100) < 0.05, "incorrect value for height, expected 69.6878045882, is %f", msg->height);
+    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless((msg->lat*100 - 37.4290633739*100) < 0.05, "incorrect value for lat, expected 37.4290633739, is %f", msg->lat);
   }
   // Test successful parsing of a message
   {
@@ -349,27 +313,18 @@ START_TEST( test_auto_check_sbp_navigation_9 )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
-    char *errStr = (char *)malloc(500);
-    msg_pos_llh_t* msg = ( msg_pos_llh_t *)last_msg;
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    sprintf(errStr, "incorrect value for v_accuracy, expected 0, is %d %f", (int)msg->v_accuracy, (float)msg->v_accuracy);
-    fail_unless(msg->v_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for n_sats, expected 9, is %d %f", (int)msg->n_sats, (float)msg->n_sats);
-    fail_unless(msg->n_sats == 9, errStr);
-    sprintf(errStr, "incorrect value for lon, expected -122.173404926, is %d %f", (int)msg->lon, (float)msg->lon);
-    fail_unless(msg->lon == -122.173404926, errStr);
-    sprintf(errStr, "incorrect value for tow, expected 2567900, is %d %f", (int)msg->tow, (float)msg->tow);
-    fail_unless(msg->tow == 2567900, errStr);
-    sprintf(errStr, "incorrect value for height, expected 70.5249547318, is %d %f", (int)msg->height, (float)msg->height);
-    fail_unless(msg->height == 70.5249547318, errStr);
-    sprintf(errStr, "incorrect value for flags, expected 0, is %d %f", (int)msg->flags, (float)msg->flags);
-    fail_unless(msg->flags == 0, errStr);
-    sprintf(errStr, "incorrect value for h_accuracy, expected 0, is %d %f", (int)msg->h_accuracy, (float)msg->h_accuracy);
-    fail_unless(msg->h_accuracy == 0, errStr);
-    sprintf(errStr, "incorrect value for lat, expected 37.4290765936, is %d %f", (int)msg->lat, (float)msg->lat);
-    fail_unless(msg->lat == 37.4290765936, errStr);
-    free(errStr);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->lon*100 - -122.173404926*100) < 0.05, "incorrect value for lon, expected -122.173404926, is %f", msg->lon);
+    fail_unless(msg->tow == 2567900, "incorrect value for tow, expected 2567900, is %d", msg->tow);
+    fail_unless((msg->height*100 - 70.5249547318*100) < 0.05, "incorrect value for height, expected 70.5249547318, is %f", msg->height);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless((msg->lat*100 - 37.4290765936*100) < 0.05, "incorrect value for lat, expected 37.4290765936, is %f", msg->lat);
   }
 }
 END_TEST
