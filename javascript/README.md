@@ -10,9 +10,10 @@ You can include the `javascript/sbp` directory. Two objects are exported - `disp
 to parse individual binary messages.packets.
 
 ## Requirements
+```
 brew install nodejs
 npm install -g mocha
-npm install -g
+```
 
 ## Examples
 See `test_http_stream.js` for connecting an HTTP stream to the dispatcher.

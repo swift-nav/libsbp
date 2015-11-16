@@ -5,6 +5,7 @@
 SWIFTNAV_ROOT := $(shell pwd)
 MAKEFLAGS += SWIFTNAV_ROOT=$(SWIFTNAV_ROOT)
 SBP_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/yaml/swiftnav/sbp/
+SBP_TESTS_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/tests/yaml/
 SBP_GEN_BIN := python sbpg/generator.py
 export PYTHONPATH := .
 
@@ -48,6 +49,12 @@ c:
 		       -o $(SWIFTNAV_ROOT)/c/include/libsbp \
                        -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
 	               --c
+	rm -f $(SWIFTNAV_ROOT)/c/test/auto_check*.c
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
+		       -o $(SWIFTNAV_ROOT)/c/test \
+                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
+	               --test-c
 	@echo
 	@echo "Finished. Please check $(SWIFTNAV_ROOT)/c/include/libsbp."
 
@@ -55,8 +62,8 @@ deps:
 	@echo
 	@echo "Installing dependencies..."
 	@echo
-	cd $(SWIFTNAV_ROOT)/generator; \
-	pip install --user -r requirements.txt
+	cd $(SWIFTNAV_ROOT)/generator; pip install --user -r requirements.txt
+	cd $(SWIFTNAV_ROOT); npm install
 	@echo
 	@echo "Finished!"
 
@@ -170,7 +177,7 @@ test-c: c
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
 	cmake ../; \
-	make test
+	make
 
 test-java: java
 	@echo

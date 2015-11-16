@@ -16,7 +16,9 @@ Parsing YAML specifications of SBP.
 import glob
 import os
 import sbpg.specs.yaml_schema as s
+import sbpg.specs.yaml_test_schema as t
 import sbpg.syntax as sbp
+import sbpg.test_structs as sbp_test
 import sys
 import yaml
 
@@ -59,6 +61,41 @@ def read_spec(filename, verbose=False):
       raise e
   return contents
 
+def read_test_spec(filename, verbose=False):
+  """
+  Read an SBP test specification.
+
+  Parameters
+  ----------
+  filename : str
+    Local filename for specification.
+  verbose : bool
+    Print out some debugging info
+
+  Returns
+  ----------
+
+  Raises
+  ----------
+  Exception
+    On empty file.
+  yaml.YAMLError
+    On Yaml parsing error
+  voluptuous.Invalid
+    On invalid SBP schema
+  """
+  contents = None
+  with open(filename, 'r') as f:
+    contents = yaml.safe_load(f)
+    if contents is None:
+      raise Exception("Empty yaml file: %s." % filename)
+    try:
+      t.test_schema(contents)
+    except Exception as e:
+      sys.stderr.write("Invalid SBP test YAML specification: %s.\n" % filename)
+      raise e
+  return contents
+
 def get_files(input_file):
   """
   Initializes an index of files to generate, returns the base
@@ -74,12 +111,35 @@ def get_files(input_file):
     base_dir = input_file
     for inf in glob.glob(input_file + s.SBP_EXTENSION):
       file_index[os.path.abspath(inf)] = None
+    for inf in glob.glob(input_file + '/*'):
+      base, index = get_files(os.path.abspath(inf))
+      z = file_index.copy()
+      z.update(index)
+      file_index = z
   return (base_dir, file_index)
+
+def resolve_test_deps(base_dir, file_index):
+  """
+  Given a base directory and an initial set of files, retrieves
+  dependencies and adds them to the file_index.
+
+  """
+  def flatten(tree, index = {}):
+    for include in tree.get('include', []):
+      fname = base_dir + "/" + include
+      assert os.path.exists(fname), "File %s does not exist." % fname
+      if fname not in index:
+        index[fname] = read_test_spec(fname)
+        index.update(flatten(index[fname], file_index))
+    return index
+  for fname, contents in file_index.items():
+    file_index[fname] = read_test_spec(fname)
+    file_index.update(flatten(file_index[fname], file_index))
+  return file_index
 
 # TODO (Buro): I imagine we'd want to do a basic toposort of the
 # package and type dependencies to properly resolve types and detect
 # circular dependencies.
-
 def resolve_deps(base_dir, file_index):
   """
   Given a base directory and an initial set of files, retrieves
@@ -102,8 +162,47 @@ def resolve_deps(base_dir, file_index):
 def parse_spec(contents):
   return mk_package(contents)
 
+def parse_test_spec(fname, contents, spec_no):
+  return mk_package_test_suite(fname, contents, spec_no)
+
 ##############################################################################
 #
+
+def mk_package_test_suite(fname, contents, spec_no):
+  """Instantiates a package test specification from a parsed "AST" of a
+  package test.
+
+  Parameters
+  ----------
+  contents : dict
+
+  Returns
+  ----------
+  PackageTestSpecification
+
+  """
+  package = contents.get('package', None)
+  description = contents.get('description', None)
+  generated_on = contents.get('generated_on', None)
+  tests = contents.get('tests', [])
+  resolved = [mk_test(test) for test in tests]
+  return sbp_test.PackageTestSpecification(package=package,
+                                  src_filename=fname,
+                                  suite_no=spec_no,
+                                  description=description,
+                                  generated_on=generated_on,
+                                  tests=resolved)
+
+def mk_test(test):
+  """Instantiates a test for a particular SBP message.
+
+  """
+  assert len(test) == 5
+  return sbp_test.TestSpecification(raw_packet=test.get('raw_packet', None),
+                                    msg_type=test.get('msg_type', None),
+                                    raw_json=test.get('raw_json', None),
+                                    msg=test.get('msg', None),
+                                    sbp=test.get('sbp', None))
 
 def mk_package(contents):
   """Instantiates a package specification from a parsed "AST" of a

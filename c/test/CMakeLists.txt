@@ -17,21 +17,8 @@ else (CMAKE_CROSSCOMPILING)
 
     include_directories("${PROJECT_SOURCE_DIR}/include/libsbp")
 
-    add_executable(test_libsbp
-      check_acquisition.c
-      check_bootload.c
-      check_edc.c
-      check_file_io.c
-      check_flash.c
-      check_main.c
-      check_navigation.c
-      check_observation.c
-      check_piksi.c
-      check_sbp.c
-      check_settings.c
-      check_system.c
-      check_tracking.c
-    )
+    FILE(GLOB generated_c_sources auto*.c)
+    add_executable(test_libsbp check_main.c check_edc.c check_sbp.c ${generated_c_sources})
 
     target_link_libraries(test_libsbp ${TEST_LIBS})
     add_custom_command(
