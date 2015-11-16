@@ -87,6 +87,20 @@ START_TEST( test_(((s.suite_name))) )
   // Run tests:
   //
 
+    ((*- macro compare_value(prefix, value) *))
+    ((*- if value is stringType *))
+    fail_unless(strstr(msg->(((prefix))), (((value|str_escape)))) != NULL, "incorrect value for msg->(((prefix))), expected string '%s', is '%s'", (((value|str_escape))), msg->(((prefix))));
+    ((*- elif value is arrayType *))
+    ((*- for ff in value *))((( compare_value( (((prefix))) + '[' + (((loop.index0|toStr))) + ']', (((ff))) ) )))((*- endfor *))
+    ((*- elif value is dictType *))
+    ((*- for k in value *))((( compare_value( (((prefix))) + '.' + (((k))), (((value[k]))) ) )))((*- endfor *))
+    ((*- elif value is floatType *))
+    fail_unless((msg->(((prefix)))*100 - (((value)))*100) < 0.05, "incorrect value for (((prefix))), expected (((value))), is %f", msg->(((prefix))));
+    ((*- else *))
+    fail_unless(msg->(((prefix))) == (((value))), "incorrect value for (((prefix))), expected (((value))), is %d", msg->(((prefix))));
+    ((*- endif *))
+    ((*- endmacro *))
+
   ((*- for t in s.tests *))
   // Test successful parsing of a message
   {
@@ -123,31 +137,12 @@ START_TEST( test_(((s.suite_name))) )
     fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
-    // Cast to expected message type
+    // Cast to expected message type - the +6 byte offset is where the payload starts
     ((*- if t.fields *))
-    char *errStr = (char *)malloc(500);
-    (((t.msg_type_name|convert)))* msg = ( (((t.msg_type_name|convert))) *)last_msg;
+    (((t.msg_type_name|convert)))* msg = ( (((t.msg_type_name|convert))) *)((void *)last_msg + 6);
+    // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    ((*- for f in t.fields *))
-    ((*- if t.fields[f] is stringType *))
-    fail_unless(strcmp(msg->(((f))), (((t.fields[f]|str_escape)))) == 0, "incorrect value for (((f)))");
-    ((*- elif t.fields[f] is arrayType *))
-    ((*- elif t.fields[f] is dictType *))
-    ((*- for ff in t.fields[f] *))
-    ((*- if t.fields[f][ff] is dictType *))
-    ((*- for fff in t.fields[f][ff] *))
-    fail_unless(msg->(((f))).(((ff))).(((fff))) == (((t.fields[f][ff][fff]))), "incorrect value for (((f))).(((ff))).(((fff))), expected (((t.fields[f][ff][fff])))");
-    ((*- endfor *))
-    ((*- else *))
-    fail_unless(msg->(((f))).(((ff))) == (((t.fields[f][ff]))), "incorrect value for (((f)))->(((ff))), expected (((t.fields[f][ff])))");
-    ((*- endif *))
-    ((*- endfor *))
-    ((*- else *))
-    sprintf(errStr, "incorrect value for (((f))), expected (((t.fields[f]))), is %d %f", (int)msg->(((f))), (float)msg->(((f))));
-    fail_unless(msg->(((f))) == (((t.fields[f]))), errStr);
-    ((*- endif *))
-    ((*- endfor *))
-    free(errStr);
+    ((*- for f in t.fields *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
     ((*- endif *))
   }
   ((*- endfor *))

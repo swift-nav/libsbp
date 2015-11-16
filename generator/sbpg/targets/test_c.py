@@ -96,11 +96,17 @@ def arrayType(value):
 def dictType(value):
     return type(value) == dict
 
+def floatType(value):
+    return type(value) == float
+
 def isEmpty(value):
     return len(value) == 0
 
 def strEscape(value):
-    return "((char []){" + ",".join(["(char)" + str(ord(ch)) for ch in value]) + "})"
+    return "((char []){" + ",".join(["(char)" + str(ord(ch)) for ch in value]) + ",0})"
+
+def toStr(value):
+    return str(value)
 
 JENV.filters['commentify'] = commentify
 JENV.filters['mk_id'] = mk_id
@@ -108,10 +114,12 @@ JENV.filters['mk_size'] = mk_size
 JENV.filters['convert'] = convert
 JENV.filters['type'] = type
 JENV.filters['str_escape'] = strEscape
+JENV.filters['toStr'] = toStr
 
 JENV.tests['stringType'] = stringType
 JENV.tests['arrayType'] = arrayType
 JENV.tests['dictType'] = dictType
+JENV.tests['floatType'] = floatType
 JENV.tests['empty'] = isEmpty
 
 def render_source(output_dir, package_spec):
