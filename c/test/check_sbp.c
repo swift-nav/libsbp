@@ -97,7 +97,7 @@ void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   last_len = len;
   last_context = context;
   memcpy(last_msg, msg, len);
-  
+
   /*printy_callback(sender_id, len, msg);*/
 }
 
@@ -150,7 +150,7 @@ START_TEST(test_sbp_process)
   fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
         == 0,
       "test data decoded incorrectly");
-  fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS, 
+  fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
       "context pointer incorrectly passed");
 
   sbp_register_callback(&s, 0x2270, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
@@ -441,4 +441,3 @@ Suite* sbp_suite(void)
 
   return s;
 }
-
