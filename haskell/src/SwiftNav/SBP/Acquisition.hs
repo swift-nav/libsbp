@@ -37,8 +37,8 @@ msgAcqResult = 0x0014
 -- the best signal-to-noise (SNR) ratio.
 data MsgAcqResult = MsgAcqResult
   { _msgAcqResult_snr :: Float
-    -- ^ SNR of best point. Currently dimensonless, but will have units of dB Hz
-    -- in the revision of this message.
+    -- ^ SNR of best point. Currently in arbitrary SNR points, but will be in
+    -- units of dB Hz in a later revision of this message.
   , _msgAcqResult_cp :: Float
     -- ^ Code phase of best point
   , _msgAcqResult_cf :: Float

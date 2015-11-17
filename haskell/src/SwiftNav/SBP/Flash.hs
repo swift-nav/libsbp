@@ -9,8 +9,6 @@
 -- Messages for reading/writing the device's onboard flash memory. Many of
 -- these messages target specific flash memory peripherals used in Swift
 -- Navigation devices: the STM32 flash and the M25Pxx FPGA configuration flash.
--- These are in the implementation-defined range (0x0000-0x00FF), and are
--- intended for internal-use only.
 
 module SwiftNav.SBP.Flash where
 

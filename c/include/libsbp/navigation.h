@@ -72,11 +72,11 @@ from -500000 to 500000)
 #define SBP_MSG_DOPS             0x0206
 typedef struct __attribute__((packed)) {
   u32 tow;     /**< GPS Time of Week [ms] */
-  u16 gdop;    /**< Geometric Dilution of Precision */
-  u16 pdop;    /**< Position Dilution of Precision */
-  u16 tdop;    /**< Time Dilution of Precision */
-  u16 hdop;    /**< Horizontal Dilution of Precision */
-  u16 vdop;    /**< Vertical Dilution of Precision */
+  u16 gdop;    /**< Geometric Dilution of Precision [0.01] */
+  u16 pdop;    /**< Position Dilution of Precision [0.01] */
+  u16 tdop;    /**< Time Dilution of Precision [0.01] */
+  u16 hdop;    /**< Horizontal Dilution of Precision [0.01] */
+  u16 vdop;    /**< Vertical Dilution of Precision [0.01] */
 } msg_dops_t;
 
 
@@ -160,7 +160,7 @@ to 0.
  * This message reports the baseline solution in North East Down
  * (NED) coordinates. This baseline is the relative vector distance
  * from the base station to the rover receiver, and NED coordinate
- * system is defined at the local tangent plane centered at the
+ * system is defined at the local WGS84 tangent plane centered at the
  * base station position.  The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
@@ -204,8 +204,9 @@ to 0.
 /** Velocity in NED
  *
  * This message reports the velocity in local North East Down (NED)
- * coordinates. The full GPS time is given by the preceding
- * MSG_GPS_TIME with the matching time-of-week (tow).
+ * coordinates. The NED coordinate system is defined as the local WGS84
+ * tangent plane centered at the current position. The full GPS time is
+ * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_NED          0x0205
 typedef struct __attribute__((packed)) {
@@ -224,10 +225,10 @@ implemented). Defaults to 0.
 } msg_vel_ned_t;
 
 
-/** Heading relative to North
+/** Heading relative to True North
  *
  * This message reports the baseline heading pointing from the base station
- * to the rover relative to North. The full GPS time is given by the
+ * to the rover relative to True North. The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_HEADING 0x0207

@@ -18,10 +18,9 @@
  * Messages for using device's onboard flash filesystem functionality. This allows
  * data to be stored persistently in the device's program flash with wear-levelling
  * using a simple filesystem interface. The file system interface (CFS) defines an
- * abstract API for reading directories and for reading and writing files.  These
- * are in the implementation-defined range (0x0000-0x00FF), and intended for
- * internal-use only. Note that some of these messages share the same message type
- * ID for both the host request and the device response.
+ * abstract API for reading directories and for reading and writing files.  Note
+ * that some of these messages share the same message type ID for both the host
+ * request and the device response.
 ***********************/
 
 var SBP = require('./sbp');

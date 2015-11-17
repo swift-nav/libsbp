@@ -15,10 +15,9 @@
  **********************
  * Package description:
  *
- * Messages for the bootloading configuration on the device.  These are in the
- * implementation-defined range (0x0000-0x00FF), and are intended for internal use
- * only. Note that some of these messages share the same message type ID for both
- * the host request and the device response.
+ * Messages for the bootloading configuration on the device.  Note that some of
+ * these messages share the same message type ID for both the host request and the
+ * device response.
 ***********************/
 
 var SBP = require('./sbp');

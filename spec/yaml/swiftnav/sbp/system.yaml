@@ -63,8 +63,14 @@ definitions:
                   desc: Reserved
               - 2:
                   desc: SwiftNAP Error
+                  values:
+                      - 0: System Healthy
+                      - 1: An error has occurred in the SwiftNAP
               - 1:
                   desc: IO Error
+                  values:
+                      - 0: System Healthy
+                      - 1: An IO error has occurred
               - 0:
                   desc: System Error Flag
                   values:

@@ -13,10 +13,10 @@
 """
 Messages for reading and writing the device's device settings.
 
-These are in the implementation-defined range (0x0000-0x00FF). Note
-that some of these messages share the same message type ID for both
-the host request and the device response. See the accompanying
-document for descriptions of settings configurations and examples:
+Note that some of these messages share the same message type ID for both the
+host request and the device response. See the accompanying document for
+descriptions of settings configurations and examples:
+
 https://github.com/swift-nav/piksi\_firmware/blob/master/docs/settings.pdf
 
 """

@@ -141,14 +141,19 @@ detection\footnote{CCITT 16-bit CRC Implementation uses parameters
   \label{tab:message}
 \end{table}
 
+\section{NMEA-0183}
+\label{sec:NMEA}
+
 \begin{large}
-Swift devices, such as the Piksi, also support the standard NMEA-0183
-protocol for single-point position solutions. Observations transmitted
-via SBP can also be converted into RINEX. Note that NMEA doesn't
-define a standardized message string for RTK solutions. To make it
-possible to achieve RTK accuracy with legacy host hardware or software
-that can only read NMEA, recent firmware versions implement a
-``pseudo-absolute'' mode.
+
+Swift devices, such as the Piksi, also have limited support for the standard
+NMEA-0183 protocol.
+
+Note that NMEA-0183 doesn't define standardized message
+string equivalents for many important SBP messages such as observations,
+baselines and ephemerides. For this reason it is strongly recommended to use
+SBP for new development. NMEA-0183 output is provided primarily to support
+legacy devices.
 
 \end{large}
 

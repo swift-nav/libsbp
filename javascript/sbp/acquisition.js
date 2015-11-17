@@ -31,8 +31,8 @@ var SBPGnssSignal = require("./gnss_signal").SBPGnssSignal;
  * best signal-to-noise (SNR) ratio.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field snr number (float, 4 bytes) SNR of best point. Currently dimensonless, but will have units of dB Hz in the
- *   revision of this message.
+ * @field snr number (float, 4 bytes) SNR of best point. Currently in arbitrary SNR points, but will be in units of dB
+ *   Hz in a later revision of this message.
  * @field cp number (float, 4 bytes) Code phase of best point
  * @field cf number (float, 4 bytes) Carrier frequency of best point
  * @field sid SBPGnssSignal GNSS signal for which acquisition was attempted
