@@ -18,11 +18,10 @@ sudo apt-get install build-essential pkg-config cmake
 On other systems, you can obtain CMake from your operating system
 package manager or from http://www.cmake.org/.
 
-Once you have the dependencies installed,
+Once you have the dependencies installed, from this (the libsbp/c directory)
 create a build directory where the library will be built:
 
 ```shell
-cd libsbp/c
 mkdir build
 cd build
 ```
