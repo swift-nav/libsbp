@@ -192,7 +192,7 @@ def render_sbp(output_dir, package_specs):
     for m in package_spec.definitions:
       if m.static and m.sbp_id:
         msgs.append(to_data(m.identifier))
-  print sorted(msgs)
+  #print sorted(msgs)
   destination_filename = "%s/src/SwiftNav/SBP.hs" % output_dir
   py_template = JENV.get_template(SBP_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:

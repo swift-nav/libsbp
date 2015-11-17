@@ -51,7 +51,7 @@ void setup_port()
   }
 }
 
-void hearbeat_callback(u16 sender_id, u8 len, u8 msg[], void *context)
+void heartbeat_callback(u16 sender_id, u8 len, u8 msg[], void *context)
 {
   (void)sender_id, (void)len, (void)msg, (void)context;
   fprintf(stdout, "%s\n", __FUNCTION__);
@@ -117,7 +117,7 @@ int main(int argc, char **argv)
 
   sbp_state_init(&s);
 
-  sbp_register_callback(&s, SBP_MSG_HEARTBEAT, &hearbeat_callback, NULL,
+  sbp_register_callback(&s, SBP_MSG_HEARTBEAT, &heartbeat_callback, NULL,
                         &heartbeat_callback_node);
 
   while(1) {

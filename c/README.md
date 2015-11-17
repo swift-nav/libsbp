@@ -12,7 +12,13 @@ On Debian-based systems (including Ubuntu 12.10 or later) you can get
 them with:
 
 ```shell
-sudo apt-get install build-essential pkg-config cmake
+sudo apt-get install build-essential pkg-config cmake doxygen check
+```
+
+On Mac:
+
+```shell
+brew install check cmake pkg-config doxygen
 ```
 
 On other systems, you can obtain CMake from your operating system
