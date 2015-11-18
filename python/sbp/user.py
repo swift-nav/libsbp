@@ -24,16 +24,17 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, gr
 # Please do not hand edit!
 
 
-SBP_MSG_USER = 0x0800
-class MsgUser(SBP):
-  """SBP class for message MSG_USER (0x0800).
+SBP_MSG_USER_DATA = 0x0800
+class MsgUserData(SBP):
+  """SBP class for message MSG_USER_DATA (0x0800).
 
-  You can have MSG_USER inherit its fields directly
+  You can have MSG_USER_DATA inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  This message can contain any application specific user data.
+  This message can contain any application specific user data up to a
+maximum length of 255 bytes per message.
 
 
   Parameters
@@ -46,7 +47,7 @@ class MsgUser(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgUser",
+  _parser = Struct("MsgUserData",
                    OptionalGreedyRange(ULInt8('contents')),)
   __slots__ = [
                'contents',
@@ -54,13 +55,13 @@ class MsgUser(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgUser,
+      super( MsgUserData,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgUser, self).__init__()
-      self.msg_type = SBP_MSG_USER
+      super( MsgUserData, self).__init__()
+      self.msg_type = SBP_MSG_USER_DATA
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.contents = kwargs.pop('contents')
 
@@ -73,12 +74,12 @@ class MsgUser(SBP):
 
     """
     d = json.loads(s)
-    return MsgUser.from_json_dict(d)
+    return MsgUserData.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgUser(sbp, **d)
+    return MsgUserData(sbp, **d)
 
  
   def from_binary(self, d):
@@ -86,7 +87,7 @@ class MsgUser(SBP):
     the message.
 
     """
-    p = MsgUser._parser.parse(d)
+    p = MsgUserData._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -95,17 +96,17 @@ class MsgUser(SBP):
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgUser._parser.build(c)
+    self.payload = MsgUserData._parser.build(c)
     return self.pack()
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgUser, self).to_json_dict()
+    d = super( MsgUserData, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
 
 msg_classes = {
-  0x0800: MsgUser,
+  0x0800: MsgUserData,
 }

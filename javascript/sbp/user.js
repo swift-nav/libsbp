@@ -22,30 +22,31 @@ var SBP = require('./sbp');
 var Parser = require('binary-parser').Parser;
 
 /**
- * SBP class for message MSG_USER (0x0800).
+ * SBP class for message MSG_USER_DATA (0x0800).
  *
- * This message can contain any application specific user data.
+ * This message can contain any application specific user data up to a maximum
+ * length of 255 bytes per message.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field contents array User data payload
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgUser = function (sbp) {
+var MsgUserData = function (sbp) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_USER";
+  this.messageType = "MSG_USER_DATA";
   this.fields = this.parser.parse(sbp.payload);
 
   return this;
 };
-MsgUser.prototype = Object.create(SBP.prototype);
-MsgUser.prototype.constructor = MsgUser;
-MsgUser.prototype.parser = new Parser()
+MsgUserData.prototype = Object.create(SBP.prototype);
+MsgUserData.prototype.constructor = MsgUserData;
+MsgUserData.prototype.parser = new Parser()
   .endianess('little')
   .array('contents', { type: 'uint8', readUntil: 'eof' });
-MsgUser.prototype.fieldSpec = [];
-MsgUser.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8', function () { return 1; }]);
+MsgUserData.prototype.fieldSpec = [];
+MsgUserData.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8', function () { return 1; }]);
 
 module.exports = {
-  0x0800: MsgUser,
+  0x0800: MsgUserData,
 }

@@ -10,6 +10,7 @@ src/com/swiftnav/sbp/piksi
 src/com/swiftnav/sbp/settings
 src/com/swiftnav/sbp/system
 src/com/swiftnav/sbp/tracking
+src/com/swiftnav/sbp/user
 src/com/swiftnav/sbp/client/MessageTable.java
 .gradle
 .idea

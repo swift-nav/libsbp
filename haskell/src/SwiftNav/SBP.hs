@@ -124,7 +124,7 @@ data SBPMsg =
    | SBPMsgTrackingStateDepA MsgTrackingStateDepA Msg
    | SBPMsgTweet MsgTweet Msg
    | SBPMsgUartState MsgUartState Msg
-   | SBPMsgUser MsgUser Msg
+   | SBPMsgUserData MsgUserData Msg
    | SBPMsgVelEcef MsgVelEcef Msg
    | SBPMsgVelNed MsgVelNed Msg
    | SBPMsgBadCrc Msg
@@ -204,7 +204,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgTrackingStateDepA = SBPMsgTrackingStateDepA (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgTweet = SBPMsgTweet (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgUser = SBPMsgUser (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgUserData = SBPMsgUserData (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgVelNed = SBPMsgVelNed (decode (fromStrict _msgSBPPayload)) sbp
           | otherwise = SBPMsgUnknown sbp
@@ -278,7 +278,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgTrackingStateDepA _ sbp) = sbp
       encode' (SBPMsgTweet _ sbp) = sbp
       encode' (SBPMsgUartState _ sbp) = sbp
-      encode' (SBPMsgUser _ sbp) = sbp
+      encode' (SBPMsgUserData _ sbp) = sbp
       encode' (SBPMsgVelEcef _ sbp) = sbp
       encode' (SBPMsgVelNed _ sbp) = sbp
       encode' (SBPMsgUnknown sbp) = sbp
@@ -354,7 +354,7 @@ instance FromJSON SBPMsg where
         | msgType == msgTrackingStateDepA = SBPMsgTrackingStateDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgTweet = SBPMsgTweet <$> parseJSON obj <*> parseJSON obj
         | msgType == msgUartState = SBPMsgUartState <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgUser = SBPMsgUser <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgUserData = SBPMsgUserData <$> parseJSON obj <*> parseJSON obj
         | msgType == msgVelEcef = SBPMsgVelEcef <$> parseJSON obj <*> parseJSON obj
         | msgType == msgVelNed = SBPMsgVelNed <$> parseJSON obj <*> parseJSON obj
         | otherwise = SBPMsgUnknown <$> parseJSON obj
@@ -432,7 +432,7 @@ instance ToJSON SBPMsg where
    toJSON (SBPMsgTrackingStateDepA msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgTweet msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgUartState msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgUser msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgUserData msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgVelEcef msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgVelNed msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgBadCrc sbp) = toJSON sbp

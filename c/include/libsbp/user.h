@@ -28,12 +28,13 @@
 
 /** User data
  *
- * This message can contain any application specific user data.
+ * This message can contain any application specific user data up to a
+ * maximum length of 255 bytes per message.
  */
-#define SBP_MSG_USER 0x0800
+#define SBP_MSG_USER_DATA 0x0800
 typedef struct __attribute__((packed)) {
   u8 contents[0]; /**< User data payload */
-} msg_user_t;
+} msg_user_data_t;
 
 
 /** \} */

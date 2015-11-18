@@ -26,27 +26,28 @@ import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
-msgUser :: Word16
-msgUser = 0x0800
+msgUserData :: Word16
+msgUserData = 0x0800
 
--- | SBP class for message MSG_USER (0x0800).
+-- | SBP class for message MSG_USER_DATA (0x0800).
 --
--- This message can contain any application specific user data.
-data MsgUser = MsgUser
-  { _msgUser_contents :: [Word8]
+-- This message can contain any application specific user data up to a maximum
+-- length of 255 bytes per message.
+data MsgUserData = MsgUserData
+  { _msgUserData_contents :: [Word8]
     -- ^ User data payload
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgUser where
+instance Binary MsgUserData where
   get = do
-    _msgUser_contents <- whileM (liftM not isEmpty) getWord8
-    return MsgUser {..}
+    _msgUserData_contents <- whileM (liftM not isEmpty) getWord8
+    return MsgUserData {..}
 
-  put MsgUser {..} = do
-    mapM_ putWord8 _msgUser_contents
+  put MsgUserData {..} = do
+    mapM_ putWord8 _msgUserData_contents
 
-$(deriveSBP 'msgUser ''MsgUser)
+$(deriveSBP 'msgUserData ''MsgUserData)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUser_" . stripPrefix "_msgUser_"}
-             ''MsgUser)
-$(makeLenses ''MsgUser)
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUserData_" . stripPrefix "_msgUserData_"}
+             ''MsgUserData)
+$(makeLenses ''MsgUserData)
