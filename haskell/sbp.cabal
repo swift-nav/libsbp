@@ -38,6 +38,7 @@ library
                      , SwiftNav.SBP.Settings
                      , SwiftNav.SBP.System
                      , SwiftNav.SBP.Tracking
+                     , SwiftNav.SBP.User
                      , SwiftNav.SBP.Encoding
                      , SwiftNav.SBP.Types
   other-modules:       SwiftNav.SBP.TH
