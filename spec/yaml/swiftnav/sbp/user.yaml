@@ -1,0 +1,31 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.user
+description: |
+  Messages reserved for use by the user.
+stable: False
+public: True
+include:
+  - types.yaml
+definitions:
+
+ - MSG_USER_DATA:
+    id: 0x0800
+    short_desc: User data
+    desc: |
+        This message can contain any application specific user data up to a
+        maximum length of 255 bytes per message.
+    fields:
+        - contents:
+            type: array
+            fill: u8
+            desc: User data payload
+
