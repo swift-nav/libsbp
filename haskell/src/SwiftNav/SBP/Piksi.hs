@@ -27,6 +27,7 @@ import Data.Word
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
+import SwiftNav.SBP.GnssSignal
 
 msgAlmanac :: Word16
 msgAlmanac = 0x0069
