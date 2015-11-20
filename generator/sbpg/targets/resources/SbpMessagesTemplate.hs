@@ -24,7 +24,9 @@ import Data.Int
 import Data.Word
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
-import SwiftNav.SBP.Types
+((*- for m in module_includes *))
+import (((m)))
+((*- endfor *))
 ((* for m in msgs *))
 ((*- if m.static *))
 ((*- if m.sbp_id *))

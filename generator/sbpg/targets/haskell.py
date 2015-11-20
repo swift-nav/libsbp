@@ -156,11 +156,12 @@ def render_source(output_dir, package_spec):
   py_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
   module_includes = [".".join([module_prefix] + [camel_case(j) for j in i.split(".")[:-1]])
                      for i in package_spec.includes]
-  print module_name, module_includes
+
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,
                                description=package_spec.description,
-                               module_name=full_module_name))
+                               module_name=full_module_name,
+                               module_includes=module_includes))
 
 def render_cabal(output_dir, package_specs, release):
   modules = []
