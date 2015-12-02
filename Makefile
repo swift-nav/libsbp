@@ -187,7 +187,7 @@ test-python: python
 	@echo
 	@echo "Running Python tests..."
 	@echo
-	cd $(SWIFTNAV_ROOT)/python/ && tox
+	cd $(SWIFTNAV_ROOT)/python/ && pip install --user -r requirements.txt && tox
 
 test-javascript: javascript
 	@echo
