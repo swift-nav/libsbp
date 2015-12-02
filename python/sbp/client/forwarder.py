@@ -48,4 +48,3 @@ class Forwarder(Thread):
       self._source.breakiter()
     except:
       pass
-
