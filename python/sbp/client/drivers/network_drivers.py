@@ -13,6 +13,7 @@
 """
 
 from .base_driver import BaseDriver
+from concurrent.futures import ThreadPoolExecutor
 from requests.adapters import DEFAULT_POOLBLOCK, DEFAULT_POOLSIZE, HTTPAdapter
 from requests.packages.urllib3.util import Retry
 from requests_futures.sessions import FuturesSession
@@ -137,11 +138,12 @@ class HTTPDriver(BaseDriver):
                                         pool_maxsize=DEFAULT_POOLSIZE,
                                         pool_block=DEFAULT_POOLBLOCK,
                                         max_retries=retry))
-    self.write_session = FuturesSession()
+    self.write_session = None
     self.device_uid = device_uid
     self.timeout = timeout
     self.read_response = None
     self.write_response = None
+    self.source = None
 
   def flush(self):
     """File-flush wrapper (noop).
@@ -191,7 +193,10 @@ class HTTPDriver(BaseDriver):
     if not passive:
       del headers['Pragma']
     try:
-      gen = (msg.pack() for msg, _ in source.filter(whitelist))
+      self.executor = ThreadPoolExecutor(max_workers=DEFAULT_POOLSIZE)
+      self.write_session = FuturesSession(executor=self.executor)
+      self.source = source.filter(whitelist)
+      gen = (msg.pack() for msg, _ in self.source)
       self.write_session.put(self.url, data=gen, headers=headers)
       self.write_response = True
     except requests.exceptions.ConnectionError:
@@ -224,9 +229,11 @@ class HTTPDriver(BaseDriver):
     """
     try:
       self.write_session.close()
-      # TODO (Buro): Do something smarter once we understand how
-      # FuturesSession really works.
-      self.write_session = FuturesSession()
+      self.executor.shutdown(wait=False)
+      self.source.breakiter()
+      self.source = None
+      self.executor = None
+      self.write_session = None
     except:
       pass
 
