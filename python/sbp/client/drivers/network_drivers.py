@@ -269,8 +269,8 @@ class HTTPDriver(BaseDriver):
     return self.read_ok
 
   def read(self, size):
-    """
-    Read wrapper.
+    """Read wrapper. If the client connection is closed or some other
+    exception is thrown, raises an IOError.
 
     Parameters
     ----------
@@ -283,19 +283,13 @@ class HTTPDriver(BaseDriver):
 
     """
     if self.read_response is None or not self.device_uid:
-      # NOTE (Buro/jgross): Force a yield here to another thread. The
-      # spinning here causes the UI thread to lock up.
-      time.sleep(0)
-      pass
-    elif not self.read_ok:
-      msg = "HTTP GET Request failed! With code %s." % (self.read_response.status_code)
-      warnings.warn(msg, RuntimeWarning)
-      return
-    else:
-      try:
-        return self.read_response.raw.read(size)
-      except:
-        pass
+      raise ValueError("Invalid/insufficient HTTP request parameters!")
+    elif not self.read_ok or self.read_response.raw.closed:
+      raise IOError("HTTP read closed?!")
+    try:
+      return self.read_response.raw.read(size)
+    except:
+      raise IOError("HTTP read error!")
 
   def read_close(self):
     """File-handle close wrapper (noop).
