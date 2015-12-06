@@ -77,11 +77,13 @@ def test_http_test_pass():
     assert driver.connect_read()
     assert driver.read_ok
     assert driver.read(size=255) == msg.to_binary()
-    assert driver.read(size=255) == ''
+    with pytest.raises(IOError):
+      assert driver.read(size=255)
     assert not driver.read_close()
     assert driver.read_response is None
     assert not driver.read_ok
-    assert driver.read(size=255) is None
+    with pytest.raises(ValueError):
+      driver.read(size=255)
   with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as http:
     with Handler(Framer(http.read, http.write, False)) as link:
       def tester(sbp_msg, **metadata):
@@ -110,7 +112,8 @@ def test_http_test_fail():
   with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
     assert not driver.connect_read()
     assert not driver.read_ok
-    assert driver.read(size=255) is None
+    with pytest.raises(IOError):
+      driver.read(size=255)
 
 def mock_streaming_msgs(msgs, interval=0.1):
   for m in msgs:
@@ -141,7 +144,8 @@ def test_http_test_pass_streaming():
     assert not driver.read_close()
     assert driver.read_response is None
     assert not driver.read_ok
-    assert driver.read(size=255) is None
+    with pytest.raises(ValueError):
+      driver.read(size=255)
 
 @activate
 def test_http_test_pass_retry():
@@ -162,4 +166,7 @@ def test_http_test_pass_retry():
   register_uri(GET, BASE_STATION_URI, get_responses)
   register_uri(PUT, BASE_STATION_URI, post_responses)
   with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
-    driver.read(size=255)
+    with pytest.raises(ValueError):
+      driver.read(size=255)
+    assert driver.connect_read()
+    assert driver.read(size=255)
