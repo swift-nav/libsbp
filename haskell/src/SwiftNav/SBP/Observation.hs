@@ -169,41 +169,78 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObs_" . stripPr
              ''MsgObs)
 $(makeLenses ''MsgObs)
 
-msgBasePos :: Word16
-msgBasePos = 0x0044
+msgBasePosLlh :: Word16
+msgBasePosLlh = 0x0044
 
--- | SBP class for message MSG_BASE_POS (0x0044).
+-- | SBP class for message MSG_BASE_POS_LLH (0x0044).
 --
 -- The base station position message is the position reported by the base
 -- station itself. It is used for pseudo-absolute RTK positioning, and is
 -- required to be a high-accuracy surveyed location of the base station. Any
 -- error here will result in an error in the pseudo-absolute position output.
-data MsgBasePos = MsgBasePos
-  { _msgBasePos_lat  :: Double
+data MsgBasePosLlh = MsgBasePosLlh
+  { _msgBasePosLlh_lat  :: Double
     -- ^ Latitude
-  , _msgBasePos_lon  :: Double
+  , _msgBasePosLlh_lon  :: Double
     -- ^ Longitude
-  , _msgBasePos_height :: Double
+  , _msgBasePosLlh_height :: Double
     -- ^ Height
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgBasePos where
+instance Binary MsgBasePosLlh where
   get = do
-    _msgBasePos_lat <- getFloat64le
-    _msgBasePos_lon <- getFloat64le
-    _msgBasePos_height <- getFloat64le
-    return MsgBasePos {..}
+    _msgBasePosLlh_lat <- getFloat64le
+    _msgBasePosLlh_lon <- getFloat64le
+    _msgBasePosLlh_height <- getFloat64le
+    return MsgBasePosLlh {..}
 
-  put MsgBasePos {..} = do
-    putFloat64le _msgBasePos_lat
-    putFloat64le _msgBasePos_lon
-    putFloat64le _msgBasePos_height
+  put MsgBasePosLlh {..} = do
+    putFloat64le _msgBasePosLlh_lat
+    putFloat64le _msgBasePosLlh_lon
+    putFloat64le _msgBasePosLlh_height
 
-$(deriveSBP 'msgBasePos ''MsgBasePos)
+$(deriveSBP 'msgBasePosLlh ''MsgBasePosLlh)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBasePos_" . stripPrefix "_msgBasePos_"}
-             ''MsgBasePos)
-$(makeLenses ''MsgBasePos)
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBasePosLlh_" . stripPrefix "_msgBasePosLlh_"}
+             ''MsgBasePosLlh)
+$(makeLenses ''MsgBasePosLlh)
+
+msgBasePosEcef :: Word16
+msgBasePosEcef = 0x0048
+
+-- | SBP class for message MSG_BASE_POS_ECEF (0x0048).
+--
+-- The base station position message is the position reported by the base
+-- station itself in absolute Earth Centered Earth Fixed coordinates. It is
+-- used for pseudo-absolute RTK positioning, and is required to be a high-
+-- accuracy surveyed location of the base station. Any error here will result
+-- in an error in the pseudo-absolute position output.
+data MsgBasePosEcef = MsgBasePosEcef
+  { _msgBasePosEcef_x :: Double
+    -- ^ ECEF X coodinate
+  , _msgBasePosEcef_y :: Double
+    -- ^ ECEF Y coordinate
+  , _msgBasePosEcef_z :: Double
+    -- ^ ECEF Z coordinate
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgBasePosEcef where
+  get = do
+    _msgBasePosEcef_x <- getFloat64le
+    _msgBasePosEcef_y <- getFloat64le
+    _msgBasePosEcef_z <- getFloat64le
+    return MsgBasePosEcef {..}
+
+  put MsgBasePosEcef {..} = do
+    putFloat64le _msgBasePosEcef_x
+    putFloat64le _msgBasePosEcef_y
+    putFloat64le _msgBasePosEcef_z
+
+$(deriveSBP 'msgBasePosEcef ''MsgBasePosEcef)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBasePosEcef_" . stripPrefix "_msgBasePosEcef_"}
+             ''MsgBasePosEcef)
+$(makeLenses ''MsgBasePosEcef)
 
 msgEphemeris :: Word16
 msgEphemeris = 0x0047

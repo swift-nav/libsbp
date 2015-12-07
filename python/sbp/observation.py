@@ -363,11 +363,11 @@ satellite being tracked.
     d.update(j)
     return d
     
-SBP_MSG_BASE_POS = 0x0044
-class MsgBasePos(SBP):
-  """SBP class for message MSG_BASE_POS (0x0044).
+SBP_MSG_BASE_POS_LLH = 0x0044
+class MsgBasePosLLH(SBP):
+  """SBP class for message MSG_BASE_POS_LLH (0x0044).
 
-  You can have MSG_BASE_POS inherit its fields directly
+  You can have MSG_BASE_POS_LLH inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -393,7 +393,7 @@ error in the pseudo-absolute position output.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBasePos",
+  _parser = Struct("MsgBasePosLLH",
                    LFloat64('lat'),
                    LFloat64('lon'),
                    LFloat64('height'),)
@@ -405,13 +405,13 @@ error in the pseudo-absolute position output.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgBasePos,
+      super( MsgBasePosLLH,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgBasePos, self).__init__()
-      self.msg_type = SBP_MSG_BASE_POS
+      super( MsgBasePosLLH, self).__init__()
+      self.msg_type = SBP_MSG_BASE_POS_LLH
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.lat = kwargs.pop('lat')
       self.lon = kwargs.pop('lon')
@@ -426,12 +426,12 @@ error in the pseudo-absolute position output.
 
     """
     d = json.loads(s)
-    return MsgBasePos.from_json_dict(d)
+    return MsgBasePosLLH.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgBasePos(sbp, **d)
+    return MsgBasePosLLH(sbp, **d)
 
  
   def from_binary(self, d):
@@ -439,7 +439,7 @@ error in the pseudo-absolute position output.
     the message.
 
     """
-    p = MsgBasePos._parser.parse(d)
+    p = MsgBasePosLLH._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -448,12 +448,108 @@ error in the pseudo-absolute position output.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgBasePos._parser.build(c)
+    self.payload = MsgBasePosLLH._parser.build(c)
     return self.pack()
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgBasePos, self).to_json_dict()
+    d = super( MsgBasePosLLH, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_BASE_POS_ECEF = 0x0048
+class MsgBasePosECEF(SBP):
+  """SBP class for message MSG_BASE_POS_ECEF (0x0048).
+
+  You can have MSG_BASE_POS_ECEF inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The base station position message is the position reported by
+the base station itself in absolute Earth Centered Earth Fixed
+coordinates. It is used for pseudo-absolute RTK positioning, and
+is required to be a high-accuracy surveyed location of the base
+station. Any error here will result in an error in the
+pseudo-absolute position output.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  x : double
+    ECEF X coodinate
+  y : double
+    ECEF Y coordinate
+  z : double
+    ECEF Z coordinate
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgBasePosECEF",
+                   LFloat64('x'),
+                   LFloat64('y'),
+                   LFloat64('z'),)
+  __slots__ = [
+               'x',
+               'y',
+               'z',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgBasePosECEF,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgBasePosECEF, self).__init__()
+      self.msg_type = SBP_MSG_BASE_POS_ECEF
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgBasePosECEF.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgBasePosECEF(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgBasePosECEF._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgBasePosECEF._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgBasePosECEF, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -1188,7 +1284,8 @@ satellite being tracked.
 
 msg_classes = {
   0x0043: MsgObs,
-  0x0044: MsgBasePos,
+  0x0044: MsgBasePosLLH,
+  0x0048: MsgBasePosECEF,
   0x0047: MsgEphemeris,
   0x001A: MsgEphemerisDepA,
   0x0046: MsgEphemerisDepB,

@@ -179,7 +179,7 @@ MsgObs.prototype.fieldSpec.push(['header', ObservationHeader.prototype.fieldSpec
 MsgObs.prototype.fieldSpec.push(['obs', 'array', PackedObsContent.prototype.fieldSpec, function () { return this.fields.array.length; }]);
 
 /**
- * SBP class for message MSG_BASE_POS (0x0044).
+ * SBP class for message MSG_BASE_POS_LLH (0x0044).
  *
  * The base station position message is the position reported by the base station
  * itself. It is used for pseudo-absolute RTK positioning, and is required to be a
@@ -193,24 +193,59 @@ MsgObs.prototype.fieldSpec.push(['obs', 'array', PackedObsContent.prototype.fiel
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBasePos = function (sbp) {
+var MsgBasePosLlh = function (sbp) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_BASE_POS";
+  this.messageType = "MSG_BASE_POS_LLH";
   this.fields = this.parser.parse(sbp.payload);
 
   return this;
 };
-MsgBasePos.prototype = Object.create(SBP.prototype);
-MsgBasePos.prototype.constructor = MsgBasePos;
-MsgBasePos.prototype.parser = new Parser()
+MsgBasePosLlh.prototype = Object.create(SBP.prototype);
+MsgBasePosLlh.prototype.constructor = MsgBasePosLlh;
+MsgBasePosLlh.prototype.parser = new Parser()
   .endianess('little')
   .doublele('lat')
   .doublele('lon')
   .doublele('height');
-MsgBasePos.prototype.fieldSpec = [];
-MsgBasePos.prototype.fieldSpec.push(['lat', 'writeDoubleLE', 8]);
-MsgBasePos.prototype.fieldSpec.push(['lon', 'writeDoubleLE', 8]);
-MsgBasePos.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
+MsgBasePosLlh.prototype.fieldSpec = [];
+MsgBasePosLlh.prototype.fieldSpec.push(['lat', 'writeDoubleLE', 8]);
+MsgBasePosLlh.prototype.fieldSpec.push(['lon', 'writeDoubleLE', 8]);
+MsgBasePosLlh.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
+
+/**
+ * SBP class for message MSG_BASE_POS_ECEF (0x0048).
+ *
+ * The base station position message is the position reported by the base station
+ * itself in absolute Earth Centered Earth Fixed coordinates. It is used for
+ * pseudo-absolute RTK positioning, and is required to be a high-accuracy surveyed
+ * location of the base station. Any error here will result in an error in the
+ * pseudo-absolute position output.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field x number (float, 8 bytes) ECEF X coodinate
+ * @field y number (float, 8 bytes) ECEF Y coordinate
+ * @field z number (float, 8 bytes) ECEF Z coordinate
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgBasePosEcef = function (sbp) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_BASE_POS_ECEF";
+  this.fields = this.parser.parse(sbp.payload);
+
+  return this;
+};
+MsgBasePosEcef.prototype = Object.create(SBP.prototype);
+MsgBasePosEcef.prototype.constructor = MsgBasePosEcef;
+MsgBasePosEcef.prototype.parser = new Parser()
+  .endianess('little')
+  .doublele('x')
+  .doublele('y')
+  .doublele('z');
+MsgBasePosEcef.prototype.fieldSpec = [];
+MsgBasePosEcef.prototype.fieldSpec.push(['x', 'writeDoubleLE', 8]);
+MsgBasePosEcef.prototype.fieldSpec.push(['y', 'writeDoubleLE', 8]);
+MsgBasePosEcef.prototype.fieldSpec.push(['z', 'writeDoubleLE', 8]);
 
 /**
  * SBP class for message MSG_EPHEMERIS (0x0047).
@@ -599,7 +634,8 @@ module.exports = {
   ObservationHeader: ObservationHeader,
   PackedObsContent: PackedObsContent,
   0x0043: MsgObs,
-  0x0044: MsgBasePos,
+  0x0044: MsgBasePosLlh,
+  0x0048: MsgBasePosEcef,
   0x0047: MsgEphemeris,
   0x001A: MsgEphemerisDepA,
   0x0046: MsgEphemerisDepB,
