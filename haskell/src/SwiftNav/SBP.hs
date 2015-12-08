@@ -62,7 +62,8 @@ data SBPMsg =
      SBPMsgAcqResult MsgAcqResult Msg
    | SBPMsgAcqResultDepA MsgAcqResultDepA Msg
    | SBPMsgAlmanac MsgAlmanac Msg
-   | SBPMsgBasePos MsgBasePos Msg
+   | SBPMsgBasePosEcef MsgBasePosEcef Msg
+   | SBPMsgBasePosLlh MsgBasePosLlh Msg
    | SBPMsgBaselineEcef MsgBaselineEcef Msg
    | SBPMsgBaselineHeading MsgBaselineHeading Msg
    | SBPMsgBaselineNed MsgBaselineNed Msg
@@ -142,7 +143,8 @@ instance Binary SBPMsg where
           | _msgSBPType == msgAcqResult = SBPMsgAcqResult (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgAcqResultDepA = SBPMsgAcqResultDepA (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgAlmanac = SBPMsgAlmanac (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgBasePos = SBPMsgBasePos (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgBasePosEcef = SBPMsgBasePosEcef (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgBasePosLlh = SBPMsgBasePosLlh (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgBaselineEcef = SBPMsgBaselineEcef (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgBaselineHeading = SBPMsgBaselineHeading (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgBaselineNed = SBPMsgBaselineNed (decode (fromStrict _msgSBPPayload)) sbp
@@ -216,7 +218,8 @@ instance Binary SBPMsg where
       encode' (SBPMsgAcqResult _ sbp) = sbp
       encode' (SBPMsgAcqResultDepA _ sbp) = sbp
       encode' (SBPMsgAlmanac _ sbp) = sbp
-      encode' (SBPMsgBasePos _ sbp) = sbp
+      encode' (SBPMsgBasePosEcef _ sbp) = sbp
+      encode' (SBPMsgBasePosLlh _ sbp) = sbp
       encode' (SBPMsgBaselineEcef _ sbp) = sbp
       encode' (SBPMsgBaselineHeading _ sbp) = sbp
       encode' (SBPMsgBaselineNed _ sbp) = sbp
@@ -292,7 +295,8 @@ instance FromJSON SBPMsg where
         | msgType == msgAcqResult = SBPMsgAcqResult <$> parseJSON obj <*> parseJSON obj
         | msgType == msgAcqResultDepA = SBPMsgAcqResultDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgAlmanac = SBPMsgAlmanac <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgBasePos = SBPMsgBasePos <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgBasePosEcef = SBPMsgBasePosEcef <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgBasePosLlh = SBPMsgBasePosLlh <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBaselineEcef = SBPMsgBaselineEcef <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBaselineHeading = SBPMsgBaselineHeading <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBaselineNed = SBPMsgBaselineNed <$> parseJSON obj <*> parseJSON obj
@@ -370,7 +374,8 @@ instance ToJSON SBPMsg where
    toJSON (SBPMsgAcqResult msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgAcqResultDepA msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgAlmanac msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgBasePos msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgBasePosEcef msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgBasePosLlh msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgBaselineEcef msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgBaselineHeading msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgBaselineNed msg sbp) = toJSON msg `merge` toJSON sbp

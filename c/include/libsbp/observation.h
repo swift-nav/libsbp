@@ -106,12 +106,29 @@ satellite being tracked.
  * location of the base station. Any error here will result in an
  * error in the pseudo-absolute position output.
  */
-#define SBP_MSG_BASE_POS        0x0044
+#define SBP_MSG_BASE_POS_LLH    0x0044
 typedef struct __attribute__((packed)) {
   double lat;       /**< Latitude [deg] */
   double lon;       /**< Longitude [deg] */
   double height;    /**< Height [m] */
-} msg_base_pos_t;
+} msg_base_pos_llh_t;
+
+
+/** Base station position in ECEF
+ *
+ * The base station position message is the position reported by
+ * the base station itself in absolute Earth Centered Earth Fixed
+ * coordinates. It is used for pseudo-absolute RTK positioning, and
+ * is required to be a high-accuracy surveyed location of the base
+ * station. Any error here will result in an error in the
+ * pseudo-absolute position output.
+ */
+#define SBP_MSG_BASE_POS_ECEF   0x0048
+typedef struct __attribute__((packed)) {
+  double x;    /**< ECEF X coodinate [m] */
+  double y;    /**< ECEF Y coordinate [m] */
+  double z;    /**< ECEF Z coordinate [m] */
+} msg_base_pos_ecef_t;
 
 
 /** Satellite broadcast ephemeris

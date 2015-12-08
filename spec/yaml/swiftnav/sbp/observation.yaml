@@ -111,7 +111,7 @@ definitions:
               Pseudorange and carrier phase observation for a
               satellite being tracked.
 
- - MSG_BASE_POS:
+ - MSG_BASE_POS_LLH:
     id: 0x0044
     short_desc: Base station position
     desc: |
@@ -133,6 +133,30 @@ definitions:
             type: double
             units: m
             desc: Height
+
+ - MSG_BASE_POS_ECEF:
+    id: 0x0048
+    short_desc: Base station position in ECEF
+    desc: |
+      The base station position message is the position reported by
+      the base station itself in absolute Earth Centered Earth Fixed
+      coordinates. It is used for pseudo-absolute RTK positioning, and
+      is required to be a high-accuracy surveyed location of the base
+      station. Any error here will result in an error in the
+      pseudo-absolute position output.
+    fields:
+        - x:
+            type: double
+            units: m
+            desc: ECEF X coodinate
+        - y:
+            type: double
+            units: m
+            desc: ECEF Y coordinate
+        - z:
+            type: double
+            units: m
+            desc: ECEF Z coordinate
 
  - MSG_EPHEMERIS:
     id: 0x0047
