@@ -87,7 +87,7 @@ definitions:
               signal has lost and regained lock, indicating that the
               carrier phase ambiguity may have changed.
         - sid:
-            type: SBPGnssSignal
+            type: GnssSignal
             desc: GNSS signal identifier
 
  - MSG_OBS:
@@ -266,7 +266,7 @@ definitions:
           type: u8
           desc: Satellite is healthy?
       - sid:
-          type: SBPGnssSignal
+          type: GnssSignal
           desc: GNSS signal identifier
       - iode:
           type: u8

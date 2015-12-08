@@ -41,7 +41,7 @@ definitions:
             units: hz
             desc: Carrier frequency of best point
         - sid:
-            type: SBPGnssSignal
+            type: GnssSignal
             desc: GNSS signal for which acquisition was attempted
 
  - MSG_ACQ_RESULT_DEP_A:
