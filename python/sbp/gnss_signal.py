@@ -23,8 +23,8 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, gr
 # Please do not hand edit!
 
 
-class SBPGnssSignal(object):
-  """SBPGnssSignal.
+class GnssSignal(object):
+  """GnssSignal.
   
   Signal identifier containing constellation, band, and satellite identifier
 
@@ -39,7 +39,7 @@ class SBPGnssSignal(object):
     Constellation to which the satellite belongs
 
   """
-  _parser = Embedded(Struct("SBPGnssSignal",
+  _parser = Embedded(Struct("GnssSignal",
                      ULInt16('sat'),
                      ULInt8('band'),
                      ULInt8('constellation'),))
@@ -61,13 +61,13 @@ class SBPGnssSignal(object):
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = SBPGnssSignal._parser.parse(d)
+    p = GnssSignal._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return SBPGnssSignal.build(d)
+    return GnssSignal.build(d)
     
 
 msg_classes = {

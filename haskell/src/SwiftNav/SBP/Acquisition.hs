@@ -44,7 +44,7 @@ data MsgAcqResult = MsgAcqResult
     -- ^ Code phase of best point
   , _msgAcqResult_cf :: Float
     -- ^ Carrier frequency of best point
-  , _msgAcqResult_sid :: SBPGnssSignal
+  , _msgAcqResult_sid :: GnssSignal
     -- ^ GNSS signal for which acquisition was attempted
   } deriving ( Show, Read, Eq )
 

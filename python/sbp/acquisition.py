@@ -52,7 +52,7 @@ be in units of dB Hz in a later revision of this message.
     Code phase of best point
   cf : float
     Carrier frequency of best point
-  sid : SBPGnssSignal
+  sid : GnssSignal
     GNSS signal for which acquisition was attempted
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -62,7 +62,7 @@ be in units of dB Hz in a later revision of this message.
                    LFloat32('snr'),
                    LFloat32('cp'),
                    LFloat32('cf'),
-                   Struct('sid', SBPGnssSignal._parser),)
+                   Struct('sid', GnssSignal._parser),)
   __slots__ = [
                'snr',
                'cp',

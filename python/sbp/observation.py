@@ -173,7 +173,7 @@ tracked.
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
 
-  sid : SBPGnssSignal
+  sid : GnssSignal
     GNSS signal identifier
 
   """
@@ -182,7 +182,7 @@ carrier phase ambiguity may have changed.
                      Struct('L', CarrierPhase._parser),
                      ULInt8('cn0'),
                      ULInt16('lock'),
-                     Struct('sid', SBPGnssSignal._parser),))
+                     Struct('sid', GnssSignal._parser),))
   __slots__ = [
                'P',
                'L',
@@ -624,7 +624,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Is valid?
   healthy : int
     Satellite is healthy?
-  sid : SBPGnssSignal
+  sid : GnssSignal
     GNSS signal identifier
   iode : int
     Issue of ephemeris data
@@ -662,7 +662,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    ULInt16('toc_wn'),
                    ULInt8('valid'),
                    ULInt8('healthy'),
-                   Struct('sid', SBPGnssSignal._parser),
+                   Struct('sid', GnssSignal._parser),
                    ULInt8('iode'),
                    ULInt16('iodc'),
                    ULInt32('reserved'),)

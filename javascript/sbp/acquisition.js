@@ -35,7 +35,7 @@ var SBPGnssSignal = require("./gnss_signal").SBPGnssSignal;
  *   Hz in a later revision of this message.
  * @field cp number (float, 4 bytes) Code phase of best point
  * @field cf number (float, 4 bytes) Carrier frequency of best point
- * @field sid SBPGnssSignal GNSS signal for which acquisition was attempted
+ * @field sid GnssSignal GNSS signal for which acquisition was attempted
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -53,12 +53,12 @@ MsgAcqResult.prototype.parser = new Parser()
   .floatle('snr')
   .floatle('cp')
   .floatle('cf')
-  .nest('sid', { type: SBPGnssSignal.prototype.parser });
+  .nest('sid', { type: GnssSignal.prototype.parser });
 MsgAcqResult.prototype.fieldSpec = [];
 MsgAcqResult.prototype.fieldSpec.push(['snr', 'writeFloatLE', 4]);
 MsgAcqResult.prototype.fieldSpec.push(['cp', 'writeFloatLE', 4]);
 MsgAcqResult.prototype.fieldSpec.push(['cf', 'writeFloatLE', 4]);
-MsgAcqResult.prototype.fieldSpec.push(['sid', SBPGnssSignal.prototype.fieldSpec]);
+MsgAcqResult.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 
 /**
  * SBP class for message MSG_ACQ_RESULT_DEP_A (0x0015).

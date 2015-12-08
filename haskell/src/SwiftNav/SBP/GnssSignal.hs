@@ -26,29 +26,29 @@ import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
--- | SBPGnssSignal.
+-- | GnssSignal.
 --
 -- Signal identifier containing constellation, band, and satellite identifier
-data SBPGnssSignal = SBPGnssSignal
-  { _sBPGnssSignal_sat         :: Word16
+data GnssSignal = GnssSignal
+  { _gnssSignal_sat         :: Word16
     -- ^ Constellation-specific satellite identifier
-  , _sBPGnssSignal_band        :: Word8
+  , _gnssSignal_band        :: Word8
     -- ^ Signal band
-  , _sBPGnssSignal_constellation :: Word8
+  , _gnssSignal_constellation :: Word8
     -- ^ Constellation to which the satellite belongs
   } deriving ( Show, Read, Eq )
 
-instance Binary SBPGnssSignal where
+instance Binary GnssSignal where
   get = do
-    _sBPGnssSignal_sat <- getWord16le
-    _sBPGnssSignal_band <- getWord8
-    _sBPGnssSignal_constellation <- getWord8
-    return SBPGnssSignal {..}
+    _gnssSignal_sat <- getWord16le
+    _gnssSignal_band <- getWord8
+    _gnssSignal_constellation <- getWord8
+    return GnssSignal {..}
 
-  put SBPGnssSignal {..} = do
-    putWord16le _sBPGnssSignal_sat
-    putWord8 _sBPGnssSignal_band
-    putWord8 _sBPGnssSignal_constellation
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_sBPGnssSignal_" . stripPrefix "_sBPGnssSignal_"}
-             ''SBPGnssSignal)
-$(makeLenses ''SBPGnssSignal)
+  put GnssSignal {..} = do
+    putWord16le _gnssSignal_sat
+    putWord8 _gnssSignal_band
+    putWord8 _gnssSignal_constellation
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gnssSignal_" . stripPrefix "_gnssSignal_"}
+             ''GnssSignal)
+$(makeLenses ''GnssSignal)

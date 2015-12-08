@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class SBPGnssSignal extends SBPStruct {
+public class GnssSignal extends SBPStruct {
     
     /** Constellation-specific satellite identifier */
     public int sat;
@@ -33,10 +33,10 @@ public class SBPGnssSignal extends SBPStruct {
     public int constellation;
     
 
-    public SBPGnssSignal () {}
+    public GnssSignal () {}
 
     @Override
-    public SBPGnssSignal parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public GnssSignal parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         sat = parser.getU16();
         band = parser.getU8();

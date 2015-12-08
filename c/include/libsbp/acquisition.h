@@ -42,7 +42,7 @@ be in units of dB Hz in a later revision of this message.
  */
   float cp;     /**< Code phase of best point [chips] */
   float cf;     /**< Carrier frequency of best point [hz] */
-  sbp_gnss_signal_t sid;    /**< GNSS signal for which acquisition was attempted */
+  gnss_signal_t sid;    /**< GNSS signal for which acquisition was attempted */
 } msg_acq_result_t;
 
 

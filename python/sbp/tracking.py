@@ -36,7 +36,7 @@ measured signal power.
   ----------
   state : int
     Status of tracking channel
-  sid : SBPGnssSignal
+  sid : GnssSignal
     GNSS signal being tracked
   cn0 : float
     Carrier-to-noise density
@@ -44,7 +44,7 @@ measured signal power.
   """
   _parser = Embedded(Struct("TrackingChannelState",
                      ULInt8('state'),
-                     Struct('sid', SBPGnssSignal._parser),
+                     Struct('sid', GnssSignal._parser),
                      LFloat32('cn0'),))
   __slots__ = [
                'state',
@@ -260,7 +260,7 @@ update interval.
     SBP parent object to inherit from.
   channel : int
     Tracking channel of origin
-  sid : SBPGnssSignal
+  sid : GnssSignal
     GNSS signal identifier
   corrs : array
     Early, Prompt and Late correlations
@@ -270,7 +270,7 @@ update interval.
   """
   _parser = Struct("MsgTrackingIq",
                    ULInt8('channel'),
-                   Struct('sid', SBPGnssSignal._parser),
+                   Struct('sid', GnssSignal._parser),
                    Struct('corrs', Array(3, Struct('corrs', TrackingChannelCorrelation._parser))),)
   __slots__ = [
                'channel',

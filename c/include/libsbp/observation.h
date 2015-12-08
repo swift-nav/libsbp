@@ -77,7 +77,7 @@ typedef struct __attribute__((packed)) {
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
  */
-  sbp_gnss_signal_t sid;     /**< GNSS signal identifier */
+  gnss_signal_t sid;     /**< GNSS signal identifier */
 } packed_obs_content_t;
 
 
@@ -166,7 +166,7 @@ typedef struct __attribute__((packed)) {
   u16 toc_wn;      /**< Clock reference week number [week] */
   u8 valid;       /**< Is valid? */
   u8 healthy;     /**< Satellite is healthy? */
-  sbp_gnss_signal_t sid;         /**< GNSS signal identifier */
+  gnss_signal_t sid;         /**< GNSS signal identifier */
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
   u32 reserved;    /**< Reserved field */

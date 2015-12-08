@@ -34,7 +34,7 @@
  */
 typedef struct __attribute__((packed)) {
   u8 state;    /**< Status of tracking channel */
-  sbp_gnss_signal_t sid;      /**< GNSS signal being tracked */
+  gnss_signal_t sid;      /**< GNSS signal being tracked */
   float cn0;      /**< Carrier-to-noise density [dB Hz] */
 } tracking_channel_state_t;
 
@@ -69,7 +69,7 @@ typedef struct __attribute__((packed)) {
 #define SBP_MSG_TRACKING_IQ          0x001C
 typedef struct __attribute__((packed)) {
   u8 channel;    /**< Tracking channel of origin */
-  sbp_gnss_signal_t sid;        /**< GNSS signal identifier */
+  gnss_signal_t sid;        /**< GNSS signal identifier */
   tracking_channel_correlation_t corrs[3];   /**< Early, Prompt and Late correlations */
 } msg_tracking_iq_t;
 

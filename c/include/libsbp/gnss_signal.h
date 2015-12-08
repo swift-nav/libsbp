@@ -34,7 +34,7 @@ typedef struct __attribute__((packed)) {
   u16 sat;              /**< Constellation-specific satellite identifier */
   u8 band;             /**< Signal band */
   u8 constellation;    /**< Constellation to which the satellite belongs */
-} sbp_gnss_signal_t;
+} gnss_signal_t;
 
 
 /** \} */
