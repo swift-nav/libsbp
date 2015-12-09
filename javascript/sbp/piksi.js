@@ -21,7 +21,7 @@
 
 var SBP = require('./sbp');
 var Parser = require('binary-parser').Parser;
-var SBPGnssSignal = require("./gnss_signal").SBPGnssSignal;
+var GnssSignal = require("./gnss_signal").GnssSignal;
 
 /**
  * SBP class for message MSG_ALMANAC (0x0069).
