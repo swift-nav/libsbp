@@ -183,7 +183,7 @@ typedef struct __attribute__((packed)) {
 #define SBP_MSG_MASK_SATELLITE 0x001B
 typedef struct __attribute__((packed)) {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
-  gnss_signal_t sid;     /**< GNSS signal for which the mask is applied */
+  sbp_gnss_signal_t sid;     /**< GNSS signal for which the mask is applied */
 } msg_mask_satellite_t;
 
 
