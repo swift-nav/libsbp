@@ -34,7 +34,7 @@ import SwiftNav.SBP.GnssSignal
 data TrackingChannelState = TrackingChannelState
   { _trackingChannelState_state :: Word8
     -- ^ Status of tracking channel
-  , _trackingChannelState_sid :: SBPGnssSignal
+  , _trackingChannelState_sid :: GnssSignal
     -- ^ GNSS signal being tracked
   , _trackingChannelState_cn0 :: Float
     -- ^ Carrier-to-noise density
@@ -115,7 +115,7 @@ msgTrackingIq = 0x001C
 data MsgTrackingIq = MsgTrackingIq
   { _msgTrackingIq_channel :: Word8
     -- ^ Tracking channel of origin
-  , _msgTrackingIq_sid   :: SBPGnssSignal
+  , _msgTrackingIq_sid   :: GnssSignal
     -- ^ GNSS signal identifier
   , _msgTrackingIq_corrs :: [TrackingChannelCorrelation]
     -- ^ Early, Prompt and Late correlations

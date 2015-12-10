@@ -20,7 +20,7 @@
 
 var SBP = require('./sbp');
 var Parser = require('binary-parser').Parser;
-var SBPGnssSignal = require("./gnss_signal").SBPGnssSignal;
+var GnssSignal = require("./gnss_signal").GnssSignal;
 
 /**
  * SBP class for message fragment TrackingChannelState
@@ -30,7 +30,7 @@ var SBPGnssSignal = require("./gnss_signal").SBPGnssSignal;
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field state number (unsigned 8-bit int, 1 byte) Status of tracking channel
- * @field sid SBPGnssSignal GNSS signal being tracked
+ * @field sid GnssSignal GNSS signal being tracked
  * @field cn0 number (float, 4 bytes) Carrier-to-noise density
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -47,11 +47,11 @@ TrackingChannelState.prototype.constructor = TrackingChannelState;
 TrackingChannelState.prototype.parser = new Parser()
   .endianess('little')
   .uint8('state')
-  .nest('sid', { type: SBPGnssSignal.prototype.parser })
+  .nest('sid', { type: GnssSignal.prototype.parser })
   .floatle('cn0');
 TrackingChannelState.prototype.fieldSpec = [];
 TrackingChannelState.prototype.fieldSpec.push(['state', 'writeUInt8', 1]);
-TrackingChannelState.prototype.fieldSpec.push(['sid', SBPGnssSignal.prototype.fieldSpec]);
+TrackingChannelState.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 TrackingChannelState.prototype.fieldSpec.push(['cn0', 'writeFloatLE', 4]);
 
 /**
@@ -117,7 +117,7 @@ TrackingChannelCorrelation.prototype.fieldSpec.push(['Q', 'writeInt32LE', 4]);
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field channel number (unsigned 8-bit int, 1 byte) Tracking channel of origin
- * @field sid SBPGnssSignal GNSS signal identifier
+ * @field sid GnssSignal GNSS signal identifier
  * @field corrs array Early, Prompt and Late correlations
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -134,11 +134,11 @@ MsgTrackingIq.prototype.constructor = MsgTrackingIq;
 MsgTrackingIq.prototype.parser = new Parser()
   .endianess('little')
   .uint8('channel')
-  .nest('sid', { type: SBPGnssSignal.prototype.parser })
+  .nest('sid', { type: GnssSignal.prototype.parser })
   .array('corrs', { length: 3, type: TrackingChannelCorrelation.prototype.parser });
 MsgTrackingIq.prototype.fieldSpec = [];
 MsgTrackingIq.prototype.fieldSpec.push(['channel', 'writeUInt8', 1]);
-MsgTrackingIq.prototype.fieldSpec.push(['sid', SBPGnssSignal.prototype.fieldSpec]);
+MsgTrackingIq.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 MsgTrackingIq.prototype.fieldSpec.push(['corrs', 'array', TrackingChannelCorrelation.prototype.fieldSpec, function () { return this.fields.array.length; }]);
 
 /**

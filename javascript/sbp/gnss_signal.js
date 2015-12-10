@@ -22,7 +22,7 @@ var SBP = require('./sbp');
 var Parser = require('binary-parser').Parser;
 
 /**
- * SBP class for message fragment SBPGnssSignal
+ * SBP class for message fragment GnssSignal
  *
  * Signal identifier containing constellation, band, and satellite identifier
  *
@@ -33,25 +33,25 @@ var Parser = require('binary-parser').Parser;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var SBPGnssSignal = function (sbp) {
+var GnssSignal = function (sbp) {
   SBP.call(this, sbp);
-  this.messageType = "SBPGnssSignal";
+  this.messageType = "GnssSignal";
   this.fields = this.parser.parse(sbp.payload);
 
   return this;
 };
-SBPGnssSignal.prototype = Object.create(SBP.prototype);
-SBPGnssSignal.prototype.constructor = SBPGnssSignal;
-SBPGnssSignal.prototype.parser = new Parser()
+GnssSignal.prototype = Object.create(SBP.prototype);
+GnssSignal.prototype.constructor = GnssSignal;
+GnssSignal.prototype.parser = new Parser()
   .endianess('little')
   .uint16('sat')
   .uint8('band')
   .uint8('constellation');
-SBPGnssSignal.prototype.fieldSpec = [];
-SBPGnssSignal.prototype.fieldSpec.push(['sat', 'writeUInt16LE', 2]);
-SBPGnssSignal.prototype.fieldSpec.push(['band', 'writeUInt8', 1]);
-SBPGnssSignal.prototype.fieldSpec.push(['constellation', 'writeUInt8', 1]);
+GnssSignal.prototype.fieldSpec = [];
+GnssSignal.prototype.fieldSpec.push(['sat', 'writeUInt16LE', 2]);
+GnssSignal.prototype.fieldSpec.push(['band', 'writeUInt8', 1]);
+GnssSignal.prototype.fieldSpec.push(['constellation', 'writeUInt8', 1]);
 
 module.exports = {
-  SBPGnssSignal: SBPGnssSignal,
+  GnssSignal: GnssSignal,
 }

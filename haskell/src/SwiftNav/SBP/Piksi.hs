@@ -384,7 +384,7 @@ msgMaskSatellite = 0x001B
 data MsgMaskSatellite = MsgMaskSatellite
   { _msgMaskSatellite_mask :: Word8
     -- ^ Mask of systems that should ignore this satellite.
-  , _msgMaskSatellite_sid :: SBPGnssSignal
+  , _msgMaskSatellite_sid :: GnssSignal
     -- ^ GNSS signal for which the mask is applied
   } deriving ( Show, Read, Eq )
 

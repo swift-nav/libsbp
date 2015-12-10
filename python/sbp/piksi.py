@@ -810,7 +810,7 @@ from being used in various Piksi subsystems.
     SBP parent object to inherit from.
   mask : int
     Mask of systems that should ignore this satellite.
-  sid : SBPGnssSignal
+  sid : GnssSignal
     GNSS signal for which the mask is applied
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -818,7 +818,7 @@ from being used in various Piksi subsystems.
   """
   _parser = Struct("MsgMaskSatellite",
                    ULInt8('mask'),
-                   Struct('sid', SBPGnssSignal._parser),)
+                   Struct('sid', GnssSignal._parser),)
   __slots__ = [
                'mask',
                'sid',

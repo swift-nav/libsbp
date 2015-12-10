@@ -16,7 +16,7 @@ include:
   - types.yaml
 definitions:
 
- - SBPGnssSignal:
+ - GnssSignal:
     short_desc: Represents all the relevant information about the signal
     desc: |
         Signal identifier containing constellation, band, and satellite identifier

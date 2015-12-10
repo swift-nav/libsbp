@@ -227,6 +227,6 @@ definitions:
                         - 0: Enabled
                         - 1: Skip this satellite on future acquisitions
         - sid:
-            type: SBPGnssSignal
+            type: GnssSignal
             desc: GNSS signal for which the mask is applied
 

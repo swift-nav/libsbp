@@ -114,7 +114,7 @@ data PackedObsContent = PackedObsContent
     -- ^ Lock indicator. This value changes whenever a satellite signal has lost
     -- and regained lock, indicating that the carrier phase ambiguity may have
     -- changed.
-  , _packedObsContent_sid :: SBPGnssSignal
+  , _packedObsContent_sid :: GnssSignal
     -- ^ GNSS signal identifier
   } deriving ( Show, Read, Eq )
 
@@ -306,7 +306,7 @@ data MsgEphemeris = MsgEphemeris
     -- ^ Is valid?
   , _msgEphemeris_healthy :: Word8
     -- ^ Satellite is healthy?
-  , _msgEphemeris_sid    :: SBPGnssSignal
+  , _msgEphemeris_sid    :: GnssSignal
     -- ^ GNSS signal identifier
   , _msgEphemeris_iode   :: Word8
     -- ^ Issue of ephemeris data

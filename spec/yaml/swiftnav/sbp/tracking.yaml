@@ -36,7 +36,7 @@ definitions:
                         - 0: Disabled
                         - 1: Running
         - sid:
-            type: SBPGnssSignal
+            type: GnssSignal
             desc: GNSS signal being tracked
         - cn0:
             type: float
@@ -79,7 +79,7 @@ definitions:
           type: u8
           desc: Tracking channel of origin
       - sid:
-          type: SBPGnssSignal
+          type: GnssSignal
           desc: GNSS signal identifier
       - corrs:
           type: array
