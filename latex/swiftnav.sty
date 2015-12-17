@@ -31,10 +31,10 @@
 }
 
 % Define our alternate color
-\definecolor{alt}{RGB}{140,0,0}
+\definecolor{alt}{RGB}{255,131,0}
 
 % Colored section headings
-\titleformat*{\section}{\color{alt}\normalfont\huge\bfseries}
+\titleformat*{\section}{\color{alt}\normalfont\LARGE\bfseries}
 \titleformat*{\subsection}{\color{alt}\normalfont\Large\bfseries}
 
 % Tweak the page layout
@@ -88,7 +88,7 @@
 }
 
 % Bullet point symbols
-\renewcommand{\labelitemi}{\color{alt}\footnotesize{$\blacksquare$}}
+\renewcommand{\labelitemi}{\color{black}\footnotesize{$\blacksquare$}}
 % Bullet point style with no indent
 \newcommand{\bulletnoindent}{
   \setlength{\itemsep}{0pt}
@@ -151,13 +151,13 @@
       \begin{tikzpicture}%
         \node (top_right) at (\textwidth,0) {};
         \draw[line width=0.5pt] (0,0) -- (top_right);
-        \node [anchor=north west] (logo) {\includegraphics[height=3cm]{logo.pdf}};%
+        \node [anchor=north west] (logo) {\includegraphics[height=3cm]{SwiftNav_Logo_Horizontal_4-color_Size1.eps}};%
         \draw[line width=0.5pt] (logo.south west) -- (logo.south west -| top_right);
         \node [
           anchor=south east,
           text width=15cm,
           align=right
-        ] at (\textwidth, -1.5cm) {\Huge{\textbf{\color{alt}\@title}}};%
+        ] at (\textwidth, -1.5cm) {\huge{\textbf{\color{black}\@title}}};%
         \node [
           anchor=south east,
           text width=15cm,
