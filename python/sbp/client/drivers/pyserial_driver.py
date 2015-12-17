@@ -73,6 +73,9 @@ class PySerialDriver(BaseDriver):
       print "Piksi disconnected"
       print
       raise IOError
+    # TODO what's the root cause of this?
+    except TypeError:
+      raise IOError
 
   def write(self, s):
     """
@@ -89,4 +92,7 @@ class PySerialDriver(BaseDriver):
       print
       print "Piksi disconnected"
       print
+      raise IOError
+    # TODO what's the root cause of this?
+    except TypeError:
       raise IOError
