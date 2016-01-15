@@ -168,6 +168,33 @@ definitions:
             desc: Smoothed estimate of the current latency
 
  - MSG_UART_STATE:
+    id: 0x001D
+    short_desc: State of the UART channels
+    desc: |
+      The UART message reports data latency and throughput of the UART
+      channels providing SBP I/O. On the default Piksi configuration,
+      UARTs A and B are used for telemetry radios, but can also be
+      host access ports for embedded hosts, or other interfaces in
+      future. The reported percentage values must be normalized.
+    fields:
+        - uart_a:
+            type: UARTChannel
+            desc: State of UART A
+        - uart_b:
+            type: UARTChannel
+            desc: State of UART B
+        - uart_ftdi:
+            type: UARTChannel
+            desc: State of UART FTDI (USB logger)
+        - latency:
+            type: Latency
+            desc: UART communication latency
+        - obs_period:
+            type: Latency
+            desc: Observation receipt period
+
+
+ - MSG_UART_STATE_DEPA:
     id: 0x0018
     short_desc: State of the UART channels
     desc: |
