@@ -14,75 +14,12 @@ Generator for c tests target.
 """
 
 from sbpg.targets.templating import *
+from sbpg.targets.c import *
 import base64
 
 TEST_TEMPLATE_NAME = "sbp_c_test.c.j2"
 CHECK_SUITES_TEMPLATE_NAME = "sbp_c_suites.h.j2"
 CHECK_MAIN_TEMPLATE_NAME = "sbp_c_main.c.j2"
-
-def commentify(value):
-  """
-  Builds a comment.
-  """
-  if value is None:
-    return
-  if len(value.split('\n')) == 1:
-    return "* " + value
-  else:
-    return '\n'.join([' * ' + l for l in value.split('\n')[:-1]])
-
-
-def extensions(includes):
-  """Formats a list of header files to include.
-  """
-  return ["".join([i.split(".")[0], ".h"]) for i in includes if i.split(".")[0] != "types"]
-
-import re
-
-CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
-                      's64', 'float', 'double'])
-
-
-def convert(value):
-  """Converts to a C language appropriate identifier format.
-
-  """
-  s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', value)
-  return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower() + "_t"
-
-
-def mk_id(field):
-  """Builds an identifier from a field.
-  """
-  name = field.type_id
-  if name == "string":
-    return "%s" % ("char")
-  elif name == "array" and field.size:
-    if field.options['fill'].value not in CONSTRUCT_CODE:
-      return "%s" % convert(field.options['fill'].value)
-    else:
-      return "%s" % field.options['fill'].value
-  elif name == "array":
-    return "%s" % convert(field.options['fill'].value)
-  elif name not in CONSTRUCT_CODE:
-    return convert(name)
-  else:
-    return name
-
-def mk_size(field):
-  """Builds an identifier for a container type.
-  """
-  name = field.type_id
-  if name == "string" and field.options.get('size', None):
-    return "%s[%d];" % (field.identifier, field.options.get('size').value)
-  elif name == "string":
-    return "%s[0];" % field.identifier
-  elif name == "array" and field.options.get('size', None):
-    return "%s[%d];" % (field.identifier, field.options.get('size').value)
-  elif name == "array":
-    return "%s[0];" % field.identifier
-  else:
-    return '%s;' % field.identifier
 
 def b64_decode(field):
     return base64.standard_b64decode(field)
