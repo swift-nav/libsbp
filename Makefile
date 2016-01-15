@@ -193,6 +193,7 @@ test-javascript: javascript
 	@echo
 	@echo "Running JavaScript tests..."
 	@echo
+	npm install; \
 	npm test
 
 release:
