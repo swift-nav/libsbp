@@ -153,7 +153,7 @@ tests:
         tx_buffer_level: 15
         tx_throughput: 11.600000381469727
     module: sbp.piksi
-    name: MsgUartState
+    name: MsgUartStateDepa
   msg_type: '0x18'
   raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
     1219, "msg_type": 24, "crc": 1527, "length": 58, "uart_b": {"rx_buffer_level":
@@ -201,7 +201,7 @@ tests:
         tx_buffer_level: 0
         tx_throughput: 0.06599999964237213
     module: sbp.piksi
-    name: MsgUartState
+    name: MsgUartStateDepa
   msg_type: '0x18'
   raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
     1219, "msg_type": 24, "crc": 28225, "length": 58, "uart_b": {"rx_buffer_level":
@@ -249,7 +249,7 @@ tests:
         tx_buffer_level: 10
         tx_throughput: 0.13899999856948853
     module: sbp.piksi
-    name: MsgUartState
+    name: MsgUartStateDepa
   msg_type: '0x18'
   raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
     1219, "msg_type": 24, "crc": 9414, "length": 58, "uart_b": {"rx_buffer_level":
@@ -297,7 +297,7 @@ tests:
         tx_buffer_level: 0
         tx_throughput: 0.06599999964237213
     module: sbp.piksi
-    name: MsgUartState
+    name: MsgUartStateDepa
   msg_type: '0x18'
   raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
     1219, "msg_type": 24, "crc": 28225, "length": 58, "uart_b": {"rx_buffer_level":
@@ -345,7 +345,7 @@ tests:
         tx_buffer_level: 38
         tx_throughput: 0.49399998784065247
     module: sbp.piksi
-    name: MsgUartState
+    name: MsgUartStateDepa
   msg_type: '0x18'
   raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
     1219, "msg_type": 24, "crc": 28528, "length": 58, "uart_b": {"rx_buffer_level":
@@ -393,7 +393,7 @@ tests:
         tx_buffer_level: 50
         tx_throughput: 1.315000057220459
     module: sbp.piksi
-    name: MsgUartState
+    name: MsgUartStateDepa
   msg_type: '0x18'
   raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
     1219, "msg_type": 24, "crc": 18454, "length": 58, "uart_b": {"rx_buffer_level":
