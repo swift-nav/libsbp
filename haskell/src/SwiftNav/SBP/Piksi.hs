@@ -307,9 +307,9 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_latency_" . stripP
 $(makeLenses ''Latency)
 
 msgUartState :: Word16
-msgUartState = 0x0018
+msgUartState = 0x001D
 
--- | SBP class for message MSG_UART_STATE (0x0018).
+-- | SBP class for message MSG_UART_STATE (0x001D).
 --
 -- The UART message reports data latency and throughput of the UART channels
 -- providing SBP I/O. On the default Piksi configuration, UARTs A and B are
@@ -317,14 +317,16 @@ msgUartState = 0x0018
 -- hosts, or other interfaces in future. The reported percentage values must be
 -- normalized.
 data MsgUartState = MsgUartState
-  { _msgUartState_uart_a  :: UARTChannel
+  { _msgUartState_uart_a   :: UARTChannel
     -- ^ State of UART A
-  , _msgUartState_uart_b  :: UARTChannel
+  , _msgUartState_uart_b   :: UARTChannel
     -- ^ State of UART B
   , _msgUartState_uart_ftdi :: UARTChannel
     -- ^ State of UART FTDI (USB logger)
-  , _msgUartState_latency :: Latency
+  , _msgUartState_latency  :: Latency
     -- ^ UART communication latency
+  , _msgUartState_obs_period :: Latency
+    -- ^ Observation receipt period
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgUartState where
@@ -333,6 +335,7 @@ instance Binary MsgUartState where
     _msgUartState_uart_b <- get
     _msgUartState_uart_ftdi <- get
     _msgUartState_latency <- get
+    _msgUartState_obs_period <- get
     return MsgUartState {..}
 
   put MsgUartState {..} = do
@@ -340,12 +343,54 @@ instance Binary MsgUartState where
     put _msgUartState_uart_b
     put _msgUartState_uart_ftdi
     put _msgUartState_latency
+    put _msgUartState_obs_period
 
 $(deriveSBP 'msgUartState ''MsgUartState)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUartState_" . stripPrefix "_msgUartState_"}
              ''MsgUartState)
 $(makeLenses ''MsgUartState)
+
+msgUartStateDepa :: Word16
+msgUartStateDepa = 0x0018
+
+-- | SBP class for message MSG_UART_STATE_DEPA (0x0018).
+--
+-- The UART message reports data latency and throughput of the UART channels
+-- providing SBP I/O. On the default Piksi configuration, UARTs A and B are
+-- used for telemetry radios, but can also be host access ports for embedded
+-- hosts, or other interfaces in future. The reported percentage values must be
+-- normalized.
+data MsgUartStateDepa = MsgUartStateDepa
+  { _msgUartStateDepa_uart_a  :: UARTChannel
+    -- ^ State of UART A
+  , _msgUartStateDepa_uart_b  :: UARTChannel
+    -- ^ State of UART B
+  , _msgUartStateDepa_uart_ftdi :: UARTChannel
+    -- ^ State of UART FTDI (USB logger)
+  , _msgUartStateDepa_latency :: Latency
+    -- ^ UART communication latency
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgUartStateDepa where
+  get = do
+    _msgUartStateDepa_uart_a <- get
+    _msgUartStateDepa_uart_b <- get
+    _msgUartStateDepa_uart_ftdi <- get
+    _msgUartStateDepa_latency <- get
+    return MsgUartStateDepa {..}
+
+  put MsgUartStateDepa {..} = do
+    put _msgUartStateDepa_uart_a
+    put _msgUartStateDepa_uart_b
+    put _msgUartStateDepa_uart_ftdi
+    put _msgUartStateDepa_latency
+
+$(deriveSBP 'msgUartStateDepa ''MsgUartStateDepa)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUartStateDepa_" . stripPrefix "_msgUartStateDepa_"}
+             ''MsgUartStateDepa)
+$(makeLenses ''MsgUartStateDepa)
 
 msgIarState :: Word16
 msgIarState = 0x0019

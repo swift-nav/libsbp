@@ -289,7 +289,7 @@ Latency.prototype.fieldSpec.push(['lmax', 'writeInt32LE', 4]);
 Latency.prototype.fieldSpec.push(['current', 'writeInt32LE', 4]);
 
 /**
- * SBP class for message MSG_UART_STATE (0x0018).
+ * SBP class for message MSG_UART_STATE (0x001D).
  *
  * The UART message reports data latency and throughput of the UART channels
  * providing SBP I/O. On the default Piksi configuration, UARTs A and B are used
@@ -301,6 +301,7 @@ Latency.prototype.fieldSpec.push(['current', 'writeInt32LE', 4]);
  * @field uart_b UARTChannel State of UART B
  * @field uart_ftdi UARTChannel State of UART FTDI (USB logger)
  * @field latency Latency UART communication latency
+ * @field obs_period Latency Observation receipt period
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -318,12 +319,51 @@ MsgUartState.prototype.parser = new Parser()
   .nest('uart_a', { type: UARTChannel.prototype.parser })
   .nest('uart_b', { type: UARTChannel.prototype.parser })
   .nest('uart_ftdi', { type: UARTChannel.prototype.parser })
-  .nest('latency', { type: Latency.prototype.parser });
+  .nest('latency', { type: Latency.prototype.parser })
+  .nest('obs_period', { type: Latency.prototype.parser });
 MsgUartState.prototype.fieldSpec = [];
 MsgUartState.prototype.fieldSpec.push(['uart_a', UARTChannel.prototype.fieldSpec]);
 MsgUartState.prototype.fieldSpec.push(['uart_b', UARTChannel.prototype.fieldSpec]);
 MsgUartState.prototype.fieldSpec.push(['uart_ftdi', UARTChannel.prototype.fieldSpec]);
 MsgUartState.prototype.fieldSpec.push(['latency', Latency.prototype.fieldSpec]);
+MsgUartState.prototype.fieldSpec.push(['obs_period', Latency.prototype.fieldSpec]);
+
+/**
+ * SBP class for message MSG_UART_STATE_DEPA (0x0018).
+ *
+ * The UART message reports data latency and throughput of the UART channels
+ * providing SBP I/O. On the default Piksi configuration, UARTs A and B are used
+ * for telemetry radios, but can also be host access ports for embedded hosts, or
+ * other interfaces in future. The reported percentage values must be normalized.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field uart_a UARTChannel State of UART A
+ * @field uart_b UARTChannel State of UART B
+ * @field uart_ftdi UARTChannel State of UART FTDI (USB logger)
+ * @field latency Latency UART communication latency
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgUartStateDepa = function (sbp) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_UART_STATE_DEPA";
+  this.fields = this.parser.parse(sbp.payload);
+
+  return this;
+};
+MsgUartStateDepa.prototype = Object.create(SBP.prototype);
+MsgUartStateDepa.prototype.constructor = MsgUartStateDepa;
+MsgUartStateDepa.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('uart_a', { type: UARTChannel.prototype.parser })
+  .nest('uart_b', { type: UARTChannel.prototype.parser })
+  .nest('uart_ftdi', { type: UARTChannel.prototype.parser })
+  .nest('latency', { type: Latency.prototype.parser });
+MsgUartStateDepa.prototype.fieldSpec = [];
+MsgUartStateDepa.prototype.fieldSpec.push(['uart_a', UARTChannel.prototype.fieldSpec]);
+MsgUartStateDepa.prototype.fieldSpec.push(['uart_b', UARTChannel.prototype.fieldSpec]);
+MsgUartStateDepa.prototype.fieldSpec.push(['uart_ftdi', UARTChannel.prototype.fieldSpec]);
+MsgUartStateDepa.prototype.fieldSpec.push(['latency', Latency.prototype.fieldSpec]);
 
 /**
  * SBP class for message MSG_IAR_STATE (0x0019).
@@ -392,7 +432,8 @@ module.exports = {
   0x0017: MsgThreadState,
   UARTChannel: UARTChannel,
   Latency: Latency,
-  0x0018: MsgUartState,
+  0x001D: MsgUartState,
+  0x0018: MsgUartStateDepa,
   0x0019: MsgIarState,
   0x001B: MsgMaskSatellite,
 }
