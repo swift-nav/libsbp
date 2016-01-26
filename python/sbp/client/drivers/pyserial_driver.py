@@ -42,9 +42,11 @@ class PySerialDriver(BaseDriver):
       handle.baudrate = baud
       handle.timeout = 1
       super(PySerialDriver, self).__init__(handle)
-    except (OSError, serial.SerialException):
+    except (OSError, serial.SerialException) as e:
       print
-      print "Serial device '%s' not found" % port
+      print "Error opening serial device '%s':" % port
+      print e
+      print
       print "The following serial devices were detected:"
       print
       for (name, desc, _) in serial.tools.list_ports.comports():
