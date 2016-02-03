@@ -31,9 +31,9 @@
  * Signal identifier containing constellation, band, and satellite identifier
  */
 typedef struct __attribute__((packed)) {
-  u16 sat;              /**< Constellation-specific satellite identifier */
-  u8 band;             /**< Signal band */
-  u8 constellation;    /**< Constellation to which the satellite belongs */
+  u16 sat;         /**< Constellation-specific satellite identifier */
+  u8 code;        /**< Signal constellation, band and code */
+  u8 reserved;    /**< Reserved */
 } sbp_gnss_signal_t;
 
 

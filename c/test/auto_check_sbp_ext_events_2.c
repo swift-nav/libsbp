@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from /Users/joshuagross/Desktop/Projects/libsbp/spec/tests/yaml/swiftnav/sbp/test_ext_events.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from /home/pasi/pmiettinen/libsbp/spec/tests/yaml/swiftnav/sbp/test_ext_events.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -74,7 +74,7 @@ static void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   /*printy_callback(sender_id, len, msg);*/
 }
 
-START_TEST( test_auto_check_sbp_ext_events_12 )
+START_TEST( test_auto_check_sbp_ext_events_2 )
 {
   static sbp_msg_callbacks_node_t n;
   //static sbp_msg_callbacks_node_t n2;
@@ -134,11 +134,11 @@ START_TEST( test_auto_check_sbp_ext_events_12 )
 }
 END_TEST
 
-Suite* auto_check_sbp_ext_events_12_suite(void)
+Suite* auto_check_sbp_ext_events_2_suite(void)
 {
-  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_ext_events_12");
-  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_ext_events_12");
-  tcase_add_test(tc_acq, test_auto_check_sbp_ext_events_12);
+  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_ext_events_2");
+  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_ext_events_2");
+  tcase_add_test(tc_acq, test_auto_check_sbp_ext_events_2);
   suite_add_tcase(s, tc_acq);
   return s;
 }

@@ -28,8 +28,8 @@ var Parser = require('binary-parser').Parser;
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sat number (unsigned 16-bit int, 2 bytes) Constellation-specific satellite identifier
- * @field band number (unsigned 8-bit int, 1 byte) Signal band
- * @field constellation number (unsigned 8-bit int, 1 byte) Constellation to which the satellite belongs
+ * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
+ * @field reserved number (unsigned 8-bit int, 1 byte) Reserved
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -45,12 +45,12 @@ GnssSignal.prototype.constructor = GnssSignal;
 GnssSignal.prototype.parser = new Parser()
   .endianess('little')
   .uint16('sat')
-  .uint8('band')
-  .uint8('constellation');
+  .uint8('code')
+  .uint8('reserved');
 GnssSignal.prototype.fieldSpec = [];
 GnssSignal.prototype.fieldSpec.push(['sat', 'writeUInt16LE', 2]);
-GnssSignal.prototype.fieldSpec.push(['band', 'writeUInt8', 1]);
-GnssSignal.prototype.fieldSpec.push(['constellation', 'writeUInt8', 1]);
+GnssSignal.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
+GnssSignal.prototype.fieldSpec.push(['reserved', 'writeUInt8', 1]);
 
 module.exports = {
   GnssSignal: GnssSignal,

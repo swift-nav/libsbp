@@ -33,20 +33,20 @@ class GnssSignal(object):
   ----------
   sat : int
     Constellation-specific satellite identifier
-  band : int
-    Signal band
-  constellation : int
-    Constellation to which the satellite belongs
+  code : int
+    Signal constellation, band and code
+  reserved : int
+    Reserved
 
   """
   _parser = Embedded(Struct("GnssSignal",
                      ULInt16('sat'),
-                     ULInt8('band'),
-                     ULInt8('constellation'),))
+                     ULInt8('code'),
+                     ULInt8('reserved'),))
   __slots__ = [
                'sat',
-               'band',
-               'constellation',
+               'code',
+               'reserved',
               ]
 
   def __init__(self, payload=None, **kwargs):
@@ -54,8 +54,8 @@ class GnssSignal(object):
       self.from_binary(payload)
     else:
       self.sat = kwargs.pop('sat')
-      self.band = kwargs.pop('band')
-      self.constellation = kwargs.pop('constellation')
+      self.code = kwargs.pop('code')
+      self.reserved = kwargs.pop('reserved')
 
   def __repr__(self):
     return fmt_repr(self)
