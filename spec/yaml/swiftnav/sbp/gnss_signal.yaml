@@ -24,9 +24,9 @@ definitions:
         - sat:
             type: u16
             desc: Constellation-specific satellite identifier
-        - band:
+        - code:
             type: u8
-            desc: Signal band
-        - constellation:
+            desc: Signal constellation, band and code
+        - reserved:
             type: u8
-            desc: Constellation to which the satellite belongs
+            desc: Reserved

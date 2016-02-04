@@ -9,85 +9,85 @@ tests:
       states:
       - cn0: 39.24782180786133
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 202
         state: 1
       - cn0: 36.09756088256836
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 203
         state: 1
       - cn0: 37.62678527832031
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 208
         state: 1
       - cn0: 39.020729064941406
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 212
         state: 1
       - cn0: 42.03290557861328
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 217
         state: 1
       - cn0: 37.43546676635742
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 218
         state: 1
       - cn0: 38.4229621887207
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 220
         state: 1
       - cn0: 38.91520309448242
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 222
         state: 1
       - cn0: 42.62259292602539
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 225
         state: 1
       - cn0: -1.0
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 0
         state: 0
       - cn0: -1.0
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 0
         state: 0
     module: sbp.tracking
     name: MsgTrackingState
   msg_type: '0x13'
   raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 39.24782180786133,
-    "sid": {"band": 0, "constellation": 0, "sat": 202}}, {"state": 1, "cn0": 36.09756088256836,
-    "sid": {"band": 0, "constellation": 0, "sat": 203}}, {"state": 1, "cn0": 37.62678527832031,
-    "sid": {"band": 0, "constellation": 0, "sat": 208}}, {"state": 1, "cn0": 39.020729064941406,
-    "sid": {"band": 0, "constellation": 0, "sat": 212}}, {"state": 1, "cn0": 42.03290557861328,
-    "sid": {"band": 0, "constellation": 0, "sat": 217}}, {"state": 1, "cn0": 37.43546676635742,
-    "sid": {"band": 0, "constellation": 0, "sat": 218}}, {"state": 1, "cn0": 38.4229621887207,
-    "sid": {"band": 0, "constellation": 0, "sat": 220}}, {"state": 1, "cn0": 38.91520309448242,
-    "sid": {"band": 0, "constellation": 0, "sat": 222}}, {"state": 1, "cn0": 42.62259292602539,
-    "sid": {"band": 0, "constellation": 0, "sat": 225}}, {"state": 0, "cn0": -1.0,
-    "sid": {"band": 0, "constellation": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
-    {"band": 0, "constellation": 0, "sat": 0}}], "crc": 25054, "length": 99, "preamble":
+    "sid": {"code": 0, "reserved": 0, "sat": 202}}, {"state": 1, "cn0": 36.09756088256836,
+    "sid": {"code": 0, "reserved": 0, "sat": 203}}, {"state": 1, "cn0": 37.62678527832031,
+    "sid": {"code": 0, "reserved": 0, "sat": 208}}, {"state": 1, "cn0": 39.020729064941406,
+    "sid": {"code": 0, "reserved": 0, "sat": 212}}, {"state": 1, "cn0": 42.03290557861328,
+    "sid": {"code": 0, "reserved": 0, "sat": 217}}, {"state": 1, "cn0": 37.43546676635742,
+    "sid": {"code": 0, "reserved": 0, "sat": 218}}, {"state": 1, "cn0": 38.4229621887207,
+    "sid": {"code": 0, "reserved": 0, "sat": 220}}, {"state": 1, "cn0": 38.91520309448242,
+    "sid": {"code": 0, "reserved": 0, "sat": 222}}, {"state": 1, "cn0": 42.62259292602539,
+    "sid": {"code": 0, "reserved": 0, "sat": 225}}, {"state": 0, "cn0": -1.0,
+    "sid": {"code": 0, "reserved": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}], "crc": 25054, "length": 99, "preamble":
     85, "payload": "AcoAAADF/RxCAcsAAADnYxBCAdAAAADUgRZCAdQAAAA6FRxCAdkAAACyIShCAdoAAADrvRVCAdwAAAAdsRlCAd4AAAArqRtCAeEAAACJfSpCAAAAAAAAAIC/AAAAAAAAAIC/"}'
   raw_packet: VRMA9tdjAcoAAADF/RxCAcsAAADnYxBCAdAAAADUgRZCAdQAAAA6FRxCAdkAAACyIShCAdoAAADrvRVCAdwAAAAdsRlCAd4AAAArqRtCAeEAAACJfSpCAAAAAAAAAIC/AAAAAAAAAIC/3mE=
   sbp:
@@ -103,85 +103,85 @@ tests:
       states:
       - cn0: 38.994117736816406
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 202
         state: 1
       - cn0: 34.889801025390625
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 203
         state: 1
       - cn0: 37.44603729248047
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 208
         state: 1
       - cn0: 38.72849655151367
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 212
         state: 1
       - cn0: 41.983219146728516
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 217
         state: 1
       - cn0: 37.46448516845703
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 218
         state: 1
       - cn0: 38.44300079345703
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 220
         state: 1
       - cn0: 39.03423309326172
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 222
         state: 1
       - cn0: 42.89944839477539
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 225
         state: 1
       - cn0: -1.0
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 0
         state: 0
       - cn0: -1.0
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 0
         state: 0
     module: sbp.tracking
     name: MsgTrackingState
   msg_type: '0x13'
   raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 38.994117736816406,
-    "sid": {"band": 0, "constellation": 0, "sat": 202}}, {"state": 1, "cn0": 34.889801025390625,
-    "sid": {"band": 0, "constellation": 0, "sat": 203}}, {"state": 1, "cn0": 37.44603729248047,
-    "sid": {"band": 0, "constellation": 0, "sat": 208}}, {"state": 1, "cn0": 38.72849655151367,
-    "sid": {"band": 0, "constellation": 0, "sat": 212}}, {"state": 1, "cn0": 41.983219146728516,
-    "sid": {"band": 0, "constellation": 0, "sat": 217}}, {"state": 1, "cn0": 37.46448516845703,
-    "sid": {"band": 0, "constellation": 0, "sat": 218}}, {"state": 1, "cn0": 38.44300079345703,
-    "sid": {"band": 0, "constellation": 0, "sat": 220}}, {"state": 1, "cn0": 39.03423309326172,
-    "sid": {"band": 0, "constellation": 0, "sat": 222}}, {"state": 1, "cn0": 42.89944839477539,
-    "sid": {"band": 0, "constellation": 0, "sat": 225}}, {"state": 0, "cn0": -1.0,
-    "sid": {"band": 0, "constellation": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
-    {"band": 0, "constellation": 0, "sat": 0}}], "crc": 7956, "length": 99, "preamble":
+    "sid": {"code": 0, "reserved": 0, "sat": 202}}, {"state": 1, "cn0": 34.889801025390625,
+    "sid": {"code": 0, "reserved": 0, "sat": 203}}, {"state": 1, "cn0": 37.44603729248047,
+    "sid": {"code": 0, "reserved": 0, "sat": 208}}, {"state": 1, "cn0": 38.72849655151367,
+    "sid": {"code": 0, "reserved": 0, "sat": 212}}, {"state": 1, "cn0": 41.983219146728516,
+    "sid": {"code": 0, "reserved": 0, "sat": 217}}, {"state": 1, "cn0": 37.46448516845703,
+    "sid": {"code": 0, "reserved": 0, "sat": 218}}, {"state": 1, "cn0": 38.44300079345703,
+    "sid": {"code": 0, "reserved": 0, "sat": 220}}, {"state": 1, "cn0": 39.03423309326172,
+    "sid": {"code": 0, "reserved": 0, "sat": 222}}, {"state": 1, "cn0": 42.89944839477539,
+    "sid": {"code": 0, "reserved": 0, "sat": 225}}, {"state": 0, "cn0": -1.0,
+    "sid": {"code": 0, "reserved": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}], "crc": 7956, "length": 99, "preamble":
     85, "payload": "AcoAAAD6+RtCAcsAAAAojwtCAdAAAAC+yBVCAdQAAAD76RpCAdkAAADR7idCAdoAAACi2xVCAdwAAACixRlCAd4AAAAOIxxCAeEAAAAJmStCAAAAAAAAAIC/AAAAAAAAAIC/"}'
   raw_packet: VRMA9tdjAcoAAAD6+RtCAcsAAAAojwtCAdAAAAC+yBVCAdQAAAD76RpCAdkAAADR7idCAdoAAACi2xVCAdwAAACixRlCAd4AAAAOIxxCAeEAAAAJmStCAAAAAAAAAIC/AAAAAAAAAIC/FB8=
   sbp:
@@ -197,85 +197,85 @@ tests:
       states:
       - cn0: 38.95457077026367
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 202
         state: 1
       - cn0: 35.813316345214844
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 203
         state: 1
       - cn0: 37.553924560546875
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 208
         state: 1
       - cn0: 38.88901901245117
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 212
         state: 1
       - cn0: 42.4013557434082
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 217
         state: 1
       - cn0: 37.63916015625
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 218
         state: 1
       - cn0: 37.919986724853516
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 220
         state: 1
       - cn0: 39.25254440307617
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 222
         state: 1
       - cn0: 42.59827423095703
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 225
         state: 1
       - cn0: -1.0
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 0
         state: 0
       - cn0: -1.0
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 0
         state: 0
     module: sbp.tracking
     name: MsgTrackingState
   msg_type: '0x13'
   raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 38.95457077026367,
-    "sid": {"band": 0, "constellation": 0, "sat": 202}}, {"state": 1, "cn0": 35.813316345214844,
-    "sid": {"band": 0, "constellation": 0, "sat": 203}}, {"state": 1, "cn0": 37.553924560546875,
-    "sid": {"band": 0, "constellation": 0, "sat": 208}}, {"state": 1, "cn0": 38.88901901245117,
-    "sid": {"band": 0, "constellation": 0, "sat": 212}}, {"state": 1, "cn0": 42.4013557434082,
-    "sid": {"band": 0, "constellation": 0, "sat": 217}}, {"state": 1, "cn0": 37.63916015625,
-    "sid": {"band": 0, "constellation": 0, "sat": 218}}, {"state": 1, "cn0": 37.919986724853516,
-    "sid": {"band": 0, "constellation": 0, "sat": 220}}, {"state": 1, "cn0": 39.25254440307617,
-    "sid": {"band": 0, "constellation": 0, "sat": 222}}, {"state": 1, "cn0": 42.59827423095703,
-    "sid": {"band": 0, "constellation": 0, "sat": 225}}, {"state": 0, "cn0": -1.0,
-    "sid": {"band": 0, "constellation": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
-    {"band": 0, "constellation": 0, "sat": 0}}], "crc": 18409, "length": 99, "preamble":
+    "sid": {"code": 0, "reserved": 0, "sat": 202}}, {"state": 1, "cn0": 35.813316345214844,
+    "sid": {"code": 0, "reserved": 0, "sat": 203}}, {"state": 1, "cn0": 37.553924560546875,
+    "sid": {"code": 0, "reserved": 0, "sat": 208}}, {"state": 1, "cn0": 38.88901901245117,
+    "sid": {"code": 0, "reserved": 0, "sat": 212}}, {"state": 1, "cn0": 42.4013557434082,
+    "sid": {"code": 0, "reserved": 0, "sat": 217}}, {"state": 1, "cn0": 37.63916015625,
+    "sid": {"code": 0, "reserved": 0, "sat": 218}}, {"state": 1, "cn0": 37.919986724853516,
+    "sid": {"code": 0, "reserved": 0, "sat": 220}}, {"state": 1, "cn0": 39.25254440307617,
+    "sid": {"code": 0, "reserved": 0, "sat": 222}}, {"state": 1, "cn0": 42.59827423095703,
+    "sid": {"code": 0, "reserved": 0, "sat": 225}}, {"state": 0, "cn0": -1.0,
+    "sid": {"code": 0, "reserved": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}], "crc": 18409, "length": 99, "preamble":
     85, "payload": "AcoAAAB70RtCAcsAAADWQA9CAdAAAAA4NxZCAdQAAABbjhtCAdkAAAD9milCAdoAAACAjhZCAdwAAAARrhdCAd4AAACbAh1CAeEAAACiZCpCAAAAAAAAAIC/AAAAAAAAAIC/"}'
   raw_packet: VRMA9tdjAcoAAAB70RtCAcsAAADWQA9CAdAAAAA4NxZCAdQAAABbjhtCAdkAAAD9milCAdoAAACAjhZCAdwAAAARrhdCAd4AAACbAh1CAeEAAACiZCpCAAAAAAAAAIC/AAAAAAAAAIC/6Uc=
   sbp:
@@ -291,85 +291,85 @@ tests:
       states:
       - cn0: 39.369598388671875
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 202
         state: 1
       - cn0: 36.52173614501953
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 203
         state: 1
       - cn0: 38.15976333618164
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 208
         state: 1
       - cn0: 39.19989776611328
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 212
         state: 1
       - cn0: 41.55845642089844
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 217
         state: 1
       - cn0: 37.026981353759766
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 218
         state: 1
       - cn0: 38.1049690246582
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 220
         state: 1
       - cn0: 39.04584503173828
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 222
         state: 1
       - cn0: 42.37783432006836
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 225
         state: 1
       - cn0: -1.0
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 0
         state: 0
       - cn0: -1.0
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 0
         state: 0
     module: sbp.tracking
     name: MsgTrackingState
   msg_type: '0x13'
   raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 39.369598388671875,
-    "sid": {"band": 0, "constellation": 0, "sat": 202}}, {"state": 1, "cn0": 36.52173614501953,
-    "sid": {"band": 0, "constellation": 0, "sat": 203}}, {"state": 1, "cn0": 38.15976333618164,
-    "sid": {"band": 0, "constellation": 0, "sat": 208}}, {"state": 1, "cn0": 39.19989776611328,
-    "sid": {"band": 0, "constellation": 0, "sat": 212}}, {"state": 1, "cn0": 41.55845642089844,
-    "sid": {"band": 0, "constellation": 0, "sat": 217}}, {"state": 1, "cn0": 37.026981353759766,
-    "sid": {"band": 0, "constellation": 0, "sat": 218}}, {"state": 1, "cn0": 38.1049690246582,
-    "sid": {"band": 0, "constellation": 0, "sat": 220}}, {"state": 1, "cn0": 39.04584503173828,
-    "sid": {"band": 0, "constellation": 0, "sat": 222}}, {"state": 1, "cn0": 42.37783432006836,
-    "sid": {"band": 0, "constellation": 0, "sat": 225}}, {"state": 0, "cn0": -1.0,
-    "sid": {"band": 0, "constellation": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
-    {"band": 0, "constellation": 0, "sat": 0}}], "crc": 49481, "length": 99, "preamble":
+    "sid": {"code": 0, "reserved": 0, "sat": 202}}, {"state": 1, "cn0": 36.52173614501953,
+    "sid": {"code": 0, "reserved": 0, "sat": 203}}, {"state": 1, "cn0": 38.15976333618164,
+    "sid": {"code": 0, "reserved": 0, "sat": 208}}, {"state": 1, "cn0": 39.19989776611328,
+    "sid": {"code": 0, "reserved": 0, "sat": 212}}, {"state": 1, "cn0": 41.55845642089844,
+    "sid": {"code": 0, "reserved": 0, "sat": 217}}, {"state": 1, "cn0": 37.026981353759766,
+    "sid": {"code": 0, "reserved": 0, "sat": 218}}, {"state": 1, "cn0": 38.1049690246582,
+    "sid": {"code": 0, "reserved": 0, "sat": 220}}, {"state": 1, "cn0": 39.04584503173828,
+    "sid": {"code": 0, "reserved": 0, "sat": 222}}, {"state": 1, "cn0": 42.37783432006836,
+    "sid": {"code": 0, "reserved": 0, "sat": 225}}, {"state": 0, "cn0": -1.0,
+    "sid": {"code": 0, "reserved": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}], "crc": 49481, "length": 99, "preamble":
     85, "payload": "AcoAAAB4eh1CAcsAAABCFhJCAdAAAACZoxhCAdQAAACyzBxCAdkAAADcOyZCAdoAAAChGxRCAdwAAAB9axhCAd4AAADyLhxCAeEAAADngilCAAAAAAAAAIC/AAAAAAAAAIC/"}'
   raw_packet: VRMA9tdjAcoAAAB4eh1CAcsAAABCFhJCAdAAAACZoxhCAdQAAACyzBxCAdkAAADcOyZCAdoAAAChGxRCAdwAAAB9axhCAd4AAADyLhxCAeEAAADngilCAAAAAAAAAIC/AAAAAAAAAIC/ScE=
   sbp:
@@ -385,85 +385,85 @@ tests:
       states:
       - cn0: 39.70351791381836
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 202
         state: 1
       - cn0: 36.52388381958008
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 203
         state: 1
       - cn0: 37.169708251953125
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 208
         state: 1
       - cn0: 38.81692886352539
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 212
         state: 1
       - cn0: 42.05073165893555
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 217
         state: 1
       - cn0: 37.807498931884766
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 218
         state: 1
       - cn0: 37.71632385253906
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 220
         state: 1
       - cn0: 38.5289192199707
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 222
         state: 1
       - cn0: 42.27101516723633
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 225
         state: 1
       - cn0: -1.0
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 0
         state: 0
       - cn0: -1.0
         sid:
-          band: 0
-          constellation: 0
+          code: 0
+          reserved: 0
           sat: 0
         state: 0
     module: sbp.tracking
     name: MsgTrackingState
   msg_type: '0x13'
   raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 39.70351791381836,
-    "sid": {"band": 0, "constellation": 0, "sat": 202}}, {"state": 1, "cn0": 36.52388381958008,
-    "sid": {"band": 0, "constellation": 0, "sat": 203}}, {"state": 1, "cn0": 37.169708251953125,
-    "sid": {"band": 0, "constellation": 0, "sat": 208}}, {"state": 1, "cn0": 38.81692886352539,
-    "sid": {"band": 0, "constellation": 0, "sat": 212}}, {"state": 1, "cn0": 42.05073165893555,
-    "sid": {"band": 0, "constellation": 0, "sat": 217}}, {"state": 1, "cn0": 37.807498931884766,
-    "sid": {"band": 0, "constellation": 0, "sat": 218}}, {"state": 1, "cn0": 37.71632385253906,
-    "sid": {"band": 0, "constellation": 0, "sat": 220}}, {"state": 1, "cn0": 38.5289192199707,
-    "sid": {"band": 0, "constellation": 0, "sat": 222}}, {"state": 1, "cn0": 42.27101516723633,
-    "sid": {"band": 0, "constellation": 0, "sat": 225}}, {"state": 0, "cn0": -1.0,
-    "sid": {"band": 0, "constellation": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
-    {"band": 0, "constellation": 0, "sat": 0}}], "crc": 12158, "length": 99, "preamble":
+    "sid": {"code": 0, "reserved": 0, "sat": 202}}, {"state": 1, "cn0": 36.52388381958008,
+    "sid": {"code": 0, "reserved": 0, "sat": 203}}, {"state": 1, "cn0": 37.169708251953125,
+    "sid": {"code": 0, "reserved": 0, "sat": 208}}, {"state": 1, "cn0": 38.81692886352539,
+    "sid": {"code": 0, "reserved": 0, "sat": 212}}, {"state": 1, "cn0": 42.05073165893555,
+    "sid": {"code": 0, "reserved": 0, "sat": 217}}, {"state": 1, "cn0": 37.807498931884766,
+    "sid": {"code": 0, "reserved": 0, "sat": 218}}, {"state": 1, "cn0": 37.71632385253906,
+    "sid": {"code": 0, "reserved": 0, "sat": 220}}, {"state": 1, "cn0": 38.5289192199707,
+    "sid": {"code": 0, "reserved": 0, "sat": 222}}, {"state": 1, "cn0": 42.27101516723633,
+    "sid": {"code": 0, "reserved": 0, "sat": 225}}, {"state": 0, "cn0": -1.0,
+    "sid": {"code": 0, "reserved": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}], "crc": 12158, "length": 99, "preamble":
     85, "payload": "AcoAAABn0B5CAcsAAAB1GBJCAdAAAADIrRRCAdQAAACJRBtCAdkAAADzMyhCAdoAAADhOhdCAdwAAACE3RZCAd4AAACdHRpCAeEAAACFFSlCAAAAAAAAAIC/AAAAAAAAAIC/"}'
   raw_packet: VRMA9tdjAcoAAABn0B5CAcsAAAB1GBJCAdAAAADIrRRCAdQAAACJRBtCAdkAAADzMyhCAdoAAADhOhdCAdwAAACE3RZCAd4AAACdHRpCAeEAAACFFSlCAAAAAAAAAIC/AAAAAAAAAIC/fi8=
   sbp:

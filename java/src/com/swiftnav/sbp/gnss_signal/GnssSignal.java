@@ -26,11 +26,11 @@ public class GnssSignal extends SBPStruct {
     /** Constellation-specific satellite identifier */
     public int sat;
     
-    /** Signal band */
-    public int band;
+    /** Signal constellation, band and code */
+    public int code;
     
-    /** Constellation to which the satellite belongs */
-    public int constellation;
+    /** Reserved */
+    public int reserved;
     
 
     public GnssSignal () {}
@@ -39,8 +39,8 @@ public class GnssSignal extends SBPStruct {
     public GnssSignal parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         sat = parser.getU16();
-        band = parser.getU8();
-        constellation = parser.getU8();
+        code = parser.getU8();
+        reserved = parser.getU8();
         return this;
     }
 
@@ -48,16 +48,16 @@ public class GnssSignal extends SBPStruct {
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
         builder.putU16(sat);
-        builder.putU8(band);
-        builder.putU8(constellation);
+        builder.putU8(code);
+        builder.putU8(reserved);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
         obj.put("sat", sat);
-        obj.put("band", band);
-        obj.put("constellation", constellation);
+        obj.put("code", code);
+        obj.put("reserved", reserved);
         return obj;
     }
 }

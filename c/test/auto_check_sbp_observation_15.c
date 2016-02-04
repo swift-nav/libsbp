@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from /Users/joshuagross/Desktop/Projects/libsbp/spec/tests/yaml/swiftnav/sbp/observation/test_MsgObs.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from /home/pasi/pmiettinen/libsbp/spec/tests/yaml/swiftnav/sbp/observation/test_MsgObs.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -74,7 +74,7 @@ static void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   /*printy_callback(sender_id, len, msg);*/
 }
 
-START_TEST( test_auto_check_sbp_observation_13 )
+START_TEST( test_auto_check_sbp_observation_15 )
 {
   static sbp_msg_callbacks_node_t n;
   //static sbp_msg_callbacks_node_t n2;
@@ -133,48 +133,48 @@ START_TEST( test_auto_check_sbp_observation_13 )
     fail_unless(msg->obs[0].L.i == 117913055, "incorrect value for obs[0].L.i, expected 117913055, is %d", msg->obs[0].L.i);
     fail_unless(msg->obs[0].L.f == 27, "incorrect value for obs[0].L.f, expected 27, is %d", msg->obs[0].L.f);
     fail_unless(msg->obs[0].cn0 == 157, "incorrect value for obs[0].cn0, expected 157, is %d", msg->obs[0].cn0);
-    fail_unless(msg->obs[0].sid.band == 0, "incorrect value for obs[0].sid.band, expected 0, is %d", msg->obs[0].sid.band);
-    fail_unless(msg->obs[0].sid.constellation == 0, "incorrect value for obs[0].sid.constellation, expected 0, is %d", msg->obs[0].sid.constellation);
+    fail_unless(msg->obs[0].sid.code == 0, "incorrect value for obs[0].sid.code, expected 0, is %d", msg->obs[0].sid.code);
+    fail_unless(msg->obs[0].sid.reserved == 0, "incorrect value for obs[0].sid.reserved, expected 0, is %d", msg->obs[0].sid.reserved);
     fail_unless(msg->obs[0].sid.sat == 202, "incorrect value for obs[0].sid.sat, expected 202, is %d", msg->obs[0].sid.sat);
     fail_unless(msg->obs[1].lock == 0, "incorrect value for obs[1].lock, expected 0, is %d", msg->obs[1].lock);
     fail_unless(msg->obs[1].P == 2471857210, "incorrect value for obs[1].P, expected 2471857210, is %d", msg->obs[1].P);
     fail_unless(msg->obs[1].L.i == 129899608, "incorrect value for obs[1].L.i, expected 129899608, is %d", msg->obs[1].L.i);
     fail_unless(msg->obs[1].L.f == 175, "incorrect value for obs[1].L.f, expected 175, is %d", msg->obs[1].L.f);
     fail_unless(msg->obs[1].cn0 == 144, "incorrect value for obs[1].cn0, expected 144, is %d", msg->obs[1].cn0);
-    fail_unless(msg->obs[1].sid.band == 0, "incorrect value for obs[1].sid.band, expected 0, is %d", msg->obs[1].sid.band);
-    fail_unless(msg->obs[1].sid.constellation == 0, "incorrect value for obs[1].sid.constellation, expected 0, is %d", msg->obs[1].sid.constellation);
+    fail_unless(msg->obs[1].sid.code == 0, "incorrect value for obs[1].sid.code, expected 0, is %d", msg->obs[1].sid.code);
+    fail_unless(msg->obs[1].sid.reserved == 0, "incorrect value for obs[1].sid.reserved, expected 0, is %d", msg->obs[1].sid.reserved);
     fail_unless(msg->obs[1].sid.sat == 203, "incorrect value for obs[1].sid.sat, expected 203, is %d", msg->obs[1].sid.sat);
     fail_unless(msg->obs[2].lock == 0, "incorrect value for obs[2].lock, expected 0, is %d", msg->obs[2].lock);
     fail_unless(msg->obs[2].P == 2331544796, "incorrect value for obs[2].P, expected 2331544796, is %d", msg->obs[2].P);
     fail_unless(msg->obs[2].L.i == 122531024, "incorrect value for obs[2].L.i, expected 122531024, is %d", msg->obs[2].L.i);
     fail_unless(msg->obs[2].L.f == 135, "incorrect value for obs[2].L.f, expected 135, is %d", msg->obs[2].L.f);
     fail_unless(msg->obs[2].cn0 == 151, "incorrect value for obs[2].cn0, expected 151, is %d", msg->obs[2].cn0);
-    fail_unless(msg->obs[2].sid.band == 0, "incorrect value for obs[2].sid.band, expected 0, is %d", msg->obs[2].sid.band);
-    fail_unless(msg->obs[2].sid.constellation == 0, "incorrect value for obs[2].sid.constellation, expected 0, is %d", msg->obs[2].sid.constellation);
+    fail_unless(msg->obs[2].sid.code == 0, "incorrect value for obs[2].sid.code, expected 0, is %d", msg->obs[2].sid.code);
+    fail_unless(msg->obs[2].sid.reserved == 0, "incorrect value for obs[2].sid.reserved, expected 0, is %d", msg->obs[2].sid.reserved);
     fail_unless(msg->obs[2].sid.sat == 208, "incorrect value for obs[2].sid.sat, expected 208, is %d", msg->obs[2].sid.sat);
     fail_unless(msg->obs[3].lock == 0, "incorrect value for obs[3].lock, expected 0, is %d", msg->obs[3].lock);
     fail_unless(msg->obs[3].P == 2269692589, "incorrect value for obs[3].P, expected 2269692589, is %d", msg->obs[3].P);
     fail_unless(msg->obs[3].L.i == 119280243, "incorrect value for obs[3].L.i, expected 119280243, is %d", msg->obs[3].L.i);
     fail_unless(msg->obs[3].L.f == 242, "incorrect value for obs[3].L.f, expected 242, is %d", msg->obs[3].L.f);
     fail_unless(msg->obs[3].cn0 == 156, "incorrect value for obs[3].cn0, expected 156, is %d", msg->obs[3].cn0);
-    fail_unless(msg->obs[3].sid.band == 0, "incorrect value for obs[3].sid.band, expected 0, is %d", msg->obs[3].sid.band);
-    fail_unless(msg->obs[3].sid.constellation == 0, "incorrect value for obs[3].sid.constellation, expected 0, is %d", msg->obs[3].sid.constellation);
+    fail_unless(msg->obs[3].sid.code == 0, "incorrect value for obs[3].sid.code, expected 0, is %d", msg->obs[3].sid.code);
+    fail_unless(msg->obs[3].sid.reserved == 0, "incorrect value for obs[3].sid.reserved, expected 0, is %d", msg->obs[3].sid.reserved);
     fail_unless(msg->obs[3].sid.sat == 212, "incorrect value for obs[3].sid.sat, expected 212, is %d", msg->obs[3].sid.sat);
     fail_unless(msg->obs[4].lock == 0, "incorrect value for obs[4].lock, expected 0, is %d", msg->obs[4].lock);
     fail_unless(msg->obs[4].P == 2087293092, "incorrect value for obs[4].P, expected 2087293092, is %d", msg->obs[4].P);
     fail_unless(msg->obs[4].L.i == 109691922, "incorrect value for obs[4].L.i, expected 109691922, is %d", msg->obs[4].L.i);
     fail_unless(msg->obs[4].L.f == 120, "incorrect value for obs[4].L.f, expected 120, is %d", msg->obs[4].L.f);
     fail_unless(msg->obs[4].cn0 == 168, "incorrect value for obs[4].cn0, expected 168, is %d", msg->obs[4].cn0);
-    fail_unless(msg->obs[4].sid.band == 0, "incorrect value for obs[4].sid.band, expected 0, is %d", msg->obs[4].sid.band);
-    fail_unless(msg->obs[4].sid.constellation == 0, "incorrect value for obs[4].sid.constellation, expected 0, is %d", msg->obs[4].sid.constellation);
+    fail_unless(msg->obs[4].sid.code == 0, "incorrect value for obs[4].sid.code, expected 0, is %d", msg->obs[4].sid.code);
+    fail_unless(msg->obs[4].sid.reserved == 0, "incorrect value for obs[4].sid.reserved, expected 0, is %d", msg->obs[4].sid.reserved);
     fail_unless(msg->obs[4].sid.sat == 217, "incorrect value for obs[4].sid.sat, expected 217, is %d", msg->obs[4].sid.sat);
     fail_unless(msg->obs[5].lock == 0, "incorrect value for obs[5].lock, expected 0, is %d", msg->obs[5].lock);
     fail_unless(msg->obs[5].P == 2347034654, "incorrect value for obs[5].P, expected 2347034654, is %d", msg->obs[5].P);
     fail_unless(msg->obs[5].L.i == 123340754, "incorrect value for obs[5].L.i, expected 123340754, is %d", msg->obs[5].L.i);
     fail_unless(msg->obs[5].L.f == 87, "incorrect value for obs[5].L.f, expected 87, is %d", msg->obs[5].L.f);
     fail_unless(msg->obs[5].cn0 == 150, "incorrect value for obs[5].cn0, expected 150, is %d", msg->obs[5].cn0);
-    fail_unless(msg->obs[5].sid.band == 0, "incorrect value for obs[5].sid.band, expected 0, is %d", msg->obs[5].sid.band);
-    fail_unless(msg->obs[5].sid.constellation == 0, "incorrect value for obs[5].sid.constellation, expected 0, is %d", msg->obs[5].sid.constellation);
+    fail_unless(msg->obs[5].sid.code == 0, "incorrect value for obs[5].sid.code, expected 0, is %d", msg->obs[5].sid.code);
+    fail_unless(msg->obs[5].sid.reserved == 0, "incorrect value for obs[5].sid.reserved, expected 0, is %d", msg->obs[5].sid.reserved);
     fail_unless(msg->obs[5].sid.sat == 218, "incorrect value for obs[5].sid.sat, expected 218, is %d", msg->obs[5].sid.sat);
   }
   // Test successful parsing of a message
@@ -224,24 +224,24 @@ START_TEST( test_auto_check_sbp_observation_13 )
     fail_unless(msg->obs[0].L.i == 120256389, "incorrect value for obs[0].L.i, expected 120256389, is %d", msg->obs[0].L.i);
     fail_unless(msg->obs[0].L.f == 219, "incorrect value for obs[0].L.f, expected 219, is %d", msg->obs[0].L.f);
     fail_unless(msg->obs[0].cn0 == 154, "incorrect value for obs[0].cn0, expected 154, is %d", msg->obs[0].cn0);
-    fail_unless(msg->obs[0].sid.band == 0, "incorrect value for obs[0].sid.band, expected 0, is %d", msg->obs[0].sid.band);
-    fail_unless(msg->obs[0].sid.constellation == 0, "incorrect value for obs[0].sid.constellation, expected 0, is %d", msg->obs[0].sid.constellation);
+    fail_unless(msg->obs[0].sid.code == 0, "incorrect value for obs[0].sid.code, expected 0, is %d", msg->obs[0].sid.code);
+    fail_unless(msg->obs[0].sid.reserved == 0, "incorrect value for obs[0].sid.reserved, expected 0, is %d", msg->obs[0].sid.reserved);
     fail_unless(msg->obs[0].sid.sat == 220, "incorrect value for obs[0].sid.sat, expected 220, is %d", msg->obs[0].sid.sat);
     fail_unless(msg->obs[1].lock == 0, "incorrect value for obs[1].lock, expected 0, is %d", msg->obs[1].lock);
     fail_unless(msg->obs[1].P == 2239434459, "incorrect value for obs[1].P, expected 2239434459, is %d", msg->obs[1].P);
     fail_unless(msg->obs[1].L.i == 117692256, "incorrect value for obs[1].L.i, expected 117692256, is %d", msg->obs[1].L.i);
     fail_unless(msg->obs[1].L.f == 235, "incorrect value for obs[1].L.f, expected 235, is %d", msg->obs[1].L.f);
     fail_unless(msg->obs[1].cn0 == 156, "incorrect value for obs[1].cn0, expected 156, is %d", msg->obs[1].cn0);
-    fail_unless(msg->obs[1].sid.band == 0, "incorrect value for obs[1].sid.band, expected 0, is %d", msg->obs[1].sid.band);
-    fail_unless(msg->obs[1].sid.constellation == 0, "incorrect value for obs[1].sid.constellation, expected 0, is %d", msg->obs[1].sid.constellation);
+    fail_unless(msg->obs[1].sid.code == 0, "incorrect value for obs[1].sid.code, expected 0, is %d", msg->obs[1].sid.code);
+    fail_unless(msg->obs[1].sid.reserved == 0, "incorrect value for obs[1].sid.reserved, expected 0, is %d", msg->obs[1].sid.reserved);
     fail_unless(msg->obs[1].sid.sat == 222, "incorrect value for obs[1].sid.sat, expected 222, is %d", msg->obs[1].sid.sat);
     fail_unless(msg->obs[2].lock == 0, "incorrect value for obs[2].lock, expected 0, is %d", msg->obs[2].lock);
     fail_unless(msg->obs[2].P == 2052171351, "incorrect value for obs[2].P, expected 2052171351, is %d", msg->obs[2].P);
     fail_unless(msg->obs[2].L.i == 107851013, "incorrect value for obs[2].L.i, expected 107851013, is %d", msg->obs[2].L.i);
     fail_unless(msg->obs[2].L.f == 174, "incorrect value for obs[2].L.f, expected 174, is %d", msg->obs[2].L.f);
     fail_unless(msg->obs[2].cn0 == 170, "incorrect value for obs[2].cn0, expected 170, is %d", msg->obs[2].cn0);
-    fail_unless(msg->obs[2].sid.band == 0, "incorrect value for obs[2].sid.band, expected 0, is %d", msg->obs[2].sid.band);
-    fail_unless(msg->obs[2].sid.constellation == 0, "incorrect value for obs[2].sid.constellation, expected 0, is %d", msg->obs[2].sid.constellation);
+    fail_unless(msg->obs[2].sid.code == 0, "incorrect value for obs[2].sid.code, expected 0, is %d", msg->obs[2].sid.code);
+    fail_unless(msg->obs[2].sid.reserved == 0, "incorrect value for obs[2].sid.reserved, expected 0, is %d", msg->obs[2].sid.reserved);
     fail_unless(msg->obs[2].sid.sat == 225, "incorrect value for obs[2].sid.sat, expected 225, is %d", msg->obs[2].sid.sat);
   }
   // Test successful parsing of a message
@@ -291,48 +291,48 @@ START_TEST( test_auto_check_sbp_observation_13 )
     fail_unless(msg->obs[0].L.i == 117912556, "incorrect value for obs[0].L.i, expected 117912556, is %d", msg->obs[0].L.i);
     fail_unless(msg->obs[0].L.f == 94, "incorrect value for obs[0].L.f, expected 94, is %d", msg->obs[0].L.f);
     fail_unless(msg->obs[0].cn0 == 156, "incorrect value for obs[0].cn0, expected 156, is %d", msg->obs[0].cn0);
-    fail_unless(msg->obs[0].sid.band == 0, "incorrect value for obs[0].sid.band, expected 0, is %d", msg->obs[0].sid.band);
-    fail_unless(msg->obs[0].sid.constellation == 0, "incorrect value for obs[0].sid.constellation, expected 0, is %d", msg->obs[0].sid.constellation);
+    fail_unless(msg->obs[0].sid.code == 0, "incorrect value for obs[0].sid.code, expected 0, is %d", msg->obs[0].sid.code);
+    fail_unless(msg->obs[0].sid.reserved == 0, "incorrect value for obs[0].sid.reserved, expected 0, is %d", msg->obs[0].sid.reserved);
     fail_unless(msg->obs[0].sid.sat == 202, "incorrect value for obs[0].sid.sat, expected 202, is %d", msg->obs[0].sid.sat);
     fail_unless(msg->obs[1].lock == 0, "incorrect value for obs[1].lock, expected 0, is %d", msg->obs[1].lock);
     fail_unless(msg->obs[1].P == 2471868513, "incorrect value for obs[1].P, expected 2471868513, is %d", msg->obs[1].P);
     fail_unless(msg->obs[1].L.i == 129900210, "incorrect value for obs[1].L.i, expected 129900210, is %d", msg->obs[1].L.i);
     fail_unless(msg->obs[1].L.f == 40, "incorrect value for obs[1].L.f, expected 40, is %d", msg->obs[1].L.f);
     fail_unless(msg->obs[1].cn0 == 140, "incorrect value for obs[1].cn0, expected 140, is %d", msg->obs[1].cn0);
-    fail_unless(msg->obs[1].sid.band == 0, "incorrect value for obs[1].sid.band, expected 0, is %d", msg->obs[1].sid.band);
-    fail_unless(msg->obs[1].sid.constellation == 0, "incorrect value for obs[1].sid.constellation, expected 0, is %d", msg->obs[1].sid.constellation);
+    fail_unless(msg->obs[1].sid.code == 0, "incorrect value for obs[1].sid.code, expected 0, is %d", msg->obs[1].sid.code);
+    fail_unless(msg->obs[1].sid.reserved == 0, "incorrect value for obs[1].sid.reserved, expected 0, is %d", msg->obs[1].sid.reserved);
     fail_unless(msg->obs[1].sid.sat == 203, "incorrect value for obs[1].sid.sat, expected 203, is %d", msg->obs[1].sid.sat);
     fail_unless(msg->obs[2].lock == 0, "incorrect value for obs[2].lock, expected 0, is %d", msg->obs[2].lock);
     fail_unless(msg->obs[2].P == 2331537287, "incorrect value for obs[2].P, expected 2331537287, is %d", msg->obs[2].P);
     fail_unless(msg->obs[2].L.i == 122530650, "incorrect value for obs[2].L.i, expected 122530650, is %d", msg->obs[2].L.i);
     fail_unless(msg->obs[2].L.f == 2, "incorrect value for obs[2].L.f, expected 2, is %d", msg->obs[2].L.f);
     fail_unless(msg->obs[2].cn0 == 150, "incorrect value for obs[2].cn0, expected 150, is %d", msg->obs[2].cn0);
-    fail_unless(msg->obs[2].sid.band == 0, "incorrect value for obs[2].sid.band, expected 0, is %d", msg->obs[2].sid.band);
-    fail_unless(msg->obs[2].sid.constellation == 0, "incorrect value for obs[2].sid.constellation, expected 0, is %d", msg->obs[2].sid.constellation);
+    fail_unless(msg->obs[2].sid.code == 0, "incorrect value for obs[2].sid.code, expected 0, is %d", msg->obs[2].sid.code);
+    fail_unless(msg->obs[2].sid.reserved == 0, "incorrect value for obs[2].sid.reserved, expected 0, is %d", msg->obs[2].sid.reserved);
     fail_unless(msg->obs[2].sid.sat == 208, "incorrect value for obs[2].sid.sat, expected 208, is %d", msg->obs[2].sid.sat);
     fail_unless(msg->obs[3].lock == 0, "incorrect value for obs[3].lock, expected 0, is %d", msg->obs[3].lock);
     fail_unless(msg->obs[3].P == 2269703860, "incorrect value for obs[3].P, expected 2269703860, is %d", msg->obs[3].P);
     fail_unless(msg->obs[3].L.i == 119280830, "incorrect value for obs[3].L.i, expected 119280830, is %d", msg->obs[3].L.i);
     fail_unless(msg->obs[3].L.f == 241, "incorrect value for obs[3].L.f, expected 241, is %d", msg->obs[3].L.f);
     fail_unless(msg->obs[3].cn0 == 155, "incorrect value for obs[3].cn0, expected 155, is %d", msg->obs[3].cn0);
-    fail_unless(msg->obs[3].sid.band == 0, "incorrect value for obs[3].sid.band, expected 0, is %d", msg->obs[3].sid.band);
-    fail_unless(msg->obs[3].sid.constellation == 0, "incorrect value for obs[3].sid.constellation, expected 0, is %d", msg->obs[3].sid.constellation);
+    fail_unless(msg->obs[3].sid.code == 0, "incorrect value for obs[3].sid.code, expected 0, is %d", msg->obs[3].sid.code);
+    fail_unless(msg->obs[3].sid.reserved == 0, "incorrect value for obs[3].sid.reserved, expected 0, is %d", msg->obs[3].sid.reserved);
     fail_unless(msg->obs[3].sid.sat == 212, "incorrect value for obs[3].sid.sat, expected 212, is %d", msg->obs[3].sid.sat);
     fail_unless(msg->obs[4].lock == 0, "incorrect value for obs[4].lock, expected 0, is %d", msg->obs[4].lock);
     fail_unless(msg->obs[4].P == 2087295247, "incorrect value for obs[4].P, expected 2087295247, is %d", msg->obs[4].P);
     fail_unless(msg->obs[4].L.i == 109691996, "incorrect value for obs[4].L.i, expected 109691996, is %d", msg->obs[4].L.i);
     fail_unless(msg->obs[4].L.f == 153, "incorrect value for obs[4].L.f, expected 153, is %d", msg->obs[4].L.f);
     fail_unless(msg->obs[4].cn0 == 168, "incorrect value for obs[4].cn0, expected 168, is %d", msg->obs[4].cn0);
-    fail_unless(msg->obs[4].sid.band == 0, "incorrect value for obs[4].sid.band, expected 0, is %d", msg->obs[4].sid.band);
-    fail_unless(msg->obs[4].sid.constellation == 0, "incorrect value for obs[4].sid.constellation, expected 0, is %d", msg->obs[4].sid.constellation);
+    fail_unless(msg->obs[4].sid.code == 0, "incorrect value for obs[4].sid.code, expected 0, is %d", msg->obs[4].sid.code);
+    fail_unless(msg->obs[4].sid.reserved == 0, "incorrect value for obs[4].sid.reserved, expected 0, is %d", msg->obs[4].sid.reserved);
     fail_unless(msg->obs[4].sid.sat == 217, "incorrect value for obs[4].sid.sat, expected 217, is %d", msg->obs[4].sid.sat);
     fail_unless(msg->obs[5].lock == 0, "incorrect value for obs[5].lock, expected 0, is %d", msg->obs[5].lock);
     fail_unless(msg->obs[5].P == 2347022641, "incorrect value for obs[5].P, expected 2347022641, is %d", msg->obs[5].P);
     fail_unless(msg->obs[5].L.i == 123340176, "incorrect value for obs[5].L.i, expected 123340176, is %d", msg->obs[5].L.i);
     fail_unless(msg->obs[5].L.f == 41, "incorrect value for obs[5].L.f, expected 41, is %d", msg->obs[5].L.f);
     fail_unless(msg->obs[5].cn0 == 150, "incorrect value for obs[5].cn0, expected 150, is %d", msg->obs[5].cn0);
-    fail_unless(msg->obs[5].sid.band == 0, "incorrect value for obs[5].sid.band, expected 0, is %d", msg->obs[5].sid.band);
-    fail_unless(msg->obs[5].sid.constellation == 0, "incorrect value for obs[5].sid.constellation, expected 0, is %d", msg->obs[5].sid.constellation);
+    fail_unless(msg->obs[5].sid.code == 0, "incorrect value for obs[5].sid.code, expected 0, is %d", msg->obs[5].sid.code);
+    fail_unless(msg->obs[5].sid.reserved == 0, "incorrect value for obs[5].sid.reserved, expected 0, is %d", msg->obs[5].sid.reserved);
     fail_unless(msg->obs[5].sid.sat == 218, "incorrect value for obs[5].sid.sat, expected 218, is %d", msg->obs[5].sid.sat);
   }
   // Test successful parsing of a message
@@ -382,24 +382,24 @@ START_TEST( test_auto_check_sbp_observation_13 )
     fail_unless(msg->obs[0].L.i == 120255759, "incorrect value for obs[0].L.i, expected 120255759, is %d", msg->obs[0].L.i);
     fail_unless(msg->obs[0].L.f == 20, "incorrect value for obs[0].L.f, expected 20, is %d", msg->obs[0].L.f);
     fail_unless(msg->obs[0].cn0 == 154, "incorrect value for obs[0].cn0, expected 154, is %d", msg->obs[0].cn0);
-    fail_unless(msg->obs[0].sid.band == 0, "incorrect value for obs[0].sid.band, expected 0, is %d", msg->obs[0].sid.band);
-    fail_unless(msg->obs[0].sid.constellation == 0, "incorrect value for obs[0].sid.constellation, expected 0, is %d", msg->obs[0].sid.constellation);
+    fail_unless(msg->obs[0].sid.code == 0, "incorrect value for obs[0].sid.code, expected 0, is %d", msg->obs[0].sid.code);
+    fail_unless(msg->obs[0].sid.reserved == 0, "incorrect value for obs[0].sid.reserved, expected 0, is %d", msg->obs[0].sid.reserved);
     fail_unless(msg->obs[0].sid.sat == 220, "incorrect value for obs[0].sid.sat, expected 220, is %d", msg->obs[0].sid.sat);
     fail_unless(msg->obs[1].lock == 0, "incorrect value for obs[1].lock, expected 0, is %d", msg->obs[1].lock);
     fail_unless(msg->obs[1].P == 2239428560, "incorrect value for obs[1].P, expected 2239428560, is %d", msg->obs[1].P);
     fail_unless(msg->obs[1].L.i == 117691920, "incorrect value for obs[1].L.i, expected 117691920, is %d", msg->obs[1].L.i);
     fail_unless(msg->obs[1].L.f == 38, "incorrect value for obs[1].L.f, expected 38, is %d", msg->obs[1].L.f);
     fail_unless(msg->obs[1].cn0 == 156, "incorrect value for obs[1].cn0, expected 156, is %d", msg->obs[1].cn0);
-    fail_unless(msg->obs[1].sid.band == 0, "incorrect value for obs[1].sid.band, expected 0, is %d", msg->obs[1].sid.band);
-    fail_unless(msg->obs[1].sid.constellation == 0, "incorrect value for obs[1].sid.constellation, expected 0, is %d", msg->obs[1].sid.constellation);
+    fail_unless(msg->obs[1].sid.code == 0, "incorrect value for obs[1].sid.code, expected 0, is %d", msg->obs[1].sid.code);
+    fail_unless(msg->obs[1].sid.reserved == 0, "incorrect value for obs[1].sid.reserved, expected 0, is %d", msg->obs[1].sid.reserved);
     fail_unless(msg->obs[1].sid.sat == 222, "incorrect value for obs[1].sid.sat, expected 222, is %d", msg->obs[1].sid.sat);
     fail_unless(msg->obs[2].lock == 0, "incorrect value for obs[2].lock, expected 0, is %d", msg->obs[2].lock);
     fail_unless(msg->obs[2].P == 2052167183, "incorrect value for obs[2].P, expected 2052167183, is %d", msg->obs[2].P);
     fail_unless(msg->obs[2].L.i == 107850774, "incorrect value for obs[2].L.i, expected 107850774, is %d", msg->obs[2].L.i);
     fail_unless(msg->obs[2].L.f == 7, "incorrect value for obs[2].L.f, expected 7, is %d", msg->obs[2].L.f);
     fail_unless(msg->obs[2].cn0 == 172, "incorrect value for obs[2].cn0, expected 172, is %d", msg->obs[2].cn0);
-    fail_unless(msg->obs[2].sid.band == 0, "incorrect value for obs[2].sid.band, expected 0, is %d", msg->obs[2].sid.band);
-    fail_unless(msg->obs[2].sid.constellation == 0, "incorrect value for obs[2].sid.constellation, expected 0, is %d", msg->obs[2].sid.constellation);
+    fail_unless(msg->obs[2].sid.code == 0, "incorrect value for obs[2].sid.code, expected 0, is %d", msg->obs[2].sid.code);
+    fail_unless(msg->obs[2].sid.reserved == 0, "incorrect value for obs[2].sid.reserved, expected 0, is %d", msg->obs[2].sid.reserved);
     fail_unless(msg->obs[2].sid.sat == 225, "incorrect value for obs[2].sid.sat, expected 225, is %d", msg->obs[2].sid.sat);
   }
   // Test successful parsing of a message
@@ -449,58 +449,58 @@ START_TEST( test_auto_check_sbp_observation_13 )
     fail_unless(msg->obs[0].L.i == 117912057, "incorrect value for obs[0].L.i, expected 117912057, is %d", msg->obs[0].L.i);
     fail_unless(msg->obs[0].L.f == 165, "incorrect value for obs[0].L.f, expected 165, is %d", msg->obs[0].L.f);
     fail_unless(msg->obs[0].cn0 == 156, "incorrect value for obs[0].cn0, expected 156, is %d", msg->obs[0].cn0);
-    fail_unless(msg->obs[0].sid.band == 0, "incorrect value for obs[0].sid.band, expected 0, is %d", msg->obs[0].sid.band);
-    fail_unless(msg->obs[0].sid.constellation == 0, "incorrect value for obs[0].sid.constellation, expected 0, is %d", msg->obs[0].sid.constellation);
+    fail_unless(msg->obs[0].sid.code == 0, "incorrect value for obs[0].sid.code, expected 0, is %d", msg->obs[0].sid.code);
+    fail_unless(msg->obs[0].sid.reserved == 0, "incorrect value for obs[0].sid.reserved, expected 0, is %d", msg->obs[0].sid.reserved);
     fail_unless(msg->obs[0].sid.sat == 202, "incorrect value for obs[0].sid.sat, expected 202, is %d", msg->obs[0].sid.sat);
     fail_unless(msg->obs[1].lock == 0, "incorrect value for obs[1].lock, expected 0, is %d", msg->obs[1].lock);
     fail_unless(msg->obs[1].P == 2471880049, "incorrect value for obs[1].P, expected 2471880049, is %d", msg->obs[1].P);
     fail_unless(msg->obs[1].L.i == 129900811, "incorrect value for obs[1].L.i, expected 129900811, is %d", msg->obs[1].L.i);
     fail_unless(msg->obs[1].L.f == 106, "incorrect value for obs[1].L.f, expected 106, is %d", msg->obs[1].L.f);
     fail_unless(msg->obs[1].cn0 == 143, "incorrect value for obs[1].cn0, expected 143, is %d", msg->obs[1].cn0);
-    fail_unless(msg->obs[1].sid.band == 0, "incorrect value for obs[1].sid.band, expected 0, is %d", msg->obs[1].sid.band);
-    fail_unless(msg->obs[1].sid.constellation == 0, "incorrect value for obs[1].sid.constellation, expected 0, is %d", msg->obs[1].sid.constellation);
+    fail_unless(msg->obs[1].sid.code == 0, "incorrect value for obs[1].sid.code, expected 0, is %d", msg->obs[1].sid.code);
+    fail_unless(msg->obs[1].sid.reserved == 0, "incorrect value for obs[1].sid.reserved, expected 0, is %d", msg->obs[1].sid.reserved);
     fail_unless(msg->obs[1].sid.sat == 203, "incorrect value for obs[1].sid.sat, expected 203, is %d", msg->obs[1].sid.sat);
     fail_unless(msg->obs[2].lock == 0, "incorrect value for obs[2].lock, expected 0, is %d", msg->obs[2].lock);
     fail_unless(msg->obs[2].P == 2331530678, "incorrect value for obs[2].P, expected 2331530678, is %d", msg->obs[2].P);
     fail_unless(msg->obs[2].L.i == 122530275, "incorrect value for obs[2].L.i, expected 122530275, is %d", msg->obs[2].L.i);
     fail_unless(msg->obs[2].L.f == 159, "incorrect value for obs[2].L.f, expected 159, is %d", msg->obs[2].L.f);
     fail_unless(msg->obs[2].cn0 == 150, "incorrect value for obs[2].cn0, expected 150, is %d", msg->obs[2].cn0);
-    fail_unless(msg->obs[2].sid.band == 0, "incorrect value for obs[2].sid.band, expected 0, is %d", msg->obs[2].sid.band);
-    fail_unless(msg->obs[2].sid.constellation == 0, "incorrect value for obs[2].sid.constellation, expected 0, is %d", msg->obs[2].sid.constellation);
+    fail_unless(msg->obs[2].sid.code == 0, "incorrect value for obs[2].sid.code, expected 0, is %d", msg->obs[2].sid.code);
+    fail_unless(msg->obs[2].sid.reserved == 0, "incorrect value for obs[2].sid.reserved, expected 0, is %d", msg->obs[2].sid.reserved);
     fail_unless(msg->obs[2].sid.sat == 208, "incorrect value for obs[2].sid.sat, expected 208, is %d", msg->obs[2].sid.sat);
     fail_unless(msg->obs[3].lock == 0, "incorrect value for obs[3].lock, expected 0, is %d", msg->obs[3].lock);
     fail_unless(msg->obs[3].P == 2269714449, "incorrect value for obs[3].P, expected 2269714449, is %d", msg->obs[3].P);
     fail_unless(msg->obs[3].L.i == 119281418, "incorrect value for obs[3].L.i, expected 119281418, is %d", msg->obs[3].L.i);
     fail_unless(msg->obs[3].L.f == 7, "incorrect value for obs[3].L.f, expected 7, is %d", msg->obs[3].L.f);
     fail_unless(msg->obs[3].cn0 == 156, "incorrect value for obs[3].cn0, expected 156, is %d", msg->obs[3].cn0);
-    fail_unless(msg->obs[3].sid.band == 0, "incorrect value for obs[3].sid.band, expected 0, is %d", msg->obs[3].sid.band);
-    fail_unless(msg->obs[3].sid.constellation == 0, "incorrect value for obs[3].sid.constellation, expected 0, is %d", msg->obs[3].sid.constellation);
+    fail_unless(msg->obs[3].sid.code == 0, "incorrect value for obs[3].sid.code, expected 0, is %d", msg->obs[3].sid.code);
+    fail_unless(msg->obs[3].sid.reserved == 0, "incorrect value for obs[3].sid.reserved, expected 0, is %d", msg->obs[3].sid.reserved);
     fail_unless(msg->obs[3].sid.sat == 212, "incorrect value for obs[3].sid.sat, expected 212, is %d", msg->obs[3].sid.sat);
     fail_unless(msg->obs[4].lock == 0, "incorrect value for obs[4].lock, expected 0, is %d", msg->obs[4].lock);
     fail_unless(msg->obs[4].P == 2087295852, "incorrect value for obs[4].P, expected 2087295852, is %d", msg->obs[4].P);
     fail_unless(msg->obs[4].L.i == 109692070, "incorrect value for obs[4].L.i, expected 109692070, is %d", msg->obs[4].L.i);
     fail_unless(msg->obs[4].L.f == 186, "incorrect value for obs[4].L.f, expected 186, is %d", msg->obs[4].L.f);
     fail_unless(msg->obs[4].cn0 == 170, "incorrect value for obs[4].cn0, expected 170, is %d", msg->obs[4].cn0);
-    fail_unless(msg->obs[4].sid.band == 0, "incorrect value for obs[4].sid.band, expected 0, is %d", msg->obs[4].sid.band);
-    fail_unless(msg->obs[4].sid.constellation == 0, "incorrect value for obs[4].sid.constellation, expected 0, is %d", msg->obs[4].sid.constellation);
+    fail_unless(msg->obs[4].sid.code == 0, "incorrect value for obs[4].sid.code, expected 0, is %d", msg->obs[4].sid.code);
+    fail_unless(msg->obs[4].sid.reserved == 0, "incorrect value for obs[4].sid.reserved, expected 0, is %d", msg->obs[4].sid.reserved);
     fail_unless(msg->obs[4].sid.sat == 217, "incorrect value for obs[4].sid.sat, expected 217, is %d", msg->obs[4].sid.sat);
     fail_unless(msg->obs[5].lock == 0, "incorrect value for obs[5].lock, expected 0, is %d", msg->obs[5].lock);
     fail_unless(msg->obs[5].P == 2347011798, "incorrect value for obs[5].P, expected 2347011798, is %d", msg->obs[5].P);
     fail_unless(msg->obs[5].L.i == 123339597, "incorrect value for obs[5].L.i, expected 123339597, is %d", msg->obs[5].L.i);
     fail_unless(msg->obs[5].L.f == 236, "incorrect value for obs[5].L.f, expected 236, is %d", msg->obs[5].L.f);
     fail_unless(msg->obs[5].cn0 == 151, "incorrect value for obs[5].cn0, expected 151, is %d", msg->obs[5].cn0);
-    fail_unless(msg->obs[5].sid.band == 0, "incorrect value for obs[5].sid.band, expected 0, is %d", msg->obs[5].sid.band);
-    fail_unless(msg->obs[5].sid.constellation == 0, "incorrect value for obs[5].sid.constellation, expected 0, is %d", msg->obs[5].sid.constellation);
+    fail_unless(msg->obs[5].sid.code == 0, "incorrect value for obs[5].sid.code, expected 0, is %d", msg->obs[5].sid.code);
+    fail_unless(msg->obs[5].sid.reserved == 0, "incorrect value for obs[5].sid.reserved, expected 0, is %d", msg->obs[5].sid.reserved);
     fail_unless(msg->obs[5].sid.sat == 218, "incorrect value for obs[5].sid.sat, expected 218, is %d", msg->obs[5].sid.sat);
   }
 }
 END_TEST
 
-Suite* auto_check_sbp_observation_13_suite(void)
+Suite* auto_check_sbp_observation_15_suite(void)
 {
-  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_observation_13");
-  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_observation_13");
-  tcase_add_test(tc_acq, test_auto_check_sbp_observation_13);
+  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_observation_15");
+  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_observation_15");
+  tcase_add_test(tc_acq, test_auto_check_sbp_observation_15);
   suite_add_tcase(s, tc_acq);
   return s;
 }
