@@ -84,7 +84,7 @@ class Framer(object):
     while len(data) < size:
       d = self._read(size - len(data))
       if self._broken:
-        return data
+        raise StopIteration
       if not d:
         # NOTE (Buro/jgross): Force a yield here to another thread. In
         # case the stream fails midstream, the spinning here causes
