@@ -88,10 +88,15 @@ def main():
       "Invalid output directory: %s. Exiting!" % output_dir
     # Ingest, parse, and validate.
     test_mode = args.test_c
+
     if test_mode:
       file_index = yaml.resolve_test_deps(*yaml.get_files(input_file))
     else:
       file_index = yaml.resolve_deps(*yaml.get_files(input_file))
+
+    # Sort the files - we need them to be in a stable order for some test generation
+    file_index_items = sorted(file_index.items(), key=lambda f: f[0])
+
     if verbose:
       print "Reading files..."
       pprint.pprint(file_index.keys())
@@ -102,7 +107,7 @@ def main():
     else:
       spec_no = 0
       all_specs = []
-      for fname, spec in file_index.items():
+      for fname, spec in file_index_items:
         spec_no = spec_no + 1
         if test_mode:
           parsed = yaml.parse_test_spec(fname, spec, spec_no)
