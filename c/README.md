@@ -9,7 +9,7 @@ with no dependencies other than the standard C libraries.
 ## Installation
 
 On Debian-based systems (including Ubuntu 12.10 or later) you can get
-them with:
+dependencies with:
 
 ```shell
 sudo apt-get install build-essential pkg-config cmake doxygen check

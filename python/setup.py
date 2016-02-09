@@ -34,7 +34,7 @@ PACKAGE_DATA = { 'sbp' : [
 ] }
 
 cwd = os.path.abspath(os.path.dirname(__file__))
-with open(cwd + '/README.rst') as f:
+with open(cwd + '/README.md') as f:
   readme = f.read()
 
 with open(cwd + '/requirements.txt') as f:

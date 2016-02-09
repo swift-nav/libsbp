@@ -2,6 +2,14 @@
 
 Haskell client for Swift Binary Protocol (SBP).
 
+## Requirements
+
+`haskell-stack`: [Instructions here](https://github.com/commercialhaskell/stack/blob/master/doc/install_and_upgrade.md).
+
+## Install from Hackage
+
+Available on [Hackage as `sbp`](http://hackage.haskell.org/package/sbp).
+
 ## Setup
 
 To build:

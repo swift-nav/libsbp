@@ -26,6 +26,31 @@ repository is organized into the following directory structure:
 * [`java`](https://github.com/swift-nav/libsbp/tree/HEAD/java): Java client library and examples.
 * [`javascript`](https://github.com/swift-nav/libsbp/tree/HEAD/javascript): JavaScript client library and examples.
 
+Except for the `generator`, all of the above are generated and should not be modified directly.
+
+## Building / installing
+### Installing from package managers
+Some bindings are available on package managers:
+
+* [`python`](https://github.com/swift-nav/libsbp/tree/HEAD/python): available on pip
+* [`haskell`](https://github.com/swift-nav/libsbp/tree/HEAD/haskell): available on Hackage
+* [`javascript`](https://github.com/swift-nav/libsbp/tree/HEAD/javascript): available on NPM
+
+### Installing from source
+You can build one binding at a time or update all at once:
+
+```
+make python
+```
+
+or
+
+```
+make all
+```
+
+are both valid. To see a list of all valid targets, run `make help`.
+
 ## SBP Protocol Specification
 
 SBP consists of two pieces: (i) an over-the-wire message framing
