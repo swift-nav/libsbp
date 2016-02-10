@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from /Users/joshuagross/Desktop/Projects/libsbp/spec/tests/yaml/swiftnav/sbp/test_tracking.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/test_tracking.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging

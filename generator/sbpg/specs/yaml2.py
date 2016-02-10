@@ -21,6 +21,7 @@ import sbpg.syntax as sbp
 import sbpg.test_structs as sbp_test
 import sys
 import yaml
+import inspect
 
 ##############################################################################
 #
@@ -186,6 +187,12 @@ def mk_package_test_suite(fname, contents, spec_no):
   generated_on = contents.get('generated_on', None)
   tests = contents.get('tests', [])
   resolved = [mk_test(test) for test in tests]
+
+  # Get current directory, root directory, and then strip root directory from test suite filename
+  curr_file_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+  root_libsbp_dir = os.path.realpath(os.path.join(curr_file_dir, '../../../'))
+  fname = str.replace(fname, root_libsbp_dir+'/', '')
+
   return sbp_test.PackageTestSpecification(package=package,
                                   src_filename=fname,
                                   suite_no=spec_no,
