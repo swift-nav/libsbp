@@ -53,7 +53,7 @@ help:
 	@echo
 
 all: deps-generator c python javascript java haskell docs
-docs: verify-prereq-docs pdf html
+docs: verify-prereq-docs deps-generator pdf html
 
 c:          deps-c          gen-c          test-c
 python:     deps-python     gen-python     test-python
