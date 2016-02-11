@@ -14,8 +14,22 @@ SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
 SBP_MINOR_VERSION := $(word 2, $(subst ., , $(SBP_VERSION)))
 SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
 
-.PHONY: help all c python javascript docs pdf html test release dist silly java haskell
+.PHONY: help docs pdf html test release dist silly all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-generator deps-haskell gen-haskell test-haskell verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell
 
+# Functions
+define announce-begin
+	@echo
+	@echo "$1 ..."
+	@echo
+endef
+
+define announce-end
+	@echo
+	@echo "$1"
+	@echo
+endef
+
+# Help!
 help:
 	@echo
 	@echo "Helper for generating and releasing SBP client libraries."
@@ -38,171 +52,187 @@ help:
 	@echo "  test      to run all tests"
 	@echo
 
-all: deps c python javascript haskell test docs
+all: deps-generator c python javascript java haskell docs
+docs: verify-prereq-docs deps-generator pdf html
 
-c:
-	@echo
-	@echo "Generating C headers..."
-	@echo
+c:          deps-c          gen-c          test-c
+python:     deps-python     gen-python     test-python
+javascript: deps-javascript gen-javascript test-javascript
+java:       deps-java       gen-java       test-java
+haskell:    deps-haskell    gen-haskell    test-haskell
+
+# Prerequisite verification
+verify-prereq-generator: 
+	@command -v python 1>/dev/null 2>/dev/null || { echo >&2 "I require \`python\` but it's not installed. Aborting.\n\nHave you installed Python?"; exit 1; }
+	@command -v pip    1>/dev/null 2>/dev/null || { echo >&2 "I require \`pip\` but it's not installed.  Aborting.\n\nHave you installed pip?"; exit 1; }
+
+verify-prereq-c:
+	@command -v checkmk      1>/dev/null 2>/dev/null || { echo >&2 "I require \`checkmk\` but it's not installed. Aborting.\n\nHave you installed checkmk? See the C readme at \`c/README.md\` for setup instructions."; exit 1; }
+	@command -v cmake        1>/dev/null 2>/dev/null || { echo >&2 "I require \`cmake\` but it's not installed. Aborting.\n\nHave you installed cmake? See the C readme at \`c/README.md\` for setup instructions."; exit 1; }
+	@command -v pkg-config   1>/dev/null 2>/dev/null || { echo >&2 "I require \`pkg-config\` but it's not installed. Aborting.\n\nHave you installed pkg-config? See the C readme at \`c/README.md\` for setup instructions."; exit 1; }
+	@command -v doxygen      1>/dev/null 2>/dev/null || { echo >&2 "I require \`doxygen\` but it's not installed. Aborting.\n\nHave you installed doxygen? See the C readme at \`c/README.md\` for setup instructions."; exit 1; }
+
+verify-prereq-python:
+	@command -v python 1>/dev/null 2>/dev/null || { echo >&2 "I require \`python\` but it's not installed. Aborting.\n\nHave you installed Python? See the Python readme at \`python/README.md\` for setup instructions."; exit 1; }
+	@command -v pip 1>/dev/null 2>/dev/null || { echo >&2 "I require \`pip\` but it's not installed. Aborting.\n\nHave you installed pip? See the Python readme at \`python/README.md\` for setup instructions."; exit 1; }
+	@command -v tox 1>/dev/null 2>/dev/null || { echo >&2 "I require \`tox\` but it's not installed. Aborting.\n\nHave you installed tox? See the Python readme at \`python/README.md\` for setup instructions."; exit 1; }
+
+verify-prereq-javascript:
+	@command -v node   1>/dev/null 2>/dev/null || { echo >&2 "I require \`node\` but it's not installed. Aborting.\n\nHave you installed Node.js? See the JavaScript readme at \`javascript/README.md\` for setup instructions."; exit 1; }
+	@command -v npm    1>/dev/null 2>/dev/null || { echo >&2 "I require \`npm\` but it's not installed. Aborting.\n\nHave you installed NPM? See the JavaScript readme at \`javascript/README.md\` for setup instructions."; exit 1; }
+	@command -v mocha  1>/dev/null 2>/dev/null || { echo >&2 "I require \`mocha\` but it's not installed. Aborting.\n\nHave you installed mocha? See the JavaScript readme at \`javascript/README.md\` for setup instructions."; exit 1; }
+
+verify-prereq-java: ;
+
+verify-prereq-haskell: ;
+
+verify-prereq-docs: 
+	@command -v pdflatex  1>/dev/null 2>/dev/null || { echo >&2 "I require \`pdflatex\` but it's not installed. Aborting.\n\nHave you installed pdflatex? See the generator readme (Installing instructions) at \`generator/README.md\` for setup instructions."; exit 1; }
+
+# Dependencies
+
+deps-c: verify-prereq-c
+
+deps-python: verify-prereq-python
+
+deps-javascript: verify-prereq-javascript
+	$(call announce-begin,"Installing Javascript dependencies")
+	cd $(SWIFTNAV_ROOT); npm install
+	$(call announce-end,"Finished installing Javascript dependencies")
+
+deps-java: verify-prereq-java 
+
+deps-haskell: verify-prereq-haskell
+
+deps-generator: verify-prereq-generator
+	$(call announce-begin,"Installing generator dependencies")
+	cd $(SWIFTNAV_ROOT)/generator; python -m pip install --user -r requirements.txt
+	$(call announce-end,"Finished installing generator dependencies")
+
+# Generators
+
+gen-c: deps-generator
+	$(call announce-begin,"Generating C headers")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/c/include/libsbp \
                        -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
 	               --c
-	rm -f $(SWIFTNAV_ROOT)/c/test/auto_check*.c
+
+	$(call announce-begin,"Generating C tests")
+	rm -f $(SWIFTNAV_ROOT)/c/test/auto_check*.c; \
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/c/test \
                        -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
 	               --test-c
-	@echo
-	@echo "Finished. Please check $(SWIFTNAV_ROOT)/c/include/libsbp."
 
-deps:
-	@echo
-	@echo "Installing dependencies..."
-	@echo
-	cd $(SWIFTNAV_ROOT)/generator; pip install --user -r requirements.txt
-	cd $(SWIFTNAV_ROOT); npm install
-	@echo
-	@echo "Finished!"
+	$(call announce-end,"Finished generating C. Please check $(SWIFTNAV_ROOT)/c/include/libsbp.")
 
-python:
-	@echo
-	@echo "Generating Python bindings..."
-	@echo
+gen-python: deps-generator
+	$(call announce-begin,"Generating Python bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/python/sbp/ \
                        -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
 		       --python
-	@echo
-	@echo "Finished! Please check $(SWIFTNAV_ROOT)/python/sbp."
+	$(call announce-end,"Finished generating Python bindings. Please check $(SWIFTNAV_ROOT)/python/sbp")
 
-javascript:
-	@echo
-	@echo "Generating JavaScript bindings..."
-	@echo
+gen-javascript: deps-generator
+	$(call announce-begin,"Generating JavaScript bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/javascript/sbp/ \
                        -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
-		       --javascript;\
-	cd $(SWIFTNAV_ROOT);
-	@echo "Bumping NPM version. You can ignore the following error, if any."
+		       --javascript
+	cd $(SWIFTNAV_ROOT)
+	$(call announce-begin,"Bumping NPM version")
 	@- npm version "v$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" --no-git-tag-version >/dev/null 2>&1
-	@echo
-	@echo "Finished! Please check $(SWIFTNAV_ROOT)/javascript/sbp."
+	$(call announce-end,"Finished generating JavaScript bindings. Please check $(SWIFTNAV_ROOT)/javascript/sbp")
 
-java:
-	@echo
-	@echo "Generating Java bindings..."
-	@echo
+gen-java: deps-generator
+	$(call announce-begin,"Generating Java bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/java/src/ \
 		       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
 		       --java
-	@echo
-	@echo "Finished! Please check $(SWIFTNAV_ROOT)/java/src/sbp."
+	$(call announce-end,"Finished generating Java bindings. Please check $(SWIFTNAV_ROOT)/java/src/sbp")
 
-haskell:
-	@echo
-	@echo "Generating Haskell bindings..."
-	@echo
+gen-haskell: deps-generator
+	$(call announce-begin,"Generating Haskell bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 					-o $(SWIFTNAV_ROOT)/haskell/ \
 					-r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
 					--haskell
-	@echo
-	@echo "Finished! Please check $(SWIFTNAV_ROOT)/haskell."
+	$(call announce-begin,"Finished generating Haskell bindings")
+
+# Testers
+
+test: test-all-begin test-c test-java test-python test-javascript test-all-end
+
+test-all-begin:
+	$(call announce-begin,"Running all tests")
+
+test-all-end:
+	$(call announce-end,"Finished running all tests")
+
+test-c:
+	$(call announce-begin,"Running C tests")
+	cd $(SWIFTNAV_ROOT)/c; \
+	mkdir -p build/ && cd build/; \
+	cmake ../; \
+	make
+	$(call announce-end,"Finished running C tests")
+
+test-python:
+	$(call announce-begin,"Running Python tests")
+	cd $(SWIFTNAV_ROOT)/python/ && python -m pip install --user -r requirements.txt && python -m tox
+	$(call announce-end,"Finished running Python tests")
+
+test-javascript:
+	$(call announce-begin,"Running JavaScript tests")
+	npm install; \
+	npm test
+	$(call announce-end,"Finished running JavaScript tests")
+
+test-java:
+	$(call announce-begin,"No Java tests - TODO")
+
+test-haskell: ;
 
 dist:
-	@echo
-	@echo "Deploy packages ..."
-	@echo
+	$(call announce-begin,"Deploying packages")
 	cd $(SWIFTNAV_ROOT)/python; \
 	python setup.py sdist upload -r pypi
 	npm publish
-	@echo
-	@echo "Finished! Please check $(SWIFTNAV_ROOT)/python/sbp."
-
-docs: pdf html
+	$(call announce-end,"Finished deploying packages")
 
 pdf:
-	@echo
-	@echo "Generating datasheet documentation..."
-	@echo
+	$(call announce-begin,"Generating PDF datasheet documentation")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/latex/ \
                        -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
 	               --latex
-	@echo
-	@echo "Finished!"
-	@echo "Please check $(SWIFTNAV_ROOT)/latex and $(SWIFTNAV_ROOT)/docs."
+	$(call announce-end,"Finished! Please check $(SWIFTNAV_ROOT)/latex and $(SWIFTNAV_ROOT)/docs")
 
 html:
-	@echo
-	@echo "Generating bindings documentation..."
-	@echo
-	@echo "Generating C documentation..."
-	@echo
+	$(call announce-begin,"Generating bindings documentation")
+	$(call announce-begin,"Generating C bindings documentation")
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
 	cmake ../; \
 	make docs
-	@echo
-	@echo "Generating Python documentation..."
-	@echo
+	$(call announce-begin,"Generating Python documentation")
 	cd $(SWIFTNAV_ROOT)/python/docs/ && make html
-	@echo
-	@echo "Finished!"
-
-test: test-all-begin test-c test-java test-python test-javascript test-all-end
-
-test-all-begin:
-	@echo
-	@echo "Running all tests..."
-
-test-all-end:
-	@echo
-	@echo "Finished!"
-
-test-c: c
-	@echo
-	@echo "Running C tests..."
-	@echo
-	cd $(SWIFTNAV_ROOT)/c; \
-	mkdir -p build/ && cd build/; \
-	cmake ../; \
-	make
-
-test-java: java
-	@echo
-	@echo "No Java tests - TODO"
-
-test-python: python
-	@echo
-	@echo "Running Python tests..."
-	@echo
-	cd $(SWIFTNAV_ROOT)/python/ && pip install --user -r requirements.txt && tox
-
-test-javascript: javascript
-	@echo
-	@echo "Running JavaScript tests..."
-	@echo
-	npm install; \
-	npm test
+	$(call announce-end,"Finished generating documentation")
 
 release:
-	@echo
-	@echo "Run release boilerplate..."
-	@echo
+	$(call announce-begin,"Run release boilerplate")
 	github_changelog_generator --no-author \
 				   -t $(CHANGELOG_GITHUB_TOKEN)$ \
 				   -o DRAFT_CHANGELOG.md \
 				   swift-nav/libsbp
-	@echo
-	@echo "Added CHANGELOG details to DRAFT_CHANGELOG.md!"
+	$(call announce-end,"Added CHANGELOG details to DRAFT_CHANGELOG.md!")

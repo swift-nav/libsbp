@@ -1,10 +1,18 @@
-SBP Bindings for Python
-=======================
+# SBP Bindings for Python
 
 Python client for Swift Binary Protocol (SBP).
 
-Setup
------
+## Requirements
+
+You must have `python` and `pip` installed.
+
+## Install from pypi
+
+Install package from pypi::
+
+  $ sudo pip install sbp
+
+## Install from source
 
 Install dependencies only::
 
@@ -14,35 +22,27 @@ Install from repo::
 
   $ sudo python setup.py install
 
-Install package from pypi::
+# Usage Examples
 
-  $ sudo pip install sbp
-
-Usage Examples
---------------
-
-Simple example
-~~~~~~~~~~~~~~
+## Simple example
 
 Receives SBP messages over a serial port, decodes MSG_BASELINE
-messages and prints them out. See `simple.py`_ .
+messages and prints them out. See [`simple.py`](https://github.com/swift-nav/libsbp/blob/master/python/sbp/client/examples/simple.py).
 
 Run this example with::
 
   $ python -m sbp.client.examples.simple -p /path/to/serial/port
 
-Sending SBP messages over UDP
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Sending SBP messages over UDP
 
 Receives SBP messages over a serial port and sends all incoming
-messages to a UDP socket. See `udp.py`_ .
+messages to a UDP socket. See [`udp.py`](https://github.com/swift-nav/libsbp/blob/master/python/sbp/client/examples/udp.py).
 
 Run this example with::
 
   $ python -m sbp.client.examples.udp -s /path/to/serial/port
 
-Testing
---------------
+# Testing
 
 To run the tests and check for coverage::
 
@@ -52,12 +52,8 @@ To run the tests without suppressing stdout output:
 
   $  py.test -v -s --cov sbp tests/
 
-License
--------
+# License
 
 Copyright © 2015 Swift Navigation
 
 Distributed under LGPLv3.0.
-
-.. _simple.py: https://github.com/swift-nav/libsbp/blob/master/python/sbp/client/examples/simple.py
-.. _udp.py: https://github.com/swift-nav/libsbp/blob/master/python/sbp/client/examples/udp.py

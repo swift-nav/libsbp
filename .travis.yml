@@ -19,7 +19,6 @@ install:
   - npm install
 
 script:
-  - make deps
   - make test
   - make docs
 

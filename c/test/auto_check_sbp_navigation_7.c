@@ -10,13 +10,13 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from /home/pasi/pmiettinen/libsbp/spec/tests/yaml/swiftnav/sbp/settings/test_MsgSettingsReadByIndexResp.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgPosLLH.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
 #include <sbp.h>
-#include <settings.h>
+#include <navigation.h>
 
 static u32 n_callbacks_logged;
 static u16 last_sender_id;
@@ -74,7 +74,7 @@ static void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   /*printy_callback(sender_id, len, msg);*/
 }
 
-START_TEST( test_auto_check_sbp_settings_18 )
+START_TEST( test_auto_check_sbp_navigation_7 )
 {
   static sbp_msg_callbacks_node_t n;
   //static sbp_msg_callbacks_node_t n2;
@@ -97,12 +97,12 @@ START_TEST( test_auto_check_sbp_settings_18 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xa7, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_callback(&sbp_state, 0x201, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,167,0,246,215,78,0,0,116,101,108,101,109,101,116,114,121,95,114,97,100,105,111,0,99,111,110,102,105,103,117,114,97,116,105,111,110,95,115,116,114,105,110,103,0,65,84,38,70,44,65,84,83,49,61,49,49,53,44,65,84,83,50,61,49,50,56,44,65,84,83,53,61,48,44,65,84,38,87,44,65,84,90,0,248,233, };
+    u8 test_data[] = {85,1,2,246,215,34,20,46,39,0,250,29,226,186,235,182,66,64,19,203,51,196,24,139,94,192,31,157,160,232,122,115,81,64,0,0,0,0,9,0,236,139, };
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xa7, 55286, sizeof(test_data), test_data, &dummy_write);
+    sbp_send_message(&sbp_state, 0x201, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
       fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -122,11 +122,17 @@ START_TEST( test_auto_check_sbp_settings_18 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_settings_read_by_index_resp_t* msg = ( msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
+    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->index == 0, "incorrect value for index, expected 0, is %d", msg->index);
-    fail_unless(strstr(msg->setting, ((char []){(char)116,(char)101,(char)108,(char)101,(char)109,(char)101,(char)116,(char)114,(char)121,(char)95,(char)114,(char)97,(char)100,(char)105,(char)111,(char)0,(char)99,(char)111,(char)110,(char)102,(char)105,(char)103,(char)117,(char)114,(char)97,(char)116,(char)105,(char)111,(char)110,(char)95,(char)115,(char)116,(char)114,(char)105,(char)110,(char)103,(char)0,(char)65,(char)84,(char)38,(char)70,(char)44,(char)65,(char)84,(char)83,(char)49,(char)61,(char)49,(char)49,(char)53,(char)44,(char)65,(char)84,(char)83,(char)50,(char)61,(char)49,(char)50,(char)56,(char)44,(char)65,(char)84,(char)83,(char)53,(char)61,(char)48,(char)44,(char)65,(char)84,(char)38,(char)87,(char)44,(char)65,(char)84,(char)90,(char)0,0})) != NULL, "incorrect value for msg->setting, expected string '%s', is '%s'", ((char []){(char)116,(char)101,(char)108,(char)101,(char)109,(char)101,(char)116,(char)114,(char)121,(char)95,(char)114,(char)97,(char)100,(char)105,(char)111,(char)0,(char)99,(char)111,(char)110,(char)102,(char)105,(char)103,(char)117,(char)114,(char)97,(char)116,(char)105,(char)111,(char)110,(char)95,(char)115,(char)116,(char)114,(char)105,(char)110,(char)103,(char)0,(char)65,(char)84,(char)38,(char)70,(char)44,(char)65,(char)84,(char)83,(char)49,(char)61,(char)49,(char)49,(char)53,(char)44,(char)65,(char)84,(char)83,(char)50,(char)61,(char)49,(char)50,(char)56,(char)44,(char)65,(char)84,(char)83,(char)53,(char)61,(char)48,(char)44,(char)65,(char)84,(char)38,(char)87,(char)44,(char)65,(char)84,(char)90,(char)0,0}), msg->setting);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->lon*100 - -122.173386622*100) < 0.05, "incorrect value for lon, expected -122.173386622, is %f", msg->lon);
+    fail_unless(msg->tow == 2567700, "incorrect value for tow, expected 2567700, is %d", msg->tow);
+    fail_unless((msg->height*100 - 69.8043767518*100) < 0.05, "incorrect value for height, expected 69.8043767518, is %f", msg->height);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless((msg->lat*100 - 37.4290689091*100) < 0.05, "incorrect value for lat, expected 37.4290689091, is %f", msg->lat);
   }
   // Test successful parsing of a message
   {
@@ -139,12 +145,12 @@ START_TEST( test_auto_check_sbp_settings_18 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xa7, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_callback(&sbp_state, 0x201, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,167,0,246,215,35,1,0,117,97,114,116,95,102,116,100,105,0,109,111,100,101,0,83,66,80,0,101,110,117,109,58,83,66,80,44,78,77,69,65,0,167,243, };
+    u8 test_data[] = {85,1,2,246,215,34,20,46,39,0,161,51,75,148,235,182,66,64,36,41,246,30,25,139,94,192,254,218,49,127,10,108,81,64,0,0,0,0,9,1,25,117, };
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xa7, 55286, sizeof(test_data), test_data, &dummy_write);
+    sbp_send_message(&sbp_state, 0x201, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
       fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -164,11 +170,17 @@ START_TEST( test_auto_check_sbp_settings_18 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_settings_read_by_index_resp_t* msg = ( msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
+    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->index == 1, "incorrect value for index, expected 1, is %d", msg->index);
-    fail_unless(strstr(msg->setting, ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)102,(char)116,(char)100,(char)105,(char)0,(char)109,(char)111,(char)100,(char)101,(char)0,(char)83,(char)66,(char)80,(char)0,(char)101,(char)110,(char)117,(char)109,(char)58,(char)83,(char)66,(char)80,(char)44,(char)78,(char)77,(char)69,(char)65,(char)0,0})) != NULL, "incorrect value for msg->setting, expected string '%s', is '%s'", ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)102,(char)116,(char)100,(char)105,(char)0,(char)109,(char)111,(char)100,(char)101,(char)0,(char)83,(char)66,(char)80,(char)0,(char)101,(char)110,(char)117,(char)109,(char)58,(char)83,(char)66,(char)80,(char)44,(char)78,(char)77,(char)69,(char)65,(char)0,0}), msg->setting);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->lon*100 - -122.173408261*100) < 0.05, "incorrect value for lon, expected -122.173408261, is %f", msg->lon);
+    fail_unless(msg->tow == 2567700, "incorrect value for tow, expected 2567700, is %d", msg->tow);
+    fail_unless((msg->height*100 - 69.6881406772*100) < 0.05, "incorrect value for height, expected 69.6881406772, is %f", msg->height);
+    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless((msg->lat*100 - 37.4290643089*100) < 0.05, "incorrect value for lat, expected 37.4290643089, is %f", msg->lat);
   }
   // Test successful parsing of a message
   {
@@ -181,12 +193,12 @@ START_TEST( test_auto_check_sbp_settings_18 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xa7, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_callback(&sbp_state, 0x201, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,167,0,246,215,35,2,0,117,97,114,116,95,102,116,100,105,0,115,98,112,95,109,101,115,115,97,103,101,95,109,97,115,107,0,54,53,53,51,53,0,4,56, };
+    u8 test_data[] = {85,1,2,246,215,34,120,46,39,0,56,214,210,65,235,182,66,64,13,46,132,80,25,139,94,192,22,143,46,234,191,95,81,64,0,0,0,0,9,0,174,105, };
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xa7, 55286, sizeof(test_data), test_data, &dummy_write);
+    sbp_send_message(&sbp_state, 0x201, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
       fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -206,11 +218,17 @@ START_TEST( test_auto_check_sbp_settings_18 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_settings_read_by_index_resp_t* msg = ( msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
+    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->index == 2, "incorrect value for index, expected 2, is %d", msg->index);
-    fail_unless(strstr(msg->setting, ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)102,(char)116,(char)100,(char)105,(char)0,(char)115,(char)98,(char)112,(char)95,(char)109,(char)101,(char)115,(char)115,(char)97,(char)103,(char)101,(char)95,(char)109,(char)97,(char)115,(char)107,(char)0,(char)54,(char)53,(char)53,(char)51,(char)53,(char)0,0})) != NULL, "incorrect value for msg->setting, expected string '%s', is '%s'", ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)102,(char)116,(char)100,(char)105,(char)0,(char)115,(char)98,(char)112,(char)95,(char)109,(char)101,(char)115,(char)115,(char)97,(char)103,(char)101,(char)95,(char)109,(char)97,(char)115,(char)107,(char)0,(char)54,(char)53,(char)53,(char)51,(char)53,(char)0,0}), msg->setting);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->lon*100 - -122.173420075*100) < 0.05, "incorrect value for lon, expected -122.173420075, is %f", msg->lon);
+    fail_unless(msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", msg->tow);
+    fail_unless((msg->height*100 - 69.4960885482*100) < 0.05, "incorrect value for height, expected 69.4960885482, is %f", msg->height);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless((msg->lat*100 - 37.4290544776*100) < 0.05, "incorrect value for lat, expected 37.4290544776, is %f", msg->lat);
   }
   // Test successful parsing of a message
   {
@@ -223,12 +241,12 @@ START_TEST( test_auto_check_sbp_settings_18 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xa7, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_callback(&sbp_state, 0x201, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,167,0,246,215,29,3,0,117,97,114,116,95,102,116,100,105,0,98,97,117,100,114,97,116,101,0,49,48,48,48,48,48,48,0,242,146, };
+    u8 test_data[] = {85,1,2,246,215,34,120,46,39,0,251,117,115,140,235,182,66,64,152,134,167,12,25,139,94,192,160,22,137,253,4,108,81,64,0,0,0,0,9,1,122,127, };
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xa7, 55286, sizeof(test_data), test_data, &dummy_write);
+    sbp_send_message(&sbp_state, 0x201, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
       fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -248,11 +266,17 @@ START_TEST( test_auto_check_sbp_settings_18 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_settings_read_by_index_resp_t* msg = ( msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
+    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->index == 3, "incorrect value for index, expected 3, is %d", msg->index);
-    fail_unless(strstr(msg->setting, ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)102,(char)116,(char)100,(char)105,(char)0,(char)98,(char)97,(char)117,(char)100,(char)114,(char)97,(char)116,(char)101,(char)0,(char)49,(char)48,(char)48,(char)48,(char)48,(char)48,(char)48,(char)0,0})) != NULL, "incorrect value for msg->setting, expected string '%s', is '%s'", ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)102,(char)116,(char)100,(char)105,(char)0,(char)98,(char)97,(char)117,(char)100,(char)114,(char)97,(char)116,(char)101,(char)0,(char)49,(char)48,(char)48,(char)48,(char)48,(char)48,(char)48,(char)0,0}), msg->setting);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->lon*100 - -122.173403896*100) < 0.05, "incorrect value for lon, expected -122.173403896, is %f", msg->lon);
+    fail_unless(msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", msg->tow);
+    fail_unless((msg->height*100 - 69.6878045882*100) < 0.05, "incorrect value for height, expected 69.6878045882, is %f", msg->height);
+    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless((msg->lat*100 - 37.4290633739*100) < 0.05, "incorrect value for lat, expected 37.4290633739, is %f", msg->lat);
   }
   // Test successful parsing of a message
   {
@@ -265,12 +289,12 @@ START_TEST( test_auto_check_sbp_settings_18 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xa7, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_callback(&sbp_state, 0x201, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,167,0,246,215,36,4,0,117,97,114,116,95,117,97,114,116,97,0,109,111,100,101,0,83,66,80,0,101,110,117,109,58,83,66,80,44,78,77,69,65,0,22,4, };
+    u8 test_data[] = {85,1,2,246,215,34,220,46,39,0,51,124,88,251,235,182,66,64,153,5,250,16,25,139,94,192,146,60,187,219,152,161,81,64,0,0,0,0,9,0,194,158, };
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xa7, 55286, sizeof(test_data), test_data, &dummy_write);
+    sbp_send_message(&sbp_state, 0x201, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
       fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -290,20 +314,26 @@ START_TEST( test_auto_check_sbp_settings_18 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_settings_read_by_index_resp_t* msg = ( msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
+    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->index == 4, "incorrect value for index, expected 4, is %d", msg->index);
-    fail_unless(strstr(msg->setting, ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)117,(char)97,(char)114,(char)116,(char)97,(char)0,(char)109,(char)111,(char)100,(char)101,(char)0,(char)83,(char)66,(char)80,(char)0,(char)101,(char)110,(char)117,(char)109,(char)58,(char)83,(char)66,(char)80,(char)44,(char)78,(char)77,(char)69,(char)65,(char)0,0})) != NULL, "incorrect value for msg->setting, expected string '%s', is '%s'", ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)117,(char)97,(char)114,(char)116,(char)97,(char)0,(char)109,(char)111,(char)100,(char)101,(char)0,(char)83,(char)66,(char)80,(char)0,(char)101,(char)110,(char)117,(char)109,(char)58,(char)83,(char)66,(char)80,(char)44,(char)78,(char)77,(char)69,(char)65,(char)0,0}), msg->setting);
+    fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->lon*100 - -122.173404926*100) < 0.05, "incorrect value for lon, expected -122.173404926, is %f", msg->lon);
+    fail_unless(msg->tow == 2567900, "incorrect value for tow, expected 2567900, is %d", msg->tow);
+    fail_unless((msg->height*100 - 70.5249547318*100) < 0.05, "incorrect value for height, expected 70.5249547318, is %f", msg->height);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
+    fail_unless((msg->lat*100 - 37.4290765936*100) < 0.05, "incorrect value for lat, expected 37.4290765936, is %f", msg->lat);
   }
 }
 END_TEST
 
-Suite* auto_check_sbp_settings_18_suite(void)
+Suite* auto_check_sbp_navigation_7_suite(void)
 {
-  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_settings_18");
-  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_settings_18");
-  tcase_add_test(tc_acq, test_auto_check_sbp_settings_18);
+  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_navigation_7");
+  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_navigation_7");
+  tcase_add_test(tc_acq, test_auto_check_sbp_navigation_7);
   suite_add_tcase(s, tc_acq);
   return s;
 }

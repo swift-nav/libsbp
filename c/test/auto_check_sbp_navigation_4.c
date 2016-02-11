@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from /home/pasi/pmiettinen/libsbp/spec/tests/yaml/swiftnav/sbp/navigation/test_MsgDops.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgDops.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -74,7 +74,7 @@ static void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   /*printy_callback(sender_id, len, msg);*/
 }
 
-START_TEST( test_auto_check_sbp_navigation_25 )
+START_TEST( test_auto_check_sbp_navigation_4 )
 {
   static sbp_msg_callbacks_node_t n;
   //static sbp_msg_callbacks_node_t n2;
@@ -227,11 +227,11 @@ START_TEST( test_auto_check_sbp_navigation_25 )
 }
 END_TEST
 
-Suite* auto_check_sbp_navigation_25_suite(void)
+Suite* auto_check_sbp_navigation_4_suite(void)
 {
-  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_navigation_25");
-  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_navigation_25");
-  tcase_add_test(tc_acq, test_auto_check_sbp_navigation_25);
+  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_navigation_4");
+  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_navigation_4");
+  tcase_add_test(tc_acq, test_auto_check_sbp_navigation_4);
   suite_add_tcase(s, tc_acq);
   return s;
 }
