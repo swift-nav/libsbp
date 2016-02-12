@@ -4,7 +4,7 @@ Python client for Swift Binary Protocol (SBP).
 
 ## Requirements
 
-You must have `python` and `pip` installed.
+You must have `python`, `pip`, and `pandoc` installed to build the Python library (`pandoc` is only used during the build process).
 
 ## Install from pypi
 
