@@ -123,7 +123,7 @@ class HTTPDriver(BaseDriver):
 
   def __init__(self,
                device_uid=None,
-               url="http://broker.testing.skylark.swiftnav.com",
+               url="https://broker.testing.skylark.swiftnav.com",
                retries=DEFAULT_RETRIES,
                timeout=DEFAULT_TIMEOUT,):
     retry = Retry(connect=DEFAULT_RETRIES[0],
@@ -134,6 +134,11 @@ class HTTPDriver(BaseDriver):
     self.url = url
     self.read_session = requests.Session()
     self.read_session.mount("http://",
+                            HTTPAdapter(pool_connections=DEFAULT_POOLSIZE,
+                                        pool_maxsize=DEFAULT_POOLSIZE,
+                                        pool_block=DEFAULT_POOLBLOCK,
+                                        max_retries=retry))
+    self.read_session.mount("https://",
                             HTTPAdapter(pool_connections=DEFAULT_POOLSIZE,
                                         pool_maxsize=DEFAULT_POOLSIZE,
                                         pool_block=DEFAULT_POOLBLOCK,
