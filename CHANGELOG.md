@@ -180,7 +180,7 @@
 
 **Closed issues:**
 
-- python/README.md refers to nonexisting requirements.txt [\#50](https://github.com/swift-nav/libsbp/issues/50)
+- python/README.rst refers to nonexisting requirements.txt [\#50](https://github.com/swift-nav/libsbp/issues/50)
 - Update documentation descriptions and payload info for various piksi.yaml messages. [\#45](https://github.com/swift-nav/libsbp/issues/45)
 - Rename uarts in MSG\_UART\_STATE [\#44](https://github.com/swift-nav/libsbp/issues/44)
 - Integrate SBP, language-specific developer documentation [\#18](https://github.com/swift-nav/libsbp/issues/18)
