@@ -17,9 +17,6 @@ install:
   - pip install --upgrade --user Sphinx
   - npm install -g mocha
   - npm install
-# install pandoc: Stolen from https://github.com/yihui/knitr/blob/master/.travis.yml
-  - "[ ! -d ~/bin ] && mkdir ~/bin || true"
-  - "wget -q -O - https://github.com/yihui/crandalf/raw/master/inst/scripts/install-pandoc | bash"
 
 script:
   - make test

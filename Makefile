@@ -62,7 +62,7 @@ java:       deps-java       gen-java       test-java
 haskell:    deps-haskell    gen-haskell    test-haskell
 
 # Prerequisite verification
-verify-prereq-generator: 
+verify-prereq-generator:
 	@command -v python 1>/dev/null 2>/dev/null || { echo >&2 "I require \`python\` but it's not installed. Aborting.\n\nHave you installed Python?"; exit 1; }
 	@command -v pip    1>/dev/null 2>/dev/null || { echo >&2 "I require \`pip\` but it's not installed.  Aborting.\n\nHave you installed pip?"; exit 1; }
 
@@ -73,10 +73,10 @@ verify-prereq-c:
 	@command -v doxygen      1>/dev/null 2>/dev/null || { echo >&2 "I require \`doxygen\` but it's not installed. Aborting.\n\nHave you installed doxygen? See the C readme at \`c/README.md\` for setup instructions."; exit 1; }
 
 verify-prereq-python:
-	@command -v python 1>/dev/null 2>/dev/null || { echo >&2 "I require \`python\` but it's not installed. Aborting.\n\nHave you installed Python? See the Python readme at \`python/README.md\` for setup instructions."; exit 1; }
-	@command -v pip 1>/dev/null 2>/dev/null    || { echo >&2 "I require \`pip\` but it's not installed. Aborting.\n\nHave you installed pip? See the Python readme at \`python/README.md\` for setup instructions."; exit 1; }
-	@command -v tox 1>/dev/null 2>/dev/null    || { echo >&2 "I require \`tox\` but it's not installed. Aborting.\n\nHave you installed tox? See the Python readme at \`python/README.md\` for setup instructions."; exit 1; }
-	@command -v pandoc 1>/dev/null 2>/dev/null || { echo >&2 "I require \`pandoc\` but it's not installed. Aborting.\n\nHave you installed pandoc? See the Python readme at \`python/README.md\` for setup instructions."; exit 1; }
+	@command -v python 1>/dev/null 2>/dev/null || { echo >&2 "I require \`python\` but it's not installed. Aborting.\n\nHave you installed Python? See the Python readme at \`python/README.rst\` for setup instructions."; exit 1; }
+	@command -v pip 1>/dev/null 2>/dev/null    || { echo >&2 "I require \`pip\` but it's not installed. Aborting.\n\nHave you installed pip? See the Python readme at \`python/README.rst\` for setup instructions."; exit 1; }
+	@command -v tox 1>/dev/null 2>/dev/null    || { echo >&2 "I require \`tox\` but it's not installed. Aborting.\n\nHave you installed tox? See the Python readme at \`python/README.rst\` for setup instructions."; exit 1; }
+	@command -v pandoc 1>/dev/null 2>/dev/null || { echo >&2 "I require \`pandoc\` but it's not installed. Aborting.\n\nHave you installed pandoc? See the Python readme at \`python/README.rst\` for setup instructions."; exit 1; }
 
 verify-prereq-javascript:
 	@command -v node   1>/dev/null 2>/dev/null || { echo >&2 "I require \`node\` but it's not installed. Aborting.\n\nHave you installed Node.js? See the JavaScript readme at \`javascript/README.md\` for setup instructions."; exit 1; }
@@ -87,7 +87,7 @@ verify-prereq-java: ;
 
 verify-prereq-haskell: ;
 
-verify-prereq-docs: 
+verify-prereq-docs:
 	@command -v pdflatex  1>/dev/null 2>/dev/null || { echo >&2 "I require \`pdflatex\` but it's not installed. Aborting.\n\nHave you installed pdflatex? See the generator readme (Installing instructions) at \`generator/README.md\` for setup instructions."; exit 1; }
 
 # Dependencies
@@ -101,7 +101,7 @@ deps-javascript: verify-prereq-javascript
 	cd $(SWIFTNAV_ROOT); npm install
 	$(call announce-end,"Finished installing Javascript dependencies")
 
-deps-java: verify-prereq-java 
+deps-java: verify-prereq-java
 
 deps-haskell: verify-prereq-haskell
 

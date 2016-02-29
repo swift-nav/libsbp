@@ -16,4 +16,3 @@ pytest-cov==1.8.1
 pyyaml==3.11
 tox==1.8.1
 virtualenv==1.11.6
-pypandoc

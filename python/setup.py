@@ -2,7 +2,6 @@
 
 from setuptools import setup
 import os
-import pypandoc
 from sbp.version import VERSION
 
 CLASSIFIERS = [
@@ -35,8 +34,8 @@ PACKAGE_DATA = { 'sbp' : [
 ] }
 
 cwd = os.path.abspath(os.path.dirname(__file__))
-
-readme = pypandoc.convert(cwd + '/README.md', 'rst')
+with open(cwd + '/README.rst') as f:
+  readme = f.read()
 
 with open(cwd + '/requirements.txt') as f:
   INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
