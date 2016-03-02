@@ -187,6 +187,18 @@ typedef struct __attribute__((packed)) {
 } msg_mask_satellite_t;
 
 
+/** Output information element updated in NDB
+ *
+ * This message from Piksi to host carries information on updated
+ * data element in NDB.
+ */
+#define SBP_MSG_NDB_UPDATE     0x0080
+typedef struct __attribute__((packed)) {
+  u32 mask;    /**< Indication of information element type */
+  u8 data[0]; /**< New value of updated information element */
+} msg_ndb_update_t;
+
+
 /** \} */
 
 #endif /* LIBSBP_PIKSI_MESSAGES_H */

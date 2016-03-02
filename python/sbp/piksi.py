@@ -878,6 +878,93 @@ from being used in various Piksi subsystems.
     d.update(j)
     return d
     
+SBP_MSG_NDB_UPDATE = 0x0080
+class MsgNdbUpdate(SBP):
+  """SBP class for message MSG_NDB_UPDATE (0x0080).
+
+  You can have MSG_NDB_UPDATE inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message from Piksi to host carries information on updated
+data element in NDB.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  mask : int
+    Indication of information element type
+  data : array
+    New value of updated information element
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgNdbUpdate",
+                   ULInt32('mask'),
+                   OptionalGreedyRange(ULInt8('data')),)
+  __slots__ = [
+               'mask',
+               'data',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgNdbUpdate,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgNdbUpdate, self).__init__()
+      self.msg_type = SBP_MSG_NDB_UPDATE
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.mask = kwargs.pop('mask')
+      self.data = kwargs.pop('data')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgNdbUpdate.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgNdbUpdate(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgNdbUpdate._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgNdbUpdate._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgNdbUpdate, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0069: MsgAlmanac,
@@ -891,4 +978,5 @@ msg_classes = {
   0x0018: MsgUartState,
   0x0019: MsgIarState,
   0x001B: MsgMaskSatellite,
+  0x0080: MsgNdbUpdate,
 }

@@ -230,3 +230,17 @@ definitions:
             type: GnssSignal
             desc: GNSS signal for which the mask is applied
 
+ - MSG_NDB_UPDATE:
+    id: 0x0080
+    short_desc: Output information element updated in NDB
+    desc: |
+      This message from Piksi to host carries information on updated
+      data element in NDB.
+    fields:
+        - mask:
+            type: u32
+            desc: Indication of information element type
+        - data:
+            type: array
+            fill: u8
+            desc: New value of updated information element
