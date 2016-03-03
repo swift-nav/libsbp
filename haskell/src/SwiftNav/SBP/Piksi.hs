@@ -403,3 +403,33 @@ $(deriveSBP 'msgMaskSatellite ''MsgMaskSatellite)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgMaskSatellite_" . stripPrefix "_msgMaskSatellite_"}
              ''MsgMaskSatellite)
 $(makeLenses ''MsgMaskSatellite)
+
+msgNdbUpdate :: Word16
+msgNdbUpdate = 0x0080
+
+-- | SBP class for message MSG_NDB_UPDATE (0x0080).
+--
+-- This message from Piksi to host carries information on updated data element
+-- in NDB.
+data MsgNdbUpdate = MsgNdbUpdate
+  { _msgNdbUpdate_mask :: Word32
+    -- ^ Indication of information element type
+  , _msgNdbUpdate_data :: [Word8]
+    -- ^ New value of updated information element
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgNdbUpdate where
+  get = do
+    _msgNdbUpdate_mask <- getWord32le
+    _msgNdbUpdate_data <- whileM (liftM not isEmpty) getWord8
+    return MsgNdbUpdate {..}
+
+  put MsgNdbUpdate {..} = do
+    putWord32le _msgNdbUpdate_mask
+    mapM_ putWord8 _msgNdbUpdate_data
+
+$(deriveSBP 'msgNdbUpdate ''MsgNdbUpdate)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNdbUpdate_" . stripPrefix "_msgNdbUpdate_"}
+             ''MsgNdbUpdate)
+$(makeLenses ''MsgNdbUpdate)

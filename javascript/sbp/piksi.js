@@ -381,6 +381,35 @@ MsgMaskSatellite.prototype.fieldSpec = [];
 MsgMaskSatellite.prototype.fieldSpec.push(['mask', 'writeUInt8', 1]);
 MsgMaskSatellite.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 
+/**
+ * SBP class for message MSG_NDB_UPDATE (0x0080).
+ *
+ * This message from Piksi to host carries information on updated data element in
+ * NDB.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field mask number (unsigned 32-bit int, 4 bytes) Indication of information element type
+ * @field data array New value of updated information element
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgNdbUpdate = function (sbp) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_NDB_UPDATE";
+  this.fields = this.parser.parse(sbp.payload);
+
+  return this;
+};
+MsgNdbUpdate.prototype = Object.create(SBP.prototype);
+MsgNdbUpdate.prototype.constructor = MsgNdbUpdate;
+MsgNdbUpdate.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('mask')
+  .array('data', { type: 'uint8', readUntil: 'eof' });
+MsgNdbUpdate.prototype.fieldSpec = [];
+MsgNdbUpdate.prototype.fieldSpec.push(['mask', 'writeUInt32LE', 4]);
+MsgNdbUpdate.prototype.fieldSpec.push(['data', 'array', 'writeUInt8', function () { return 1; }]);
+
 module.exports = {
   0x0069: MsgAlmanac,
   0x0068: MsgSetTime,
@@ -395,4 +424,5 @@ module.exports = {
   0x0018: MsgUartState,
   0x0019: MsgIarState,
   0x001B: MsgMaskSatellite,
+  0x0080: MsgNdbUpdate,
 }

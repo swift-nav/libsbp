@@ -99,6 +99,7 @@ data SBPMsg =
    | SBPMsgMaskSatellite MsgMaskSatellite Msg
    | SBPMsgNapDeviceDnaReq MsgNapDeviceDnaReq Msg
    | SBPMsgNapDeviceDnaResp MsgNapDeviceDnaResp Msg
+   | SBPMsgNdbUpdate MsgNdbUpdate Msg
    | SBPMsgObs MsgObs Msg
    | SBPMsgObsDepA MsgObsDepA Msg
    | SBPMsgPosEcef MsgPosEcef Msg
@@ -180,6 +181,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgMaskSatellite = SBPMsgMaskSatellite (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == msgNdbUpdate = SBPMsgNdbUpdate (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgObs = SBPMsgObs (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgObsDepA = SBPMsgObsDepA (decode (fromStrict _msgSBPPayload)) sbp
           | _msgSBPType == msgPosEcef = SBPMsgPosEcef (decode (fromStrict _msgSBPPayload)) sbp
@@ -255,6 +257,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgMaskSatellite _ sbp) = sbp
       encode' (SBPMsgNapDeviceDnaReq _ sbp) = sbp
       encode' (SBPMsgNapDeviceDnaResp _ sbp) = sbp
+      encode' (SBPMsgNdbUpdate _ sbp) = sbp
       encode' (SBPMsgObs _ sbp) = sbp
       encode' (SBPMsgObsDepA _ sbp) = sbp
       encode' (SBPMsgPosEcef _ sbp) = sbp
@@ -332,6 +335,7 @@ instance FromJSON SBPMsg where
         | msgType == msgMaskSatellite = SBPMsgMaskSatellite <$> parseJSON obj <*> parseJSON obj
         | msgType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq <$> parseJSON obj <*> parseJSON obj
         | msgType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgNdbUpdate = SBPMsgNdbUpdate <$> parseJSON obj <*> parseJSON obj
         | msgType == msgObs = SBPMsgObs <$> parseJSON obj <*> parseJSON obj
         | msgType == msgObsDepA = SBPMsgObsDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgPosEcef = SBPMsgPosEcef <$> parseJSON obj <*> parseJSON obj
@@ -411,6 +415,7 @@ instance ToJSON SBPMsg where
    toJSON (SBPMsgMaskSatellite msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgNapDeviceDnaReq msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgNapDeviceDnaResp msg sbp) = toJSON msg `merge` toJSON sbp
+   toJSON (SBPMsgNdbUpdate msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgObs msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgObsDepA msg sbp) = toJSON msg `merge` toJSON sbp
    toJSON (SBPMsgPosEcef msg sbp) = toJSON msg `merge` toJSON sbp
