@@ -3,6 +3,7 @@ sudo: false
 addons:
   apt:
     packages:
+    - check
     - cmake
     - gradle
 
