@@ -3,6 +3,8 @@ sudo: false
 addons:
   apt:
     packages:
+    - check
+    - doxygen
     - cmake
     - gradle
 

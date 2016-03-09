@@ -40,6 +40,9 @@ with open(cwd + '/README.rst') as f:
 with open(cwd + '/requirements.txt') as f:
   INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
 
+with open(cwd + '/test_requirements.txt') as f:
+  TEST_REQUIRES = [i.strip() for i in f.readlines()]
+
 setup(name='sbp',
       description='Python bindings for Swift Binary Protocol',
       long_description=readme,
@@ -52,5 +55,6 @@ setup(name='sbp',
       platforms=PLATFORMS,
       package_data=PACKAGE_DATA,
       install_requires=INSTALL_REQUIRES,
+      tests_require=TEST_REQUIRES,
       use_2to3=False,
       zip_safe=False)
