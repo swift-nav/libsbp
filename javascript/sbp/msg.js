@@ -141,6 +141,7 @@ module.exports = {
    *
    * @param stream: A Readable stream of bytes.
    * @param callback: a callback function invoked when a framed message is found and decoded in the stream.
+   * @returns [parsed SBP object, Buffer]
    */
   dispatch: function dispatch (stream, callback) {
     var offset = 0;
@@ -191,7 +192,7 @@ module.exports = {
         // remove this chunk from the stream buffer
         streamBuffer = streamBuffer.slice(preamblePos+6+length+2);
 
-        return module.exports.decode(fullBuffer);
+        return [module.exports.decode(fullBuffer), fullBuffer];
       } else {
         // remove bad preamble from the stream buffer
         streamBuffer = streamBuffer.slice(preamblePos+1);
@@ -207,7 +208,9 @@ module.exports = {
         if (streamBuffer.length < 2) {
           return;
         }
-        var framedMessage = getFramedMessage();
+        var pair = getFramedMessage();
+        var framedMessage = pair[0];
+        var fullBuffer = pair[1];
 
         // If there is data left to process after a successful parse, process again
         if (streamBuffer.length > 0) {
@@ -216,7 +219,7 @@ module.exports = {
           }, 0);
         }
 
-        callback(null, framedMessage);
+        callback(null, framedMessage, fullBuffer);
       } catch (e) {
         // If the buffer was corrupt but there's more in the stream, try again immediately
         if (e instanceof BufferCorruptError && streamBuffer.length > 0) {
