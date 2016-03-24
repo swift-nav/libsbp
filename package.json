@@ -15,5 +15,8 @@
   "dependencies": {
     "binary-parser": "git://github.com/JoshuaGross/binary-parser.git#jgross-greedy-string",
     "js-yaml": "^3.4.3"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5"
   }
 }
