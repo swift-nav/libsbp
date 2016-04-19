@@ -12,7 +12,7 @@ module SwiftNav.CRC16
   ( crc16
   ) where
 
-import BasicPrelude hiding ( ByteString, foldl' )
+import BasicPrelude         hiding (ByteString, foldl')
 import Data.Array
 import Data.Bits
 import Data.ByteString.Lazy

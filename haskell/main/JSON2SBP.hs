@@ -9,14 +9,13 @@
 -- JSON to SBP tool - reads SBP JSON from stdin and sends SBP JSON to
 -- stdout.
 
-import           BasicPrelude
+import           BasicPrelude hiding (lines)
 import           Control.Monad.Trans.Resource
 import           Data.Aeson
 import           Data.Conduit
 import           Data.Conduit.Binary
 import qualified Data.Conduit.List as CL
 import           Data.Conduit.Serialization.Binary
-import qualified Data.Conduit.Text as CT
 import           SwiftNav.SBP
 import           System.IO
 
@@ -33,8 +32,10 @@ decodeSBPMsg :: ByteString -> Maybe SBPMsg
 decodeSBPMsg v = decodeStrict v <|> sbpMsgData <$> decodeStrict v
 
 main :: IO ()
-main = runResourceT $
-  sourceHandle stdin =$=
-  CT.decode CT.utf8 =$= CT.lines =$= CL.mapMaybe (decodeSBPMsg . encodeUtf8) =$=
-  conduitEncode $$
-  sinkHandle stdout
+main =
+  runResourceT $
+    sourceHandle stdin       =$=
+    lines                    =$=
+    CL.mapMaybe decodeSBPMsg =$=
+    conduitEncode            $$
+    sinkHandle stdout

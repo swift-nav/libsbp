@@ -27,16 +27,11 @@ module SwiftNav.SBP
   , module SwiftNav.SBP.User
   ) where
 
-import BasicPrelude hiding (lookup)
-import Control.Lens hiding ((.=))
-import Data.Aeson hiding (decode, decode')
+import BasicPrelude             hiding (lookup)
+import Control.Lens             hiding ((.=))
+import Data.Aeson               hiding (decode, decode')
 import Data.Binary
-import Data.Binary.Get
-import Data.Binary.Put
-import Data.ByteString.Lazy hiding (ByteString)
-import Data.ByteString.Builder
-import Data.HashMap.Strict
-import SwiftNav.CRC16
+import Data.ByteString.Lazy     hiding (ByteString)
 import SwiftNav.SBP.Acquisition
 import SwiftNav.SBP.Bootload
 import SwiftNav.SBP.ExtEvents
@@ -132,160 +127,160 @@ data SBPMsg =
    | SBPMsgUnknown Msg
   deriving ( Show, Read, Eq )
 
+$(makePrisms ''SBPMsg)
+
 instance Binary SBPMsg where
   get = do
     preamble <- getWord8
     if preamble /= msgSBPPreamble then get else do
-      sbp <- get
-      return $ decode' sbp where
-        decode' sbp@Msg {..}
-          | checkCrc sbp /= _msgSBPCrc = SBPMsgBadCrc sbp
-          | _msgSBPType == msgAcqResult = SBPMsgAcqResult (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgAcqResultDepA = SBPMsgAcqResultDepA (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgAlmanac = SBPMsgAlmanac (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgBasePosEcef = SBPMsgBasePosEcef (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgBasePosLlh = SBPMsgBasePosLlh (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgBaselineEcef = SBPMsgBaselineEcef (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgBaselineHeading = SBPMsgBaselineHeading (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgBaselineNed = SBPMsgBaselineNed (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgCwResults = SBPMsgCwResults (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgCwStart = SBPMsgCwStart (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgDops = SBPMsgDops (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgEphemeris = SBPMsgEphemeris (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgExtEvent = SBPMsgExtEvent (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgFileioReadDirReq = SBPMsgFileioReadDirReq (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgFileioReadDirResp = SBPMsgFileioReadDirResp (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgFileioReadReq = SBPMsgFileioReadReq (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgFileioReadResp = SBPMsgFileioReadResp (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgFileioRemove = SBPMsgFileioRemove (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgFileioWriteReq = SBPMsgFileioWriteReq (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgFileioWriteResp = SBPMsgFileioWriteResp (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgFlashDone = SBPMsgFlashDone (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgFlashErase = SBPMsgFlashErase (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgFlashProgram = SBPMsgFlashProgram (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgFlashReadReq = SBPMsgFlashReadReq (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgFlashReadResp = SBPMsgFlashReadResp (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgGpsTime = SBPMsgGpsTime (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgHeartbeat = SBPMsgHeartbeat (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgIarState = SBPMsgIarState (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgInitBase = SBPMsgInitBase (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgLog = SBPMsgLog (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgMaskSatellite = SBPMsgMaskSatellite (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgObs = SBPMsgObs (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgObsDepA = SBPMsgObsDepA (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgPosEcef = SBPMsgPosEcef (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgPosLlh = SBPMsgPosLlh (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgReset = SBPMsgReset (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgResetFilters = SBPMsgResetFilters (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgSetTime = SBPMsgSetTime (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgSettingsReadReq = SBPMsgSettingsReadReq (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgSettingsReadResp = SBPMsgSettingsReadResp (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgSettingsSave = SBPMsgSettingsSave (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgSettingsWrite = SBPMsgSettingsWrite (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgStmFlashLockSector = SBPMsgStmFlashLockSector (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgThreadState = SBPMsgThreadState (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgTrackingIq = SBPMsgTrackingIq (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgTrackingState = SBPMsgTrackingState (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgTrackingStateDepA = SBPMsgTrackingStateDepA (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgTweet = SBPMsgTweet (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgUserData = SBPMsgUserData (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict _msgSBPPayload)) sbp
-          | _msgSBPType == msgVelNed = SBPMsgVelNed (decode (fromStrict _msgSBPPayload)) sbp
-          | otherwise = SBPMsgUnknown sbp
+      decode' <$> get where
+        decode' m@Msg {..}
+          | checkCrc m /= _msgSBPCrc = SBPMsgBadCrc m
+          | _msgSBPType == msgAcqResult = SBPMsgAcqResult (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgAcqResultDepA = SBPMsgAcqResultDepA (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgAlmanac = SBPMsgAlmanac (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgBasePosEcef = SBPMsgBasePosEcef (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgBasePosLlh = SBPMsgBasePosLlh (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgBaselineEcef = SBPMsgBaselineEcef (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgBaselineHeading = SBPMsgBaselineHeading (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgBaselineNed = SBPMsgBaselineNed (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgCwResults = SBPMsgCwResults (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgCwStart = SBPMsgCwStart (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgDops = SBPMsgDops (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgEphemeris = SBPMsgEphemeris (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgExtEvent = SBPMsgExtEvent (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgFileioReadDirReq = SBPMsgFileioReadDirReq (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgFileioReadDirResp = SBPMsgFileioReadDirResp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgFileioReadReq = SBPMsgFileioReadReq (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgFileioReadResp = SBPMsgFileioReadResp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgFileioRemove = SBPMsgFileioRemove (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgFileioWriteReq = SBPMsgFileioWriteReq (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgFileioWriteResp = SBPMsgFileioWriteResp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgFlashDone = SBPMsgFlashDone (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgFlashErase = SBPMsgFlashErase (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgFlashProgram = SBPMsgFlashProgram (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgFlashReadReq = SBPMsgFlashReadReq (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgFlashReadResp = SBPMsgFlashReadResp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgGpsTime = SBPMsgGpsTime (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgHeartbeat = SBPMsgHeartbeat (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgIarState = SBPMsgIarState (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgInitBase = SBPMsgInitBase (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgLog = SBPMsgLog (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgMaskSatellite = SBPMsgMaskSatellite (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgObs = SBPMsgObs (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgObsDepA = SBPMsgObsDepA (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgPosEcef = SBPMsgPosEcef (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgPosLlh = SBPMsgPosLlh (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgReset = SBPMsgReset (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgResetFilters = SBPMsgResetFilters (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgSetTime = SBPMsgSetTime (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgSettingsReadReq = SBPMsgSettingsReadReq (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgSettingsReadResp = SBPMsgSettingsReadResp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgSettingsSave = SBPMsgSettingsSave (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgSettingsWrite = SBPMsgSettingsWrite (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgStmFlashLockSector = SBPMsgStmFlashLockSector (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgThreadState = SBPMsgThreadState (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgTrackingIq = SBPMsgTrackingIq (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgTrackingState = SBPMsgTrackingState (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgTrackingStateDepA = SBPMsgTrackingStateDepA (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgTweet = SBPMsgTweet (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgUserData = SBPMsgUserData (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgVelNed = SBPMsgVelNed (decode (fromStrict _msgSBPPayload)) m
+          | otherwise = SBPMsgUnknown m
 
-  put msg = do
+  put sm = do
     putWord8 msgSBPPreamble
-    put $ encode' msg
-    where
-      encode' (SBPMsgAcqResult _ sbp) = sbp
-      encode' (SBPMsgAcqResultDepA _ sbp) = sbp
-      encode' (SBPMsgAlmanac _ sbp) = sbp
-      encode' (SBPMsgBasePosEcef _ sbp) = sbp
-      encode' (SBPMsgBasePosLlh _ sbp) = sbp
-      encode' (SBPMsgBaselineEcef _ sbp) = sbp
-      encode' (SBPMsgBaselineHeading _ sbp) = sbp
-      encode' (SBPMsgBaselineNed _ sbp) = sbp
-      encode' (SBPMsgBootloaderHandshakeDepA _ sbp) = sbp
-      encode' (SBPMsgBootloaderHandshakeReq _ sbp) = sbp
-      encode' (SBPMsgBootloaderHandshakeResp _ sbp) = sbp
-      encode' (SBPMsgBootloaderJumpToApp _ sbp) = sbp
-      encode' (SBPMsgCwResults _ sbp) = sbp
-      encode' (SBPMsgCwStart _ sbp) = sbp
-      encode' (SBPMsgDops _ sbp) = sbp
-      encode' (SBPMsgEphemeris _ sbp) = sbp
-      encode' (SBPMsgEphemerisDepA _ sbp) = sbp
-      encode' (SBPMsgEphemerisDepB _ sbp) = sbp
-      encode' (SBPMsgExtEvent _ sbp) = sbp
-      encode' (SBPMsgFileioReadDirReq _ sbp) = sbp
-      encode' (SBPMsgFileioReadDirResp _ sbp) = sbp
-      encode' (SBPMsgFileioReadReq _ sbp) = sbp
-      encode' (SBPMsgFileioReadResp _ sbp) = sbp
-      encode' (SBPMsgFileioRemove _ sbp) = sbp
-      encode' (SBPMsgFileioWriteReq _ sbp) = sbp
-      encode' (SBPMsgFileioWriteResp _ sbp) = sbp
-      encode' (SBPMsgFlashDone _ sbp) = sbp
-      encode' (SBPMsgFlashErase _ sbp) = sbp
-      encode' (SBPMsgFlashProgram _ sbp) = sbp
-      encode' (SBPMsgFlashReadReq _ sbp) = sbp
-      encode' (SBPMsgFlashReadResp _ sbp) = sbp
-      encode' (SBPMsgGpsTime _ sbp) = sbp
-      encode' (SBPMsgHeartbeat _ sbp) = sbp
-      encode' (SBPMsgIarState _ sbp) = sbp
-      encode' (SBPMsgInitBase _ sbp) = sbp
-      encode' (SBPMsgLog _ sbp) = sbp
-      encode' (SBPMsgM25FlashWriteStatus _ sbp) = sbp
-      encode' (SBPMsgMaskSatellite _ sbp) = sbp
-      encode' (SBPMsgNapDeviceDnaReq _ sbp) = sbp
-      encode' (SBPMsgNapDeviceDnaResp _ sbp) = sbp
-      encode' (SBPMsgObs _ sbp) = sbp
-      encode' (SBPMsgObsDepA _ sbp) = sbp
-      encode' (SBPMsgPosEcef _ sbp) = sbp
-      encode' (SBPMsgPosLlh _ sbp) = sbp
-      encode' (SBPMsgPrintDep _ sbp) = sbp
-      encode' (SBPMsgReset _ sbp) = sbp
-      encode' (SBPMsgResetFilters _ sbp) = sbp
-      encode' (SBPMsgSetTime _ sbp) = sbp
-      encode' (SBPMsgSettingsReadByIndexDone _ sbp) = sbp
-      encode' (SBPMsgSettingsReadByIndexReq _ sbp) = sbp
-      encode' (SBPMsgSettingsReadByIndexResp _ sbp) = sbp
-      encode' (SBPMsgSettingsReadReq _ sbp) = sbp
-      encode' (SBPMsgSettingsReadResp _ sbp) = sbp
-      encode' (SBPMsgSettingsSave _ sbp) = sbp
-      encode' (SBPMsgSettingsWrite _ sbp) = sbp
-      encode' (SBPMsgStartup _ sbp) = sbp
-      encode' (SBPMsgStmFlashLockSector _ sbp) = sbp
-      encode' (SBPMsgStmFlashUnlockSector _ sbp) = sbp
-      encode' (SBPMsgStmUniqueIdReq _ sbp) = sbp
-      encode' (SBPMsgStmUniqueIdResp _ sbp) = sbp
-      encode' (SBPMsgThreadState _ sbp) = sbp
-      encode' (SBPMsgTrackingIq _ sbp) = sbp
-      encode' (SBPMsgTrackingState _ sbp) = sbp
-      encode' (SBPMsgTrackingStateDepA _ sbp) = sbp
-      encode' (SBPMsgTweet _ sbp) = sbp
-      encode' (SBPMsgUartState _ sbp) = sbp
-      encode' (SBPMsgUserData _ sbp) = sbp
-      encode' (SBPMsgVelEcef _ sbp) = sbp
-      encode' (SBPMsgVelNed _ sbp) = sbp
-      encode' (SBPMsgUnknown sbp) = sbp
-      encode' (SBPMsgBadCrc sbp) = sbp
+    encode' sm where
+      encode' (SBPMsgAcqResult _ m) = put m
+      encode' (SBPMsgAcqResultDepA _ m) = put m
+      encode' (SBPMsgAlmanac _ m) = put m
+      encode' (SBPMsgBasePosEcef _ m) = put m
+      encode' (SBPMsgBasePosLlh _ m) = put m
+      encode' (SBPMsgBaselineEcef _ m) = put m
+      encode' (SBPMsgBaselineHeading _ m) = put m
+      encode' (SBPMsgBaselineNed _ m) = put m
+      encode' (SBPMsgBootloaderHandshakeDepA _ m) = put m
+      encode' (SBPMsgBootloaderHandshakeReq _ m) = put m
+      encode' (SBPMsgBootloaderHandshakeResp _ m) = put m
+      encode' (SBPMsgBootloaderJumpToApp _ m) = put m
+      encode' (SBPMsgCwResults _ m) = put m
+      encode' (SBPMsgCwStart _ m) = put m
+      encode' (SBPMsgDops _ m) = put m
+      encode' (SBPMsgEphemeris _ m) = put m
+      encode' (SBPMsgEphemerisDepA _ m) = put m
+      encode' (SBPMsgEphemerisDepB _ m) = put m
+      encode' (SBPMsgExtEvent _ m) = put m
+      encode' (SBPMsgFileioReadDirReq _ m) = put m
+      encode' (SBPMsgFileioReadDirResp _ m) = put m
+      encode' (SBPMsgFileioReadReq _ m) = put m
+      encode' (SBPMsgFileioReadResp _ m) = put m
+      encode' (SBPMsgFileioRemove _ m) = put m
+      encode' (SBPMsgFileioWriteReq _ m) = put m
+      encode' (SBPMsgFileioWriteResp _ m) = put m
+      encode' (SBPMsgFlashDone _ m) = put m
+      encode' (SBPMsgFlashErase _ m) = put m
+      encode' (SBPMsgFlashProgram _ m) = put m
+      encode' (SBPMsgFlashReadReq _ m) = put m
+      encode' (SBPMsgFlashReadResp _ m) = put m
+      encode' (SBPMsgGpsTime _ m) = put m
+      encode' (SBPMsgHeartbeat _ m) = put m
+      encode' (SBPMsgIarState _ m) = put m
+      encode' (SBPMsgInitBase _ m) = put m
+      encode' (SBPMsgLog _ m) = put m
+      encode' (SBPMsgM25FlashWriteStatus _ m) = put m
+      encode' (SBPMsgMaskSatellite _ m) = put m
+      encode' (SBPMsgNapDeviceDnaReq _ m) = put m
+      encode' (SBPMsgNapDeviceDnaResp _ m) = put m
+      encode' (SBPMsgObs _ m) = put m
+      encode' (SBPMsgObsDepA _ m) = put m
+      encode' (SBPMsgPosEcef _ m) = put m
+      encode' (SBPMsgPosLlh _ m) = put m
+      encode' (SBPMsgPrintDep _ m) = put m
+      encode' (SBPMsgReset _ m) = put m
+      encode' (SBPMsgResetFilters _ m) = put m
+      encode' (SBPMsgSetTime _ m) = put m
+      encode' (SBPMsgSettingsReadByIndexDone _ m) = put m
+      encode' (SBPMsgSettingsReadByIndexReq _ m) = put m
+      encode' (SBPMsgSettingsReadByIndexResp _ m) = put m
+      encode' (SBPMsgSettingsReadReq _ m) = put m
+      encode' (SBPMsgSettingsReadResp _ m) = put m
+      encode' (SBPMsgSettingsSave _ m) = put m
+      encode' (SBPMsgSettingsWrite _ m) = put m
+      encode' (SBPMsgStartup _ m) = put m
+      encode' (SBPMsgStmFlashLockSector _ m) = put m
+      encode' (SBPMsgStmFlashUnlockSector _ m) = put m
+      encode' (SBPMsgStmUniqueIdReq _ m) = put m
+      encode' (SBPMsgStmUniqueIdResp _ m) = put m
+      encode' (SBPMsgThreadState _ m) = put m
+      encode' (SBPMsgTrackingIq _ m) = put m
+      encode' (SBPMsgTrackingState _ m) = put m
+      encode' (SBPMsgTrackingStateDepA _ m) = put m
+      encode' (SBPMsgTweet _ m) = put m
+      encode' (SBPMsgUartState _ m) = put m
+      encode' (SBPMsgUserData _ m) = put m
+      encode' (SBPMsgVelEcef _ m) = put m
+      encode' (SBPMsgVelNed _ m) = put m
+      encode' (SBPMsgUnknown m) = put m
+      encode' (SBPMsgBadCrc m) = put m
 
 instance FromJSON SBPMsg where
   parseJSON obj@(Object o) = do
@@ -364,81 +359,154 @@ instance FromJSON SBPMsg where
         | otherwise = SBPMsgUnknown <$> parseJSON obj
   parseJSON _ = mzero
 
-merge :: Value -> Value -> Value
-merge (Object one) (Object two) = Object (one <> two)
-merge _ (Object two) = Object two
-merge (Object one) _ = Object one
-merge _ v = v
+mergeValues :: Value -> Value -> Value
+mergeValues (Object a) (Object b) = Object (a <> b)
+mergeValues (Object a) _          = Object a
+mergeValues _          (Object b) = Object b
+mergeValues _          v          = v
 
 instance ToJSON SBPMsg where
-   toJSON (SBPMsgAcqResult msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgAcqResultDepA msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgAlmanac msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgBasePosEcef msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgBasePosLlh msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgBaselineEcef msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgBaselineHeading msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgBaselineNed msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgBootloaderHandshakeDepA msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgBootloaderHandshakeReq msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgBootloaderHandshakeResp msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgBootloaderJumpToApp msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgCwResults msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgCwStart msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgDops msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgEphemeris msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgEphemerisDepA msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgEphemerisDepB msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgExtEvent msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgFileioReadDirReq msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgFileioReadDirResp msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgFileioReadReq msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgFileioReadResp msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgFileioRemove msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgFileioWriteReq msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgFileioWriteResp msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgFlashDone msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgFlashErase msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgFlashProgram msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgFlashReadReq msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgFlashReadResp msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgGpsTime msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgHeartbeat msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgIarState msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgInitBase msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgLog msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgM25FlashWriteStatus msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgMaskSatellite msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgNapDeviceDnaReq msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgNapDeviceDnaResp msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgObs msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgObsDepA msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgPosEcef msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgPosLlh msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgPrintDep msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgReset msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgResetFilters msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgSetTime msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgSettingsReadByIndexDone msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgSettingsReadByIndexReq msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgSettingsReadByIndexResp msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgSettingsReadReq msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgSettingsReadResp msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgSettingsSave msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgSettingsWrite msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgStartup msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgStmFlashLockSector msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgStmFlashUnlockSector msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgStmUniqueIdReq msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgStmUniqueIdResp msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgThreadState msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgTrackingIq msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgTrackingState msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgTrackingStateDepA msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgTweet msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgUartState msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgUserData msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgVelEcef msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgVelNed msg sbp) = toJSON msg `merge` toJSON sbp
-   toJSON (SBPMsgBadCrc sbp) = toJSON sbp
-   toJSON (SBPMsgUnknown sbp) = toJSON sbp
+  toJSON (SBPMsgAcqResult n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgAcqResultDepA n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgAlmanac n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgBasePosEcef n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgBasePosLlh n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgBaselineEcef n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgBaselineHeading n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgBaselineNed n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgBootloaderHandshakeDepA n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgBootloaderHandshakeReq n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgBootloaderHandshakeResp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgBootloaderJumpToApp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgCwResults n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgCwStart n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgDops n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgEphemeris n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgEphemerisDepA n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgEphemerisDepB n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgExtEvent n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgFileioReadDirReq n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgFileioReadDirResp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgFileioReadReq n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgFileioReadResp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgFileioRemove n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgFileioWriteReq n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgFileioWriteResp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgFlashDone n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgFlashErase n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgFlashProgram n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgFlashReadReq n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgFlashReadResp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgGpsTime n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgHeartbeat n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgIarState n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgInitBase n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgLog n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgM25FlashWriteStatus n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgMaskSatellite n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgNapDeviceDnaReq n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgNapDeviceDnaResp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgObs n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgObsDepA n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgPosEcef n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgPosLlh n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgPrintDep n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgReset n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgResetFilters n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgSetTime n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgSettingsReadByIndexDone n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgSettingsReadByIndexReq n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgSettingsReadByIndexResp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgSettingsReadReq n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgSettingsReadResp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgSettingsSave n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgSettingsWrite n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgStartup n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgStmFlashLockSector n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgStmFlashUnlockSector n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgStmUniqueIdReq n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgStmUniqueIdResp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgThreadState n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgTrackingIq n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgTrackingState n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgTrackingStateDepA n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgTweet n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgUartState n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgUserData n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgVelEcef n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgVelNed n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgBadCrc m) = toJSON m
+  toJSON (SBPMsgUnknown m) = toJSON m
+
+instance HasMsg SBPMsg where
+  msg f (SBPMsgAcqResult n m) = SBPMsgAcqResult n <$> f m
+  msg f (SBPMsgAcqResultDepA n m) = SBPMsgAcqResultDepA n <$> f m
+  msg f (SBPMsgAlmanac n m) = SBPMsgAlmanac n <$> f m
+  msg f (SBPMsgBasePosEcef n m) = SBPMsgBasePosEcef n <$> f m
+  msg f (SBPMsgBasePosLlh n m) = SBPMsgBasePosLlh n <$> f m
+  msg f (SBPMsgBaselineEcef n m) = SBPMsgBaselineEcef n <$> f m
+  msg f (SBPMsgBaselineHeading n m) = SBPMsgBaselineHeading n <$> f m
+  msg f (SBPMsgBaselineNed n m) = SBPMsgBaselineNed n <$> f m
+  msg f (SBPMsgBootloaderHandshakeDepA n m) = SBPMsgBootloaderHandshakeDepA n <$> f m
+  msg f (SBPMsgBootloaderHandshakeReq n m) = SBPMsgBootloaderHandshakeReq n <$> f m
+  msg f (SBPMsgBootloaderHandshakeResp n m) = SBPMsgBootloaderHandshakeResp n <$> f m
+  msg f (SBPMsgBootloaderJumpToApp n m) = SBPMsgBootloaderJumpToApp n <$> f m
+  msg f (SBPMsgCwResults n m) = SBPMsgCwResults n <$> f m
+  msg f (SBPMsgCwStart n m) = SBPMsgCwStart n <$> f m
+  msg f (SBPMsgDops n m) = SBPMsgDops n <$> f m
+  msg f (SBPMsgEphemeris n m) = SBPMsgEphemeris n <$> f m
+  msg f (SBPMsgEphemerisDepA n m) = SBPMsgEphemerisDepA n <$> f m
+  msg f (SBPMsgEphemerisDepB n m) = SBPMsgEphemerisDepB n <$> f m
+  msg f (SBPMsgExtEvent n m) = SBPMsgExtEvent n <$> f m
+  msg f (SBPMsgFileioReadDirReq n m) = SBPMsgFileioReadDirReq n <$> f m
+  msg f (SBPMsgFileioReadDirResp n m) = SBPMsgFileioReadDirResp n <$> f m
+  msg f (SBPMsgFileioReadReq n m) = SBPMsgFileioReadReq n <$> f m
+  msg f (SBPMsgFileioReadResp n m) = SBPMsgFileioReadResp n <$> f m
+  msg f (SBPMsgFileioRemove n m) = SBPMsgFileioRemove n <$> f m
+  msg f (SBPMsgFileioWriteReq n m) = SBPMsgFileioWriteReq n <$> f m
+  msg f (SBPMsgFileioWriteResp n m) = SBPMsgFileioWriteResp n <$> f m
+  msg f (SBPMsgFlashDone n m) = SBPMsgFlashDone n <$> f m
+  msg f (SBPMsgFlashErase n m) = SBPMsgFlashErase n <$> f m
+  msg f (SBPMsgFlashProgram n m) = SBPMsgFlashProgram n <$> f m
+  msg f (SBPMsgFlashReadReq n m) = SBPMsgFlashReadReq n <$> f m
+  msg f (SBPMsgFlashReadResp n m) = SBPMsgFlashReadResp n <$> f m
+  msg f (SBPMsgGpsTime n m) = SBPMsgGpsTime n <$> f m
+  msg f (SBPMsgHeartbeat n m) = SBPMsgHeartbeat n <$> f m
+  msg f (SBPMsgIarState n m) = SBPMsgIarState n <$> f m
+  msg f (SBPMsgInitBase n m) = SBPMsgInitBase n <$> f m
+  msg f (SBPMsgLog n m) = SBPMsgLog n <$> f m
+  msg f (SBPMsgM25FlashWriteStatus n m) = SBPMsgM25FlashWriteStatus n <$> f m
+  msg f (SBPMsgMaskSatellite n m) = SBPMsgMaskSatellite n <$> f m
+  msg f (SBPMsgNapDeviceDnaReq n m) = SBPMsgNapDeviceDnaReq n <$> f m
+  msg f (SBPMsgNapDeviceDnaResp n m) = SBPMsgNapDeviceDnaResp n <$> f m
+  msg f (SBPMsgObs n m) = SBPMsgObs n <$> f m
+  msg f (SBPMsgObsDepA n m) = SBPMsgObsDepA n <$> f m
+  msg f (SBPMsgPosEcef n m) = SBPMsgPosEcef n <$> f m
+  msg f (SBPMsgPosLlh n m) = SBPMsgPosLlh n <$> f m
+  msg f (SBPMsgPrintDep n m) = SBPMsgPrintDep n <$> f m
+  msg f (SBPMsgReset n m) = SBPMsgReset n <$> f m
+  msg f (SBPMsgResetFilters n m) = SBPMsgResetFilters n <$> f m
+  msg f (SBPMsgSetTime n m) = SBPMsgSetTime n <$> f m
+  msg f (SBPMsgSettingsReadByIndexDone n m) = SBPMsgSettingsReadByIndexDone n <$> f m
+  msg f (SBPMsgSettingsReadByIndexReq n m) = SBPMsgSettingsReadByIndexReq n <$> f m
+  msg f (SBPMsgSettingsReadByIndexResp n m) = SBPMsgSettingsReadByIndexResp n <$> f m
+  msg f (SBPMsgSettingsReadReq n m) = SBPMsgSettingsReadReq n <$> f m
+  msg f (SBPMsgSettingsReadResp n m) = SBPMsgSettingsReadResp n <$> f m
+  msg f (SBPMsgSettingsSave n m) = SBPMsgSettingsSave n <$> f m
+  msg f (SBPMsgSettingsWrite n m) = SBPMsgSettingsWrite n <$> f m
+  msg f (SBPMsgStartup n m) = SBPMsgStartup n <$> f m
+  msg f (SBPMsgStmFlashLockSector n m) = SBPMsgStmFlashLockSector n <$> f m
+  msg f (SBPMsgStmFlashUnlockSector n m) = SBPMsgStmFlashUnlockSector n <$> f m
+  msg f (SBPMsgStmUniqueIdReq n m) = SBPMsgStmUniqueIdReq n <$> f m
+  msg f (SBPMsgStmUniqueIdResp n m) = SBPMsgStmUniqueIdResp n <$> f m
+  msg f (SBPMsgThreadState n m) = SBPMsgThreadState n <$> f m
+  msg f (SBPMsgTrackingIq n m) = SBPMsgTrackingIq n <$> f m
+  msg f (SBPMsgTrackingState n m) = SBPMsgTrackingState n <$> f m
+  msg f (SBPMsgTrackingStateDepA n m) = SBPMsgTrackingStateDepA n <$> f m
+  msg f (SBPMsgTweet n m) = SBPMsgTweet n <$> f m
+  msg f (SBPMsgUartState n m) = SBPMsgUartState n <$> f m
+  msg f (SBPMsgUserData n m) = SBPMsgUserData n <$> f m
+  msg f (SBPMsgVelEcef n m) = SBPMsgVelEcef n <$> f m
+  msg f (SBPMsgVelNed n m) = SBPMsgVelNed n <$> f m
+  msg f (SBPMsgUnknown m) = SBPMsgUnknown <$> f m
+  msg f (SBPMsgBadCrc m) = SBPMsgBadCrc <$> f m

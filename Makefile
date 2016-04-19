@@ -171,7 +171,7 @@ gen-haskell: deps-generator
 
 # Testers
 
-test: test-all-begin test-c test-java test-python test-javascript test-all-end
+test: test-all-begin test-c test-java test-python test-haskell test-javascript test-all-end
 
 test-all-begin:
 	$(call announce-begin,"Running all tests")
@@ -201,7 +201,10 @@ test-javascript:
 test-java:
 	$(call announce-begin,"No Java tests - TODO")
 
-test-haskell: ;
+test-haskell:
+	$(call announce-begin,"Running Haskell tests")
+	cd $(SWIFTNAV_ROOT)/haskell/ && stack build --test
+	$(call announce-end,"Finished running Haskell tests")
 
 dist:
 	$(call announce-begin,"Deploying packages")

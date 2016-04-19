@@ -20,8 +20,9 @@ import           SwiftNav.SBP
 import           System.IO
 
 main :: IO ()
-main = runResourceT $
-  sourceHandle stdin =$=
-  conduitDecode =$=
-  CL.map (encode :: SBPMsg -> ByteString) $$
-  sinkHandle stdout
+main =
+  runResourceT $
+    sourceHandle stdin                      =$=
+    conduitDecode                           =$=
+    CL.map (encode :: SBPMsg -> ByteString) $$
+    sinkHandle stdout

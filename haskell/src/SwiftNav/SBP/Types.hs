@@ -11,16 +11,15 @@
 
 module SwiftNav.SBP.Types where
 
-import BasicPrelude hiding (lookup)
-import Control.Lens hiding ((.=))
-import Data.Aeson hiding (decode, decode')
+import BasicPrelude            hiding (lookup)
+import Control.Lens            hiding ((.=))
+import Data.Aeson              hiding (decode, decode')
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.Put
-import Data.ByteString.Lazy hiding (ByteString)
 import Data.ByteString.Builder
 import SwiftNav.CRC16
-import SwiftNav.SBP.Encoding
+import SwiftNav.SBP.Encoding   ()
 
 -- | Denotes the start of frame transmission. For v1.0, always 0x55.
 msgSBPPreamble :: Word8
@@ -58,7 +57,7 @@ data Msg = Msg
     -- Preamble)
   } deriving ( Show, Read, Eq )
 
-$(makeLenses ''Msg)
+$(makeClassy ''Msg)
 
 instance Binary Msg where
   get = do
