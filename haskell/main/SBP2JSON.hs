@@ -24,12 +24,12 @@ import           System.IO
 
 -- | Encode a SBPMsg to a line of JSON.
 encodeLine :: SBPMsg -> ByteString
-encodeLine v = BL.toStrict $ toLazyByteString $
-  encodeToByteStringBuilder (toJSON v) <> "\n"
+encodeLine v = BL.toStrict $ toLazyByteString $ encodeToBuilder (toJSON v) <> "\n"
 
 main :: IO ()
-main = runResourceT $
-  sourceHandle stdin =$=
-  conduitDecode =$=
-  CL.map encodeLine $$
-  sinkHandle stdout
+main =
+  runResourceT $
+    sourceHandle stdin  =$=
+      conduitDecode     =$=
+      CL.map encodeLine $$
+      sinkHandle stdout

@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-unused-imports #-}
 -- |
 -- Module:      SwiftNav.SBP.Settings
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
@@ -17,13 +18,13 @@ module SwiftNav.SBP.Settings where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH (deriveJSON, defaultOptions, fieldLabelModifier)
+import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy hiding ( ByteString )
+import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
 import SwiftNav.SBP.Encoding

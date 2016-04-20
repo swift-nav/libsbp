@@ -16,16 +16,11 @@ module SwiftNav.SBP
   ((*- endfor *))
   ) where
 
-import BasicPrelude hiding (lookup)
-import Control.Lens hiding ((.=))
-import Data.Aeson hiding (decode, decode')
+import BasicPrelude             hiding (lookup)
+import Control.Lens             hiding ((.=))
+import Data.Aeson               hiding (decode, decode')
 import Data.Binary
-import Data.Binary.Get
-import Data.Binary.Put
-import Data.ByteString.Lazy hiding (ByteString)
-import Data.ByteString.Builder
-import Data.HashMap.Strict
-import SwiftNav.CRC16
+import Data.ByteString.Lazy     hiding (ByteString)
 ((*- for m in modules *))
 import (((m)))
 ((*- endfor *))
@@ -49,28 +44,28 @@ data SBPMsg =
 ((*- endif *))
 ((*- endfor *))
 
+$(makePrisms ''SBPMsg)
+
 instance Binary SBPMsg where
   get = do
     preamble <- getWord8
     if preamble /= msgSBPPreamble then get else do
-      sbp <- get
-      return $ decode' sbp where
-        decode' sbp@Msg {..}
-          | checkCrc sbp /= _msgSBPCrc = SBPMsgBadCrc sbp
+      decode' <$> get where
+        decode' m@Msg {..}
+          | checkCrc m /= _msgSBPCrc = SBPMsgBadCrc m
           ((*- for m in msgs *))
-          | _msgSBPType == (((m | to_global))) = SBP(((m))) (decode (fromStrict _msgSBPPayload)) sbp
+          | _msgSBPType == (((m | to_global))) = SBP(((m))) (decode (fromStrict _msgSBPPayload)) m
           ((*- endfor *))
-          | otherwise = SBPMsgUnknown sbp
+          | otherwise = SBPMsgUnknown m
 
-  put msg = do
+  put sm = do
     putWord8 msgSBPPreamble
-    put $ encode' msg
-    where
+    encode' sm where
       ((*- for m in msgs *))
-      encode' (SBP(((m))) _ sbp) = sbp
+      encode' (SBP(((m))) _ m) = put m
       ((*- endfor *))
-      encode' (SBPMsgUnknown sbp) = sbp
-      encode' (SBPMsgBadCrc sbp) = sbp
+      encode' (SBPMsgUnknown m) = put m
+      encode' (SBPMsgBadCrc m) = put m
 
 instance FromJSON SBPMsg where
   parseJSON obj@(Object o) = do
@@ -83,15 +78,22 @@ instance FromJSON SBPMsg where
         | otherwise = SBPMsgUnknown <$> parseJSON obj
   parseJSON _ = mzero
 
-merge :: Value -> Value -> Value
-merge (Object one) (Object two) = Object (one <> two)
-merge _ (Object two) = Object two
-merge (Object one) _ = Object one
-merge _ v = v
+mergeValues :: Value -> Value -> Value
+mergeValues (Object a) (Object b) = Object (a <> b)
+mergeValues (Object a) _          = Object a
+mergeValues _          (Object b) = Object b
+mergeValues _          v          = v
 
 instance ToJSON SBPMsg where
 ((*- for m in msgs *))
-   toJSON (SBP(((m))) msg sbp) = toJSON msg `merge` toJSON sbp
+  toJSON (SBP(((m))) n m) = toJSON n `mergeValues` toJSON m
 ((*- endfor *))
-   toJSON (SBPMsgBadCrc sbp) = toJSON sbp
-   toJSON (SBPMsgUnknown sbp) = toJSON sbp
+  toJSON (SBPMsgBadCrc m) = toJSON m
+  toJSON (SBPMsgUnknown m) = toJSON m
+
+instance HasMsg SBPMsg where
+((*- for m in msgs *))
+  msg f (SBP(((m))) n m) = SBP(((m))) n <$> f m
+((*- endfor *))
+  msg f (SBPMsgUnknown m) = SBPMsgUnknown <$> f m
+  msg f (SBPMsgBadCrc m) = SBPMsgBadCrc <$> f m
