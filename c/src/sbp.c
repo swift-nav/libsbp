@@ -151,7 +151,7 @@
  * Register a callback that is called when a message
  * with type msg_type is received.
  *
- * To handle all message types, pass SBP_GLOBAL_CALLBACK as msg_type.
+ * To handle all message types, pass `SBP_GLOBAL_CALLBACK` (0x00) as msg_type.
  * NOTE: This should be the first and only callback you register. Behavior
  * with multiple callbacks registered along with the global callback will
  * be considered "undefined."
