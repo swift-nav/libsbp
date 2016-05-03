@@ -426,6 +426,43 @@ START_TEST(test_callbacks)
 }
 END_TEST
 
+START_TEST(test_global_callback)
+{
+  sbp_state_t s;
+  sbp_state_init(&s);
+
+  /* Start with no callbacks registered.  */
+  sbp_clear_callbacks(&s);
+
+  fail_unless(sbp_find_callback(&s, 0x1234) == 0,
+      "sbp_find_callback should return NULL if no callbacks registered");
+
+  static sbp_msg_callbacks_node_t n;
+
+  int NUMBER = 42;
+
+  fail_unless(sbp_register_callback(&s, SBP_GLOBAL_CALLBACK, &test_callback, &NUMBER, &n) == SBP_OK,
+      "sbp_register_callback should return success if everything is groovy");
+
+  fail_unless(sbp_find_callback(&s, 0x1234) == &n,
+      "sbp_find_callback didn't return the correct callback node pointer");
+
+  fail_unless(sbp_find_callback(&s, 0x1234)->context == &NUMBER,
+      "sbp_find_callback didn't return the correct context pointer");
+
+  fail_unless(sbp_register_callback(&s, 0x1234, &test_callback, 0, &n)
+      == SBP_CALLBACK_ERROR,
+    "sbp_register_callback should return SBP_CALLBACK_ERROR if a callback "
+    "of the global type is already defined");
+
+    /* Clear all the registered callbacks and check they can no longer be found. */
+  sbp_clear_callbacks(&s);
+
+  fail_unless(sbp_find_callback(&s, 0x1234) == 0,
+      "sbp_find_callback should return NULL if no callbacks registered (2)");
+}
+END_TEST
+
 Suite* sbp_suite(void)
 {
   Suite *s = suite_create("SBP");
@@ -436,6 +473,7 @@ Suite* sbp_suite(void)
   tcase_add_test(tc_core, test_callbacks);
   tcase_add_test(tc_core, test_sbp_send_message);
   tcase_add_test(tc_core, test_sbp_process);
+  tcase_add_test(tc_core, test_global_callback);
 
   suite_add_tcase(s, tc_core);
 

@@ -231,7 +231,7 @@ sbp_msg_callbacks_node_t* sbp_find_callback(sbp_state_t *s, u16 msg_type)
    */
   sbp_msg_callbacks_node_t *p = s->sbp_msg_callbacks_head;
   do
-    if (p->msg_type == msg_type)
+    if (p->msg_type == msg_type || p->msg_type == SBP_GLOBAL_CALLBACK)
       return p;
 
   while ((p = p->next));
