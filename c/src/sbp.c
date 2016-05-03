@@ -151,6 +151,11 @@
  * Register a callback that is called when a message
  * with type msg_type is received.
  *
+ * To handle all message types, pass `SBP_GLOBAL_CALLBACK` (0x00) as msg_type.
+ * NOTE: This should be the first and only callback you register. Behavior
+ * with multiple callbacks registered along with the global callback will
+ * be considered "undefined."
+ *
  * \param msg_type Message type associated with callback
  * \param cb       Pointer to message callback function
  * \param context  Pointer to context for callback function
@@ -231,7 +236,7 @@ sbp_msg_callbacks_node_t* sbp_find_callback(sbp_state_t *s, u16 msg_type)
    */
   sbp_msg_callbacks_node_t *p = s->sbp_msg_callbacks_head;
   do
-    if (p->msg_type == msg_type)
+    if (p->msg_type == msg_type || p->msg_type == SBP_GLOBAL_CALLBACK)
       return p;
 
   while ((p = p->next));

@@ -36,6 +36,9 @@
 /** Default sender ID. Intended for messages sent from the host to the device. */
 #define SBP_SENDER_ID 0x42
 
+/** Fake message id that indicates a handler should be invoked for every message type. */
+#define SBP_GLOBAL_CALLBACK 0x00
+
 /** SBP callback function prototype definition. */
 typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[], void *context);
 
