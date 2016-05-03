@@ -33,7 +33,7 @@ class JSONLogger(BaseLogger):
     try:
       data = self.dispatch(msg).to_json_dict()
       return json.dumps(self.fmt_msg(data, **metadata), allow_nan=False)
-    except ValueError:
+    except (ValueError, UnicodeDecodeError):
       warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
              % (msg.msg_type, msg)
       warnings.warn(warn, RuntimeWarning)
@@ -75,7 +75,7 @@ class JSONLogIterator(LogIterator):
         item = SBP.from_json_dict(data.pop('data'))
         msg = self.dispatch(item, line)
         yield (msg, data)
-      except ValueError:
+      except (ValueError, UnicodeDecodeError):
         warn = "Bad JSON decoding for line %s" % line
         warnings.warn(warn, RuntimeWarning)
     self.handle.seek(0, 0)
@@ -124,7 +124,7 @@ class MultiJSONLogIterator(JSONLogIterator):
       for line in handle:
         try:
           datas.append(json.loads(line))
-        except ValueError:
+        except (ValueError, UnicodeDecodeError):
           warn = "Bad JSON decoding for line %s" % line
           warnings.warn(warn, RuntimeWarning)
 
