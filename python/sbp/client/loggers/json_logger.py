@@ -34,13 +34,18 @@ class JSONLogger(BaseLogger):
       data = self.dispatch(msg).to_json_dict()
       return json.dumps(self.fmt_msg(data, **metadata), allow_nan=False)
     except (ValueError, UnicodeDecodeError):
-      warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
-             % (msg.msg_type, msg)
-      warnings.warn(warn, RuntimeWarning)
-      return json.dumps(self.fmt_msg(msg.to_json_dict(), **metadata))
+      try:
+        warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
+               % (msg.msg_type, msg)
+        warnings.warn(warn, RuntimeWarning)
+        return json.dumps(self.fmt_msg(msg.to_json_dict(), **metadata))
+      except (ValueError, UnicodeDecodeError):
+        return None
 
   def __call__(self, msg, **metadata):
-    self.handle.write(self.dump(msg, **metadata) + "\n")
+    output = self.dump(msg, **metadata)
+    if output:
+      self.handle.write(output + "\n")
 
 class JSONLogIterator(LogIterator):
   """
