@@ -14,15 +14,19 @@ module SwiftNav.SBP.Observation where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
+import Data.Aeson.TH             (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy      hiding (ByteString)
+import Data.Derive.Arbitrary     (makeArbitrary)
+import Data.DeriveTH             (derive)
 import Data.Int
 import Data.Word
+import Test.QuickCheck           (Arbitrary (..))
+import Test.QuickCheck.Instances ()
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
@@ -51,6 +55,7 @@ instance Binary ObsGPSTime where
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_obsGPSTime_" . stripPrefix "_obsGPSTime_"}
              ''ObsGPSTime)
 $(makeLenses ''ObsGPSTime)
+$(derive makeArbitrary ''ObsGPSTime)
 
 -- | CarrierPhase.
 --
@@ -76,6 +81,7 @@ instance Binary CarrierPhase where
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_carrierPhase_" . stripPrefix "_carrierPhase_"}
              ''CarrierPhase)
 $(makeLenses ''CarrierPhase)
+$(derive makeArbitrary ''CarrierPhase)
 
 -- | ObservationHeader.
 --
@@ -100,6 +106,7 @@ instance Binary ObservationHeader where
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_observationHeader_" . stripPrefix "_observationHeader_"}
              ''ObservationHeader)
 $(makeLenses ''ObservationHeader)
+$(derive makeArbitrary ''ObservationHeader)
 
 -- | PackedObsContent.
 --
@@ -137,6 +144,7 @@ instance Binary PackedObsContent where
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContent_" . stripPrefix "_packedObsContent_"}
              ''PackedObsContent)
 $(makeLenses ''PackedObsContent)
+$(derive makeArbitrary ''PackedObsContent)
 
 msgObs :: Word16
 msgObs = 0x0043
@@ -169,6 +177,7 @@ $(deriveSBP 'msgObs ''MsgObs)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObs_" . stripPrefix "_msgObs_"}
              ''MsgObs)
 $(makeLenses ''MsgObs)
+$(derive makeArbitrary ''MsgObs)
 
 msgBasePosLlh :: Word16
 msgBasePosLlh = 0x0044
@@ -205,6 +214,7 @@ $(deriveSBP 'msgBasePosLlh ''MsgBasePosLlh)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBasePosLlh_" . stripPrefix "_msgBasePosLlh_"}
              ''MsgBasePosLlh)
 $(makeLenses ''MsgBasePosLlh)
+$(derive makeArbitrary ''MsgBasePosLlh)
 
 msgBasePosEcef :: Word16
 msgBasePosEcef = 0x0048
@@ -242,6 +252,7 @@ $(deriveSBP 'msgBasePosEcef ''MsgBasePosEcef)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBasePosEcef_" . stripPrefix "_msgBasePosEcef_"}
              ''MsgBasePosEcef)
 $(makeLenses ''MsgBasePosEcef)
+$(derive makeArbitrary ''MsgBasePosEcef)
 
 msgEphemeris :: Word16
 msgEphemeris = 0x0047
@@ -386,6 +397,7 @@ $(deriveSBP 'msgEphemeris ''MsgEphemeris)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemeris_" . stripPrefix "_msgEphemeris_"}
              ''MsgEphemeris)
 $(makeLenses ''MsgEphemeris)
+$(derive makeArbitrary ''MsgEphemeris)
 
 msgEphemerisDepA :: Word16
 msgEphemerisDepA = 0x001A
@@ -515,6 +527,7 @@ $(deriveSBP 'msgEphemerisDepA ''MsgEphemerisDepA)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepA_" . stripPrefix "_msgEphemerisDepA_"}
              ''MsgEphemerisDepA)
 $(makeLenses ''MsgEphemerisDepA)
+$(derive makeArbitrary ''MsgEphemerisDepA)
 
 msgEphemerisDepB :: Word16
 msgEphemerisDepB = 0x0046
@@ -648,6 +661,7 @@ $(deriveSBP 'msgEphemerisDepB ''MsgEphemerisDepB)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepB_" . stripPrefix "_msgEphemerisDepB_"}
              ''MsgEphemerisDepB)
 $(makeLenses ''MsgEphemerisDepB)
+$(derive makeArbitrary ''MsgEphemerisDepB)
 
 -- | PackedObsContentDepA.
 --
@@ -685,6 +699,7 @@ instance Binary PackedObsContentDepA where
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDepA_" . stripPrefix "_packedObsContentDepA_"}
              ''PackedObsContentDepA)
 $(makeLenses ''PackedObsContentDepA)
+$(derive makeArbitrary ''PackedObsContentDepA)
 
 msgObsDepA :: Word16
 msgObsDepA = 0x0045
@@ -714,3 +729,4 @@ $(deriveSBP 'msgObsDepA ''MsgObsDepA)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepA_" . stripPrefix "_msgObsDepA_"}
              ''MsgObsDepA)
 $(makeLenses ''MsgObsDepA)
+$(derive makeArbitrary ''MsgObsDepA)

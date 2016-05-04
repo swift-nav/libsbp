@@ -14,15 +14,19 @@ module SwiftNav.SBP.Logging where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
+import Data.Aeson.TH             (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy      hiding (ByteString)
+import Data.Derive.Arbitrary     (makeArbitrary)
+import Data.DeriveTH             (derive)
 import Data.Int
 import Data.Word
+import Test.QuickCheck           (Arbitrary (..))
+import Test.QuickCheck.Instances ()
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
@@ -57,6 +61,7 @@ $(deriveSBP 'msgLog ''MsgLog)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgLog_" . stripPrefix "_msgLog_"}
              ''MsgLog)
 $(makeLenses ''MsgLog)
+$(derive makeArbitrary ''MsgLog)
 
 msgTweet :: Word16
 msgTweet = 0x0012
@@ -82,6 +87,7 @@ $(deriveSBP 'msgTweet ''MsgTweet)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTweet_" . stripPrefix "_msgTweet_"}
              ''MsgTweet)
 $(makeLenses ''MsgTweet)
+$(derive makeArbitrary ''MsgTweet)
 
 msgPrintDep :: Word16
 msgPrintDep = 0x0010
@@ -107,3 +113,4 @@ $(deriveSBP 'msgPrintDep ''MsgPrintDep)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPrintDep_" . stripPrefix "_msgPrintDep_"}
              ''MsgPrintDep)
 $(makeLenses ''MsgPrintDep)
+$(derive makeArbitrary ''MsgPrintDep)

@@ -42,8 +42,11 @@ library
                      , binary
                      , bytestring
                      , data-binary-ieee754
+                     , derive
                      , lens
                      , monad-loops
+                     , QuickCheck
+                     , quickcheck-instances
                      , template-haskell
                      , text
                      , unordered-containers
@@ -131,8 +134,10 @@ test-suite test
                      , base
                      , base64-bytestring
                      , basic-prelude
+                     , binary
                      , bytestring
                      , QuickCheck
+                     , quickcheck-instances
                      , sbp
                      , tasty
                      , tasty-hunit

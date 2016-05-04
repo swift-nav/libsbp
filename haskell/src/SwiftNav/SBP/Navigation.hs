@@ -22,15 +22,19 @@ module SwiftNav.SBP.Navigation where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
+import Data.Aeson.TH             (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy      hiding (ByteString)
+import Data.Derive.Arbitrary     (makeArbitrary)
+import Data.DeriveTH             (derive)
 import Data.Int
 import Data.Word
+import Test.QuickCheck           (Arbitrary (..))
+import Test.QuickCheck.Instances ()
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
@@ -80,6 +84,7 @@ $(deriveSBP 'msgGpsTime ''MsgGpsTime)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGpsTime_" . stripPrefix "_msgGpsTime_"}
              ''MsgGpsTime)
 $(makeLenses ''MsgGpsTime)
+$(derive makeArbitrary ''MsgGpsTime)
 
 msgDops :: Word16
 msgDops = 0x0206
@@ -126,6 +131,7 @@ $(deriveSBP 'msgDops ''MsgDops)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDops_" . stripPrefix "_msgDops_"}
              ''MsgDops)
 $(makeLenses ''MsgDops)
+$(derive makeArbitrary ''MsgDops)
 
 msgPosEcef :: Word16
 msgPosEcef = 0x0200
@@ -181,6 +187,7 @@ $(deriveSBP 'msgPosEcef ''MsgPosEcef)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosEcef_" . stripPrefix "_msgPosEcef_"}
              ''MsgPosEcef)
 $(makeLenses ''MsgPosEcef)
+$(derive makeArbitrary ''MsgPosEcef)
 
 msgPosLlh :: Word16
 msgPosLlh = 0x0201
@@ -240,6 +247,7 @@ $(deriveSBP 'msgPosLlh ''MsgPosLlh)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosLlh_" . stripPrefix "_msgPosLlh_"}
              ''MsgPosLlh)
 $(makeLenses ''MsgPosLlh)
+$(derive makeArbitrary ''MsgPosLlh)
 
 msgBaselineEcef :: Word16
 msgBaselineEcef = 0x0202
@@ -292,6 +300,7 @@ $(deriveSBP 'msgBaselineEcef ''MsgBaselineEcef)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineEcef_" . stripPrefix "_msgBaselineEcef_"}
              ''MsgBaselineEcef)
 $(makeLenses ''MsgBaselineEcef)
+$(derive makeArbitrary ''MsgBaselineEcef)
 
 msgBaselineNed :: Word16
 msgBaselineNed = 0x0203
@@ -350,6 +359,7 @@ $(deriveSBP 'msgBaselineNed ''MsgBaselineNed)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineNed_" . stripPrefix "_msgBaselineNed_"}
              ''MsgBaselineNed)
 $(makeLenses ''MsgBaselineNed)
+$(derive makeArbitrary ''MsgBaselineNed)
 
 msgVelEcef :: Word16
 msgVelEcef = 0x0204
@@ -401,6 +411,7 @@ $(deriveSBP 'msgVelEcef ''MsgVelEcef)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelEcef_" . stripPrefix "_msgVelEcef_"}
              ''MsgVelEcef)
 $(makeLenses ''MsgVelEcef)
+$(derive makeArbitrary ''MsgVelEcef)
 
 msgVelNed :: Word16
 msgVelNed = 0x0205
@@ -457,6 +468,7 @@ $(deriveSBP 'msgVelNed ''MsgVelNed)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelNed_" . stripPrefix "_msgVelNed_"}
              ''MsgVelNed)
 $(makeLenses ''MsgVelNed)
+$(derive makeArbitrary ''MsgVelNed)
 
 msgBaselineHeading :: Word16
 msgBaselineHeading = 0x0207
@@ -496,3 +508,4 @@ $(deriveSBP 'msgBaselineHeading ''MsgBaselineHeading)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineHeading_" . stripPrefix "_msgBaselineHeading_"}
              ''MsgBaselineHeading)
 $(makeLenses ''MsgBaselineHeading)
+$(derive makeArbitrary ''MsgBaselineHeading)

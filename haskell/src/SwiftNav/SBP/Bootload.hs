@@ -16,15 +16,19 @@ module SwiftNav.SBP.Bootload where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
+import Data.Aeson.TH             (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy      hiding (ByteString)
+import Data.Derive.Arbitrary     (makeArbitrary)
+import Data.DeriveTH             (derive)
 import Data.Int
 import Data.Word
+import Test.QuickCheck           (Arbitrary (..))
+import Test.QuickCheck.Instances ()
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
@@ -52,6 +56,7 @@ $(deriveSBP 'msgBootloaderHandshakeReq ''MsgBootloaderHandshakeReq)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeReq_" . stripPrefix "_msgBootloaderHandshakeReq_"}
              ''MsgBootloaderHandshakeReq)
 $(makeLenses ''MsgBootloaderHandshakeReq)
+$(derive makeArbitrary ''MsgBootloaderHandshakeReq)
 
 msgBootloaderHandshakeResp :: Word16
 msgBootloaderHandshakeResp = 0x00B4
@@ -84,6 +89,7 @@ $(deriveSBP 'msgBootloaderHandshakeResp ''MsgBootloaderHandshakeResp)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeResp_" . stripPrefix "_msgBootloaderHandshakeResp_"}
              ''MsgBootloaderHandshakeResp)
 $(makeLenses ''MsgBootloaderHandshakeResp)
+$(derive makeArbitrary ''MsgBootloaderHandshakeResp)
 
 msgBootloaderJumpToApp :: Word16
 msgBootloaderJumpToApp = 0x00B1
@@ -109,6 +115,7 @@ $(deriveSBP 'msgBootloaderJumpToApp ''MsgBootloaderJumpToApp)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderJumpToApp_" . stripPrefix "_msgBootloaderJumpToApp_"}
              ''MsgBootloaderJumpToApp)
 $(makeLenses ''MsgBootloaderJumpToApp)
+$(derive makeArbitrary ''MsgBootloaderJumpToApp)
 
 msgNapDeviceDnaReq :: Word16
 msgNapDeviceDnaReq = 0x00DE
@@ -135,6 +142,7 @@ $(deriveSBP 'msgNapDeviceDnaReq ''MsgNapDeviceDnaReq)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNapDeviceDnaReq_" . stripPrefix "_msgNapDeviceDnaReq_"}
              ''MsgNapDeviceDnaReq)
 $(makeLenses ''MsgNapDeviceDnaReq)
+$(derive makeArbitrary ''MsgNapDeviceDnaReq)
 
 msgNapDeviceDnaResp :: Word16
 msgNapDeviceDnaResp = 0x00DD
@@ -165,6 +173,7 @@ $(deriveSBP 'msgNapDeviceDnaResp ''MsgNapDeviceDnaResp)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNapDeviceDnaResp_" . stripPrefix "_msgNapDeviceDnaResp_"}
              ''MsgNapDeviceDnaResp)
 $(makeLenses ''MsgNapDeviceDnaResp)
+$(derive makeArbitrary ''MsgNapDeviceDnaResp)
 
 msgBootloaderHandshakeDepA :: Word16
 msgBootloaderHandshakeDepA = 0x00B0
@@ -190,3 +199,4 @@ $(deriveSBP 'msgBootloaderHandshakeDepA ''MsgBootloaderHandshakeDepA)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeDepA_" . stripPrefix "_msgBootloaderHandshakeDepA_"}
              ''MsgBootloaderHandshakeDepA)
 $(makeLenses ''MsgBootloaderHandshakeDepA)
+$(derive makeArbitrary ''MsgBootloaderHandshakeDepA)

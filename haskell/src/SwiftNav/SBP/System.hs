@@ -14,15 +14,19 @@ module SwiftNav.SBP.System where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
+import Data.Aeson.TH             (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy      hiding (ByteString)
+import Data.Derive.Arbitrary     (makeArbitrary)
+import Data.DeriveTH             (derive)
 import Data.Int
 import Data.Word
+import Test.QuickCheck           (Arbitrary (..))
+import Test.QuickCheck.Instances ()
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
@@ -53,6 +57,7 @@ $(deriveSBP 'msgStartup ''MsgStartup)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStartup_" . stripPrefix "_msgStartup_"}
              ''MsgStartup)
 $(makeLenses ''MsgStartup)
+$(derive makeArbitrary ''MsgStartup)
 
 msgHeartbeat :: Word16
 msgHeartbeat = 0xFFFF
@@ -84,3 +89,4 @@ $(deriveSBP 'msgHeartbeat ''MsgHeartbeat)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgHeartbeat_" . stripPrefix "_msgHeartbeat_"}
              ''MsgHeartbeat)
 $(makeLenses ''MsgHeartbeat)
+$(derive makeArbitrary ''MsgHeartbeat)
