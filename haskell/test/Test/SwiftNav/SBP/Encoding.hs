@@ -27,18 +27,28 @@ testRoundtrip :: TestTree
 testRoundtrip = QC.testProperty "Aeson" prop
   where prop ws = (A.decode . A.encode $ (ws :: BS.ByteString)) === Just (ws :: BS.ByteString)
 
-testRoundtrip2 :: TestTree
-testRoundtrip2 = QC.testProperty "MsgObs JSON" prop
+testRoundtripMsgObsJson :: TestTree
+testRoundtripMsgObsJson = QC.testProperty "MsgObs JSON" prop
   where prop m = (A.decode . A.encode $ (m :: MsgObs)) === Just (m :: MsgObs)
 
-testRoundtrip3 :: TestTree
-testRoundtrip3 = QC.testProperty "MsgObs Binary" prop
+testRoundtripMsgObsBinary :: TestTree
+testRoundtripMsgObsBinary = QC.testProperty "MsgObs Binary" prop
   where prop m = (B.decode . B.encode $ (m :: MsgObs)) === (m :: MsgObs)
+
+testRoundtripSBPMsgJson :: TestTree
+testRoundtripSBPMsgJson = QC.testProperty "SBPMsg JSON" prop
+  where prop m = (A.decode . A.encode $ (m :: SBPMsg)) === Just (m :: SBPMsg)
+
+testRoundtripSBPMsgBinary :: TestTree
+testRoundtripSBPMsgBinary = QC.testProperty "SBPMsg Binary" prop
+  where prop m = (B.decode . B.encode $ (m :: SBPMsg)) === (m :: SBPMsg)
 
 tests :: TestTree
 tests = testGroup "Roundtrip JSON serialization"
         [ testRoundtrip
         , testParse
-        , testRoundtrip2
-        , testRoundtrip3
+        , testRoundtripMsgObsJson
+        , testRoundtripMsgObsBinary
+        --, testRoundtripSBPMsgJson
+        --, testRoundtripSBPMsgBinary
         ]

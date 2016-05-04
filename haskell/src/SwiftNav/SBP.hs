@@ -31,7 +31,7 @@ import BasicPrelude             hiding (lookup)
 import Control.Lens             hiding ((.=))
 import Data.Aeson               hiding (decode, decode')
 import Data.Binary
-import Data.ByteString.Lazy     hiding (ByteString)
+import Data.ByteString.Lazy     (fromStrict)
 import SwiftNav.SBP.Acquisition
 import SwiftNav.SBP.Bootload
 import SwiftNav.SBP.ExtEvents
@@ -47,6 +47,7 @@ import SwiftNav.SBP.System
 import SwiftNav.SBP.Tracking
 import SwiftNav.SBP.User
 import SwiftNav.SBP.Types
+import Test.QuickCheck          (Arbitrary(..), Gen, oneof)
 
 
 -- | An SBP message ADT composed of all defined SBP messages.
@@ -510,3 +511,8 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgVelNed n m) = SBPMsgVelNed n <$> f m
   msg f (SBPMsgUnknown m) = SBPMsgUnknown <$> f m
   msg f (SBPMsgBadCrc m) = SBPMsgBadCrc <$> f m
+
+instance Arbitrary SBPMsg where
+  arbitrary = oneof [
+                (arbitrary :: Gen MsgObs) >>= (\n -> arbitrary >>= (\i -> return $ SBPMsgObs n $ toSBP n i))
+              ]
