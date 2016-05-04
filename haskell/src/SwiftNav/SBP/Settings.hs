@@ -18,15 +18,19 @@ module SwiftNav.SBP.Settings where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
+import Data.Aeson.TH             (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy      hiding (ByteString)
+import Data.Derive.Arbitrary     (makeArbitrary)
+import Data.DeriveTH             (derive)
 import Data.Int
 import Data.Word
+import Test.QuickCheck           (Arbitrary (..))
+import Test.QuickCheck.Instances ()
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
@@ -53,6 +57,7 @@ $(deriveSBP 'msgSettingsSave ''MsgSettingsSave)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsSave_" . stripPrefix "_msgSettingsSave_"}
              ''MsgSettingsSave)
 $(makeLenses ''MsgSettingsSave)
+$(derive makeArbitrary ''MsgSettingsSave)
 
 msgSettingsWrite :: Word16
 msgSettingsWrite = 0x00A0
@@ -80,6 +85,7 @@ $(deriveSBP 'msgSettingsWrite ''MsgSettingsWrite)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsWrite_" . stripPrefix "_msgSettingsWrite_"}
              ''MsgSettingsWrite)
 $(makeLenses ''MsgSettingsWrite)
+$(derive makeArbitrary ''MsgSettingsWrite)
 
 msgSettingsReadReq :: Word16
 msgSettingsReadReq = 0x00A4
@@ -107,6 +113,7 @@ $(deriveSBP 'msgSettingsReadReq ''MsgSettingsReadReq)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadReq_" . stripPrefix "_msgSettingsReadReq_"}
              ''MsgSettingsReadReq)
 $(makeLenses ''MsgSettingsReadReq)
+$(derive makeArbitrary ''MsgSettingsReadReq)
 
 msgSettingsReadResp :: Word16
 msgSettingsReadResp = 0x00A5
@@ -133,6 +140,7 @@ $(deriveSBP 'msgSettingsReadResp ''MsgSettingsReadResp)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadResp_" . stripPrefix "_msgSettingsReadResp_"}
              ''MsgSettingsReadResp)
 $(makeLenses ''MsgSettingsReadResp)
+$(derive makeArbitrary ''MsgSettingsReadResp)
 
 msgSettingsReadByIndexReq :: Word16
 msgSettingsReadByIndexReq = 0x00A2
@@ -162,6 +170,7 @@ $(deriveSBP 'msgSettingsReadByIndexReq ''MsgSettingsReadByIndexReq)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadByIndexReq_" . stripPrefix "_msgSettingsReadByIndexReq_"}
              ''MsgSettingsReadByIndexReq)
 $(makeLenses ''MsgSettingsReadByIndexReq)
+$(derive makeArbitrary ''MsgSettingsReadByIndexReq)
 
 msgSettingsReadByIndexResp :: Word16
 msgSettingsReadByIndexResp = 0x00A7
@@ -195,6 +204,7 @@ $(deriveSBP 'msgSettingsReadByIndexResp ''MsgSettingsReadByIndexResp)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadByIndexResp_" . stripPrefix "_msgSettingsReadByIndexResp_"}
              ''MsgSettingsReadByIndexResp)
 $(makeLenses ''MsgSettingsReadByIndexResp)
+$(derive makeArbitrary ''MsgSettingsReadByIndexResp)
 
 msgSettingsReadByIndexDone :: Word16
 msgSettingsReadByIndexDone = 0x00A6
@@ -217,3 +227,4 @@ $(deriveSBP 'msgSettingsReadByIndexDone ''MsgSettingsReadByIndexDone)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadByIndexDone_" . stripPrefix "_msgSettingsReadByIndexDone_"}
              ''MsgSettingsReadByIndexDone)
 $(makeLenses ''MsgSettingsReadByIndexDone)
+$(derive makeArbitrary ''MsgSettingsReadByIndexDone)

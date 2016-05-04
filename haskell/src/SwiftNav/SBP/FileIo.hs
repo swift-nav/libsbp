@@ -19,15 +19,19 @@ module SwiftNav.SBP.FileIo where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
+import Data.Aeson.TH             (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy      hiding (ByteString)
+import Data.Derive.Arbitrary     (makeArbitrary)
+import Data.DeriveTH             (derive)
 import Data.Int
 import Data.Word
+import Test.QuickCheck           (Arbitrary (..))
+import Test.QuickCheck.Instances ()
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
@@ -74,6 +78,7 @@ $(deriveSBP 'msgFileioReadReq ''MsgFileioReadReq)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadReq_" . stripPrefix "_msgFileioReadReq_"}
              ''MsgFileioReadReq)
 $(makeLenses ''MsgFileioReadReq)
+$(derive makeArbitrary ''MsgFileioReadReq)
 
 msgFileioReadResp :: Word16
 msgFileioReadResp = 0x00A3
@@ -106,6 +111,7 @@ $(deriveSBP 'msgFileioReadResp ''MsgFileioReadResp)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadResp_" . stripPrefix "_msgFileioReadResp_"}
              ''MsgFileioReadResp)
 $(makeLenses ''MsgFileioReadResp)
+$(derive makeArbitrary ''MsgFileioReadResp)
 
 msgFileioReadDirReq :: Word16
 msgFileioReadDirReq = 0x00A9
@@ -146,6 +152,7 @@ $(deriveSBP 'msgFileioReadDirReq ''MsgFileioReadDirReq)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadDirReq_" . stripPrefix "_msgFileioReadDirReq_"}
              ''MsgFileioReadDirReq)
 $(makeLenses ''MsgFileioReadDirReq)
+$(derive makeArbitrary ''MsgFileioReadDirReq)
 
 msgFileioReadDirResp :: Word16
 msgFileioReadDirResp = 0x00AA
@@ -179,6 +186,7 @@ $(deriveSBP 'msgFileioReadDirResp ''MsgFileioReadDirResp)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadDirResp_" . stripPrefix "_msgFileioReadDirResp_"}
              ''MsgFileioReadDirResp)
 $(makeLenses ''MsgFileioReadDirResp)
+$(derive makeArbitrary ''MsgFileioReadDirResp)
 
 msgFileioRemove :: Word16
 msgFileioRemove = 0x00AC
@@ -207,6 +215,7 @@ $(deriveSBP 'msgFileioRemove ''MsgFileioRemove)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioRemove_" . stripPrefix "_msgFileioRemove_"}
              ''MsgFileioRemove)
 $(makeLenses ''MsgFileioRemove)
+$(derive makeArbitrary ''MsgFileioRemove)
 
 msgFileioWriteReq :: Word16
 msgFileioWriteReq = 0x00AD
@@ -250,6 +259,7 @@ $(deriveSBP 'msgFileioWriteReq ''MsgFileioWriteReq)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioWriteReq_" . stripPrefix "_msgFileioWriteReq_"}
              ''MsgFileioWriteReq)
 $(makeLenses ''MsgFileioWriteReq)
+$(derive makeArbitrary ''MsgFileioWriteReq)
 
 msgFileioWriteResp :: Word16
 msgFileioWriteResp = 0x00AB
@@ -278,3 +288,4 @@ $(deriveSBP 'msgFileioWriteResp ''MsgFileioWriteResp)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioWriteResp_" . stripPrefix "_msgFileioWriteResp_"}
              ''MsgFileioWriteResp)
 $(makeLenses ''MsgFileioWriteResp)
+$(derive makeArbitrary ''MsgFileioWriteResp)

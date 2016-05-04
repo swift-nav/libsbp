@@ -14,15 +14,19 @@ module SwiftNav.SBP.GnssSignal where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
+import Data.Aeson.TH             (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy      hiding (ByteString)
+import Data.Derive.Arbitrary     (makeArbitrary)
+import Data.DeriveTH             (derive)
 import Data.Int
 import Data.Word
+import Test.QuickCheck           (Arbitrary (..))
+import Test.QuickCheck.Instances ()
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
@@ -53,3 +57,4 @@ instance Binary GnssSignal where
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gnssSignal_" . stripPrefix "_gnssSignal_"}
              ''GnssSignal)
 $(makeLenses ''GnssSignal)
+$(derive makeArbitrary ''GnssSignal)

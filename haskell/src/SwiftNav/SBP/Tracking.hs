@@ -14,15 +14,19 @@ module SwiftNav.SBP.Tracking where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
+import Data.Aeson.TH             (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy      hiding (ByteString)
+import Data.Derive.Arbitrary     (makeArbitrary)
+import Data.DeriveTH             (derive)
 import Data.Int
 import Data.Word
+import Test.QuickCheck           (Arbitrary (..))
+import Test.QuickCheck.Instances ()
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
@@ -55,6 +59,7 @@ instance Binary TrackingChannelState where
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_trackingChannelState_" . stripPrefix "_trackingChannelState_"}
              ''TrackingChannelState)
 $(makeLenses ''TrackingChannelState)
+$(derive makeArbitrary ''TrackingChannelState)
 
 msgTrackingState :: Word16
 msgTrackingState = 0x0013
@@ -82,6 +87,7 @@ $(deriveSBP 'msgTrackingState ''MsgTrackingState)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTrackingState_" . stripPrefix "_msgTrackingState_"}
              ''MsgTrackingState)
 $(makeLenses ''MsgTrackingState)
+$(derive makeArbitrary ''MsgTrackingState)
 
 -- | TrackingChannelCorrelation.
 --
@@ -105,6 +111,7 @@ instance Binary TrackingChannelCorrelation where
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_trackingChannelCorrelation_" . stripPrefix "_trackingChannelCorrelation_"}
              ''TrackingChannelCorrelation)
 $(makeLenses ''TrackingChannelCorrelation)
+$(derive makeArbitrary ''TrackingChannelCorrelation)
 
 msgTrackingIq :: Word16
 msgTrackingIq = 0x001C
@@ -139,6 +146,7 @@ $(deriveSBP 'msgTrackingIq ''MsgTrackingIq)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTrackingIq_" . stripPrefix "_msgTrackingIq_"}
              ''MsgTrackingIq)
 $(makeLenses ''MsgTrackingIq)
+$(derive makeArbitrary ''MsgTrackingIq)
 
 -- | TrackingChannelStateDepA.
 --
@@ -166,6 +174,7 @@ instance Binary TrackingChannelStateDepA where
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_trackingChannelStateDepA_" . stripPrefix "_trackingChannelStateDepA_"}
              ''TrackingChannelStateDepA)
 $(makeLenses ''TrackingChannelStateDepA)
+$(derive makeArbitrary ''TrackingChannelStateDepA)
 
 msgTrackingStateDepA :: Word16
 msgTrackingStateDepA = 0x0016
@@ -191,3 +200,4 @@ $(deriveSBP 'msgTrackingStateDepA ''MsgTrackingStateDepA)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTrackingStateDepA_" . stripPrefix "_msgTrackingStateDepA_"}
              ''MsgTrackingStateDepA)
 $(makeLenses ''MsgTrackingStateDepA)
+$(derive makeArbitrary ''MsgTrackingStateDepA)

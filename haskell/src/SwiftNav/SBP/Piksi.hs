@@ -16,15 +16,19 @@ module SwiftNav.SBP.Piksi where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
+import Data.Aeson.TH             (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy      hiding (ByteString)
+import Data.Derive.Arbitrary     (makeArbitrary)
+import Data.DeriveTH             (derive)
 import Data.Int
 import Data.Word
+import Test.QuickCheck           (Arbitrary (..))
+import Test.QuickCheck.Instances ()
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
@@ -52,6 +56,7 @@ $(deriveSBP 'msgAlmanac ''MsgAlmanac)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAlmanac_" . stripPrefix "_msgAlmanac_"}
              ''MsgAlmanac)
 $(makeLenses ''MsgAlmanac)
+$(derive makeArbitrary ''MsgAlmanac)
 
 msgSetTime :: Word16
 msgSetTime = 0x0068
@@ -75,6 +80,7 @@ $(deriveSBP 'msgSetTime ''MsgSetTime)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSetTime_" . stripPrefix "_msgSetTime_"}
              ''MsgSetTime)
 $(makeLenses ''MsgSetTime)
+$(derive makeArbitrary ''MsgSetTime)
 
 msgReset :: Word16
 msgReset = 0x00B2
@@ -97,6 +103,7 @@ $(deriveSBP 'msgReset ''MsgReset)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgReset_" . stripPrefix "_msgReset_"}
              ''MsgReset)
 $(makeLenses ''MsgReset)
+$(derive makeArbitrary ''MsgReset)
 
 msgCwResults :: Word16
 msgCwResults = 0x00C0
@@ -121,6 +128,7 @@ $(deriveSBP 'msgCwResults ''MsgCwResults)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCwResults_" . stripPrefix "_msgCwResults_"}
              ''MsgCwResults)
 $(makeLenses ''MsgCwResults)
+$(derive makeArbitrary ''MsgCwResults)
 
 msgCwStart :: Word16
 msgCwStart = 0x00C1
@@ -145,6 +153,7 @@ $(deriveSBP 'msgCwStart ''MsgCwStart)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCwStart_" . stripPrefix "_msgCwStart_"}
              ''MsgCwStart)
 $(makeLenses ''MsgCwStart)
+$(derive makeArbitrary ''MsgCwStart)
 
 msgResetFilters :: Word16
 msgResetFilters = 0x0022
@@ -171,6 +180,7 @@ $(deriveSBP 'msgResetFilters ''MsgResetFilters)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgResetFilters_" . stripPrefix "_msgResetFilters_"}
              ''MsgResetFilters)
 $(makeLenses ''MsgResetFilters)
+$(derive makeArbitrary ''MsgResetFilters)
 
 msgInitBase :: Word16
 msgInitBase = 0x0023
@@ -196,6 +206,7 @@ $(deriveSBP 'msgInitBase ''MsgInitBase)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgInitBase_" . stripPrefix "_msgInitBase_"}
              ''MsgInitBase)
 $(makeLenses ''MsgInitBase)
+$(derive makeArbitrary ''MsgInitBase)
 
 msgThreadState :: Word16
 msgThreadState = 0x0017
@@ -232,6 +243,7 @@ $(deriveSBP 'msgThreadState ''MsgThreadState)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgThreadState_" . stripPrefix "_msgThreadState_"}
              ''MsgThreadState)
 $(makeLenses ''MsgThreadState)
+$(derive makeArbitrary ''MsgThreadState)
 
 -- | UARTChannel.
 --
@@ -272,6 +284,7 @@ instance Binary UARTChannel where
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_uARTChannel_" . stripPrefix "_uARTChannel_"}
              ''UARTChannel)
 $(makeLenses ''UARTChannel)
+$(derive makeArbitrary ''UARTChannel)
 
 -- | Latency.
 --
@@ -306,6 +319,7 @@ instance Binary Latency where
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_latency_" . stripPrefix "_latency_"}
              ''Latency)
 $(makeLenses ''Latency)
+$(derive makeArbitrary ''Latency)
 
 msgUartState :: Word16
 msgUartState = 0x0018
@@ -347,6 +361,7 @@ $(deriveSBP 'msgUartState ''MsgUartState)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUartState_" . stripPrefix "_msgUartState_"}
              ''MsgUartState)
 $(makeLenses ''MsgUartState)
+$(derive makeArbitrary ''MsgUartState)
 
 msgIarState :: Word16
 msgIarState = 0x0019
@@ -374,6 +389,7 @@ $(deriveSBP 'msgIarState ''MsgIarState)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgIarState_" . stripPrefix "_msgIarState_"}
              ''MsgIarState)
 $(makeLenses ''MsgIarState)
+$(derive makeArbitrary ''MsgIarState)
 
 msgMaskSatellite :: Word16
 msgMaskSatellite = 0x001B
@@ -404,3 +420,4 @@ $(deriveSBP 'msgMaskSatellite ''MsgMaskSatellite)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgMaskSatellite_" . stripPrefix "_msgMaskSatellite_"}
              ''MsgMaskSatellite)
 $(makeLenses ''MsgMaskSatellite)
+$(derive makeArbitrary ''MsgMaskSatellite)

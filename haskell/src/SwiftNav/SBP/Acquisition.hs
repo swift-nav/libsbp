@@ -14,15 +14,19 @@ module SwiftNav.SBP.Acquisition where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
+import Data.Aeson.TH             (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy      hiding (ByteString)
+import Data.Derive.Arbitrary     (makeArbitrary)
+import Data.DeriveTH             (derive)
 import Data.Int
 import Data.Word
+import Test.QuickCheck           (Arbitrary (..))
+import Test.QuickCheck.Instances ()
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
@@ -68,6 +72,7 @@ $(deriveSBP 'msgAcqResult ''MsgAcqResult)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResult_" . stripPrefix "_msgAcqResult_"}
              ''MsgAcqResult)
 $(makeLenses ''MsgAcqResult)
+$(derive makeArbitrary ''MsgAcqResult)
 
 msgAcqResultDepA :: Word16
 msgAcqResultDepA = 0x0015
@@ -107,3 +112,4 @@ $(deriveSBP 'msgAcqResultDepA ''MsgAcqResultDepA)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResultDepA_" . stripPrefix "_msgAcqResultDepA_"}
              ''MsgAcqResultDepA)
 $(makeLenses ''MsgAcqResultDepA)
+$(derive makeArbitrary ''MsgAcqResultDepA)

@@ -14,15 +14,19 @@ module (((module_name))) where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
+import Data.Aeson.TH             (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy      hiding (ByteString)
+import Data.Derive.Arbitrary     (makeArbitrary)
+import Data.DeriveTH             (derive)
 import Data.Int
 import Data.Word
+import Test.QuickCheck           (Arbitrary (..))
+import Test.QuickCheck.Instances ()
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 ((*- for m in module_includes *))
@@ -91,6 +95,7 @@ $(deriveSBP '(((m.identifier|to_global))) ''(((m.identifier|to_data))))
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_(((m.identifier|to_global)))_" . stripPrefix "_(((m.identifier|to_global)))_"}
              ''(((m.identifier|to_data))))
 $(makeLenses ''(((m.identifier|to_data))))
+$(derive makeArbitrary ''(((m.identifier|to_data))))
 
 ((*- endif *))
 ((* endfor *))

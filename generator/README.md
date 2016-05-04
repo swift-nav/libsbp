@@ -26,6 +26,9 @@ optional arguments:
 For example,
 
 ```shell
+pip install -r requirements.txt
+python setup.py install
+
 # Output C bindings:
 python sbpg/generator.py -i ../spec/yaml/swiftnav/sbp/ -o ../c/ --c
 
@@ -36,6 +39,8 @@ python sbpg/generator.py -i ../spec/yaml/swiftnav/sbp/navigation.yaml -o ../pyth
 # Output LaTeX documentation
 python sbpg/generator.py -i ../spec/yaml/swiftnav/sbp/ -o ../latex/ --latex
 
+# Output Haskell bindings:
+python sbpg/generator.py -i ../spec/yaml/swiftnav/sbp/ -o ../haskell/ --haskell
 ```
 
 ## Testing and Deployment

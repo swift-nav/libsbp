@@ -1,5 +1,5 @@
 name:                  sbp
-version:               0.52.2
+version:               0.52.3
 synopsis:              SwiftNav's SBP Library
 homepage:              https://github.com/swift-nav/libsbp
 license:               LGPL-3
@@ -53,8 +53,11 @@ library
                      , binary
                      , bytestring
                      , data-binary-ieee754
+                     , derive
                      , lens
                      , monad-loops
+                     , QuickCheck
+                     , quickcheck-instances
                      , template-haskell
                      , text
                      , unordered-containers
@@ -142,8 +145,10 @@ test-suite test
                      , base
                      , base64-bytestring
                      , basic-prelude
+                     , binary
                      , bytestring
                      , QuickCheck
+                     , quickcheck-instances
                      , sbp
                      , tasty
                      , tasty-hunit

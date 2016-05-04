@@ -16,15 +16,19 @@ module SwiftNav.SBP.Flash where
 import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
+import Data.Aeson.TH             (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
 import Data.ByteString
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy      hiding (ByteString)
+import Data.Derive.Arbitrary     (makeArbitrary)
+import Data.DeriveTH             (derive)
 import Data.Int
 import Data.Word
+import Test.QuickCheck           (Arbitrary (..))
+import Test.QuickCheck.Instances ()
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
@@ -69,6 +73,7 @@ $(deriveSBP 'msgFlashProgram ''MsgFlashProgram)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashProgram_" . stripPrefix "_msgFlashProgram_"}
              ''MsgFlashProgram)
 $(makeLenses ''MsgFlashProgram)
+$(derive makeArbitrary ''MsgFlashProgram)
 
 msgFlashDone :: Word16
 msgFlashDone = 0x00E0
@@ -97,6 +102,7 @@ $(deriveSBP 'msgFlashDone ''MsgFlashDone)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashDone_" . stripPrefix "_msgFlashDone_"}
              ''MsgFlashDone)
 $(makeLenses ''MsgFlashDone)
+$(derive makeArbitrary ''MsgFlashDone)
 
 msgFlashReadReq :: Word16
 msgFlashReadReq = 0x00E7
@@ -135,6 +141,7 @@ $(deriveSBP 'msgFlashReadReq ''MsgFlashReadReq)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashReadReq_" . stripPrefix "_msgFlashReadReq_"}
              ''MsgFlashReadReq)
 $(makeLenses ''MsgFlashReadReq)
+$(derive makeArbitrary ''MsgFlashReadReq)
 
 msgFlashReadResp :: Word16
 msgFlashReadResp = 0x00E1
@@ -173,6 +180,7 @@ $(deriveSBP 'msgFlashReadResp ''MsgFlashReadResp)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashReadResp_" . stripPrefix "_msgFlashReadResp_"}
              ''MsgFlashReadResp)
 $(makeLenses ''MsgFlashReadResp)
+$(derive makeArbitrary ''MsgFlashReadResp)
 
 msgFlashErase :: Word16
 msgFlashErase = 0x00E2
@@ -205,6 +213,7 @@ $(deriveSBP 'msgFlashErase ''MsgFlashErase)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashErase_" . stripPrefix "_msgFlashErase_"}
              ''MsgFlashErase)
 $(makeLenses ''MsgFlashErase)
+$(derive makeArbitrary ''MsgFlashErase)
 
 msgStmFlashLockSector :: Word16
 msgStmFlashLockSector = 0x00E3
@@ -231,6 +240,7 @@ $(deriveSBP 'msgStmFlashLockSector ''MsgStmFlashLockSector)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmFlashLockSector_" . stripPrefix "_msgStmFlashLockSector_"}
              ''MsgStmFlashLockSector)
 $(makeLenses ''MsgStmFlashLockSector)
+$(derive makeArbitrary ''MsgStmFlashLockSector)
 
 msgStmFlashUnlockSector :: Word16
 msgStmFlashUnlockSector = 0x00E4
@@ -257,6 +267,7 @@ $(deriveSBP 'msgStmFlashUnlockSector ''MsgStmFlashUnlockSector)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmFlashUnlockSector_" . stripPrefix "_msgStmFlashUnlockSector_"}
              ''MsgStmFlashUnlockSector)
 $(makeLenses ''MsgStmFlashUnlockSector)
+$(derive makeArbitrary ''MsgStmFlashUnlockSector)
 
 msgStmUniqueIdReq :: Word16
 msgStmUniqueIdReq = 0x00E8
@@ -281,6 +292,7 @@ $(deriveSBP 'msgStmUniqueIdReq ''MsgStmUniqueIdReq)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmUniqueIdReq_" . stripPrefix "_msgStmUniqueIdReq_"}
              ''MsgStmUniqueIdReq)
 $(makeLenses ''MsgStmUniqueIdReq)
+$(derive makeArbitrary ''MsgStmUniqueIdReq)
 
 msgStmUniqueIdResp :: Word16
 msgStmUniqueIdResp = 0x00E5
@@ -308,6 +320,7 @@ $(deriveSBP 'msgStmUniqueIdResp ''MsgStmUniqueIdResp)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmUniqueIdResp_" . stripPrefix "_msgStmUniqueIdResp_"}
              ''MsgStmUniqueIdResp)
 $(makeLenses ''MsgStmUniqueIdResp)
+$(derive makeArbitrary ''MsgStmUniqueIdResp)
 
 msgM25FlashWriteStatus :: Word16
 msgM25FlashWriteStatus = 0x00F3
@@ -334,3 +347,4 @@ $(deriveSBP 'msgM25FlashWriteStatus ''MsgM25FlashWriteStatus)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgM25FlashWriteStatus_" . stripPrefix "_msgM25FlashWriteStatus_"}
              ''MsgM25FlashWriteStatus)
 $(makeLenses ''MsgM25FlashWriteStatus)
+$(derive makeArbitrary ''MsgM25FlashWriteStatus)
