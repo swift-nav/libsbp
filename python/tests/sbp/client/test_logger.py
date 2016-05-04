@@ -75,6 +75,19 @@ def test_multi_json_log():
       assert len(w) == 0
   assert count == 2650 + 1451
 
+def test_non_utf8_json_log():
+  """
+  JSON log iterator sanity tests.
+  """
+  log_datafile = "./data/serial_link_non_utf8.log.dat"
+  count = 0
+  with warnings.catch_warnings(record=True) as w:
+    with JSONLogIterator(log_datafile) as log:
+      for msg, metadata in log.next():
+        pass
+      warnings.simplefilter("always")
+      assert len(w) == 1
+
 @pytest.mark.xfail
 def test_msg_print():
   """
