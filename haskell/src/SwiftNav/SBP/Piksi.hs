@@ -273,6 +273,41 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_uARTChannel_" . st
              ''UARTChannel)
 $(makeLenses ''UARTChannel)
 
+-- | Period.
+--
+-- Statistics on the period of observations received from the base station. As
+-- complete observation sets are received, their time of reception is compared
+-- with the prior set''s time of reception. This measurement provides a proxy
+-- for link quality as incomplete or missing sets will increase the period.
+-- Long periods can cause momentary RTK solution outages.
+data Period = Period
+  { _period_avg   :: Int32
+    -- ^ Average period
+  , _period_pmin  :: Int32
+    -- ^ Minimum period
+  , _period_pmax  :: Int32
+    -- ^ Maximum period
+  , _period_current :: Int32
+    -- ^ Smoothed estimate of the current period
+  } deriving ( Show, Read, Eq )
+
+instance Binary Period where
+  get = do
+    _period_avg <- liftM fromIntegral getWord32le
+    _period_pmin <- liftM fromIntegral getWord32le
+    _period_pmax <- liftM fromIntegral getWord32le
+    _period_current <- liftM fromIntegral getWord32le
+    return Period {..}
+
+  put Period {..} = do
+    putWord32le $ fromIntegral _period_avg
+    putWord32le $ fromIntegral _period_pmin
+    putWord32le $ fromIntegral _period_pmax
+    putWord32le $ fromIntegral _period_current
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_period_" . stripPrefix "_period_"}
+             ''Period)
+$(makeLenses ''Period)
+
 -- | Latency.
 --
 -- Statistics on the latency of observations received from the base station. As
@@ -308,24 +343,29 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_latency_" . stripP
 $(makeLenses ''Latency)
 
 msgUartState :: Word16
-msgUartState = 0x0018
+msgUartState = 0x001D
 
--- | SBP class for message MSG_UART_STATE (0x0018).
+-- | SBP class for message MSG_UART_STATE (0x001D).
 --
 -- The UART message reports data latency and throughput of the UART channels
 -- providing SBP I/O. On the default Piksi configuration, UARTs A and B are
 -- used for telemetry radios, but can also be host access ports for embedded
 -- hosts, or other interfaces in future. The reported percentage values must be
--- normalized.
+-- normalized. Observations latency and period can be used to assess the
+-- health of the differential corrections link. Latency provides the timeliness
+-- of received base observations while the  period indicates their likelihood
+-- of transmission.
 data MsgUartState = MsgUartState
-  { _msgUartState_uart_a  :: UARTChannel
+  { _msgUartState_uart_a   :: UARTChannel
     -- ^ State of UART A
-  , _msgUartState_uart_b  :: UARTChannel
+  , _msgUartState_uart_b   :: UARTChannel
     -- ^ State of UART B
   , _msgUartState_uart_ftdi :: UARTChannel
     -- ^ State of UART FTDI (USB logger)
-  , _msgUartState_latency :: Latency
+  , _msgUartState_latency  :: Latency
     -- ^ UART communication latency
+  , _msgUartState_obs_period :: Period
+    -- ^ Observation receipt period
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgUartState where
@@ -334,6 +374,7 @@ instance Binary MsgUartState where
     _msgUartState_uart_b <- get
     _msgUartState_uart_ftdi <- get
     _msgUartState_latency <- get
+    _msgUartState_obs_period <- get
     return MsgUartState {..}
 
   put MsgUartState {..} = do
@@ -341,12 +382,50 @@ instance Binary MsgUartState where
     put _msgUartState_uart_b
     put _msgUartState_uart_ftdi
     put _msgUartState_latency
+    put _msgUartState_obs_period
 
 $(deriveSBP 'msgUartState ''MsgUartState)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUartState_" . stripPrefix "_msgUartState_"}
              ''MsgUartState)
 $(makeLenses ''MsgUartState)
+
+msgUartStateDepa :: Word16
+msgUartStateDepa = 0x0018
+
+-- | SBP class for message MSG_UART_STATE_DEPA (0x0018).
+--
+-- Deprecated
+data MsgUartStateDepa = MsgUartStateDepa
+  { _msgUartStateDepa_uart_a  :: UARTChannel
+    -- ^ State of UART A
+  , _msgUartStateDepa_uart_b  :: UARTChannel
+    -- ^ State of UART B
+  , _msgUartStateDepa_uart_ftdi :: UARTChannel
+    -- ^ State of UART FTDI (USB logger)
+  , _msgUartStateDepa_latency :: Latency
+    -- ^ UART communication latency
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgUartStateDepa where
+  get = do
+    _msgUartStateDepa_uart_a <- get
+    _msgUartStateDepa_uart_b <- get
+    _msgUartStateDepa_uart_ftdi <- get
+    _msgUartStateDepa_latency <- get
+    return MsgUartStateDepa {..}
+
+  put MsgUartStateDepa {..} = do
+    put _msgUartStateDepa_uart_a
+    put _msgUartStateDepa_uart_b
+    put _msgUartStateDepa_uart_ftdi
+    put _msgUartStateDepa_latency
+
+$(deriveSBP 'msgUartStateDepa ''MsgUartStateDepa)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUartStateDepa_" . stripPrefix "_msgUartStateDepa_"}
+             ''MsgUartStateDepa)
+$(makeLenses ''MsgUartStateDepa)
 
 msgIarState :: Word16
 msgIarState = 0x0019

@@ -252,6 +252,44 @@ UARTChannel.prototype.fieldSpec.push(['tx_buffer_level', 'writeUInt8', 1]);
 UARTChannel.prototype.fieldSpec.push(['rx_buffer_level', 'writeUInt8', 1]);
 
 /**
+ * SBP class for message fragment Period
+ *
+ * Statistics on the period of observations received from the base station. As
+ * complete observation sets are received, their time of reception is compared with
+ * the prior set''s time of reception. This measurement provides a proxy for link
+ * quality as incomplete or missing sets will increase the period.  Long periods
+ * can cause momentary RTK solution outages.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field avg number (signed 32-bit int, 4 bytes) Average period
+ * @field pmin number (signed 32-bit int, 4 bytes) Minimum period
+ * @field pmax number (signed 32-bit int, 4 bytes) Maximum period
+ * @field current number (signed 32-bit int, 4 bytes) Smoothed estimate of the current period
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var Period = function (sbp) {
+  SBP.call(this, sbp);
+  this.messageType = "Period";
+  this.fields = this.parser.parse(sbp.payload);
+
+  return this;
+};
+Period.prototype = Object.create(SBP.prototype);
+Period.prototype.constructor = Period;
+Period.prototype.parser = new Parser()
+  .endianess('little')
+  .int32('avg')
+  .int32('pmin')
+  .int32('pmax')
+  .int32('current');
+Period.prototype.fieldSpec = [];
+Period.prototype.fieldSpec.push(['avg', 'writeInt32LE', 4]);
+Period.prototype.fieldSpec.push(['pmin', 'writeInt32LE', 4]);
+Period.prototype.fieldSpec.push(['pmax', 'writeInt32LE', 4]);
+Period.prototype.fieldSpec.push(['current', 'writeInt32LE', 4]);
+
+/**
  * SBP class for message fragment Latency
  *
  * Statistics on the latency of observations received from the base station. As
@@ -289,18 +327,22 @@ Latency.prototype.fieldSpec.push(['lmax', 'writeInt32LE', 4]);
 Latency.prototype.fieldSpec.push(['current', 'writeInt32LE', 4]);
 
 /**
- * SBP class for message MSG_UART_STATE (0x0018).
+ * SBP class for message MSG_UART_STATE (0x001D).
  *
  * The UART message reports data latency and throughput of the UART channels
  * providing SBP I/O. On the default Piksi configuration, UARTs A and B are used
  * for telemetry radios, but can also be host access ports for embedded hosts, or
  * other interfaces in future. The reported percentage values must be normalized.
+ * Observations latency and period can be used to assess the  health of the
+ * differential corrections link. Latency provides the timeliness of received base
+ * observations while the  period indicates their likelihood of transmission.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field uart_a UARTChannel State of UART A
  * @field uart_b UARTChannel State of UART B
  * @field uart_ftdi UARTChannel State of UART FTDI (USB logger)
  * @field latency Latency UART communication latency
+ * @field obs_period Period Observation receipt period
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -318,12 +360,48 @@ MsgUartState.prototype.parser = new Parser()
   .nest('uart_a', { type: UARTChannel.prototype.parser })
   .nest('uart_b', { type: UARTChannel.prototype.parser })
   .nest('uart_ftdi', { type: UARTChannel.prototype.parser })
-  .nest('latency', { type: Latency.prototype.parser });
+  .nest('latency', { type: Latency.prototype.parser })
+  .nest('obs_period', { type: Period.prototype.parser });
 MsgUartState.prototype.fieldSpec = [];
 MsgUartState.prototype.fieldSpec.push(['uart_a', UARTChannel.prototype.fieldSpec]);
 MsgUartState.prototype.fieldSpec.push(['uart_b', UARTChannel.prototype.fieldSpec]);
 MsgUartState.prototype.fieldSpec.push(['uart_ftdi', UARTChannel.prototype.fieldSpec]);
 MsgUartState.prototype.fieldSpec.push(['latency', Latency.prototype.fieldSpec]);
+MsgUartState.prototype.fieldSpec.push(['obs_period', Period.prototype.fieldSpec]);
+
+/**
+ * SBP class for message MSG_UART_STATE_DEPA (0x0018).
+ *
+ * Deprecated
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field uart_a UARTChannel State of UART A
+ * @field uart_b UARTChannel State of UART B
+ * @field uart_ftdi UARTChannel State of UART FTDI (USB logger)
+ * @field latency Latency UART communication latency
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgUartStateDepa = function (sbp) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_UART_STATE_DEPA";
+  this.fields = this.parser.parse(sbp.payload);
+
+  return this;
+};
+MsgUartStateDepa.prototype = Object.create(SBP.prototype);
+MsgUartStateDepa.prototype.constructor = MsgUartStateDepa;
+MsgUartStateDepa.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('uart_a', { type: UARTChannel.prototype.parser })
+  .nest('uart_b', { type: UARTChannel.prototype.parser })
+  .nest('uart_ftdi', { type: UARTChannel.prototype.parser })
+  .nest('latency', { type: Latency.prototype.parser });
+MsgUartStateDepa.prototype.fieldSpec = [];
+MsgUartStateDepa.prototype.fieldSpec.push(['uart_a', UARTChannel.prototype.fieldSpec]);
+MsgUartStateDepa.prototype.fieldSpec.push(['uart_b', UARTChannel.prototype.fieldSpec]);
+MsgUartStateDepa.prototype.fieldSpec.push(['uart_ftdi', UARTChannel.prototype.fieldSpec]);
+MsgUartStateDepa.prototype.fieldSpec.push(['latency', Latency.prototype.fieldSpec]);
 
 /**
  * SBP class for message MSG_IAR_STATE (0x0019).
@@ -391,8 +469,10 @@ module.exports = {
   0x0023: MsgInitBase,
   0x0017: MsgThreadState,
   UARTChannel: UARTChannel,
+  Period: Period,
   Latency: Latency,
-  0x0018: MsgUartState,
+  0x001D: MsgUartState,
+  0x0018: MsgUartStateDepa,
   0x0019: MsgIarState,
   0x001B: MsgMaskSatellite,
 }

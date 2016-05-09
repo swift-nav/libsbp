@@ -120,6 +120,7 @@ data SBPMsg =
    | SBPMsgTrackingStateDepA MsgTrackingStateDepA Msg
    | SBPMsgTweet MsgTweet Msg
    | SBPMsgUartState MsgUartState Msg
+   | SBPMsgUartStateDepa MsgUartStateDepa Msg
    | SBPMsgUserData MsgUserData Msg
    | SBPMsgVelEcef MsgVelEcef Msg
    | SBPMsgVelNed MsgVelNed Msg
@@ -202,6 +203,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgTrackingStateDepA = SBPMsgTrackingStateDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgTweet = SBPMsgTweet (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgUartStateDepa = SBPMsgUartStateDepa (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgUserData = SBPMsgUserData (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgVelNed = SBPMsgVelNed (decode (fromStrict _msgSBPPayload)) m
@@ -276,6 +278,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgTrackingStateDepA _ m) = put m
       encode' (SBPMsgTweet _ m) = put m
       encode' (SBPMsgUartState _ m) = put m
+      encode' (SBPMsgUartStateDepa _ m) = put m
       encode' (SBPMsgUserData _ m) = put m
       encode' (SBPMsgVelEcef _ m) = put m
       encode' (SBPMsgVelNed _ m) = put m
@@ -353,6 +356,7 @@ instance FromJSON SBPMsg where
         | msgType == msgTrackingStateDepA = SBPMsgTrackingStateDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgTweet = SBPMsgTweet <$> parseJSON obj <*> parseJSON obj
         | msgType == msgUartState = SBPMsgUartState <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgUartStateDepa = SBPMsgUartStateDepa <$> parseJSON obj <*> parseJSON obj
         | msgType == msgUserData = SBPMsgUserData <$> parseJSON obj <*> parseJSON obj
         | msgType == msgVelEcef = SBPMsgVelEcef <$> parseJSON obj <*> parseJSON obj
         | msgType == msgVelNed = SBPMsgVelNed <$> parseJSON obj <*> parseJSON obj
@@ -432,6 +436,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgTrackingStateDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgTweet n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgUartState n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgUartStateDepa n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgUserData n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgVelEcef n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgVelNed n m) = toJSON n `mergeValues` toJSON m
@@ -505,6 +510,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgTrackingStateDepA n m) = SBPMsgTrackingStateDepA n <$> f m
   msg f (SBPMsgTweet n m) = SBPMsgTweet n <$> f m
   msg f (SBPMsgUartState n m) = SBPMsgUartState n <$> f m
+  msg f (SBPMsgUartStateDepa n m) = SBPMsgUartStateDepa n <$> f m
   msg f (SBPMsgUserData n m) = SBPMsgUserData n <$> f m
   msg f (SBPMsgVelEcef n m) = SBPMsgVelEcef n <$> f m
   msg f (SBPMsgVelNed n m) = SBPMsgVelNed n <$> f m

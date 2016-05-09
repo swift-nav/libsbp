@@ -34,7 +34,7 @@
  * This is a legacy message for sending and loading a satellite
  * alamanac onto the Piksi's flash memory from the host.
  */
-#define SBP_MSG_ALMANAC        0x0069
+#define SBP_MSG_ALMANAC         0x0069
 
 
 /** Send GPS time from host (host => Piksi)
@@ -42,7 +42,7 @@
  * This message sets up timing functionality using a coarse GPS
  * time estimate sent by the host.
  */
-#define SBP_MSG_SET_TIME       0x0068
+#define SBP_MSG_SET_TIME        0x0068
 
 
 /** Reset the device (host => Piksi)
@@ -50,7 +50,7 @@
  * This message from the host resets the Piksi back into the
  * bootloader.
  */
-#define SBP_MSG_RESET          0x00B2
+#define SBP_MSG_RESET           0x00B2
 
 
 /** Legacy message for CW interference channel (Piksi => host)
@@ -59,7 +59,7 @@
  * CW interference channel on the SwiftNAP. This message will be
  * removed in a future release.
  */
-#define SBP_MSG_CW_RESULTS     0x00C0
+#define SBP_MSG_CW_RESULTS      0x00C0
 
 
 /** Legacy message for CW interference channel (host => Piksi)
@@ -68,7 +68,7 @@
  * the CW interference channel on the SwiftNAP. This message will
  * be removed in a future release.
  */
-#define SBP_MSG_CW_START       0x00C1
+#define SBP_MSG_CW_START        0x00C1
 
 
 /** Reset IAR filters (host => Piksi)
@@ -76,7 +76,7 @@
  * This message resets either the DGNSS Kalman filters or Integer
  * Ambiguity Resolution (IAR) process.
  */
-#define SBP_MSG_RESET_FILTERS  0x0022
+#define SBP_MSG_RESET_FILTERS   0x0022
 typedef struct __attribute__((packed)) {
   u8 filter;    /**< Filter flags */
 } msg_reset_filters_t;
@@ -90,7 +90,7 @@ typedef struct __attribute__((packed)) {
  * there aren't a shared minimum number (4) of satellite
  * observations between the two.
  */
-#define SBP_MSG_INIT_BASE      0x0023
+#define SBP_MSG_INIT_BASE       0x0023
 
 
 /** State of an RTOS thread
@@ -99,7 +99,7 @@ typedef struct __attribute__((packed)) {
  * operating system (RTOS) thread usage statistics for the named
  * thread. The reported percentage values must be normalized.
  */
-#define SBP_MSG_THREAD_STATE   0x0017
+#define SBP_MSG_THREAD_STATE    0x0017
 typedef struct __attribute__((packed)) {
   char name[20];      /**< Thread name (NULL terminated) */
   u16 cpu;           /**< Percentage cpu use for this thread. Values range from 0
@@ -129,6 +129,23 @@ typedef struct __attribute__((packed)) {
 } uart_channel_t;
 
 
+/** base station observation message receipt period
+ *
+ * Statistics on the period of observations received from the base
+ * station. As complete observation sets are received, their time
+ * of reception is compared with the prior set''s time of reception.
+ * This measurement provides a proxy for link quality as incomplete
+ * or missing sets will increase the period.  Long periods
+ * can cause momentary RTK solution outages.
+ */
+typedef struct __attribute__((packed)) {
+  s32 avg;        /**< Average period [ms] */
+  s32 pmin;       /**< Minimum period [ms] */
+  s32 pmax;       /**< Maximum period [ms] */
+  s32 current;    /**< Smoothed estimate of the current period [ms] */
+} period_t;
+
+
 /** Receiver-to-base station latency
  *
  * Statistics on the latency of observations received from the base
@@ -152,14 +169,32 @@ typedef struct __attribute__((packed)) {
  * UARTs A and B are used for telemetry radios, but can also be
  * host access ports for embedded hosts, or other interfaces in
  * future. The reported percentage values must be normalized.
+ * Observations latency and period can be used to assess the 
+ * health of the differential corrections link. Latency provides
+ * the timeliness of received base observations while the 
+ * period indicates their likelihood of transmission.
  */
-#define SBP_MSG_UART_STATE     0x0018
+#define SBP_MSG_UART_STATE      0x001D
+typedef struct __attribute__((packed)) {
+  uart_channel_t uart_a;        /**< State of UART A */
+  uart_channel_t uart_b;        /**< State of UART B */
+  uart_channel_t uart_ftdi;     /**< State of UART FTDI (USB logger) */
+  latency_t latency;       /**< UART communication latency */
+  period_t obs_period;    /**< Observation receipt period */
+} msg_uart_state_t;
+
+
+/** Deprecated
+ *
+* Deprecated
+ */
+#define SBP_MSG_UART_STATE_DEPA 0x0018
 typedef struct __attribute__((packed)) {
   uart_channel_t uart_a;       /**< State of UART A */
   uart_channel_t uart_b;       /**< State of UART B */
   uart_channel_t uart_ftdi;    /**< State of UART FTDI (USB logger) */
   latency_t latency;      /**< UART communication latency */
-} msg_uart_state_t;
+} msg_uart_state_depa_t;
 
 
 /** State of the Integer Ambiguity Resolution (IAR) process
@@ -169,7 +204,7 @@ typedef struct __attribute__((packed)) {
  * ambiguities from double-differenced carrier-phase measurements
  * from satellite observations.
  */
-#define SBP_MSG_IAR_STATE      0x0019
+#define SBP_MSG_IAR_STATE       0x0019
 typedef struct __attribute__((packed)) {
   u32 num_hyps;    /**< Number of integer ambiguity hypotheses remaining */
 } msg_iar_state_t;
@@ -180,7 +215,7 @@ typedef struct __attribute__((packed)) {
  * This message allows setting a mask to prevent a particular satellite
  * from being used in various Piksi subsystems.
  */
-#define SBP_MSG_MASK_SATELLITE 0x001B
+#define SBP_MSG_MASK_SATELLITE  0x001B
 typedef struct __attribute__((packed)) {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   sbp_gnss_signal_t sid;     /**< GNSS signal for which the mask is applied */
