@@ -94,6 +94,62 @@ be normalized.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return UARTChannel.build(d)
     
+class Period(object):
+  """Period.
+  
+  Statistics on the period of observations received from the base
+station. As complete observation sets are received, their time
+of reception is compared with the prior set''s time of reception.
+This measurement provides a proxy for link quality as incomplete
+or missing sets will increase the period.  Long periods
+can cause momentary RTK solution outages.
+
+  
+  Parameters
+  ----------
+  avg : int
+    Average period
+  pmin : int
+    Minimum period
+  pmax : int
+    Maximum period
+  current : int
+    Smoothed estimate of the current period
+
+  """
+  _parser = Embedded(Struct("Period",
+                     SLInt32('avg'),
+                     SLInt32('pmin'),
+                     SLInt32('pmax'),
+                     SLInt32('current'),))
+  __slots__ = [
+               'avg',
+               'pmin',
+               'pmax',
+               'current',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.avg = kwargs.pop('avg')
+      self.pmin = kwargs.pop('pmin')
+      self.pmax = kwargs.pop('pmax')
+      self.current = kwargs.pop('current')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = Period._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return Period.build(d)
+    
 class Latency(object):
   """Latency.
   
@@ -607,9 +663,9 @@ thread. The reported percentage values must be normalized.
     d.update(j)
     return d
     
-SBP_MSG_UART_STATE = 0x0018
+SBP_MSG_UART_STATE = 0x001D
 class MsgUartState(SBP):
-  """SBP class for message MSG_UART_STATE (0x0018).
+  """SBP class for message MSG_UART_STATE (0x001D).
 
   You can have MSG_UART_STATE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -621,6 +677,10 @@ channels providing SBP I/O. On the default Piksi configuration,
 UARTs A and B are used for telemetry radios, but can also be
 host access ports for embedded hosts, or other interfaces in
 future. The reported percentage values must be normalized.
+Observations latency and period can be used to assess the 
+health of the differential corrections link. Latency provides
+the timeliness of received base observations while the 
+period indicates their likelihood of transmission.
 
 
   Parameters
@@ -635,6 +695,8 @@ future. The reported percentage values must be normalized.
     State of UART FTDI (USB logger)
   latency : Latency
     UART communication latency
+  obs_period : Period
+    Observation receipt period
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -643,12 +705,14 @@ future. The reported percentage values must be normalized.
                    Struct('uart_a', UARTChannel._parser),
                    Struct('uart_b', UARTChannel._parser),
                    Struct('uart_ftdi', UARTChannel._parser),
-                   Struct('latency', Latency._parser),)
+                   Struct('latency', Latency._parser),
+                   Struct('obs_period', Period._parser),)
   __slots__ = [
                'uart_a',
                'uart_b',
                'uart_ftdi',
                'latency',
+               'obs_period',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -665,6 +729,7 @@ future. The reported percentage values must be normalized.
       self.uart_b = kwargs.pop('uart_b')
       self.uart_ftdi = kwargs.pop('uart_ftdi')
       self.latency = kwargs.pop('latency')
+      self.obs_period = kwargs.pop('obs_period')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -703,6 +768,101 @@ future. The reported percentage values must be normalized.
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgUartState, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_UART_STATE_DEPA = 0x0018
+class MsgUartStateDepa(SBP):
+  """SBP class for message MSG_UART_STATE_DEPA (0x0018).
+
+  You can have MSG_UART_STATE_DEPA inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Deprecated
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  uart_a : UARTChannel
+    State of UART A
+  uart_b : UARTChannel
+    State of UART B
+  uart_ftdi : UARTChannel
+    State of UART FTDI (USB logger)
+  latency : Latency
+    UART communication latency
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgUartStateDepa",
+                   Struct('uart_a', UARTChannel._parser),
+                   Struct('uart_b', UARTChannel._parser),
+                   Struct('uart_ftdi', UARTChannel._parser),
+                   Struct('latency', Latency._parser),)
+  __slots__ = [
+               'uart_a',
+               'uart_b',
+               'uart_ftdi',
+               'latency',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgUartStateDepa,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgUartStateDepa, self).__init__()
+      self.msg_type = SBP_MSG_UART_STATE_DEPA
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.uart_a = kwargs.pop('uart_a')
+      self.uart_b = kwargs.pop('uart_b')
+      self.uart_ftdi = kwargs.pop('uart_ftdi')
+      self.latency = kwargs.pop('latency')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgUartStateDepa.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgUartStateDepa(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgUartStateDepa._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgUartStateDepa._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgUartStateDepa, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -888,7 +1048,8 @@ msg_classes = {
   0x0022: MsgResetFilters,
   0x0023: MsgInitBase,
   0x0017: MsgThreadState,
-  0x0018: MsgUartState,
+  0x001D: MsgUartState,
+  0x0018: MsgUartStateDepa,
   0x0019: MsgIarState,
   0x001B: MsgMaskSatellite,
 }

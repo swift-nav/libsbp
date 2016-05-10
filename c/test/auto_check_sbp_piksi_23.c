@@ -380,7 +380,7 @@ START_TEST( test_auto_check_sbp_piksi_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_uart_state_t* msg = ( msg_uart_state_t *)((void *)last_msg + 6);
+    msg_uart_state_depa_t* msg = ( msg_uart_state_depa_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->latency.current == -1, "incorrect value for latency.current, expected -1, is %d", msg->latency.current);
@@ -442,7 +442,7 @@ START_TEST( test_auto_check_sbp_piksi_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_uart_state_t* msg = ( msg_uart_state_t *)((void *)last_msg + 6);
+    msg_uart_state_depa_t* msg = ( msg_uart_state_depa_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->latency.current == -1, "incorrect value for latency.current, expected -1, is %d", msg->latency.current);
@@ -504,7 +504,7 @@ START_TEST( test_auto_check_sbp_piksi_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_uart_state_t* msg = ( msg_uart_state_t *)((void *)last_msg + 6);
+    msg_uart_state_depa_t* msg = ( msg_uart_state_depa_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->latency.current == -1, "incorrect value for latency.current, expected -1, is %d", msg->latency.current);
@@ -566,7 +566,7 @@ START_TEST( test_auto_check_sbp_piksi_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_uart_state_t* msg = ( msg_uart_state_t *)((void *)last_msg + 6);
+    msg_uart_state_depa_t* msg = ( msg_uart_state_depa_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->latency.current == -1, "incorrect value for latency.current, expected -1, is %d", msg->latency.current);
@@ -628,7 +628,7 @@ START_TEST( test_auto_check_sbp_piksi_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_uart_state_t* msg = ( msg_uart_state_t *)((void *)last_msg + 6);
+    msg_uart_state_depa_t* msg = ( msg_uart_state_depa_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->latency.current == -1, "incorrect value for latency.current, expected -1, is %d", msg->latency.current);
@@ -690,7 +690,7 @@ START_TEST( test_auto_check_sbp_piksi_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_uart_state_t* msg = ( msg_uart_state_t *)((void *)last_msg + 6);
+    msg_uart_state_depa_t* msg = ( msg_uart_state_depa_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->latency.current == -1, "incorrect value for latency.current, expected -1, is %d", msg->latency.current);

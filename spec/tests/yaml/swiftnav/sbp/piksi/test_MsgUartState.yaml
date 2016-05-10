@@ -1,6 +1,6 @@
 ---
-description: Unit tests for swiftnav.sbp.piksi MsgUartState v0.51.
-generated_on: 2015-11-09 11:34:21.429274
+description: Unit tests for swiftnav.sbp.piksi MsgUartState v0.53.
+generated_on: 2015-01-15 16:50:00.0
 package: sbp.piksi
 tests:
 
@@ -33,7 +33,7 @@ tests:
         tx_buffer_level: 81
         tx_throughput: 5.063380241394043
     module: sbp.piksi
-    name: MsgUartState
+    name: MsgUartStateDepa
   msg_type: '0x18'
   raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
     55286, "msg_type": 24, "crc": 31815, "length": 58, "uart_b": {"rx_buffer_level":
@@ -81,7 +81,7 @@ tests:
         tx_buffer_level: 85
         tx_throughput: 6.7901411056518555
     module: sbp.piksi
-    name: MsgUartState
+    name: MsgUartStateDepa
   msg_type: '0x18'
   raw_json: '{"latency": {"current": -1, "lmax": 0, "avg": -1, "lmin": 0}, "sender":
     55286, "msg_type": 24, "crc": 63641, "length": 58, "uart_b": {"rx_buffer_level":
