@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/observation/test_MsgObs.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/observation/test_MsgObs_dep_b.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -122,7 +122,7 @@ START_TEST( test_auto_check_sbp_observation_10 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_obs_t* msg = ( msg_obs_t *)((void *)last_msg + 6);
+    msg_obs_dep_b_t* msg = ( msg_obs_dep_b_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->header.n_obs == 32, "incorrect value for header.n_obs, expected 32, is %d", msg->header.n_obs);
@@ -213,7 +213,7 @@ START_TEST( test_auto_check_sbp_observation_10 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_obs_t* msg = ( msg_obs_t *)((void *)last_msg + 6);
+    msg_obs_dep_b_t* msg = ( msg_obs_dep_b_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->header.n_obs == 33, "incorrect value for header.n_obs, expected 33, is %d", msg->header.n_obs);
@@ -280,7 +280,7 @@ START_TEST( test_auto_check_sbp_observation_10 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_obs_t* msg = ( msg_obs_t *)((void *)last_msg + 6);
+    msg_obs_dep_b_t* msg = ( msg_obs_dep_b_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->header.n_obs == 32, "incorrect value for header.n_obs, expected 32, is %d", msg->header.n_obs);
@@ -371,7 +371,7 @@ START_TEST( test_auto_check_sbp_observation_10 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_obs_t* msg = ( msg_obs_t *)((void *)last_msg + 6);
+    msg_obs_dep_b_t* msg = ( msg_obs_dep_b_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->header.n_obs == 33, "incorrect value for header.n_obs, expected 33, is %d", msg->header.n_obs);
@@ -438,7 +438,7 @@ START_TEST( test_auto_check_sbp_observation_10 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_obs_t* msg = ( msg_obs_t *)((void *)last_msg + 6);
+    msg_obs_dep_b_t* msg = ( msg_obs_dep_b_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->header.n_obs == 32, "incorrect value for header.n_obs, expected 32, is %d", msg->header.n_obs);

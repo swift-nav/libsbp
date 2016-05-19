@@ -22,32 +22,20 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class PackedObsContent extends SBPStruct {
+public class PackedObsContentDepB extends SBPStruct {
     
     /** Pseudorange observation */
     public long P;
     
-    /** Phase Range minus pseudorange. Phaserange can be reconstructed
-by adding pseudorange to this value. This follows the convention
-from DF0012 or the DF042 field from the RTCM 10403.2 Ammendment 2
-specification.  Importantly, this assumes the phaserange has the 
-same sign as the pseudorange.
- */
-    public int L;
+    /** Carrier phase observation with opposite sign from typical convention. */
+    public CarrierPhaseDepA L;
     
     /** Carrier-to-Noise density */
     public int cn0;
     
-    /** Lock indicator. This value gives an indication of the time
-for which a satellite has maintained continuous phase lock.
-Whenever a satellite signal has lost and regained lock, this 
-value is reset to zero. It is encoded according to DF402 from
-the RTCM 10403.2 Amendment 2 specification.  Given a lock time (t)
-in milliseconds, the field value (n) is given by floor(log_2(t) - 4) 
-when t is greater than 32 ms or 0 if (t) is less than 32 ms. 
-Conversely, given the field, n,  the lower range of possible  lock times
-is given by 2 ^ (n + 4) ms and the upper range is given by 2 ^ (n + 5) ms
-provided n is not 0.  If n is 0 the lower range is given to be 0 ms.
+    /** Lock indicator. This value changes whenever a satellite
+signal has lost and regained lock, indicating that the
+carrier phase ambiguity may have changed.
  */
     public int lock;
     
@@ -55,15 +43,15 @@ provided n is not 0.  If n is 0 the lower range is given to be 0 ms.
     public GnssSignal sid;
     
 
-    public PackedObsContent () {}
+    public PackedObsContentDepB () {}
 
     @Override
-    public PackedObsContent parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public PackedObsContentDepB parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         P = parser.getU32();
-        L = parser.getS32();
+        L = new CarrierPhaseDepA().parse(parser);
         cn0 = parser.getU8();
-        lock = parser.getU8();
+        lock = parser.getU16();
         sid = new GnssSignal().parse(parser);
         return this;
     }
@@ -72,9 +60,9 @@ provided n is not 0.  If n is 0 the lower range is given to be 0 ms.
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
         builder.putU32(P);
-        builder.putS32(L);
+        L.build(builder);
         builder.putU8(cn0);
-        builder.putU8(lock);
+        builder.putU16(lock);
         sid.build(builder);
     }
 
@@ -82,7 +70,7 @@ provided n is not 0.  If n is 0 the lower range is given to be 0 ms.
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
         obj.put("P", P);
-        obj.put("L", L);
+        obj.put("L", L.toJSON());
         obj.put("cn0", cn0);
         obj.put("lock", lock);
         obj.put("sid", sid.toJSON());
