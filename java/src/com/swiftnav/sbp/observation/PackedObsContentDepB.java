@@ -22,12 +22,12 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class PackedObsContentDepA extends SBPStruct {
+public class PackedObsContentDepB extends SBPStruct {
     
     /** Pseudorange observation */
     public long P;
     
-    /** Carrier phase observation with opposite sign from typical convention */
+    /** Carrier phase observation with opposite sign from typical convention. */
     public CarrierPhaseDepA L;
     
     /** Carrier-to-Noise density */
@@ -39,20 +39,20 @@ carrier phase ambiguity may have changed.
  */
     public int lock;
     
-    /** PRN-1 identifier of the satellite signal */
-    public int prn;
+    /** GNSS signal identifier */
+    public GnssSignal sid;
     
 
-    public PackedObsContentDepA () {}
+    public PackedObsContentDepB () {}
 
     @Override
-    public PackedObsContentDepA parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public PackedObsContentDepB parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         P = parser.getU32();
         L = new CarrierPhaseDepA().parse(parser);
         cn0 = parser.getU8();
         lock = parser.getU16();
-        prn = parser.getU8();
+        sid = new GnssSignal().parse(parser);
         return this;
     }
 
@@ -63,7 +63,7 @@ carrier phase ambiguity may have changed.
         L.build(builder);
         builder.putU8(cn0);
         builder.putU16(lock);
-        builder.putU8(prn);
+        sid.build(builder);
     }
 
     @Override
@@ -73,7 +73,7 @@ carrier phase ambiguity may have changed.
         obj.put("L", L.toJSON());
         obj.put("cn0", cn0);
         obj.put("lock", lock);
-        obj.put("prn", prn);
+        obj.put("sid", sid.toJSON());
         return obj;
     }
 }

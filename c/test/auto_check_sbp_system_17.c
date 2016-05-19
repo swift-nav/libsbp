@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/test_system.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgHeartbeat.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -74,7 +74,7 @@ static void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   /*printy_callback(sender_id, len, msg);*/
 }
 
-START_TEST( test_auto_check_sbp_system_24 )
+START_TEST( test_auto_check_sbp_system_17 )
 {
   static sbp_msg_callbacks_node_t n;
   //static sbp_msg_callbacks_node_t n2;
@@ -97,53 +97,12 @@ START_TEST( test_auto_check_sbp_system_24 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xff00, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-
-    u8 test_data[] = {85,0,255,195,4,4,0,0,0,0,127,181, };
-
-    dummy_reset();
-    sbp_send_message(&sbp_state, 0xff00, 1219, sizeof(test_data), test_data, &dummy_write);
-
-    while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
-    }
-
-    fail_unless(n_callbacks_logged == 1,
-        "one callback should have been logged");
-    fail_unless(last_sender_id == 1219,
-        "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
-        "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
-          == 0,
-        "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "context pointer incorrectly passed");
-
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_startup_t* msg = ( msg_startup_t *)((void *)last_msg + 6);
-    // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->reserved == 0, "incorrect value for reserved, expected 0, is %d", msg->reserved);
-  }
-  // Test successful parsing of a message
-  {
-    // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
-    //  allocated multiple times across different tests.
-    sbp_state_init(&sbp_state);
-
-    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
-
-    logging_reset();
-
     sbp_register_callback(&sbp_state, 0xffff, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,255,255,195,4,4,0,0,0,0,66,57, };
+    u8 test_data[] = {85,255,255,246,215,4,0,50,0,0,249,216, };
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xffff, 1219, sizeof(test_data), test_data, &dummy_write);
+    sbp_send_message(&sbp_state, 0xffff, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
       fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -152,7 +111,7 @@ START_TEST( test_auto_check_sbp_system_24 )
 
     fail_unless(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 1219,
+    fail_unless(last_sender_id == 55286,
         "sender_id decoded incorrectly");
     fail_unless(last_len == sizeof(test_data),
         "len decoded incorrectly");
@@ -166,16 +125,16 @@ START_TEST( test_auto_check_sbp_system_24 )
     msg_heartbeat_t* msg = ( msg_heartbeat_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->flags == 12800, "incorrect value for flags, expected 12800, is %d", msg->flags);
   }
 }
 END_TEST
 
-Suite* auto_check_sbp_system_24_suite(void)
+Suite* auto_check_sbp_system_17_suite(void)
 {
-  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_system_24");
-  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_system_24");
-  tcase_add_test(tc_acq, test_auto_check_sbp_system_24);
+  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_system_17");
+  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_system_17");
+  tcase_add_test(tc_acq, test_auto_check_sbp_system_17);
   suite_add_tcase(s, tc_acq);
   return s;
 }

@@ -22,9 +22,9 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_EPHEMERIS (0x0080).
+/** SBP class for message MSG_EPHEMERIS_DEP_C (0x0047).
  *
- * You can have MSG_EPHEMERIS inherent its fields directly from
+ * You can have MSG_EPHEMERIS_DEP_C inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
@@ -34,8 +34,8 @@ import org.json.JSONArray;
  * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
  * 20-III) for more details. */
 
-public class MsgEphemeris extends SBPMessage {
-    public static final int TYPE = 0x0080;
+public class MsgEphemerisDepC extends SBPMessage {
+    public static final int TYPE = 0x0047;
 
     
     /** Group delay differential between L1 and L2 */
@@ -126,9 +126,9 @@ public class MsgEphemeris extends SBPMessage {
     public long reserved;
     
 
-    public MsgEphemeris (int sender) { super(sender, TYPE); }
-    public MsgEphemeris () { super(TYPE); }
-    public MsgEphemeris (SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisDepC (int sender) { super(sender, TYPE); }
+    public MsgEphemerisDepC () { super(TYPE); }
+    public MsgEphemerisDepC (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
