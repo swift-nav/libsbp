@@ -33,22 +33,6 @@ definitions:
             units: week
             desc: GPS week number
 
- - CarrierPhase:
-    short_desc: GPS carrier phase measurement.
-    desc: |
-      Carrier phase measurement in cycles represented as a 40-bit
-      fixed point number with Q32.8 layout, i.e. 32-bits of whole
-      cycles and 8-bits of fractional cycles.
-    fields:
-        - i:
-            type: s32
-            units: cycles
-            desc: Carrier phase whole cycles
-        - f:
-            type: u8
-            units: cycles / 256
-            desc: Carrier phase fractional part
-
  - ObservationHeader:
     short_desc: Header for observation message.
     desc: Header of a GPS observation message.
@@ -67,38 +51,53 @@ definitions:
     short_desc: GPS observations for a particular satellite signal.
     desc: |
       Pseudorange and carrier phase observation for a satellite being
-      tracked.
+      tracked. The observations should be interoperable with 3rd party 
+      receivers and conform with typical RTCMv3 GNSS observations. 
     fields:
         - P:
             type: u32
-            units: cm
+            units: 2 cm
             desc: Pseudorange observation
         - L:
-            type: CarrierPhase
-            desc: Carrier phase observation
+            type: s32
+            units: 0.5 mm
+            desc: |
+                  Phase Range minus pseudorange. Phaserange can be reconstructed
+                  by adding pseudorange to this value. This follows the convention
+                  from DF0012 or the DF042 field from the RTCM 10403.2 Ammendment 2
+                  specification.  Importantly, this assumes the phaserange has the 
+                  same sign as the pseudorange.
         - cn0:
             type: u8
             units: dB Hz * 4
             desc: Carrier-to-Noise density
         - lock:
-            type: u16
+            type: u8
             desc: |
-              Lock indicator. This value changes whenever a satellite
-              signal has lost and regained lock, indicating that the
-              carrier phase ambiguity may have changed.
+              Lock indicator. This value gives an indication of the time
+              for which a satellite has maintained continuous phase lock.
+              Whenever a satellite signal has lost and regained lock, this 
+              value is reset to zero. It is encoded according to DF402 from
+              the RTCM 10403.2 Amendment 2 specification.  Given a lock time (t)
+              in milliseconds, the field value (n) is given by floor(log_2(t) - 4) 
+              when t is greater than 32 ms or 0 if (t) is less than 32 ms. 
+              Conversely, given the field, n,  the lower range of possible  lock times
+              is given by 2 ^ (n + 4) ms and the upper range is given by 2 ^ (n + 5) ms
+              provided n is not 0.  If n is 0 the lower range is given to be 0 ms.
         - sid:
             type: GnssSignal
             desc: GNSS signal identifier
 
+  
  - MSG_OBS:
-    id: 0x0043
+    id: 0x0049
     short_desc: GPS satellite observations
     desc: |
       The GPS observations message reports all the raw pseudorange and
       carrier phase observations for the satellites being tracked by
-      the device. Carrier phase observation here is represented as a
-      40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-      whole cycles and 8-bits of fractional cycles).
+      the device. Carrier phase observation here is phaserange - pseudorange.
+      The observations should be interoperable with 3rd party receivers and conform 
+      with typical RTCMv3 GNSS observations. 
     fields:
         - header:
             type: ObservationHeader
@@ -110,6 +109,7 @@ definitions:
             desc: |
               Pseudorange and carrier phase observation for a
               satellite being tracked.
+
 
  - MSG_BASE_POS_LLH:
     id: 0x0044
@@ -159,7 +159,7 @@ definitions:
             desc: ECEF Z coordinate
 
  - MSG_EPHEMERIS:
-    id: 0x0047
+    id: 0x0080
     short_desc: Satellite broadcast ephemeris
     desc: |
       The ephemeris message returns a set of satellite orbit
@@ -499,6 +499,24 @@ definitions:
       - iode:
           type: u8
           desc: Issue of ephemeris data
+ 
+ - CarrierPhaseDepA:
+    short_desc: GPS carrier phase measurement.
+    desc: |
+      Carrier phase measurement in cycles represented as a 40-bit
+      fixed point number with Q32.8 layout, i.e. 32-bits of whole
+      cycles and 8-bits of fractional cycles. This has the opposite
+      sign convention than a typical GPS receiver and the phase has
+      the opposite sign as the pseudorange.
+    fields:
+        - i:
+            type: s32
+            units: cycles
+            desc: Carrier phase whole cycles
+        - f:
+            type: u8
+            units: cycles / 256
+            desc: Carrier phase fractional part
 
  - PackedObsContentDepA:
     short_desc: Deprecated
@@ -509,8 +527,8 @@ definitions:
             units: cm
             desc: Pseudorange observation
         - L:
-            type: CarrierPhase
-            desc: Carrier phase observation
+            type: CarrierPhaseDepA
+            desc: Carrier phase observation with opposite sign from typical convention
         - cn0:
             type: u8
             units: dB Hz * 4
@@ -524,6 +542,33 @@ definitions:
         - prn:
             type: u8
             desc: PRN-1 identifier of the satellite signal
+
+ - PackedObsContentDepB:
+    short_desc: GPS observations for a particular satellite signal.
+    desc: |
+      Pseudorange and carrier phase observation for a satellite being
+      tracked.  Pseudoranges are referenced to a nominal pseudorange.
+    fields:
+        - P:
+            type: u32
+            units: cm
+            desc: Pseudorange observation
+        - L:
+            type: CarrierPhaseDepA
+            desc: Carrier phase observation with opposite sign from typical convention.
+        - cn0:
+            type: u8
+            units: dB Hz * 4
+            desc: Carrier-to-Noise density
+        - lock:
+            type: u16
+            desc: |
+              Lock indicator. This value changes whenever a satellite
+              signal has lost and regained lock, indicating that the
+              carrier phase ambiguity may have changed.
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier
 
  - MSG_OBS_DEP_A:
     id: 0x0045
@@ -543,4 +588,150 @@ definitions:
             desc: |
               Pseudorange and carrier phase observation for a
               satellite being tracked.
+ 
+ - MSG_OBS_DEP_B:
+    id: 0x0043
+    short_desc: Deprecated
+    desc: |
+      This observation message has been deprecated in favor of 
+      observations that are more interoperable. This message
+      should be used for observations referenced to 
+      a nominal pseudorange which are not interoperable with
+      most 3rd party GNSS receievers or typical RTCMv3 
+      observations.
+    public: False
+    replaced_by:
+      - MSG_OBS
+    fields:
+        - header:
+            type: ObservationHeader
+            desc: Header of a GPS observation message
+        - obs:
+            type: array
+            fill: PackedObsContentDepB
+            map_by: sid
+            desc: |
+              Pseudorange and carrier phase observation for a
+              satellite being tracked.
 
+ - MSG_EPHEMERIS_DEP_C:
+    id: 0x0047
+    short_desc: Ephemeris (Deprecated)
+    desc: |
+      This ephemeris message has been deprecated to allow the ephemerides
+      to be masked separately from GNSS observations.
+      The ephemeris message returns a set of satellite orbits
+      parameters that is used to calculate GPS satellite position,
+      velocity, and clock offset. Please see the Navstar GPS
+      Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+      20-III) for more details.
+    fields:
+      - tgd:
+          type: double
+          units: s
+          desc: Group delay differential between L1 and L2
+      - c_rs:
+          type: double
+          units: m
+          desc: Amplitude of the sine harmonic correction term to the orbit radius
+      - c_rc:
+          type: double
+          units: m
+          desc: Amplitude of the cosine harmonic correction term to the orbit radius
+      - c_uc:
+          type: double
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the argument of latitude
+      - c_us:
+          type: double
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the argument of latitude
+      - c_ic:
+          type: double
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the angle of inclination
+      - c_is:
+          type: double
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the angle of inclination
+      - dn:
+          type: double
+          units: rad/s
+          desc: Mean motion difference
+      - m0:
+          type: double
+          units: radians
+          desc: Mean anomaly at reference time
+      - ecc:
+          type: double
+          desc: Eccentricity of satellite orbit
+      - sqrta:
+          type: double
+          units: m^(1/2)
+          desc: Square root of the semi-major axis of orbit
+      - omega0:
+          type: double
+          units: rad
+          desc: Longitude of ascending node of orbit plane at weekly epoch
+      - omegadot:
+          type: double
+          units: rad/s
+          desc: Rate of right ascension
+      - w:
+          type: double
+          units: rad
+          desc: Argument of perigee
+      - inc:
+          type: double
+          units: rad
+          desc: Inclination
+      - inc_dot:
+          type: double
+          units: rad/s
+          desc: Inclination first derivative
+      - af0:
+          type: double
+          units: s
+          desc: Polynomial clock correction coefficient (clock bias)
+      - af1:
+          type: double
+          units: s/s
+          desc: Polynomial clock correction coefficient (clock drift)
+      - af2:
+          type: double
+          units: s/s^2
+          desc: Polynomial clock correction coefficient (rate of clock drift)
+      - toe_tow:
+          type: double
+          units: s
+          desc: Time of week
+      - toe_wn:
+          type: u16
+          units: week
+          desc: Week number
+      - toc_tow:
+          type: double
+          units: s
+          desc: Clock reference time of week
+      - toc_wn:
+          type: u16
+          units: week
+          desc: Clock reference week number
+      - valid:
+          type: u8
+          desc: Is valid?
+      - healthy:
+          type: u8
+          desc: Satellite is healthy?
+      - sid:
+          type: GnssSignal
+          desc: GNSS signal identifier
+      - iode:
+          type: u8
+          desc: Issue of ephemeris data
+      - iodc:
+          type: u16
+          desc: Issue of clock data
+      - reserved:
+          type: u32
+          desc: Reserved field

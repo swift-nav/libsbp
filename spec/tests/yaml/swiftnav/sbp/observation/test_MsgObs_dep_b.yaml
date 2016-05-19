@@ -73,7 +73,7 @@ tests:
           reserved: 0
           sat: 218
     module: sbp.observation
-    name: MsgObs
+    name: MsgObsDepB
   msg_type: '0x43'
   raw_json: '{"sender": 55286, "msg_type": 67, "header": {"n_obs": 32, "t": {"wn":
     1787, "tow": 2567800}}, "obs": [{"lock": 0, "sid": {"code": 0, "reserved": 0,
@@ -135,7 +135,7 @@ tests:
           reserved: 0
           sat: 225
     module: sbp.observation
-    name: MsgObs
+    name: MsgObsDepB
   msg_type: '0x43'
   raw_json: '{"sender": 55286, "msg_type": 67, "header": {"n_obs": 33, "t": {"wn":
     1787, "tow": 2567800}}, "obs": [{"lock": 0, "sid": {"code": 0, "reserved": 0,
@@ -222,7 +222,7 @@ tests:
           reserved: 0
           sat: 218
     module: sbp.observation
-    name: MsgObs
+    name: MsgObsDepB
   msg_type: '0x43'
   raw_json: '{"sender": 55286, "msg_type": 67, "header": {"n_obs": 32, "t": {"wn":
     1787, "tow": 2568000}}, "obs": [{"lock": 0, "sid": {"code": 0, "reserved": 0,
@@ -284,7 +284,7 @@ tests:
           reserved: 0
           sat: 225
     module: sbp.observation
-    name: MsgObs
+    name: MsgObsDepB
   msg_type: '0x43'
   raw_json: '{"sender": 55286, "msg_type": 67, "header": {"n_obs": 33, "t": {"wn":
     1787, "tow": 2568000}}, "obs": [{"lock": 0, "sid": {"code": 0, "reserved": 0,
@@ -371,7 +371,7 @@ tests:
           reserved: 0
           sat: 218
     module: sbp.observation
-    name: MsgObs
+    name: MsgObsDepB
   msg_type: '0x43'
   raw_json: '{"sender": 55286, "msg_type": 67, "header": {"n_obs": 32, "t": {"wn":
     1787, "tow": 2568200}}, "obs": [{"lock": 0, "sid": {"code": 0, "reserved": 0,
