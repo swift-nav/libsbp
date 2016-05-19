@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_EPHEMERIS (0x0047).
+/** SBP class for message MSG_EPHEMERIS (0x0080).
  *
  * You can have MSG_EPHEMERIS inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -35,7 +35,7 @@ import org.json.JSONArray;
  * 20-III) for more details. */
 
 public class MsgEphemeris extends SBPMessage {
-    public static final int TYPE = 0x0047;
+    public static final int TYPE = 0x0080;
 
     
     /** Group delay differential between L1 and L2 */

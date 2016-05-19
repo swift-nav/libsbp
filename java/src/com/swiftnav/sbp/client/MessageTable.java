@@ -71,6 +71,8 @@ import com.swiftnav.sbp.observation.MsgEphemeris;
 import com.swiftnav.sbp.observation.MsgEphemerisDepA;
 import com.swiftnav.sbp.observation.MsgEphemerisDepB;
 import com.swiftnav.sbp.observation.MsgObsDepA;
+import com.swiftnav.sbp.observation.MsgObsDepB;
+import com.swiftnav.sbp.observation.MsgEphemerisDepC;
 import com.swiftnav.sbp.navigation.MsgGPSTime;
 import com.swiftnav.sbp.navigation.MsgDops;
 import com.swiftnav.sbp.navigation.MsgPosECEF;
@@ -201,6 +203,10 @@ final class MessageTable {
                 return new MsgEphemerisDepB(msg);
             case MsgObsDepA.TYPE:
                 return new MsgObsDepA(msg);
+            case MsgObsDepB.TYPE:
+                return new MsgObsDepB(msg);
+            case MsgEphemerisDepC.TYPE:
+                return new MsgEphemerisDepC(msg);
             case MsgGPSTime.TYPE:
                 return new MsgGPSTime(msg);
             case MsgDops.TYPE:

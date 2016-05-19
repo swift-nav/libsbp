@@ -27,8 +27,8 @@ public class PackedObsContentDepA extends SBPStruct {
     /** Pseudorange observation */
     public long P;
     
-    /** Carrier phase observation */
-    public CarrierPhase L;
+    /** Carrier phase observation with opposite sign from typical convention */
+    public CarrierPhaseDepA L;
     
     /** Carrier-to-Noise density */
     public int cn0;
@@ -49,7 +49,7 @@ carrier phase ambiguity may have changed.
     public PackedObsContentDepA parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         P = parser.getU32();
-        L = new CarrierPhase().parse(parser);
+        L = new CarrierPhaseDepA().parse(parser);
         cn0 = parser.getU8();
         lock = parser.getU16();
         prn = parser.getU8();
