@@ -22,20 +22,21 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_OBS (0x0049).
+/** SBP class for message MSG_OBS_DEP_B (0x0043).
  *
- * You can have MSG_OBS inherent its fields directly from
+ * You can have MSG_OBS_DEP_B inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The GPS observations message reports all the raw pseudorange and
- * carrier phase observations for the satellites being tracked by
- * the device. Carrier phase observation here is phaserange - pseudorange.
- * The observations should be interoperable with 3rd party receivers and conform 
- * with typical RTCMv3 GNSS observations.  */
+ * This observation message has been deprecated in favor of 
+ * observations that are more interoperable. This message
+ * should be used for observations referenced to 
+ * a nominal pseudorange which are not interoperable with
+ * most 3rd party GNSS receievers or typical RTCMv3 
+ * observations. */
 
-public class MsgObs extends SBPMessage {
-    public static final int TYPE = 0x0049;
+public class MsgObsDepB extends SBPMessage {
+    public static final int TYPE = 0x0043;
 
     
     /** Header of a GPS observation message */
@@ -44,12 +45,12 @@ public class MsgObs extends SBPMessage {
     /** Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
-    public PackedObsContent[] obs;
+    public PackedObsContentDepB[] obs;
     
 
-    public MsgObs (int sender) { super(sender, TYPE); }
-    public MsgObs () { super(TYPE); }
-    public MsgObs (SBPMessage msg) throws SBPBinaryException {
+    public MsgObsDepB (int sender) { super(sender, TYPE); }
+    public MsgObsDepB () { super(TYPE); }
+    public MsgObsDepB (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -58,7 +59,7 @@ satellite being tracked.
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         header = new ObservationHeader().parse(parser);
-        obs = parser.getArray(PackedObsContent.class);
+        obs = parser.getArray(PackedObsContentDepB.class);
     }
 
     @Override
