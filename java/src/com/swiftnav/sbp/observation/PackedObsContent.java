@@ -27,7 +27,7 @@ public class PackedObsContent extends SBPStruct {
     /** Pseudorange observation */
     public long P;
     
-    /** Carrier phase observation */
+    /** Carrier phase observation with typical sign convention. */
     public CarrierPhase L;
     
     /** Carrier-to-Noise density */

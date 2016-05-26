@@ -22,58 +22,37 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class PackedObsContentDepA extends SBPStruct {
+public class CarrierPhaseDepA extends SBPStruct {
     
-    /** Pseudorange observation */
-    public long P;
+    /** Carrier phase whole cycles */
+    public int i;
     
-    /** Carrier phase observation with opposite sign from typical convention */
-    public CarrierPhaseDepA L;
-    
-    /** Carrier-to-Noise density */
-    public int cn0;
-    
-    /** Lock indicator. This value changes whenever a satellite
-signal has lost and regained lock, indicating that the
-carrier phase ambiguity may have changed.
- */
-    public int lock;
-    
-    /** PRN-1 identifier of the satellite signal */
-    public int prn;
+    /** Carrier phase fractional part */
+    public int f;
     
 
-    public PackedObsContentDepA () {}
+    public CarrierPhaseDepA () {}
 
     @Override
-    public PackedObsContentDepA parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public CarrierPhaseDepA parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        P = parser.getU32();
-        L = new CarrierPhaseDepA().parse(parser);
-        cn0 = parser.getU8();
-        lock = parser.getU16();
-        prn = parser.getU8();
+        i = parser.getS32();
+        f = parser.getU8();
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        builder.putU32(P);
-        L.build(builder);
-        builder.putU8(cn0);
-        builder.putU16(lock);
-        builder.putU8(prn);
+        builder.putS32(i);
+        builder.putU8(f);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("P", P);
-        obj.put("L", L.toJSON());
-        obj.put("cn0", cn0);
-        obj.put("lock", lock);
-        obj.put("prn", prn);
+        obj.put("i", i);
+        obj.put("f", f);
         return obj;
     }
 }

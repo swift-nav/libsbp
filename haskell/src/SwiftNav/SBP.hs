@@ -72,6 +72,7 @@ data SBPMsg =
    | SBPMsgEphemeris MsgEphemeris Msg
    | SBPMsgEphemerisDepA MsgEphemerisDepA Msg
    | SBPMsgEphemerisDepB MsgEphemerisDepB Msg
+   | SBPMsgEphemerisDepC MsgEphemerisDepC Msg
    | SBPMsgExtEvent MsgExtEvent Msg
    | SBPMsgFileioReadDirReq MsgFileioReadDirReq Msg
    | SBPMsgFileioReadDirResp MsgFileioReadDirResp Msg
@@ -96,6 +97,7 @@ data SBPMsg =
    | SBPMsgNapDeviceDnaResp MsgNapDeviceDnaResp Msg
    | SBPMsgObs MsgObs Msg
    | SBPMsgObsDepA MsgObsDepA Msg
+   | SBPMsgObsDepB MsgObsDepB Msg
    | SBPMsgPosEcef MsgPosEcef Msg
    | SBPMsgPosLlh MsgPosLlh Msg
    | SBPMsgPrintDep MsgPrintDep Msg
@@ -155,6 +157,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgEphemeris = SBPMsgEphemeris (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgEphemerisDepC = SBPMsgEphemerisDepC (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgExtEvent = SBPMsgExtEvent (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgFileioReadDirReq = SBPMsgFileioReadDirReq (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgFileioReadDirResp = SBPMsgFileioReadDirResp (decode (fromStrict _msgSBPPayload)) m
@@ -179,6 +182,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgObs = SBPMsgObs (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgObsDepA = SBPMsgObsDepA (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgObsDepB = SBPMsgObsDepB (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgPosEcef = SBPMsgPosEcef (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgPosLlh = SBPMsgPosLlh (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict _msgSBPPayload)) m
@@ -230,6 +234,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgEphemeris _ m) = put m
       encode' (SBPMsgEphemerisDepA _ m) = put m
       encode' (SBPMsgEphemerisDepB _ m) = put m
+      encode' (SBPMsgEphemerisDepC _ m) = put m
       encode' (SBPMsgExtEvent _ m) = put m
       encode' (SBPMsgFileioReadDirReq _ m) = put m
       encode' (SBPMsgFileioReadDirResp _ m) = put m
@@ -254,6 +259,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgNapDeviceDnaResp _ m) = put m
       encode' (SBPMsgObs _ m) = put m
       encode' (SBPMsgObsDepA _ m) = put m
+      encode' (SBPMsgObsDepB _ m) = put m
       encode' (SBPMsgPosEcef _ m) = put m
       encode' (SBPMsgPosLlh _ m) = put m
       encode' (SBPMsgPrintDep _ m) = put m
@@ -308,6 +314,7 @@ instance FromJSON SBPMsg where
         | msgType == msgEphemeris = SBPMsgEphemeris <$> parseJSON obj <*> parseJSON obj
         | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgEphemerisDepC = SBPMsgEphemerisDepC <$> parseJSON obj <*> parseJSON obj
         | msgType == msgExtEvent = SBPMsgExtEvent <$> parseJSON obj <*> parseJSON obj
         | msgType == msgFileioReadDirReq = SBPMsgFileioReadDirReq <$> parseJSON obj <*> parseJSON obj
         | msgType == msgFileioReadDirResp = SBPMsgFileioReadDirResp <$> parseJSON obj <*> parseJSON obj
@@ -332,6 +339,7 @@ instance FromJSON SBPMsg where
         | msgType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> parseJSON obj <*> parseJSON obj
         | msgType == msgObs = SBPMsgObs <$> parseJSON obj <*> parseJSON obj
         | msgType == msgObsDepA = SBPMsgObsDepA <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgObsDepB = SBPMsgObsDepB <$> parseJSON obj <*> parseJSON obj
         | msgType == msgPosEcef = SBPMsgPosEcef <$> parseJSON obj <*> parseJSON obj
         | msgType == msgPosLlh = SBPMsgPosLlh <$> parseJSON obj <*> parseJSON obj
         | msgType == msgPrintDep = SBPMsgPrintDep <$> parseJSON obj <*> parseJSON obj
@@ -388,6 +396,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgEphemeris n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgEphemerisDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgEphemerisDepB n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgEphemerisDepC n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgExtEvent n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgFileioReadDirReq n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgFileioReadDirResp n m) = toJSON n `mergeValues` toJSON m
@@ -412,6 +421,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgNapDeviceDnaResp n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgObs n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgObsDepA n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgObsDepB n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgPosEcef n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgPosLlh n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgPrintDep n m) = toJSON n `mergeValues` toJSON m
@@ -462,6 +472,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgEphemeris n m) = SBPMsgEphemeris n <$> f m
   msg f (SBPMsgEphemerisDepA n m) = SBPMsgEphemerisDepA n <$> f m
   msg f (SBPMsgEphemerisDepB n m) = SBPMsgEphemerisDepB n <$> f m
+  msg f (SBPMsgEphemerisDepC n m) = SBPMsgEphemerisDepC n <$> f m
   msg f (SBPMsgExtEvent n m) = SBPMsgExtEvent n <$> f m
   msg f (SBPMsgFileioReadDirReq n m) = SBPMsgFileioReadDirReq n <$> f m
   msg f (SBPMsgFileioReadDirResp n m) = SBPMsgFileioReadDirResp n <$> f m
@@ -486,6 +497,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgNapDeviceDnaResp n m) = SBPMsgNapDeviceDnaResp n <$> f m
   msg f (SBPMsgObs n m) = SBPMsgObs n <$> f m
   msg f (SBPMsgObsDepA n m) = SBPMsgObsDepA n <$> f m
+  msg f (SBPMsgObsDepB n m) = SBPMsgObsDepB n <$> f m
   msg f (SBPMsgPosEcef n m) = SBPMsgPosEcef n <$> f m
   msg f (SBPMsgPosLlh n m) = SBPMsgPosLlh n <$> f m
   msg f (SBPMsgPrintDep n m) = SBPMsgPrintDep n <$> f m

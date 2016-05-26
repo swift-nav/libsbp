@@ -56,7 +56,7 @@ $(makeLenses ''ObsGPSTime)
 --
 -- Carrier phase measurement in cycles represented as a 40-bit fixed point
 -- number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
--- fractional cycles.
+-- fractional cycles.  This phase has the  same sign as the pseudorange.
 data CarrierPhase = CarrierPhase
   { _carrierPhase_i :: Int32
     -- ^ Carrier phase whole cycles
@@ -103,12 +103,14 @@ $(makeLenses ''ObservationHeader)
 
 -- | PackedObsContent.
 --
--- Pseudorange and carrier phase observation for a satellite being tracked.
+-- Pseudorange and carrier phase observation for a satellite being tracked. The
+-- observations should be interoperable with 3rd party  receivers and conform
+-- with typical RTCMv3 GNSS observations.
 data PackedObsContent = PackedObsContent
   { _packedObsContent_P  :: Word32
     -- ^ Pseudorange observation
   , _packedObsContent_L  :: CarrierPhase
-    -- ^ Carrier phase observation
+    -- ^ Carrier phase observation with typical sign convention.
   , _packedObsContent_cn0 :: Word8
     -- ^ Carrier-to-Noise density
   , _packedObsContent_lock :: Word16
@@ -139,14 +141,16 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContent_"
 $(makeLenses ''PackedObsContent)
 
 msgObs :: Word16
-msgObs = 0x0043
+msgObs = 0x0049
 
--- | SBP class for message MSG_OBS (0x0043).
+-- | SBP class for message MSG_OBS (0x0049).
 --
 -- The GPS observations message reports all the raw pseudorange and carrier
 -- phase observations for the satellites being tracked by the device. Carrier
 -- phase observation here is represented as a 40-bit fixed point number with
 -- Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).
+-- The observations  should be interoperable with 3rd party receivers and
+-- conform  with typical RTCMv3 GNSS observations.
 data MsgObs = MsgObs
   { _msgObs_header :: ObservationHeader
     -- ^ Header of a GPS observation message
@@ -244,9 +248,9 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBasePosEcef_" .
 $(makeLenses ''MsgBasePosEcef)
 
 msgEphemeris :: Word16
-msgEphemeris = 0x0047
+msgEphemeris = 0x0080
 
--- | SBP class for message MSG_EPHEMERIS (0x0047).
+-- | SBP class for message MSG_EPHEMERIS (0x0080).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
 -- used to calculate GPS satellite position, velocity, and clock offset. Please
@@ -649,14 +653,184 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepB_"
              ''MsgEphemerisDepB)
 $(makeLenses ''MsgEphemerisDepB)
 
+msgEphemerisDepC :: Word16
+msgEphemerisDepC = 0x0047
+
+-- | SBP class for message MSG_EPHEMERIS_DEP_C (0x0047).
+--
+-- The ephemeris message returns a set of satellite orbit parameters that is
+-- used to calculate GPS satellite position, velocity, and clock offset. Please
+-- see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
+-- Table 20-III) for more details.
+data MsgEphemerisDepC = MsgEphemerisDepC
+  { _msgEphemerisDepC_tgd    :: Double
+    -- ^ Group delay differential between L1 and L2
+  , _msgEphemerisDepC_c_rs   :: Double
+    -- ^ Amplitude of the sine harmonic correction term to the orbit radius
+  , _msgEphemerisDepC_c_rc   :: Double
+    -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
+  , _msgEphemerisDepC_c_uc   :: Double
+    -- ^ Amplitude of the cosine harmonic correction term to the argument of
+    -- latitude
+  , _msgEphemerisDepC_c_us   :: Double
+    -- ^ Amplitude of the sine harmonic correction term to the argument of
+    -- latitude
+  , _msgEphemerisDepC_c_ic   :: Double
+    -- ^ Amplitude of the cosine harmonic correction term to the angle of
+    -- inclination
+  , _msgEphemerisDepC_c_is   :: Double
+    -- ^ Amplitude of the sine harmonic correction term to the angle of
+    -- inclination
+  , _msgEphemerisDepC_dn     :: Double
+    -- ^ Mean motion difference
+  , _msgEphemerisDepC_m0     :: Double
+    -- ^ Mean anomaly at reference time
+  , _msgEphemerisDepC_ecc    :: Double
+    -- ^ Eccentricity of satellite orbit
+  , _msgEphemerisDepC_sqrta  :: Double
+    -- ^ Square root of the semi-major axis of orbit
+  , _msgEphemerisDepC_omega0 :: Double
+    -- ^ Longitude of ascending node of orbit plane at weekly epoch
+  , _msgEphemerisDepC_omegadot :: Double
+    -- ^ Rate of right ascension
+  , _msgEphemerisDepC_w      :: Double
+    -- ^ Argument of perigee
+  , _msgEphemerisDepC_inc    :: Double
+    -- ^ Inclination
+  , _msgEphemerisDepC_inc_dot :: Double
+    -- ^ Inclination first derivative
+  , _msgEphemerisDepC_af0    :: Double
+    -- ^ Polynomial clock correction coefficient (clock bias)
+  , _msgEphemerisDepC_af1    :: Double
+    -- ^ Polynomial clock correction coefficient (clock drift)
+  , _msgEphemerisDepC_af2    :: Double
+    -- ^ Polynomial clock correction coefficient (rate of clock drift)
+  , _msgEphemerisDepC_toe_tow :: Double
+    -- ^ Time of week
+  , _msgEphemerisDepC_toe_wn :: Word16
+    -- ^ Week number
+  , _msgEphemerisDepC_toc_tow :: Double
+    -- ^ Clock reference time of week
+  , _msgEphemerisDepC_toc_wn :: Word16
+    -- ^ Clock reference week number
+  , _msgEphemerisDepC_valid  :: Word8
+    -- ^ Is valid?
+  , _msgEphemerisDepC_healthy :: Word8
+    -- ^ Satellite is healthy?
+  , _msgEphemerisDepC_sid    :: GnssSignal
+    -- ^ GNSS signal identifier
+  , _msgEphemerisDepC_iode   :: Word8
+    -- ^ Issue of ephemeris data
+  , _msgEphemerisDepC_iodc   :: Word16
+    -- ^ Issue of clock data
+  , _msgEphemerisDepC_reserved :: Word32
+    -- ^ Reserved field
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgEphemerisDepC where
+  get = do
+    _msgEphemerisDepC_tgd <- getFloat64le
+    _msgEphemerisDepC_c_rs <- getFloat64le
+    _msgEphemerisDepC_c_rc <- getFloat64le
+    _msgEphemerisDepC_c_uc <- getFloat64le
+    _msgEphemerisDepC_c_us <- getFloat64le
+    _msgEphemerisDepC_c_ic <- getFloat64le
+    _msgEphemerisDepC_c_is <- getFloat64le
+    _msgEphemerisDepC_dn <- getFloat64le
+    _msgEphemerisDepC_m0 <- getFloat64le
+    _msgEphemerisDepC_ecc <- getFloat64le
+    _msgEphemerisDepC_sqrta <- getFloat64le
+    _msgEphemerisDepC_omega0 <- getFloat64le
+    _msgEphemerisDepC_omegadot <- getFloat64le
+    _msgEphemerisDepC_w <- getFloat64le
+    _msgEphemerisDepC_inc <- getFloat64le
+    _msgEphemerisDepC_inc_dot <- getFloat64le
+    _msgEphemerisDepC_af0 <- getFloat64le
+    _msgEphemerisDepC_af1 <- getFloat64le
+    _msgEphemerisDepC_af2 <- getFloat64le
+    _msgEphemerisDepC_toe_tow <- getFloat64le
+    _msgEphemerisDepC_toe_wn <- getWord16le
+    _msgEphemerisDepC_toc_tow <- getFloat64le
+    _msgEphemerisDepC_toc_wn <- getWord16le
+    _msgEphemerisDepC_valid <- getWord8
+    _msgEphemerisDepC_healthy <- getWord8
+    _msgEphemerisDepC_sid <- get
+    _msgEphemerisDepC_iode <- getWord8
+    _msgEphemerisDepC_iodc <- getWord16le
+    _msgEphemerisDepC_reserved <- getWord32le
+    return MsgEphemerisDepC {..}
+
+  put MsgEphemerisDepC {..} = do
+    putFloat64le _msgEphemerisDepC_tgd
+    putFloat64le _msgEphemerisDepC_c_rs
+    putFloat64le _msgEphemerisDepC_c_rc
+    putFloat64le _msgEphemerisDepC_c_uc
+    putFloat64le _msgEphemerisDepC_c_us
+    putFloat64le _msgEphemerisDepC_c_ic
+    putFloat64le _msgEphemerisDepC_c_is
+    putFloat64le _msgEphemerisDepC_dn
+    putFloat64le _msgEphemerisDepC_m0
+    putFloat64le _msgEphemerisDepC_ecc
+    putFloat64le _msgEphemerisDepC_sqrta
+    putFloat64le _msgEphemerisDepC_omega0
+    putFloat64le _msgEphemerisDepC_omegadot
+    putFloat64le _msgEphemerisDepC_w
+    putFloat64le _msgEphemerisDepC_inc
+    putFloat64le _msgEphemerisDepC_inc_dot
+    putFloat64le _msgEphemerisDepC_af0
+    putFloat64le _msgEphemerisDepC_af1
+    putFloat64le _msgEphemerisDepC_af2
+    putFloat64le _msgEphemerisDepC_toe_tow
+    putWord16le _msgEphemerisDepC_toe_wn
+    putFloat64le _msgEphemerisDepC_toc_tow
+    putWord16le _msgEphemerisDepC_toc_wn
+    putWord8 _msgEphemerisDepC_valid
+    putWord8 _msgEphemerisDepC_healthy
+    put _msgEphemerisDepC_sid
+    putWord8 _msgEphemerisDepC_iode
+    putWord16le _msgEphemerisDepC_iodc
+    putWord32le _msgEphemerisDepC_reserved
+
+$(deriveSBP 'msgEphemerisDepC ''MsgEphemerisDepC)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepC_" . stripPrefix "_msgEphemerisDepC_"}
+             ''MsgEphemerisDepC)
+$(makeLenses ''MsgEphemerisDepC)
+
+-- | CarrierPhaseDepA.
+--
+-- Carrier phase measurement in cycles represented as a 40-bit fixed point
+-- number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
+-- fractional cycles. This has the opposite sign convention than a typical GPS
+-- receiver and the phase has the opposite sign as the pseudorange.
+data CarrierPhaseDepA = CarrierPhaseDepA
+  { _carrierPhaseDepA_i :: Int32
+    -- ^ Carrier phase whole cycles
+  , _carrierPhaseDepA_f :: Word8
+    -- ^ Carrier phase fractional part
+  } deriving ( Show, Read, Eq )
+
+instance Binary CarrierPhaseDepA where
+  get = do
+    _carrierPhaseDepA_i <- liftM fromIntegral getWord32le
+    _carrierPhaseDepA_f <- getWord8
+    return CarrierPhaseDepA {..}
+
+  put CarrierPhaseDepA {..} = do
+    putWord32le $ fromIntegral _carrierPhaseDepA_i
+    putWord8 _carrierPhaseDepA_f
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_carrierPhaseDepA_" . stripPrefix "_carrierPhaseDepA_"}
+             ''CarrierPhaseDepA)
+$(makeLenses ''CarrierPhaseDepA)
+
 -- | PackedObsContentDepA.
 --
 -- Deprecated.
 data PackedObsContentDepA = PackedObsContentDepA
   { _packedObsContentDepA_P  :: Word32
     -- ^ Pseudorange observation
-  , _packedObsContentDepA_L  :: CarrierPhase
-    -- ^ Carrier phase observation
+  , _packedObsContentDepA_L  :: CarrierPhaseDepA
+    -- ^ Carrier phase observation with opposite sign from typical convention
   , _packedObsContentDepA_cn0 :: Word8
     -- ^ Carrier-to-Noise density
   , _packedObsContentDepA_lock :: Word16
@@ -686,6 +860,44 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDe
              ''PackedObsContentDepA)
 $(makeLenses ''PackedObsContentDepA)
 
+-- | PackedObsContentDepB.
+--
+-- Pseudorange and carrier phase observation for a satellite being tracked.
+-- Pseudoranges are referenced to a nominal pseudorange.
+data PackedObsContentDepB = PackedObsContentDepB
+  { _packedObsContentDepB_P  :: Word32
+    -- ^ Pseudorange observation
+  , _packedObsContentDepB_L  :: CarrierPhaseDepA
+    -- ^ Carrier phase observation with opposite sign from typical convention.
+  , _packedObsContentDepB_cn0 :: Word8
+    -- ^ Carrier-to-Noise density
+  , _packedObsContentDepB_lock :: Word16
+    -- ^ Lock indicator. This value changes whenever a satellite signal has lost
+    -- and regained lock, indicating that the carrier phase ambiguity may have
+    -- changed.
+  , _packedObsContentDepB_sid :: GnssSignal
+    -- ^ GNSS signal identifier
+  } deriving ( Show, Read, Eq )
+
+instance Binary PackedObsContentDepB where
+  get = do
+    _packedObsContentDepB_P <- getWord32le
+    _packedObsContentDepB_L <- get
+    _packedObsContentDepB_cn0 <- getWord8
+    _packedObsContentDepB_lock <- getWord16le
+    _packedObsContentDepB_sid <- get
+    return PackedObsContentDepB {..}
+
+  put PackedObsContentDepB {..} = do
+    putWord32le _packedObsContentDepB_P
+    put _packedObsContentDepB_L
+    putWord8 _packedObsContentDepB_cn0
+    putWord16le _packedObsContentDepB_lock
+    put _packedObsContentDepB_sid
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDepB_" . stripPrefix "_packedObsContentDepB_"}
+             ''PackedObsContentDepB)
+$(makeLenses ''PackedObsContentDepB)
+
 msgObsDepA :: Word16
 msgObsDepA = 0x0045
 
@@ -714,3 +926,35 @@ $(deriveSBP 'msgObsDepA ''MsgObsDepA)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepA_" . stripPrefix "_msgObsDepA_"}
              ''MsgObsDepA)
 $(makeLenses ''MsgObsDepA)
+
+msgObsDepB :: Word16
+msgObsDepB = 0x0043
+
+-- | SBP class for message MSG_OBS_DEP_B (0x0043).
+--
+-- This observation message has been deprecated in favor of  observations that
+-- are more interoperable. This message should be used for observations
+-- referenced to  a nominal pseudorange which are not interoperable with most
+-- 3rd party GNSS receievers or typical RTCMv3  observations.
+data MsgObsDepB = MsgObsDepB
+  { _msgObsDepB_header :: ObservationHeader
+    -- ^ Header of a GPS observation message
+  , _msgObsDepB_obs  :: [PackedObsContentDepB]
+    -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgObsDepB where
+  get = do
+    _msgObsDepB_header <- get
+    _msgObsDepB_obs <- whileM (liftM not isEmpty) get
+    return MsgObsDepB {..}
+
+  put MsgObsDepB {..} = do
+    put _msgObsDepB_header
+    mapM_ put _msgObsDepB_obs
+
+$(deriveSBP 'msgObsDepB ''MsgObsDepB)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepB_" . stripPrefix "_msgObsDepB_"}
+             ''MsgObsDepB)
+$(makeLenses ''MsgObsDepB)
