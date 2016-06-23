@@ -123,7 +123,7 @@ class HTTPDriver(BaseDriver):
 
   def __init__(self,
                device_uid=None,
-               url="https://broker.testing.skylark.swiftnav.com",
+               url="https://broker.staging.skylark.swiftnav.com",
                retries=DEFAULT_RETRIES,
                timeout=DEFAULT_TIMEOUT,):
     retry = Retry(connect=DEFAULT_RETRIES[0],
@@ -175,7 +175,7 @@ class HTTPDriver(BaseDriver):
     # object, which cast to False for 4xx and 5xx HTTP codes.
     return bool(self.write_response)
 
-  def connect_write(self, source, whitelist, passive=True):
+  def connect_write(self, source, whitelist, pragma=None):
     """Initialize a streaming write HTTP response. Manually connects the
     underlying file-handle. In the event of a network disconnection,
     use to manually reinitiate an HTTP session.
@@ -186,16 +186,10 @@ class HTTPDriver(BaseDriver):
       Iterable source of SBP messages.
     whitelist : [int]
       Whitelist of messages to write
-    passive : bool
-      Adds a passive Pragma to header, which keeps broadcast
-      observations private.
 
     """
-    headers = {'Device-Uid': self.device_uid,
-               'Accept': BROKER_SBP_TYPE,
-               'Content-Type': BROKER_SBP_TYPE,
-               'Pragma': 'passive'}
-    if not passive:
+    headers = {'Device-Uid': self.device_uid, 'Content-Type': BROKER_SBP_TYPE, 'Pragma': pragma}
+    if not pragma:
       del headers['Pragma']
     try:
       self.executor = ThreadPoolExecutor(max_workers=DEFAULT_POOLSIZE)
@@ -249,13 +243,15 @@ class HTTPDriver(BaseDriver):
     """
     return bool(self.read_response)
 
-  def connect_read(self):
+  def connect_read(self, pragma=None):
     """Initialize a streaming read/write HTTP response. Manually connects
     the underlying file-handle. In the event of a network
     disconnection, use to manually reinitiate an HTTP session.
 
     """
-    headers = {'Device-Uid': self.device_uid, 'Accept': BROKER_SBP_TYPE}
+    headers = {'Device-Uid': self.device_uid, 'Accept': BROKER_SBP_TYPE, 'Pragma': pragma}
+    if not pragma:
+      del headers['Pragma']
     try:
       self.read_response = self.read_session.get(self.url,
                                                  stream=True,
