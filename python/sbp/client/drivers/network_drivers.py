@@ -192,7 +192,6 @@ class HTTPDriver(BaseDriver):
 
     """
     headers = {'Device-Uid': self.device_uid,
-               'Accept': BROKER_SBP_TYPE,
                'Content-Type': BROKER_SBP_TYPE,
                'Pragma': 'passive'}
     if not passive:
@@ -249,13 +248,21 @@ class HTTPDriver(BaseDriver):
     """
     return bool(self.read_response)
 
-  def connect_read(self):
+  def connect_read(self, virtual=False):
     """Initialize a streaming read/write HTTP response. Manually connects
     the underlying file-handle. In the event of a network
     disconnection, use to manually reinitiate an HTTP session.
 
+    Parameters
+    ----------
+    virtual : bool
+      Adds a proxy Pragma to header, which pulls broadcast
+      observations from a pseudo reference station.
+
     """
-    headers = {'Device-Uid': self.device_uid, 'Accept': BROKER_SBP_TYPE}
+    headers = {'Device-Uid': self.device_uid, 'Accept': BROKER_SBP_TYPE, 'Pragma': 'proxy'}
+    if not virtual:
+      del headers['Pragma']
     try:
       self.read_response = self.read_session.get(self.url,
                                                  stream=True,
