@@ -123,7 +123,7 @@ class HTTPDriver(BaseDriver):
 
   def __init__(self,
                device_uid=None,
-               url="https://broker.testing.skylark.swiftnav.com",
+               url="https://broker.staging.skylark.swiftnav.com",
                retries=DEFAULT_RETRIES,
                timeout=DEFAULT_TIMEOUT,):
     retry = Retry(connect=DEFAULT_RETRIES[0],
