@@ -175,7 +175,7 @@ class HTTPDriver(BaseDriver):
     # object, which cast to False for 4xx and 5xx HTTP codes.
     return bool(self.write_response)
 
-  def connect_write(self, source, whitelist, passive=True):
+  def connect_write(self, source, whitelist):
     """Initialize a streaming write HTTP response. Manually connects the
     underlying file-handle. In the event of a network disconnection,
     use to manually reinitiate an HTTP session.
@@ -186,16 +186,9 @@ class HTTPDriver(BaseDriver):
       Iterable source of SBP messages.
     whitelist : [int]
       Whitelist of messages to write
-    passive : bool
-      Adds a passive Pragma to header, which keeps broadcast
-      observations private.
 
     """
-    headers = {'Device-Uid': self.device_uid,
-               'Content-Type': BROKER_SBP_TYPE,
-               'Pragma': 'passive'}
-    if not passive:
-      del headers['Pragma']
+    headers = {'Device-Uid': self.device_uid, 'Content-Type': BROKER_SBP_TYPE}
     try:
       self.executor = ThreadPoolExecutor(max_workers=DEFAULT_POOLSIZE)
       self.write_session = FuturesSession(executor=self.executor)
