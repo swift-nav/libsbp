@@ -77,7 +77,7 @@ class JSONLogIterator(LogIterator):
     for line in self.handle:
       try:
         data = json.loads(line)
-        item = SBP.from_json_dict(data.pop('data'))
+        item = SBP.from_json_dict(data.pop('data', data))
         msg = self.dispatch(item, line)
         yield (msg, data)
       except (ValueError, UnicodeDecodeError):
