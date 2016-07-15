@@ -42,9 +42,11 @@ class Forwarder(Thread):
         break
       self._sink(msg, **metadata)
 
-  def stop():
+  def stop(self):
     self._broken = True
     try:
       self._source.breakiter()
+      self.sink.flush()
+      self.sink.close()
     except:
       pass
