@@ -79,11 +79,22 @@ function BufferCorruptError (message) {
 BufferCorruptError.prototype = Object.create(Error.prototype);
 BufferCorruptError.prototype.constructor = BufferCorruptError;
 
-var packages = ["acquisition", "bootload", "ext_events", "file_io", "flash", "logging", "navigation", "observation", "piksi", "settings", "system", "tracking"];
+var sbpImports = {
+  acquisition: require('./acquisition.js'),
+  bootload: require('./bootload.js'),
+  ext_events: require('./ext_events.js'),
+  file_io: require('./file_io.js'),
+  flash: require('./flash.js'),
+  logging: require('./logging.js'),
+  navigation: require('./navigation.js'),
+  observation: require('./observation.js'),
+  piksi: require('./piksi.js'),
+  settings: require('./settings.js'),
+  system: require('./system.js'),
+  tracking: require('./tracking.js')
+};
 
-var sbpTable = packages.map(function (pkg) {
-  return require(path.resolve(__dirname, "./" + pkg + ".js"));
-}).reduce(function (prev, curr) {
+var sbpTable = Object.values(sbpImports).reduce(function (prev, curr) {
   var numericKeysDict = {};
   Object.keys(curr).map(function (key) {
     if (parseInt(key) == key) {
