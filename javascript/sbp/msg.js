@@ -94,7 +94,8 @@ var sbpImports = {
   tracking: require('./tracking.js')
 };
 
-var sbpTable = Object.values(sbpImports).reduce(function (prev, curr) {
+var sbpTable = Object.keys(sbpImports).reduce(function (prev, key) {
+  var curr = sbpImports[key];
   var numericKeysDict = {};
   Object.keys(curr).map(function (key) {
     if (parseInt(key) == key) {
