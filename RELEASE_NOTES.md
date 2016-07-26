@@ -6,8 +6,21 @@ For a detailed index of changes, please see the
 
 Contents
 --------
+ * [v1.01](#v1.01)
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
+
+v1.01 <a name="v1.01"></a>
+--------------------------
+Many changes since the last update to the release notes.  
+- New Observation message format (which triggered a major version 
+  increment)
+- New UART State message format
+- Haskell Bindings
+- Java Bindings
+- Javascript Bindings
+- Improvements to python client libraries and iterative interface
+  abstraction
 
 v0.39 <a name="v0.39"></a>
 --------------------------
