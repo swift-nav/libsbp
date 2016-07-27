@@ -208,9 +208,14 @@ test-haskell:
 
 dist:
 	$(call announce-begin,"Deploying packages")
-	cd $(SWIFTNAV_ROOT)/python; \
+	pushd $(SWIFTNAV_ROOT)/python
 	python setup.py sdist upload -r pypi
+	popd
 	npm publish
+	pushd $(SWIFTNAV_ROOT)/haskell
+	stack sdist
+	stack upload .
+	popd
 	$(call announce-end,"Finished deploying packages")
 
 pdf:
