@@ -1,5 +1,5 @@
 name:                  sbp
-version:               1.0.0
+version:               1.0.1
 synopsis:              SwiftNav's SBP Library
 homepage:              https://github.com/swift-nav/libsbp
 license:               LGPL-3
