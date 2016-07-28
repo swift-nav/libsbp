@@ -107,3 +107,18 @@ definitions:
     short_desc: Finished reading settings (host <= device)
     desc: |
       The settings message for indicating end of the settings values.
+
+ - MSG_SETTINGS_REGISTER:
+    id: 0x00AE
+    short_desc: Register setting and default value (device => host)
+    desc: |
+      This message registers the presence and default value of a setting
+      with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE
+      for this setting to set the initial value.
+    fields:
+      - setting:
+          type: string
+          desc: |
+            A NULL-terminated and delimited string with contents
+            [SECTION_SETTING, SETTING, VALUE].
+

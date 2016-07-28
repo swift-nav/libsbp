@@ -207,6 +207,34 @@ MsgSettingsReadByIndexDone.prototype.parser = new Parser()
   .endianess('little');
 MsgSettingsReadByIndexDone.prototype.fieldSpec = [];
 
+/**
+ * SBP class for message MSG_SETTINGS_REGISTER (0x00AE).
+ *
+ * This message registers the presence and default value of a setting with a
+ * settings daemon.  The host should reply with MSG_SETTINGS_WRITE for this setting
+ * to set the initial value.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field setting string A NULL-terminated and delimited string with contents [SECTION_SETTING, SETTING,
+ *   VALUE].
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSettingsRegister = function (sbp) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SETTINGS_REGISTER";
+  this.fields = this.parser.parse(sbp.payload);
+
+  return this;
+};
+MsgSettingsRegister.prototype = Object.create(SBP.prototype);
+MsgSettingsRegister.prototype.constructor = MsgSettingsRegister;
+MsgSettingsRegister.prototype.parser = new Parser()
+  .endianess('little')
+  .string('setting', { greedy: true });
+MsgSettingsRegister.prototype.fieldSpec = [];
+MsgSettingsRegister.prototype.fieldSpec.push(['setting', 'string']);
+
 module.exports = {
   0x00A1: MsgSettingsSave,
   0x00A0: MsgSettingsWrite,
@@ -215,4 +243,5 @@ module.exports = {
   0x00A2: MsgSettingsReadByIndexReq,
   0x00A7: MsgSettingsReadByIndexResp,
   0x00A6: MsgSettingsReadByIndexDone,
+  0x00AE: MsgSettingsRegister,
 }
