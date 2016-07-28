@@ -550,6 +550,91 @@ class MsgSettingsReadByIndexDone(SBP):
 
  
     
+SBP_MSG_SETTINGS_REGISTER = 0x00AE
+class MsgSettingsRegister(SBP):
+  """SBP class for message MSG_SETTINGS_REGISTER (0x00AE).
+
+  You can have MSG_SETTINGS_REGISTER inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message registers the presence and default value of a setting
+with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE
+for this setting to set the initial value.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  setting : string
+    A NULL-terminated and delimited string with contents
+[SECTION_SETTING, SETTING, VALUE].
+
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgSettingsRegister",
+                   greedy_string('setting'),)
+  __slots__ = [
+               'setting',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSettingsRegister,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSettingsRegister, self).__init__()
+      self.msg_type = SBP_MSG_SETTINGS_REGISTER
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.setting = kwargs.pop('setting')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSettingsRegister.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSettingsRegister(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSettingsRegister._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSettingsRegister._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSettingsRegister, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x00A1: MsgSettingsSave,
@@ -559,4 +644,5 @@ msg_classes = {
   0x00A2: MsgSettingsReadByIndexReq,
   0x00A7: MsgSettingsReadByIndexResp,
   0x00A6: MsgSettingsReadByIndexDone,
+  0x00AE: MsgSettingsRegister,
 }
