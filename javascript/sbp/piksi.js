@@ -39,6 +39,7 @@ var MsgAlmanac = function (sbp) {
   return this;
 };
 MsgAlmanac.prototype = Object.create(SBP.prototype);
+MsgAlmanac.prototype.msg_type = 0x0069;
 MsgAlmanac.prototype.constructor = MsgAlmanac;
 MsgAlmanac.prototype.parser = new Parser()
   .endianess('little');
@@ -60,6 +61,7 @@ var MsgSetTime = function (sbp) {
   return this;
 };
 MsgSetTime.prototype = Object.create(SBP.prototype);
+MsgSetTime.prototype.msg_type = 0x0068;
 MsgSetTime.prototype.constructor = MsgSetTime;
 MsgSetTime.prototype.parser = new Parser()
   .endianess('little');
@@ -80,6 +82,7 @@ var MsgReset = function (sbp) {
   return this;
 };
 MsgReset.prototype = Object.create(SBP.prototype);
+MsgReset.prototype.msg_type = 0x00B2;
 MsgReset.prototype.constructor = MsgReset;
 MsgReset.prototype.parser = new Parser()
   .endianess('little');
@@ -101,6 +104,7 @@ var MsgCwResults = function (sbp) {
   return this;
 };
 MsgCwResults.prototype = Object.create(SBP.prototype);
+MsgCwResults.prototype.msg_type = 0x00C0;
 MsgCwResults.prototype.constructor = MsgCwResults;
 MsgCwResults.prototype.parser = new Parser()
   .endianess('little');
@@ -122,6 +126,7 @@ var MsgCwStart = function (sbp) {
   return this;
 };
 MsgCwStart.prototype = Object.create(SBP.prototype);
+MsgCwStart.prototype.msg_type = 0x00C1;
 MsgCwStart.prototype.constructor = MsgCwStart;
 MsgCwStart.prototype.parser = new Parser()
   .endianess('little');
@@ -146,6 +151,7 @@ var MsgResetFilters = function (sbp) {
   return this;
 };
 MsgResetFilters.prototype = Object.create(SBP.prototype);
+MsgResetFilters.prototype.msg_type = 0x0022;
 MsgResetFilters.prototype.constructor = MsgResetFilters;
 MsgResetFilters.prototype.parser = new Parser()
   .endianess('little')
@@ -171,6 +177,7 @@ var MsgInitBase = function (sbp) {
   return this;
 };
 MsgInitBase.prototype = Object.create(SBP.prototype);
+MsgInitBase.prototype.msg_type = 0x0023;
 MsgInitBase.prototype.constructor = MsgInitBase;
 MsgInitBase.prototype.parser = new Parser()
   .endianess('little');
@@ -199,6 +206,7 @@ var MsgThreadState = function (sbp) {
   return this;
 };
 MsgThreadState.prototype = Object.create(SBP.prototype);
+MsgThreadState.prototype.msg_type = 0x0017;
 MsgThreadState.prototype.constructor = MsgThreadState;
 MsgThreadState.prototype.parser = new Parser()
   .endianess('little')
@@ -354,6 +362,7 @@ var MsgUartState = function (sbp) {
   return this;
 };
 MsgUartState.prototype = Object.create(SBP.prototype);
+MsgUartState.prototype.msg_type = 0x001D;
 MsgUartState.prototype.constructor = MsgUartState;
 MsgUartState.prototype.parser = new Parser()
   .endianess('little')
@@ -390,6 +399,7 @@ var MsgUartStateDepa = function (sbp) {
   return this;
 };
 MsgUartStateDepa.prototype = Object.create(SBP.prototype);
+MsgUartStateDepa.prototype.msg_type = 0x0018;
 MsgUartStateDepa.prototype.constructor = MsgUartStateDepa;
 MsgUartStateDepa.prototype.parser = new Parser()
   .endianess('little')
@@ -423,6 +433,7 @@ var MsgIarState = function (sbp) {
   return this;
 };
 MsgIarState.prototype = Object.create(SBP.prototype);
+MsgIarState.prototype.msg_type = 0x0019;
 MsgIarState.prototype.constructor = MsgIarState;
 MsgIarState.prototype.parser = new Parser()
   .endianess('little')
@@ -450,6 +461,7 @@ var MsgMaskSatellite = function (sbp) {
   return this;
 };
 MsgMaskSatellite.prototype = Object.create(SBP.prototype);
+MsgMaskSatellite.prototype.msg_type = 0x001B;
 MsgMaskSatellite.prototype.constructor = MsgMaskSatellite;
 MsgMaskSatellite.prototype.parser = new Parser()
   .endianess('little')
@@ -461,18 +473,30 @@ MsgMaskSatellite.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec
 
 module.exports = {
   0x0069: MsgAlmanac,
+  MsgAlmanac: MsgAlmanac,
   0x0068: MsgSetTime,
+  MsgSetTime: MsgSetTime,
   0x00B2: MsgReset,
+  MsgReset: MsgReset,
   0x00C0: MsgCwResults,
+  MsgCwResults: MsgCwResults,
   0x00C1: MsgCwStart,
+  MsgCwStart: MsgCwStart,
   0x0022: MsgResetFilters,
+  MsgResetFilters: MsgResetFilters,
   0x0023: MsgInitBase,
+  MsgInitBase: MsgInitBase,
   0x0017: MsgThreadState,
+  MsgThreadState: MsgThreadState,
   UARTChannel: UARTChannel,
   Period: Period,
   Latency: Latency,
   0x001D: MsgUartState,
+  MsgUartState: MsgUartState,
   0x0018: MsgUartStateDepa,
+  MsgUartStateDepa: MsgUartStateDepa,
   0x0019: MsgIarState,
+  MsgIarState: MsgIarState,
   0x001B: MsgMaskSatellite,
+  MsgMaskSatellite: MsgMaskSatellite,
 }

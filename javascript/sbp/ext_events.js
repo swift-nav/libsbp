@@ -45,6 +45,7 @@ var MsgExtEvent = function (sbp) {
   return this;
 };
 MsgExtEvent.prototype = Object.create(SBP.prototype);
+MsgExtEvent.prototype.msg_type = 0x0101;
 MsgExtEvent.prototype.constructor = MsgExtEvent;
 MsgExtEvent.prototype.parser = new Parser()
   .endianess('little')
@@ -62,4 +63,5 @@ MsgExtEvent.prototype.fieldSpec.push(['pin', 'writeUInt8', 1]);
 
 module.exports = {
   0x0101: MsgExtEvent,
+  MsgExtEvent: MsgExtEvent,
 }

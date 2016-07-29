@@ -48,6 +48,7 @@ var MsgFlashProgram = function (sbp) {
   return this;
 };
 MsgFlashProgram.prototype = Object.create(SBP.prototype);
+MsgFlashProgram.prototype.msg_type = 0x00E6;
 MsgFlashProgram.prototype.constructor = MsgFlashProgram;
 MsgFlashProgram.prototype.parser = new Parser()
   .endianess('little')
@@ -81,6 +82,7 @@ var MsgFlashDone = function (sbp) {
   return this;
 };
 MsgFlashDone.prototype = Object.create(SBP.prototype);
+MsgFlashDone.prototype.msg_type = 0x00E0;
 MsgFlashDone.prototype.constructor = MsgFlashDone;
 MsgFlashDone.prototype.parser = new Parser()
   .endianess('little')
@@ -112,6 +114,7 @@ var MsgFlashReadReq = function (sbp) {
   return this;
 };
 MsgFlashReadReq.prototype = Object.create(SBP.prototype);
+MsgFlashReadReq.prototype.msg_type = 0x00E7;
 MsgFlashReadReq.prototype.constructor = MsgFlashReadReq;
 MsgFlashReadReq.prototype.parser = new Parser()
   .endianess('little')
@@ -147,6 +150,7 @@ var MsgFlashReadResp = function (sbp) {
   return this;
 };
 MsgFlashReadResp.prototype = Object.create(SBP.prototype);
+MsgFlashReadResp.prototype.msg_type = 0x00E1;
 MsgFlashReadResp.prototype.constructor = MsgFlashReadResp;
 MsgFlashReadResp.prototype.parser = new Parser()
   .endianess('little')
@@ -180,6 +184,7 @@ var MsgFlashErase = function (sbp) {
   return this;
 };
 MsgFlashErase.prototype = Object.create(SBP.prototype);
+MsgFlashErase.prototype.msg_type = 0x00E2;
 MsgFlashErase.prototype.constructor = MsgFlashErase;
 MsgFlashErase.prototype.parser = new Parser()
   .endianess('little')
@@ -208,6 +213,7 @@ var MsgStmFlashLockSector = function (sbp) {
   return this;
 };
 MsgStmFlashLockSector.prototype = Object.create(SBP.prototype);
+MsgStmFlashLockSector.prototype.msg_type = 0x00E3;
 MsgStmFlashLockSector.prototype.constructor = MsgStmFlashLockSector;
 MsgStmFlashLockSector.prototype.parser = new Parser()
   .endianess('little')
@@ -234,6 +240,7 @@ var MsgStmFlashUnlockSector = function (sbp) {
   return this;
 };
 MsgStmFlashUnlockSector.prototype = Object.create(SBP.prototype);
+MsgStmFlashUnlockSector.prototype.msg_type = 0x00E4;
 MsgStmFlashUnlockSector.prototype.constructor = MsgStmFlashUnlockSector;
 MsgStmFlashUnlockSector.prototype.parser = new Parser()
   .endianess('little')
@@ -258,6 +265,7 @@ var MsgStmUniqueIdReq = function (sbp) {
   return this;
 };
 MsgStmUniqueIdReq.prototype = Object.create(SBP.prototype);
+MsgStmUniqueIdReq.prototype.msg_type = 0x00E8;
 MsgStmUniqueIdReq.prototype.constructor = MsgStmUniqueIdReq;
 MsgStmUniqueIdReq.prototype.parser = new Parser()
   .endianess('little');
@@ -283,6 +291,7 @@ var MsgStmUniqueIdResp = function (sbp) {
   return this;
 };
 MsgStmUniqueIdResp.prototype = Object.create(SBP.prototype);
+MsgStmUniqueIdResp.prototype.msg_type = 0x00E5;
 MsgStmUniqueIdResp.prototype.constructor = MsgStmUniqueIdResp;
 MsgStmUniqueIdResp.prototype.parser = new Parser()
   .endianess('little')
@@ -309,6 +318,7 @@ var MsgM25FlashWriteStatus = function (sbp) {
   return this;
 };
 MsgM25FlashWriteStatus.prototype = Object.create(SBP.prototype);
+MsgM25FlashWriteStatus.prototype.msg_type = 0x00F3;
 MsgM25FlashWriteStatus.prototype.constructor = MsgM25FlashWriteStatus;
 MsgM25FlashWriteStatus.prototype.parser = new Parser()
   .endianess('little')
@@ -318,13 +328,23 @@ MsgM25FlashWriteStatus.prototype.fieldSpec.push(['status', 'array', 'writeUInt8'
 
 module.exports = {
   0x00E6: MsgFlashProgram,
+  MsgFlashProgram: MsgFlashProgram,
   0x00E0: MsgFlashDone,
+  MsgFlashDone: MsgFlashDone,
   0x00E7: MsgFlashReadReq,
+  MsgFlashReadReq: MsgFlashReadReq,
   0x00E1: MsgFlashReadResp,
+  MsgFlashReadResp: MsgFlashReadResp,
   0x00E2: MsgFlashErase,
+  MsgFlashErase: MsgFlashErase,
   0x00E3: MsgStmFlashLockSector,
+  MsgStmFlashLockSector: MsgStmFlashLockSector,
   0x00E4: MsgStmFlashUnlockSector,
+  MsgStmFlashUnlockSector: MsgStmFlashUnlockSector,
   0x00E8: MsgStmUniqueIdReq,
+  MsgStmUniqueIdReq: MsgStmUniqueIdReq,
   0x00E5: MsgStmUniqueIdResp,
+  MsgStmUniqueIdResp: MsgStmUniqueIdResp,
   0x00F3: MsgM25FlashWriteStatus,
+  MsgM25FlashWriteStatus: MsgM25FlashWriteStatus,
 }

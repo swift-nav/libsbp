@@ -74,6 +74,7 @@ var MsgTrackingState = function (sbp) {
   return this;
 };
 MsgTrackingState.prototype = Object.create(SBP.prototype);
+MsgTrackingState.prototype.msg_type = 0x0013;
 MsgTrackingState.prototype.constructor = MsgTrackingState;
 MsgTrackingState.prototype.parser = new Parser()
   .endianess('little')
@@ -130,6 +131,7 @@ var MsgTrackingIq = function (sbp) {
   return this;
 };
 MsgTrackingIq.prototype = Object.create(SBP.prototype);
+MsgTrackingIq.prototype.msg_type = 0x001C;
 MsgTrackingIq.prototype.constructor = MsgTrackingIq;
 MsgTrackingIq.prototype.parser = new Parser()
   .endianess('little')
@@ -190,6 +192,7 @@ var MsgTrackingStateDepA = function (sbp) {
   return this;
 };
 MsgTrackingStateDepA.prototype = Object.create(SBP.prototype);
+MsgTrackingStateDepA.prototype.msg_type = 0x0016;
 MsgTrackingStateDepA.prototype.constructor = MsgTrackingStateDepA;
 MsgTrackingStateDepA.prototype.parser = new Parser()
   .endianess('little')
@@ -200,8 +203,11 @@ MsgTrackingStateDepA.prototype.fieldSpec.push(['states', 'array', TrackingChanne
 module.exports = {
   TrackingChannelState: TrackingChannelState,
   0x0013: MsgTrackingState,
+  MsgTrackingState: MsgTrackingState,
   TrackingChannelCorrelation: TrackingChannelCorrelation,
   0x001C: MsgTrackingIq,
+  MsgTrackingIq: MsgTrackingIq,
   TrackingChannelStateDepA: TrackingChannelStateDepA,
   0x0016: MsgTrackingStateDepA,
+  MsgTrackingStateDepA: MsgTrackingStateDepA,
 }

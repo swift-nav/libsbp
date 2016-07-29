@@ -42,6 +42,7 @@ var MsgLog = function (sbp) {
   return this;
 };
 MsgLog.prototype = Object.create(SBP.prototype);
+MsgLog.prototype.msg_type = 0x0401;
 MsgLog.prototype.constructor = MsgLog;
 MsgLog.prototype.parser = new Parser()
   .endianess('little')
@@ -69,6 +70,7 @@ var MsgTweet = function (sbp) {
   return this;
 };
 MsgTweet.prototype = Object.create(SBP.prototype);
+MsgTweet.prototype.msg_type = 0x0012;
 MsgTweet.prototype.constructor = MsgTweet;
 MsgTweet.prototype.parser = new Parser()
   .endianess('little')
@@ -94,6 +96,7 @@ var MsgPrintDep = function (sbp) {
   return this;
 };
 MsgPrintDep.prototype = Object.create(SBP.prototype);
+MsgPrintDep.prototype.msg_type = 0x0010;
 MsgPrintDep.prototype.constructor = MsgPrintDep;
 MsgPrintDep.prototype.parser = new Parser()
   .endianess('little')
@@ -103,6 +106,9 @@ MsgPrintDep.prototype.fieldSpec.push(['text', 'string']);
 
 module.exports = {
   0x0401: MsgLog,
+  MsgLog: MsgLog,
   0x0012: MsgTweet,
+  MsgTweet: MsgTweet,
   0x0010: MsgPrintDep,
+  MsgPrintDep: MsgPrintDep,
 }

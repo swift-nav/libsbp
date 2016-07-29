@@ -47,6 +47,7 @@ var MsgAcqResult = function (sbp) {
   return this;
 };
 MsgAcqResult.prototype = Object.create(SBP.prototype);
+MsgAcqResult.prototype.msg_type = 0x0014;
 MsgAcqResult.prototype.constructor = MsgAcqResult;
 MsgAcqResult.prototype.parser = new Parser()
   .endianess('little')
@@ -82,6 +83,7 @@ var MsgAcqResultDepA = function (sbp) {
   return this;
 };
 MsgAcqResultDepA.prototype = Object.create(SBP.prototype);
+MsgAcqResultDepA.prototype.msg_type = 0x0015;
 MsgAcqResultDepA.prototype.constructor = MsgAcqResultDepA;
 MsgAcqResultDepA.prototype.parser = new Parser()
   .endianess('little')
@@ -97,5 +99,7 @@ MsgAcqResultDepA.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
 
 module.exports = {
   0x0014: MsgAcqResult,
+  MsgAcqResult: MsgAcqResult,
   0x0015: MsgAcqResultDepA,
+  MsgAcqResultDepA: MsgAcqResultDepA,
 }

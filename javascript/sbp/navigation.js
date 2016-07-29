@@ -57,6 +57,7 @@ var MsgGpsTime = function (sbp) {
   return this;
 };
 MsgGpsTime.prototype = Object.create(SBP.prototype);
+MsgGpsTime.prototype.msg_type = 0x0100;
 MsgGpsTime.prototype.constructor = MsgGpsTime;
 MsgGpsTime.prototype.parser = new Parser()
   .endianess('little')
@@ -94,6 +95,7 @@ var MsgDops = function (sbp) {
   return this;
 };
 MsgDops.prototype = Object.create(SBP.prototype);
+MsgDops.prototype.msg_type = 0x0206;
 MsgDops.prototype.constructor = MsgDops;
 MsgDops.prototype.parser = new Parser()
   .endianess('little')
@@ -140,6 +142,7 @@ var MsgPosEcef = function (sbp) {
   return this;
 };
 MsgPosEcef.prototype = Object.create(SBP.prototype);
+MsgPosEcef.prototype.msg_type = 0x0200;
 MsgPosEcef.prototype.constructor = MsgPosEcef;
 MsgPosEcef.prototype.parser = new Parser()
   .endianess('little')
@@ -189,6 +192,7 @@ var MsgPosLlh = function (sbp) {
   return this;
 };
 MsgPosLlh.prototype = Object.create(SBP.prototype);
+MsgPosLlh.prototype.msg_type = 0x0201;
 MsgPosLlh.prototype.constructor = MsgPosLlh;
 MsgPosLlh.prototype.parser = new Parser()
   .endianess('little')
@@ -237,6 +241,7 @@ var MsgBaselineEcef = function (sbp) {
   return this;
 };
 MsgBaselineEcef.prototype = Object.create(SBP.prototype);
+MsgBaselineEcef.prototype.msg_type = 0x0202;
 MsgBaselineEcef.prototype.constructor = MsgBaselineEcef;
 MsgBaselineEcef.prototype.parser = new Parser()
   .endianess('little')
@@ -285,6 +290,7 @@ var MsgBaselineNed = function (sbp) {
   return this;
 };
 MsgBaselineNed.prototype = Object.create(SBP.prototype);
+MsgBaselineNed.prototype.msg_type = 0x0203;
 MsgBaselineNed.prototype.constructor = MsgBaselineNed;
 MsgBaselineNed.prototype.parser = new Parser()
   .endianess('little')
@@ -332,6 +338,7 @@ var MsgVelEcef = function (sbp) {
   return this;
 };
 MsgVelEcef.prototype = Object.create(SBP.prototype);
+MsgVelEcef.prototype.msg_type = 0x0204;
 MsgVelEcef.prototype.constructor = MsgVelEcef;
 MsgVelEcef.prototype.parser = new Parser()
   .endianess('little')
@@ -379,6 +386,7 @@ var MsgVelNed = function (sbp) {
   return this;
 };
 MsgVelNed.prototype = Object.create(SBP.prototype);
+MsgVelNed.prototype.msg_type = 0x0205;
 MsgVelNed.prototype.constructor = MsgVelNed;
 MsgVelNed.prototype.parser = new Parser()
   .endianess('little')
@@ -423,6 +431,7 @@ var MsgBaselineHeading = function (sbp) {
   return this;
 };
 MsgBaselineHeading.prototype = Object.create(SBP.prototype);
+MsgBaselineHeading.prototype.msg_type = 0x0207;
 MsgBaselineHeading.prototype.constructor = MsgBaselineHeading;
 MsgBaselineHeading.prototype.parser = new Parser()
   .endianess('little')
@@ -438,12 +447,21 @@ MsgBaselineHeading.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 module.exports = {
   0x0100: MsgGpsTime,
+  MsgGpsTime: MsgGpsTime,
   0x0206: MsgDops,
+  MsgDops: MsgDops,
   0x0200: MsgPosEcef,
+  MsgPosEcef: MsgPosEcef,
   0x0201: MsgPosLlh,
+  MsgPosLlh: MsgPosLlh,
   0x0202: MsgBaselineEcef,
+  MsgBaselineEcef: MsgBaselineEcef,
   0x0203: MsgBaselineNed,
+  MsgBaselineNed: MsgBaselineNed,
   0x0204: MsgVelEcef,
+  MsgVelEcef: MsgVelEcef,
   0x0205: MsgVelNed,
+  MsgVelNed: MsgVelNed,
   0x0207: MsgBaselineHeading,
+  MsgBaselineHeading: MsgBaselineHeading,
 }

@@ -174,6 +174,7 @@ var MsgObs = function (sbp) {
   return this;
 };
 MsgObs.prototype = Object.create(SBP.prototype);
+MsgObs.prototype.msg_type = 0x0049;
 MsgObs.prototype.constructor = MsgObs;
 MsgObs.prototype.parser = new Parser()
   .endianess('little')
@@ -206,6 +207,7 @@ var MsgBasePosLlh = function (sbp) {
   return this;
 };
 MsgBasePosLlh.prototype = Object.create(SBP.prototype);
+MsgBasePosLlh.prototype.msg_type = 0x0044;
 MsgBasePosLlh.prototype.constructor = MsgBasePosLlh;
 MsgBasePosLlh.prototype.parser = new Parser()
   .endianess('little')
@@ -241,6 +243,7 @@ var MsgBasePosEcef = function (sbp) {
   return this;
 };
 MsgBasePosEcef.prototype = Object.create(SBP.prototype);
+MsgBasePosEcef.prototype.msg_type = 0x0048;
 MsgBasePosEcef.prototype.constructor = MsgBasePosEcef;
 MsgBasePosEcef.prototype.parser = new Parser()
   .endianess('little')
@@ -301,6 +304,7 @@ var MsgEphemeris = function (sbp) {
   return this;
 };
 MsgEphemeris.prototype = Object.create(SBP.prototype);
+MsgEphemeris.prototype.msg_type = 0x0080;
 MsgEphemeris.prototype.constructor = MsgEphemeris;
 MsgEphemeris.prototype.parser = new Parser()
   .endianess('little')
@@ -407,6 +411,7 @@ var MsgEphemerisDepA = function (sbp) {
   return this;
 };
 MsgEphemerisDepA.prototype = Object.create(SBP.prototype);
+MsgEphemerisDepA.prototype.msg_type = 0x001A;
 MsgEphemerisDepA.prototype.constructor = MsgEphemerisDepA;
 MsgEphemerisDepA.prototype.parser = new Parser()
   .endianess('little')
@@ -508,6 +513,7 @@ var MsgEphemerisDepB = function (sbp) {
   return this;
 };
 MsgEphemerisDepB.prototype = Object.create(SBP.prototype);
+MsgEphemerisDepB.prototype.msg_type = 0x0046;
 MsgEphemerisDepB.prototype.constructor = MsgEphemerisDepB;
 MsgEphemerisDepB.prototype.parser = new Parser()
   .endianess('little')
@@ -616,6 +622,7 @@ var MsgEphemerisDepC = function (sbp) {
   return this;
 };
 MsgEphemerisDepC.prototype = Object.create(SBP.prototype);
+MsgEphemerisDepC.prototype.msg_type = 0x0047;
 MsgEphemerisDepC.prototype.constructor = MsgEphemerisDepC;
 MsgEphemerisDepC.prototype.parser = new Parser()
   .endianess('little')
@@ -806,6 +813,7 @@ var MsgObsDepA = function (sbp) {
   return this;
 };
 MsgObsDepA.prototype = Object.create(SBP.prototype);
+MsgObsDepA.prototype.msg_type = 0x0045;
 MsgObsDepA.prototype.constructor = MsgObsDepA;
 MsgObsDepA.prototype.parser = new Parser()
   .endianess('little')
@@ -837,6 +845,7 @@ var MsgObsDepB = function (sbp) {
   return this;
 };
 MsgObsDepB.prototype = Object.create(SBP.prototype);
+MsgObsDepB.prototype.msg_type = 0x0043;
 MsgObsDepB.prototype.constructor = MsgObsDepB;
 MsgObsDepB.prototype.parser = new Parser()
   .endianess('little')
@@ -852,15 +861,24 @@ module.exports = {
   ObservationHeader: ObservationHeader,
   PackedObsContent: PackedObsContent,
   0x0049: MsgObs,
+  MsgObs: MsgObs,
   0x0044: MsgBasePosLlh,
+  MsgBasePosLlh: MsgBasePosLlh,
   0x0048: MsgBasePosEcef,
+  MsgBasePosEcef: MsgBasePosEcef,
   0x0080: MsgEphemeris,
+  MsgEphemeris: MsgEphemeris,
   0x001A: MsgEphemerisDepA,
+  MsgEphemerisDepA: MsgEphemerisDepA,
   0x0046: MsgEphemerisDepB,
+  MsgEphemerisDepB: MsgEphemerisDepB,
   0x0047: MsgEphemerisDepC,
+  MsgEphemerisDepC: MsgEphemerisDepC,
   CarrierPhaseDepA: CarrierPhaseDepA,
   PackedObsContentDepA: PackedObsContentDepA,
   PackedObsContentDepB: PackedObsContentDepB,
   0x0045: MsgObsDepA,
+  MsgObsDepA: MsgObsDepA,
   0x0043: MsgObsDepB,
+  MsgObsDepB: MsgObsDepB,
 }

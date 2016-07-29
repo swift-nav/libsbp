@@ -131,6 +131,9 @@ function crc16 (buf, crc) {
 }
 
 module.exports = {
+  preambleByte: SBP_PREAMBLE,
+  crc16: crc16,
+
   decode: function decode (msg) {
     var sbp = parser.parse(msg);
     var msgTypeDecoder = sbpTable[sbp['msg_type']];

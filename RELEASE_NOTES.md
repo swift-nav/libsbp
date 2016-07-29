@@ -6,11 +6,17 @@ For a detailed index of changes, please see the
 
 Contents
 --------
- * [v1.01](#v1.01)
+ * [v1.0.2](#v1.0.2)
+ * [v1.0.1](#v1.0.1)
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
 
-v1.01 <a name="v1.01"></a>
+v1.0.2 <a name="v1.0.2"></a>
+--------------------------
+Minor release: changes JavaScript bindings to simplify constructing
+SBP messages.
+
+v1.0.1 <a name="v1.01"></a>
 --------------------------
 Many changes since the last update to the release notes.  
 - New Observation message format (which triggered a major version 

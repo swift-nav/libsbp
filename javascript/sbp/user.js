@@ -40,6 +40,7 @@ var MsgUserData = function (sbp) {
   return this;
 };
 MsgUserData.prototype = Object.create(SBP.prototype);
+MsgUserData.prototype.msg_type = 0x0800;
 MsgUserData.prototype.constructor = MsgUserData;
 MsgUserData.prototype.parser = new Parser()
   .endianess('little')
@@ -49,4 +50,5 @@ MsgUserData.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8', functio
 
 module.exports = {
   0x0800: MsgUserData,
+  MsgUserData: MsgUserData,
 }

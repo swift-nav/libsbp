@@ -41,6 +41,7 @@ var MsgSettingsSave = function (sbp) {
   return this;
 };
 MsgSettingsSave.prototype = Object.create(SBP.prototype);
+MsgSettingsSave.prototype.msg_type = 0x00A1;
 MsgSettingsSave.prototype.constructor = MsgSettingsSave;
 MsgSettingsSave.prototype.parser = new Parser()
   .endianess('little');
@@ -66,6 +67,7 @@ var MsgSettingsWrite = function (sbp) {
   return this;
 };
 MsgSettingsWrite.prototype = Object.create(SBP.prototype);
+MsgSettingsWrite.prototype.msg_type = 0x00A0;
 MsgSettingsWrite.prototype.constructor = MsgSettingsWrite;
 MsgSettingsWrite.prototype.parser = new Parser()
   .endianess('little')
@@ -93,6 +95,7 @@ var MsgSettingsReadReq = function (sbp) {
   return this;
 };
 MsgSettingsReadReq.prototype = Object.create(SBP.prototype);
+MsgSettingsReadReq.prototype.msg_type = 0x00A4;
 MsgSettingsReadReq.prototype.constructor = MsgSettingsReadReq;
 MsgSettingsReadReq.prototype.parser = new Parser()
   .endianess('little')
@@ -119,6 +122,7 @@ var MsgSettingsReadResp = function (sbp) {
   return this;
 };
 MsgSettingsReadResp.prototype = Object.create(SBP.prototype);
+MsgSettingsReadResp.prototype.msg_type = 0x00A5;
 MsgSettingsReadResp.prototype.constructor = MsgSettingsReadResp;
 MsgSettingsReadResp.prototype.parser = new Parser()
   .endianess('little')
@@ -148,6 +152,7 @@ var MsgSettingsReadByIndexReq = function (sbp) {
   return this;
 };
 MsgSettingsReadByIndexReq.prototype = Object.create(SBP.prototype);
+MsgSettingsReadByIndexReq.prototype.msg_type = 0x00A2;
 MsgSettingsReadByIndexReq.prototype.constructor = MsgSettingsReadByIndexReq;
 MsgSettingsReadByIndexReq.prototype.parser = new Parser()
   .endianess('little')
@@ -178,6 +183,7 @@ var MsgSettingsReadByIndexResp = function (sbp) {
   return this;
 };
 MsgSettingsReadByIndexResp.prototype = Object.create(SBP.prototype);
+MsgSettingsReadByIndexResp.prototype.msg_type = 0x00A7;
 MsgSettingsReadByIndexResp.prototype.constructor = MsgSettingsReadByIndexResp;
 MsgSettingsReadByIndexResp.prototype.parser = new Parser()
   .endianess('little')
@@ -202,6 +208,7 @@ var MsgSettingsReadByIndexDone = function (sbp) {
   return this;
 };
 MsgSettingsReadByIndexDone.prototype = Object.create(SBP.prototype);
+MsgSettingsReadByIndexDone.prototype.msg_type = 0x00A6;
 MsgSettingsReadByIndexDone.prototype.constructor = MsgSettingsReadByIndexDone;
 MsgSettingsReadByIndexDone.prototype.parser = new Parser()
   .endianess('little');
@@ -209,10 +216,17 @@ MsgSettingsReadByIndexDone.prototype.fieldSpec = [];
 
 module.exports = {
   0x00A1: MsgSettingsSave,
+  MsgSettingsSave: MsgSettingsSave,
   0x00A0: MsgSettingsWrite,
+  MsgSettingsWrite: MsgSettingsWrite,
   0x00A4: MsgSettingsReadReq,
+  MsgSettingsReadReq: MsgSettingsReadReq,
   0x00A5: MsgSettingsReadResp,
+  MsgSettingsReadResp: MsgSettingsReadResp,
   0x00A2: MsgSettingsReadByIndexReq,
+  MsgSettingsReadByIndexReq: MsgSettingsReadByIndexReq,
   0x00A7: MsgSettingsReadByIndexResp,
+  MsgSettingsReadByIndexResp: MsgSettingsReadByIndexResp,
   0x00A6: MsgSettingsReadByIndexDone,
+  MsgSettingsReadByIndexDone: MsgSettingsReadByIndexDone,
 }

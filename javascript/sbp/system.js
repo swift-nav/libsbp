@@ -41,6 +41,7 @@ var MsgStartup = function (sbp) {
   return this;
 };
 MsgStartup.prototype = Object.create(SBP.prototype);
+MsgStartup.prototype.msg_type = 0xFF00;
 MsgStartup.prototype.constructor = MsgStartup;
 MsgStartup.prototype.parser = new Parser()
   .endianess('little')
@@ -72,6 +73,7 @@ var MsgHeartbeat = function (sbp) {
   return this;
 };
 MsgHeartbeat.prototype = Object.create(SBP.prototype);
+MsgHeartbeat.prototype.msg_type = 0xFFFF;
 MsgHeartbeat.prototype.constructor = MsgHeartbeat;
 MsgHeartbeat.prototype.parser = new Parser()
   .endianess('little')
@@ -81,5 +83,7 @@ MsgHeartbeat.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
 module.exports = {
   0xFF00: MsgStartup,
+  MsgStartup: MsgStartup,
   0xFFFF: MsgHeartbeat,
+  MsgHeartbeat: MsgHeartbeat,
 }

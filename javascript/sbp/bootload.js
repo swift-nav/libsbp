@@ -40,6 +40,7 @@ var MsgBootloaderHandshakeReq = function (sbp) {
   return this;
 };
 MsgBootloaderHandshakeReq.prototype = Object.create(SBP.prototype);
+MsgBootloaderHandshakeReq.prototype.msg_type = 0x00B3;
 MsgBootloaderHandshakeReq.prototype.constructor = MsgBootloaderHandshakeReq;
 MsgBootloaderHandshakeReq.prototype.parser = new Parser()
   .endianess('little');
@@ -67,6 +68,7 @@ var MsgBootloaderHandshakeResp = function (sbp) {
   return this;
 };
 MsgBootloaderHandshakeResp.prototype = Object.create(SBP.prototype);
+MsgBootloaderHandshakeResp.prototype.msg_type = 0x00B4;
 MsgBootloaderHandshakeResp.prototype.constructor = MsgBootloaderHandshakeResp;
 MsgBootloaderHandshakeResp.prototype.parser = new Parser()
   .endianess('little')
@@ -94,6 +96,7 @@ var MsgBootloaderJumpToApp = function (sbp) {
   return this;
 };
 MsgBootloaderJumpToApp.prototype = Object.create(SBP.prototype);
+MsgBootloaderJumpToApp.prototype.msg_type = 0x00B1;
 MsgBootloaderJumpToApp.prototype.constructor = MsgBootloaderJumpToApp;
 MsgBootloaderJumpToApp.prototype.parser = new Parser()
   .endianess('little')
@@ -120,6 +123,7 @@ var MsgNapDeviceDnaReq = function (sbp) {
   return this;
 };
 MsgNapDeviceDnaReq.prototype = Object.create(SBP.prototype);
+MsgNapDeviceDnaReq.prototype.msg_type = 0x00DE;
 MsgNapDeviceDnaReq.prototype.constructor = MsgNapDeviceDnaReq;
 MsgNapDeviceDnaReq.prototype.parser = new Parser()
   .endianess('little');
@@ -147,6 +151,7 @@ var MsgNapDeviceDnaResp = function (sbp) {
   return this;
 };
 MsgNapDeviceDnaResp.prototype = Object.create(SBP.prototype);
+MsgNapDeviceDnaResp.prototype.msg_type = 0x00DD;
 MsgNapDeviceDnaResp.prototype.constructor = MsgNapDeviceDnaResp;
 MsgNapDeviceDnaResp.prototype.parser = new Parser()
   .endianess('little')
@@ -172,6 +177,7 @@ var MsgBootloaderHandshakeDepA = function (sbp) {
   return this;
 };
 MsgBootloaderHandshakeDepA.prototype = Object.create(SBP.prototype);
+MsgBootloaderHandshakeDepA.prototype.msg_type = 0x00B0;
 MsgBootloaderHandshakeDepA.prototype.constructor = MsgBootloaderHandshakeDepA;
 MsgBootloaderHandshakeDepA.prototype.parser = new Parser()
   .endianess('little')
@@ -181,9 +187,15 @@ MsgBootloaderHandshakeDepA.prototype.fieldSpec.push(['handshake', 'array', 'writ
 
 module.exports = {
   0x00B3: MsgBootloaderHandshakeReq,
+  MsgBootloaderHandshakeReq: MsgBootloaderHandshakeReq,
   0x00B4: MsgBootloaderHandshakeResp,
+  MsgBootloaderHandshakeResp: MsgBootloaderHandshakeResp,
   0x00B1: MsgBootloaderJumpToApp,
+  MsgBootloaderJumpToApp: MsgBootloaderJumpToApp,
   0x00DE: MsgNapDeviceDnaReq,
+  MsgNapDeviceDnaReq: MsgNapDeviceDnaReq,
   0x00DD: MsgNapDeviceDnaResp,
+  MsgNapDeviceDnaResp: MsgNapDeviceDnaResp,
   0x00B0: MsgBootloaderHandshakeDepA,
+  MsgBootloaderHandshakeDepA: MsgBootloaderHandshakeDepA,
 }
