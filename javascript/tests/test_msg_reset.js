@@ -31,6 +31,7 @@ describe('encode and decode a MSG_RESET message', function () {
     var msg = new MsgReset(msgEnvelope);
     var msgBuffer = msg.toBuffer();
 
+    assert(msgBuffer instanceof Buffer);
     assert(msgBuffer.equals(decode(msgBuffer).toBuffer()));
   });
 });
