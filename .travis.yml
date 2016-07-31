@@ -22,8 +22,12 @@ before_install:
   - mkdir -p $HOME/.local/bin
   - export PATH=$HOME/.local/bin:$PATH
   - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C $HOME/.local/bin '*/stack'
-  - curl -sL https://deb.nodesource.com/setup_6.x | bash -
-  - apt-get install -y nodejs
+  # Install node 6; from https://github.com/nodejs/nan/blob/master/.travis.yml
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 6
+  - npm install npm
+  - mv node_modules npm
+  - npm/.bin/npm --version
+  - npm/.bin/npm install
 
 install:
   - tlmgr update --self
