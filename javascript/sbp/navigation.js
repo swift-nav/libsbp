@@ -49,10 +49,10 @@ var Parser = require('binary-parser').Parser;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGpsTime = function (sbp) {
+var MsgGpsTime = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_GPS_TIME";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -87,10 +87,10 @@ MsgGpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgDops = function (sbp) {
+var MsgDops = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_DOPS";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -134,10 +134,10 @@ MsgDops.prototype.fieldSpec.push(['vdop', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPosEcef = function (sbp) {
+var MsgPosEcef = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_POS_ECEF";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -184,10 +184,10 @@ MsgPosEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPosLlh = function (sbp) {
+var MsgPosLlh = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_POS_LLH";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -233,10 +233,10 @@ MsgPosLlh.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBaselineEcef = function (sbp) {
+var MsgBaselineEcef = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BASELINE_ECEF";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -282,10 +282,10 @@ MsgBaselineEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBaselineNed = function (sbp) {
+var MsgBaselineNed = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BASELINE_NED";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -330,10 +330,10 @@ MsgBaselineNed.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelEcef = function (sbp) {
+var MsgVelEcef = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_ECEF";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -378,10 +378,10 @@ MsgVelEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelNed = function (sbp) {
+var MsgVelNed = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_NED";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -423,10 +423,10 @@ MsgVelNed.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBaselineHeading = function (sbp) {
+var MsgBaselineHeading = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BASELINE_HEADING";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };

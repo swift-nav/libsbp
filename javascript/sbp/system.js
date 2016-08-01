@@ -33,10 +33,10 @@ var Parser = require('binary-parser').Parser;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgStartup = function (sbp) {
+var MsgStartup = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_STARTUP";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -65,10 +65,10 @@ MsgStartup.prototype.fieldSpec.push(['reserved', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgHeartbeat = function (sbp) {
+var MsgHeartbeat = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_HEARTBEAT";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };

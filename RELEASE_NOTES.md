@@ -6,10 +6,16 @@ For a detailed index of changes, please see the
 
 Contents
 --------
+ * [v1.1.0](#v1.1.0)
  * [v1.0.2](#v1.0.2)
  * [v1.0.1](#v1.0.1)
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
+
+v1.1.0 <a name="v1.1.0"></a>
+--------------------------
+* Added `MSG_SETTINGS_REGISTER` message
+* More improvements to JavaScript to add a `constructMsg` interface (`sbp/construct.js`).
 
 v1.0.2 <a name="v1.0.2"></a>
 --------------------------

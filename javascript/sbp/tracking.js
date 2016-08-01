@@ -35,10 +35,10 @@ var GnssSignal = require("./gnss_signal").GnssSignal;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var TrackingChannelState = function (sbp) {
+var TrackingChannelState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "TrackingChannelState";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -66,10 +66,10 @@ TrackingChannelState.prototype.fieldSpec.push(['cn0', 'writeFloatLE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingState = function (sbp) {
+var MsgTrackingState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_TRACKING_STATE";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -93,10 +93,10 @@ MsgTrackingState.prototype.fieldSpec.push(['states', 'array', TrackingChannelSta
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var TrackingChannelCorrelation = function (sbp) {
+var TrackingChannelCorrelation = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "TrackingChannelCorrelation";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -123,10 +123,10 @@ TrackingChannelCorrelation.prototype.fieldSpec.push(['Q', 'writeInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingIq = function (sbp) {
+var MsgTrackingIq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_TRACKING_IQ";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -155,10 +155,10 @@ MsgTrackingIq.prototype.fieldSpec.push(['corrs', 'array', TrackingChannelCorrela
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var TrackingChannelStateDepA = function (sbp) {
+var TrackingChannelStateDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "TrackingChannelStateDepA";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -184,10 +184,10 @@ TrackingChannelStateDepA.prototype.fieldSpec.push(['cn0', 'writeFloatLE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingStateDepA = function (sbp) {
+var MsgTrackingStateDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_TRACKING_STATE_DEP_A";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };

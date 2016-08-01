@@ -33,10 +33,10 @@ var Parser = require('binary-parser').Parser;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var GnssSignal = function (sbp) {
+var GnssSignal = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "GnssSignal";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };

@@ -31,10 +31,10 @@ var GnssSignal = require("./gnss_signal").GnssSignal;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAlmanac = function (sbp) {
+var MsgAlmanac = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ALMANAC";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -53,10 +53,10 @@ MsgAlmanac.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSetTime = function (sbp) {
+var MsgSetTime = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SET_TIME";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -74,10 +74,10 @@ MsgSetTime.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgReset = function (sbp) {
+var MsgReset = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_RESET";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -96,10 +96,10 @@ MsgReset.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgCwResults = function (sbp) {
+var MsgCwResults = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_CW_RESULTS";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -118,10 +118,10 @@ MsgCwResults.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgCwStart = function (sbp) {
+var MsgCwStart = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_CW_START";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -143,10 +143,10 @@ MsgCwStart.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgResetFilters = function (sbp) {
+var MsgResetFilters = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_RESET_FILTERS";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -169,10 +169,10 @@ MsgResetFilters.prototype.fieldSpec.push(['filter', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgInitBase = function (sbp) {
+var MsgInitBase = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_INIT_BASE";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -198,10 +198,10 @@ MsgInitBase.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgThreadState = function (sbp) {
+var MsgThreadState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_THREAD_STATE";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -234,10 +234,10 @@ MsgThreadState.prototype.fieldSpec.push(['stack_free', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var UARTChannel = function (sbp) {
+var UARTChannel = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "UARTChannel";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -276,10 +276,10 @@ UARTChannel.prototype.fieldSpec.push(['rx_buffer_level', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var Period = function (sbp) {
+var Period = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "Period";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -313,10 +313,10 @@ Period.prototype.fieldSpec.push(['current', 'writeInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var Latency = function (sbp) {
+var Latency = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "Latency";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -354,10 +354,10 @@ Latency.prototype.fieldSpec.push(['current', 'writeInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgUartState = function (sbp) {
+var MsgUartState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_UART_STATE";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -391,10 +391,10 @@ MsgUartState.prototype.fieldSpec.push(['obs_period', Period.prototype.fieldSpec]
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgUartStateDepa = function (sbp) {
+var MsgUartStateDepa = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_UART_STATE_DEPA";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -425,10 +425,10 @@ MsgUartStateDepa.prototype.fieldSpec.push(['latency', Latency.prototype.fieldSpe
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgIarState = function (sbp) {
+var MsgIarState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_IAR_STATE";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -453,10 +453,10 @@ MsgIarState.prototype.fieldSpec.push(['num_hyps', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgMaskSatellite = function (sbp) {
+var MsgMaskSatellite = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_MASK_SATELLITE";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
