@@ -39,10 +39,10 @@ var GnssSignal = require("./gnss_signal").GnssSignal;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAcqResult = function (sbp) {
+var MsgAcqResult = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ACQ_RESULT";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -75,10 +75,10 @@ MsgAcqResult.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAcqResultDepA = function (sbp) {
+var MsgAcqResultDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ACQ_RESULT_DEP_A";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };

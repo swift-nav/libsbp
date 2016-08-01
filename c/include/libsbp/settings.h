@@ -120,6 +120,20 @@ typedef struct __attribute__((packed)) {
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE 0x00A6
 
 
+/** Register setting and default value (device => host)
+ *
+ * This message registers the presence and default value of a setting
+ * with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE
+ * for this setting to set the initial value.
+ */
+#define SBP_MSG_SETTINGS_REGISTER           0x00AE
+typedef struct __attribute__((packed)) {
+  char setting[0]; /**< A NULL-terminated and delimited string with contents
+[SECTION_SETTING, SETTING, VALUE].
+ */
+} msg_settings_register_t;
+
+
 /** \} */
 
 #endif /* LIBSBP_SETTINGS_MESSAGES_H */

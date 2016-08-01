@@ -109,6 +109,7 @@ data SBPMsg =
    | SBPMsgSettingsReadByIndexResp MsgSettingsReadByIndexResp Msg
    | SBPMsgSettingsReadReq MsgSettingsReadReq Msg
    | SBPMsgSettingsReadResp MsgSettingsReadResp Msg
+   | SBPMsgSettingsRegister MsgSettingsRegister Msg
    | SBPMsgSettingsSave MsgSettingsSave Msg
    | SBPMsgSettingsWrite MsgSettingsWrite Msg
    | SBPMsgStartup MsgStartup Msg
@@ -194,6 +195,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgSettingsReadReq = SBPMsgSettingsReadReq (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgSettingsReadResp = SBPMsgSettingsReadResp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgSettingsRegister = SBPMsgSettingsRegister (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgSettingsSave = SBPMsgSettingsSave (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgSettingsWrite = SBPMsgSettingsWrite (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict _msgSBPPayload)) m
@@ -271,6 +273,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgSettingsReadByIndexResp _ m) = put m
       encode' (SBPMsgSettingsReadReq _ m) = put m
       encode' (SBPMsgSettingsReadResp _ m) = put m
+      encode' (SBPMsgSettingsRegister _ m) = put m
       encode' (SBPMsgSettingsSave _ m) = put m
       encode' (SBPMsgSettingsWrite _ m) = put m
       encode' (SBPMsgStartup _ m) = put m
@@ -351,6 +354,7 @@ instance FromJSON SBPMsg where
         | msgType == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp <$> parseJSON obj <*> parseJSON obj
         | msgType == msgSettingsReadReq = SBPMsgSettingsReadReq <$> parseJSON obj <*> parseJSON obj
         | msgType == msgSettingsReadResp = SBPMsgSettingsReadResp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgSettingsRegister = SBPMsgSettingsRegister <$> parseJSON obj <*> parseJSON obj
         | msgType == msgSettingsSave = SBPMsgSettingsSave <$> parseJSON obj <*> parseJSON obj
         | msgType == msgSettingsWrite = SBPMsgSettingsWrite <$> parseJSON obj <*> parseJSON obj
         | msgType == msgStartup = SBPMsgStartup <$> parseJSON obj <*> parseJSON obj
@@ -433,6 +437,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSettingsReadByIndexResp n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgSettingsReadReq n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgSettingsReadResp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgSettingsRegister n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgSettingsSave n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgSettingsWrite n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgStartup n m) = toJSON n `mergeValues` toJSON m
@@ -509,6 +514,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSettingsReadByIndexResp n m) = SBPMsgSettingsReadByIndexResp n <$> f m
   msg f (SBPMsgSettingsReadReq n m) = SBPMsgSettingsReadReq n <$> f m
   msg f (SBPMsgSettingsReadResp n m) = SBPMsgSettingsReadResp n <$> f m
+  msg f (SBPMsgSettingsRegister n m) = SBPMsgSettingsRegister n <$> f m
   msg f (SBPMsgSettingsSave n m) = SBPMsgSettingsSave n <$> f m
   msg f (SBPMsgSettingsWrite n m) = SBPMsgSettingsWrite n <$> f m
   msg f (SBPMsgStartup n m) = SBPMsgStartup n <$> f m

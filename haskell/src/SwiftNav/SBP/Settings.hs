@@ -217,3 +217,31 @@ $(deriveSBP 'msgSettingsReadByIndexDone ''MsgSettingsReadByIndexDone)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadByIndexDone_" . stripPrefix "_msgSettingsReadByIndexDone_"}
              ''MsgSettingsReadByIndexDone)
 $(makeLenses ''MsgSettingsReadByIndexDone)
+
+msgSettingsRegister :: Word16
+msgSettingsRegister = 0x00AE
+
+-- | SBP class for message MSG_SETTINGS_REGISTER (0x00AE).
+--
+-- This message registers the presence and default value of a setting with a
+-- settings daemon.  The host should reply with MSG_SETTINGS_WRITE for this
+-- setting to set the initial value.
+data MsgSettingsRegister = MsgSettingsRegister
+  { _msgSettingsRegister_setting :: ByteString
+    -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
+    -- SETTING, VALUE].
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSettingsRegister where
+  get = do
+    _msgSettingsRegister_setting <- liftM toStrict getRemainingLazyByteString
+    return MsgSettingsRegister {..}
+
+  put MsgSettingsRegister {..} = do
+    putByteString _msgSettingsRegister_setting
+
+$(deriveSBP 'msgSettingsRegister ''MsgSettingsRegister)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsRegister_" . stripPrefix "_msgSettingsRegister_"}
+             ''MsgSettingsRegister)
+$(makeLenses ''MsgSettingsRegister)

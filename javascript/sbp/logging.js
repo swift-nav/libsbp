@@ -34,10 +34,10 @@ var Parser = require('binary-parser').Parser;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLog = function (sbp) {
+var MsgLog = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_LOG";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -62,10 +62,10 @@ MsgLog.prototype.fieldSpec.push(['text', 'string']);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTweet = function (sbp) {
+var MsgTweet = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_TWEET";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -88,10 +88,10 @@ MsgTweet.prototype.fieldSpec.push(['tweet', 'string']);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPrintDep = function (sbp) {
+var MsgPrintDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_PRINT_DEP";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };

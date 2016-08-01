@@ -9,12 +9,18 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+var mkBuf = function (size, writer, payload, offset) {
+  var b = new Buffer(size);
+  b[writer](payload, offset || 0);
+  return b;
+}
+
 /**
  * Parent prototypal class for all SBP message objects.
  */
 function SBP (sbp) {
   this.messageType = "raw";
-  this.sbp = sbp;
+  this.sbp = sbp || {};
   this.fields = {};
 
   return this;
@@ -73,33 +79,48 @@ SBP.prototype.payloadToBuffer = function payloadToBuffer (fieldSpec, data) {
 };
 
 /**
+ * Make a buffer for the message length field.
+ */
+SBP.prototype.getLengthBuffer = function getLengthBuffer () {
+  return mkBuf(1, 'writeUInt8', this.length || this.sbp.length, 0);
+};
+
+/**
+ * Make a buffer for the message sender field.
+ */
+SBP.prototype.getSenderBuffer = function getSenderBuffer () {
+  return mkBuf(2, 'writeUInt16LE', this.sender || this.sbp.sender, 0);
+};
+
+/**
+ * Make a buffer for the message preamble field.
+ */
+SBP.prototype.getPreambleBuffer = function getPreambleBuffer () {
+  return mkBuf(1, 'writeUInt8', this.preamble || this.sbp.preamble, 0);
+};
+
+/**
+ * Make a buffer for the message type field.
+ */
+SBP.prototype.getMsgTypeBuffer = function getMsgTypeBuffer () {
+  return mkBuf(2, 'writeUInt16LE', this.msg_type || this.sbp.msg_type, 0);
+};
+
+/**
  * Convert a message to its binary representation.
  */
 SBP.prototype.toBuffer = function toBuffer () {
   var payload = this.payloadToBuffer();
-  var buffers = [];
-  var b;
+  var crcBuf = mkBuf(2, 'writeUInt16LE', this.crc || this.sbp.crc, 0);
+  var buffers = [
+    this.getPreambleBuffer(),
+    this.getMsgTypeBuffer(),
+    this.getSenderBuffer(),
+    this.getLengthBuffer()
+  ];
 
-  b = new Buffer(1);
-  b.writeUInt8(this.sbp.preamble, 0);
-  buffers.push(b);
 
-  b = new Buffer(2);
-  b.writeUInt16LE(this.sbp.msg_type, 0);
-  buffers.push(b);
-
-  b = new Buffer(2);
-  b.writeUInt16LE(this.sbp.sender, 0);
-  buffers.push(b);
-
-  b = new Buffer(1);
-  b.writeUInt8(this.sbp.length, 0);
-  buffers.push(b);
-
-  b = new Buffer(2);
-  b.writeUInt16LE(this.sbp.crc, 0);
-
-  return Buffer.concat(buffers.concat(payload).concat(b));
+  return Buffer.concat(buffers.concat(payload).concat(crcBuf));
 };
 
 /**

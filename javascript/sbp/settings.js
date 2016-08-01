@@ -33,10 +33,10 @@ var Parser = require('binary-parser').Parser;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsSave = function (sbp) {
+var MsgSettingsSave = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_SAVE";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -59,10 +59,10 @@ MsgSettingsSave.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsWrite = function (sbp) {
+var MsgSettingsWrite = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_WRITE";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -87,10 +87,10 @@ MsgSettingsWrite.prototype.fieldSpec.push(['setting', 'string']);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsReadReq = function (sbp) {
+var MsgSettingsReadReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_READ_REQ";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -114,10 +114,10 @@ MsgSettingsReadReq.prototype.fieldSpec.push(['setting', 'string']);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsReadResp = function (sbp) {
+var MsgSettingsReadResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_READ_RESP";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -144,10 +144,10 @@ MsgSettingsReadResp.prototype.fieldSpec.push(['setting', 'string']);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsReadByIndexReq = function (sbp) {
+var MsgSettingsReadByIndexReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_READ_BY_INDEX_REQ";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -175,10 +175,10 @@ MsgSettingsReadByIndexReq.prototype.fieldSpec.push(['index', 'writeUInt16LE', 2]
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsReadByIndexResp = function (sbp) {
+var MsgSettingsReadByIndexResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_READ_BY_INDEX_RESP";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -200,10 +200,10 @@ MsgSettingsReadByIndexResp.prototype.fieldSpec.push(['setting', 'string']);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsReadByIndexDone = function (sbp) {
+var MsgSettingsReadByIndexDone = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_READ_BY_INDEX_DONE";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -213,6 +213,35 @@ MsgSettingsReadByIndexDone.prototype.constructor = MsgSettingsReadByIndexDone;
 MsgSettingsReadByIndexDone.prototype.parser = new Parser()
   .endianess('little');
 MsgSettingsReadByIndexDone.prototype.fieldSpec = [];
+
+/**
+ * SBP class for message MSG_SETTINGS_REGISTER (0x00AE).
+ *
+ * This message registers the presence and default value of a setting with a
+ * settings daemon.  The host should reply with MSG_SETTINGS_WRITE for this setting
+ * to set the initial value.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field setting string A NULL-terminated and delimited string with contents [SECTION_SETTING, SETTING,
+ *   VALUE].
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSettingsRegister = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SETTINGS_REGISTER";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSettingsRegister.prototype = Object.create(SBP.prototype);
+MsgSettingsRegister.prototype.msg_type = 0x00AE;
+MsgSettingsRegister.prototype.constructor = MsgSettingsRegister;
+MsgSettingsRegister.prototype.parser = new Parser()
+  .endianess('little')
+  .string('setting', { greedy: true });
+MsgSettingsRegister.prototype.fieldSpec = [];
+MsgSettingsRegister.prototype.fieldSpec.push(['setting', 'string']);
 
 module.exports = {
   0x00A1: MsgSettingsSave,
@@ -229,4 +258,6 @@ module.exports = {
   MsgSettingsReadByIndexResp: MsgSettingsReadByIndexResp,
   0x00A6: MsgSettingsReadByIndexDone,
   MsgSettingsReadByIndexDone: MsgSettingsReadByIndexDone,
+  0x00AE: MsgSettingsRegister,
+  MsgSettingsRegister: MsgSettingsRegister,
 }

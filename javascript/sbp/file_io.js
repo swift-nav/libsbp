@@ -45,10 +45,10 @@ var Parser = require('binary-parser').Parser;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioReadReq = function (sbp) {
+var MsgFileioReadReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_READ_REQ";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -81,10 +81,10 @@ MsgFileioReadReq.prototype.fieldSpec.push(['filename', 'string']);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioReadResp = function (sbp) {
+var MsgFileioReadResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_READ_RESP";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -118,10 +118,10 @@ MsgFileioReadResp.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8', f
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioReadDirReq = function (sbp) {
+var MsgFileioReadDirReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_READ_DIR_REQ";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -153,10 +153,10 @@ MsgFileioReadDirReq.prototype.fieldSpec.push(['dirname', 'string']);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioReadDirResp = function (sbp) {
+var MsgFileioReadDirResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_READ_DIR_RESP";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -184,10 +184,10 @@ MsgFileioReadDirResp.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8'
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioRemove = function (sbp) {
+var MsgFileioRemove = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_REMOVE";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -218,10 +218,10 @@ MsgFileioRemove.prototype.fieldSpec.push(['filename', 'string']);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioWriteReq = function (sbp) {
+var MsgFileioWriteReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_WRITE_REQ";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
@@ -253,10 +253,10 @@ MsgFileioWriteReq.prototype.fieldSpec.push(['data', 'array', 'writeUInt8', funct
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioWriteResp = function (sbp) {
+var MsgFileioWriteResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_WRITE_RESP";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };

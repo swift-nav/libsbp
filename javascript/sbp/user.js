@@ -32,10 +32,10 @@ var Parser = require('binary-parser').Parser;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgUserData = function (sbp) {
+var MsgUserData = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_USER_DATA";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };

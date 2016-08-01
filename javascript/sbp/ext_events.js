@@ -37,10 +37,10 @@ var Parser = require('binary-parser').Parser;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgExtEvent = function (sbp) {
+var MsgExtEvent = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EXT_EVENT";
-  this.fields = this.parser.parse(sbp.payload);
+  this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };

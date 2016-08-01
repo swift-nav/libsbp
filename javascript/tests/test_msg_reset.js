@@ -11,8 +11,7 @@
 
 var assert = require('assert');
 var path = require('path');
-var sbp = require(path.resolve(__dirname, '../sbp/'));
-var SBP = require(path.resolve(__dirname, '../sbp/sbp'));
+var constructMsg = require(path.resolve(__dirname, '../sbp/construct'));
 var sbpPiksi = require(path.resolve(__dirname, '../sbp/piksi'));
 var MsgReset = sbpPiksi.MsgReset;
 
@@ -20,15 +19,7 @@ var decode = require(path.resolve(__dirname, '../sbp/')).decode;
 
 describe('encode and decode a MSG_RESET message', function () {
   it('should encode, and round-trip a MSG_RESET message', function () {
-    var msgEnvelope = new SBP();
-    msgEnvelope.preamble = sbp.preambleByte;
-    msgEnvelope.msg_type = MsgReset.prototype.msg_type;
-    msgEnvelope.sender = 0; // see SBP.pdf documentation
-    msgEnvelope.payload = new Buffer([]);
-    msgEnvelope.length = msgEnvelope.payload.length;
-    msgEnvelope.crc = sbp.crc16(msgEnvelope.payload);
-
-    var msg = new MsgReset(msgEnvelope);
+    var msg = constructMsg(MsgReset, {});
     var msgBuffer = msg.toBuffer();
 
     assert(msgBuffer instanceof Buffer);

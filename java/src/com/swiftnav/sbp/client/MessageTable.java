@@ -55,6 +55,7 @@ import com.swiftnav.sbp.settings.MsgSettingsReadResp;
 import com.swiftnav.sbp.settings.MsgSettingsReadByIndexReq;
 import com.swiftnav.sbp.settings.MsgSettingsReadByIndexResp;
 import com.swiftnav.sbp.settings.MsgSettingsReadByIndexDone;
+import com.swiftnav.sbp.settings.MsgSettingsRegister;
 import com.swiftnav.sbp.navigation.MsgGPSTime;
 import com.swiftnav.sbp.navigation.MsgDops;
 import com.swiftnav.sbp.navigation.MsgPosECEF;
@@ -171,6 +172,8 @@ final class MessageTable {
                 return new MsgSettingsReadByIndexResp(msg);
             case MsgSettingsReadByIndexDone.TYPE:
                 return new MsgSettingsReadByIndexDone(msg);
+            case MsgSettingsRegister.TYPE:
+                return new MsgSettingsRegister(msg);
             case MsgGPSTime.TYPE:
                 return new MsgGPSTime(msg);
             case MsgDops.TYPE:
