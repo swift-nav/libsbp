@@ -53,6 +53,7 @@ var MsgFileioReadReq = function (sbp, fields) {
   return this;
 };
 MsgFileioReadReq.prototype = Object.create(SBP.prototype);
+MsgFileioReadReq.prototype.messageType = "MSG_FILEIO_READ_REQ";
 MsgFileioReadReq.prototype.msg_type = 0x00A8;
 MsgFileioReadReq.prototype.constructor = MsgFileioReadReq;
 MsgFileioReadReq.prototype.parser = new Parser()
@@ -89,6 +90,7 @@ var MsgFileioReadResp = function (sbp, fields) {
   return this;
 };
 MsgFileioReadResp.prototype = Object.create(SBP.prototype);
+MsgFileioReadResp.prototype.messageType = "MSG_FILEIO_READ_RESP";
 MsgFileioReadResp.prototype.msg_type = 0x00A3;
 MsgFileioReadResp.prototype.constructor = MsgFileioReadResp;
 MsgFileioReadResp.prototype.parser = new Parser()
@@ -126,6 +128,7 @@ var MsgFileioReadDirReq = function (sbp, fields) {
   return this;
 };
 MsgFileioReadDirReq.prototype = Object.create(SBP.prototype);
+MsgFileioReadDirReq.prototype.messageType = "MSG_FILEIO_READ_DIR_REQ";
 MsgFileioReadDirReq.prototype.msg_type = 0x00A9;
 MsgFileioReadDirReq.prototype.constructor = MsgFileioReadDirReq;
 MsgFileioReadDirReq.prototype.parser = new Parser()
@@ -161,6 +164,7 @@ var MsgFileioReadDirResp = function (sbp, fields) {
   return this;
 };
 MsgFileioReadDirResp.prototype = Object.create(SBP.prototype);
+MsgFileioReadDirResp.prototype.messageType = "MSG_FILEIO_READ_DIR_RESP";
 MsgFileioReadDirResp.prototype.msg_type = 0x00AA;
 MsgFileioReadDirResp.prototype.constructor = MsgFileioReadDirResp;
 MsgFileioReadDirResp.prototype.parser = new Parser()
@@ -192,6 +196,7 @@ var MsgFileioRemove = function (sbp, fields) {
   return this;
 };
 MsgFileioRemove.prototype = Object.create(SBP.prototype);
+MsgFileioRemove.prototype.messageType = "MSG_FILEIO_REMOVE";
 MsgFileioRemove.prototype.msg_type = 0x00AC;
 MsgFileioRemove.prototype.constructor = MsgFileioRemove;
 MsgFileioRemove.prototype.parser = new Parser()
@@ -226,6 +231,7 @@ var MsgFileioWriteReq = function (sbp, fields) {
   return this;
 };
 MsgFileioWriteReq.prototype = Object.create(SBP.prototype);
+MsgFileioWriteReq.prototype.messageType = "MSG_FILEIO_WRITE_REQ";
 MsgFileioWriteReq.prototype.msg_type = 0x00AD;
 MsgFileioWriteReq.prototype.constructor = MsgFileioWriteReq;
 MsgFileioWriteReq.prototype.parser = new Parser()
@@ -261,6 +267,7 @@ var MsgFileioWriteResp = function (sbp, fields) {
   return this;
 };
 MsgFileioWriteResp.prototype = Object.create(SBP.prototype);
+MsgFileioWriteResp.prototype.messageType = "MSG_FILEIO_WRITE_RESP";
 MsgFileioWriteResp.prototype.msg_type = 0x00AB;
 MsgFileioWriteResp.prototype.constructor = MsgFileioWriteResp;
 MsgFileioWriteResp.prototype.parser = new Parser()

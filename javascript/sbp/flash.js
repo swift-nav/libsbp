@@ -48,6 +48,7 @@ var MsgFlashProgram = function (sbp, fields) {
   return this;
 };
 MsgFlashProgram.prototype = Object.create(SBP.prototype);
+MsgFlashProgram.prototype.messageType = "MSG_FLASH_PROGRAM";
 MsgFlashProgram.prototype.msg_type = 0x00E6;
 MsgFlashProgram.prototype.constructor = MsgFlashProgram;
 MsgFlashProgram.prototype.parser = new Parser()
@@ -82,6 +83,7 @@ var MsgFlashDone = function (sbp, fields) {
   return this;
 };
 MsgFlashDone.prototype = Object.create(SBP.prototype);
+MsgFlashDone.prototype.messageType = "MSG_FLASH_DONE";
 MsgFlashDone.prototype.msg_type = 0x00E0;
 MsgFlashDone.prototype.constructor = MsgFlashDone;
 MsgFlashDone.prototype.parser = new Parser()
@@ -114,6 +116,7 @@ var MsgFlashReadReq = function (sbp, fields) {
   return this;
 };
 MsgFlashReadReq.prototype = Object.create(SBP.prototype);
+MsgFlashReadReq.prototype.messageType = "MSG_FLASH_READ_REQ";
 MsgFlashReadReq.prototype.msg_type = 0x00E7;
 MsgFlashReadReq.prototype.constructor = MsgFlashReadReq;
 MsgFlashReadReq.prototype.parser = new Parser()
@@ -150,6 +153,7 @@ var MsgFlashReadResp = function (sbp, fields) {
   return this;
 };
 MsgFlashReadResp.prototype = Object.create(SBP.prototype);
+MsgFlashReadResp.prototype.messageType = "MSG_FLASH_READ_RESP";
 MsgFlashReadResp.prototype.msg_type = 0x00E1;
 MsgFlashReadResp.prototype.constructor = MsgFlashReadResp;
 MsgFlashReadResp.prototype.parser = new Parser()
@@ -184,6 +188,7 @@ var MsgFlashErase = function (sbp, fields) {
   return this;
 };
 MsgFlashErase.prototype = Object.create(SBP.prototype);
+MsgFlashErase.prototype.messageType = "MSG_FLASH_ERASE";
 MsgFlashErase.prototype.msg_type = 0x00E2;
 MsgFlashErase.prototype.constructor = MsgFlashErase;
 MsgFlashErase.prototype.parser = new Parser()
@@ -213,6 +218,7 @@ var MsgStmFlashLockSector = function (sbp, fields) {
   return this;
 };
 MsgStmFlashLockSector.prototype = Object.create(SBP.prototype);
+MsgStmFlashLockSector.prototype.messageType = "MSG_STM_FLASH_LOCK_SECTOR";
 MsgStmFlashLockSector.prototype.msg_type = 0x00E3;
 MsgStmFlashLockSector.prototype.constructor = MsgStmFlashLockSector;
 MsgStmFlashLockSector.prototype.parser = new Parser()
@@ -240,6 +246,7 @@ var MsgStmFlashUnlockSector = function (sbp, fields) {
   return this;
 };
 MsgStmFlashUnlockSector.prototype = Object.create(SBP.prototype);
+MsgStmFlashUnlockSector.prototype.messageType = "MSG_STM_FLASH_UNLOCK_SECTOR";
 MsgStmFlashUnlockSector.prototype.msg_type = 0x00E4;
 MsgStmFlashUnlockSector.prototype.constructor = MsgStmFlashUnlockSector;
 MsgStmFlashUnlockSector.prototype.parser = new Parser()
@@ -265,6 +272,7 @@ var MsgStmUniqueIdReq = function (sbp, fields) {
   return this;
 };
 MsgStmUniqueIdReq.prototype = Object.create(SBP.prototype);
+MsgStmUniqueIdReq.prototype.messageType = "MSG_STM_UNIQUE_ID_REQ";
 MsgStmUniqueIdReq.prototype.msg_type = 0x00E8;
 MsgStmUniqueIdReq.prototype.constructor = MsgStmUniqueIdReq;
 MsgStmUniqueIdReq.prototype.parser = new Parser()
@@ -291,6 +299,7 @@ var MsgStmUniqueIdResp = function (sbp, fields) {
   return this;
 };
 MsgStmUniqueIdResp.prototype = Object.create(SBP.prototype);
+MsgStmUniqueIdResp.prototype.messageType = "MSG_STM_UNIQUE_ID_RESP";
 MsgStmUniqueIdResp.prototype.msg_type = 0x00E5;
 MsgStmUniqueIdResp.prototype.constructor = MsgStmUniqueIdResp;
 MsgStmUniqueIdResp.prototype.parser = new Parser()
@@ -318,6 +327,7 @@ var MsgM25FlashWriteStatus = function (sbp, fields) {
   return this;
 };
 MsgM25FlashWriteStatus.prototype = Object.create(SBP.prototype);
+MsgM25FlashWriteStatus.prototype.messageType = "MSG_M25_FLASH_WRITE_STATUS";
 MsgM25FlashWriteStatus.prototype.msg_type = 0x00F3;
 MsgM25FlashWriteStatus.prototype.constructor = MsgM25FlashWriteStatus;
 MsgM25FlashWriteStatus.prototype.parser = new Parser()

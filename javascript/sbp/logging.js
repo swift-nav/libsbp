@@ -42,6 +42,7 @@ var MsgLog = function (sbp, fields) {
   return this;
 };
 MsgLog.prototype = Object.create(SBP.prototype);
+MsgLog.prototype.messageType = "MSG_LOG";
 MsgLog.prototype.msg_type = 0x0401;
 MsgLog.prototype.constructor = MsgLog;
 MsgLog.prototype.parser = new Parser()
@@ -70,6 +71,7 @@ var MsgTweet = function (sbp, fields) {
   return this;
 };
 MsgTweet.prototype = Object.create(SBP.prototype);
+MsgTweet.prototype.messageType = "MSG_TWEET";
 MsgTweet.prototype.msg_type = 0x0012;
 MsgTweet.prototype.constructor = MsgTweet;
 MsgTweet.prototype.parser = new Parser()
@@ -96,6 +98,7 @@ var MsgPrintDep = function (sbp, fields) {
   return this;
 };
 MsgPrintDep.prototype = Object.create(SBP.prototype);
+MsgPrintDep.prototype.messageType = "MSG_PRINT_DEP";
 MsgPrintDep.prototype.msg_type = 0x0010;
 MsgPrintDep.prototype.constructor = MsgPrintDep;
 MsgPrintDep.prototype.parser = new Parser()

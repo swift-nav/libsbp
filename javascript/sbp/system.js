@@ -41,6 +41,7 @@ var MsgStartup = function (sbp, fields) {
   return this;
 };
 MsgStartup.prototype = Object.create(SBP.prototype);
+MsgStartup.prototype.messageType = "MSG_STARTUP";
 MsgStartup.prototype.msg_type = 0xFF00;
 MsgStartup.prototype.constructor = MsgStartup;
 MsgStartup.prototype.parser = new Parser()
@@ -73,6 +74,7 @@ var MsgHeartbeat = function (sbp, fields) {
   return this;
 };
 MsgHeartbeat.prototype = Object.create(SBP.prototype);
+MsgHeartbeat.prototype.messageType = "MSG_HEARTBEAT";
 MsgHeartbeat.prototype.msg_type = 0xFFFF;
 MsgHeartbeat.prototype.constructor = MsgHeartbeat;
 MsgHeartbeat.prototype.parser = new Parser()

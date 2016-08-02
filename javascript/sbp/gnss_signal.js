@@ -41,6 +41,7 @@ var GnssSignal = function (sbp, fields) {
   return this;
 };
 GnssSignal.prototype = Object.create(SBP.prototype);
+GnssSignal.prototype.messageType = "GnssSignal";
 GnssSignal.prototype.constructor = GnssSignal;
 GnssSignal.prototype.parser = new Parser()
   .endianess('little')

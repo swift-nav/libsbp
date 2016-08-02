@@ -40,6 +40,7 @@ var MsgUserData = function (sbp, fields) {
   return this;
 };
 MsgUserData.prototype = Object.create(SBP.prototype);
+MsgUserData.prototype.messageType = "MSG_USER_DATA";
 MsgUserData.prototype.msg_type = 0x0800;
 MsgUserData.prototype.constructor = MsgUserData;
 MsgUserData.prototype.parser = new Parser()

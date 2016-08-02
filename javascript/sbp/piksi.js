@@ -39,6 +39,7 @@ var MsgAlmanac = function (sbp, fields) {
   return this;
 };
 MsgAlmanac.prototype = Object.create(SBP.prototype);
+MsgAlmanac.prototype.messageType = "MSG_ALMANAC";
 MsgAlmanac.prototype.msg_type = 0x0069;
 MsgAlmanac.prototype.constructor = MsgAlmanac;
 MsgAlmanac.prototype.parser = new Parser()
@@ -61,6 +62,7 @@ var MsgSetTime = function (sbp, fields) {
   return this;
 };
 MsgSetTime.prototype = Object.create(SBP.prototype);
+MsgSetTime.prototype.messageType = "MSG_SET_TIME";
 MsgSetTime.prototype.msg_type = 0x0068;
 MsgSetTime.prototype.constructor = MsgSetTime;
 MsgSetTime.prototype.parser = new Parser()
@@ -82,6 +84,7 @@ var MsgReset = function (sbp, fields) {
   return this;
 };
 MsgReset.prototype = Object.create(SBP.prototype);
+MsgReset.prototype.messageType = "MSG_RESET";
 MsgReset.prototype.msg_type = 0x00B2;
 MsgReset.prototype.constructor = MsgReset;
 MsgReset.prototype.parser = new Parser()
@@ -104,6 +107,7 @@ var MsgCwResults = function (sbp, fields) {
   return this;
 };
 MsgCwResults.prototype = Object.create(SBP.prototype);
+MsgCwResults.prototype.messageType = "MSG_CW_RESULTS";
 MsgCwResults.prototype.msg_type = 0x00C0;
 MsgCwResults.prototype.constructor = MsgCwResults;
 MsgCwResults.prototype.parser = new Parser()
@@ -126,6 +130,7 @@ var MsgCwStart = function (sbp, fields) {
   return this;
 };
 MsgCwStart.prototype = Object.create(SBP.prototype);
+MsgCwStart.prototype.messageType = "MSG_CW_START";
 MsgCwStart.prototype.msg_type = 0x00C1;
 MsgCwStart.prototype.constructor = MsgCwStart;
 MsgCwStart.prototype.parser = new Parser()
@@ -151,6 +156,7 @@ var MsgResetFilters = function (sbp, fields) {
   return this;
 };
 MsgResetFilters.prototype = Object.create(SBP.prototype);
+MsgResetFilters.prototype.messageType = "MSG_RESET_FILTERS";
 MsgResetFilters.prototype.msg_type = 0x0022;
 MsgResetFilters.prototype.constructor = MsgResetFilters;
 MsgResetFilters.prototype.parser = new Parser()
@@ -177,6 +183,7 @@ var MsgInitBase = function (sbp, fields) {
   return this;
 };
 MsgInitBase.prototype = Object.create(SBP.prototype);
+MsgInitBase.prototype.messageType = "MSG_INIT_BASE";
 MsgInitBase.prototype.msg_type = 0x0023;
 MsgInitBase.prototype.constructor = MsgInitBase;
 MsgInitBase.prototype.parser = new Parser()
@@ -206,6 +213,7 @@ var MsgThreadState = function (sbp, fields) {
   return this;
 };
 MsgThreadState.prototype = Object.create(SBP.prototype);
+MsgThreadState.prototype.messageType = "MSG_THREAD_STATE";
 MsgThreadState.prototype.msg_type = 0x0017;
 MsgThreadState.prototype.constructor = MsgThreadState;
 MsgThreadState.prototype.parser = new Parser()
@@ -242,6 +250,7 @@ var UARTChannel = function (sbp, fields) {
   return this;
 };
 UARTChannel.prototype = Object.create(SBP.prototype);
+UARTChannel.prototype.messageType = "UARTChannel";
 UARTChannel.prototype.constructor = UARTChannel;
 UARTChannel.prototype.parser = new Parser()
   .endianess('little')
@@ -284,6 +293,7 @@ var Period = function (sbp, fields) {
   return this;
 };
 Period.prototype = Object.create(SBP.prototype);
+Period.prototype.messageType = "Period";
 Period.prototype.constructor = Period;
 Period.prototype.parser = new Parser()
   .endianess('little')
@@ -321,6 +331,7 @@ var Latency = function (sbp, fields) {
   return this;
 };
 Latency.prototype = Object.create(SBP.prototype);
+Latency.prototype.messageType = "Latency";
 Latency.prototype.constructor = Latency;
 Latency.prototype.parser = new Parser()
   .endianess('little')
@@ -362,6 +373,7 @@ var MsgUartState = function (sbp, fields) {
   return this;
 };
 MsgUartState.prototype = Object.create(SBP.prototype);
+MsgUartState.prototype.messageType = "MSG_UART_STATE";
 MsgUartState.prototype.msg_type = 0x001D;
 MsgUartState.prototype.constructor = MsgUartState;
 MsgUartState.prototype.parser = new Parser()
@@ -399,6 +411,7 @@ var MsgUartStateDepa = function (sbp, fields) {
   return this;
 };
 MsgUartStateDepa.prototype = Object.create(SBP.prototype);
+MsgUartStateDepa.prototype.messageType = "MSG_UART_STATE_DEPA";
 MsgUartStateDepa.prototype.msg_type = 0x0018;
 MsgUartStateDepa.prototype.constructor = MsgUartStateDepa;
 MsgUartStateDepa.prototype.parser = new Parser()
@@ -433,6 +446,7 @@ var MsgIarState = function (sbp, fields) {
   return this;
 };
 MsgIarState.prototype = Object.create(SBP.prototype);
+MsgIarState.prototype.messageType = "MSG_IAR_STATE";
 MsgIarState.prototype.msg_type = 0x0019;
 MsgIarState.prototype.constructor = MsgIarState;
 MsgIarState.prototype.parser = new Parser()
@@ -461,6 +475,7 @@ var MsgMaskSatellite = function (sbp, fields) {
   return this;
 };
 MsgMaskSatellite.prototype = Object.create(SBP.prototype);
+MsgMaskSatellite.prototype.messageType = "MSG_MASK_SATELLITE";
 MsgMaskSatellite.prototype.msg_type = 0x001B;
 MsgMaskSatellite.prototype.constructor = MsgMaskSatellite;
 MsgMaskSatellite.prototype.parser = new Parser()

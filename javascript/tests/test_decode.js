@@ -14,6 +14,8 @@ var path = require('path');
 var assert = require('assert');
 var yaml = require('js-yaml');
 var decode = require(path.resolve(__dirname, '../sbp/')).decode;
+var messageTypesTable = require(path.resolve(__dirname, '../sbp/')).sbpMessageTypesTable;
+var constructMsg = require(path.resolve(__dirname, '../sbp/construct'));
 var utils = require('./utils');
 
 var yamlFiles = utils.getYamlSpecs();
@@ -24,8 +26,9 @@ describe('test packages based on YAML descriptors', function () {
       var yamlConfig = yaml.safeLoad(fs.readFileSync(filename));
       yamlConfig.tests.map(function (testSpec, i) {
         describe('test spec '+i, function () {
+          var msgBuffer = new Buffer(testSpec['raw_packet'], 'base64');
           var decodeMsg = function () {
-            return decode(new Buffer(testSpec['raw_packet'], 'base64'));
+            return decode(msgBuffer);
           };
           it('should parse binary sbp and payload', function () {
             decodeMsg();
@@ -45,6 +48,12 @@ describe('test packages based on YAML descriptors', function () {
           it('should serialize back to JSON properly', function () {
             var msg = decodeMsg();
             assert.deepEqual(JSON.parse(msg.toJSON()), JSON.parse(testSpec['raw_json']));
+          });
+          it('should be identical to constructed message with identical fields', function () {
+            var msg = decodeMsg();
+            var msgTypeConstructor = messageTypesTable[msg.messageType];
+            var constructedMsg = constructMsg(msgTypeConstructor, msg.fields, msg.sbp.sender);
+            assert(msgBuffer.equals(constructedMsg.toBuffer()));
           });
         });
       });

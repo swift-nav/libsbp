@@ -45,6 +45,7 @@ var MsgExtEvent = function (sbp, fields) {
   return this;
 };
 MsgExtEvent.prototype = Object.create(SBP.prototype);
+MsgExtEvent.prototype.messageType = "MSG_EXT_EVENT";
 MsgExtEvent.prototype.msg_type = 0x0101;
 MsgExtEvent.prototype.constructor = MsgExtEvent;
 MsgExtEvent.prototype.parser = new Parser()

@@ -57,6 +57,7 @@ var MsgGpsTime = function (sbp, fields) {
   return this;
 };
 MsgGpsTime.prototype = Object.create(SBP.prototype);
+MsgGpsTime.prototype.messageType = "MSG_GPS_TIME";
 MsgGpsTime.prototype.msg_type = 0x0100;
 MsgGpsTime.prototype.constructor = MsgGpsTime;
 MsgGpsTime.prototype.parser = new Parser()
@@ -95,6 +96,7 @@ var MsgDops = function (sbp, fields) {
   return this;
 };
 MsgDops.prototype = Object.create(SBP.prototype);
+MsgDops.prototype.messageType = "MSG_DOPS";
 MsgDops.prototype.msg_type = 0x0206;
 MsgDops.prototype.constructor = MsgDops;
 MsgDops.prototype.parser = new Parser()
@@ -142,6 +144,7 @@ var MsgPosEcef = function (sbp, fields) {
   return this;
 };
 MsgPosEcef.prototype = Object.create(SBP.prototype);
+MsgPosEcef.prototype.messageType = "MSG_POS_ECEF";
 MsgPosEcef.prototype.msg_type = 0x0200;
 MsgPosEcef.prototype.constructor = MsgPosEcef;
 MsgPosEcef.prototype.parser = new Parser()
@@ -192,6 +195,7 @@ var MsgPosLlh = function (sbp, fields) {
   return this;
 };
 MsgPosLlh.prototype = Object.create(SBP.prototype);
+MsgPosLlh.prototype.messageType = "MSG_POS_LLH";
 MsgPosLlh.prototype.msg_type = 0x0201;
 MsgPosLlh.prototype.constructor = MsgPosLlh;
 MsgPosLlh.prototype.parser = new Parser()
@@ -241,6 +245,7 @@ var MsgBaselineEcef = function (sbp, fields) {
   return this;
 };
 MsgBaselineEcef.prototype = Object.create(SBP.prototype);
+MsgBaselineEcef.prototype.messageType = "MSG_BASELINE_ECEF";
 MsgBaselineEcef.prototype.msg_type = 0x0202;
 MsgBaselineEcef.prototype.constructor = MsgBaselineEcef;
 MsgBaselineEcef.prototype.parser = new Parser()
@@ -290,6 +295,7 @@ var MsgBaselineNed = function (sbp, fields) {
   return this;
 };
 MsgBaselineNed.prototype = Object.create(SBP.prototype);
+MsgBaselineNed.prototype.messageType = "MSG_BASELINE_NED";
 MsgBaselineNed.prototype.msg_type = 0x0203;
 MsgBaselineNed.prototype.constructor = MsgBaselineNed;
 MsgBaselineNed.prototype.parser = new Parser()
@@ -338,6 +344,7 @@ var MsgVelEcef = function (sbp, fields) {
   return this;
 };
 MsgVelEcef.prototype = Object.create(SBP.prototype);
+MsgVelEcef.prototype.messageType = "MSG_VEL_ECEF";
 MsgVelEcef.prototype.msg_type = 0x0204;
 MsgVelEcef.prototype.constructor = MsgVelEcef;
 MsgVelEcef.prototype.parser = new Parser()
@@ -386,6 +393,7 @@ var MsgVelNed = function (sbp, fields) {
   return this;
 };
 MsgVelNed.prototype = Object.create(SBP.prototype);
+MsgVelNed.prototype.messageType = "MSG_VEL_NED";
 MsgVelNed.prototype.msg_type = 0x0205;
 MsgVelNed.prototype.constructor = MsgVelNed;
 MsgVelNed.prototype.parser = new Parser()
@@ -431,6 +439,7 @@ var MsgBaselineHeading = function (sbp, fields) {
   return this;
 };
 MsgBaselineHeading.prototype = Object.create(SBP.prototype);
+MsgBaselineHeading.prototype.messageType = "MSG_BASELINE_HEADING";
 MsgBaselineHeading.prototype.msg_type = 0x0207;
 MsgBaselineHeading.prototype.constructor = MsgBaselineHeading;
 MsgBaselineHeading.prototype.parser = new Parser()

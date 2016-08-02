@@ -94,7 +94,7 @@ var sbpImports = {
   tracking: require('./tracking.js')
 };
 
-var sbpTable = Object.keys(sbpImports).reduce(function (prev, key) {
+var sbpIdTable = Object.keys(sbpImports).reduce(function (prev, key) {
   var curr = sbpImports[key];
   var numericKeysDict = {};
   Object.keys(curr).map(function (key) {
@@ -103,6 +103,18 @@ var sbpTable = Object.keys(sbpImports).reduce(function (prev, key) {
     }
   });
   return mergeDict(prev, numericKeysDict);
+}, {});
+
+var sbpMessageTypesTable = Object.keys(sbpImports).reduce(function (prev, key) {
+  var curr = sbpImports[key];
+  var nonNumericKeysDict = {};
+  Object.keys(curr).map(function (key) {
+    if (parseInt(key) != key) {
+      var messageType = curr[key].prototype.messageType || key;
+      nonNumericKeysDict[messageType] = curr[key];
+    }
+  });
+  return mergeDict(prev, nonNumericKeysDict);
 }, {});
 
 var parser = new Parser()
@@ -134,9 +146,12 @@ module.exports = {
   preambleByte: SBP_PREAMBLE,
   crc16: crc16,
 
+  sbpIdTable: sbpIdTable,
+  sbpMessageTypesTable: sbpMessageTypesTable,
+
   decode: function decode (msg) {
     var sbp = parser.parse(msg);
-    var msgTypeDecoder = sbpTable[sbp['msg_type']];
+    var msgTypeDecoder = sbpIdTable[sbp['msg_type']];
 
     if (typeof msgTypeDecoder === 'undefined') {
       console.log("Unknown message type: ", sbp['msg_type']);

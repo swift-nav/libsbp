@@ -40,6 +40,7 @@ var MsgBootloaderHandshakeReq = function (sbp, fields) {
   return this;
 };
 MsgBootloaderHandshakeReq.prototype = Object.create(SBP.prototype);
+MsgBootloaderHandshakeReq.prototype.messageType = "MSG_BOOTLOADER_HANDSHAKE_REQ";
 MsgBootloaderHandshakeReq.prototype.msg_type = 0x00B3;
 MsgBootloaderHandshakeReq.prototype.constructor = MsgBootloaderHandshakeReq;
 MsgBootloaderHandshakeReq.prototype.parser = new Parser()
@@ -68,6 +69,7 @@ var MsgBootloaderHandshakeResp = function (sbp, fields) {
   return this;
 };
 MsgBootloaderHandshakeResp.prototype = Object.create(SBP.prototype);
+MsgBootloaderHandshakeResp.prototype.messageType = "MSG_BOOTLOADER_HANDSHAKE_RESP";
 MsgBootloaderHandshakeResp.prototype.msg_type = 0x00B4;
 MsgBootloaderHandshakeResp.prototype.constructor = MsgBootloaderHandshakeResp;
 MsgBootloaderHandshakeResp.prototype.parser = new Parser()
@@ -96,6 +98,7 @@ var MsgBootloaderJumpToApp = function (sbp, fields) {
   return this;
 };
 MsgBootloaderJumpToApp.prototype = Object.create(SBP.prototype);
+MsgBootloaderJumpToApp.prototype.messageType = "MSG_BOOTLOADER_JUMP_TO_APP";
 MsgBootloaderJumpToApp.prototype.msg_type = 0x00B1;
 MsgBootloaderJumpToApp.prototype.constructor = MsgBootloaderJumpToApp;
 MsgBootloaderJumpToApp.prototype.parser = new Parser()
@@ -123,6 +126,7 @@ var MsgNapDeviceDnaReq = function (sbp, fields) {
   return this;
 };
 MsgNapDeviceDnaReq.prototype = Object.create(SBP.prototype);
+MsgNapDeviceDnaReq.prototype.messageType = "MSG_NAP_DEVICE_DNA_REQ";
 MsgNapDeviceDnaReq.prototype.msg_type = 0x00DE;
 MsgNapDeviceDnaReq.prototype.constructor = MsgNapDeviceDnaReq;
 MsgNapDeviceDnaReq.prototype.parser = new Parser()
@@ -151,6 +155,7 @@ var MsgNapDeviceDnaResp = function (sbp, fields) {
   return this;
 };
 MsgNapDeviceDnaResp.prototype = Object.create(SBP.prototype);
+MsgNapDeviceDnaResp.prototype.messageType = "MSG_NAP_DEVICE_DNA_RESP";
 MsgNapDeviceDnaResp.prototype.msg_type = 0x00DD;
 MsgNapDeviceDnaResp.prototype.constructor = MsgNapDeviceDnaResp;
 MsgNapDeviceDnaResp.prototype.parser = new Parser()
@@ -177,6 +182,7 @@ var MsgBootloaderHandshakeDepA = function (sbp, fields) {
   return this;
 };
 MsgBootloaderHandshakeDepA.prototype = Object.create(SBP.prototype);
+MsgBootloaderHandshakeDepA.prototype.messageType = "MSG_BOOTLOADER_HANDSHAKE_DEP_A";
 MsgBootloaderHandshakeDepA.prototype.msg_type = 0x00B0;
 MsgBootloaderHandshakeDepA.prototype.constructor = MsgBootloaderHandshakeDepA;
 MsgBootloaderHandshakeDepA.prototype.parser = new Parser()

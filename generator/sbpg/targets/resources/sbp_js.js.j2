@@ -46,6 +46,7 @@ var ((( m.identifier | js_classnameify ))) = function (sbp, fields) {
   return this;
 };
 ((( m.identifier | js_classnameify ))).prototype = Object.create(SBP.prototype);
+((( m.identifier | js_classnameify ))).prototype.messageType = "(((m.identifier)))";
 ((*- if m.sbp_id *))
 ((( m.identifier | js_classnameify ))).prototype.msg_type = ((('0x%04X'|format(m.sbp_id))));
 ((*- endif *))

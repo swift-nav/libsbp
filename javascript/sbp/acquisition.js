@@ -47,6 +47,7 @@ var MsgAcqResult = function (sbp, fields) {
   return this;
 };
 MsgAcqResult.prototype = Object.create(SBP.prototype);
+MsgAcqResult.prototype.messageType = "MSG_ACQ_RESULT";
 MsgAcqResult.prototype.msg_type = 0x0014;
 MsgAcqResult.prototype.constructor = MsgAcqResult;
 MsgAcqResult.prototype.parser = new Parser()
@@ -83,6 +84,7 @@ var MsgAcqResultDepA = function (sbp, fields) {
   return this;
 };
 MsgAcqResultDepA.prototype = Object.create(SBP.prototype);
+MsgAcqResultDepA.prototype.messageType = "MSG_ACQ_RESULT_DEP_A";
 MsgAcqResultDepA.prototype.msg_type = 0x0015;
 MsgAcqResultDepA.prototype.constructor = MsgAcqResultDepA;
 MsgAcqResultDepA.prototype.parser = new Parser()

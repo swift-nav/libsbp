@@ -43,6 +43,7 @@ var TrackingChannelState = function (sbp, fields) {
   return this;
 };
 TrackingChannelState.prototype = Object.create(SBP.prototype);
+TrackingChannelState.prototype.messageType = "TrackingChannelState";
 TrackingChannelState.prototype.constructor = TrackingChannelState;
 TrackingChannelState.prototype.parser = new Parser()
   .endianess('little')
@@ -74,6 +75,7 @@ var MsgTrackingState = function (sbp, fields) {
   return this;
 };
 MsgTrackingState.prototype = Object.create(SBP.prototype);
+MsgTrackingState.prototype.messageType = "MSG_TRACKING_STATE";
 MsgTrackingState.prototype.msg_type = 0x0013;
 MsgTrackingState.prototype.constructor = MsgTrackingState;
 MsgTrackingState.prototype.parser = new Parser()
@@ -101,6 +103,7 @@ var TrackingChannelCorrelation = function (sbp, fields) {
   return this;
 };
 TrackingChannelCorrelation.prototype = Object.create(SBP.prototype);
+TrackingChannelCorrelation.prototype.messageType = "TrackingChannelCorrelation";
 TrackingChannelCorrelation.prototype.constructor = TrackingChannelCorrelation;
 TrackingChannelCorrelation.prototype.parser = new Parser()
   .endianess('little')
@@ -131,6 +134,7 @@ var MsgTrackingIq = function (sbp, fields) {
   return this;
 };
 MsgTrackingIq.prototype = Object.create(SBP.prototype);
+MsgTrackingIq.prototype.messageType = "MSG_TRACKING_IQ";
 MsgTrackingIq.prototype.msg_type = 0x001C;
 MsgTrackingIq.prototype.constructor = MsgTrackingIq;
 MsgTrackingIq.prototype.parser = new Parser()
@@ -163,6 +167,7 @@ var TrackingChannelStateDepA = function (sbp, fields) {
   return this;
 };
 TrackingChannelStateDepA.prototype = Object.create(SBP.prototype);
+TrackingChannelStateDepA.prototype.messageType = "TrackingChannelStateDepA";
 TrackingChannelStateDepA.prototype.constructor = TrackingChannelStateDepA;
 TrackingChannelStateDepA.prototype.parser = new Parser()
   .endianess('little')
@@ -192,6 +197,7 @@ var MsgTrackingStateDepA = function (sbp, fields) {
   return this;
 };
 MsgTrackingStateDepA.prototype = Object.create(SBP.prototype);
+MsgTrackingStateDepA.prototype.messageType = "MSG_TRACKING_STATE_DEP_A";
 MsgTrackingStateDepA.prototype.msg_type = 0x0016;
 MsgTrackingStateDepA.prototype.constructor = MsgTrackingStateDepA;
 MsgTrackingStateDepA.prototype.parser = new Parser()

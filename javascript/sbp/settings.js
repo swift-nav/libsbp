@@ -41,6 +41,7 @@ var MsgSettingsSave = function (sbp, fields) {
   return this;
 };
 MsgSettingsSave.prototype = Object.create(SBP.prototype);
+MsgSettingsSave.prototype.messageType = "MSG_SETTINGS_SAVE";
 MsgSettingsSave.prototype.msg_type = 0x00A1;
 MsgSettingsSave.prototype.constructor = MsgSettingsSave;
 MsgSettingsSave.prototype.parser = new Parser()
@@ -67,6 +68,7 @@ var MsgSettingsWrite = function (sbp, fields) {
   return this;
 };
 MsgSettingsWrite.prototype = Object.create(SBP.prototype);
+MsgSettingsWrite.prototype.messageType = "MSG_SETTINGS_WRITE";
 MsgSettingsWrite.prototype.msg_type = 0x00A0;
 MsgSettingsWrite.prototype.constructor = MsgSettingsWrite;
 MsgSettingsWrite.prototype.parser = new Parser()
@@ -95,6 +97,7 @@ var MsgSettingsReadReq = function (sbp, fields) {
   return this;
 };
 MsgSettingsReadReq.prototype = Object.create(SBP.prototype);
+MsgSettingsReadReq.prototype.messageType = "MSG_SETTINGS_READ_REQ";
 MsgSettingsReadReq.prototype.msg_type = 0x00A4;
 MsgSettingsReadReq.prototype.constructor = MsgSettingsReadReq;
 MsgSettingsReadReq.prototype.parser = new Parser()
@@ -122,6 +125,7 @@ var MsgSettingsReadResp = function (sbp, fields) {
   return this;
 };
 MsgSettingsReadResp.prototype = Object.create(SBP.prototype);
+MsgSettingsReadResp.prototype.messageType = "MSG_SETTINGS_READ_RESP";
 MsgSettingsReadResp.prototype.msg_type = 0x00A5;
 MsgSettingsReadResp.prototype.constructor = MsgSettingsReadResp;
 MsgSettingsReadResp.prototype.parser = new Parser()
@@ -152,6 +156,7 @@ var MsgSettingsReadByIndexReq = function (sbp, fields) {
   return this;
 };
 MsgSettingsReadByIndexReq.prototype = Object.create(SBP.prototype);
+MsgSettingsReadByIndexReq.prototype.messageType = "MSG_SETTINGS_READ_BY_INDEX_REQ";
 MsgSettingsReadByIndexReq.prototype.msg_type = 0x00A2;
 MsgSettingsReadByIndexReq.prototype.constructor = MsgSettingsReadByIndexReq;
 MsgSettingsReadByIndexReq.prototype.parser = new Parser()
@@ -183,6 +188,7 @@ var MsgSettingsReadByIndexResp = function (sbp, fields) {
   return this;
 };
 MsgSettingsReadByIndexResp.prototype = Object.create(SBP.prototype);
+MsgSettingsReadByIndexResp.prototype.messageType = "MSG_SETTINGS_READ_BY_INDEX_RESP";
 MsgSettingsReadByIndexResp.prototype.msg_type = 0x00A7;
 MsgSettingsReadByIndexResp.prototype.constructor = MsgSettingsReadByIndexResp;
 MsgSettingsReadByIndexResp.prototype.parser = new Parser()
@@ -208,6 +214,7 @@ var MsgSettingsReadByIndexDone = function (sbp, fields) {
   return this;
 };
 MsgSettingsReadByIndexDone.prototype = Object.create(SBP.prototype);
+MsgSettingsReadByIndexDone.prototype.messageType = "MSG_SETTINGS_READ_BY_INDEX_DONE";
 MsgSettingsReadByIndexDone.prototype.msg_type = 0x00A6;
 MsgSettingsReadByIndexDone.prototype.constructor = MsgSettingsReadByIndexDone;
 MsgSettingsReadByIndexDone.prototype.parser = new Parser()
@@ -235,6 +242,7 @@ var MsgSettingsRegister = function (sbp, fields) {
   return this;
 };
 MsgSettingsRegister.prototype = Object.create(SBP.prototype);
+MsgSettingsRegister.prototype.messageType = "MSG_SETTINGS_REGISTER";
 MsgSettingsRegister.prototype.msg_type = 0x00AE;
 MsgSettingsRegister.prototype.constructor = MsgSettingsRegister;
 MsgSettingsRegister.prototype.parser = new Parser()

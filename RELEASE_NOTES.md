@@ -6,11 +6,16 @@ For a detailed index of changes, please see the
 
 Contents
 --------
+ * [v1.1.1](#v1.1.1)
  * [v1.1.0](#v1.1.0)
  * [v1.0.2](#v1.0.2)
  * [v1.0.1](#v1.0.1)
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
+
+v1.1.1 <a name="v1.1.1"></a>
+--------------------------
+* Javascript: fixed bug with `constructMsg` and added more tests and examples for message construction.
 
 v1.1.0 <a name="v1.1.0"></a>
 --------------------------

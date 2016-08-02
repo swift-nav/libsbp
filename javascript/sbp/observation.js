@@ -42,6 +42,7 @@ var ObsGPSTime = function (sbp, fields) {
   return this;
 };
 ObsGPSTime.prototype = Object.create(SBP.prototype);
+ObsGPSTime.prototype.messageType = "ObsGPSTime";
 ObsGPSTime.prototype.constructor = ObsGPSTime;
 ObsGPSTime.prototype.parser = new Parser()
   .endianess('little')
@@ -72,6 +73,7 @@ var CarrierPhase = function (sbp, fields) {
   return this;
 };
 CarrierPhase.prototype = Object.create(SBP.prototype);
+CarrierPhase.prototype.messageType = "CarrierPhase";
 CarrierPhase.prototype.constructor = CarrierPhase;
 CarrierPhase.prototype.parser = new Parser()
   .endianess('little')
@@ -101,6 +103,7 @@ var ObservationHeader = function (sbp, fields) {
   return this;
 };
 ObservationHeader.prototype = Object.create(SBP.prototype);
+ObservationHeader.prototype.messageType = "ObservationHeader";
 ObservationHeader.prototype.constructor = ObservationHeader;
 ObservationHeader.prototype.parser = new Parser()
   .endianess('little')
@@ -135,6 +138,7 @@ var PackedObsContent = function (sbp, fields) {
   return this;
 };
 PackedObsContent.prototype = Object.create(SBP.prototype);
+PackedObsContent.prototype.messageType = "PackedObsContent";
 PackedObsContent.prototype.constructor = PackedObsContent;
 PackedObsContent.prototype.parser = new Parser()
   .endianess('little')
@@ -174,6 +178,7 @@ var MsgObs = function (sbp, fields) {
   return this;
 };
 MsgObs.prototype = Object.create(SBP.prototype);
+MsgObs.prototype.messageType = "MSG_OBS";
 MsgObs.prototype.msg_type = 0x0049;
 MsgObs.prototype.constructor = MsgObs;
 MsgObs.prototype.parser = new Parser()
@@ -207,6 +212,7 @@ var MsgBasePosLlh = function (sbp, fields) {
   return this;
 };
 MsgBasePosLlh.prototype = Object.create(SBP.prototype);
+MsgBasePosLlh.prototype.messageType = "MSG_BASE_POS_LLH";
 MsgBasePosLlh.prototype.msg_type = 0x0044;
 MsgBasePosLlh.prototype.constructor = MsgBasePosLlh;
 MsgBasePosLlh.prototype.parser = new Parser()
@@ -243,6 +249,7 @@ var MsgBasePosEcef = function (sbp, fields) {
   return this;
 };
 MsgBasePosEcef.prototype = Object.create(SBP.prototype);
+MsgBasePosEcef.prototype.messageType = "MSG_BASE_POS_ECEF";
 MsgBasePosEcef.prototype.msg_type = 0x0048;
 MsgBasePosEcef.prototype.constructor = MsgBasePosEcef;
 MsgBasePosEcef.prototype.parser = new Parser()
@@ -304,6 +311,7 @@ var MsgEphemeris = function (sbp, fields) {
   return this;
 };
 MsgEphemeris.prototype = Object.create(SBP.prototype);
+MsgEphemeris.prototype.messageType = "MSG_EPHEMERIS";
 MsgEphemeris.prototype.msg_type = 0x0080;
 MsgEphemeris.prototype.constructor = MsgEphemeris;
 MsgEphemeris.prototype.parser = new Parser()
@@ -411,6 +419,7 @@ var MsgEphemerisDepA = function (sbp, fields) {
   return this;
 };
 MsgEphemerisDepA.prototype = Object.create(SBP.prototype);
+MsgEphemerisDepA.prototype.messageType = "MSG_EPHEMERIS_DEP_A";
 MsgEphemerisDepA.prototype.msg_type = 0x001A;
 MsgEphemerisDepA.prototype.constructor = MsgEphemerisDepA;
 MsgEphemerisDepA.prototype.parser = new Parser()
@@ -513,6 +522,7 @@ var MsgEphemerisDepB = function (sbp, fields) {
   return this;
 };
 MsgEphemerisDepB.prototype = Object.create(SBP.prototype);
+MsgEphemerisDepB.prototype.messageType = "MSG_EPHEMERIS_DEP_B";
 MsgEphemerisDepB.prototype.msg_type = 0x0046;
 MsgEphemerisDepB.prototype.constructor = MsgEphemerisDepB;
 MsgEphemerisDepB.prototype.parser = new Parser()
@@ -622,6 +632,7 @@ var MsgEphemerisDepC = function (sbp, fields) {
   return this;
 };
 MsgEphemerisDepC.prototype = Object.create(SBP.prototype);
+MsgEphemerisDepC.prototype.messageType = "MSG_EPHEMERIS_DEP_C";
 MsgEphemerisDepC.prototype.msg_type = 0x0047;
 MsgEphemerisDepC.prototype.constructor = MsgEphemerisDepC;
 MsgEphemerisDepC.prototype.parser = new Parser()
@@ -708,6 +719,7 @@ var CarrierPhaseDepA = function (sbp, fields) {
   return this;
 };
 CarrierPhaseDepA.prototype = Object.create(SBP.prototype);
+CarrierPhaseDepA.prototype.messageType = "CarrierPhaseDepA";
 CarrierPhaseDepA.prototype.constructor = CarrierPhaseDepA;
 CarrierPhaseDepA.prototype.parser = new Parser()
   .endianess('little')
@@ -740,6 +752,7 @@ var PackedObsContentDepA = function (sbp, fields) {
   return this;
 };
 PackedObsContentDepA.prototype = Object.create(SBP.prototype);
+PackedObsContentDepA.prototype.messageType = "PackedObsContentDepA";
 PackedObsContentDepA.prototype.constructor = PackedObsContentDepA;
 PackedObsContentDepA.prototype.parser = new Parser()
   .endianess('little')
@@ -779,6 +792,7 @@ var PackedObsContentDepB = function (sbp, fields) {
   return this;
 };
 PackedObsContentDepB.prototype = Object.create(SBP.prototype);
+PackedObsContentDepB.prototype.messageType = "PackedObsContentDepB";
 PackedObsContentDepB.prototype.constructor = PackedObsContentDepB;
 PackedObsContentDepB.prototype.parser = new Parser()
   .endianess('little')
@@ -813,6 +827,7 @@ var MsgObsDepA = function (sbp, fields) {
   return this;
 };
 MsgObsDepA.prototype = Object.create(SBP.prototype);
+MsgObsDepA.prototype.messageType = "MSG_OBS_DEP_A";
 MsgObsDepA.prototype.msg_type = 0x0045;
 MsgObsDepA.prototype.constructor = MsgObsDepA;
 MsgObsDepA.prototype.parser = new Parser()
@@ -845,6 +860,7 @@ var MsgObsDepB = function (sbp, fields) {
   return this;
 };
 MsgObsDepB.prototype = Object.create(SBP.prototype);
+MsgObsDepB.prototype.messageType = "MSG_OBS_DEP_B";
 MsgObsDepB.prototype.msg_type = 0x0043;
 MsgObsDepB.prototype.constructor = MsgObsDepB;
 MsgObsDepB.prototype.parser = new Parser()

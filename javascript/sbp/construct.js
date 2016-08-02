@@ -22,7 +22,7 @@ var crc = sbp.crc16;
  * @param MsgType {Function} The message type you want to construct.
  * @param fields {Object} Optional key-value pairs of message fields.
  */
-module.exports = function constructMsg (MsgType, fields) {
+module.exports = function constructMsg (MsgType, fields, sender) {
   if (typeof MsgType !== 'function') {
     throw new Error('The MsgType parameter must be a valid SBP message type constructor.');
   }
@@ -43,12 +43,12 @@ module.exports = function constructMsg (MsgType, fields) {
   // Construct message envelope
   msgEnvelope.preamble = sbp.preambleByte;
   msgEnvelope.msg_type = MsgType.prototype.msg_type;
-  msgEnvelope.sender = 0; // see SBP.pdf documentation
+  msgEnvelope.sender = sender || 0; // see SBP.pdf documentation
   msgEnvelope.length = msgEnvelope.payload.length;
   msgEnvelope.crc = crc(msgEnvelope.payload,
                       crc(msgEnvelope.getLengthBuffer(),
                         crc(msgEnvelope.getSenderBuffer(),
                           crc(msgEnvelope.getMsgTypeBuffer()))));
 
-  return msgEnvelope;
+  return msg;
 };
