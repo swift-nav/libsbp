@@ -2180,6 +2180,312 @@ satellite being tracked.
     d.update(j)
     return d
     
+SBP_MSG_IONO = 0x0090
+class MsgIono(SBP):
+  """SBP class for message MSG_IONO (0x0090).
+
+  You can have MSG_IONO inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The ionospheric parameters which allow the "L1 only" or "L2 only" user to
+utilize the ionospheric model for computation of the ionospheric delay.
+Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  t_nmct : ObsGPSTime
+    Navigation Message Correction Table Valitidy Time
+  a0 : double
+  a1 : double
+  a2 : double
+  a3 : double
+  b0 : double
+  b1 : double
+  b2 : double
+  b3 : double
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgIono",
+                   Struct('t_nmct', ObsGPSTime._parser),
+                   LFloat64('a0'),
+                   LFloat64('a1'),
+                   LFloat64('a2'),
+                   LFloat64('a3'),
+                   LFloat64('b0'),
+                   LFloat64('b1'),
+                   LFloat64('b2'),
+                   LFloat64('b3'),)
+  __slots__ = [
+               't_nmct',
+               'a0',
+               'a1',
+               'a2',
+               'a3',
+               'b0',
+               'b1',
+               'b2',
+               'b3',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgIono,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgIono, self).__init__()
+      self.msg_type = SBP_MSG_IONO
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.t_nmct = kwargs.pop('t_nmct')
+      self.a0 = kwargs.pop('a0')
+      self.a1 = kwargs.pop('a1')
+      self.a2 = kwargs.pop('a2')
+      self.a3 = kwargs.pop('a3')
+      self.b0 = kwargs.pop('b0')
+      self.b1 = kwargs.pop('b1')
+      self.b2 = kwargs.pop('b2')
+      self.b3 = kwargs.pop('b3')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgIono.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgIono(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgIono._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgIono._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgIono, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SV_CONFIGURATION_GPS = 0x0091
+class MsgSvConfigurationGPS(SBP):
+  """SBP class for message MSG_SV_CONFIGURATION_GPS (0x0091).
+
+  You can have MSG_SV_CONFIGURATION_GPS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  t_nmct : ObsGPSTime
+    Navigation Message Correction Table Valitidy Time
+  l2c_mask : int
+    L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgSvConfigurationGPS",
+                   Struct('t_nmct', ObsGPSTime._parser),
+                   ULInt32('l2c_mask'),)
+  __slots__ = [
+               't_nmct',
+               'l2c_mask',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSvConfigurationGPS,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSvConfigurationGPS, self).__init__()
+      self.msg_type = SBP_MSG_SV_CONFIGURATION_GPS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.t_nmct = kwargs.pop('t_nmct')
+      self.l2c_mask = kwargs.pop('l2c_mask')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSvConfigurationGPS.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSvConfigurationGPS(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSvConfigurationGPS._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSvConfigurationGPS._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSvConfigurationGPS, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_GROUP_DELAY = 0x0092
+class MsgGroupDelay(SBP):
+  """SBP class for message MSG_GROUP_DELAY (0x0092).
+
+  You can have MSG_GROUP_DELAY inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  t_op : ObsGPSTime
+    Data Predict Time of Week
+  prn : int
+    Satellite number
+  valid : int
+    bit-field indicating validity of the values,
+LSB indicating tgd validity etc.
+1 = value is valid, 0 = value is not valid.
+
+  tgd : int
+  isc_l1ca : int
+  isc_l2c : int
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgGroupDelay",
+                   Struct('t_op', ObsGPSTime._parser),
+                   ULInt8('prn'),
+                   ULInt8('valid'),
+                   SLInt16('tgd'),
+                   SLInt16('isc_l1ca'),
+                   SLInt16('isc_l2c'),)
+  __slots__ = [
+               't_op',
+               'prn',
+               'valid',
+               'tgd',
+               'isc_l1ca',
+               'isc_l2c',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgGroupDelay,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgGroupDelay, self).__init__()
+      self.msg_type = SBP_MSG_GROUP_DELAY
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.t_op = kwargs.pop('t_op')
+      self.prn = kwargs.pop('prn')
+      self.valid = kwargs.pop('valid')
+      self.tgd = kwargs.pop('tgd')
+      self.isc_l1ca = kwargs.pop('isc_l1ca')
+      self.isc_l2c = kwargs.pop('isc_l2c')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgGroupDelay.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgGroupDelay(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgGroupDelay._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgGroupDelay._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgGroupDelay, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0049: MsgObs,
@@ -2194,4 +2500,7 @@ msg_classes = {
   0x0047: MsgEphemerisDepC,
   0x0045: MsgObsDepA,
   0x0043: MsgObsDepB,
+  0x0090: MsgIono,
+  0x0091: MsgSvConfigurationGPS,
+  0x0092: MsgGroupDelay,
 }

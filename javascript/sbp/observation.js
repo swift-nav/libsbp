@@ -1094,6 +1094,132 @@ MsgObsDepB.prototype.fieldSpec = [];
 MsgObsDepB.prototype.fieldSpec.push(['header', ObservationHeader.prototype.fieldSpec]);
 MsgObsDepB.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepB.prototype.fieldSpec, function () { return this.fields.array.length; }]);
 
+/**
+ * SBP class for message MSG_IONO (0x0090).
+ *
+ * The ionospheric parameters which allow the "L1 only" or "L2 only" user to
+ * utilize the ionospheric model for computation of the ionospheric delay. Please
+ * see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field t_nmct ObsGPSTime Navigation Message Correction Table Valitidy Time
+ * @field a0 number (float, 8 bytes)
+ * @field a1 number (float, 8 bytes)
+ * @field a2 number (float, 8 bytes)
+ * @field a3 number (float, 8 bytes)
+ * @field b0 number (float, 8 bytes)
+ * @field b1 number (float, 8 bytes)
+ * @field b2 number (float, 8 bytes)
+ * @field b3 number (float, 8 bytes)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgIono = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_IONO";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgIono.prototype = Object.create(SBP.prototype);
+MsgIono.prototype.messageType = "MSG_IONO";
+MsgIono.prototype.msg_type = 0x0090;
+MsgIono.prototype.constructor = MsgIono;
+MsgIono.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('t_nmct', { type: ObsGPSTime.prototype.parser })
+  .doublele('a0')
+  .doublele('a1')
+  .doublele('a2')
+  .doublele('a3')
+  .doublele('b0')
+  .doublele('b1')
+  .doublele('b2')
+  .doublele('b3');
+MsgIono.prototype.fieldSpec = [];
+MsgIono.prototype.fieldSpec.push(['t_nmct', ObsGPSTime.prototype.fieldSpec]);
+MsgIono.prototype.fieldSpec.push(['a0', 'writeDoubleLE', 8]);
+MsgIono.prototype.fieldSpec.push(['a1', 'writeDoubleLE', 8]);
+MsgIono.prototype.fieldSpec.push(['a2', 'writeDoubleLE', 8]);
+MsgIono.prototype.fieldSpec.push(['a3', 'writeDoubleLE', 8]);
+MsgIono.prototype.fieldSpec.push(['b0', 'writeDoubleLE', 8]);
+MsgIono.prototype.fieldSpec.push(['b1', 'writeDoubleLE', 8]);
+MsgIono.prototype.fieldSpec.push(['b2', 'writeDoubleLE', 8]);
+MsgIono.prototype.fieldSpec.push(['b3', 'writeDoubleLE', 8]);
+
+/**
+ * SBP class for message MSG_SV_CONFIGURATION_GPS (0x0091).
+ *
+ * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field t_nmct ObsGPSTime Navigation Message Correction Table Valitidy Time
+ * @field l2c_mask number (unsigned 32-bit int, 4 bytes) L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSvConfigurationGps = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SV_CONFIGURATION_GPS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSvConfigurationGps.prototype = Object.create(SBP.prototype);
+MsgSvConfigurationGps.prototype.messageType = "MSG_SV_CONFIGURATION_GPS";
+MsgSvConfigurationGps.prototype.msg_type = 0x0091;
+MsgSvConfigurationGps.prototype.constructor = MsgSvConfigurationGps;
+MsgSvConfigurationGps.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('t_nmct', { type: ObsGPSTime.prototype.parser })
+  .uint32('l2c_mask');
+MsgSvConfigurationGps.prototype.fieldSpec = [];
+MsgSvConfigurationGps.prototype.fieldSpec.push(['t_nmct', ObsGPSTime.prototype.fieldSpec]);
+MsgSvConfigurationGps.prototype.fieldSpec.push(['l2c_mask', 'writeUInt32LE', 4]);
+
+/**
+ * SBP class for message MSG_GROUP_DELAY (0x0092).
+ *
+ * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field t_op ObsGPSTime Data Predict Time of Week
+ * @field prn number (unsigned 8-bit int, 1 byte) Satellite number
+ * @field valid number (unsigned 8-bit int, 1 byte) bit-field indicating validity of the values, LSB indicating tgd validity etc. 1
+ *   = value is valid, 0 = value is not valid.
+ * @field tgd number (signed 16-bit int, 2 bytes)
+ * @field isc_l1ca number (signed 16-bit int, 2 bytes)
+ * @field isc_l2c number (signed 16-bit int, 2 bytes)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgGroupDelay = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_GROUP_DELAY";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgGroupDelay.prototype = Object.create(SBP.prototype);
+MsgGroupDelay.prototype.messageType = "MSG_GROUP_DELAY";
+MsgGroupDelay.prototype.msg_type = 0x0092;
+MsgGroupDelay.prototype.constructor = MsgGroupDelay;
+MsgGroupDelay.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('t_op', { type: ObsGPSTime.prototype.parser })
+  .uint8('prn')
+  .uint8('valid')
+  .int16('tgd')
+  .int16('isc_l1ca')
+  .int16('isc_l2c');
+MsgGroupDelay.prototype.fieldSpec = [];
+MsgGroupDelay.prototype.fieldSpec.push(['t_op', ObsGPSTime.prototype.fieldSpec]);
+MsgGroupDelay.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
+MsgGroupDelay.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
+MsgGroupDelay.prototype.fieldSpec.push(['tgd', 'writeInt16LE', 2]);
+MsgGroupDelay.prototype.fieldSpec.push(['isc_l1ca', 'writeInt16LE', 2]);
+MsgGroupDelay.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
+
 module.exports = {
   ObsGPSTime: ObsGPSTime,
   CarrierPhase: CarrierPhase,
@@ -1127,4 +1253,10 @@ module.exports = {
   MsgObsDepA: MsgObsDepA,
   0x0043: MsgObsDepB,
   MsgObsDepB: MsgObsDepB,
+  0x0090: MsgIono,
+  MsgIono: MsgIono,
+  0x0091: MsgSvConfigurationGps,
+  MsgSvConfigurationGps: MsgSvConfigurationGps,
+  0x0092: MsgGroupDelay,
+  MsgGroupDelay: MsgGroupDelay,
 }

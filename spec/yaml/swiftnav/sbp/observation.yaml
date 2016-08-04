@@ -946,3 +946,79 @@ definitions:
               Pseudorange and carrier phase observation for a
               satellite being tracked.
 
+ - MSG_IONO:
+    id: 0x0090
+    short_desc: Iono corrections
+    desc: |
+      The ionospheric parameters which allow the "L1 only" or "L2 only" user to
+      utilize the ionospheric model for computation of the ionospheric delay.
+      Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
+    fields:
+      - t_nmct:
+          type: ObsGPSTime
+          desc: Navigation Message Correction Table Valitidy Time
+      - a0:
+          type: double
+          units: s
+      - a1:
+          type: double
+          units: s/semi-circle
+      - a2:
+          type: double
+          units: s/(semi-circle)^2
+      - a3:
+          type: double
+          units: s/(semi-circle)^3
+      - b0:
+          type: double
+          units: s
+      - b1:
+          type: double
+          units: s/semi-circle
+      - b2:
+          type: double
+          units: s/(semi-circle)^2
+      - b3:
+          type: double
+          units: s/(semi-circle)^3
+
+ - MSG_SV_CONFIGURATION_GPS:
+    id: 0x0091
+    short_desc: L2C capability mask
+    desc: |
+      Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+    fields:
+      - t_nmct:
+          type: ObsGPSTime
+          desc: Navigation Message Correction Table Valitidy Time
+      - l2c_mask:
+          type: u32
+          desc: L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
+
+ - MSG_GROUP_DELAY:
+    id: 0x0092
+    short_desc: Group Delay
+    desc: Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+    fields:
+      - t_op:
+          type: ObsGPSTime
+          desc: Data Predict Time of Week
+      - prn:
+          type: u8
+          desc: Satellite number
+      - valid:
+          type: u8
+          desc: |
+            bit-field indicating validity of the values,
+            LSB indicating tgd validity etc.
+            1 = value is valid, 0 = value is not valid.
+      - tgd:
+          type: s16
+          units: s * 2^-35
+      - isc_l1ca:
+          type: s16
+          units: s * 2^-35
+      - isc_l2c:
+          type: s16
+          units: s * 2^-35
+

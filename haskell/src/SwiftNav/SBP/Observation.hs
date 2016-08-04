@@ -1205,3 +1205,126 @@ $(deriveSBP 'msgObsDepB ''MsgObsDepB)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepB_" . stripPrefix "_msgObsDepB_"}
              ''MsgObsDepB)
 $(makeLenses ''MsgObsDepB)
+
+msgIono :: Word16
+msgIono = 0x0090
+
+-- | SBP class for message MSG_IONO (0x0090).
+--
+-- The ionospheric parameters which allow the "L1 only" or "L2 only" user to
+-- utilize the ionospheric model for computation of the ionospheric delay.
+-- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
+data MsgIono = MsgIono
+  { _msgIono_t_nmct :: ObsGPSTime
+    -- ^ Navigation Message Correction Table Valitidy Time
+  , _msgIono_a0   :: Double
+  , _msgIono_a1   :: Double
+  , _msgIono_a2   :: Double
+  , _msgIono_a3   :: Double
+  , _msgIono_b0   :: Double
+  , _msgIono_b1   :: Double
+  , _msgIono_b2   :: Double
+  , _msgIono_b3   :: Double
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgIono where
+  get = do
+    _msgIono_t_nmct <- get
+    _msgIono_a0 <- getFloat64le
+    _msgIono_a1 <- getFloat64le
+    _msgIono_a2 <- getFloat64le
+    _msgIono_a3 <- getFloat64le
+    _msgIono_b0 <- getFloat64le
+    _msgIono_b1 <- getFloat64le
+    _msgIono_b2 <- getFloat64le
+    _msgIono_b3 <- getFloat64le
+    return MsgIono {..}
+
+  put MsgIono {..} = do
+    put _msgIono_t_nmct
+    putFloat64le _msgIono_a0
+    putFloat64le _msgIono_a1
+    putFloat64le _msgIono_a2
+    putFloat64le _msgIono_a3
+    putFloat64le _msgIono_b0
+    putFloat64le _msgIono_b1
+    putFloat64le _msgIono_b2
+    putFloat64le _msgIono_b3
+
+$(deriveSBP 'msgIono ''MsgIono)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgIono_" . stripPrefix "_msgIono_"}
+             ''MsgIono)
+$(makeLenses ''MsgIono)
+
+msgSvConfigurationGps :: Word16
+msgSvConfigurationGps = 0x0091
+
+-- | SBP class for message MSG_SV_CONFIGURATION_GPS (0x0091).
+--
+-- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+data MsgSvConfigurationGps = MsgSvConfigurationGps
+  { _msgSvConfigurationGps_t_nmct :: ObsGPSTime
+    -- ^ Navigation Message Correction Table Valitidy Time
+  , _msgSvConfigurationGps_l2c_mask :: Word32
+    -- ^ L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSvConfigurationGps where
+  get = do
+    _msgSvConfigurationGps_t_nmct <- get
+    _msgSvConfigurationGps_l2c_mask <- getWord32le
+    return MsgSvConfigurationGps {..}
+
+  put MsgSvConfigurationGps {..} = do
+    put _msgSvConfigurationGps_t_nmct
+    putWord32le _msgSvConfigurationGps_l2c_mask
+
+$(deriveSBP 'msgSvConfigurationGps ''MsgSvConfigurationGps)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSvConfigurationGps_" . stripPrefix "_msgSvConfigurationGps_"}
+             ''MsgSvConfigurationGps)
+$(makeLenses ''MsgSvConfigurationGps)
+
+msgGroupDelay :: Word16
+msgGroupDelay = 0x0092
+
+-- | SBP class for message MSG_GROUP_DELAY (0x0092).
+--
+-- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+data MsgGroupDelay = MsgGroupDelay
+  { _msgGroupDelay_t_op   :: ObsGPSTime
+    -- ^ Data Predict Time of Week
+  , _msgGroupDelay_prn    :: Word8
+    -- ^ Satellite number
+  , _msgGroupDelay_valid  :: Word8
+    -- ^ bit-field indicating validity of the values, LSB indicating tgd validity
+    -- etc. 1 = value is valid, 0 = value is not valid.
+  , _msgGroupDelay_tgd    :: Int16
+  , _msgGroupDelay_isc_l1ca :: Int16
+  , _msgGroupDelay_isc_l2c :: Int16
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgGroupDelay where
+  get = do
+    _msgGroupDelay_t_op <- get
+    _msgGroupDelay_prn <- getWord8
+    _msgGroupDelay_valid <- getWord8
+    _msgGroupDelay_tgd <- liftM fromIntegral getWord16le
+    _msgGroupDelay_isc_l1ca <- liftM fromIntegral getWord16le
+    _msgGroupDelay_isc_l2c <- liftM fromIntegral getWord16le
+    return MsgGroupDelay {..}
+
+  put MsgGroupDelay {..} = do
+    put _msgGroupDelay_t_op
+    putWord8 _msgGroupDelay_prn
+    putWord8 _msgGroupDelay_valid
+    putWord16le $ fromIntegral _msgGroupDelay_tgd
+    putWord16le $ fromIntegral _msgGroupDelay_isc_l1ca
+    putWord16le $ fromIntegral _msgGroupDelay_isc_l2c
+
+$(deriveSBP 'msgGroupDelay ''MsgGroupDelay)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGroupDelay_" . stripPrefix "_msgGroupDelay_"}
+             ''MsgGroupDelay)
+$(makeLenses ''MsgGroupDelay)
