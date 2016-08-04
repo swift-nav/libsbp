@@ -69,10 +69,13 @@ data SBPMsg =
    | SBPMsgCwResults MsgCwResults Msg
    | SBPMsgCwStart MsgCwStart Msg
    | SBPMsgDops MsgDops Msg
-   | SBPMsgEphemeris MsgEphemeris Msg
    | SBPMsgEphemerisDepA MsgEphemerisDepA Msg
    | SBPMsgEphemerisDepB MsgEphemerisDepB Msg
    | SBPMsgEphemerisDepC MsgEphemerisDepC Msg
+   | SBPMsgEphemerisDepD MsgEphemerisDepD Msg
+   | SBPMsgEphemerisGlo MsgEphemerisGlo Msg
+   | SBPMsgEphemerisGps MsgEphemerisGps Msg
+   | SBPMsgEphemerisSbas MsgEphemerisSbas Msg
    | SBPMsgExtEvent MsgExtEvent Msg
    | SBPMsgFileioReadDirReq MsgFileioReadDirReq Msg
    | SBPMsgFileioReadDirResp MsgFileioReadDirResp Msg
@@ -155,10 +158,13 @@ instance Binary SBPMsg where
           | _msgSBPType == msgCwResults = SBPMsgCwResults (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgCwStart = SBPMsgCwStart (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgDops = SBPMsgDops (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgEphemeris = SBPMsgEphemeris (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgEphemerisDepC = SBPMsgEphemerisDepC (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgEphemerisDepD = SBPMsgEphemerisDepD (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgEphemerisGlo = SBPMsgEphemerisGlo (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgEphemerisGps = SBPMsgEphemerisGps (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgEphemerisSbas = SBPMsgEphemerisSbas (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgExtEvent = SBPMsgExtEvent (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgFileioReadDirReq = SBPMsgFileioReadDirReq (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgFileioReadDirResp = SBPMsgFileioReadDirResp (decode (fromStrict _msgSBPPayload)) m
@@ -233,10 +239,13 @@ instance Binary SBPMsg where
       encode' (SBPMsgCwResults _ m) = put m
       encode' (SBPMsgCwStart _ m) = put m
       encode' (SBPMsgDops _ m) = put m
-      encode' (SBPMsgEphemeris _ m) = put m
       encode' (SBPMsgEphemerisDepA _ m) = put m
       encode' (SBPMsgEphemerisDepB _ m) = put m
       encode' (SBPMsgEphemerisDepC _ m) = put m
+      encode' (SBPMsgEphemerisDepD _ m) = put m
+      encode' (SBPMsgEphemerisGlo _ m) = put m
+      encode' (SBPMsgEphemerisGps _ m) = put m
+      encode' (SBPMsgEphemerisSbas _ m) = put m
       encode' (SBPMsgExtEvent _ m) = put m
       encode' (SBPMsgFileioReadDirReq _ m) = put m
       encode' (SBPMsgFileioReadDirResp _ m) = put m
@@ -314,10 +323,13 @@ instance FromJSON SBPMsg where
         | msgType == msgCwResults = SBPMsgCwResults <$> parseJSON obj <*> parseJSON obj
         | msgType == msgCwStart = SBPMsgCwStart <$> parseJSON obj <*> parseJSON obj
         | msgType == msgDops = SBPMsgDops <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgEphemeris = SBPMsgEphemeris <$> parseJSON obj <*> parseJSON obj
         | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> parseJSON obj <*> parseJSON obj
         | msgType == msgEphemerisDepC = SBPMsgEphemerisDepC <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgEphemerisDepD = SBPMsgEphemerisDepD <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgEphemerisGlo = SBPMsgEphemerisGlo <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgEphemerisGps = SBPMsgEphemerisGps <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgEphemerisSbas = SBPMsgEphemerisSbas <$> parseJSON obj <*> parseJSON obj
         | msgType == msgExtEvent = SBPMsgExtEvent <$> parseJSON obj <*> parseJSON obj
         | msgType == msgFileioReadDirReq = SBPMsgFileioReadDirReq <$> parseJSON obj <*> parseJSON obj
         | msgType == msgFileioReadDirResp = SBPMsgFileioReadDirResp <$> parseJSON obj <*> parseJSON obj
@@ -397,10 +409,13 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgCwResults n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgCwStart n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgDops n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgEphemeris n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgEphemerisDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgEphemerisDepB n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgEphemerisDepC n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgEphemerisDepD n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgEphemerisGlo n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgEphemerisGps n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgEphemerisSbas n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgExtEvent n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgFileioReadDirReq n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgFileioReadDirResp n m) = toJSON n `mergeValues` toJSON m
@@ -474,10 +489,13 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgCwResults n m) = SBPMsgCwResults n <$> f m
   msg f (SBPMsgCwStart n m) = SBPMsgCwStart n <$> f m
   msg f (SBPMsgDops n m) = SBPMsgDops n <$> f m
-  msg f (SBPMsgEphemeris n m) = SBPMsgEphemeris n <$> f m
   msg f (SBPMsgEphemerisDepA n m) = SBPMsgEphemerisDepA n <$> f m
   msg f (SBPMsgEphemerisDepB n m) = SBPMsgEphemerisDepB n <$> f m
   msg f (SBPMsgEphemerisDepC n m) = SBPMsgEphemerisDepC n <$> f m
+  msg f (SBPMsgEphemerisDepD n m) = SBPMsgEphemerisDepD n <$> f m
+  msg f (SBPMsgEphemerisGlo n m) = SBPMsgEphemerisGlo n <$> f m
+  msg f (SBPMsgEphemerisGps n m) = SBPMsgEphemerisGps n <$> f m
+  msg f (SBPMsgEphemerisSbas n m) = SBPMsgEphemerisSbas n <$> f m
   msg f (SBPMsgExtEvent n m) = SBPMsgExtEvent n <$> f m
   msg f (SBPMsgFileioReadDirReq n m) = SBPMsgFileioReadDirReq n <$> f m
   msg f (SBPMsgFileioReadDirResp n m) = SBPMsgFileioReadDirResp n <$> f m

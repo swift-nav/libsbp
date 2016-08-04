@@ -203,7 +203,7 @@ test-java:
 
 test-haskell:
 	$(call announce-begin,"Running Haskell tests")
-	cd $(SWIFTNAV_ROOT)/haskell/ && stack build --test
+	cd $(SWIFTNAV_ROOT)/haskell/ && stack build --test --allow-different-user
 	$(call announce-end,"Finished running Haskell tests")
 
 dist:

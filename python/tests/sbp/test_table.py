@@ -1,5 +1,6 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015 - 2016 Swift Navigation Inc.
 # Contact: Bhaskar Mookerji <mookerji@swiftnav.com>
+#          Pasi Miettinen <pasi.miettinen@exafore.com>
 #
 # This source is subject to the license found in the file 'LICENSE' which must
 # be be distributed together with this source. All other rights reserved.
@@ -34,7 +35,7 @@ def test_table_count():
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 73
+  number_of_messages = 76 
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_table_unqiue_count():
