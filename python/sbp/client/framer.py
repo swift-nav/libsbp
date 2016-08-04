@@ -34,7 +34,6 @@ class Framer(object):
     self._write = write
     self._verbose = verbose
     self._broken = False
-    self._base_time = self._timestamp()
     self._dispatch = dispatcher
 
   def __iter__(self):
@@ -54,12 +53,6 @@ class Framer(object):
     """
     return calendar.timegm(time.gmtime())
 
-  def _delta(self):
-    """
-    Relevant time differential generator.
-    """
-    return int((time.time() - self._base_time) * 1000)
-
   def next(self):
     msg = None
     while msg is None:
@@ -69,7 +62,7 @@ class Framer(object):
           raise StopIteration
       except IOError:
         raise StopIteration
-    return (msg, {'delta': self._delta(), 'timestamp': self._timestamp()})
+    return (msg, {'timestamp': self._timestamp()})
 
   def _readall(self, size):
     """
@@ -133,8 +126,6 @@ class Framer(object):
 
     Parameters
     ----------
-    delta : float
-      Ignored
     time : float
       Ignored
     msg : SBP message

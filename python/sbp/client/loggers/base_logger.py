@@ -29,7 +29,6 @@ class BaseLogger(object):
     if filename:
       self.handle = open(filename, mode)
     self.dispatcher = dispatcher
-    self.base_time = time.time()
     self.tags = tags
 
   def __enter__(self):
@@ -65,12 +64,6 @@ class BaseLogger(object):
     Timestamp generator.
     """
     return calendar.timegm(time.gmtime())
-
-  def delta(self):
-    """
-    Relevant time differential generator.
-    """
-    return int((time.time() - self.base_time) * 1000)
 
 
 class LogIterator(object):

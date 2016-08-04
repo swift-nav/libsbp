@@ -28,7 +28,7 @@ class Handler(object):
 
   Parameters
   ----------
-  source : Iterable of tuple(delta, time, SBP message)
+  source : Iterable of tuple(time, SBP message)
     Stream of SBP messages
   """
   def __init__(self, source):
