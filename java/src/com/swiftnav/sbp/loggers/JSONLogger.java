@@ -36,15 +36,10 @@ public class JSONLogger implements SBPSender {
         return cal.getTimeInMillis() / 1000;
     }
 
-    private long delta() {
-        return utc() - starttime;
-    }
-
     @Override
     public void sendMessage(SBPMessage msg) throws IOException {
         JSONObject logobj = new JSONObject();
         try {
-            logobj.put("delta", delta());
             logobj.put("timestamp", utc());
             logobj.put("data", msg.toJSON());
         } catch (JSONException e) {
