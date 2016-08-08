@@ -1,14 +1,10 @@
-boto==2.38.0
+boto==2.42.0
 construct==2.5.2
-flake8==2.3.0
 httpretty
 requests>=2.8.1
 futures==2.2.0
 requests-futures>=0.9.5
-pep8==1.5.7
 pyftdi==0.6.3
 pylibftdi==0.14.2
 pyserial==2.7
-pyyaml==3.11
 tox==1.8.1
-virtualenv==1.11.6
