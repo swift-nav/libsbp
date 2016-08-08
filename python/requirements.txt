@@ -7,4 +7,5 @@ requests-futures>=0.9.5
 pyftdi==0.6.3
 pylibftdi==0.14.2
 pyserial==2.7
+pyyaml==3.11
 tox==1.8.1
