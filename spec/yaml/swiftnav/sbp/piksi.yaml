@@ -300,10 +300,10 @@ definitions:
             desc: Processor VCCAUX
         - cpu_temperature:
             type: float
-            units: C
+            units: degrees C
             desc: Processor temperature
         - fe_temperature:
             type: float
-            units: C
+            units: degrees C
             desc: Frontend temperature (if available)
 
