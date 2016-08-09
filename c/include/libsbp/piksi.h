@@ -169,9 +169,9 @@ typedef struct __attribute__((packed)) {
  * UARTs A and B are used for telemetry radios, but can also be
  * host access ports for embedded hosts, or other interfaces in
  * future. The reported percentage values must be normalized.
- * Observations latency and period can be used to assess the 
+ * Observations latency and period can be used to assess the
  * health of the differential corrections link. Latency provides
- * the timeliness of received base observations while the 
+ * the timeliness of received base observations while the
  * period indicates their likelihood of transmission.
  */
 #define SBP_MSG_UART_STATE      0x001D
@@ -220,6 +220,22 @@ typedef struct __attribute__((packed)) {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   sbp_gnss_signal_t sid;     /**< GNSS signal for which the mask is applied */
 } msg_mask_satellite_t;
+
+
+/** Device temperature and voltage levels
+ *
+ * This message contains temperature and voltage level measurements from the
+ * processor's monitoring system and the RF frontend die temperature if
+ * available.
+ */
+#define SBP_MSG_DEVICE_MONITOR  0x00B5
+typedef struct __attribute__((packed)) {
+  s16 dev_vin;            /**< Device V_in [V / 11 * 1000] */
+  s16 cpu_vint;           /**< Processor V_int [V * 1000] */
+  s16 cpu_vaux;           /**< Processor V_aux [V * 1000] */
+  s16 cpu_temperature;    /**< Processor temperature [degrees C * 100] */
+  s16 fe_temperature;     /**< Frontend temperature (if available) [degrees C * 100] */
+} msg_device_monitor_t;
 
 
 /** \} */
