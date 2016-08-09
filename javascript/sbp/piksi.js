@@ -352,9 +352,9 @@ Latency.prototype.fieldSpec.push(['current', 'writeInt32LE', 4]);
  * providing SBP I/O. On the default Piksi configuration, UARTs A and B are used
  * for telemetry radios, but can also be host access ports for embedded hosts, or
  * other interfaces in future. The reported percentage values must be normalized.
- * Observations latency and period can be used to assess the  health of the
+ * Observations latency and period can be used to assess the health of the
  * differential corrections link. Latency provides the timeliness of received base
- * observations while the  period indicates their likelihood of transmission.
+ * observations while the period indicates their likelihood of transmission.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field uart_a UARTChannel State of UART A
@@ -486,6 +486,46 @@ MsgMaskSatellite.prototype.fieldSpec = [];
 MsgMaskSatellite.prototype.fieldSpec.push(['mask', 'writeUInt8', 1]);
 MsgMaskSatellite.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 
+/**
+ * SBP class for message MSG_DEVICE_MONITOR (0x00B5).
+ *
+ * This message contains temperature and voltage level measurements from the
+ * processor's monitoring system and the RF frontend die temperature if available.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field dev_vin number (signed 16-bit int, 2 bytes) Device V_in
+ * @field cpu_vint number (signed 16-bit int, 2 bytes) Processor V_int
+ * @field cpu_vaux number (signed 16-bit int, 2 bytes) Processor V_aux
+ * @field cpu_temperature number (signed 16-bit int, 2 bytes) Processor temperature
+ * @field fe_temperature number (signed 16-bit int, 2 bytes) Frontend temperature (if available)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgDeviceMonitor = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_DEVICE_MONITOR";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgDeviceMonitor.prototype = Object.create(SBP.prototype);
+MsgDeviceMonitor.prototype.messageType = "MSG_DEVICE_MONITOR";
+MsgDeviceMonitor.prototype.msg_type = 0x00B5;
+MsgDeviceMonitor.prototype.constructor = MsgDeviceMonitor;
+MsgDeviceMonitor.prototype.parser = new Parser()
+  .endianess('little')
+  .int16('dev_vin')
+  .int16('cpu_vint')
+  .int16('cpu_vaux')
+  .int16('cpu_temperature')
+  .int16('fe_temperature');
+MsgDeviceMonitor.prototype.fieldSpec = [];
+MsgDeviceMonitor.prototype.fieldSpec.push(['dev_vin', 'writeInt16LE', 2]);
+MsgDeviceMonitor.prototype.fieldSpec.push(['cpu_vint', 'writeInt16LE', 2]);
+MsgDeviceMonitor.prototype.fieldSpec.push(['cpu_vaux', 'writeInt16LE', 2]);
+MsgDeviceMonitor.prototype.fieldSpec.push(['cpu_temperature', 'writeInt16LE', 2]);
+MsgDeviceMonitor.prototype.fieldSpec.push(['fe_temperature', 'writeInt16LE', 2]);
+
 module.exports = {
   0x0069: MsgAlmanac,
   MsgAlmanac: MsgAlmanac,
@@ -514,4 +554,6 @@ module.exports = {
   MsgIarState: MsgIarState,
   0x001B: MsgMaskSatellite,
   MsgMaskSatellite: MsgMaskSatellite,
+  0x00B5: MsgDeviceMonitor,
+  MsgDeviceMonitor: MsgDeviceMonitor,
 }
