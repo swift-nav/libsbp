@@ -50,6 +50,9 @@ import com.swiftnav.sbp.observation.MsgEphemerisDepB;
 import com.swiftnav.sbp.observation.MsgEphemerisDepC;
 import com.swiftnav.sbp.observation.MsgObsDepA;
 import com.swiftnav.sbp.observation.MsgObsDepB;
+import com.swiftnav.sbp.observation.MsgIono;
+import com.swiftnav.sbp.observation.MsgSvConfigurationGPS;
+import com.swiftnav.sbp.observation.MsgGroupDelay;
 import com.swiftnav.sbp.piksi.MsgAlmanac;
 import com.swiftnav.sbp.piksi.MsgSetTime;
 import com.swiftnav.sbp.piksi.MsgReset;
@@ -165,6 +168,12 @@ final class MessageTable {
                 return new MsgObsDepA(msg);
             case MsgObsDepB.TYPE:
                 return new MsgObsDepB(msg);
+            case MsgIono.TYPE:
+                return new MsgIono(msg);
+            case MsgSvConfigurationGPS.TYPE:
+                return new MsgSvConfigurationGPS(msg);
+            case MsgGroupDelay.TYPE:
+                return new MsgGroupDelay(msg);
             case MsgAlmanac.TYPE:
                 return new MsgAlmanac(msg);
             case MsgSetTime.TYPE:

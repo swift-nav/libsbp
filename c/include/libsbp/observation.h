@@ -93,7 +93,7 @@ carrier phase ambiguity may have changed.
  * should be interoperable with 3rd party receivers and conform 
  * with typical RTCMv3 GNSS observations. 
  */
-#define SBP_MSG_OBS             0x0049
+#define SBP_MSG_OBS                  0x0049
 typedef struct __attribute__((packed)) {
   observation_header_t header;    /**< Header of a GPS observation message */
   packed_obs_content_t obs[0];    /**< Pseudorange and carrier phase observation for a
@@ -110,7 +110,7 @@ satellite being tracked.
  * location of the base station. Any error here will result in an
  * error in the pseudo-absolute position output.
  */
-#define SBP_MSG_BASE_POS_LLH    0x0044
+#define SBP_MSG_BASE_POS_LLH         0x0044
 typedef struct __attribute__((packed)) {
   double lat;       /**< Latitude [deg] */
   double lon;       /**< Longitude [deg] */
@@ -127,7 +127,7 @@ typedef struct __attribute__((packed)) {
  * station. Any error here will result in an error in the
  * pseudo-absolute position output.
  */
-#define SBP_MSG_BASE_POS_ECEF   0x0048
+#define SBP_MSG_BASE_POS_ECEF        0x0048
 typedef struct __attribute__((packed)) {
   double x;    /**< ECEF X coodinate [m] */
   double y;    /**< ECEF Y coordinate [m] */
@@ -157,7 +157,7 @@ GLO: 0 = valid, non-zero = invalid
  * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
  * 20-III) for more details.
  */
-#define SBP_MSG_EPHEMERIS_GPS   0x0081
+#define SBP_MSG_EPHEMERIS_GPS        0x0081
 typedef struct __attribute__((packed)) {
   ephemeris_common_content_t common;      /**< Values common for all ephemeris types */
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
@@ -185,7 +185,7 @@ typedef struct __attribute__((packed)) {
 } msg_ephemeris_gps_t;
 
 
-#define SBP_MSG_EPHEMERIS_SBAS  0x0082
+#define SBP_MSG_EPHEMERIS_SBAS       0x0082
 typedef struct __attribute__((packed)) {
   ephemeris_common_content_t common;    /**< Values common for all ephemeris types */
   double pos[3];    /**< Position of the GEO at time toe [m] */
@@ -204,7 +204,7 @@ typedef struct __attribute__((packed)) {
  * Characteristics of words of immediate information (ephemeris parameters)"
  * for more details.
  */
-#define SBP_MSG_EPHEMERIS_GLO   0x0083
+#define SBP_MSG_EPHEMERIS_GLO        0x0083
 typedef struct __attribute__((packed)) {
   ephemeris_common_content_t common;    /**< Values common for all ephemeris types */
   double gamma;     /**< Relative deviation of predicted carrier frequency from nominal */
@@ -223,7 +223,7 @@ typedef struct __attribute__((packed)) {
  * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
  * 20-III) for more details.
  */
-#define SBP_MSG_EPHEMERIS_DEP_D 0x0080
+#define SBP_MSG_EPHEMERIS_DEP_D      0x0080
 typedef struct __attribute__((packed)) {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
@@ -261,7 +261,7 @@ typedef struct __attribute__((packed)) {
  *
 * Deprecated.
  */
-#define SBP_MSG_EPHEMERIS_DEP_A 0x001A
+#define SBP_MSG_EPHEMERIS_DEP_A      0x001A
 typedef struct __attribute__((packed)) {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
@@ -296,7 +296,7 @@ typedef struct __attribute__((packed)) {
  *
 * Deprecated.
  */
-#define SBP_MSG_EPHEMERIS_DEP_B 0x0046
+#define SBP_MSG_EPHEMERIS_DEP_B      0x0046
 typedef struct __attribute__((packed)) {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
@@ -336,7 +336,7 @@ typedef struct __attribute__((packed)) {
  * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
  * 20-III) for more details.
  */
-#define SBP_MSG_EPHEMERIS_DEP_C 0x0047
+#define SBP_MSG_EPHEMERIS_DEP_C      0x0047
 typedef struct __attribute__((packed)) {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
@@ -421,7 +421,7 @@ carrier phase ambiguity may have changed.
  *
 * Deprecated.
  */
-#define SBP_MSG_OBS_DEP_A       0x0045
+#define SBP_MSG_OBS_DEP_A            0x0045
 typedef struct __attribute__((packed)) {
   observation_header_t header;    /**< Header of a GPS observation message */
   packed_obs_content_dep_a_t obs[0];    /**< Pseudorange and carrier phase observation for a
@@ -439,13 +439,62 @@ satellite being tracked.
  * most 3rd party GNSS receievers or typical RTCMv3 
  * observations.
  */
-#define SBP_MSG_OBS_DEP_B       0x0043
+#define SBP_MSG_OBS_DEP_B            0x0043
 typedef struct __attribute__((packed)) {
   observation_header_t header;    /**< Header of a GPS observation message */
   packed_obs_content_dep_b_t obs[0];    /**< Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
 } msg_obs_dep_b_t;
+
+
+/** Iono corrections
+ *
+ * The ionospheric parameters which allow the "L1 only" or "L2 only" user to
+ * utilize the ionospheric model for computation of the ionospheric delay.
+ * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
+ */
+#define SBP_MSG_IONO                 0x0090
+typedef struct __attribute__((packed)) {
+  obs_gps_time_t t_nmct;    /**< Navigation Message Correction Table Valitidy Time */
+  double a0;       
+  double a1;       
+  double a2;       
+  double a3;       
+  double b0;       
+  double b1;       
+  double b2;       
+  double b3;       
+} msg_iono_t;
+
+
+/** L2C capability mask
+ *
+ * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+ */
+#define SBP_MSG_SV_CONFIGURATION_GPS 0x0091
+typedef struct __attribute__((packed)) {
+  obs_gps_time_t t_nmct;      /**< Navigation Message Correction Table Valitidy Time */
+  u32 l2c_mask;    /**< L2C capability mask, SV32 bit being MSB, SV1 bit being LSB */
+} msg_sv_configuration_gps_t;
+
+
+/** Group Delay
+ *
+* Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ */
+#define SBP_MSG_GROUP_DELAY          0x0092
+typedef struct __attribute__((packed)) {
+  obs_gps_time_t t_op;        /**< Data Predict Time of Week */
+  u8 prn;         /**< Satellite number */
+  u8 valid;       /**< bit-field indicating validity of the values,
+LSB indicating tgd validity etc.
+1 = value is valid, 0 = value is not valid.
+ */
+  s16 tgd;        
+  s16 isc_l1ca;   
+  s16 isc_l2c;    
+} msg_group_delay_t;
 
 
 /** \} */
