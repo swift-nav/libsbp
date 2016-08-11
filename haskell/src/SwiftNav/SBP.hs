@@ -68,6 +68,7 @@ data SBPMsg =
    | SBPMsgBootloaderJumpToApp MsgBootloaderJumpToApp Msg
    | SBPMsgCwResults MsgCwResults Msg
    | SBPMsgCwStart MsgCwStart Msg
+   | SBPMsgDeviceMonitor MsgDeviceMonitor Msg
    | SBPMsgDops MsgDops Msg
    | SBPMsgEphemerisDepA MsgEphemerisDepA Msg
    | SBPMsgEphemerisDepB MsgEphemerisDepB Msg
@@ -160,6 +161,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgCwResults = SBPMsgCwResults (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgCwStart = SBPMsgCwStart (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgDeviceMonitor = SBPMsgDeviceMonitor (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgDops = SBPMsgDops (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict _msgSBPPayload)) m
@@ -244,6 +246,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgBootloaderJumpToApp _ m) = put m
       encode' (SBPMsgCwResults _ m) = put m
       encode' (SBPMsgCwStart _ m) = put m
+      encode' (SBPMsgDeviceMonitor _ m) = put m
       encode' (SBPMsgDops _ m) = put m
       encode' (SBPMsgEphemerisDepA _ m) = put m
       encode' (SBPMsgEphemerisDepB _ m) = put m
@@ -331,6 +334,7 @@ instance FromJSON SBPMsg where
         | msgType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp <$> parseJSON obj <*> parseJSON obj
         | msgType == msgCwResults = SBPMsgCwResults <$> parseJSON obj <*> parseJSON obj
         | msgType == msgCwStart = SBPMsgCwStart <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgDeviceMonitor = SBPMsgDeviceMonitor <$> parseJSON obj <*> parseJSON obj
         | msgType == msgDops = SBPMsgDops <$> parseJSON obj <*> parseJSON obj
         | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> parseJSON obj <*> parseJSON obj
@@ -420,6 +424,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgBootloaderJumpToApp n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgCwResults n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgCwStart n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgDeviceMonitor n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgDops n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgEphemerisDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgEphemerisDepB n m) = toJSON n `mergeValues` toJSON m
@@ -503,6 +508,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgBootloaderJumpToApp n m) = SBPMsgBootloaderJumpToApp n <$> f m
   msg f (SBPMsgCwResults n m) = SBPMsgCwResults n <$> f m
   msg f (SBPMsgCwStart n m) = SBPMsgCwStart n <$> f m
+  msg f (SBPMsgDeviceMonitor n m) = SBPMsgDeviceMonitor n <$> f m
   msg f (SBPMsgDops n m) = SBPMsgDops n <$> f m
   msg f (SBPMsgEphemerisDepA n m) = SBPMsgEphemerisDepA n <$> f m
   msg f (SBPMsgEphemerisDepB n m) = SBPMsgEphemerisDepB n <$> f m

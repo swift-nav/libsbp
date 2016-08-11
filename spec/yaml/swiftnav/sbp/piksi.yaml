@@ -153,7 +153,7 @@ definitions:
         - avg:
             type: s32
             units: ms
-            desc: Average period 
+            desc: Average period
         - pmin:
             type: s32
             units: ms
@@ -202,9 +202,9 @@ definitions:
       UARTs A and B are used for telemetry radios, but can also be
       host access ports for embedded hosts, or other interfaces in
       future. The reported percentage values must be normalized.
-      Observations latency and period can be used to assess the 
+      Observations latency and period can be used to assess the
       health of the differential corrections link. Latency provides
-      the timeliness of received base observations while the 
+      the timeliness of received base observations while the
       period indicates their likelihood of transmission.
     fields:
         - uart_a:
@@ -281,4 +281,33 @@ definitions:
         - sid:
             type: GnssSignal
             desc: GNSS signal for which the mask is applied
+
+ - MSG_DEVICE_MONITOR:
+    id: 0x00B5
+    short_desc: Device temperature and voltage levels
+    desc: |
+      This message contains temperature and voltage level measurements from the
+      processor's monitoring system and the RF frontend die temperature if
+      available.
+    fields:
+        - dev_vin:
+            type: s16
+            units: V / 11 * 1000
+            desc: Device V_in
+        - cpu_vint:
+            type: s16
+            units: V * 1000
+            desc: Processor V_int
+        - cpu_vaux:
+            type: s16
+            units: V * 1000
+            desc: Processor V_aux
+        - cpu_temperature:
+            type: s16
+            units: degrees C * 100
+            desc: Processor temperature
+        - fe_temperature:
+            type: s16
+            units: degrees C * 100
+            desc: Frontend temperature (if available)
 
