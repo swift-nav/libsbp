@@ -677,9 +677,9 @@ channels providing SBP I/O. On the default Piksi configuration,
 UARTs A and B are used for telemetry radios, but can also be
 host access ports for embedded hosts, or other interfaces in
 future. The reported percentage values must be normalized.
-Observations latency and period can be used to assess the 
+Observations latency and period can be used to assess the
 health of the differential corrections link. Latency provides
-the timeliness of received base observations while the 
+the timeliness of received base observations while the
 period indicates their likelihood of transmission.
 
 
@@ -1038,6 +1038,109 @@ from being used in various Piksi subsystems.
     d.update(j)
     return d
     
+SBP_MSG_DEVICE_MONITOR = 0x00B5
+class MsgDeviceMonitor(SBP):
+  """SBP class for message MSG_DEVICE_MONITOR (0x00B5).
+
+  You can have MSG_DEVICE_MONITOR inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message contains temperature and voltage level measurements from the
+processor's monitoring system and the RF frontend die temperature if
+available.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  dev_vin : int
+    Device V_in
+  cpu_vint : int
+    Processor V_int
+  cpu_vaux : int
+    Processor V_aux
+  cpu_temperature : int
+    Processor temperature
+  fe_temperature : int
+    Frontend temperature (if available)
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgDeviceMonitor",
+                   SLInt16('dev_vin'),
+                   SLInt16('cpu_vint'),
+                   SLInt16('cpu_vaux'),
+                   SLInt16('cpu_temperature'),
+                   SLInt16('fe_temperature'),)
+  __slots__ = [
+               'dev_vin',
+               'cpu_vint',
+               'cpu_vaux',
+               'cpu_temperature',
+               'fe_temperature',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgDeviceMonitor,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgDeviceMonitor, self).__init__()
+      self.msg_type = SBP_MSG_DEVICE_MONITOR
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.dev_vin = kwargs.pop('dev_vin')
+      self.cpu_vint = kwargs.pop('cpu_vint')
+      self.cpu_vaux = kwargs.pop('cpu_vaux')
+      self.cpu_temperature = kwargs.pop('cpu_temperature')
+      self.fe_temperature = kwargs.pop('fe_temperature')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgDeviceMonitor.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgDeviceMonitor(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgDeviceMonitor._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgDeviceMonitor._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgDeviceMonitor, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0069: MsgAlmanac,
@@ -1052,4 +1155,5 @@ msg_classes = {
   0x0018: MsgUartStateDepa,
   0x0019: MsgIarState,
   0x001B: MsgMaskSatellite,
+  0x00B5: MsgDeviceMonitor,
 }

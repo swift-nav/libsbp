@@ -351,10 +351,10 @@ msgUartState = 0x001D
 -- providing SBP I/O. On the default Piksi configuration, UARTs A and B are
 -- used for telemetry radios, but can also be host access ports for embedded
 -- hosts, or other interfaces in future. The reported percentage values must be
--- normalized. Observations latency and period can be used to assess the
--- health of the differential corrections link. Latency provides the timeliness
--- of received base observations while the  period indicates their likelihood
--- of transmission.
+-- normalized. Observations latency and period can be used to assess the health
+-- of the differential corrections link. Latency provides the timeliness of
+-- received base observations while the period indicates their likelihood of
+-- transmission.
 data MsgUartState = MsgUartState
   { _msgUartState_uart_a   :: UARTChannel
     -- ^ State of UART A
@@ -483,3 +483,46 @@ $(deriveSBP 'msgMaskSatellite ''MsgMaskSatellite)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgMaskSatellite_" . stripPrefix "_msgMaskSatellite_"}
              ''MsgMaskSatellite)
 $(makeLenses ''MsgMaskSatellite)
+
+msgDeviceMonitor :: Word16
+msgDeviceMonitor = 0x00B5
+
+-- | SBP class for message MSG_DEVICE_MONITOR (0x00B5).
+--
+-- This message contains temperature and voltage level measurements from the
+-- processor's monitoring system and the RF frontend die temperature if
+-- available.
+data MsgDeviceMonitor = MsgDeviceMonitor
+  { _msgDeviceMonitor_dev_vin       :: Int16
+    -- ^ Device V_in
+  , _msgDeviceMonitor_cpu_vint      :: Int16
+    -- ^ Processor V_int
+  , _msgDeviceMonitor_cpu_vaux      :: Int16
+    -- ^ Processor V_aux
+  , _msgDeviceMonitor_cpu_temperature :: Int16
+    -- ^ Processor temperature
+  , _msgDeviceMonitor_fe_temperature :: Int16
+    -- ^ Frontend temperature (if available)
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgDeviceMonitor where
+  get = do
+    _msgDeviceMonitor_dev_vin <- liftM fromIntegral getWord16le
+    _msgDeviceMonitor_cpu_vint <- liftM fromIntegral getWord16le
+    _msgDeviceMonitor_cpu_vaux <- liftM fromIntegral getWord16le
+    _msgDeviceMonitor_cpu_temperature <- liftM fromIntegral getWord16le
+    _msgDeviceMonitor_fe_temperature <- liftM fromIntegral getWord16le
+    return MsgDeviceMonitor {..}
+
+  put MsgDeviceMonitor {..} = do
+    putWord16le $ fromIntegral _msgDeviceMonitor_dev_vin
+    putWord16le $ fromIntegral _msgDeviceMonitor_cpu_vint
+    putWord16le $ fromIntegral _msgDeviceMonitor_cpu_vaux
+    putWord16le $ fromIntegral _msgDeviceMonitor_cpu_temperature
+    putWord16le $ fromIntegral _msgDeviceMonitor_fe_temperature
+
+$(deriveSBP 'msgDeviceMonitor ''MsgDeviceMonitor)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDeviceMonitor_" . stripPrefix "_msgDeviceMonitor_"}
+             ''MsgDeviceMonitor)
+$(makeLenses ''MsgDeviceMonitor)
