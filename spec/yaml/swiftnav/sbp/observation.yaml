@@ -923,7 +923,7 @@ definitions:
  
  - MSG_OBS_DEP_B:
     id: 0x0043
-    short_desc: Deprecated
+    short_desc: GNSS observations 
     desc: |
       This observation message has been deprecated in favor of 
       observations that are more interoperable. This message
@@ -932,8 +932,6 @@ definitions:
       most 3rd party GNSS receievers or typical RTCMv3 
       observations.
     public: False
-    replaced_by:
-      - MSG_OBS
     fields:
         - header:
             type: ObservationHeader
