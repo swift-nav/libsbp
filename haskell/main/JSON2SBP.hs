@@ -16,6 +16,7 @@ import           Data.Conduit
 import           Data.Conduit.Binary
 import qualified Data.Conduit.List as CL
 import           Data.Conduit.Serialization.Binary
+import           Debug.Trace
 import           SwiftNav.SBP
 import           System.IO
 
@@ -29,7 +30,11 @@ instance FromJSON SBPMsgData where
 
 -- | Decode a SBPMsg from JSON.
 decodeSBPMsg :: ByteString -> Maybe SBPMsg
-decodeSBPMsg v = decodeStrict v <|> sbpMsgData <$> decodeStrict v
+decodeSBPMsg v = result
+  where parsed = eitherDecodeStrict v <|> sbpMsgData <$> eitherDecodeStrict v
+        result = case parsed of
+                   Left s -> trace s Nothing
+                   Right x -> Just x
 
 main :: IO ()
 main =
