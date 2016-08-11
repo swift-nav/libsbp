@@ -170,7 +170,8 @@ s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, vo
     return SBP_NULL_ERROR;
 
   for (sbp_msg_callbacks_node_t *n = s->sbp_msg_callbacks_head; n; n = n->next)
-    if ((n == node) || (n->cb == cb))
+    if ((n == node) ||
+        ((n->cb == cb) && (n->msg_type == msg_type) && (n->context == context)))
       return SBP_CALLBACK_ERROR;
 
   /* Fill in our new sbp_msg_callback_node_t. */
