@@ -169,9 +169,9 @@ s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, vo
   if (node == 0)
     return SBP_NULL_ERROR;
 
-  /* Check if callback was already registered for this type. */
-  if (sbp_find_callback(s, msg_type) != 0)
-    return SBP_CALLBACK_ERROR;
+  for (sbp_msg_callbacks_node_t *n = s->sbp_msg_callbacks_head; n; n = n->next)
+    if ((n == node) || (n->cb == cb))
+      return SBP_CALLBACK_ERROR;
 
   /* Fill in our new sbp_msg_callback_node_t. */
   node->msg_type = msg_type;
@@ -202,6 +202,30 @@ s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, vo
   return SBP_OK;
 }
 
+/** Remove a registered callback.
+ *
+ * \param node     #sbp_msg_callbacks_node_t struct of callback to remove.
+ * \return `SBP_OK` (0) if successful, `SBP_CALLBACK_ERROR` if no callback was
+ *         registered for that message type.
+ */
+s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node)
+{
+  sbp_msg_callbacks_node_t *n;
+
+  if (s->sbp_msg_callbacks_head == node) {
+    s->sbp_msg_callbacks_head = node->next;
+    return SBP_OK;
+  } else {
+    for (n = s->sbp_msg_callbacks_head; n; n = n->next) {
+      if (n->next == node) {
+        n->next = node->next;
+        return SBP_OK;
+      }
+    }
+  }
+  return SBP_CALLBACK_ERROR;
+}
+
 /** Clear all registered callbacks.
  * This is probably only useful for testing but who knows!
  */
@@ -209,35 +233,6 @@ void sbp_clear_callbacks(sbp_state_t *s)
 {
   /* Reset the head of the callbacks list to NULL. */
   s->sbp_msg_callbacks_head = 0;
-}
-
-/** Find the callback function associated with a message type.
- * Searches through the list of registered callbacks to find the callback
- * associated with the passed message type.
- *
- * \param msg_type Message type to find callback for
- * \return Pointer to callback node (#sbp_msg_callbacks_node_t) or `NULL` if
- *         callback not found for that message type.
- */
-sbp_msg_callbacks_node_t* sbp_find_callback(sbp_state_t *s, u16 msg_type)
-{
-  /* If our list is empty, return NULL. */
-  if (!s->sbp_msg_callbacks_head)
-    return 0;
-
-  /* Traverse the linked list and return the callback
-   * function pointer if we find a node with a matching
-   * message id.
-   */
-  sbp_msg_callbacks_node_t *p = s->sbp_msg_callbacks_head;
-  do
-    if (p->msg_type == msg_type)
-      return p;
-
-  while ((p = p->next));
-
-  /* Didn't find a matching callback, return NULL. */
-  return 0;
 }
 
 /** Initialize an #sbp_state_t struct before use.
@@ -376,15 +371,18 @@ s8 sbp_process(sbp_state_t *s, u32 (*read)(u8 *buff, u32 n, void *context))
       if (s->crc == crc) {
 
         /* Message complete, process it. */
-        sbp_msg_callbacks_node_t* node = sbp_find_callback(s, s->msg_type);
-        if (node) {
-          (*node->cb)(s->sender_id, s->msg_len, s->msg_buff, node->context);
-          return SBP_OK_CALLBACK_EXECUTED;
-        } else {
-          return SBP_OK_CALLBACK_UNDEFINED;
+        s8 ret = SBP_OK_CALLBACK_UNDEFINED;
+        sbp_msg_callbacks_node_t* node;
+        for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
+          if (node->msg_type == s->msg_type) {
+            (*node->cb)(s->sender_id, s->msg_len, s->msg_buff, node->context);
+            ret = SBP_OK_CALLBACK_EXECUTED;
+          }
         }
-      } else
-          return SBP_CRC_ERROR;
+        return ret;
+      } else {
+        return SBP_CRC_ERROR;
+      }
     }
     break;
 
