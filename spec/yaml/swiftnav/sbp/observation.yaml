@@ -931,7 +931,6 @@ definitions:
       a nominal pseudorange which are not interoperable with
       most 3rd party GNSS receievers or typical RTCMv3 
       observations.
-    public: False
     fields:
         - header:
             type: ObservationHeader
