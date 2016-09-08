@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.text.DateFormat;
+
 
 public class JSONLogger implements SBPSender {
     private OutputStream stream;
@@ -28,19 +30,24 @@ public class JSONLogger implements SBPSender {
 
     public JSONLogger(OutputStream stream_) {
         stream = stream_;
-        starttime = utc();
+        starttime = ISOTimestamp();
     }
 
-    private long utc() {
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        return cal.getTimeInMillis() / 1000;
+    private String ISOTimestamp() {
+        // http://stackoverflow.com/questions/1459656/how-to-get-the-current-time-in-yyyy-mm-dd-hhmisec-millisecond-format-in-java?rq=1
+        // http://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        df.setTimeZone(tz);
+        String asISO = df.format(new Date());
+        return asISO;
     }
 
     @Override
     public void sendMessage(SBPMessage msg) throws IOException {
         JSONObject logobj = new JSONObject();
         try {
-            logobj.put("timestamp", utc());
+            logobj.put("timestamp", ISOTimestamp());
             logobj.put("data", msg.toJSON());
         } catch (JSONException e) {
             e.printStackTrace();
