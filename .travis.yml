@@ -31,11 +31,8 @@ before_install:
 
 install:
   # - tlmgr update --self
-  # update tlmgr with this script 
-  - wget http://ctan.mirrors.hoobly.com/systems/texlive/tlnet/update-tlmgr-latest.sh
-  - bash update-tlmgr-latest.sh
-  - tlmgr install standalone #standalone.sty
-  - tlmgr install cmbright #cmbright font
+  # - tlmgr install standalone #standalone.sty
+  # - tlmgr install cmbright #cmbright font
   - pip install --upgrade --user Sphinx
   - npm install -g mocha
   - npm install
@@ -44,4 +41,4 @@ install:
 
 script:
   - make test
-  - make docs
+  # - make docs
