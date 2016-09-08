@@ -30,9 +30,9 @@ before_install:
   - npm/.bin/npm install
 
 install:
-  - tlmgr update --self || true
-  - tlmgr install standalone #standalone.sty
-  - tlmgr install cmbright #cmbright font
+  # - tlmgr update --self
+  # - tlmgr install standalone #standalone.sty
+  # - tlmgr install cmbright #cmbright font
   - pip install --upgrade --user Sphinx
   - npm install -g mocha
   - npm install
@@ -41,4 +41,4 @@ install:
 
 script:
   - make test
-  - make docs
+  # - make docs
