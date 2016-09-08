@@ -70,8 +70,14 @@ class JSONLogIterator(LogIterator):
 
     Returns
     -------
-    (float, float, object)
-      (elapsed msec since beginning of log, UTC timestamp, msg)
+    Tuple(sbp MSG object, {'timestamp':'ISO 8601 time'})
+      Second item is for metadata. There used to be multiple fields and
+      there could be more in the future.
+
+    Notes
+    -----
+    In practice it seems like a lot of times JSONLogIterator objects return
+    iterators instead of tuples due to weird usage of the class.
 
     """
     for line in self.handle:
@@ -120,8 +126,9 @@ class MultiJSONLogIterator(JSONLogIterator):
 
     Returns
     -------
-    (float, float, object)
-      (elapsed msec since beginning of log, UTC timestamp, msg)
+    Tuple(sbp MSG object, {'timestamp':'ISO 8601 time'})
+      Second item is for metadata. There used to be multiple fields and
+      there could be more in the future.
 
     """
     datas = []

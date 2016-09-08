@@ -28,7 +28,7 @@ class Handler(object):
 
   Parameters
   ----------
-  source : Iterable of tuple(time, SBP message)
+  source : Iterable of tuple(SBP message, {'timestamp':'ISO 8601 str'})
     Stream of SBP messages
   """
   def __init__(self, source):

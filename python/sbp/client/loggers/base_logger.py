@@ -10,7 +10,7 @@
 
 from ...table import dispatch
 from construct.core import ConstructError
-import calendar
+import datetime
 import time
 import warnings
 
@@ -62,8 +62,12 @@ class BaseLogger(object):
   def timestamp(self):
     """
     Timestamp generator.
+
+    Returns
+    -------
+    str : ISO 8601
     """
-    return calendar.timegm(time.gmtime())
+    return datetime.datetime.utcnow().isoformat()
 
 
 class LogIterator(object):

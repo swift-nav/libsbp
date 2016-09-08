@@ -12,7 +12,7 @@ from ..msg import crc16, SBP, SBP_PREAMBLE
 from ..table import dispatch
 
 import struct
-import calendar
+import datetime
 import time
 
 class Framer(object):
@@ -50,8 +50,12 @@ class Framer(object):
   def _timestamp(self):
     """
     Timestamp generator.
+
+    Returns
+    -------
+    str : ISO 8601 format timestamp
     """
-    return calendar.timegm(time.gmtime())
+    return datetime.datetime.utcnow().isoformat()
 
   def next(self):
     msg = None
@@ -126,9 +130,9 @@ class Framer(object):
 
     Parameters
     ----------
-    time : float
-      Ignored
     msg : SBP message
       SBP message to send.
+    metadata : dict
+      {'timestamp': 'ISO 8601 str'} (ignored for now)
     """
     self._write(msg.to_binary())
