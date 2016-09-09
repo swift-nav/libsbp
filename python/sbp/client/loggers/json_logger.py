@@ -70,7 +70,7 @@ class JSONLogIterator(LogIterator):
 
     Returns
     -------
-    Tuple(sbp MSG object, {'timestamp':'ISO 8601 time'})
+    Tuple(sbp MSG object, {'time':'ISO 8601 time'})
       Second item is for metadata. There used to be multiple fields and
       there could be more in the future.
 
@@ -126,7 +126,7 @@ class MultiJSONLogIterator(JSONLogIterator):
 
     Returns
     -------
-    Tuple(sbp MSG object, {'timestamp':'ISO 8601 time'})
+    Tuple(sbp MSG object, {'time':'ISO 8601 time'})
       Second item is for metadata. There used to be multiple fields and
       there could be more in the future.
 
@@ -140,7 +140,7 @@ class MultiJSONLogIterator(JSONLogIterator):
           warn = "Bad JSON decoding for line %s" % line
           warnings.warn(warn, RuntimeWarning)
 
-    for data in sorted(datas, key=itemgetter('timestamp')):
+    for data in sorted(datas, key=itemgetter('time')):
       item = SBP.from_json_dict(data.pop('data'))
       msg = self.dispatch(item)
       yield (msg, data)
