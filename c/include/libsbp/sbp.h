@@ -74,8 +74,8 @@ typedef struct {
 
 s8 sbp_register_callback(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context,
                          sbp_msg_callbacks_node_t *node);
+s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node);
 void sbp_clear_callbacks(sbp_state_t* s);
-sbp_msg_callbacks_node_t* sbp_find_callback(sbp_state_t* s, u16 msg_type);
 void sbp_state_init(sbp_state_t *s);
 void sbp_state_set_io_context(sbp_state_t *s, void* context);
 s8 sbp_process(sbp_state_t *s, u32 (*read)(u8 *buff, u32 n, void* context));

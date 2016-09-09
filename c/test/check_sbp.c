@@ -118,6 +118,27 @@ void test_callback2(u16 sender_id, u8 len, u8 msg[], void* context)
   (void)context;
 }
 
+sbp_msg_callbacks_node_t* sbp_find_callback(sbp_state_t *s, u16 msg_type)
+{
+  /* If our list is empty, return NULL. */
+  if (!s->sbp_msg_callbacks_head)
+    return 0;
+
+  /* Traverse the linked list and return the callback
+   * function pointer if we find a node with a matching
+   * message id.
+   */
+  sbp_msg_callbacks_node_t *p = s->sbp_msg_callbacks_head;
+  do
+    if (p->msg_type == msg_type)
+      return p;
+
+  while ((p = p->next));
+
+  /* Didn't find a matching callback, return NULL. */
+  return 0;
+}
+
 START_TEST(test_sbp_process)
 {
   /* TODO: Tests with different read function behaviour. */
@@ -156,6 +177,10 @@ START_TEST(test_sbp_process)
   sbp_register_callback(&s, 0x2270, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
   fail_unless(sbp_find_callback(&s, 0x2270) != 0,
     "second callback not found");
+
+  sbp_remove_callback(&s, &n2);
+  fail_unless(sbp_find_callback(&s, 0x2270) == 0,
+    "callback not removed");
 
   logging_reset();
   sbp_send_message(&s, 0x2269, 0x4243, 0, 0, &dummy_write);
