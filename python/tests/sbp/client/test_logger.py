@@ -30,7 +30,7 @@ def test_log():
   log_datafile = "./data/serial_link_log_20150310-115522-test.log.dat"
   with LogIterator(log_datafile) as log:
     with pytest.raises(NotImplementedError) as exc_info:
-      for delta, timestamp, msg in log.next():
+      for msg, metadata in log.next():
         pass
   assert exc_info.value.message == "next() not implemented!"
 
@@ -43,15 +43,13 @@ def test_json_log():
   with warnings.catch_warnings(record=True) as w:
     with JSONLogIterator(log_datafile) as log:
       for msg, metadata in log.next():
-        assert type(metadata['delta']) == int
-        assert type(metadata['timestamp']) == int
+        assert type(metadata['time']) == unicode
         assert isinstance(msg, SBP) or issubclass(type(msg), SBP)
         count += 1
       warnings.simplefilter("always")
       assert len(w) == 0
   assert count == 2650
 
-@pytest.mark.skipif(True, reason="Format changed.")
 def test_multi_json_log():
   """
   Multi JSON log iterator sanity tests.
@@ -64,13 +62,12 @@ def test_multi_json_log():
   with warnings.catch_warnings(record=True) as w:
     with MultiJSONLogIterator(handles) as log:
       for msg, metadata in log.next():
-        assert type(metadata['delta']) == int
-        assert type(metadata['timestamp']) == int
+        assert type(metadata['time']) == unicode
         assert isinstance(msg, SBP) or issubclass(type(msg), SBP)
         assert type(metadata['metadata']) == dict
         assert not metadata['metadata']
-        assert metadata['timestamp'] >= past
-        past = metadata['timestamp']
+        assert metadata['time'] >= past
+        past = metadata['time']
         count += 1
       warnings.simplefilter("always")
       assert len(w) == 0
@@ -96,7 +93,7 @@ def test_msg_print():
   log_datafile = "./data/serial_link_log_20150428-084729.log.dat"
   with JSONLogIterator(log_datafile) as log:
     with warnings.catch_warnings(record=True) as w:
-      for delta, timestamp, msg in log.next():
+      for msg, metadata in log.next():
         pass
       warnings.simplefilter("always")
       # Check for warnings.
