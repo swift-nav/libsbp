@@ -10,8 +10,6 @@
 
 from ...table import dispatch
 from construct.core import ConstructError
-import datetime
-import time
 import warnings
 
 class BaseLogger(object):
@@ -58,17 +56,6 @@ class BaseLogger(object):
       warnings.warn(warn, RuntimeWarning)
       data = msg
     return data
-
-  def timestamp(self):
-    """
-    Timestamp generator.
-
-    Returns
-    -------
-    str : ISO 8601
-    """
-    return datetime.datetime.utcnow().isoformat()
-
 
 class LogIterator(object):
   """

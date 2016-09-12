@@ -47,7 +47,7 @@ public class JSONLogger implements SBPSender {
     public void sendMessage(SBPMessage msg) throws IOException {
         JSONObject logobj = new JSONObject();
         try {
-            logobj.put("timestamp", ISOTimestamp());
+            logobj.put("time", ISOTimestamp());
             logobj.put("data", msg.toJSON());
         } catch (JSONException e) {
             e.printStackTrace();

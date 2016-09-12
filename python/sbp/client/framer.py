@@ -47,7 +47,7 @@ class Framer(object):
     """
     self._broken = True
 
-  def _timestamp(self):
+  def _time(self):
     """
     Timestamp generator.
 
@@ -66,7 +66,7 @@ class Framer(object):
           raise StopIteration
       except IOError:
         raise StopIteration
-    return (msg, {'timestamp': self._timestamp()})
+    return (msg, {'time': self._time()})
 
   def _readall(self, size):
     """
@@ -133,6 +133,6 @@ class Framer(object):
     msg : SBP message
       SBP message to send.
     metadata : dict
-      {'timestamp': 'ISO 8601 str'} (ignored for now)
+      {'time': 'ISO 8601 str'} (ignored for now)
     """
     self._write(msg.to_binary())
