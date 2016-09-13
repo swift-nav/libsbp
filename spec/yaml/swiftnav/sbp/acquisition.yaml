@@ -70,3 +70,68 @@ definitions:
             desc: |
               PRN-1 identifier of the satellite signal for which
               acquisition was attempted
+
+ - AcqSvProfile:
+    short_desc: Acq perfomance measurement and debug
+    desc: |
+      Profile for a specific SV for debugging purposes
+      The message describes SV profile during acquisition time.
+      The message is used to debug and measure the performance.
+    fields:
+        - job_type:
+            type: u8
+            desc: SV search job type (deep, fallback, etc)
+        - status:
+            type: u8
+            desc: Acquisition status 1 is Success, 0 is Failure
+        - cn0:
+            type: u16
+            desc: CN0 value. Only valid if status is '1'
+            units: dB-Hz*10
+        - int_time:
+            type: u8
+            units: ms
+            desc: Acquisition integration time
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal for which acquisition was attempted
+        - bin_width:
+            type: u16
+            units: Hz
+            desc: Acq frequency bin width
+        - timestamp:
+            type: u32
+            units: ms
+            desc: Timestamp of the job complete event
+        - time_spent:
+            type: u32
+            units: us
+            desc: Time spent to search for sid.code
+        - cf_min:
+            type: u32
+            units: Hz
+            desc: Doppler range lowest frequency
+        - cf_max:
+            type: u32
+            units: Hz
+            desc: Doppler range highest frequency
+        - cf:
+            type: u32
+            units: Hz
+            desc: Doppler value of detected peak. Only valid if status is '1'
+        - cp:
+            type: u32
+            units: chips*10
+            desc: Codephase of detected peak. Only valid if status is '1'
+
+ - MSG_ACQ_SV_PROFILE:
+    id: 0x001E
+    short_desc: Acquisition perfomance measurement and debug
+    desc: |
+      The message describes all SV profiles during acquisition time.
+      The message is used to debug and measure the performance.
+    fields:
+        - acq_sv_profile:
+            type: array
+            fill: AcqSvProfile
+            desc: SV profiles during acquisition time
