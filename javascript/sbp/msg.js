@@ -63,6 +63,14 @@ var mergeDict = function (dest, src) {
   return dest;
 };
 
+function ParameterValidationError (message) {
+  this.name = 'ParameterValidationError';
+  this.message = message;
+  this.stack = (new Error()).stack;
+}
+ParameterValidationError.prototype = Object.create(Error.prototype);
+ParameterValidationError.prototype.constructor = ParameterValidationError;
+
 function BufferTooShortError (message) {
   this.name = 'BufferTooShortError';
   this.message = message;
@@ -169,13 +177,30 @@ module.exports = {
    *
    * This corresponds to the logic in `framer.py`.
    *
-   * @param stream: A Readable stream of bytes.
-   * @param callback: a callback function invoked when a framed message is found and decoded in the stream.
+   * @param {Stream} stream - A Readable stream of bytes.
+   * @param {function|Array|number} [messageWhitelist]: An optional parameter that will filter
+   *   messages. Filtered messages will not be fully decoded, improving performance. Whitelist
+   *   can be an array of message types, a numeric mask that will be applied to the message type,
+   *   or a function that takes the message type and returns a boolean.
+   * @param {function} callback: a callback function invoked when a framed message is found and decoded in the stream.
    * @returns [parsed SBP object, Buffer]
    */
-  dispatch: function dispatch (stream, callback) {
+  dispatch: function dispatch (stream, messageWhitelistIn, callbackIn) {
     var offset = 0;
     var streamBuffer = new Buffer(0);
+
+    var callback, messageWhitelist;
+
+    if (typeof callbackIn === 'undefined' && typeof messageWhitelistIn === 'function') {
+      callback = messageWhitelistIn;
+    } else {
+      callback = callbackIn;
+      messageWhitelist = messageWhitelistIn;
+    }
+
+    if (messageWhitelist && !(Array.isArray(messageWhitelist) || ['function', 'number'].indexOf(typeof messageWhitelist) !== -1)) {
+      throw ParameterValidationError('dispatch: messageWhitelist must be function, number, or array');
+    }
 
     var getFramedMessage = function () {
       var headerBuf, payloadBuf;
@@ -202,6 +227,15 @@ module.exports = {
       msgType = streamBuffer.readUInt16LE(preamblePos+1);
       sender = streamBuffer.readUInt16LE(preamblePos+3);
       length = streamBuffer.readUInt8(preamblePos+5);
+
+      // Don't continue if message isn't whitelisted...
+      var whitelistedArray = messageWhitelist && Array.isArray(messageWhitelist) && messageWhitelist.indexOf(msgType) !== -1;
+      var whitelistedMask = messageWhitelist && typeof messageWhitelist === 'number' && (messageWhitelist & msgType);
+      var whitelistedFn = messageWhitelist && typeof messageWhitelist === 'function' && messageWhitelist(msgType);
+      if (messageWhitelist && !(whitelistedArray || whitelistedMask || whitelistedFn)) {
+        streamBuffer = streamBuffer.slice(preamblePos+6+length+2);
+        return null;
+      }
 
       // Get full payload
       // First, check payload length + CRC
@@ -239,27 +273,30 @@ module.exports = {
           return;
         }
         var pair = getFramedMessage();
+
+        // pair may have been filtered and not fully decoded
+        if (pair === null) {
+          return;
+        }
+
         var framedMessage = pair[0];
         var fullBuffer = pair[1];
 
-        // If there is data left to process after a successful parse, process again
+        callback(null, framedMessage, fullBuffer);
+      } catch (e) {
+        if (!(e instanceof BufferTooShortError || e instanceof BufferCorruptError)) {
+          throw e;
+        }
+      } finally {
+        offset = 0;
+        stream.resume();
+
+        // If there's more in the stream, try again immediately
         if (streamBuffer.length > 0) {
           setTimeout(function () {
             processData(new Buffer(0));
           }, 0);
         }
-
-        callback(null, framedMessage, fullBuffer);
-      } catch (e) {
-        // If the buffer was corrupt but there's more in the stream, try again immediately
-        if (e instanceof BufferCorruptError && streamBuffer.length > 0) {
-          setTimeout(function () {
-            processData(new Buffer(0));
-          }, 0);
-        }
-      } finally {
-        offset = 0;
-        stream.resume();
       }
     };
 
