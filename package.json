@@ -17,6 +17,7 @@
     "js-yaml": "^3.4.3"
   },
   "devDependencies": {
+    "benchmark": "^2.1.1",
     "mocha": "^2.4.5",
     "request": "^2.74.0",
     "serialport": "^4.0.1"
