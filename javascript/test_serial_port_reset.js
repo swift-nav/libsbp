@@ -12,7 +12,7 @@ var sbpPiksi = require(path.resolve(__dirname, './sbp/piksi'));
 var MsgReset = sbpPiksi.MsgReset;
 
 // Change this to a valid piksi serial port path.
-var serial = '/dev/cu.usbserial-00001014';
+var serial = '/dev/cu.usbserial-00002014';
 
 var piksi = new SerialPort(serial, {
   //baudrate: 115200 // serial or uart
@@ -25,4 +25,14 @@ piksi.on('open', function () {
   dispatch(piksi, function (err, framedMsg) {
     console.log('Message from piksi:', err, framedMsg.messageType);
   });
+
+  setTimeout(function () {
+    console.log('Sending a MSG_RESET');
+
+    var msgBytes = constructMsg(MsgReset, {}).toBuffer();
+
+    piksi.write(msgBytes, function () {
+      console.log('wrote bytes', msgBytes, arguments);
+    });
+  }, 1000);
 });

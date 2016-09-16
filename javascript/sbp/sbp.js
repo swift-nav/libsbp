@@ -141,7 +141,7 @@ SBP.prototype.toJSON = function toJSON () {
     dict[k] = this.fields[k];
   }.bind(this));
 
-  return JSON.stringify(dict);
+  return dict;
 };
 
 /**
