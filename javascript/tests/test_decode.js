@@ -47,7 +47,7 @@ describe('test packages based on YAML descriptors', function () {
           });
           it('should serialize back to JSON properly', function () {
             var msg = decodeMsg();
-            assert.deepEqual(JSON.parse(msg.toJSON()), JSON.parse(testSpec['raw_json']));
+            assert.deepEqual(JSON.parse(JSON.stringify(msg)), JSON.parse(testSpec['raw_json']));
           });
           it('should be identical to constructed message with identical fields', function () {
             var msg = decodeMsg();
