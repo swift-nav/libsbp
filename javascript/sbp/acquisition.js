@@ -99,9 +99,101 @@ MsgAcqResultDepA.prototype.fieldSpec.push(['cp', 'writeFloatLE', 4]);
 MsgAcqResultDepA.prototype.fieldSpec.push(['cf', 'writeFloatLE', 4]);
 MsgAcqResultDepA.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
 
+/**
+ * SBP class for message fragment AcqSvProfile
+ *
+ * Profile for a specific SV for debugging purposes The message describes SV
+ * profile during acquisition time. The message is used to debug and measure the
+ * performance.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field job_type number (unsigned 8-bit int, 1 byte) SV search job type (deep, fallback, etc)
+ * @field status number (unsigned 8-bit int, 1 byte) Acquisition status 1 is Success, 0 is Failure
+ * @field cn0 number (unsigned 16-bit int, 2 bytes) CN0 value. Only valid if status is '1'
+ * @field int_time number (unsigned 8-bit int, 1 byte) Acquisition integration time
+ * @field sid GnssSignal GNSS signal for which acquisition was attempted
+ * @field bin_width number (unsigned 16-bit int, 2 bytes) Acq frequency bin width
+ * @field timestamp number (unsigned 32-bit int, 4 bytes) Timestamp of the job complete event
+ * @field time_spent number (unsigned 32-bit int, 4 bytes) Time spent to search for sid.code
+ * @field cf_min number (unsigned 32-bit int, 4 bytes) Doppler range lowest frequency
+ * @field cf_max number (unsigned 32-bit int, 4 bytes) Doppler range highest frequency
+ * @field cf number (unsigned 32-bit int, 4 bytes) Doppler value of detected peak. Only valid if status is '1'
+ * @field cp number (unsigned 32-bit int, 4 bytes) Codephase of detected peak. Only valid if status is '1'
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var AcqSvProfile = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "AcqSvProfile";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+AcqSvProfile.prototype = Object.create(SBP.prototype);
+AcqSvProfile.prototype.messageType = "AcqSvProfile";
+AcqSvProfile.prototype.constructor = AcqSvProfile;
+AcqSvProfile.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('job_type')
+  .uint8('status')
+  .uint16('cn0')
+  .uint8('int_time')
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .uint16('bin_width')
+  .uint32('timestamp')
+  .uint32('time_spent')
+  .uint32('cf_min')
+  .uint32('cf_max')
+  .uint32('cf')
+  .uint32('cp');
+AcqSvProfile.prototype.fieldSpec = [];
+AcqSvProfile.prototype.fieldSpec.push(['job_type', 'writeUInt8', 1]);
+AcqSvProfile.prototype.fieldSpec.push(['status', 'writeUInt8', 1]);
+AcqSvProfile.prototype.fieldSpec.push(['cn0', 'writeUInt16LE', 2]);
+AcqSvProfile.prototype.fieldSpec.push(['int_time', 'writeUInt8', 1]);
+AcqSvProfile.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+AcqSvProfile.prototype.fieldSpec.push(['bin_width', 'writeUInt16LE', 2]);
+AcqSvProfile.prototype.fieldSpec.push(['timestamp', 'writeUInt32LE', 4]);
+AcqSvProfile.prototype.fieldSpec.push(['time_spent', 'writeUInt32LE', 4]);
+AcqSvProfile.prototype.fieldSpec.push(['cf_min', 'writeUInt32LE', 4]);
+AcqSvProfile.prototype.fieldSpec.push(['cf_max', 'writeUInt32LE', 4]);
+AcqSvProfile.prototype.fieldSpec.push(['cf', 'writeUInt32LE', 4]);
+AcqSvProfile.prototype.fieldSpec.push(['cp', 'writeUInt32LE', 4]);
+
+/**
+ * SBP class for message MSG_ACQ_SV_PROFILE (0x001E).
+ *
+ * The message describes all SV profiles during acquisition time. The message is
+ * used to debug and measure the performance.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field acq_sv_profile array SV profiles during acquisition time
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgAcqSvProfile = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ACQ_SV_PROFILE";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgAcqSvProfile.prototype = Object.create(SBP.prototype);
+MsgAcqSvProfile.prototype.messageType = "MSG_ACQ_SV_PROFILE";
+MsgAcqSvProfile.prototype.msg_type = 0x001E;
+MsgAcqSvProfile.prototype.constructor = MsgAcqSvProfile;
+MsgAcqSvProfile.prototype.parser = new Parser()
+  .endianess('little')
+  .array('acq_sv_profile', { type: AcqSvProfile.prototype.parser, readUntil: 'eof' });
+MsgAcqSvProfile.prototype.fieldSpec = [];
+MsgAcqSvProfile.prototype.fieldSpec.push(['acq_sv_profile', 'array', AcqSvProfile.prototype.fieldSpec, function () { return this.fields.array.length; }]);
+
 module.exports = {
   0x0014: MsgAcqResult,
   MsgAcqResult: MsgAcqResult,
   0x0015: MsgAcqResultDepA,
   MsgAcqResultDepA: MsgAcqResultDepA,
+  AcqSvProfile: AcqSvProfile,
+  0x001E: MsgAcqSvProfile,
+  MsgAcqSvProfile: MsgAcqSvProfile,
 }

@@ -24,6 +24,99 @@ from sbp.gnss_signal import *
 # Please do not hand edit!
 
 
+class AcqSvProfile(object):
+  """AcqSvProfile.
+  
+  Profile for a specific SV for debugging purposes
+The message describes SV profile during acquisition time.
+The message is used to debug and measure the performance.
+
+  
+  Parameters
+  ----------
+  job_type : int
+    SV search job type (deep, fallback, etc)
+  status : int
+    Acquisition status 1 is Success, 0 is Failure
+  cn0 : int
+    CN0 value. Only valid if status is '1'
+  int_time : int
+    Acquisition integration time
+  sid : GnssSignal
+    GNSS signal for which acquisition was attempted
+  bin_width : int
+    Acq frequency bin width
+  timestamp : int
+    Timestamp of the job complete event
+  time_spent : int
+    Time spent to search for sid.code
+  cf_min : int
+    Doppler range lowest frequency
+  cf_max : int
+    Doppler range highest frequency
+  cf : int
+    Doppler value of detected peak. Only valid if status is '1'
+  cp : int
+    Codephase of detected peak. Only valid if status is '1'
+
+  """
+  _parser = Embedded(Struct("AcqSvProfile",
+                     ULInt8('job_type'),
+                     ULInt8('status'),
+                     ULInt16('cn0'),
+                     ULInt8('int_time'),
+                     Struct('sid', GnssSignal._parser),
+                     ULInt16('bin_width'),
+                     ULInt32('timestamp'),
+                     ULInt32('time_spent'),
+                     ULInt32('cf_min'),
+                     ULInt32('cf_max'),
+                     ULInt32('cf'),
+                     ULInt32('cp'),))
+  __slots__ = [
+               'job_type',
+               'status',
+               'cn0',
+               'int_time',
+               'sid',
+               'bin_width',
+               'timestamp',
+               'time_spent',
+               'cf_min',
+               'cf_max',
+               'cf',
+               'cp',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.job_type = kwargs.pop('job_type')
+      self.status = kwargs.pop('status')
+      self.cn0 = kwargs.pop('cn0')
+      self.int_time = kwargs.pop('int_time')
+      self.sid = kwargs.pop('sid')
+      self.bin_width = kwargs.pop('bin_width')
+      self.timestamp = kwargs.pop('timestamp')
+      self.time_spent = kwargs.pop('time_spent')
+      self.cf_min = kwargs.pop('cf_min')
+      self.cf_max = kwargs.pop('cf_max')
+      self.cf = kwargs.pop('cf')
+      self.cp = kwargs.pop('cp')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = AcqSvProfile._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return AcqSvProfile.build(d)
+    
 SBP_MSG_ACQ_RESULT = 0x0014
 class MsgAcqResult(SBP):
   """SBP class for message MSG_ACQ_RESULT (0x0014).
@@ -225,8 +318,91 @@ acquisition was attempted
     d.update(j)
     return d
     
+SBP_MSG_ACQ_SV_PROFILE = 0x001E
+class MsgAcqSvProfile(SBP):
+  """SBP class for message MSG_ACQ_SV_PROFILE (0x001E).
+
+  You can have MSG_ACQ_SV_PROFILE inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The message describes all SV profiles during acquisition time.
+The message is used to debug and measure the performance.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  acq_sv_profile : array
+    SV profiles during acquisition time
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgAcqSvProfile",
+                   OptionalGreedyRange(Struct('acq_sv_profile', AcqSvProfile._parser)),)
+  __slots__ = [
+               'acq_sv_profile',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgAcqSvProfile,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgAcqSvProfile, self).__init__()
+      self.msg_type = SBP_MSG_ACQ_SV_PROFILE
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.acq_sv_profile = kwargs.pop('acq_sv_profile')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgAcqSvProfile.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgAcqSvProfile(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgAcqSvProfile._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgAcqSvProfile._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgAcqSvProfile, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0014: MsgAcqResult,
   0x0015: MsgAcqResultDepA,
+  0x001E: MsgAcqSvProfile,
 }
