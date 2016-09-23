@@ -230,7 +230,7 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_DEVICE_MONITOR  0x00B5
 typedef struct __attribute__((packed)) {
-  s16 dev_vin;            /**< Device V_in [V / 11 * 1000] */
+  s16 dev_vin;            /**< Device V_in [V * 1000] */
   s16 cpu_vint;           /**< Processor V_int [V * 1000] */
   s16 cpu_vaux;           /**< Processor V_aux [V * 1000] */
   s16 cpu_temperature;    /**< Processor temperature [degrees C * 100] */

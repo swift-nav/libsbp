@@ -107,3 +107,94 @@ $(deriveSBP 'msgAcqResultDepA ''MsgAcqResultDepA)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResultDepA_" . stripPrefix "_msgAcqResultDepA_"}
              ''MsgAcqResultDepA)
 $(makeLenses ''MsgAcqResultDepA)
+
+-- | AcqSvProfile.
+--
+-- Profile for a specific SV for debugging purposes The message describes SV
+-- profile during acquisition time. The message is used to debug and measure
+-- the performance.
+data AcqSvProfile = AcqSvProfile
+  { _acqSvProfile_job_type :: Word8
+    -- ^ SV search job type (deep, fallback, etc)
+  , _acqSvProfile_status   :: Word8
+    -- ^ Acquisition status 1 is Success, 0 is Failure
+  , _acqSvProfile_cn0      :: Word16
+    -- ^ CN0 value. Only valid if status is '1'
+  , _acqSvProfile_int_time :: Word8
+    -- ^ Acquisition integration time
+  , _acqSvProfile_sid      :: GnssSignal
+    -- ^ GNSS signal for which acquisition was attempted
+  , _acqSvProfile_bin_width :: Word16
+    -- ^ Acq frequency bin width
+  , _acqSvProfile_timestamp :: Word32
+    -- ^ Timestamp of the job complete event
+  , _acqSvProfile_time_spent :: Word32
+    -- ^ Time spent to search for sid.code
+  , _acqSvProfile_cf_min   :: Word32
+    -- ^ Doppler range lowest frequency
+  , _acqSvProfile_cf_max   :: Word32
+    -- ^ Doppler range highest frequency
+  , _acqSvProfile_cf       :: Word32
+    -- ^ Doppler value of detected peak. Only valid if status is '1'
+  , _acqSvProfile_cp       :: Word32
+    -- ^ Codephase of detected peak. Only valid if status is '1'
+  } deriving ( Show, Read, Eq )
+
+instance Binary AcqSvProfile where
+  get = do
+    _acqSvProfile_job_type <- getWord8
+    _acqSvProfile_status <- getWord8
+    _acqSvProfile_cn0 <- getWord16le
+    _acqSvProfile_int_time <- getWord8
+    _acqSvProfile_sid <- get
+    _acqSvProfile_bin_width <- getWord16le
+    _acqSvProfile_timestamp <- getWord32le
+    _acqSvProfile_time_spent <- getWord32le
+    _acqSvProfile_cf_min <- getWord32le
+    _acqSvProfile_cf_max <- getWord32le
+    _acqSvProfile_cf <- getWord32le
+    _acqSvProfile_cp <- getWord32le
+    return AcqSvProfile {..}
+
+  put AcqSvProfile {..} = do
+    putWord8 _acqSvProfile_job_type
+    putWord8 _acqSvProfile_status
+    putWord16le _acqSvProfile_cn0
+    putWord8 _acqSvProfile_int_time
+    put _acqSvProfile_sid
+    putWord16le _acqSvProfile_bin_width
+    putWord32le _acqSvProfile_timestamp
+    putWord32le _acqSvProfile_time_spent
+    putWord32le _acqSvProfile_cf_min
+    putWord32le _acqSvProfile_cf_max
+    putWord32le _acqSvProfile_cf
+    putWord32le _acqSvProfile_cp
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_acqSvProfile_" . stripPrefix "_acqSvProfile_"}
+             ''AcqSvProfile)
+$(makeLenses ''AcqSvProfile)
+
+msgAcqSvProfile :: Word16
+msgAcqSvProfile = 0x001E
+
+-- | SBP class for message MSG_ACQ_SV_PROFILE (0x001E).
+--
+-- The message describes all SV profiles during acquisition time. The message
+-- is used to debug and measure the performance.
+data MsgAcqSvProfile = MsgAcqSvProfile
+  { _msgAcqSvProfile_acq_sv_profile :: [AcqSvProfile]
+    -- ^ SV profiles during acquisition time
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgAcqSvProfile where
+  get = do
+    _msgAcqSvProfile_acq_sv_profile <- whileM (liftM not isEmpty) get
+    return MsgAcqSvProfile {..}
+
+  put MsgAcqSvProfile {..} = do
+    mapM_ put _msgAcqSvProfile_acq_sv_profile
+
+$(deriveSBP 'msgAcqSvProfile ''MsgAcqSvProfile)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqSvProfile_" . stripPrefix "_msgAcqSvProfile_"}
+             ''MsgAcqSvProfile)
+$(makeLenses ''MsgAcqSvProfile)

@@ -17,6 +17,7 @@ import com.swiftnav.sbp.SBPMessage.Builder;
 import com.swiftnav.sbp.SBPMessage.Parser;
 import com.swiftnav.sbp.acquisition.MsgAcqResult;
 import com.swiftnav.sbp.acquisition.MsgAcqResultDepA;
+import com.swiftnav.sbp.acquisition.MsgAcqSvProfile;
 import com.swiftnav.sbp.tracking.MsgTrackingState;
 import com.swiftnav.sbp.tracking.MsgTrackingIq;
 import com.swiftnav.sbp.tracking.MsgTrackingStateDepA;
@@ -103,6 +104,8 @@ final class MessageTable {
                 return new MsgAcqResult(msg);
             case MsgAcqResultDepA.TYPE:
                 return new MsgAcqResultDepA(msg);
+            case MsgAcqSvProfile.TYPE:
+                return new MsgAcqSvProfile(msg);
             case MsgTrackingState.TYPE:
                 return new MsgTrackingState(msg);
             case MsgTrackingIq.TYPE:
