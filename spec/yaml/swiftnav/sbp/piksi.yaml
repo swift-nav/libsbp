@@ -292,7 +292,7 @@ definitions:
     fields:
         - dev_vin:
             type: s16
-            units: V / 11 * 1000
+            units: V * 1000
             desc: Device V_in
         - cpu_vint:
             type: s16
