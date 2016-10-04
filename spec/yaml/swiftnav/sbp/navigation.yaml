@@ -155,8 +155,8 @@ definitions:
                   desc: Fix mode
                   values:
                       - 0: Single Point Positioning (SPP)
-                      - 1: Float RTK
-                      - 2: Fixed RTK
+                      - 1: Fixed RTK
+                      - 2: Float RTK
 
  - MSG_POS_LLH:
     id: 0x0201
