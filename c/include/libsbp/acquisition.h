@@ -78,9 +78,9 @@ typedef struct __attribute__((packed)) {
   u16 bin_width;     /**< Acq frequency bin width [Hz] */
   u32 timestamp;     /**< Timestamp of the job complete event [ms] */
   u32 time_spent;    /**< Time spent to search for sid.code [us] */
-  u32 cf_min;        /**< Doppler range lowest frequency [Hz] */
-  u32 cf_max;        /**< Doppler range highest frequency [Hz] */
-  u32 cf;            /**< Doppler value of detected peak. Only valid if status is '1' [Hz] */
+  s32 cf_min;        /**< Doppler range lowest frequency [Hz] */
+  s32 cf_max;        /**< Doppler range highest frequency [Hz] */
+  s32 cf;            /**< Doppler value of detected peak. Only valid if status is '1' [Hz] */
   u32 cp;            /**< Codephase of detected peak. Only valid if status is '1' [chips*10] */
 } acq_sv_profile_t;
 
