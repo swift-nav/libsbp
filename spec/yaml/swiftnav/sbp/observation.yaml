@@ -19,27 +19,33 @@ include:
 definitions:
 
  - ObsGPSTime:
-    short_desc: Millisecond-accurate GPS time
+    short_desc: Nanosecond-accurate receiver clock time
     desc: |
-      A wire-appropriate GPS time, defined as the number of
-      milliseconds since beginning of the week on the Saturday/Sunday
+      A wire-appropriate receiver clock time, defined as the time
+      since the beginning of the week on the Saturday/Sunday
       transition.
     fields:
         - tow:
             type: u32
             units: ms
             desc: Milliseconds since start of GPS week
+        - ns:
+            type: s32
+            units: ns
+            desc: |
+              Nanosecond residual of millisecond-rounded TOW (ranges
+              from -500000 to 500000)
         - wn:
             type: u16
             units: week
             desc: GPS week number
 
  - CarrierPhase:
-    short_desc: GPS carrier phase measurement.
+    short_desc: GNSS carrier phase measurement.
     desc: |
       Carrier phase measurement in cycles represented as a 40-bit
       fixed point number with Q32.8 layout, i.e. 32-bits of whole
-      cycles and 8-bits of fractional cycles.  This phase has the 
+      cycles and 8-bits of fractional cycles.  This phase has the
       same sign as the pseudorange.
     fields:
         - i:
@@ -51,13 +57,30 @@ definitions:
             units: cycles / 256
             desc: Carrier phase fractional part
 
+ - Doppler:
+    short_desc: GNSS doppler measurement.
+    desc: |
+      Doppler measurement in Hz represented as a 24-bit
+      fixed point number with Q16.8 layout, i.e. 16-bits of whole
+      doppler and 8-bits of fractional doppler.  This doppler is defined
+      as positive for approaching satellites.
+    fields:
+        - i:
+            type: s16
+            units: Hz
+            desc: Doppler whole Hz
+        - f:
+            type: u8
+            units: Hz / 256
+            desc: Doppler fractional part
+
  - ObservationHeader:
     short_desc: Header for observation message.
-    desc: Header of a GPS observation message.
+    desc: Header of a GNSS observation message.
     fields:
         - t:
             type: ObsGPSTime
-            desc: GPS time of this observation
+            desc: GNSS time of this observation
         - n_obs:
             type: u8
             desc: |
@@ -66,11 +89,11 @@ definitions:
               counter (ith packet of n)
 
  - PackedObsContent:
-    short_desc: GPS observations for a particular satellite signal.
+    short_desc: GNSS observations for a particular satellite signal.
     desc: |
       Pseudorange and carrier phase observation for a satellite being
-      tracked. The observations should be interoperable with 3rd party 
-      receivers and conform with typical RTCMv3 GNSS observations. 
+      tracked. The observations should be interoperable with 3rd party
+      receivers and conform with typical RTCMv3 GNSS observations.
     fields:
         - P:
             type: u32
@@ -80,32 +103,57 @@ definitions:
             type: CarrierPhase
             units: cycles
             desc: Carrier phase observation with typical sign convention.
+        - D:
+            type: Doppler
+            units: Hz
+            desc: Doppler observation with typical sign convention.
         - cn0:
             type: u8
             units: dB Hz * 4
             desc: Carrier-to-Noise density
+        - snr:
+            type: u8
+            units: dB * 4 - 20
+            desc: Signal-to-Noise ratio. A fixed offset of -20 dB is applied.
         - lock:
             type: u16
             desc: |
               Lock indicator. This value changes whenever a satellite
               signal has lost and regained lock, indicating that the
               carrier phase ambiguity may have changed.
+        - flags:
+            type: u16
+            desc: |
+              Measurement status flags. A bit field of flags providing the
+              status of this obervation.
+            fields:
+              - 2-15:
+                  desc: Reserved
+              - 1:
+                  desc: Suitable for use in RTK
+                  values:
+                      - 0: Measurement should not be used in RTK
+                      - 1: Measurement can be used in RTK
+              - 0:
+                  desc: Suitable for use in SPP
+                  values:
+                      - 0: Measurement should not be used in SPP
+                      - 1: Measurement can be used in SPP
         - sid:
             type: GnssSignal
             desc: GNSS signal identifier
 
-  
  - MSG_OBS:
-    id: 0x0049
+    id: 0x004A
     short_desc: GPS satellite observations
     desc: |
       The GPS observations message reports all the raw pseudorange and
       carrier phase observations for the satellites being tracked by
       the device. Carrier phase observation here is represented as a
       40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-      whole cycles and 8-bits of fractional cycles).  The observations 
-      should be interoperable with 3rd party receivers and conform 
-      with typical RTCMv3 GNSS observations. 
+      whole cycles and 8-bits of fractional cycles).  The observations
+      should be interoperable with 3rd party receivers and conform
+      with typical RTCMv3 GNSS observations.
     fields:
         - header:
             type: ObservationHeader
@@ -117,7 +165,6 @@ definitions:
             desc: |
               Pseudorange and carrier phase observation for a
               satellite being tracked.
-
 
  - MSG_BASE_POS_LLH:
     id: 0x0044
@@ -711,7 +758,7 @@ definitions:
       - iode:
           type: u8
           desc: Issue of ephemeris data
- 
+
  - MSG_EPHEMERIS_DEP_C:
     id: 0x0047
     short_desc: Satellite broadcast ephemeris
@@ -832,6 +879,36 @@ definitions:
           type: u32
           desc: Reserved field
 
+ - ObsGPSTimeDep:
+    short_desc: Millisecond-accurate GPS time
+    desc: |
+      A wire-appropriate GPS time, defined as the number of
+      milliseconds since beginning of the week on the Saturday/Sunday
+      transition.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: Milliseconds since start of GPS week
+        - wn:
+            type: u16
+            units: week
+            desc: GPS week number
+
+ - ObservationHeaderDep:
+    short_desc: Header for observation message.
+    desc: Header of a GPS observation message.
+    fields:
+        - t:
+            type: ObsGPSTimeDep
+            desc: GPS time of this observation
+        - n_obs:
+            type: u8
+            desc: |
+              Total number of observations. First nibble is the size
+              of the sequence (n), second nibble is the zero-indexed
+              counter (ith packet of n)
+
  - CarrierPhaseDepA:
     short_desc: GPS carrier phase measurement.
     desc: |
@@ -902,6 +979,35 @@ definitions:
             type: GnssSignal
             desc: GNSS signal identifier
 
+ - PackedObsContentDepC:
+   short_desc: GPS observations for a particular satellite signal.
+   desc: |
+     Pseudorange and carrier phase observation for a satellite being
+     tracked. The observations should be interoperable with 3rd party
+     receivers and conform with typical RTCMv3 GNSS observations.
+   fields:
+       - P:
+           type: u32
+           units: 2 cm
+           desc: Pseudorange observation
+       - L:
+           type: CarrierPhase
+           units: cycles
+           desc: Carrier phase observation with typical sign convention.
+       - cn0:
+           type: u8
+           units: dB Hz * 4
+           desc: Carrier-to-Noise density
+       - lock:
+           type: u16
+           desc: |
+             Lock indicator. This value changes whenever a satellite
+             signal has lost and regained lock, indicating that the
+             carrier phase ambiguity may have changed.
+       - sid:
+           type: GnssSignal
+           desc: GNSS signal identifier
+
  - MSG_OBS_DEP_A:
     id: 0x0045
     short_desc: Deprecated
@@ -911,7 +1017,7 @@ definitions:
       - MSG_OBS
     fields:
         - header:
-            type: ObservationHeader
+            type: ObservationHeaderDep
             desc: Header of a GPS observation message
         - obs:
             type: array
@@ -920,27 +1026,53 @@ definitions:
             desc: |
               Pseudorange and carrier phase observation for a
               satellite being tracked.
- 
+
  - MSG_OBS_DEP_B:
     id: 0x0043
     short_desc: Deprecated
     desc: |
-      This observation message has been deprecated in favor of 
+      This observation message has been deprecated in favor of
       observations that are more interoperable. This message
-      should be used for observations referenced to 
+      should be used for observations referenced to
       a nominal pseudorange which are not interoperable with
-      most 3rd party GNSS receievers or typical RTCMv3 
+      most 3rd party GNSS receievers or typical RTCMv3
       observations.
     public: False
     replaced_by:
       - MSG_OBS
     fields:
         - header:
-            type: ObservationHeader
+            type: ObservationHeaderDep
             desc: Header of a GPS observation message
         - obs:
             type: array
             fill: PackedObsContentDepB
+            map_by: sid
+            desc: |
+              Pseudorange and carrier phase observation for a
+              satellite being tracked.
+
+ - MSG_OBS_DEP_C:
+    id: 0x0049
+    short_desc: Deprecated
+    desc: |
+      The GPS observations message reports all the raw pseudorange and
+      carrier phase observations for the satellites being tracked by
+      the device. Carrier phase observation here is represented as a
+      40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
+      whole cycles and 8-bits of fractional cycles).  The observations
+      should be interoperable with 3rd party receivers and conform
+      with typical RTCMv3 GNSS observations.
+    public: False
+    replaced_by:
+      - MSG_OBS
+    fields:
+        - header:
+            type: ObservationHeaderDep
+            desc: Header of a GPS observation message
+        - obs:
+            type: array
+            fill: PackedObsContentDepC
             map_by: sid
             desc: |
               Pseudorange and carrier phase observation for a
@@ -1021,4 +1153,3 @@ definitions:
       - isc_l2c:
           type: s16
           units: s * 2^-35
-
