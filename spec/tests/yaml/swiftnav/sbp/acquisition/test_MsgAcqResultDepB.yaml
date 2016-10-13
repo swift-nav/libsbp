@@ -1,0 +1,127 @@
+---
+description: Unit tests for swiftnav.sbp.acquisition MsgAcqResult v0.51.
+generated_on: 2015-11-09 15:15:45.741388
+package: sbp.acquisition
+tests:
+
+- msg:
+    fields:
+      cf: 4995.1171875
+      cp: 322.0
+      sid:
+        code: 0
+        reserved: 0
+        sat: 9
+      snr: 36.66360855102539
+    module: sbp.acquisition
+    name: MsgAcqResultDepB
+  msg_type: '0x14'
+  raw_json: '{"sender": 55286, "msg_type": 20, "cf": 4995.1171875, "crc": 50000, "length":
+    16, "snr": 36.66360855102539, "sid": {"code": 0, "reserved": 0, "sat": 9},
+    "cp": 322.0, "preamble": 85, "payload": "iacSQgAAoUPwGJxFCQAAAA=="}'
+  raw_packet: VRQA9tcQiacSQgAAoUPwGJxFCQAAAFDD
+  sbp:
+    crc: '0xc350'
+    length: 16
+    msg_type: '0x14'
+    payload: iacSQgAAoUPwGJxFCQAAAA==
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      cf: -8241.943359375
+      cp: 843.0
+      sid:
+        code: 0
+        reserved: 0
+        sat: 3
+      snr: 36.16875457763672
+    module: sbp.acquisition
+    name: MsgAcqResultDepB
+  msg_type: '0x14'
+  raw_json: '{"sender": 55286, "msg_type": 20, "cf": -8241.943359375, "crc": 36757,
+    "length": 16, "snr": 36.16875457763672, "sid": {"code": 0, "reserved": 0,
+    "sat": 3}, "cp": 843.0, "preamble": 85, "payload": "zqwQQgDAUkTGxwDGAwAAAA=="}'
+  raw_packet: VRQA9tcQzqwQQgDAUkTGxwDGAwAAAJWP
+  sbp:
+    crc: '0x8f95'
+    length: 16
+    msg_type: '0x14'
+    payload: zqwQQgDAUkTGxwDGAwAAAA==
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      cf: 4745.361328125
+      cp: 794.0
+      sid:
+        code: 0
+        reserved: 0
+        sat: 18
+      snr: 35.77723693847656
+    module: sbp.acquisition
+    name: MsgAcqResultDepB
+  msg_type: '0x14'
+  raw_json: '{"sender": 55286, "msg_type": 20, "cf": 4745.361328125, "crc": 39859,
+    "length": 16, "snr": 35.77723693847656, "sid": {"code": 0, "reserved": 0,
+    "sat": 18}, "cp": 794.0, "preamble": 85, "payload": "5BsPQgCARkTkSpRFEgAAAA=="}'
+  raw_packet: VRQA9tcQ5BsPQgCARkTkSpRFEgAAALOb
+  sbp:
+    crc: '0x9bb3'
+    length: 16
+    msg_type: '0x14'
+    payload: 5BsPQgCARkTkSpRFEgAAAA==
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      cf: 2497.55859375
+      cp: 258.5
+      sid:
+        code: 0
+        reserved: 0
+        sat: 17
+      snr: 35.69451141357422
+    module: sbp.acquisition
+    name: MsgAcqResultDepB
+  msg_type: '0x14'
+  raw_json: '{"sender": 55286, "msg_type": 20, "cf": 2497.55859375, "crc": 46354,
+    "length": 16, "snr": 35.69451141357422, "sid": {"code": 0, "reserved": 0,
+    "sat": 17}, "cp": 258.5, "preamble": 85, "payload": "LscOQgBAgUPwGBxFEQAAAA=="}'
+  raw_packet: VRQA9tcQLscOQgBAgUPwGBxFEQAAABK1
+  sbp:
+    crc: '0xb512'
+    length: 16
+    msg_type: '0x14'
+    payload: LscOQgBAgUPwGBxFEQAAAA==
+    preamble: '0x55'
+    sender: '0xd7f6'
+
+- msg:
+    fields:
+      cf: -499.5117492675781
+      cp: 522.0
+      sid:
+        code: 0
+        reserved: 0
+        sat: 5
+      snr: 35.52417755126953
+    module: sbp.acquisition
+    name: MsgAcqResultDepB
+  msg_type: '0x14'
+  raw_json: '{"sender": 55286, "msg_type": 20, "cf": -499.5117492675781, "crc": 52003,
+    "length": 16, "snr": 35.52417755126953, "sid": {"code": 0, "reserved": 0,
+    "sat": 5}, "cp": 522.0, "preamble": 85, "payload": "whgOQgCAAkSBwfnDBQAAAA=="}'
+  raw_packet: VRQA9tcQwhgOQgCAAkSBwfnDBQAAACPL
+  sbp:
+    crc: '0xcb23'
+    length: 16
+    msg_type: '0x14'
+    payload: whgOQgCAAkSBwfnDBQAAAA==
+    preamble: '0x55'
+    sender: '0xd7f6'
+version: '0.51'
+...

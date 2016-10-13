@@ -22,24 +22,22 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_ACQ_RESULT (0x001F).
+/** SBP class for message MSG_ACQ_RESULT_DEP_B (0x0014).
  *
- * You can have MSG_ACQ_RESULT inherent its fields directly from
+ * You can have MSG_ACQ_RESULT_DEP_B inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message describes the results from an attempted GPS signal
- * acquisition search for a satellite PRN over a code phase/carrier
- * frequency range. It contains the parameters of the point in the
- * acquisition search space with the best carrier-to-noise (CN/0)
- * ratio. */
+* Deprecated. */
 
-public class MsgAcqResult extends SBPMessage {
-    public static final int TYPE = 0x001F;
+public class MsgAcqResultDepB extends SBPMessage {
+    public static final int TYPE = 0x0014;
 
     
-    /** CN/0 of best point */
-    public float cn0;
+    /** SNR of best point. Currently in arbitrary SNR points, but will
+be in units of dB Hz in a later revision of this message.
+ */
+    public float snr;
     
     /** Code phase of best point */
     public float cp;
@@ -51,9 +49,9 @@ public class MsgAcqResult extends SBPMessage {
     public GnssSignal sid;
     
 
-    public MsgAcqResult (int sender) { super(sender, TYPE); }
-    public MsgAcqResult () { super(TYPE); }
-    public MsgAcqResult (SBPMessage msg) throws SBPBinaryException {
+    public MsgAcqResultDepB (int sender) { super(sender, TYPE); }
+    public MsgAcqResultDepB () { super(TYPE); }
+    public MsgAcqResultDepB (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -61,7 +59,7 @@ public class MsgAcqResult extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        cn0 = parser.getFloat();
+        snr = parser.getFloat();
         cp = parser.getFloat();
         cf = parser.getFloat();
         sid = new GnssSignal().parse(parser);
@@ -69,7 +67,7 @@ public class MsgAcqResult extends SBPMessage {
 
     @Override
     protected void build(Builder builder) {
-        builder.putFloat(cn0);
+        builder.putFloat(snr);
         builder.putFloat(cp);
         builder.putFloat(cf);
         sid.build(builder);
@@ -78,7 +76,7 @@ public class MsgAcqResult extends SBPMessage {
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("cn0", cn0);
+        obj.put("snr", snr);
         obj.put("cp", cp);
         obj.put("cf", cf);
         obj.put("sid", sid.toJSON());

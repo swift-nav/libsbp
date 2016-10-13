@@ -18,14 +18,36 @@ include:
 definitions:
 
  - MSG_ACQ_RESULT:
-    id: 0x0014
+    id: 0x001F
     short_desc: Satellite acquisition result
     desc: |
       This message describes the results from an attempted GPS signal
       acquisition search for a satellite PRN over a code phase/carrier
       frequency range. It contains the parameters of the point in the
-      acquisition search space with the best signal-to-noise (SNR)
+      acquisition search space with the best carrier-to-noise (CN/0)
       ratio.
+    fields:
+        - cn0:
+            type: float
+            units: dB Hz
+            desc: CN/0 of best point
+        - cp:
+            type: float
+            units: chips
+            desc: Code phase of best point
+        - cf:
+            type: float
+            units: hz
+            desc: Carrier frequency of best point
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal for which acquisition was attempted
+
+ - MSG_ACQ_RESULT_DEP_B:
+    id: 0x0014
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: False
     fields:
         - snr:
             type: float

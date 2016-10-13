@@ -32,10 +32,23 @@
  * This message describes the results from an attempted GPS signal
  * acquisition search for a satellite PRN over a code phase/carrier
  * frequency range. It contains the parameters of the point in the
- * acquisition search space with the best signal-to-noise (SNR)
+ * acquisition search space with the best carrier-to-noise (CN/0)
  * ratio.
  */
-#define SBP_MSG_ACQ_RESULT       0x0014
+#define SBP_MSG_ACQ_RESULT       0x001F
+typedef struct __attribute__((packed)) {
+  float cn0;    /**< CN/0 of best point [dB Hz] */
+  float cp;     /**< Code phase of best point [chips] */
+  float cf;     /**< Carrier frequency of best point [hz] */
+  sbp_gnss_signal_t sid;    /**< GNSS signal for which acquisition was attempted */
+} msg_acq_result_t;
+
+
+/** Deprecated
+ *
+* Deprecated.
+ */
+#define SBP_MSG_ACQ_RESULT_DEP_B 0x0014
 typedef struct __attribute__((packed)) {
   float snr;    /**< SNR of best point. Currently in arbitrary SNR points, but will
 be in units of dB Hz in a later revision of this message.
@@ -43,7 +56,7 @@ be in units of dB Hz in a later revision of this message.
   float cp;     /**< Code phase of best point [chips] */
   float cf;     /**< Carrier frequency of best point [hz] */
   sbp_gnss_signal_t sid;    /**< GNSS signal for which acquisition was attempted */
-} msg_acq_result_t;
+} msg_acq_result_dep_b_t;
 
 
 /** Deprecated
