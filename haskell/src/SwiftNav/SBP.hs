@@ -56,6 +56,7 @@ import SwiftNav.SBP.Types
 data SBPMsg =
      SBPMsgAcqResult MsgAcqResult Msg
    | SBPMsgAcqResultDepA MsgAcqResultDepA Msg
+   | SBPMsgAcqResultDepB MsgAcqResultDepB Msg
    | SBPMsgAcqSvProfile MsgAcqSvProfile Msg
    | SBPMsgAlmanac MsgAlmanac Msg
    | SBPMsgBasePosEcef MsgBasePosEcef Msg
@@ -151,6 +152,7 @@ instance Binary SBPMsg where
           | checkCrc m /= _msgSBPCrc = SBPMsgBadCrc m
           | _msgSBPType == msgAcqResult = SBPMsgAcqResult (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgAcqResultDepA = SBPMsgAcqResultDepA (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgAcqResultDepB = SBPMsgAcqResultDepB (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgAcqSvProfile = SBPMsgAcqSvProfile (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgAlmanac = SBPMsgAlmanac (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBasePosEcef = SBPMsgBasePosEcef (decode (fromStrict _msgSBPPayload)) m
@@ -238,6 +240,7 @@ instance Binary SBPMsg where
     encode' sm where
       encode' (SBPMsgAcqResult _ m) = put m
       encode' (SBPMsgAcqResultDepA _ m) = put m
+      encode' (SBPMsgAcqResultDepB _ m) = put m
       encode' (SBPMsgAcqSvProfile _ m) = put m
       encode' (SBPMsgAlmanac _ m) = put m
       encode' (SBPMsgBasePosEcef _ m) = put m
@@ -328,6 +331,7 @@ instance FromJSON SBPMsg where
       decode' msgType
         | msgType == msgAcqResult = SBPMsgAcqResult <$> parseJSON obj <*> parseJSON obj
         | msgType == msgAcqResultDepA = SBPMsgAcqResultDepA <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgAcqResultDepB = SBPMsgAcqResultDepB <$> parseJSON obj <*> parseJSON obj
         | msgType == msgAcqSvProfile = SBPMsgAcqSvProfile <$> parseJSON obj <*> parseJSON obj
         | msgType == msgAlmanac = SBPMsgAlmanac <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBasePosEcef = SBPMsgBasePosEcef <$> parseJSON obj <*> parseJSON obj
@@ -420,6 +424,7 @@ mergeValues _          v          = v
 instance ToJSON SBPMsg where
   toJSON (SBPMsgAcqResult n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgAcqResultDepA n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgAcqResultDepB n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgAcqSvProfile n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgAlmanac n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBasePosEcef n m) = toJSON n `mergeValues` toJSON m
@@ -506,6 +511,7 @@ instance ToJSON SBPMsg where
 instance HasMsg SBPMsg where
   msg f (SBPMsgAcqResult n m) = SBPMsgAcqResult n <$> f m
   msg f (SBPMsgAcqResultDepA n m) = SBPMsgAcqResultDepA n <$> f m
+  msg f (SBPMsgAcqResultDepB n m) = SBPMsgAcqResultDepB n <$> f m
   msg f (SBPMsgAcqSvProfile n m) = SBPMsgAcqSvProfile n <$> f m
   msg f (SBPMsgAlmanac n m) = SBPMsgAlmanac n <$> f m
   msg f (SBPMsgBasePosEcef n m) = SBPMsgBasePosEcef n <$> f m

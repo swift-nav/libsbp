@@ -1,127 +1,127 @@
 ---
-description: Unit tests for swiftnav.sbp.acquisition MsgAcqResult v0.51.
-generated_on: 2015-11-09 15:15:45.741388
+description: Unit tests for swiftnav.sbp.acquisition MsgAcqResult vNone.
+generated_on: 2016-10-27 13:09:43.307936
 package: sbp.acquisition
 tests:
 
 - msg:
     fields:
-      cf: 4995.1171875
-      cp: 322.0
+      cf: 1769.06591796875
+      cn0: 40.509063720703125
+      cp: 457.1922302246094
       sid:
         code: 0
         reserved: 0
-        sat: 9
-      snr: 36.66360855102539
+        sat: 10
     module: sbp.acquisition
     name: MsgAcqResult
-  msg_type: '0x14'
-  raw_json: '{"sender": 55286, "msg_type": 20, "cf": 4995.1171875, "crc": 50000, "length":
-    16, "snr": 36.66360855102539, "sid": {"code": 0, "reserved": 0, "sat": 9},
-    "cp": 322.0, "preamble": 85, "payload": "iacSQgAAoUPwGJxFCQAAAA=="}'
-  raw_packet: VRQA9tcQiacSQgAAoUPwGJxFCQAAAFDD
+  msg_type: '0x1f'
+  raw_json: '{"sender": 3112, "msg_type": 31, "cf": 1769.06591796875, "cn0": 40.509063720703125,
+    "crc": 48393, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 10}, "cp":
+    457.1922302246094, "preamble": 85, "payload": "SAkiQpuY5EMcIt1ECgAAAA=="}'
+  raw_packet: VR8AKAwQSAkiQpuY5EMcIt1ECgAAAAm9
   sbp:
-    crc: '0xc350'
+    crc: '0xbd09'
     length: 16
-    msg_type: '0x14'
-    payload: iacSQgAAoUPwGJxFCQAAAA==
+    msg_type: '0x1f'
+    payload: SAkiQpuY5EMcIt1ECgAAAA==
     preamble: '0x55'
-    sender: '0xd7f6'
+    sender: '0xc28'
 
 - msg:
     fields:
-      cf: -8241.943359375
-      cp: 843.0
+      cf: -505.4473876953125
+      cn0: 43.49464416503906
+      cp: 865.4657592773438
       sid:
         code: 0
         reserved: 0
-        sat: 3
-      snr: 36.16875457763672
+        sat: 6
     module: sbp.acquisition
     name: MsgAcqResult
-  msg_type: '0x14'
-  raw_json: '{"sender": 55286, "msg_type": 20, "cf": -8241.943359375, "crc": 36757,
-    "length": 16, "snr": 36.16875457763672, "sid": {"code": 0, "reserved": 0,
-    "sat": 3}, "cp": 843.0, "preamble": 85, "payload": "zqwQQgDAUkTGxwDGAwAAAA=="}'
-  raw_packet: VRQA9tcQzqwQQgDAUkTGxwDGAwAAAJWP
+  msg_type: '0x1f'
+  raw_json: '{"sender": 3112, "msg_type": 31, "cf": -505.4473876953125, "cn0": 43.49464416503906,
+    "crc": 47496, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 6}, "cp":
+    865.4657592773438, "preamble": 85, "payload": "hPotQs9dWEREufzDBgAAAA=="}'
+  raw_packet: VR8AKAwQhPotQs9dWEREufzDBgAAAIi5
   sbp:
-    crc: '0x8f95'
+    crc: '0xb988'
     length: 16
-    msg_type: '0x14'
-    payload: zqwQQgDAUkTGxwDGAwAAAA==
+    msg_type: '0x1f'
+    payload: hPotQs9dWEREufzDBgAAAA==
     preamble: '0x55'
-    sender: '0xd7f6'
+    sender: '0xc28'
 
 - msg:
     fields:
-      cf: 4745.361328125
-      cp: 794.0
+      cf: -1263.618408203125
+      cn0: 38.2183952331543
+      cp: 230.3564453125
       sid:
         code: 0
         reserved: 0
-        sat: 18
-      snr: 35.77723693847656
+        sat: 13
     module: sbp.acquisition
     name: MsgAcqResult
-  msg_type: '0x14'
-  raw_json: '{"sender": 55286, "msg_type": 20, "cf": 4745.361328125, "crc": 39859,
-    "length": 16, "snr": 35.77723693847656, "sid": {"code": 0, "reserved": 0,
-    "sat": 18}, "cp": 794.0, "preamble": 85, "payload": "5BsPQgCARkTkSpRFEgAAAA=="}'
-  raw_packet: VRQA9tcQ5BsPQgCARkTkSpRFEgAAALOb
+  msg_type: '0x1f'
+  raw_json: '{"sender": 3112, "msg_type": 31, "cf": -1263.618408203125, "cn0": 38.2183952331543,
+    "crc": 41366, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 13}, "cp":
+    230.3564453125, "preamble": 85, "payload": "o98YQkBbZkPK853EDQAAAA=="}'
+  raw_packet: VR8AKAwQo98YQkBbZkPK853EDQAAAJah
   sbp:
-    crc: '0x9bb3'
+    crc: '0xa196'
     length: 16
-    msg_type: '0x14'
-    payload: 5BsPQgCARkTkSpRFEgAAAA==
+    msg_type: '0x1f'
+    payload: o98YQkBbZkPK853EDQAAAA==
     preamble: '0x55'
-    sender: '0xd7f6'
+    sender: '0xc28'
 
 - msg:
     fields:
-      cf: 2497.55859375
-      cp: 258.5
+      cf: 3032.684326171875
+      cn0: 37.313968658447266
+      cp: 252.83935546875
       sid:
         code: 0
         reserved: 0
-        sat: 17
-      snr: 35.69451141357422
+        sat: 1
     module: sbp.acquisition
     name: MsgAcqResult
-  msg_type: '0x14'
-  raw_json: '{"sender": 55286, "msg_type": 20, "cf": 2497.55859375, "crc": 46354,
-    "length": 16, "snr": 35.69451141357422, "sid": {"code": 0, "reserved": 0,
-    "sat": 17}, "cp": 258.5, "preamble": 85, "payload": "LscOQgBAgUPwGBxFEQAAAA=="}'
-  raw_packet: VRQA9tcQLscOQgBAgUPwGBxFEQAAABK1
+  msg_type: '0x1f'
+  raw_json: '{"sender": 3112, "msg_type": 31, "cf": 3032.684326171875, "cn0": 37.313968658447266,
+    "crc": 53613, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 1}, "cp":
+    252.83935546875, "preamble": 85, "payload": "gUEVQuDWfEPzij1FAQAAAA=="}'
+  raw_packet: VR8AKAwQgUEVQuDWfEPzij1FAQAAAG3R
   sbp:
-    crc: '0xb512'
+    crc: '0xd16d'
     length: 16
-    msg_type: '0x14'
-    payload: LscOQgBAgUPwGBxFEQAAAA==
+    msg_type: '0x1f'
+    payload: gUEVQuDWfEPzij1FAQAAAA==
     preamble: '0x55'
-    sender: '0xd7f6'
+    sender: '0xc28'
 
 - msg:
     fields:
-      cf: -499.5117492675781
-      cp: 522.0
+      cf: 2527.23681640625
+      cn0: 47.53466033935547
+      cp: 920.5919189453125
       sid:
         code: 0
         reserved: 0
-        sat: 5
-      snr: 35.52417755126953
+        sat: 27
     module: sbp.acquisition
     name: MsgAcqResult
-  msg_type: '0x14'
-  raw_json: '{"sender": 55286, "msg_type": 20, "cf": -499.5117492675781, "crc": 52003,
-    "length": 16, "snr": 35.52417755126953, "sid": {"code": 0, "reserved": 0,
-    "sat": 5}, "cp": 522.0, "preamble": 85, "payload": "whgOQgCAAkSBwfnDBQAAAA=="}'
-  raw_packet: VRQA9tcQwhgOQgCAAkSBwfnDBQAAACPL
+  msg_type: '0x1f'
+  raw_json: '{"sender": 3112, "msg_type": 31, "cf": 2527.23681640625, "cn0": 47.53466033935547,
+    "crc": 17243, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 27}, "cp":
+    920.5919189453125, "preamble": 85, "payload": "fiM+QuIlZkTK8x1FGwAAAA=="}'
+  raw_packet: VR8AKAwQfiM+QuIlZkTK8x1FGwAAAFtD
   sbp:
-    crc: '0xcb23'
+    crc: '0x435b'
     length: 16
-    msg_type: '0x14'
-    payload: whgOQgCAAkSBwfnDBQAAAA==
+    msg_type: '0x1f'
+    payload: fiM+QuIlZkTK8x1FGwAAAA==
     preamble: '0x55'
-    sender: '0xd7f6'
-version: '0.51'
+    sender: '0xc28'
+version: null
 ...
