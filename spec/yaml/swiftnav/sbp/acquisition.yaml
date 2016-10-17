@@ -108,15 +108,15 @@ definitions:
             units: us
             desc: Time spent to search for sid.code
         - cf_min:
-            type: u32
+            type: s32
             units: Hz
             desc: Doppler range lowest frequency
         - cf_max:
-            type: u32
+            type: s32
             units: Hz
             desc: Doppler range highest frequency
         - cf:
-            type: u32
+            type: s32
             units: Hz
             desc: Doppler value of detected peak. Only valid if status is '1'
         - cp:

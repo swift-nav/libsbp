@@ -69,9 +69,9 @@ The message is used to debug and measure the performance.
                      ULInt16('bin_width'),
                      ULInt32('timestamp'),
                      ULInt32('time_spent'),
-                     ULInt32('cf_min'),
-                     ULInt32('cf_max'),
-                     ULInt32('cf'),
+                     SLInt32('cf_min'),
+                     SLInt32('cf_max'),
+                     SLInt32('cf'),
                      ULInt32('cp'),))
   __slots__ = [
                'job_type',
