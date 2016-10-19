@@ -83,7 +83,7 @@ definitions:
     desc: |
       This message initializes the integer ambiguity resolution (IAR)
       process on the Piksi to use an assumed baseline position between
-      the base station and rover receivers. Warns via MSG_PRINT if
+      the base station and rover receivers. Warns via MSG_LOG if
       there aren't a shared minimum number (4) of satellite
       observations between the two.
 
