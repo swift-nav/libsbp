@@ -72,9 +72,9 @@ def test_http_test_pass():
                BASE_STATION_URI,
                '',
                content_type="application/vnd.swiftnav.broker.v1+sbp")
-  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
+  with HTTPDriver(url=BASE_STATION_URI) as driver:
     assert not driver.read_ok
-    assert driver.connect_read()
+    assert driver.connect_read("Swift22")
     assert driver.read_ok
     assert driver.read(size=255) == msg.to_binary()
     with pytest.raises(IOError):
@@ -84,7 +84,7 @@ def test_http_test_pass():
     assert not driver.read_ok
     with pytest.raises(ValueError):
       driver.read(size=255)
-  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as http:
+  with HTTPDriver(url=BASE_STATION_URI) as http:
     with Handler(Framer(http.read, http.write, False)) as link:
       def tester(sbp_msg, **metadata):
         assert sbp_msg.payload == msg.payload
@@ -109,8 +109,8 @@ def test_http_test_fail():
                '',
                content_type="application/vnd.swiftnav.broker.v1+sbp",
                status=400)
-  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
-    assert not driver.connect_read()
+  with HTTPDriver(url=BASE_STATION_URI) as driver:
+    assert not driver.connect_read("Swift22")
     assert not driver.read_ok
     with pytest.raises(IOError):
       driver.read(size=255)
@@ -136,8 +136,8 @@ def test_http_test_pass_streaming():
                body='',
                content_type="application/vnd.swiftnav.broker.v1+sbp",
                streaming=True)
-  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
-    assert driver.connect_read()
+  with HTTPDriver(url=BASE_STATION_URI) as driver:
+    assert driver.connect_read("Swift22")
     assert driver.read_ok
     assert driver.read(size=255) == ''.join([m.to_binary() for m in msgs])
     assert driver.read(size=255) == ''
@@ -165,8 +165,8 @@ def test_http_test_pass_retry():
                              content_type="application/vnd.swiftnav.broker.v1+sbp")]
   register_uri(GET, BASE_STATION_URI, get_responses)
   register_uri(PUT, BASE_STATION_URI, post_responses)
-  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
+  with HTTPDriver(url=BASE_STATION_URI) as driver:
     with pytest.raises(ValueError):
       driver.read(size=255)
-    assert driver.connect_read()
+    assert driver.connect_read("Swift22")
     assert driver.read(size=255)
