@@ -175,7 +175,7 @@ class HTTPDriver(BaseDriver):
     # object, which cast to False for 4xx and 5xx HTTP codes.
     return bool(self.write_response)
 
-  def connect_write(self, source, whitelist, pragma=None):
+  def connect_write(self, source, whitelist, device_uid=None, pragma=None):
     """Initialize a streaming write HTTP response. Manually connects the
     underlying file-handle. In the event of a network disconnection,
     use to manually reinitiate an HTTP session.
@@ -188,7 +188,8 @@ class HTTPDriver(BaseDriver):
       Whitelist of messages to write
 
     """
-    headers = {'Device-Uid': self.device_uid, 'Content-Type': BROKER_SBP_TYPE, 'Pragma': pragma}
+    header_device_uid = device_uid or self.device_uid
+    headers = {'Device-Uid': header_device_uid, 'Content-Type': BROKER_SBP_TYPE, 'Pragma': pragma}
     if not pragma:
       del headers['Pragma']
     try:
@@ -243,13 +244,14 @@ class HTTPDriver(BaseDriver):
     """
     return bool(self.read_response)
 
-  def connect_read(self, pragma=None):
+  def connect_read(self, device_uid=None, pragma=None):
     """Initialize a streaming read/write HTTP response. Manually connects
     the underlying file-handle. In the event of a network
     disconnection, use to manually reinitiate an HTTP session.
 
     """
-    headers = {'Device-Uid': self.device_uid, 'Accept': BROKER_SBP_TYPE, 'Pragma': pragma}
+    header_device_uid = device_uid or self.device_uid
+    headers = {'Device-Uid': header_device_uid, 'Accept': BROKER_SBP_TYPE, 'Pragma': pragma}
     if not pragma:
       del headers['Pragma']
     try:
