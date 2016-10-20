@@ -108,8 +108,6 @@ class HTTPDriver(BaseDriver):
 
   Parameters
   ----------
-  device_uid : uid
-    Device unique id
   url : str
     HTTP endpoint
   retries : tuple
@@ -122,7 +120,6 @@ class HTTPDriver(BaseDriver):
   """
 
   def __init__(self,
-               device_uid=None,
                url="https://broker.staging.skylark.swiftnav.com",
                retries=DEFAULT_RETRIES,
                timeout=DEFAULT_TIMEOUT,):
@@ -144,7 +141,6 @@ class HTTPDriver(BaseDriver):
                                         pool_block=DEFAULT_POOLBLOCK,
                                         max_retries=retry))
     self.write_session = None
-    self.device_uid = device_uid
     self.timeout = timeout
     self.read_response = None
     self.write_response = None
@@ -175,7 +171,7 @@ class HTTPDriver(BaseDriver):
     # object, which cast to False for 4xx and 5xx HTTP codes.
     return bool(self.write_response)
 
-  def connect_write(self, source, whitelist, pragma=None):
+  def connect_write(self, source, device_uid, pragma=None):
     """Initialize a streaming write HTTP response. Manually connects the
     underlying file-handle. In the event of a network disconnection,
     use to manually reinitiate an HTTP session.
@@ -184,17 +180,14 @@ class HTTPDriver(BaseDriver):
     ----------
     source : sbp.client.handler.Handler
       Iterable source of SBP messages.
-    whitelist : [int]
-      Whitelist of messages to write
 
     """
-    headers = {'Device-Uid': self.device_uid, 'Content-Type': BROKER_SBP_TYPE, 'Pragma': pragma}
+    headers = {'Device-Uid': device_uid, 'Content-Type': BROKER_SBP_TYPE, 'Pragma': pragma}
     if not pragma:
       del headers['Pragma']
     try:
       self.executor = ThreadPoolExecutor(max_workers=DEFAULT_POOLSIZE)
       self.write_session = FuturesSession(executor=self.executor)
-      self.source = source.filter(whitelist)
       gen = (msg.pack() for msg, _ in self.source)
       self.write_session.put(self.url, data=gen, headers=headers)
       self.write_response = True
@@ -243,13 +236,13 @@ class HTTPDriver(BaseDriver):
     """
     return bool(self.read_response)
 
-  def connect_read(self, pragma=None):
+  def connect_read(self, device_uid, pragma=None):
     """Initialize a streaming read/write HTTP response. Manually connects
     the underlying file-handle. In the event of a network
     disconnection, use to manually reinitiate an HTTP session.
 
     """
-    headers = {'Device-Uid': self.device_uid, 'Accept': BROKER_SBP_TYPE, 'Pragma': pragma}
+    headers = {'Device-Uid': device_uid, 'Accept': BROKER_SBP_TYPE, 'Pragma': pragma}
     if not pragma:
       del headers['Pragma']
     try:
@@ -283,7 +276,7 @@ class HTTPDriver(BaseDriver):
     bytearray, or None
 
     """
-    if self.read_response is None or not self.device_uid:
+    if self.read_response is None:
       raise ValueError("Invalid/insufficient HTTP request parameters!")
     elif not self.read_ok or self.read_response.raw.closed:
       raise IOError("HTTP read closed?!")
