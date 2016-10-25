@@ -96,7 +96,6 @@ definitions:
             units: 0.01
             desc: Vertical Dilution of Precision
 
-
  - MSG_POS_ECEF:
     id: 0x0200
     short_desc: Single-point position in ECEF
@@ -472,3 +471,114 @@ definitions:
                     values:
                         - 0: Float RTK
                         - 1: Fixed RTK
+
+ - MSG_PVT:
+    id: 0x0208
+    short_desc: Position velocity time (UTC) solution
+    desc: |
+      The position-velocity-time (PVT) message reports the combined absolute
+      geodetic coordinates, status flags of the position solution, velocity, and
+      full UTC time of the receiver. If the rover receiver knows the surveyed
+      position of the base station and has an RTK solution, this reports a
+      pseudo-absolute position solution using the base station position and the
+      rover's RTK baseline vector.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS time of week rounded to the nearest millisecond
+        - year:
+            type: u16
+            units: years
+            desc: Year (UTC)
+        - month:
+            type: u8
+            units: months
+            desc: Month of the year (UTC) (ranges from to 1 to 12)
+        - day:
+            type: u8
+            units: days
+            desc: Day of the month (UTC) (ranges from 1 to 31)
+        - mins:
+            type: u8
+            units: minutes
+            desc: Minute of the hour (UTC) (ranges from 0 to 59)
+        - sec:
+            type: u8
+            units: s
+            desc: |
+              Seconds of the minute (UTC) (ranges from 0 to 60). The upper range
+              includes an the possibility of an extra leap second correction.
+        - ns:
+            type: s32
+            units: ns
+            desc: Nanosecond residual of UTC sec (ranges from -1e9 to 1e9)
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: s32
+            units: mm
+            desc: Height above WGS84 ellipsoid
+        - heightMSL:
+            type: s32
+            units: mm
+            desc: Height above mean sea level
+        - h_accuracy:
+            type: double
+            units: mm
+            desc: |
+              Horizontal position accuracy estimate (not
+              implemented). Defaults to 0.
+        - v_accuracy:
+            type: u16
+            units: mm
+            desc: |
+              Vertical position accuracy estimate (not
+              implemented). Defaults to 0.
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution.
+        - vel_n:
+            type: s32
+            units: mm/s
+            desc: Velocity North coordinate
+        - vel_e:
+            type: s32
+            units: mm/s
+            desc: Velocity East coordinate
+        - vel_d:
+            type: s32
+            units: mm/s
+            desc: Velocity Down coordinate
+        - pdop:
+            type: u16
+            units: 0.01
+            desc: Position Dilution of Precision
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                    - 0x000: Invalid
+                    - 0x001: RTK Float
+                    - 0x010: RTK Fixed
+                    - 0x011: SPP
+                    - 0x100: Reserved
+                    - 0x101: Reserved
+                    - 0x110: Reserved
+                    - 0x111: Reserved
+              - 3-6:
+                  desc: Reserved
+              - 7:
+                  desc: RAIM repair flag
+                  values:
+                    - 0: No RAIM repair
+                    - 1: RAIM repair
