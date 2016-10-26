@@ -549,6 +549,23 @@ definitions:
                         - 1: Float RTK
                         - 2: Fixed RTK
 
+ - MSG_AGE_CORRECTIONS:
+    id: 0x0210
+    short_desc: Age of corrections
+    desc: |
+      This message reports the Age of the corrections used for the current
+      Differential solution
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - age:
+              type: u16
+              units: deciseconds
+              desc: Age of the corrections (0xFFFF indicates invalid)
+
+
  - MSG_GPS_TIME_DEP_A:
     id: 0x0100
     short_desc: GPS Time (v1.0)
