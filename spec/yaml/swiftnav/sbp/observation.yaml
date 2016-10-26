@@ -381,6 +381,7 @@ definitions:
  - MSG_EPHEMERIS_DEP_D:
     id: 0x0080
     short_desc: Satellite broadcast ephemeris
+    public: False
     desc: |
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate GPS satellite position,
@@ -722,6 +723,7 @@ definitions:
  - MSG_EPHEMERIS_DEP_C:
     id: 0x0047
     short_desc: Satellite broadcast ephemeris
+    public: false
     desc: |
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate GPS satellite position,

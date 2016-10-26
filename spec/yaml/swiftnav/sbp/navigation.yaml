@@ -567,6 +567,7 @@ definitions:
 
 
  - MSG_GPS_TIME_DEP_A:
+    public: false
     id: 0x0100
     short_desc: GPS Time (v1.0)
     desc: |
@@ -604,6 +605,7 @@ definitions:
 
  - MSG_DOPS_DEP_A:
     id: 0x0206
+    public: false
     short_desc: Dilution of Precision
     desc: |
       This dilution of precision (DOP) message describes the effect of
@@ -638,6 +640,7 @@ definitions:
 
  - MSG_POS_ECEF_DEP_A:
     id: 0x0200
+    public: false
     short_desc: Single-point position in ECEF
     desc: |
       The position solution message reports absolute Earth Centered
@@ -699,6 +702,7 @@ definitions:
 
  - MSG_POS_LLH_DEP_A:
     id: 0x0201
+    public: false
     short_desc: Geodetic Position
     desc: |
       This position solution message reports the absolute geodetic
@@ -771,6 +775,7 @@ definitions:
 
  - MSG_BASELINE_ECEF_DEP_A:
     id: 0x0202
+    public: false
     short_desc: Baseline Position in ECEF
     desc: |
       This message reports the baseline solution in Earth Centered
@@ -828,6 +833,7 @@ definitions:
 
  - MSG_BASELINE_NED_DEP_A:
     id: 0x0203
+    public: false
     short_desc: Baseline in NED
     desc: |
       This message reports the baseline solution in North East Down
@@ -892,7 +898,9 @@ definitions:
 
  - MSG_VEL_ECEF_DEP_A:
     id: 0x0204
+    public: false
     short_desc: Velocity in ECEF
+    public: False
     desc: |
       This message reports the velocity in Earth Centered Earth Fixed
       (ECEF) coordinates. The full GPS time is given by the preceding
@@ -930,6 +938,7 @@ definitions:
  - MSG_VEL_NED_DEP_A:
     id: 0x0205
     short_desc: Velocity in NED
+    public: False
     desc: |
       This message reports the velocity in local North East Down (NED)
       coordinates. The NED coordinate system is defined as the local WGS84
@@ -972,6 +981,7 @@ definitions:
               desc: Status flags (reserved)
 
  - MSG_BASELINE_HEADING_DEP_A:
+    public: false
     id: 0x0207
     short_desc: Heading relative to True North
     desc: |
