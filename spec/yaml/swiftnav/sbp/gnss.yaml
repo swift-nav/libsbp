@@ -14,7 +14,27 @@ stable: True
 public: True
 include:
   - types.yaml
+  
 definitions:
+ 
+ - GnssSignal16:
+    short_desc: Represents all the relevant information about the signal
+    desc: |
+        Signal identifier containing constellation, band, and satellite identifier
+               - 0 GPS L1CA
+               - 1 GPS L2CM
+               - 2 SBAS L1CA
+               - 3 GLO L1CA
+               - 4 GLO L2CA
+               - 5 GPS L1P
+               - 6 GPS L2P
+    fields:
+        - sat:
+            type: u8
+            desc: Constellation-specific satellite identifier
+        - code:
+            type: u8
+            desc: Signal constellation, band and code
 
  - GnssSignal:
     short_desc: Represents all the relevant information about the signal
