@@ -28,7 +28,7 @@ include:
 definitions:
 
  - MSG_GPS_TIME:
-    id: 0x0101
+    id: 0x0102
     short_desc: GPS Time
     desc: |
       This message reports the GPS time, representing the time since
@@ -72,7 +72,7 @@ definitions:
                           - 1: GNSS Solution
 
  - MSG_UTC_TIME:
-    id: 0x0102
+    id: 0x0103
     short_desc: UTC Time
     desc: |
       This message reports the Universal Coordinated Time (UTC).  Note the flags 
