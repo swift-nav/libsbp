@@ -105,7 +105,10 @@ definitions:
                         - 3: |
                             Sub-frame synchronization (L1 C/A) /
                             message synchronization (L2C)
-                        - 4-7: Reserved
+                        - 4: Reserved
+                        - 5: Reserved
+                        - 6: Reserved
+                        - 7: Reserved
         - tow_flags:
             type: u8
             desc: TOW status flags.
@@ -118,7 +121,11 @@ definitions:
                         - 0: TOW is not available
                         - 1: Decoded TOW is available
                         - 2: Propagated TOW is available
-                        - 3-7: Reserved
+                        - 3: Reserved
+                        - 4: Reserved
+                        - 5: Reserved
+                        - 6: Reserved
+                        - 7: Reserved
         - track_flags:
             type: u8
             desc: Tracking loop status flags.
@@ -142,7 +149,10 @@ definitions:
                         - 1: FLL/DLL lock
                         - 2: PLL optimistic lock
                         - 3: PLL pessimistic lock
-                        - 4-7: Reserved
+                        - 4: Reserved
+                        - 5: Reserved
+                        - 6: Reserved
+                        - 7: Reserved
         - nav_flags:
             type: u8
             desc: Navigation data status flags.
@@ -165,7 +175,11 @@ definitions:
                         - 0: Health is unknown
                         - 1: Signal is unhealthy
                         - 2: Signal is healthy
-                        - 3-7: Reserved
+                        - 3: Reserved
+                        - 4: Reserved
+                        - 5: Reserved
+                        - 6: Reserved
+                        - 7: Reserved
         - pset_flags:
             type: u8
             desc: Parameters sets flags.
@@ -179,7 +193,10 @@ definitions:
                         - 1: 5 ms integration time
                         - 2: 10 ms integration time
                         - 3: 20 ms integration time
-                        - 4-7: Reserved
+                        - 4: Reserved
+                        - 5: Reserved
+                        - 6: Reserved
+                        - 7: Reserved
         - misc_flags:
             type: u8
             desc: Miscellaneous flags.
@@ -201,7 +218,8 @@ definitions:
                     values:
                         - 0: Re-acquisition
                         - 1: Running
-                        - 2-3: Reserved
+                        - 2: Reserved
+                        - 3: Reserved
 
  - TrackingChannelState:
     short_desc: Signal tracking channel state
