@@ -44,7 +44,9 @@ definitions:
         - L:
             type: CarrierPhase
             units: cycles
-            desc: Carrier phase observation with typical sign convention.
+            desc: |
+              Carrier phase observation with typical sign convention. Only valid
+              when PLL pessimistic lock is achieved.
         - cn0:
             type: u8
             units: dB Hz * 4
@@ -87,25 +89,119 @@ definitions:
         - acceleration:
             type: u8
             units: g * 10
-            desc: Acceleration.
+            desc: Acceleration. Valid only when acceleration valid flag is set.
         - sync_flags:
             type: u8
-            desc: Synchronisation status flags.
+            desc: Synchronization status flags.
+            fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: Synchronization status.
+                    values:
+                        - 0: No synchronization
+                        - 1: Bit synchronization
+                        - 2: Word synchronization (L1 C/A only)
+                        - 3: |
+                            Sub-frame synchronization (L1 C/A) /
+                            message synchronization (L2C)
+                        - 4-7: Reserved
         - tow_flags:
             type: u8
             desc: TOW status flags.
+            fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: TOW status.
+                    values:
+                        - 0: TOW is not available
+                        - 1: Decoded TOW is available
+                        - 2: Propagated TOW is available
+                        - 3-7: Reserved
         - track_flags:
             type: u8
             desc: Tracking loop status flags.
+            fields:
+                - 5-7:
+                    desc: Reserved
+                - 4:
+                    desc: FLL status.
+                    values:
+                        - 0: FLL is inactive
+                        - 1: FLL is active
+                - 3:
+                    desc: PLL status.
+                    values:
+                        - 0: PLL is inactive
+                        - 1: PLL is active
+                - 0-2:
+                    desc: Tracking loop status.
+                    values:
+                        - 0: No locks
+                        - 1: FLL/DLL lock
+                        - 2: PLL optimistic lock
+                        - 3: PLL pessimistic lock
+                        - 4-7: Reserved
         - nav_flags:
             type: u8
             desc: Navigation data status flags.
+            fields:
+                - 5-7:
+                    desc: Reserved
+                - 4:
+                    desc: Almanac availability status.
+                    values:
+                        - 0: Almanac is not available
+                        - 1: Almanac is available
+                - 3:
+                    desc: Ephemeris availability status.
+                    values:
+                        - 0: Ephemeris is not available
+                        - 1: Ephemeris is available
+                - 0-2:
+                    desc: Health status.
+                    values:
+                        - 0: Health is unknown
+                        - 1: Signal is unhealthy
+                        - 2: Signal is healthy
+                        - 3-7: Reserved
         - pset_flags:
             type: u8
             desc: Parameters sets flags.
+            fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: Parameter sets.
+                    values:
+                        - 0: 1 ms integration time
+                        - 1: 5 ms integration time
+                        - 2: 10 ms integration time
+                        - 3: 20 ms integration time
+                        - 4-7: Reserved
         - misc_flags:
             type: u8
-            desc: Miscellanious flags.
+            desc: Miscellaneous flags.
+            fields:
+                - 4-7:
+                    desc: Reserved
+                - 3:
+                    desc: Acceleration validity status.
+                    values:
+                        - 0: Acceleration is not valid
+                        - 1: Acceleration is valid
+                - 2:
+                    desc: Carrier half cycle ambiguity status.
+                    values:
+                        - 0: Unresolved
+                        - 1: Resolved
+                - 0-1:
+                    desc: Tracking channel status.
+                    values:
+                        - 0: Re-acquisition
+                        - 1: Running
+                        - 2-3: Reserved
 
  - TrackingChannelState:
     short_desc: Signal tracking channel state
