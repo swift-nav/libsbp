@@ -44,5 +44,6 @@ Suite* auto_check_sbp_piksi_24_suite(void);
 Suite* auto_check_sbp_system_25_suite(void);
 Suite* auto_check_sbp_tracking_26_suite(void);
 Suite* auto_check_sbp_tracking_27_suite(void);
+Suite* auto_check_sbp_tracking_28_suite(void);
 
 #endif /* CHECK_SUITES_H */

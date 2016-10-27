@@ -53,6 +53,7 @@ int main(void)
   srunner_add_suite(sr, auto_check_sbp_system_25_suite());
   srunner_add_suite(sr, auto_check_sbp_tracking_26_suite());
   srunner_add_suite(sr, auto_check_sbp_tracking_27_suite());
+  srunner_add_suite(sr, auto_check_sbp_tracking_28_suite());
 
   srunner_set_fork_status(sr, CK_NOFORK);
   srunner_run_all(sr, CK_NORMAL);
