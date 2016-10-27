@@ -476,12 +476,18 @@ definitions:
     id: 0x0208
     short_desc: Position velocity time (UTC) solution
     desc: |
+
       The position-velocity-time (PVT) message reports the combined absolute
       geodetic coordinates, status flags of the position solution, velocity, and
       full UTC time of the receiver. If the rover receiver knows the surveyed
       position of the base station and has an RTK solution, this reports a
       pseudo-absolute position solution using the base station position and the
       rover's RTK baseline vector.
+
+      When explicit GPS to UTC time conversion parameters are not available from
+      the GPS navigation message, MSG_PVT will use the best available receiver
+      defaults. As such, UTC seconds may be incorrect by a few seconds, but will
+      be flagged as such.
     fields:
         - tow:
             type: u32
@@ -525,10 +531,10 @@ definitions:
             type: s32
             units: mm
             desc: Height above WGS84 ellipsoid
-        - heightMSL:
+        - height_msl:
             type: s32
             units: mm
-            desc: Height above mean sea level
+            desc: Height above mean sea level (not implemented)
         - h_accuracy:
             type: double
             units: mm
@@ -576,7 +582,11 @@ definitions:
                     - 0x110: Reserved
                     - 0x111: Reserved
               - 3-6:
-                  desc: Reserved
+                  desc: UTC flags
+                  values:
+                    - 0x000: Invalid UTC date
+                    - 0x001: Valid UTC date, defaults used
+                    - 0x010: Valid UTC leap seconds
               - 7:
                   desc: RAIM repair flag
                   values:
