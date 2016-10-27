@@ -476,7 +476,6 @@ definitions:
     id: 0x0208
     short_desc: Position velocity time (UTC) solution
     desc: |
-
       The position-velocity-time (PVT) message reports the combined absolute
       geodetic coordinates, status flags of the position solution, velocity, and
       full UTC time of the receiver. If the rover receiver knows the surveyed
@@ -486,8 +485,8 @@ definitions:
 
       When explicit GPS to UTC time conversion parameters are not available from
       the GPS navigation message, MSG_PVT will use the best available receiver
-      defaults. As such, UTC seconds may be incorrect by a few seconds, but will
-      be flagged as such.
+      defaults. In this circumstance, UTC seconds may be incorrect by a few
+      seconds, but will be flagged accordingly.
     fields:
         - tow:
             type: u32
