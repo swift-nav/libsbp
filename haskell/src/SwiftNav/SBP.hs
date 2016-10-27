@@ -129,6 +129,7 @@ data SBPMsg =
    | SBPMsgTrackingIq MsgTrackingIq Msg
    | SBPMsgTrackingState MsgTrackingState Msg
    | SBPMsgTrackingStateDepA MsgTrackingStateDepA Msg
+   | SBPMsgTrackingStateDetailed MsgTrackingStateDetailed Msg
    | SBPMsgTweet MsgTweet Msg
    | SBPMsgUartState MsgUartState Msg
    | SBPMsgUartStateDepa MsgUartStateDepa Msg
@@ -223,6 +224,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgTrackingIq = SBPMsgTrackingIq (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgTrackingState = SBPMsgTrackingState (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgTrackingStateDepA = SBPMsgTrackingStateDepA (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgTrackingStateDetailed = SBPMsgTrackingStateDetailed (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgTweet = SBPMsgTweet (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgUartStateDepa = SBPMsgUartStateDepa (decode (fromStrict _msgSBPPayload)) m
@@ -309,6 +311,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgTrackingIq _ m) = put m
       encode' (SBPMsgTrackingState _ m) = put m
       encode' (SBPMsgTrackingStateDepA _ m) = put m
+      encode' (SBPMsgTrackingStateDetailed _ m) = put m
       encode' (SBPMsgTweet _ m) = put m
       encode' (SBPMsgUartState _ m) = put m
       encode' (SBPMsgUartStateDepa _ m) = put m
@@ -398,6 +401,7 @@ instance FromJSON SBPMsg where
         | msgType == msgTrackingIq = SBPMsgTrackingIq <$> parseJSON obj <*> parseJSON obj
         | msgType == msgTrackingState = SBPMsgTrackingState <$> parseJSON obj <*> parseJSON obj
         | msgType == msgTrackingStateDepA = SBPMsgTrackingStateDepA <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgTrackingStateDetailed = SBPMsgTrackingStateDetailed <$> parseJSON obj <*> parseJSON obj
         | msgType == msgTweet = SBPMsgTweet <$> parseJSON obj <*> parseJSON obj
         | msgType == msgUartState = SBPMsgUartState <$> parseJSON obj <*> parseJSON obj
         | msgType == msgUartStateDepa = SBPMsgUartStateDepa <$> parseJSON obj <*> parseJSON obj
@@ -489,6 +493,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgTrackingIq n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgTrackingState n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgTrackingStateDepA n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgTrackingStateDetailed n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgTweet n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgUartState n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgUartStateDepa n m) = toJSON n `mergeValues` toJSON m
@@ -574,6 +579,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgTrackingIq n m) = SBPMsgTrackingIq n <$> f m
   msg f (SBPMsgTrackingState n m) = SBPMsgTrackingState n <$> f m
   msg f (SBPMsgTrackingStateDepA n m) = SBPMsgTrackingStateDepA n <$> f m
+  msg f (SBPMsgTrackingStateDetailed n m) = SBPMsgTrackingStateDetailed n <$> f m
   msg f (SBPMsgTweet n m) = SBPMsgTweet n <$> f m
   msg f (SBPMsgUartState n m) = SBPMsgUartState n <$> f m
   msg f (SBPMsgUartStateDepa n m) = SBPMsgUartStateDepa n <$> f m

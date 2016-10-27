@@ -130,11 +130,11 @@ data AcqSvProfile = AcqSvProfile
     -- ^ Timestamp of the job complete event
   , _acqSvProfile_time_spent :: Word32
     -- ^ Time spent to search for sid.code
-  , _acqSvProfile_cf_min   :: Word32
+  , _acqSvProfile_cf_min   :: Int32
     -- ^ Doppler range lowest frequency
-  , _acqSvProfile_cf_max   :: Word32
+  , _acqSvProfile_cf_max   :: Int32
     -- ^ Doppler range highest frequency
-  , _acqSvProfile_cf       :: Word32
+  , _acqSvProfile_cf       :: Int32
     -- ^ Doppler value of detected peak. Only valid if status is '1'
   , _acqSvProfile_cp       :: Word32
     -- ^ Codephase of detected peak. Only valid if status is '1'
@@ -150,9 +150,9 @@ instance Binary AcqSvProfile where
     _acqSvProfile_bin_width <- getWord16le
     _acqSvProfile_timestamp <- getWord32le
     _acqSvProfile_time_spent <- getWord32le
-    _acqSvProfile_cf_min <- getWord32le
-    _acqSvProfile_cf_max <- getWord32le
-    _acqSvProfile_cf <- getWord32le
+    _acqSvProfile_cf_min <- liftM fromIntegral getWord32le
+    _acqSvProfile_cf_max <- liftM fromIntegral getWord32le
+    _acqSvProfile_cf <- liftM fromIntegral getWord32le
     _acqSvProfile_cp <- getWord32le
     return AcqSvProfile {..}
 
@@ -165,9 +165,9 @@ instance Binary AcqSvProfile where
     putWord16le _acqSvProfile_bin_width
     putWord32le _acqSvProfile_timestamp
     putWord32le _acqSvProfile_time_spent
-    putWord32le _acqSvProfile_cf_min
-    putWord32le _acqSvProfile_cf_max
-    putWord32le _acqSvProfile_cf
+    putWord32le $ fromIntegral _acqSvProfile_cf_min
+    putWord32le $ fromIntegral _acqSvProfile_cf_max
+    putWord32le $ fromIntegral _acqSvProfile_cf
     putWord32le _acqSvProfile_cp
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_acqSvProfile_" . stripPrefix "_acqSvProfile_"}
              ''AcqSvProfile)

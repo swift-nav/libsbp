@@ -17,6 +17,7 @@ import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss_signal.*;
+import com.swiftnav.sbp.observation.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
