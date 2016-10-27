@@ -18,10 +18,10 @@ var messageTypesTable = require(path.resolve(__dirname, '../sbp/')).sbpMessageTy
 var constructMsg = require(path.resolve(__dirname, '../sbp/construct'));
 var utils = require('./utils');
 
-var yamlFiles = utils.getYamlSpecs();
+var yamlTestFiles = utils.getYamlTests();
 
-describe('test packages based on YAML descriptors', function () {
-  yamlFiles.map(function (filename) {
+describe('test packages based on YAML test files', function () {
+  yamlTestFiles.map(function (filename) {
     describe(filename, function () {
       var yamlConfig = yaml.safeLoad(fs.readFileSync(filename));
       yamlConfig.tests.map(function (testSpec, i) {
@@ -47,7 +47,13 @@ describe('test packages based on YAML descriptors', function () {
           });
           it('should serialize back to JSON properly', function () {
             var msg = decodeMsg();
-            assert.deepEqual(JSON.parse(JSON.stringify(msg)), JSON.parse(testSpec['raw_json']));
+
+            var expected = JSON.parse(testSpec['raw_json']);
+
+            // UInt64s are stringified as strings, not bare numbers in JSON, so...
+            var actual = JSON.parse(JSON.stringify(msg).replace(/"([0-9]+)"/, '$1'));
+
+            assert.deepEqual(actual, expected);
           });
           it('should be identical to constructed message with identical fields', function () {
             var msg = decodeMsg();

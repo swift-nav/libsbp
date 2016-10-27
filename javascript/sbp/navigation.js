@@ -26,7 +26,9 @@
 ***********************/
 
 var SBP = require('./sbp');
-var Parser = require('binary-parser').Parser;
+var Parser = require('./parser');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_GPS_TIME (0x0100).

@@ -20,7 +20,9 @@
 ***********************/
 
 var SBP = require('./sbp');
-var Parser = require('binary-parser').Parser;
+var Parser = require('./parser');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
 var GnssSignal = require("./gnss_signal").GnssSignal;
 
 /**
@@ -222,7 +224,7 @@ MsgThreadState.prototype.parser = new Parser()
   .uint16('cpu')
   .uint32('stack_free');
 MsgThreadState.prototype.fieldSpec = [];
-MsgThreadState.prototype.fieldSpec.push(['name', 'string']);
+MsgThreadState.prototype.fieldSpec.push(['name', 'string', 20]);
 MsgThreadState.prototype.fieldSpec.push(['cpu', 'writeUInt16LE', 2]);
 MsgThreadState.prototype.fieldSpec.push(['stack_free', 'writeUInt32LE', 4]);
 

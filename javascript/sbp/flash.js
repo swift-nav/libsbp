@@ -21,7 +21,9 @@
 ***********************/
 
 var SBP = require('./sbp');
-var Parser = require('binary-parser').Parser;
+var Parser = require('./parser');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_FLASH_PROGRAM (0x00E6).
@@ -59,9 +61,9 @@ MsgFlashProgram.prototype.parser = new Parser()
   .array('data', { type: 'uint8', length: 'addr_len' });
 MsgFlashProgram.prototype.fieldSpec = [];
 MsgFlashProgram.prototype.fieldSpec.push(['target', 'writeUInt8', 1]);
-MsgFlashProgram.prototype.fieldSpec.push(['addr_start', 'array', 'writeUInt8', function () { return 1; }]);
+MsgFlashProgram.prototype.fieldSpec.push(['addr_start', 'array', 'writeUInt8', function () { return 1; }, 3]);
 MsgFlashProgram.prototype.fieldSpec.push(['addr_len', 'writeUInt8', 1]);
-MsgFlashProgram.prototype.fieldSpec.push(['data', 'array', 'writeUInt8', function () { return 1; }]);
+MsgFlashProgram.prototype.fieldSpec.push(['data', 'array', 'writeUInt8', function () { return 1; }, 'addr_len']);
 
 /**
  * SBP class for message MSG_FLASH_DONE (0x00E0).
@@ -126,7 +128,7 @@ MsgFlashReadReq.prototype.parser = new Parser()
   .uint8('addr_len');
 MsgFlashReadReq.prototype.fieldSpec = [];
 MsgFlashReadReq.prototype.fieldSpec.push(['target', 'writeUInt8', 1]);
-MsgFlashReadReq.prototype.fieldSpec.push(['addr_start', 'array', 'writeUInt8', function () { return 1; }]);
+MsgFlashReadReq.prototype.fieldSpec.push(['addr_start', 'array', 'writeUInt8', function () { return 1; }, 3]);
 MsgFlashReadReq.prototype.fieldSpec.push(['addr_len', 'writeUInt8', 1]);
 
 /**
@@ -163,7 +165,7 @@ MsgFlashReadResp.prototype.parser = new Parser()
   .uint8('addr_len');
 MsgFlashReadResp.prototype.fieldSpec = [];
 MsgFlashReadResp.prototype.fieldSpec.push(['target', 'writeUInt8', 1]);
-MsgFlashReadResp.prototype.fieldSpec.push(['addr_start', 'array', 'writeUInt8', function () { return 1; }]);
+MsgFlashReadResp.prototype.fieldSpec.push(['addr_start', 'array', 'writeUInt8', function () { return 1; }, 3]);
 MsgFlashReadResp.prototype.fieldSpec.push(['addr_len', 'writeUInt8', 1]);
 
 /**
@@ -306,7 +308,7 @@ MsgStmUniqueIdResp.prototype.parser = new Parser()
   .endianess('little')
   .array('stm_id', { length: 12, type: 'uint8' });
 MsgStmUniqueIdResp.prototype.fieldSpec = [];
-MsgStmUniqueIdResp.prototype.fieldSpec.push(['stm_id', 'array', 'writeUInt8', function () { return 1; }]);
+MsgStmUniqueIdResp.prototype.fieldSpec.push(['stm_id', 'array', 'writeUInt8', function () { return 1; }, 12]);
 
 /**
  * SBP class for message MSG_M25_FLASH_WRITE_STATUS (0x00F3).
@@ -334,7 +336,7 @@ MsgM25FlashWriteStatus.prototype.parser = new Parser()
   .endianess('little')
   .array('status', { length: 1, type: 'uint8' });
 MsgM25FlashWriteStatus.prototype.fieldSpec = [];
-MsgM25FlashWriteStatus.prototype.fieldSpec.push(['status', 'array', 'writeUInt8', function () { return 1; }]);
+MsgM25FlashWriteStatus.prototype.fieldSpec.push(['status', 'array', 'writeUInt8', function () { return 1; }, 1]);
 
 module.exports = {
   0x00E6: MsgFlashProgram,

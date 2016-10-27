@@ -1,0 +1,256 @@
+---
+description: Unit tests for swiftnav.sbp.tracking MsgTrackingStateDetailed vNone.
+generated_on: 2016-10-27 15:44:05.108930
+package: sbp.tracking
+tests:
+
+- msg:
+    fields:
+      L:
+        f: 238
+        i: -120760716
+      P: 1149000000
+      P_std: 100
+      acceleration: 1
+      clock_drift: 10
+      clock_offset: 100
+      cn0: 0
+      corr_spacing: 2000
+      doppler: 251
+      doppler_std: 2
+      lock: 12345
+      misc_flags: 175
+      nav_flags: 173
+      pset_flags: 174
+      recv_time: 5193328303
+      sid:
+        code: 0
+        reserved: 0
+        sat: 65535
+      sync_flags: 170
+      tot:
+        tow: 86400000
+        wn: 1876
+      tow_flags: 171
+      track_flags: 172
+      uptime: 3600
+    module: sbp.tracking
+    name: MsgTrackingStateDetailed
+  msg_type: '0x11'
+  raw_json: '{"track_flags": 172, "doppler": 251, "clock_offset": 100, "msg_type":
+    17, "lock": 12345, "nav_flags": 173, "P_std": 100, "L": {"i": -120760716, "f":
+    238}, "pset_flags": 174, "P": 1149000000, "misc_flags": 175, "preamble": 85, "payload":
+    "r+aLNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==",
+    "recv_time": 5193328303, "acceleration": 1, "uptime": 3600, "sender": 49219, "cn0":
+    0, "doppler_std": 2, "tow_flags": 171, "tot": {"wn": 1876, "tow": 86400000}, "crc":
+    46779, "length": 55, "clock_drift": 10, "sid": {"code": 0, "reserved": 0, "sat":
+    65535}, "sync_flags": 170, "corr_spacing": 2000}'
+  raw_packet: VREAQ8A3r+aLNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2ur7u2
+  sbp:
+    crc: '0xb6bb'
+    length: 55
+    msg_type: '0x11'
+    payload: r+aLNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==
+    preamble: '0x55'
+    sender: '0xc043'
+
+- msg:
+    fields:
+      L:
+        f: 238
+        i: -120760716
+      P: 1149000000
+      P_std: 100
+      acceleration: 1
+      clock_drift: 10
+      clock_offset: 100
+      cn0: 0
+      corr_spacing: 2000
+      doppler: 251
+      doppler_std: 2
+      lock: 12345
+      misc_flags: 175
+      nav_flags: 173
+      pset_flags: 174
+      recv_time: 5193330649
+      sid:
+        code: 0
+        reserved: 0
+        sat: 65535
+      sync_flags: 170
+      tot:
+        tow: 86400000
+        wn: 1876
+      tow_flags: 171
+      track_flags: 172
+      uptime: 3600
+    module: sbp.tracking
+    name: MsgTrackingStateDetailed
+  msg_type: '0x11'
+  raw_json: '{"track_flags": 172, "doppler": 251, "clock_offset": 100, "msg_type":
+    17, "lock": 12345, "nav_flags": 173, "P_std": 100, "L": {"i": -120760716, "f":
+    238}, "pset_flags": 174, "P": 1149000000, "misc_flags": 175, "preamble": 85, "payload":
+    "2e+LNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==",
+    "recv_time": 5193330649, "acceleration": 1, "uptime": 3600, "sender": 49219, "cn0":
+    0, "doppler_std": 2, "tow_flags": 171, "tot": {"wn": 1876, "tow": 86400000}, "crc":
+    7809, "length": 55, "clock_drift": 10, "sid": {"code": 0, "reserved": 0, "sat":
+    65535}, "sync_flags": 170, "corr_spacing": 2000}'
+  raw_packet: VREAQ8A32e+LNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2ur4Ee
+  sbp:
+    crc: '0x1e81'
+    length: 55
+    msg_type: '0x11'
+    payload: 2e+LNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==
+    preamble: '0x55'
+    sender: '0xc043'
+
+- msg:
+    fields:
+      L:
+        f: 238
+        i: -120760716
+      P: 1149000000
+      P_std: 100
+      acceleration: 1
+      clock_drift: 10
+      clock_offset: 100
+      cn0: 0
+      corr_spacing: 2000
+      doppler: 251
+      doppler_std: 2
+      lock: 12345
+      misc_flags: 175
+      nav_flags: 173
+      pset_flags: 174
+      recv_time: 5193332536
+      sid:
+        code: 0
+        reserved: 0
+        sat: 65535
+      sync_flags: 170
+      tot:
+        tow: 86400000
+        wn: 1876
+      tow_flags: 171
+      track_flags: 172
+      uptime: 3600
+    module: sbp.tracking
+    name: MsgTrackingStateDetailed
+  msg_type: '0x11'
+  raw_json: '{"track_flags": 172, "doppler": 251, "clock_offset": 100, "msg_type":
+    17, "lock": 12345, "nav_flags": 173, "P_std": 100, "L": {"i": -120760716, "f":
+    238}, "pset_flags": 174, "P": 1149000000, "misc_flags": 175, "preamble": 85, "payload":
+    "OPeLNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==",
+    "recv_time": 5193332536, "acceleration": 1, "uptime": 3600, "sender": 49219, "cn0":
+    0, "doppler_std": 2, "tow_flags": 171, "tot": {"wn": 1876, "tow": 86400000}, "crc":
+    24047, "length": 55, "clock_drift": 10, "sid": {"code": 0, "reserved": 0, "sat":
+    65535}, "sync_flags": 170, "corr_spacing": 2000}'
+  raw_packet: VREAQ8A3OPeLNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2ur+9d
+  sbp:
+    crc: '0x5def'
+    length: 55
+    msg_type: '0x11'
+    payload: OPeLNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==
+    preamble: '0x55'
+    sender: '0xc043'
+
+- msg:
+    fields:
+      L:
+        f: 238
+        i: -120760716
+      P: 1149000000
+      P_std: 100
+      acceleration: 1
+      clock_drift: 10
+      clock_offset: 100
+      cn0: 0
+      corr_spacing: 2000
+      doppler: 251
+      doppler_std: 2
+      lock: 12345
+      misc_flags: 175
+      nav_flags: 173
+      pset_flags: 174
+      recv_time: 5193334392
+      sid:
+        code: 0
+        reserved: 0
+        sat: 65535
+      sync_flags: 170
+      tot:
+        tow: 86400000
+        wn: 1876
+      tow_flags: 171
+      track_flags: 172
+      uptime: 3600
+    module: sbp.tracking
+    name: MsgTrackingStateDetailed
+  msg_type: '0x11'
+  raw_json: '{"track_flags": 172, "doppler": 251, "clock_offset": 100, "msg_type":
+    17, "lock": 12345, "nav_flags": 173, "P_std": 100, "L": {"i": -120760716, "f":
+    238}, "pset_flags": 174, "P": 1149000000, "misc_flags": 175, "preamble": 85, "payload":
+    "eP6LNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==",
+    "recv_time": 5193334392, "acceleration": 1, "uptime": 3600, "sender": 49219, "cn0":
+    0, "doppler_std": 2, "tow_flags": 171, "tot": {"wn": 1876, "tow": 86400000}, "crc":
+    48733, "length": 55, "clock_drift": 10, "sid": {"code": 0, "reserved": 0, "sat":
+    65535}, "sync_flags": 170, "corr_spacing": 2000}'
+  raw_packet: VREAQ8A3eP6LNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2ur12+
+  sbp:
+    crc: '0xbe5d'
+    length: 55
+    msg_type: '0x11'
+    payload: eP6LNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==
+    preamble: '0x55'
+    sender: '0xc043'
+
+- msg:
+    fields:
+      L:
+        f: 238
+        i: -120760716
+      P: 1149000000
+      P_std: 100
+      acceleration: 1
+      clock_drift: 10
+      clock_offset: 100
+      cn0: 0
+      corr_spacing: 2000
+      doppler: 251
+      doppler_std: 2
+      lock: 12345
+      misc_flags: 175
+      nav_flags: 173
+      pset_flags: 174
+      recv_time: 5193336270
+      sid:
+        code: 0
+        reserved: 0
+        sat: 65535
+      sync_flags: 170
+      tot:
+        tow: 86400000
+        wn: 1876
+      tow_flags: 171
+      track_flags: 172
+      uptime: 3600
+    module: sbp.tracking
+    name: MsgTrackingStateDetailed
+  msg_type: '0x11'
+  raw_json: '{"track_flags": 172, "doppler": 251, "clock_offset": 100, "msg_type":
+    17, "lock": 12345, "nav_flags": 173, "P_std": 100, "L": {"i": -120760716, "f":
+    238}, "pset_flags": 174, "P": 1149000000, "misc_flags": 175, "preamble": 85, "payload":
+    "zgWMNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==",
+    "recv_time": 5193336270, "acceleration": 1, "uptime": 3600, "sender": 49219, "cn0":
+    0, "doppler_std": 2, "tow_flags": 171, "tot": {"wn": 1876, "tow": 86400000}, "crc":
+    64417, "length": 55, "clock_drift": 10, "sid": {"code": 0, "reserved": 0, "sat":
+    65535}, "sync_flags": 170, "corr_spacing": 2000}'
+  raw_packet: VREAQ8A3zgWMNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2ur6H7
+  sbp:
+    crc: '0xfba1'
+    length: 55
+    msg_type: '0x11'
+    payload: zgWMNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==
+    preamble: '0x55'
+    sender: '0xc043'
+version: null
