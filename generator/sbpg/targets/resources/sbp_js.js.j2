@@ -19,9 +19,17 @@
 ***********************/
 
 var SBP = require('./sbp');
-var Parser = require('binary-parser').Parser;
+var Parser = require('./parser');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
 ((*- for (file, ident) in include *))
+((*- if ident is list *))
+((*- for ident2 in ident *))
+var (((ident2))) = require("./(((file)))").(((ident2)));
+((*- endfor *))
+((*- else *))
 var (((ident))) = require("./(((file)))").(((ident)));
+((*- endif *))
 ((*- endfor *))
 
 ((*- for m in msgs *))
@@ -60,11 +68,11 @@ var ((( m.identifier | js_classnameify ))) = function (sbp, fields) {
 ((*- if f.type_id is builtinType *))
 ((( m.identifier | js_classnameify ))).prototype.fieldSpec.push(['(((f.identifier)))', '(((f.type_id | writeBuffer)))', (((f.type_id | bufferSize)))]);
 ((*- elif f.type_id == 'array' and f.options['fill'].value is builtinType *))
-((( m.identifier | js_classnameify ))).prototype.fieldSpec.push(['(((f.identifier)))', 'array', '(((f.options['fill'].value | writeBuffer)))', function () { return (((f.options['fill'].value | bufferSize))); }]);
+((( m.identifier | js_classnameify ))).prototype.fieldSpec.push(['(((f.identifier)))', 'array', '(((f.options['fill'].value | writeBuffer)))', function () { return (((f | arrayFillSize))); }, ((( f | arrayLength )))]);
 ((*- elif f.type_id == 'array' *))
-((( m.identifier | js_classnameify ))).prototype.fieldSpec.push(['(((f.identifier)))', 'array', ((( f.options['fill'].value ))).prototype.fieldSpec, function () { return (((f.type_id | bufferSize))); }]);
+((( m.identifier | js_classnameify ))).prototype.fieldSpec.push(['(((f.identifier)))', 'array', ((( f.options['fill'].value ))).prototype.fieldSpec, function () { return (((f | arrayFillSize))); }, ((( f | arrayLength )))]);
 ((*- elif f.type_id == 'string' *))
-((( m.identifier | js_classnameify ))).prototype.fieldSpec.push(['(((f.identifier)))', 'string']);
+((( m.identifier | js_classnameify ))).prototype.fieldSpec.push(['(((f.identifier)))', 'string', ((( f | arrayLength )))]);
 ((*- else *))
 ((( m.identifier | js_classnameify ))).prototype.fieldSpec.push(['(((f.identifier)))', ((( f.type_id ))).prototype.fieldSpec]);
 ((*- endif *))

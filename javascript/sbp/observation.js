@@ -19,7 +19,9 @@
 ***********************/
 
 var SBP = require('./sbp');
-var Parser = require('binary-parser').Parser;
+var Parser = require('./parser');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
 var GnssSignal = require("./gnss_signal").GnssSignal;
 
 /**
@@ -187,7 +189,7 @@ MsgObs.prototype.parser = new Parser()
   .array('obs', { type: PackedObsContent.prototype.parser, readUntil: 'eof' });
 MsgObs.prototype.fieldSpec = [];
 MsgObs.prototype.fieldSpec.push(['header', ObservationHeader.prototype.fieldSpec]);
-MsgObs.prototype.fieldSpec.push(['obs', 'array', PackedObsContent.prototype.fieldSpec, function () { return this.fields.array.length; }]);
+MsgObs.prototype.fieldSpec.push(['obs', 'array', PackedObsContent.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
  * SBP class for message MSG_BASE_POS_LLH (0x0044).
@@ -434,9 +436,9 @@ MsgEphemerisSbas.prototype.parser = new Parser()
   .doublele('a_gf1');
 MsgEphemerisSbas.prototype.fieldSpec = [];
 MsgEphemerisSbas.prototype.fieldSpec.push(['common', EphemerisCommonContent.prototype.fieldSpec]);
-MsgEphemerisSbas.prototype.fieldSpec.push(['pos', 'array', 'writeDoubleLE', function () { return 8; }]);
-MsgEphemerisSbas.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', function () { return 8; }]);
-MsgEphemerisSbas.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }]);
+MsgEphemerisSbas.prototype.fieldSpec.push(['pos', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisSbas.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisSbas.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
 MsgEphemerisSbas.prototype.fieldSpec.push(['a_gf0', 'writeDoubleLE', 8]);
 MsgEphemerisSbas.prototype.fieldSpec.push(['a_gf1', 'writeDoubleLE', 8]);
 
@@ -481,9 +483,9 @@ MsgEphemerisGlo.prototype.fieldSpec = [];
 MsgEphemerisGlo.prototype.fieldSpec.push(['common', EphemerisCommonContent.prototype.fieldSpec]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['gamma', 'writeDoubleLE', 8]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['tau', 'writeDoubleLE', 8]);
-MsgEphemerisGlo.prototype.fieldSpec.push(['pos', 'array', 'writeDoubleLE', function () { return 8; }]);
-MsgEphemerisGlo.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', function () { return 8; }]);
-MsgEphemerisGlo.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }]);
+MsgEphemerisGlo.prototype.fieldSpec.push(['pos', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisGlo.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisGlo.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
 
 /**
  * SBP class for message MSG_EPHEMERIS_DEP_D (0x0080).
@@ -1059,7 +1061,7 @@ MsgObsDepA.prototype.parser = new Parser()
   .array('obs', { type: PackedObsContentDepA.prototype.parser, readUntil: 'eof' });
 MsgObsDepA.prototype.fieldSpec = [];
 MsgObsDepA.prototype.fieldSpec.push(['header', ObservationHeader.prototype.fieldSpec]);
-MsgObsDepA.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepA.prototype.fieldSpec, function () { return this.fields.array.length; }]);
+MsgObsDepA.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepA.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
  * SBP class for message MSG_OBS_DEP_B (0x0043).
@@ -1092,7 +1094,7 @@ MsgObsDepB.prototype.parser = new Parser()
   .array('obs', { type: PackedObsContentDepB.prototype.parser, readUntil: 'eof' });
 MsgObsDepB.prototype.fieldSpec = [];
 MsgObsDepB.prototype.fieldSpec.push(['header', ObservationHeader.prototype.fieldSpec]);
-MsgObsDepB.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepB.prototype.fieldSpec, function () { return this.fields.array.length; }]);
+MsgObsDepB.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepB.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
  * SBP class for message MSG_IONO (0x0090).

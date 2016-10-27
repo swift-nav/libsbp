@@ -17,10 +17,10 @@ var Readable = require('stream').Readable;
 var dispatch = require(path.resolve(__dirname, '../sbp/')).dispatch;
 var utils = require('./utils');
 
-var yamlFiles = utils.getYamlSpecs();
+var yamlTestFiles = utils.getYamlTests();
 
 describe('test packages based on YAML descriptors, through the dispatcher', function () {
-  yamlFiles.map(function (filename) {
+  yamlTestFiles.map(function (filename) {
     describe(filename, function () {
       var yamlConfig = yaml.safeLoad(fs.readFileSync(filename));
       yamlConfig.tests.map(function (testSpec, i) {

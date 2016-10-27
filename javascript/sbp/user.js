@@ -19,7 +19,9 @@
 ***********************/
 
 var SBP = require('./sbp');
-var Parser = require('binary-parser').Parser;
+var Parser = require('./parser');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_USER_DATA (0x0800).
@@ -47,7 +49,7 @@ MsgUserData.prototype.parser = new Parser()
   .endianess('little')
   .array('contents', { type: 'uint8', readUntil: 'eof' });
 MsgUserData.prototype.fieldSpec = [];
-MsgUserData.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8', function () { return 1; }]);
+MsgUserData.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 module.exports = {
   0x0800: MsgUserData,

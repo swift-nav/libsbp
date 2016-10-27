@@ -19,7 +19,9 @@
 ***********************/
 
 var SBP = require('./sbp');
-var Parser = require('binary-parser').Parser;
+var Parser = require('./parser');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_LOG (0x0401).
@@ -51,7 +53,7 @@ MsgLog.prototype.parser = new Parser()
   .string('text', { greedy: true });
 MsgLog.prototype.fieldSpec = [];
 MsgLog.prototype.fieldSpec.push(['level', 'writeUInt8', 1]);
-MsgLog.prototype.fieldSpec.push(['text', 'string']);
+MsgLog.prototype.fieldSpec.push(['text', 'string', null]);
 
 /**
  * SBP class for message MSG_TWEET (0x0012).
@@ -78,7 +80,7 @@ MsgTweet.prototype.parser = new Parser()
   .endianess('little')
   .string('tweet', { length: 140 });
 MsgTweet.prototype.fieldSpec = [];
-MsgTweet.prototype.fieldSpec.push(['tweet', 'string']);
+MsgTweet.prototype.fieldSpec.push(['tweet', 'string', 140]);
 
 /**
  * SBP class for message MSG_PRINT_DEP (0x0010).
@@ -105,7 +107,7 @@ MsgPrintDep.prototype.parser = new Parser()
   .endianess('little')
   .string('text', { greedy: true });
 MsgPrintDep.prototype.fieldSpec = [];
-MsgPrintDep.prototype.fieldSpec.push(['text', 'string']);
+MsgPrintDep.prototype.fieldSpec.push(['text', 'string', null]);
 
 module.exports = {
   0x0401: MsgLog,

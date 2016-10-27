@@ -12,25 +12,30 @@
 var assert = require('assert');
 var path = require('path');
 var fs = require('fs');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
+
+function walkYAML (dir) {
+  var results = [];
+  var list = fs.readdirSync(dir);
+  list.forEach(function(file) {
+    file = dir + '/' + file;
+    var stat = fs.statSync(file);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(walkYAML(file));
+    } else if (file.match(/\.yaml$/)) {
+      results.push(path.resolve(dir, file));
+    }
+  });
+  return results;
+}
 
 module.exports = {
+  getYamlTests: function () {
+    return walkYAML(path.resolve(__dirname, '../../spec/tests/yaml'));
+  },
   getYamlSpecs: function () {
-    var walk = function(dir) {
-      var results = [];
-      var list = fs.readdirSync(dir);
-      list.forEach(function(file) {
-        file = dir + '/' + file;
-        var stat = fs.statSync(file);
-        if (stat && stat.isDirectory()) {
-          results = results.concat(walk(file));
-        } else if (file.match(/\.yaml$/)) {
-          results.push(path.resolve(dir, file));
-        }
-      });
-      return results;
-    };
-    var yamlDir = path.resolve(__dirname, '../../spec/tests/yaml');
-    return walk(yamlDir);
+    return walkYAML(path.resolve(__dirname, '../../spec/yaml/swiftnav/sbp'));
   },
   verifyFields: function (spec, msg) {
     for (var k in spec) {
@@ -47,6 +52,8 @@ module.exports = {
         assert.equal(v.compare(msg[k]), 0); // Node v4ish
       } else if (msg[k] instanceof Buffer) {
         assert.equal(v.toString(), msg[k].toString()); // Node v0.10ish
+      } else if (msg[k] instanceof UInt64) {
+        assert.equal(msg[k].toString(), ''+v);
       } else {
         assert.deepEqual(v, msg[k]);
       }
