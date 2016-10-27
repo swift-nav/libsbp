@@ -581,14 +581,14 @@ definitions:
                     - 0x101: Reserved
                     - 0x110: Reserved
                     - 0x111: Reserved
-              - 3-6:
+              - 3-5:
                   desc: UTC flags
                   values:
-                    - 0x000: Invalid UTC date
-                    - 0x001: Valid UTC date, defaults used
-                    - 0x010: Valid UTC leap seconds
+                    - 0x00: Invalid UTC date
+                    - 0x01: Valid UTC date, defaults used
+                    - 0x10: Valid UTC leap seconds
               - 7:
                   desc: RAIM repair flag
                   values:
-                    - 0: No RAIM repair
-                    - 1: RAIM repair
+                    - 0x0: No RAIM repair
+                    - 0x1: RAIM repair
