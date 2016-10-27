@@ -83,7 +83,7 @@ definitions:
                   desc: Carrier valid
                   values:
                       - 0: Invalid Carrier Phase measurement
-                      - 1: Valid Carrier Phase measurement (half cycle ambiguity may exist)
+                      - 1: Valid Carrier Phase measurement
               - 0:
                   desc: Code valid
                   values:

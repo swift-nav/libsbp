@@ -76,7 +76,7 @@ definitions:
     short_desc: UTC Time
     desc: |
       This message reports the Universal Coordinated Time (UTC).  Note the flags 
-      which indicate whether the leapsecond correction is known to be correct.
+      which indicate the source of the UTC offset value and source of the time fix.
     fields:
         - flags:
             type: u8
