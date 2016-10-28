@@ -40,7 +40,7 @@ import re
 CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double'])
 
-COLLISIONS = set(['GnssSignal'])
+COLLISIONS = set(['GnssSignal', 'GPSTime'])
 
 def convert(value):
   """Converts to a C language appropriate identifier format.
