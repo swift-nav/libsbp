@@ -23,7 +23,7 @@ definitions:
     desc: Header of a GPS observation message.
     fields:
         - t:
-            type: ObsGPSTime
+            type: GPSTime
             desc: GPS time of this observation
         - n_obs:
             type: u8
@@ -140,7 +140,7 @@ definitions:
             type: GnssSignal
             desc: GNSS signal identifier
         - toe:
-            type: ObsGPSTime
+            type: GPSTime
             desc: Time of Ephemerides
         - ura:
             type: double
@@ -250,7 +250,7 @@ definitions:
           units: s/s^2
           desc: Polynomial clock correction coefficient (rate of clock drift)
       - toc:
-          type: ObsGPSTime
+          type: GPSTime
           desc: Clock reference
       - iode:
           type: u8
@@ -922,7 +922,7 @@ definitions:
       Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
     fields:
       - t_nmct:
-          type: ObsGPSTime
+          type: GPSTime
           desc: Navigation Message Correction Table Valitidy Time
       - a0:
           type: double
@@ -956,7 +956,7 @@ definitions:
       Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
     fields:
       - t_nmct:
-          type: ObsGPSTime
+          type: GPSTime
           desc: Navigation Message Correction Table Valitidy Time
       - l2c_mask:
           type: u32
@@ -968,7 +968,7 @@ definitions:
     desc: Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
     fields:
       - t_op:
-          type: ObsGPSTime
+          type: GPSTime
           desc: Data Predict Time of Week
       - prn:
           type: u8
