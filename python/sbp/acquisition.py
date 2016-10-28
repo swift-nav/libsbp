@@ -117,9 +117,9 @@ The message is used to debug and measure the performance.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return AcqSvProfile.build(d)
     
-SBP_MSG_ACQ_RESULT = 0x0014
+SBP_MSG_ACQ_RESULT = 0x001F
 class MsgAcqResult(SBP):
-  """SBP class for message MSG_ACQ_RESULT (0x0014).
+  """SBP class for message MSG_ACQ_RESULT (0x001F).
 
   You can have MSG_ACQ_RESULT inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -129,7 +129,7 @@ class MsgAcqResult(SBP):
   This message describes the results from an attempted GPS signal
 acquisition search for a satellite PRN over a code phase/carrier
 frequency range. It contains the parameters of the point in the
-acquisition search space with the best signal-to-noise (SNR)
+acquisition search space with the best carrier-to-noise (CN/0)
 ratio.
 
 
@@ -137,10 +137,8 @@ ratio.
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  snr : float
-    SNR of best point. Currently in arbitrary SNR points, but will
-be in units of dB Hz in a later revision of this message.
-
+  cn0 : float
+    CN/0 of best point
   cp : float
     Code phase of best point
   cf : float
@@ -152,12 +150,12 @@ be in units of dB Hz in a later revision of this message.
 
   """
   _parser = Struct("MsgAcqResult",
-                   LFloat32('snr'),
+                   LFloat32('cn0'),
                    LFloat32('cp'),
                    LFloat32('cf'),
                    Struct('sid', GnssSignal._parser),)
   __slots__ = [
-               'snr',
+               'cn0',
                'cp',
                'cf',
                'sid',
@@ -173,7 +171,7 @@ be in units of dB Hz in a later revision of this message.
       super( MsgAcqResult, self).__init__()
       self.msg_type = SBP_MSG_ACQ_RESULT
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.snr = kwargs.pop('snr')
+      self.cn0 = kwargs.pop('cn0')
       self.cp = kwargs.pop('cp')
       self.cf = kwargs.pop('cf')
       self.sid = kwargs.pop('sid')
@@ -215,6 +213,103 @@ be in units of dB Hz in a later revision of this message.
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgAcqResult, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_ACQ_RESULT_DEP_B = 0x0014
+class MsgAcqResultDepB(SBP):
+  """SBP class for message MSG_ACQ_RESULT_DEP_B (0x0014).
+
+  You can have MSG_ACQ_RESULT_DEP_B inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Deprecated.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  snr : float
+    SNR of best point. Currently in arbitrary SNR points, but will
+be in units of dB Hz in a later revision of this message.
+
+  cp : float
+    Code phase of best point
+  cf : float
+    Carrier frequency of best point
+  sid : GnssSignal
+    GNSS signal for which acquisition was attempted
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgAcqResultDepB",
+                   LFloat32('snr'),
+                   LFloat32('cp'),
+                   LFloat32('cf'),
+                   Struct('sid', GnssSignal._parser),)
+  __slots__ = [
+               'snr',
+               'cp',
+               'cf',
+               'sid',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgAcqResultDepB,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgAcqResultDepB, self).__init__()
+      self.msg_type = SBP_MSG_ACQ_RESULT_DEP_B
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.snr = kwargs.pop('snr')
+      self.cp = kwargs.pop('cp')
+      self.cf = kwargs.pop('cf')
+      self.sid = kwargs.pop('sid')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgAcqResultDepB.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgAcqResultDepB(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgAcqResultDepB._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgAcqResultDepB._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgAcqResultDepB, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -402,7 +497,8 @@ The message is used to debug and measure the performance.
     
 
 msg_classes = {
-  0x0014: MsgAcqResult,
+  0x001F: MsgAcqResult,
+  0x0014: MsgAcqResultDepB,
   0x0015: MsgAcqResultDepA,
   0x001E: MsgAcqSvProfile,
 }

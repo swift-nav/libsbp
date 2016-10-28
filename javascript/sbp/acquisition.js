@@ -27,16 +27,15 @@ var GPSTime = require("./gnss").GPSTime;
 var CarrierPhase = require("./gnss").CarrierPhase;
 
 /**
- * SBP class for message MSG_ACQ_RESULT (0x0014).
+ * SBP class for message MSG_ACQ_RESULT (0x001F).
  *
  * This message describes the results from an attempted GPS signal acquisition
  * search for a satellite PRN over a code phase/carrier frequency range. It
  * contains the parameters of the point in the acquisition search space with the
- * best signal-to-noise (SNR) ratio.
+ * best carrier-to-noise (CN/0) ratio.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field snr number (float, 4 bytes) SNR of best point. Currently in arbitrary SNR points, but will be in units of dB
- *   Hz in a later revision of this message.
+ * @field cn0 number (float, 4 bytes) CN/0 of best point
  * @field cp number (float, 4 bytes) Code phase of best point
  * @field cf number (float, 4 bytes) Carrier frequency of best point
  * @field sid GnssSignal GNSS signal for which acquisition was attempted
@@ -52,19 +51,56 @@ var MsgAcqResult = function (sbp, fields) {
 };
 MsgAcqResult.prototype = Object.create(SBP.prototype);
 MsgAcqResult.prototype.messageType = "MSG_ACQ_RESULT";
-MsgAcqResult.prototype.msg_type = 0x0014;
+MsgAcqResult.prototype.msg_type = 0x001F;
 MsgAcqResult.prototype.constructor = MsgAcqResult;
 MsgAcqResult.prototype.parser = new Parser()
+  .endianess('little')
+  .floatle('cn0')
+  .floatle('cp')
+  .floatle('cf')
+  .nest('sid', { type: GnssSignal.prototype.parser });
+MsgAcqResult.prototype.fieldSpec = [];
+MsgAcqResult.prototype.fieldSpec.push(['cn0', 'writeFloatLE', 4]);
+MsgAcqResult.prototype.fieldSpec.push(['cp', 'writeFloatLE', 4]);
+MsgAcqResult.prototype.fieldSpec.push(['cf', 'writeFloatLE', 4]);
+MsgAcqResult.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+
+/**
+ * SBP class for message MSG_ACQ_RESULT_DEP_B (0x0014).
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field snr number (float, 4 bytes) SNR of best point. Currently in arbitrary SNR points, but will be in units of dB
+ *   Hz in a later revision of this message.
+ * @field cp number (float, 4 bytes) Code phase of best point
+ * @field cf number (float, 4 bytes) Carrier frequency of best point
+ * @field sid GnssSignal GNSS signal for which acquisition was attempted
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgAcqResultDepB = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ACQ_RESULT_DEP_B";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgAcqResultDepB.prototype = Object.create(SBP.prototype);
+MsgAcqResultDepB.prototype.messageType = "MSG_ACQ_RESULT_DEP_B";
+MsgAcqResultDepB.prototype.msg_type = 0x0014;
+MsgAcqResultDepB.prototype.constructor = MsgAcqResultDepB;
+MsgAcqResultDepB.prototype.parser = new Parser()
   .endianess('little')
   .floatle('snr')
   .floatle('cp')
   .floatle('cf')
   .nest('sid', { type: GnssSignal.prototype.parser });
-MsgAcqResult.prototype.fieldSpec = [];
-MsgAcqResult.prototype.fieldSpec.push(['snr', 'writeFloatLE', 4]);
-MsgAcqResult.prototype.fieldSpec.push(['cp', 'writeFloatLE', 4]);
-MsgAcqResult.prototype.fieldSpec.push(['cf', 'writeFloatLE', 4]);
-MsgAcqResult.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgAcqResultDepB.prototype.fieldSpec = [];
+MsgAcqResultDepB.prototype.fieldSpec.push(['snr', 'writeFloatLE', 4]);
+MsgAcqResultDepB.prototype.fieldSpec.push(['cp', 'writeFloatLE', 4]);
+MsgAcqResultDepB.prototype.fieldSpec.push(['cf', 'writeFloatLE', 4]);
+MsgAcqResultDepB.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 
 /**
  * SBP class for message MSG_ACQ_RESULT_DEP_A (0x0015).
@@ -193,8 +229,10 @@ MsgAcqSvProfile.prototype.fieldSpec = [];
 MsgAcqSvProfile.prototype.fieldSpec.push(['acq_sv_profile', 'array', AcqSvProfile.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 module.exports = {
-  0x0014: MsgAcqResult,
+  0x001F: MsgAcqResult,
   MsgAcqResult: MsgAcqResult,
+  0x0014: MsgAcqResultDepB,
+  MsgAcqResultDepB: MsgAcqResultDepB,
   0x0015: MsgAcqResultDepA,
   MsgAcqResultDepA: MsgAcqResultDepA,
   AcqSvProfile: AcqSvProfile,

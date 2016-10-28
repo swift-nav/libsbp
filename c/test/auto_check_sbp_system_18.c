@@ -10,13 +10,13 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/settings/test_MsgSettingsReadByIndexDone.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgHeartbeat.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
 #include <sbp.h>
-#include <settings.h>
+#include <system.h>
 
 static u32 n_callbacks_logged;
 static u16 last_sender_id;
@@ -74,7 +74,7 @@ static void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   /*printy_callback(sender_id, len, msg);*/
 }
 
-START_TEST( test_auto_check_sbp_settings_15 )
+START_TEST( test_auto_check_sbp_system_18 )
 {
   static sbp_msg_callbacks_node_t n;
   //static sbp_msg_callbacks_node_t n2;
@@ -97,12 +97,12 @@ START_TEST( test_auto_check_sbp_settings_15 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xa6, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_callback(&sbp_state, 0xffff, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,166,0,246,215,0,163,58, };
+    u8 test_data[] = {85,255,255,246,215,4,0,50,0,0,249,216, };
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xa6, 55286, sizeof(test_data), test_data, &dummy_write);
+    sbp_send_message(&sbp_state, 0xffff, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
       fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -122,15 +122,19 @@ START_TEST( test_auto_check_sbp_settings_15 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_heartbeat_t* msg = ( msg_heartbeat_t *)((void *)last_msg + 6);
+    // Run tests against fields
+    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
+    fail_unless(msg->flags == 12800, "incorrect value for flags, expected 12800, is %d", msg->flags);
   }
 }
 END_TEST
 
-Suite* auto_check_sbp_settings_15_suite(void)
+Suite* auto_check_sbp_system_18_suite(void)
 {
-  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_settings_15");
-  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_settings_15");
-  tcase_add_test(tc_acq, test_auto_check_sbp_settings_15);
+  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_system_18");
+  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_system_18");
+  tcase_add_test(tc_acq, test_auto_check_sbp_system_18);
   suite_add_tcase(s, tc_acq);
   return s;
 }

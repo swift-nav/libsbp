@@ -74,7 +74,7 @@ static void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   /*printy_callback(sender_id, len, msg);*/
 }
 
-START_TEST( test_auto_check_sbp_bootload_19 )
+START_TEST( test_auto_check_sbp_bootload_20 )
 {
   static sbp_msg_callbacks_node_t n;
   //static sbp_msg_callbacks_node_t n2;
@@ -175,11 +175,11 @@ START_TEST( test_auto_check_sbp_bootload_19 )
 }
 END_TEST
 
-Suite* auto_check_sbp_bootload_19_suite(void)
+Suite* auto_check_sbp_bootload_20_suite(void)
 {
-  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_bootload_19");
-  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_bootload_19");
-  tcase_add_test(tc_acq, test_auto_check_sbp_bootload_19);
+  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_bootload_20");
+  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_bootload_20");
+  tcase_add_test(tc_acq, test_auto_check_sbp_bootload_20);
   suite_add_tcase(s, tc_acq);
   return s;
 }

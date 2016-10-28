@@ -27,7 +27,7 @@ int main(void)
 
   // auto-generated tests:
   srunner_add_suite(sr, auto_check_sbp_acquisition_1_suite());
-  srunner_add_suite(sr, auto_check_sbp_navigation_2_suite());
+  srunner_add_suite(sr, auto_check_sbp_acquisition_2_suite());
   srunner_add_suite(sr, auto_check_sbp_navigation_3_suite());
   srunner_add_suite(sr, auto_check_sbp_navigation_4_suite());
   srunner_add_suite(sr, auto_check_sbp_navigation_5_suite());
@@ -35,25 +35,26 @@ int main(void)
   srunner_add_suite(sr, auto_check_sbp_navigation_7_suite());
   srunner_add_suite(sr, auto_check_sbp_navigation_8_suite());
   srunner_add_suite(sr, auto_check_sbp_navigation_9_suite());
-  srunner_add_suite(sr, auto_check_sbp_observation_10_suite());
+  srunner_add_suite(sr, auto_check_sbp_navigation_10_suite());
   srunner_add_suite(sr, auto_check_sbp_observation_11_suite());
-  srunner_add_suite(sr, auto_check_sbp_piksi_12_suite());
+  srunner_add_suite(sr, auto_check_sbp_observation_12_suite());
   srunner_add_suite(sr, auto_check_sbp_piksi_13_suite());
   srunner_add_suite(sr, auto_check_sbp_piksi_14_suite());
-  srunner_add_suite(sr, auto_check_sbp_settings_15_suite());
+  srunner_add_suite(sr, auto_check_sbp_piksi_15_suite());
   srunner_add_suite(sr, auto_check_sbp_settings_16_suite());
-  srunner_add_suite(sr, auto_check_sbp_system_17_suite());
-  srunner_add_suite(sr, auto_check_sbp_acquisition_18_suite());
-  srunner_add_suite(sr, auto_check_sbp_bootload_19_suite());
-  srunner_add_suite(sr, auto_check_sbp_ext_events_20_suite());
-  srunner_add_suite(sr, auto_check_sbp_logging_21_suite());
-  srunner_add_suite(sr, auto_check_sbp_navigation_22_suite());
-  srunner_add_suite(sr, auto_check_sbp_observation_23_suite());
-  srunner_add_suite(sr, auto_check_sbp_piksi_24_suite());
-  srunner_add_suite(sr, auto_check_sbp_system_25_suite());
-  srunner_add_suite(sr, auto_check_sbp_tracking_26_suite());
+  srunner_add_suite(sr, auto_check_sbp_settings_17_suite());
+  srunner_add_suite(sr, auto_check_sbp_system_18_suite());
+  srunner_add_suite(sr, auto_check_sbp_acquisition_19_suite());
+  srunner_add_suite(sr, auto_check_sbp_bootload_20_suite());
+  srunner_add_suite(sr, auto_check_sbp_ext_events_21_suite());
+  srunner_add_suite(sr, auto_check_sbp_logging_22_suite());
+  srunner_add_suite(sr, auto_check_sbp_navigation_23_suite());
+  srunner_add_suite(sr, auto_check_sbp_observation_24_suite());
+  srunner_add_suite(sr, auto_check_sbp_piksi_25_suite());
+  srunner_add_suite(sr, auto_check_sbp_system_26_suite());
   srunner_add_suite(sr, auto_check_sbp_tracking_27_suite());
   srunner_add_suite(sr, auto_check_sbp_tracking_28_suite());
+  srunner_add_suite(sr, auto_check_sbp_tracking_29_suite());
 
   srunner_set_fork_status(sr, CK_NOFORK);
   srunner_run_all(sr, CK_NORMAL);
