@@ -24,7 +24,9 @@
 ***********************/
 
 var SBP = require('./sbp');
-var Parser = require('binary-parser').Parser;
+var Parser = require('./parser');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_FILEIO_READ_REQ (0x00A8).
@@ -66,7 +68,7 @@ MsgFileioReadReq.prototype.fieldSpec = [];
 MsgFileioReadReq.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
 MsgFileioReadReq.prototype.fieldSpec.push(['offset', 'writeUInt32LE', 4]);
 MsgFileioReadReq.prototype.fieldSpec.push(['chunk_size', 'writeUInt8', 1]);
-MsgFileioReadReq.prototype.fieldSpec.push(['filename', 'string']);
+MsgFileioReadReq.prototype.fieldSpec.push(['filename', 'string', null]);
 
 /**
  * SBP class for message MSG_FILEIO_READ_RESP (0x00A3).
@@ -99,7 +101,7 @@ MsgFileioReadResp.prototype.parser = new Parser()
   .array('contents', { type: 'uint8', readUntil: 'eof' });
 MsgFileioReadResp.prototype.fieldSpec = [];
 MsgFileioReadResp.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
-MsgFileioReadResp.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8', function () { return 1; }]);
+MsgFileioReadResp.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 /**
  * SBP class for message MSG_FILEIO_READ_DIR_REQ (0x00A9).
@@ -139,7 +141,7 @@ MsgFileioReadDirReq.prototype.parser = new Parser()
 MsgFileioReadDirReq.prototype.fieldSpec = [];
 MsgFileioReadDirReq.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
 MsgFileioReadDirReq.prototype.fieldSpec.push(['offset', 'writeUInt32LE', 4]);
-MsgFileioReadDirReq.prototype.fieldSpec.push(['dirname', 'string']);
+MsgFileioReadDirReq.prototype.fieldSpec.push(['dirname', 'string', null]);
 
 /**
  * SBP class for message MSG_FILEIO_READ_DIR_RESP (0x00AA).
@@ -173,7 +175,7 @@ MsgFileioReadDirResp.prototype.parser = new Parser()
   .array('contents', { type: 'uint8', readUntil: 'eof' });
 MsgFileioReadDirResp.prototype.fieldSpec = [];
 MsgFileioReadDirResp.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
-MsgFileioReadDirResp.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8', function () { return 1; }]);
+MsgFileioReadDirResp.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 /**
  * SBP class for message MSG_FILEIO_REMOVE (0x00AC).
@@ -203,7 +205,7 @@ MsgFileioRemove.prototype.parser = new Parser()
   .endianess('little')
   .string('filename', { greedy: true });
 MsgFileioRemove.prototype.fieldSpec = [];
-MsgFileioRemove.prototype.fieldSpec.push(['filename', 'string']);
+MsgFileioRemove.prototype.fieldSpec.push(['filename', 'string', null]);
 
 /**
  * SBP class for message MSG_FILEIO_WRITE_REQ (0x00AD).
@@ -243,8 +245,8 @@ MsgFileioWriteReq.prototype.parser = new Parser()
 MsgFileioWriteReq.prototype.fieldSpec = [];
 MsgFileioWriteReq.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
 MsgFileioWriteReq.prototype.fieldSpec.push(['offset', 'writeUInt32LE', 4]);
-MsgFileioWriteReq.prototype.fieldSpec.push(['filename', 'string']);
-MsgFileioWriteReq.prototype.fieldSpec.push(['data', 'array', 'writeUInt8', function () { return 1; }]);
+MsgFileioWriteReq.prototype.fieldSpec.push(['filename', 'string', null]);
+MsgFileioWriteReq.prototype.fieldSpec.push(['data', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 /**
  * SBP class for message MSG_FILEIO_WRITE_RESP (0x00AB).

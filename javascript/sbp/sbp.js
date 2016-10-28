@@ -9,10 +9,21 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+var assert = require('assert');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
+
 var mkBuf = function (size, writer, payload, offset) {
   var b = new Buffer(size);
   b[writer](payload, offset || 0);
   return b;
+}
+
+/**
+ * Augment UInt64's prototype - it should have toJSON
+ */
+UInt64.prototype.toJSON = function () {
+  return this.toString();
 }
 
 /**
@@ -48,12 +59,22 @@ SBP.prototype.payloadToBuffer = function payloadToBuffer (fieldSpec, data) {
 
     if (typeof dataType === 'string' && dataType.indexOf('write') === 0) {
       var dataSize = fieldSize(field[2]);
-      var b = new Buffer(dataSize);
-      b[dataType](data[fieldName], 0);
-      buffers.push(b);
+      if (dataType === 'writeUInt64LE') {
+        assert(data[fieldName] instanceof UInt64, 'uint64 type must be represented by cuint.UINT64');
+        var high = data[fieldName].clone().shiftRight(32).and(new UInt64(0xffffffff, 0)).toNumber();
+        var low = data[fieldName].clone().and(new UInt64(0xffffffff, 0)).toNumber();
+        var b = new Buffer(8);
+        b.writeUInt32LE(low);
+        b.writeUInt32LE(high, 4);
+        buffers.push(b);
+      } else {
+        var b = new Buffer(dataSize);
+        b[dataType](data[fieldName], 0);
+        buffers.push(b);
+      }
     } else if (dataType === 'string') {
       var b = new Buffer(data[fieldName].length);
-      b.write(data[fieldName]);
+      b.write(data[fieldName], 0, 'utf8');
       buffers.push(b);
     } else if (dataType === 'array') {
       var dataFill = field[2];

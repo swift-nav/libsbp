@@ -41,11 +41,11 @@ WRITE_BUFFER_CODE = {
   'u8': 'writeUInt8',
   'u16': 'writeUInt16LE',
   'u32': 'writeUInt32LE',
-  'u64': 'writeUIntLE', # only supports up to 48 bits of accuracy
+  'u64': 'writeUInt64LE', # only supports up to 48 bits of accuracy
   's8': 'writeInt8',
   's16': 'writeInt16LE',
   's32': 'writeInt32LE',
-  's64': 'writeIntLE', # only supports up to 48 bits of accuracy
+  's64': 'writeInt64LE', # only supports up to 48 bits of accuracy
   'float': 'writeFloatLE',
   'double': 'writeDoubleLE',
 }
@@ -96,6 +96,19 @@ def buffer_size(type_id, type_map=BUFFER_SIZE_MAP):
     return "this.fields.%s.length" % type_id
   else:
     return "this.fields.%s.length" % type_id.identifier
+
+def array_fill_size(f):
+  if builtin_type(f.options['fill'].value):
+    return buffer_size(f.options['fill'].value)
+  else:
+    return buffer_size(f.type_id)
+
+def array_length(f):
+  if 'size' in f.options:
+    return f.options.get('size').value
+  if 'size_fn' in f.options:
+    return "'%s'" % f.options.get('size_fn').value
+  return 'null'
 
 def jsdoc_format(type_id, jsdoc=JSDOC_CODE):
   """
@@ -151,11 +164,17 @@ def star_wordwrap(s):
 def star_wordwrap_indent(s):
   return "\n *   ".join(textwrap.wrap(' '.join(s.split('\n')), 80))
 
+def islist(x):
+  return isinstance(x, list)
+
 JENV.tests['builtinType'] = builtin_type
+JENV.tests['list'] = islist
 
 JENV.filters['js_classnameify'] = js_classnameify
 JENV.filters['writeBuffer'] = write_buffer
 JENV.filters['bufferSize'] = buffer_size
+JENV.filters['arrayFillSize'] = array_fill_size
+JENV.filters['arrayLength'] = array_length
 JENV.filters['construct_js'] = construct_format
 JENV.filters['jsdoc'] = jsdoc_format
 JENV.filters['starWordWrap'] = star_wordwrap
@@ -171,7 +190,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
   destination_filename = "%s/%s.js" % (directory, name)
   py_template = jenv.get_template(TEMPLATE_NAME)
   module_path = ".".join(package_spec.identifier.split(".")[1:-1])
-  includeMap = {'gnss_signal':'GnssSignal'}
+  includeMap = {'gnss': ['GnssSignal', 'GPSTime', 'CarrierPhase'] }
   includes = [".".join(i.split(".")[:-1]) for i in package_spec.includes]
   includes = [(i, includeMap.get(i)) for i in includes if i != "types"]
   with open(destination_filename, 'w') as f:

@@ -1,0 +1,65 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Vlad Ungureanu <vvu@vdev.ro>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.gnss
+description: Various structs shared between modules
+stable: True
+public: True
+include:
+  - types.yaml
+definitions:
+
+ - GnssSignal:
+    short_desc: Represents all the relevant information about the signal
+    desc: |
+        Signal identifier containing constellation, band, and satellite identifier
+    fields:
+        - sat:
+            type: u16
+            desc: Constellation-specific satellite identifier
+        - code:
+            type: u8
+            desc: Signal constellation, band and code
+        - reserved:
+            type: u8
+            desc: Reserved
+
+ - GPSTime:
+    short_desc: Millisecond-accurate GPS time
+    desc: |
+      A wire-appropriate GPS time, defined as the number of
+      milliseconds since beginning of the week on the Saturday/Sunday
+      transition.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: Milliseconds since start of GPS week
+        - wn:
+            type: u16
+            units: week
+            desc: GPS week number
+
+ - CarrierPhase:
+    short_desc: GPS carrier phase measurement.
+    desc: |
+      Carrier phase measurement in cycles represented as a 40-bit
+      fixed point number with Q32.8 layout, i.e. 32-bits of whole
+      cycles and 8-bits of fractional cycles.  This phase has the
+      same sign as the pseudorange.
+    fields:
+        - i:
+            type: s32
+            units: cycles
+            desc: Carrier phase whole cycles
+        - f:
+            type: u8
+            units: cycles / 256
+            desc: Carrier phase fractional part

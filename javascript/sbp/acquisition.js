@@ -19,8 +19,12 @@
 ***********************/
 
 var SBP = require('./sbp');
-var Parser = require('binary-parser').Parser;
-var GnssSignal = require("./gnss_signal").GnssSignal;
+var Parser = require('./parser');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
+var GnssSignal = require("./gnss").GnssSignal;
+var GPSTime = require("./gnss").GPSTime;
+var CarrierPhase = require("./gnss").CarrierPhase;
 
 /**
  * SBP class for message MSG_ACQ_RESULT (0x0014).
@@ -115,9 +119,9 @@ MsgAcqResultDepA.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
  * @field bin_width number (unsigned 16-bit int, 2 bytes) Acq frequency bin width
  * @field timestamp number (unsigned 32-bit int, 4 bytes) Timestamp of the job complete event
  * @field time_spent number (unsigned 32-bit int, 4 bytes) Time spent to search for sid.code
- * @field cf_min number (unsigned 32-bit int, 4 bytes) Doppler range lowest frequency
- * @field cf_max number (unsigned 32-bit int, 4 bytes) Doppler range highest frequency
- * @field cf number (unsigned 32-bit int, 4 bytes) Doppler value of detected peak. Only valid if status is '1'
+ * @field cf_min number (signed 32-bit int, 4 bytes) Doppler range lowest frequency
+ * @field cf_max number (signed 32-bit int, 4 bytes) Doppler range highest frequency
+ * @field cf number (signed 32-bit int, 4 bytes) Doppler value of detected peak. Only valid if status is '1'
  * @field cp number (unsigned 32-bit int, 4 bytes) Codephase of detected peak. Only valid if status is '1'
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -142,9 +146,9 @@ AcqSvProfile.prototype.parser = new Parser()
   .uint16('bin_width')
   .uint32('timestamp')
   .uint32('time_spent')
-  .uint32('cf_min')
-  .uint32('cf_max')
-  .uint32('cf')
+  .int32('cf_min')
+  .int32('cf_max')
+  .int32('cf')
   .uint32('cp');
 AcqSvProfile.prototype.fieldSpec = [];
 AcqSvProfile.prototype.fieldSpec.push(['job_type', 'writeUInt8', 1]);
@@ -155,9 +159,9 @@ AcqSvProfile.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 AcqSvProfile.prototype.fieldSpec.push(['bin_width', 'writeUInt16LE', 2]);
 AcqSvProfile.prototype.fieldSpec.push(['timestamp', 'writeUInt32LE', 4]);
 AcqSvProfile.prototype.fieldSpec.push(['time_spent', 'writeUInt32LE', 4]);
-AcqSvProfile.prototype.fieldSpec.push(['cf_min', 'writeUInt32LE', 4]);
-AcqSvProfile.prototype.fieldSpec.push(['cf_max', 'writeUInt32LE', 4]);
-AcqSvProfile.prototype.fieldSpec.push(['cf', 'writeUInt32LE', 4]);
+AcqSvProfile.prototype.fieldSpec.push(['cf_min', 'writeInt32LE', 4]);
+AcqSvProfile.prototype.fieldSpec.push(['cf_max', 'writeInt32LE', 4]);
+AcqSvProfile.prototype.fieldSpec.push(['cf', 'writeInt32LE', 4]);
 AcqSvProfile.prototype.fieldSpec.push(['cp', 'writeUInt32LE', 4]);
 
 /**
@@ -186,7 +190,7 @@ MsgAcqSvProfile.prototype.parser = new Parser()
   .endianess('little')
   .array('acq_sv_profile', { type: AcqSvProfile.prototype.parser, readUntil: 'eof' });
 MsgAcqSvProfile.prototype.fieldSpec = [];
-MsgAcqSvProfile.prototype.fieldSpec.push(['acq_sv_profile', 'array', AcqSvProfile.prototype.fieldSpec, function () { return this.fields.array.length; }]);
+MsgAcqSvProfile.prototype.fieldSpec.push(['acq_sv_profile', 'array', AcqSvProfile.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 module.exports = {
   0x0014: MsgAcqResult,

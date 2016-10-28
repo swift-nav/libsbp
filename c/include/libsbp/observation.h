@@ -24,32 +24,7 @@
 #define LIBSBP_OBSERVATION_MESSAGES_H
 
 #include "common.h"
-#include "gnss_signal.h"
-
-
-/** Millisecond-accurate GPS time
- *
- * A wire-appropriate GPS time, defined as the number of
- * milliseconds since beginning of the week on the Saturday/Sunday
- * transition.
- */
-typedef struct __attribute__((packed)) {
-  u32 tow;    /**< Milliseconds since start of GPS week [ms] */
-  u16 wn;     /**< GPS week number [week] */
-} obs_gps_time_t;
-
-
-/** GPS carrier phase measurement.
- *
- * Carrier phase measurement in cycles represented as a 40-bit
- * fixed point number with Q32.8 layout, i.e. 32-bits of whole
- * cycles and 8-bits of fractional cycles.  This phase has the 
- * same sign as the pseudorange.
- */
-typedef struct __attribute__((packed)) {
-  s32 i;    /**< Carrier phase whole cycles [cycles] */
-  u8 f;    /**< Carrier phase fractional part [cycles / 256] */
-} carrier_phase_t;
+#include "gnss.h"
 
 
 /** Header for observation message.
@@ -57,7 +32,7 @@ typedef struct __attribute__((packed)) {
 * Header of a GPS observation message.
  */
 typedef struct __attribute__((packed)) {
-  obs_gps_time_t t;        /**< GPS time of this observation */
+  sbp_gps_time_t t;        /**< GPS time of this observation */
   u8 n_obs;    /**< Total number of observations. First nibble is the size
 of the sequence (n), second nibble is the zero-indexed
 counter (ith packet of n)
@@ -68,8 +43,8 @@ counter (ith packet of n)
 /** GPS observations for a particular satellite signal.
  *
  * Pseudorange and carrier phase observation for a satellite being
- * tracked. The observations should be interoperable with 3rd party 
- * receivers and conform with typical RTCMv3 GNSS observations. 
+ * tracked. The observations should be interoperable with 3rd party
+ * receivers and conform with typical RTCMv3 GNSS observations.
  */
 typedef struct __attribute__((packed)) {
   u32 P;       /**< Pseudorange observation [2 cm] */
@@ -89,9 +64,9 @@ carrier phase ambiguity may have changed.
  * carrier phase observations for the satellites being tracked by
  * the device. Carrier phase observation here is represented as a
  * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
- * whole cycles and 8-bits of fractional cycles).  The observations 
- * should be interoperable with 3rd party receivers and conform 
- * with typical RTCMv3 GNSS observations. 
+ * whole cycles and 8-bits of fractional cycles).  The observations
+ * should be interoperable with 3rd party receivers and conform
+ * with typical RTCMv3 GNSS observations.
  */
 #define SBP_MSG_OBS                  0x0049
 typedef struct __attribute__((packed)) {
@@ -137,7 +112,7 @@ typedef struct __attribute__((packed)) {
 
 typedef struct __attribute__((packed)) {
   sbp_gnss_signal_t sid;             /**< GNSS signal identifier */
-  obs_gps_time_t toe;             /**< Time of Ephemerides */
+  sbp_gps_time_t toe;             /**< Time of Ephemerides */
   double ura;             /**< User Range Accuracy [m] */
   u32 fit_interval;    /**< Curve fit interval [s] */
   u8 valid;           /**< Status of ephemeris, 1 = valid, 0 = invalid */
@@ -179,7 +154,7 @@ typedef struct __attribute__((packed)) {
   double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
   double af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
   double af2;         /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-  obs_gps_time_t toc;         /**< Clock reference */
+  sbp_gps_time_t toc;         /**< Clock reference */
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
 } msg_ephemeris_gps_t;
@@ -432,11 +407,11 @@ satellite being tracked.
 
 /** Deprecated
  *
- * This observation message has been deprecated in favor of 
+ * This observation message has been deprecated in favor of
  * observations that are more interoperable. This message
- * should be used for observations referenced to 
+ * should be used for observations referenced to
  * a nominal pseudorange which are not interoperable with
- * most 3rd party GNSS receievers or typical RTCMv3 
+ * most 3rd party GNSS receievers or typical RTCMv3
  * observations.
  */
 #define SBP_MSG_OBS_DEP_B            0x0043
@@ -456,7 +431,7 @@ satellite being tracked.
  */
 #define SBP_MSG_IONO                 0x0090
 typedef struct __attribute__((packed)) {
-  obs_gps_time_t t_nmct;    /**< Navigation Message Correction Table Valitidy Time */
+  sbp_gps_time_t t_nmct;    /**< Navigation Message Correction Table Valitidy Time */
   double a0;       
   double a1;       
   double a2;       
@@ -474,7 +449,7 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_SV_CONFIGURATION_GPS 0x0091
 typedef struct __attribute__((packed)) {
-  obs_gps_time_t t_nmct;      /**< Navigation Message Correction Table Valitidy Time */
+  sbp_gps_time_t t_nmct;      /**< Navigation Message Correction Table Valitidy Time */
   u32 l2c_mask;    /**< L2C capability mask, SV32 bit being MSB, SV1 bit being LSB */
 } msg_sv_configuration_gps_t;
 
@@ -485,7 +460,7 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_GROUP_DELAY          0x0092
 typedef struct __attribute__((packed)) {
-  obs_gps_time_t t_op;        /**< Data Predict Time of Week */
+  sbp_gps_time_t t_op;        /**< Data Predict Time of Week */
   u8 prn;         /**< Satellite number */
   u8 valid;       /**< bit-field indicating validity of the values,
 LSB indicating tgd validity etc.

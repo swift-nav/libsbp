@@ -40,13 +40,13 @@ import re
 CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double'])
 
-COLLISIONS = set(['GnssSignal'])
+COLLISIONS = set(['GnssSignal', 'GPSTime'])
 
 def convert(value):
   """Converts to a C language appropriate identifier format.
 
   """
-  s0 = "SBP" + value if value in COLLISIONS else value
+  s0 = "Sbp" + value if value in COLLISIONS else value
   s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', s0)
   return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower() + "_t"
 

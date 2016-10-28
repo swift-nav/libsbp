@@ -16,7 +16,7 @@ package com.swiftnav.sbp.observation;
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import com.swiftnav.sbp.gnss_signal.*;
+import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -99,7 +99,7 @@ public class MsgEphemerisGPS extends SBPMessage {
     public double af2;
     
     /** Clock reference */
-    public ObsGPSTime toc;
+    public GPSTime toc;
     
     /** Issue of ephemeris data */
     public int iode;
@@ -138,7 +138,7 @@ public class MsgEphemerisGPS extends SBPMessage {
         af0 = parser.getDouble();
         af1 = parser.getDouble();
         af2 = parser.getDouble();
-        toc = new ObsGPSTime().parse(parser);
+        toc = new GPSTime().parse(parser);
         iode = parser.getU8();
         iodc = parser.getU16();
     }

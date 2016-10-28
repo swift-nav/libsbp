@@ -18,99 +18,12 @@ from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
-from sbp.gnss_signal import *
+from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml with generate.py.
 # Please do not hand edit!
 
 
-class ObsGPSTime(object):
-  """ObsGPSTime.
-  
-  A wire-appropriate GPS time, defined as the number of
-milliseconds since beginning of the week on the Saturday/Sunday
-transition.
-
-  
-  Parameters
-  ----------
-  tow : int
-    Milliseconds since start of GPS week
-  wn : int
-    GPS week number
-
-  """
-  _parser = Embedded(Struct("ObsGPSTime",
-                     ULInt32('tow'),
-                     ULInt16('wn'),))
-  __slots__ = [
-               'tow',
-               'wn',
-              ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.tow = kwargs.pop('tow')
-      self.wn = kwargs.pop('wn')
-
-  def __repr__(self):
-    return fmt_repr(self)
-  
-  def from_binary(self, d):
-    p = ObsGPSTime._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return ObsGPSTime.build(d)
-    
-class CarrierPhase(object):
-  """CarrierPhase.
-  
-  Carrier phase measurement in cycles represented as a 40-bit
-fixed point number with Q32.8 layout, i.e. 32-bits of whole
-cycles and 8-bits of fractional cycles.  This phase has the 
-same sign as the pseudorange.
-
-  
-  Parameters
-  ----------
-  i : int
-    Carrier phase whole cycles
-  f : int
-    Carrier phase fractional part
-
-  """
-  _parser = Embedded(Struct("CarrierPhase",
-                     SLInt32('i'),
-                     ULInt8('f'),))
-  __slots__ = [
-               'i',
-               'f',
-              ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.i = kwargs.pop('i')
-      self.f = kwargs.pop('f')
-
-  def __repr__(self):
-    return fmt_repr(self)
-  
-  def from_binary(self, d):
-    p = CarrierPhase._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return CarrierPhase.build(d)
-    
 class ObservationHeader(object):
   """ObservationHeader.
   
@@ -118,7 +31,7 @@ class ObservationHeader(object):
   
   Parameters
   ----------
-  t : ObsGPSTime
+  t : GPSTime
     GPS time of this observation
   n_obs : int
     Total number of observations. First nibble is the size
@@ -128,7 +41,7 @@ counter (ith packet of n)
 
   """
   _parser = Embedded(Struct("ObservationHeader",
-                     Struct('t', ObsGPSTime._parser),
+                     Struct('t', GPSTime._parser),
                      ULInt8('n_obs'),))
   __slots__ = [
                't',
@@ -158,8 +71,8 @@ class PackedObsContent(object):
   """PackedObsContent.
   
   Pseudorange and carrier phase observation for a satellite being
-tracked. The observations should be interoperable with 3rd party 
-receivers and conform with typical RTCMv3 GNSS observations. 
+tracked. The observations should be interoperable with 3rd party
+receivers and conform with typical RTCMv3 GNSS observations.
 
   
   Parameters
@@ -223,7 +136,7 @@ class EphemerisCommonContent(object):
   ----------
   sid : GnssSignal
     GNSS signal identifier
-  toe : ObsGPSTime
+  toe : GPSTime
     Time of Ephemerides
   ura : double
     User Range Accuracy
@@ -241,7 +154,7 @@ GLO: 0 = valid, non-zero = invalid
   """
   _parser = Embedded(Struct("EphemerisCommonContent",
                      Struct('sid', GnssSignal._parser),
-                     Struct('toe', ObsGPSTime._parser),
+                     Struct('toe', GPSTime._parser),
                      LFloat64('ura'),
                      ULInt32('fit_interval'),
                      ULInt8('valid'),
@@ -454,9 +367,9 @@ class MsgObs(SBP):
 carrier phase observations for the satellites being tracked by
 the device. Carrier phase observation here is represented as a
 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-whole cycles and 8-bits of fractional cycles).  The observations 
-should be interoperable with 3rd party receivers and conform 
-with typical RTCMv3 GNSS observations. 
+whole cycles and 8-bits of fractional cycles).  The observations
+should be interoperable with 3rd party receivers and conform
+with typical RTCMv3 GNSS observations.
 
 
   Parameters
@@ -786,7 +699,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Polynomial clock correction coefficient (clock drift)
   af2 : double
     Polynomial clock correction coefficient (rate of clock drift)
-  toc : ObsGPSTime
+  toc : GPSTime
     Clock reference
   iode : int
     Issue of ephemeris data
@@ -817,7 +730,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    LFloat64('af0'),
                    LFloat64('af1'),
                    LFloat64('af2'),
-                   Struct('toc', ObsGPSTime._parser),
+                   Struct('toc', GPSTime._parser),
                    ULInt8('iode'),
                    ULInt16('iodc'),)
   __slots__ = [
@@ -2096,11 +2009,11 @@ class MsgObsDepB(SBP):
   of its fields.
 
   
-  This observation message has been deprecated in favor of 
+  This observation message has been deprecated in favor of
 observations that are more interoperable. This message
-should be used for observations referenced to 
+should be used for observations referenced to
 a nominal pseudorange which are not interoperable with
-most 3rd party GNSS receievers or typical RTCMv3 
+most 3rd party GNSS receievers or typical RTCMv3
 observations.
 
 
@@ -2198,7 +2111,7 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  t_nmct : ObsGPSTime
+  t_nmct : GPSTime
     Navigation Message Correction Table Valitidy Time
   a0 : double
   a1 : double
@@ -2213,7 +2126,7 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 
   """
   _parser = Struct("MsgIono",
-                   Struct('t_nmct', ObsGPSTime._parser),
+                   Struct('t_nmct', GPSTime._parser),
                    LFloat64('a0'),
                    LFloat64('a1'),
                    LFloat64('a2'),
@@ -2311,7 +2224,7 @@ class MsgSvConfigurationGPS(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  t_nmct : ObsGPSTime
+  t_nmct : GPSTime
     Navigation Message Correction Table Valitidy Time
   l2c_mask : int
     L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
@@ -2320,7 +2233,7 @@ class MsgSvConfigurationGPS(SBP):
 
   """
   _parser = Struct("MsgSvConfigurationGPS",
-                   Struct('t_nmct', ObsGPSTime._parser),
+                   Struct('t_nmct', GPSTime._parser),
                    ULInt32('l2c_mask'),)
   __slots__ = [
                't_nmct',
@@ -2396,7 +2309,7 @@ class MsgGroupDelay(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  t_op : ObsGPSTime
+  t_op : GPSTime
     Data Predict Time of Week
   prn : int
     Satellite number
@@ -2413,7 +2326,7 @@ LSB indicating tgd validity etc.
 
   """
   _parser = Struct("MsgGroupDelay",
-                   Struct('t_op', ObsGPSTime._parser),
+                   Struct('t_op', GPSTime._parser),
                    ULInt8('prn'),
                    ULInt8('valid'),
                    SLInt16('tgd'),

@@ -16,7 +16,7 @@ package com.swiftnav.sbp.observation;
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import com.swiftnav.sbp.gnss_signal.*;
+import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -28,7 +28,7 @@ public class EphemerisCommonContent extends SBPStruct {
     public GnssSignal sid;
     
     /** Time of Ephemerides */
-    public ObsGPSTime toe;
+    public GPSTime toe;
     
     /** User Range Accuracy */
     public double ura;
@@ -53,7 +53,7 @@ GLO: 0 = valid, non-zero = invalid
     public EphemerisCommonContent parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         sid = new GnssSignal().parse(parser);
-        toe = new ObsGPSTime().parse(parser);
+        toe = new GPSTime().parse(parser);
         ura = parser.getDouble();
         fit_interval = parser.getU32();
         valid = parser.getU8();

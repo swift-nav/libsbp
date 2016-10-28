@@ -23,7 +23,9 @@
 ***********************/
 
 var SBP = require('./sbp');
-var Parser = require('binary-parser').Parser;
+var Parser = require('./parser');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_SETTINGS_SAVE (0x00A1).
@@ -75,7 +77,7 @@ MsgSettingsWrite.prototype.parser = new Parser()
   .endianess('little')
   .string('setting', { greedy: true });
 MsgSettingsWrite.prototype.fieldSpec = [];
-MsgSettingsWrite.prototype.fieldSpec.push(['setting', 'string']);
+MsgSettingsWrite.prototype.fieldSpec.push(['setting', 'string', null]);
 
 /**
  * SBP class for message MSG_SETTINGS_READ_REQ (0x00A4).
@@ -104,7 +106,7 @@ MsgSettingsReadReq.prototype.parser = new Parser()
   .endianess('little')
   .string('setting', { greedy: true });
 MsgSettingsReadReq.prototype.fieldSpec = [];
-MsgSettingsReadReq.prototype.fieldSpec.push(['setting', 'string']);
+MsgSettingsReadReq.prototype.fieldSpec.push(['setting', 'string', null]);
 
 /**
  * SBP class for message MSG_SETTINGS_READ_RESP (0x00A5).
@@ -132,7 +134,7 @@ MsgSettingsReadResp.prototype.parser = new Parser()
   .endianess('little')
   .string('setting', { greedy: true });
 MsgSettingsReadResp.prototype.fieldSpec = [];
-MsgSettingsReadResp.prototype.fieldSpec.push(['setting', 'string']);
+MsgSettingsReadResp.prototype.fieldSpec.push(['setting', 'string', null]);
 
 /**
  * SBP class for message MSG_SETTINGS_READ_BY_INDEX_REQ (0x00A2).
@@ -197,7 +199,7 @@ MsgSettingsReadByIndexResp.prototype.parser = new Parser()
   .string('setting', { greedy: true });
 MsgSettingsReadByIndexResp.prototype.fieldSpec = [];
 MsgSettingsReadByIndexResp.prototype.fieldSpec.push(['index', 'writeUInt16LE', 2]);
-MsgSettingsReadByIndexResp.prototype.fieldSpec.push(['setting', 'string']);
+MsgSettingsReadByIndexResp.prototype.fieldSpec.push(['setting', 'string', null]);
 
 /**
  * SBP class for message MSG_SETTINGS_READ_BY_INDEX_DONE (0x00A6).
@@ -249,7 +251,7 @@ MsgSettingsRegister.prototype.parser = new Parser()
   .endianess('little')
   .string('setting', { greedy: true });
 MsgSettingsRegister.prototype.fieldSpec = [];
-MsgSettingsRegister.prototype.fieldSpec.push(['setting', 'string']);
+MsgSettingsRegister.prototype.fieldSpec.push(['setting', 'string', null]);
 
 module.exports = {
   0x00A1: MsgSettingsSave,

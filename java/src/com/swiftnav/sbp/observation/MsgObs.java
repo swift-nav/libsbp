@@ -16,7 +16,7 @@ package com.swiftnav.sbp.observation;
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import com.swiftnav.sbp.gnss_signal.*;
+import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -32,9 +32,9 @@ import org.json.JSONArray;
  * carrier phase observations for the satellites being tracked by
  * the device. Carrier phase observation here is represented as a
  * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
- * whole cycles and 8-bits of fractional cycles).  The observations 
- * should be interoperable with 3rd party receivers and conform 
- * with typical RTCMv3 GNSS observations.  */
+ * whole cycles and 8-bits of fractional cycles).  The observations
+ * should be interoperable with 3rd party receivers and conform
+ * with typical RTCMv3 GNSS observations. */
 
 public class MsgObs extends SBPMessage {
     public static final int TYPE = 0x0049;

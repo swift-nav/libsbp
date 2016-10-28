@@ -1,5 +1,5 @@
 name:                  sbp
-version:               1.2.2
+version:               1.2.4
 synopsis:              SwiftNav's SBP Library
 homepage:              https://github.com/swift-nav/libsbp
 license:               LGPL-3
@@ -30,7 +30,7 @@ library
                      , SwiftNav.SBP.ExtEvents
                      , SwiftNav.SBP.FileIo
                      , SwiftNav.SBP.Flash
-                     , SwiftNav.SBP.GnssSignal
+                     , SwiftNav.SBP.Gnss
                      , SwiftNav.SBP.Logging
                      , SwiftNav.SBP.Navigation
                      , SwiftNav.SBP.Observation

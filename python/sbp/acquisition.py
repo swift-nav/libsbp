@@ -18,7 +18,7 @@ from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
-from sbp.gnss_signal import *
+from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/acquisition.yaml with generate.py.
 # Please do not hand edit!

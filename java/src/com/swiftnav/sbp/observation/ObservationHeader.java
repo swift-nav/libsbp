@@ -16,7 +16,7 @@ package com.swiftnav.sbp.observation;
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import com.swiftnav.sbp.gnss_signal.*;
+import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -25,7 +25,7 @@ import com.swiftnav.sbp.SBPStruct;
 public class ObservationHeader extends SBPStruct {
     
     /** GPS time of this observation */
-    public ObsGPSTime t;
+    public GPSTime t;
     
     /** Total number of observations. First nibble is the size
 of the sequence (n), second nibble is the zero-indexed
@@ -39,7 +39,7 @@ counter (ith packet of n)
     @Override
     public ObservationHeader parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        t = new ObsGPSTime().parse(parser);
+        t = new GPSTime().parse(parser);
         n_obs = parser.getU8();
         return this;
     }

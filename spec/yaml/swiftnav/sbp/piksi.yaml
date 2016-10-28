@@ -18,7 +18,7 @@ stable: False
 public: True
 include:
   - types.yaml
-  - gnss_signal.yaml
+  - gnss.yaml
 definitions:
 
  - MSG_ALMANAC:
@@ -310,4 +310,3 @@ definitions:
             type: s16
             units: degrees C * 100
             desc: Frontend temperature (if available)
-

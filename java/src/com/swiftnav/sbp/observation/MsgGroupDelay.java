@@ -16,7 +16,7 @@ package com.swiftnav.sbp.observation;
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import com.swiftnav.sbp.gnss_signal.*;
+import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -35,7 +35,7 @@ public class MsgGroupDelay extends SBPMessage {
 
     
     /** Data Predict Time of Week */
-    public ObsGPSTime t_op;
+    public GPSTime t_op;
     
     /** Satellite number */
     public int prn;
@@ -63,7 +63,7 @@ LSB indicating tgd validity etc.
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        t_op = new ObsGPSTime().parse(parser);
+        t_op = new GPSTime().parse(parser);
         prn = parser.getU8();
         valid = parser.getU8();
         tgd = parser.getS16();

@@ -19,7 +19,7 @@ from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
-from sbp.gnss_signal import *
+from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml with generate.py.
 # Please do not hand edit!
@@ -158,6 +158,195 @@ class TrackingChannelStateDepA(object):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return TrackingChannelStateDepA.build(d)
     
+SBP_MSG_TRACKING_STATE_DETAILED = 0x0011
+class MsgTrackingStateDetailed(SBP):
+  """SBP class for message MSG_TRACKING_STATE_DETAILED (0x0011).
+
+  You can have MSG_TRACKING_STATE_DETAILED inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The tracking message returns a set tracking channel parameters for a
+single tracking channel useful for debugging issues.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  recv_time : int
+    Receiver clock time.
+  tot : GPSTime
+    Time of transmission of signal from satellite.
+  P : int
+    Pseudorange observation.
+  P_std : int
+    Pseudorange observation standard deviation.
+  L : CarrierPhase
+    Carrier phase observation with typical sign convention. Only valid
+when PLL pessimistic lock is achieved.
+
+  cn0 : int
+    Carrier-to-Noise density
+  lock : int
+    Lock indicator. This value changes whenever a satellite
+signal has lost and regained lock, indicating that the
+carrier phase ambiguity may have changed.
+
+  sid : GnssSignal
+    GNSS signal identifier.
+  doppler : int
+    Carrier Doppler frequency.
+  doppler_std : int
+    Carrier Doppler frequency standard deviation.
+  uptime : int
+    Number of seconds of continuous tracking. Specifies how much time
+signal is in continuous track.
+
+  clock_offset : int
+    TCXO clock offset.
+  clock_drift : int
+    TCXO clock drift.
+  corr_spacing : int
+    Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
+  acceleration : int
+    Acceleration. Valid only when acceleration valid flag is set.
+  sync_flags : int
+    Synchronization status flags.
+  tow_flags : int
+    TOW status flags.
+  track_flags : int
+    Tracking loop status flags.
+  nav_flags : int
+    Navigation data status flags.
+  pset_flags : int
+    Parameters sets flags.
+  misc_flags : int
+    Miscellaneous flags.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgTrackingStateDetailed",
+                   ULInt64('recv_time'),
+                   Struct('tot', GPSTime._parser),
+                   ULInt32('P'),
+                   ULInt16('P_std'),
+                   Struct('L', CarrierPhase._parser),
+                   ULInt8('cn0'),
+                   ULInt16('lock'),
+                   Struct('sid', GnssSignal._parser),
+                   SLInt32('doppler'),
+                   ULInt16('doppler_std'),
+                   ULInt32('uptime'),
+                   ULInt16('clock_offset'),
+                   ULInt16('clock_drift'),
+                   ULInt16('corr_spacing'),
+                   ULInt8('acceleration'),
+                   ULInt8('sync_flags'),
+                   ULInt8('tow_flags'),
+                   ULInt8('track_flags'),
+                   ULInt8('nav_flags'),
+                   ULInt8('pset_flags'),
+                   ULInt8('misc_flags'),)
+  __slots__ = [
+               'recv_time',
+               'tot',
+               'P',
+               'P_std',
+               'L',
+               'cn0',
+               'lock',
+               'sid',
+               'doppler',
+               'doppler_std',
+               'uptime',
+               'clock_offset',
+               'clock_drift',
+               'corr_spacing',
+               'acceleration',
+               'sync_flags',
+               'tow_flags',
+               'track_flags',
+               'nav_flags',
+               'pset_flags',
+               'misc_flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgTrackingStateDetailed,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgTrackingStateDetailed, self).__init__()
+      self.msg_type = SBP_MSG_TRACKING_STATE_DETAILED
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.recv_time = kwargs.pop('recv_time')
+      self.tot = kwargs.pop('tot')
+      self.P = kwargs.pop('P')
+      self.P_std = kwargs.pop('P_std')
+      self.L = kwargs.pop('L')
+      self.cn0 = kwargs.pop('cn0')
+      self.lock = kwargs.pop('lock')
+      self.sid = kwargs.pop('sid')
+      self.doppler = kwargs.pop('doppler')
+      self.doppler_std = kwargs.pop('doppler_std')
+      self.uptime = kwargs.pop('uptime')
+      self.clock_offset = kwargs.pop('clock_offset')
+      self.clock_drift = kwargs.pop('clock_drift')
+      self.corr_spacing = kwargs.pop('corr_spacing')
+      self.acceleration = kwargs.pop('acceleration')
+      self.sync_flags = kwargs.pop('sync_flags')
+      self.tow_flags = kwargs.pop('tow_flags')
+      self.track_flags = kwargs.pop('track_flags')
+      self.nav_flags = kwargs.pop('nav_flags')
+      self.pset_flags = kwargs.pop('pset_flags')
+      self.misc_flags = kwargs.pop('misc_flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgTrackingStateDetailed.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgTrackingStateDetailed(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgTrackingStateDetailed._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgTrackingStateDetailed._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgTrackingStateDetailed, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_TRACKING_STATE = 0x0013
 class MsgTrackingState(SBP):
   """SBP class for message MSG_TRACKING_STATE (0x0013).
@@ -177,7 +366,7 @@ measurements for all tracked satellites.
   sbp : SBP
     SBP parent object to inherit from.
   states : array
-    Satellite tracking channel state
+    Signal tracking channel state
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -415,6 +604,7 @@ class MsgTrackingStateDepA(SBP):
     
 
 msg_classes = {
+  0x0011: MsgTrackingStateDetailed,
   0x0013: MsgTrackingState,
   0x001C: MsgTrackingIq,
   0x0016: MsgTrackingStateDepA,

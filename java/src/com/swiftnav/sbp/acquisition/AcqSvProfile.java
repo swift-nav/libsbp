@@ -16,7 +16,7 @@ package com.swiftnav.sbp.acquisition;
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import com.swiftnav.sbp.gnss_signal.*;
+import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -49,13 +49,13 @@ public class AcqSvProfile extends SBPStruct {
     public long time_spent;
     
     /** Doppler range lowest frequency */
-    public long cf_min;
+    public int cf_min;
     
     /** Doppler range highest frequency */
-    public long cf_max;
+    public int cf_max;
     
     /** Doppler value of detected peak. Only valid if status is '1' */
-    public long cf;
+    public int cf;
     
     /** Codephase of detected peak. Only valid if status is '1' */
     public long cp;
@@ -74,9 +74,9 @@ public class AcqSvProfile extends SBPStruct {
         bin_width = parser.getU16();
         timestamp = parser.getU32();
         time_spent = parser.getU32();
-        cf_min = parser.getU32();
-        cf_max = parser.getU32();
-        cf = parser.getU32();
+        cf_min = parser.getS32();
+        cf_max = parser.getS32();
+        cf = parser.getS32();
         cp = parser.getU32();
         return this;
     }
@@ -92,9 +92,9 @@ public class AcqSvProfile extends SBPStruct {
         builder.putU16(bin_width);
         builder.putU32(timestamp);
         builder.putU32(time_spent);
-        builder.putU32(cf_min);
-        builder.putU32(cf_max);
-        builder.putU32(cf);
+        builder.putS32(cf_min);
+        builder.putS32(cf_max);
+        builder.putS32(cf);
         builder.putU32(cp);
     }
 

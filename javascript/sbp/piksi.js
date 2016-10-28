@@ -20,8 +20,12 @@
 ***********************/
 
 var SBP = require('./sbp');
-var Parser = require('binary-parser').Parser;
-var GnssSignal = require("./gnss_signal").GnssSignal;
+var Parser = require('./parser');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
+var GnssSignal = require("./gnss").GnssSignal;
+var GPSTime = require("./gnss").GPSTime;
+var CarrierPhase = require("./gnss").CarrierPhase;
 
 /**
  * SBP class for message MSG_ALMANAC (0x0069).
@@ -222,7 +226,7 @@ MsgThreadState.prototype.parser = new Parser()
   .uint16('cpu')
   .uint32('stack_free');
 MsgThreadState.prototype.fieldSpec = [];
-MsgThreadState.prototype.fieldSpec.push(['name', 'string']);
+MsgThreadState.prototype.fieldSpec.push(['name', 'string', 20]);
 MsgThreadState.prototype.fieldSpec.push(['cpu', 'writeUInt16LE', 2]);
 MsgThreadState.prototype.fieldSpec.push(['stack_free', 'writeUInt32LE', 4]);
 

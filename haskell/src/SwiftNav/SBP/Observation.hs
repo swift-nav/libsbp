@@ -26,62 +26,13 @@ import Data.Word
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
-import SwiftNav.SBP.GnssSignal
-
--- | ObsGPSTime.
---
--- A wire-appropriate GPS time, defined as the number of milliseconds since
--- beginning of the week on the Saturday/Sunday transition.
-data ObsGPSTime = ObsGPSTime
-  { _obsGPSTime_tow :: Word32
-    -- ^ Milliseconds since start of GPS week
-  , _obsGPSTime_wn :: Word16
-    -- ^ GPS week number
-  } deriving ( Show, Read, Eq )
-
-instance Binary ObsGPSTime where
-  get = do
-    _obsGPSTime_tow <- getWord32le
-    _obsGPSTime_wn <- getWord16le
-    return ObsGPSTime {..}
-
-  put ObsGPSTime {..} = do
-    putWord32le _obsGPSTime_tow
-    putWord16le _obsGPSTime_wn
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_obsGPSTime_" . stripPrefix "_obsGPSTime_"}
-             ''ObsGPSTime)
-$(makeLenses ''ObsGPSTime)
-
--- | CarrierPhase.
---
--- Carrier phase measurement in cycles represented as a 40-bit fixed point
--- number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
--- fractional cycles.  This phase has the  same sign as the pseudorange.
-data CarrierPhase = CarrierPhase
-  { _carrierPhase_i :: Int32
-    -- ^ Carrier phase whole cycles
-  , _carrierPhase_f :: Word8
-    -- ^ Carrier phase fractional part
-  } deriving ( Show, Read, Eq )
-
-instance Binary CarrierPhase where
-  get = do
-    _carrierPhase_i <- liftM fromIntegral getWord32le
-    _carrierPhase_f <- getWord8
-    return CarrierPhase {..}
-
-  put CarrierPhase {..} = do
-    putWord32le $ fromIntegral _carrierPhase_i
-    putWord8 _carrierPhase_f
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_carrierPhase_" . stripPrefix "_carrierPhase_"}
-             ''CarrierPhase)
-$(makeLenses ''CarrierPhase)
+import SwiftNav.SBP.Gnss
 
 -- | ObservationHeader.
 --
 -- Header of a GPS observation message.
 data ObservationHeader = ObservationHeader
-  { _observationHeader_t   :: ObsGPSTime
+  { _observationHeader_t   :: GPSTime
     -- ^ GPS time of this observation
   , _observationHeader_n_obs :: Word8
     -- ^ Total number of observations. First nibble is the size of the sequence
@@ -104,7 +55,7 @@ $(makeLenses ''ObservationHeader)
 -- | PackedObsContent.
 --
 -- Pseudorange and carrier phase observation for a satellite being tracked. The
--- observations should be interoperable with 3rd party  receivers and conform
+-- observations should be interoperable with 3rd party receivers and conform
 -- with typical RTCMv3 GNSS observations.
 data PackedObsContent = PackedObsContent
   { _packedObsContent_P  :: Word32
@@ -149,8 +100,8 @@ msgObs = 0x0049
 -- phase observations for the satellites being tracked by the device. Carrier
 -- phase observation here is represented as a 40-bit fixed point number with
 -- Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).
--- The observations  should be interoperable with 3rd party receivers and
--- conform  with typical RTCMv3 GNSS observations.
+-- The observations should be interoperable with 3rd party receivers and
+-- conform with typical RTCMv3 GNSS observations.
 data MsgObs = MsgObs
   { _msgObs_header :: ObservationHeader
     -- ^ Header of a GPS observation message
@@ -250,7 +201,7 @@ $(makeLenses ''MsgBasePosEcef)
 data EphemerisCommonContent = EphemerisCommonContent
   { _ephemerisCommonContent_sid        :: GnssSignal
     -- ^ GNSS signal identifier
-  , _ephemerisCommonContent_toe        :: ObsGPSTime
+  , _ephemerisCommonContent_toe        :: GPSTime
     -- ^ Time of Ephemerides
   , _ephemerisCommonContent_ura        :: Double
     -- ^ User Range Accuracy
@@ -338,7 +289,7 @@ data MsgEphemerisGps = MsgEphemerisGps
     -- ^ Polynomial clock correction coefficient (clock drift)
   , _msgEphemerisGps_af2    :: Double
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
-  , _msgEphemerisGps_toc    :: ObsGPSTime
+  , _msgEphemerisGps_toc    :: GPSTime
     -- ^ Clock reference
   , _msgEphemerisGps_iode   :: Word8
     -- ^ Issue of ephemeris data
@@ -1179,10 +1130,10 @@ msgObsDepB = 0x0043
 
 -- | SBP class for message MSG_OBS_DEP_B (0x0043).
 --
--- This observation message has been deprecated in favor of  observations that
+-- This observation message has been deprecated in favor of observations that
 -- are more interoperable. This message should be used for observations
--- referenced to  a nominal pseudorange which are not interoperable with most
--- 3rd party GNSS receievers or typical RTCMv3  observations.
+-- referenced to a nominal pseudorange which are not interoperable with most
+-- 3rd party GNSS receievers or typical RTCMv3 observations.
 data MsgObsDepB = MsgObsDepB
   { _msgObsDepB_header :: ObservationHeader
     -- ^ Header of a GPS observation message
@@ -1215,7 +1166,7 @@ msgIono = 0x0090
 -- utilize the ionospheric model for computation of the ionospheric delay.
 -- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 data MsgIono = MsgIono
-  { _msgIono_t_nmct :: ObsGPSTime
+  { _msgIono_t_nmct :: GPSTime
     -- ^ Navigation Message Correction Table Valitidy Time
   , _msgIono_a0   :: Double
   , _msgIono_a1   :: Double
@@ -1264,7 +1215,7 @@ msgSvConfigurationGps = 0x0091
 --
 -- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
 data MsgSvConfigurationGps = MsgSvConfigurationGps
-  { _msgSvConfigurationGps_t_nmct :: ObsGPSTime
+  { _msgSvConfigurationGps_t_nmct :: GPSTime
     -- ^ Navigation Message Correction Table Valitidy Time
   , _msgSvConfigurationGps_l2c_mask :: Word32
     -- ^ L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
@@ -1293,7 +1244,7 @@ msgGroupDelay = 0x0092
 --
 -- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 data MsgGroupDelay = MsgGroupDelay
-  { _msgGroupDelay_t_op   :: ObsGPSTime
+  { _msgGroupDelay_t_op   :: GPSTime
     -- ^ Data Predict Time of Week
   , _msgGroupDelay_prn    :: Word8
     -- ^ Satellite number

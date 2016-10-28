@@ -11,17 +11,17 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/gnss_signal.yaml
+ * Automatically generated from yaml/swiftnav/sbp/gnss.yaml
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-/** \defgroup gnss_signal Gnss_signal
+/** \defgroup gnss Gnss
  *
- * * Struct to represent a signal (constellation, band, satellite identifier)
+ * * Various structs shared between modules
  * \{ */
 
-#ifndef LIBSBP_GNSS_SIGNAL_MESSAGES_H
-#define LIBSBP_GNSS_SIGNAL_MESSAGES_H
+#ifndef LIBSBP_GNSS_MESSAGES_H
+#define LIBSBP_GNSS_MESSAGES_H
 
 #include "common.h"
 
@@ -37,6 +37,31 @@ typedef struct __attribute__((packed)) {
 } sbp_gnss_signal_t;
 
 
+/** Millisecond-accurate GPS time
+ *
+ * A wire-appropriate GPS time, defined as the number of
+ * milliseconds since beginning of the week on the Saturday/Sunday
+ * transition.
+ */
+typedef struct __attribute__((packed)) {
+  u32 tow;    /**< Milliseconds since start of GPS week [ms] */
+  u16 wn;     /**< GPS week number [week] */
+} sbp_gps_time_t;
+
+
+/** GPS carrier phase measurement.
+ *
+ * Carrier phase measurement in cycles represented as a 40-bit
+ * fixed point number with Q32.8 layout, i.e. 32-bits of whole
+ * cycles and 8-bits of fractional cycles.  This phase has the
+ * same sign as the pseudorange.
+ */
+typedef struct __attribute__((packed)) {
+  s32 i;    /**< Carrier phase whole cycles [cycles] */
+  u8 f;    /**< Carrier phase fractional part [cycles / 256] */
+} carrier_phase_t;
+
+
 /** \} */
 
-#endif /* LIBSBP_GNSS_SIGNAL_MESSAGES_H */
+#endif /* LIBSBP_GNSS_MESSAGES_H */

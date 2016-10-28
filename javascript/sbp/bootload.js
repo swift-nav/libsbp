@@ -21,7 +21,9 @@
 ***********************/
 
 var SBP = require('./sbp');
-var Parser = require('binary-parser').Parser;
+var Parser = require('./parser');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_BOOTLOADER_HANDSHAKE_REQ (0x00B3).
@@ -78,7 +80,7 @@ MsgBootloaderHandshakeResp.prototype.parser = new Parser()
   .string('version', { greedy: true });
 MsgBootloaderHandshakeResp.prototype.fieldSpec = [];
 MsgBootloaderHandshakeResp.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
-MsgBootloaderHandshakeResp.prototype.fieldSpec.push(['version', 'string']);
+MsgBootloaderHandshakeResp.prototype.fieldSpec.push(['version', 'string', null]);
 
 /**
  * SBP class for message MSG_BOOTLOADER_JUMP_TO_APP (0x00B1).
@@ -162,7 +164,7 @@ MsgNapDeviceDnaResp.prototype.parser = new Parser()
   .endianess('little')
   .array('dna', { length: 8, type: 'uint8' });
 MsgNapDeviceDnaResp.prototype.fieldSpec = [];
-MsgNapDeviceDnaResp.prototype.fieldSpec.push(['dna', 'array', 'writeUInt8', function () { return 1; }]);
+MsgNapDeviceDnaResp.prototype.fieldSpec.push(['dna', 'array', 'writeUInt8', function () { return 1; }, 8]);
 
 /**
  * SBP class for message MSG_BOOTLOADER_HANDSHAKE_DEP_A (0x00B0).
@@ -189,7 +191,7 @@ MsgBootloaderHandshakeDepA.prototype.parser = new Parser()
   .endianess('little')
   .array('handshake', { type: 'uint8', readUntil: 'eof' });
 MsgBootloaderHandshakeDepA.prototype.fieldSpec = [];
-MsgBootloaderHandshakeDepA.prototype.fieldSpec.push(['handshake', 'array', 'writeUInt8', function () { return 1; }]);
+MsgBootloaderHandshakeDepA.prototype.fieldSpec.push(['handshake', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 module.exports = {
   0x00B3: MsgBootloaderHandshakeReq,
