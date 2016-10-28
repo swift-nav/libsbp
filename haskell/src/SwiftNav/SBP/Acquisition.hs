@@ -26,7 +26,7 @@ import Data.Word
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
-import SwiftNav.SBP.GnssSignal
+import SwiftNav.SBP.Gnss
 
 msgAcqResult :: Word16
 msgAcqResult = 0x0014

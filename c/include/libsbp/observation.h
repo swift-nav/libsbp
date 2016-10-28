@@ -24,32 +24,7 @@
 #define LIBSBP_OBSERVATION_MESSAGES_H
 
 #include "common.h"
-#include "gnss_signal.h"
-
-
-/** Millisecond-accurate GPS time
- *
- * A wire-appropriate GPS time, defined as the number of
- * milliseconds since beginning of the week on the Saturday/Sunday
- * transition.
- */
-typedef struct __attribute__((packed)) {
-  u32 tow;    /**< Milliseconds since start of GPS week [ms] */
-  u16 wn;     /**< GPS week number [week] */
-} obs_gps_time_t;
-
-
-/** GPS carrier phase measurement.
- *
- * Carrier phase measurement in cycles represented as a 40-bit
- * fixed point number with Q32.8 layout, i.e. 32-bits of whole
- * cycles and 8-bits of fractional cycles.  This phase has the 
- * same sign as the pseudorange.
- */
-typedef struct __attribute__((packed)) {
-  s32 i;    /**< Carrier phase whole cycles [cycles] */
-  u8 f;    /**< Carrier phase fractional part [cycles / 256] */
-} carrier_phase_t;
+#include "gnss.h"
 
 
 /** Header for observation message.
@@ -68,8 +43,8 @@ counter (ith packet of n)
 /** GPS observations for a particular satellite signal.
  *
  * Pseudorange and carrier phase observation for a satellite being
- * tracked. The observations should be interoperable with 3rd party 
- * receivers and conform with typical RTCMv3 GNSS observations. 
+ * tracked. The observations should be interoperable with 3rd party
+ * receivers and conform with typical RTCMv3 GNSS observations.
  */
 typedef struct __attribute__((packed)) {
   u32 P;       /**< Pseudorange observation [2 cm] */
@@ -89,9 +64,9 @@ carrier phase ambiguity may have changed.
  * carrier phase observations for the satellites being tracked by
  * the device. Carrier phase observation here is represented as a
  * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
- * whole cycles and 8-bits of fractional cycles).  The observations 
- * should be interoperable with 3rd party receivers and conform 
- * with typical RTCMv3 GNSS observations. 
+ * whole cycles and 8-bits of fractional cycles).  The observations
+ * should be interoperable with 3rd party receivers and conform
+ * with typical RTCMv3 GNSS observations.
  */
 #define SBP_MSG_OBS                  0x0049
 typedef struct __attribute__((packed)) {
@@ -432,11 +407,11 @@ satellite being tracked.
 
 /** Deprecated
  *
- * This observation message has been deprecated in favor of 
+ * This observation message has been deprecated in favor of
  * observations that are more interoperable. This message
- * should be used for observations referenced to 
+ * should be used for observations referenced to
  * a nominal pseudorange which are not interoperable with
- * most 3rd party GNSS receievers or typical RTCMv3 
+ * most 3rd party GNSS receievers or typical RTCMv3
  * observations.
  */
 #define SBP_MSG_OBS_DEP_B            0x0043

@@ -24,8 +24,7 @@
 #define LIBSBP_TRACKING_MESSAGES_H
 
 #include "common.h"
-#include "gnss_signal.h"
-#include "observation.h"
+#include "gnss.h"
 
 
 /** Detailed signal tracking channel states

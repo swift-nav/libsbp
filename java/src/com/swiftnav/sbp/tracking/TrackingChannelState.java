@@ -16,8 +16,7 @@ package com.swiftnav.sbp.tracking;
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import com.swiftnav.sbp.gnss_signal.*;
-import com.swiftnav.sbp.observation.*;
+import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;

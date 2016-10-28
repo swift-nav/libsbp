@@ -22,9 +22,9 @@ var SBP = require('./sbp');
 var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
-var GnssSignal = require("./gnss_signal").GnssSignal;
-var ObsGPSTime = require("./observation").ObsGPSTime;
-var CarrierPhase = require("./observation").CarrierPhase;
+var GnssSignal = require("./gnss").GnssSignal;
+var ObsGPSTime = require("./gnss").ObsGPSTime;
+var CarrierPhase = require("./gnss").CarrierPhase;
 
 /**
  * SBP class for message MSG_TRACKING_STATE_DETAILED (0x0011).

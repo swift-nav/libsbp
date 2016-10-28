@@ -22,68 +22,9 @@ var SBP = require('./sbp');
 var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
-var GnssSignal = require("./gnss_signal").GnssSignal;
-
-/**
- * SBP class for message fragment ObsGPSTime
- *
- * A wire-appropriate GPS time, defined as the number of milliseconds since
- * beginning of the week on the Saturday/Sunday transition.
- *
- * Fields in the SBP payload (`sbp.payload`):
- * @field tow number (unsigned 32-bit int, 4 bytes) Milliseconds since start of GPS week
- * @field wn number (unsigned 16-bit int, 2 bytes) GPS week number
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-var ObsGPSTime = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "ObsGPSTime";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-ObsGPSTime.prototype = Object.create(SBP.prototype);
-ObsGPSTime.prototype.messageType = "ObsGPSTime";
-ObsGPSTime.prototype.constructor = ObsGPSTime;
-ObsGPSTime.prototype.parser = new Parser()
-  .endianess('little')
-  .uint32('tow')
-  .uint16('wn');
-ObsGPSTime.prototype.fieldSpec = [];
-ObsGPSTime.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
-ObsGPSTime.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
-
-/**
- * SBP class for message fragment CarrierPhase
- *
- * Carrier phase measurement in cycles represented as a 40-bit fixed point number
- * with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of fractional cycles.
- * This phase has the  same sign as the pseudorange.
- *
- * Fields in the SBP payload (`sbp.payload`):
- * @field i number (signed 32-bit int, 4 bytes) Carrier phase whole cycles
- * @field f number (unsigned 8-bit int, 1 byte) Carrier phase fractional part
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-var CarrierPhase = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "CarrierPhase";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-CarrierPhase.prototype = Object.create(SBP.prototype);
-CarrierPhase.prototype.messageType = "CarrierPhase";
-CarrierPhase.prototype.constructor = CarrierPhase;
-CarrierPhase.prototype.parser = new Parser()
-  .endianess('little')
-  .int32('i')
-  .uint8('f');
-CarrierPhase.prototype.fieldSpec = [];
-CarrierPhase.prototype.fieldSpec.push(['i', 'writeInt32LE', 4]);
-CarrierPhase.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
+var GnssSignal = require("./gnss").GnssSignal;
+var ObsGPSTime = require("./gnss").ObsGPSTime;
+var CarrierPhase = require("./gnss").CarrierPhase;
 
 /**
  * SBP class for message fragment ObservationHeader
@@ -119,7 +60,7 @@ ObservationHeader.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
  * SBP class for message fragment PackedObsContent
  *
  * Pseudorange and carrier phase observation for a satellite being tracked. The
- * observations should be interoperable with 3rd party  receivers and conform with
+ * observations should be interoperable with 3rd party receivers and conform with
  * typical RTCMv3 GNSS observations.
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -163,7 +104,7 @@ PackedObsContent.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec
  * observations for the satellites being tracked by the device. Carrier phase
  * observation here is represented as a 40-bit fixed point number with Q32.8 layout
  * (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).  The
- * observations  should be interoperable with 3rd party receivers and conform  with
+ * observations should be interoperable with 3rd party receivers and conform with
  * typical RTCMv3 GNSS observations.
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -1066,10 +1007,10 @@ MsgObsDepA.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepA.protot
 /**
  * SBP class for message MSG_OBS_DEP_B (0x0043).
  *
- * This observation message has been deprecated in favor of  observations that are
- * more interoperable. This message should be used for observations referenced to
- * a nominal pseudorange which are not interoperable with most 3rd party GNSS
- * receievers or typical RTCMv3  observations.
+ * This observation message has been deprecated in favor of observations that are
+ * more interoperable. This message should be used for observations referenced to a
+ * nominal pseudorange which are not interoperable with most 3rd party GNSS
+ * receievers or typical RTCMv3 observations.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header ObservationHeader Header of a GPS observation message
@@ -1223,8 +1164,6 @@ MsgGroupDelay.prototype.fieldSpec.push(['isc_l1ca', 'writeInt16LE', 2]);
 MsgGroupDelay.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
 
 module.exports = {
-  ObsGPSTime: ObsGPSTime,
-  CarrierPhase: CarrierPhase,
   ObservationHeader: ObservationHeader,
   PackedObsContent: PackedObsContent,
   0x0049: MsgObs,

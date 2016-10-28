@@ -15,8 +15,7 @@ stable: False
 public: True
 include:
   - types.yaml
-  - gnss_signal.yaml
-  - observation.yaml
+  - gnss.yaml
 definitions:
 
  - MSG_TRACKING_STATE_DETAILED:

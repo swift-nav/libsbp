@@ -26,7 +26,7 @@
 #define LIBSBP_PIKSI_MESSAGES_H
 
 #include "common.h"
-#include "gnss_signal.h"
+#include "gnss.h"
 
 
 /** Legacy message to load satellite almanac (host => Piksi)

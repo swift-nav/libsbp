@@ -16,7 +16,7 @@ package com.swiftnav.sbp.observation;
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import com.swiftnav.sbp.gnss_signal.*;
+import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -28,11 +28,11 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This observation message has been deprecated in favor of 
+ * This observation message has been deprecated in favor of
  * observations that are more interoperable. This message
- * should be used for observations referenced to 
+ * should be used for observations referenced to
  * a nominal pseudorange which are not interoperable with
- * most 3rd party GNSS receievers or typical RTCMv3 
+ * most 3rd party GNSS receievers or typical RTCMv3
  * observations. */
 
 public class MsgObsDepB extends SBPMessage {

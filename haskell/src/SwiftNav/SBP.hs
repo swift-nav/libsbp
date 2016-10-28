@@ -16,7 +16,7 @@ module SwiftNav.SBP
   , module SwiftNav.SBP.ExtEvents
   , module SwiftNav.SBP.FileIo
   , module SwiftNav.SBP.Flash
-  , module SwiftNav.SBP.GnssSignal
+  , module SwiftNav.SBP.Gnss
   , module SwiftNav.SBP.Logging
   , module SwiftNav.SBP.Navigation
   , module SwiftNav.SBP.Observation
@@ -37,7 +37,7 @@ import SwiftNav.SBP.Bootload
 import SwiftNav.SBP.ExtEvents
 import SwiftNav.SBP.FileIo
 import SwiftNav.SBP.Flash
-import SwiftNav.SBP.GnssSignal
+import SwiftNav.SBP.Gnss
 import SwiftNav.SBP.Logging
 import SwiftNav.SBP.Navigation
 import SwiftNav.SBP.Observation

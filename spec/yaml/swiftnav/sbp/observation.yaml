@@ -15,41 +15,8 @@ stable: True
 public: True
 include:
   - types.yaml
-  - gnss_signal.yaml
+  - gnss.yaml
 definitions:
-
- - ObsGPSTime:
-    short_desc: Millisecond-accurate GPS time
-    desc: |
-      A wire-appropriate GPS time, defined as the number of
-      milliseconds since beginning of the week on the Saturday/Sunday
-      transition.
-    fields:
-        - tow:
-            type: u32
-            units: ms
-            desc: Milliseconds since start of GPS week
-        - wn:
-            type: u16
-            units: week
-            desc: GPS week number
-
- - CarrierPhase:
-    short_desc: GPS carrier phase measurement.
-    desc: |
-      Carrier phase measurement in cycles represented as a 40-bit
-      fixed point number with Q32.8 layout, i.e. 32-bits of whole
-      cycles and 8-bits of fractional cycles.  This phase has the 
-      same sign as the pseudorange.
-    fields:
-        - i:
-            type: s32
-            units: cycles
-            desc: Carrier phase whole cycles
-        - f:
-            type: u8
-            units: cycles / 256
-            desc: Carrier phase fractional part
 
  - ObservationHeader:
     short_desc: Header for observation message.
@@ -69,8 +36,8 @@ definitions:
     short_desc: GPS observations for a particular satellite signal.
     desc: |
       Pseudorange and carrier phase observation for a satellite being
-      tracked. The observations should be interoperable with 3rd party 
-      receivers and conform with typical RTCMv3 GNSS observations. 
+      tracked. The observations should be interoperable with 3rd party
+      receivers and conform with typical RTCMv3 GNSS observations.
     fields:
         - P:
             type: u32
@@ -94,7 +61,7 @@ definitions:
             type: GnssSignal
             desc: GNSS signal identifier
 
-  
+
  - MSG_OBS:
     id: 0x0049
     short_desc: GPS satellite observations
@@ -103,9 +70,9 @@ definitions:
       carrier phase observations for the satellites being tracked by
       the device. Carrier phase observation here is represented as a
       40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-      whole cycles and 8-bits of fractional cycles).  The observations 
-      should be interoperable with 3rd party receivers and conform 
-      with typical RTCMv3 GNSS observations. 
+      whole cycles and 8-bits of fractional cycles).  The observations
+      should be interoperable with 3rd party receivers and conform
+      with typical RTCMv3 GNSS observations.
     fields:
         - header:
             type: ObservationHeader
@@ -711,7 +678,7 @@ definitions:
       - iode:
           type: u8
           desc: Issue of ephemeris data
- 
+
  - MSG_EPHEMERIS_DEP_C:
     id: 0x0047
     short_desc: Satellite broadcast ephemeris
@@ -920,16 +887,16 @@ definitions:
             desc: |
               Pseudorange and carrier phase observation for a
               satellite being tracked.
- 
+
  - MSG_OBS_DEP_B:
     id: 0x0043
     short_desc: Deprecated
     desc: |
-      This observation message has been deprecated in favor of 
+      This observation message has been deprecated in favor of
       observations that are more interoperable. This message
-      should be used for observations referenced to 
+      should be used for observations referenced to
       a nominal pseudorange which are not interoperable with
-      most 3rd party GNSS receievers or typical RTCMv3 
+      most 3rd party GNSS receievers or typical RTCMv3
       observations.
     public: False
     replaced_by:
@@ -1021,4 +988,3 @@ definitions:
       - isc_l2c:
           type: s16
           units: s * 2^-35
-

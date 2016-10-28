@@ -26,8 +26,7 @@ import Data.Word
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
-import SwiftNav.SBP.GnssSignal
-import SwiftNav.SBP.Observation
+import SwiftNav.SBP.Gnss
 
 msgTrackingStateDetailed :: Word16
 msgTrackingStateDetailed = 0x0011

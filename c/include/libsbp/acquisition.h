@@ -24,7 +24,7 @@
 #define LIBSBP_ACQUISITION_MESSAGES_H
 
 #include "common.h"
-#include "gnss_signal.h"
+#include "gnss.h"
 
 
 /** Satellite acquisition result

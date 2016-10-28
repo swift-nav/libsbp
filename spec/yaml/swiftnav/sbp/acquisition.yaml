@@ -14,7 +14,7 @@ stable: False
 public: True
 include:
   - types.yaml
-  - gnss_signal.yaml
+  - gnss.yaml
 definitions:
 
  - MSG_ACQ_RESULT:

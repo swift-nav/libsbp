@@ -11,50 +11,53 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-package com.swiftnav.sbp.piksi;
+package com.swiftnav.sbp.gnss;
 
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
+import com.swiftnav.sbp.SBPStruct;
 
-
-/** SBP class for message MSG_RESET (0x00B2).
- *
- * You can have MSG_RESET inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
- *
- * This message from the host resets the Piksi back into the
- * bootloader. */
-
-public class MsgReset extends SBPMessage {
-    public static final int TYPE = 0x00B2;
-
+public class GnssSignal extends SBPStruct {
+    
+    /** Constellation-specific satellite identifier */
+    public int sat;
+    
+    /** Signal constellation, band and code */
+    public int code;
+    
+    /** Reserved */
+    public int reserved;
     
 
-    public MsgReset (int sender) { super(sender, TYPE); }
-    public MsgReset () { super(TYPE); }
-    public MsgReset (SBPMessage msg) throws SBPBinaryException {
-        super(msg);
-        assert msg.type != TYPE;
-    }
+    public GnssSignal () {}
 
     @Override
-    protected void parse(Parser parser) throws SBPBinaryException {
+    public GnssSignal parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
+        sat = parser.getU16();
+        code = parser.getU8();
+        reserved = parser.getU8();
+        return this;
     }
 
     @Override
-    protected void build(Builder builder) {
+    public void build(SBPMessage.Builder builder) {
+        /* Build fields into binary */
+        builder.putU16(sat);
+        builder.putU8(code);
+        builder.putU8(reserved);
     }
 
     @Override
     public JSONObject toJSON() {
-        JSONObject obj = super.toJSON();
+        JSONObject obj = new JSONObject();
+        obj.put("sat", sat);
+        obj.put("code", code);
+        obj.put("reserved", reserved);
         return obj;
     }
 }

@@ -11,7 +11,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-package com.swiftnav.sbp.gnss_signal;
+package com.swiftnav.sbp.gnss;
 
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
@@ -21,43 +21,37 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class GnssSignal extends SBPStruct {
+public class ObsGPSTime extends SBPStruct {
     
-    /** Constellation-specific satellite identifier */
-    public int sat;
+    /** Milliseconds since start of GPS week */
+    public long tow;
     
-    /** Signal constellation, band and code */
-    public int code;
-    
-    /** Reserved */
-    public int reserved;
+    /** GPS week number */
+    public int wn;
     
 
-    public GnssSignal () {}
+    public ObsGPSTime () {}
 
     @Override
-    public GnssSignal parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public ObsGPSTime parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        sat = parser.getU16();
-        code = parser.getU8();
-        reserved = parser.getU8();
+        tow = parser.getU32();
+        wn = parser.getU16();
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        builder.putU16(sat);
-        builder.putU8(code);
-        builder.putU8(reserved);
+        builder.putU32(tow);
+        builder.putU16(wn);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("sat", sat);
-        obj.put("code", code);
-        obj.put("reserved", reserved);
+        obj.put("tow", tow);
+        obj.put("wn", wn);
         return obj;
     }
 }

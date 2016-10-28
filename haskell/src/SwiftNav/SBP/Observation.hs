@@ -26,56 +26,7 @@ import Data.Word
 import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
-import SwiftNav.SBP.GnssSignal
-
--- | ObsGPSTime.
---
--- A wire-appropriate GPS time, defined as the number of milliseconds since
--- beginning of the week on the Saturday/Sunday transition.
-data ObsGPSTime = ObsGPSTime
-  { _obsGPSTime_tow :: Word32
-    -- ^ Milliseconds since start of GPS week
-  , _obsGPSTime_wn :: Word16
-    -- ^ GPS week number
-  } deriving ( Show, Read, Eq )
-
-instance Binary ObsGPSTime where
-  get = do
-    _obsGPSTime_tow <- getWord32le
-    _obsGPSTime_wn <- getWord16le
-    return ObsGPSTime {..}
-
-  put ObsGPSTime {..} = do
-    putWord32le _obsGPSTime_tow
-    putWord16le _obsGPSTime_wn
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_obsGPSTime_" . stripPrefix "_obsGPSTime_"}
-             ''ObsGPSTime)
-$(makeLenses ''ObsGPSTime)
-
--- | CarrierPhase.
---
--- Carrier phase measurement in cycles represented as a 40-bit fixed point
--- number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
--- fractional cycles.  This phase has the  same sign as the pseudorange.
-data CarrierPhase = CarrierPhase
-  { _carrierPhase_i :: Int32
-    -- ^ Carrier phase whole cycles
-  , _carrierPhase_f :: Word8
-    -- ^ Carrier phase fractional part
-  } deriving ( Show, Read, Eq )
-
-instance Binary CarrierPhase where
-  get = do
-    _carrierPhase_i <- liftM fromIntegral getWord32le
-    _carrierPhase_f <- getWord8
-    return CarrierPhase {..}
-
-  put CarrierPhase {..} = do
-    putWord32le $ fromIntegral _carrierPhase_i
-    putWord8 _carrierPhase_f
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_carrierPhase_" . stripPrefix "_carrierPhase_"}
-             ''CarrierPhase)
-$(makeLenses ''CarrierPhase)
+import SwiftNav.SBP.Gnss
 
 -- | ObservationHeader.
 --
@@ -104,7 +55,7 @@ $(makeLenses ''ObservationHeader)
 -- | PackedObsContent.
 --
 -- Pseudorange and carrier phase observation for a satellite being tracked. The
--- observations should be interoperable with 3rd party  receivers and conform
+-- observations should be interoperable with 3rd party receivers and conform
 -- with typical RTCMv3 GNSS observations.
 data PackedObsContent = PackedObsContent
   { _packedObsContent_P  :: Word32
@@ -149,8 +100,8 @@ msgObs = 0x0049
 -- phase observations for the satellites being tracked by the device. Carrier
 -- phase observation here is represented as a 40-bit fixed point number with
 -- Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).
--- The observations  should be interoperable with 3rd party receivers and
--- conform  with typical RTCMv3 GNSS observations.
+-- The observations should be interoperable with 3rd party receivers and
+-- conform with typical RTCMv3 GNSS observations.
 data MsgObs = MsgObs
   { _msgObs_header :: ObservationHeader
     -- ^ Header of a GPS observation message
@@ -1179,10 +1130,10 @@ msgObsDepB = 0x0043
 
 -- | SBP class for message MSG_OBS_DEP_B (0x0043).
 --
--- This observation message has been deprecated in favor of  observations that
+-- This observation message has been deprecated in favor of observations that
 -- are more interoperable. This message should be used for observations
--- referenced to  a nominal pseudorange which are not interoperable with most
--- 3rd party GNSS receievers or typical RTCMv3  observations.
+-- referenced to a nominal pseudorange which are not interoperable with most
+-- 3rd party GNSS receievers or typical RTCMv3 observations.
 data MsgObsDepB = MsgObsDepB
   { _msgObsDepB_header :: ObservationHeader
     -- ^ Header of a GPS observation message

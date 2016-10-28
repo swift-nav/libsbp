@@ -11,50 +11,47 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-package com.swiftnav.sbp.piksi;
+package com.swiftnav.sbp.gnss;
 
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
+import com.swiftnav.sbp.SBPStruct;
 
-
-/** SBP class for message MSG_RESET (0x00B2).
- *
- * You can have MSG_RESET inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
- *
- * This message from the host resets the Piksi back into the
- * bootloader. */
-
-public class MsgReset extends SBPMessage {
-    public static final int TYPE = 0x00B2;
-
+public class CarrierPhase extends SBPStruct {
+    
+    /** Carrier phase whole cycles */
+    public int i;
+    
+    /** Carrier phase fractional part */
+    public int f;
     
 
-    public MsgReset (int sender) { super(sender, TYPE); }
-    public MsgReset () { super(TYPE); }
-    public MsgReset (SBPMessage msg) throws SBPBinaryException {
-        super(msg);
-        assert msg.type != TYPE;
-    }
+    public CarrierPhase () {}
 
     @Override
-    protected void parse(Parser parser) throws SBPBinaryException {
+    public CarrierPhase parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
+        i = parser.getS32();
+        f = parser.getU8();
+        return this;
     }
 
     @Override
-    protected void build(Builder builder) {
+    public void build(SBPMessage.Builder builder) {
+        /* Build fields into binary */
+        builder.putS32(i);
+        builder.putU8(f);
     }
 
     @Override
     public JSONObject toJSON() {
-        JSONObject obj = super.toJSON();
+        JSONObject obj = new JSONObject();
+        obj.put("i", i);
+        obj.put("f", f);
         return obj;
     }
 }
