@@ -32,7 +32,7 @@
 * Header of a GPS observation message.
  */
 typedef struct __attribute__((packed)) {
-  sbpgps_time_t t;        /**< GPS time of this observation */
+  sbp_gps_time_t t;        /**< GPS time of this observation */
   u8 n_obs;    /**< Total number of observations. First nibble is the size
 of the sequence (n), second nibble is the zero-indexed
 counter (ith packet of n)
@@ -112,7 +112,7 @@ typedef struct __attribute__((packed)) {
 
 typedef struct __attribute__((packed)) {
   sbp_gnss_signal_t sid;             /**< GNSS signal identifier */
-  sbpgps_time_t toe;             /**< Time of Ephemerides */
+  sbp_gps_time_t toe;             /**< Time of Ephemerides */
   double ura;             /**< User Range Accuracy [m] */
   u32 fit_interval;    /**< Curve fit interval [s] */
   u8 valid;           /**< Status of ephemeris, 1 = valid, 0 = invalid */
@@ -154,7 +154,7 @@ typedef struct __attribute__((packed)) {
   double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
   double af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
   double af2;         /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-  sbpgps_time_t toc;         /**< Clock reference */
+  sbp_gps_time_t toc;         /**< Clock reference */
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
 } msg_ephemeris_gps_t;
@@ -431,7 +431,7 @@ satellite being tracked.
  */
 #define SBP_MSG_IONO                 0x0090
 typedef struct __attribute__((packed)) {
-  sbpgps_time_t t_nmct;    /**< Navigation Message Correction Table Valitidy Time */
+  sbp_gps_time_t t_nmct;    /**< Navigation Message Correction Table Valitidy Time */
   double a0;       
   double a1;       
   double a2;       
@@ -449,7 +449,7 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_SV_CONFIGURATION_GPS 0x0091
 typedef struct __attribute__((packed)) {
-  sbpgps_time_t t_nmct;      /**< Navigation Message Correction Table Valitidy Time */
+  sbp_gps_time_t t_nmct;      /**< Navigation Message Correction Table Valitidy Time */
   u32 l2c_mask;    /**< L2C capability mask, SV32 bit being MSB, SV1 bit being LSB */
 } msg_sv_configuration_gps_t;
 
@@ -460,7 +460,7 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_GROUP_DELAY          0x0092
 typedef struct __attribute__((packed)) {
-  sbpgps_time_t t_op;        /**< Data Predict Time of Week */
+  sbp_gps_time_t t_op;        /**< Data Predict Time of Week */
   u8 prn;         /**< Satellite number */
   u8 valid;       /**< bit-field indicating validity of the values,
 LSB indicating tgd validity etc.
