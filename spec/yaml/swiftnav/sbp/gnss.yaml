@@ -31,7 +31,7 @@ definitions:
             type: u8
             desc: Reserved
 
- - ObsGPSTime:
+ - GPSTime:
     short_desc: Millisecond-accurate GPS time
     desc: |
       A wire-appropriate GPS time, defined as the number of
