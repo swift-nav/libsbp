@@ -23,7 +23,7 @@ var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
 var GnssSignal = require("./gnss").GnssSignal;
-var ObsGPSTime = require("./gnss").ObsGPSTime;
+var GPSTime = require("./gnss").GPSTime;
 var CarrierPhase = require("./gnss").CarrierPhase;
 
 /**
@@ -32,7 +32,7 @@ var CarrierPhase = require("./gnss").CarrierPhase;
  * Header of a GPS observation message.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field t ObsGPSTime GPS time of this observation
+ * @field t GPSTime GPS time of this observation
  * @field n_obs number (unsigned 8-bit int, 1 byte) Total number of observations. First nibble is the size of the sequence (n),
  *   second nibble is the zero-indexed counter (ith packet of n)
  *
@@ -50,10 +50,10 @@ ObservationHeader.prototype.messageType = "ObservationHeader";
 ObservationHeader.prototype.constructor = ObservationHeader;
 ObservationHeader.prototype.parser = new Parser()
   .endianess('little')
-  .nest('t', { type: ObsGPSTime.prototype.parser })
+  .nest('t', { type: GPSTime.prototype.parser })
   .uint8('n_obs');
 ObservationHeader.prototype.fieldSpec = [];
-ObservationHeader.prototype.fieldSpec.push(['t', ObsGPSTime.prototype.fieldSpec]);
+ObservationHeader.prototype.fieldSpec.push(['t', GPSTime.prototype.fieldSpec]);
 ObservationHeader.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
 
 /**
@@ -211,7 +211,7 @@ MsgBasePosEcef.prototype.fieldSpec.push(['z', 'writeDoubleLE', 8]);
  
  * Fields in the SBP payload (`sbp.payload`):
  * @field sid GnssSignal GNSS signal identifier
- * @field toe ObsGPSTime Time of Ephemerides
+ * @field toe GPSTime Time of Ephemerides
  * @field ura number (float, 8 bytes) User Range Accuracy
  * @field fit_interval number (unsigned 32-bit int, 4 bytes) Curve fit interval
  * @field valid number (unsigned 8-bit int, 1 byte) Status of ephemeris, 1 = valid, 0 = invalid
@@ -233,14 +233,14 @@ EphemerisCommonContent.prototype.constructor = EphemerisCommonContent;
 EphemerisCommonContent.prototype.parser = new Parser()
   .endianess('little')
   .nest('sid', { type: GnssSignal.prototype.parser })
-  .nest('toe', { type: ObsGPSTime.prototype.parser })
+  .nest('toe', { type: GPSTime.prototype.parser })
   .doublele('ura')
   .uint32('fit_interval')
   .uint8('valid')
   .uint8('health_bits');
 EphemerisCommonContent.prototype.fieldSpec = [];
 EphemerisCommonContent.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
-EphemerisCommonContent.prototype.fieldSpec.push(['toe', ObsGPSTime.prototype.fieldSpec]);
+EphemerisCommonContent.prototype.fieldSpec.push(['toe', GPSTime.prototype.fieldSpec]);
 EphemerisCommonContent.prototype.fieldSpec.push(['ura', 'writeDoubleLE', 8]);
 EphemerisCommonContent.prototype.fieldSpec.push(['fit_interval', 'writeUInt32LE', 4]);
 EphemerisCommonContent.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
@@ -275,7 +275,7 @@ EphemerisCommonContent.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1]
  * @field af0 number (float, 8 bytes) Polynomial clock correction coefficient (clock bias)
  * @field af1 number (float, 8 bytes) Polynomial clock correction coefficient (clock drift)
  * @field af2 number (float, 8 bytes) Polynomial clock correction coefficient (rate of clock drift)
- * @field toc ObsGPSTime Clock reference
+ * @field toc GPSTime Clock reference
  * @field iode number (unsigned 8-bit int, 1 byte) Issue of ephemeris data
  * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data
  *
@@ -314,7 +314,7 @@ MsgEphemerisGps.prototype.parser = new Parser()
   .doublele('af0')
   .doublele('af1')
   .doublele('af2')
-  .nest('toc', { type: ObsGPSTime.prototype.parser })
+  .nest('toc', { type: GPSTime.prototype.parser })
   .uint8('iode')
   .uint16('iodc');
 MsgEphemerisGps.prototype.fieldSpec = [];
@@ -338,7 +338,7 @@ MsgEphemerisGps.prototype.fieldSpec.push(['inc_dot', 'writeDoubleLE', 8]);
 MsgEphemerisGps.prototype.fieldSpec.push(['af0', 'writeDoubleLE', 8]);
 MsgEphemerisGps.prototype.fieldSpec.push(['af1', 'writeDoubleLE', 8]);
 MsgEphemerisGps.prototype.fieldSpec.push(['af2', 'writeDoubleLE', 8]);
-MsgEphemerisGps.prototype.fieldSpec.push(['toc', ObsGPSTime.prototype.fieldSpec]);
+MsgEphemerisGps.prototype.fieldSpec.push(['toc', GPSTime.prototype.fieldSpec]);
 MsgEphemerisGps.prototype.fieldSpec.push(['iode', 'writeUInt8', 1]);
 MsgEphemerisGps.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
 
@@ -1045,7 +1045,7 @@ MsgObsDepB.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepB.protot
  * see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field t_nmct ObsGPSTime Navigation Message Correction Table Valitidy Time
+ * @field t_nmct GPSTime Navigation Message Correction Table Valitidy Time
  * @field a0 number (float, 8 bytes)
  * @field a1 number (float, 8 bytes)
  * @field a2 number (float, 8 bytes)
@@ -1070,7 +1070,7 @@ MsgIono.prototype.msg_type = 0x0090;
 MsgIono.prototype.constructor = MsgIono;
 MsgIono.prototype.parser = new Parser()
   .endianess('little')
-  .nest('t_nmct', { type: ObsGPSTime.prototype.parser })
+  .nest('t_nmct', { type: GPSTime.prototype.parser })
   .doublele('a0')
   .doublele('a1')
   .doublele('a2')
@@ -1080,7 +1080,7 @@ MsgIono.prototype.parser = new Parser()
   .doublele('b2')
   .doublele('b3');
 MsgIono.prototype.fieldSpec = [];
-MsgIono.prototype.fieldSpec.push(['t_nmct', ObsGPSTime.prototype.fieldSpec]);
+MsgIono.prototype.fieldSpec.push(['t_nmct', GPSTime.prototype.fieldSpec]);
 MsgIono.prototype.fieldSpec.push(['a0', 'writeDoubleLE', 8]);
 MsgIono.prototype.fieldSpec.push(['a1', 'writeDoubleLE', 8]);
 MsgIono.prototype.fieldSpec.push(['a2', 'writeDoubleLE', 8]);
@@ -1096,7 +1096,7 @@ MsgIono.prototype.fieldSpec.push(['b3', 'writeDoubleLE', 8]);
  * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field t_nmct ObsGPSTime Navigation Message Correction Table Valitidy Time
+ * @field t_nmct GPSTime Navigation Message Correction Table Valitidy Time
  * @field l2c_mask number (unsigned 32-bit int, 4 bytes) L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -1114,10 +1114,10 @@ MsgSvConfigurationGps.prototype.msg_type = 0x0091;
 MsgSvConfigurationGps.prototype.constructor = MsgSvConfigurationGps;
 MsgSvConfigurationGps.prototype.parser = new Parser()
   .endianess('little')
-  .nest('t_nmct', { type: ObsGPSTime.prototype.parser })
+  .nest('t_nmct', { type: GPSTime.prototype.parser })
   .uint32('l2c_mask');
 MsgSvConfigurationGps.prototype.fieldSpec = [];
-MsgSvConfigurationGps.prototype.fieldSpec.push(['t_nmct', ObsGPSTime.prototype.fieldSpec]);
+MsgSvConfigurationGps.prototype.fieldSpec.push(['t_nmct', GPSTime.prototype.fieldSpec]);
 MsgSvConfigurationGps.prototype.fieldSpec.push(['l2c_mask', 'writeUInt32LE', 4]);
 
 /**
@@ -1126,7 +1126,7 @@ MsgSvConfigurationGps.prototype.fieldSpec.push(['l2c_mask', 'writeUInt32LE', 4])
  * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field t_op ObsGPSTime Data Predict Time of Week
+ * @field t_op GPSTime Data Predict Time of Week
  * @field prn number (unsigned 8-bit int, 1 byte) Satellite number
  * @field valid number (unsigned 8-bit int, 1 byte) bit-field indicating validity of the values, LSB indicating tgd validity etc. 1
  *   = value is valid, 0 = value is not valid.
@@ -1149,14 +1149,14 @@ MsgGroupDelay.prototype.msg_type = 0x0092;
 MsgGroupDelay.prototype.constructor = MsgGroupDelay;
 MsgGroupDelay.prototype.parser = new Parser()
   .endianess('little')
-  .nest('t_op', { type: ObsGPSTime.prototype.parser })
+  .nest('t_op', { type: GPSTime.prototype.parser })
   .uint8('prn')
   .uint8('valid')
   .int16('tgd')
   .int16('isc_l1ca')
   .int16('isc_l2c');
 MsgGroupDelay.prototype.fieldSpec = [];
-MsgGroupDelay.prototype.fieldSpec.push(['t_op', ObsGPSTime.prototype.fieldSpec]);
+MsgGroupDelay.prototype.fieldSpec.push(['t_op', GPSTime.prototype.fieldSpec]);
 MsgGroupDelay.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
 MsgGroupDelay.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
 MsgGroupDelay.prototype.fieldSpec.push(['tgd', 'writeInt16LE', 2]);

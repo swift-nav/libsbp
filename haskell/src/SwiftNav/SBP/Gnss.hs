@@ -54,29 +54,29 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gnssSignal_" . str
              ''GnssSignal)
 $(makeLenses ''GnssSignal)
 
--- | ObsGPSTime.
+-- | GPSTime.
 --
 -- A wire-appropriate GPS time, defined as the number of milliseconds since
 -- beginning of the week on the Saturday/Sunday transition.
-data ObsGPSTime = ObsGPSTime
-  { _obsGPSTime_tow :: Word32
+data GPSTime = GPSTime
+  { _gPSTime_tow :: Word32
     -- ^ Milliseconds since start of GPS week
-  , _obsGPSTime_wn :: Word16
+  , _gPSTime_wn :: Word16
     -- ^ GPS week number
   } deriving ( Show, Read, Eq )
 
-instance Binary ObsGPSTime where
+instance Binary GPSTime where
   get = do
-    _obsGPSTime_tow <- getWord32le
-    _obsGPSTime_wn <- getWord16le
-    return ObsGPSTime {..}
+    _gPSTime_tow <- getWord32le
+    _gPSTime_wn <- getWord16le
+    return GPSTime {..}
 
-  put ObsGPSTime {..} = do
-    putWord32le _obsGPSTime_tow
-    putWord16le _obsGPSTime_wn
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_obsGPSTime_" . stripPrefix "_obsGPSTime_"}
-             ''ObsGPSTime)
-$(makeLenses ''ObsGPSTime)
+  put GPSTime {..} = do
+    putWord32le _gPSTime_tow
+    putWord16le _gPSTime_wn
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gPSTime_" . stripPrefix "_gPSTime_"}
+             ''GPSTime)
+$(makeLenses ''GPSTime)
 
 -- | CarrierPhase.
 --

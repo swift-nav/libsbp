@@ -24,7 +24,7 @@ var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
 var GnssSignal = require("./gnss").GnssSignal;
-var ObsGPSTime = require("./gnss").ObsGPSTime;
+var GPSTime = require("./gnss").GPSTime;
 var CarrierPhase = require("./gnss").CarrierPhase;
 
 /**

@@ -31,7 +31,7 @@ class ObservationHeader(object):
   
   Parameters
   ----------
-  t : ObsGPSTime
+  t : GPSTime
     GPS time of this observation
   n_obs : int
     Total number of observations. First nibble is the size
@@ -41,7 +41,7 @@ counter (ith packet of n)
 
   """
   _parser = Embedded(Struct("ObservationHeader",
-                     Struct('t', ObsGPSTime._parser),
+                     Struct('t', GPSTime._parser),
                      ULInt8('n_obs'),))
   __slots__ = [
                't',
@@ -136,7 +136,7 @@ class EphemerisCommonContent(object):
   ----------
   sid : GnssSignal
     GNSS signal identifier
-  toe : ObsGPSTime
+  toe : GPSTime
     Time of Ephemerides
   ura : double
     User Range Accuracy
@@ -154,7 +154,7 @@ GLO: 0 = valid, non-zero = invalid
   """
   _parser = Embedded(Struct("EphemerisCommonContent",
                      Struct('sid', GnssSignal._parser),
-                     Struct('toe', ObsGPSTime._parser),
+                     Struct('toe', GPSTime._parser),
                      LFloat64('ura'),
                      ULInt32('fit_interval'),
                      ULInt8('valid'),
@@ -699,7 +699,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Polynomial clock correction coefficient (clock drift)
   af2 : double
     Polynomial clock correction coefficient (rate of clock drift)
-  toc : ObsGPSTime
+  toc : GPSTime
     Clock reference
   iode : int
     Issue of ephemeris data
@@ -730,7 +730,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    LFloat64('af0'),
                    LFloat64('af1'),
                    LFloat64('af2'),
-                   Struct('toc', ObsGPSTime._parser),
+                   Struct('toc', GPSTime._parser),
                    ULInt8('iode'),
                    ULInt16('iodc'),)
   __slots__ = [
@@ -2111,7 +2111,7 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  t_nmct : ObsGPSTime
+  t_nmct : GPSTime
     Navigation Message Correction Table Valitidy Time
   a0 : double
   a1 : double
@@ -2126,7 +2126,7 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 
   """
   _parser = Struct("MsgIono",
-                   Struct('t_nmct', ObsGPSTime._parser),
+                   Struct('t_nmct', GPSTime._parser),
                    LFloat64('a0'),
                    LFloat64('a1'),
                    LFloat64('a2'),
@@ -2224,7 +2224,7 @@ class MsgSvConfigurationGPS(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  t_nmct : ObsGPSTime
+  t_nmct : GPSTime
     Navigation Message Correction Table Valitidy Time
   l2c_mask : int
     L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
@@ -2233,7 +2233,7 @@ class MsgSvConfigurationGPS(SBP):
 
   """
   _parser = Struct("MsgSvConfigurationGPS",
-                   Struct('t_nmct', ObsGPSTime._parser),
+                   Struct('t_nmct', GPSTime._parser),
                    ULInt32('l2c_mask'),)
   __slots__ = [
                't_nmct',
@@ -2309,7 +2309,7 @@ class MsgGroupDelay(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  t_op : ObsGPSTime
+  t_op : GPSTime
     Data Predict Time of Week
   prn : int
     Satellite number
@@ -2326,7 +2326,7 @@ LSB indicating tgd validity etc.
 
   """
   _parser = Struct("MsgGroupDelay",
-                   Struct('t_op', ObsGPSTime._parser),
+                   Struct('t_op', GPSTime._parser),
                    ULInt8('prn'),
                    ULInt8('valid'),
                    SLInt16('tgd'),

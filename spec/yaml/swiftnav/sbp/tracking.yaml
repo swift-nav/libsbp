@@ -30,7 +30,7 @@ definitions:
             units: ns
             desc: Receiver clock time.
         - tot:
-            type: ObsGPSTime
+            type: GPSTime
             desc: Time of transmission of signal from satellite.
         - P:
             type: u32

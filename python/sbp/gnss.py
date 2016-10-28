@@ -69,8 +69,8 @@ class GnssSignal(object):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return GnssSignal.build(d)
     
-class ObsGPSTime(object):
-  """ObsGPSTime.
+class GPSTime(object):
+  """GPSTime.
   
   A wire-appropriate GPS time, defined as the number of
 milliseconds since beginning of the week on the Saturday/Sunday
@@ -85,7 +85,7 @@ transition.
     GPS week number
 
   """
-  _parser = Embedded(Struct("ObsGPSTime",
+  _parser = Embedded(Struct("GPSTime",
                      ULInt32('tow'),
                      ULInt16('wn'),))
   __slots__ = [
@@ -104,13 +104,13 @@ transition.
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = ObsGPSTime._parser.parse(d)
+    p = GPSTime._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return ObsGPSTime.build(d)
+    return GPSTime.build(d)
     
 class CarrierPhase(object):
   """CarrierPhase.

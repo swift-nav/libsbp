@@ -46,7 +46,7 @@ typedef struct __attribute__((packed)) {
 typedef struct __attribute__((packed)) {
   u32 tow;    /**< Milliseconds since start of GPS week [ms] */
   u16 wn;     /**< GPS week number [week] */
-} obs_gps_time_t;
+} sbpgps_time_t;
 
 
 /** GPS carrier phase measurement.

@@ -99,7 +99,7 @@ public class MsgEphemerisGPS extends SBPMessage {
     public double af2;
     
     /** Clock reference */
-    public ObsGPSTime toc;
+    public GPSTime toc;
     
     /** Issue of ephemeris data */
     public int iode;
@@ -138,7 +138,7 @@ public class MsgEphemerisGPS extends SBPMessage {
         af0 = parser.getDouble();
         af1 = parser.getDouble();
         af2 = parser.getDouble();
-        toc = new ObsGPSTime().parse(parser);
+        toc = new GPSTime().parse(parser);
         iode = parser.getU8();
         iodc = parser.getU16();
     }

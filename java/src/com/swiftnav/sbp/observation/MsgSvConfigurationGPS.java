@@ -35,7 +35,7 @@ public class MsgSvConfigurationGPS extends SBPMessage {
 
     
     /** Navigation Message Correction Table Valitidy Time */
-    public ObsGPSTime t_nmct;
+    public GPSTime t_nmct;
     
     /** L2C capability mask, SV32 bit being MSB, SV1 bit being LSB */
     public long l2c_mask;
@@ -51,7 +51,7 @@ public class MsgSvConfigurationGPS extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        t_nmct = new ObsGPSTime().parse(parser);
+        t_nmct = new GPSTime().parse(parser);
         l2c_mask = parser.getU32();
     }
 

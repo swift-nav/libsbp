@@ -23,7 +23,7 @@ var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
 var GnssSignal = require("./gnss").GnssSignal;
-var ObsGPSTime = require("./gnss").ObsGPSTime;
+var GPSTime = require("./gnss").GPSTime;
 var CarrierPhase = require("./gnss").CarrierPhase;
 
 /**
@@ -34,7 +34,7 @@ var CarrierPhase = require("./gnss").CarrierPhase;
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field recv_time number (unsigned 64-bit int, 8 bytes) Receiver clock time.
- * @field tot ObsGPSTime Time of transmission of signal from satellite.
+ * @field tot GPSTime Time of transmission of signal from satellite.
  * @field P number (unsigned 32-bit int, 4 bytes) Pseudorange observation.
  * @field P_std number (unsigned 16-bit int, 2 bytes) Pseudorange observation standard deviation.
  * @field L CarrierPhase Carrier phase observation with typical sign convention. Only valid when PLL
@@ -74,7 +74,7 @@ MsgTrackingStateDetailed.prototype.constructor = MsgTrackingStateDetailed;
 MsgTrackingStateDetailed.prototype.parser = new Parser()
   .endianess('little')
   .uint64('recv_time')
-  .nest('tot', { type: ObsGPSTime.prototype.parser })
+  .nest('tot', { type: GPSTime.prototype.parser })
   .uint32('P')
   .uint16('P_std')
   .nest('L', { type: CarrierPhase.prototype.parser })
@@ -96,7 +96,7 @@ MsgTrackingStateDetailed.prototype.parser = new Parser()
   .uint8('misc_flags');
 MsgTrackingStateDetailed.prototype.fieldSpec = [];
 MsgTrackingStateDetailed.prototype.fieldSpec.push(['recv_time', 'writeUInt64LE', 8]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['tot', ObsGPSTime.prototype.fieldSpec]);
+MsgTrackingStateDetailed.prototype.fieldSpec.push(['tot', GPSTime.prototype.fieldSpec]);
 MsgTrackingStateDetailed.prototype.fieldSpec.push(['P', 'writeUInt32LE', 4]);
 MsgTrackingStateDetailed.prototype.fieldSpec.push(['P_std', 'writeUInt16LE', 2]);
 MsgTrackingStateDetailed.prototype.fieldSpec.push(['L', CarrierPhase.prototype.fieldSpec]);

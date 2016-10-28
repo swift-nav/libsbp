@@ -177,7 +177,7 @@ single tracking channel useful for debugging issues.
     SBP parent object to inherit from.
   recv_time : int
     Receiver clock time.
-  tot : ObsGPSTime
+  tot : GPSTime
     Time of transmission of signal from satellite.
   P : int
     Pseudorange observation.
@@ -230,7 +230,7 @@ signal is in continuous track.
   """
   _parser = Struct("MsgTrackingStateDetailed",
                    ULInt64('recv_time'),
-                   Struct('tot', ObsGPSTime._parser),
+                   Struct('tot', GPSTime._parser),
                    ULInt32('P'),
                    ULInt16('P_std'),
                    Struct('L', CarrierPhase._parser),

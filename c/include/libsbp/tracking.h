@@ -35,7 +35,7 @@
 #define SBP_MSG_TRACKING_STATE_DETAILED 0x0011
 typedef struct __attribute__((packed)) {
   u64 recv_time;       /**< Receiver clock time. [ns] */
-  obs_gps_time_t tot;             /**< Time of transmission of signal from satellite. */
+  sbpgps_time_t tot;             /**< Time of transmission of signal from satellite. */
   u32 P;               /**< Pseudorange observation. [2 cm] */
   u16 P_std;           /**< Pseudorange observation standard deviation. [2 cm] */
   carrier_phase_t L;               /**< Carrier phase observation with typical sign convention. Only valid

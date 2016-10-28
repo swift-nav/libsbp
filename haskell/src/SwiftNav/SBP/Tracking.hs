@@ -38,7 +38,7 @@ msgTrackingStateDetailed = 0x0011
 data MsgTrackingStateDetailed = MsgTrackingStateDetailed
   { _msgTrackingStateDetailed_recv_time  :: Word64
     -- ^ Receiver clock time.
-  , _msgTrackingStateDetailed_tot        :: ObsGPSTime
+  , _msgTrackingStateDetailed_tot        :: GPSTime
     -- ^ Time of transmission of signal from satellite.
   , _msgTrackingStateDetailed_P          :: Word32
     -- ^ Pseudorange observation.

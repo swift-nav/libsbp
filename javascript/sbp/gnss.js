@@ -56,7 +56,7 @@ GnssSignal.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
 GnssSignal.prototype.fieldSpec.push(['reserved', 'writeUInt8', 1]);
 
 /**
- * SBP class for message fragment ObsGPSTime
+ * SBP class for message fragment GPSTime
  *
  * A wire-appropriate GPS time, defined as the number of milliseconds since
  * beginning of the week on the Saturday/Sunday transition.
@@ -67,23 +67,23 @@ GnssSignal.prototype.fieldSpec.push(['reserved', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var ObsGPSTime = function (sbp, fields) {
+var GPSTime = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "ObsGPSTime";
+  this.messageType = "GPSTime";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-ObsGPSTime.prototype = Object.create(SBP.prototype);
-ObsGPSTime.prototype.messageType = "ObsGPSTime";
-ObsGPSTime.prototype.constructor = ObsGPSTime;
-ObsGPSTime.prototype.parser = new Parser()
+GPSTime.prototype = Object.create(SBP.prototype);
+GPSTime.prototype.messageType = "GPSTime";
+GPSTime.prototype.constructor = GPSTime;
+GPSTime.prototype.parser = new Parser()
   .endianess('little')
   .uint32('tow')
   .uint16('wn');
-ObsGPSTime.prototype.fieldSpec = [];
-ObsGPSTime.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
-ObsGPSTime.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
+GPSTime.prototype.fieldSpec = [];
+GPSTime.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+GPSTime.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 
 /**
  * SBP class for message fragment CarrierPhase
@@ -118,6 +118,6 @@ CarrierPhase.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
 
 module.exports = {
   GnssSignal: GnssSignal,
-  ObsGPSTime: ObsGPSTime,
+  GPSTime: GPSTime,
   CarrierPhase: CarrierPhase,
 }

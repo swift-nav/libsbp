@@ -39,7 +39,7 @@ public class MsgTrackingStateDetailed extends SBPMessage {
     public long recv_time;
     
     /** Time of transmission of signal from satellite. */
-    public ObsGPSTime tot;
+    public GPSTime tot;
     
     /** Pseudorange observation. */
     public long P;
@@ -117,7 +117,7 @@ signal is in continuous track.
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         recv_time = parser.getU64();
-        tot = new ObsGPSTime().parse(parser);
+        tot = new GPSTime().parse(parser);
         P = parser.getU32();
         P_std = parser.getU16();
         L = new CarrierPhase().parse(parser);
