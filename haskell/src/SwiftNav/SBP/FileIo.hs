@@ -51,7 +51,7 @@ data MsgFileioReadReq = MsgFileioReadReq
     -- ^ File offset
   , _msgFileioReadReq_chunk_size :: Word8
     -- ^ Chunk size to read
-  , _msgFileioReadReq_filename :: ByteString
+  , _msgFileioReadReq_filename :: Text
     -- ^ Name of the file to read from
   } deriving ( Show, Read, Eq )
 
@@ -60,14 +60,14 @@ instance Binary MsgFileioReadReq where
     _msgFileioReadReq_sequence <- getWord32le
     _msgFileioReadReq_offset <- getWord32le
     _msgFileioReadReq_chunk_size <- getWord8
-    _msgFileioReadReq_filename <- liftM toStrict getRemainingLazyByteString
+    _msgFileioReadReq_filename <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
     return MsgFileioReadReq {..}
 
   put MsgFileioReadReq {..} = do
     putWord32le _msgFileioReadReq_sequence
     putWord32le _msgFileioReadReq_offset
     putWord8 _msgFileioReadReq_chunk_size
-    putByteString _msgFileioReadReq_filename
+    putByteString $ encodeUtf8 _msgFileioReadReq_filename
 
 $(deriveSBP 'msgFileioReadReq ''MsgFileioReadReq)
 
@@ -94,7 +94,7 @@ data MsgFileioReadResp = MsgFileioReadResp
 instance Binary MsgFileioReadResp where
   get = do
     _msgFileioReadResp_sequence <- getWord32le
-    _msgFileioReadResp_contents <- whileM (liftM not isEmpty) getWord8
+    _msgFileioReadResp_contents <- whileM (not <$> isEmpty) getWord8
     return MsgFileioReadResp {..}
 
   put MsgFileioReadResp {..} = do
@@ -125,7 +125,7 @@ data MsgFileioReadDirReq = MsgFileioReadDirReq
     -- ^ Read sequence number
   , _msgFileioReadDirReq_offset :: Word32
     -- ^ The offset to skip the first n elements of the file list
-  , _msgFileioReadDirReq_dirname :: ByteString
+  , _msgFileioReadDirReq_dirname :: Text
     -- ^ Name of the directory to list
   } deriving ( Show, Read, Eq )
 
@@ -133,13 +133,13 @@ instance Binary MsgFileioReadDirReq where
   get = do
     _msgFileioReadDirReq_sequence <- getWord32le
     _msgFileioReadDirReq_offset <- getWord32le
-    _msgFileioReadDirReq_dirname <- liftM toStrict getRemainingLazyByteString
+    _msgFileioReadDirReq_dirname <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
     return MsgFileioReadDirReq {..}
 
   put MsgFileioReadDirReq {..} = do
     putWord32le _msgFileioReadDirReq_sequence
     putWord32le _msgFileioReadDirReq_offset
-    putByteString _msgFileioReadDirReq_dirname
+    putByteString $ encodeUtf8 _msgFileioReadDirReq_dirname
 
 $(deriveSBP 'msgFileioReadDirReq ''MsgFileioReadDirReq)
 
@@ -167,7 +167,7 @@ data MsgFileioReadDirResp = MsgFileioReadDirResp
 instance Binary MsgFileioReadDirResp where
   get = do
     _msgFileioReadDirResp_sequence <- getWord32le
-    _msgFileioReadDirResp_contents <- whileM (liftM not isEmpty) getWord8
+    _msgFileioReadDirResp_contents <- whileM (not <$> isEmpty) getWord8
     return MsgFileioReadDirResp {..}
 
   put MsgFileioReadDirResp {..} = do
@@ -190,17 +190,17 @@ msgFileioRemove = 0x00AC
 -- message". A device will only process this message when it is received from
 -- sender ID 0x42.
 data MsgFileioRemove = MsgFileioRemove
-  { _msgFileioRemove_filename :: ByteString
+  { _msgFileioRemove_filename :: Text
     -- ^ Name of the file to delete
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgFileioRemove where
   get = do
-    _msgFileioRemove_filename <- liftM toStrict getRemainingLazyByteString
+    _msgFileioRemove_filename <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
     return MsgFileioRemove {..}
 
   put MsgFileioRemove {..} = do
-    putByteString _msgFileioRemove_filename
+    putByteString $ encodeUtf8 _msgFileioRemove_filename
 
 $(deriveSBP 'msgFileioRemove ''MsgFileioRemove)
 
@@ -225,7 +225,7 @@ data MsgFileioWriteReq = MsgFileioWriteReq
     -- ^ Write sequence number
   , _msgFileioWriteReq_offset :: Word32
     -- ^ Offset into the file at which to start writing in bytes
-  , _msgFileioWriteReq_filename :: ByteString
+  , _msgFileioWriteReq_filename :: Text
     -- ^ Name of the file to write to
   , _msgFileioWriteReq_data   :: [Word8]
     -- ^ Variable-length array of data to write
@@ -235,14 +235,14 @@ instance Binary MsgFileioWriteReq where
   get = do
     _msgFileioWriteReq_sequence <- getWord32le
     _msgFileioWriteReq_offset <- getWord32le
-    _msgFileioWriteReq_filename <- liftM toStrict getRemainingLazyByteString
-    _msgFileioWriteReq_data <- whileM (liftM not isEmpty) getWord8
+    _msgFileioWriteReq_filename <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    _msgFileioWriteReq_data <- whileM (not <$> isEmpty) getWord8
     return MsgFileioWriteReq {..}
 
   put MsgFileioWriteReq {..} = do
     putWord32le _msgFileioWriteReq_sequence
     putWord32le _msgFileioWriteReq_offset
-    putByteString _msgFileioWriteReq_filename
+    putByteString $ encodeUtf8 _msgFileioWriteReq_filename
     mapM_ putWord8 _msgFileioWriteReq_data
 
 $(deriveSBP 'msgFileioWriteReq ''MsgFileioWriteReq)

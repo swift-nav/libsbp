@@ -41,7 +41,7 @@ data MsgUserData = MsgUserData
 
 instance Binary MsgUserData where
   get = do
-    _msgUserData_contents <- whileM (liftM not isEmpty) getWord8
+    _msgUserData_contents <- whileM (not <$> isEmpty) getWord8
     return MsgUserData {..}
 
   put MsgUserData {..} = do

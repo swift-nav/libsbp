@@ -38,19 +38,19 @@ msgLog = 0x0401
 data MsgLog = MsgLog
   { _msgLog_level :: Word8
     -- ^ Logging level
-  , _msgLog_text :: ByteString
+  , _msgLog_text :: Text
     -- ^ Human-readable string
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgLog where
   get = do
     _msgLog_level <- getWord8
-    _msgLog_text <- liftM toStrict getRemainingLazyByteString
+    _msgLog_text <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
     return MsgLog {..}
 
   put MsgLog {..} = do
     putWord8 _msgLog_level
-    putByteString _msgLog_text
+    putByteString $ encodeUtf8 _msgLog_text
 
 $(deriveSBP 'msgLog ''MsgLog)
 
@@ -65,17 +65,17 @@ msgTweet = 0x0012
 --
 -- All the news fit to tweet.
 data MsgTweet = MsgTweet
-  { _msgTweet_tweet :: ByteString
+  { _msgTweet_tweet :: Text
     -- ^ Human-readable string
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgTweet where
   get = do
-    _msgTweet_tweet <- getByteString 140
+    _msgTweet_tweet <- decodeUtf8 <$> getByteString 140
     return MsgTweet {..}
 
   put MsgTweet {..} = do
-    putByteString _msgTweet_tweet
+    putByteString $ encodeUtf8 _msgTweet_tweet
 
 $(deriveSBP 'msgTweet ''MsgTweet)
 
@@ -90,17 +90,17 @@ msgPrintDep = 0x0010
 --
 -- Deprecated.
 data MsgPrintDep = MsgPrintDep
-  { _msgPrintDep_text :: ByteString
+  { _msgPrintDep_text :: Text
     -- ^ Human-readable string
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgPrintDep where
   get = do
-    _msgPrintDep_text <- liftM toStrict getRemainingLazyByteString
+    _msgPrintDep_text <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
     return MsgPrintDep {..}
 
   put MsgPrintDep {..} = do
-    putByteString _msgPrintDep_text
+    putByteString $ encodeUtf8 _msgPrintDep_text
 
 $(deriveSBP 'msgPrintDep ''MsgPrintDep)
 

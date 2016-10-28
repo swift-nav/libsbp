@@ -206,7 +206,7 @@ msgThreadState = 0x0017
 -- (RTOS) thread usage statistics for the named thread. The reported percentage
 -- values must be normalized.
 data MsgThreadState = MsgThreadState
-  { _msgThreadState_name     :: ByteString
+  { _msgThreadState_name     :: Text
     -- ^ Thread name (NULL terminated)
   , _msgThreadState_cpu      :: Word16
     -- ^ Percentage cpu use for this thread. Values range from 0 - 1000 and needs
@@ -217,13 +217,13 @@ data MsgThreadState = MsgThreadState
 
 instance Binary MsgThreadState where
   get = do
-    _msgThreadState_name <- getByteString 20
+    _msgThreadState_name <- decodeUtf8 <$> getByteString 20
     _msgThreadState_cpu <- getWord16le
     _msgThreadState_stack_free <- getWord32le
     return MsgThreadState {..}
 
   put MsgThreadState {..} = do
-    putByteString _msgThreadState_name
+    putByteString $ encodeUtf8 _msgThreadState_name
     putWord16le _msgThreadState_cpu
     putWord32le _msgThreadState_stack_free
 
@@ -293,10 +293,10 @@ data Period = Period
 
 instance Binary Period where
   get = do
-    _period_avg <- liftM fromIntegral getWord32le
-    _period_pmin <- liftM fromIntegral getWord32le
-    _period_pmax <- liftM fromIntegral getWord32le
-    _period_current <- liftM fromIntegral getWord32le
+    _period_avg <- fromIntegral <$> getWord32le
+    _period_pmin <- fromIntegral <$> getWord32le
+    _period_pmax <- fromIntegral <$> getWord32le
+    _period_current <- fromIntegral <$> getWord32le
     return Period {..}
 
   put Period {..} = do
@@ -327,10 +327,10 @@ data Latency = Latency
 
 instance Binary Latency where
   get = do
-    _latency_avg <- liftM fromIntegral getWord32le
-    _latency_lmin <- liftM fromIntegral getWord32le
-    _latency_lmax <- liftM fromIntegral getWord32le
-    _latency_current <- liftM fromIntegral getWord32le
+    _latency_avg <- fromIntegral <$> getWord32le
+    _latency_lmin <- fromIntegral <$> getWord32le
+    _latency_lmax <- fromIntegral <$> getWord32le
+    _latency_current <- fromIntegral <$> getWord32le
     return Latency {..}
 
   put Latency {..} = do
@@ -507,11 +507,11 @@ data MsgDeviceMonitor = MsgDeviceMonitor
 
 instance Binary MsgDeviceMonitor where
   get = do
-    _msgDeviceMonitor_dev_vin <- liftM fromIntegral getWord16le
-    _msgDeviceMonitor_cpu_vint <- liftM fromIntegral getWord16le
-    _msgDeviceMonitor_cpu_vaux <- liftM fromIntegral getWord16le
-    _msgDeviceMonitor_cpu_temperature <- liftM fromIntegral getWord16le
-    _msgDeviceMonitor_fe_temperature <- liftM fromIntegral getWord16le
+    _msgDeviceMonitor_dev_vin <- fromIntegral <$> getWord16le
+    _msgDeviceMonitor_cpu_vint <- fromIntegral <$> getWord16le
+    _msgDeviceMonitor_cpu_vaux <- fromIntegral <$> getWord16le
+    _msgDeviceMonitor_cpu_temperature <- fromIntegral <$> getWord16le
+    _msgDeviceMonitor_fe_temperature <- fromIntegral <$> getWord16le
     return MsgDeviceMonitor {..}
 
   put MsgDeviceMonitor {..} = do

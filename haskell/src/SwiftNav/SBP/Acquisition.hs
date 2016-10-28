@@ -187,9 +187,9 @@ instance Binary AcqSvProfile where
     _acqSvProfile_bin_width <- getWord16le
     _acqSvProfile_timestamp <- getWord32le
     _acqSvProfile_time_spent <- getWord32le
-    _acqSvProfile_cf_min <- liftM fromIntegral getWord32le
-    _acqSvProfile_cf_max <- liftM fromIntegral getWord32le
-    _acqSvProfile_cf <- liftM fromIntegral getWord32le
+    _acqSvProfile_cf_min <- fromIntegral <$> getWord32le
+    _acqSvProfile_cf_max <- fromIntegral <$> getWord32le
+    _acqSvProfile_cf <- fromIntegral <$> getWord32le
     _acqSvProfile_cp <- getWord32le
     return AcqSvProfile {..}
 
@@ -224,7 +224,7 @@ data MsgAcqSvProfile = MsgAcqSvProfile
 
 instance Binary MsgAcqSvProfile where
   get = do
-    _msgAcqSvProfile_acq_sv_profile <- whileM (liftM not isEmpty) get
+    _msgAcqSvProfile_acq_sv_profile <- whileM (not <$> isEmpty) get
     return MsgAcqSvProfile {..}
 
   put MsgAcqSvProfile {..} = do

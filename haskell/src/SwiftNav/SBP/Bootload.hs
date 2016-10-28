@@ -65,19 +65,19 @@ msgBootloaderHandshakeResp = 0x00B4
 data MsgBootloaderHandshakeResp = MsgBootloaderHandshakeResp
   { _msgBootloaderHandshakeResp_flags :: Word32
     -- ^ Bootloader flags
-  , _msgBootloaderHandshakeResp_version :: ByteString
+  , _msgBootloaderHandshakeResp_version :: Text
     -- ^ Bootloader version number
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgBootloaderHandshakeResp where
   get = do
     _msgBootloaderHandshakeResp_flags <- getWord32le
-    _msgBootloaderHandshakeResp_version <- liftM toStrict getRemainingLazyByteString
+    _msgBootloaderHandshakeResp_version <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
     return MsgBootloaderHandshakeResp {..}
 
   put MsgBootloaderHandshakeResp {..} = do
     putWord32le _msgBootloaderHandshakeResp_flags
-    putByteString _msgBootloaderHandshakeResp_version
+    putByteString $ encodeUtf8 _msgBootloaderHandshakeResp_version
 
 $(deriveSBP 'msgBootloaderHandshakeResp ''MsgBootloaderHandshakeResp)
 
@@ -179,7 +179,7 @@ data MsgBootloaderHandshakeDepA = MsgBootloaderHandshakeDepA
 
 instance Binary MsgBootloaderHandshakeDepA where
   get = do
-    _msgBootloaderHandshakeDepA_handshake <- whileM (liftM not isEmpty) getWord8
+    _msgBootloaderHandshakeDepA_handshake <- whileM (not <$> isEmpty) getWord8
     return MsgBootloaderHandshakeDepA {..}
 
   put MsgBootloaderHandshakeDepA {..} = do
