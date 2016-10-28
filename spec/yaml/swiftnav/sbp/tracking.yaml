@@ -31,7 +31,9 @@ definitions:
             desc: Receiver clock time.
         - tot:
             type: GPSTime
-            desc: Time of transmission of signal from satellite.
+            desc: |
+              Time of transmission of signal from satellite. Valid only when TOW
+              status is decoded or propagated.
         - P:
             type: u32
             units: 2 cm
