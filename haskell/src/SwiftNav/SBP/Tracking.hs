@@ -94,7 +94,7 @@ instance Binary MsgTrackingStateDetailed where
     _msgTrackingStateDetailed_cn0 <- getWord8
     _msgTrackingStateDetailed_lock <- getWord16le
     _msgTrackingStateDetailed_sid <- get
-    _msgTrackingStateDetailed_doppler <- liftM fromIntegral getWord32le
+    _msgTrackingStateDetailed_doppler <- fromIntegral <$> getWord32le
     _msgTrackingStateDetailed_doppler_std <- getWord16le
     _msgTrackingStateDetailed_uptime <- getWord32le
     _msgTrackingStateDetailed_clock_offset <- getWord16le
@@ -181,7 +181,7 @@ data MsgTrackingState = MsgTrackingState
 
 instance Binary MsgTrackingState where
   get = do
-    _msgTrackingState_states <- whileM (liftM not isEmpty) get
+    _msgTrackingState_states <- whileM (not <$> isEmpty) get
     return MsgTrackingState {..}
 
   put MsgTrackingState {..} = do
@@ -205,8 +205,8 @@ data TrackingChannelCorrelation = TrackingChannelCorrelation
 
 instance Binary TrackingChannelCorrelation where
   get = do
-    _trackingChannelCorrelation_I <- liftM fromIntegral getWord32le
-    _trackingChannelCorrelation_Q <- liftM fromIntegral getWord32le
+    _trackingChannelCorrelation_I <- fromIntegral <$> getWord32le
+    _trackingChannelCorrelation_Q <- fromIntegral <$> getWord32le
     return TrackingChannelCorrelation {..}
 
   put TrackingChannelCorrelation {..} = do
@@ -290,7 +290,7 @@ data MsgTrackingStateDepA = MsgTrackingStateDepA
 
 instance Binary MsgTrackingStateDepA where
   get = do
-    _msgTrackingStateDepA_states <- whileM (liftM not isEmpty) get
+    _msgTrackingStateDepA_states <- whileM (not <$> isEmpty) get
     return MsgTrackingStateDepA {..}
 
   put MsgTrackingStateDepA {..} = do

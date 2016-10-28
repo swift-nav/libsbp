@@ -61,7 +61,7 @@ msgSettingsWrite = 0x00A0
 --
 -- The setting message writes the device configuration.
 data MsgSettingsWrite = MsgSettingsWrite
-  { _msgSettingsWrite_setting :: ByteString
+  { _msgSettingsWrite_setting :: Text
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING, VALUE]. A device will only process to this message when it is
     -- received from sender ID 0x42.
@@ -69,11 +69,11 @@ data MsgSettingsWrite = MsgSettingsWrite
 
 instance Binary MsgSettingsWrite where
   get = do
-    _msgSettingsWrite_setting <- liftM toStrict getRemainingLazyByteString
+    _msgSettingsWrite_setting <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
     return MsgSettingsWrite {..}
 
   put MsgSettingsWrite {..} = do
-    putByteString _msgSettingsWrite_setting
+    putByteString $ encodeUtf8 _msgSettingsWrite_setting
 
 $(deriveSBP 'msgSettingsWrite ''MsgSettingsWrite)
 
@@ -88,7 +88,7 @@ msgSettingsReadReq = 0x00A4
 --
 -- The setting message reads the device configuration.
 data MsgSettingsReadReq = MsgSettingsReadReq
-  { _msgSettingsReadReq_setting :: ByteString
+  { _msgSettingsReadReq_setting :: Text
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING]. A device will only respond to this message when it is received
     -- from sender ID 0x42.
@@ -96,11 +96,11 @@ data MsgSettingsReadReq = MsgSettingsReadReq
 
 instance Binary MsgSettingsReadReq where
   get = do
-    _msgSettingsReadReq_setting <- liftM toStrict getRemainingLazyByteString
+    _msgSettingsReadReq_setting <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
     return MsgSettingsReadReq {..}
 
   put MsgSettingsReadReq {..} = do
-    putByteString _msgSettingsReadReq_setting
+    putByteString $ encodeUtf8 _msgSettingsReadReq_setting
 
 $(deriveSBP 'msgSettingsReadReq ''MsgSettingsReadReq)
 
@@ -115,18 +115,18 @@ msgSettingsReadResp = 0x00A5
 --
 -- The setting message reads the device configuration.
 data MsgSettingsReadResp = MsgSettingsReadResp
-  { _msgSettingsReadResp_setting :: ByteString
+  { _msgSettingsReadResp_setting :: Text
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING, VALUE].
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSettingsReadResp where
   get = do
-    _msgSettingsReadResp_setting <- liftM toStrict getRemainingLazyByteString
+    _msgSettingsReadResp_setting <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
     return MsgSettingsReadResp {..}
 
   put MsgSettingsReadResp {..} = do
-    putByteString _msgSettingsReadResp_setting
+    putByteString $ encodeUtf8 _msgSettingsReadResp_setting
 
 $(deriveSBP 'msgSettingsReadResp ''MsgSettingsReadResp)
 
@@ -175,7 +175,7 @@ data MsgSettingsReadByIndexResp = MsgSettingsReadByIndexResp
   { _msgSettingsReadByIndexResp_index :: Word16
     -- ^ An index into the device settings, with values ranging from 0 to
     -- length(settings)
-  , _msgSettingsReadByIndexResp_setting :: ByteString
+  , _msgSettingsReadByIndexResp_setting :: Text
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING, VALUE].
   } deriving ( Show, Read, Eq )
@@ -183,12 +183,12 @@ data MsgSettingsReadByIndexResp = MsgSettingsReadByIndexResp
 instance Binary MsgSettingsReadByIndexResp where
   get = do
     _msgSettingsReadByIndexResp_index <- getWord16le
-    _msgSettingsReadByIndexResp_setting <- liftM toStrict getRemainingLazyByteString
+    _msgSettingsReadByIndexResp_setting <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
     return MsgSettingsReadByIndexResp {..}
 
   put MsgSettingsReadByIndexResp {..} = do
     putWord16le _msgSettingsReadByIndexResp_index
-    putByteString _msgSettingsReadByIndexResp_setting
+    putByteString $ encodeUtf8 _msgSettingsReadByIndexResp_setting
 
 $(deriveSBP 'msgSettingsReadByIndexResp ''MsgSettingsReadByIndexResp)
 
@@ -227,18 +227,18 @@ msgSettingsRegister = 0x00AE
 -- settings daemon.  The host should reply with MSG_SETTINGS_WRITE for this
 -- setting to set the initial value.
 data MsgSettingsRegister = MsgSettingsRegister
-  { _msgSettingsRegister_setting :: ByteString
+  { _msgSettingsRegister_setting :: Text
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING, VALUE].
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSettingsRegister where
   get = do
-    _msgSettingsRegister_setting <- liftM toStrict getRemainingLazyByteString
+    _msgSettingsRegister_setting <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
     return MsgSettingsRegister {..}
 
   put MsgSettingsRegister {..} = do
-    putByteString _msgSettingsRegister_setting
+    putByteString $ encodeUtf8 _msgSettingsRegister_setting
 
 $(deriveSBP 'msgSettingsRegister ''MsgSettingsRegister)
 

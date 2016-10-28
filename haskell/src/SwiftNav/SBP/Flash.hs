@@ -55,7 +55,7 @@ instance Binary MsgFlashProgram where
     _msgFlashProgram_target <- getWord8
     _msgFlashProgram_addr_start <- replicateM 3 getWord8
     _msgFlashProgram_addr_len <- getWord8
-    _msgFlashProgram_data <- whileM (liftM not isEmpty) getWord8
+    _msgFlashProgram_data <- whileM (not <$> isEmpty) getWord8
     return MsgFlashProgram {..}
 
   put MsgFlashProgram {..} = do

@@ -32,7 +32,7 @@ CONSTRUCT_CODE = {
   's64': 'Int64',
   'float': 'Float',
   'double': 'Double',
-  'string': 'ByteString',
+  'string': 'Text',
 }
 
 GET_CONSTRUCT_CODE = {
@@ -40,10 +40,10 @@ GET_CONSTRUCT_CODE = {
   'u16': 'getWord16le',
   'u32': 'getWord32le',
   'u64': 'getWord64le',
-  's8': 'liftM fromIntegral getWord8',
-  's16': 'liftM fromIntegral getWord16le',
-  's32': 'liftM fromIntegral getWord32le',
-  's64': 'liftM fromIntegral getWord64le',
+  's8': 'fromIntegral <$> getWord8',
+  's16': 'fromIntegral <$> getWord16le',
+  's32': 'fromIntegral <$> getWord32le',
+  's64': 'fromIntegral <$> getWord64le',
   'float': 'getFloat32le',
   'double': 'getFloat64le',
 }
@@ -59,7 +59,7 @@ PUT_CONSTRUCT_CODE = {
   's64': 'putWord64le $ fromIntegral',
   'float': 'putFloat32le',
   'double': 'putFloat64le',
-  'string': 'putByteString',
+  'string': 'putByteString $ encodeUtf8',
 }
 
 def camel_case(s):
@@ -103,9 +103,9 @@ def to_get(f, type_map=GET_CONSTRUCT_CODE):
   if type_map.get(name, None):
     return type_map.get(name, None)
   elif name == 'string' and f.options.get('size', None):
-    return "getByteString %s" % f.options.get('size').value
+    return "decodeUtf8 <$> getByteString %s" % f.options.get('size').value
   elif name == 'string':
-    return "liftM toStrict getRemainingLazyByteString"
+    return "decodeUtf8 . toStrict <$> getRemainingLazyByteString"
   elif name == 'array' and f.options.get('size', None):
     fill = f.options['fill'].value
     f_ = copy.copy(f)
@@ -116,7 +116,7 @@ def to_get(f, type_map=GET_CONSTRUCT_CODE):
     fill = f.options['fill'].value
     f_ = copy.copy(f)
     f_.type_id = fill
-    return "whileM (liftM not isEmpty) %s" % to_get(f_, type_map)
+    return "whileM (not <$> isEmpty) %s" % to_get(f_, type_map)
   return type_map.get(name, "get")
 
 def to_put(f, type_map=PUT_CONSTRUCT_CODE):

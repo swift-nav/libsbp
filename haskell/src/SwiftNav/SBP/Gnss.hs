@@ -92,7 +92,7 @@ data CarrierPhase = CarrierPhase
 
 instance Binary CarrierPhase where
   get = do
-    _carrierPhase_i <- liftM fromIntegral getWord32le
+    _carrierPhase_i <- fromIntegral <$> getWord32le
     _carrierPhase_f <- getWord8
     return CarrierPhase {..}
 

@@ -112,7 +112,7 @@ data MsgObs = MsgObs
 instance Binary MsgObs where
   get = do
     _msgObs_header <- get
-    _msgObs_obs <- whileM (liftM not isEmpty) get
+    _msgObs_obs <- whileM (not <$> isEmpty) get
     return MsgObs {..}
 
   put MsgObs {..} = do
@@ -1010,7 +1010,7 @@ data CarrierPhaseDepA = CarrierPhaseDepA
 
 instance Binary CarrierPhaseDepA where
   get = do
-    _carrierPhaseDepA_i <- liftM fromIntegral getWord32le
+    _carrierPhaseDepA_i <- fromIntegral <$> getWord32le
     _carrierPhaseDepA_f <- getWord8
     return CarrierPhaseDepA {..}
 
@@ -1112,7 +1112,7 @@ data MsgObsDepA = MsgObsDepA
 instance Binary MsgObsDepA where
   get = do
     _msgObsDepA_header <- get
-    _msgObsDepA_obs <- whileM (liftM not isEmpty) get
+    _msgObsDepA_obs <- whileM (not <$> isEmpty) get
     return MsgObsDepA {..}
 
   put MsgObsDepA {..} = do
@@ -1144,7 +1144,7 @@ data MsgObsDepB = MsgObsDepB
 instance Binary MsgObsDepB where
   get = do
     _msgObsDepB_header <- get
-    _msgObsDepB_obs <- whileM (liftM not isEmpty) get
+    _msgObsDepB_obs <- whileM (not <$> isEmpty) get
     return MsgObsDepB {..}
 
   put MsgObsDepB {..} = do
@@ -1261,9 +1261,9 @@ instance Binary MsgGroupDelay where
     _msgGroupDelay_t_op <- get
     _msgGroupDelay_prn <- getWord8
     _msgGroupDelay_valid <- getWord8
-    _msgGroupDelay_tgd <- liftM fromIntegral getWord16le
-    _msgGroupDelay_isc_l1ca <- liftM fromIntegral getWord16le
-    _msgGroupDelay_isc_l2c <- liftM fromIntegral getWord16le
+    _msgGroupDelay_tgd <- fromIntegral <$> getWord16le
+    _msgGroupDelay_isc_l1ca <- fromIntegral <$> getWord16le
+    _msgGroupDelay_isc_l2c <- fromIntegral <$> getWord16le
     return MsgGroupDelay {..}
 
   put MsgGroupDelay {..} = do
