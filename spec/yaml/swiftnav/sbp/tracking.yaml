@@ -35,7 +35,9 @@ definitions:
         - P:
             type: u32
             units: 2 cm
-            desc: Pseudorange observation.
+            desc: |
+              Pseudorange observation. Valid only when pseudorange valid flag is
+              set.
         - P_std:
             type: u16
             units: 2 cm
@@ -200,8 +202,13 @@ definitions:
             type: u8
             desc: Miscellaneous flags.
             fields:
-                - 4-7:
+                - 5-7:
                     desc: Reserved
+                - 4:
+                    desc: Pseudorange validity status.
+                    values:
+                        - 0: Pseudorange is not valid
+                        - 1: Pseudorange is valid
                 - 3:
                     desc: Acceleration validity status.
                     values:
