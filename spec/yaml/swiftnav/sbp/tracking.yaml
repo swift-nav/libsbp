@@ -32,8 +32,9 @@ definitions:
         - tot:
             type: GPSTime
             desc: |
-              Time of transmission of signal from satellite. Valid only when TOW
-              status is decoded or propagated.
+              Time of transmission of signal from satellite. TOW only valid when
+              TOW status is decoded or propagated. WN only valid when week
+              number valid flag is set.
         - P:
             type: u32
             units: 2 cm
@@ -48,7 +49,7 @@ definitions:
             type: CarrierPhase
             units: cycles
             desc: |
-              Carrier phase observation with typical sign convention. Only valid
+              Carrier phase observation with typical sign convention. Valid only
               when PLL pessimistic lock is achieved.
         - cn0:
             type: u8
@@ -80,11 +81,13 @@ definitions:
         - clock_offset:
             type: u16
             units: ppb * 10
-            desc: TCXO clock offset.
+            desc: |
+              TCXO clock offset. Valid only when valid clock valid flag is set.
         - clock_drift:
             type: u16
             units: (ppb * 10) / s
-            desc: TCXO clock drift.
+            desc: |
+              TCXO clock drift. Valid only when valid clock valid flag is set.
         - corr_spacing:
             type: u16
             units: ns
@@ -116,8 +119,13 @@ definitions:
             type: u8
             desc: TOW status flags.
             fields:
-                - 3-7:
+                - 4-7:
                     desc: Reserved
+                - 3:
+                    desc: Week number validity status.
+                    values:
+                        - 0: Week number is not valid
+                        - 1: Week number is valid
                 - 0-2:
                     desc: TOW status.
                     values:
@@ -204,8 +212,13 @@ definitions:
             type: u8
             desc: Miscellaneous flags.
             fields:
-                - 5-7:
+                - 6-7:
                     desc: Reserved
+                - 5:
+                    desc: Clock validity status.
+                    values:
+                        - 0: Clock offset and drift is not valid
+                        - 1: Clock offset and drift is valid
                 - 4:
                     desc: Pseudorange validity status.
                     values:
