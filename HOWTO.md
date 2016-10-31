@@ -76,8 +76,7 @@ Oh boy, so you've decided to release a new version of libsbp.
     # Produces most recent tag (e.g., v0.29)
     git describe --abbrev=0 --tags
     # Increment that value, create a new one (e.g, v0.30), and push
-    git tag -a INCREMENTED_TAG
-    git push upstream INCREMENTED_TAG
+    git tag -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
 
 1. Verify that package dependencies, their version numbers, and the
@@ -85,22 +84,32 @@ Oh boy, so you've decided to release a new version of libsbp.
    documentation are consistent.
 
 2. Add to RELEASE_NOTES.md and update the CHANGELOG details with `make
-   release`. Submit a pull request. This requires
+   release`. Submit a pull request and get it merged. This requires
    [github-changelog-generator](https://github.com/skywinder/github-changelog-generator),
-   and a CHANGELOG_GITHUB_TOKEN in your PATH if you don't already have
+   and a `CHANGELOG_GITHUB_TOKEN` in your `PATH` if you don't already have
    them.
 
-3. Create a release on
+3. After the release PR is merged, recreate the tag:
+    ```shell
+    git checkout master
+    git pull
+    git tag -d INCREMENTED_TAG
+    git tag -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
+    git push origin INCREMENTED_TAG
+    ```
+
+4. Create a release on
    [GitHub](https://github.com/swift-nav/libsbp/releases) and add the
    RELEASE_NOTES.md.
 
-4. Distribute release packages: `make dist`. You may need credentials
-   on the appropriate package repositories.
+5. Distribute release packages: `make dist`. You may need credentials
+   on the appropriate package repositories. Ignore the GPG error in `stack`,
+   the package will get uploaded correctly anyway.
 
-5. Announce release to the
+6. Announce release to the
    [forum](https://groups.google.com/forum/#!forum/swiftnav-discuss).
 
-6. Releases are not only never perfect, they never really end. Please
+7. Releases are not only never perfect, they never really end. Please
    pay special attention to any downstream projects or users that may
    have issues or regressions as a consequence of the release version.
 
