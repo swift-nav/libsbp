@@ -2,6 +2,7 @@
 # libraries. Please read and understand the contents of this file
 # before using it to do Crazy Things.
 
+SHELL := /bin/bash
 SWIFTNAV_ROOT := $(shell pwd)
 MAKEFLAGS += SWIFTNAV_ROOT=$(SWIFTNAV_ROOT)
 SBP_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/yaml/swiftnav/sbp/
