@@ -126,23 +126,23 @@ class HTTPDriver(BaseDriver):
                url="https://broker.staging.skylark.swiftnav.com",
                retries=DEFAULT_RETRIES,
                timeout=DEFAULT_TIMEOUT,):
-    retry = Retry(connect=DEFAULT_RETRIES[0],
-                  read=DEFAULT_RETRIES[1],
-                  redirect=MAX_REDIRECTS,
-                  status_forcelist=[500],
-                  backoff_factor=DEFAULT_BACKOFF_FACTOR)
+    self._retry = Retry(connect=DEFAULT_RETRIES[0],
+                        read=DEFAULT_RETRIES[1],
+                        redirect=MAX_REDIRECTS,
+                        status_forcelist=[500],
+                        backoff_factor=DEFAULT_BACKOFF_FACTOR)
     self.url = url
     self.read_session = requests.Session()
     self.read_session.mount("http://",
                             HTTPAdapter(pool_connections=DEFAULT_POOLSIZE,
                                         pool_maxsize=DEFAULT_POOLSIZE,
                                         pool_block=DEFAULT_POOLBLOCK,
-                                        max_retries=retry))
+                                        max_retries=self._retry))
     self.read_session.mount("https://",
                             HTTPAdapter(pool_connections=DEFAULT_POOLSIZE,
                                         pool_maxsize=DEFAULT_POOLSIZE,
                                         pool_block=DEFAULT_POOLBLOCK,
-                                        max_retries=retry))
+                                        max_retries=self._retry))
     self.write_session = None
     self.device_uid = device_uid
     self.timeout = timeout
@@ -195,6 +195,16 @@ class HTTPDriver(BaseDriver):
     try:
       self.executor = ThreadPoolExecutor(max_workers=DEFAULT_POOLSIZE)
       self.write_session = FuturesSession(executor=self.executor)
+      self.write_session.mount("http://",
+                               HTTPAdapter(pool_connections=DEFAULT_POOLSIZE,
+                                           pool_maxsize=DEFAULT_POOLSIZE,
+                                           pool_block=DEFAULT_POOLBLOCK,
+                                           max_retries=self._retry))
+      self.write_session.mount("https://",
+                               HTTPAdapter(pool_connections=DEFAULT_POOLSIZE,
+                                           pool_maxsize=DEFAULT_POOLSIZE,
+                                           pool_block=DEFAULT_POOLBLOCK,
+                                           max_retries=self._retry))
       self.source = source.filter(whitelist)
       gen = (msg.pack() for msg, _ in self.source)
       self.write_session.put(self.url, data=gen, headers=headers)
