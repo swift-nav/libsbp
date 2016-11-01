@@ -68,7 +68,12 @@ Some thoughts to consider when adding a new message:
 
 # Releasing New Versions of the Library
 
-Oh boy, so you've decided to release a new version of libsbp.
+Oh boy, so you've decided to release a new version of libsbp. It's recommended
+this process is performed on a Mac, as it has been known to go wrong on Linux.
+
+The v1.2.5 release for Python on PyPi failed to install due to missing
+`requirements.txt` file in the uploaded archive after a deployment was done on
+Ubuntu 16.04.
 
 0. Branch and tag a new release. Tag the release version:
 
