@@ -1,12 +1,38 @@
 # Change Log
 
-## [v1.2.5](https://github.com/swift-nav/libsbp/tree/v1.2.5) (2016-10-28)
+## [Unreleased](https://github.com/swift-nav/libsbp/tree/HEAD)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v1.2.7...HEAD)
+
+**Merged pull requests:**
+
+- Update tracking message to match firmware implementation [\#393](https://github.com/swift-nav/libsbp/pull/393)
+
+## [v1.2.7](https://github.com/swift-nav/libsbp/tree/v1.2.7) (2016-11-02)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v1.2.6...v1.2.7)
+
+**Merged pull requests:**
+
+- Give Haskell code better casing for GPSTime [\#400](https://github.com/swift-nav/libsbp/pull/400)
+- Add retries to networking writes. [\#398](https://github.com/swift-nav/libsbp/pull/398)
+
+## [v1.2.6](https://github.com/swift-nav/libsbp/tree/v1.2.6) (2016-11-01)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v1.2.5...v1.2.6)
+
+**Merged pull requests:**
+
+- Do release on a Mac [\#397](https://github.com/swift-nav/libsbp/pull/397)
+- Update HOWTO [\#396](https://github.com/swift-nav/libsbp/pull/396)
+- Use bash in Make so pushd/popd work [\#395](https://github.com/swift-nav/libsbp/pull/395)
+
+## [v1.2.5](https://github.com/swift-nav/libsbp/tree/v1.2.5) (2016-10-31)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v1.2.4...v1.2.5)
 
 **Merged pull requests:**
 
+- Release v1.2.5 [\#394](https://github.com/swift-nav/libsbp/pull/394)
 - Base64 encoded strings in Haskell's JSON [\#392](https://github.com/swift-nav/libsbp/pull/392)
-- Add detailed tracking state message [\#391](https://github.com/swift-nav/libsbp/pull/391)
+- WIP: Add detailed tracking state message [\#391](https://github.com/swift-nav/libsbp/pull/391)
 - Update acquisition message to use CN/0 [\#384](https://github.com/swift-nav/libsbp/pull/384)
 
 ## [v1.2.4](https://github.com/swift-nav/libsbp/tree/v1.2.4) (2016-10-20)
