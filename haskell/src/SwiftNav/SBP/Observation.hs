@@ -32,7 +32,7 @@ import SwiftNav.SBP.Gnss
 --
 -- Header of a GPS observation message.
 data ObservationHeader = ObservationHeader
-  { _observationHeader_t   :: GPSTime
+  { _observationHeader_t   :: GpsTime
     -- ^ GPS time of this observation
   , _observationHeader_n_obs :: Word8
     -- ^ Total number of observations. First nibble is the size of the sequence
@@ -201,7 +201,7 @@ $(makeLenses ''MsgBasePosEcef)
 data EphemerisCommonContent = EphemerisCommonContent
   { _ephemerisCommonContent_sid        :: GnssSignal
     -- ^ GNSS signal identifier
-  , _ephemerisCommonContent_toe        :: GPSTime
+  , _ephemerisCommonContent_toe        :: GpsTime
     -- ^ Time of Ephemerides
   , _ephemerisCommonContent_ura        :: Double
     -- ^ User Range Accuracy
@@ -289,7 +289,7 @@ data MsgEphemerisGps = MsgEphemerisGps
     -- ^ Polynomial clock correction coefficient (clock drift)
   , _msgEphemerisGps_af2    :: Double
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
-  , _msgEphemerisGps_toc    :: GPSTime
+  , _msgEphemerisGps_toc    :: GpsTime
     -- ^ Clock reference
   , _msgEphemerisGps_iode   :: Word8
     -- ^ Issue of ephemeris data
@@ -1166,7 +1166,7 @@ msgIono = 0x0090
 -- utilize the ionospheric model for computation of the ionospheric delay.
 -- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 data MsgIono = MsgIono
-  { _msgIono_t_nmct :: GPSTime
+  { _msgIono_t_nmct :: GpsTime
     -- ^ Navigation Message Correction Table Valitidy Time
   , _msgIono_a0   :: Double
   , _msgIono_a1   :: Double
@@ -1215,7 +1215,7 @@ msgSvConfigurationGps = 0x0091
 --
 -- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
 data MsgSvConfigurationGps = MsgSvConfigurationGps
-  { _msgSvConfigurationGps_t_nmct :: GPSTime
+  { _msgSvConfigurationGps_t_nmct :: GpsTime
     -- ^ Navigation Message Correction Table Valitidy Time
   , _msgSvConfigurationGps_l2c_mask :: Word32
     -- ^ L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
@@ -1244,7 +1244,7 @@ msgGroupDelay = 0x0092
 --
 -- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 data MsgGroupDelay = MsgGroupDelay
-  { _msgGroupDelay_t_op   :: GPSTime
+  { _msgGroupDelay_t_op   :: GpsTime
     -- ^ Data Predict Time of Week
   , _msgGroupDelay_prn    :: Word8
     -- ^ Satellite number
