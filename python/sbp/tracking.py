@@ -178,13 +178,20 @@ single tracking channel useful for debugging issues.
   recv_time : int
     Receiver clock time.
   tot : GPSTime
-    Time of transmission of signal from satellite.
+    Time of transmission of signal from satellite. TOW only valid when
+TOW status is decoded or propagated. WN only valid when week
+number valid flag is set.
+
   P : int
-    Pseudorange observation.
+    Pseudorange observation. Valid only when pseudorange valid flag is
+set.
+
   P_std : int
-    Pseudorange observation standard deviation.
+    Pseudorange observation standard deviation. Valid only when
+pseudorange valid flag is set.
+
   L : CarrierPhase
-    Carrier phase observation with typical sign convention. Only valid
+    Carrier phase observation with typical sign convention. Valid only
 when PLL pessimistic lock is achieved.
 
   cn0 : int
@@ -205,9 +212,11 @@ carrier phase ambiguity may have changed.
 signal is in continuous track.
 
   clock_offset : int
-    TCXO clock offset.
+    TCXO clock offset. Valid only when valid clock valid flag is set.
+
   clock_drift : int
-    TCXO clock drift.
+    TCXO clock drift. Valid only when valid clock valid flag is set.
+
   corr_spacing : int
     Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
   acceleration : int
@@ -240,10 +249,10 @@ signal is in continuous track.
                    SLInt32('doppler'),
                    ULInt16('doppler_std'),
                    ULInt32('uptime'),
-                   ULInt16('clock_offset'),
-                   ULInt16('clock_drift'),
+                   SLInt16('clock_offset'),
+                   SLInt16('clock_drift'),
                    ULInt16('corr_spacing'),
-                   ULInt8('acceleration'),
+                   SLInt8('acceleration'),
                    ULInt8('sync_flags'),
                    ULInt8('tow_flags'),
                    ULInt8('track_flags'),

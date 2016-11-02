@@ -39,13 +39,16 @@ data MsgTrackingStateDetailed = MsgTrackingStateDetailed
   { _msgTrackingStateDetailed_recv_time  :: Word64
     -- ^ Receiver clock time.
   , _msgTrackingStateDetailed_tot        :: GpsTime
-    -- ^ Time of transmission of signal from satellite.
+    -- ^ Time of transmission of signal from satellite. TOW only valid when TOW
+    -- status is decoded or propagated. WN only valid when week number valid
+    -- flag is set.
   , _msgTrackingStateDetailed_P          :: Word32
-    -- ^ Pseudorange observation.
+    -- ^ Pseudorange observation. Valid only when pseudorange valid flag is set.
   , _msgTrackingStateDetailed_P_std      :: Word16
-    -- ^ Pseudorange observation standard deviation.
+    -- ^ Pseudorange observation standard deviation. Valid only when pseudorange
+    -- valid flag is set.
   , _msgTrackingStateDetailed_L          :: CarrierPhase
-    -- ^ Carrier phase observation with typical sign convention. Only valid when
+    -- ^ Carrier phase observation with typical sign convention. Valid only when
     -- PLL pessimistic lock is achieved.
   , _msgTrackingStateDetailed_cn0        :: Word8
     -- ^ Carrier-to-Noise density
@@ -62,13 +65,13 @@ data MsgTrackingStateDetailed = MsgTrackingStateDetailed
   , _msgTrackingStateDetailed_uptime     :: Word32
     -- ^ Number of seconds of continuous tracking. Specifies how much time signal
     -- is in continuous track.
-  , _msgTrackingStateDetailed_clock_offset :: Word16
-    -- ^ TCXO clock offset.
-  , _msgTrackingStateDetailed_clock_drift :: Word16
-    -- ^ TCXO clock drift.
+  , _msgTrackingStateDetailed_clock_offset :: Int16
+    -- ^ TCXO clock offset. Valid only when valid clock valid flag is set.
+  , _msgTrackingStateDetailed_clock_drift :: Int16
+    -- ^ TCXO clock drift. Valid only when valid clock valid flag is set.
   , _msgTrackingStateDetailed_corr_spacing :: Word16
     -- ^ Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
-  , _msgTrackingStateDetailed_acceleration :: Word8
+  , _msgTrackingStateDetailed_acceleration :: Int8
     -- ^ Acceleration. Valid only when acceleration valid flag is set.
   , _msgTrackingStateDetailed_sync_flags :: Word8
     -- ^ Synchronization status flags.
@@ -97,10 +100,10 @@ instance Binary MsgTrackingStateDetailed where
     _msgTrackingStateDetailed_doppler <- fromIntegral <$> getWord32le
     _msgTrackingStateDetailed_doppler_std <- getWord16le
     _msgTrackingStateDetailed_uptime <- getWord32le
-    _msgTrackingStateDetailed_clock_offset <- getWord16le
-    _msgTrackingStateDetailed_clock_drift <- getWord16le
+    _msgTrackingStateDetailed_clock_offset <- fromIntegral <$> getWord16le
+    _msgTrackingStateDetailed_clock_drift <- fromIntegral <$> getWord16le
     _msgTrackingStateDetailed_corr_spacing <- getWord16le
-    _msgTrackingStateDetailed_acceleration <- getWord8
+    _msgTrackingStateDetailed_acceleration <- fromIntegral <$> getWord8
     _msgTrackingStateDetailed_sync_flags <- getWord8
     _msgTrackingStateDetailed_tow_flags <- getWord8
     _msgTrackingStateDetailed_track_flags <- getWord8
@@ -121,10 +124,10 @@ instance Binary MsgTrackingStateDetailed where
     putWord32le $ fromIntegral _msgTrackingStateDetailed_doppler
     putWord16le _msgTrackingStateDetailed_doppler_std
     putWord32le _msgTrackingStateDetailed_uptime
-    putWord16le _msgTrackingStateDetailed_clock_offset
-    putWord16le _msgTrackingStateDetailed_clock_drift
+    putWord16le $ fromIntegral _msgTrackingStateDetailed_clock_offset
+    putWord16le $ fromIntegral _msgTrackingStateDetailed_clock_drift
     putWord16le _msgTrackingStateDetailed_corr_spacing
-    putWord8 _msgTrackingStateDetailed_acceleration
+    putWord8 $ fromIntegral _msgTrackingStateDetailed_acceleration
     putWord8 _msgTrackingStateDetailed_sync_flags
     putWord8 _msgTrackingStateDetailed_tow_flags
     putWord8 _msgTrackingStateDetailed_track_flags

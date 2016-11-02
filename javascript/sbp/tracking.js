@@ -34,10 +34,12 @@ var CarrierPhase = require("./gnss").CarrierPhase;
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field recv_time number (unsigned 64-bit int, 8 bytes) Receiver clock time.
- * @field tot GPSTime Time of transmission of signal from satellite.
- * @field P number (unsigned 32-bit int, 4 bytes) Pseudorange observation.
- * @field P_std number (unsigned 16-bit int, 2 bytes) Pseudorange observation standard deviation.
- * @field L CarrierPhase Carrier phase observation with typical sign convention. Only valid when PLL
+ * @field tot GPSTime Time of transmission of signal from satellite. TOW only valid when TOW status is
+ *   decoded or propagated. WN only valid when week number valid flag is set.
+ * @field P number (unsigned 32-bit int, 4 bytes) Pseudorange observation. Valid only when pseudorange valid flag is set.
+ * @field P_std number (unsigned 16-bit int, 2 bytes) Pseudorange observation standard deviation. Valid only when pseudorange valid
+ *   flag is set.
+ * @field L CarrierPhase Carrier phase observation with typical sign convention. Valid only when PLL
  *   pessimistic lock is achieved.
  * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density
  * @field lock number (unsigned 16-bit int, 2 bytes) Lock indicator. This value changes whenever a satellite signal has lost and
@@ -47,10 +49,10 @@ var CarrierPhase = require("./gnss").CarrierPhase;
  * @field doppler_std number (unsigned 16-bit int, 2 bytes) Carrier Doppler frequency standard deviation.
  * @field uptime number (unsigned 32-bit int, 4 bytes) Number of seconds of continuous tracking. Specifies how much time signal is in
  *   continuous track.
- * @field clock_offset number (unsigned 16-bit int, 2 bytes) TCXO clock offset.
- * @field clock_drift number (unsigned 16-bit int, 2 bytes) TCXO clock drift.
+ * @field clock_offset number (signed 16-bit int, 2 bytes) TCXO clock offset. Valid only when valid clock valid flag is set.
+ * @field clock_drift number (signed 16-bit int, 2 bytes) TCXO clock drift. Valid only when valid clock valid flag is set.
  * @field corr_spacing number (unsigned 16-bit int, 2 bytes) Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
- * @field acceleration number (unsigned 8-bit int, 1 byte) Acceleration. Valid only when acceleration valid flag is set.
+ * @field acceleration number (signed 8-bit int, 1 byte) Acceleration. Valid only when acceleration valid flag is set.
  * @field sync_flags number (unsigned 8-bit int, 1 byte) Synchronization status flags.
  * @field tow_flags number (unsigned 8-bit int, 1 byte) TOW status flags.
  * @field track_flags number (unsigned 8-bit int, 1 byte) Tracking loop status flags.
@@ -84,10 +86,10 @@ MsgTrackingStateDetailed.prototype.parser = new Parser()
   .int32('doppler')
   .uint16('doppler_std')
   .uint32('uptime')
-  .uint16('clock_offset')
-  .uint16('clock_drift')
+  .int16('clock_offset')
+  .int16('clock_drift')
   .uint16('corr_spacing')
-  .uint8('acceleration')
+  .int8('acceleration')
   .uint8('sync_flags')
   .uint8('tow_flags')
   .uint8('track_flags')
@@ -106,10 +108,10 @@ MsgTrackingStateDetailed.prototype.fieldSpec.push(['sid', GnssSignal.prototype.f
 MsgTrackingStateDetailed.prototype.fieldSpec.push(['doppler', 'writeInt32LE', 4]);
 MsgTrackingStateDetailed.prototype.fieldSpec.push(['doppler_std', 'writeUInt16LE', 2]);
 MsgTrackingStateDetailed.prototype.fieldSpec.push(['uptime', 'writeUInt32LE', 4]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['clock_offset', 'writeUInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['clock_drift', 'writeUInt16LE', 2]);
+MsgTrackingStateDetailed.prototype.fieldSpec.push(['clock_offset', 'writeInt16LE', 2]);
+MsgTrackingStateDetailed.prototype.fieldSpec.push(['clock_drift', 'writeInt16LE', 2]);
 MsgTrackingStateDetailed.prototype.fieldSpec.push(['corr_spacing', 'writeUInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['acceleration', 'writeUInt8', 1]);
+MsgTrackingStateDetailed.prototype.fieldSpec.push(['acceleration', 'writeInt8', 1]);
 MsgTrackingStateDetailed.prototype.fieldSpec.push(['sync_flags', 'writeUInt8', 1]);
 MsgTrackingStateDetailed.prototype.fieldSpec.push(['tow_flags', 'writeUInt8', 1]);
 MsgTrackingStateDetailed.prototype.fieldSpec.push(['track_flags', 'writeUInt8', 1]);

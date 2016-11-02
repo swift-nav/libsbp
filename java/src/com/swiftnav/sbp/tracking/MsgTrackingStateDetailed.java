@@ -38,16 +38,23 @@ public class MsgTrackingStateDetailed extends SBPMessage {
     /** Receiver clock time. */
     public long recv_time;
     
-    /** Time of transmission of signal from satellite. */
+    /** Time of transmission of signal from satellite. TOW only valid when
+TOW status is decoded or propagated. WN only valid when week
+number valid flag is set.
+ */
     public GPSTime tot;
     
-    /** Pseudorange observation. */
+    /** Pseudorange observation. Valid only when pseudorange valid flag is
+set.
+ */
     public long P;
     
-    /** Pseudorange observation standard deviation. */
+    /** Pseudorange observation standard deviation. Valid only when
+pseudorange valid flag is set.
+ */
     public int P_std;
     
-    /** Carrier phase observation with typical sign convention. Only valid
+    /** Carrier phase observation with typical sign convention. Valid only
 when PLL pessimistic lock is achieved.
  */
     public CarrierPhase L;
@@ -75,10 +82,12 @@ signal is in continuous track.
  */
     public long uptime;
     
-    /** TCXO clock offset. */
+    /** TCXO clock offset. Valid only when valid clock valid flag is set.
+ */
     public int clock_offset;
     
-    /** TCXO clock drift. */
+    /** TCXO clock drift. Valid only when valid clock valid flag is set.
+ */
     public int clock_drift;
     
     /** Early-Prompt (EP) and Prompt-Late (PL) correlators spacing. */
@@ -127,10 +136,10 @@ signal is in continuous track.
         doppler = parser.getS32();
         doppler_std = parser.getU16();
         uptime = parser.getU32();
-        clock_offset = parser.getU16();
-        clock_drift = parser.getU16();
+        clock_offset = parser.getS16();
+        clock_drift = parser.getS16();
         corr_spacing = parser.getU16();
-        acceleration = parser.getU8();
+        acceleration = parser.getS8();
         sync_flags = parser.getU8();
         tow_flags = parser.getU8();
         track_flags = parser.getU8();
@@ -152,10 +161,10 @@ signal is in continuous track.
         builder.putS32(doppler);
         builder.putU16(doppler_std);
         builder.putU32(uptime);
-        builder.putU16(clock_offset);
-        builder.putU16(clock_drift);
+        builder.putS16(clock_offset);
+        builder.putS16(clock_drift);
         builder.putU16(corr_spacing);
-        builder.putU8(acceleration);
+        builder.putS8(acceleration);
         builder.putU8(sync_flags);
         builder.putU8(tow_flags);
         builder.putU8(track_flags);
