@@ -30,24 +30,24 @@ definitions:
             desc: Cause of startup
             fields:
               - 0-8:
-                  desc: cause of startup
+                  desc: Cause of startup
                   values:
-                    - 0: power on
-                    - 1: software reset
-                    - 2: watchdog reset
+                    - 0: Power on
+                    - 1: Software reset
+                    - 2: Watchdog reset
         - startup_type:
             type: u8
-            desc: startup type
+            desc: Startup type
             fields:
               - 0-8:
                   values:
-                    - 0: cold start
-                    - 1: warm start
-                    - 2: hot start
+                    - 0: Cold start
+                    - 1: Warm start
+                    - 2: Hot start
 
         - reserved:
             type: u16
-            desc: reserved
+            desc: Reserved
 
  - MSG_DGNSS_STATUS:
     id: 0xFF02
@@ -62,7 +62,7 @@ definitions:
             desc: Status flags
             fields:
               - 4-7:
-                  desc: reserved
+                  desc: Reserved
               - 0-3:
                   desc: Differential type
                   values:
@@ -72,10 +72,10 @@ definitions:
         - latency:
             type: u16
             units: deci-seconds
-            desc: latency of observation receipt
+            desc: Latency of observation receipt
         - num_signals:
             type: u8
-            desc: number of signals from base station
+            desc: Number of signals from base station
         - source:
             type: string
             desc: Corrections source string
