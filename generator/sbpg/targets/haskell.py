@@ -72,6 +72,9 @@ def to_global(s):
   """
   Format a global variable name.
   """
+  if s.startswith('GPSTime'):
+    s = 'Gps' + s[3:]
+
   if '_' in s:
     s = "".join([string.capitalize(i) for i in s.split("_")])
   return s[0].lower() + s[1:]
@@ -80,6 +83,9 @@ def to_data(s):
   """
   Format a data variable name.
   """
+  if s.startswith('GPSTime'):
+    s = 'Gps' + s[3:]
+
   if '_' in s:
     return "".join([string.capitalize(i) for i in s.split("_")])
   return s
@@ -89,6 +95,8 @@ def to_type(f, type_map=CONSTRUCT_CODE):
   Format a the proper type.
   """
   name = f.type_id
+  if name.startswith('GPSTime'):
+    name = 'Gps' + name[3:]
   if type_map.get(name, None):
     return type_map.get(name, None)
   elif name == 'array':
@@ -100,6 +108,8 @@ def to_type(f, type_map=CONSTRUCT_CODE):
 
 def to_get(f, type_map=GET_CONSTRUCT_CODE):
   name = f.type_id
+  if name.startswith('GPSTime'):
+    name = 'Gps' + name[3:]
   if type_map.get(name, None):
     return type_map.get(name, None)
   elif name == 'string' and f.options.get('size', None):
@@ -121,6 +131,8 @@ def to_get(f, type_map=GET_CONSTRUCT_CODE):
 
 def to_put(f, type_map=PUT_CONSTRUCT_CODE):
   name = f.type_id
+  if name.startswith('GPSTime'):
+    name = 'Gps' + name[3:]
   if type_map.get(name, None):
     return type_map.get(name, None)
   elif name == 'array':

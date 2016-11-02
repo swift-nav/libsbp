@@ -58,25 +58,25 @@ $(makeLenses ''GnssSignal)
 --
 -- A wire-appropriate GPS time, defined as the number of milliseconds since
 -- beginning of the week on the Saturday/Sunday transition.
-data GPSTime = GPSTime
-  { _gPSTime_tow :: Word32
+data GpsTime = GpsTime
+  { _gpsTime_tow :: Word32
     -- ^ Milliseconds since start of GPS week
-  , _gPSTime_wn :: Word16
+  , _gpsTime_wn :: Word16
     -- ^ GPS week number
   } deriving ( Show, Read, Eq )
 
-instance Binary GPSTime where
+instance Binary GpsTime where
   get = do
-    _gPSTime_tow <- getWord32le
-    _gPSTime_wn <- getWord16le
-    return GPSTime {..}
+    _gpsTime_tow <- getWord32le
+    _gpsTime_wn <- getWord16le
+    return GpsTime {..}
 
-  put GPSTime {..} = do
-    putWord32le _gPSTime_tow
-    putWord16le _gPSTime_wn
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gPSTime_" . stripPrefix "_gPSTime_"}
-             ''GPSTime)
-$(makeLenses ''GPSTime)
+  put GpsTime {..} = do
+    putWord32le _gpsTime_tow
+    putWord16le _gpsTime_wn
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gpsTime_" . stripPrefix "_gpsTime_"}
+             ''GpsTime)
+$(makeLenses ''GpsTime)
 
 -- | CarrierPhase.
 --
