@@ -36,7 +36,7 @@ definitions:
     short_desc: GNSS observations for a particular satellite signal.
     desc: |
       Pseudorange and carrier phase observation for a satellite being
-      tracked. The observations should be interoperable with 3rd party
+      tracked. The observations are interoperable with 3rd party
       receivers and conform with typical RTCMv3 GNSS observations.  
       
     fields:
@@ -54,8 +54,8 @@ definitions:
             desc: Doppler observation with typical sign convention.
         - cn0:
             type: u8
-            units: dB Hz * 0.25
-            desc: Carrier-to-Noise density
+            units: dB Hz / 4
+            desc: Carrier-to-Noise density.  Zero implies invalid cn0.
         - lock:
             type: u8
             desc: |
@@ -72,23 +72,27 @@ definitions:
               status of this observation.  If this field is 0 it means only the Cn0
               estimate for the signal is valid.
             fields:
-              - 3-7:
+              - 4-7:
                   desc: Reserved
+              - 3:
+                  desc: Measured Doppler Valid
+                      - 0: Measured Doppler Invalid
+                      - 0: Measured Doppler Valid
               - 2:
-                  desc: half-cycle ambiguity
+                  desc: Half-cycle ambiguity
                   values:
                       - 0: Half cycle phase ambiguity unresolved
                       - 1: Half cycle phase ambiguity resolved
               - 1:
                   desc: Carrier valid
                   values:
-                      - 0: Invalid Carrier Phase measurement
-                      - 1: Valid Carrier Phase measurement
+                      - 0: Invalid carrier phase measurement
+                      - 1: Valid carrier phase measurement
               - 0:
-                  desc: Code valid
+                  desc: Pseudorange valid
                   values:
-                      - 0: Code phase invalid
-                      - 1: Valid code phase and coarse TOW decoded
+                      - 0: Pseudorange invalid
+                      - 1: Valid pseudorange and coarse TOW decoded
         - sid:
             type: GnssSignal16
             desc: GNSS signal identifier (16 bit)
@@ -102,7 +106,7 @@ definitions:
       the device. Carrier phase observation here is represented as a
       40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
       whole cycles and 8-bits of fractional cycles).  The observations
-      should be interoperable with 3rd party receivers and conform
+      are be interoperable with 3rd party receivers and conform
       with typical RTCMv3 GNSS observations.  
       
       The lock field represents the range of time for 
@@ -723,7 +727,7 @@ definitions:
  - MSG_EPHEMERIS_DEP_C:
     id: 0x0047
     short_desc: Satellite broadcast ephemeris
-    public: false
+    public: False
     desc: |
       The ephemeris message returns a set of satellite orbit
       parameters that is used to calculate GPS satellite position,
@@ -902,7 +906,7 @@ definitions:
             desc: Carrier phase observation with opposite sign from typical convention
         - cn0:
             type: u8
-            units: dB Hz * 4
+            units: dB Hz / 4
             desc: Carrier-to-Noise density
         - lock:
             type: u16
@@ -929,7 +933,7 @@ definitions:
             desc: Carrier phase observation with opposite sign from typical convention.
         - cn0:
             type: u8
-            units: dB Hz * 4
+            units: dB Hz / 4
             desc: Carrier-to-Noise density
         - lock:
             type: u16
@@ -945,7 +949,7 @@ definitions:
     short_desc: GPS observations for a particular satellite signal.
     desc: |
       Pseudorange and carrier phase observation for a satellite being
-      tracked. The observations should be interoperable with 3rd party
+      tracked. The observations are be interoperable with 3rd party
       receivers and conform with typical RTCMv3 GNSS observations.
     fields:
         - P:
@@ -958,7 +962,7 @@ definitions:
             desc: Carrier phase observation with typical sign convention.
         - cn0:
             type: u8
-            units: dB Hz * 4
+            units: dB Hz / 4
             desc: Carrier-to-Noise density
         - lock:
             type: u16
@@ -1023,7 +1027,7 @@ definitions:
       the device. Carrier phase observation here is represented as a
       40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
       whole cycles and 8-bits of fractional cycles).  The observations
-      should be interoperable with 3rd party receivers and conform
+      are interoperable with 3rd party receivers and conform
       with typical RTCMv3 GNSS observations.
     public: False
     replaced_by:
