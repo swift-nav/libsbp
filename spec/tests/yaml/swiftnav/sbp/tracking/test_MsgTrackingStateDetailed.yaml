@@ -1,256 +1,252 @@
 ---
 description: Unit tests for swiftnav.sbp.tracking MsgTrackingStateDetailed vNone.
-generated_on: 2016-10-27 15:44:05.108930
+generated_on: 2016-11-03 08:54:53.536946
 package: sbp.tracking
 tests:
 
 - msg:
     fields:
       L:
-        f: 238
-        i: -120760716
-      P: 1149000000
-      P_std: 100
-      acceleration: 1
-      clock_drift: 10
-      clock_offset: 100
-      cn0: 0
-      corr_spacing: 2000
-      doppler: 251
-      doppler_std: 2
-      lock: 12345
-      misc_flags: 175
-      nav_flags: 173
-      pset_flags: 174
-      recv_time: 5193328303
+        f: 169
+        i: 1319
+      P: 0
+      P_std: 0
+      acceleration: 108
+      clock_drift: 0
+      clock_offset: 0
+      cn0: 177
+      corr_spacing: 40
+      doppler: 15701
+      doppler_std: 39
+      lock: 14032
+      misc_flags: 9
+      nav_flags: 0
+      pset_flags: 0
+      recv_time: 7909447587
       sid:
         code: 0
         reserved: 0
-        sat: 65535
-      sync_flags: 170
+        sat: 15
+      sync_flags: 1
       tot:
-        tow: 86400000
-        wn: 1876
-      tow_flags: 171
-      track_flags: 172
-      uptime: 3600
+        tow: 0
+        wn: 0
+      tow_flags: 0
+      track_flags: 11
+      uptime: 1
     module: sbp.tracking
     name: MsgTrackingStateDetailed
   msg_type: '0x11'
-  raw_json: '{"track_flags": 172, "doppler": 251, "clock_offset": 100, "msg_type":
-    17, "lock": 12345, "nav_flags": 173, "P_std": 100, "L": {"i": -120760716, "f":
-    238}, "pset_flags": 174, "P": 1149000000, "misc_flags": 175, "preamble": 85, "payload":
-    "r+aLNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==",
-    "recv_time": 5193328303, "acceleration": 1, "uptime": 3600, "sender": 49219, "cn0":
-    0, "doppler_std": 2, "tow_flags": 171, "tot": {"wn": 1876, "tow": 86400000}, "crc":
-    46779, "length": 55, "clock_drift": 10, "sid": {"code": 0, "reserved": 0, "sat":
-    65535}, "sync_flags": 170, "corr_spacing": 2000}'
-  raw_packet: VREAQ8A3r+aLNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2ur7u2
+  raw_json: '{"track_flags": 11, "doppler": 15701, "clock_offset": 0, "msg_type":
+    17, "lock": 14032, "nav_flags": 0, "P_std": 0, "L": {"i": 1319, "f": 169}, "pset_flags":
+    0, "P": 0, "misc_flags": 9, "preamble": 85, "payload": "o5dw1wEAAAAAAAAAAAAAAAAAAAAnBQAAqbHQNg8AAABVPQAAJwABAAAAAAAAACgAbAEACwAACQ==",
+    "recv_time": 7909447587, "acceleration": 108, "uptime": 1, "sender": 26427, "cn0":
+    177, "doppler_std": 39, "tow_flags": 0, "tot": {"wn": 0, "tow": 0}, "crc": 54950,
+    "length": 55, "clock_drift": 0, "sid": {"code": 0, "reserved": 0, "sat": 15},
+    "sync_flags": 1, "corr_spacing": 40}'
+  raw_packet: VREAO2c3o5dw1wEAAAAAAAAAAAAAAAAAAAAnBQAAqbHQNg8AAABVPQAAJwABAAAAAAAAACgAbAEACwAACabW
   sbp:
-    crc: '0xb6bb'
+    crc: '0xd6a6'
     length: 55
     msg_type: '0x11'
-    payload: r+aLNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==
+    payload: o5dw1wEAAAAAAAAAAAAAAAAAAAAnBQAAqbHQNg8AAABVPQAAJwABAAAAAAAAACgAbAEACwAACQ==
     preamble: '0x55'
-    sender: '0xc043'
+    sender: '0x673b'
 
 - msg:
     fields:
       L:
-        f: 238
-        i: -120760716
-      P: 1149000000
-      P_std: 100
-      acceleration: 1
-      clock_drift: 10
-      clock_offset: 100
-      cn0: 0
-      corr_spacing: 2000
-      doppler: 251
-      doppler_std: 2
-      lock: 12345
-      misc_flags: 175
-      nav_flags: 173
-      pset_flags: 174
-      recv_time: 5193330649
+        f: 14
+        i: 1810
+      P: 0
+      P_std: 0
+      acceleration: -32
+      clock_drift: 0
+      clock_offset: 0
+      cn0: 175
+      corr_spacing: 40
+      doppler: 15667
+      doppler_std: 30
+      lock: 14032
+      misc_flags: 9
+      nav_flags: 0
+      pset_flags: 0
+      recv_time: 8409447265
       sid:
         code: 0
         reserved: 0
-        sat: 65535
-      sync_flags: 170
+        sat: 15
+      sync_flags: 1
       tot:
-        tow: 86400000
-        wn: 1876
-      tow_flags: 171
-      track_flags: 172
-      uptime: 3600
+        tow: 0
+        wn: 0
+      tow_flags: 0
+      track_flags: 11
+      uptime: 1
     module: sbp.tracking
     name: MsgTrackingStateDetailed
   msg_type: '0x11'
-  raw_json: '{"track_flags": 172, "doppler": 251, "clock_offset": 100, "msg_type":
-    17, "lock": 12345, "nav_flags": 173, "P_std": 100, "L": {"i": -120760716, "f":
-    238}, "pset_flags": 174, "P": 1149000000, "misc_flags": 175, "preamble": 85, "payload":
-    "2e+LNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==",
-    "recv_time": 5193330649, "acceleration": 1, "uptime": 3600, "sender": 49219, "cn0":
-    0, "doppler_std": 2, "tow_flags": 171, "tot": {"wn": 1876, "tow": 86400000}, "crc":
-    7809, "length": 55, "clock_drift": 10, "sid": {"code": 0, "reserved": 0, "sat":
-    65535}, "sync_flags": 170, "corr_spacing": 2000}'
-  raw_packet: VREAQ8A32e+LNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2ur4Ee
+  raw_json: '{"track_flags": 11, "doppler": 15667, "clock_offset": 0, "msg_type":
+    17, "lock": 14032, "nav_flags": 0, "P_std": 0, "L": {"i": 1810, "f": 14}, "pset_flags":
+    0, "P": 0, "misc_flags": 9, "preamble": 85, "payload": "Yfs99QEAAAAAAAAAAAAAAAAAAAASBwAADq/QNg8AAAAzPQAAHgABAAAAAAAAACgA4AEACwAACQ==",
+    "recv_time": 8409447265, "acceleration": -32, "uptime": 1, "sender": 26427, "cn0":
+    175, "doppler_std": 30, "tow_flags": 0, "tot": {"wn": 0, "tow": 0}, "crc": 45960,
+    "length": 55, "clock_drift": 0, "sid": {"code": 0, "reserved": 0, "sat": 15},
+    "sync_flags": 1, "corr_spacing": 40}'
+  raw_packet: VREAO2c3Yfs99QEAAAAAAAAAAAAAAAAAAAASBwAADq/QNg8AAAAzPQAAHgABAAAAAAAAACgA4AEACwAACYiz
   sbp:
-    crc: '0x1e81'
+    crc: '0xb388'
     length: 55
     msg_type: '0x11'
-    payload: 2e+LNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==
+    payload: Yfs99QEAAAAAAAAAAAAAAAAAAAASBwAADq/QNg8AAAAzPQAAHgABAAAAAAAAACgA4AEACwAACQ==
     preamble: '0x55'
-    sender: '0xc043'
+    sender: '0x673b'
 
 - msg:
     fields:
       L:
-        f: 238
-        i: -120760716
-      P: 1149000000
-      P_std: 100
-      acceleration: 1
-      clock_drift: 10
-      clock_offset: 100
-      cn0: 0
-      corr_spacing: 2000
-      doppler: 251
-      doppler_std: 2
-      lock: 12345
-      misc_flags: 175
-      nav_flags: 173
-      pset_flags: 174
-      recv_time: 5193332536
+        f: 8
+        i: 2298
+      P: 0
+      P_std: 0
+      acceleration: 27
+      clock_drift: 0
+      clock_offset: 0
+      cn0: 179
+      corr_spacing: 40
+      doppler: 15683
+      doppler_std: 22
+      lock: 14032
+      misc_flags: 9
+      nav_flags: 0
+      pset_flags: 2
+      recv_time: 8907446923
       sid:
         code: 0
         reserved: 0
-        sat: 65535
-      sync_flags: 170
+        sat: 15
+      sync_flags: 1
       tot:
-        tow: 86400000
-        wn: 1876
-      tow_flags: 171
-      track_flags: 172
-      uptime: 3600
+        tow: 0
+        wn: 0
+      tow_flags: 0
+      track_flags: 11
+      uptime: 2
     module: sbp.tracking
     name: MsgTrackingStateDetailed
   msg_type: '0x11'
-  raw_json: '{"track_flags": 172, "doppler": 251, "clock_offset": 100, "msg_type":
-    17, "lock": 12345, "nav_flags": 173, "P_std": 100, "L": {"i": -120760716, "f":
-    238}, "pset_flags": 174, "P": 1149000000, "misc_flags": 175, "preamble": 85, "payload":
-    "OPeLNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==",
-    "recv_time": 5193332536, "acceleration": 1, "uptime": 3600, "sender": 49219, "cn0":
-    0, "doppler_std": 2, "tow_flags": 171, "tot": {"wn": 1876, "tow": 86400000}, "crc":
-    24047, "length": 55, "clock_drift": 10, "sid": {"code": 0, "reserved": 0, "sat":
-    65535}, "sync_flags": 170, "corr_spacing": 2000}'
-  raw_packet: VREAQ8A3OPeLNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2ur+9d
+  raw_json: '{"track_flags": 11, "doppler": 15683, "clock_offset": 0, "msg_type":
+    17, "lock": 14032, "nav_flags": 0, "P_std": 0, "L": {"i": 2298, "f": 8}, "pset_flags":
+    2, "P": 0, "misc_flags": 9, "preamble": 85, "payload": "i9rsEgIAAAAAAAAAAAAAAAAAAAD6CAAACLPQNg8AAABDPQAAFgACAAAAAAAAACgAGwEACwACCQ==",
+    "recv_time": 8907446923, "acceleration": 27, "uptime": 2, "sender": 26427, "cn0":
+    179, "doppler_std": 22, "tow_flags": 0, "tot": {"wn": 0, "tow": 0}, "crc": 40921,
+    "length": 55, "clock_drift": 0, "sid": {"code": 0, "reserved": 0, "sat": 15},
+    "sync_flags": 1, "corr_spacing": 40}'
+  raw_packet: VREAO2c3i9rsEgIAAAAAAAAAAAAAAAAAAAD6CAAACLPQNg8AAABDPQAAFgACAAAAAAAAACgAGwEACwACCdmf
   sbp:
-    crc: '0x5def'
+    crc: '0x9fd9'
     length: 55
     msg_type: '0x11'
-    payload: OPeLNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==
+    payload: i9rsEgIAAAAAAAAAAAAAAAAAAAD6CAAACLPQNg8AAABDPQAAFgACAAAAAAAAACgAGwEACwACCQ==
     preamble: '0x55'
-    sender: '0xc043'
+    sender: '0x673b'
 
 - msg:
     fields:
       L:
-        f: 238
-        i: -120760716
-      P: 1149000000
-      P_std: 100
-      acceleration: 1
-      clock_drift: 10
-      clock_offset: 100
-      cn0: 0
-      corr_spacing: 2000
-      doppler: 251
-      doppler_std: 2
-      lock: 12345
-      misc_flags: 175
-      nav_flags: 173
-      pset_flags: 174
-      recv_time: 5193334392
+        f: 125
+        i: 2786
+      P: 0
+      P_std: 0
+      acceleration: -36
+      clock_drift: 0
+      clock_offset: 0
+      cn0: 181
+      corr_spacing: 40
+      doppler: 15645
+      doppler_std: 10
+      lock: 14032
+      misc_flags: 9
+      nav_flags: 0
+      pset_flags: 3
+      recv_time: 9406446591
       sid:
         code: 0
         reserved: 0
-        sat: 65535
-      sync_flags: 170
+        sat: 15
+      sync_flags: 1
       tot:
-        tow: 86400000
-        wn: 1876
-      tow_flags: 171
-      track_flags: 172
-      uptime: 3600
+        tow: 0
+        wn: 0
+      tow_flags: 0
+      track_flags: 11
+      uptime: 2
     module: sbp.tracking
     name: MsgTrackingStateDetailed
   msg_type: '0x11'
-  raw_json: '{"track_flags": 172, "doppler": 251, "clock_offset": 100, "msg_type":
-    17, "lock": 12345, "nav_flags": 173, "P_std": 100, "L": {"i": -120760716, "f":
-    238}, "pset_flags": 174, "P": 1149000000, "misc_flags": 175, "preamble": 85, "payload":
-    "eP6LNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==",
-    "recv_time": 5193334392, "acceleration": 1, "uptime": 3600, "sender": 49219, "cn0":
-    0, "doppler_std": 2, "tow_flags": 171, "tot": {"wn": 1876, "tow": 86400000}, "crc":
-    48733, "length": 55, "clock_drift": 10, "sid": {"code": 0, "reserved": 0, "sat":
-    65535}, "sync_flags": 170, "corr_spacing": 2000}'
-  raw_packet: VREAQ8A3eP6LNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2ur12+
+  raw_json: '{"track_flags": 11, "doppler": 15645, "clock_offset": 0, "msg_type":
+    17, "lock": 14032, "nav_flags": 0, "P_std": 0, "L": {"i": 2786, "f": 125}, "pset_flags":
+    3, "P": 0, "misc_flags": 9, "preamble": 85, "payload": "//uqMAIAAAAAAAAAAAAAAAAAAADiCgAAfbXQNg8AAAAdPQAACgACAAAAAAAAACgA3AEACwADCQ==",
+    "recv_time": 9406446591, "acceleration": -36, "uptime": 2, "sender": 26427, "cn0":
+    181, "doppler_std": 10, "tow_flags": 0, "tot": {"wn": 0, "tow": 0}, "crc": 24386,
+    "length": 55, "clock_drift": 0, "sid": {"code": 0, "reserved": 0, "sat": 15},
+    "sync_flags": 1, "corr_spacing": 40}'
+  raw_packet: VREAO2c3//uqMAIAAAAAAAAAAAAAAAAAAADiCgAAfbXQNg8AAAAdPQAACgACAAAAAAAAACgA3AEACwADCUJf
   sbp:
-    crc: '0xbe5d'
+    crc: '0x5f42'
     length: 55
     msg_type: '0x11'
-    payload: eP6LNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==
+    payload: //uqMAIAAAAAAAAAAAAAAAAAAADiCgAAfbXQNg8AAAAdPQAACgACAAAAAAAAACgA3AEACwADCQ==
     preamble: '0x55'
-    sender: '0xc043'
+    sender: '0x673b'
 
 - msg:
     fields:
       L:
-        f: 238
-        i: -120760716
-      P: 1149000000
-      P_std: 100
-      acceleration: 1
-      clock_drift: 10
-      clock_offset: 100
-      cn0: 0
-      corr_spacing: 2000
-      doppler: 251
-      doppler_std: 2
-      lock: 12345
-      misc_flags: 175
-      nav_flags: 173
-      pset_flags: 174
-      recv_time: 5193336270
+        f: 64
+        i: 3275
+      P: 0
+      P_std: 0
+      acceleration: 2
+      clock_drift: 0
+      clock_offset: 0
+      cn0: 184
+      corr_spacing: 40
+      doppler: 15640
+      doppler_std: 4
+      lock: 14032
+      misc_flags: 9
+      nav_flags: 0
+      pset_flags: 3
+      recv_time: 9906446269
       sid:
         code: 0
         reserved: 0
-        sat: 65535
-      sync_flags: 170
+        sat: 15
+      sync_flags: 1
       tot:
-        tow: 86400000
-        wn: 1876
-      tow_flags: 171
-      track_flags: 172
-      uptime: 3600
+        tow: 0
+        wn: 0
+      tow_flags: 0
+      track_flags: 11
+      uptime: 3
     module: sbp.tracking
     name: MsgTrackingStateDetailed
   msg_type: '0x11'
-  raw_json: '{"track_flags": 172, "doppler": 251, "clock_offset": 100, "msg_type":
-    17, "lock": 12345, "nav_flags": 173, "P_std": 100, "L": {"i": -120760716, "f":
-    238}, "pset_flags": 174, "P": 1149000000, "misc_flags": 175, "preamble": 85, "payload":
-    "zgWMNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==",
-    "recv_time": 5193336270, "acceleration": 1, "uptime": 3600, "sender": 49219, "cn0":
-    0, "doppler_std": 2, "tow_flags": 171, "tot": {"wn": 1876, "tow": 86400000}, "crc":
-    64417, "length": 55, "clock_drift": 10, "sid": {"code": 0, "reserved": 0, "sat":
-    65535}, "sync_flags": 170, "corr_spacing": 2000}'
-  raw_packet: VREAQ8A3zgWMNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2ur6H7
+  raw_json: '{"track_flags": 11, "doppler": 15640, "clock_offset": 0, "msg_type":
+    17, "lock": 14032, "nav_flags": 0, "P_std": 0, "L": {"i": 3275, "f": 64}, "pset_flags":
+    3, "P": 0, "misc_flags": 9, "preamble": 85, "payload": "vV94TgIAAAAAAAAAAAAAAAAAAADLDAAAQLjQNg8AAAAYPQAABAADAAAAAAAAACgAAgEACwADCQ==",
+    "recv_time": 9906446269, "acceleration": 2, "uptime": 3, "sender": 26427, "cn0":
+    184, "doppler_std": 4, "tow_flags": 0, "tot": {"wn": 0, "tow": 0}, "crc": 52930,
+    "length": 55, "clock_drift": 0, "sid": {"code": 0, "reserved": 0, "sat": 15},
+    "sync_flags": 1, "corr_spacing": 40}'
+  raw_packet: VREAO2c3vV94TgIAAAAAAAAAAAAAAAAAAADLDAAAQLjQNg8AAAAYPQAABAADAAAAAAAAACgAAgEACwADCcLO
   sbp:
-    crc: '0xfba1'
+    crc: '0xcec2'
     length: 55
     msg_type: '0x11'
-    payload: zgWMNQEAAAAAXCYFVAdAWXxEZAB0Vs347gA5MP//AAD7AAAAAgAQDgAAZAAKANAHAaqrrK2urw==
+    payload: vV94TgIAAAAAAAAAAAAAAAAAAADLDAAAQLjQNg8AAAAYPQAABAADAAAAAAAAACgAAgEACwADCQ==
     preamble: '0x55'
-    sender: '0xc043'
+    sender: '0x673b'
 version: null
+...
