@@ -35,27 +35,36 @@
 #define SBP_MSG_TRACKING_STATE_DETAILED 0x0011
 typedef struct __attribute__((packed)) {
   u64 recv_time;       /**< Receiver clock time. [ns] */
-  sbp_gps_time_t tot;             /**< Time of transmission of signal from satellite. */
-  u32 P;               /**< Pseudorange observation. [2 cm] */
-  u16 P_std;           /**< Pseudorange observation standard deviation. [2 cm] */
-  carrier_phase_t L;               /**< Carrier phase observation with typical sign convention. Only valid
+  sbp_gps_time_t tot;             /**< Time of transmission of signal from satellite. TOW only valid when
+TOW status is decoded or propagated. WN only valid when week
+number valid flag is set.
+ */
+  u32 P;               /**< Pseudorange observation. Valid only when pseudorange valid flag is
+set.
+ [2 cm] */
+  u16 P_std;           /**< Pseudorange observation standard deviation. Valid only when
+pseudorange valid flag is set.
+ [2 cm] */
+  carrier_phase_t L;               /**< Carrier phase observation with typical sign convention. Valid only
 when PLL pessimistic lock is achieved.
  [cycles] */
-  u8 cn0;             /**< Carrier-to-Noise density [dB Hz * 4] */
+  u8 cn0;             /**< Carrier-to-Noise density [dB Hz / 4] */
   u16 lock;            /**< Lock indicator. This value changes whenever a satellite
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
  */
   sbp_gnss_signal_t sid;             /**< GNSS signal identifier. */
-  s32 doppler;         /**< Carrier Doppler frequency. [Hz * 10] */
-  u16 doppler_std;     /**< Carrier Doppler frequency standard deviation. [Hz * 10] */
+  s32 doppler;         /**< Carrier Doppler frequency. [Hz / 16] */
+  u16 doppler_std;     /**< Carrier Doppler frequency standard deviation. [Hz / 16] */
   u32 uptime;          /**< Number of seconds of continuous tracking. Specifies how much time
 signal is in continuous track.
  [s] */
-  u16 clock_offset;    /**< TCXO clock offset. [ppb * 10] */
-  u16 clock_drift;     /**< TCXO clock drift. [(ppb * 10) / s] */
+  s16 clock_offset;    /**< TCXO clock offset. Valid only when valid clock valid flag is set.
+ [s / (2 ^ 20)] */
+  s16 clock_drift;     /**< TCXO clock drift. Valid only when valid clock valid flag is set.
+ [(s / s) / (2 ^ 31)] */
   u16 corr_spacing;    /**< Early-Prompt (EP) and Prompt-Late (PL) correlators spacing. [ns] */
-  u8 acceleration;    /**< Acceleration. Valid only when acceleration valid flag is set. [g * 10] */
+  s8 acceleration;    /**< Acceleration. Valid only when acceleration valid flag is set. [g / 8] */
   u8 sync_flags;      /**< Synchronization status flags. */
   u8 tow_flags;       /**< TOW status flags. */
   u8 track_flags;     /**< Tracking loop status flags. */

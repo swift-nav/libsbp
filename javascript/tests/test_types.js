@@ -38,6 +38,8 @@ function getFieldValuesFromSpecType (fieldType, line, previousValues) {
     return Math.floor(Math.random() * (Math.pow(2, 32) - 1));
   } else if (fieldType === 'writeUInt16LE') {
     return Math.floor(Math.random() * (Math.pow(2, 16) - 1));
+  } else if (fieldType === 'writeInt8') {
+    return Math.floor(Math.random() * (Math.pow(2, 7) - 1)) * (Math.random() > 0.5 ? 1 : -1);
   } else if (fieldType === 'writeUInt8') {
     // we keep uint8s artificially small, because they often represent lengths of arrays
     return Math.floor(Math.random() * 10);
