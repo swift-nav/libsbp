@@ -76,8 +76,9 @@ definitions:
                   desc: Reserved
               - 3:
                   desc: Measured Doppler Valid
+                  values:
                       - 0: Measured Doppler Invalid
-                      - 0: Measured Doppler Valid
+                      - 1: Measured Doppler Valid
               - 2:
                   desc: Half-cycle ambiguity
                   values:
