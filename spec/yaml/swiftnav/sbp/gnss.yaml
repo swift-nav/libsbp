@@ -68,15 +68,15 @@ definitions:
             desc: GPS week number
 
  - GPSTimeNano:
-     short_desc: Nanosecond-accurate receiver clock time
-     desc: |
-       A wire-appropriate GPS time, defined as the number of
-       milliseconds since beginning of the week on the Saturday/Sunday
-       A wire-appropriate receiver clock time, defined as the time
-       since the beginning of the week on the Saturday/Sunday
-       transition. In most cases, observations are epoch aligned 
-       so ns field will be 0.
-     fields:
+    short_desc: Nanosecond-accurate receiver clock time
+    desc: |
+      A wire-appropriate GPS time, defined as the number of
+      milliseconds since beginning of the week on the Saturday/Sunday
+      A wire-appropriate receiver clock time, defined as the time
+      since the beginning of the week on the Saturday/Sunday
+      transition. In most cases, observations are epoch aligned 
+      so ns field will be 0.
+    fields:
         - tow:
             type: u32
             units: ms
@@ -91,35 +91,20 @@ definitions:
             type: u16
             units: week
             desc: GPS week number
+ 
  - CarrierPhase:
-    short_desc: GPS carrier phase measurement.
-    desc: |
-      Carrier phase measurement in cycles represented as a 40-bit
-      fixed point number with Q32.8 layout, i.e. 32-bits of whole
-      cycles and 8-bits of fractional cycles.  This phase has the
-      same sign as the pseudorange.
-    fields:
-        - i:
-            type: s32
-            units: cycles
-            desc: Carrier phase whole cycles
-        - f:
-            type: u8
-            units: cycles / 256
-            desc: Carrier phase fractional part
- - CarrierPhase:
-    short_desc: GPS carrier phase measurement.
-    desc: |
-      Carrier phase measurement in cycles represented as a 40-bit
-      fixed point number with Q32.8 layout, i.e. 32-bits of whole
-      cycles and 8-bits of fractional cycles.  This phase has the
-      same sign as the pseudorange.
-    fields:
-        - i:
-            type: s32
-            units: cycles
-            desc: Carrier phase whole cycles
-        - f:
-            type: u8
-            units: cycles / 256
-            desc: Carrier phase fractional part
+      short_desc: GPS carrier phase measurement.
+      desc: |
+        Carrier phase measurement in cycles represented as a 40-bit
+        fixed point number with Q32.8 layout, i.e. 32-bits of whole
+        cycles and 8-bits of fractional cycles.  This phase has the
+        same sign as the pseudorange.
+      fields:
+          - i:
+              type: s32
+              units: cycles
+              desc: Carrier phase whole cycles
+          - f:
+              type: u8
+              units: cycles / 256
+              desc: Carrier phase fractional part
