@@ -110,6 +110,7 @@ definitions:
 
  - MSG_SETTINGS_REGISTER:
     id: 0x00AE
+    public: false
     short_desc: Register setting and default value (device => host)
     desc: |
       This message registers the presence and default value of a setting

@@ -1,5 +1,5 @@
 ---
-description: Unit tests for swiftnav.sbp.navigation MsgVelNED v0.51.
+description: Unit tests for swiftnav.sbp.navigation MsgVelNEDDepA v0.51.
 generated_on: 2015-11-09 11:34:21.267364
 package: sbp.navigation
 tests:
@@ -15,7 +15,7 @@ tests:
       tow: 2567700
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgVelNED
+    name: MsgVelNEDDepA
   msg_type: '0x205'
   raw_json: '{"v_accuracy": 0, "e": 3996, "sender": 55286, "msg_type": 517, "tow":
     2567700, "n": -1082, "crc": 23713, "length": 22, "flags": 0, "h_accuracy": 0,
@@ -41,7 +41,7 @@ tests:
       tow: 2567800
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgVelNED
+    name: MsgVelNEDDepA
   msg_type: '0x205'
   raw_json: '{"v_accuracy": 0, "e": 3791, "sender": 55286, "msg_type": 517, "tow":
     2567800, "n": -1010, "crc": 41085, "length": 22, "flags": 0, "h_accuracy": 0,
@@ -67,7 +67,7 @@ tests:
       tow: 2567900
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgVelNED
+    name: MsgVelNEDDepA
   msg_type: '0x205'
   raw_json: '{"v_accuracy": 0, "e": 3724, "sender": 55286, "msg_type": 517, "tow":
     2567900, "n": -976, "crc": 34739, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats":
@@ -92,7 +92,7 @@ tests:
       tow: 2568000
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgVelNED
+    name: MsgVelNEDDepA
   msg_type: '0x205'
   raw_json: '{"v_accuracy": 0, "e": 3848, "sender": 55286, "msg_type": 517, "tow":
     2568000, "n": -992, "crc": 45363, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats":
@@ -117,7 +117,7 @@ tests:
       tow: 2568100
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgVelNED
+    name: MsgVelNEDDepA
   msg_type: '0x205'
   raw_json: '{"v_accuracy": 0, "e": 3724, "sender": 55286, "msg_type": 517, "tow":
     2568100, "n": -944, "crc": 23, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats":

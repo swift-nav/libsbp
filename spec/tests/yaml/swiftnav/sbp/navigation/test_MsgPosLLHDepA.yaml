@@ -1,5 +1,5 @@
 ---
-description: Unit tests for swiftnav.sbp.navigation MsgPosLLH v0.51.
+description: Unit tests for swiftnav.sbp.navigation MsgPosLLHDepA v0.51.
 generated_on: 2015-11-09 11:34:21.360715
 package: sbp.navigation
 tests:
@@ -15,7 +15,7 @@ tests:
       tow: 2567700
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgPosLLH
+    name: MsgPosLLHDepA
   msg_type: '0x201'
   raw_json: '{"v_accuracy": 0, "n_sats": 9, "sender": 55286, "msg_type": 513, "lon":
     -122.17338662202773, "tow": 2567700, "height": 69.80437675175607, "crc": 35820,
@@ -41,7 +41,7 @@ tests:
       tow: 2567700
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgPosLLH
+    name: MsgPosLLHDepA
   msg_type: '0x201'
   raw_json: '{"v_accuracy": 0, "n_sats": 9, "sender": 55286, "msg_type": 513, "lon":
     -122.17340826071865, "tow": 2567700, "height": 69.68814067715354, "crc": 29977,
@@ -67,7 +67,7 @@ tests:
       tow: 2567800
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgPosLLH
+    name: MsgPosLLHDepA
   msg_type: '0x201'
   raw_json: '{"v_accuracy": 0, "n_sats": 9, "sender": 55286, "msg_type": 513, "lon":
     -122.17342007549469, "tow": 2567800, "height": 69.49608854815264, "crc": 27054,
@@ -93,7 +93,7 @@ tests:
       tow: 2567800
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgPosLLH
+    name: MsgPosLLHDepA
   msg_type: '0x201'
   raw_json: '{"v_accuracy": 0, "n_sats": 9, "sender": 55286, "msg_type": 513, "lon":
     -122.17340389594972, "tow": 2567800, "height": 69.68780458819901, "crc": 32634,
@@ -119,7 +119,7 @@ tests:
       tow: 2567900
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgPosLLH
+    name: MsgPosLLHDepA
   msg_type: '0x201'
   raw_json: '{"v_accuracy": 0, "n_sats": 9, "sender": 55286, "msg_type": 513, "lon":
     -122.17340492645452, "tow": 2567900, "height": 70.5249547317965, "crc": 40642,

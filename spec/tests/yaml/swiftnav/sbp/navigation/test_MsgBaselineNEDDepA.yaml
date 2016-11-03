@@ -1,5 +1,5 @@
 ---
-description: Unit tests for swiftnav.sbp.navigation MsgBaselineNED v0.51.
+description: Unit tests for swiftnav.sbp.navigation MsgBaselineNEDDepA v0.51.
 generated_on: 2015-11-09 11:34:21.340285
 package: sbp.navigation
 tests:
@@ -15,7 +15,7 @@ tests:
       tow: 2567700
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgBaselineNED
+    name: MsgBaselineNEDDepA
   msg_type: '0x203'
   raw_json: '{"v_accuracy": 0, "e": -26134, "sender": 55286, "msg_type": 515, "tow":
     2567700, "n": -96525, "crc": 49501, "length": 22, "flags": 1, "h_accuracy": 0,
@@ -41,7 +41,7 @@ tests:
       tow: 2567800
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgBaselineNED
+    name: MsgBaselineNEDDepA
   msg_type: '0x203'
   raw_json: '{"v_accuracy": 0, "e": -25747, "sender": 55286, "msg_type": 515, "tow":
     2567800, "n": -96629, "crc": 10022, "length": 22, "flags": 1, "h_accuracy": 0,
@@ -67,7 +67,7 @@ tests:
       tow: 2567900
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgBaselineNED
+    name: MsgBaselineNEDDepA
   msg_type: '0x203'
   raw_json: '{"v_accuracy": 0, "e": -25360, "sender": 55286, "msg_type": 515, "tow":
     2567900, "n": -96731, "crc": 34106, "length": 22, "flags": 1, "h_accuracy": 0,
@@ -93,7 +93,7 @@ tests:
       tow: 2568000
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgBaselineNED
+    name: MsgBaselineNEDDepA
   msg_type: '0x203'
   raw_json: '{"v_accuracy": 0, "e": -24973, "sender": 55286, "msg_type": 515, "tow":
     2568000, "n": -96831, "crc": 54840, "length": 22, "flags": 1, "h_accuracy": 0,
@@ -119,7 +119,7 @@ tests:
       tow: 2568100
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgBaselineNED
+    name: MsgBaselineNEDDepA
   msg_type: '0x203'
   raw_json: '{"v_accuracy": 0, "e": -24586, "sender": 55286, "msg_type": 515, "tow":
     2568100, "n": -96931, "crc": 62698, "length": 22, "flags": 1, "h_accuracy": 0,

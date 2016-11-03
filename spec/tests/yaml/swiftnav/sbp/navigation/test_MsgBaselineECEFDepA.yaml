@@ -1,5 +1,5 @@
 ---
-description: Unit tests for swiftnav.sbp.navigation MsgBaselineECEF v0.51.
+description: Unit tests for swiftnav.sbp.navigation MsgBaselineECEFDepA v0.51.
 generated_on: 2015-11-09 11:34:21.287537
 package: sbp.navigation
 tests:
@@ -14,7 +14,7 @@ tests:
       y: -35532
       z: -76840
     module: sbp.navigation
-    name: MsgBaselineECEF
+    name: MsgBaselineECEFDepA
   msg_type: '0x202'
   raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 514, "tow": 2567700, "crc":
     35122, "length": 20, "flags": 1, "y": -35532, "x": -53227, "z": -76840, "preamble":
@@ -38,7 +38,7 @@ tests:
       y: -35791
       z: -76922
     module: sbp.navigation
-    name: MsgBaselineECEF
+    name: MsgBaselineECEFDepA
   msg_type: '0x202'
   raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 514, "tow": 2567800, "crc":
     39907, "length": 20, "flags": 1, "y": -35791, "x": -52934, "z": -76922, "preamble":
@@ -62,7 +62,7 @@ tests:
       y: -36049
       z: -77004
     module: sbp.navigation
-    name: MsgBaselineECEF
+    name: MsgBaselineECEFDepA
   msg_type: '0x202'
   raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 514, "tow": 2567900, "crc":
     32317, "length": 20, "flags": 1, "y": -36049, "x": -52639, "z": -77004, "preamble":
@@ -86,7 +86,7 @@ tests:
       y: -36307
       z: -77084
     module: sbp.navigation
-    name: MsgBaselineECEF
+    name: MsgBaselineECEFDepA
   msg_type: '0x202'
   raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 514, "tow": 2568000, "crc":
     20424, "length": 20, "flags": 1, "y": -36307, "x": -52344, "z": -77084, "preamble":
@@ -110,7 +110,7 @@ tests:
       y: -36564
       z: -77163
     module: sbp.navigation
-    name: MsgBaselineECEF
+    name: MsgBaselineECEFDepA
   msg_type: '0x202'
   raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 514, "tow": 2568100, "crc":
     6248, "length": 20, "flags": 1, "y": -36564, "x": -52048, "z": -77163, "preamble":
