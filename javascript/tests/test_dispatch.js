@@ -14,8 +14,8 @@ var path = require('path');
 var assert = require('assert');
 var Readable = require('stream').Readable;
 var dispatch = require(path.resolve(__dirname, '../sbp/')).dispatch;
-var MsgPosLlh = require(path.resolve(__dirname, '../sbp/navigation')).MsgPosLlh;
-var MsgVelEcef = require(path.resolve(__dirname, '../sbp/navigation')).MsgVelEcef;
+var MsgPosLlhDepA = require(path.resolve(__dirname, '../sbp/navigation')).MsgPosLlhDepA;
+var MsgVelEcefDepA = require(path.resolve(__dirname, '../sbp/navigation')).MsgVelEcefDepA;
 
 var framedMessage =                 [0x55, 0x02, 0x02, 0xcc, 0x04, 0x14, 0x70, 0x3d, 0xd0, 0x18, 0xcf, 0xef, 0xff, 0xff, 0xef, 0xe8, 0xff, 0xff, 0xf0, 0x18, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x43, 0x94];
 var corruptedMessageTooShort =      [0x55, 0x02, 0x02, 0xcc, 0x04, 0x12, 0x70, 0x3d, 0xd0, 0x18, 0xcf, 0xef, 0xff, 0xff, 0xef, 0xe8, 0xff, 0xff, 0xf0, 0x18, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x43, 0x94];
@@ -176,8 +176,8 @@ describe('dispatcher', function () {
 
     var callbacks = 0;
     var validMessages = 0;
-    dispatch(rs, [MsgPosLlh.prototype.msg_type], function (err, framedMessage) {
-      assert.equal(framedMessage.msg_type, MsgPosLlh.prototype.msg_type);
+    dispatch(rs, [MsgPosLlhDepA.prototype.msg_type], function (err, framedMessage) {
+      assert.equal(framedMessage.msg_type, MsgPosLlhDepA.prototype.msg_type);
       if (framedMessage && framedMessage.fields && framedMessage.fields.tow) {
         validMessages++;
       }
@@ -199,8 +199,8 @@ describe('dispatcher', function () {
 
     var callbacks = 0;
     var validMessages = 0;
-    dispatch(rs, ~MsgVelEcef.prototype.msg_type, function (err, framedMessage) {
-      assert.equal(framedMessage.msg_type, MsgPosLlh.prototype.msg_type);
+    dispatch(rs, ~MsgVelEcefDepA.prototype.msg_type, function (err, framedMessage) {
+      assert.equal(framedMessage.msg_type, MsgPosLlhDepA.prototype.msg_type);
       if (framedMessage && framedMessage.fields && framedMessage.fields.tow) {
         validMessages++;
       }
@@ -223,10 +223,10 @@ describe('dispatcher', function () {
     var callbacks = 0;
     var validMessages = 0;
     var whitelist = function (msgType) {
-      return msgType === MsgVelEcef.prototype.msg_type;
+      return msgType === MsgVelEcefDepA.prototype.msg_type;
     };
     dispatch(rs, whitelist, function (err, framedMessage) {
-      assert.equal(framedMessage.msg_type, MsgVelEcef.prototype.msg_type);
+      assert.equal(framedMessage.msg_type, MsgVelEcefDepA.prototype.msg_type);
       if (framedMessage && framedMessage.fields && framedMessage.fields.tow) {
         validMessages++;
       }
