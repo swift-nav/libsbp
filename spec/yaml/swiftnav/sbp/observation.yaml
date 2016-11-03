@@ -23,7 +23,7 @@ definitions:
     desc: Header of a GNSS observation message.
     fields:
         - t:
-            type: ObsGPSTime
+            type: GPSTimeNano
             desc: GNSS time of this observation
         - n_obs:
             type: u8
@@ -31,7 +31,23 @@ definitions:
               Total number of observations. First nibble is the size
               of the sequence (n), second nibble is the zero-indexed
               counter (ith packet of n)
-
+ - Doppler:
+     short_desc: GNSS doppler measurement.
+     desc: |
+       Doppler measurement in Hz represented as a 24-bit
+       fixed point number with Q16.8 layout, i.e. 16-bits of whole
+       doppler and 8-bits of fractional doppler.  This doppler is defined
+       as positive for approaching satellites.
+     fields:
+         - i:
+             type: s16
+             units: Hz
+             desc: Doppler whole Hz
+         - f:
+             type: u8
+             units: Hz / 256
+             desc: Doppler fractional part
+ 
  - PackedObsContent:
     short_desc: GNSS observations for a particular satellite signal.
     desc: |
@@ -846,28 +862,12 @@ definitions:
           type: u32
           desc: Reserved field
 
- - ObsGPSTimeDep:
-    short_desc: Millisecond-accurate GPS time
-    desc: |
-      A wire-appropriate GPS time, defined as the number of
-      milliseconds since beginning of the week on the Saturday/Sunday
-      transition.
-    fields:
-        - tow:
-            type: u32
-            units: ms
-            desc: Milliseconds since start of GPS week
-        - wn:
-            type: u16
-            units: week
-            desc: GPS week number
-
  - ObservationHeaderDep:
     short_desc: Header for observation message.
     desc: Header of a GPS observation message.
     fields:
         - t:
-            type: ObsGPSTimeDep
+            type: GPSTime
             desc: GPS time of this observation
         - n_obs:
             type: u8
