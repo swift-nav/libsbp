@@ -1,5 +1,5 @@
 ---
-description: Unit tests for swiftnav.sbp.navigation MsgPosECEF v0.51.
+description: Unit tests for swiftnav.sbp.navigation MsgPosECEFDepA v0.51.
 generated_on: 2015-11-09 11:34:21.253104
 package: sbp.navigation
 tests:
@@ -14,7 +14,7 @@ tests:
       y: -4292510.764041577
       z: 3855357.977260149
     module: sbp.navigation
-    name: MsgPosECEF
+    name: MsgPosECEFDepA
   msg_type: '0x200'
   raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 512, "tow": 2567700, "crc":
     22029, "length": 32, "flags": 0, "y": -4292510.764041577, "x": -2700354.5912927105,
@@ -39,7 +39,7 @@ tests:
       y: -4292509.928737887
       z: 3855357.5011712564
     module: sbp.navigation
-    name: MsgPosECEF
+    name: MsgPosECEFDepA
   msg_type: '0x200'
   raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 512, "tow": 2567700, "crc":
     36683, "length": 32, "flags": 1, "y": -4292509.928737887, "x": -2700356.3285146747,
@@ -64,7 +64,7 @@ tests:
       y: -4292509.80414865
       z: 3855356.517968082
     module: sbp.navigation
-    name: MsgPosECEF
+    name: MsgPosECEFDepA
   msg_type: '0x200'
   raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 512, "tow": 2567800, "crc":
     29132, "length": 32, "flags": 0, "y": -4292509.80414865, "x": -2700357.485576801,
@@ -89,7 +89,7 @@ tests:
       y: -4292510.187605589
       z: 3855357.4185667858
     module: sbp.navigation
-    name: MsgPosECEF
+    name: MsgPosECEFDepA
   msg_type: '0x200'
   raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 512, "tow": 2567800, "crc":
     18273, "length": 32, "flags": 1, "y": -4292510.187605589, "x": -2700356.0349524925,
@@ -114,7 +114,7 @@ tests:
       y: -4292509.946935424
       z: 3855359.0924900775
     module: sbp.navigation
-    name: MsgPosECEF
+    name: MsgPosECEFDepA
   msg_type: '0x200'
   raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 512, "tow": 2567900, "crc":
     25095, "length": 32, "flags": 0, "y": -4292509.946935424, "x": -2700355.9913074784,

@@ -1,5 +1,5 @@
 ---
-description: Unit tests for swiftnav.sbp.navigation MsgGPSTime v0.51.
+description: Unit tests for swiftnav.sbp.navigation MsgGPSTimeDepA v0.51.
 generated_on: 2015-11-09 11:34:21.279013
 package: sbp.navigation
 tests:
@@ -11,7 +11,7 @@ tests:
       tow: 2567800
       wn: 1787
     module: sbp.navigation
-    name: MsgGPSTime
+    name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 55286, "msg_type": 256, "wn": 1787, "tow": 2567800, "crc":
     9349, "length": 11, "flags": 0, "ns": 0, "preamble": 85, "payload": "+wZ4LicAAAAAAAA="}'
@@ -31,7 +31,7 @@ tests:
       tow: 2567900
       wn: 1787
     module: sbp.navigation
-    name: MsgGPSTime
+    name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 55286, "msg_type": 256, "wn": 1787, "tow": 2567900, "crc":
     40996, "length": 11, "flags": 0, "ns": 0, "preamble": 85, "payload": "+wbcLicAAAAAAAA="}'
@@ -51,7 +51,7 @@ tests:
       tow: 2568000
       wn: 1787
     module: sbp.navigation
-    name: MsgGPSTime
+    name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 55286, "msg_type": 256, "wn": 1787, "tow": 2568000, "crc":
     48811, "length": 11, "flags": 0, "ns": 0, "preamble": 85, "payload": "+wZALycAAAAAAAA="}'
@@ -71,7 +71,7 @@ tests:
       tow: 2568100
       wn: 1787
     module: sbp.navigation
-    name: MsgGPSTime
+    name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 55286, "msg_type": 256, "wn": 1787, "tow": 2568100, "crc":
     26067, "length": 11, "flags": 0, "ns": 0, "preamble": 85, "payload": "+wakLycAAAAAAAA="}'
@@ -91,7 +91,7 @@ tests:
       tow: 2568200
       wn: 1787
     module: sbp.navigation
-    name: MsgGPSTime
+    name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 55286, "msg_type": 256, "wn": 1787, "tow": 2568200, "crc":
     11515, "length": 11, "flags": 0, "ns": 0, "preamble": 85, "payload": "+wYIMCcAAAAAAAA="}'
