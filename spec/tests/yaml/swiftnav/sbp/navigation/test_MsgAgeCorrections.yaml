@@ -1,0 +1,25 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgAgeCorrections v2.0.
+generated_on: 2016-11-04 14:44:51.683177
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      age: 30
+      tow: 100
+    module: sbp.navigation
+    name: MsgAgeCorrections
+  msg_type: 528
+  raw_json: '{"sender": 66, "msg_type": 528, "age": 30, "tow": 100, "crc": 51945,
+    "length": 6, "preamble": 85, "payload": "ZAAAAB4A"}'
+  raw_packet: VRACQgAGZAAAAB4A6co=
+  sbp:
+    crc: '0xcae9'
+    length: 6
+    msg_type: '0x210'
+    payload: ZAAAAB4A
+    preamble: '0x55'
+    sender: '0x42'
+version: 2.0
+...

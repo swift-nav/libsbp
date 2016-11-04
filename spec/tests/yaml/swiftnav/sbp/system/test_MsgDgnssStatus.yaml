@@ -1,0 +1,28 @@
+---
+description: Unit tests for swiftnav.sbp.system MsgDgnssStatus v2.0.
+generated_on: 2016-11-04 14:47:58.712586
+package: sbp.system
+tests:
+
+- msg:
+    fields:
+      flags: 0
+      latency: 50
+      num_signals: 12
+      source: Skylark
+    module: sbp.system
+    name: MsgDgnssStatus
+  msg_type: 65282
+  raw_json: '{"latency": 50, "sender": 66, "msg_type": 65282, "source": "Skylark",
+    "num_signals": 12, "crc": 458, "length": 11, "flags": 0, "preamble": 85, "payload":
+    "ADIADFNreWxhcms="}'
+  raw_packet: VQL/QgALADIADFNreWxhcmvKAQ==
+  sbp:
+    crc: '0x1ca'
+    length: 11
+    msg_type: '0xff02'
+    payload: ADIADFNreWxhcms=
+    preamble: '0x55'
+    sender: '0x42'
+version: 2.0
+...
