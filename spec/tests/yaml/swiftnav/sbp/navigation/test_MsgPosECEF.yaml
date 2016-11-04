@@ -1,0 +1,132 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgPosECEF vNone.
+generated_on: 2016-11-04 01:03:53.692833
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 2
+      n_sats: 14
+      tow: 326825000
+      x: -2684269.2107900055
+      y: -4316647.00927669
+      z: 3839647.0740485587
+    module: sbp.navigation
+    name: MsgPosECEF
+  msg_type: 521
+  raw_json: '{"n_sats": 14, "sender": 35027, "msg_type": 521, "tow": 326825000, "crc":
+    61754, "length": 32, "flags": 2, "y": -4316647.00927669, "x": -2684269.2107900055,
+    "z": 3839647.0740485587, "preamble": 85, "payload": "KPR6E7oq+5q2ekTBQv2XwHl3UMFVbHqJT0tNQQAADgI=",
+    "accuracy": 0}'
+  raw_packet: VQkC04ggKPR6E7oq+5q2ekTBQv2XwHl3UMFVbHqJT0tNQQAADgI68Q==
+  sbp:
+    crc: '0xf13a'
+    length: 32
+    msg_type: '0x209'
+    payload: KPR6E7oq+5q2ekTBQv2XwHl3UMFVbHqJT0tNQQAADgI=
+    preamble: '0x55'
+    sender: '0x88d3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 2
+      n_sats: 15
+      tow: 326826000
+      x: -2684269.0326572997
+      y: -4316646.751816
+      z: 3839646.7095350414
+    module: sbp.navigation
+    name: MsgPosECEF
+  msg_type: 521
+  raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 521, "tow": 326826000, "crc":
+    1620, "length": 32, "flags": 2, "y": -4316646.751816, "x": -2684269.0326572997,
+    "z": 3839646.7095350414, "preamble": 85, "payload": "EPh6E0kdLoS2ekTB28AdsHl3UMFTC9JaT0tNQQAADwI=",
+    "accuracy": 0}'
+  raw_packet: VQkC04ggEPh6E0kdLoS2ekTB28AdsHl3UMFTC9JaT0tNQQAADwJUBg==
+  sbp:
+    crc: '0x654'
+    length: 32
+    msg_type: '0x209'
+    payload: EPh6E0kdLoS2ekTB28AdsHl3UMFTC9JaT0tNQQAADwI=
+    preamble: '0x55'
+    sender: '0x88d3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 2
+      n_sats: 15
+      tow: 326827000
+      x: -2684269.064252186
+      y: -4316646.762264892
+      z: 3839646.463913912
+    module: sbp.navigation
+    name: MsgPosECEF
+  msg_type: 521
+  raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 521, "tow": 326827000, "crc":
+    55443, "length": 32, "flags": 2, "y": -4316646.762264892, "x": -2684269.064252186,
+    "z": 3839646.463913912, "preamble": 85, "payload": "+Pt6E2dqOYi2ekTBsPLIsHl3UMH0h2E7T0tNQQAADwI=",
+    "accuracy": 0}'
+  raw_packet: VQkC04gg+Pt6E2dqOYi2ekTBsPLIsHl3UMH0h2E7T0tNQQAADwKT2A==
+  sbp:
+    crc: '0xd893'
+    length: 32
+    msg_type: '0x209'
+    payload: +Pt6E2dqOYi2ekTBsPLIsHl3UMH0h2E7T0tNQQAADwI=
+    preamble: '0x55'
+    sender: '0x88d3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 2
+      n_sats: 15
+      tow: 326828000
+      x: -2684269.4292816394
+      y: -4316647.118271949
+      z: 3839646.124909738
+    module: sbp.navigation
+    name: MsgPosECEF
+  msg_type: 521
+  raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 521, "tow": 326828000, "crc":
+    51496, "length": 32, "flags": 2, "y": -4316647.118271949, "x": -2684269.4292816394,
+    "z": 3839646.124909738, "preamble": 85, "payload": "4P96E2Wz8ra2ekTBgsSRx3l3UMHUCv0PT0tNQQAADwI=",
+    "accuracy": 0}'
+  raw_packet: VQkC04gg4P96E2Wz8ra2ekTBgsSRx3l3UMHUCv0PT0tNQQAADwIoyQ==
+  sbp:
+    crc: '0xc928'
+    length: 32
+    msg_type: '0x209'
+    payload: 4P96E2Wz8ra2ekTBgsSRx3l3UMHUCv0PT0tNQQAADwI=
+    preamble: '0x55'
+    sender: '0x88d3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 2
+      n_sats: 15
+      tow: 326829000
+      x: -2684269.683741399
+      y: -4316647.3623821335
+      z: 3839645.90179852
+    module: sbp.navigation
+    name: MsgPosECEF
+  msg_type: 521
+  raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 521, "tow": 326829000, "crc":
+    22203, "length": 32, "flags": 2, "y": -4316647.3623821335, "x": -2684269.683741399,
+    "z": 3839645.90179852, "preamble": 85, "payload": "yAN7E5LWhNe2ekTB1UQx13l3UMFHIm7zTktNQQAADwI=",
+    "accuracy": 0}'
+  raw_packet: VQkC04ggyAN7E5LWhNe2ekTB1UQx13l3UMFHIm7zTktNQQAADwK7Vg==
+  sbp:
+    crc: '0x56bb'
+    length: 32
+    msg_type: '0x209'
+    payload: yAN7E5LWhNe2ekTB1UQx13l3UMFHIm7zTktNQQAADwI=
+    preamble: '0x55'
+    sender: '0x88d3'
+version: null
+...
