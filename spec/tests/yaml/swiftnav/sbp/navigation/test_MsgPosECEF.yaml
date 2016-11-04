@@ -8,31 +8,6 @@ tests:
     fields:
       accuracy: 0
       flags: 2
-      n_sats: 14
-      tow: 326825000
-      x: -2684269.2107900055
-      y: -4316647.00927669
-      z: 3839647.0740485587
-    module: sbp.navigation
-    name: MsgPosECEF
-  msg_type: 521
-  raw_json: '{"n_sats": 14, "sender": 35027, "msg_type": 521, "tow": 326825000, "crc":
-    61754, "length": 32, "flags": 2, "y": -4316647.00927669, "x": -2684269.2107900055,
-    "z": 3839647.0740485587, "preamble": 85, "payload": "KPR6E7oq+5q2ekTBQv2XwHl3UMFVbHqJT0tNQQAADgI=",
-    "accuracy": 0}'
-  raw_packet: VQkC04ggKPR6E7oq+5q2ekTBQv2XwHl3UMFVbHqJT0tNQQAADgI68Q==
-  sbp:
-    crc: '0xf13a'
-    length: 32
-    msg_type: '0x209'
-    payload: KPR6E7oq+5q2ekTBQv2XwHl3UMFVbHqJT0tNQQAADgI=
-    preamble: '0x55'
-    sender: '0x88d3'
-
-- msg:
-    fields:
-      accuracy: 0
-      flags: 2
       n_sats: 15
       tow: 326826000
       x: -2684269.0326572997
