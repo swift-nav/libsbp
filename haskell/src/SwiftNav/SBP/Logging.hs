@@ -58,6 +58,45 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgLog_" . stripPr
              ''MsgLog)
 $(makeLenses ''MsgLog)
 
+msgFwd :: Word16
+msgFwd = 0x0402
+
+-- | SBP class for message MSG_FWD (0x0402).
+--
+-- This message provides the ability to forward messages over SBP.  This may
+-- take the form of wrapping up SBP messages received by Piksi for logging
+-- purposes or wrapping  another protocol with SBP.  The source identifier
+-- indicates from what interface a forwarded stream derived. The protocol
+-- identifier identifies what the expected protocol the forwarded msg contains.
+-- Protocol 0 represents SBP and the remaining values are implementation
+-- defined.
+data MsgFwd = MsgFwd
+  { _msgFwd_source    :: Word8
+    -- ^ source identifier
+  , _msgFwd_protocol  :: Word8
+    -- ^ protocol identifier
+  , _msgFwd_fwd_payload :: Text
+    -- ^ variable length wrapped binary message
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgFwd where
+  get = do
+    _msgFwd_source <- getWord8
+    _msgFwd_protocol <- getWord8
+    _msgFwd_fwd_payload <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    return MsgFwd {..}
+
+  put MsgFwd {..} = do
+    putWord8 _msgFwd_source
+    putWord8 _msgFwd_protocol
+    putByteString $ encodeUtf8 _msgFwd_fwd_payload
+
+$(deriveSBP 'msgFwd ''MsgFwd)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFwd_" . stripPrefix "_msgFwd_"}
+             ''MsgFwd)
+$(makeLenses ''MsgFwd)
+
 msgTweet :: Word16
 msgTweet = 0x0012
 

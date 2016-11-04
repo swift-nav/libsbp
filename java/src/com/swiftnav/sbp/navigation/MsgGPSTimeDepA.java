@@ -21,9 +21,9 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_GPS_TIME (0x0102).
+/** SBP class for message MSG_GPS_TIME_DEP_A (0x0100).
  *
- * You can have MSG_GPS_TIME inherent its fields directly from
+ * You can have MSG_GPS_TIME_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
@@ -41,8 +41,8 @@ import org.json.JSONArray;
  * (but lacking the ns field) and indicates a more precise time of
  * these messages. */
 
-public class MsgGPSTime extends SBPMessage {
-    public static final int TYPE = 0x0102;
+public class MsgGPSTimeDepA extends SBPMessage {
+    public static final int TYPE = 0x0100;
 
     
     /** GPS week number */
@@ -60,9 +60,9 @@ from -500000 to 500000)
     public int flags;
     
 
-    public MsgGPSTime (int sender) { super(sender, TYPE); }
-    public MsgGPSTime () { super(TYPE); }
-    public MsgGPSTime (SBPMessage msg) throws SBPBinaryException {
+    public MsgGPSTimeDepA (int sender) { super(sender, TYPE); }
+    public MsgGPSTimeDepA () { super(TYPE); }
+    public MsgGPSTimeDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }

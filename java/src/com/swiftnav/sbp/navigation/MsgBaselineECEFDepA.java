@@ -21,9 +21,9 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_BASELINE_ECEF (0x020B).
+/** SBP class for message MSG_BASELINE_ECEF_DEP_A (0x0202).
  *
- * You can have MSG_BASELINE_ECEF inherent its fields directly from
+ * You can have MSG_BASELINE_ECEF_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
@@ -33,8 +33,8 @@ import org.json.JSONArray;
  * full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow). */
 
-public class MsgBaselineECEF extends SBPMessage {
-    public static final int TYPE = 0x020B;
+public class MsgBaselineECEFDepA extends SBPMessage {
+    public static final int TYPE = 0x0202;
 
     
     /** GPS Time of Week */
@@ -61,9 +61,9 @@ to 0.
     public int flags;
     
 
-    public MsgBaselineECEF (int sender) { super(sender, TYPE); }
-    public MsgBaselineECEF () { super(TYPE); }
-    public MsgBaselineECEF (SBPMessage msg) throws SBPBinaryException {
+    public MsgBaselineECEFDepA (int sender) { super(sender, TYPE); }
+    public MsgBaselineECEFDepA () { super(TYPE); }
+    public MsgBaselineECEFDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }

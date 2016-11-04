@@ -21,37 +21,42 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_BASELINE_HEADING (0x020F).
+/** SBP class for message MSG_DOPS_DEP_A (0x0206).
  *
- * You can have MSG_BASELINE_HEADING inherent its fields directly from
+ * You can have MSG_DOPS_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message reports the baseline heading pointing from the base station
- * to the rover relative to True North. The full GPS time is given by the
- * preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
- * that time-matched RTK mode is used when the base station is moving. */
+ * This dilution of precision (DOP) message describes the effect of
+ * navigation satellite geometry on positional measurement
+ * precision. */
 
-public class MsgBaselineHeading extends SBPMessage {
-    public static final int TYPE = 0x020F;
+public class MsgDopsDepA extends SBPMessage {
+    public static final int TYPE = 0x0206;
 
     
     /** GPS Time of Week */
     public long tow;
     
-    /** Heading */
-    public long heading;
+    /** Geometric Dilution of Precision */
+    public int gdop;
     
-    /** Number of satellites used in solution */
-    public int n_sats;
+    /** Position Dilution of Precision */
+    public int pdop;
     
-    /** Status flags */
-    public int flags;
+    /** Time Dilution of Precision */
+    public int tdop;
+    
+    /** Horizontal Dilution of Precision */
+    public int hdop;
+    
+    /** Vertical Dilution of Precision */
+    public int vdop;
     
 
-    public MsgBaselineHeading (int sender) { super(sender, TYPE); }
-    public MsgBaselineHeading () { super(TYPE); }
-    public MsgBaselineHeading (SBPMessage msg) throws SBPBinaryException {
+    public MsgDopsDepA (int sender) { super(sender, TYPE); }
+    public MsgDopsDepA () { super(TYPE); }
+    public MsgDopsDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -60,26 +65,32 @@ public class MsgBaselineHeading extends SBPMessage {
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         tow = parser.getU32();
-        heading = parser.getU32();
-        n_sats = parser.getU8();
-        flags = parser.getU8();
+        gdop = parser.getU16();
+        pdop = parser.getU16();
+        tdop = parser.getU16();
+        hdop = parser.getU16();
+        vdop = parser.getU16();
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU32(tow);
-        builder.putU32(heading);
-        builder.putU8(n_sats);
-        builder.putU8(flags);
+        builder.putU16(gdop);
+        builder.putU16(pdop);
+        builder.putU16(tdop);
+        builder.putU16(hdop);
+        builder.putU16(vdop);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);
-        obj.put("heading", heading);
-        obj.put("n_sats", n_sats);
-        obj.put("flags", flags);
+        obj.put("gdop", gdop);
+        obj.put("pdop", pdop);
+        obj.put("tdop", tdop);
+        obj.put("hdop", hdop);
+        obj.put("vdop", vdop);
         return obj;
     }
 }

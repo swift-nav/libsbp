@@ -29,6 +29,23 @@
 /** Represents all the relevant information about the signal
  *
  * Signal identifier containing constellation, band, and satellite identifier
+ *        - 0 GPS L1CA
+ *        - 1 GPS L2CM
+ *        - 2 SBAS L1CA
+ *        - 3 GLO L1CA
+ *        - 4 GLO L2CA
+ *        - 5 GPS L1P
+ *        - 6 GPS L2P
+ */
+typedef struct __attribute__((packed)) {
+  u8 sat;     /**< Constellation-specific satellite identifier */
+  u8 code;    /**< Signal constellation, band and code */
+} gnss_signal16_t;
+
+
+/** Represents all the relevant information about the signal
+ *
+ * Signal identifier containing constellation, band, and satellite identifier
  */
 typedef struct __attribute__((packed)) {
   u16 sat;         /**< Constellation-specific satellite identifier */
@@ -47,6 +64,24 @@ typedef struct __attribute__((packed)) {
   u32 tow;    /**< Milliseconds since start of GPS week [ms] */
   u16 wn;     /**< GPS week number [week] */
 } sbp_gps_time_t;
+
+
+/** Nanosecond-accurate receiver clock time
+ *
+ * A wire-appropriate GPS time, defined as the number of
+ * milliseconds since beginning of the week on the Saturday/Sunday
+ * A wire-appropriate receiver clock time, defined as the time
+ * since the beginning of the week on the Saturday/Sunday
+ * transition. In most cases, observations are epoch aligned 
+ * so ns field will be 0.
+ */
+typedef struct __attribute__((packed)) {
+  u32 tow;    /**< Milliseconds since start of GPS week [ms] */
+  s32 ns;     /**< Nanosecond residual of millisecond-rounded TOW (ranges
+from -500000 to 500000)
+ [ns] */
+  u16 wn;     /**< GPS week number [week] */
+} gps_time_nano_t;
 
 
 /** GPS carrier phase measurement.

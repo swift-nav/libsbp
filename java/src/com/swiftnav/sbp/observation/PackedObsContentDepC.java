@@ -22,40 +22,58 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class ObservationHeader extends SBPStruct {
+public class PackedObsContentDepC extends SBPStruct {
     
-    /** GNSS time of this observation */
-    public GPSTimeNano t;
+    /** Pseudorange observation */
+    public long P;
     
-    /** Total number of observations. First nibble is the size
-of the sequence (n), second nibble is the zero-indexed
-counter (ith packet of n)
+    /** Carrier phase observation with typical sign convention. */
+    public CarrierPhase L;
+    
+    /** Carrier-to-Noise density */
+    public int cn0;
+    
+    /** Lock indicator. This value changes whenever a satellite
+signal has lost and regained lock, indicating that the
+carrier phase ambiguity may have changed.
  */
-    public int n_obs;
+    public int lock;
+    
+    /** GNSS signal identifier */
+    public GnssSignal sid;
     
 
-    public ObservationHeader () {}
+    public PackedObsContentDepC () {}
 
     @Override
-    public ObservationHeader parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public PackedObsContentDepC parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        t = new GPSTimeNano().parse(parser);
-        n_obs = parser.getU8();
+        P = parser.getU32();
+        L = new CarrierPhase().parse(parser);
+        cn0 = parser.getU8();
+        lock = parser.getU16();
+        sid = new GnssSignal().parse(parser);
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        t.build(builder);
-        builder.putU8(n_obs);
+        builder.putU32(P);
+        L.build(builder);
+        builder.putU8(cn0);
+        builder.putU16(lock);
+        sid.build(builder);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("t", t.toJSON());
-        obj.put("n_obs", n_obs);
+        obj.put("P", P);
+        obj.put("L", L.toJSON());
+        obj.put("cn0", cn0);
+        obj.put("lock", lock);
+        obj.put("sid", sid.toJSON());
         return obj;
     }
 }

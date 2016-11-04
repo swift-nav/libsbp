@@ -24,8 +24,10 @@ var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
 var GnssSignal = require("./gnss").GnssSignal;
+var GnssSignal16 = require("./gnss").GnssSignal16;
 var GPSTime = require("./gnss").GPSTime;
 var CarrierPhase = require("./gnss").CarrierPhase;
+var GPSTimeNano = require("./gnss").GPSTimeNano;
 
 /**
  * SBP class for message MSG_ALMANAC (0x0069).

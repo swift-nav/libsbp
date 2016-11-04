@@ -42,6 +42,10 @@ or configuration requests.
   ----------
   sbp : SBP
     SBP parent object to inherit from.
+  cause : int
+    Cause of startup
+  startup_type : int
+    Startup type
   reserved : int
     Reserved
   sender : int
@@ -49,8 +53,12 @@ or configuration requests.
 
   """
   _parser = Struct("MsgStartup",
-                   ULInt32('reserved'),)
+                   ULInt8('cause'),
+                   ULInt8('startup_type'),
+                   ULInt16('reserved'),)
   __slots__ = [
+               'cause',
+               'startup_type',
                'reserved',
               ]
 
@@ -64,6 +72,8 @@ or configuration requests.
       super( MsgStartup, self).__init__()
       self.msg_type = SBP_MSG_STARTUP
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.cause = kwargs.pop('cause')
+      self.startup_type = kwargs.pop('startup_type')
       self.reserved = kwargs.pop('reserved')
 
   def __repr__(self):
@@ -103,6 +113,104 @@ or configuration requests.
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgStartup, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_DGNSS_STATUS = 0xFF02
+class MsgDgnssStatus(SBP):
+  """SBP class for message MSG_DGNSS_STATUS (0xFF02).
+
+  You can have MSG_DGNSS_STATUS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message provides information about the receipt of Differential
+corrections.  It is expected to be sent with each receipt of a complete
+corrections packet.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  flags : int
+    Status flags
+  latency : int
+    Latency of observation receipt
+  num_signals : int
+    Number of signals from base station
+  source : string
+    Corrections source string
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgDgnssStatus",
+                   ULInt8('flags'),
+                   ULInt16('latency'),
+                   ULInt8('num_signals'),
+                   greedy_string('source'),)
+  __slots__ = [
+               'flags',
+               'latency',
+               'num_signals',
+               'source',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgDgnssStatus,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgDgnssStatus, self).__init__()
+      self.msg_type = SBP_MSG_DGNSS_STATUS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.flags = kwargs.pop('flags')
+      self.latency = kwargs.pop('latency')
+      self.num_signals = kwargs.pop('num_signals')
+      self.source = kwargs.pop('source')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgDgnssStatus.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgDgnssStatus(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgDgnssStatus._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgDgnssStatus._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgDgnssStatus, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -200,5 +308,6 @@ the remaining error flags should be inspected.
 
 msg_classes = {
   0xFF00: MsgStartup,
+  0xFF02: MsgDgnssStatus,
   0xFFFF: MsgHeartbeat,
 }

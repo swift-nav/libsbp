@@ -20,7 +20,8 @@
  *  * Messages for reading/writing the device's onboard flash memory. Many
  * of these messages target specific flash memory peripherals used in
  * Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
- * configuration flash.
+ * configuration flash from Piksi 2.3.1.  This module does not apply 
+ * to Piksi Multi.
  * \{ */
 
 #ifndef LIBSBP_FLASH_MESSAGES_H

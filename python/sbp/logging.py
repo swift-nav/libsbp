@@ -112,6 +112,103 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     d.update(j)
     return d
     
+SBP_MSG_FWD = 0x0402
+class MsgFwd(SBP):
+  """SBP class for message MSG_FWD (0x0402).
+
+  You can have MSG_FWD inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message provides the ability to forward messages over SBP.  This may take the form
+of wrapping up SBP messages received by Piksi for logging purposes or wrapping 
+another protocol with SBP.
+
+The source identifier indicates from what interface a forwarded stream derived.
+The protocol identifier identifies what the expected protocol the forwarded msg contains.
+Protocol 0 represents SBP and the remaining values are implementation defined.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  source : int
+    source identifier
+  protocol : int
+    protocol identifier
+  fwd_payload : string
+    variable length wrapped binary message
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgFwd",
+                   ULInt8('source'),
+                   ULInt8('protocol'),
+                   greedy_string('fwd_payload'),)
+  __slots__ = [
+               'source',
+               'protocol',
+               'fwd_payload',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgFwd,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgFwd, self).__init__()
+      self.msg_type = SBP_MSG_FWD
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.source = kwargs.pop('source')
+      self.protocol = kwargs.pop('protocol')
+      self.fwd_payload = kwargs.pop('fwd_payload')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFwd.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFwd(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgFwd._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgFwd._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgFwd, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_TWEET = 0x0012
 class MsgTweet(SBP):
   """SBP class for message MSG_TWEET (0x0012).
@@ -275,6 +372,7 @@ class MsgPrintDep(SBP):
 
 msg_classes = {
   0x0401: MsgLog,
+  0x0402: MsgFwd,
   0x0012: MsgTweet,
   0x0010: MsgPrintDep,
 }

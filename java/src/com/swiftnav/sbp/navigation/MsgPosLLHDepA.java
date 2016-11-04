@@ -21,9 +21,9 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_POS_LLH (0x020A).
+/** SBP class for message MSG_POS_LLH_DEP_A (0x0201).
  *
- * You can have MSG_POS_LLH inherent its fields directly from
+ * You can have MSG_POS_LLH_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
@@ -36,8 +36,8 @@ import org.json.JSONArray;
  * GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow). */
 
-public class MsgPosLLH extends SBPMessage {
-    public static final int TYPE = 0x020A;
+public class MsgPosLLHDepA extends SBPMessage {
+    public static final int TYPE = 0x0201;
 
     
     /** GPS Time of Week */
@@ -69,9 +69,9 @@ implemented). Defaults to 0.
     public int flags;
     
 
-    public MsgPosLLH (int sender) { super(sender, TYPE); }
-    public MsgPosLLH () { super(TYPE); }
-    public MsgPosLLH (SBPMessage msg) throws SBPBinaryException {
+    public MsgPosLLHDepA (int sender) { super(sender, TYPE); }
+    public MsgPosLLHDepA () { super(TYPE); }
+    public MsgPosLLHDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }

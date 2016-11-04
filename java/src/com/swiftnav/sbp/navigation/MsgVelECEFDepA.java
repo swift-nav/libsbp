@@ -21,35 +21,33 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_BASELINE_ECEF (0x020B).
+/** SBP class for message MSG_VEL_ECEF_DEP_A (0x0204).
  *
- * You can have MSG_BASELINE_ECEF inherent its fields directly from
+ * You can have MSG_VEL_ECEF_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message reports the baseline solution in Earth Centered
- * Earth Fixed (ECEF) coordinates. This baseline is the relative
- * vector distance from the base station to the rover receiver. The
- * full GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow). */
+ * This message reports the velocity in Earth Centered Earth Fixed
+ * (ECEF) coordinates. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow). */
 
-public class MsgBaselineECEF extends SBPMessage {
-    public static final int TYPE = 0x020B;
+public class MsgVelECEFDepA extends SBPMessage {
+    public static final int TYPE = 0x0204;
 
     
     /** GPS Time of Week */
     public long tow;
     
-    /** Baseline ECEF X coordinate */
+    /** Velocity ECEF X coordinate */
     public int x;
     
-    /** Baseline ECEF Y coordinate */
+    /** Velocity ECEF Y coordinate */
     public int y;
     
-    /** Baseline ECEF Z coordinate */
+    /** Velocity ECEF Z coordinate */
     public int z;
     
-    /** Position accuracy estimate (not implemented). Defaults
+    /** Velocity accuracy estimate (not implemented). Defaults
 to 0.
  */
     public int accuracy;
@@ -57,13 +55,13 @@ to 0.
     /** Number of satellites used in solution */
     public int n_sats;
     
-    /** Status flags */
+    /** Status flags (reserved) */
     public int flags;
     
 
-    public MsgBaselineECEF (int sender) { super(sender, TYPE); }
-    public MsgBaselineECEF () { super(TYPE); }
-    public MsgBaselineECEF (SBPMessage msg) throws SBPBinaryException {
+    public MsgVelECEFDepA (int sender) { super(sender, TYPE); }
+    public MsgVelECEFDepA () { super(TYPE); }
+    public MsgVelECEFDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }

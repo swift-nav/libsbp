@@ -11,7 +11,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-package com.swiftnav.sbp.system;
+package com.swiftnav.sbp.navigation;
 
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
@@ -21,34 +21,29 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_STARTUP (0xFF00).
+/** SBP class for message MSG_AGE_CORRECTIONS (0x0210).
  *
- * You can have MSG_STARTUP inherent its fields directly from
+ * You can have MSG_AGE_CORRECTIONS inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The system start-up message is sent once on system
- * start-up. It notifies the host or other attached devices that
- * the system has started and is now ready to respond to commands
- * or configuration requests. */
+ * This message reports the Age of the corrections used for the current
+ * Differential solution */
 
-public class MsgStartup extends SBPMessage {
-    public static final int TYPE = 0xFF00;
+public class MsgAgeCorrections extends SBPMessage {
+    public static final int TYPE = 0x0210;
 
     
-    /** Cause of startup */
-    public int cause;
+    /** GPS Time of Week */
+    public long tow;
     
-    /** Startup type */
-    public int startup_type;
-    
-    /** Reserved */
-    public int reserved;
+    /** Age of the corrections (0xFFFF indicates invalid) */
+    public int age;
     
 
-    public MsgStartup (int sender) { super(sender, TYPE); }
-    public MsgStartup () { super(TYPE); }
-    public MsgStartup (SBPMessage msg) throws SBPBinaryException {
+    public MsgAgeCorrections (int sender) { super(sender, TYPE); }
+    public MsgAgeCorrections () { super(TYPE); }
+    public MsgAgeCorrections (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -56,24 +51,21 @@ public class MsgStartup extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        cause = parser.getU8();
-        startup_type = parser.getU8();
-        reserved = parser.getU16();
+        tow = parser.getU32();
+        age = parser.getU16();
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putU8(cause);
-        builder.putU8(startup_type);
-        builder.putU16(reserved);
+        builder.putU32(tow);
+        builder.putU16(age);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("cause", cause);
-        obj.put("startup_type", startup_type);
-        obj.put("reserved", reserved);
+        obj.put("tow", tow);
+        obj.put("age", age);
         return obj;
     }
 }

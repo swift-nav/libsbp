@@ -11,51 +11,55 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-package com.swiftnav.sbp.observation;
+package com.swiftnav.sbp.gnss;
 
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class ObservationHeader extends SBPStruct {
+public class GPSTimeNano extends SBPStruct {
     
-    /** GNSS time of this observation */
-    public GPSTimeNano t;
+    /** Milliseconds since start of GPS week */
+    public long tow;
     
-    /** Total number of observations. First nibble is the size
-of the sequence (n), second nibble is the zero-indexed
-counter (ith packet of n)
+    /** Nanosecond residual of millisecond-rounded TOW (ranges
+from -500000 to 500000)
  */
-    public int n_obs;
+    public int ns;
+    
+    /** GPS week number */
+    public int wn;
     
 
-    public ObservationHeader () {}
+    public GPSTimeNano () {}
 
     @Override
-    public ObservationHeader parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public GPSTimeNano parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        t = new GPSTimeNano().parse(parser);
-        n_obs = parser.getU8();
+        tow = parser.getU32();
+        ns = parser.getS32();
+        wn = parser.getU16();
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        t.build(builder);
-        builder.putU8(n_obs);
+        builder.putU32(tow);
+        builder.putS32(ns);
+        builder.putU16(wn);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("t", t.toJSON());
-        obj.put("n_obs", n_obs);
+        obj.put("tow", tow);
+        obj.put("ns", ns);
+        obj.put("wn", wn);
         return obj;
     }
 }

@@ -11,7 +11,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-package com.swiftnav.sbp.navigation;
+package com.swiftnav.sbp.system;
 
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
@@ -21,37 +21,36 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_BASELINE_HEADING (0x020F).
+/** SBP class for message MSG_DGNSS_STATUS (0xFF02).
  *
- * You can have MSG_BASELINE_HEADING inherent its fields directly from
+ * You can have MSG_DGNSS_STATUS inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message reports the baseline heading pointing from the base station
- * to the rover relative to True North. The full GPS time is given by the
- * preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
- * that time-matched RTK mode is used when the base station is moving. */
+ * This message provides information about the receipt of Differential
+ * corrections.  It is expected to be sent with each receipt of a complete
+ * corrections packet. */
 
-public class MsgBaselineHeading extends SBPMessage {
-    public static final int TYPE = 0x020F;
+public class MsgDgnssStatus extends SBPMessage {
+    public static final int TYPE = 0xFF02;
 
-    
-    /** GPS Time of Week */
-    public long tow;
-    
-    /** Heading */
-    public long heading;
-    
-    /** Number of satellites used in solution */
-    public int n_sats;
     
     /** Status flags */
     public int flags;
     
+    /** Latency of observation receipt */
+    public int latency;
+    
+    /** Number of signals from base station */
+    public int num_signals;
+    
+    /** Corrections source string */
+    public String source;
+    
 
-    public MsgBaselineHeading (int sender) { super(sender, TYPE); }
-    public MsgBaselineHeading () { super(TYPE); }
-    public MsgBaselineHeading (SBPMessage msg) throws SBPBinaryException {
+    public MsgDgnssStatus (int sender) { super(sender, TYPE); }
+    public MsgDgnssStatus () { super(TYPE); }
+    public MsgDgnssStatus (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -59,27 +58,27 @@ public class MsgBaselineHeading extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        tow = parser.getU32();
-        heading = parser.getU32();
-        n_sats = parser.getU8();
         flags = parser.getU8();
+        latency = parser.getU16();
+        num_signals = parser.getU8();
+        source = parser.getString();
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putU32(tow);
-        builder.putU32(heading);
-        builder.putU8(n_sats);
         builder.putU8(flags);
+        builder.putU16(latency);
+        builder.putU8(num_signals);
+        builder.putString(source);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("tow", tow);
-        obj.put("heading", heading);
-        obj.put("n_sats", n_sats);
         obj.put("flags", flags);
+        obj.put("latency", latency);
+        obj.put("num_signals", num_signals);
+        obj.put("source", source);
         return obj;
     }
 }

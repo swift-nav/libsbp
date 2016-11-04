@@ -23,6 +23,54 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, gr
 # Please do not hand edit!
 
 
+class GnssSignal16(object):
+  """GnssSignal16.
+  
+  Signal identifier containing constellation, band, and satellite identifier
+       - 0 GPS L1CA
+       - 1 GPS L2CM
+       - 2 SBAS L1CA
+       - 3 GLO L1CA
+       - 4 GLO L2CA
+       - 5 GPS L1P
+       - 6 GPS L2P
+
+  
+  Parameters
+  ----------
+  sat : int
+    Constellation-specific satellite identifier
+  code : int
+    Signal constellation, band and code
+
+  """
+  _parser = Embedded(Struct("GnssSignal16",
+                     ULInt8('sat'),
+                     ULInt8('code'),))
+  __slots__ = [
+               'sat',
+               'code',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sat = kwargs.pop('sat')
+      self.code = kwargs.pop('code')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = GnssSignal16._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GnssSignal16.build(d)
+    
 class GnssSignal(object):
   """GnssSignal.
   
@@ -111,6 +159,59 @@ transition.
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return GPSTime.build(d)
+    
+class GPSTimeNano(object):
+  """GPSTimeNano.
+  
+  A wire-appropriate GPS time, defined as the number of
+milliseconds since beginning of the week on the Saturday/Sunday
+A wire-appropriate receiver clock time, defined as the time
+since the beginning of the week on the Saturday/Sunday
+transition. In most cases, observations are epoch aligned 
+so ns field will be 0.
+
+  
+  Parameters
+  ----------
+  tow : int
+    Milliseconds since start of GPS week
+  ns : int
+    Nanosecond residual of millisecond-rounded TOW (ranges
+from -500000 to 500000)
+
+  wn : int
+    GPS week number
+
+  """
+  _parser = Embedded(Struct("GPSTimeNano",
+                     ULInt32('tow'),
+                     SLInt32('ns'),
+                     ULInt16('wn'),))
+  __slots__ = [
+               'tow',
+               'ns',
+               'wn',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.tow = kwargs.pop('tow')
+      self.ns = kwargs.pop('ns')
+      self.wn = kwargs.pop('wn')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = GPSTimeNano._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GPSTimeNano.build(d)
     
 class CarrierPhase(object):
   """CarrierPhase.

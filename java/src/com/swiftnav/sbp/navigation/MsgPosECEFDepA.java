@@ -21,33 +21,36 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_BASELINE_ECEF (0x020B).
+/** SBP class for message MSG_POS_ECEF_DEP_A (0x0200).
  *
- * You can have MSG_BASELINE_ECEF inherent its fields directly from
+ * You can have MSG_POS_ECEF_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message reports the baseline solution in Earth Centered
- * Earth Fixed (ECEF) coordinates. This baseline is the relative
- * vector distance from the base station to the rover receiver. The
- * full GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow). */
+ * The position solution message reports absolute Earth Centered
+ * Earth Fixed (ECEF) coordinates and the status (single point vs
+ * pseudo-absolute RTK) of the position solution. If the rover
+ * receiver knows the surveyed position of the base station and has
+ * an RTK solution, this reports a pseudo-absolute position
+ * solution using the base station position and the rover's RTK
+ * baseline vector. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow). */
 
-public class MsgBaselineECEF extends SBPMessage {
-    public static final int TYPE = 0x020B;
+public class MsgPosECEFDepA extends SBPMessage {
+    public static final int TYPE = 0x0200;
 
     
     /** GPS Time of Week */
     public long tow;
     
-    /** Baseline ECEF X coordinate */
-    public int x;
+    /** ECEF X coordinate */
+    public double x;
     
-    /** Baseline ECEF Y coordinate */
-    public int y;
+    /** ECEF Y coordinate */
+    public double y;
     
-    /** Baseline ECEF Z coordinate */
-    public int z;
+    /** ECEF Z coordinate */
+    public double z;
     
     /** Position accuracy estimate (not implemented). Defaults
 to 0.
@@ -61,9 +64,9 @@ to 0.
     public int flags;
     
 
-    public MsgBaselineECEF (int sender) { super(sender, TYPE); }
-    public MsgBaselineECEF () { super(TYPE); }
-    public MsgBaselineECEF (SBPMessage msg) throws SBPBinaryException {
+    public MsgPosECEFDepA (int sender) { super(sender, TYPE); }
+    public MsgPosECEFDepA () { super(TYPE); }
+    public MsgPosECEFDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -72,9 +75,9 @@ to 0.
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         tow = parser.getU32();
-        x = parser.getS32();
-        y = parser.getS32();
-        z = parser.getS32();
+        x = parser.getDouble();
+        y = parser.getDouble();
+        z = parser.getDouble();
         accuracy = parser.getU16();
         n_sats = parser.getU8();
         flags = parser.getU8();
@@ -83,9 +86,9 @@ to 0.
     @Override
     protected void build(Builder builder) {
         builder.putU32(tow);
-        builder.putS32(x);
-        builder.putS32(y);
-        builder.putS32(z);
+        builder.putDouble(x);
+        builder.putDouble(y);
+        builder.putDouble(z);
         builder.putU16(accuracy);
         builder.putU8(n_sats);
         builder.putU8(flags);

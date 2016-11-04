@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_DOPS (0x0206).
+/** SBP class for message MSG_DOPS (0x0208).
  *
  * You can have MSG_DOPS inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -29,10 +29,11 @@ import org.json.JSONArray;
  *
  * This dilution of precision (DOP) message describes the effect of
  * navigation satellite geometry on positional measurement
- * precision. */
+ * precision.  The flags field indicated whether the DOP reported
+ * corresponds to differential or SPP solution. */
 
 public class MsgDops extends SBPMessage {
-    public static final int TYPE = 0x0206;
+    public static final int TYPE = 0x0208;
 
     
     /** GPS Time of Week */
@@ -53,6 +54,9 @@ public class MsgDops extends SBPMessage {
     /** Vertical Dilution of Precision */
     public int vdop;
     
+    /** Indicates the position solution with which the DOPS message corresponds */
+    public int flags;
+    
 
     public MsgDops (int sender) { super(sender, TYPE); }
     public MsgDops () { super(TYPE); }
@@ -70,6 +74,7 @@ public class MsgDops extends SBPMessage {
         tdop = parser.getU16();
         hdop = parser.getU16();
         vdop = parser.getU16();
+        flags = parser.getU8();
     }
 
     @Override
@@ -80,6 +85,7 @@ public class MsgDops extends SBPMessage {
         builder.putU16(tdop);
         builder.putU16(hdop);
         builder.putU16(vdop);
+        builder.putU8(flags);
     }
 
     @Override
@@ -91,6 +97,7 @@ public class MsgDops extends SBPMessage {
         obj.put("tdop", tdop);
         obj.put("hdop", hdop);
         obj.put("vdop", vdop);
+        obj.put("flags", flags);
         return obj;
     }
 }

@@ -21,57 +21,53 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_POS_LLH (0x020A).
+/** SBP class for message MSG_VEL_NED_DEP_A (0x0205).
  *
- * You can have MSG_POS_LLH inherent its fields directly from
+ * You can have MSG_VEL_NED_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This position solution message reports the absolute geodetic
- * coordinates and the status (single point vs pseudo-absolute RTK)
- * of the position solution. If the rover receiver knows the
- * surveyed position of the base station and has an RTK solution,
- * this reports a pseudo-absolute position solution using the base
- * station position and the rover's RTK baseline vector. The full
- * GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow). */
+ * This message reports the velocity in local North East Down (NED)
+ * coordinates. The NED coordinate system is defined as the local WGS84
+ * tangent plane centered at the current position. The full GPS time is
+ * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). */
 
-public class MsgPosLLH extends SBPMessage {
-    public static final int TYPE = 0x020A;
+public class MsgVelNEDDepA extends SBPMessage {
+    public static final int TYPE = 0x0205;
 
     
     /** GPS Time of Week */
     public long tow;
     
-    /** Latitude */
-    public double lat;
+    /** Velocity North coordinate */
+    public int n;
     
-    /** Longitude */
-    public double lon;
+    /** Velocity East coordinate */
+    public int e;
     
-    /** Height */
-    public double height;
+    /** Velocity Down coordinate */
+    public int d;
     
-    /** Horizontal position accuracy estimate (not
+    /** Horizontal velocity accuracy estimate (not
 implemented). Defaults to 0.
  */
     public int h_accuracy;
     
-    /** Vertical position accuracy estimate (not
+    /** Vertical velocity accuracy estimate (not
 implemented). Defaults to 0.
  */
     public int v_accuracy;
     
-    /** Number of satellites used in solution. */
+    /** Number of satellites used in solution */
     public int n_sats;
     
-    /** Status flags */
+    /** Status flags (reserved) */
     public int flags;
     
 
-    public MsgPosLLH (int sender) { super(sender, TYPE); }
-    public MsgPosLLH () { super(TYPE); }
-    public MsgPosLLH (SBPMessage msg) throws SBPBinaryException {
+    public MsgVelNEDDepA (int sender) { super(sender, TYPE); }
+    public MsgVelNEDDepA () { super(TYPE); }
+    public MsgVelNEDDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -80,9 +76,9 @@ implemented). Defaults to 0.
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         tow = parser.getU32();
-        lat = parser.getDouble();
-        lon = parser.getDouble();
-        height = parser.getDouble();
+        n = parser.getS32();
+        e = parser.getS32();
+        d = parser.getS32();
         h_accuracy = parser.getU16();
         v_accuracy = parser.getU16();
         n_sats = parser.getU8();
@@ -92,9 +88,9 @@ implemented). Defaults to 0.
     @Override
     protected void build(Builder builder) {
         builder.putU32(tow);
-        builder.putDouble(lat);
-        builder.putDouble(lon);
-        builder.putDouble(height);
+        builder.putS32(n);
+        builder.putS32(e);
+        builder.putS32(d);
         builder.putU16(h_accuracy);
         builder.putU16(v_accuracy);
         builder.putU8(n_sats);
@@ -105,9 +101,9 @@ implemented). Defaults to 0.
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);
-        obj.put("lat", lat);
-        obj.put("lon", lon);
-        obj.put("height", height);
+        obj.put("n", n);
+        obj.put("e", e);
+        obj.put("d", d);
         obj.put("h_accuracy", h_accuracy);
         obj.put("v_accuracy", v_accuracy);
         obj.put("n_sats", n_sats);

@@ -30,17 +30,29 @@ public class PackedObsContent extends SBPStruct {
     /** Carrier phase observation with typical sign convention. */
     public CarrierPhase L;
     
-    /** Carrier-to-Noise density */
+    /** Doppler observation with typical sign convention. */
+    public Doppler D;
+    
+    /** Carrier-to-Noise density.  Zero implies invalid cn0. */
     public int cn0;
     
-    /** Lock indicator. This value changes whenever a satellite
-signal has lost and regained lock, indicating that the
-carrier phase ambiguity may have changed.
+    /** Lock timer. This value gives an indication of the time
+for which a signal has maintained continuous phase lock.
+Whenever a signal has lost and regained lock, this 
+value is reset to zero. It is encoded according to DF402 from
+the RTCM 10403.2 Amendment 2 specification.  Valid values range 
+from 0 to 15 and the most significant nibble is reserved for future use.
  */
     public int lock;
     
-    /** GNSS signal identifier */
-    public GnssSignal sid;
+    /** Measurement status flags. A bit field of flags providing the
+status of this observation.  If this field is 0 it means only the Cn0
+estimate for the signal is valid.
+ */
+    public int flags;
+    
+    /** GNSS signal identifier (16 bit) */
+    public GnssSignal16 sid;
     
 
     public PackedObsContent () {}
@@ -50,9 +62,11 @@ carrier phase ambiguity may have changed.
         /* Parse fields from binary */
         P = parser.getU32();
         L = new CarrierPhase().parse(parser);
+        D = new Doppler().parse(parser);
         cn0 = parser.getU8();
-        lock = parser.getU16();
-        sid = new GnssSignal().parse(parser);
+        lock = parser.getU8();
+        flags = parser.getU8();
+        sid = new GnssSignal16().parse(parser);
         return this;
     }
 
@@ -61,8 +75,10 @@ carrier phase ambiguity may have changed.
         /* Build fields into binary */
         builder.putU32(P);
         L.build(builder);
+        D.build(builder);
         builder.putU8(cn0);
-        builder.putU16(lock);
+        builder.putU8(lock);
+        builder.putU8(flags);
         sid.build(builder);
     }
 
@@ -71,8 +87,10 @@ carrier phase ambiguity may have changed.
         JSONObject obj = new JSONObject();
         obj.put("P", P);
         obj.put("L", L.toJSON());
+        obj.put("D", D.toJSON());
         obj.put("cn0", cn0);
         obj.put("lock", lock);
+        obj.put("flags", flags);
         obj.put("sid", sid.toJSON());
         return obj;
     }

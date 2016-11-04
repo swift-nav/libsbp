@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_VEL_NED (0x0205).
+/** SBP class for message MSG_VEL_NED (0x020E).
  *
  * You can have MSG_VEL_NED inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -33,7 +33,7 @@ import org.json.JSONArray;
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). */
 
 public class MsgVelNED extends SBPMessage {
-    public static final int TYPE = 0x0205;
+    public static final int TYPE = 0x020E;
 
     
     /** GPS Time of Week */
@@ -61,7 +61,7 @@ implemented). Defaults to 0.
     /** Number of satellites used in solution */
     public int n_sats;
     
-    /** Status flags (reserved) */
+    /** Status flags */
     public int flags;
     
 

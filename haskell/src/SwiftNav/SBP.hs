@@ -58,12 +58,16 @@ data SBPMsg =
    | SBPMsgAcqResultDepA MsgAcqResultDepA Msg
    | SBPMsgAcqResultDepB MsgAcqResultDepB Msg
    | SBPMsgAcqSvProfile MsgAcqSvProfile Msg
+   | SBPMsgAgeCorrections MsgAgeCorrections Msg
    | SBPMsgAlmanac MsgAlmanac Msg
    | SBPMsgBasePosEcef MsgBasePosEcef Msg
    | SBPMsgBasePosLlh MsgBasePosLlh Msg
    | SBPMsgBaselineEcef MsgBaselineEcef Msg
+   | SBPMsgBaselineEcefDepA MsgBaselineEcefDepA Msg
    | SBPMsgBaselineHeading MsgBaselineHeading Msg
+   | SBPMsgBaselineHeadingDepA MsgBaselineHeadingDepA Msg
    | SBPMsgBaselineNed MsgBaselineNed Msg
+   | SBPMsgBaselineNedDepA MsgBaselineNedDepA Msg
    | SBPMsgBootloaderHandshakeDepA MsgBootloaderHandshakeDepA Msg
    | SBPMsgBootloaderHandshakeReq MsgBootloaderHandshakeReq Msg
    | SBPMsgBootloaderHandshakeResp MsgBootloaderHandshakeResp Msg
@@ -71,7 +75,9 @@ data SBPMsg =
    | SBPMsgCwResults MsgCwResults Msg
    | SBPMsgCwStart MsgCwStart Msg
    | SBPMsgDeviceMonitor MsgDeviceMonitor Msg
+   | SBPMsgDgnssStatus MsgDgnssStatus Msg
    | SBPMsgDops MsgDops Msg
+   | SBPMsgDopsDepA MsgDopsDepA Msg
    | SBPMsgEphemerisDepA MsgEphemerisDepA Msg
    | SBPMsgEphemerisDepB MsgEphemerisDepB Msg
    | SBPMsgEphemerisDepC MsgEphemerisDepC Msg
@@ -92,7 +98,9 @@ data SBPMsg =
    | SBPMsgFlashProgram MsgFlashProgram Msg
    | SBPMsgFlashReadReq MsgFlashReadReq Msg
    | SBPMsgFlashReadResp MsgFlashReadResp Msg
+   | SBPMsgFwd MsgFwd Msg
    | SBPMsgGpsTime MsgGpsTime Msg
+   | SBPMsgGpsTimeDepA MsgGpsTimeDepA Msg
    | SBPMsgGroupDelay MsgGroupDelay Msg
    | SBPMsgHeartbeat MsgHeartbeat Msg
    | SBPMsgIarState MsgIarState Msg
@@ -106,8 +114,11 @@ data SBPMsg =
    | SBPMsgObs MsgObs Msg
    | SBPMsgObsDepA MsgObsDepA Msg
    | SBPMsgObsDepB MsgObsDepB Msg
+   | SBPMsgObsDepC MsgObsDepC Msg
    | SBPMsgPosEcef MsgPosEcef Msg
+   | SBPMsgPosEcefDepA MsgPosEcefDepA Msg
    | SBPMsgPosLlh MsgPosLlh Msg
+   | SBPMsgPosLlhDepA MsgPosLlhDepA Msg
    | SBPMsgPrintDep MsgPrintDep Msg
    | SBPMsgReset MsgReset Msg
    | SBPMsgResetFilters MsgResetFilters Msg
@@ -135,8 +146,11 @@ data SBPMsg =
    | SBPMsgUartState MsgUartState Msg
    | SBPMsgUartStateDepa MsgUartStateDepa Msg
    | SBPMsgUserData MsgUserData Msg
+   | SBPMsgUtcTime MsgUtcTime Msg
    | SBPMsgVelEcef MsgVelEcef Msg
+   | SBPMsgVelEcefDepA MsgVelEcefDepA Msg
    | SBPMsgVelNed MsgVelNed Msg
+   | SBPMsgVelNedDepA MsgVelNedDepA Msg
    | SBPMsgBadCrc Msg
    | SBPMsgUnknown Msg
   deriving ( Show, Read, Eq )
@@ -154,12 +168,16 @@ instance Binary SBPMsg where
           | _msgSBPType == msgAcqResultDepA = SBPMsgAcqResultDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgAcqResultDepB = SBPMsgAcqResultDepB (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgAcqSvProfile = SBPMsgAcqSvProfile (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgAgeCorrections = SBPMsgAgeCorrections (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgAlmanac = SBPMsgAlmanac (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBasePosEcef = SBPMsgBasePosEcef (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBasePosLlh = SBPMsgBasePosLlh (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBaselineEcef = SBPMsgBaselineEcef (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgBaselineEcefDepA = SBPMsgBaselineEcefDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBaselineHeading = SBPMsgBaselineHeading (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgBaselineHeadingDepA = SBPMsgBaselineHeadingDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBaselineNed = SBPMsgBaselineNed (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgBaselineNedDepA = SBPMsgBaselineNedDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp (decode (fromStrict _msgSBPPayload)) m
@@ -167,7 +185,9 @@ instance Binary SBPMsg where
           | _msgSBPType == msgCwResults = SBPMsgCwResults (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgCwStart = SBPMsgCwStart (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgDeviceMonitor = SBPMsgDeviceMonitor (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgDgnssStatus = SBPMsgDgnssStatus (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgDops = SBPMsgDops (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgDopsDepA = SBPMsgDopsDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgEphemerisDepC = SBPMsgEphemerisDepC (decode (fromStrict _msgSBPPayload)) m
@@ -188,7 +208,9 @@ instance Binary SBPMsg where
           | _msgSBPType == msgFlashProgram = SBPMsgFlashProgram (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgFlashReadReq = SBPMsgFlashReadReq (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgFlashReadResp = SBPMsgFlashReadResp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgFwd = SBPMsgFwd (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgGpsTime = SBPMsgGpsTime (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgGpsTimeDepA = SBPMsgGpsTimeDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgGroupDelay = SBPMsgGroupDelay (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgHeartbeat = SBPMsgHeartbeat (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgIarState = SBPMsgIarState (decode (fromStrict _msgSBPPayload)) m
@@ -202,8 +224,11 @@ instance Binary SBPMsg where
           | _msgSBPType == msgObs = SBPMsgObs (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgObsDepA = SBPMsgObsDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgObsDepB = SBPMsgObsDepB (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgObsDepC = SBPMsgObsDepC (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgPosEcef = SBPMsgPosEcef (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgPosEcefDepA = SBPMsgPosEcefDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgPosLlh = SBPMsgPosLlh (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgPosLlhDepA = SBPMsgPosLlhDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgReset = SBPMsgReset (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgResetFilters = SBPMsgResetFilters (decode (fromStrict _msgSBPPayload)) m
@@ -231,8 +256,11 @@ instance Binary SBPMsg where
           | _msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgUartStateDepa = SBPMsgUartStateDepa (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgUserData = SBPMsgUserData (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgUtcTime = SBPMsgUtcTime (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgVelEcefDepA = SBPMsgVelEcefDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgVelNed = SBPMsgVelNed (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgVelNedDepA = SBPMsgVelNedDepA (decode (fromStrict _msgSBPPayload)) m
           | otherwise = SBPMsgUnknown m
 
   put sm = do
@@ -242,12 +270,16 @@ instance Binary SBPMsg where
       encode' (SBPMsgAcqResultDepA _ m) = put m
       encode' (SBPMsgAcqResultDepB _ m) = put m
       encode' (SBPMsgAcqSvProfile _ m) = put m
+      encode' (SBPMsgAgeCorrections _ m) = put m
       encode' (SBPMsgAlmanac _ m) = put m
       encode' (SBPMsgBasePosEcef _ m) = put m
       encode' (SBPMsgBasePosLlh _ m) = put m
       encode' (SBPMsgBaselineEcef _ m) = put m
+      encode' (SBPMsgBaselineEcefDepA _ m) = put m
       encode' (SBPMsgBaselineHeading _ m) = put m
+      encode' (SBPMsgBaselineHeadingDepA _ m) = put m
       encode' (SBPMsgBaselineNed _ m) = put m
+      encode' (SBPMsgBaselineNedDepA _ m) = put m
       encode' (SBPMsgBootloaderHandshakeDepA _ m) = put m
       encode' (SBPMsgBootloaderHandshakeReq _ m) = put m
       encode' (SBPMsgBootloaderHandshakeResp _ m) = put m
@@ -255,7 +287,9 @@ instance Binary SBPMsg where
       encode' (SBPMsgCwResults _ m) = put m
       encode' (SBPMsgCwStart _ m) = put m
       encode' (SBPMsgDeviceMonitor _ m) = put m
+      encode' (SBPMsgDgnssStatus _ m) = put m
       encode' (SBPMsgDops _ m) = put m
+      encode' (SBPMsgDopsDepA _ m) = put m
       encode' (SBPMsgEphemerisDepA _ m) = put m
       encode' (SBPMsgEphemerisDepB _ m) = put m
       encode' (SBPMsgEphemerisDepC _ m) = put m
@@ -276,7 +310,9 @@ instance Binary SBPMsg where
       encode' (SBPMsgFlashProgram _ m) = put m
       encode' (SBPMsgFlashReadReq _ m) = put m
       encode' (SBPMsgFlashReadResp _ m) = put m
+      encode' (SBPMsgFwd _ m) = put m
       encode' (SBPMsgGpsTime _ m) = put m
+      encode' (SBPMsgGpsTimeDepA _ m) = put m
       encode' (SBPMsgGroupDelay _ m) = put m
       encode' (SBPMsgHeartbeat _ m) = put m
       encode' (SBPMsgIarState _ m) = put m
@@ -290,8 +326,11 @@ instance Binary SBPMsg where
       encode' (SBPMsgObs _ m) = put m
       encode' (SBPMsgObsDepA _ m) = put m
       encode' (SBPMsgObsDepB _ m) = put m
+      encode' (SBPMsgObsDepC _ m) = put m
       encode' (SBPMsgPosEcef _ m) = put m
+      encode' (SBPMsgPosEcefDepA _ m) = put m
       encode' (SBPMsgPosLlh _ m) = put m
+      encode' (SBPMsgPosLlhDepA _ m) = put m
       encode' (SBPMsgPrintDep _ m) = put m
       encode' (SBPMsgReset _ m) = put m
       encode' (SBPMsgResetFilters _ m) = put m
@@ -319,8 +358,11 @@ instance Binary SBPMsg where
       encode' (SBPMsgUartState _ m) = put m
       encode' (SBPMsgUartStateDepa _ m) = put m
       encode' (SBPMsgUserData _ m) = put m
+      encode' (SBPMsgUtcTime _ m) = put m
       encode' (SBPMsgVelEcef _ m) = put m
+      encode' (SBPMsgVelEcefDepA _ m) = put m
       encode' (SBPMsgVelNed _ m) = put m
+      encode' (SBPMsgVelNedDepA _ m) = put m
       encode' (SBPMsgUnknown m) = put m
       encode' (SBPMsgBadCrc m) = put m
 
@@ -333,12 +375,16 @@ instance FromJSON SBPMsg where
         | msgType == msgAcqResultDepA = SBPMsgAcqResultDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgAcqResultDepB = SBPMsgAcqResultDepB <$> parseJSON obj <*> parseJSON obj
         | msgType == msgAcqSvProfile = SBPMsgAcqSvProfile <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgAgeCorrections = SBPMsgAgeCorrections <$> parseJSON obj <*> parseJSON obj
         | msgType == msgAlmanac = SBPMsgAlmanac <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBasePosEcef = SBPMsgBasePosEcef <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBasePosLlh = SBPMsgBasePosLlh <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBaselineEcef = SBPMsgBaselineEcef <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgBaselineEcefDepA = SBPMsgBaselineEcefDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBaselineHeading = SBPMsgBaselineHeading <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgBaselineHeadingDepA = SBPMsgBaselineHeadingDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBaselineNed = SBPMsgBaselineNed <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgBaselineNedDepA = SBPMsgBaselineNedDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp <$> parseJSON obj <*> parseJSON obj
@@ -346,7 +392,9 @@ instance FromJSON SBPMsg where
         | msgType == msgCwResults = SBPMsgCwResults <$> parseJSON obj <*> parseJSON obj
         | msgType == msgCwStart = SBPMsgCwStart <$> parseJSON obj <*> parseJSON obj
         | msgType == msgDeviceMonitor = SBPMsgDeviceMonitor <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgDgnssStatus = SBPMsgDgnssStatus <$> parseJSON obj <*> parseJSON obj
         | msgType == msgDops = SBPMsgDops <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgDopsDepA = SBPMsgDopsDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> parseJSON obj <*> parseJSON obj
         | msgType == msgEphemerisDepC = SBPMsgEphemerisDepC <$> parseJSON obj <*> parseJSON obj
@@ -367,7 +415,9 @@ instance FromJSON SBPMsg where
         | msgType == msgFlashProgram = SBPMsgFlashProgram <$> parseJSON obj <*> parseJSON obj
         | msgType == msgFlashReadReq = SBPMsgFlashReadReq <$> parseJSON obj <*> parseJSON obj
         | msgType == msgFlashReadResp = SBPMsgFlashReadResp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgFwd = SBPMsgFwd <$> parseJSON obj <*> parseJSON obj
         | msgType == msgGpsTime = SBPMsgGpsTime <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgGpsTimeDepA = SBPMsgGpsTimeDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgGroupDelay = SBPMsgGroupDelay <$> parseJSON obj <*> parseJSON obj
         | msgType == msgHeartbeat = SBPMsgHeartbeat <$> parseJSON obj <*> parseJSON obj
         | msgType == msgIarState = SBPMsgIarState <$> parseJSON obj <*> parseJSON obj
@@ -381,8 +431,11 @@ instance FromJSON SBPMsg where
         | msgType == msgObs = SBPMsgObs <$> parseJSON obj <*> parseJSON obj
         | msgType == msgObsDepA = SBPMsgObsDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgObsDepB = SBPMsgObsDepB <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgObsDepC = SBPMsgObsDepC <$> parseJSON obj <*> parseJSON obj
         | msgType == msgPosEcef = SBPMsgPosEcef <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgPosEcefDepA = SBPMsgPosEcefDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgPosLlh = SBPMsgPosLlh <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgPosLlhDepA = SBPMsgPosLlhDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgPrintDep = SBPMsgPrintDep <$> parseJSON obj <*> parseJSON obj
         | msgType == msgReset = SBPMsgReset <$> parseJSON obj <*> parseJSON obj
         | msgType == msgResetFilters = SBPMsgResetFilters <$> parseJSON obj <*> parseJSON obj
@@ -410,8 +463,11 @@ instance FromJSON SBPMsg where
         | msgType == msgUartState = SBPMsgUartState <$> parseJSON obj <*> parseJSON obj
         | msgType == msgUartStateDepa = SBPMsgUartStateDepa <$> parseJSON obj <*> parseJSON obj
         | msgType == msgUserData = SBPMsgUserData <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgUtcTime = SBPMsgUtcTime <$> parseJSON obj <*> parseJSON obj
         | msgType == msgVelEcef = SBPMsgVelEcef <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgVelEcefDepA = SBPMsgVelEcefDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgVelNed = SBPMsgVelNed <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgVelNedDepA = SBPMsgVelNedDepA <$> parseJSON obj <*> parseJSON obj
         | otherwise = SBPMsgUnknown <$> parseJSON obj
   parseJSON _ = mzero
 
@@ -426,12 +482,16 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgAcqResultDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgAcqResultDepB n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgAcqSvProfile n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgAgeCorrections n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgAlmanac n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBasePosEcef n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBasePosLlh n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBaselineEcef n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgBaselineEcefDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBaselineHeading n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgBaselineHeadingDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBaselineNed n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgBaselineNedDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBootloaderHandshakeDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBootloaderHandshakeReq n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBootloaderHandshakeResp n m) = toJSON n `mergeValues` toJSON m
@@ -439,7 +499,9 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgCwResults n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgCwStart n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgDeviceMonitor n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgDgnssStatus n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgDops n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgDopsDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgEphemerisDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgEphemerisDepB n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgEphemerisDepC n m) = toJSON n `mergeValues` toJSON m
@@ -460,7 +522,9 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgFlashProgram n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgFlashReadReq n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgFlashReadResp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgFwd n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgGpsTime n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgGpsTimeDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgGroupDelay n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgHeartbeat n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgIarState n m) = toJSON n `mergeValues` toJSON m
@@ -474,8 +538,11 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgObs n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgObsDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgObsDepB n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgObsDepC n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgPosEcef n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgPosEcefDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgPosLlh n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgPosLlhDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgPrintDep n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgReset n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgResetFilters n m) = toJSON n `mergeValues` toJSON m
@@ -503,8 +570,11 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgUartState n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgUartStateDepa n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgUserData n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgUtcTime n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgVelEcef n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgVelEcefDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgVelNed n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgVelNedDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBadCrc m) = toJSON m
   toJSON (SBPMsgUnknown m) = toJSON m
 
@@ -513,12 +583,16 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgAcqResultDepA n m) = SBPMsgAcqResultDepA n <$> f m
   msg f (SBPMsgAcqResultDepB n m) = SBPMsgAcqResultDepB n <$> f m
   msg f (SBPMsgAcqSvProfile n m) = SBPMsgAcqSvProfile n <$> f m
+  msg f (SBPMsgAgeCorrections n m) = SBPMsgAgeCorrections n <$> f m
   msg f (SBPMsgAlmanac n m) = SBPMsgAlmanac n <$> f m
   msg f (SBPMsgBasePosEcef n m) = SBPMsgBasePosEcef n <$> f m
   msg f (SBPMsgBasePosLlh n m) = SBPMsgBasePosLlh n <$> f m
   msg f (SBPMsgBaselineEcef n m) = SBPMsgBaselineEcef n <$> f m
+  msg f (SBPMsgBaselineEcefDepA n m) = SBPMsgBaselineEcefDepA n <$> f m
   msg f (SBPMsgBaselineHeading n m) = SBPMsgBaselineHeading n <$> f m
+  msg f (SBPMsgBaselineHeadingDepA n m) = SBPMsgBaselineHeadingDepA n <$> f m
   msg f (SBPMsgBaselineNed n m) = SBPMsgBaselineNed n <$> f m
+  msg f (SBPMsgBaselineNedDepA n m) = SBPMsgBaselineNedDepA n <$> f m
   msg f (SBPMsgBootloaderHandshakeDepA n m) = SBPMsgBootloaderHandshakeDepA n <$> f m
   msg f (SBPMsgBootloaderHandshakeReq n m) = SBPMsgBootloaderHandshakeReq n <$> f m
   msg f (SBPMsgBootloaderHandshakeResp n m) = SBPMsgBootloaderHandshakeResp n <$> f m
@@ -526,7 +600,9 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgCwResults n m) = SBPMsgCwResults n <$> f m
   msg f (SBPMsgCwStart n m) = SBPMsgCwStart n <$> f m
   msg f (SBPMsgDeviceMonitor n m) = SBPMsgDeviceMonitor n <$> f m
+  msg f (SBPMsgDgnssStatus n m) = SBPMsgDgnssStatus n <$> f m
   msg f (SBPMsgDops n m) = SBPMsgDops n <$> f m
+  msg f (SBPMsgDopsDepA n m) = SBPMsgDopsDepA n <$> f m
   msg f (SBPMsgEphemerisDepA n m) = SBPMsgEphemerisDepA n <$> f m
   msg f (SBPMsgEphemerisDepB n m) = SBPMsgEphemerisDepB n <$> f m
   msg f (SBPMsgEphemerisDepC n m) = SBPMsgEphemerisDepC n <$> f m
@@ -547,7 +623,9 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgFlashProgram n m) = SBPMsgFlashProgram n <$> f m
   msg f (SBPMsgFlashReadReq n m) = SBPMsgFlashReadReq n <$> f m
   msg f (SBPMsgFlashReadResp n m) = SBPMsgFlashReadResp n <$> f m
+  msg f (SBPMsgFwd n m) = SBPMsgFwd n <$> f m
   msg f (SBPMsgGpsTime n m) = SBPMsgGpsTime n <$> f m
+  msg f (SBPMsgGpsTimeDepA n m) = SBPMsgGpsTimeDepA n <$> f m
   msg f (SBPMsgGroupDelay n m) = SBPMsgGroupDelay n <$> f m
   msg f (SBPMsgHeartbeat n m) = SBPMsgHeartbeat n <$> f m
   msg f (SBPMsgIarState n m) = SBPMsgIarState n <$> f m
@@ -561,8 +639,11 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgObs n m) = SBPMsgObs n <$> f m
   msg f (SBPMsgObsDepA n m) = SBPMsgObsDepA n <$> f m
   msg f (SBPMsgObsDepB n m) = SBPMsgObsDepB n <$> f m
+  msg f (SBPMsgObsDepC n m) = SBPMsgObsDepC n <$> f m
   msg f (SBPMsgPosEcef n m) = SBPMsgPosEcef n <$> f m
+  msg f (SBPMsgPosEcefDepA n m) = SBPMsgPosEcefDepA n <$> f m
   msg f (SBPMsgPosLlh n m) = SBPMsgPosLlh n <$> f m
+  msg f (SBPMsgPosLlhDepA n m) = SBPMsgPosLlhDepA n <$> f m
   msg f (SBPMsgPrintDep n m) = SBPMsgPrintDep n <$> f m
   msg f (SBPMsgReset n m) = SBPMsgReset n <$> f m
   msg f (SBPMsgResetFilters n m) = SBPMsgResetFilters n <$> f m
@@ -590,7 +671,10 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgUartState n m) = SBPMsgUartState n <$> f m
   msg f (SBPMsgUartStateDepa n m) = SBPMsgUartStateDepa n <$> f m
   msg f (SBPMsgUserData n m) = SBPMsgUserData n <$> f m
+  msg f (SBPMsgUtcTime n m) = SBPMsgUtcTime n <$> f m
   msg f (SBPMsgVelEcef n m) = SBPMsgVelEcef n <$> f m
+  msg f (SBPMsgVelEcefDepA n m) = SBPMsgVelEcefDepA n <$> f m
   msg f (SBPMsgVelNed n m) = SBPMsgVelNed n <$> f m
+  msg f (SBPMsgVelNedDepA n m) = SBPMsgVelNedDepA n <$> f m
   msg f (SBPMsgUnknown m) = SBPMsgUnknown <$> f m
   msg f (SBPMsgBadCrc m) = SBPMsgBadCrc <$> f m

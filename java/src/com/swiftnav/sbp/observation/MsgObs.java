@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_OBS (0x0049).
+/** SBP class for message MSG_OBS (0x004A).
  *
  * You can have MSG_OBS inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -33,11 +33,21 @@ import org.json.JSONArray;
  * the device. Carrier phase observation here is represented as a
  * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
  * whole cycles and 8-bits of fractional cycles).  The observations
- * should be interoperable with 3rd party receivers and conform
- * with typical RTCMv3 GNSS observations. */
+ * are be interoperable with 3rd party receivers and conform
+ * with typical RTCMv3 GNSS observations.  
+ * 
+ * The lock field represents the range of time for 
+ * which a particular signal has maintained carrier phase lock. 
+ * The minimum and maximum possible lock times 
+ * for each value of the field can be described by the following piecewise function.  
+ * Given the lock value, l, the minimum lock time is given by 2 ^ (l + 4) ms and the 
+ * maximum lock time is given by 2 ^ (l + 5) ms provided n is not 0.  
+ * If n is 0 the lower range is given to be 0 ms. Conversely, given a lock time 
+ * (t) in milliseconds, the field value is given by floor(log_2(t) - 4) 
+ * when t is greater than 32 ms or 0 if (t) is less than 32 ms. */
 
 public class MsgObs extends SBPMessage {
-    public static final int TYPE = 0x0049;
+    public static final int TYPE = 0x004A;
 
     
     /** Header of a GPS observation message */

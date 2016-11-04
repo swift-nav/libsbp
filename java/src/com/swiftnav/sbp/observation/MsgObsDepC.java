@@ -22,21 +22,22 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_OBS_DEP_B (0x0043).
+/** SBP class for message MSG_OBS_DEP_C (0x0049).
  *
- * You can have MSG_OBS_DEP_B inherent its fields directly from
+ * You can have MSG_OBS_DEP_C inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This observation message has been deprecated in favor of
- * observations that are more interoperable. This message
- * should be used for observations referenced to
- * a nominal pseudorange which are not interoperable with
- * most 3rd party GNSS receievers or typical RTCMv3
- * observations. */
+ * The GPS observations message reports all the raw pseudorange and
+ * carrier phase observations for the satellites being tracked by
+ * the device. Carrier phase observation here is represented as a
+ * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
+ * whole cycles and 8-bits of fractional cycles).  The observations
+ * are interoperable with 3rd party receivers and conform
+ * with typical RTCMv3 GNSS observations. */
 
-public class MsgObsDepB extends SBPMessage {
-    public static final int TYPE = 0x0043;
+public class MsgObsDepC extends SBPMessage {
+    public static final int TYPE = 0x0049;
 
     
     /** Header of a GPS observation message */
@@ -45,12 +46,12 @@ public class MsgObsDepB extends SBPMessage {
     /** Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
-    public PackedObsContentDepB[] obs;
+    public PackedObsContentDepC[] obs;
     
 
-    public MsgObsDepB (int sender) { super(sender, TYPE); }
-    public MsgObsDepB () { super(TYPE); }
-    public MsgObsDepB (SBPMessage msg) throws SBPBinaryException {
+    public MsgObsDepC (int sender) { super(sender, TYPE); }
+    public MsgObsDepC () { super(TYPE); }
+    public MsgObsDepC (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -59,7 +60,7 @@ satellite being tracked.
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         header = new ObservationHeaderDep().parse(parser);
-        obs = parser.getArray(PackedObsContentDepB.class);
+        obs = parser.getArray(PackedObsContentDepC.class);
     }
 
     @Override

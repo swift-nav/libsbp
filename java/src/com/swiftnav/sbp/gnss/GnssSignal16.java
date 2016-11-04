@@ -11,51 +11,47 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-package com.swiftnav.sbp.observation;
+package com.swiftnav.sbp.gnss;
 
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class ObservationHeader extends SBPStruct {
+public class GnssSignal16 extends SBPStruct {
     
-    /** GNSS time of this observation */
-    public GPSTimeNano t;
+    /** Constellation-specific satellite identifier */
+    public int sat;
     
-    /** Total number of observations. First nibble is the size
-of the sequence (n), second nibble is the zero-indexed
-counter (ith packet of n)
- */
-    public int n_obs;
+    /** Signal constellation, band and code */
+    public int code;
     
 
-    public ObservationHeader () {}
+    public GnssSignal16 () {}
 
     @Override
-    public ObservationHeader parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public GnssSignal16 parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        t = new GPSTimeNano().parse(parser);
-        n_obs = parser.getU8();
+        sat = parser.getU8();
+        code = parser.getU8();
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        t.build(builder);
-        builder.putU8(n_obs);
+        builder.putU8(sat);
+        builder.putU8(code);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("t", t.toJSON());
-        obj.put("n_obs", n_obs);
+        obj.put("sat", sat);
+        obj.put("code", code);
         return obj;
     }
 }
