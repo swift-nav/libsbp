@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelNED.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelNEDDepA.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -122,7 +122,7 @@ START_TEST( test_auto_check_sbp_navigation_10 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ned_t* msg = ( msg_vel_ned_t *)((void *)last_msg + 6);
+    msg_vel_ned_dep_a_t* msg = ( msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -170,7 +170,7 @@ START_TEST( test_auto_check_sbp_navigation_10 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ned_t* msg = ( msg_vel_ned_t *)((void *)last_msg + 6);
+    msg_vel_ned_dep_a_t* msg = ( msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -218,7 +218,7 @@ START_TEST( test_auto_check_sbp_navigation_10 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ned_t* msg = ( msg_vel_ned_t *)((void *)last_msg + 6);
+    msg_vel_ned_dep_a_t* msg = ( msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -266,7 +266,7 @@ START_TEST( test_auto_check_sbp_navigation_10 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ned_t* msg = ( msg_vel_ned_t *)((void *)last_msg + 6);
+    msg_vel_ned_dep_a_t* msg = ( msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -314,7 +314,7 @@ START_TEST( test_auto_check_sbp_navigation_10 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ned_t* msg = ( msg_vel_ned_t *)((void *)last_msg + 6);
+    msg_vel_ned_dep_a_t* msg = ( msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);

@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelECEF.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelECEFDepA.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -122,7 +122,7 @@ START_TEST( test_auto_check_sbp_navigation_9 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
+    msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
@@ -169,7 +169,7 @@ START_TEST( test_auto_check_sbp_navigation_9 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
+    msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
@@ -216,7 +216,7 @@ START_TEST( test_auto_check_sbp_navigation_9 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
+    msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
@@ -263,7 +263,7 @@ START_TEST( test_auto_check_sbp_navigation_9 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
+    msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
@@ -310,7 +310,7 @@ START_TEST( test_auto_check_sbp_navigation_9 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
+    msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);

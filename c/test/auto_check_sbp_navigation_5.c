@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgDops.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgDopsDepA.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -122,7 +122,7 @@ START_TEST( test_auto_check_sbp_navigation_5 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
+    msg_dops_dep_a_t* msg = ( msg_dops_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->gdop == 180, "incorrect value for gdop, expected 180, is %d", msg->gdop);
@@ -168,7 +168,7 @@ START_TEST( test_auto_check_sbp_navigation_5 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
+    msg_dops_dep_a_t* msg = ( msg_dops_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->gdop == 180, "incorrect value for gdop, expected 180, is %d", msg->gdop);
@@ -214,7 +214,7 @@ START_TEST( test_auto_check_sbp_navigation_5 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
+    msg_dops_dep_a_t* msg = ( msg_dops_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->gdop == 180, "incorrect value for gdop, expected 180, is %d", msg->gdop);
