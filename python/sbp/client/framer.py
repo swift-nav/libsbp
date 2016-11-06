@@ -14,6 +14,7 @@ from ..table import dispatch
 import struct
 import datetime
 import time
+import uuid
 
 class Framer(object):
   """
@@ -35,6 +36,7 @@ class Framer(object):
     self._verbose = verbose
     self._broken = False
     self._dispatch = dispatcher
+    self._session = str(uuid.uuid4())
 
   def __iter__(self):
     self._broken = False
@@ -66,7 +68,7 @@ class Framer(object):
           raise StopIteration
       except IOError:
         raise StopIteration
-    return (msg, {'time': self._time()})
+    return (msg, {'time': self._time(), 'session-uid': self._session})
 
   def _readall(self, size):
     """
