@@ -174,9 +174,10 @@ definitions:
                   desc: Fix mode
                   values:
                       - 0: Invalid
-                      - 1: Float RTK
-                      - 2: Fixed RTK
-                      - 3: Single Point Position (SPP) 
+                      - 1: Single Point Position (SPP) 
+                      - 2: Reserved 
+                      - 3: Float RTK
+                      - 4: Fixed RTK
 
 
  - MSG_POS_ECEF:
@@ -232,9 +233,10 @@ definitions:
                   desc: Fix mode
                   values:
                       - 0: Invalid
-                      - 1: Float RTK
-                      - 2: Fixed RTK
-                      - 3: Single Point Position (SPP) 
+                      - 1: Single Point Position (SPP) 
+                      - 2: Reserved 
+                      - 3: Float RTK
+                      - 4: Fixed RTK
 
  - MSG_POS_LLH:
     id: 0x020A
@@ -295,9 +297,10 @@ definitions:
                   desc: Fix mode
                   values:
                       - 0: Invalid
-                      - 1: Float RTK
-                      - 2: Fixed RTK
-                      - 3: Single Point Position (SPP) 
+                      - 1: Single Point Position (SPP) 
+                      - 2: Reserved
+                      - 3: Float RTK
+                      - 4: Fixed RTK
 
  - MSG_BASELINE_ECEF:
     id: 0x020B
@@ -349,8 +352,10 @@ definitions:
                     desc: Fix mode
                     values:
                         - 0: Invalid
-                        - 1: Float RTK
-                        - 2: Fixed RTK
+                        - 1: Reserved
+                        - 2: Reserved
+                        - 3: Float RTK
+                        - 4: Fixed RTK
 
  - MSG_BASELINE_NED:
     id: 0x020C
@@ -409,8 +414,10 @@ definitions:
                     desc: Fix mode
                     values:
                         - 0: Invalid
-                        - 1: Float RTK
-                        - 2: Fixed RTK
+                        - 1: Reserved
+                        - 2: Reserved
+                        - 3: Float RTK
+                        - 4: Fixed RTK
 
  - MSG_VEL_ECEF:
     id: 0x020D
@@ -546,8 +553,10 @@ definitions:
                     desc: Fix mode
                     values:
                         - 0: Invalid
-                        - 1: Float RTK
-                        - 2: Fixed RTK
+                        - 1: Reserved
+                        - 2: Reserved
+                        - 3: Float RTK
+                        - 4: Fixed RTK
 
  - MSG_AGE_CORRECTIONS:
     id: 0x0210
