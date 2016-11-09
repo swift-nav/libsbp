@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_VEL_ECEF (0x0204).
+/** SBP class for message MSG_VEL_ECEF (0x020D).
  *
  * You can have MSG_VEL_ECEF inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -32,7 +32,7 @@ import org.json.JSONArray;
  * MSG_GPS_TIME with the matching time-of-week (tow). */
 
 public class MsgVelECEF extends SBPMessage {
-    public static final int TYPE = 0x0204;
+    public static final int TYPE = 0x020D;
 
     
     /** GPS Time of Week */
@@ -55,7 +55,7 @@ to 0.
     /** Number of satellites used in solution */
     public int n_sats;
     
-    /** Status flags (reserved) */
+    /** Status flags */
     public int flags;
     
 

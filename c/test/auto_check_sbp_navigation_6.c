@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgGPSTime.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgGPSTimeDepA.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -122,7 +122,7 @@ START_TEST( test_auto_check_sbp_navigation_6 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    msg_gps_time_dep_a_t* msg = ( msg_gps_time_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", msg->wn);
@@ -166,7 +166,7 @@ START_TEST( test_auto_check_sbp_navigation_6 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    msg_gps_time_dep_a_t* msg = ( msg_gps_time_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", msg->wn);
@@ -210,7 +210,7 @@ START_TEST( test_auto_check_sbp_navigation_6 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    msg_gps_time_dep_a_t* msg = ( msg_gps_time_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", msg->wn);
@@ -254,7 +254,7 @@ START_TEST( test_auto_check_sbp_navigation_6 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    msg_gps_time_dep_a_t* msg = ( msg_gps_time_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", msg->wn);
@@ -298,7 +298,7 @@ START_TEST( test_auto_check_sbp_navigation_6 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    msg_gps_time_dep_a_t* msg = ( msg_gps_time_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", msg->wn);

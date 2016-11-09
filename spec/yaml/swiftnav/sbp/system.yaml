@@ -25,9 +25,61 @@ definitions:
         the system has started and is now ready to respond to commands
         or configuration requests.
     fields:
+        - cause:
+            type: u8
+            desc: Cause of startup
+            fields:
+              - 0-8:
+                  desc: Cause of startup
+                  values:
+                    - 0: Power on
+                    - 1: Software reset
+                    - 2: Watchdog reset
+        - startup_type:
+            type: u8
+            desc: Startup type
+            fields:
+              - 0-8:
+                  values:
+                    - 0: Cold start
+                    - 1: Warm start
+                    - 2: Hot start
+
         - reserved:
-            type: u32
+            type: u16
             desc: Reserved
+
+ - MSG_DGNSS_STATUS:
+    id: 0xFF02
+    short_desc: Status of received corrections
+    desc: |
+        This message provides information about the receipt of Differential
+        corrections.  It is expected to be sent with each receipt of a complete
+        corrections packet.
+    fields:
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 4-7:
+                  desc: Reserved
+              - 0-3:
+                  desc: Differential type
+                  values:
+                      - 0: Invalid
+                      - 1: Code Difference
+                      - 2: RTK
+        - latency:
+            type: u16
+            units: deci-seconds
+            desc: Latency of observation receipt
+        - num_signals:
+            type: u8
+            desc: Number of signals from base station
+        - source:
+            type: string
+            desc: Corrections source string
+
 
  - MSG_HEARTBEAT:
     id: 0xFFFF

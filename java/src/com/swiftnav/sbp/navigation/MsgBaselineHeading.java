@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_BASELINE_HEADING (0x0207).
+/** SBP class for message MSG_BASELINE_HEADING (0x020F).
  *
  * You can have MSG_BASELINE_HEADING inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -29,10 +29,11 @@ import org.json.JSONArray;
  *
  * This message reports the baseline heading pointing from the base station
  * to the rover relative to True North. The full GPS time is given by the
- * preceding MSG_GPS_TIME with the matching time-of-week (tow). */
+ * preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
+ * that time-matched RTK mode is used when the base station is moving. */
 
 public class MsgBaselineHeading extends SBPMessage {
-    public static final int TYPE = 0x0207;
+    public static final int TYPE = 0x020F;
 
     
     /** GPS Time of Week */

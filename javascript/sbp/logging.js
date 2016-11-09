@@ -56,6 +56,44 @@ MsgLog.prototype.fieldSpec.push(['level', 'writeUInt8', 1]);
 MsgLog.prototype.fieldSpec.push(['text', 'string', null]);
 
 /**
+ * SBP class for message MSG_FWD (0x0402).
+ *
+ * This message provides the ability to forward messages over SBP.  This may take
+ * the form of wrapping up SBP messages received by Piksi for logging purposes or
+ * wrapping  another protocol with SBP.  The source identifier indicates from what
+ * interface a forwarded stream derived. The protocol identifier identifies what
+ * the expected protocol the forwarded msg contains. Protocol 0 represents SBP and
+ * the remaining values are implementation defined.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field source number (unsigned 8-bit int, 1 byte) source identifier
+ * @field protocol number (unsigned 8-bit int, 1 byte) protocol identifier
+ * @field fwd_payload string variable length wrapped binary message
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgFwd = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_FWD";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgFwd.prototype = Object.create(SBP.prototype);
+MsgFwd.prototype.messageType = "MSG_FWD";
+MsgFwd.prototype.msg_type = 0x0402;
+MsgFwd.prototype.constructor = MsgFwd;
+MsgFwd.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('source')
+  .uint8('protocol')
+  .string('fwd_payload', { greedy: true });
+MsgFwd.prototype.fieldSpec = [];
+MsgFwd.prototype.fieldSpec.push(['source', 'writeUInt8', 1]);
+MsgFwd.prototype.fieldSpec.push(['protocol', 'writeUInt8', 1]);
+MsgFwd.prototype.fieldSpec.push(['fwd_payload', 'string', null]);
+
+/**
  * SBP class for message MSG_TWEET (0x0012).
  *
  * All the news fit to tweet.
@@ -112,6 +150,8 @@ MsgPrintDep.prototype.fieldSpec.push(['text', 'string', null]);
 module.exports = {
   0x0401: MsgLog,
   MsgLog: MsgLog,
+  0x0402: MsgFwd,
+  MsgFwd: MsgFwd,
   0x0012: MsgTweet,
   MsgTweet: MsgTweet,
   0x0010: MsgPrintDep,

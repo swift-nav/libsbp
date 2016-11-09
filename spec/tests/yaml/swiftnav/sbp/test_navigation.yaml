@@ -11,7 +11,7 @@ tests:
       tow: 407084500
       wn: 1838
     module: sbp.navigation
-    name: MsgGPSTime
+    name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 1219, "msg_type": 256, "wn": 1838, "tow": 407084500, "crc":
     48855, "length": 11, "flags": 0, "ns": -224401, "preamble": 85, "payload": "LgfUnUMYb5P8/wA="}'
@@ -31,7 +31,7 @@ tests:
       tow: 407084600
       wn: 1838
     module: sbp.navigation
-    name: MsgGPSTime
+    name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 1219, "msg_type": 256, "wn": 1838, "tow": 407084600, "crc":
     22918, "length": 11, "flags": 0, "ns": 223085, "preamble": 85, "payload": "Lgc4nkMYbWcDAAA="}'
@@ -51,7 +51,7 @@ tests:
       tow: 407084700
       wn: 1838
     module: sbp.navigation
-    name: MsgGPSTime
+    name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 1219, "msg_type": 256, "wn": 1838, "tow": 407084700, "crc":
     61902, "length": 11, "flags": 0, "ns": -222999, "preamble": 85, "payload": "LgecnkMY6Zj8/wA="}'
@@ -71,7 +71,7 @@ tests:
       tow: 407084800
       wn: 1838
     module: sbp.navigation
-    name: MsgGPSTime
+    name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 1219, "msg_type": 256, "wn": 1838, "tow": 407084800, "crc":
     25235, "length": 11, "flags": 0, "ns": 236272, "preamble": 85, "payload": "LgcAn0MY8JoDAAA="}'
@@ -91,7 +91,7 @@ tests:
       tow: 407084900
       wn: 1838
     module: sbp.navigation
-    name: MsgGPSTime
+    name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 1219, "msg_type": 256, "wn": 1838, "tow": 407084900, "crc":
     39098, "length": 11, "flags": 0, "ns": -236144, "preamble": 85, "payload": "Lgdkn0MYkGX8/wA="}'
@@ -111,7 +111,7 @@ tests:
       tow: 407151150
       wn: 1838
     module: sbp.navigation
-    name: MsgGPSTime
+    name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 1219, "msg_type": 256, "wn": 1838, "tow": 407151150, "crc":
     57611, "length": 11, "flags": 0, "ns": -334131, "preamble": 85, "payload": "LgcuokQYzeb6/wA="}'
@@ -134,7 +134,7 @@ tests:
       y: -4263209.753232954
       z: 3884633.142084079
     module: sbp.navigation
-    name: MsgPosECEF
+    name: MsgPosECEFDepA
   msg_type: '0x200'
   raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 512, "tow": 407084500, "crc":
     1169, "length": 32, "flags": 0, "y": -4263209.753232954, "x": -2704376.0110433814,
@@ -159,7 +159,7 @@ tests:
       y: -4263208.610442672
       z: 3884632.627157578
     module: sbp.navigation
-    name: MsgPosECEF
+    name: MsgPosECEFDepA
   msg_type: '0x200'
   raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 512, "tow": 407084600, "crc":
     17141, "length": 32, "flags": 0, "y": -4263208.610442672, "x": -2704375.9287024545,
@@ -184,7 +184,7 @@ tests:
       y: -4263207.370641668
       z: 3884631.282421521
     module: sbp.navigation
-    name: MsgPosECEF
+    name: MsgPosECEFDepA
   msg_type: '0x200'
   raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 512, "tow": 407084700, "crc":
     57093, "length": 32, "flags": 0, "y": -4263207.370641668, "x": -2704375.162789617,
@@ -209,7 +209,7 @@ tests:
       y: -4263207.965250214
       z: 3884632.1007095524
     module: sbp.navigation
-    name: MsgPosECEF
+    name: MsgPosECEFDepA
   msg_type: '0x200'
   raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 512, "tow": 407084800, "crc":
     54415, "length": 32, "flags": 0, "y": -4263207.965250214, "x": -2704376.3549937834,
@@ -234,7 +234,7 @@ tests:
       y: -4263207.314747473
       z: 3884631.4773294823
     module: sbp.navigation
-    name: MsgPosECEF
+    name: MsgPosECEFDepA
   msg_type: '0x200'
   raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 512, "tow": 407084900, "crc":
     56646, "length": 32, "flags": 0, "y": -4263207.314747473, "x": -2704375.291287334,
@@ -259,7 +259,7 @@ tests:
       y: -4263209.482329298
       z: 3884635.5118107493
     module: sbp.navigation
-    name: MsgPosECEF
+    name: MsgPosECEFDepA
   msg_type: '0x200'
   raw_json: '{"n_sats": 5, "sender": 1219, "msg_type": 512, "tow": 407151150, "crc":
     56593, "length": 32, "flags": 0, "y": -4263209.482329298, "x": -2704375.68369399,
@@ -284,7 +284,7 @@ tests:
       y: -12186
       z: 7419
     module: sbp.navigation
-    name: MsgBaselineECEF
+    name: MsgBaselineECEFDepA
   msg_type: '0x202'
   raw_json: '{"n_sats": 6, "sender": 1219, "msg_type": 514, "tow": 407180700, "crc":
     43154, "length": 20, "flags": 0, "y": -12186, "x": -6231, "z": 7419, "preamble":
@@ -308,7 +308,7 @@ tests:
       y: -12185
       z: 7420
     module: sbp.navigation
-    name: MsgBaselineECEF
+    name: MsgBaselineECEFDepA
   msg_type: '0x202'
   raw_json: '{"n_sats": 6, "sender": 1219, "msg_type": 514, "tow": 407180800, "crc":
     29730, "length": 20, "flags": 0, "y": -12185, "x": -6231, "z": 7420, "preamble":
@@ -332,7 +332,7 @@ tests:
       y: -18496
       z: 13807
     module: sbp.navigation
-    name: MsgBaselineECEF
+    name: MsgBaselineECEFDepA
   msg_type: '0x202'
   raw_json: '{"n_sats": 6, "sender": 1219, "msg_type": 514, "tow": 407180900, "crc":
     4065, "length": 20, "flags": 0, "y": -18496, "x": -8162, "z": 13807, "preamble":
@@ -356,7 +356,7 @@ tests:
       y: -18497
       z: 13810
     module: sbp.navigation
-    name: MsgBaselineECEF
+    name: MsgBaselineECEFDepA
   msg_type: '0x202'
   raw_json: '{"n_sats": 6, "sender": 1219, "msg_type": 514, "tow": 407181000, "crc":
     25635, "length": 20, "flags": 0, "y": -18497, "x": -8164, "z": 13810, "preamble":
@@ -380,7 +380,7 @@ tests:
       y: -15591
       z: 15257
     module: sbp.navigation
-    name: MsgBaselineECEF
+    name: MsgBaselineECEFDepA
   msg_type: '0x202'
   raw_json: '{"n_sats": 6, "sender": 1219, "msg_type": 514, "tow": 407181100, "crc":
     16962, "length": 20, "flags": 0, "y": -15591, "x": -7400, "z": 15257, "preamble":
@@ -404,7 +404,7 @@ tests:
       y: -15591
       z: 15257
     module: sbp.navigation
-    name: MsgBaselineECEF
+    name: MsgBaselineECEFDepA
   msg_type: '0x202'
   raw_json: '{"n_sats": 6, "sender": 1219, "msg_type": 514, "tow": 407181200, "crc":
     34595, "length": 20, "flags": 0, "y": -15591, "x": -7401, "z": 15257, "preamble":
@@ -429,7 +429,7 @@ tests:
       tow: 407180700
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgBaselineNED
+    name: MsgBaselineNEDDepA
   msg_type: '0x203'
   raw_json: '{"v_accuracy": 0, "e": 1265, "sender": 1219, "msg_type": 515, "tow":
     407180700, "n": -2430, "crc": 5626, "length": 22, "flags": 0, "h_accuracy": 0,
@@ -455,7 +455,7 @@ tests:
       tow: 407180800
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgBaselineNED
+    name: MsgBaselineNEDDepA
   msg_type: '0x203'
   raw_json: '{"v_accuracy": 0, "e": 1265, "sender": 1219, "msg_type": 515, "tow":
     407180800, "n": -2430, "crc": 34288, "length": 22, "flags": 0, "h_accuracy": 0,
@@ -481,7 +481,7 @@ tests:
       tow: 407180900
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgBaselineNED
+    name: MsgBaselineNEDDepA
   msg_type: '0x203'
   raw_json: '{"v_accuracy": 0, "e": 3015, "sender": 1219, "msg_type": 515, "tow":
     407180900, "n": -1248, "crc": 46348, "length": 22, "flags": 0, "h_accuracy": 0,
@@ -507,7 +507,7 @@ tests:
       tow: 407181000
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgBaselineNED
+    name: MsgBaselineNEDDepA
   msg_type: '0x203'
   raw_json: '{"v_accuracy": 0, "e": 3015, "sender": 1219, "msg_type": 515, "tow":
     407181000, "n": -1247, "crc": 14934, "length": 22, "flags": 0, "h_accuracy": 0,
@@ -533,7 +533,7 @@ tests:
       tow: 407181100
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgBaselineNED
+    name: MsgBaselineNEDDepA
   msg_type: '0x203'
   raw_json: '{"v_accuracy": 0, "e": 2103, "sender": 1219, "msg_type": 515, "tow":
     407181100, "n": 1646, "crc": 63795, "length": 22, "flags": 0, "h_accuracy": 0,
@@ -559,7 +559,7 @@ tests:
       tow: 407181200
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgBaselineNED
+    name: MsgBaselineNEDDepA
   msg_type: '0x203'
   raw_json: '{"v_accuracy": 0, "e": 2102, "sender": 1219, "msg_type": 515, "tow":
     407181200, "n": 1646, "crc": 5838, "length": 22, "flags": 0, "h_accuracy": 0,
@@ -584,7 +584,7 @@ tests:
       y: -11
       z: -37
     module: sbp.navigation
-    name: MsgVelECEF
+    name: MsgVelECEFDepA
   msg_type: '0x204'
   raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 516, "tow": 407084500, "crc":
     65348, "length": 20, "flags": 0, "y": -11, "x": 24, "z": -37, "preamble": 85,
@@ -608,7 +608,7 @@ tests:
       y: -22
       z: 18
     module: sbp.navigation
-    name: MsgVelECEF
+    name: MsgVelECEFDepA
   msg_type: '0x204'
   raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 516, "tow": 407084600, "crc":
     35030, "length": 20, "flags": 0, "y": -22, "x": 4, "z": 18, "preamble": 85, "payload":
@@ -632,7 +632,7 @@ tests:
       y: 4
       z: 1
     module: sbp.navigation
-    name: MsgVelECEF
+    name: MsgVelECEFDepA
   msg_type: '0x204'
   raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 516, "tow": 407084700, "crc":
     40826, "length": 20, "flags": 0, "y": 4, "x": -26, "z": 1, "preamble": 85, "payload":
@@ -656,7 +656,7 @@ tests:
       y: -19
       z: 28
     module: sbp.navigation
-    name: MsgVelECEF
+    name: MsgVelECEFDepA
   msg_type: '0x204'
   raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 516, "tow": 407084800, "crc":
     37608, "length": 20, "flags": 0, "y": -19, "x": -9, "z": 28, "preamble": 85, "payload":
@@ -680,7 +680,7 @@ tests:
       y: 2
       z: -11
     module: sbp.navigation
-    name: MsgVelECEF
+    name: MsgVelECEFDepA
   msg_type: '0x204'
   raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 516, "tow": 407084900, "crc":
     61099, "length": 20, "flags": 0, "y": 2, "x": -1, "z": -11, "preamble": 85, "payload":
@@ -704,7 +704,7 @@ tests:
       y: -71
       z: 65
     module: sbp.navigation
-    name: MsgVelECEF
+    name: MsgVelECEFDepA
   msg_type: '0x204'
   raw_json: '{"n_sats": 5, "sender": 1219, "msg_type": 516, "tow": 407151150, "crc":
     39506, "length": 20, "flags": 0, "y": -71, "x": -49, "z": 65, "preamble": 85,
@@ -729,7 +729,7 @@ tests:
       tow: 407084500
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgVelNED
+    name: MsgVelNEDDepA
   msg_type: '0x205'
   raw_json: '{"v_accuracy": 0, "e": 26, "sender": 1219, "msg_type": 517, "tow": 407084500,
     "n": -27, "crc": 6532, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8,
@@ -754,7 +754,7 @@ tests:
       tow: 407084600
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgVelNED
+    name: MsgVelNEDDepA
   msg_type: '0x205'
   raw_json: '{"v_accuracy": 0, "e": 15, "sender": 1219, "msg_type": 517, "tow": 407084600,
     "n": 4, "crc": 3626, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8, "preamble":
@@ -779,7 +779,7 @@ tests:
       tow: 407084700
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgVelNED
+    name: MsgVelNEDDepA
   msg_type: '0x205'
   raw_json: '{"v_accuracy": 0, "e": -24, "sender": 1219, "msg_type": 517, "tow": 407084700,
     "n": -5, "crc": 38106, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8,
@@ -804,7 +804,7 @@ tests:
       tow: 407084800
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgVelNED
+    name: MsgVelNEDDepA
   msg_type: '0x205'
   raw_json: '{"v_accuracy": 0, "e": 2, "sender": 1219, "msg_type": 517, "tow": 407084800,
     "n": 10, "crc": 4244, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8,
@@ -829,7 +829,7 @@ tests:
       tow: 407084900
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgVelNED
+    name: MsgVelNEDDepA
   msg_type: '0x205'
   raw_json: '{"v_accuracy": 0, "e": -2, "sender": 1219, "msg_type": 517, "tow": 407084900,
     "n": -8, "crc": 60671, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8,
@@ -854,7 +854,7 @@ tests:
       tow: 407151150
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgVelNED
+    name: MsgVelNEDDepA
   msg_type: '0x205'
   raw_json: '{"v_accuracy": 0, "e": -3, "sender": 1219, "msg_type": 517, "tow": 407151150,
     "n": -1, "crc": 48550, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 5,
@@ -877,7 +877,7 @@ tests:
       tow: 407084500
       vdop: 44
     module: sbp.navigation
-    name: MsgDops
+    name: MsgDopsDepA
   msg_type: '0x206'
   raw_json: '{"gdop": 247, "tdop": 123, "vdop": 44, "sender": 1219, "msg_type": 518,
     "tow": 407084500, "pdop": 215, "crc": 5582, "length": 14, "preamble": 85, "payload":
@@ -900,7 +900,7 @@ tests:
       tow: 0
       vdop: 0
     module: sbp.navigation
-    name: MsgDops
+    name: MsgDopsDepA
   msg_type: '0x206'
   raw_json: '{"gdop": 65535, "tdop": 0, "vdop": 0, "sender": 1219, "msg_type": 518,
     "tow": 0, "pdop": 65535, "crc": 3218, "length": 14, "preamble": 85, "payload":
@@ -923,7 +923,7 @@ tests:
       tow: 407152000
       vdop: 113
     module: sbp.navigation
-    name: MsgDops
+    name: MsgDopsDepA
   msg_type: '0x206'
   raw_json: '{"gdop": 348, "tdop": 155, "vdop": 113, "sender": 1219, "msg_type": 518,
     "tow": 407152000, "pdop": 312, "crc": 23937, "length": 14, "preamble": 85, "payload":
@@ -946,7 +946,7 @@ tests:
       tow: 407153000
       vdop: 113
     module: sbp.navigation
-    name: MsgDops
+    name: MsgDopsDepA
   msg_type: '0x206'
   raw_json: '{"gdop": 348, "tdop": 155, "vdop": 113, "sender": 1219, "msg_type": 518,
     "tow": 407153000, "pdop": 311, "crc": 32977, "length": 14, "preamble": 85, "payload":
@@ -969,7 +969,7 @@ tests:
       tow: 407154000
       vdop: 112
     module: sbp.navigation
-    name: MsgDops
+    name: MsgDopsDepA
   msg_type: '0x206'
   raw_json: '{"gdop": 348, "tdop": 155, "vdop": 112, "sender": 1219, "msg_type": 518,
     "tow": 407154000, "pdop": 311, "crc": 1566, "length": 14, "preamble": 85, "payload":
@@ -992,7 +992,7 @@ tests:
       tow: 407155000
       vdop: 112
     module: sbp.navigation
-    name: MsgDops
+    name: MsgDopsDepA
   msg_type: '0x206'
   raw_json: '{"gdop": 348, "tdop": 155, "vdop": 112, "sender": 1219, "msg_type": 518,
     "tow": 407155000, "pdop": 311, "crc": 17222, "length": 14, "preamble": 85, "payload":
@@ -1017,7 +1017,7 @@ tests:
       tow: 407084500
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgPosLLH
+    name: MsgPosLLHDepA
   msg_type: '0x201'
   raw_json: '{"v_accuracy": 0, "n_sats": 8, "sender": 1219, "msg_type": 513, "lon":
     -122.38908437889262, "tow": 407084500, "height": 4.039810885214956, "crc": 43501,
@@ -1043,7 +1043,7 @@ tests:
       tow: 407084600
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgPosLLH
+    name: MsgPosLLHDepA
   msg_type: '0x201'
   raw_json: '{"v_accuracy": 0, "n_sats": 8, "sender": 1219, "msg_type": 513, "lon":
     -122.38909053700489, "tow": 407084600, "height": 2.926714087009657, "crc": 2968,
@@ -1069,7 +1069,7 @@ tests:
       tow: 407084700
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgPosLLH
+    name: MsgPosLLHDepA
   msg_type: '0x201'
   raw_json: '{"v_accuracy": 0, "n_sats": 8, "sender": 1219, "msg_type": 513, "lon":
     -122.3890907340148, "tow": 407084700, "height": 0.9512146647395566, "crc": 39901,
@@ -1095,7 +1095,7 @@ tests:
       tow: 407084800
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgPosLLH
+    name: MsgPosLLHDepA
   msg_type: '0x201'
   raw_json: '{"v_accuracy": 0, "n_sats": 8, "sender": 1219, "msg_type": 513, "lon":
     -122.38909854449612, "tow": 407084800, "height": 2.354135752047538, "crc": 24146,
@@ -1121,7 +1121,7 @@ tests:
       tow: 407084900
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgPosLLH
+    name: MsgPosLLHDepA
   msg_type: '0x201'
   raw_json: '{"v_accuracy": 0, "n_sats": 8, "sender": 1219, "msg_type": 513, "lon":
     -122.38909230523223, "tow": 407084900, "height": 1.0876763181642641, "crc": 15430,
@@ -1147,7 +1147,7 @@ tests:
       tow: 407151150
       v_accuracy: 0
     module: sbp.navigation
-    name: MsgPosLLH
+    name: MsgPosLLHDepA
   msg_type: '0x201'
   raw_json: '{"v_accuracy": 0, "n_sats": 5, "sender": 1219, "msg_type": 513, "lon":
     -122.38908288868525, "tow": 407151150, "height": 5.171533844654222, "crc": 31188,

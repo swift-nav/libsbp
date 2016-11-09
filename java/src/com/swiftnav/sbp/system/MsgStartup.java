@@ -36,8 +36,14 @@ public class MsgStartup extends SBPMessage {
     public static final int TYPE = 0xFF00;
 
     
+    /** Cause of startup */
+    public int cause;
+    
+    /** Startup type */
+    public int startup_type;
+    
     /** Reserved */
-    public long reserved;
+    public int reserved;
     
 
     public MsgStartup (int sender) { super(sender, TYPE); }
@@ -50,17 +56,23 @@ public class MsgStartup extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        reserved = parser.getU32();
+        cause = parser.getU8();
+        startup_type = parser.getU8();
+        reserved = parser.getU16();
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putU32(reserved);
+        builder.putU8(cause);
+        builder.putU8(startup_type);
+        builder.putU16(reserved);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
+        obj.put("cause", cause);
+        obj.put("startup_type", startup_type);
         obj.put("reserved", reserved);
         return obj;
     }

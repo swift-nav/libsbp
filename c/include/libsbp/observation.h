@@ -29,10 +29,10 @@
 
 /** Header for observation message.
  *
-* Header of a GPS observation message.
+* Header of a GNSS observation message.
  */
 typedef struct __attribute__((packed)) {
-  sbp_gps_time_t t;        /**< GPS time of this observation */
+  gps_time_nano_t t;        /**< GNSS time of this observation */
   u8 n_obs;    /**< Total number of observations. First nibble is the size
 of the sequence (n), second nibble is the zero-indexed
 counter (ith packet of n)
@@ -40,21 +40,42 @@ counter (ith packet of n)
 } observation_header_t;
 
 
-/** GPS observations for a particular satellite signal.
+/** GNSS doppler measurement.
  *
- * Pseudorange and carrier phase observation for a satellite being
- * tracked. The observations should be interoperable with 3rd party
- * receivers and conform with typical RTCMv3 GNSS observations.
+ * Doppler measurement in Hz represented as a 24-bit
+ * fixed point number with Q16.8 layout, i.e. 16-bits of whole
+ * doppler and 8-bits of fractional doppler.  This doppler is defined
+ * as positive for approaching satellites.
  */
 typedef struct __attribute__((packed)) {
-  u32 P;       /**< Pseudorange observation [2 cm] */
-  carrier_phase_t L;       /**< Carrier phase observation with typical sign convention. [cycles] */
-  u8 cn0;     /**< Carrier-to-Noise density [dB Hz * 4] */
-  u16 lock;    /**< Lock indicator. This value changes whenever a satellite
-signal has lost and regained lock, indicating that the
-carrier phase ambiguity may have changed.
+  s16 i;    /**< Doppler whole Hz [Hz] */
+  u8 f;    /**< Doppler fractional part [Hz / 256] */
+} doppler_t;
+
+
+/** GNSS observations for a particular satellite signal.
+ *
+ * Pseudorange and carrier phase observation for a satellite being
+ * tracked. The observations are interoperable with 3rd party
+ * receivers and conform with typical RTCMv3 GNSS observations.  
  */
-  sbp_gnss_signal_t sid;     /**< GNSS signal identifier */
+typedef struct __attribute__((packed)) {
+  u32 P;        /**< Pseudorange observation [2 cm] */
+  carrier_phase_t L;        /**< Carrier phase observation with typical sign convention. [cycles] */
+  doppler_t D;        /**< Doppler observation with typical sign convention. [Hz] */
+  u8 cn0;      /**< Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
+  u8 lock;     /**< Lock timer. This value gives an indication of the time
+for which a signal has maintained continuous phase lock.
+Whenever a signal has lost and regained lock, this 
+value is reset to zero. It is encoded according to DF402 from
+the RTCM 10403.2 Amendment 2 specification.  Valid values range 
+from 0 to 15 and the most significant nibble is reserved for future use.
+ */
+  u8 flags;    /**< Measurement status flags. A bit field of flags providing the
+status of this observation.  If this field is 0 it means only the Cn0
+estimate for the signal is valid.
+ */
+  gnss_signal16_t sid;      /**< GNSS signal identifier (16 bit) */
 } packed_obs_content_t;
 
 
@@ -65,10 +86,20 @@ carrier phase ambiguity may have changed.
  * the device. Carrier phase observation here is represented as a
  * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
  * whole cycles and 8-bits of fractional cycles).  The observations
- * should be interoperable with 3rd party receivers and conform
- * with typical RTCMv3 GNSS observations.
+ * are be interoperable with 3rd party receivers and conform
+ * with typical RTCMv3 GNSS observations.  
+ * 
+ * The lock field represents the range of time for 
+ * which a particular signal has maintained carrier phase lock. 
+ * The minimum and maximum possible lock times 
+ * for each value of the field can be described by the following piecewise function.  
+ * Given the lock value, l, the minimum lock time is given by 2 ^ (l + 4) ms and the 
+ * maximum lock time is given by 2 ^ (l + 5) ms provided n is not 0.  
+ * If n is 0 the lower range is given to be 0 ms. Conversely, given a lock time 
+ * (t) in milliseconds, the field value is given by floor(log_2(t) - 4) 
+ * when t is greater than 32 ms or 0 if (t) is less than 32 ms.
  */
-#define SBP_MSG_OBS                  0x0049
+#define SBP_MSG_OBS                  0x004A
 typedef struct __attribute__((packed)) {
   observation_header_t header;    /**< Header of a GPS observation message */
   packed_obs_content_t obs[0];    /**< Pseudorange and carrier phase observation for a
@@ -345,6 +376,19 @@ typedef struct __attribute__((packed)) {
 } msg_ephemeris_dep_c_t;
 
 
+/** Header for observation message.
+ *
+* Header of a GPS observation message.
+ */
+typedef struct __attribute__((packed)) {
+  sbp_gps_time_t t;        /**< GPS time of this observation */
+  u8 n_obs;    /**< Total number of observations. First nibble is the size
+of the sequence (n), second nibble is the zero-indexed
+counter (ith packet of n)
+ */
+} observation_header_dep_t;
+
+
 /** GPS carrier phase measurement.
  *
  * Carrier phase measurement in cycles represented as a 40-bit
@@ -366,7 +410,7 @@ typedef struct __attribute__((packed)) {
 typedef struct __attribute__((packed)) {
   u32 P;       /**< Pseudorange observation [cm] */
   carrier_phase_dep_a_t L;       /**< Carrier phase observation with opposite sign from typical convention */
-  u8 cn0;     /**< Carrier-to-Noise density [dB Hz * 4] */
+  u8 cn0;     /**< Carrier-to-Noise density [dB Hz / 4] */
   u16 lock;    /**< Lock indicator. This value changes whenever a satellite
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
@@ -383,7 +427,7 @@ carrier phase ambiguity may have changed.
 typedef struct __attribute__((packed)) {
   u32 P;       /**< Pseudorange observation [cm] */
   carrier_phase_dep_a_t L;       /**< Carrier phase observation with opposite sign from typical convention. */
-  u8 cn0;     /**< Carrier-to-Noise density [dB Hz * 4] */
+  u8 cn0;     /**< Carrier-to-Noise density [dB Hz / 4] */
   u16 lock;    /**< Lock indicator. This value changes whenever a satellite
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
@@ -392,13 +436,31 @@ carrier phase ambiguity may have changed.
 } packed_obs_content_dep_b_t;
 
 
+/** GPS observations for a particular satellite signal.
+ *
+ * Pseudorange and carrier phase observation for a satellite being
+ * tracked. The observations are be interoperable with 3rd party
+ * receivers and conform with typical RTCMv3 GNSS observations.
+ */
+typedef struct __attribute__((packed)) {
+  u32 P;       /**< Pseudorange observation [2 cm] */
+  carrier_phase_t L;       /**< Carrier phase observation with typical sign convention. [cycles] */
+  u8 cn0;     /**< Carrier-to-Noise density [dB Hz / 4] */
+  u16 lock;    /**< Lock indicator. This value changes whenever a satellite
+signal has lost and regained lock, indicating that the
+carrier phase ambiguity may have changed.
+ */
+  sbp_gnss_signal_t sid;     /**< GNSS signal identifier */
+} packed_obs_content_dep_c_t;
+
+
 /** Deprecated
  *
 * Deprecated.
  */
 #define SBP_MSG_OBS_DEP_A            0x0045
 typedef struct __attribute__((packed)) {
-  observation_header_t header;    /**< Header of a GPS observation message */
+  observation_header_dep_t header;    /**< Header of a GPS observation message */
   packed_obs_content_dep_a_t obs[0];    /**< Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
@@ -416,11 +478,30 @@ satellite being tracked.
  */
 #define SBP_MSG_OBS_DEP_B            0x0043
 typedef struct __attribute__((packed)) {
-  observation_header_t header;    /**< Header of a GPS observation message */
+  observation_header_dep_t header;    /**< Header of a GPS observation message */
   packed_obs_content_dep_b_t obs[0];    /**< Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
 } msg_obs_dep_b_t;
+
+
+/** Deprecated
+ *
+ * The GPS observations message reports all the raw pseudorange and
+ * carrier phase observations for the satellites being tracked by
+ * the device. Carrier phase observation here is represented as a
+ * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
+ * whole cycles and 8-bits of fractional cycles).  The observations
+ * are interoperable with 3rd party receivers and conform
+ * with typical RTCMv3 GNSS observations.
+ */
+#define SBP_MSG_OBS_DEP_C            0x0049
+typedef struct __attribute__((packed)) {
+  observation_header_dep_t header;    /**< Header of a GPS observation message */
+  packed_obs_content_dep_c_t obs[0];    /**< Pseudorange and carrier phase observation for a
+satellite being tracked.
+ */
+} msg_obs_dep_c_t;
 
 
 /** Iono corrections

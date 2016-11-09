@@ -31,7 +31,9 @@ var UInt64 = require('cuint').UINT64;
  * respond to commands or configuration requests.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field reserved number (unsigned 32-bit int, 4 bytes) Reserved
+ * @field cause number (unsigned 8-bit int, 1 byte) Cause of startup
+ * @field startup_type number (unsigned 8-bit int, 1 byte) Startup type
+ * @field reserved number (unsigned 16-bit int, 2 bytes) Reserved
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -48,9 +50,50 @@ MsgStartup.prototype.msg_type = 0xFF00;
 MsgStartup.prototype.constructor = MsgStartup;
 MsgStartup.prototype.parser = new Parser()
   .endianess('little')
-  .uint32('reserved');
+  .uint8('cause')
+  .uint8('startup_type')
+  .uint16('reserved');
 MsgStartup.prototype.fieldSpec = [];
-MsgStartup.prototype.fieldSpec.push(['reserved', 'writeUInt32LE', 4]);
+MsgStartup.prototype.fieldSpec.push(['cause', 'writeUInt8', 1]);
+MsgStartup.prototype.fieldSpec.push(['startup_type', 'writeUInt8', 1]);
+MsgStartup.prototype.fieldSpec.push(['reserved', 'writeUInt16LE', 2]);
+
+/**
+ * SBP class for message MSG_DGNSS_STATUS (0xFF02).
+ *
+ * This message provides information about the receipt of Differential corrections.
+ * It is expected to be sent with each receipt of a complete corrections packet.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ * @field latency number (unsigned 16-bit int, 2 bytes) Latency of observation receipt
+ * @field num_signals number (unsigned 8-bit int, 1 byte) Number of signals from base station
+ * @field source string Corrections source string
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgDgnssStatus = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_DGNSS_STATUS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgDgnssStatus.prototype = Object.create(SBP.prototype);
+MsgDgnssStatus.prototype.messageType = "MSG_DGNSS_STATUS";
+MsgDgnssStatus.prototype.msg_type = 0xFF02;
+MsgDgnssStatus.prototype.constructor = MsgDgnssStatus;
+MsgDgnssStatus.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('flags')
+  .uint16('latency')
+  .uint8('num_signals')
+  .string('source', { greedy: true });
+MsgDgnssStatus.prototype.fieldSpec = [];
+MsgDgnssStatus.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+MsgDgnssStatus.prototype.fieldSpec.push(['latency', 'writeUInt16LE', 2]);
+MsgDgnssStatus.prototype.fieldSpec.push(['num_signals', 'writeUInt8', 1]);
+MsgDgnssStatus.prototype.fieldSpec.push(['source', 'string', null]);
 
 /**
  * SBP class for message MSG_HEARTBEAT (0xFFFF).
@@ -88,6 +131,8 @@ MsgHeartbeat.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 module.exports = {
   0xFF00: MsgStartup,
   MsgStartup: MsgStartup,
+  0xFF02: MsgDgnssStatus,
+  MsgDgnssStatus: MsgDgnssStatus,
   0xFFFF: MsgHeartbeat,
   MsgHeartbeat: MsgHeartbeat,
 }

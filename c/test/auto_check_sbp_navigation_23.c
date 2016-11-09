@@ -122,7 +122,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    msg_gps_time_dep_a_t* msg = ( msg_gps_time_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1838, "incorrect value for wn, expected 1838, is %d", msg->wn);
@@ -166,7 +166,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    msg_gps_time_dep_a_t* msg = ( msg_gps_time_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1838, "incorrect value for wn, expected 1838, is %d", msg->wn);
@@ -210,7 +210,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    msg_gps_time_dep_a_t* msg = ( msg_gps_time_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1838, "incorrect value for wn, expected 1838, is %d", msg->wn);
@@ -254,7 +254,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    msg_gps_time_dep_a_t* msg = ( msg_gps_time_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1838, "incorrect value for wn, expected 1838, is %d", msg->wn);
@@ -298,7 +298,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    msg_gps_time_dep_a_t* msg = ( msg_gps_time_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1838, "incorrect value for wn, expected 1838, is %d", msg->wn);
@@ -342,7 +342,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
+    msg_gps_time_dep_a_t* msg = ( msg_gps_time_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1838, "incorrect value for wn, expected 1838, is %d", msg->wn);
@@ -386,7 +386,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_ecef_t* msg = ( msg_pos_ecef_t *)((void *)last_msg + 6);
+    msg_pos_ecef_dep_a_t* msg = ( msg_pos_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 8, "incorrect value for n_sats, expected 8, is %d", msg->n_sats);
@@ -433,7 +433,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_ecef_t* msg = ( msg_pos_ecef_t *)((void *)last_msg + 6);
+    msg_pos_ecef_dep_a_t* msg = ( msg_pos_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 8, "incorrect value for n_sats, expected 8, is %d", msg->n_sats);
@@ -480,7 +480,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_ecef_t* msg = ( msg_pos_ecef_t *)((void *)last_msg + 6);
+    msg_pos_ecef_dep_a_t* msg = ( msg_pos_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 8, "incorrect value for n_sats, expected 8, is %d", msg->n_sats);
@@ -527,7 +527,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_ecef_t* msg = ( msg_pos_ecef_t *)((void *)last_msg + 6);
+    msg_pos_ecef_dep_a_t* msg = ( msg_pos_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 8, "incorrect value for n_sats, expected 8, is %d", msg->n_sats);
@@ -574,7 +574,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_ecef_t* msg = ( msg_pos_ecef_t *)((void *)last_msg + 6);
+    msg_pos_ecef_dep_a_t* msg = ( msg_pos_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 8, "incorrect value for n_sats, expected 8, is %d", msg->n_sats);
@@ -621,7 +621,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_ecef_t* msg = ( msg_pos_ecef_t *)((void *)last_msg + 6);
+    msg_pos_ecef_dep_a_t* msg = ( msg_pos_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 5, "incorrect value for n_sats, expected 5, is %d", msg->n_sats);
@@ -668,7 +668,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ecef_t* msg = ( msg_baseline_ecef_t *)((void *)last_msg + 6);
+    msg_baseline_ecef_dep_a_t* msg = ( msg_baseline_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 6, "incorrect value for n_sats, expected 6, is %d", msg->n_sats);
@@ -715,7 +715,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ecef_t* msg = ( msg_baseline_ecef_t *)((void *)last_msg + 6);
+    msg_baseline_ecef_dep_a_t* msg = ( msg_baseline_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 6, "incorrect value for n_sats, expected 6, is %d", msg->n_sats);
@@ -762,7 +762,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ecef_t* msg = ( msg_baseline_ecef_t *)((void *)last_msg + 6);
+    msg_baseline_ecef_dep_a_t* msg = ( msg_baseline_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 6, "incorrect value for n_sats, expected 6, is %d", msg->n_sats);
@@ -809,7 +809,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ecef_t* msg = ( msg_baseline_ecef_t *)((void *)last_msg + 6);
+    msg_baseline_ecef_dep_a_t* msg = ( msg_baseline_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 6, "incorrect value for n_sats, expected 6, is %d", msg->n_sats);
@@ -856,7 +856,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ecef_t* msg = ( msg_baseline_ecef_t *)((void *)last_msg + 6);
+    msg_baseline_ecef_dep_a_t* msg = ( msg_baseline_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 6, "incorrect value for n_sats, expected 6, is %d", msg->n_sats);
@@ -903,7 +903,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ecef_t* msg = ( msg_baseline_ecef_t *)((void *)last_msg + 6);
+    msg_baseline_ecef_dep_a_t* msg = ( msg_baseline_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 6, "incorrect value for n_sats, expected 6, is %d", msg->n_sats);
@@ -950,7 +950,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)((void *)last_msg + 6);
+    msg_baseline_ned_dep_a_t* msg = ( msg_baseline_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -998,7 +998,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)((void *)last_msg + 6);
+    msg_baseline_ned_dep_a_t* msg = ( msg_baseline_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -1046,7 +1046,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)((void *)last_msg + 6);
+    msg_baseline_ned_dep_a_t* msg = ( msg_baseline_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -1094,7 +1094,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)((void *)last_msg + 6);
+    msg_baseline_ned_dep_a_t* msg = ( msg_baseline_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -1142,7 +1142,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)((void *)last_msg + 6);
+    msg_baseline_ned_dep_a_t* msg = ( msg_baseline_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -1190,7 +1190,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ned_t* msg = ( msg_baseline_ned_t *)((void *)last_msg + 6);
+    msg_baseline_ned_dep_a_t* msg = ( msg_baseline_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -1238,7 +1238,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
+    msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 8, "incorrect value for n_sats, expected 8, is %d", msg->n_sats);
@@ -1285,7 +1285,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
+    msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 8, "incorrect value for n_sats, expected 8, is %d", msg->n_sats);
@@ -1332,7 +1332,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
+    msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 8, "incorrect value for n_sats, expected 8, is %d", msg->n_sats);
@@ -1379,7 +1379,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
+    msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 8, "incorrect value for n_sats, expected 8, is %d", msg->n_sats);
@@ -1426,7 +1426,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
+    msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 8, "incorrect value for n_sats, expected 8, is %d", msg->n_sats);
@@ -1473,7 +1473,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
+    msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 5, "incorrect value for n_sats, expected 5, is %d", msg->n_sats);
@@ -1520,7 +1520,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ned_t* msg = ( msg_vel_ned_t *)((void *)last_msg + 6);
+    msg_vel_ned_dep_a_t* msg = ( msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -1568,7 +1568,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ned_t* msg = ( msg_vel_ned_t *)((void *)last_msg + 6);
+    msg_vel_ned_dep_a_t* msg = ( msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -1616,7 +1616,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ned_t* msg = ( msg_vel_ned_t *)((void *)last_msg + 6);
+    msg_vel_ned_dep_a_t* msg = ( msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -1664,7 +1664,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ned_t* msg = ( msg_vel_ned_t *)((void *)last_msg + 6);
+    msg_vel_ned_dep_a_t* msg = ( msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -1712,7 +1712,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ned_t* msg = ( msg_vel_ned_t *)((void *)last_msg + 6);
+    msg_vel_ned_dep_a_t* msg = ( msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -1760,7 +1760,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ned_t* msg = ( msg_vel_ned_t *)((void *)last_msg + 6);
+    msg_vel_ned_dep_a_t* msg = ( msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -1808,7 +1808,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
+    msg_dops_dep_a_t* msg = ( msg_dops_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->gdop == 247, "incorrect value for gdop, expected 247, is %d", msg->gdop);
@@ -1854,7 +1854,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
+    msg_dops_dep_a_t* msg = ( msg_dops_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->gdop == 65535, "incorrect value for gdop, expected 65535, is %d", msg->gdop);
@@ -1900,7 +1900,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
+    msg_dops_dep_a_t* msg = ( msg_dops_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->gdop == 348, "incorrect value for gdop, expected 348, is %d", msg->gdop);
@@ -1946,7 +1946,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
+    msg_dops_dep_a_t* msg = ( msg_dops_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->gdop == 348, "incorrect value for gdop, expected 348, is %d", msg->gdop);
@@ -1992,7 +1992,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
+    msg_dops_dep_a_t* msg = ( msg_dops_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->gdop == 348, "incorrect value for gdop, expected 348, is %d", msg->gdop);
@@ -2038,7 +2038,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
+    msg_dops_dep_a_t* msg = ( msg_dops_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->gdop == 348, "incorrect value for gdop, expected 348, is %d", msg->gdop);
@@ -2084,7 +2084,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
+    msg_pos_llh_dep_a_t* msg = ( msg_pos_llh_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -2132,7 +2132,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
+    msg_pos_llh_dep_a_t* msg = ( msg_pos_llh_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -2180,7 +2180,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
+    msg_pos_llh_dep_a_t* msg = ( msg_pos_llh_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -2228,7 +2228,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
+    msg_pos_llh_dep_a_t* msg = ( msg_pos_llh_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -2276,7 +2276,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
+    msg_pos_llh_dep_a_t* msg = ( msg_pos_llh_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
@@ -2324,7 +2324,7 @@ START_TEST( test_auto_check_sbp_navigation_23 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_llh_t* msg = ( msg_pos_llh_t *)((void *)last_msg + 6);
+    msg_pos_llh_dep_a_t* msg = ( msg_pos_llh_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);

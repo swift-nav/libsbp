@@ -27,12 +27,12 @@ from sbp.gnss import *
 class ObservationHeader(object):
   """ObservationHeader.
   
-  Header of a GPS observation message.
+  Header of a GNSS observation message.
   
   Parameters
   ----------
-  t : GPSTime
-    GPS time of this observation
+  t : GPSTimeNano
+    GNSS time of this observation
   n_obs : int
     Total number of observations. First nibble is the size
 of the sequence (n), second nibble is the zero-indexed
@@ -41,7 +41,7 @@ counter (ith packet of n)
 
   """
   _parser = Embedded(Struct("ObservationHeader",
-                     Struct('t', GPSTime._parser),
+                     Struct('t', GPSTimeNano._parser),
                      ULInt8('n_obs'),))
   __slots__ = [
                't',
@@ -67,12 +67,56 @@ counter (ith packet of n)
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return ObservationHeader.build(d)
     
+class Doppler(object):
+  """Doppler.
+  
+  Doppler measurement in Hz represented as a 24-bit
+fixed point number with Q16.8 layout, i.e. 16-bits of whole
+doppler and 8-bits of fractional doppler.  This doppler is defined
+as positive for approaching satellites.
+
+  
+  Parameters
+  ----------
+  i : int
+    Doppler whole Hz
+  f : int
+    Doppler fractional part
+
+  """
+  _parser = Embedded(Struct("Doppler",
+                     SLInt16('i'),
+                     ULInt8('f'),))
+  __slots__ = [
+               'i',
+               'f',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.i = kwargs.pop('i')
+      self.f = kwargs.pop('f')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = Doppler._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return Doppler.build(d)
+    
 class PackedObsContent(object):
   """PackedObsContent.
   
   Pseudorange and carrier phase observation for a satellite being
-tracked. The observations should be interoperable with 3rd party
-receivers and conform with typical RTCMv3 GNSS observations.
+tracked. The observations are interoperable with 3rd party
+receivers and conform with typical RTCMv3 GNSS observations.  
 
   
   Parameters
@@ -81,28 +125,42 @@ receivers and conform with typical RTCMv3 GNSS observations.
     Pseudorange observation
   L : CarrierPhase
     Carrier phase observation with typical sign convention.
+  D : Doppler
+    Doppler observation with typical sign convention.
   cn0 : int
-    Carrier-to-Noise density
+    Carrier-to-Noise density.  Zero implies invalid cn0.
   lock : int
-    Lock indicator. This value changes whenever a satellite
-signal has lost and regained lock, indicating that the
-carrier phase ambiguity may have changed.
+    Lock timer. This value gives an indication of the time
+for which a signal has maintained continuous phase lock.
+Whenever a signal has lost and regained lock, this 
+value is reset to zero. It is encoded according to DF402 from
+the RTCM 10403.2 Amendment 2 specification.  Valid values range 
+from 0 to 15 and the most significant nibble is reserved for future use.
 
-  sid : GnssSignal
-    GNSS signal identifier
+  flags : int
+    Measurement status flags. A bit field of flags providing the
+status of this observation.  If this field is 0 it means only the Cn0
+estimate for the signal is valid.
+
+  sid : GnssSignal16
+    GNSS signal identifier (16 bit)
 
   """
   _parser = Embedded(Struct("PackedObsContent",
                      ULInt32('P'),
                      Struct('L', CarrierPhase._parser),
+                     Struct('D', Doppler._parser),
                      ULInt8('cn0'),
-                     ULInt16('lock'),
-                     Struct('sid', GnssSignal._parser),))
+                     ULInt8('lock'),
+                     ULInt8('flags'),
+                     Struct('sid', GnssSignal16._parser),))
   __slots__ = [
                'P',
                'L',
+               'D',
                'cn0',
                'lock',
+               'flags',
                'sid',
               ]
 
@@ -112,8 +170,10 @@ carrier phase ambiguity may have changed.
     else:
       self.P = kwargs.pop('P')
       self.L = kwargs.pop('L')
+      self.D = kwargs.pop('D')
       self.cn0 = kwargs.pop('cn0')
       self.lock = kwargs.pop('lock')
+      self.flags = kwargs.pop('flags')
       self.sid = kwargs.pop('sid')
 
   def __repr__(self):
@@ -190,6 +250,49 @@ GLO: 0 = valid, non-zero = invalid
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return EphemerisCommonContent.build(d)
+    
+class ObservationHeaderDep(object):
+  """ObservationHeaderDep.
+  
+  Header of a GPS observation message.
+  
+  Parameters
+  ----------
+  t : GPSTime
+    GPS time of this observation
+  n_obs : int
+    Total number of observations. First nibble is the size
+of the sequence (n), second nibble is the zero-indexed
+counter (ith packet of n)
+
+
+  """
+  _parser = Embedded(Struct("ObservationHeaderDep",
+                     Struct('t', GPSTime._parser),
+                     ULInt8('n_obs'),))
+  __slots__ = [
+               't',
+               'n_obs',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.t = kwargs.pop('t')
+      self.n_obs = kwargs.pop('n_obs')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = ObservationHeaderDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return ObservationHeaderDep.build(d)
     
 class CarrierPhaseDepA(object):
   """CarrierPhaseDepA.
@@ -354,9 +457,70 @@ carrier phase ambiguity may have changed.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return PackedObsContentDepB.build(d)
     
-SBP_MSG_OBS = 0x0049
+class PackedObsContentDepC(object):
+  """PackedObsContentDepC.
+  
+  Pseudorange and carrier phase observation for a satellite being
+tracked. The observations are be interoperable with 3rd party
+receivers and conform with typical RTCMv3 GNSS observations.
+
+  
+  Parameters
+  ----------
+  P : int
+    Pseudorange observation
+  L : CarrierPhase
+    Carrier phase observation with typical sign convention.
+  cn0 : int
+    Carrier-to-Noise density
+  lock : int
+    Lock indicator. This value changes whenever a satellite
+signal has lost and regained lock, indicating that the
+carrier phase ambiguity may have changed.
+
+  sid : GnssSignal
+    GNSS signal identifier
+
+  """
+  _parser = Embedded(Struct("PackedObsContentDepC",
+                     ULInt32('P'),
+                     Struct('L', CarrierPhase._parser),
+                     ULInt8('cn0'),
+                     ULInt16('lock'),
+                     Struct('sid', GnssSignal._parser),))
+  __slots__ = [
+               'P',
+               'L',
+               'cn0',
+               'lock',
+               'sid',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.P = kwargs.pop('P')
+      self.L = kwargs.pop('L')
+      self.cn0 = kwargs.pop('cn0')
+      self.lock = kwargs.pop('lock')
+      self.sid = kwargs.pop('sid')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = PackedObsContentDepC._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return PackedObsContentDepC.build(d)
+    
+SBP_MSG_OBS = 0x004A
 class MsgObs(SBP):
-  """SBP class for message MSG_OBS (0x0049).
+  """SBP class for message MSG_OBS (0x004A).
 
   You can have MSG_OBS inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -368,8 +532,18 @@ carrier phase observations for the satellites being tracked by
 the device. Carrier phase observation here is represented as a
 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
 whole cycles and 8-bits of fractional cycles).  The observations
-should be interoperable with 3rd party receivers and conform
-with typical RTCMv3 GNSS observations.
+are be interoperable with 3rd party receivers and conform
+with typical RTCMv3 GNSS observations.  
+
+The lock field represents the range of time for 
+which a particular signal has maintained carrier phase lock. 
+The minimum and maximum possible lock times 
+for each value of the field can be described by the following piecewise function.  
+Given the lock value, l, the minimum lock time is given by 2 ^ (l + 4) ms and the 
+maximum lock time is given by 2 ^ (l + 5) ms provided n is not 0.  
+If n is 0 the lower range is given to be 0 ms. Conversely, given a lock time 
+(t) in milliseconds, the field value is given by floor(log_2(t) - 4) 
+when t is greater than 32 ms or 0 if (t) is less than 32 ms.
 
 
   Parameters
@@ -1928,7 +2102,7 @@ class MsgObsDepA(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  header : ObservationHeader
+  header : ObservationHeaderDep
     Header of a GPS observation message
   obs : array
     Pseudorange and carrier phase observation for a
@@ -1939,7 +2113,7 @@ satellite being tracked.
 
   """
   _parser = Struct("MsgObsDepA",
-                   Struct('header', ObservationHeader._parser),
+                   Struct('header', ObservationHeaderDep._parser),
                    OptionalGreedyRange(Struct('obs', PackedObsContentDepA._parser)),)
   __slots__ = [
                'header',
@@ -2021,7 +2195,7 @@ observations.
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  header : ObservationHeader
+  header : ObservationHeaderDep
     Header of a GPS observation message
   obs : array
     Pseudorange and carrier phase observation for a
@@ -2032,7 +2206,7 @@ satellite being tracked.
 
   """
   _parser = Struct("MsgObsDepB",
-                   Struct('header', ObservationHeader._parser),
+                   Struct('header', ObservationHeaderDep._parser),
                    OptionalGreedyRange(Struct('obs', PackedObsContentDepB._parser)),)
   __slots__ = [
                'header',
@@ -2089,6 +2263,100 @@ satellite being tracked.
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgObsDepB, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_OBS_DEP_C = 0x0049
+class MsgObsDepC(SBP):
+  """SBP class for message MSG_OBS_DEP_C (0x0049).
+
+  You can have MSG_OBS_DEP_C inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The GPS observations message reports all the raw pseudorange and
+carrier phase observations for the satellites being tracked by
+the device. Carrier phase observation here is represented as a
+40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
+whole cycles and 8-bits of fractional cycles).  The observations
+are interoperable with 3rd party receivers and conform
+with typical RTCMv3 GNSS observations.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : ObservationHeaderDep
+    Header of a GPS observation message
+  obs : array
+    Pseudorange and carrier phase observation for a
+satellite being tracked.
+
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgObsDepC",
+                   Struct('header', ObservationHeaderDep._parser),
+                   OptionalGreedyRange(Struct('obs', PackedObsContentDepC._parser)),)
+  __slots__ = [
+               'header',
+               'obs',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgObsDepC,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgObsDepC, self).__init__()
+      self.msg_type = SBP_MSG_OBS_DEP_C
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.obs = kwargs.pop('obs')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgObsDepC.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgObsDepC(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgObsDepC._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgObsDepC._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgObsDepC, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -2401,7 +2669,7 @@ LSB indicating tgd validity etc.
     
 
 msg_classes = {
-  0x0049: MsgObs,
+  0x004A: MsgObs,
   0x0044: MsgBasePosLLH,
   0x0048: MsgBasePosECEF,
   0x0081: MsgEphemerisGPS,
@@ -2413,6 +2681,7 @@ msg_classes = {
   0x0047: MsgEphemerisDepC,
   0x0045: MsgObsDepA,
   0x0043: MsgObsDepB,
+  0x0049: MsgObsDepC,
   0x0090: MsgIono,
   0x0091: MsgSvConfigurationGPS,
   0x0092: MsgGroupDelay,

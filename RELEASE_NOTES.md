@@ -6,12 +6,24 @@ For a detailed index of changes, please see the
 
 Contents
 --------
+ * [V2.0]{#V2.0.0}
  * [v1.1.1](#v1.1.1)
  * [v1.1.0](#v1.1.0)
  * [v1.0.2](#v1.0.2)
  * [v1.0.1](#v1.0.1)
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
+
+v2.0 <a name=v2.0.0>
+* Depcrated and redfined all navigation messages due to redefinition of the FLAGS field
+  * Navigation messages are expected to go out with every solution epoch whether valid or not
+* New observation message with Measured Doppler addition, observation flags,  and lock timer
+* Deprecation of Piksi V2.3.1 bootloader and flash messages
+* Addition of MSG_FWD to allow wrapping of forwardes SBP or other protocol messages
+* Addition of UTC Time message
+* Addition of DGPS Status Message.  This message will go out with each receipt of base observations.
+* Addition of Age of corrections message.  This will go out with every solution epoch to indicate correction age
+* Add information fields to reserved word in  MSG_STARTUP definition
 
 v1.1.1 <a name="v1.1.1"></a>
 --------------------------

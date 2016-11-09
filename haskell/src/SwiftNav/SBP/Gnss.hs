@@ -27,6 +27,31 @@ import SwiftNav.SBP.Encoding
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
+-- | GnssSignal16.
+--
+-- Signal identifier containing constellation, band, and satellite identifier
+-- - 0 GPS L1CA        - 1 GPS L2CM        - 2 SBAS L1CA        - 3 GLO L1CA
+-- - 4 GLO L2CA        - 5 GPS L1P        - 6 GPS L2P
+data GnssSignal16 = GnssSignal16
+  { _gnssSignal16_sat :: Word8
+    -- ^ Constellation-specific satellite identifier
+  , _gnssSignal16_code :: Word8
+    -- ^ Signal constellation, band and code
+  } deriving ( Show, Read, Eq )
+
+instance Binary GnssSignal16 where
+  get = do
+    _gnssSignal16_sat <- getWord8
+    _gnssSignal16_code <- getWord8
+    return GnssSignal16 {..}
+
+  put GnssSignal16 {..} = do
+    putWord8 _gnssSignal16_sat
+    putWord8 _gnssSignal16_code
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gnssSignal16_" . stripPrefix "_gnssSignal16_"}
+             ''GnssSignal16)
+$(makeLenses ''GnssSignal16)
+
 -- | GnssSignal.
 --
 -- Signal identifier containing constellation, band, and satellite identifier
@@ -77,6 +102,38 @@ instance Binary GpsTime where
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gpsTime_" . stripPrefix "_gpsTime_"}
              ''GpsTime)
 $(makeLenses ''GpsTime)
+
+-- | GPSTimeNano.
+--
+-- A wire-appropriate GPS time, defined as the number of milliseconds since
+-- beginning of the week on the Saturday/Sunday A wire-appropriate receiver
+-- clock time, defined as the time since the beginning of the week on the
+-- Saturday/Sunday transition. In most cases, observations are epoch aligned
+-- so ns field will be 0.
+data GpsTimeNano = GpsTimeNano
+  { _gpsTimeNano_tow :: Word32
+    -- ^ Milliseconds since start of GPS week
+  , _gpsTimeNano_ns :: Int32
+    -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
+    -- 500000)
+  , _gpsTimeNano_wn :: Word16
+    -- ^ GPS week number
+  } deriving ( Show, Read, Eq )
+
+instance Binary GpsTimeNano where
+  get = do
+    _gpsTimeNano_tow <- getWord32le
+    _gpsTimeNano_ns <- fromIntegral <$> getWord32le
+    _gpsTimeNano_wn <- getWord16le
+    return GpsTimeNano {..}
+
+  put GpsTimeNano {..} = do
+    putWord32le _gpsTimeNano_tow
+    putWord32le $ fromIntegral _gpsTimeNano_ns
+    putWord16le _gpsTimeNano_wn
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gpsTimeNano_" . stripPrefix "_gpsTimeNano_"}
+             ''GpsTimeNano)
+$(makeLenses ''GpsTimeNano)
 
 -- | CarrierPhase.
 --

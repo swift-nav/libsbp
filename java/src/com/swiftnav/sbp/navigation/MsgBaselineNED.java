@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_BASELINE_NED (0x0203).
+/** SBP class for message MSG_BASELINE_NED (0x020C).
  *
  * You can have MSG_BASELINE_NED inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -35,7 +35,7 @@ import org.json.JSONArray;
  * preceding MSG_GPS_TIME with the matching time-of-week (tow). */
 
 public class MsgBaselineNED extends SBPMessage {
-    public static final int TYPE = 0x0203;
+    public static final int TYPE = 0x020C;
 
     
     /** GPS Time of Week */

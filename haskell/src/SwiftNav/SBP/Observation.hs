@@ -30,10 +30,10 @@ import SwiftNav.SBP.Gnss
 
 -- | ObservationHeader.
 --
--- Header of a GPS observation message.
+-- Header of a GNSS observation message.
 data ObservationHeader = ObservationHeader
-  { _observationHeader_t   :: GpsTime
-    -- ^ GPS time of this observation
+  { _observationHeader_t   :: GpsTimeNano
+    -- ^ GNSS time of this observation
   , _observationHeader_n_obs :: Word8
     -- ^ Total number of observations. First nibble is the size of the sequence
     -- (n), second nibble is the zero-indexed counter (ith packet of n)
@@ -52,56 +52,102 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_observationHeader_
              ''ObservationHeader)
 $(makeLenses ''ObservationHeader)
 
+-- | Doppler.
+--
+-- Doppler measurement in Hz represented as a 24-bit fixed point number with
+-- Q16.8 layout, i.e. 16-bits of whole doppler and 8-bits of fractional
+-- doppler.  This doppler is defined as positive for approaching satellites.
+data Doppler = Doppler
+  { _doppler_i :: Int16
+    -- ^ Doppler whole Hz
+  , _doppler_f :: Word8
+    -- ^ Doppler fractional part
+  } deriving ( Show, Read, Eq )
+
+instance Binary Doppler where
+  get = do
+    _doppler_i <- fromIntegral <$> getWord16le
+    _doppler_f <- getWord8
+    return Doppler {..}
+
+  put Doppler {..} = do
+    putWord16le $ fromIntegral _doppler_i
+    putWord8 _doppler_f
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_doppler_" . stripPrefix "_doppler_"}
+             ''Doppler)
+$(makeLenses ''Doppler)
+
 -- | PackedObsContent.
 --
 -- Pseudorange and carrier phase observation for a satellite being tracked. The
--- observations should be interoperable with 3rd party receivers and conform
--- with typical RTCMv3 GNSS observations.
+-- observations are interoperable with 3rd party receivers and conform with
+-- typical RTCMv3 GNSS observations.
 data PackedObsContent = PackedObsContent
-  { _packedObsContent_P  :: Word32
+  { _packedObsContent_P   :: Word32
     -- ^ Pseudorange observation
-  , _packedObsContent_L  :: CarrierPhase
+  , _packedObsContent_L   :: CarrierPhase
     -- ^ Carrier phase observation with typical sign convention.
+  , _packedObsContent_D   :: Doppler
+    -- ^ Doppler observation with typical sign convention.
   , _packedObsContent_cn0 :: Word8
-    -- ^ Carrier-to-Noise density
-  , _packedObsContent_lock :: Word16
-    -- ^ Lock indicator. This value changes whenever a satellite signal has lost
-    -- and regained lock, indicating that the carrier phase ambiguity may have
-    -- changed.
-  , _packedObsContent_sid :: GnssSignal
-    -- ^ GNSS signal identifier
+    -- ^ Carrier-to-Noise density.  Zero implies invalid cn0.
+  , _packedObsContent_lock :: Word8
+    -- ^ Lock timer. This value gives an indication of the time for which a
+    -- signal has maintained continuous phase lock. Whenever a signal has lost
+    -- and regained lock, this  value is reset to zero. It is encoded according
+    -- to DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values
+    -- range  from 0 to 15 and the most significant nibble is reserved for
+    -- future use.
+  , _packedObsContent_flags :: Word8
+    -- ^ Measurement status flags. A bit field of flags providing the status of
+    -- this observation.  If this field is 0 it means only the Cn0 estimate for
+    -- the signal is valid.
+  , _packedObsContent_sid :: GnssSignal16
+    -- ^ GNSS signal identifier (16 bit)
   } deriving ( Show, Read, Eq )
 
 instance Binary PackedObsContent where
   get = do
     _packedObsContent_P <- getWord32le
     _packedObsContent_L <- get
+    _packedObsContent_D <- get
     _packedObsContent_cn0 <- getWord8
-    _packedObsContent_lock <- getWord16le
+    _packedObsContent_lock <- getWord8
+    _packedObsContent_flags <- getWord8
     _packedObsContent_sid <- get
     return PackedObsContent {..}
 
   put PackedObsContent {..} = do
     putWord32le _packedObsContent_P
     put _packedObsContent_L
+    put _packedObsContent_D
     putWord8 _packedObsContent_cn0
-    putWord16le _packedObsContent_lock
+    putWord8 _packedObsContent_lock
+    putWord8 _packedObsContent_flags
     put _packedObsContent_sid
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContent_" . stripPrefix "_packedObsContent_"}
              ''PackedObsContent)
 $(makeLenses ''PackedObsContent)
 
 msgObs :: Word16
-msgObs = 0x0049
+msgObs = 0x004A
 
--- | SBP class for message MSG_OBS (0x0049).
+-- | SBP class for message MSG_OBS (0x004A).
 --
 -- The GPS observations message reports all the raw pseudorange and carrier
 -- phase observations for the satellites being tracked by the device. Carrier
 -- phase observation here is represented as a 40-bit fixed point number with
 -- Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).
--- The observations should be interoperable with 3rd party receivers and
--- conform with typical RTCMv3 GNSS observations.
+-- The observations are be interoperable with 3rd party receivers and conform
+-- with typical RTCMv3 GNSS observations.    The lock field represents the
+-- range of time for  which a particular signal has maintained carrier phase
+-- lock.  The minimum and maximum possible lock times  for each value of the
+-- field can be described by the following piecewise function.   Given the lock
+-- value, l, the minimum lock time is given by 2 ^ (l + 4) ms and the  maximum
+-- lock time is given by 2 ^ (l + 5) ms provided n is not 0.   If n is 0 the
+-- lower range is given to be 0 ms. Conversely, given a lock time  (t) in
+-- milliseconds, the field value is given by floor(log_2(t) - 4)  when t is
+-- greater than 32 ms or 0 if (t) is less than 32 ms.
 data MsgObs = MsgObs
   { _msgObs_header :: ObservationHeader
     -- ^ Header of a GPS observation message
@@ -995,6 +1041,30 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepC_"
              ''MsgEphemerisDepC)
 $(makeLenses ''MsgEphemerisDepC)
 
+-- | ObservationHeaderDep.
+--
+-- Header of a GPS observation message.
+data ObservationHeaderDep = ObservationHeaderDep
+  { _observationHeaderDep_t   :: GpsTime
+    -- ^ GPS time of this observation
+  , _observationHeaderDep_n_obs :: Word8
+    -- ^ Total number of observations. First nibble is the size of the sequence
+    -- (n), second nibble is the zero-indexed counter (ith packet of n)
+  } deriving ( Show, Read, Eq )
+
+instance Binary ObservationHeaderDep where
+  get = do
+    _observationHeaderDep_t <- get
+    _observationHeaderDep_n_obs <- getWord8
+    return ObservationHeaderDep {..}
+
+  put ObservationHeaderDep {..} = do
+    put _observationHeaderDep_t
+    putWord8 _observationHeaderDep_n_obs
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_observationHeaderDep_" . stripPrefix "_observationHeaderDep_"}
+             ''ObservationHeaderDep)
+$(makeLenses ''ObservationHeaderDep)
+
 -- | CarrierPhaseDepA.
 --
 -- Carrier phase measurement in cycles represented as a 40-bit fixed point
@@ -1096,6 +1166,45 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDe
              ''PackedObsContentDepB)
 $(makeLenses ''PackedObsContentDepB)
 
+-- | PackedObsContentDepC.
+--
+-- Pseudorange and carrier phase observation for a satellite being tracked. The
+-- observations are be interoperable with 3rd party receivers and conform with
+-- typical RTCMv3 GNSS observations.
+data PackedObsContentDepC = PackedObsContentDepC
+  { _packedObsContentDepC_P  :: Word32
+    -- ^ Pseudorange observation
+  , _packedObsContentDepC_L  :: CarrierPhase
+    -- ^ Carrier phase observation with typical sign convention.
+  , _packedObsContentDepC_cn0 :: Word8
+    -- ^ Carrier-to-Noise density
+  , _packedObsContentDepC_lock :: Word16
+    -- ^ Lock indicator. This value changes whenever a satellite signal has lost
+    -- and regained lock, indicating that the carrier phase ambiguity may have
+    -- changed.
+  , _packedObsContentDepC_sid :: GnssSignal
+    -- ^ GNSS signal identifier
+  } deriving ( Show, Read, Eq )
+
+instance Binary PackedObsContentDepC where
+  get = do
+    _packedObsContentDepC_P <- getWord32le
+    _packedObsContentDepC_L <- get
+    _packedObsContentDepC_cn0 <- getWord8
+    _packedObsContentDepC_lock <- getWord16le
+    _packedObsContentDepC_sid <- get
+    return PackedObsContentDepC {..}
+
+  put PackedObsContentDepC {..} = do
+    putWord32le _packedObsContentDepC_P
+    put _packedObsContentDepC_L
+    putWord8 _packedObsContentDepC_cn0
+    putWord16le _packedObsContentDepC_lock
+    put _packedObsContentDepC_sid
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDepC_" . stripPrefix "_packedObsContentDepC_"}
+             ''PackedObsContentDepC)
+$(makeLenses ''PackedObsContentDepC)
+
 msgObsDepA :: Word16
 msgObsDepA = 0x0045
 
@@ -1103,7 +1212,7 @@ msgObsDepA = 0x0045
 --
 -- Deprecated.
 data MsgObsDepA = MsgObsDepA
-  { _msgObsDepA_header :: ObservationHeader
+  { _msgObsDepA_header :: ObservationHeaderDep
     -- ^ Header of a GPS observation message
   , _msgObsDepA_obs  :: [PackedObsContentDepA]
     -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
@@ -1135,7 +1244,7 @@ msgObsDepB = 0x0043
 -- referenced to a nominal pseudorange which are not interoperable with most
 -- 3rd party GNSS receievers or typical RTCMv3 observations.
 data MsgObsDepB = MsgObsDepB
-  { _msgObsDepB_header :: ObservationHeader
+  { _msgObsDepB_header :: ObservationHeaderDep
     -- ^ Header of a GPS observation message
   , _msgObsDepB_obs  :: [PackedObsContentDepB]
     -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
@@ -1156,6 +1265,40 @@ $(deriveSBP 'msgObsDepB ''MsgObsDepB)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepB_" . stripPrefix "_msgObsDepB_"}
              ''MsgObsDepB)
 $(makeLenses ''MsgObsDepB)
+
+msgObsDepC :: Word16
+msgObsDepC = 0x0049
+
+-- | SBP class for message MSG_OBS_DEP_C (0x0049).
+--
+-- The GPS observations message reports all the raw pseudorange and carrier
+-- phase observations for the satellites being tracked by the device. Carrier
+-- phase observation here is represented as a 40-bit fixed point number with
+-- Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).
+-- The observations are interoperable with 3rd party receivers and conform with
+-- typical RTCMv3 GNSS observations.
+data MsgObsDepC = MsgObsDepC
+  { _msgObsDepC_header :: ObservationHeaderDep
+    -- ^ Header of a GPS observation message
+  , _msgObsDepC_obs  :: [PackedObsContentDepC]
+    -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgObsDepC where
+  get = do
+    _msgObsDepC_header <- get
+    _msgObsDepC_obs <- whileM (not <$> isEmpty) get
+    return MsgObsDepC {..}
+
+  put MsgObsDepC {..} = do
+    put _msgObsDepC_header
+    mapM_ put _msgObsDepC_obs
+
+$(deriveSBP 'msgObsDepC ''MsgObsDepC)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepC_" . stripPrefix "_msgObsDepC_"}
+             ''MsgObsDepC)
+$(makeLenses ''MsgObsDepC)
 
 msgIono :: Word16
 msgIono = 0x0090

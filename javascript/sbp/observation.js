@@ -23,16 +23,18 @@ var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
 var GnssSignal = require("./gnss").GnssSignal;
+var GnssSignal16 = require("./gnss").GnssSignal16;
 var GPSTime = require("./gnss").GPSTime;
 var CarrierPhase = require("./gnss").CarrierPhase;
+var GPSTimeNano = require("./gnss").GPSTimeNano;
 
 /**
  * SBP class for message fragment ObservationHeader
  *
- * Header of a GPS observation message.
+ * Header of a GNSS observation message.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field t GPSTime GPS time of this observation
+ * @field t GPSTimeNano GNSS time of this observation
  * @field n_obs number (unsigned 8-bit int, 1 byte) Total number of observations. First nibble is the size of the sequence (n),
  *   second nibble is the zero-indexed counter (ith packet of n)
  *
@@ -50,26 +52,64 @@ ObservationHeader.prototype.messageType = "ObservationHeader";
 ObservationHeader.prototype.constructor = ObservationHeader;
 ObservationHeader.prototype.parser = new Parser()
   .endianess('little')
-  .nest('t', { type: GPSTime.prototype.parser })
+  .nest('t', { type: GPSTimeNano.prototype.parser })
   .uint8('n_obs');
 ObservationHeader.prototype.fieldSpec = [];
-ObservationHeader.prototype.fieldSpec.push(['t', GPSTime.prototype.fieldSpec]);
+ObservationHeader.prototype.fieldSpec.push(['t', GPSTimeNano.prototype.fieldSpec]);
 ObservationHeader.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message fragment Doppler
+ *
+ * Doppler measurement in Hz represented as a 24-bit fixed point number with Q16.8
+ * layout, i.e. 16-bits of whole doppler and 8-bits of fractional doppler.  This
+ * doppler is defined as positive for approaching satellites.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field i number (signed 16-bit int, 2 bytes) Doppler whole Hz
+ * @field f number (unsigned 8-bit int, 1 byte) Doppler fractional part
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var Doppler = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "Doppler";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+Doppler.prototype = Object.create(SBP.prototype);
+Doppler.prototype.messageType = "Doppler";
+Doppler.prototype.constructor = Doppler;
+Doppler.prototype.parser = new Parser()
+  .endianess('little')
+  .int16('i')
+  .uint8('f');
+Doppler.prototype.fieldSpec = [];
+Doppler.prototype.fieldSpec.push(['i', 'writeInt16LE', 2]);
+Doppler.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
 
 /**
  * SBP class for message fragment PackedObsContent
  *
  * Pseudorange and carrier phase observation for a satellite being tracked. The
- * observations should be interoperable with 3rd party receivers and conform with
- * typical RTCMv3 GNSS observations.
+ * observations are interoperable with 3rd party receivers and conform with typical
+ * RTCMv3 GNSS observations.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field P number (unsigned 32-bit int, 4 bytes) Pseudorange observation
  * @field L CarrierPhase Carrier phase observation with typical sign convention.
- * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density
- * @field lock number (unsigned 16-bit int, 2 bytes) Lock indicator. This value changes whenever a satellite signal has lost and
- *   regained lock, indicating that the carrier phase ambiguity may have changed.
- * @field sid GnssSignal GNSS signal identifier
+ * @field D Doppler Doppler observation with typical sign convention.
+ * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density.  Zero implies invalid cn0.
+ * @field lock number (unsigned 8-bit int, 1 byte) Lock timer. This value gives an indication of the time for which a signal has
+ *   maintained continuous phase lock. Whenever a signal has lost and regained lock,
+ *   this  value is reset to zero. It is encoded according to DF402 from the RTCM
+ *   10403.2 Amendment 2 specification.  Valid values range  from 0 to 15 and the
+ *   most significant nibble is reserved for future use.
+ * @field flags number (unsigned 8-bit int, 1 byte) Measurement status flags. A bit field of flags providing the status of this
+ *   observation.  If this field is 0 it means only the Cn0 estimate for the signal
+ *   is valid.
+ * @field sid GnssSignal16 GNSS signal identifier (16 bit)
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -87,25 +127,37 @@ PackedObsContent.prototype.parser = new Parser()
   .endianess('little')
   .uint32('P')
   .nest('L', { type: CarrierPhase.prototype.parser })
+  .nest('D', { type: Doppler.prototype.parser })
   .uint8('cn0')
-  .uint16('lock')
-  .nest('sid', { type: GnssSignal.prototype.parser });
+  .uint8('lock')
+  .uint8('flags')
+  .nest('sid', { type: GnssSignal16.prototype.parser });
 PackedObsContent.prototype.fieldSpec = [];
 PackedObsContent.prototype.fieldSpec.push(['P', 'writeUInt32LE', 4]);
 PackedObsContent.prototype.fieldSpec.push(['L', CarrierPhase.prototype.fieldSpec]);
+PackedObsContent.prototype.fieldSpec.push(['D', Doppler.prototype.fieldSpec]);
 PackedObsContent.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
-PackedObsContent.prototype.fieldSpec.push(['lock', 'writeUInt16LE', 2]);
-PackedObsContent.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+PackedObsContent.prototype.fieldSpec.push(['lock', 'writeUInt8', 1]);
+PackedObsContent.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+PackedObsContent.prototype.fieldSpec.push(['sid', GnssSignal16.prototype.fieldSpec]);
 
 /**
- * SBP class for message MSG_OBS (0x0049).
+ * SBP class for message MSG_OBS (0x004A).
  *
  * The GPS observations message reports all the raw pseudorange and carrier phase
  * observations for the satellites being tracked by the device. Carrier phase
  * observation here is represented as a 40-bit fixed point number with Q32.8 layout
  * (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).  The
- * observations should be interoperable with 3rd party receivers and conform with
- * typical RTCMv3 GNSS observations.
+ * observations are be interoperable with 3rd party receivers and conform with
+ * typical RTCMv3 GNSS observations.    The lock field represents the range of time
+ * for  which a particular signal has maintained carrier phase lock.  The minimum
+ * and maximum possible lock times  for each value of the field can be described by
+ * the following piecewise function.   Given the lock value, l, the minimum lock
+ * time is given by 2 ^ (l + 4) ms and the  maximum lock time is given by 2 ^ (l +
+ * 5) ms provided n is not 0.   If n is 0 the lower range is given to be 0 ms.
+ * Conversely, given a lock time  (t) in milliseconds, the field value is given by
+ * floor(log_2(t) - 4)  when t is greater than 32 ms or 0 if (t) is less than 32
+ * ms.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header ObservationHeader Header of a GPS observation message
@@ -122,7 +174,7 @@ var MsgObs = function (sbp, fields) {
 };
 MsgObs.prototype = Object.create(SBP.prototype);
 MsgObs.prototype.messageType = "MSG_OBS";
-MsgObs.prototype.msg_type = 0x0049;
+MsgObs.prototype.msg_type = 0x004A;
 MsgObs.prototype.constructor = MsgObs;
 MsgObs.prototype.parser = new Parser()
   .endianess('little')
@@ -864,6 +916,36 @@ MsgEphemerisDepC.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
 MsgEphemerisDepC.prototype.fieldSpec.push(['reserved', 'writeUInt32LE', 4]);
 
 /**
+ * SBP class for message fragment ObservationHeaderDep
+ *
+ * Header of a GPS observation message.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field t GPSTime GPS time of this observation
+ * @field n_obs number (unsigned 8-bit int, 1 byte) Total number of observations. First nibble is the size of the sequence (n),
+ *   second nibble is the zero-indexed counter (ith packet of n)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var ObservationHeaderDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "ObservationHeaderDep";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+ObservationHeaderDep.prototype = Object.create(SBP.prototype);
+ObservationHeaderDep.prototype.messageType = "ObservationHeaderDep";
+ObservationHeaderDep.prototype.constructor = ObservationHeaderDep;
+ObservationHeaderDep.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('t', { type: GPSTime.prototype.parser })
+  .uint8('n_obs');
+ObservationHeaderDep.prototype.fieldSpec = [];
+ObservationHeaderDep.prototype.fieldSpec.push(['t', GPSTime.prototype.fieldSpec]);
+ObservationHeaderDep.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
+
+/**
  * SBP class for message fragment CarrierPhaseDepA
  *
  * Carrier phase measurement in cycles represented as a 40-bit fixed point number
@@ -975,12 +1057,53 @@ PackedObsContentDepB.prototype.fieldSpec.push(['lock', 'writeUInt16LE', 2]);
 PackedObsContentDepB.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 
 /**
+ * SBP class for message fragment PackedObsContentDepC
+ *
+ * Pseudorange and carrier phase observation for a satellite being tracked. The
+ * observations are be interoperable with 3rd party receivers and conform with
+ * typical RTCMv3 GNSS observations.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field P number (unsigned 32-bit int, 4 bytes) Pseudorange observation
+ * @field L CarrierPhase Carrier phase observation with typical sign convention.
+ * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density
+ * @field lock number (unsigned 16-bit int, 2 bytes) Lock indicator. This value changes whenever a satellite signal has lost and
+ *   regained lock, indicating that the carrier phase ambiguity may have changed.
+ * @field sid GnssSignal GNSS signal identifier
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var PackedObsContentDepC = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "PackedObsContentDepC";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+PackedObsContentDepC.prototype = Object.create(SBP.prototype);
+PackedObsContentDepC.prototype.messageType = "PackedObsContentDepC";
+PackedObsContentDepC.prototype.constructor = PackedObsContentDepC;
+PackedObsContentDepC.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('P')
+  .nest('L', { type: CarrierPhase.prototype.parser })
+  .uint8('cn0')
+  .uint16('lock')
+  .nest('sid', { type: GnssSignal.prototype.parser });
+PackedObsContentDepC.prototype.fieldSpec = [];
+PackedObsContentDepC.prototype.fieldSpec.push(['P', 'writeUInt32LE', 4]);
+PackedObsContentDepC.prototype.fieldSpec.push(['L', CarrierPhase.prototype.fieldSpec]);
+PackedObsContentDepC.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
+PackedObsContentDepC.prototype.fieldSpec.push(['lock', 'writeUInt16LE', 2]);
+PackedObsContentDepC.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+
+/**
  * SBP class for message MSG_OBS_DEP_A (0x0045).
  *
  * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field header ObservationHeader Header of a GPS observation message
+ * @field header ObservationHeaderDep Header of a GPS observation message
  * @field obs array Pseudorange and carrier phase observation for a satellite being tracked.
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -998,10 +1121,10 @@ MsgObsDepA.prototype.msg_type = 0x0045;
 MsgObsDepA.prototype.constructor = MsgObsDepA;
 MsgObsDepA.prototype.parser = new Parser()
   .endianess('little')
-  .nest('header', { type: ObservationHeader.prototype.parser })
+  .nest('header', { type: ObservationHeaderDep.prototype.parser })
   .array('obs', { type: PackedObsContentDepA.prototype.parser, readUntil: 'eof' });
 MsgObsDepA.prototype.fieldSpec = [];
-MsgObsDepA.prototype.fieldSpec.push(['header', ObservationHeader.prototype.fieldSpec]);
+MsgObsDepA.prototype.fieldSpec.push(['header', ObservationHeaderDep.prototype.fieldSpec]);
 MsgObsDepA.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepA.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
@@ -1013,7 +1136,7 @@ MsgObsDepA.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepA.protot
  * receievers or typical RTCMv3 observations.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field header ObservationHeader Header of a GPS observation message
+ * @field header ObservationHeaderDep Header of a GPS observation message
  * @field obs array Pseudorange and carrier phase observation for a satellite being tracked.
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -1031,11 +1154,46 @@ MsgObsDepB.prototype.msg_type = 0x0043;
 MsgObsDepB.prototype.constructor = MsgObsDepB;
 MsgObsDepB.prototype.parser = new Parser()
   .endianess('little')
-  .nest('header', { type: ObservationHeader.prototype.parser })
+  .nest('header', { type: ObservationHeaderDep.prototype.parser })
   .array('obs', { type: PackedObsContentDepB.prototype.parser, readUntil: 'eof' });
 MsgObsDepB.prototype.fieldSpec = [];
-MsgObsDepB.prototype.fieldSpec.push(['header', ObservationHeader.prototype.fieldSpec]);
+MsgObsDepB.prototype.fieldSpec.push(['header', ObservationHeaderDep.prototype.fieldSpec]);
 MsgObsDepB.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepB.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+/**
+ * SBP class for message MSG_OBS_DEP_C (0x0049).
+ *
+ * The GPS observations message reports all the raw pseudorange and carrier phase
+ * observations for the satellites being tracked by the device. Carrier phase
+ * observation here is represented as a 40-bit fixed point number with Q32.8 layout
+ * (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).  The
+ * observations are interoperable with 3rd party receivers and conform with typical
+ * RTCMv3 GNSS observations.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field header ObservationHeaderDep Header of a GPS observation message
+ * @field obs array Pseudorange and carrier phase observation for a satellite being tracked.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgObsDepC = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_OBS_DEP_C";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgObsDepC.prototype = Object.create(SBP.prototype);
+MsgObsDepC.prototype.messageType = "MSG_OBS_DEP_C";
+MsgObsDepC.prototype.msg_type = 0x0049;
+MsgObsDepC.prototype.constructor = MsgObsDepC;
+MsgObsDepC.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('header', { type: ObservationHeaderDep.prototype.parser })
+  .array('obs', { type: PackedObsContentDepC.prototype.parser, readUntil: 'eof' });
+MsgObsDepC.prototype.fieldSpec = [];
+MsgObsDepC.prototype.fieldSpec.push(['header', ObservationHeaderDep.prototype.fieldSpec]);
+MsgObsDepC.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepC.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
  * SBP class for message MSG_IONO (0x0090).
@@ -1165,8 +1323,9 @@ MsgGroupDelay.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
 
 module.exports = {
   ObservationHeader: ObservationHeader,
+  Doppler: Doppler,
   PackedObsContent: PackedObsContent,
-  0x0049: MsgObs,
+  0x004A: MsgObs,
   MsgObs: MsgObs,
   0x0044: MsgBasePosLlh,
   MsgBasePosLlh: MsgBasePosLlh,
@@ -1187,13 +1346,17 @@ module.exports = {
   MsgEphemerisDepB: MsgEphemerisDepB,
   0x0047: MsgEphemerisDepC,
   MsgEphemerisDepC: MsgEphemerisDepC,
+  ObservationHeaderDep: ObservationHeaderDep,
   CarrierPhaseDepA: CarrierPhaseDepA,
   PackedObsContentDepA: PackedObsContentDepA,
   PackedObsContentDepB: PackedObsContentDepB,
+  PackedObsContentDepC: PackedObsContentDepC,
   0x0045: MsgObsDepA,
   MsgObsDepA: MsgObsDepA,
   0x0043: MsgObsDepB,
   MsgObsDepB: MsgObsDepB,
+  0x0049: MsgObsDepC,
+  MsgObsDepC: MsgObsDepC,
   0x0090: MsgIono,
   MsgIono: MsgIono,
   0x0091: MsgSvConfigurationGps,

@@ -33,10 +33,27 @@
  * the system has started and is now ready to respond to commands
  * or configuration requests.
  */
-#define SBP_MSG_STARTUP   0xFF00
+#define SBP_MSG_STARTUP      0xFF00
 typedef struct __attribute__((packed)) {
-  u32 reserved;    /**< Reserved */
+  u8 cause;           /**< Cause of startup */
+  u8 startup_type;    /**< Startup type */
+  u16 reserved;        /**< Reserved */
 } msg_startup_t;
+
+
+/** Status of received corrections
+ *
+ * This message provides information about the receipt of Differential
+ * corrections.  It is expected to be sent with each receipt of a complete
+ * corrections packet.
+ */
+#define SBP_MSG_DGNSS_STATUS 0xFF02
+typedef struct __attribute__((packed)) {
+  u8 flags;          /**< Status flags */
+  u16 latency;        /**< Latency of observation receipt [deci-seconds] */
+  u8 num_signals;    /**< Number of signals from base station */
+  char source[0];      /**< Corrections source string */
+} msg_dgnss_status_t;
 
 
 /** System heartbeat message
@@ -52,7 +69,7 @@ typedef struct __attribute__((packed)) {
  * occurred in the system. To determine the source of the error,
  * the remaining error flags should be inspected.
  */
-#define SBP_MSG_HEARTBEAT 0xFFFF
+#define SBP_MSG_HEARTBEAT    0xFFFF
 typedef struct __attribute__((packed)) {
   u32 flags;    /**< Status flags */
 } msg_heartbeat_t;

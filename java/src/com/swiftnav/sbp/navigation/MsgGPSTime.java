@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_GPS_TIME (0x0100).
+/** SBP class for message MSG_GPS_TIME (0x0102).
  *
  * You can have MSG_GPS_TIME inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -42,7 +42,7 @@ import org.json.JSONArray;
  * these messages. */
 
 public class MsgGPSTime extends SBPMessage {
-    public static final int TYPE = 0x0100;
+    public static final int TYPE = 0x0102;
 
     
     /** GPS week number */

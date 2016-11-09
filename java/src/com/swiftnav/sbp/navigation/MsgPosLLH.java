@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_POS_LLH (0x0201).
+/** SBP class for message MSG_POS_LLH (0x020A).
  *
  * You can have MSG_POS_LLH inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -37,7 +37,7 @@ import org.json.JSONArray;
  * matching time-of-week (tow). */
 
 public class MsgPosLLH extends SBPMessage {
-    public static final int TYPE = 0x0201;
+    public static final int TYPE = 0x020A;
 
     
     /** GPS Time of Week */

@@ -11,7 +11,8 @@
 
 
 """
-Messages for the bootloading configuration on the device.
+Messages for the bootloading configuration of a Piksi 2.3.1.  This message
+group does not apply to Piksi Multi.
 
 Note that some of these messages share the same message type ID for both the
 host request and the device response.

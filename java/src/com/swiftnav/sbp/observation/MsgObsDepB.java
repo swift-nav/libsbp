@@ -40,7 +40,7 @@ public class MsgObsDepB extends SBPMessage {
 
     
     /** Header of a GPS observation message */
-    public ObservationHeader header;
+    public ObservationHeaderDep header;
     
     /** Pseudorange and carrier phase observation for a
 satellite being tracked.
@@ -58,7 +58,7 @@ satellite being tracked.
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        header = new ObservationHeader().parse(parser);
+        header = new ObservationHeaderDep().parse(parser);
         obs = parser.getArray(PackedObsContentDepB.class);
     }
 

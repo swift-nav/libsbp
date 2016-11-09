@@ -1,132 +1,107 @@
 ---
-description: Unit tests for swiftnav.sbp.navigation MsgPosECEF v0.51.
-generated_on: 2015-11-09 11:34:21.253104
+description: Unit tests for swiftnav.sbp.navigation MsgPosECEF vNone.
+generated_on: 2016-11-04 01:03:53.692833
 package: sbp.navigation
 tests:
 
 - msg:
     fields:
       accuracy: 0
-      flags: 0
-      n_sats: 9
-      tow: 2567700
-      x: -2700354.5912927105
-      y: -4292510.764041577
-      z: 3855357.977260149
+      flags: 2
+      n_sats: 15
+      tow: 326826000
+      x: -2684269.0326572997
+      y: -4316646.751816
+      z: 3839646.7095350414
     module: sbp.navigation
     name: MsgPosECEF
-  msg_type: '0x200'
-  raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 512, "tow": 2567700, "crc":
-    22029, "length": 32, "flags": 0, "y": -4292510.764041577, "x": -2700354.5912927105,
-    "z": 3855357.977260149, "preamble": 85, "payload": "FC4nAMN6r0shmkTBpA7msOdfUMFO3Bb9/mlNQQAACQA=",
+  msg_type: 521
+  raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 521, "tow": 326826000, "crc":
+    1620, "length": 32, "flags": 2, "y": -4316646.751816, "x": -2684269.0326572997,
+    "z": 3839646.7095350414, "preamble": 85, "payload": "EPh6E0kdLoS2ekTB28AdsHl3UMFTC9JaT0tNQQAADwI=",
     "accuracy": 0}'
-  raw_packet: VQAC9tcgFC4nAMN6r0shmkTBpA7msOdfUMFO3Bb9/mlNQQAACQANVg==
+  raw_packet: VQkC04ggEPh6E0kdLoS2ekTB28AdsHl3UMFTC9JaT0tNQQAADwJUBg==
   sbp:
-    crc: '0x560d'
+    crc: '0x654'
     length: 32
-    msg_type: '0x200'
-    payload: FC4nAMN6r0shmkTBpA7msOdfUMFO3Bb9/mlNQQAACQA=
+    msg_type: '0x209'
+    payload: EPh6E0kdLoS2ekTB28AdsHl3UMFTC9JaT0tNQQAADwI=
     preamble: '0x55'
-    sender: '0xd7f6'
+    sender: '0x88d3'
 
 - msg:
     fields:
       accuracy: 0
-      flags: 1
-      n_sats: 9
-      tow: 2567700
-      x: -2700356.3285146747
-      y: -4292509.928737887
-      z: 3855357.5011712564
+      flags: 2
+      n_sats: 15
+      tow: 326827000
+      x: -2684269.064252186
+      y: -4316646.762264892
+      z: 3839646.463913912
     module: sbp.navigation
     name: MsgPosECEF
-  msg_type: '0x200'
-  raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 512, "tow": 2567700, "crc":
-    36683, "length": 32, "flags": 1, "y": -4292509.928737887, "x": -2700356.3285146747,
-    "z": 3855357.5011712564, "preamble": 85, "payload": "FC4nANTEDCoimkTBCXFwe+dfUME2YSbA/mlNQQAACQE=",
+  msg_type: 521
+  raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 521, "tow": 326827000, "crc":
+    55443, "length": 32, "flags": 2, "y": -4316646.762264892, "x": -2684269.064252186,
+    "z": 3839646.463913912, "preamble": 85, "payload": "+Pt6E2dqOYi2ekTBsPLIsHl3UMH0h2E7T0tNQQAADwI=",
     "accuracy": 0}'
-  raw_packet: VQAC9tcgFC4nANTEDCoimkTBCXFwe+dfUME2YSbA/mlNQQAACQFLjw==
+  raw_packet: VQkC04gg+Pt6E2dqOYi2ekTBsPLIsHl3UMH0h2E7T0tNQQAADwKT2A==
   sbp:
-    crc: '0x8f4b'
+    crc: '0xd893'
     length: 32
-    msg_type: '0x200'
-    payload: FC4nANTEDCoimkTBCXFwe+dfUME2YSbA/mlNQQAACQE=
+    msg_type: '0x209'
+    payload: +Pt6E2dqOYi2ekTBsPLIsHl3UMH0h2E7T0tNQQAADwI=
     preamble: '0x55'
-    sender: '0xd7f6'
+    sender: '0x88d3'
 
 - msg:
     fields:
       accuracy: 0
-      flags: 0
-      n_sats: 9
-      tow: 2567800
-      x: -2700357.485576801
-      y: -4292509.80414865
-      z: 3855356.517968082
+      flags: 2
+      n_sats: 15
+      tow: 326828000
+      x: -2684269.4292816394
+      y: -4316647.118271949
+      z: 3839646.124909738
     module: sbp.navigation
     name: MsgPosECEF
-  msg_type: '0x200'
-  raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 512, "tow": 2567800, "crc":
-    29132, "length": 32, "flags": 0, "y": -4292509.80414865, "x": -2700357.485576801,
-    "z": 3855356.517968082, "preamble": 85, "payload": "eC4nAHBhJ74imkTB5it3c+dfUMEyx0xC/mlNQQAACQA=",
+  msg_type: 521
+  raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 521, "tow": 326828000, "crc":
+    51496, "length": 32, "flags": 2, "y": -4316647.118271949, "x": -2684269.4292816394,
+    "z": 3839646.124909738, "preamble": 85, "payload": "4P96E2Wz8ra2ekTBgsSRx3l3UMHUCv0PT0tNQQAADwI=",
     "accuracy": 0}'
-  raw_packet: VQAC9tcgeC4nAHBhJ74imkTB5it3c+dfUMEyx0xC/mlNQQAACQDMcQ==
+  raw_packet: VQkC04gg4P96E2Wz8ra2ekTBgsSRx3l3UMHUCv0PT0tNQQAADwIoyQ==
   sbp:
-    crc: '0x71cc'
+    crc: '0xc928'
     length: 32
-    msg_type: '0x200'
-    payload: eC4nAHBhJ74imkTB5it3c+dfUMEyx0xC/mlNQQAACQA=
+    msg_type: '0x209'
+    payload: 4P96E2Wz8ra2ekTBgsSRx3l3UMHUCv0PT0tNQQAADwI=
     preamble: '0x55'
-    sender: '0xd7f6'
+    sender: '0x88d3'
 
 - msg:
     fields:
       accuracy: 0
-      flags: 1
-      n_sats: 9
-      tow: 2567800
-      x: -2700356.0349524925
-      y: -4292510.187605589
-      z: 3855357.4185667858
+      flags: 2
+      n_sats: 15
+      tow: 326829000
+      x: -2684269.683741399
+      y: -4316647.3623821335
+      z: 3839645.90179852
     module: sbp.navigation
     name: MsgPosECEF
-  msg_type: '0x200'
-  raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 512, "tow": 2567800, "crc":
-    18273, "length": 32, "flags": 1, "y": -4292510.187605589, "x": -2700356.0349524925,
-    "z": 3855357.4185667858, "preamble": 85, "payload": "eC4nAMJSeQQimkTB37oBjOdfUMGwmJO1/mlNQQAACQE=",
+  msg_type: 521
+  raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 521, "tow": 326829000, "crc":
+    22203, "length": 32, "flags": 2, "y": -4316647.3623821335, "x": -2684269.683741399,
+    "z": 3839645.90179852, "preamble": 85, "payload": "yAN7E5LWhNe2ekTB1UQx13l3UMFHIm7zTktNQQAADwI=",
     "accuracy": 0}'
-  raw_packet: VQAC9tcgeC4nAMJSeQQimkTB37oBjOdfUMGwmJO1/mlNQQAACQFhRw==
+  raw_packet: VQkC04ggyAN7E5LWhNe2ekTB1UQx13l3UMFHIm7zTktNQQAADwK7Vg==
   sbp:
-    crc: '0x4761'
+    crc: '0x56bb'
     length: 32
-    msg_type: '0x200'
-    payload: eC4nAMJSeQQimkTB37oBjOdfUMGwmJO1/mlNQQAACQE=
+    msg_type: '0x209'
+    payload: yAN7E5LWhNe2ekTB1UQx13l3UMFHIm7zTktNQQAADwI=
     preamble: '0x55'
-    sender: '0xd7f6'
-
-- msg:
-    fields:
-      accuracy: 0
-      flags: 0
-      n_sats: 9
-      tow: 2567900
-      x: -2700355.9913074784
-      y: -4292509.946935424
-      z: 3855359.0924900775
-    module: sbp.navigation
-    name: MsgPosECEF
-  msg_type: '0x200'
-  raw_json: '{"n_sats": 9, "sender": 55286, "msg_type": 512, "tow": 2567900, "crc":
-    25095, "length": 32, "flags": 0, "y": -4292509.946935424, "x": -2700355.9913074784,
-    "z": 3855359.0924900775, "preamble": 85, "payload": "3C4nANgp4/4hmkTBCZeafOdfUMEBt9aL/2lNQQAACQA=",
-    "accuracy": 0}'
-  raw_packet: VQAC9tcg3C4nANgp4/4hmkTBCZeafOdfUMEBt9aL/2lNQQAACQAHYg==
-  sbp:
-    crc: '0x6207'
-    length: 32
-    msg_type: '0x200'
-    payload: 3C4nANgp4/4hmkTBCZeafOdfUMEBt9aL/2lNQQAACQA=
-    preamble: '0x55'
-    sender: '0xd7f6'
-version: '0.51'
+    sender: '0x88d3'
+version: null
 ...

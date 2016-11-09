@@ -39,6 +39,24 @@ typedef struct __attribute__((packed)) {
 } msg_log_t;
 
 
+/** Wrapper for FWD a separate stream of information over SBP
+ *
+ * This message provides the ability to forward messages over SBP.  This may take the form
+ * of wrapping up SBP messages received by Piksi for logging purposes or wrapping 
+ * another protocol with SBP.
+ * 
+ * The source identifier indicates from what interface a forwarded stream derived.
+ * The protocol identifier identifies what the expected protocol the forwarded msg contains.
+ * Protocol 0 represents SBP and the remaining values are implementation defined.
+ */
+#define SBP_MSG_FWD       0x0402
+typedef struct __attribute__((packed)) {
+  u8 source;         /**< source identifier */
+  u8 protocol;       /**< protocol identifier */
+  char fwd_payload[0]; /**< variable length wrapped binary message */
+} msg_fwd_t;
+
+
 /** Tweet
  *
 * All the news fit to tweet.
