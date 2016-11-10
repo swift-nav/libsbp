@@ -14,7 +14,7 @@ Contents
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
 
-v2.0 <a name=v2.0.0>
+v2.0 <a name="v2.0.0">
 * Depcrated and redfined all navigation messages due to redefinition of the FLAGS field
   * Navigation messages are expected to go out with every solution epoch whether valid or not
 * New observation message with Measured Doppler addition, observation flags,  and lock timer
