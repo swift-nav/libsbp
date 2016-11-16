@@ -75,7 +75,7 @@ definitions:
     id: 0x0103
     short_desc: UTC Time
     desc: |
-      This message reports the Universal Coordinated Time (UTC).  Note the flags 
+      This message reports the Universal Coordinated Time (UTC).  Note the flags
       which indicate the source of the UTC offset value and source of the time fix.
     fields:
         - flags:
@@ -174,8 +174,8 @@ definitions:
                   desc: Fix mode
                   values:
                       - 0: Invalid
-                      - 1: Single Point Position (SPP) 
-                      - 2: Reserved 
+                      - 1: Single Point Position (SPP)
+                      - 2: Reserved
                       - 3: Float RTK
                       - 4: Fixed RTK
 
@@ -233,8 +233,8 @@ definitions:
                   desc: Fix mode
                   values:
                       - 0: Invalid
-                      - 1: Single Point Position (SPP) 
-                      - 2: Reserved 
+                      - 1: Single Point Position (SPP)
+                      - 2: Reserved
                       - 3: Float RTK
                       - 4: Fixed RTK
 
@@ -297,7 +297,7 @@ definitions:
                   desc: Fix mode
                   values:
                       - 0: Invalid
-                      - 1: Single Point Position (SPP) 
+                      - 1: Single Point Position (SPP)
                       - 2: Reserved
                       - 3: Float RTK
                       - 4: Fixed RTK
@@ -454,7 +454,7 @@ definitions:
               desc: Number of satellites used in solution
           - flags:
               type: u8
-              desc: Status flags 
+              desc: Status flags
               fields:
                 - 3-7:
                     desc: reserved
@@ -462,7 +462,7 @@ definitions:
                     desc: velocity mode
                     values:
                         - 0: Invalid
-                        - 1: Measured Doppler Derived 
+                        - 1: Measured Doppler Derived
                         - 2: Computed Doppler Derived
 
  - MSG_VEL_NED:
@@ -507,7 +507,7 @@ definitions:
               desc: Number of satellites used in solution
           - flags:
               type: u8
-              desc: Status flags 
+              desc: Status flags
               fields:
                 - 3-7:
                     desc: reserved
@@ -515,7 +515,7 @@ definitions:
                     desc: velocity mode
                     values:
                         - 0: Invalid
-                        - 1: Measured Doppler Derived 
+                        - 1: Measured Doppler Derived
                         - 2: Computed Doppler Derived
 
  - MSG_BASELINE_HEADING:
@@ -574,6 +574,48 @@ definitions:
               units: deciseconds
               desc: Age of the corrections (0xFFFF indicates invalid)
 
+ - MSG_RTK_SOLUTION_STATUS:
+    id: 0x0211
+    short_desc: Detailed RTK solution status
+    desc: |
+      This message provides detailed status of the latest RTK solution.
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - n_l1:
+              type: u8
+              desc: |
+                Total number of L1 signals used in solution.
+          - n_l2:
+              type: u8
+              desc: |
+                Total number of L2 signals used in solution.
+          - n_l1_code:
+              type: u8
+              desc: |
+                Total number of L1 code only signals used in solution.
+          - n_l2_code:
+              type: u8
+              desc: |
+                Total number of L2 code only signals used in solution.
+          - n_l1_float:
+              type: u8
+              desc: |
+                Total number of L1 floating ambiguity signals used in solution.
+          - n_l2_float:
+              type: u8
+              desc: |
+                Total number of L2 floating ambiguity signals used in solution.
+          - n_l1_fixed:
+              type: u8
+              desc: |
+                Total number of L1 fixed ambiguity signals used in solution.
+          - n_l2_fixed:
+              type: u8
+              desc: |
+                Total number of L2 fixed ambiguity signals used in solution.
 
  - MSG_GPS_TIME_DEP_A:
     public: false
