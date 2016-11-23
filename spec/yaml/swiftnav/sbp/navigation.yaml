@@ -75,7 +75,7 @@ definitions:
     id: 0x0103
     short_desc: UTC Time
     desc: |
-      This message reports the Universal Coordinated Time (UTC).  Note the flags 
+      This message reports the Universal Coordinated Time (UTC).  Note the flags
       which indicate the source of the UTC offset value and source of the time fix.
     fields:
         - flags:
@@ -174,8 +174,8 @@ definitions:
                   desc: Fix mode
                   values:
                       - 0: Invalid
-                      - 1: Single Point Position (SPP) 
-                      - 2: Reserved 
+                      - 1: Single Point Position (SPP)
+                      - 2: Reserved
                       - 3: Float RTK
                       - 4: Fixed RTK
 
@@ -233,8 +233,8 @@ definitions:
                   desc: Fix mode
                   values:
                       - 0: Invalid
-                      - 1: Single Point Position (SPP) 
-                      - 2: Reserved 
+                      - 1: Single Point Position (SPP)
+                      - 2: Reserved
                       - 3: Float RTK
                       - 4: Fixed RTK
 
@@ -266,7 +266,7 @@ definitions:
         - height:
             type: double
             units: m
-            desc: Height
+            desc: Height above WGS84 ellipsoid
         - h_accuracy:
             type: u16
             units: mm
@@ -297,7 +297,7 @@ definitions:
                   desc: Fix mode
                   values:
                       - 0: Invalid
-                      - 1: Single Point Position (SPP) 
+                      - 1: Single Point Position (SPP)
                       - 2: Reserved
                       - 3: Float RTK
                       - 4: Fixed RTK
@@ -454,7 +454,7 @@ definitions:
               desc: Number of satellites used in solution
           - flags:
               type: u8
-              desc: Status flags 
+              desc: Status flags
               fields:
                 - 3-7:
                     desc: reserved
@@ -462,7 +462,7 @@ definitions:
                     desc: velocity mode
                     values:
                         - 0: Invalid
-                        - 1: Measured Doppler Derived 
+                        - 1: Measured Doppler Derived
                         - 2: Computed Doppler Derived
 
  - MSG_VEL_NED:
@@ -507,7 +507,7 @@ definitions:
               desc: Number of satellites used in solution
           - flags:
               type: u8
-              desc: Status flags 
+              desc: Status flags
               fields:
                 - 3-7:
                     desc: reserved
@@ -515,7 +515,7 @@ definitions:
                     desc: velocity mode
                     values:
                         - 0: Invalid
-                        - 1: Measured Doppler Derived 
+                        - 1: Measured Doppler Derived
                         - 2: Computed Doppler Derived
 
  - MSG_BASELINE_HEADING:
