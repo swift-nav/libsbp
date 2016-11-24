@@ -16,7 +16,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgPosLLH
-  msg_type: 522
+  msg_type: '0x20a'
   raw_json: '{"v_accuracy": 0, "n_sats": 14, "sender": 35027, "msg_type": 522, "lon":
     -121.87505366879361, "tow": 326825000, "height": 28.21160739227208, "crc": 41647,
     "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.25130398358085, "preamble":
@@ -42,7 +42,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgPosLLH
-  msg_type: 522
+  msg_type: '0x20a'
   raw_json: '{"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon":
     -121.87505349618341, "tow": 326826000, "height": 27.742055560866373, "crc": 45350,
     "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.251303074738104, "preamble":
@@ -68,7 +68,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgPosLLH
-  msg_type: 522
+  msg_type: '0x20a'
   raw_json: '{"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon":
     -121.87505373641241, "tow": 326827000, "height": 27.613721582970516, "crc": 10291,
     "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.25130117370741, "preamble":
@@ -94,7 +94,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgPosLLH
-  msg_type: 522
+  msg_type: '0x20a'
   raw_json: '{"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon":
     -121.87505511141057, "tow": 326828000, "height": 27.80259807042305, "crc": 49676,
     "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.251296042079176, "preamble":
@@ -120,7 +120,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgPosLLH
-  msg_type: 522
+  msg_type: '0x20a'
   raw_json: '{"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon":
     -121.87505609407974, "tow": 326829000, "height": 27.939512310879213, "crc": 26402,
     "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.251292578377395, "preamble":

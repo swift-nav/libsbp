@@ -12,7 +12,7 @@ tests:
       source: Skylark
     module: sbp.system
     name: MsgDgnssStatus
-  msg_type: 65282
+  msg_type: '0xff02'
   raw_json: '{"latency": 50, "sender": 66, "msg_type": 65282, "source": "Skylark",
     "num_signals": 12, "crc": 458, "length": 11, "flags": 0, "preamble": 85, "payload":
     "ADIADFNreWxhcms="}'

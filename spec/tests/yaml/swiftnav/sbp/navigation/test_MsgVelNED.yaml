@@ -16,7 +16,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgVelNED
-  msg_type: 526
+  msg_type: '0x20e'
   raw_json: '{"v_accuracy": 0, "e": -4, "sender": 35027, "msg_type": 526, "tow": 326825000,
     "n": 3, "crc": 53590, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 14,
     "preamble": 85, "payload": "KPR6EwMAAAD8////8////wAAAAAOAA==", "d": -13}'
@@ -41,7 +41,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgVelNED
-  msg_type: 526
+  msg_type: '0x20e'
   raw_json: '{"v_accuracy": 0, "e": -1, "sender": 35027, "msg_type": 526, "tow": 326825500,
     "n": -4, "crc": 58384, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 15,
     "preamble": 85, "payload": "HPZ6E/z/////////6P///wAAAAAPAA==", "d": -24}'
@@ -66,7 +66,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgVelNED
-  msg_type: 526
+  msg_type: '0x20e'
   raw_json: '{"v_accuracy": 0, "e": -3, "sender": 35027, "msg_type": 526, "tow": 326826000,
     "n": 0, "crc": 41995, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 15,
     "preamble": 85, "payload": "EPh6EwAAAAD9////9P///wAAAAAPAA==", "d": -12}'
@@ -91,7 +91,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgVelNED
-  msg_type: 526
+  msg_type: '0x20e'
   raw_json: '{"v_accuracy": 0, "e": 3, "sender": 35027, "msg_type": 526, "tow": 326826500,
     "n": 2, "crc": 53400, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 15,
     "preamble": 85, "payload": "BPp6EwIAAAADAAAA6P///wAAAAAPAA==", "d": -24}'
@@ -116,7 +116,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgVelNED
-  msg_type: 526
+  msg_type: '0x20e'
   raw_json: '{"v_accuracy": 0, "e": 0, "sender": 35027, "msg_type": 526, "tow": 326827000,
     "n": 1, "crc": 30902, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 15,
     "preamble": 85, "payload": "+Pt6EwEAAAAAAAAA6////wAAAAAPAA==", "d": -21}'

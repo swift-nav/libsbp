@@ -15,7 +15,7 @@ tests:
       z: 3839646.7095350414
     module: sbp.navigation
     name: MsgPosECEF
-  msg_type: 521
+  msg_type: '0x209' 
   raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 521, "tow": 326826000, "crc":
     1620, "length": 32, "flags": 2, "y": -4316646.751816, "x": -2684269.0326572997,
     "z": 3839646.7095350414, "preamble": 85, "payload": "EPh6E0kdLoS2ekTB28AdsHl3UMFTC9JaT0tNQQAADwI=",
@@ -40,7 +40,7 @@ tests:
       z: 3839646.463913912
     module: sbp.navigation
     name: MsgPosECEF
-  msg_type: 521
+  msg_type: '0x209'
   raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 521, "tow": 326827000, "crc":
     55443, "length": 32, "flags": 2, "y": -4316646.762264892, "x": -2684269.064252186,
     "z": 3839646.463913912, "preamble": 85, "payload": "+Pt6E2dqOYi2ekTBsPLIsHl3UMH0h2E7T0tNQQAADwI=",
@@ -65,7 +65,7 @@ tests:
       z: 3839646.124909738
     module: sbp.navigation
     name: MsgPosECEF
-  msg_type: 521
+  msg_type: '0x209' 
   raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 521, "tow": 326828000, "crc":
     51496, "length": 32, "flags": 2, "y": -4316647.118271949, "x": -2684269.4292816394,
     "z": 3839646.124909738, "preamble": 85, "payload": "4P96E2Wz8ra2ekTBgsSRx3l3UMHUCv0PT0tNQQAADwI=",
@@ -90,7 +90,7 @@ tests:
       z: 3839645.90179852
     module: sbp.navigation
     name: MsgPosECEF
-  msg_type: 521
+  msg_type: '0x209'
   raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 521, "tow": 326829000, "crc":
     22203, "length": 32, "flags": 2, "y": -4316647.3623821335, "x": -2684269.683741399,
     "z": 3839645.90179852, "preamble": 85, "payload": "yAN7E5LWhNe2ekTB1UQx13l3UMFHIm7zTktNQQAADwI=",

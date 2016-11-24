@@ -10,7 +10,7 @@ tests:
       tow: 100
     module: sbp.navigation
     name: MsgAgeCorrections
-  msg_type: 528
+  msg_type: '0x210'
   raw_json: '{"sender": 66, "msg_type": 528, "age": 30, "tow": 100, "crc": 51945,
     "length": 6, "preamble": 85, "payload": "ZAAAAB4A"}'
   raw_packet: VRACQgAGZAAAAB4A6co=

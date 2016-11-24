@@ -15,7 +15,7 @@ tests:
       z: 10
     module: sbp.navigation
     name: MsgVelECEF
-  msg_type: 525
+  msg_type: '0x20d'
   raw_json: '{"n_sats": 14, "sender": 35027, "msg_type": 525, "tow": 326825000, "crc":
     25525, "length": 20, "flags": 0, "y": -5, "x": -8, "z": 10, "preamble": 85, "payload":
     "KPR6E/j////7////CgAAAAAADgA=", "accuracy": 0}'
@@ -39,7 +39,7 @@ tests:
       z: 11
     module: sbp.navigation
     name: MsgVelECEF
-  msg_type: 525
+  msg_type: '0x20d'
   raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 525, "tow": 326825500, "crc":
     30935, "length": 20, "flags": 0, "y": -18, "x": -12, "z": 11, "preamble": 85,
     "payload": "HPZ6E/T////u////CwAAAAAADwA=", "accuracy": 0}'
@@ -63,7 +63,7 @@ tests:
       z: 7
     module: sbp.navigation
     name: MsgVelECEF
-  msg_type: 525
+  msg_type: '0x20d'
   raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 525, "tow": 326826000, "crc":
     56824, "length": 20, "flags": 0, "y": -6, "x": -8, "z": 7, "preamble": 85, "payload":
     "EPh6E/j////6////BwAAAAAADwA=", "accuracy": 0}'
@@ -87,7 +87,7 @@ tests:
       z: 16
     module: sbp.navigation
     name: MsgVelECEF
-  msg_type: 525
+  msg_type: '0x20d'
   raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 525, "tow": 326826500, "crc":
     42753, "length": 20, "flags": 0, "y": -17, "x": -7, "z": 16, "preamble": 85, "payload":
     "BPp6E/n////v////EAAAAAAADwA=", "accuracy": 0}'
@@ -111,7 +111,7 @@ tests:
       z: 14
     module: sbp.navigation
     name: MsgVelECEF
-  msg_type: 525
+  msg_type: '0x20d'
   raw_json: '{"n_sats": 15, "sender": 35027, "msg_type": 525, "tow": 326827000, "crc":
     11199, "length": 20, "flags": 0, "y": -13, "x": -9, "z": 14, "preamble": 85, "payload":
     "+Pt6E/f////z////DgAAAAAADwA=", "accuracy": 0}'
