@@ -268,7 +268,7 @@ data MsgPosLlh = MsgPosLlh
   , _msgPosLlh_lon      :: Double
     -- ^ Longitude
   , _msgPosLlh_height   :: Double
-    -- ^ Height
+    -- ^ Height above WGS84 ellipsoid
   , _msgPosLlh_h_accuracy :: Word16
     -- ^ Horizontal position accuracy estimate (not implemented). Defaults to 0.
   , _msgPosLlh_v_accuracy :: Word16
