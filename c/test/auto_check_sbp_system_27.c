@@ -10,13 +10,13 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/test_bootload.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgDgnssStatus.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
 #include <sbp.h>
-#include <bootload.h>
+#include <system.h>
 
 static u32 n_callbacks_logged;
 static u16 last_sender_id;
@@ -74,7 +74,7 @@ static void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   /*printy_callback(sender_id, len, msg);*/
 }
 
-START_TEST( test_auto_check_sbp_bootload_20 )
+START_TEST( test_auto_check_sbp_system_27 )
 {
   static sbp_msg_callbacks_node_t n;
   //static sbp_msg_callbacks_node_t n2;
@@ -97,12 +97,12 @@ START_TEST( test_auto_check_sbp_bootload_20 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xb4, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_callback(&sbp_state, 0xff02, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,180,0,0,0,9,0,0,0,0,118,49,46,50,10,201,1, };
+    u8 test_data[] = {85,2,255,66,0,11,0,50,0,12,83,107,121,108,97,114,107,202,1, };
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xb4, 0, sizeof(test_data), test_data, &dummy_write);
+    sbp_send_message(&sbp_state, 0xff02, 66, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
       fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -111,7 +111,7 @@ START_TEST( test_auto_check_sbp_bootload_20 )
 
     fail_unless(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 0,
+    fail_unless(last_sender_id == 66,
         "sender_id decoded incorrectly");
     fail_unless(last_len == sizeof(test_data),
         "len decoded incorrectly");
@@ -122,64 +122,22 @@ START_TEST( test_auto_check_sbp_bootload_20 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_bootloader_handshake_resp_t* msg = ( msg_bootloader_handshake_resp_t *)((void *)last_msg + 6);
+    msg_dgnss_status_t* msg = ( msg_dgnss_status_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(strstr(msg->version, ((char []){(char)118,(char)49,(char)46,(char)50,(char)10,0})) != NULL, "incorrect value for msg->version, expected string '%s', is '%s'", ((char []){(char)118,(char)49,(char)46,(char)50,(char)10,0}), msg->version);
+    fail_unless(msg->latency == 50, "incorrect value for latency, expected 50, is %d", msg->latency);
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-  }
-  // Test successful parsing of a message
-  {
-    // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
-    //  allocated multiple times across different tests.
-    sbp_state_init(&sbp_state);
-
-    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
-
-    logging_reset();
-
-    sbp_register_callback(&sbp_state, 0xb0, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-
-    u8 test_data[] = {85,176,0,195,4,4,118,49,46,50,1,206, };
-
-    dummy_reset();
-    sbp_send_message(&sbp_state, 0xb0, 1219, sizeof(test_data), test_data, &dummy_write);
-
-    while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
-    }
-
-    fail_unless(n_callbacks_logged == 1,
-        "one callback should have been logged");
-    fail_unless(last_sender_id == 1219,
-        "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
-        "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
-          == 0,
-        "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "context pointer incorrectly passed");
-
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_bootloader_handshake_dep_a_t* msg = ( msg_bootloader_handshake_dep_a_t *)((void *)last_msg + 6);
-    // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->handshake[0] == 118, "incorrect value for handshake[0], expected 118, is %d", msg->handshake[0]);
-    fail_unless(msg->handshake[1] == 49, "incorrect value for handshake[1], expected 49, is %d", msg->handshake[1]);
-    fail_unless(msg->handshake[2] == 46, "incorrect value for handshake[2], expected 46, is %d", msg->handshake[2]);
-    fail_unless(msg->handshake[3] == 50, "incorrect value for handshake[3], expected 50, is %d", msg->handshake[3]);
+    fail_unless(msg->num_signals == 12, "incorrect value for num_signals, expected 12, is %d", msg->num_signals);
+    fail_unless(strstr(msg->source, ((char []){(char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107,0})) != NULL, "incorrect value for msg->source, expected string '%s', is '%s'", ((char []){(char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107,0}), msg->source);
   }
 }
 END_TEST
 
-Suite* auto_check_sbp_bootload_20_suite(void)
+Suite* auto_check_sbp_system_27_suite(void)
 {
-  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_bootload_20");
-  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_bootload_20");
-  tcase_add_test(tc_acq, test_auto_check_sbp_bootload_20);
+  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_system_27");
+  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_system_27");
+  tcase_add_test(tc_acq, test_auto_check_sbp_system_27);
   suite_add_tcase(s, tc_acq);
   return s;
 }

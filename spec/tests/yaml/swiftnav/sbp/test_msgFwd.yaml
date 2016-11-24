@@ -11,7 +11,7 @@ tests:
       source: 0
     module: sbp.logging
     name: MsgFwd
-  msg_type: 1026
+  msg_type: '0x402'
   raw_json: '{"protocol": 0, "sender": 66, "msg_type": 1026, "source": 0, "fwd_payload":
     "VQD/QgAEAAAAAEag", "crc": 24445, "length": 18, "preamble": 85, "payload": "AABWUUQvUWdBRUFBQUFBRWFn"}'
   raw_packet: VQIEQgASAABWUUQvUWdBRUFBQUFBRWFnfV8=

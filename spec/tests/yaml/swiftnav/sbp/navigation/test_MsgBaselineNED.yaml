@@ -16,7 +16,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgBaselineNED
-  msg_type: 524
+  msg_type: '0x20c'
   raw_json: '{"v_accuracy": 0, "e": -1681229, "sender": 35027, "msg_type": 524, "tow":
     326825000, "n": 816073, "crc": 18146, "length": 22, "flags": 0, "h_accuracy":
     0, "n_sats": 14, "preamble": 85, "payload": "KPR6E8lzDACzWOb/mX0AAAAAAAAOAA==",
@@ -42,7 +42,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgBaselineNED
-  msg_type: 524
+  msg_type: '0x20c'
   raw_json: '{"v_accuracy": 0, "e": -1681214, "sender": 35027, "msg_type": 524, "tow":
     326826000, "n": 815970, "crc": 23877, "length": 22, "flags": 0, "h_accuracy":
     0, "n_sats": 15, "preamble": 85, "payload": "EPh6E2JzDADCWOb/bn8AAAAAAAAPAA==",
@@ -68,7 +68,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgBaselineNED
-  msg_type: 524
+  msg_type: '0x20c'
   raw_json: '{"v_accuracy": 0, "e": -1681235, "sender": 35027, "msg_type": 524, "tow":
     326827000, "n": 815759, "crc": 43474, "length": 22, "flags": 0, "h_accuracy":
     0, "n_sats": 15, "preamble": 85, "payload": "+Pt6E49yDACtWOb/7n8AAAAAAAAPAA==",
@@ -94,7 +94,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgBaselineNED
-  msg_type: 524
+  msg_type: '0x20c'
   raw_json: '{"v_accuracy": 0, "e": -1681357, "sender": 35027, "msg_type": 524, "tow":
     326828000, "n": 815190, "crc": 27527, "length": 22, "flags": 0, "h_accuracy":
     0, "n_sats": 15, "preamble": 85, "payload": "4P96E1ZwDAAzWOb/L38AAAAAAAAPAA==",
@@ -120,7 +120,7 @@ tests:
       v_accuracy: 0
     module: sbp.navigation
     name: MsgBaselineNED
-  msg_type: 524
+  msg_type: '0x20c'
   raw_json: '{"v_accuracy": 0, "e": -1681444, "sender": 35027, "msg_type": 524, "tow":
     326829000, "n": 814806, "crc": 20670, "length": 22, "flags": 0, "h_accuracy":
     0, "n_sats": 15, "preamble": 85, "payload": "yAN7E9ZuDADcV+b/pX4AAAAAAAAPAA==",

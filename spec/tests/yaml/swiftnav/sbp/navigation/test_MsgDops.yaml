@@ -15,7 +15,7 @@ tests:
       vdop: 5
     module: sbp.navigation
     name: MsgDops
-  msg_type: 520
+  msg_type: '0x208'
   raw_json: '{"gdop": 2, "tdop": 5, "vdop": 5, "sender": 66, "msg_type": 520, "pdop":
     6, "tow": 100, "crc": 1268, "length": 15, "flags": 0, "preamble": 85, "payload":
     "ZAAAAAIABgAFAAUABQAA", "hdop": 5}'
