@@ -10,13 +10,13 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgAgeCorrections.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgStartup.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
 #include <sbp.h>
-#include <navigation.h>
+#include <system.h>
 
 static u32 n_callbacks_logged;
 static u16 last_sender_id;
@@ -74,7 +74,7 @@ static void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   /*printy_callback(sender_id, len, msg);*/
 }
 
-START_TEST( test_auto_check_sbp_navigation_3 )
+START_TEST( test_auto_check_sbp_system_29 )
 {
   static sbp_msg_callbacks_node_t n;
   //static sbp_msg_callbacks_node_t n2;
@@ -97,12 +97,12 @@ START_TEST( test_auto_check_sbp_navigation_3 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x210, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_callback(&sbp_state, 0xff00, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,16,2,66,0,6,100,0,0,0,30,0,233,202, };
+    u8 test_data[] = {85,0,255,66,0,4,0,0,0,0,70,160, };
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x210, 66, sizeof(test_data), test_data, &dummy_write);
+    sbp_send_message(&sbp_state, 0xff00, 66, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
       fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -122,20 +122,21 @@ START_TEST( test_auto_check_sbp_navigation_3 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_age_corrections_t* msg = ( msg_age_corrections_t *)((void *)last_msg + 6);
+    msg_startup_t* msg = ( msg_startup_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->age == 30, "incorrect value for age, expected 30, is %d", msg->age);
-    fail_unless(msg->tow == 100, "incorrect value for tow, expected 100, is %d", msg->tow);
+    fail_unless(msg->cause == 0, "incorrect value for cause, expected 0, is %d", msg->cause);
+    fail_unless(msg->startup_type == 0, "incorrect value for startup_type, expected 0, is %d", msg->startup_type);
+    fail_unless(msg->reserved == 0, "incorrect value for reserved, expected 0, is %d", msg->reserved);
   }
 }
 END_TEST
 
-Suite* auto_check_sbp_navigation_3_suite(void)
+Suite* auto_check_sbp_system_29_suite(void)
 {
-  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_navigation_3");
-  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_navigation_3");
-  tcase_add_test(tc_acq, test_auto_check_sbp_navigation_3);
+  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_system_29");
+  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_system_29");
+  tcase_add_test(tc_acq, test_auto_check_sbp_system_29);
   suite_add_tcase(s, tc_acq);
   return s;
 }

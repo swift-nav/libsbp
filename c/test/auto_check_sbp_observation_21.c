@@ -74,7 +74,7 @@ static void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   /*printy_callback(sender_id, len, msg);*/
 }
 
-START_TEST( test_auto_check_sbp_observation_12 )
+START_TEST( test_auto_check_sbp_observation_21 )
 {
   static sbp_msg_callbacks_node_t n;
   //static sbp_msg_callbacks_node_t n2;
@@ -496,11 +496,11 @@ START_TEST( test_auto_check_sbp_observation_12 )
 }
 END_TEST
 
-Suite* auto_check_sbp_observation_12_suite(void)
+Suite* auto_check_sbp_observation_21_suite(void)
 {
-  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_observation_12");
-  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_observation_12");
-  tcase_add_test(tc_acq, test_auto_check_sbp_observation_12);
+  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_observation_21");
+  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_observation_21");
+  tcase_add_test(tc_acq, test_auto_check_sbp_observation_21);
   suite_add_tcase(s, tc_acq);
   return s;
 }

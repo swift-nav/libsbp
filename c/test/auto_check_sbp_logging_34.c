@@ -10,13 +10,13 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/piksi/test_MsgIarState.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/test_msgFwd.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
 #include <sbp.h>
-#include <piksi.h>
+#include <logging.h>
 
 static u32 n_callbacks_logged;
 static u16 last_sender_id;
@@ -74,7 +74,7 @@ static void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   /*printy_callback(sender_id, len, msg);*/
 }
 
-START_TEST( test_auto_check_sbp_piksi_13 )
+START_TEST( test_auto_check_sbp_logging_34 )
 {
   static sbp_msg_callbacks_node_t n;
   //static sbp_msg_callbacks_node_t n2;
@@ -97,12 +97,12 @@ START_TEST( test_auto_check_sbp_piksi_13 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x19, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_callback(&sbp_state, 0x402, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,25,0,246,215,4,1,0,0,0,216,140, };
+    u8 test_data[] = {85,2,4,66,0,18,0,0,86,81,68,47,81,103,65,69,65,65,65,65,65,69,97,103,125,95, };
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x19, 55286, sizeof(test_data), test_data, &dummy_write);
+    sbp_send_message(&sbp_state, 0x402, 66, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
       fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -111,7 +111,7 @@ START_TEST( test_auto_check_sbp_piksi_13 )
 
     fail_unless(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 55286,
+    fail_unless(last_sender_id == 66,
         "sender_id decoded incorrectly");
     fail_unless(last_len == sizeof(test_data),
         "len decoded incorrectly");
@@ -122,19 +122,21 @@ START_TEST( test_auto_check_sbp_piksi_13 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_iar_state_t* msg = ( msg_iar_state_t *)((void *)last_msg + 6);
+    msg_fwd_t* msg = ( msg_fwd_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->num_hyps == 1, "incorrect value for num_hyps, expected 1, is %d", msg->num_hyps);
+    fail_unless(msg->source == 0, "incorrect value for source, expected 0, is %d", msg->source);
+    fail_unless(strstr(msg->fwd_payload, ((char []){(char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103,0})) != NULL, "incorrect value for msg->fwd_payload, expected string '%s', is '%s'", ((char []){(char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103,0}), msg->fwd_payload);
+    fail_unless(msg->protocol == 0, "incorrect value for protocol, expected 0, is %d", msg->protocol);
   }
 }
 END_TEST
 
-Suite* auto_check_sbp_piksi_13_suite(void)
+Suite* auto_check_sbp_logging_34_suite(void)
 {
-  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_piksi_13");
-  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_piksi_13");
-  tcase_add_test(tc_acq, test_auto_check_sbp_piksi_13);
+  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_logging_34");
+  TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_logging_34");
+  tcase_add_test(tc_acq, test_auto_check_sbp_logging_34);
   suite_add_tcase(s, tc_acq);
   return s;
 }
