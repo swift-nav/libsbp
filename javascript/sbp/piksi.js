@@ -532,6 +532,68 @@ MsgDeviceMonitor.prototype.fieldSpec.push(['cpu_vaux', 'writeInt16LE', 2]);
 MsgDeviceMonitor.prototype.fieldSpec.push(['cpu_temperature', 'writeInt16LE', 2]);
 MsgDeviceMonitor.prototype.fieldSpec.push(['fe_temperature', 'writeInt16LE', 2]);
 
+/**
+ * SBP class for message MSG_COMMAND_REQ (0x00B8).
+ *
+ * Request the recipient to execute an command. Output will be sent in MSG_LOG
+ * messages, and the exit code will be returned with MSG_COMMAND_RESP.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sequence number (unsigned 32-bit int, 4 bytes) Sequence number
+ * @field command string Command line to execute
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgCommandReq = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_COMMAND_REQ";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgCommandReq.prototype = Object.create(SBP.prototype);
+MsgCommandReq.prototype.messageType = "MSG_COMMAND_REQ";
+MsgCommandReq.prototype.msg_type = 0x00B8;
+MsgCommandReq.prototype.constructor = MsgCommandReq;
+MsgCommandReq.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('sequence')
+  .string('command', { greedy: true });
+MsgCommandReq.prototype.fieldSpec = [];
+MsgCommandReq.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
+MsgCommandReq.prototype.fieldSpec.push(['command', 'string', null]);
+
+/**
+ * SBP class for message MSG_COMMAND_RESP (0x00B9).
+ *
+ * The response to MSG_COMMAND_REQ with the return code of the command.  A return
+ * code of zero indicates success.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sequence number (unsigned 32-bit int, 4 bytes) Sequence number
+ * @field code number (signed 32-bit int, 4 bytes) Exit code
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgCommandResp = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_COMMAND_RESP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgCommandResp.prototype = Object.create(SBP.prototype);
+MsgCommandResp.prototype.messageType = "MSG_COMMAND_RESP";
+MsgCommandResp.prototype.msg_type = 0x00B9;
+MsgCommandResp.prototype.constructor = MsgCommandResp;
+MsgCommandResp.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('sequence')
+  .int32('code');
+MsgCommandResp.prototype.fieldSpec = [];
+MsgCommandResp.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
+MsgCommandResp.prototype.fieldSpec.push(['code', 'writeInt32LE', 4]);
+
 module.exports = {
   0x0069: MsgAlmanac,
   MsgAlmanac: MsgAlmanac,
@@ -562,4 +624,8 @@ module.exports = {
   MsgMaskSatellite: MsgMaskSatellite,
   0x00B5: MsgDeviceMonitor,
   MsgDeviceMonitor: MsgDeviceMonitor,
+  0x00B8: MsgCommandReq,
+  MsgCommandReq: MsgCommandReq,
+  0x00B9: MsgCommandResp,
+  MsgCommandResp: MsgCommandResp,
 }
