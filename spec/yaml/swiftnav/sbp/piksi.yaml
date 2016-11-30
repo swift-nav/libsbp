@@ -310,3 +310,32 @@ definitions:
             type: s16
             units: degrees C * 100
             desc: Frontend temperature (if available)
+
+ - MSG_COMMAND_REQ:
+    id: 0x00B8
+    short_desc: Execute a command (host => device)
+    desc: |
+      Request the recipient to execute an command.
+      Output will be sent in MSG_LOG messages, and the exit
+      code will be returned with MSG_COMMAND_RESP.
+    fields:
+      - sequence:
+          type: u32
+          desc: Sequence number
+      - command:
+          type: string
+          desc: Command line to execute
+
+ - MSG_COMMAND_RESP:
+    id: 0x00B9
+    short_desc: Exit code from executed command (device => host)
+    desc: |
+      The response to MSG_COMMAND_REQ with the return code of
+      the command.  A return code of zero indicates success.
+    fields:
+      - sequence:
+          type: u32
+          desc: Sequence number
+      - code:
+          type: s32
+          desc: Exit code

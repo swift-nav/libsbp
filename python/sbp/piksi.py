@@ -1141,6 +1141,181 @@ available.
     d.update(j)
     return d
     
+SBP_MSG_COMMAND_REQ = 0x00B8
+class MsgCommandReq(SBP):
+  """SBP class for message MSG_COMMAND_REQ (0x00B8).
+
+  You can have MSG_COMMAND_REQ inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Request the recipient to execute an command.
+Output will be sent in MSG_LOG messages, and the exit
+code will be returned with MSG_COMMAND_RESP.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  sequence : int
+    Sequence number
+  command : string
+    Command line to execute
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgCommandReq",
+                   ULInt32('sequence'),
+                   greedy_string('command'),)
+  __slots__ = [
+               'sequence',
+               'command',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgCommandReq,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgCommandReq, self).__init__()
+      self.msg_type = SBP_MSG_COMMAND_REQ
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.sequence = kwargs.pop('sequence')
+      self.command = kwargs.pop('command')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgCommandReq.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgCommandReq(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgCommandReq._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgCommandReq._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgCommandReq, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_COMMAND_RESP = 0x00B9
+class MsgCommandResp(SBP):
+  """SBP class for message MSG_COMMAND_RESP (0x00B9).
+
+  You can have MSG_COMMAND_RESP inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The response to MSG_COMMAND_REQ with the return code of
+the command.  A return code of zero indicates success.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  sequence : int
+    Sequence number
+  code : int
+    Exit code
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgCommandResp",
+                   ULInt32('sequence'),
+                   SLInt32('code'),)
+  __slots__ = [
+               'sequence',
+               'code',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgCommandResp,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgCommandResp, self).__init__()
+      self.msg_type = SBP_MSG_COMMAND_RESP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.sequence = kwargs.pop('sequence')
+      self.code = kwargs.pop('code')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgCommandResp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgCommandResp(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgCommandResp._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgCommandResp._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgCommandResp, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0069: MsgAlmanac,
@@ -1156,4 +1331,6 @@ msg_classes = {
   0x0019: MsgIarState,
   0x001B: MsgMaskSatellite,
   0x00B5: MsgDeviceMonitor,
+  0x00B8: MsgCommandReq,
+  0x00B9: MsgCommandResp,
 }

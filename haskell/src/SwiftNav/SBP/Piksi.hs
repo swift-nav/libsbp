@@ -526,3 +526,63 @@ $(deriveSBP 'msgDeviceMonitor ''MsgDeviceMonitor)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDeviceMonitor_" . stripPrefix "_msgDeviceMonitor_"}
              ''MsgDeviceMonitor)
 $(makeLenses ''MsgDeviceMonitor)
+
+msgCommandReq :: Word16
+msgCommandReq = 0x00B8
+
+-- | SBP class for message MSG_COMMAND_REQ (0x00B8).
+--
+-- Request the recipient to execute an command. Output will be sent in MSG_LOG
+-- messages, and the exit code will be returned with MSG_COMMAND_RESP.
+data MsgCommandReq = MsgCommandReq
+  { _msgCommandReq_sequence :: Word32
+    -- ^ Sequence number
+  , _msgCommandReq_command :: Text
+    -- ^ Command line to execute
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgCommandReq where
+  get = do
+    _msgCommandReq_sequence <- getWord32le
+    _msgCommandReq_command <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    return MsgCommandReq {..}
+
+  put MsgCommandReq {..} = do
+    putWord32le _msgCommandReq_sequence
+    putByteString $ encodeUtf8 _msgCommandReq_command
+
+$(deriveSBP 'msgCommandReq ''MsgCommandReq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCommandReq_" . stripPrefix "_msgCommandReq_"}
+             ''MsgCommandReq)
+$(makeLenses ''MsgCommandReq)
+
+msgCommandResp :: Word16
+msgCommandResp = 0x00B9
+
+-- | SBP class for message MSG_COMMAND_RESP (0x00B9).
+--
+-- The response to MSG_COMMAND_REQ with the return code of the command.  A
+-- return code of zero indicates success.
+data MsgCommandResp = MsgCommandResp
+  { _msgCommandResp_sequence :: Word32
+    -- ^ Sequence number
+  , _msgCommandResp_code   :: Int32
+    -- ^ Exit code
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgCommandResp where
+  get = do
+    _msgCommandResp_sequence <- getWord32le
+    _msgCommandResp_code <- fromIntegral <$> getWord32le
+    return MsgCommandResp {..}
+
+  put MsgCommandResp {..} = do
+    putWord32le _msgCommandResp_sequence
+    putWord32le $ fromIntegral _msgCommandResp_code
+
+$(deriveSBP 'msgCommandResp ''MsgCommandResp)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCommandResp_" . stripPrefix "_msgCommandResp_"}
+             ''MsgCommandResp)
+$(makeLenses ''MsgCommandResp)

@@ -238,6 +238,31 @@ typedef struct __attribute__((packed)) {
 } msg_device_monitor_t;
 
 
+/** Execute a command (host => device)
+ *
+ * Request the recipient to execute an command.
+ * Output will be sent in MSG_LOG messages, and the exit
+ * code will be returned with MSG_COMMAND_RESP.
+ */
+#define SBP_MSG_COMMAND_REQ     0x00B8
+typedef struct __attribute__((packed)) {
+  u32 sequence;    /**< Sequence number */
+  char command[0];  /**< Command line to execute */
+} msg_command_req_t;
+
+
+/** Exit code from executed command (device => host)
+ *
+ * The response to MSG_COMMAND_REQ with the return code of
+ * the command.  A return code of zero indicates success.
+ */
+#define SBP_MSG_COMMAND_RESP    0x00B9
+typedef struct __attribute__((packed)) {
+  u32 sequence;    /**< Sequence number */
+  s32 code;        /**< Exit code */
+} msg_command_resp_t;
+
+
 /** \} */
 
 #endif /* LIBSBP_PIKSI_MESSAGES_H */

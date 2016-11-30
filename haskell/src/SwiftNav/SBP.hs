@@ -72,6 +72,8 @@ data SBPMsg =
    | SBPMsgBootloaderHandshakeReq MsgBootloaderHandshakeReq Msg
    | SBPMsgBootloaderHandshakeResp MsgBootloaderHandshakeResp Msg
    | SBPMsgBootloaderJumpToApp MsgBootloaderJumpToApp Msg
+   | SBPMsgCommandReq MsgCommandReq Msg
+   | SBPMsgCommandResp MsgCommandResp Msg
    | SBPMsgCwResults MsgCwResults Msg
    | SBPMsgCwStart MsgCwStart Msg
    | SBPMsgDeviceMonitor MsgDeviceMonitor Msg
@@ -182,6 +184,8 @@ instance Binary SBPMsg where
           | _msgSBPType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgCommandReq = SBPMsgCommandReq (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgCommandResp = SBPMsgCommandResp (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgCwResults = SBPMsgCwResults (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgCwStart = SBPMsgCwStart (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgDeviceMonitor = SBPMsgDeviceMonitor (decode (fromStrict _msgSBPPayload)) m
@@ -284,6 +288,8 @@ instance Binary SBPMsg where
       encode' (SBPMsgBootloaderHandshakeReq _ m) = put m
       encode' (SBPMsgBootloaderHandshakeResp _ m) = put m
       encode' (SBPMsgBootloaderJumpToApp _ m) = put m
+      encode' (SBPMsgCommandReq _ m) = put m
+      encode' (SBPMsgCommandResp _ m) = put m
       encode' (SBPMsgCwResults _ m) = put m
       encode' (SBPMsgCwStart _ m) = put m
       encode' (SBPMsgDeviceMonitor _ m) = put m
@@ -389,6 +395,8 @@ instance FromJSON SBPMsg where
         | msgType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgCommandReq = SBPMsgCommandReq <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgCommandResp = SBPMsgCommandResp <$> parseJSON obj <*> parseJSON obj
         | msgType == msgCwResults = SBPMsgCwResults <$> parseJSON obj <*> parseJSON obj
         | msgType == msgCwStart = SBPMsgCwStart <$> parseJSON obj <*> parseJSON obj
         | msgType == msgDeviceMonitor = SBPMsgDeviceMonitor <$> parseJSON obj <*> parseJSON obj
@@ -496,6 +504,8 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgBootloaderHandshakeReq n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBootloaderHandshakeResp n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBootloaderJumpToApp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgCommandReq n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgCommandResp n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgCwResults n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgCwStart n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgDeviceMonitor n m) = toJSON n `mergeValues` toJSON m
@@ -597,6 +607,8 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgBootloaderHandshakeReq n m) = SBPMsgBootloaderHandshakeReq n <$> f m
   msg f (SBPMsgBootloaderHandshakeResp n m) = SBPMsgBootloaderHandshakeResp n <$> f m
   msg f (SBPMsgBootloaderJumpToApp n m) = SBPMsgBootloaderJumpToApp n <$> f m
+  msg f (SBPMsgCommandReq n m) = SBPMsgCommandReq n <$> f m
+  msg f (SBPMsgCommandResp n m) = SBPMsgCommandResp n <$> f m
   msg f (SBPMsgCwResults n m) = SBPMsgCwResults n <$> f m
   msg f (SBPMsgCwStart n m) = SBPMsgCwStart n <$> f m
   msg f (SBPMsgDeviceMonitor n m) = SBPMsgDeviceMonitor n <$> f m
