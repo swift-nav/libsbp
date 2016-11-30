@@ -153,7 +153,7 @@ class MsgUtcTime(SBP):
   of its fields.
 
   
-  This message reports the Universal Coordinated Time (UTC).  Note the flags 
+  This message reports the Universal Coordinated Time (UTC).  Note the flags
 which indicate the source of the UTC offset value and source of the time fix.
 
 
@@ -530,7 +530,7 @@ matching time-of-week (tow).
   lon : double
     Longitude
   height : double
-    Height
+    Height above WGS84 ellipsoid
   h_accuracy : int
     Horizontal position accuracy estimate (not
 implemented). Defaults to 0.

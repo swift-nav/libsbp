@@ -49,7 +49,7 @@ public class MsgPosLLH extends SBPMessage {
     /** Longitude */
     public double lon;
     
-    /** Height */
+    /** Height above WGS84 ellipsoid */
     public double height;
     
     /** Horizontal position accuracy estimate (not

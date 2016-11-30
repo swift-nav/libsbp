@@ -65,7 +65,7 @@ from -500000 to 500000)
 
 /** UTC Time
  *
- * This message reports the Universal Coordinated Time (UTC).  Note the flags 
+ * This message reports the Universal Coordinated Time (UTC).  Note the flags
  * which indicate the source of the UTC offset value and source of the time fix.
  */
 #define SBP_MSG_UTC_TIME               0x0103
@@ -142,7 +142,7 @@ typedef struct __attribute__((packed)) {
   u32 tow;           /**< GPS Time of Week [ms] */
   double lat;           /**< Latitude [deg] */
   double lon;           /**< Longitude [deg] */
-  double height;        /**< Height [m] */
+  double height;        /**< Height above WGS84 ellipsoid [m] */
   u16 h_accuracy;    /**< Horizontal position accuracy estimate (not
 implemented). Defaults to 0.
  [mm] */

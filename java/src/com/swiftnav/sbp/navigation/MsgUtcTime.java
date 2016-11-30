@@ -27,7 +27,7 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message reports the Universal Coordinated Time (UTC).  Note the flags 
+ * This message reports the Universal Coordinated Time (UTC).  Note the flags
  * which indicate the source of the UTC offset value and source of the time fix. */
 
 public class MsgUtcTime extends SBPMessage {

@@ -77,8 +77,8 @@ MsgGpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_UTC_TIME (0x0103).
  *
- * This message reports the Universal Coordinated Time (UTC).  Note the flags
- * which indicate the source of the UTC offset value and source of the time fix.
+ * This message reports the Universal Coordinated Time (UTC).  Note the flags which
+ * indicate the source of the UTC offset value and source of the time fix.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field flags number (unsigned 8-bit int, 1 byte) Indicates source and time validity
@@ -237,7 +237,7 @@ MsgPosEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
  * @field lat number (float, 8 bytes) Latitude
  * @field lon number (float, 8 bytes) Longitude
- * @field height number (float, 8 bytes) Height
+ * @field height number (float, 8 bytes) Height above WGS84 ellipsoid
  * @field h_accuracy number (unsigned 16-bit int, 2 bytes) Horizontal position accuracy estimate (not implemented). Defaults to 0.
  * @field v_accuracy number (unsigned 16-bit int, 2 bytes) Vertical position accuracy estimate (not implemented). Defaults to 0.
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution.
