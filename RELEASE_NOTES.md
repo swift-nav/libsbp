@@ -6,7 +6,8 @@ For a detailed index of changes, please see the
 
 Contents
 --------
- * [v2.0](#v2.0.0)
+ * [v2.1.0](#v2.1.0)
+ * [v2.0.0](#v2.0.0)
  * [v1.1.1](#v1.1.1)
  * [v1.1.0](#v1.1.0)
  * [v1.0.2](#v1.0.2)
@@ -14,8 +15,14 @@ Contents
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
 
-v2.0 <a name="v2.0.0">
-* Depcrated and redfined all navigation messages due to redefinition of the FLAGS field
+v2.0.0 <a name="v2.1.0">
+--------------------------
+* Add command and response messages
+* Clarify height field is above ellipsoid
+
+v2.0.0 <a name="v2.0.0">
+--------------------------
+* Deprecated and redefined all navigation messages due to redefinition of the FLAGS field
   * Navigation messages are expected to go out with every solution epoch whether valid or not
 * New observation message with Measured Doppler addition, observation flags,  and lock timer
 * Deprecation of Piksi V2.3.1 bootloader and flash messages
