@@ -26,7 +26,7 @@ public class SBPDriverHTTP extends SBPDriverStream {
         //http.setDoOutput(true);
         //http.setChunkedStreamingMode(200);
         http.setRequestProperty("Device-Uid", uid);
-        http.setRequestProperty("Accept", "application/vnd.swiftnav.broker.v1+sbp");
+        http.setRequestProperty("Accept", "application/vnd.swiftnav.broker.v1+sbp2");
         //http.setRequestProperty("Content-Type", "application/sbp");
 
         http.connect();
