@@ -16,7 +16,7 @@
 
 module SwiftNav.SBP.FileIo where
 
-import BasicPrelude
+import BasicPrelude as P
 import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
@@ -71,7 +71,7 @@ instance Binary MsgFileioReadReq where
 
 $(deriveSBP 'msgFileioReadReq ''MsgFileioReadReq)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadReq_" . stripPrefix "_msgFileioReadReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadReq_" . P.stripPrefix "_msgFileioReadReq_"}
              ''MsgFileioReadReq)
 $(makeLenses ''MsgFileioReadReq)
 
@@ -103,7 +103,7 @@ instance Binary MsgFileioReadResp where
 
 $(deriveSBP 'msgFileioReadResp ''MsgFileioReadResp)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadResp_" . stripPrefix "_msgFileioReadResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadResp_" . P.stripPrefix "_msgFileioReadResp_"}
              ''MsgFileioReadResp)
 $(makeLenses ''MsgFileioReadResp)
 
@@ -143,7 +143,7 @@ instance Binary MsgFileioReadDirReq where
 
 $(deriveSBP 'msgFileioReadDirReq ''MsgFileioReadDirReq)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadDirReq_" . stripPrefix "_msgFileioReadDirReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadDirReq_" . P.stripPrefix "_msgFileioReadDirReq_"}
              ''MsgFileioReadDirReq)
 $(makeLenses ''MsgFileioReadDirReq)
 
@@ -176,7 +176,7 @@ instance Binary MsgFileioReadDirResp where
 
 $(deriveSBP 'msgFileioReadDirResp ''MsgFileioReadDirResp)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadDirResp_" . stripPrefix "_msgFileioReadDirResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadDirResp_" . P.stripPrefix "_msgFileioReadDirResp_"}
              ''MsgFileioReadDirResp)
 $(makeLenses ''MsgFileioReadDirResp)
 
@@ -204,7 +204,7 @@ instance Binary MsgFileioRemove where
 
 $(deriveSBP 'msgFileioRemove ''MsgFileioRemove)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioRemove_" . stripPrefix "_msgFileioRemove_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioRemove_" . P.stripPrefix "_msgFileioRemove_"}
              ''MsgFileioRemove)
 $(makeLenses ''MsgFileioRemove)
 
@@ -247,7 +247,7 @@ instance Binary MsgFileioWriteReq where
 
 $(deriveSBP 'msgFileioWriteReq ''MsgFileioWriteReq)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioWriteReq_" . stripPrefix "_msgFileioWriteReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioWriteReq_" . P.stripPrefix "_msgFileioWriteReq_"}
              ''MsgFileioWriteReq)
 $(makeLenses ''MsgFileioWriteReq)
 
@@ -275,6 +275,6 @@ instance Binary MsgFileioWriteResp where
 
 $(deriveSBP 'msgFileioWriteResp ''MsgFileioWriteResp)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioWriteResp_" . stripPrefix "_msgFileioWriteResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioWriteResp_" . P.stripPrefix "_msgFileioWriteResp_"}
              ''MsgFileioWriteResp)
 $(makeLenses ''MsgFileioWriteResp)

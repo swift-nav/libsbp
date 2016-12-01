@@ -11,7 +11,7 @@
 
 module SwiftNav.SBP.Acquisition where
 
-import BasicPrelude
+import BasicPrelude as P
 import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
@@ -64,7 +64,7 @@ instance Binary MsgAcqResult where
 
 $(deriveSBP 'msgAcqResult ''MsgAcqResult)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResult_" . stripPrefix "_msgAcqResult_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResult_" . P.stripPrefix "_msgAcqResult_"}
              ''MsgAcqResult)
 $(makeLenses ''MsgAcqResult)
 
@@ -102,7 +102,7 @@ instance Binary MsgAcqResultDepB where
 
 $(deriveSBP 'msgAcqResultDepB ''MsgAcqResultDepB)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResultDepB_" . stripPrefix "_msgAcqResultDepB_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResultDepB_" . P.stripPrefix "_msgAcqResultDepB_"}
              ''MsgAcqResultDepB)
 $(makeLenses ''MsgAcqResultDepB)
 
@@ -141,7 +141,7 @@ instance Binary MsgAcqResultDepA where
 
 $(deriveSBP 'msgAcqResultDepA ''MsgAcqResultDepA)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResultDepA_" . stripPrefix "_msgAcqResultDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResultDepA_" . P.stripPrefix "_msgAcqResultDepA_"}
              ''MsgAcqResultDepA)
 $(makeLenses ''MsgAcqResultDepA)
 
@@ -206,7 +206,7 @@ instance Binary AcqSvProfile where
     putWord32le $ fromIntegral _acqSvProfile_cf_max
     putWord32le $ fromIntegral _acqSvProfile_cf
     putWord32le _acqSvProfile_cp
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_acqSvProfile_" . stripPrefix "_acqSvProfile_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_acqSvProfile_" . P.stripPrefix "_acqSvProfile_"}
              ''AcqSvProfile)
 $(makeLenses ''AcqSvProfile)
 
@@ -232,6 +232,6 @@ instance Binary MsgAcqSvProfile where
 
 $(deriveSBP 'msgAcqSvProfile ''MsgAcqSvProfile)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqSvProfile_" . stripPrefix "_msgAcqSvProfile_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqSvProfile_" . P.stripPrefix "_msgAcqSvProfile_"}
              ''MsgAcqSvProfile)
 $(makeLenses ''MsgAcqSvProfile)

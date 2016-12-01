@@ -11,7 +11,7 @@
 
 module SwiftNav.SBP.Logging where
 
-import BasicPrelude
+import BasicPrelude as P
 import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
@@ -54,7 +54,7 @@ instance Binary MsgLog where
 
 $(deriveSBP 'msgLog ''MsgLog)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgLog_" . stripPrefix "_msgLog_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgLog_" . P.stripPrefix "_msgLog_"}
              ''MsgLog)
 $(makeLenses ''MsgLog)
 
@@ -93,7 +93,7 @@ instance Binary MsgFwd where
 
 $(deriveSBP 'msgFwd ''MsgFwd)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFwd_" . stripPrefix "_msgFwd_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFwd_" . P.stripPrefix "_msgFwd_"}
              ''MsgFwd)
 $(makeLenses ''MsgFwd)
 
@@ -118,7 +118,7 @@ instance Binary MsgTweet where
 
 $(deriveSBP 'msgTweet ''MsgTweet)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTweet_" . stripPrefix "_msgTweet_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTweet_" . P.stripPrefix "_msgTweet_"}
              ''MsgTweet)
 $(makeLenses ''MsgTweet)
 
@@ -143,6 +143,6 @@ instance Binary MsgPrintDep where
 
 $(deriveSBP 'msgPrintDep ''MsgPrintDep)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPrintDep_" . stripPrefix "_msgPrintDep_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPrintDep_" . P.stripPrefix "_msgPrintDep_"}
              ''MsgPrintDep)
 $(makeLenses ''MsgPrintDep)

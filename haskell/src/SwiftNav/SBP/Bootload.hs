@@ -13,7 +13,7 @@
 
 module SwiftNav.SBP.Bootload where
 
-import BasicPrelude
+import BasicPrelude as P
 import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
@@ -49,7 +49,7 @@ instance Binary MsgBootloaderHandshakeReq where
 
 $(deriveSBP 'msgBootloaderHandshakeReq ''MsgBootloaderHandshakeReq)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeReq_" . stripPrefix "_msgBootloaderHandshakeReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeReq_" . P.stripPrefix "_msgBootloaderHandshakeReq_"}
              ''MsgBootloaderHandshakeReq)
 $(makeLenses ''MsgBootloaderHandshakeReq)
 
@@ -81,7 +81,7 @@ instance Binary MsgBootloaderHandshakeResp where
 
 $(deriveSBP 'msgBootloaderHandshakeResp ''MsgBootloaderHandshakeResp)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeResp_" . stripPrefix "_msgBootloaderHandshakeResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeResp_" . P.stripPrefix "_msgBootloaderHandshakeResp_"}
              ''MsgBootloaderHandshakeResp)
 $(makeLenses ''MsgBootloaderHandshakeResp)
 
@@ -106,7 +106,7 @@ instance Binary MsgBootloaderJumpToApp where
 
 $(deriveSBP 'msgBootloaderJumpToApp ''MsgBootloaderJumpToApp)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderJumpToApp_" . stripPrefix "_msgBootloaderJumpToApp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderJumpToApp_" . P.stripPrefix "_msgBootloaderJumpToApp_"}
              ''MsgBootloaderJumpToApp)
 $(makeLenses ''MsgBootloaderJumpToApp)
 
@@ -132,7 +132,7 @@ instance Binary MsgNapDeviceDnaReq where
 
 $(deriveSBP 'msgNapDeviceDnaReq ''MsgNapDeviceDnaReq)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNapDeviceDnaReq_" . stripPrefix "_msgNapDeviceDnaReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNapDeviceDnaReq_" . P.stripPrefix "_msgNapDeviceDnaReq_"}
              ''MsgNapDeviceDnaReq)
 $(makeLenses ''MsgNapDeviceDnaReq)
 
@@ -162,7 +162,7 @@ instance Binary MsgNapDeviceDnaResp where
 
 $(deriveSBP 'msgNapDeviceDnaResp ''MsgNapDeviceDnaResp)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNapDeviceDnaResp_" . stripPrefix "_msgNapDeviceDnaResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNapDeviceDnaResp_" . P.stripPrefix "_msgNapDeviceDnaResp_"}
              ''MsgNapDeviceDnaResp)
 $(makeLenses ''MsgNapDeviceDnaResp)
 
@@ -187,6 +187,6 @@ instance Binary MsgBootloaderHandshakeDepA where
 
 $(deriveSBP 'msgBootloaderHandshakeDepA ''MsgBootloaderHandshakeDepA)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeDepA_" . stripPrefix "_msgBootloaderHandshakeDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeDepA_" . P.stripPrefix "_msgBootloaderHandshakeDepA_"}
              ''MsgBootloaderHandshakeDepA)
 $(makeLenses ''MsgBootloaderHandshakeDepA)

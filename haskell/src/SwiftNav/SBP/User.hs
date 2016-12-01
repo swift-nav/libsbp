@@ -11,7 +11,7 @@
 
 module SwiftNav.SBP.User where
 
-import BasicPrelude
+import BasicPrelude as P
 import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
@@ -49,6 +49,6 @@ instance Binary MsgUserData where
 
 $(deriveSBP 'msgUserData ''MsgUserData)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUserData_" . stripPrefix "_msgUserData_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUserData_" . P.stripPrefix "_msgUserData_"}
              ''MsgUserData)
 $(makeLenses ''MsgUserData)

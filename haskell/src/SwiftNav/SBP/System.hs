@@ -11,7 +11,7 @@
 
 module SwiftNav.SBP.System where
 
-import BasicPrelude
+import BasicPrelude as P
 import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
@@ -58,7 +58,7 @@ instance Binary MsgStartup where
 
 $(deriveSBP 'msgStartup ''MsgStartup)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStartup_" . stripPrefix "_msgStartup_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStartup_" . P.stripPrefix "_msgStartup_"}
              ''MsgStartup)
 $(makeLenses ''MsgStartup)
 
@@ -97,7 +97,7 @@ instance Binary MsgDgnssStatus where
 
 $(deriveSBP 'msgDgnssStatus ''MsgDgnssStatus)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDgnssStatus_" . stripPrefix "_msgDgnssStatus_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDgnssStatus_" . P.stripPrefix "_msgDgnssStatus_"}
              ''MsgDgnssStatus)
 $(makeLenses ''MsgDgnssStatus)
 
@@ -128,6 +128,6 @@ instance Binary MsgHeartbeat where
 
 $(deriveSBP 'msgHeartbeat ''MsgHeartbeat)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgHeartbeat_" . stripPrefix "_msgHeartbeat_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgHeartbeat_" . P.stripPrefix "_msgHeartbeat_"}
              ''MsgHeartbeat)
 $(makeLenses ''MsgHeartbeat)

@@ -11,7 +11,7 @@
 
 module SwiftNav.SBP.Observation where
 
-import BasicPrelude
+import BasicPrelude as P
 import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
@@ -48,7 +48,7 @@ instance Binary ObservationHeader where
   put ObservationHeader {..} = do
     put _observationHeader_t
     putWord8 _observationHeader_n_obs
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_observationHeader_" . stripPrefix "_observationHeader_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_observationHeader_" . P.stripPrefix "_observationHeader_"}
              ''ObservationHeader)
 $(makeLenses ''ObservationHeader)
 
@@ -73,7 +73,7 @@ instance Binary Doppler where
   put Doppler {..} = do
     putWord16le $ fromIntegral _doppler_i
     putWord8 _doppler_f
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_doppler_" . stripPrefix "_doppler_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_doppler_" . P.stripPrefix "_doppler_"}
              ''Doppler)
 $(makeLenses ''Doppler)
 
@@ -125,7 +125,7 @@ instance Binary PackedObsContent where
     putWord8 _packedObsContent_lock
     putWord8 _packedObsContent_flags
     put _packedObsContent_sid
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContent_" . stripPrefix "_packedObsContent_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContent_" . P.stripPrefix "_packedObsContent_"}
              ''PackedObsContent)
 $(makeLenses ''PackedObsContent)
 
@@ -167,7 +167,7 @@ instance Binary MsgObs where
 
 $(deriveSBP 'msgObs ''MsgObs)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObs_" . stripPrefix "_msgObs_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObs_" . P.stripPrefix "_msgObs_"}
              ''MsgObs)
 $(makeLenses ''MsgObs)
 
@@ -203,7 +203,7 @@ instance Binary MsgBasePosLlh where
 
 $(deriveSBP 'msgBasePosLlh ''MsgBasePosLlh)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBasePosLlh_" . stripPrefix "_msgBasePosLlh_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBasePosLlh_" . P.stripPrefix "_msgBasePosLlh_"}
              ''MsgBasePosLlh)
 $(makeLenses ''MsgBasePosLlh)
 
@@ -240,7 +240,7 @@ instance Binary MsgBasePosEcef where
 
 $(deriveSBP 'msgBasePosEcef ''MsgBasePosEcef)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBasePosEcef_" . stripPrefix "_msgBasePosEcef_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBasePosEcef_" . P.stripPrefix "_msgBasePosEcef_"}
              ''MsgBasePosEcef)
 $(makeLenses ''MsgBasePosEcef)
 
@@ -277,7 +277,7 @@ instance Binary EphemerisCommonContent where
     putWord32le _ephemerisCommonContent_fit_interval
     putWord8 _ephemerisCommonContent_valid
     putWord8 _ephemerisCommonContent_health_bits
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_ephemerisCommonContent_" . stripPrefix "_ephemerisCommonContent_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_ephemerisCommonContent_" . P.stripPrefix "_ephemerisCommonContent_"}
              ''EphemerisCommonContent)
 $(makeLenses ''EphemerisCommonContent)
 
@@ -397,7 +397,7 @@ instance Binary MsgEphemerisGps where
 
 $(deriveSBP 'msgEphemerisGps ''MsgEphemerisGps)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGps_" . stripPrefix "_msgEphemerisGps_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGps_" . P.stripPrefix "_msgEphemerisGps_"}
              ''MsgEphemerisGps)
 $(makeLenses ''MsgEphemerisGps)
 
@@ -439,7 +439,7 @@ instance Binary MsgEphemerisSbas where
 
 $(deriveSBP 'msgEphemerisSbas ''MsgEphemerisSbas)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisSbas_" . stripPrefix "_msgEphemerisSbas_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisSbas_" . P.stripPrefix "_msgEphemerisSbas_"}
              ''MsgEphemerisSbas)
 $(makeLenses ''MsgEphemerisSbas)
 
@@ -487,7 +487,7 @@ instance Binary MsgEphemerisGlo where
 
 $(deriveSBP 'msgEphemerisGlo ''MsgEphemerisGlo)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGlo_" . stripPrefix "_msgEphemerisGlo_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGlo_" . P.stripPrefix "_msgEphemerisGlo_"}
              ''MsgEphemerisGlo)
 $(makeLenses ''MsgEphemerisGlo)
 
@@ -631,7 +631,7 @@ instance Binary MsgEphemerisDepD where
 
 $(deriveSBP 'msgEphemerisDepD ''MsgEphemerisDepD)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepD_" . stripPrefix "_msgEphemerisDepD_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepD_" . P.stripPrefix "_msgEphemerisDepD_"}
              ''MsgEphemerisDepD)
 $(makeLenses ''MsgEphemerisDepD)
 
@@ -760,7 +760,7 @@ instance Binary MsgEphemerisDepA where
 
 $(deriveSBP 'msgEphemerisDepA ''MsgEphemerisDepA)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepA_" . stripPrefix "_msgEphemerisDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepA_" . P.stripPrefix "_msgEphemerisDepA_"}
              ''MsgEphemerisDepA)
 $(makeLenses ''MsgEphemerisDepA)
 
@@ -893,7 +893,7 @@ instance Binary MsgEphemerisDepB where
 
 $(deriveSBP 'msgEphemerisDepB ''MsgEphemerisDepB)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepB_" . stripPrefix "_msgEphemerisDepB_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepB_" . P.stripPrefix "_msgEphemerisDepB_"}
              ''MsgEphemerisDepB)
 $(makeLenses ''MsgEphemerisDepB)
 
@@ -1037,7 +1037,7 @@ instance Binary MsgEphemerisDepC where
 
 $(deriveSBP 'msgEphemerisDepC ''MsgEphemerisDepC)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepC_" . stripPrefix "_msgEphemerisDepC_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepC_" . P.stripPrefix "_msgEphemerisDepC_"}
              ''MsgEphemerisDepC)
 $(makeLenses ''MsgEphemerisDepC)
 
@@ -1061,7 +1061,7 @@ instance Binary ObservationHeaderDep where
   put ObservationHeaderDep {..} = do
     put _observationHeaderDep_t
     putWord8 _observationHeaderDep_n_obs
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_observationHeaderDep_" . stripPrefix "_observationHeaderDep_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_observationHeaderDep_" . P.stripPrefix "_observationHeaderDep_"}
              ''ObservationHeaderDep)
 $(makeLenses ''ObservationHeaderDep)
 
@@ -1087,7 +1087,7 @@ instance Binary CarrierPhaseDepA where
   put CarrierPhaseDepA {..} = do
     putWord32le $ fromIntegral _carrierPhaseDepA_i
     putWord8 _carrierPhaseDepA_f
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_carrierPhaseDepA_" . stripPrefix "_carrierPhaseDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_carrierPhaseDepA_" . P.stripPrefix "_carrierPhaseDepA_"}
              ''CarrierPhaseDepA)
 $(makeLenses ''CarrierPhaseDepA)
 
@@ -1124,7 +1124,7 @@ instance Binary PackedObsContentDepA where
     putWord8 _packedObsContentDepA_cn0
     putWord16le _packedObsContentDepA_lock
     putWord8 _packedObsContentDepA_prn
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDepA_" . stripPrefix "_packedObsContentDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDepA_" . P.stripPrefix "_packedObsContentDepA_"}
              ''PackedObsContentDepA)
 $(makeLenses ''PackedObsContentDepA)
 
@@ -1162,7 +1162,7 @@ instance Binary PackedObsContentDepB where
     putWord8 _packedObsContentDepB_cn0
     putWord16le _packedObsContentDepB_lock
     put _packedObsContentDepB_sid
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDepB_" . stripPrefix "_packedObsContentDepB_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDepB_" . P.stripPrefix "_packedObsContentDepB_"}
              ''PackedObsContentDepB)
 $(makeLenses ''PackedObsContentDepB)
 
@@ -1201,7 +1201,7 @@ instance Binary PackedObsContentDepC where
     putWord8 _packedObsContentDepC_cn0
     putWord16le _packedObsContentDepC_lock
     put _packedObsContentDepC_sid
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDepC_" . stripPrefix "_packedObsContentDepC_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDepC_" . P.stripPrefix "_packedObsContentDepC_"}
              ''PackedObsContentDepC)
 $(makeLenses ''PackedObsContentDepC)
 
@@ -1230,7 +1230,7 @@ instance Binary MsgObsDepA where
 
 $(deriveSBP 'msgObsDepA ''MsgObsDepA)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepA_" . stripPrefix "_msgObsDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepA_" . P.stripPrefix "_msgObsDepA_"}
              ''MsgObsDepA)
 $(makeLenses ''MsgObsDepA)
 
@@ -1262,7 +1262,7 @@ instance Binary MsgObsDepB where
 
 $(deriveSBP 'msgObsDepB ''MsgObsDepB)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepB_" . stripPrefix "_msgObsDepB_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepB_" . P.stripPrefix "_msgObsDepB_"}
              ''MsgObsDepB)
 $(makeLenses ''MsgObsDepB)
 
@@ -1296,7 +1296,7 @@ instance Binary MsgObsDepC where
 
 $(deriveSBP 'msgObsDepC ''MsgObsDepC)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepC_" . stripPrefix "_msgObsDepC_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepC_" . P.stripPrefix "_msgObsDepC_"}
              ''MsgObsDepC)
 $(makeLenses ''MsgObsDepC)
 
@@ -1347,7 +1347,7 @@ instance Binary MsgIono where
 
 $(deriveSBP 'msgIono ''MsgIono)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgIono_" . stripPrefix "_msgIono_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgIono_" . P.stripPrefix "_msgIono_"}
              ''MsgIono)
 $(makeLenses ''MsgIono)
 
@@ -1376,7 +1376,7 @@ instance Binary MsgSvConfigurationGps where
 
 $(deriveSBP 'msgSvConfigurationGps ''MsgSvConfigurationGps)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSvConfigurationGps_" . stripPrefix "_msgSvConfigurationGps_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSvConfigurationGps_" . P.stripPrefix "_msgSvConfigurationGps_"}
              ''MsgSvConfigurationGps)
 $(makeLenses ''MsgSvConfigurationGps)
 
@@ -1419,6 +1419,6 @@ instance Binary MsgGroupDelay where
 
 $(deriveSBP 'msgGroupDelay ''MsgGroupDelay)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGroupDelay_" . stripPrefix "_msgGroupDelay_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGroupDelay_" . P.stripPrefix "_msgGroupDelay_"}
              ''MsgGroupDelay)
 $(makeLenses ''MsgGroupDelay)

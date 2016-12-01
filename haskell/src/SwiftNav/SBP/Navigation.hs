@@ -19,7 +19,7 @@
 
 module SwiftNav.SBP.Navigation where
 
-import BasicPrelude
+import BasicPrelude as P
 import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
@@ -77,7 +77,7 @@ instance Binary MsgGpsTime where
 
 $(deriveSBP 'msgGpsTime ''MsgGpsTime)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGpsTime_" . stripPrefix "_msgGpsTime_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGpsTime_" . P.stripPrefix "_msgGpsTime_"}
              ''MsgGpsTime)
 $(makeLenses ''MsgGpsTime)
 
@@ -137,7 +137,7 @@ instance Binary MsgUtcTime where
 
 $(deriveSBP 'msgUtcTime ''MsgUtcTime)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUtcTime_" . stripPrefix "_msgUtcTime_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUtcTime_" . P.stripPrefix "_msgUtcTime_"}
              ''MsgUtcTime)
 $(makeLenses ''MsgUtcTime)
 
@@ -189,7 +189,7 @@ instance Binary MsgDops where
 
 $(deriveSBP 'msgDops ''MsgDops)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDops_" . stripPrefix "_msgDops_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDops_" . P.stripPrefix "_msgDops_"}
              ''MsgDops)
 $(makeLenses ''MsgDops)
 
@@ -244,7 +244,7 @@ instance Binary MsgPosEcef where
 
 $(deriveSBP 'msgPosEcef ''MsgPosEcef)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosEcef_" . stripPrefix "_msgPosEcef_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosEcef_" . P.stripPrefix "_msgPosEcef_"}
              ''MsgPosEcef)
 $(makeLenses ''MsgPosEcef)
 
@@ -303,7 +303,7 @@ instance Binary MsgPosLlh where
 
 $(deriveSBP 'msgPosLlh ''MsgPosLlh)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosLlh_" . stripPrefix "_msgPosLlh_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosLlh_" . P.stripPrefix "_msgPosLlh_"}
              ''MsgPosLlh)
 $(makeLenses ''MsgPosLlh)
 
@@ -355,7 +355,7 @@ instance Binary MsgBaselineEcef where
 
 $(deriveSBP 'msgBaselineEcef ''MsgBaselineEcef)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineEcef_" . stripPrefix "_msgBaselineEcef_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineEcef_" . P.stripPrefix "_msgBaselineEcef_"}
              ''MsgBaselineEcef)
 $(makeLenses ''MsgBaselineEcef)
 
@@ -413,7 +413,7 @@ instance Binary MsgBaselineNed where
 
 $(deriveSBP 'msgBaselineNed ''MsgBaselineNed)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineNed_" . stripPrefix "_msgBaselineNed_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineNed_" . P.stripPrefix "_msgBaselineNed_"}
              ''MsgBaselineNed)
 $(makeLenses ''MsgBaselineNed)
 
@@ -464,7 +464,7 @@ instance Binary MsgVelEcef where
 
 $(deriveSBP 'msgVelEcef ''MsgVelEcef)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelEcef_" . stripPrefix "_msgVelEcef_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelEcef_" . P.stripPrefix "_msgVelEcef_"}
              ''MsgVelEcef)
 $(makeLenses ''MsgVelEcef)
 
@@ -520,7 +520,7 @@ instance Binary MsgVelNed where
 
 $(deriveSBP 'msgVelNed ''MsgVelNed)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelNed_" . stripPrefix "_msgVelNed_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelNed_" . P.stripPrefix "_msgVelNed_"}
              ''MsgVelNed)
 $(makeLenses ''MsgVelNed)
 
@@ -560,7 +560,7 @@ instance Binary MsgBaselineHeading where
 
 $(deriveSBP 'msgBaselineHeading ''MsgBaselineHeading)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineHeading_" . stripPrefix "_msgBaselineHeading_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineHeading_" . P.stripPrefix "_msgBaselineHeading_"}
              ''MsgBaselineHeading)
 $(makeLenses ''MsgBaselineHeading)
 
@@ -590,7 +590,7 @@ instance Binary MsgAgeCorrections where
 
 $(deriveSBP 'msgAgeCorrections ''MsgAgeCorrections)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAgeCorrections_" . stripPrefix "_msgAgeCorrections_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAgeCorrections_" . P.stripPrefix "_msgAgeCorrections_"}
              ''MsgAgeCorrections)
 $(makeLenses ''MsgAgeCorrections)
 
@@ -636,7 +636,7 @@ instance Binary MsgGpsTimeDepA where
 
 $(deriveSBP 'msgGpsTimeDepA ''MsgGpsTimeDepA)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGpsTimeDepA_" . stripPrefix "_msgGpsTimeDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGpsTimeDepA_" . P.stripPrefix "_msgGpsTimeDepA_"}
              ''MsgGpsTimeDepA)
 $(makeLenses ''MsgGpsTimeDepA)
 
@@ -682,7 +682,7 @@ instance Binary MsgDopsDepA where
 
 $(deriveSBP 'msgDopsDepA ''MsgDopsDepA)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDopsDepA_" . stripPrefix "_msgDopsDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDopsDepA_" . P.stripPrefix "_msgDopsDepA_"}
              ''MsgDopsDepA)
 $(makeLenses ''MsgDopsDepA)
 
@@ -737,7 +737,7 @@ instance Binary MsgPosEcefDepA where
 
 $(deriveSBP 'msgPosEcefDepA ''MsgPosEcefDepA)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosEcefDepA_" . stripPrefix "_msgPosEcefDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosEcefDepA_" . P.stripPrefix "_msgPosEcefDepA_"}
              ''MsgPosEcefDepA)
 $(makeLenses ''MsgPosEcefDepA)
 
@@ -796,7 +796,7 @@ instance Binary MsgPosLlhDepA where
 
 $(deriveSBP 'msgPosLlhDepA ''MsgPosLlhDepA)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosLlhDepA_" . stripPrefix "_msgPosLlhDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosLlhDepA_" . P.stripPrefix "_msgPosLlhDepA_"}
              ''MsgPosLlhDepA)
 $(makeLenses ''MsgPosLlhDepA)
 
@@ -848,7 +848,7 @@ instance Binary MsgBaselineEcefDepA where
 
 $(deriveSBP 'msgBaselineEcefDepA ''MsgBaselineEcefDepA)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineEcefDepA_" . stripPrefix "_msgBaselineEcefDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineEcefDepA_" . P.stripPrefix "_msgBaselineEcefDepA_"}
              ''MsgBaselineEcefDepA)
 $(makeLenses ''MsgBaselineEcefDepA)
 
@@ -906,7 +906,7 @@ instance Binary MsgBaselineNedDepA where
 
 $(deriveSBP 'msgBaselineNedDepA ''MsgBaselineNedDepA)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineNedDepA_" . stripPrefix "_msgBaselineNedDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineNedDepA_" . P.stripPrefix "_msgBaselineNedDepA_"}
              ''MsgBaselineNedDepA)
 $(makeLenses ''MsgBaselineNedDepA)
 
@@ -957,7 +957,7 @@ instance Binary MsgVelEcefDepA where
 
 $(deriveSBP 'msgVelEcefDepA ''MsgVelEcefDepA)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelEcefDepA_" . stripPrefix "_msgVelEcefDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelEcefDepA_" . P.stripPrefix "_msgVelEcefDepA_"}
              ''MsgVelEcefDepA)
 $(makeLenses ''MsgVelEcefDepA)
 
@@ -1013,7 +1013,7 @@ instance Binary MsgVelNedDepA where
 
 $(deriveSBP 'msgVelNedDepA ''MsgVelNedDepA)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelNedDepA_" . stripPrefix "_msgVelNedDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelNedDepA_" . P.stripPrefix "_msgVelNedDepA_"}
              ''MsgVelNedDepA)
 $(makeLenses ''MsgVelNedDepA)
 
@@ -1052,6 +1052,6 @@ instance Binary MsgBaselineHeadingDepA where
 
 $(deriveSBP 'msgBaselineHeadingDepA ''MsgBaselineHeadingDepA)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineHeadingDepA_" . stripPrefix "_msgBaselineHeadingDepA_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineHeadingDepA_" . P.stripPrefix "_msgBaselineHeadingDepA_"}
              ''MsgBaselineHeadingDepA)
 $(makeLenses ''MsgBaselineHeadingDepA)

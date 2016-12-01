@@ -11,7 +11,7 @@
 
 module (((module_name))) where
 
-import BasicPrelude
+import BasicPrelude as P
 import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
@@ -88,7 +88,7 @@ instance Binary (((m.identifier|to_data))) where
 
 $(deriveSBP '(((m.identifier|to_global))) ''(((m.identifier|to_data))))
 ((* endif *))
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_(((m.identifier|to_global)))_" . stripPrefix "_(((m.identifier|to_global)))_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_(((m.identifier|to_global)))_" . P.stripPrefix "_(((m.identifier|to_global)))_"}
              ''(((m.identifier|to_data))))
 $(makeLenses ''(((m.identifier|to_data))))
 

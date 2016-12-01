@@ -14,7 +14,7 @@
 
 module SwiftNav.SBP.Flash where
 
-import BasicPrelude
+import BasicPrelude as P
 import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
@@ -67,7 +67,7 @@ instance Binary MsgFlashProgram where
 
 $(deriveSBP 'msgFlashProgram ''MsgFlashProgram)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashProgram_" . stripPrefix "_msgFlashProgram_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashProgram_" . P.stripPrefix "_msgFlashProgram_"}
              ''MsgFlashProgram)
 $(makeLenses ''MsgFlashProgram)
 
@@ -95,7 +95,7 @@ instance Binary MsgFlashDone where
 
 $(deriveSBP 'msgFlashDone ''MsgFlashDone)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashDone_" . stripPrefix "_msgFlashDone_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashDone_" . P.stripPrefix "_msgFlashDone_"}
              ''MsgFlashDone)
 $(makeLenses ''MsgFlashDone)
 
@@ -133,7 +133,7 @@ instance Binary MsgFlashReadReq where
 
 $(deriveSBP 'msgFlashReadReq ''MsgFlashReadReq)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashReadReq_" . stripPrefix "_msgFlashReadReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashReadReq_" . P.stripPrefix "_msgFlashReadReq_"}
              ''MsgFlashReadReq)
 $(makeLenses ''MsgFlashReadReq)
 
@@ -171,7 +171,7 @@ instance Binary MsgFlashReadResp where
 
 $(deriveSBP 'msgFlashReadResp ''MsgFlashReadResp)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashReadResp_" . stripPrefix "_msgFlashReadResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashReadResp_" . P.stripPrefix "_msgFlashReadResp_"}
              ''MsgFlashReadResp)
 $(makeLenses ''MsgFlashReadResp)
 
@@ -203,7 +203,7 @@ instance Binary MsgFlashErase where
 
 $(deriveSBP 'msgFlashErase ''MsgFlashErase)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashErase_" . stripPrefix "_msgFlashErase_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashErase_" . P.stripPrefix "_msgFlashErase_"}
              ''MsgFlashErase)
 $(makeLenses ''MsgFlashErase)
 
@@ -229,7 +229,7 @@ instance Binary MsgStmFlashLockSector where
 
 $(deriveSBP 'msgStmFlashLockSector ''MsgStmFlashLockSector)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmFlashLockSector_" . stripPrefix "_msgStmFlashLockSector_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmFlashLockSector_" . P.stripPrefix "_msgStmFlashLockSector_"}
              ''MsgStmFlashLockSector)
 $(makeLenses ''MsgStmFlashLockSector)
 
@@ -255,7 +255,7 @@ instance Binary MsgStmFlashUnlockSector where
 
 $(deriveSBP 'msgStmFlashUnlockSector ''MsgStmFlashUnlockSector)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmFlashUnlockSector_" . stripPrefix "_msgStmFlashUnlockSector_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmFlashUnlockSector_" . P.stripPrefix "_msgStmFlashUnlockSector_"}
              ''MsgStmFlashUnlockSector)
 $(makeLenses ''MsgStmFlashUnlockSector)
 
@@ -279,7 +279,7 @@ instance Binary MsgStmUniqueIdReq where
 
 $(deriveSBP 'msgStmUniqueIdReq ''MsgStmUniqueIdReq)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmUniqueIdReq_" . stripPrefix "_msgStmUniqueIdReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmUniqueIdReq_" . P.stripPrefix "_msgStmUniqueIdReq_"}
              ''MsgStmUniqueIdReq)
 $(makeLenses ''MsgStmUniqueIdReq)
 
@@ -306,7 +306,7 @@ instance Binary MsgStmUniqueIdResp where
 
 $(deriveSBP 'msgStmUniqueIdResp ''MsgStmUniqueIdResp)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmUniqueIdResp_" . stripPrefix "_msgStmUniqueIdResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmUniqueIdResp_" . P.stripPrefix "_msgStmUniqueIdResp_"}
              ''MsgStmUniqueIdResp)
 $(makeLenses ''MsgStmUniqueIdResp)
 
@@ -332,6 +332,6 @@ instance Binary MsgM25FlashWriteStatus where
 
 $(deriveSBP 'msgM25FlashWriteStatus ''MsgM25FlashWriteStatus)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgM25FlashWriteStatus_" . stripPrefix "_msgM25FlashWriteStatus_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgM25FlashWriteStatus_" . P.stripPrefix "_msgM25FlashWriteStatus_"}
              ''MsgM25FlashWriteStatus)
 $(makeLenses ''MsgM25FlashWriteStatus)

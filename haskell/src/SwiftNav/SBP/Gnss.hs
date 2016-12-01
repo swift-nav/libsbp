@@ -11,7 +11,7 @@
 
 module SwiftNav.SBP.Gnss where
 
-import BasicPrelude
+import BasicPrelude as P
 import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
@@ -48,7 +48,7 @@ instance Binary GnssSignal16 where
   put GnssSignal16 {..} = do
     putWord8 _gnssSignal16_sat
     putWord8 _gnssSignal16_code
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gnssSignal16_" . stripPrefix "_gnssSignal16_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gnssSignal16_" . P.stripPrefix "_gnssSignal16_"}
              ''GnssSignal16)
 $(makeLenses ''GnssSignal16)
 
@@ -75,7 +75,7 @@ instance Binary GnssSignal where
     putWord16le _gnssSignal_sat
     putWord8 _gnssSignal_code
     putWord8 _gnssSignal_reserved
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gnssSignal_" . stripPrefix "_gnssSignal_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gnssSignal_" . P.stripPrefix "_gnssSignal_"}
              ''GnssSignal)
 $(makeLenses ''GnssSignal)
 
@@ -99,7 +99,7 @@ instance Binary GpsTime where
   put GpsTime {..} = do
     putWord32le _gpsTime_tow
     putWord16le _gpsTime_wn
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gpsTime_" . stripPrefix "_gpsTime_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gpsTime_" . P.stripPrefix "_gpsTime_"}
              ''GpsTime)
 $(makeLenses ''GpsTime)
 
@@ -131,7 +131,7 @@ instance Binary GpsTimeNano where
     putWord32le _gpsTimeNano_tow
     putWord32le $ fromIntegral _gpsTimeNano_ns
     putWord16le _gpsTimeNano_wn
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gpsTimeNano_" . stripPrefix "_gpsTimeNano_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gpsTimeNano_" . P.stripPrefix "_gpsTimeNano_"}
              ''GpsTimeNano)
 $(makeLenses ''GpsTimeNano)
 
@@ -156,6 +156,6 @@ instance Binary CarrierPhase where
   put CarrierPhase {..} = do
     putWord32le $ fromIntegral _carrierPhase_i
     putWord8 _carrierPhase_f
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_carrierPhase_" . stripPrefix "_carrierPhase_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_carrierPhase_" . P.stripPrefix "_carrierPhase_"}
              ''CarrierPhase)
 $(makeLenses ''CarrierPhase)

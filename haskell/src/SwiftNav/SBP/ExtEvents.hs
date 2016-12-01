@@ -12,7 +12,7 @@
 
 module SwiftNav.SBP.ExtEvents where
 
-import BasicPrelude
+import BasicPrelude as P
 import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
@@ -67,6 +67,6 @@ instance Binary MsgExtEvent where
 
 $(deriveSBP 'msgExtEvent ''MsgExtEvent)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgExtEvent_" . stripPrefix "_msgExtEvent_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgExtEvent_" . P.stripPrefix "_msgExtEvent_"}
              ''MsgExtEvent)
 $(makeLenses ''MsgExtEvent)

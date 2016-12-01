@@ -15,7 +15,7 @@
 
 module SwiftNav.SBP.Settings where
 
-import BasicPrelude
+import BasicPrelude as P
 import Control.Lens
 import Control.Monad.Loops
 import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
@@ -50,7 +50,7 @@ instance Binary MsgSettingsSave where
 
 $(deriveSBP 'msgSettingsSave ''MsgSettingsSave)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsSave_" . stripPrefix "_msgSettingsSave_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsSave_" . P.stripPrefix "_msgSettingsSave_"}
              ''MsgSettingsSave)
 $(makeLenses ''MsgSettingsSave)
 
@@ -77,7 +77,7 @@ instance Binary MsgSettingsWrite where
 
 $(deriveSBP 'msgSettingsWrite ''MsgSettingsWrite)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsWrite_" . stripPrefix "_msgSettingsWrite_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsWrite_" . P.stripPrefix "_msgSettingsWrite_"}
              ''MsgSettingsWrite)
 $(makeLenses ''MsgSettingsWrite)
 
@@ -104,7 +104,7 @@ instance Binary MsgSettingsReadReq where
 
 $(deriveSBP 'msgSettingsReadReq ''MsgSettingsReadReq)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadReq_" . stripPrefix "_msgSettingsReadReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadReq_" . P.stripPrefix "_msgSettingsReadReq_"}
              ''MsgSettingsReadReq)
 $(makeLenses ''MsgSettingsReadReq)
 
@@ -130,7 +130,7 @@ instance Binary MsgSettingsReadResp where
 
 $(deriveSBP 'msgSettingsReadResp ''MsgSettingsReadResp)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadResp_" . stripPrefix "_msgSettingsReadResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadResp_" . P.stripPrefix "_msgSettingsReadResp_"}
              ''MsgSettingsReadResp)
 $(makeLenses ''MsgSettingsReadResp)
 
@@ -159,7 +159,7 @@ instance Binary MsgSettingsReadByIndexReq where
 
 $(deriveSBP 'msgSettingsReadByIndexReq ''MsgSettingsReadByIndexReq)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadByIndexReq_" . stripPrefix "_msgSettingsReadByIndexReq_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadByIndexReq_" . P.stripPrefix "_msgSettingsReadByIndexReq_"}
              ''MsgSettingsReadByIndexReq)
 $(makeLenses ''MsgSettingsReadByIndexReq)
 
@@ -192,7 +192,7 @@ instance Binary MsgSettingsReadByIndexResp where
 
 $(deriveSBP 'msgSettingsReadByIndexResp ''MsgSettingsReadByIndexResp)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadByIndexResp_" . stripPrefix "_msgSettingsReadByIndexResp_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadByIndexResp_" . P.stripPrefix "_msgSettingsReadByIndexResp_"}
              ''MsgSettingsReadByIndexResp)
 $(makeLenses ''MsgSettingsReadByIndexResp)
 
@@ -214,7 +214,7 @@ instance Binary MsgSettingsReadByIndexDone where
 
 $(deriveSBP 'msgSettingsReadByIndexDone ''MsgSettingsReadByIndexDone)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadByIndexDone_" . stripPrefix "_msgSettingsReadByIndexDone_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsReadByIndexDone_" . P.stripPrefix "_msgSettingsReadByIndexDone_"}
              ''MsgSettingsReadByIndexDone)
 $(makeLenses ''MsgSettingsReadByIndexDone)
 
@@ -242,6 +242,6 @@ instance Binary MsgSettingsRegister where
 
 $(deriveSBP 'msgSettingsRegister ''MsgSettingsRegister)
 
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsRegister_" . stripPrefix "_msgSettingsRegister_"}
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSettingsRegister_" . P.stripPrefix "_msgSettingsRegister_"}
              ''MsgSettingsRegister)
 $(makeLenses ''MsgSettingsRegister)
