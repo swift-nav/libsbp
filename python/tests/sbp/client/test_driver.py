@@ -67,11 +67,11 @@ def test_http_test_pass():
   register_uri(GET,
                BASE_STATION_URI,
                msg.to_binary(),
-               content_type="application/vnd.swiftnav.broker.v1+sbp")
+               content_type="application/vnd.swiftnav.broker.v1+sbp2")
   register_uri(PUT,
                BASE_STATION_URI,
                '',
-               content_type="application/vnd.swiftnav.broker.v1+sbp")
+               content_type="application/vnd.swiftnav.broker.v1+sbp2")
   with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
     assert not driver.read_ok
     assert driver.connect_read()
@@ -102,12 +102,12 @@ def test_http_test_fail():
   register_uri(GET,
                BASE_STATION_URI,
                msg.to_binary(),
-               content_type="application/vnd.swiftnav.broker.v1+sbp",
+               content_type="application/vnd.swiftnav.broker.v1+sbp2",
                status=400)
   register_uri(PUT,
                BASE_STATION_URI,
                '',
-               content_type="application/vnd.swiftnav.broker.v1+sbp",
+               content_type="application/vnd.swiftnav.broker.v1+sbp2",
                status=400)
   with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
     assert not driver.connect_read()
@@ -129,12 +129,12 @@ def test_http_test_pass_streaming():
   register_uri(GET,
                BASE_STATION_URI,
                mock_streaming_msgs([m.to_binary() for m in msgs]),
-               content_type="application/vnd.swiftnav.broker.v1+sbp",
+               content_type="application/vnd.swiftnav.broker.v1+sbp2",
                streaming=True)
   register_uri(PUT,
                BASE_STATION_URI,
                body='',
-               content_type="application/vnd.swiftnav.broker.v1+sbp",
+               content_type="application/vnd.swiftnav.broker.v1+sbp2",
                streaming=True)
   with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
     assert driver.connect_read()
@@ -153,16 +153,16 @@ def test_http_test_pass_retry():
   msg = MsgPrintDep(text='abcd')
   get_responses = [Response(body="first response",
                             status=500,
-                            content_type="application/vnd.swiftnav.broker.v1+sbp"),
+                            content_type="application/vnd.swiftnav.broker.v1+sbp2"),
                    Response(body='second and last response',
                             status=200,
-                            content_type="application/vnd.swiftnav.broker.v1+sbp")]
+                            content_type="application/vnd.swiftnav.broker.v1+sbp2")]
   post_responses = [Response(body="",
                              status=500,
-                             content_type="application/vnd.swiftnav.broker.v1+sbp"),
+                             content_type="application/vnd.swiftnav.broker.v1+sbp2"),
                     Response(body='',
                              status=200,
-                             content_type="application/vnd.swiftnav.broker.v1+sbp")]
+                             content_type="application/vnd.swiftnav.broker.v1+sbp2")]
   register_uri(GET, BASE_STATION_URI, get_responses)
   register_uri(PUT, BASE_STATION_URI, post_responses)
   with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:

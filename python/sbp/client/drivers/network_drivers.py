@@ -96,7 +96,7 @@ MAX_READ_RETRIES = 10
 DEFAULT_RETRIES = (MAX_CONNECT_RETRIES, MAX_READ_RETRIES)
 MAX_REDIRECTS = 0
 DEFAULT_BACKOFF_FACTOR = 0.2
-BROKER_SBP_TYPE = 'application/vnd.swiftnav.broker.v1+sbp'
+BROKER_SBP_TYPE = 'application/vnd.swiftnav.broker.v1+sbp2'
 
 class HTTPDriver(BaseDriver):
   """HTTPDriver
