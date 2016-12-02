@@ -27,13 +27,6 @@ class GnssSignal16(object):
   """GnssSignal16.
   
   Signal identifier containing constellation, band, and satellite identifier
-       - 0 GPS L1CA
-       - 1 GPS L2CM
-       - 2 SBAS L1CA
-       - 3 GLO L1CA
-       - 4 GLO L2CA
-       - 5 GPS L1P
-       - 6 GPS L2P
 
   
   Parameters
@@ -163,11 +156,9 @@ transition.
 class GPSTimeNano(object):
   """GPSTimeNano.
   
-  A wire-appropriate GPS time, defined as the number of
-milliseconds since beginning of the week on the Saturday/Sunday
-A wire-appropriate receiver clock time, defined as the time
+  A wire-appropriate receiver clock time, defined as the time
 since the beginning of the week on the Saturday/Sunday
-transition. In most cases, observations are epoch aligned 
+transition. In most cases, observations are epoch aligned
 so ns field will be 0.
 
   
@@ -218,7 +209,7 @@ class CarrierPhase(object):
   
   Carrier phase measurement in cycles represented as a 40-bit
 fixed point number with Q32.8 layout, i.e. 32-bits of whole
-cycles and 8-bits of fractional cycles.  This phase has the
+cycles and 8-bits of fractional cycles. This phase has the
 same sign as the pseudorange.
 
   

@@ -36,7 +36,7 @@ definitions:
      desc: |
        Doppler measurement in Hz represented as a 24-bit
        fixed point number with Q16.8 layout, i.e. 16-bits of whole
-       doppler and 8-bits of fractional doppler.  This doppler is defined
+       doppler and 8-bits of fractional doppler. This doppler is defined
        as positive for approaching satellites.
      fields:
          - i:
@@ -47,14 +47,14 @@ definitions:
              type: u8
              units: Hz / 256
              desc: Doppler fractional part
- 
+
  - PackedObsContent:
     short_desc: GNSS observations for a particular satellite signal.
     desc: |
       Pseudorange and carrier phase observation for a satellite being
       tracked. The observations are interoperable with 3rd party
-      receivers and conform with typical RTCMv3 GNSS observations.  
-      
+      receivers and conform with typical RTCMv3 GNSS observations.
+
     fields:
         - P:
             type: u32
@@ -77,9 +77,9 @@ definitions:
             desc: |
               Lock timer. This value gives an indication of the time
               for which a signal has maintained continuous phase lock.
-              Whenever a signal has lost and regained lock, this 
+              Whenever a signal has lost and regained lock, this
               value is reset to zero. It is encoded according to DF402 from
-              the RTCM 10403.2 Amendment 2 specification.  Valid values range 
+              the RTCM 10403.2 Amendment 2 specification.  Valid values range
               from 0 to 15 and the most significant nibble is reserved for future use.
         - flags:
             type: u8
@@ -91,25 +91,25 @@ definitions:
               - 4-7:
                   desc: Reserved
               - 3:
-                  desc: Measured Doppler Valid
+                  desc: Doppler valid
                   values:
-                      - 0: Measured Doppler Invalid
-                      - 1: Measured Doppler Valid
+                      - 0: Invalid doppler measurement
+                      - 1: Valid doppler measurement
               - 2:
                   desc: Half-cycle ambiguity
                   values:
                       - 0: Half cycle phase ambiguity unresolved
                       - 1: Half cycle phase ambiguity resolved
               - 1:
-                  desc: Carrier valid
+                  desc: Carrier phase valid
                   values:
                       - 0: Invalid carrier phase measurement
                       - 1: Valid carrier phase measurement
               - 0:
                   desc: Pseudorange valid
                   values:
-                      - 0: Pseudorange invalid
-                      - 1: Valid pseudorange and coarse TOW decoded
+                      - 0: Invalid pseudorange measurement
+                      - 1: Valid pseudorange measurement and coarse TOW decoded
         - sid:
             type: GnssSignal16
             desc: GNSS signal identifier (16 bit)
@@ -122,19 +122,9 @@ definitions:
       carrier phase observations for the satellites being tracked by
       the device. Carrier phase observation here is represented as a
       40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-      whole cycles and 8-bits of fractional cycles).  The observations
+      whole cycles and 8-bits of fractional cycles). The observations
       are be interoperable with 3rd party receivers and conform
-      with typical RTCMv3 GNSS observations.  
-      
-      The lock field represents the range of time for 
-      which a particular signal has maintained carrier phase lock. 
-      The minimum and maximum possible lock times 
-      for each value of the field can be described by the following piecewise function.  
-      Given the lock value, l, the minimum lock time is given by 2 ^ (l + 4) ms and the 
-      maximum lock time is given by 2 ^ (l + 5) ms provided n is not 0.  
-      If n is 0 the lower range is given to be 0 ms. Conversely, given a lock time 
-      (t) in milliseconds, the field value is given by floor(log_2(t) - 4) 
-      when t is greater than 32 ms or 0 if (t) is less than 32 ms.
+      with typical RTCMv3 GNSS observations.
     fields:
         - header:
             type: ObservationHeader
@@ -1027,7 +1017,7 @@ definitions:
       carrier phase observations for the satellites being tracked by
       the device. Carrier phase observation here is represented as a
       40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-      whole cycles and 8-bits of fractional cycles).  The observations
+      whole cycles and 8-bits of fractional cycles). The observations
       are interoperable with 3rd party receivers and conform
       with typical RTCMv3 GNSS observations.
     public: False

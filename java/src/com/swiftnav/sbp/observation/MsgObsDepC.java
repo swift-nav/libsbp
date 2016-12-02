@@ -32,7 +32,7 @@ import org.json.JSONArray;
  * carrier phase observations for the satellites being tracked by
  * the device. Carrier phase observation here is represented as a
  * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
- * whole cycles and 8-bits of fractional cycles).  The observations
+ * whole cycles and 8-bits of fractional cycles). The observations
  * are interoperable with 3rd party receivers and conform
  * with typical RTCMv3 GNSS observations. */
 

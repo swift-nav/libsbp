@@ -56,7 +56,7 @@ $(makeLenses ''ObservationHeader)
 --
 -- Doppler measurement in Hz represented as a 24-bit fixed point number with
 -- Q16.8 layout, i.e. 16-bits of whole doppler and 8-bits of fractional
--- doppler.  This doppler is defined as positive for approaching satellites.
+-- doppler. This doppler is defined as positive for approaching satellites.
 data Doppler = Doppler
   { _doppler_i :: Int16
     -- ^ Doppler whole Hz
@@ -94,9 +94,9 @@ data PackedObsContent = PackedObsContent
   , _packedObsContent_lock :: Word8
     -- ^ Lock timer. This value gives an indication of the time for which a
     -- signal has maintained continuous phase lock. Whenever a signal has lost
-    -- and regained lock, this  value is reset to zero. It is encoded according
+    -- and regained lock, this value is reset to zero. It is encoded according
     -- to DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values
-    -- range  from 0 to 15 and the most significant nibble is reserved for
+    -- range from 0 to 15 and the most significant nibble is reserved for
     -- future use.
   , _packedObsContent_flags :: Word8
     -- ^ Measurement status flags. A bit field of flags providing the status of
@@ -139,15 +139,7 @@ msgObs = 0x004A
 -- phase observation here is represented as a 40-bit fixed point number with
 -- Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).
 -- The observations are be interoperable with 3rd party receivers and conform
--- with typical RTCMv3 GNSS observations.    The lock field represents the
--- range of time for  which a particular signal has maintained carrier phase
--- lock.  The minimum and maximum possible lock times  for each value of the
--- field can be described by the following piecewise function.   Given the lock
--- value, l, the minimum lock time is given by 2 ^ (l + 4) ms and the  maximum
--- lock time is given by 2 ^ (l + 5) ms provided n is not 0.   If n is 0 the
--- lower range is given to be 0 ms. Conversely, given a lock time  (t) in
--- milliseconds, the field value is given by floor(log_2(t) - 4)  when t is
--- greater than 32 ms or 0 if (t) is less than 32 ms.
+-- with typical RTCMv3 GNSS observations.
 data MsgObs = MsgObs
   { _msgObs_header :: ObservationHeader
     -- ^ Header of a GPS observation message
