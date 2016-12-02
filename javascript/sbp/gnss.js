@@ -27,8 +27,6 @@ var UInt64 = require('cuint').UINT64;
  * SBP class for message fragment GnssSignal16
  *
  * Signal identifier containing constellation, band, and satellite identifier
- * - 0 GPS L1CA        - 1 GPS L2CM        - 2 SBAS L1CA        - 3 GLO L1CA
- * - 4 GLO L2CA        - 5 GPS L1P        - 6 GPS L2P
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sat number (unsigned 8-bit int, 1 byte) Constellation-specific satellite identifier
@@ -119,11 +117,9 @@ GPSTime.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 /**
  * SBP class for message fragment GPSTimeNano
  *
- * A wire-appropriate GPS time, defined as the number of milliseconds since
- * beginning of the week on the Saturday/Sunday A wire-appropriate receiver clock
- * time, defined as the time since the beginning of the week on the Saturday/Sunday
- * transition. In most cases, observations are epoch aligned  so ns field will be
- * 0.
+ * A wire-appropriate receiver clock time, defined as the time since the beginning
+ * of the week on the Saturday/Sunday transition. In most cases, observations are
+ * epoch aligned so ns field will be 0.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) Milliseconds since start of GPS week

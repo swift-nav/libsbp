@@ -32,19 +32,9 @@ import org.json.JSONArray;
  * carrier phase observations for the satellites being tracked by
  * the device. Carrier phase observation here is represented as a
  * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
- * whole cycles and 8-bits of fractional cycles).  The observations
+ * whole cycles and 8-bits of fractional cycles). The observations
  * are be interoperable with 3rd party receivers and conform
- * with typical RTCMv3 GNSS observations.  
- * 
- * The lock field represents the range of time for 
- * which a particular signal has maintained carrier phase lock. 
- * The minimum and maximum possible lock times 
- * for each value of the field can be described by the following piecewise function.  
- * Given the lock value, l, the minimum lock time is given by 2 ^ (l + 4) ms and the 
- * maximum lock time is given by 2 ^ (l + 5) ms provided n is not 0.  
- * If n is 0 the lower range is given to be 0 ms. Conversely, given a lock time 
- * (t) in milliseconds, the field value is given by floor(log_2(t) - 4) 
- * when t is greater than 32 ms or 0 if (t) is less than 32 ms. */
+ * with typical RTCMv3 GNSS observations. */
 
 public class MsgObs extends SBPMessage {
     public static final int TYPE = 0x004A;

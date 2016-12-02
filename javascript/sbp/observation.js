@@ -62,7 +62,7 @@ ObservationHeader.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
  * SBP class for message fragment Doppler
  *
  * Doppler measurement in Hz represented as a 24-bit fixed point number with Q16.8
- * layout, i.e. 16-bits of whole doppler and 8-bits of fractional doppler.  This
+ * layout, i.e. 16-bits of whole doppler and 8-bits of fractional doppler. This
  * doppler is defined as positive for approaching satellites.
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -103,9 +103,9 @@ Doppler.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
  * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density.  Zero implies invalid cn0.
  * @field lock number (unsigned 8-bit int, 1 byte) Lock timer. This value gives an indication of the time for which a signal has
  *   maintained continuous phase lock. Whenever a signal has lost and regained lock,
- *   this  value is reset to zero. It is encoded according to DF402 from the RTCM
- *   10403.2 Amendment 2 specification.  Valid values range  from 0 to 15 and the
- *   most significant nibble is reserved for future use.
+ *   this value is reset to zero. It is encoded according to DF402 from the RTCM
+ *   10403.2 Amendment 2 specification.  Valid values range from 0 to 15 and the most
+ *   significant nibble is reserved for future use.
  * @field flags number (unsigned 8-bit int, 1 byte) Measurement status flags. A bit field of flags providing the status of this
  *   observation.  If this field is 0 it means only the Cn0 estimate for the signal
  *   is valid.
@@ -147,17 +147,9 @@ PackedObsContent.prototype.fieldSpec.push(['sid', GnssSignal16.prototype.fieldSp
  * The GPS observations message reports all the raw pseudorange and carrier phase
  * observations for the satellites being tracked by the device. Carrier phase
  * observation here is represented as a 40-bit fixed point number with Q32.8 layout
- * (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).  The
- * observations are be interoperable with 3rd party receivers and conform with
- * typical RTCMv3 GNSS observations.    The lock field represents the range of time
- * for  which a particular signal has maintained carrier phase lock.  The minimum
- * and maximum possible lock times  for each value of the field can be described by
- * the following piecewise function.   Given the lock value, l, the minimum lock
- * time is given by 2 ^ (l + 4) ms and the  maximum lock time is given by 2 ^ (l +
- * 5) ms provided n is not 0.   If n is 0 the lower range is given to be 0 ms.
- * Conversely, given a lock time  (t) in milliseconds, the field value is given by
- * floor(log_2(t) - 4)  when t is greater than 32 ms or 0 if (t) is less than 32
- * ms.
+ * (i.e. 32-bits of whole cycles and 8-bits of fractional cycles). The observations
+ * are be interoperable with 3rd party receivers and conform with typical RTCMv3
+ * GNSS observations.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header ObservationHeader Header of a GPS observation message
@@ -1166,9 +1158,9 @@ MsgObsDepB.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepB.protot
  * The GPS observations message reports all the raw pseudorange and carrier phase
  * observations for the satellites being tracked by the device. Carrier phase
  * observation here is represented as a 40-bit fixed point number with Q32.8 layout
- * (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).  The
- * observations are interoperable with 3rd party receivers and conform with typical
- * RTCMv3 GNSS observations.
+ * (i.e. 32-bits of whole cycles and 8-bits of fractional cycles). The observations
+ * are interoperable with 3rd party receivers and conform with typical RTCMv3 GNSS
+ * observations.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header ObservationHeaderDep Header of a GPS observation message
