@@ -17,6 +17,7 @@ module SwiftNav.SBP
   , module SwiftNav.SBP.FileIo
   , module SwiftNav.SBP.Flash
   , module SwiftNav.SBP.Gnss
+  , module SwiftNav.SBP.Imu
   , module SwiftNav.SBP.Logging
   , module SwiftNav.SBP.Navigation
   , module SwiftNav.SBP.Observation
@@ -38,6 +39,7 @@ import SwiftNav.SBP.ExtEvents
 import SwiftNav.SBP.FileIo
 import SwiftNav.SBP.Flash
 import SwiftNav.SBP.Gnss
+import SwiftNav.SBP.Imu
 import SwiftNav.SBP.Logging
 import SwiftNav.SBP.Navigation
 import SwiftNav.SBP.Observation
@@ -106,6 +108,7 @@ data SBPMsg =
    | SBPMsgGroupDelay MsgGroupDelay Msg
    | SBPMsgHeartbeat MsgHeartbeat Msg
    | SBPMsgIarState MsgIarState Msg
+   | SBPMsgImuRaw MsgImuRaw Msg
    | SBPMsgInitBase MsgInitBase Msg
    | SBPMsgIono MsgIono Msg
    | SBPMsgLog MsgLog Msg
@@ -218,6 +221,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgGroupDelay = SBPMsgGroupDelay (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgHeartbeat = SBPMsgHeartbeat (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgIarState = SBPMsgIarState (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgImuRaw = SBPMsgImuRaw (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgInitBase = SBPMsgInitBase (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgIono = SBPMsgIono (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgLog = SBPMsgLog (decode (fromStrict _msgSBPPayload)) m
@@ -322,6 +326,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgGroupDelay _ m) = put m
       encode' (SBPMsgHeartbeat _ m) = put m
       encode' (SBPMsgIarState _ m) = put m
+      encode' (SBPMsgImuRaw _ m) = put m
       encode' (SBPMsgInitBase _ m) = put m
       encode' (SBPMsgIono _ m) = put m
       encode' (SBPMsgLog _ m) = put m
@@ -429,6 +434,7 @@ instance FromJSON SBPMsg where
         | msgType == msgGroupDelay = SBPMsgGroupDelay <$> parseJSON obj <*> parseJSON obj
         | msgType == msgHeartbeat = SBPMsgHeartbeat <$> parseJSON obj <*> parseJSON obj
         | msgType == msgIarState = SBPMsgIarState <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgImuRaw = SBPMsgImuRaw <$> parseJSON obj <*> parseJSON obj
         | msgType == msgInitBase = SBPMsgInitBase <$> parseJSON obj <*> parseJSON obj
         | msgType == msgIono = SBPMsgIono <$> parseJSON obj <*> parseJSON obj
         | msgType == msgLog = SBPMsgLog <$> parseJSON obj <*> parseJSON obj
@@ -538,6 +544,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgGroupDelay n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgHeartbeat n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgIarState n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgImuRaw n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgInitBase n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgIono n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgLog n m) = toJSON n `mergeValues` toJSON m
@@ -641,6 +648,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgGroupDelay n m) = SBPMsgGroupDelay n <$> f m
   msg f (SBPMsgHeartbeat n m) = SBPMsgHeartbeat n <$> f m
   msg f (SBPMsgIarState n m) = SBPMsgIarState n <$> f m
+  msg f (SBPMsgImuRaw n m) = SBPMsgImuRaw n <$> f m
   msg f (SBPMsgInitBase n m) = SBPMsgInitBase n <$> f m
   msg f (SBPMsgIono n m) = SBPMsgIono n <$> f m
   msg f (SBPMsgLog n m) = SBPMsgLog n <$> f m

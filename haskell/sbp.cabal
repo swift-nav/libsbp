@@ -31,6 +31,7 @@ library
                      , SwiftNav.SBP.FileIo
                      , SwiftNav.SBP.Flash
                      , SwiftNav.SBP.Gnss
+                     , SwiftNav.SBP.Imu
                      , SwiftNav.SBP.Logging
                      , SwiftNav.SBP.Navigation
                      , SwiftNav.SBP.Observation
