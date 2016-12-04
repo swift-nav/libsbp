@@ -1,0 +1,55 @@
+# Copyright (C) 2016 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.imu
+description: Inertial Measurement Unit (IMU) messages.
+stable: False
+public: True
+include:
+  - types.yaml
+definitions:
+
+ - MSG_IMU_RAW:
+    id: 0x0900
+    short_desc: Raw IMU data
+    desc: |
+      Raw data from the Inertial Measurement Unit, containing accelerometer and
+      gyroscope readings.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: |
+              Milliseconds since start of GPS week. If the high bit is set, the
+              time is unknown or invalid.
+        - tow_f:
+            type: u8
+            units: ms / 256
+            desc: |
+              Milliseconds since start of GPS week, fractional part
+        - acc_x:
+            type: s16
+            desc: Acceleration in the body frame X axis
+        - acc_y:
+            type: s16
+            desc: Acceleration in the body frame Y axis
+        - acc_z:
+            type: s16
+            desc: Acceleration in the body frame Z axis
+        - gyr_x:
+            type: s16
+            desc: Angular rate around the body frame X axis
+        - gyr_y:
+            type: s16
+            desc: Angular rate around the body frame Y axis
+        - gyr_z:
+            type: s16
+            desc: Angular rate around the body frame Z axis
+
