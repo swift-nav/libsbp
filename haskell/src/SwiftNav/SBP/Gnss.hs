@@ -55,7 +55,9 @@ $(makeLenses ''GnssSignal16)
 -- Signal identifier containing constellation, band, and satellite identifier
 data GnssSignal = GnssSignal
   { _gnssSignal_sat    :: Word16
-    -- ^ Constellation-specific satellite identifier
+    -- ^ Constellation-specific satellite identifier.  Note: unlike GnssSignal16,
+    -- GPS satellites are encoded as (PRN - 1). Other constellations do not
+    -- have this offset.
   , _gnssSignal_code   :: Word8
     -- ^ Signal constellation, band and code
   , _gnssSignal_reserved :: Word8

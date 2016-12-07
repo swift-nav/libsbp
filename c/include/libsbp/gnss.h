@@ -41,7 +41,11 @@ typedef struct __attribute__((packed)) {
  * Signal identifier containing constellation, band, and satellite identifier
  */
 typedef struct __attribute__((packed)) {
-  u16 sat;         /**< Constellation-specific satellite identifier */
+  u16 sat;         /**< Constellation-specific satellite identifier.
+
+Note: unlike GnssSignal16, GPS satellites are encoded as
+(PRN - 1). Other constellations do not have this offset.
+ */
   u8 code;        /**< Signal constellation, band and code */
   u8 reserved;    /**< Reserved */
 } sbp_gnss_signal_t;
