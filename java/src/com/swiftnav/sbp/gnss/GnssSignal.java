@@ -23,7 +23,11 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class GnssSignal extends SBPStruct {
     
-    /** Constellation-specific satellite identifier */
+    /** Constellation-specific satellite identifier.
+
+Note: unlike GnssSignal16, GPS satellites are encoded as
+(PRN - 1). Other constellations do not have this offset.
+ */
     public int sat;
     
     /** Signal constellation, band and code */

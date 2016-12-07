@@ -73,7 +73,11 @@ class GnssSignal(object):
   Parameters
   ----------
   sat : int
-    Constellation-specific satellite identifier
+    Constellation-specific satellite identifier.
+
+Note: unlike GnssSignal16, GPS satellites are encoded as
+(PRN - 1). Other constellations do not have this offset.
+
   code : int
     Signal constellation, band and code
   reserved : int

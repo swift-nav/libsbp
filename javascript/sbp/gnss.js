@@ -58,7 +58,9 @@ GnssSignal16.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
  * Signal identifier containing constellation, band, and satellite identifier
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field sat number (unsigned 16-bit int, 2 bytes) Constellation-specific satellite identifier
+ * @field sat number (unsigned 16-bit int, 2 bytes) Constellation-specific satellite identifier.  Note: unlike GnssSignal16, GPS
+ *   satellites are encoded as (PRN - 1). Other constellations do not have this
+ *   offset.
  * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
  * @field reserved number (unsigned 8-bit int, 1 byte) Reserved
  *
