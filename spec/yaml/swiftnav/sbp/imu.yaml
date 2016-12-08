@@ -53,3 +53,42 @@ definitions:
             type: s16
             desc: Angular rate around the body frame Z axis
 
+ - MSG_IMU_AUX:
+    id: 0x0901
+    short_desc: Auxiliary IMU data
+    desc: |
+      Auxiliary data specific to a particular IMU. The `imu_type` field will
+      always be consistent but the rest of the payload is device specific and
+      depends on the value of `imu_type`.
+    fields:
+        - imu_type:
+            type: u8
+            desc: IMU type
+            fields:
+              - 0-7:
+                  desc: IMU Type
+                  values:
+                      - 0: Bosch BMI160
+        - temp:
+            type: s16
+            desc: Raw IMU temperature
+        - imu_conf:
+            type: u8
+            desc: IMU configuration
+            fields:
+              - 4-7:
+                  desc: Gyroscope Range
+                  values:
+                      - 0: +/- 2000 deg / s
+                      - 1: +/- 1000 deg / s
+                      - 2: +/- 500 deg / s
+                      - 3: +/- 250 deg / s
+                      - 4: +/- 125 deg / s
+              - 0-3:
+                  desc: Accelerometer Range
+                  values:
+                      - 0: +/- 2g
+                      - 1: +/- 4g
+                      - 2: +/- 8g
+                      - 3: +/- 16g
+
