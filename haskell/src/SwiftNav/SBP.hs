@@ -108,6 +108,7 @@ data SBPMsg =
    | SBPMsgGroupDelay MsgGroupDelay Msg
    | SBPMsgHeartbeat MsgHeartbeat Msg
    | SBPMsgIarState MsgIarState Msg
+   | SBPMsgImuAux MsgImuAux Msg
    | SBPMsgImuRaw MsgImuRaw Msg
    | SBPMsgInitBase MsgInitBase Msg
    | SBPMsgIono MsgIono Msg
@@ -221,6 +222,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgGroupDelay = SBPMsgGroupDelay (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgHeartbeat = SBPMsgHeartbeat (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgIarState = SBPMsgIarState (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgImuAux = SBPMsgImuAux (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgImuRaw = SBPMsgImuRaw (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgInitBase = SBPMsgInitBase (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgIono = SBPMsgIono (decode (fromStrict _msgSBPPayload)) m
@@ -326,6 +328,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgGroupDelay _ m) = put m
       encode' (SBPMsgHeartbeat _ m) = put m
       encode' (SBPMsgIarState _ m) = put m
+      encode' (SBPMsgImuAux _ m) = put m
       encode' (SBPMsgImuRaw _ m) = put m
       encode' (SBPMsgInitBase _ m) = put m
       encode' (SBPMsgIono _ m) = put m
@@ -434,6 +437,7 @@ instance FromJSON SBPMsg where
         | msgType == msgGroupDelay = SBPMsgGroupDelay <$> parseJSON obj <*> parseJSON obj
         | msgType == msgHeartbeat = SBPMsgHeartbeat <$> parseJSON obj <*> parseJSON obj
         | msgType == msgIarState = SBPMsgIarState <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgImuAux = SBPMsgImuAux <$> parseJSON obj <*> parseJSON obj
         | msgType == msgImuRaw = SBPMsgImuRaw <$> parseJSON obj <*> parseJSON obj
         | msgType == msgInitBase = SBPMsgInitBase <$> parseJSON obj <*> parseJSON obj
         | msgType == msgIono = SBPMsgIono <$> parseJSON obj <*> parseJSON obj
@@ -544,6 +548,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgGroupDelay n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgHeartbeat n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgIarState n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgImuAux n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgImuRaw n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgInitBase n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgIono n m) = toJSON n `mergeValues` toJSON m
@@ -648,6 +653,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgGroupDelay n m) = SBPMsgGroupDelay n <$> f m
   msg f (SBPMsgHeartbeat n m) = SBPMsgHeartbeat n <$> f m
   msg f (SBPMsgIarState n m) = SBPMsgIarState n <$> f m
+  msg f (SBPMsgImuAux n m) = SBPMsgImuAux n <$> f m
   msg f (SBPMsgImuRaw n m) = SBPMsgImuRaw n <$> f m
   msg f (SBPMsgInitBase n m) = SBPMsgInitBase n <$> f m
   msg f (SBPMsgIono n m) = SBPMsgIono n <$> f m

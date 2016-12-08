@@ -81,3 +81,38 @@ $(deriveSBP 'msgImuRaw ''MsgImuRaw)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgImuRaw_" . P.stripPrefix "_msgImuRaw_"}
              ''MsgImuRaw)
 $(makeLenses ''MsgImuRaw)
+
+msgImuAux :: Word16
+msgImuAux = 0x0901
+
+-- | SBP class for message MSG_IMU_AUX (0x0901).
+--
+-- Auxiliary data specific to a particular IMU. The `imu_type` field will
+-- always be consistent but the rest of the payload is device specific and
+-- depends on the value of `imu_type`.
+data MsgImuAux = MsgImuAux
+  { _msgImuAux_imu_type :: Word8
+    -- ^ IMU type
+  , _msgImuAux_temp   :: Int16
+    -- ^ Raw IMU temperature
+  , _msgImuAux_imu_conf :: Word8
+    -- ^ IMU configuration
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgImuAux where
+  get = do
+    _msgImuAux_imu_type <- getWord8
+    _msgImuAux_temp <- fromIntegral <$> getWord16le
+    _msgImuAux_imu_conf <- getWord8
+    return MsgImuAux {..}
+
+  put MsgImuAux {..} = do
+    putWord8 _msgImuAux_imu_type
+    putWord16le $ fromIntegral _msgImuAux_temp
+    putWord8 _msgImuAux_imu_conf
+
+$(deriveSBP 'msgImuAux ''MsgImuAux)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgImuAux_" . P.stripPrefix "_msgImuAux_"}
+             ''MsgImuAux)
+$(makeLenses ''MsgImuAux)

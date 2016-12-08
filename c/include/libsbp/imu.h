@@ -47,6 +47,20 @@ time is unknown or invalid.
 } msg_imu_raw_t;
 
 
+/** Auxiliary IMU data
+ *
+ * Auxiliary data specific to a particular IMU. The `imu_type` field will
+ * always be consistent but the rest of the payload is device specific and
+ * depends on the value of `imu_type`.
+ */
+#define SBP_MSG_IMU_AUX 0x0901
+typedef struct __attribute__((packed)) {
+  u8 imu_type;    /**< IMU type */
+  s16 temp;        /**< Raw IMU temperature */
+  u8 imu_conf;    /**< IMU configuration */
+} msg_imu_aux_t;
+
+
 /** \} */
 
 #endif /* LIBSBP_IMU_MESSAGES_H */

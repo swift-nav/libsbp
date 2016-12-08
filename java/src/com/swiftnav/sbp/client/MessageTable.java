@@ -51,6 +51,7 @@ import com.swiftnav.sbp.navigation.MsgVelECEFDepA;
 import com.swiftnav.sbp.navigation.MsgVelNEDDepA;
 import com.swiftnav.sbp.navigation.MsgBaselineHeadingDepA;
 import com.swiftnav.sbp.imu.MsgImuRaw;
+import com.swiftnav.sbp.imu.MsgImuAux;
 import com.swiftnav.sbp.system.MsgStartup;
 import com.swiftnav.sbp.system.MsgDgnssStatus;
 import com.swiftnav.sbp.system.MsgHeartbeat;
@@ -191,6 +192,8 @@ final class MessageTable {
                 return new MsgBaselineHeadingDepA(msg);
             case MsgImuRaw.TYPE:
                 return new MsgImuRaw(msg);
+            case MsgImuAux.TYPE:
+                return new MsgImuAux(msg);
             case MsgStartup.TYPE:
                 return new MsgStartup(msg);
             case MsgDgnssStatus.TYPE:

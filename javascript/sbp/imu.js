@@ -73,7 +73,44 @@ MsgImuRaw.prototype.fieldSpec.push(['gyr_x', 'writeInt16LE', 2]);
 MsgImuRaw.prototype.fieldSpec.push(['gyr_y', 'writeInt16LE', 2]);
 MsgImuRaw.prototype.fieldSpec.push(['gyr_z', 'writeInt16LE', 2]);
 
+/**
+ * SBP class for message MSG_IMU_AUX (0x0901).
+ *
+ * Auxiliary data specific to a particular IMU. The `imu_type` field will always be
+ * consistent but the rest of the payload is device specific and depends on the
+ * value of `imu_type`.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field imu_type number (unsigned 8-bit int, 1 byte) IMU type
+ * @field temp number (signed 16-bit int, 2 bytes) Raw IMU temperature
+ * @field imu_conf number (unsigned 8-bit int, 1 byte) IMU configuration
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgImuAux = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_IMU_AUX";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgImuAux.prototype = Object.create(SBP.prototype);
+MsgImuAux.prototype.messageType = "MSG_IMU_AUX";
+MsgImuAux.prototype.msg_type = 0x0901;
+MsgImuAux.prototype.constructor = MsgImuAux;
+MsgImuAux.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('imu_type')
+  .int16('temp')
+  .uint8('imu_conf');
+MsgImuAux.prototype.fieldSpec = [];
+MsgImuAux.prototype.fieldSpec.push(['imu_type', 'writeUInt8', 1]);
+MsgImuAux.prototype.fieldSpec.push(['temp', 'writeInt16LE', 2]);
+MsgImuAux.prototype.fieldSpec.push(['imu_conf', 'writeUInt8', 1]);
+
 module.exports = {
   0x0900: MsgImuRaw,
   MsgImuRaw: MsgImuRaw,
+  0x0901: MsgImuAux,
+  MsgImuAux: MsgImuAux,
 }
