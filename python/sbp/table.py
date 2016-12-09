@@ -28,6 +28,7 @@ from . import system as sys
 from . import tracking as trac
 from . import ext_events as ext_events
 from . import user as user
+from . import imu as imu
 import warnings
 
 _SBP_TABLE = dict(acq.msg_classes.items()
@@ -42,6 +43,7 @@ _SBP_TABLE = dict(acq.msg_classes.items()
                   + sys.msg_classes.items()
                   + trac.msg_classes.items()
                   + user.msg_classes.items()
+                  + imu.msg_classes.items()
                   + ext_events.msg_classes.items())
 
 class InvalidSBPMessageType(NotImplementedError):

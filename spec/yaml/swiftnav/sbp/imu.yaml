@@ -1,0 +1,94 @@
+# Copyright (C) 2016 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.imu
+description: Inertial Measurement Unit (IMU) messages.
+stable: False
+public: True
+include:
+  - types.yaml
+definitions:
+
+ - MSG_IMU_RAW:
+    id: 0x0900
+    short_desc: Raw IMU data
+    desc: |
+      Raw data from the Inertial Measurement Unit, containing accelerometer and
+      gyroscope readings.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: |
+              Milliseconds since start of GPS week. If the high bit is set, the
+              time is unknown or invalid.
+        - tow_f:
+            type: u8
+            units: ms / 256
+            desc: |
+              Milliseconds since start of GPS week, fractional part
+        - acc_x:
+            type: s16
+            desc: Acceleration in the body frame X axis
+        - acc_y:
+            type: s16
+            desc: Acceleration in the body frame Y axis
+        - acc_z:
+            type: s16
+            desc: Acceleration in the body frame Z axis
+        - gyr_x:
+            type: s16
+            desc: Angular rate around the body frame X axis
+        - gyr_y:
+            type: s16
+            desc: Angular rate around the body frame Y axis
+        - gyr_z:
+            type: s16
+            desc: Angular rate around the body frame Z axis
+
+ - MSG_IMU_AUX:
+    id: 0x0901
+    short_desc: Auxiliary IMU data
+    desc: |
+      Auxiliary data specific to a particular IMU. The `imu_type` field will
+      always be consistent but the rest of the payload is device specific and
+      depends on the value of `imu_type`.
+    fields:
+        - imu_type:
+            type: u8
+            desc: IMU type
+            fields:
+              - 0-7:
+                  desc: IMU Type
+                  values:
+                      - 0: Bosch BMI160
+        - temp:
+            type: s16
+            desc: Raw IMU temperature
+        - imu_conf:
+            type: u8
+            desc: IMU configuration
+            fields:
+              - 4-7:
+                  desc: Gyroscope Range
+                  values:
+                      - 0: +/- 2000 deg / s
+                      - 1: +/- 1000 deg / s
+                      - 2: +/- 500 deg / s
+                      - 3: +/- 250 deg / s
+                      - 4: +/- 125 deg / s
+              - 0-3:
+                  desc: Accelerometer Range
+                  values:
+                      - 0: +/- 2g
+                      - 1: +/- 4g
+                      - 2: +/- 8g
+                      - 3: +/- 16g
+
