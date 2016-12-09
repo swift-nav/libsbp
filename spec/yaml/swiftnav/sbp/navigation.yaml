@@ -175,7 +175,7 @@ definitions:
                   values:
                       - 0: Invalid
                       - 1: Single Point Position (SPP)
-                      - 2: Reserved
+                      - 2: Differential GNSS (DGNSS)
                       - 3: Float RTK
                       - 4: Fixed RTK
 
@@ -234,7 +234,7 @@ definitions:
                   values:
                       - 0: Invalid
                       - 1: Single Point Position (SPP)
-                      - 2: Reserved
+                      - 2: Differential GNSS (DGNSS)
                       - 3: Float RTK
                       - 4: Fixed RTK
 
@@ -298,7 +298,7 @@ definitions:
                   values:
                       - 0: Invalid
                       - 1: Single Point Position (SPP)
-                      - 2: Reserved
+                      - 2: Differential GNSS (DGNSS)
                       - 3: Float RTK
                       - 4: Fixed RTK
 
@@ -353,7 +353,7 @@ definitions:
                     values:
                         - 0: Invalid
                         - 1: Reserved
-                        - 2: Reserved
+                        - 2: Differential GNSS (DGNSS)
                         - 3: Float RTK
                         - 4: Fixed RTK
 
@@ -415,7 +415,7 @@ definitions:
                     values:
                         - 0: Invalid
                         - 1: Reserved
-                        - 2: Reserved
+                        - 2: Differential GNSS (DGNSS)
                         - 3: Float RTK
                         - 4: Fixed RTK
 
@@ -554,7 +554,7 @@ definitions:
                     values:
                         - 0: Invalid
                         - 1: Reserved
-                        - 2: Reserved
+                        - 2: Differential GNSS (DGNSS)
                         - 3: Float RTK
                         - 4: Fixed RTK
 
