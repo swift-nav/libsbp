@@ -175,7 +175,7 @@ definitions:
                   values:
                       - 0: Invalid
                       - 1: Single Point Position (SPP)
-                      - 2: Reserved
+                      - 2: Differential GNSS (DGNSS)
                       - 3: Float RTK
                       - 4: Fixed RTK
 
@@ -213,7 +213,7 @@ definitions:
             type: u16
             units: mm
             desc: |
-              Position accuracy estimate. Defaults
+              Position accuracy estimate. Not implemented in SPP mode, defaults
               to 0.
         - n_sats:
             type: u8
@@ -234,7 +234,7 @@ definitions:
                   values:
                       - 0: Invalid
                       - 1: Single Point Position (SPP)
-                      - 2: Reserved
+                      - 2: Differential GNSS (DGNSS)
                       - 3: Float RTK
                       - 4: Fixed RTK
 
@@ -271,14 +271,14 @@ definitions:
             type: u16
             units: mm
             desc: |
-              Horizontal position accuracy estimate (not
-              implemented). Defaults to 0.
+              Horizontal position accuracy estimate. Not implemented in SPP mode,
+              defaults to 0.
         - v_accuracy:
             type: u16
             units: mm
             desc: |
-              Vertical position accuracy estimate (not
-              implemented). Defaults to 0.
+              Vertical position accuracy estimate. Not implemented in SPP mode,
+              defaults to 0.
         - n_sats:
             type: u8
             desc: Number of satellites used in solution.
@@ -298,7 +298,7 @@ definitions:
                   values:
                       - 0: Invalid
                       - 1: Single Point Position (SPP)
-                      - 2: Reserved
+                      - 2: Differential GNSS (DGNSS)
                       - 3: Float RTK
                       - 4: Fixed RTK
 
@@ -332,8 +332,7 @@ definitions:
               type: u16
               units: mm
               desc: |
-                Position accuracy estimate (not implemented). Defaults
-                to 0.
+                Position accuracy estimate
           - n_sats:
               type: u8
               desc: Number of satellites used in solution
@@ -353,7 +352,7 @@ definitions:
                     values:
                         - 0: Invalid
                         - 1: Reserved
-                        - 2: Reserved
+                        - 2: Differential GNSS (DGNSS)
                         - 3: Float RTK
                         - 4: Fixed RTK
 
@@ -388,14 +387,12 @@ definitions:
               type: u16
               units: mm
               desc: |
-                Horizontal position accuracy estimate (not
-                implemented). Defaults to 0.
+                Horizontal position accuracy estimate
           - v_accuracy:
               type: u16
               units: mm
               desc: |
-                Vertical position accuracy estimate (not
-                implemented). Defaults to 0.
+                Vertical position accuracy estimate
           - n_sats:
               type: u8
               desc: Number of satellites used in solution
@@ -415,7 +412,7 @@ definitions:
                     values:
                         - 0: Invalid
                         - 1: Reserved
-                        - 2: Reserved
+                        - 2: Differential GNSS (DGNSS)
                         - 3: Float RTK
                         - 4: Fixed RTK
 
@@ -554,7 +551,7 @@ definitions:
                     values:
                         - 0: Invalid
                         - 1: Reserved
-                        - 2: Reserved
+                        - 2: Differential GNSS (DGNSS)
                         - 3: Float RTK
                         - 4: Fixed RTK
 

@@ -52,7 +52,7 @@ public class MsgPosECEF extends SBPMessage {
     /** ECEF Z coordinate */
     public double z;
     
-    /** Position accuracy estimate. Defaults
+    /** Position accuracy estimate. Not implemented in SPP mode, defaults
 to 0.
  */
     public int accuracy;
