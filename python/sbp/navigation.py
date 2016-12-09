@@ -412,7 +412,7 @@ MSG_GPS_TIME with the matching time-of-week (tow).
   z : double
     ECEF Z coordinate
   accuracy : int
-    Position accuracy estimate. Defaults
+    Position accuracy estimate. Not implemented in SPP mode, defaults
 to 0.
 
   n_sats : int
@@ -532,12 +532,12 @@ matching time-of-week (tow).
   height : double
     Height above WGS84 ellipsoid
   h_accuracy : int
-    Horizontal position accuracy estimate (not
-implemented). Defaults to 0.
+    Horizontal position accuracy estimate. Not implemented in SPP mode,
+defaults to 0.
 
   v_accuracy : int
-    Vertical position accuracy estimate (not
-implemented). Defaults to 0.
+    Vertical position accuracy estimate. Not implemented in SPP mode,
+defaults to 0.
 
   n_sats : int
     Number of satellites used in solution.
@@ -656,8 +656,7 @@ matching time-of-week (tow).
   z : int
     Baseline ECEF Z coordinate
   accuracy : int
-    Position accuracy estimate (not implemented). Defaults
-to 0.
+    Position accuracy estimate
 
   n_sats : int
     Number of satellites used in solution
@@ -774,12 +773,10 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
   d : int
     Baseline Down coordinate
   h_accuracy : int
-    Horizontal position accuracy estimate (not
-implemented). Defaults to 0.
+    Horizontal position accuracy estimate
 
   v_accuracy : int
-    Vertical position accuracy estimate (not
-implemented). Defaults to 0.
+    Vertical position accuracy estimate
 
   n_sats : int
     Number of satellites used in solution

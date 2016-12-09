@@ -52,13 +52,13 @@ public class MsgPosLLH extends SBPMessage {
     /** Height above WGS84 ellipsoid */
     public double height;
     
-    /** Horizontal position accuracy estimate (not
-implemented). Defaults to 0.
+    /** Horizontal position accuracy estimate. Not implemented in SPP mode,
+defaults to 0.
  */
     public int h_accuracy;
     
-    /** Vertical position accuracy estimate (not
-implemented). Defaults to 0.
+    /** Vertical position accuracy estimate. Not implemented in SPP mode,
+defaults to 0.
  */
     public int v_accuracy;
     

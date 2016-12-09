@@ -49,8 +49,7 @@ public class MsgBaselineECEF extends SBPMessage {
     /** Baseline ECEF Z coordinate */
     public int z;
     
-    /** Position accuracy estimate (not implemented). Defaults
-to 0.
+    /** Position accuracy estimate
  */
     public int accuracy;
     

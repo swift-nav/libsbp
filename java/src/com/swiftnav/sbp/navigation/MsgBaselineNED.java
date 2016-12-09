@@ -50,13 +50,11 @@ public class MsgBaselineNED extends SBPMessage {
     /** Baseline Down coordinate */
     public int d;
     
-    /** Horizontal position accuracy estimate (not
-implemented). Defaults to 0.
+    /** Horizontal position accuracy estimate
  */
     public int h_accuracy;
     
-    /** Vertical position accuracy estimate (not
-implemented). Defaults to 0.
+    /** Vertical position accuracy estimate
  */
     public int v_accuracy;
     

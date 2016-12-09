@@ -215,7 +215,7 @@ data MsgPosEcef = MsgPosEcef
   , _msgPosEcef_z      :: Double
     -- ^ ECEF Z coordinate
   , _msgPosEcef_accuracy :: Word16
-    -- ^ Position accuracy estimate. Defaults to 0.
+    -- ^ Position accuracy estimate. Not implemented in SPP mode, defaults to 0.
   , _msgPosEcef_n_sats :: Word8
     -- ^ Number of satellites used in solution
   , _msgPosEcef_flags  :: Word8
@@ -270,9 +270,11 @@ data MsgPosLlh = MsgPosLlh
   , _msgPosLlh_height   :: Double
     -- ^ Height above WGS84 ellipsoid
   , _msgPosLlh_h_accuracy :: Word16
-    -- ^ Horizontal position accuracy estimate (not implemented). Defaults to 0.
+    -- ^ Horizontal position accuracy estimate. Not implemented in SPP mode,
+    -- defaults to 0.
   , _msgPosLlh_v_accuracy :: Word16
-    -- ^ Vertical position accuracy estimate (not implemented). Defaults to 0.
+    -- ^ Vertical position accuracy estimate. Not implemented in SPP mode,
+    -- defaults to 0.
   , _msgPosLlh_n_sats   :: Word8
     -- ^ Number of satellites used in solution.
   , _msgPosLlh_flags    :: Word8
@@ -326,7 +328,7 @@ data MsgBaselineEcef = MsgBaselineEcef
   , _msgBaselineEcef_z      :: Int32
     -- ^ Baseline ECEF Z coordinate
   , _msgBaselineEcef_accuracy :: Word16
-    -- ^ Position accuracy estimate (not implemented). Defaults to 0.
+    -- ^ Position accuracy estimate
   , _msgBaselineEcef_n_sats :: Word8
     -- ^ Number of satellites used in solution
   , _msgBaselineEcef_flags  :: Word8
@@ -380,9 +382,9 @@ data MsgBaselineNed = MsgBaselineNed
   , _msgBaselineNed_d        :: Int32
     -- ^ Baseline Down coordinate
   , _msgBaselineNed_h_accuracy :: Word16
-    -- ^ Horizontal position accuracy estimate (not implemented). Defaults to 0.
+    -- ^ Horizontal position accuracy estimate
   , _msgBaselineNed_v_accuracy :: Word16
-    -- ^ Vertical position accuracy estimate (not implemented). Defaults to 0.
+    -- ^ Vertical position accuracy estimate
   , _msgBaselineNed_n_sats   :: Word8
     -- ^ Number of satellites used in solution
   , _msgBaselineNed_flags    :: Word8
