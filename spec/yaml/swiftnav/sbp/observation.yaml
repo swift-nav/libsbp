@@ -137,6 +137,140 @@ definitions:
               Pseudorange and carrier phase observation for a
               satellite being tracked.
 
+ - SdiffHeader:
+    short_desc: Header for sdiff message.
+    desc: Header of a GNSS sdiff message.
+    fields:
+        - t:
+            type: GPSTimeNano
+            desc: GNSS time of this observation
+        - n_obs:
+            type: u8
+            desc: |
+              Total number of observations. First nibble is the size
+              of the sequence (n), second nibble is the zero-indexed
+              counter (ith packet of n)
+        - rover_pos_x:
+            type: double
+        - rover_pos_y:
+            type: double
+        - rover_pos_z:
+            type: double
+        - base_pos_x:
+            type: double
+        - base_pos_y:
+            type: double
+        - base_pos_z:
+            type: double
+        - propagation_time:
+            type: double
+
+ - PackedSdiffContent:
+    short_desc: GNSS sdiffs for a particular satellite signal.
+    desc: |
+      Sdiffs before updating the filter itself.
+
+    fields:
+        - P:
+            type: u32
+            units: 2 cm
+            desc: Pseudorange observation
+        - L:
+            type: CarrierPhase
+            units: cycles
+            desc: Carrier phase observation with typical sign convention.
+        - MD:
+            type: Doppler
+            units: Hz
+            desc: Doppler observation with typical sign convention.
+        - CD:
+            type: Doppler
+            units: Hz
+            desc: Doppler observation with typical sign convention.
+        - cn0:
+            type: u8
+            units: dB Hz / 4
+            desc: Carrier-to-Noise density.  Zero implies invalid cn0.
+        - lock:
+            type: u8
+            desc: |
+              Lock timer. This value gives an indication of the time
+              for which a signal has maintained continuous phase lock.
+              Whenever a signal has lost and regained lock, this
+              value is reset to zero. It is encoded according to DF402 from
+              the RTCM 10403.2 Amendment 2 specification.  Valid values range
+              from 0 to 15 and the most significant nibble is reserved for future use.
+        - flags:
+            type: u8
+            desc: |
+              Measurement status flags. A bit field of flags providing the
+              status of this observation.  If this field is 0 it means only the Cn0
+              estimate for the signal is valid.
+            fields:
+              - 4-7:
+                  desc: Reserved
+              - 3:
+                  desc: Doppler valid
+                  values:
+                      - 0: Invalid doppler measurement
+                      - 1: Valid doppler measurement
+              - 2:
+                  desc: Half-cycle ambiguity
+                  values:
+                      - 0: Half cycle phase ambiguity unresolved
+                      - 1: Half cycle phase ambiguity resolved
+              - 1:
+                  desc: Carrier phase valid
+                  values:
+                      - 0: Invalid carrier phase measurement
+                      - 1: Valid carrier phase measurement
+              - 0:
+                  desc: Pseudorange valid
+                  values:
+                      - 0: Invalid pseudorange measurement
+                      - 1: Valid pseudorange measurement and coarse TOW decoded
+        - sid:
+            type: GnssSignal16
+            desc: GNSS signal identifier (16 bit)
+        - sat_pos_x:
+            type: double
+            units: m
+        - sat_pos_y:
+            type: double
+            units: m
+        - sat_pos_z:
+            type: double
+            units: m
+        - sat_vel_x:
+            type: double
+            units: m
+        - sat_vel_y:
+            type: double
+            units: m
+        - sat_vel_z:
+            type: double
+            units: m
+
+ - MSG_SDIFFS:
+    id: 0x0110
+    short_desc: GPS satellite sdiffs
+    desc: |
+      The GPS sdiffs message reports all the raw sdiff pseudorange and
+      sdiff carrier phase observations for the satellites being tracked by
+      the device.
+    fields:
+        - header:
+            type: ObservationHeader
+            desc: Header of a GPS observation message
+        - obs:
+            type: array
+            fill: PackedObsContent
+            map_by: sid
+            desc: |
+              Pseudorange and carrier phase observation for a
+              satellite being tracked.
+
+
  - MSG_BASE_POS_LLH:
     id: 0x0044
     short_desc: Base station position
