@@ -3,3 +3,4 @@ flags: {}
 packages:
   - '.'
 extra-deps: []
+pvp-bounds: both
