@@ -50,7 +50,18 @@
  * This message from the host resets the Piksi back into the
  * bootloader.
  */
-#define SBP_MSG_RESET           0x00B2
+#define SBP_MSG_RESET           0x00B6
+typedef struct __attribute__((packed)) {
+  u32 flags;    /**< Reset flags */
+} msg_reset_t;
+
+
+/** Reset the device (host => Piksi)
+ *
+ * This message from the host resets the Piksi back into the
+ * bootloader.
+ */
+#define SBP_MSG_RESET_DEP       0x00B2
 
 
 /** Legacy message for CW interference channel (Piksi => host)

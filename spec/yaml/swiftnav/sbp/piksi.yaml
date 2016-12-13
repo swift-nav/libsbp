@@ -36,6 +36,25 @@ definitions:
       time estimate sent by the host.
 
  - MSG_RESET:
+    id: 0x00B6
+    short_desc: Reset the device (host => Piksi)
+    desc: |
+      This message from the host resets the Piksi back into the
+      bootloader.
+    fields:
+      - flags:
+          type: u32
+          desc: Reset flags
+          fields:
+            - 1-31:
+                desc: Reserved
+            - 0:
+                desc: Default settings.
+                values:
+                  - 0: Preserve existing settings.
+                  - 1: Resore default settings.
+
+ - MSG_RESET_DEP:
     id: 0x00B2
     short_desc: Reset the device (host => Piksi)
     desc: |

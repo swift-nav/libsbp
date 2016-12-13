@@ -22,26 +22,23 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_RESET (0x00B6).
+/** SBP class for message MSG_RESET_DEP (0x00B2).
  *
- * You can have MSG_RESET inherent its fields directly from
+ * You can have MSG_RESET_DEP inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
  * This message from the host resets the Piksi back into the
  * bootloader. */
 
-public class MsgReset extends SBPMessage {
-    public static final int TYPE = 0x00B6;
+public class MsgResetDep extends SBPMessage {
+    public static final int TYPE = 0x00B2;
 
     
-    /** Reset flags */
-    public long flags;
-    
 
-    public MsgReset (int sender) { super(sender, TYPE); }
-    public MsgReset () { super(TYPE); }
-    public MsgReset (SBPMessage msg) throws SBPBinaryException {
+    public MsgResetDep (int sender) { super(sender, TYPE); }
+    public MsgResetDep () { super(TYPE); }
+    public MsgResetDep (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -49,18 +46,15 @@ public class MsgReset extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        flags = parser.getU32();
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putU32(flags);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("flags", flags);
         return obj;
     }
 }
