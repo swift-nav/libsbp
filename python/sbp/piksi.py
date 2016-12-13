@@ -297,9 +297,9 @@ time estimate sent by the host.
 
  
     
-SBP_MSG_RESET = 0x00B2
+SBP_MSG_RESET = 0x00B6
 class MsgReset(SBP):
-  """SBP class for message MSG_RESET (0x00B2).
+  """SBP class for message MSG_RESET (0x00B6).
 
   You can have MSG_RESET inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -310,20 +310,33 @@ class MsgReset(SBP):
 bootloader.
 
 
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  flags : int
+    Reset flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
   """
-  __slots__ = []
+  _parser = Struct("MsgReset",
+                   ULInt32('flags'),)
+  __slots__ = [
+               'flags',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
       super( MsgReset,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
-      self.payload = sbp.payload
+      self.from_binary(sbp.payload)
     else:
       super( MsgReset, self).__init__()
       self.msg_type = SBP_MSG_RESET
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.flags = kwargs.pop('flags')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -340,6 +353,75 @@ bootloader.
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
     return MsgReset(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgReset._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgReset._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgReset, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_RESET_DEP = 0x00B2
+class MsgResetDep(SBP):
+  """SBP class for message MSG_RESET_DEP (0x00B2).
+
+  You can have MSG_RESET_DEP inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message from the host resets the Piksi back into the
+bootloader.
+
+
+  """
+  __slots__ = []
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgResetDep,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.payload = sbp.payload
+    else:
+      super( MsgResetDep, self).__init__()
+      self.msg_type = SBP_MSG_RESET_DEP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.payload = ""
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgResetDep.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgResetDep(sbp, **d)
 
  
     
@@ -1320,7 +1402,8 @@ the command.  A return code of zero indicates success.
 msg_classes = {
   0x0069: MsgAlmanac,
   0x0068: MsgSetTime,
-  0x00B2: MsgReset,
+  0x00B6: MsgReset,
+  0x00B2: MsgResetDep,
   0x00C0: MsgCwResults,
   0x00C1: MsgCwStart,
   0x0022: MsgResetFilters,

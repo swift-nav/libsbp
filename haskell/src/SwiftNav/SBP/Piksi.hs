@@ -77,26 +77,51 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSetTime_" . P.s
 $(makeLenses ''MsgSetTime)
 
 msgReset :: Word16
-msgReset = 0x00B2
+msgReset = 0x00B6
 
--- | SBP class for message MSG_RESET (0x00B2).
+-- | SBP class for message MSG_RESET (0x00B6).
 --
 -- This message from the host resets the Piksi back into the bootloader.
 data MsgReset = MsgReset
-  deriving ( Show, Read, Eq )
+  { _msgReset_flags :: Word32
+    -- ^ Reset flags
+  } deriving ( Show, Read, Eq )
 
 instance Binary MsgReset where
-  get =
-    return MsgReset
+  get = do
+    _msgReset_flags <- getWord32le
+    return MsgReset {..}
 
-  put MsgReset =
-    return ()
+  put MsgReset {..} = do
+    putWord32le _msgReset_flags
 
 $(deriveSBP 'msgReset ''MsgReset)
 
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgReset_" . P.stripPrefix "_msgReset_"}
              ''MsgReset)
 $(makeLenses ''MsgReset)
+
+msgResetDep :: Word16
+msgResetDep = 0x00B2
+
+-- | SBP class for message MSG_RESET_DEP (0x00B2).
+--
+-- This message from the host resets the Piksi back into the bootloader.
+data MsgResetDep = MsgResetDep
+  deriving ( Show, Read, Eq )
+
+instance Binary MsgResetDep where
+  get =
+    return MsgResetDep
+
+  put MsgResetDep =
+    return ()
+
+$(deriveSBP 'msgResetDep ''MsgResetDep)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgResetDep_" . P.stripPrefix "_msgResetDep_"}
+             ''MsgResetDep)
+$(makeLenses ''MsgResetDep)
 
 msgCwResults :: Word16
 msgCwResults = 0x00C0

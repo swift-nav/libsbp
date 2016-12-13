@@ -76,9 +76,12 @@ MsgSetTime.prototype.parser = new Parser()
 MsgSetTime.prototype.fieldSpec = [];
 
 /**
- * SBP class for message MSG_RESET (0x00B2).
+ * SBP class for message MSG_RESET (0x00B6).
  *
  * This message from the host resets the Piksi back into the bootloader.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field flags number (unsigned 32-bit int, 4 bytes) Reset flags
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -91,11 +94,35 @@ var MsgReset = function (sbp, fields) {
 };
 MsgReset.prototype = Object.create(SBP.prototype);
 MsgReset.prototype.messageType = "MSG_RESET";
-MsgReset.prototype.msg_type = 0x00B2;
+MsgReset.prototype.msg_type = 0x00B6;
 MsgReset.prototype.constructor = MsgReset;
 MsgReset.prototype.parser = new Parser()
-  .endianess('little');
+  .endianess('little')
+  .uint32('flags');
 MsgReset.prototype.fieldSpec = [];
+MsgReset.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
+
+/**
+ * SBP class for message MSG_RESET_DEP (0x00B2).
+ *
+ * This message from the host resets the Piksi back into the bootloader.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgResetDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_RESET_DEP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgResetDep.prototype = Object.create(SBP.prototype);
+MsgResetDep.prototype.messageType = "MSG_RESET_DEP";
+MsgResetDep.prototype.msg_type = 0x00B2;
+MsgResetDep.prototype.constructor = MsgResetDep;
+MsgResetDep.prototype.parser = new Parser()
+  .endianess('little');
+MsgResetDep.prototype.fieldSpec = [];
 
 /**
  * SBP class for message MSG_CW_RESULTS (0x00C0).
@@ -599,8 +626,10 @@ module.exports = {
   MsgAlmanac: MsgAlmanac,
   0x0068: MsgSetTime,
   MsgSetTime: MsgSetTime,
-  0x00B2: MsgReset,
+  0x00B6: MsgReset,
   MsgReset: MsgReset,
+  0x00B2: MsgResetDep,
+  MsgResetDep: MsgResetDep,
   0x00C0: MsgCwResults,
   MsgCwResults: MsgCwResults,
   0x00C1: MsgCwStart,

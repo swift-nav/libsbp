@@ -127,6 +127,7 @@ data SBPMsg =
    | SBPMsgPosLlhDepA MsgPosLlhDepA Msg
    | SBPMsgPrintDep MsgPrintDep Msg
    | SBPMsgReset MsgReset Msg
+   | SBPMsgResetDep MsgResetDep Msg
    | SBPMsgResetFilters MsgResetFilters Msg
    | SBPMsgSetTime MsgSetTime Msg
    | SBPMsgSettingsReadByIndexDone MsgSettingsReadByIndexDone Msg
@@ -241,6 +242,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgPosLlhDepA = SBPMsgPosLlhDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgReset = SBPMsgReset (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgResetDep = SBPMsgResetDep (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgResetFilters = SBPMsgResetFilters (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgSetTime = SBPMsgSetTime (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone (decode (fromStrict _msgSBPPayload)) m
@@ -347,6 +349,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgPosLlhDepA _ m) = put m
       encode' (SBPMsgPrintDep _ m) = put m
       encode' (SBPMsgReset _ m) = put m
+      encode' (SBPMsgResetDep _ m) = put m
       encode' (SBPMsgResetFilters _ m) = put m
       encode' (SBPMsgSetTime _ m) = put m
       encode' (SBPMsgSettingsReadByIndexDone _ m) = put m
@@ -456,6 +459,7 @@ instance FromJSON SBPMsg where
         | msgType == msgPosLlhDepA = SBPMsgPosLlhDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgPrintDep = SBPMsgPrintDep <$> parseJSON obj <*> parseJSON obj
         | msgType == msgReset = SBPMsgReset <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgResetDep = SBPMsgResetDep <$> parseJSON obj <*> parseJSON obj
         | msgType == msgResetFilters = SBPMsgResetFilters <$> parseJSON obj <*> parseJSON obj
         | msgType == msgSetTime = SBPMsgSetTime <$> parseJSON obj <*> parseJSON obj
         | msgType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone <$> parseJSON obj <*> parseJSON obj
@@ -567,6 +571,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgPosLlhDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgPrintDep n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgReset n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgResetDep n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgResetFilters n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgSetTime n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgSettingsReadByIndexDone n m) = toJSON n `mergeValues` toJSON m
@@ -672,6 +677,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgPosLlhDepA n m) = SBPMsgPosLlhDepA n <$> f m
   msg f (SBPMsgPrintDep n m) = SBPMsgPrintDep n <$> f m
   msg f (SBPMsgReset n m) = SBPMsgReset n <$> f m
+  msg f (SBPMsgResetDep n m) = SBPMsgResetDep n <$> f m
   msg f (SBPMsgResetFilters n m) = SBPMsgResetFilters n <$> f m
   msg f (SBPMsgSetTime n m) = SBPMsgSetTime n <$> f m
   msg f (SBPMsgSettingsReadByIndexDone n m) = SBPMsgSettingsReadByIndexDone n <$> f m
