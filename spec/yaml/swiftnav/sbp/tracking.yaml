@@ -21,6 +21,7 @@ definitions:
  - MSG_TRACKING_STATE_DETAILED:
     id: 0x0011
     short_desc: Detailed signal tracking channel states
+    public: False
     desc: |
       The tracking message returns a set tracking channel parameters for a
       single tracking channel useful for debugging issues.
