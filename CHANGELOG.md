@@ -1,11 +1,90 @@
 # Change Log
 
-## [Unreleased](https://github.com/swift-nav/libsbp/tree/HEAD)
-
-[Full Changelog](https://github.com/swift-nav/libsbp/compare/v1.2.7...HEAD)
+## [v2.1.5](https://github.com/swift-nav/libsbp/tree/v2.1.5) (2017-01-04)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.1.4...v2.1.5)
 
 **Merged pull requests:**
 
+- add CDC driver [\#425](https://github.com/swift-nav/libsbp/pull/425)
+
+## [v2.1.4](https://github.com/swift-nav/libsbp/tree/v2.1.4) (2016-12-13)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.1.3...v2.1.4)
+
+**Closed issues:**
+
+- Deprecate GnssSignal; Rename GnssSignal16 to GnssSignal [\#420](https://github.com/swift-nav/libsbp/issues/420)
+
+**Merged pull requests:**
+
+- New RESET message [\#424](https://github.com/swift-nav/libsbp/pull/424)
+- Define DGNSS flags [\#421](https://github.com/swift-nav/libsbp/pull/421)
+- Clarify SID encoding of older messages [\#419](https://github.com/swift-nav/libsbp/pull/419)
+- Raw IMU data message [\#418](https://github.com/swift-nav/libsbp/pull/418)
+
+## [v2.1.3](https://github.com/swift-nav/libsbp/tree/v2.1.3) (2016-12-07)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.1.1...v2.1.3)
+
+**Closed issues:**
+
+- Remove RAIM flag from position messages [\#414](https://github.com/swift-nav/libsbp/issues/414)
+
+**Merged pull requests:**
+
+- Tidy up descriptions of new observation message [\#417](https://github.com/swift-nav/libsbp/pull/417)
+- Pick up new mime types [\#415](https://github.com/swift-nav/libsbp/pull/415)
+
+## [v2.1.1](https://github.com/swift-nav/libsbp/tree/v2.1.1) (2016-12-01)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.1.0...v2.1.1)
+
+**Closed issues:**
+
+- Compile failure / inaccurate version bounds with latest release [\#413](https://github.com/swift-nav/libsbp/issues/413)
+- Documentation no longer specifies HAE vs MSL for POS\_LLH \(0x0201\) [\#409](https://github.com/swift-nav/libsbp/issues/409)
+
+**Merged pull requests:**
+
+- Clarify height [\#411](https://github.com/swift-nav/libsbp/pull/411)
+
+## [v2.1.0](https://github.com/swift-nav/libsbp/tree/v2.1.0) (2016-11-30)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.0.0...v2.1.0)
+
+**Closed issues:**
+
+- Remove or hide all old deprecated messages [\#406](https://github.com/swift-nav/libsbp/issues/406)
+- SID signal constants should be in "values:" [\#405](https://github.com/swift-nav/libsbp/issues/405)
+- Deprecate some messages no longer supported in v3 RTK [\#404](https://github.com/swift-nav/libsbp/issues/404)
+- Add a programatic way to find out if a settings write was successful [\#343](https://github.com/swift-nav/libsbp/issues/343)
+
+**Merged pull requests:**
+
+- Add a new request/response pair for execution of shell commands. [\#412](https://github.com/swift-nav/libsbp/pull/412)
+- change all msg\_types to string of hex in test specification [\#410](https://github.com/swift-nav/libsbp/pull/410)
+- update version number in PDF doc [\#407](https://github.com/swift-nav/libsbp/pull/407)
+
+## [v2.0.0](https://github.com/swift-nav/libsbp/tree/v2.0.0) (2016-11-10)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.0...v2.0.0)
+
+**Closed issues:**
+
+- DOPS units are incorrect [\#347](https://github.com/swift-nav/libsbp/issues/347)
+
+**Merged pull requests:**
+
+- Dz sbp proposal [\#389](https://github.com/swift-nav/libsbp/pull/389)
+
+## [v2.0](https://github.com/swift-nav/libsbp/tree/v2.0) (2016-11-09)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v1.2.8...v2.0)
+
+**Merged pull requests:**
+
+- Add a session-uid to the framer [\#403](https://github.com/swift-nav/libsbp/pull/403)
+
+## [v1.2.8](https://github.com/swift-nav/libsbp/tree/v1.2.8) (2016-11-02)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v1.2.7...v1.2.8)
+
+**Merged pull requests:**
+
+- Release v1.2.8 [\#401](https://github.com/swift-nav/libsbp/pull/401)
 - Update tracking message to match firmware implementation [\#393](https://github.com/swift-nav/libsbp/pull/393)
 
 ## [v1.2.7](https://github.com/swift-nav/libsbp/tree/v1.2.7) (2016-11-02)
