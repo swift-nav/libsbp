@@ -6,6 +6,7 @@ For a detailed index of changes, please see the
 
 Contents
 --------
+ * [v2.1.5](#v2.1.5)
  * [v2.1.0](#v2.1.0)
  * [v2.0.0](#v2.0.0)
  * [v1.1.1](#v1.1.1)
@@ -15,7 +16,15 @@ Contents
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
 
-v2.0.0 <a name="v2.1.0">
+v2.1.5 <a name="v2.1.5">
+--------------------------
+* Add CDC driver for usb CDC AMC devices
+* New flags to the reset message for commanded resets
+* Add DGNSS flag to solution messages
+* Add IMU raw data messages
+* Remove RAIM flag from solution messages
+
+v2.1.0 <a name="v2.1.0">
 --------------------------
 * Add command and response messages
 * Clarify height field is above ellipsoid
