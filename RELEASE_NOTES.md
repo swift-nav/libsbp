@@ -19,7 +19,6 @@ Contents
 v2.1.5 <a name="v2.1.5">
 --------------------------
 * Add CDC driver for usb CDC AMC devices
-* Deprecate 32 bit GnssSignal in favor of 16 bit GnssSignal
 * New flags to the reset message for commanded resets
 * Add DGNSS flag to solution messages
 * Add IMU raw data messages
