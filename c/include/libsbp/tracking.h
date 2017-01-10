@@ -49,9 +49,8 @@ pseudorange valid flag is set.
 when PLL pessimistic lock is achieved.
  [cycles] */
   u8 cn0;             /**< Carrier-to-Noise density [dB Hz / 4] */
-  u16 lock;            /**< Lock indicator. This value changes whenever a satellite
-signal has lost and regained lock, indicating that the
-carrier phase ambiguity may have changed.
+  u16 lock;            /**< Lock time. It is encoded according to DF402 from the RTCM 10403.2
+Amendment 2 specification. Valid values range from 0 to 15.
  */
   sbp_gnss_signal_t sid;             /**< GNSS signal identifier. */
   s32 doppler;         /**< Carrier Doppler frequency. [Hz / 16] */

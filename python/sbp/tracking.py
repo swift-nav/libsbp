@@ -197,9 +197,8 @@ when PLL pessimistic lock is achieved.
   cn0 : int
     Carrier-to-Noise density
   lock : int
-    Lock indicator. This value changes whenever a satellite
-signal has lost and regained lock, indicating that the
-carrier phase ambiguity may have changed.
+    Lock time. It is encoded according to DF402 from the RTCM 10403.2
+Amendment 2 specification. Valid values range from 0 to 15.
 
   sid : GnssSignal
     GNSS signal identifier.
