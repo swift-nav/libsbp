@@ -118,8 +118,7 @@ typedef struct __attribute__((packed)) {
   double x;           /**< ECEF X coordinate [m] */
   double y;           /**< ECEF Y coordinate [m] */
   double z;           /**< ECEF Z coordinate [m] */
-  u16 accuracy;    /**< Position accuracy estimate. Not implemented in SPP mode, defaults
-to 0.
+  u16 accuracy;    /**< Position accuracy estimate. 
  [mm] */
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
@@ -143,11 +142,9 @@ typedef struct __attribute__((packed)) {
   double lat;           /**< Latitude [deg] */
   double lon;           /**< Longitude [deg] */
   double height;        /**< Height above WGS84 ellipsoid [m] */
-  u16 h_accuracy;    /**< Horizontal position accuracy estimate. Not implemented in SPP mode,
-defaults to 0.
+  u16 h_accuracy;    /**< Horizontal position accuracy estimate.
  [mm] */
-  u16 v_accuracy;    /**< Vertical position accuracy estimate. Not implemented in SPP mode,
-defaults to 0.
+  u16 v_accuracy;    /**< Vertical position accuracy estimate.
  [mm] */
   u8 n_sats;        /**< Number of satellites used in solution. */
   u8 flags;         /**< Status flags */
