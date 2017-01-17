@@ -87,8 +87,12 @@ class PySerialDriver(BaseDriver):
     """
     try:
       return self.handle.write(s)
-    except (OSError, serial.SerialException):
-      print
-      print "Piksi disconnected"
-      print
-      raise IOError
+    except (OSError, serial.SerialException, serial.writeTimeoutError) as e:
+      if e == serial.writeTimeoutError:
+        print "sbp pyserial_driver: writeTimeoutError"
+        return 0
+      else:
+        print
+        print "Piksi disconnected"
+        print
+        raise IOError

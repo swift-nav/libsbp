@@ -38,6 +38,7 @@ class Handler(object):
     self._receive_thread.daemon = True
     self._sinks = [] # This is a list of weakrefs to upstream iterators
     self._dead = False
+    self._write_lock = threading.Lock()
 
   def _recv_thread(self):
     """
@@ -241,7 +242,8 @@ class Handler(object):
     self.remove_callback(cb, msg_type)
 
   def __call__(self, msg, **metadata):
-    self._source(msg, **metadata)
+    with self._write_lock:
+      self._source(msg, **metadata)
 
   class _SBPQueueIterator(object):
     """
