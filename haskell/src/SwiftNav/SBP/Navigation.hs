@@ -215,7 +215,7 @@ data MsgPosEcef = MsgPosEcef
   , _msgPosEcef_z      :: Double
     -- ^ ECEF Z coordinate
   , _msgPosEcef_accuracy :: Word16
-    -- ^ Position accuracy estimate. Not implemented in SPP mode, defaults to 0.
+    -- ^ Position accuracy estimate.
   , _msgPosEcef_n_sats :: Word8
     -- ^ Number of satellites used in solution
   , _msgPosEcef_flags  :: Word8
@@ -270,11 +270,9 @@ data MsgPosLlh = MsgPosLlh
   , _msgPosLlh_height   :: Double
     -- ^ Height above WGS84 ellipsoid
   , _msgPosLlh_h_accuracy :: Word16
-    -- ^ Horizontal position accuracy estimate. Not implemented in SPP mode,
-    -- defaults to 0.
+    -- ^ Horizontal position accuracy estimate.
   , _msgPosLlh_v_accuracy :: Word16
-    -- ^ Vertical position accuracy estimate. Not implemented in SPP mode,
-    -- defaults to 0.
+    -- ^ Vertical position accuracy estimate.
   , _msgPosLlh_n_sats   :: Word8
     -- ^ Number of satellites used in solution.
   , _msgPosLlh_flags    :: Word8

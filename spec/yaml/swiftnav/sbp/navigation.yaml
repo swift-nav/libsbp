@@ -213,8 +213,7 @@ definitions:
             type: u16
             units: mm
             desc: |
-              Position accuracy estimate. Not implemented in SPP mode, defaults
-              to 0.
+              Position accuracy estimate. 
         - n_sats:
             type: u8
             desc: Number of satellites used in solution
@@ -271,14 +270,12 @@ definitions:
             type: u16
             units: mm
             desc: |
-              Horizontal position accuracy estimate. Not implemented in SPP mode,
-              defaults to 0.
+              Horizontal position accuracy estimate.
         - v_accuracy:
             type: u16
             units: mm
             desc: |
-              Vertical position accuracy estimate. Not implemented in SPP mode,
-              defaults to 0.
+              Vertical position accuracy estimate.
         - n_sats:
             type: u8
             desc: Number of satellites used in solution.
