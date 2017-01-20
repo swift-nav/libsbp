@@ -209,15 +209,21 @@ class HTTPDriver(BaseDriver):
       gen = (msg.pack() for msg, _ in self.source)
       self.write_session.put(self.url, data=gen, headers=headers)
       self.write_response = True
-    except requests.exceptions.ConnectionError:
-      msg = "Invalid request to %s with headers %s." % (self.url, headers)
+    except requests.exceptions.ConnectionError as err:
+      msg = "Client connection error to %s with [PUT] headers %s: msg=%s" \
+            % (self.url, headers, err.message)
       warnings.warn(msg)
-    except requests.exceptions.ConnectTimeout:
-      pass
+    except requests.exceptions.ConnectTimeout as err:
+      msg = "Client connection timeout to %s with [PUT] headers %s: msg=%s" \
+            % (self.url, headers, err.message)
+      warnings.warn(msg)
     except requests.exceptions.RetryError:
-      pass
+      msg = "Client retry error to %s with [PUT] headers %s: msg=%s" \
+            % (self.url, headers, err.message)
+      warnings.warn(msg)
     except requests.exceptions.ReadTimeout:
-      msg = "Invalid request to %s with headers %s." % (self.url, headers)
+      msg = "Client read timeout to %s with [PUT] headers %s: msg=%s" \
+            % (self.url, headers, err.message)
       warnings.warn(msg)
     return self.write_ok
 
@@ -269,15 +275,21 @@ class HTTPDriver(BaseDriver):
                                                  stream=True,
                                                  headers=headers,
                                                  timeout=self.timeout)
-    except requests.exceptions.ConnectionError:
-      msg = "Invalid request to %s with headers %s." % (self.url, headers)
+    except requests.exceptions.ConnectionError as err:
+      msg = "Client connection error to %s with [GET] headers %s: msg=%s" \
+            % (self.url, headers, err.message)
       warnings.warn(msg)
-    except requests.exceptions.ConnectTimeout:
-      pass
+    except requests.exceptions.ConnectTimeout as err:
+      msg = "Client connection timeout to %s with [GET] headers %s: msg=%s" \
+            % (self.url, headers, err.message)
+      warnings.warn(msg)
     except requests.exceptions.RetryError:
-      pass
+      msg = "Client retry error to %s with [GET] headers %s: msg=%s" \
+            % (self.url, headers, err.message)
+      warnings.warn(msg)
     except requests.exceptions.ReadTimeout:
-      msg = "Invalid request to %s with headers %s." % (self.url, headers)
+      msg = "Client read timeout to %s with [GET] headers %s: msg=%s" \
+            % (self.url, headers, err.message)
       warnings.warn(msg)
     return self.read_ok
 
