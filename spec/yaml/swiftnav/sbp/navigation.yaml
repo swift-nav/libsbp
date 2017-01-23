@@ -451,13 +451,13 @@ definitions:
               desc: Status flags
               fields:
                 - 3-7:
-                    desc: reserved
+                    desc: Reserved
                 - 0-2:
-                    desc: velocity mode
+                    desc: Velocity mode
                     values:
                         - 0: Invalid
-                        - 1: Measured Doppler Derived
-                        - 2: Computed Doppler Derived
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
 
  - MSG_VEL_NED:
     id: 0x020E
@@ -504,13 +504,13 @@ definitions:
               desc: Status flags
               fields:
                 - 3-7:
-                    desc: reserved
+                    desc: Reserved
                 - 0-2:
-                    desc: velocity mode
+                    desc: Velocity mode
                     values:
                         - 0: Invalid
-                        - 1: Measured Doppler Derived
-                        - 2: Computed Doppler Derived
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
 
  - MSG_BASELINE_HEADING:
     id: 0x020F
