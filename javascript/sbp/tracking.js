@@ -44,8 +44,8 @@ var GPSTimeNano = require("./gnss").GPSTimeNano;
  * @field L CarrierPhase Carrier phase observation with typical sign convention. Valid only when PLL
  *   pessimistic lock is achieved.
  * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density
- * @field lock number (unsigned 16-bit int, 2 bytes) Lock indicator. This value changes whenever a satellite signal has lost and
- *   regained lock, indicating that the carrier phase ambiguity may have changed.
+ * @field lock number (unsigned 16-bit int, 2 bytes) Lock time. It is encoded according to DF402 from the RTCM 10403.2 Amendment 2
+ *   specification. Valid values range from 0 to 15.
  * @field sid GnssSignal GNSS signal identifier.
  * @field doppler number (signed 32-bit int, 4 bytes) Carrier Doppler frequency.
  * @field doppler_std number (unsigned 16-bit int, 2 bytes) Carrier Doppler frequency standard deviation.

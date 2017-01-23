@@ -188,7 +188,7 @@ MsgDops.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field x number (float, 8 bytes) ECEF X coordinate
  * @field y number (float, 8 bytes) ECEF Y coordinate
  * @field z number (float, 8 bytes) ECEF Z coordinate
- * @field accuracy number (unsigned 16-bit int, 2 bytes) Position accuracy estimate. Not implemented in SPP mode, defaults to 0.
+ * @field accuracy number (unsigned 16-bit int, 2 bytes) Position accuracy estimate.
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
@@ -238,9 +238,8 @@ MsgPosEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field lat number (float, 8 bytes) Latitude
  * @field lon number (float, 8 bytes) Longitude
  * @field height number (float, 8 bytes) Height above WGS84 ellipsoid
- * @field h_accuracy number (unsigned 16-bit int, 2 bytes) Horizontal position accuracy estimate. Not implemented in SPP mode, defaults to
- *   0.
- * @field v_accuracy number (unsigned 16-bit int, 2 bytes) Vertical position accuracy estimate. Not implemented in SPP mode, defaults to 0.
+ * @field h_accuracy number (unsigned 16-bit int, 2 bytes) Horizontal position accuracy estimate.
+ * @field v_accuracy number (unsigned 16-bit int, 2 bytes) Vertical position accuracy estimate.
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution.
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *

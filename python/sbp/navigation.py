@@ -412,8 +412,7 @@ MSG_GPS_TIME with the matching time-of-week (tow).
   z : double
     ECEF Z coordinate
   accuracy : int
-    Position accuracy estimate. 
-
+    Position accuracy estimate.
   n_sats : int
     Number of satellites used in solution
   flags : int
@@ -532,10 +531,8 @@ matching time-of-week (tow).
     Height above WGS84 ellipsoid
   h_accuracy : int
     Horizontal position accuracy estimate.
-
   v_accuracy : int
     Vertical position accuracy estimate.
-
   n_sats : int
     Number of satellites used in solution.
   flags : int
@@ -654,7 +651,6 @@ matching time-of-week (tow).
     Baseline ECEF Z coordinate
   accuracy : int
     Position accuracy estimate
-
   n_sats : int
     Number of satellites used in solution
   flags : int
@@ -771,10 +767,8 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     Baseline Down coordinate
   h_accuracy : int
     Horizontal position accuracy estimate
-
   v_accuracy : int
     Vertical position accuracy estimate
-
   n_sats : int
     Number of satellites used in solution
   flags : int
