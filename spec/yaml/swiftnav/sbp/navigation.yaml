@@ -84,7 +84,7 @@ definitions:
             fields:
                 - 5-7:
                     desc: Reserved
-                - 2-4:
+                - 3-4:
                     desc: UTC offset source
                     values:
                         - 0: Factory Default
@@ -213,7 +213,7 @@ definitions:
             type: u16
             units: mm
             desc: |
-              Position accuracy estimate. 
+              Position accuracy estimate.
         - n_sats:
             type: u8
             desc: Number of satellites used in solution
