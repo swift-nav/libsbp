@@ -212,8 +212,7 @@ definitions:
         - accuracy:
             type: u16
             units: mm
-            desc: |
-              Position accuracy estimate.
+            desc: Position accuracy estimate.
         - n_sats:
             type: u8
             desc: Number of satellites used in solution
@@ -269,13 +268,11 @@ definitions:
         - h_accuracy:
             type: u16
             units: mm
-            desc: |
-              Horizontal position accuracy estimate.
+            desc: Horizontal position accuracy estimate.
         - v_accuracy:
             type: u16
             units: mm
-            desc: |
-              Vertical position accuracy estimate.
+            desc: Vertical position accuracy estimate.
         - n_sats:
             type: u8
             desc: Number of satellites used in solution.
@@ -328,8 +325,7 @@ definitions:
           - accuracy:
               type: u16
               units: mm
-              desc: |
-                Position accuracy estimate
+              desc: Position accuracy estimate
           - n_sats:
               type: u8
               desc: Number of satellites used in solution
@@ -383,13 +379,11 @@ definitions:
           - h_accuracy:
               type: u16
               units: mm
-              desc: |
-                Horizontal position accuracy estimate
+              desc: Horizontal position accuracy estimate
           - v_accuracy:
               type: u16
               units: mm
-              desc: |
-                Vertical position accuracy estimate
+              desc: Vertical position accuracy estimate
           - n_sats:
               type: u8
               desc: Number of satellites used in solution
