@@ -34,6 +34,7 @@ library
                      , SwiftNav.SBP.Imu
                      , SwiftNav.SBP.Logging
                      , SwiftNav.SBP.Navigation
+                     , SwiftNav.SBP.Ndb
                      , SwiftNav.SBP.Observation
                      , SwiftNav.SBP.Piksi
                      , SwiftNav.SBP.Settings

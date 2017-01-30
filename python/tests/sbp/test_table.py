@@ -26,6 +26,7 @@ from sbp import tracking as trac
 from sbp import user as user
 from sbp import imu as imu
 from sbp import ext_events as ext_events
+from sbp import ndb as ndb
 import pytest
 import sbp.acquisition as acq
 import sbp.logging as log
@@ -36,7 +37,7 @@ def test_table_count():
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 102
+  number_of_messages = 103
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_table_unqiue_count():
@@ -56,7 +57,8 @@ def test_table_unqiue_count():
                         + len(trac.msg_classes)
                         + len(user.msg_classes)
                         + len(imu.msg_classes)
-                        + len(ext_events.msg_classes))
+                        + len(ext_events.msg_classes)
+                        + len(ndb.msg_classes))
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_available_messages():
