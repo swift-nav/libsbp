@@ -44,7 +44,7 @@ var GPSTimeNano = require("./gnss").GPSTimeNano;
  *   for which signal the object belongs to. If object_type is Iono OR L2C
  *   capabilities AND data_source is NDB_DS_RECEIVER sid indicates from which SV data
  *   was decoded. Reserved in other cases.
- * @field sender number (unsigned 16-bit int, 2 bytes) A unique identifier of the sending hardware. For v1.0, set to the 2 least
+ * @field original_sender number (unsigned 16-bit int, 2 bytes) A unique identifier of the sending hardware. For v1.0, set to the 2 least
  *   significant bytes of the device serial number, valid only if data_source is
  *   NDB_DS_SBP. Reserved in case of other data_source.
  *
@@ -69,7 +69,7 @@ MsgNdbEvent.prototype.parser = new Parser()
   .uint8('result')
   .uint8('data_source')
   .nest('sid', { type: GnssSignal16.prototype.parser })
-  .uint16('sender');
+  .uint16('original_sender');
 MsgNdbEvent.prototype.fieldSpec = [];
 MsgNdbEvent.prototype.fieldSpec.push(['recv_time', 'writeUInt64LE', 8]);
 MsgNdbEvent.prototype.fieldSpec.push(['event', 'writeUInt8', 1]);
@@ -77,7 +77,7 @@ MsgNdbEvent.prototype.fieldSpec.push(['object_type', 'writeUInt8', 1]);
 MsgNdbEvent.prototype.fieldSpec.push(['result', 'writeUInt8', 1]);
 MsgNdbEvent.prototype.fieldSpec.push(['data_source', 'writeUInt8', 1]);
 MsgNdbEvent.prototype.fieldSpec.push(['sid', GnssSignal16.prototype.fieldSpec]);
-MsgNdbEvent.prototype.fieldSpec.push(['sender', 'writeUInt16LE', 2]);
+MsgNdbEvent.prototype.fieldSpec.push(['original_sender', 'writeUInt16LE', 2]);
 
 module.exports = {
   0x0400: MsgNdbEvent,
