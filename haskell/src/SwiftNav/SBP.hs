@@ -20,6 +20,7 @@ module SwiftNav.SBP
   , module SwiftNav.SBP.Imu
   , module SwiftNav.SBP.Logging
   , module SwiftNav.SBP.Navigation
+  , module SwiftNav.SBP.Ndb
   , module SwiftNav.SBP.Observation
   , module SwiftNav.SBP.Piksi
   , module SwiftNav.SBP.Settings
@@ -42,6 +43,7 @@ import SwiftNav.SBP.Gnss
 import SwiftNav.SBP.Imu
 import SwiftNav.SBP.Logging
 import SwiftNav.SBP.Navigation
+import SwiftNav.SBP.Ndb
 import SwiftNav.SBP.Observation
 import SwiftNav.SBP.Piksi
 import SwiftNav.SBP.Settings
@@ -117,6 +119,7 @@ data SBPMsg =
    | SBPMsgMaskSatellite MsgMaskSatellite Msg
    | SBPMsgNapDeviceDnaReq MsgNapDeviceDnaReq Msg
    | SBPMsgNapDeviceDnaResp MsgNapDeviceDnaResp Msg
+   | SBPMsgNdbEvent MsgNdbEvent Msg
    | SBPMsgObs MsgObs Msg
    | SBPMsgObsDepA MsgObsDepA Msg
    | SBPMsgObsDepB MsgObsDepB Msg
@@ -232,6 +235,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgMaskSatellite = SBPMsgMaskSatellite (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgNdbEvent = SBPMsgNdbEvent (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgObs = SBPMsgObs (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgObsDepA = SBPMsgObsDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgObsDepB = SBPMsgObsDepB (decode (fromStrict _msgSBPPayload)) m
@@ -339,6 +343,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgMaskSatellite _ m) = put m
       encode' (SBPMsgNapDeviceDnaReq _ m) = put m
       encode' (SBPMsgNapDeviceDnaResp _ m) = put m
+      encode' (SBPMsgNdbEvent _ m) = put m
       encode' (SBPMsgObs _ m) = put m
       encode' (SBPMsgObsDepA _ m) = put m
       encode' (SBPMsgObsDepB _ m) = put m
@@ -449,6 +454,7 @@ instance FromJSON SBPMsg where
         | msgType == msgMaskSatellite = SBPMsgMaskSatellite <$> parseJSON obj <*> parseJSON obj
         | msgType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq <$> parseJSON obj <*> parseJSON obj
         | msgType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgNdbEvent = SBPMsgNdbEvent <$> parseJSON obj <*> parseJSON obj
         | msgType == msgObs = SBPMsgObs <$> parseJSON obj <*> parseJSON obj
         | msgType == msgObsDepA = SBPMsgObsDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgObsDepB = SBPMsgObsDepB <$> parseJSON obj <*> parseJSON obj
@@ -561,6 +567,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgMaskSatellite n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgNapDeviceDnaReq n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgNapDeviceDnaResp n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgNdbEvent n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgObs n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgObsDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgObsDepB n m) = toJSON n `mergeValues` toJSON m
@@ -667,6 +674,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgMaskSatellite n m) = SBPMsgMaskSatellite n <$> f m
   msg f (SBPMsgNapDeviceDnaReq n m) = SBPMsgNapDeviceDnaReq n <$> f m
   msg f (SBPMsgNapDeviceDnaResp n m) = SBPMsgNapDeviceDnaResp n <$> f m
+  msg f (SBPMsgNdbEvent n m) = SBPMsgNdbEvent n <$> f m
   msg f (SBPMsgObs n m) = SBPMsgObs n <$> f m
   msg f (SBPMsgObsDepA n m) = SBPMsgObsDepA n <$> f m
   msg f (SBPMsgObsDepB n m) = SBPMsgObsDepB n <$> f m
