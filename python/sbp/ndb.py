@@ -59,7 +59,7 @@ signal the object belongs to. If object_type is Iono OR L2C
 capabilities AND data_source is NDB_DS_RECEIVER sid indicates
 from which SV data was decoded. Reserved in other cases.
 
-  sender : int
+  original_sender : int
     A unique identifier of the sending hardware. For v1.0,
 set to the 2 least significant bytes of the device serial
 number, valid only if data_source is NDB_DS_SBP. Reserved in case
@@ -76,7 +76,7 @@ of other data_source.
                    ULInt8('result'),
                    ULInt8('data_source'),
                    Struct('sid', GnssSignal16._parser),
-                   ULInt16('sender'),)
+                   ULInt16('original_sender'),)
   __slots__ = [
                'recv_time',
                'event',
@@ -84,7 +84,7 @@ of other data_source.
                'result',
                'data_source',
                'sid',
-               'sender',
+               'original_sender',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -103,7 +103,7 @@ of other data_source.
       self.result = kwargs.pop('result')
       self.data_source = kwargs.pop('data_source')
       self.sid = kwargs.pop('sid')
-      self.sender = kwargs.pop('sender')
+      self.original_sender = kwargs.pop('original_sender')
 
   def __repr__(self):
     return fmt_repr(self)

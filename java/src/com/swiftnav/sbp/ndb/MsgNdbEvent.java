@@ -63,7 +63,7 @@ set to the 2 least significant bytes of the device serial
 number, valid only if data_source is NDB_DS_SBP. Reserved in case
 of other data_source.
  */
-    public int sender;
+    public int original_sender;
     
 
     public MsgNdbEvent (int sender) { super(sender, TYPE); }
@@ -82,7 +82,7 @@ of other data_source.
         result = parser.getU8();
         data_source = parser.getU8();
         sid = new GnssSignal16().parse(parser);
-        sender = parser.getU16();
+        original_sender = parser.getU16();
     }
 
     @Override
@@ -93,7 +93,7 @@ of other data_source.
         builder.putU8(result);
         builder.putU8(data_source);
         sid.build(builder);
-        builder.putU16(sender);
+        builder.putU16(original_sender);
     }
 
     @Override
@@ -105,7 +105,7 @@ of other data_source.
         obj.put("result", result);
         obj.put("data_source", data_source);
         obj.put("sid", sid.toJSON());
-        obj.put("sender", sender);
+        obj.put("original_sender", original_sender);
         return obj;
     }
 }

@@ -98,7 +98,7 @@ definitions:
              signal the object belongs to. If object_type is Iono OR L2C
              capabilities AND data_source is NDB_DS_RECEIVER sid indicates
              from which SV data was decoded. Reserved in other cases.
-      - sender:
+      - original_sender:
            type: u16
            desc: |
              A unique identifier of the sending hardware. For v1.0,
