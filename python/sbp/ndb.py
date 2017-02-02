@@ -52,12 +52,16 @@ message could also be sent out when fetching an object from NDB.
     Event result.
   data_source : int
     Data source for STORE event, reserved for other events.
-  sid : GnssSignal16
+  object_sid : GnssSignal16
     GNSS signal identifier,
 If object_type is Ephemeris OR Almanac, sid indicates for which
-signal the object belongs to. If object_type is Iono OR L2C
-capabilities AND data_source is NDB_DS_RECEIVER sid indicates
-from which SV data was decoded. Reserved in other cases.
+signal the object belongs to. Reserved in other cases.
+
+  src_sid : GnssSignal16
+    GNSS signal identifier,
+If object_type is Almanac, Almanac WN, Iono OR L2C capabilities
+AND data_source is NDB_DS_RECEIVER sid indicates from which SV
+data was decoded. Reserved in other cases.
 
   original_sender : int
     A unique identifier of the sending hardware. For v1.0,
@@ -75,7 +79,8 @@ of other data_source.
                    ULInt8('object_type'),
                    ULInt8('result'),
                    ULInt8('data_source'),
-                   Struct('sid', GnssSignal16._parser),
+                   Struct('object_sid', GnssSignal16._parser),
+                   Struct('src_sid', GnssSignal16._parser),
                    ULInt16('original_sender'),)
   __slots__ = [
                'recv_time',
@@ -83,7 +88,8 @@ of other data_source.
                'object_type',
                'result',
                'data_source',
-               'sid',
+               'object_sid',
+               'src_sid',
                'original_sender',
               ]
 
@@ -102,7 +108,8 @@ of other data_source.
       self.object_type = kwargs.pop('object_type')
       self.result = kwargs.pop('result')
       self.data_source = kwargs.pop('data_source')
-      self.sid = kwargs.pop('sid')
+      self.object_sid = kwargs.pop('object_sid')
+      self.src_sid = kwargs.pop('src_sid')
       self.original_sender = kwargs.pop('original_sender')
 
   def __repr__(self):

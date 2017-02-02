@@ -46,11 +46,14 @@ data MsgNdbEvent = MsgNdbEvent
     -- ^ Event result.
   , _msgNdbEvent_data_source   :: Word8
     -- ^ Data source for STORE event, reserved for other events.
-  , _msgNdbEvent_sid           :: GnssSignal16
+  , _msgNdbEvent_object_sid    :: GnssSignal16
     -- ^ GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid
-    -- indicates for which signal the object belongs to. If object_type is Iono
-    -- OR L2C capabilities AND data_source is NDB_DS_RECEIVER sid indicates
-    -- from which SV data was decoded. Reserved in other cases.
+    -- indicates for which signal the object belongs to. Reserved in other
+    -- cases.
+  , _msgNdbEvent_src_sid       :: GnssSignal16
+    -- ^ GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR
+    -- L2C capabilities AND data_source is NDB_DS_RECEIVER sid indicates from
+    -- which SV data was decoded. Reserved in other cases.
   , _msgNdbEvent_original_sender :: Word16
     -- ^ A unique identifier of the sending hardware. For v1.0, set to the 2
     -- least significant bytes of the device serial number, valid only if
@@ -64,7 +67,8 @@ instance Binary MsgNdbEvent where
     _msgNdbEvent_object_type <- getWord8
     _msgNdbEvent_result <- getWord8
     _msgNdbEvent_data_source <- getWord8
-    _msgNdbEvent_sid <- get
+    _msgNdbEvent_object_sid <- get
+    _msgNdbEvent_src_sid <- get
     _msgNdbEvent_original_sender <- getWord16le
     return MsgNdbEvent {..}
 
@@ -74,7 +78,8 @@ instance Binary MsgNdbEvent where
     putWord8 _msgNdbEvent_object_type
     putWord8 _msgNdbEvent_result
     putWord8 _msgNdbEvent_data_source
-    put _msgNdbEvent_sid
+    put _msgNdbEvent_object_sid
+    put _msgNdbEvent_src_sid
     putWord16le _msgNdbEvent_original_sender
 
 $(deriveSBP 'msgNdbEvent ''MsgNdbEvent)
