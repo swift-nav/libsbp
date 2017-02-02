@@ -52,11 +52,16 @@ public class MsgNdbEvent extends SBPMessage {
     
     /** GNSS signal identifier,
 If object_type is Ephemeris OR Almanac, sid indicates for which
-signal the object belongs to. If object_type is Iono OR L2C
-capabilities AND data_source is NDB_DS_RECEIVER sid indicates
-from which SV data was decoded. Reserved in other cases.
+signal the object belongs to. Reserved in other cases.
  */
-    public GnssSignal16 sid;
+    public GnssSignal16 object_sid;
+    
+    /** GNSS signal identifier,
+If object_type is Almanac, Almanac WN, Iono OR L2C capabilities
+AND data_source is NDB_DS_RECEIVER sid indicates from which SV
+data was decoded. Reserved in other cases.
+ */
+    public GnssSignal16 src_sid;
     
     /** A unique identifier of the sending hardware. For v1.0,
 set to the 2 least significant bytes of the device serial
@@ -81,7 +86,8 @@ of other data_source.
         object_type = parser.getU8();
         result = parser.getU8();
         data_source = parser.getU8();
-        sid = new GnssSignal16().parse(parser);
+        object_sid = new GnssSignal16().parse(parser);
+        src_sid = new GnssSignal16().parse(parser);
         original_sender = parser.getU16();
     }
 
@@ -92,7 +98,8 @@ of other data_source.
         builder.putU8(object_type);
         builder.putU8(result);
         builder.putU8(data_source);
-        sid.build(builder);
+        object_sid.build(builder);
+        src_sid.build(builder);
         builder.putU16(original_sender);
     }
 
@@ -104,7 +111,8 @@ of other data_source.
         obj.put("object_type", object_type);
         obj.put("result", result);
         obj.put("data_source", data_source);
-        obj.put("sid", sid.toJSON());
+        obj.put("object_sid", object_sid.toJSON());
+        obj.put("src_sid", src_sid.toJSON());
         obj.put("original_sender", original_sender);
         return obj;
     }

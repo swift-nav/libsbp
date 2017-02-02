@@ -40,8 +40,9 @@ var GPSTimeNano = require("./gnss").GPSTimeNano;
  * @field object_type number (unsigned 8-bit int, 1 byte) Event object type.
  * @field result number (unsigned 8-bit int, 1 byte) Event result.
  * @field data_source number (unsigned 8-bit int, 1 byte) Data source for STORE event, reserved for other events.
- * @field sid GnssSignal16 GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid indicates
- *   for which signal the object belongs to. If object_type is Iono OR L2C
+ * @field object_sid GnssSignal16 GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid indicates
+ *   for which signal the object belongs to. Reserved in other cases.
+ * @field src_sid GnssSignal16 GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR L2C
  *   capabilities AND data_source is NDB_DS_RECEIVER sid indicates from which SV data
  *   was decoded. Reserved in other cases.
  * @field original_sender number (unsigned 16-bit int, 2 bytes) A unique identifier of the sending hardware. For v1.0, set to the 2 least
@@ -68,7 +69,8 @@ MsgNdbEvent.prototype.parser = new Parser()
   .uint8('object_type')
   .uint8('result')
   .uint8('data_source')
-  .nest('sid', { type: GnssSignal16.prototype.parser })
+  .nest('object_sid', { type: GnssSignal16.prototype.parser })
+  .nest('src_sid', { type: GnssSignal16.prototype.parser })
   .uint16('original_sender');
 MsgNdbEvent.prototype.fieldSpec = [];
 MsgNdbEvent.prototype.fieldSpec.push(['recv_time', 'writeUInt64LE', 8]);
@@ -76,7 +78,8 @@ MsgNdbEvent.prototype.fieldSpec.push(['event', 'writeUInt8', 1]);
 MsgNdbEvent.prototype.fieldSpec.push(['object_type', 'writeUInt8', 1]);
 MsgNdbEvent.prototype.fieldSpec.push(['result', 'writeUInt8', 1]);
 MsgNdbEvent.prototype.fieldSpec.push(['data_source', 'writeUInt8', 1]);
-MsgNdbEvent.prototype.fieldSpec.push(['sid', GnssSignal16.prototype.fieldSpec]);
+MsgNdbEvent.prototype.fieldSpec.push(['object_sid', GnssSignal16.prototype.fieldSpec]);
+MsgNdbEvent.prototype.fieldSpec.push(['src_sid', GnssSignal16.prototype.fieldSpec]);
 MsgNdbEvent.prototype.fieldSpec.push(['original_sender', 'writeUInt16LE', 2]);
 
 module.exports = {

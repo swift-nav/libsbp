@@ -41,6 +41,7 @@ definitions:
                     - 0: UNKNOWN
                     - 1: STORE
                     - 2: FETCH
+                    - 3: ERASE
       - object_type:
           type: u8
           desc: Event object type.
@@ -90,14 +91,19 @@ definitions:
                     - 1: NDB_DS_INIT
                     - 2: NDB_DS_RECEIVER
                     - 3: NDB_DS_SBP
-      - sid:
+      - object_sid:
            type: GnssSignal16
            desc: |
              GNSS signal identifier,
              If object_type is Ephemeris OR Almanac, sid indicates for which
-             signal the object belongs to. If object_type is Iono OR L2C
-             capabilities AND data_source is NDB_DS_RECEIVER sid indicates
-             from which SV data was decoded. Reserved in other cases.
+             signal the object belongs to. Reserved in other cases.
+      - src_sid:
+           type: GnssSignal16
+           desc: |
+             GNSS signal identifier,
+             If object_type is Almanac, Almanac WN, Iono OR L2C capabilities
+             AND data_source is NDB_DS_RECEIVER sid indicates from which SV
+             data was decoded. Reserved in other cases.
       - original_sender:
            type: u16
            desc: |
