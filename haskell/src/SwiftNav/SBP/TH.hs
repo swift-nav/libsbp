@@ -17,6 +17,7 @@ import Data.ByteString
 import Data.ByteString.Lazy hiding (ByteString)
 import Language.Haskell.TH
 import SwiftNav.SBP.Types
+import Control.Exception.Base (assert)
 
 -- | Derive ToSBP typeclass, given an SBP message type name and the
 -- name of the implemented type.
@@ -26,6 +27,7 @@ deriveSBP msgType name =
        toSBP m senderID = encoded & msgSBPCrc .~ checkCrc encoded
          where
            payload = toStrict $ encode m
-           len = fromIntegral $ Data.ByteString.length payload
+           len' = Data.ByteString.length payload
+           len = assert (len' < 256) $ fromIntegral len'
            encoded = Msg $(varE msgType) senderID len payload 0
     |]
