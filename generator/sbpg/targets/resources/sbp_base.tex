@@ -64,7 +64,7 @@
 
 \title{Swift Navigation Binary Protocol}
 \author{Swift Navigation}
-\mysubtitle{Protocol Specification (((version)))}
+\mysubtitle{Protocol Specification \version}
 \date{\today}
 
 \begin{document}
@@ -108,7 +108,7 @@ SBP consists of two pieces:
   \item an over-the-wire message framing format
   \item structured payload definitions
 \end{itemize}
-As of Version (((version))), the frame consists of a 6-byte binary
+As of Version~\version, the frame consists of a 6-byte binary
 header section, a variable-sized payload field, and a 16-bit CRC
 value. All multibyte values are ordered in \textbf{little-endian}
 format. SBP uses the CCITT CRC16 (XMODEM implementation) for error
