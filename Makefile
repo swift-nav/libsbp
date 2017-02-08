@@ -217,6 +217,7 @@ dist:
 	stack sdist
 	stack upload .
 	popd
+	make pdf_dist
 	$(call announce-end,"Finished deploying packages")
 
 pdf:
@@ -224,9 +225,12 @@ pdf:
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/latex/ \
-                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
+                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
 	               --latex
 	$(call announce-end,"Finished! Please check $(SWIFTNAV_ROOT)/latex and $(SWIFTNAV_ROOT)/docs")
+
+pdf_dist:
+	s3cmd put  $(SWIFTNAV_ROOT)/docs/sbp.pdf s3://downloads.swiftnav.com/sbp/docs/sbp_$(SBP_VERSION).pdf
 
 html:
 	$(call announce-begin,"Generating bindings documentation")
