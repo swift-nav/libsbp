@@ -37,7 +37,7 @@ install:
   - npm install -g mocha
   - npm install
   - stack update
-  - stack setup
+  - (cd haskell && stack setup)
 
 script:
   - make test

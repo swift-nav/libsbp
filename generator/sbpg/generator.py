@@ -103,7 +103,7 @@ def main():
       print "Writing to %s" % output_dir
     if args.latex:
       parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
-      tex.render_source(output_dir, parsed)
+      tex.render_source(output_dir, parsed, args.release[0])
     else:
       spec_no = 0
       all_specs = []

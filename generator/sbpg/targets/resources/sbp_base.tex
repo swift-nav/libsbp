@@ -32,6 +32,7 @@
 \numberwithin{table}{subsection}
 \numberwithin{field}{subsection}
 
+\renewcommand{\version}{(((version)))}
 \renewcommand{\thesubsubsection}{\hspace{-0.45cm}}
 
 \newcommand{\specialcell}[2][c]{%
@@ -62,9 +63,8 @@
 \immediate\write18{git describe --abbrev=0 --tags | cut -c 2-5 > \jobname.info }
 
 \title{Swift Navigation Binary Protocol}
-\version{\input{\jobname.info}}
 \author{Swift Navigation}
-\mysubtitle{Protocol Specification \theversion}
+\mysubtitle{Protocol Specification \version}
 \date{\today}
 
 \begin{document}
@@ -108,7 +108,7 @@ SBP consists of two pieces:
   \item an over-the-wire message framing format
   \item structured payload definitions
 \end{itemize}
-As of Version~\theversion, the frame consists of a 6-byte binary
+As of Version~\version, the frame consists of a 6-byte binary
 header section, a variable-sized payload field, and a 16-bit CRC
 value. All multibyte values are ordered in \textbf{little-endian}
 format. SBP uses the CCITT CRC16 (XMODEM implementation) for error

@@ -252,7 +252,7 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
       offset += size
   return (items, offset, multiplier)
 
-def render_source(output_dir, package_specs):
+def render_source(output_dir, package_specs, version):
   """
   Render and output
   """
@@ -301,7 +301,8 @@ def render_source(output_dir, package_specs):
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=stable_msgs,
                                umsgs=unstable_msgs,
-                               prims=prims))
+                               prims=prims,
+                               version=version))
   import subprocess
   import os
   os.chdir(output_dir)
