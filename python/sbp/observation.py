@@ -518,6 +518,80 @@ carrier phase ambiguity may have changed.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return PackedObsContentDepC.build(d)
     
+class AlmanacCommonContent(object):
+  """AlmanacCommonContent.
+  
+  
+  Parameters
+  ----------
+  sid : GnssSignal
+    GNSS signal identifier
+  toa : GPSTime
+    Reference time of almanac
+  ura : double
+    User Range Accuracy
+  fit_interval : int
+    Curve fit interval
+  valid : int
+    Status of almanac, 1 = valid, 0 = invalid
+  health_bits : int
+    Satellite health status for GPS:
+  - bits 5-7: NAV data health status. See IS-GPS-200H
+    Table 20-VII: NAV Data Health Indications.
+  - bits 0-4: Signal health status. See IS-GPS-200H
+    Table 20-VIII. Codes for Health of SV Signal
+    Components.
+Satellite health status for GLO:
+  See GLO ICD 5.1 table 5.1 for details
+  - bit 0: C(n), "unhealthy" flag that is transmitted within 
+    non-immediate data and indicates overall constellation status
+    at the moment of almanac uploading.
+    '0' indicates malfunction of n-satellite.
+    '1' indicates that n-satellite is operational.
+  - bit 1: Bn(ln), '0' indicates the satellite is operational
+    and suitable for navigation.
+
+
+  """
+  _parser = Embedded(Struct("AlmanacCommonContent",
+                     Struct('sid', GnssSignal._parser),
+                     Struct('toa', GPSTime._parser),
+                     LFloat64('ura'),
+                     ULInt32('fit_interval'),
+                     ULInt8('valid'),
+                     ULInt8('health_bits'),))
+  __slots__ = [
+               'sid',
+               'toa',
+               'ura',
+               'fit_interval',
+               'valid',
+               'health_bits',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sid = kwargs.pop('sid')
+      self.toa = kwargs.pop('toa')
+      self.ura = kwargs.pop('ura')
+      self.fit_interval = kwargs.pop('fit_interval')
+      self.valid = kwargs.pop('valid')
+      self.health_bits = kwargs.pop('health_bits')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = AlmanacCommonContent._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return AlmanacCommonContent.build(d)
+    
 SBP_MSG_OBS = 0x004A
 class MsgObs(SBP):
   """SBP class for message MSG_OBS (0x004A).
@@ -2657,6 +2731,256 @@ LSB indicating tgd validity etc.
     d.update(j)
     return d
     
+SBP_MSG_ALMANAC_GPS = 0x0070
+class MsgAlmanacGPS(SBP):
+  """SBP class for message MSG_ALMANAC_GPS (0x0070).
+
+  You can have MSG_ALMANAC_GPS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The almanac message returns a set of satellite orbit parameters. Almanac
+data is not very precise and is considered valid for up to several months.
+Please see the Navstar GPS Space Segment/Navigation user interfaces
+(ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  common : AlmanacCommonContent
+    Values common for all almanac types
+  m0 : double
+    Mean anomaly at reference time
+  ecc : double
+    Eccentricity of satellite orbit
+  sqrta : double
+    Square root of the semi-major axis of orbit
+  omega0 : double
+    Longitude of ascending node of orbit plane at weekly epoch
+  omegadot : double
+    Rate of right ascension
+  w : double
+    Argument of perigee
+  inc : double
+    Inclination
+  af0 : double
+    Polynomial clock correction coefficient (clock bias)
+  af1 : double
+    Polynomial clock correction coefficient (clock drift)
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgAlmanacGPS",
+                   Struct('common', AlmanacCommonContent._parser),
+                   LFloat64('m0'),
+                   LFloat64('ecc'),
+                   LFloat64('sqrta'),
+                   LFloat64('omega0'),
+                   LFloat64('omegadot'),
+                   LFloat64('w'),
+                   LFloat64('inc'),
+                   LFloat64('af0'),
+                   LFloat64('af1'),)
+  __slots__ = [
+               'common',
+               'm0',
+               'ecc',
+               'sqrta',
+               'omega0',
+               'omegadot',
+               'w',
+               'inc',
+               'af0',
+               'af1',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgAlmanacGPS,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgAlmanacGPS, self).__init__()
+      self.msg_type = SBP_MSG_ALMANAC_GPS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.common = kwargs.pop('common')
+      self.m0 = kwargs.pop('m0')
+      self.ecc = kwargs.pop('ecc')
+      self.sqrta = kwargs.pop('sqrta')
+      self.omega0 = kwargs.pop('omega0')
+      self.omegadot = kwargs.pop('omegadot')
+      self.w = kwargs.pop('w')
+      self.inc = kwargs.pop('inc')
+      self.af0 = kwargs.pop('af0')
+      self.af1 = kwargs.pop('af1')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgAlmanacGPS.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgAlmanacGPS(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgAlmanacGPS._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgAlmanacGPS._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgAlmanacGPS, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_ALMANAC_GLO = 0x0071
+class MsgAlmanacGlo(SBP):
+  """SBP class for message MSG_ALMANAC_GLO (0x0071).
+
+  You can have MSG_ALMANAC_GLO inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The almanac message returns a set of satellite orbit parameters. Almanac
+data is not very precise and is considered valid for up to several months.
+Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
+almanac" for details.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  common : AlmanacCommonContent
+    Values common for all almanac types
+  lambda_na : double
+    Longitude of the first ascending node of the orbit in PZ-90.02
+coordinate system
+
+  t_lambda_na : double
+    Time of the first ascending node passage
+  i : double
+    Value of inclination at instant of t_lambda
+  t : double
+    Value of Draconian period at instant of t_lambda
+  t_dot : double
+    Rate of change of the Draconian period
+  epsilon : double
+    Eccentricity at instant of t_lambda
+  omega : double
+    Argument of perigee at instant of t_lambda
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgAlmanacGlo",
+                   Struct('common', AlmanacCommonContent._parser),
+                   LFloat64('lambda_na'),
+                   LFloat64('t_lambda_na'),
+                   LFloat64('i'),
+                   LFloat64('t'),
+                   LFloat64('t_dot'),
+                   LFloat64('epsilon'),
+                   LFloat64('omega'),)
+  __slots__ = [
+               'common',
+               'lambda_na',
+               't_lambda_na',
+               'i',
+               't',
+               't_dot',
+               'epsilon',
+               'omega',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgAlmanacGlo,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgAlmanacGlo, self).__init__()
+      self.msg_type = SBP_MSG_ALMANAC_GLO
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.common = kwargs.pop('common')
+      self.lambda_na = kwargs.pop('lambda_na')
+      self.t_lambda_na = kwargs.pop('t_lambda_na')
+      self.i = kwargs.pop('i')
+      self.t = kwargs.pop('t')
+      self.t_dot = kwargs.pop('t_dot')
+      self.epsilon = kwargs.pop('epsilon')
+      self.omega = kwargs.pop('omega')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgAlmanacGlo.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgAlmanacGlo(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgAlmanacGlo._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgAlmanacGlo._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgAlmanacGlo, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x004A: MsgObs,
@@ -2675,4 +2999,6 @@ msg_classes = {
   0x0090: MsgIono,
   0x0091: MsgSvConfigurationGPS,
   0x0092: MsgGroupDelay,
+  0x0070: MsgAlmanacGPS,
+  0x0071: MsgAlmanacGlo,
 }

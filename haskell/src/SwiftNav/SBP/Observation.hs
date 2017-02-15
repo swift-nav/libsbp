@@ -1414,3 +1414,169 @@ $(deriveSBP 'msgGroupDelay ''MsgGroupDelay)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGroupDelay_" . P.stripPrefix "_msgGroupDelay_"}
              ''MsgGroupDelay)
 $(makeLenses ''MsgGroupDelay)
+
+data AlmanacCommonContent = AlmanacCommonContent
+  { _almanacCommonContent_sid        :: GnssSignal
+    -- ^ GNSS signal identifier
+  , _almanacCommonContent_toa        :: GpsTime
+    -- ^ Reference time of almanac
+  , _almanacCommonContent_ura        :: Double
+    -- ^ User Range Accuracy
+  , _almanacCommonContent_fit_interval :: Word32
+    -- ^ Curve fit interval
+  , _almanacCommonContent_valid      :: Word8
+    -- ^ Status of almanac, 1 = valid, 0 = invalid
+  , _almanacCommonContent_health_bits :: Word8
+    -- ^ Satellite health status for GPS:   - bits 5-7: NAV data health status.
+    -- See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
+    -- 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
+    -- Health of SV Signal     Components. Satellite health status for GLO:
+    -- See GLO ICD 5.1 table 5.1 for details   - bit 0: C(n), "unhealthy" flag
+    -- that is transmitted within      non-immediate data and indicates overall
+    -- constellation status     at the moment of almanac uploading.     '0'
+    -- indicates malfunction of n-satellite.     '1' indicates that n-satellite
+    -- is operational.   - bit 1: Bn(ln), '0' indicates the satellite is
+    -- operational     and suitable for navigation.
+  } deriving ( Show, Read, Eq )
+
+instance Binary AlmanacCommonContent where
+  get = do
+    _almanacCommonContent_sid <- get
+    _almanacCommonContent_toa <- get
+    _almanacCommonContent_ura <- getFloat64le
+    _almanacCommonContent_fit_interval <- getWord32le
+    _almanacCommonContent_valid <- getWord8
+    _almanacCommonContent_health_bits <- getWord8
+    return AlmanacCommonContent {..}
+
+  put AlmanacCommonContent {..} = do
+    put _almanacCommonContent_sid
+    put _almanacCommonContent_toa
+    putFloat64le _almanacCommonContent_ura
+    putWord32le _almanacCommonContent_fit_interval
+    putWord8 _almanacCommonContent_valid
+    putWord8 _almanacCommonContent_health_bits
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_almanacCommonContent_" . P.stripPrefix "_almanacCommonContent_"}
+             ''AlmanacCommonContent)
+$(makeLenses ''AlmanacCommonContent)
+
+msgAlmanacGps :: Word16
+msgAlmanacGps = 0x0070
+
+-- | SBP class for message MSG_ALMANAC_GPS (0x0070).
+--
+-- The almanac message returns a set of satellite orbit parameters. Almanac
+-- data is not very precise and is considered valid for up to several months.
+-- Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+-- GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+data MsgAlmanacGps = MsgAlmanacGps
+  { _msgAlmanacGps_common :: AlmanacCommonContent
+    -- ^ Values common for all almanac types
+  , _msgAlmanacGps_m0     :: Double
+    -- ^ Mean anomaly at reference time
+  , _msgAlmanacGps_ecc    :: Double
+    -- ^ Eccentricity of satellite orbit
+  , _msgAlmanacGps_sqrta  :: Double
+    -- ^ Square root of the semi-major axis of orbit
+  , _msgAlmanacGps_omega0 :: Double
+    -- ^ Longitude of ascending node of orbit plane at weekly epoch
+  , _msgAlmanacGps_omegadot :: Double
+    -- ^ Rate of right ascension
+  , _msgAlmanacGps_w      :: Double
+    -- ^ Argument of perigee
+  , _msgAlmanacGps_inc    :: Double
+    -- ^ Inclination
+  , _msgAlmanacGps_af0    :: Double
+    -- ^ Polynomial clock correction coefficient (clock bias)
+  , _msgAlmanacGps_af1    :: Double
+    -- ^ Polynomial clock correction coefficient (clock drift)
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgAlmanacGps where
+  get = do
+    _msgAlmanacGps_common <- get
+    _msgAlmanacGps_m0 <- getFloat64le
+    _msgAlmanacGps_ecc <- getFloat64le
+    _msgAlmanacGps_sqrta <- getFloat64le
+    _msgAlmanacGps_omega0 <- getFloat64le
+    _msgAlmanacGps_omegadot <- getFloat64le
+    _msgAlmanacGps_w <- getFloat64le
+    _msgAlmanacGps_inc <- getFloat64le
+    _msgAlmanacGps_af0 <- getFloat64le
+    _msgAlmanacGps_af1 <- getFloat64le
+    return MsgAlmanacGps {..}
+
+  put MsgAlmanacGps {..} = do
+    put _msgAlmanacGps_common
+    putFloat64le _msgAlmanacGps_m0
+    putFloat64le _msgAlmanacGps_ecc
+    putFloat64le _msgAlmanacGps_sqrta
+    putFloat64le _msgAlmanacGps_omega0
+    putFloat64le _msgAlmanacGps_omegadot
+    putFloat64le _msgAlmanacGps_w
+    putFloat64le _msgAlmanacGps_inc
+    putFloat64le _msgAlmanacGps_af0
+    putFloat64le _msgAlmanacGps_af1
+
+$(deriveSBP 'msgAlmanacGps ''MsgAlmanacGps)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAlmanacGps_" . P.stripPrefix "_msgAlmanacGps_"}
+             ''MsgAlmanacGps)
+$(makeLenses ''MsgAlmanacGps)
+
+msgAlmanacGlo :: Word16
+msgAlmanacGlo = 0x0071
+
+-- | SBP class for message MSG_ALMANAC_GLO (0x0071).
+--
+-- The almanac message returns a set of satellite orbit parameters. Almanac
+-- data is not very precise and is considered valid for up to several months.
+-- Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
+-- almanac" for details.
+data MsgAlmanacGlo = MsgAlmanacGlo
+  { _msgAlmanacGlo_common    :: AlmanacCommonContent
+    -- ^ Values common for all almanac types
+  , _msgAlmanacGlo_lambda_na :: Double
+    -- ^ Longitude of the first ascending node of the orbit in PZ-90.02
+    -- coordinate system
+  , _msgAlmanacGlo_t_lambda_na :: Double
+    -- ^ Time of the first ascending node passage
+  , _msgAlmanacGlo_i         :: Double
+    -- ^ Value of inclination at instant of t_lambda
+  , _msgAlmanacGlo_t         :: Double
+    -- ^ Value of Draconian period at instant of t_lambda
+  , _msgAlmanacGlo_t_dot     :: Double
+    -- ^ Rate of change of the Draconian period
+  , _msgAlmanacGlo_epsilon   :: Double
+    -- ^ Eccentricity at instant of t_lambda
+  , _msgAlmanacGlo_omega     :: Double
+    -- ^ Argument of perigee at instant of t_lambda
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgAlmanacGlo where
+  get = do
+    _msgAlmanacGlo_common <- get
+    _msgAlmanacGlo_lambda_na <- getFloat64le
+    _msgAlmanacGlo_t_lambda_na <- getFloat64le
+    _msgAlmanacGlo_i <- getFloat64le
+    _msgAlmanacGlo_t <- getFloat64le
+    _msgAlmanacGlo_t_dot <- getFloat64le
+    _msgAlmanacGlo_epsilon <- getFloat64le
+    _msgAlmanacGlo_omega <- getFloat64le
+    return MsgAlmanacGlo {..}
+
+  put MsgAlmanacGlo {..} = do
+    put _msgAlmanacGlo_common
+    putFloat64le _msgAlmanacGlo_lambda_na
+    putFloat64le _msgAlmanacGlo_t_lambda_na
+    putFloat64le _msgAlmanacGlo_i
+    putFloat64le _msgAlmanacGlo_t
+    putFloat64le _msgAlmanacGlo_t_dot
+    putFloat64le _msgAlmanacGlo_epsilon
+    putFloat64le _msgAlmanacGlo_omega
+
+$(deriveSBP 'msgAlmanacGlo ''MsgAlmanacGlo)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAlmanacGlo_" . P.stripPrefix "_msgAlmanacGlo_"}
+             ''MsgAlmanacGlo)
+$(makeLenses ''MsgAlmanacGlo)
