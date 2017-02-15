@@ -1,7 +1,6 @@
 package com.swiftnav.sbp.client;
 
 import com.swiftnav.sbp.SBPMessage;
-import com.swiftnav.sbp.observation.MsgEphemeris;
 
 import java.io.IOException;
 
