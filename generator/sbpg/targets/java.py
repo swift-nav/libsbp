@@ -28,7 +28,7 @@ TEMPLATE_TABLE_NAME = "MessageTable.java.j2"
 JAVA_TYPE_MAP = {'u8': 'int',
                  'u16': 'int',
                  'u32': 'long',
-                 'u64': 'long',
+                 'u64': 'BigInteger',
                  's8': 'int',
                  's16': 'int',
                  's32': 'int',
@@ -189,4 +189,3 @@ def render_table(output_dir, packages, jenv=JENV):
   with open(destination_filename, 'w+') as f:
       print destination_filename
       f.write(jenv.get_template(TEMPLATE_TABLE_NAME).render(packages=packages))
-
