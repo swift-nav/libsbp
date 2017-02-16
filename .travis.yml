@@ -8,6 +8,8 @@ addons:
     - cmake
     - gradle
     - libgmp-dev
+    - oracle-java8-installer
+    - oracle-java8-set-default
 
 cache:
   apt: true
