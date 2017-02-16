@@ -16,6 +16,7 @@ package com.swiftnav.sbp.ndb;
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
+import java.math.BigInteger;
 import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
@@ -36,7 +37,7 @@ public class MsgNdbEvent extends SBPMessage {
 
     
     /** HW time in milliseconds. */
-    public long recv_time;
+    public BigInteger recv_time;
     
     /** Event type. */
     public int event;

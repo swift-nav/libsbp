@@ -16,6 +16,7 @@ package com.swiftnav.sbp.navigation;
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
+import java.math.BigInteger;
 
 import org.json.JSONObject;
 import org.json.JSONArray;

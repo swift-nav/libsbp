@@ -22,15 +22,15 @@ import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class JSONLogger implements SBPSender {
     private OutputStream stream;
-    private long starttime;
 
     public JSONLogger(OutputStream stream_) {
         stream = stream_;
-        starttime = ISOTimestamp();
     }
 
     private String ISOTimestamp() {

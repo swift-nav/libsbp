@@ -20,6 +20,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.math.BigInteger;
 
 /** Superclass of all SBP messages. */
 public class SBPMessage {
@@ -97,8 +98,14 @@ public class SBPMessage {
             buf = ByteBuffer.wrap(payload).order(ByteOrder.LITTLE_ENDIAN);
         }
 
+        public int getS8() {
+            return buf.get();
+        }
         public int getU8() {
             return buf.get() & 0xff;
+        }
+        public int getS16() {
+            return buf.getShort();
         }
         public int getU16() {
             return buf.getShort() & 0xffff;
@@ -108,6 +115,11 @@ public class SBPMessage {
         }
         public int getS32() {
             return buf.getInt();
+        }
+        public BigInteger getU64() {
+            byte[] tmp = new byte[8];
+			buf.get(tmp, 0, 8);
+            return new BigInteger(1, tmp);
         }
         public float getFloat() {
             return buf.getFloat();
@@ -192,14 +204,23 @@ public class SBPMessage {
             return Arrays.copyOf(buf.array(), buf.position());
         }
 
+        public void putS8(int x) {
+            buf.put((byte) x);
+        }
         public void putU8(int x) {
             buf.put((byte) x);
+        }
+        public void putS16(int x) {
+            buf.putShort((short) x);
         }
         public void putU16(int x) {
             buf.putShort((short) x);
         }
         public void putU32(long x) {
             buf.putInt((int) x);
+        }
+        public void putU64(BigInteger x) {
+            buf.putLong(x.longValue());
         }
         public void putS32(int x) {
             buf.putInt(x);
@@ -248,4 +269,3 @@ public class SBPMessage {
         }
     }
 }
-
