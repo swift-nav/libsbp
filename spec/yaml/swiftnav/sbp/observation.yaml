@@ -1110,3 +1110,133 @@ definitions:
       - isc_l2c:
           type: s16
           units: s * 2^-35
+
+ - AlmanacCommonContent:
+    short_desc: Common fields for every almanac message.
+    fields:
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier
+        - toa:
+            type: GPSTime
+            desc: Reference time of almanac
+        - ura:
+            type: double
+            units: m
+            desc: User Range Accuracy
+        - fit_interval:
+            type: u32
+            units: s
+            desc: Curve fit interval
+        - valid:
+            type: u8
+            desc: Status of almanac, 1 = valid, 0 = invalid
+        - health_bits:
+            type: u8
+            desc: |
+              Satellite health status for GPS:
+                - bits 5-7: NAV data health status. See IS-GPS-200H
+                  Table 20-VII: NAV Data Health Indications.
+                - bits 0-4: Signal health status. See IS-GPS-200H
+                  Table 20-VIII. Codes for Health of SV Signal
+                  Components.
+              Satellite health status for GLO:
+                See GLO ICD 5.1 table 5.1 for details
+                - bit 0: C(n), "unhealthy" flag that is transmitted within 
+                  non-immediate data and indicates overall constellation status
+                  at the moment of almanac uploading.
+                  '0' indicates malfunction of n-satellite.
+                  '1' indicates that n-satellite is operational.
+                - bit 1: Bn(ln), '0' indicates the satellite is operational
+                  and suitable for navigation.
+
+ - MSG_ALMANAC_GPS:
+    id: 0x0070
+    short_desc: Satellite broadcast ephemeris for GPS
+    desc: |
+      The almanac message returns a set of satellite orbit parameters. Almanac
+      data is not very precise and is considered valid for up to several months.
+      Please see the Navstar GPS Space Segment/Navigation user interfaces
+      (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+    fields:
+      - common:
+          type: AlmanacCommonContent
+          desc: Values common for all almanac types
+      - m0:
+          type: double
+          units: rad
+          desc: Mean anomaly at reference time
+      - ecc:
+          type: double
+          desc: Eccentricity of satellite orbit
+      - sqrta:
+          type: double
+          units: m^(1/2)
+          desc: Square root of the semi-major axis of orbit
+      - omega0:
+          type: double
+          units: rad
+          desc: Longitude of ascending node of orbit plane at weekly epoch
+      - omegadot:
+          type: double
+          units: rad/s
+          desc: Rate of right ascension
+      - w:
+          type: double
+          units: rad
+          desc: Argument of perigee
+      - inc:
+          type: double
+          units: rad
+          desc: Inclination
+      - af0:
+          type: double
+          units: s
+          desc: Polynomial clock correction coefficient (clock bias)
+      - af1:
+          type: double
+          units: s/s
+          desc: Polynomial clock correction coefficient (clock drift)
+
+ - MSG_ALMANAC_GLO:
+    id: 0x0071
+    short_desc: Satellite broadcast ephemeris for GLO
+    desc: |
+      The almanac message returns a set of satellite orbit parameters. Almanac
+      data is not very precise and is considered valid for up to several months.
+      Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
+      almanac" for details.
+    fields:
+      - common:
+          type: AlmanacCommonContent
+          desc: Values common for all almanac types
+      - lambda_na:
+          type: double
+          units: rad
+          desc: |
+            Longitude of the first ascending node of the orbit in PZ-90.02
+            coordinate system
+      - t_lambda_na:
+          type: double
+          units: s
+          desc: Time of the first ascending node passage
+      - i:
+          type: double
+          units: rad
+          desc: Value of inclination at instant of t_lambda
+      - t:
+          type: double
+          units: s/orbital period
+          desc: Value of Draconian period at instant of t_lambda
+      - t_dot:
+          type: double
+          units: s/(orbital period^2)
+          desc: Rate of change of the Draconian period
+      - epsilon:
+          type: double
+          desc: Eccentricity at instant of t_lambda
+      - omega:
+          type: double
+          units: rad
+          desc: Argument of perigee at instant of t_lambda
+

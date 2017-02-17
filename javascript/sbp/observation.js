@@ -1313,6 +1313,161 @@ MsgGroupDelay.prototype.fieldSpec.push(['tgd', 'writeInt16LE', 2]);
 MsgGroupDelay.prototype.fieldSpec.push(['isc_l1ca', 'writeInt16LE', 2]);
 MsgGroupDelay.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
 
+/**
+ * SBP class for message fragment AlmanacCommonContent
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sid GnssSignal GNSS signal identifier
+ * @field toa GPSTime Reference time of almanac
+ * @field ura number (float, 8 bytes) User Range Accuracy
+ * @field fit_interval number (unsigned 32-bit int, 4 bytes) Curve fit interval
+ * @field valid number (unsigned 8-bit int, 1 byte) Status of almanac, 1 = valid, 0 = invalid
+ * @field health_bits number (unsigned 8-bit int, 1 byte) Satellite health status for GPS:   - bits 5-7: NAV data health status. See IS-
+ *   GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits 0-4: Signal
+ *   health status. See IS-GPS-200H     Table 20-VIII. Codes for Health of SV Signal
+ *   Components. Satellite health status for GLO:   See GLO ICD 5.1 table 5.1 for
+ *   details   - bit 0: C(n), "unhealthy" flag that is transmitted within      non-
+ *   immediate data and indicates overall constellation status     at the moment of
+ *   almanac uploading.     '0' indicates malfunction of n-satellite.     '1'
+ *   indicates that n-satellite is operational.   - bit 1: Bn(ln), '0' indicates the
+ *   satellite is operational     and suitable for navigation.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var AlmanacCommonContent = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "AlmanacCommonContent";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+AlmanacCommonContent.prototype = Object.create(SBP.prototype);
+AlmanacCommonContent.prototype.messageType = "AlmanacCommonContent";
+AlmanacCommonContent.prototype.constructor = AlmanacCommonContent;
+AlmanacCommonContent.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .nest('toa', { type: GPSTime.prototype.parser })
+  .doublele('ura')
+  .uint32('fit_interval')
+  .uint8('valid')
+  .uint8('health_bits');
+AlmanacCommonContent.prototype.fieldSpec = [];
+AlmanacCommonContent.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+AlmanacCommonContent.prototype.fieldSpec.push(['toa', GPSTime.prototype.fieldSpec]);
+AlmanacCommonContent.prototype.fieldSpec.push(['ura', 'writeDoubleLE', 8]);
+AlmanacCommonContent.prototype.fieldSpec.push(['fit_interval', 'writeUInt32LE', 4]);
+AlmanacCommonContent.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
+AlmanacCommonContent.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_ALMANAC_GPS (0x0070).
+ *
+ * The almanac message returns a set of satellite orbit parameters. Almanac data is
+ * not very precise and is considered valid for up to several months. Please see
+ * the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200, Chapter
+ * 20.3.3.5.1.2 Almanac Data) for more details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field common AlmanacCommonContent Values common for all almanac types
+ * @field m0 number (float, 8 bytes) Mean anomaly at reference time
+ * @field ecc number (float, 8 bytes) Eccentricity of satellite orbit
+ * @field sqrta number (float, 8 bytes) Square root of the semi-major axis of orbit
+ * @field omega0 number (float, 8 bytes) Longitude of ascending node of orbit plane at weekly epoch
+ * @field omegadot number (float, 8 bytes) Rate of right ascension
+ * @field w number (float, 8 bytes) Argument of perigee
+ * @field inc number (float, 8 bytes) Inclination
+ * @field af0 number (float, 8 bytes) Polynomial clock correction coefficient (clock bias)
+ * @field af1 number (float, 8 bytes) Polynomial clock correction coefficient (clock drift)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgAlmanacGps = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ALMANAC_GPS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgAlmanacGps.prototype = Object.create(SBP.prototype);
+MsgAlmanacGps.prototype.messageType = "MSG_ALMANAC_GPS";
+MsgAlmanacGps.prototype.msg_type = 0x0070;
+MsgAlmanacGps.prototype.constructor = MsgAlmanacGps;
+MsgAlmanacGps.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('common', { type: AlmanacCommonContent.prototype.parser })
+  .doublele('m0')
+  .doublele('ecc')
+  .doublele('sqrta')
+  .doublele('omega0')
+  .doublele('omegadot')
+  .doublele('w')
+  .doublele('inc')
+  .doublele('af0')
+  .doublele('af1');
+MsgAlmanacGps.prototype.fieldSpec = [];
+MsgAlmanacGps.prototype.fieldSpec.push(['common', AlmanacCommonContent.prototype.fieldSpec]);
+MsgAlmanacGps.prototype.fieldSpec.push(['m0', 'writeDoubleLE', 8]);
+MsgAlmanacGps.prototype.fieldSpec.push(['ecc', 'writeDoubleLE', 8]);
+MsgAlmanacGps.prototype.fieldSpec.push(['sqrta', 'writeDoubleLE', 8]);
+MsgAlmanacGps.prototype.fieldSpec.push(['omega0', 'writeDoubleLE', 8]);
+MsgAlmanacGps.prototype.fieldSpec.push(['omegadot', 'writeDoubleLE', 8]);
+MsgAlmanacGps.prototype.fieldSpec.push(['w', 'writeDoubleLE', 8]);
+MsgAlmanacGps.prototype.fieldSpec.push(['inc', 'writeDoubleLE', 8]);
+MsgAlmanacGps.prototype.fieldSpec.push(['af0', 'writeDoubleLE', 8]);
+MsgAlmanacGps.prototype.fieldSpec.push(['af1', 'writeDoubleLE', 8]);
+
+/**
+ * SBP class for message MSG_ALMANAC_GLO (0x0071).
+ *
+ * The almanac message returns a set of satellite orbit parameters. Almanac data is
+ * not very precise and is considered valid for up to several months. Please see
+ * the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and almanac" for details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field common AlmanacCommonContent Values common for all almanac types
+ * @field lambda_na number (float, 8 bytes) Longitude of the first ascending node of the orbit in PZ-90.02 coordinate system
+ * @field t_lambda_na number (float, 8 bytes) Time of the first ascending node passage
+ * @field i number (float, 8 bytes) Value of inclination at instant of t_lambda
+ * @field t number (float, 8 bytes) Value of Draconian period at instant of t_lambda
+ * @field t_dot number (float, 8 bytes) Rate of change of the Draconian period
+ * @field epsilon number (float, 8 bytes) Eccentricity at instant of t_lambda
+ * @field omega number (float, 8 bytes) Argument of perigee at instant of t_lambda
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgAlmanacGlo = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ALMANAC_GLO";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgAlmanacGlo.prototype = Object.create(SBP.prototype);
+MsgAlmanacGlo.prototype.messageType = "MSG_ALMANAC_GLO";
+MsgAlmanacGlo.prototype.msg_type = 0x0071;
+MsgAlmanacGlo.prototype.constructor = MsgAlmanacGlo;
+MsgAlmanacGlo.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('common', { type: AlmanacCommonContent.prototype.parser })
+  .doublele('lambda_na')
+  .doublele('t_lambda_na')
+  .doublele('i')
+  .doublele('t')
+  .doublele('t_dot')
+  .doublele('epsilon')
+  .doublele('omega');
+MsgAlmanacGlo.prototype.fieldSpec = [];
+MsgAlmanacGlo.prototype.fieldSpec.push(['common', AlmanacCommonContent.prototype.fieldSpec]);
+MsgAlmanacGlo.prototype.fieldSpec.push(['lambda_na', 'writeDoubleLE', 8]);
+MsgAlmanacGlo.prototype.fieldSpec.push(['t_lambda_na', 'writeDoubleLE', 8]);
+MsgAlmanacGlo.prototype.fieldSpec.push(['i', 'writeDoubleLE', 8]);
+MsgAlmanacGlo.prototype.fieldSpec.push(['t', 'writeDoubleLE', 8]);
+MsgAlmanacGlo.prototype.fieldSpec.push(['t_dot', 'writeDoubleLE', 8]);
+MsgAlmanacGlo.prototype.fieldSpec.push(['epsilon', 'writeDoubleLE', 8]);
+MsgAlmanacGlo.prototype.fieldSpec.push(['omega', 'writeDoubleLE', 8]);
+
 module.exports = {
   ObservationHeader: ObservationHeader,
   Doppler: Doppler,
@@ -1355,4 +1510,9 @@ module.exports = {
   MsgSvConfigurationGps: MsgSvConfigurationGps,
   0x0092: MsgGroupDelay,
   MsgGroupDelay: MsgGroupDelay,
+  AlmanacCommonContent: AlmanacCommonContent,
+  0x0070: MsgAlmanacGps,
+  MsgAlmanacGps: MsgAlmanacGps,
+  0x0071: MsgAlmanacGlo,
+  MsgAlmanacGlo: MsgAlmanacGlo,
 }

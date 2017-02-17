@@ -543,6 +543,75 @@ LSB indicating tgd validity etc.
 } msg_group_delay_t;
 
 
+typedef struct __attribute__((packed)) {
+  sbp_gnss_signal_t sid;             /**< GNSS signal identifier */
+  sbp_gps_time_t toa;             /**< Reference time of almanac */
+  double ura;             /**< User Range Accuracy [m] */
+  u32 fit_interval;    /**< Curve fit interval [s] */
+  u8 valid;           /**< Status of almanac, 1 = valid, 0 = invalid */
+  u8 health_bits;     /**< Satellite health status for GPS:
+  - bits 5-7: NAV data health status. See IS-GPS-200H
+    Table 20-VII: NAV Data Health Indications.
+  - bits 0-4: Signal health status. See IS-GPS-200H
+    Table 20-VIII. Codes for Health of SV Signal
+    Components.
+Satellite health status for GLO:
+  See GLO ICD 5.1 table 5.1 for details
+  - bit 0: C(n), "unhealthy" flag that is transmitted within 
+    non-immediate data and indicates overall constellation status
+    at the moment of almanac uploading.
+    '0' indicates malfunction of n-satellite.
+    '1' indicates that n-satellite is operational.
+  - bit 1: Bn(ln), '0' indicates the satellite is operational
+    and suitable for navigation.
+ */
+} almanac_common_content_t;
+
+
+/** Satellite broadcast ephemeris for GPS
+ *
+ * The almanac message returns a set of satellite orbit parameters. Almanac
+ * data is not very precise and is considered valid for up to several months.
+ * Please see the Navstar GPS Space Segment/Navigation user interfaces
+ * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+ */
+#define SBP_MSG_ALMANAC_GPS          0x0070
+typedef struct __attribute__((packed)) {
+  almanac_common_content_t common;      /**< Values common for all almanac types */
+  double m0;          /**< Mean anomaly at reference time [rad] */
+  double ecc;         /**< Eccentricity of satellite orbit */
+  double sqrta;       /**< Square root of the semi-major axis of orbit [m^(1/2)] */
+  double omega0;      /**< Longitude of ascending node of orbit plane at weekly epoch [rad] */
+  double omegadot;    /**< Rate of right ascension [rad/s] */
+  double w;           /**< Argument of perigee [rad] */
+  double inc;         /**< Inclination [rad] */
+  double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
+  double af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
+} msg_almanac_gps_t;
+
+
+/** Satellite broadcast ephemeris for GLO
+ *
+ * The almanac message returns a set of satellite orbit parameters. Almanac
+ * data is not very precise and is considered valid for up to several months.
+ * Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
+ * almanac" for details.
+ */
+#define SBP_MSG_ALMANAC_GLO          0x0071
+typedef struct __attribute__((packed)) {
+  almanac_common_content_t common;         /**< Values common for all almanac types */
+  double lambda_na;      /**< Longitude of the first ascending node of the orbit in PZ-90.02
+coordinate system
+ [rad] */
+  double t_lambda_na;    /**< Time of the first ascending node passage [s] */
+  double i;              /**< Value of inclination at instant of t_lambda [rad] */
+  double t;              /**< Value of Draconian period at instant of t_lambda [s/orbital period] */
+  double t_dot;          /**< Rate of change of the Draconian period [s/(orbital period^2)] */
+  double epsilon;        /**< Eccentricity at instant of t_lambda */
+  double omega;          /**< Argument of perigee at instant of t_lambda [rad] */
+} msg_almanac_glo_t;
+
+
 /** \} */
 
 #endif /* LIBSBP_OBSERVATION_MESSAGES_H */

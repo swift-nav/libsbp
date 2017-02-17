@@ -64,6 +64,8 @@ data SBPMsg =
    | SBPMsgAcqSvProfile MsgAcqSvProfile Msg
    | SBPMsgAgeCorrections MsgAgeCorrections Msg
    | SBPMsgAlmanac MsgAlmanac Msg
+   | SBPMsgAlmanacGlo MsgAlmanacGlo Msg
+   | SBPMsgAlmanacGps MsgAlmanacGps Msg
    | SBPMsgBasePosEcef MsgBasePosEcef Msg
    | SBPMsgBasePosLlh MsgBasePosLlh Msg
    | SBPMsgBaselineEcef MsgBaselineEcef Msg
@@ -180,6 +182,8 @@ instance Binary SBPMsg where
           | _msgSBPType == msgAcqSvProfile = SBPMsgAcqSvProfile (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgAgeCorrections = SBPMsgAgeCorrections (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgAlmanac = SBPMsgAlmanac (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgAlmanacGlo = SBPMsgAlmanacGlo (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgAlmanacGps = SBPMsgAlmanacGps (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBasePosEcef = SBPMsgBasePosEcef (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBasePosLlh = SBPMsgBasePosLlh (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgBaselineEcef = SBPMsgBaselineEcef (decode (fromStrict _msgSBPPayload)) m
@@ -288,6 +292,8 @@ instance Binary SBPMsg where
       encode' (SBPMsgAcqSvProfile _ m) = put m
       encode' (SBPMsgAgeCorrections _ m) = put m
       encode' (SBPMsgAlmanac _ m) = put m
+      encode' (SBPMsgAlmanacGlo _ m) = put m
+      encode' (SBPMsgAlmanacGps _ m) = put m
       encode' (SBPMsgBasePosEcef _ m) = put m
       encode' (SBPMsgBasePosLlh _ m) = put m
       encode' (SBPMsgBaselineEcef _ m) = put m
@@ -399,6 +405,8 @@ instance FromJSON SBPMsg where
         | msgType == msgAcqSvProfile = SBPMsgAcqSvProfile <$> parseJSON obj <*> parseJSON obj
         | msgType == msgAgeCorrections = SBPMsgAgeCorrections <$> parseJSON obj <*> parseJSON obj
         | msgType == msgAlmanac = SBPMsgAlmanac <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgAlmanacGlo = SBPMsgAlmanacGlo <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgAlmanacGps = SBPMsgAlmanacGps <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBasePosEcef = SBPMsgBasePosEcef <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBasePosLlh = SBPMsgBasePosLlh <$> parseJSON obj <*> parseJSON obj
         | msgType == msgBaselineEcef = SBPMsgBaselineEcef <$> parseJSON obj <*> parseJSON obj
@@ -512,6 +520,8 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgAcqSvProfile n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgAgeCorrections n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgAlmanac n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgAlmanacGlo n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgAlmanacGps n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBasePosEcef n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBasePosLlh n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgBaselineEcef n m) = toJSON n `mergeValues` toJSON m
@@ -619,6 +629,8 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgAcqSvProfile n m) = SBPMsgAcqSvProfile n <$> f m
   msg f (SBPMsgAgeCorrections n m) = SBPMsgAgeCorrections n <$> f m
   msg f (SBPMsgAlmanac n m) = SBPMsgAlmanac n <$> f m
+  msg f (SBPMsgAlmanacGlo n m) = SBPMsgAlmanacGlo n <$> f m
+  msg f (SBPMsgAlmanacGps n m) = SBPMsgAlmanacGps n <$> f m
   msg f (SBPMsgBasePosEcef n m) = SBPMsgBasePosEcef n <$> f m
   msg f (SBPMsgBasePosLlh n m) = SBPMsgBasePosLlh n <$> f m
   msg f (SBPMsgBaselineEcef n m) = SBPMsgBaselineEcef n <$> f m
