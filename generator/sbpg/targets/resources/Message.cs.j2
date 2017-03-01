@@ -1,0 +1,123 @@
+/*
+ * Copyright (C) 2015 Swift Navigation Inc.
+ * Contact: Gareth McMullin <gareth@swiftnav.com>
+ * Contact: Bhaskar Mookerji <mookerji@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+package (((module_path)));
+
+import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
+
+((*- for i in include *))
+import com.swiftnav.sbp.(((i))).*;
+((*- endfor *))
+
+import org.json.JSONObject;
+import org.json.JSONArray;
+((*- if m.sbp_id *))
+
+((* if m.desc *))
+/** SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).
+ *
+ * You can have (((m.identifier))) inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
+ *
+(((m.desc | commentify))) */
+((*- endif *))
+
+public class (((m.identifier | classnameify))) extends SBPMessage {
+    public static final int TYPE = ((('0x%04X'|format(m.sbp_id))));
+
+    ((* if m.fields *))
+    ((*- for f in m.fields *))
+    ((*- if f.desc *))
+    /** (((f.desc))) */
+    ((*- endif *))
+    public (((f | type_map))) (((f.identifier)));
+    ((* endfor *))
+    ((*- endif *))
+
+    public (((m.identifier | classnameify))) (int sender) { super(sender, TYPE); }
+    public (((m.identifier | classnameify))) () { super(TYPE); }
+    public (((m.identifier | classnameify))) (SBPMessage msg) throws SBPBinaryException {
+        super(msg);
+        assert msg.type != TYPE;
+    }
+
+    @Override
+    protected void parse(Parser parser) throws SBPBinaryException {
+        /* Parse fields from binary */
+        ((*- if m.fields *)) ((*- for f in m.fields *))
+        (((f.identifier))) = (((f | parse_type)));
+        ((*- endfor *)) ((*- endif *))
+    }
+
+    @Override
+    protected void build(Builder builder) {
+        ((*- if m.fields *)) ((*- for f in m.fields *))
+        (((f | build_type)));
+        ((*- endfor *)) ((*- endif *))
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject obj = super.toJSON();
+        ((*- if m.fields *)) ((*- for f in m.fields *))
+        obj.put("(((f.identifier)))", (((f|jsonify))));
+        ((*- endfor *)) ((*- endif *))
+        return obj;
+    }
+}
+((*- endif *))
+((*- if not m.sbp_id *))
+import com.swiftnav.sbp.SBPStruct;
+
+public class (((m.identifier))) extends SBPStruct {
+    ((* if m.fields *))
+    ((*- for f in m.fields *))
+    ((*- if f.desc *))
+    /** (((f.desc))) */
+    ((*- endif *))
+    public (((f | type_map))) (((f.identifier)));
+    ((* endfor *))
+    ((*- endif *))
+
+    public (((m.identifier))) () {}
+
+    @Override
+    public (((m.identifier))) parse(SBPMessage.Parser parser) throws SBPBinaryException {
+        /* Parse fields from binary */
+        ((*- if m.fields *)) ((*- for f in m.fields *))
+        (((f.identifier))) = (((f | parse_type)));
+        ((*- endfor *)) ((*- endif *))
+        return this;
+    }
+
+    @Override
+    public void build(SBPMessage.Builder builder) {
+        /* Build fields into binary */
+        ((*- if m.fields *)) ((*- for f in m.fields *))
+        (((f | build_type)));
+        ((*- endfor *)) ((*- endif *))
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject obj = new JSONObject();
+        ((*- if m.fields *)) ((*- for f in m.fields *))
+        obj.put("(((f.identifier)))", (((f|jsonify))));
+        ((*- endfor *)) ((*- endif *))
+        return obj;
+    }
+}
+((*- endif *))

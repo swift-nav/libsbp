@@ -20,6 +20,7 @@ import pprint
 import sbpg.specs.yaml2 as yaml
 import sbpg.targets.c as c
 import sbpg.targets.test_c as test_c
+import sbpg.targets.csharp as cs
 import sbpg.targets.java as java
 import sbpg.targets.latex as tex
 import sbpg.targets.haskell as hs
@@ -56,6 +57,9 @@ def get_args():
   parser.add_argument('--java',
                       action="store_true",
                       help='Target language: Java!')
+  parser.add_argument('--csharp',
+                      action="store_true",
+                      help='Target language: C#.')
   parser.add_argument('--latex',
                       action="store_true",
                       help='Target language: LaTeX.')
@@ -76,7 +80,7 @@ def main():
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
-    assert args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.java, \
+    assert args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.java or args.csharp, \
       "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
@@ -128,6 +132,8 @@ def main():
           hs.render_source(output_dir, parsed)
         elif args.java:
           java.render_source(output_dir, parsed)
+        elif args.csharp:
+          cs.render_source(output_dir, parsed)
       if args.c:
         c.render_version(output_dir, args.release[0])
       elif args.haskell:
@@ -137,6 +143,9 @@ def main():
       elif args.java:
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
         java.render_table(output_dir, parsed)
+      elif args.csharp:
+        parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
+        cs.render_table(output_dir, parsed)
       elif args.test_c:
         test_c.render_check_suites(output_dir, all_specs)
         test_c.render_check_main(output_dir, all_specs)
