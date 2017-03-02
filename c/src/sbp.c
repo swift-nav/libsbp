@@ -372,8 +372,9 @@ s8 sbp_process(sbp_state_t *s, u32 (*read)(u8 *buff, u32 n, void *context))
       if (s->crc == crc) {
 
         /* Message complete, process it. */
-        return sbp_process_payload(s, s->sender_id, s->msg_type, s->msg_len,
-                                   s->msg_buff);
+        s8 ret = sbp_process_payload(s, s->sender_id, s->msg_type, s->msg_len,
+                                     s->msg_buff);
+        return ret;
       } else {
         return SBP_CRC_ERROR;
       }
