@@ -372,14 +372,8 @@ s8 sbp_process(sbp_state_t *s, u32 (*read)(u8 *buff, u32 n, void *context))
       if (s->crc == crc) {
 
         /* Message complete, process it. */
-        s8 ret = SBP_OK_CALLBACK_UNDEFINED;
-        sbp_msg_callbacks_node_t* node;
-        for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
-          if (node->msg_type == s->msg_type) {
-            (*node->cb)(s->sender_id, s->msg_len, s->msg_buff, node->context);
-            ret = SBP_OK_CALLBACK_EXECUTED;
-          }
-        }
+        s8 ret = sbp_process_payload(s, s->sender_id, s->msg_type, s->msg_len,
+                                     s->msg_buff);
         return ret;
       } else {
         return SBP_CRC_ERROR;
@@ -394,6 +388,33 @@ s8 sbp_process(sbp_state_t *s, u32 (*read)(u8 *buff, u32 n, void *context))
 
   return SBP_OK;
 }
+
+/** Directly process a SBP message.
+ * If a SBP message has already been decoded (for example, from a binary
+ * stream or from a JSON log file) use this function to directly process it.
+ *
+ * \param s State structure
+ * \param sender_id SBP message sender id
+ * \param msg_type SBP message type
+ * \param msg_len SBP message length
+ * \param payload SBP message payload
+ * \return `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback executed,
+ *         `SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no associated
+ *         callback.
+ */
+s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
+                       u8 payload[]) {
+  s8 ret = SBP_OK_CALLBACK_UNDEFINED;
+  sbp_msg_callbacks_node_t *node;
+  for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
+    if (node->msg_type == msg_type) {
+      (*node->cb)(sender_id, msg_len, payload, node->context);
+      ret = SBP_OK_CALLBACK_EXECUTED;
+    }
+  }
+  return ret;
+}
+
 
 /** Send SBP messages.
  * Takes an SBP message payload, type and sender ID then writes a message to
