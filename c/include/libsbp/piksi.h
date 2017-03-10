@@ -34,7 +34,7 @@
  * This is a legacy message for sending and loading a satellite
  * alamanac onto the Piksi's flash memory from the host.
  */
-#define SBP_MSG_ALMANAC         0x0069
+#define SBP_MSG_ALMANAC            0x0069
 
 
 /** Send GPS time from host (host => Piksi)
@@ -42,7 +42,7 @@
  * This message sets up timing functionality using a coarse GPS
  * time estimate sent by the host.
  */
-#define SBP_MSG_SET_TIME        0x0068
+#define SBP_MSG_SET_TIME           0x0068
 
 
 /** Reset the device (host => Piksi)
@@ -50,7 +50,7 @@
  * This message from the host resets the Piksi back into the
  * bootloader.
  */
-#define SBP_MSG_RESET           0x00B6
+#define SBP_MSG_RESET              0x00B6
 typedef struct __attribute__((packed)) {
   u32 flags;    /**< Reset flags */
 } msg_reset_t;
@@ -61,7 +61,7 @@ typedef struct __attribute__((packed)) {
  * This message from the host resets the Piksi back into the
  * bootloader.
  */
-#define SBP_MSG_RESET_DEP       0x00B2
+#define SBP_MSG_RESET_DEP          0x00B2
 
 
 /** Legacy message for CW interference channel (Piksi => host)
@@ -70,7 +70,7 @@ typedef struct __attribute__((packed)) {
  * CW interference channel on the SwiftNAP. This message will be
  * removed in a future release.
  */
-#define SBP_MSG_CW_RESULTS      0x00C0
+#define SBP_MSG_CW_RESULTS         0x00C0
 
 
 /** Legacy message for CW interference channel (host => Piksi)
@@ -79,7 +79,7 @@ typedef struct __attribute__((packed)) {
  * the CW interference channel on the SwiftNAP. This message will
  * be removed in a future release.
  */
-#define SBP_MSG_CW_START        0x00C1
+#define SBP_MSG_CW_START           0x00C1
 
 
 /** Reset IAR filters (host => Piksi)
@@ -87,7 +87,7 @@ typedef struct __attribute__((packed)) {
  * This message resets either the DGNSS Kalman filters or Integer
  * Ambiguity Resolution (IAR) process.
  */
-#define SBP_MSG_RESET_FILTERS   0x0022
+#define SBP_MSG_RESET_FILTERS      0x0022
 typedef struct __attribute__((packed)) {
   u8 filter;    /**< Filter flags */
 } msg_reset_filters_t;
@@ -101,7 +101,7 @@ typedef struct __attribute__((packed)) {
  * there aren't a shared minimum number (4) of satellite
  * observations between the two.
  */
-#define SBP_MSG_INIT_BASE       0x0023
+#define SBP_MSG_INIT_BASE          0x0023
 
 
 /** State of an RTOS thread
@@ -110,7 +110,7 @@ typedef struct __attribute__((packed)) {
  * operating system (RTOS) thread usage statistics for the named
  * thread. The reported percentage values must be normalized.
  */
-#define SBP_MSG_THREAD_STATE    0x0017
+#define SBP_MSG_THREAD_STATE       0x0017
 typedef struct __attribute__((packed)) {
   char name[20];      /**< Thread name (NULL terminated) */
   u16 cpu;           /**< Percentage cpu use for this thread. Values range from 0
@@ -185,7 +185,7 @@ typedef struct __attribute__((packed)) {
  * the timeliness of received base observations while the
  * period indicates their likelihood of transmission.
  */
-#define SBP_MSG_UART_STATE      0x001D
+#define SBP_MSG_UART_STATE         0x001D
 typedef struct __attribute__((packed)) {
   uart_channel_t uart_a;        /**< State of UART A */
   uart_channel_t uart_b;        /**< State of UART B */
@@ -199,7 +199,7 @@ typedef struct __attribute__((packed)) {
  *
 * Deprecated
  */
-#define SBP_MSG_UART_STATE_DEPA 0x0018
+#define SBP_MSG_UART_STATE_DEPA    0x0018
 typedef struct __attribute__((packed)) {
   uart_channel_t uart_a;       /**< State of UART A */
   uart_channel_t uart_b;       /**< State of UART B */
@@ -215,7 +215,7 @@ typedef struct __attribute__((packed)) {
  * ambiguities from double-differenced carrier-phase measurements
  * from satellite observations.
  */
-#define SBP_MSG_IAR_STATE       0x0019
+#define SBP_MSG_IAR_STATE          0x0019
 typedef struct __attribute__((packed)) {
   u32 num_hyps;    /**< Number of integer ambiguity hypotheses remaining */
 } msg_iar_state_t;
@@ -226,7 +226,7 @@ typedef struct __attribute__((packed)) {
  * This message allows setting a mask to prevent a particular satellite
  * from being used in various Piksi subsystems.
  */
-#define SBP_MSG_MASK_SATELLITE  0x001B
+#define SBP_MSG_MASK_SATELLITE     0x001B
 typedef struct __attribute__((packed)) {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   sbp_gnss_signal_t sid;     /**< GNSS signal for which the mask is applied */
@@ -239,7 +239,7 @@ typedef struct __attribute__((packed)) {
  * processor's monitoring system and the RF frontend die temperature if
  * available.
  */
-#define SBP_MSG_DEVICE_MONITOR  0x00B5
+#define SBP_MSG_DEVICE_MONITOR     0x00B5
 typedef struct __attribute__((packed)) {
   s16 dev_vin;            /**< Device V_in [V * 1000] */
   s16 cpu_vint;           /**< Processor V_int [V * 1000] */
@@ -255,7 +255,7 @@ typedef struct __attribute__((packed)) {
  * Output will be sent in MSG_LOG messages, and the exit
  * code will be returned with MSG_COMMAND_RESP.
  */
-#define SBP_MSG_COMMAND_REQ     0x00B8
+#define SBP_MSG_COMMAND_REQ        0x00B8
 typedef struct __attribute__((packed)) {
   u32 sequence;    /**< Sequence number */
   char command[0];  /**< Command line to execute */
@@ -267,11 +267,31 @@ typedef struct __attribute__((packed)) {
  * The response to MSG_COMMAND_REQ with the return code of
  * the command.  A return code of zero indicates success.
  */
-#define SBP_MSG_COMMAND_RESP    0x00B9
+#define SBP_MSG_COMMAND_RESP       0x00B9
 typedef struct __attribute__((packed)) {
   u32 sequence;    /**< Sequence number */
   s32 code;        /**< Exit code */
 } msg_command_resp_t;
+
+
+/** Request state of Piksi network interfaces
+ *
+ * Request state of Piksi network interfaces.
+ * Output will be sent in MSG_NETWORK_STATE_RESP messages
+ */
+#define SBP_MSG_NETWORK_STATE_REQ  0x00BA
+
+
+/** State of network interface
+ *
+ * The state of a network interface on the Piksi
+ */
+#define SBP_MSG_NETWORK_STATE_RESP 0x00BB
+typedef struct __attribute__((packed)) {
+  u32 ip_address;        /**< IPv4 Address */
+  char interface_name[16]; /**< Interface Name */
+  u8 status;            /**< Status of interface */
+} msg_network_state_resp_t;
 
 
 /** \} */

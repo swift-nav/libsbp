@@ -1398,6 +1398,143 @@ the command.  A return code of zero indicates success.
     d.update(j)
     return d
     
+SBP_MSG_NETWORK_STATE_REQ = 0x00BA
+class MsgNetworkStateReq(SBP):
+  """SBP class for message MSG_NETWORK_STATE_REQ (0x00BA).
+
+  You can have MSG_NETWORK_STATE_REQ inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Request state of Piksi network interfaces.
+Output will be sent in MSG_NETWORK_STATE_RESP messages
+
+
+  """
+  __slots__ = []
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgNetworkStateReq,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.payload = sbp.payload
+    else:
+      super( MsgNetworkStateReq, self).__init__()
+      self.msg_type = SBP_MSG_NETWORK_STATE_REQ
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.payload = ""
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgNetworkStateReq.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgNetworkStateReq(sbp, **d)
+
+ 
+    
+SBP_MSG_NETWORK_STATE_RESP = 0x00BB
+class MsgNetworkStateResp(SBP):
+  """SBP class for message MSG_NETWORK_STATE_RESP (0x00BB).
+
+  You can have MSG_NETWORK_STATE_RESP inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The state of a network interface on the Piksi
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  ip_address : int
+    IPv4 Address
+  interface_name : string
+    Interface Name
+  status : int
+    Status of interface
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgNetworkStateResp",
+                   ULInt32('ip_address'),
+                   String('interface_name', 16),
+                   ULInt8('status'),)
+  __slots__ = [
+               'ip_address',
+               'interface_name',
+               'status',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgNetworkStateResp,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgNetworkStateResp, self).__init__()
+      self.msg_type = SBP_MSG_NETWORK_STATE_RESP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.ip_address = kwargs.pop('ip_address')
+      self.interface_name = kwargs.pop('interface_name')
+      self.status = kwargs.pop('status')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgNetworkStateResp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgNetworkStateResp(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgNetworkStateResp._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgNetworkStateResp._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgNetworkStateResp, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0069: MsgAlmanac,
@@ -1416,4 +1553,6 @@ msg_classes = {
   0x00B5: MsgDeviceMonitor,
   0x00B8: MsgCommandReq,
   0x00B9: MsgCommandResp,
+  0x00BA: MsgNetworkStateReq,
+  0x00BB: MsgNetworkStateResp,
 }

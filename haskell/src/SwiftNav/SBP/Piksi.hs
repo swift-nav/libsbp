@@ -611,3 +611,59 @@ $(deriveSBP 'msgCommandResp ''MsgCommandResp)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCommandResp_" . P.stripPrefix "_msgCommandResp_"}
              ''MsgCommandResp)
 $(makeLenses ''MsgCommandResp)
+
+msgNetworkStateReq :: Word16
+msgNetworkStateReq = 0x00BA
+
+-- | SBP class for message MSG_NETWORK_STATE_REQ (0x00BA).
+--
+-- Request state of Piksi network interfaces. Output will be sent in
+-- MSG_NETWORK_STATE_RESP messages
+data MsgNetworkStateReq = MsgNetworkStateReq
+  deriving ( Show, Read, Eq )
+
+instance Binary MsgNetworkStateReq where
+  get =
+    return MsgNetworkStateReq
+
+  put MsgNetworkStateReq =
+    return ()
+
+$(deriveSBP 'msgNetworkStateReq ''MsgNetworkStateReq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNetworkStateReq_" . P.stripPrefix "_msgNetworkStateReq_"}
+             ''MsgNetworkStateReq)
+$(makeLenses ''MsgNetworkStateReq)
+
+msgNetworkStateResp :: Word16
+msgNetworkStateResp = 0x00BB
+
+-- | SBP class for message MSG_NETWORK_STATE_RESP (0x00BB).
+--
+-- The state of a network interface on the Piksi
+data MsgNetworkStateResp = MsgNetworkStateResp
+  { _msgNetworkStateResp_ip_address   :: Word32
+    -- ^ IPv4 Address
+  , _msgNetworkStateResp_interface_name :: Text
+    -- ^ Interface Name
+  , _msgNetworkStateResp_status       :: Word8
+    -- ^ Status of interface
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgNetworkStateResp where
+  get = do
+    _msgNetworkStateResp_ip_address <- getWord32le
+    _msgNetworkStateResp_interface_name <- decodeUtf8 <$> getByteString 16
+    _msgNetworkStateResp_status <- getWord8
+    return MsgNetworkStateResp {..}
+
+  put MsgNetworkStateResp {..} = do
+    putWord32le _msgNetworkStateResp_ip_address
+    putByteString $ encodeUtf8 _msgNetworkStateResp_interface_name
+    putWord8 _msgNetworkStateResp_status
+
+$(deriveSBP 'msgNetworkStateResp ''MsgNetworkStateResp)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNetworkStateResp_" . P.stripPrefix "_msgNetworkStateResp_"}
+             ''MsgNetworkStateResp)
+$(makeLenses ''MsgNetworkStateResp)

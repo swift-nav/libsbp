@@ -358,3 +358,33 @@ definitions:
       - code:
           type: s32
           desc: Exit code
+
+ - MSG_NETWORK_STATE_REQ:
+    id: 0x00BA
+    short_desc: Request state of Piksi network interfaces
+    desc: |
+      Request state of Piksi network interfaces.
+      Output will be sent in MSG_NETWORK_STATE_RESP messages
+
+ - MSG_NETWORK_STATE_RESP:
+    id: 0x00BB
+    short_desc: State of network interface
+    desc: |
+      The state of a network interface on the Piksi
+    fields:
+      - ip_address:
+          type: u32
+          desc: IPv4 Address
+      - interface_name:
+          type: string
+          size: 16
+          desc: Interface Name
+      - status:
+          type: u8
+          desc: Status of interface 
+          fields:
+            - 0-7:
+                desc: IP configuration mode
+                values:
+                  - 0: Down
+                  - 1: Up
