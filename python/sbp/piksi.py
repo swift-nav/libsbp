@@ -1461,7 +1461,15 @@ class MsgNetworkStateResp(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   ip_address : int
-    IPv4 Address
+    IPv4 address
+  ip_mask : int
+    IPv4 netmask
+  ip_gateway : int
+    IPv4 gateway
+  rx_packets : int
+    Number of Rx packets
+  tx_packets : int
+    Number of Tx packets
   interface_name : string
     Interface Name
   status : int
@@ -1472,10 +1480,18 @@ class MsgNetworkStateResp(SBP):
   """
   _parser = Struct("MsgNetworkStateResp",
                    ULInt32('ip_address'),
+                   ULInt32('ip_mask'),
+                   ULInt32('ip_gateway'),
+                   ULInt32('rx_packets'),
+                   ULInt32('tx_packets'),
                    String('interface_name', 16),
                    ULInt8('status'),)
   __slots__ = [
                'ip_address',
+               'ip_mask',
+               'ip_gateway',
+               'rx_packets',
+               'tx_packets',
                'interface_name',
                'status',
               ]
@@ -1491,6 +1507,10 @@ class MsgNetworkStateResp(SBP):
       self.msg_type = SBP_MSG_NETWORK_STATE_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.ip_address = kwargs.pop('ip_address')
+      self.ip_mask = kwargs.pop('ip_mask')
+      self.ip_gateway = kwargs.pop('ip_gateway')
+      self.rx_packets = kwargs.pop('rx_packets')
+      self.tx_packets = kwargs.pop('tx_packets')
       self.interface_name = kwargs.pop('interface_name')
       self.status = kwargs.pop('status')
 

@@ -643,7 +643,15 @@ msgNetworkStateResp = 0x00BB
 -- The state of a network interface on the Piksi
 data MsgNetworkStateResp = MsgNetworkStateResp
   { _msgNetworkStateResp_ip_address   :: Word32
-    -- ^ IPv4 Address
+    -- ^ IPv4 address
+  , _msgNetworkStateResp_ip_mask      :: Word32
+    -- ^ IPv4 netmask
+  , _msgNetworkStateResp_ip_gateway   :: Word32
+    -- ^ IPv4 gateway
+  , _msgNetworkStateResp_rx_packets   :: Word32
+    -- ^ Number of Rx packets
+  , _msgNetworkStateResp_tx_packets   :: Word32
+    -- ^ Number of Tx packets
   , _msgNetworkStateResp_interface_name :: Text
     -- ^ Interface Name
   , _msgNetworkStateResp_status       :: Word8
@@ -653,12 +661,20 @@ data MsgNetworkStateResp = MsgNetworkStateResp
 instance Binary MsgNetworkStateResp where
   get = do
     _msgNetworkStateResp_ip_address <- getWord32le
+    _msgNetworkStateResp_ip_mask <- getWord32le
+    _msgNetworkStateResp_ip_gateway <- getWord32le
+    _msgNetworkStateResp_rx_packets <- getWord32le
+    _msgNetworkStateResp_tx_packets <- getWord32le
     _msgNetworkStateResp_interface_name <- decodeUtf8 <$> getByteString 16
     _msgNetworkStateResp_status <- getWord8
     return MsgNetworkStateResp {..}
 
   put MsgNetworkStateResp {..} = do
     putWord32le _msgNetworkStateResp_ip_address
+    putWord32le _msgNetworkStateResp_ip_mask
+    putWord32le _msgNetworkStateResp_ip_gateway
+    putWord32le _msgNetworkStateResp_rx_packets
+    putWord32le _msgNetworkStateResp_tx_packets
     putByteString $ encodeUtf8 _msgNetworkStateResp_interface_name
     putWord8 _msgNetworkStateResp_status
 

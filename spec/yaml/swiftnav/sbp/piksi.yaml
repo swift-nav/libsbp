@@ -374,7 +374,19 @@ definitions:
     fields:
       - ip_address:
           type: u32
-          desc: IPv4 Address
+          desc: IPv4 address
+      - ip_mask:
+          type: u32
+          desc: IPv4 netmask
+      - ip_gateway:
+          type: u32
+          desc: IPv4 gateway
+      - rx_packets:
+          type: u32
+          desc: Number of Rx packets
+      - tx_packets:
+          type: u32
+          desc: Number of Tx packets
       - interface_name:
           type: string
           size: 16

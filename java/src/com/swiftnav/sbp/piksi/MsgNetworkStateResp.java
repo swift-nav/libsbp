@@ -34,8 +34,20 @@ public class MsgNetworkStateResp extends SBPMessage {
     public static final int TYPE = 0x00BB;
 
     
-    /** IPv4 Address */
+    /** IPv4 address */
     public long ip_address;
+    
+    /** IPv4 netmask */
+    public long ip_mask;
+    
+    /** IPv4 gateway */
+    public long ip_gateway;
+    
+    /** Number of Rx packets */
+    public long rx_packets;
+    
+    /** Number of Tx packets */
+    public long tx_packets;
     
     /** Interface Name */
     public String interface_name;
@@ -55,6 +67,10 @@ public class MsgNetworkStateResp extends SBPMessage {
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         ip_address = parser.getU32();
+        ip_mask = parser.getU32();
+        ip_gateway = parser.getU32();
+        rx_packets = parser.getU32();
+        tx_packets = parser.getU32();
         interface_name = parser.getString(16);
         status = parser.getU8();
     }
@@ -62,6 +78,10 @@ public class MsgNetworkStateResp extends SBPMessage {
     @Override
     protected void build(Builder builder) {
         builder.putU32(ip_address);
+        builder.putU32(ip_mask);
+        builder.putU32(ip_gateway);
+        builder.putU32(rx_packets);
+        builder.putU32(tx_packets);
         builder.putString(interface_name, 16);
         builder.putU8(status);
     }
@@ -70,6 +90,10 @@ public class MsgNetworkStateResp extends SBPMessage {
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("ip_address", ip_address);
+        obj.put("ip_mask", ip_mask);
+        obj.put("ip_gateway", ip_gateway);
+        obj.put("rx_packets", rx_packets);
+        obj.put("tx_packets", tx_packets);
         obj.put("interface_name", interface_name);
         obj.put("status", status);
         return obj;
