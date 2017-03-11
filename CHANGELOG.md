@@ -1,10 +1,42 @@
 # Change Log
 
+## [v2.1.8](https://github.com/swift-nav/libsbp/tree/v2.1.8)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.1.7...v2.1.8)
+
+**Merged pull requests:**
+
+- Split sbp\_process\(\) into two functions.  [\#444](https://github.com/swift-nav/libsbp/pull/444)
+- Add MsgAlmanacGps and MsgAlmanacGlo [\#441](https://github.com/swift-nav/libsbp/pull/441)
+- Pdf publish version fix [\#440](https://github.com/swift-nav/libsbp/pull/440)
+
+## [v2.1.7](https://github.com/swift-nav/libsbp/tree/v2.1.7) (2017-02-08)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.1.6...v2.1.7)
+
+**Merged pull requests:**
+
+- Add src\_sid field into MSG\_NDB\_EVENT [\#439](https://github.com/swift-nav/libsbp/pull/439)
+- Rename member variable to avoid name collision [\#438](https://github.com/swift-nav/libsbp/pull/438)
+- Add MSG\_NDB\_EVENT [\#436](https://github.com/swift-nav/libsbp/pull/436)
+- Remove filename - use filehandles [\#435](https://github.com/swift-nav/libsbp/pull/435)
+
+## [v2.1.6](https://github.com/swift-nav/libsbp/tree/v2.1.6) (2017-01-25)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.1.5...v2.1.6)
+
+**Merged pull requests:**
+
+- Fix UTC flags [\#432](https://github.com/swift-nav/libsbp/pull/432)
+- Pass reason with underlying client connection warnings. [\#431](https://github.com/swift-nav/libsbp/pull/431)
+- make handler callable threadsafe, Catch pyserial writeTimeoutErrors [\#430](https://github.com/swift-nav/libsbp/pull/430)
+- Accuracy fields implemented in SPP [\#429](https://github.com/swift-nav/libsbp/pull/429)
+- Change description for msg\_tracking\_state\_detailed\_t.lock [\#427](https://github.com/swift-nav/libsbp/pull/427)
+
 ## [v2.1.5](https://github.com/swift-nav/libsbp/tree/v2.1.5) (2017-01-04)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.1.4...v2.1.5)
 
 **Merged pull requests:**
 
+- V2.1.5 branch [\#426](https://github.com/swift-nav/libsbp/pull/426)
 - add CDC driver [\#425](https://github.com/swift-nav/libsbp/pull/425)
 
 ## [v2.1.4](https://github.com/swift-nav/libsbp/tree/v2.1.4) (2016-12-13)
