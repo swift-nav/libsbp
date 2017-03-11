@@ -40,20 +40,17 @@ public class MsgNetworkStateResp extends SBPMessage {
     /** IPv4 netmask */
     public long ip_mask;
     
-    /** IPv4 gateway */
-    public long ip_gateway;
+    /** Number of Rx bytes */
+    public long rx_bytes;
     
-    /** Number of Rx packets */
-    public long rx_packets;
-    
-    /** Number of Tx packets */
-    public long tx_packets;
+    /** Number of Tx bytes */
+    public long tx_bytes;
     
     /** Interface Name */
     public String interface_name;
     
-    /** Status of interface */
-    public int status;
+    /** Interface flags from SIOCGIFFLAGS */
+    public long flags;
     
 
     public MsgNetworkStateResp (int sender) { super(sender, TYPE); }
@@ -68,22 +65,20 @@ public class MsgNetworkStateResp extends SBPMessage {
         /* Parse fields from binary */
         ip_address = parser.getU32();
         ip_mask = parser.getU32();
-        ip_gateway = parser.getU32();
-        rx_packets = parser.getU32();
-        tx_packets = parser.getU32();
+        rx_bytes = parser.getU32();
+        tx_bytes = parser.getU32();
         interface_name = parser.getString(16);
-        status = parser.getU8();
+        flags = parser.getU32();
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU32(ip_address);
         builder.putU32(ip_mask);
-        builder.putU32(ip_gateway);
-        builder.putU32(rx_packets);
-        builder.putU32(tx_packets);
+        builder.putU32(rx_bytes);
+        builder.putU32(tx_bytes);
         builder.putString(interface_name, 16);
-        builder.putU8(status);
+        builder.putU32(flags);
     }
 
     @Override
@@ -91,11 +86,10 @@ public class MsgNetworkStateResp extends SBPMessage {
         JSONObject obj = super.toJSON();
         obj.put("ip_address", ip_address);
         obj.put("ip_mask", ip_mask);
-        obj.put("ip_gateway", ip_gateway);
-        obj.put("rx_packets", rx_packets);
-        obj.put("tx_packets", tx_packets);
+        obj.put("rx_bytes", rx_bytes);
+        obj.put("tx_bytes", tx_bytes);
         obj.put("interface_name", interface_name);
-        obj.put("status", status);
+        obj.put("flags", flags);
         return obj;
     }
 }

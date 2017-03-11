@@ -1464,16 +1464,14 @@ class MsgNetworkStateResp(SBP):
     IPv4 address
   ip_mask : int
     IPv4 netmask
-  ip_gateway : int
-    IPv4 gateway
-  rx_packets : int
-    Number of Rx packets
-  tx_packets : int
-    Number of Tx packets
+  rx_bytes : int
+    Number of Rx bytes
+  tx_bytes : int
+    Number of Tx bytes
   interface_name : string
     Interface Name
-  status : int
-    Status of interface
+  flags : int
+    Interface flags from SIOCGIFFLAGS
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -1481,19 +1479,17 @@ class MsgNetworkStateResp(SBP):
   _parser = Struct("MsgNetworkStateResp",
                    ULInt32('ip_address'),
                    ULInt32('ip_mask'),
-                   ULInt32('ip_gateway'),
-                   ULInt32('rx_packets'),
-                   ULInt32('tx_packets'),
+                   ULInt32('rx_bytes'),
+                   ULInt32('tx_bytes'),
                    String('interface_name', 16),
-                   ULInt8('status'),)
+                   ULInt32('flags'),)
   __slots__ = [
                'ip_address',
                'ip_mask',
-               'ip_gateway',
-               'rx_packets',
-               'tx_packets',
+               'rx_bytes',
+               'tx_bytes',
                'interface_name',
-               'status',
+               'flags',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -1508,11 +1504,10 @@ class MsgNetworkStateResp(SBP):
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.ip_address = kwargs.pop('ip_address')
       self.ip_mask = kwargs.pop('ip_mask')
-      self.ip_gateway = kwargs.pop('ip_gateway')
-      self.rx_packets = kwargs.pop('rx_packets')
-      self.tx_packets = kwargs.pop('tx_packets')
+      self.rx_bytes = kwargs.pop('rx_bytes')
+      self.tx_bytes = kwargs.pop('tx_bytes')
       self.interface_name = kwargs.pop('interface_name')
-      self.status = kwargs.pop('status')
+      self.flags = kwargs.pop('flags')
 
   def __repr__(self):
     return fmt_repr(self)

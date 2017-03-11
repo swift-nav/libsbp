@@ -646,37 +646,33 @@ data MsgNetworkStateResp = MsgNetworkStateResp
     -- ^ IPv4 address
   , _msgNetworkStateResp_ip_mask      :: Word32
     -- ^ IPv4 netmask
-  , _msgNetworkStateResp_ip_gateway   :: Word32
-    -- ^ IPv4 gateway
-  , _msgNetworkStateResp_rx_packets   :: Word32
-    -- ^ Number of Rx packets
-  , _msgNetworkStateResp_tx_packets   :: Word32
-    -- ^ Number of Tx packets
+  , _msgNetworkStateResp_rx_bytes     :: Word32
+    -- ^ Number of Rx bytes
+  , _msgNetworkStateResp_tx_bytes     :: Word32
+    -- ^ Number of Tx bytes
   , _msgNetworkStateResp_interface_name :: Text
     -- ^ Interface Name
-  , _msgNetworkStateResp_status       :: Word8
-    -- ^ Status of interface
+  , _msgNetworkStateResp_flags        :: Word32
+    -- ^ Interface flags from SIOCGIFFLAGS
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgNetworkStateResp where
   get = do
     _msgNetworkStateResp_ip_address <- getWord32le
     _msgNetworkStateResp_ip_mask <- getWord32le
-    _msgNetworkStateResp_ip_gateway <- getWord32le
-    _msgNetworkStateResp_rx_packets <- getWord32le
-    _msgNetworkStateResp_tx_packets <- getWord32le
+    _msgNetworkStateResp_rx_bytes <- getWord32le
+    _msgNetworkStateResp_tx_bytes <- getWord32le
     _msgNetworkStateResp_interface_name <- decodeUtf8 <$> getByteString 16
-    _msgNetworkStateResp_status <- getWord8
+    _msgNetworkStateResp_flags <- getWord32le
     return MsgNetworkStateResp {..}
 
   put MsgNetworkStateResp {..} = do
     putWord32le _msgNetworkStateResp_ip_address
     putWord32le _msgNetworkStateResp_ip_mask
-    putWord32le _msgNetworkStateResp_ip_gateway
-    putWord32le _msgNetworkStateResp_rx_packets
-    putWord32le _msgNetworkStateResp_tx_packets
+    putWord32le _msgNetworkStateResp_rx_bytes
+    putWord32le _msgNetworkStateResp_tx_bytes
     putByteString $ encodeUtf8 _msgNetworkStateResp_interface_name
-    putWord8 _msgNetworkStateResp_status
+    putWord32le _msgNetworkStateResp_flags
 
 $(deriveSBP 'msgNetworkStateResp ''MsgNetworkStateResp)
 

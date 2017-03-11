@@ -652,11 +652,10 @@ MsgNetworkStateReq.prototype.fieldSpec = [];
  * Fields in the SBP payload (`sbp.payload`):
  * @field ip_address number (unsigned 32-bit int, 4 bytes) IPv4 address
  * @field ip_mask number (unsigned 32-bit int, 4 bytes) IPv4 netmask
- * @field ip_gateway number (unsigned 32-bit int, 4 bytes) IPv4 gateway
- * @field rx_packets number (unsigned 32-bit int, 4 bytes) Number of Rx packets
- * @field tx_packets number (unsigned 32-bit int, 4 bytes) Number of Tx packets
+ * @field rx_bytes number (unsigned 32-bit int, 4 bytes) Number of Rx bytes
+ * @field tx_bytes number (unsigned 32-bit int, 4 bytes) Number of Tx bytes
  * @field interface_name string Interface Name
- * @field status number (unsigned 8-bit int, 1 byte) Status of interface
+ * @field flags number (unsigned 32-bit int, 4 bytes) Interface flags from SIOCGIFFLAGS
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -675,19 +674,17 @@ MsgNetworkStateResp.prototype.parser = new Parser()
   .endianess('little')
   .uint32('ip_address')
   .uint32('ip_mask')
-  .uint32('ip_gateway')
-  .uint32('rx_packets')
-  .uint32('tx_packets')
+  .uint32('rx_bytes')
+  .uint32('tx_bytes')
   .string('interface_name', { length: 16 })
-  .uint8('status');
+  .uint32('flags');
 MsgNetworkStateResp.prototype.fieldSpec = [];
 MsgNetworkStateResp.prototype.fieldSpec.push(['ip_address', 'writeUInt32LE', 4]);
 MsgNetworkStateResp.prototype.fieldSpec.push(['ip_mask', 'writeUInt32LE', 4]);
-MsgNetworkStateResp.prototype.fieldSpec.push(['ip_gateway', 'writeUInt32LE', 4]);
-MsgNetworkStateResp.prototype.fieldSpec.push(['rx_packets', 'writeUInt32LE', 4]);
-MsgNetworkStateResp.prototype.fieldSpec.push(['tx_packets', 'writeUInt32LE', 4]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['rx_bytes', 'writeUInt32LE', 4]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['tx_bytes', 'writeUInt32LE', 4]);
 MsgNetworkStateResp.prototype.fieldSpec.push(['interface_name', 'string', 16]);
-MsgNetworkStateResp.prototype.fieldSpec.push(['status', 'writeUInt8', 1]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
 module.exports = {
   0x0069: MsgAlmanac,

@@ -290,11 +290,10 @@ typedef struct __attribute__((packed)) {
 typedef struct __attribute__((packed)) {
   u32 ip_address;        /**< IPv4 address */
   u32 ip_mask;           /**< IPv4 netmask */
-  u32 ip_gateway;        /**< IPv4 gateway */
-  u32 rx_packets;        /**< Number of Rx packets */
-  u32 tx_packets;        /**< Number of Tx packets */
+  u32 rx_bytes;          /**< Number of Rx bytes */
+  u32 tx_bytes;          /**< Number of Tx bytes */
   char interface_name[16]; /**< Interface Name */
-  u8 status;            /**< Status of interface */
+  u32 flags;             /**< Interface flags from SIOCGIFFLAGS */
 } msg_network_state_resp_t;
 
 
