@@ -6,6 +6,9 @@ For a detailed index of changes, please see the
 
 Contents
 --------
+ * [v2.1.8](#v2.1.8)
+ * [v2.1.7](#v2.1.7)
+ * [v2.1.6](#v2.1.6)
  * [v2.1.5](#v2.1.5)
  * [v2.1.0](#v2.1.0)
  * [v2.0.0](#v2.0.0)
@@ -15,6 +18,20 @@ Contents
  * [v1.0.1](#v1.0.1)
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
+
+v2.1.8 <a name="v2.1.8">
+--------------------------
+* Add MSG_ALMANAC_GPS (0x70)
+* Add MSG_ALMANC_GLO (0x71)
+
+v2.1.7 <a name="v2.1.7">
+--------------------------
+* python client improvments (threadsafe write)
+* Python network driver improvements (verbosity in connection issues)
+
+v2.1.6 <a name="v2.1.6">
+--------------------------
+* Add MSG_NDB_EVENT
 
 v2.1.5 <a name="v2.1.5">
 --------------------------
