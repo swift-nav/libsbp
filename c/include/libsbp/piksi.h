@@ -284,7 +284,9 @@ typedef struct __attribute__((packed)) {
 
 /** State of network interface
  *
- * The state of a network interface on the Piksi
+ * The state of a network interface on the Piksi.
+ * Data is made to reflect output of ifaddrs struct returned by getifaddrs
+ * in c.
  */
 #define SBP_MSG_NETWORK_STATE_RESP 0x00BB
 typedef struct __attribute__((packed)) {

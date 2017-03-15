@@ -640,7 +640,8 @@ msgNetworkStateResp = 0x00BB
 
 -- | SBP class for message MSG_NETWORK_STATE_RESP (0x00BB).
 --
--- The state of a network interface on the Piksi
+-- The state of a network interface on the Piksi. Data is made to reflect
+-- output of ifaddrs struct returned by getifaddrs in c.
 data MsgNetworkStateResp = MsgNetworkStateResp
   { _msgNetworkStateResp_ipv4_address :: [Word8]
     -- ^ IPv4 address (all zero when unavailable)

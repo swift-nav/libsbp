@@ -370,7 +370,9 @@ definitions:
     id: 0x00BB
     short_desc: State of network interface
     desc: |
-      The state of a network interface on the Piksi
+      The state of a network interface on the Piksi.
+      Data is made to reflect output of ifaddrs struct returned by getifaddrs
+      in c.
     fields:
       - ipv4_address:
           type: array

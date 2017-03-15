@@ -1453,7 +1453,9 @@ class MsgNetworkStateResp(SBP):
   of its fields.
 
   
-  The state of a network interface on the Piksi
+  The state of a network interface on the Piksi.
+Data is made to reflect output of ifaddrs struct returned by getifaddrs
+in c.
 
 
   Parameters

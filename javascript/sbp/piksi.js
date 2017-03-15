@@ -647,7 +647,8 @@ MsgNetworkStateReq.prototype.fieldSpec = [];
 /**
  * SBP class for message MSG_NETWORK_STATE_RESP (0x00BB).
  *
- * The state of a network interface on the Piksi
+ * The state of a network interface on the Piksi. Data is made to reflect output of
+ * ifaddrs struct returned by getifaddrs in c.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field ipv4_address array IPv4 address (all zero when unavailable)
