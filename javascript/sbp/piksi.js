@@ -650,8 +650,10 @@ MsgNetworkStateReq.prototype.fieldSpec = [];
  * The state of a network interface on the Piksi
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field ip_address number (unsigned 32-bit int, 4 bytes) IPv4 address
- * @field ip_mask number (unsigned 32-bit int, 4 bytes) IPv4 netmask
+ * @field ipv4_address array IPv4 address (all zero when unavailable)
+ * @field ipv4_mask_size number (unsigned 8-bit int, 1 byte) IPv4 netmask CIDR notation
+ * @field ipv6_address array IPv6 address (all zero when unavailable)
+ * @field ipv6_mask_size number (unsigned 8-bit int, 1 byte) IPv6 netmask CIDR notation
  * @field rx_bytes number (unsigned 32-bit int, 4 bytes) Number of Rx bytes
  * @field tx_bytes number (unsigned 32-bit int, 4 bytes) Number of Tx bytes
  * @field interface_name string Interface Name
@@ -672,15 +674,19 @@ MsgNetworkStateResp.prototype.msg_type = 0x00BB;
 MsgNetworkStateResp.prototype.constructor = MsgNetworkStateResp;
 MsgNetworkStateResp.prototype.parser = new Parser()
   .endianess('little')
-  .uint32('ip_address')
-  .uint32('ip_mask')
+  .array('ipv4_address', { length: 4, type: 'uint8' })
+  .uint8('ipv4_mask_size')
+  .array('ipv6_address', { length: 16, type: 'uint8' })
+  .uint8('ipv6_mask_size')
   .uint32('rx_bytes')
   .uint32('tx_bytes')
   .string('interface_name', { length: 16 })
   .uint32('flags');
 MsgNetworkStateResp.prototype.fieldSpec = [];
-MsgNetworkStateResp.prototype.fieldSpec.push(['ip_address', 'writeUInt32LE', 4]);
-MsgNetworkStateResp.prototype.fieldSpec.push(['ip_mask', 'writeUInt32LE', 4]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['ipv4_address', 'array', 'writeUInt8', function () { return 1; }, 4]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['ipv4_mask_size', 'writeUInt8', 1]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['ipv6_address', 'array', 'writeUInt8', function () { return 1; }, 16]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['ipv6_mask_size', 'writeUInt8', 1]);
 MsgNetworkStateResp.prototype.fieldSpec.push(['rx_bytes', 'writeUInt32LE', 4]);
 MsgNetworkStateResp.prototype.fieldSpec.push(['tx_bytes', 'writeUInt32LE', 4]);
 MsgNetworkStateResp.prototype.fieldSpec.push(['interface_name', 'string', 16]);

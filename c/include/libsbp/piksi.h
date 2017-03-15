@@ -288,8 +288,10 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_NETWORK_STATE_RESP 0x00BB
 typedef struct __attribute__((packed)) {
-  u32 ip_address;        /**< IPv4 address */
-  u32 ip_mask;           /**< IPv4 netmask */
+  u8 ipv4_address[4];   /**< IPv4 address (all zero when unavailable) */
+  u8 ipv4_mask_size;    /**< IPv4 netmask CIDR notation */
+  u8 ipv6_address[16];  /**< IPv6 address (all zero when unavailable) */
+  u8 ipv6_mask_size;    /**< IPv6 netmask CIDR notation */
   u32 rx_bytes;          /**< Number of Rx bytes */
   u32 tx_bytes;          /**< Number of Tx bytes */
   char interface_name[16]; /**< Interface Name */

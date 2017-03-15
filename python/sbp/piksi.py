@@ -1460,10 +1460,14 @@ class MsgNetworkStateResp(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  ip_address : int
-    IPv4 address
-  ip_mask : int
-    IPv4 netmask
+  ipv4_address : array
+    IPv4 address (all zero when unavailable)
+  ipv4_mask_size : int
+    IPv4 netmask CIDR notation
+  ipv6_address : array
+    IPv6 address (all zero when unavailable)
+  ipv6_mask_size : int
+    IPv6 netmask CIDR notation
   rx_bytes : int
     Number of Rx bytes
   tx_bytes : int
@@ -1477,15 +1481,19 @@ class MsgNetworkStateResp(SBP):
 
   """
   _parser = Struct("MsgNetworkStateResp",
-                   ULInt32('ip_address'),
-                   ULInt32('ip_mask'),
+                   Struct('ipv4_address', Array(4, ULInt8('ipv4_address'))),
+                   ULInt8('ipv4_mask_size'),
+                   Struct('ipv6_address', Array(16, ULInt8('ipv6_address'))),
+                   ULInt8('ipv6_mask_size'),
                    ULInt32('rx_bytes'),
                    ULInt32('tx_bytes'),
                    String('interface_name', 16),
                    ULInt32('flags'),)
   __slots__ = [
-               'ip_address',
-               'ip_mask',
+               'ipv4_address',
+               'ipv4_mask_size',
+               'ipv6_address',
+               'ipv6_mask_size',
                'rx_bytes',
                'tx_bytes',
                'interface_name',
@@ -1502,8 +1510,10 @@ class MsgNetworkStateResp(SBP):
       super( MsgNetworkStateResp, self).__init__()
       self.msg_type = SBP_MSG_NETWORK_STATE_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.ip_address = kwargs.pop('ip_address')
-      self.ip_mask = kwargs.pop('ip_mask')
+      self.ipv4_address = kwargs.pop('ipv4_address')
+      self.ipv4_mask_size = kwargs.pop('ipv4_mask_size')
+      self.ipv6_address = kwargs.pop('ipv6_address')
+      self.ipv6_mask_size = kwargs.pop('ipv6_mask_size')
       self.rx_bytes = kwargs.pop('rx_bytes')
       self.tx_bytes = kwargs.pop('tx_bytes')
       self.interface_name = kwargs.pop('interface_name')

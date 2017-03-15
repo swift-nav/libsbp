@@ -34,11 +34,17 @@ public class MsgNetworkStateResp extends SBPMessage {
     public static final int TYPE = 0x00BB;
 
     
-    /** IPv4 address */
-    public long ip_address;
+    /** IPv4 address (all zero when unavailable) */
+    public int[] ipv4_address;
     
-    /** IPv4 netmask */
-    public long ip_mask;
+    /** IPv4 netmask CIDR notation */
+    public int ipv4_mask_size;
+    
+    /** IPv6 address (all zero when unavailable) */
+    public int[] ipv6_address;
+    
+    /** IPv6 netmask CIDR notation */
+    public int ipv6_mask_size;
     
     /** Number of Rx bytes */
     public long rx_bytes;
@@ -63,8 +69,10 @@ public class MsgNetworkStateResp extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        ip_address = parser.getU32();
-        ip_mask = parser.getU32();
+        ipv4_address = parser.getArrayofU8(4);
+        ipv4_mask_size = parser.getU8();
+        ipv6_address = parser.getArrayofU8(16);
+        ipv6_mask_size = parser.getU8();
         rx_bytes = parser.getU32();
         tx_bytes = parser.getU32();
         interface_name = parser.getString(16);
@@ -73,8 +81,10 @@ public class MsgNetworkStateResp extends SBPMessage {
 
     @Override
     protected void build(Builder builder) {
-        builder.putU32(ip_address);
-        builder.putU32(ip_mask);
+        builder.putArrayofU8(ipv4_address, 4);
+        builder.putU8(ipv4_mask_size);
+        builder.putArrayofU8(ipv6_address, 16);
+        builder.putU8(ipv6_mask_size);
         builder.putU32(rx_bytes);
         builder.putU32(tx_bytes);
         builder.putString(interface_name, 16);
@@ -84,8 +94,10 @@ public class MsgNetworkStateResp extends SBPMessage {
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("ip_address", ip_address);
-        obj.put("ip_mask", ip_mask);
+        obj.put("ipv4_address", new JSONArray(ipv4_address));
+        obj.put("ipv4_mask_size", ipv4_mask_size);
+        obj.put("ipv6_address", new JSONArray(ipv6_address));
+        obj.put("ipv6_mask_size", ipv6_mask_size);
         obj.put("rx_bytes", rx_bytes);
         obj.put("tx_bytes", tx_bytes);
         obj.put("interface_name", interface_name);
