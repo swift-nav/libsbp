@@ -122,6 +122,8 @@ data SBPMsg =
    | SBPMsgNapDeviceDnaReq MsgNapDeviceDnaReq Msg
    | SBPMsgNapDeviceDnaResp MsgNapDeviceDnaResp Msg
    | SBPMsgNdbEvent MsgNdbEvent Msg
+   | SBPMsgNetworkStateReq MsgNetworkStateReq Msg
+   | SBPMsgNetworkStateResp MsgNetworkStateResp Msg
    | SBPMsgObs MsgObs Msg
    | SBPMsgObsDepA MsgObsDepA Msg
    | SBPMsgObsDepB MsgObsDepB Msg
@@ -240,6 +242,8 @@ instance Binary SBPMsg where
           | _msgSBPType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgNdbEvent = SBPMsgNdbEvent (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgNetworkStateReq = SBPMsgNetworkStateReq (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgNetworkStateResp = SBPMsgNetworkStateResp (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgObs = SBPMsgObs (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgObsDepA = SBPMsgObsDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgObsDepB = SBPMsgObsDepB (decode (fromStrict _msgSBPPayload)) m
@@ -350,6 +354,8 @@ instance Binary SBPMsg where
       encode' (SBPMsgNapDeviceDnaReq _ m) = put m
       encode' (SBPMsgNapDeviceDnaResp _ m) = put m
       encode' (SBPMsgNdbEvent _ m) = put m
+      encode' (SBPMsgNetworkStateReq _ m) = put m
+      encode' (SBPMsgNetworkStateResp _ m) = put m
       encode' (SBPMsgObs _ m) = put m
       encode' (SBPMsgObsDepA _ m) = put m
       encode' (SBPMsgObsDepB _ m) = put m
@@ -463,6 +469,8 @@ instance FromJSON SBPMsg where
         | msgType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq <$> parseJSON obj <*> parseJSON obj
         | msgType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> parseJSON obj <*> parseJSON obj
         | msgType == msgNdbEvent = SBPMsgNdbEvent <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgNetworkStateReq = SBPMsgNetworkStateReq <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgNetworkStateResp = SBPMsgNetworkStateResp <$> parseJSON obj <*> parseJSON obj
         | msgType == msgObs = SBPMsgObs <$> parseJSON obj <*> parseJSON obj
         | msgType == msgObsDepA = SBPMsgObsDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgObsDepB = SBPMsgObsDepB <$> parseJSON obj <*> parseJSON obj
@@ -578,6 +586,8 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgNapDeviceDnaReq n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgNapDeviceDnaResp n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgNdbEvent n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgNetworkStateReq n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgNetworkStateResp n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgObs n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgObsDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgObsDepB n m) = toJSON n `mergeValues` toJSON m
@@ -687,6 +697,8 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgNapDeviceDnaReq n m) = SBPMsgNapDeviceDnaReq n <$> f m
   msg f (SBPMsgNapDeviceDnaResp n m) = SBPMsgNapDeviceDnaResp n <$> f m
   msg f (SBPMsgNdbEvent n m) = SBPMsgNdbEvent n <$> f m
+  msg f (SBPMsgNetworkStateReq n m) = SBPMsgNetworkStateReq n <$> f m
+  msg f (SBPMsgNetworkStateResp n m) = SBPMsgNetworkStateResp n <$> f m
   msg f (SBPMsgObs n m) = SBPMsgObs n <$> f m
   msg f (SBPMsgObsDepA n m) = SBPMsgObsDepA n <$> f m
   msg f (SBPMsgObsDepB n m) = SBPMsgObsDepB n <$> f m

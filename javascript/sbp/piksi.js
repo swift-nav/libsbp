@@ -621,6 +621,78 @@ MsgCommandResp.prototype.fieldSpec = [];
 MsgCommandResp.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
 MsgCommandResp.prototype.fieldSpec.push(['code', 'writeInt32LE', 4]);
 
+/**
+ * SBP class for message MSG_NETWORK_STATE_REQ (0x00BA).
+ *
+ * Request state of Piksi network interfaces. Output will be sent in
+ * MSG_NETWORK_STATE_RESP messages
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgNetworkStateReq = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_NETWORK_STATE_REQ";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgNetworkStateReq.prototype = Object.create(SBP.prototype);
+MsgNetworkStateReq.prototype.messageType = "MSG_NETWORK_STATE_REQ";
+MsgNetworkStateReq.prototype.msg_type = 0x00BA;
+MsgNetworkStateReq.prototype.constructor = MsgNetworkStateReq;
+MsgNetworkStateReq.prototype.parser = new Parser()
+  .endianess('little');
+MsgNetworkStateReq.prototype.fieldSpec = [];
+
+/**
+ * SBP class for message MSG_NETWORK_STATE_RESP (0x00BB).
+ *
+ * The state of a network interface on the Piksi. Data is made to reflect output of
+ * ifaddrs struct returned by getifaddrs in c.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field ipv4_address array IPv4 address (all zero when unavailable)
+ * @field ipv4_mask_size number (unsigned 8-bit int, 1 byte) IPv4 netmask CIDR notation
+ * @field ipv6_address array IPv6 address (all zero when unavailable)
+ * @field ipv6_mask_size number (unsigned 8-bit int, 1 byte) IPv6 netmask CIDR notation
+ * @field rx_bytes number (unsigned 32-bit int, 4 bytes) Number of Rx bytes
+ * @field tx_bytes number (unsigned 32-bit int, 4 bytes) Number of Tx bytes
+ * @field interface_name string Interface Name
+ * @field flags number (unsigned 32-bit int, 4 bytes) Interface flags from SIOCGIFFLAGS
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgNetworkStateResp = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_NETWORK_STATE_RESP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgNetworkStateResp.prototype = Object.create(SBP.prototype);
+MsgNetworkStateResp.prototype.messageType = "MSG_NETWORK_STATE_RESP";
+MsgNetworkStateResp.prototype.msg_type = 0x00BB;
+MsgNetworkStateResp.prototype.constructor = MsgNetworkStateResp;
+MsgNetworkStateResp.prototype.parser = new Parser()
+  .endianess('little')
+  .array('ipv4_address', { length: 4, type: 'uint8' })
+  .uint8('ipv4_mask_size')
+  .array('ipv6_address', { length: 16, type: 'uint8' })
+  .uint8('ipv6_mask_size')
+  .uint32('rx_bytes')
+  .uint32('tx_bytes')
+  .string('interface_name', { length: 16 })
+  .uint32('flags');
+MsgNetworkStateResp.prototype.fieldSpec = [];
+MsgNetworkStateResp.prototype.fieldSpec.push(['ipv4_address', 'array', 'writeUInt8', function () { return 1; }, 4]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['ipv4_mask_size', 'writeUInt8', 1]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['ipv6_address', 'array', 'writeUInt8', function () { return 1; }, 16]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['ipv6_mask_size', 'writeUInt8', 1]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['rx_bytes', 'writeUInt32LE', 4]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['tx_bytes', 'writeUInt32LE', 4]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['interface_name', 'string', 16]);
+MsgNetworkStateResp.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
+
 module.exports = {
   0x0069: MsgAlmanac,
   MsgAlmanac: MsgAlmanac,
@@ -657,4 +729,8 @@ module.exports = {
   MsgCommandReq: MsgCommandReq,
   0x00B9: MsgCommandResp,
   MsgCommandResp: MsgCommandResp,
+  0x00BA: MsgNetworkStateReq,
+  MsgNetworkStateReq: MsgNetworkStateReq,
+  0x00BB: MsgNetworkStateResp,
+  MsgNetworkStateResp: MsgNetworkStateResp,
 }

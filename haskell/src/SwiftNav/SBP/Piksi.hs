@@ -611,3 +611,80 @@ $(deriveSBP 'msgCommandResp ''MsgCommandResp)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCommandResp_" . P.stripPrefix "_msgCommandResp_"}
              ''MsgCommandResp)
 $(makeLenses ''MsgCommandResp)
+
+msgNetworkStateReq :: Word16
+msgNetworkStateReq = 0x00BA
+
+-- | SBP class for message MSG_NETWORK_STATE_REQ (0x00BA).
+--
+-- Request state of Piksi network interfaces. Output will be sent in
+-- MSG_NETWORK_STATE_RESP messages
+data MsgNetworkStateReq = MsgNetworkStateReq
+  deriving ( Show, Read, Eq )
+
+instance Binary MsgNetworkStateReq where
+  get =
+    return MsgNetworkStateReq
+
+  put MsgNetworkStateReq =
+    return ()
+
+$(deriveSBP 'msgNetworkStateReq ''MsgNetworkStateReq)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNetworkStateReq_" . P.stripPrefix "_msgNetworkStateReq_"}
+             ''MsgNetworkStateReq)
+$(makeLenses ''MsgNetworkStateReq)
+
+msgNetworkStateResp :: Word16
+msgNetworkStateResp = 0x00BB
+
+-- | SBP class for message MSG_NETWORK_STATE_RESP (0x00BB).
+--
+-- The state of a network interface on the Piksi. Data is made to reflect
+-- output of ifaddrs struct returned by getifaddrs in c.
+data MsgNetworkStateResp = MsgNetworkStateResp
+  { _msgNetworkStateResp_ipv4_address :: [Word8]
+    -- ^ IPv4 address (all zero when unavailable)
+  , _msgNetworkStateResp_ipv4_mask_size :: Word8
+    -- ^ IPv4 netmask CIDR notation
+  , _msgNetworkStateResp_ipv6_address :: [Word8]
+    -- ^ IPv6 address (all zero when unavailable)
+  , _msgNetworkStateResp_ipv6_mask_size :: Word8
+    -- ^ IPv6 netmask CIDR notation
+  , _msgNetworkStateResp_rx_bytes     :: Word32
+    -- ^ Number of Rx bytes
+  , _msgNetworkStateResp_tx_bytes     :: Word32
+    -- ^ Number of Tx bytes
+  , _msgNetworkStateResp_interface_name :: Text
+    -- ^ Interface Name
+  , _msgNetworkStateResp_flags        :: Word32
+    -- ^ Interface flags from SIOCGIFFLAGS
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgNetworkStateResp where
+  get = do
+    _msgNetworkStateResp_ipv4_address <- replicateM 4 getWord8
+    _msgNetworkStateResp_ipv4_mask_size <- getWord8
+    _msgNetworkStateResp_ipv6_address <- replicateM 16 getWord8
+    _msgNetworkStateResp_ipv6_mask_size <- getWord8
+    _msgNetworkStateResp_rx_bytes <- getWord32le
+    _msgNetworkStateResp_tx_bytes <- getWord32le
+    _msgNetworkStateResp_interface_name <- decodeUtf8 <$> getByteString 16
+    _msgNetworkStateResp_flags <- getWord32le
+    return MsgNetworkStateResp {..}
+
+  put MsgNetworkStateResp {..} = do
+    mapM_ putWord8 _msgNetworkStateResp_ipv4_address
+    putWord8 _msgNetworkStateResp_ipv4_mask_size
+    mapM_ putWord8 _msgNetworkStateResp_ipv6_address
+    putWord8 _msgNetworkStateResp_ipv6_mask_size
+    putWord32le _msgNetworkStateResp_rx_bytes
+    putWord32le _msgNetworkStateResp_tx_bytes
+    putByteString $ encodeUtf8 _msgNetworkStateResp_interface_name
+    putWord32le _msgNetworkStateResp_flags
+
+$(deriveSBP 'msgNetworkStateResp ''MsgNetworkStateResp)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNetworkStateResp_" . P.stripPrefix "_msgNetworkStateResp_"}
+             ''MsgNetworkStateResp)
+$(makeLenses ''MsgNetworkStateResp)

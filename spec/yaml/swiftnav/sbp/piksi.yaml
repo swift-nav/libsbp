@@ -358,3 +358,83 @@ definitions:
       - code:
           type: s32
           desc: Exit code
+
+ - MSG_NETWORK_STATE_REQ:
+    id: 0x00BA
+    short_desc: Request state of Piksi network interfaces
+    desc: |
+      Request state of Piksi network interfaces.
+      Output will be sent in MSG_NETWORK_STATE_RESP messages
+
+ - MSG_NETWORK_STATE_RESP:
+    id: 0x00BB
+    short_desc: State of network interface
+    desc: |
+      The state of a network interface on the Piksi.
+      Data is made to reflect output of ifaddrs struct returned by getifaddrs
+      in c.
+    fields:
+      - ipv4_address:
+          type: array
+          size: 4
+          fill: u8
+          desc: IPv4 address (all zero when unavailable)
+      - ipv4_mask_size:
+          type: u8
+          desc: IPv4 netmask CIDR notation
+      - ipv6_address:
+          type: array
+          size: 16
+          fill: u8
+          desc: IPv6 address (all zero when unavailable)
+      - ipv6_mask_size:
+          type: u8
+          desc: IPv6 netmask CIDR notation
+      - rx_bytes:
+          type: u32
+          desc: Number of Rx bytes
+      - tx_bytes:
+          type: u32
+          desc: Number of Tx bytes
+      - interface_name:
+          type: string
+          size: 16
+          desc: Interface Name
+      - flags:
+          type: u32
+          desc: Interface flags from SIOCGIFFLAGS
+          fields:
+            - 16-31:
+                desc: Reserved
+            - 15:
+                desc: IFF_MULTICAST - supports multicast
+            - 14:
+                desc: IFF_LINK2 - per link layer defined bit
+            - 13:
+                desc: IFF_LINK1 - per link layer defined bit
+            - 12:
+                desc: IFF_LINK0 - per link layer defined bit
+            - 11:
+                desc: IFF_SIMPLEX - can't hear own transmissions
+            - 10:
+                desc: IFF_OACTIVE - transmission in progress
+            - 9:
+                desc: IFF_ALLMULTI - receive all multicast packets
+            - 8:
+                desc: IFF_PROMISC - receive all packets
+            - 7:
+                desc: IFF_NOARP - no address resolution protocol
+            - 6:
+                desc: IFF_RUNNING - resources allocated
+            - 5:
+                desc: IFF_NOTRAILERS - avoid use of trailers
+            - 4:
+                desc: IFF_POINTOPOINT - interface is point-to-point link
+            - 3:
+                desc: IFF_LOOPBACK - is a loopback net
+            - 2:
+                desc: IFF_DEBUG - broadcast address valid
+            - 1:
+                desc: IFF_BROADCAST - broadcast address valid
+            - 0:
+                desc: IFF_UP - interface is up
