@@ -35,12 +35,13 @@ class PySerialDriver(BaseDriver):
     Baud rate of serial port (defaults to 115200)
 
   """
-  def __init__(self, port, baud=115200):
+  def __init__(self, port, baud=115200, rtscts=False):
     import serial
     try:
       handle = serial.serial_for_url(port)
       handle.baudrate = baud
       handle.timeout = 1
+      handle.rtscts = rtscts
       super(PySerialDriver, self).__init__(handle)
     except (OSError, serial.SerialException) as e:
       print
