@@ -10,6 +10,12 @@ Haskell client for Swift Binary Protocol (SBP).
 
 Available on [Hackage as `sbp`](http://hackage.haskell.org/package/sbp).
 
+To install from Hackage using `stack`:
+
+    $ stack install --resolver lts-6.25 sbp
+    
+Note that we explicitly specify the `lts-6.25` resolver, `libsbp` may fail to build with more recent resolvers.
+
 ## Setup
 
 To build:
