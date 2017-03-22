@@ -88,8 +88,8 @@ MsgGpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field day number (unsigned 8-bit int, 1 byte) days in the month (range 1-31)
  * @field hours number (unsigned 8-bit int, 1 byte) hours of day (range 0-23)
  * @field minutes number (unsigned 8-bit int, 1 byte) minutes of hour (range 0-59)
- * @field seconds number (unsigned 8-bit int, 1 byte) seconds of minute (range 0-60)
- * @field ns number (signed 32-bit int, 4 bytes) Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000)
+ * @field seconds number (unsigned 8-bit int, 1 byte) seconds of minute (range 0-60) rounded down
+ * @field ns number (unsigned 32-bit int, 4 bytes) nanosecond in current second (range 0-1000000000)
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -114,7 +114,7 @@ MsgUtcTime.prototype.parser = new Parser()
   .uint8('hours')
   .uint8('minutes')
   .uint8('seconds')
-  .int32('ns');
+  .uint32('ns');
 MsgUtcTime.prototype.fieldSpec = [];
 MsgUtcTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 MsgUtcTime.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
@@ -124,7 +124,7 @@ MsgUtcTime.prototype.fieldSpec.push(['day', 'writeUInt8', 1]);
 MsgUtcTime.prototype.fieldSpec.push(['hours', 'writeUInt8', 1]);
 MsgUtcTime.prototype.fieldSpec.push(['minutes', 'writeUInt8', 1]);
 MsgUtcTime.prototype.fieldSpec.push(['seconds', 'writeUInt8', 1]);
-MsgUtcTime.prototype.fieldSpec.push(['ns', 'writeInt32LE', 4]);
+MsgUtcTime.prototype.fieldSpec.push(['ns', 'writeUInt32LE', 4]);
 
 /**
  * SBP class for message MSG_DOPS (0x0208).

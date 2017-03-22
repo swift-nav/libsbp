@@ -105,10 +105,9 @@ data MsgUtcTime = MsgUtcTime
   , _msgUtcTime_minutes :: Word8
     -- ^ minutes of hour (range 0-59)
   , _msgUtcTime_seconds :: Word8
-    -- ^ seconds of minute (range 0-60)
-  , _msgUtcTime_ns    :: Int32
-    -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
-    -- 500000)
+    -- ^ seconds of minute (range 0-60) rounded down
+  , _msgUtcTime_ns    :: Word32
+    -- ^ nanosecond in current second (range 0-1000000000)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgUtcTime where
@@ -121,7 +120,7 @@ instance Binary MsgUtcTime where
     _msgUtcTime_hours <- getWord8
     _msgUtcTime_minutes <- getWord8
     _msgUtcTime_seconds <- getWord8
-    _msgUtcTime_ns <- fromIntegral <$> getWord32le
+    _msgUtcTime_ns <- getWord32le
     return MsgUtcTime {..}
 
   put MsgUtcTime {..} = do
@@ -133,7 +132,7 @@ instance Binary MsgUtcTime where
     putWord8 _msgUtcTime_hours
     putWord8 _msgUtcTime_minutes
     putWord8 _msgUtcTime_seconds
-    putWord32le $ fromIntegral _msgUtcTime_ns
+    putWord32le _msgUtcTime_ns
 
 $(deriveSBP 'msgUtcTime ''MsgUtcTime)
 

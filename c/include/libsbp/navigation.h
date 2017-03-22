@@ -77,8 +77,8 @@ typedef struct __attribute__((packed)) {
   u8 day;        /**< days in the month (range 1-31) [day] */
   u8 hours;      /**< hours of day (range 0-23) [hours] */
   u8 minutes;    /**< minutes of hour (range 0-59) [minutes] */
-  u8 seconds;    /**< seconds of minute (range 0-60) [seconds] */
-  s32 ns;         /**< Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000) [nanoseconds] */
+  u8 seconds;    /**< seconds of minute (range 0-60) rounded down [seconds] */
+  u32 ns;         /**< nanosecond in current second (range 0-1000000000) [nanoseconds] */
 } msg_utc_time_t;
 
 

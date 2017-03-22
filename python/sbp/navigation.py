@@ -176,9 +176,9 @@ which indicate the source of the UTC offset value and source of the time fix.
   minutes : int
     minutes of hour (range 0-59)
   seconds : int
-    seconds of minute (range 0-60)
+    seconds of minute (range 0-60) rounded down
   ns : int
-    Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000)
+    nanosecond in current second (range 0-1000000000)
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -192,7 +192,7 @@ which indicate the source of the UTC offset value and source of the time fix.
                    ULInt8('hours'),
                    ULInt8('minutes'),
                    ULInt8('seconds'),
-                   SLInt32('ns'),)
+                   ULInt32('ns'),)
   __slots__ = [
                'flags',
                'tow',
