@@ -50,3 +50,9 @@ class Forwarder(Thread):
       self.sink.close()
     except:
       pass
+
+  def __enter__(self):
+    self.run()
+  
+  def __exit__(self):
+    self.stop()
