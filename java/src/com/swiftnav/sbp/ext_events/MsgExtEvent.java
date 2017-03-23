@@ -43,7 +43,7 @@ public class MsgExtEvent extends SBPMessage {
     /** Nanosecond residual of millisecond-rounded TOW (ranges
 from -500000 to 500000)
  */
-    public int ns;
+    public int ns_residual;
     
     /** Flags */
     public int flags;
@@ -64,7 +64,7 @@ from -500000 to 500000)
         /* Parse fields from binary */
         wn = parser.getU16();
         tow = parser.getU32();
-        ns = parser.getS32();
+        ns_residual = parser.getS32();
         flags = parser.getU8();
         pin = parser.getU8();
     }
@@ -73,7 +73,7 @@ from -500000 to 500000)
     protected void build(Builder builder) {
         builder.putU16(wn);
         builder.putU32(tow);
-        builder.putS32(ns);
+        builder.putS32(ns_residual);
         builder.putU8(flags);
         builder.putU8(pin);
     }
@@ -83,7 +83,7 @@ from -500000 to 500000)
         JSONObject obj = super.toJSON();
         obj.put("wn", wn);
         obj.put("tow", tow);
-        obj.put("ns", ns);
+        obj.put("ns_residual", ns_residual);
         obj.put("flags", flags);
         obj.put("pin", pin);
         return obj;

@@ -125,7 +125,7 @@ GPSTime.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) Milliseconds since start of GPS week
- * @field ns number (signed 32-bit int, 4 bytes) Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000)
+ * @field ns_residual number (signed 32-bit int, 4 bytes) Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000)
  * @field wn number (unsigned 16-bit int, 2 bytes) GPS week number
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -143,11 +143,11 @@ GPSTimeNano.prototype.constructor = GPSTimeNano;
 GPSTimeNano.prototype.parser = new Parser()
   .endianess('little')
   .uint32('tow')
-  .int32('ns')
+  .int32('ns_residual')
   .uint16('wn');
 GPSTimeNano.prototype.fieldSpec = [];
 GPSTimeNano.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
-GPSTimeNano.prototype.fieldSpec.push(['ns', 'writeInt32LE', 4]);
+GPSTimeNano.prototype.fieldSpec.push(['ns_residual', 'writeInt32LE', 4]);
 GPSTimeNano.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 
 /**

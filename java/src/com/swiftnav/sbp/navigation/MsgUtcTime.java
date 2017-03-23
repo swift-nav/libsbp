@@ -58,7 +58,7 @@ public class MsgUtcTime extends SBPMessage {
     /** seconds of minute (range 0-60) rounded down */
     public int seconds;
     
-    /** nanosecond in current second (range 0-1000000000) */
+    /** nanoseconds of second (range 0-999999999) */
     public long ns;
     
 

@@ -33,7 +33,7 @@ var UInt64 = require('cuint').UINT64;
  * Fields in the SBP payload (`sbp.payload`):
  * @field wn number (unsigned 16-bit int, 2 bytes) GPS week number
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS time of week rounded to the nearest millisecond
- * @field ns number (signed 32-bit int, 4 bytes) Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000)
+ * @field ns_residual number (signed 32-bit int, 4 bytes) Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000)
  * @field flags number (unsigned 8-bit int, 1 byte) Flags
  * @field pin number (unsigned 8-bit int, 1 byte) Pin number.  0..9 = DEBUG0..9.
  *
@@ -54,13 +54,13 @@ MsgExtEvent.prototype.parser = new Parser()
   .endianess('little')
   .uint16('wn')
   .uint32('tow')
-  .int32('ns')
+  .int32('ns_residual')
   .uint8('flags')
   .uint8('pin');
 MsgExtEvent.prototype.fieldSpec = [];
 MsgExtEvent.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 MsgExtEvent.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
-MsgExtEvent.prototype.fieldSpec.push(['ns', 'writeInt32LE', 4]);
+MsgExtEvent.prototype.fieldSpec.push(['ns_residual', 'writeInt32LE', 4]);
 MsgExtEvent.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 MsgExtEvent.prototype.fieldSpec.push(['pin', 'writeUInt8', 1]);
 

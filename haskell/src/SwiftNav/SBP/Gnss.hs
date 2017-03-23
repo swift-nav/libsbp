@@ -109,25 +109,25 @@ $(makeLenses ''GpsTime)
 -- beginning of the week on the Saturday/Sunday transition. In most cases,
 -- observations are epoch aligned so ns field will be 0.
 data GpsTimeNano = GpsTimeNano
-  { _gpsTimeNano_tow :: Word32
+  { _gpsTimeNano_tow       :: Word32
     -- ^ Milliseconds since start of GPS week
-  , _gpsTimeNano_ns :: Int32
+  , _gpsTimeNano_ns_residual :: Int32
     -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     -- 500000)
-  , _gpsTimeNano_wn :: Word16
+  , _gpsTimeNano_wn        :: Word16
     -- ^ GPS week number
   } deriving ( Show, Read, Eq )
 
 instance Binary GpsTimeNano where
   get = do
     _gpsTimeNano_tow <- getWord32le
-    _gpsTimeNano_ns <- fromIntegral <$> getWord32le
+    _gpsTimeNano_ns_residual <- fromIntegral <$> getWord32le
     _gpsTimeNano_wn <- getWord16le
     return GpsTimeNano {..}
 
   put GpsTimeNano {..} = do
     putWord32le _gpsTimeNano_tow
-    putWord32le $ fromIntegral _gpsTimeNano_ns
+    putWord32le $ fromIntegral _gpsTimeNano_ns_residual
     putWord16le _gpsTimeNano_wn
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gpsTimeNano_" . P.stripPrefix "_gpsTimeNano_"}
              ''GpsTimeNano)

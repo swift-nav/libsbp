@@ -29,7 +29,7 @@ public class GPSTimeNano extends SBPStruct {
     /** Nanosecond residual of millisecond-rounded TOW (ranges
 from -500000 to 500000)
  */
-    public int ns;
+    public int ns_residual;
     
     /** GPS week number */
     public int wn;
@@ -41,7 +41,7 @@ from -500000 to 500000)
     public GPSTimeNano parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         tow = parser.getU32();
-        ns = parser.getS32();
+        ns_residual = parser.getS32();
         wn = parser.getU16();
         return this;
     }
@@ -50,7 +50,7 @@ from -500000 to 500000)
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
         builder.putU32(tow);
-        builder.putS32(ns);
+        builder.putS32(ns_residual);
         builder.putU16(wn);
     }
 
@@ -58,7 +58,7 @@ from -500000 to 500000)
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
         obj.put("tow", tow);
-        obj.put("ns", ns);
+        obj.put("ns_residual", ns_residual);
         obj.put("wn", wn);
         return obj;
     }

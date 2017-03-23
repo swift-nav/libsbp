@@ -170,7 +170,7 @@ so ns field will be 0.
   ----------
   tow : int
     Milliseconds since start of GPS week
-  ns : int
+  ns_residual : int
     Nanosecond residual of millisecond-rounded TOW (ranges
 from -500000 to 500000)
 
@@ -180,11 +180,11 @@ from -500000 to 500000)
   """
   _parser = Embedded(Struct("GPSTimeNano",
                      ULInt32('tow'),
-                     SLInt32('ns'),
+                     SLInt32('ns_residual'),
                      ULInt16('wn'),))
   __slots__ = [
                'tow',
-               'ns',
+               'ns_residual',
                'wn',
               ]
 
@@ -193,7 +193,7 @@ from -500000 to 500000)
       self.from_binary(payload)
     else:
       self.tow = kwargs.pop('tow')
-      self.ns = kwargs.pop('ns')
+      self.ns_residual = kwargs.pop('ns_residual')
       self.wn = kwargs.pop('wn')
 
   def __repr__(self):
