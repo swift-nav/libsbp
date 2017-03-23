@@ -7,14 +7,14 @@ tests:
 - msg:
     fields:
       flags: 0
-      ns: 0
+      ns_residual: 0
       tow: 2567800
       wn: 1787
     module: sbp.navigation
     name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 55286, "msg_type": 256, "wn": 1787, "tow": 2567800, "crc":
-    9349, "length": 11, "flags": 0, "ns": 0, "preamble": 85, "payload": "+wZ4LicAAAAAAAA="}'
+    9349, "length": 11, "flags": 0, "ns_residual": 0, "preamble": 85, "payload": "+wZ4LicAAAAAAAA="}'
   raw_packet: VQAB9tcL+wZ4LicAAAAAAACFJA==
   sbp:
     crc: '0x2485'
@@ -27,14 +27,14 @@ tests:
 - msg:
     fields:
       flags: 0
-      ns: 0
+      ns_residual: 0
       tow: 2567900
       wn: 1787
     module: sbp.navigation
     name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 55286, "msg_type": 256, "wn": 1787, "tow": 2567900, "crc":
-    40996, "length": 11, "flags": 0, "ns": 0, "preamble": 85, "payload": "+wbcLicAAAAAAAA="}'
+    40996, "length": 11, "flags": 0, "ns_residual": 0, "preamble": 85, "payload": "+wbcLicAAAAAAAA="}'
   raw_packet: VQAB9tcL+wbcLicAAAAAAAAkoA==
   sbp:
     crc: '0xa024'
@@ -47,14 +47,14 @@ tests:
 - msg:
     fields:
       flags: 0
-      ns: 0
+      ns_residual: 0
       tow: 2568000
       wn: 1787
     module: sbp.navigation
     name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 55286, "msg_type": 256, "wn": 1787, "tow": 2568000, "crc":
-    48811, "length": 11, "flags": 0, "ns": 0, "preamble": 85, "payload": "+wZALycAAAAAAAA="}'
+    48811, "length": 11, "flags": 0, "ns_residual": 0, "preamble": 85, "payload": "+wZALycAAAAAAAA="}'
   raw_packet: VQAB9tcL+wZALycAAAAAAACrvg==
   sbp:
     crc: '0xbeab'
@@ -67,14 +67,14 @@ tests:
 - msg:
     fields:
       flags: 0
-      ns: 0
+      ns_residual: 0
       tow: 2568100
       wn: 1787
     module: sbp.navigation
     name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 55286, "msg_type": 256, "wn": 1787, "tow": 2568100, "crc":
-    26067, "length": 11, "flags": 0, "ns": 0, "preamble": 85, "payload": "+wakLycAAAAAAAA="}'
+    26067, "length": 11, "flags": 0, "ns_residual": 0, "preamble": 85, "payload": "+wakLycAAAAAAAA="}'
   raw_packet: VQAB9tcL+wakLycAAAAAAADTZQ==
   sbp:
     crc: '0x65d3'
@@ -87,14 +87,14 @@ tests:
 - msg:
     fields:
       flags: 0
-      ns: 0
+      ns_residual: 0
       tow: 2568200
       wn: 1787
     module: sbp.navigation
     name: MsgGPSTimeDepA
   msg_type: '0x100'
   raw_json: '{"sender": 55286, "msg_type": 256, "wn": 1787, "tow": 2568200, "crc":
-    11515, "length": 11, "flags": 0, "ns": 0, "preamble": 85, "payload": "+wYIMCcAAAAAAAA="}'
+    11515, "length": 11, "flags": 0, "ns_residual": 0, "preamble": 85, "payload": "+wYIMCcAAAAAAAA="}'
   raw_packet: VQAB9tcL+wYIMCcAAAAAAAD7LA==
   sbp:
     crc: '0x2cfb'

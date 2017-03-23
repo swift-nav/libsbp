@@ -33,7 +33,7 @@ definitions:
             type: u32
             units: ms
             desc: GPS time of week rounded to the nearest millisecond
-        - ns:
+        - ns_residual:
             type: s32
             units: ns
             desc: |
