@@ -46,7 +46,7 @@ var UInt64 = require('cuint').UINT64;
  * Fields in the SBP payload (`sbp.payload`):
  * @field wn number (unsigned 16-bit int, 2 bytes) GPS week number
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS time of week rounded to the nearest millisecond
- * @field ns number (signed 32-bit int, 4 bytes) Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000)
+ * @field ns_residual number (signed 32-bit int, 4 bytes) Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000)
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags (reserved)
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -66,12 +66,12 @@ MsgGpsTime.prototype.parser = new Parser()
   .endianess('little')
   .uint16('wn')
   .uint32('tow')
-  .int32('ns')
+  .int32('ns_residual')
   .uint8('flags');
 MsgGpsTime.prototype.fieldSpec = [];
 MsgGpsTime.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 MsgGpsTime.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
-MsgGpsTime.prototype.fieldSpec.push(['ns', 'writeInt32LE', 4]);
+MsgGpsTime.prototype.fieldSpec.push(['ns_residual', 'writeInt32LE', 4]);
 MsgGpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
@@ -88,8 +88,8 @@ MsgGpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field day number (unsigned 8-bit int, 1 byte) days in the month (range 1-31)
  * @field hours number (unsigned 8-bit int, 1 byte) hours of day (range 0-23)
  * @field minutes number (unsigned 8-bit int, 1 byte) minutes of hour (range 0-59)
- * @field seconds number (unsigned 8-bit int, 1 byte) seconds of minute (range 0-60)
- * @field ns number (signed 32-bit int, 4 bytes) Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000)
+ * @field seconds number (unsigned 8-bit int, 1 byte) seconds of minute (range 0-60) rounded down
+ * @field ns number (unsigned 32-bit int, 4 bytes) nanoseconds of second (range 0-999999999)
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -114,7 +114,7 @@ MsgUtcTime.prototype.parser = new Parser()
   .uint8('hours')
   .uint8('minutes')
   .uint8('seconds')
-  .int32('ns');
+  .uint32('ns');
 MsgUtcTime.prototype.fieldSpec = [];
 MsgUtcTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 MsgUtcTime.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
@@ -124,7 +124,7 @@ MsgUtcTime.prototype.fieldSpec.push(['day', 'writeUInt8', 1]);
 MsgUtcTime.prototype.fieldSpec.push(['hours', 'writeUInt8', 1]);
 MsgUtcTime.prototype.fieldSpec.push(['minutes', 'writeUInt8', 1]);
 MsgUtcTime.prototype.fieldSpec.push(['seconds', 'writeUInt8', 1]);
-MsgUtcTime.prototype.fieldSpec.push(['ns', 'writeInt32LE', 4]);
+MsgUtcTime.prototype.fieldSpec.push(['ns', 'writeUInt32LE', 4]);
 
 /**
  * SBP class for message MSG_DOPS (0x0208).
@@ -560,7 +560,7 @@ MsgAgeCorrections.prototype.fieldSpec.push(['age', 'writeUInt16LE', 2]);
  * Fields in the SBP payload (`sbp.payload`):
  * @field wn number (unsigned 16-bit int, 2 bytes) GPS week number
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS time of week rounded to the nearest millisecond
- * @field ns number (signed 32-bit int, 4 bytes) Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000)
+ * @field ns_residual number (signed 32-bit int, 4 bytes) Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000)
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags (reserved)
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -580,12 +580,12 @@ MsgGpsTimeDepA.prototype.parser = new Parser()
   .endianess('little')
   .uint16('wn')
   .uint32('tow')
-  .int32('ns')
+  .int32('ns_residual')
   .uint8('flags');
 MsgGpsTimeDepA.prototype.fieldSpec = [];
 MsgGpsTimeDepA.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 MsgGpsTimeDepA.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
-MsgGpsTimeDepA.prototype.fieldSpec.push(['ns', 'writeInt32LE', 4]);
+MsgGpsTimeDepA.prototype.fieldSpec.push(['ns_residual', 'writeInt32LE', 4]);
 MsgGpsTimeDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**

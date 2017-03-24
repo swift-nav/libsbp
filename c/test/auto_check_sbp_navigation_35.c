@@ -126,7 +126,7 @@ START_TEST( test_auto_check_sbp_navigation_35 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1838, "incorrect value for wn, expected 1838, is %d", msg->wn);
-    fail_unless(msg->ns == -224401, "incorrect value for ns, expected -224401, is %d", msg->ns);
+    fail_unless(msg->ns_residual == -224401, "incorrect value for ns_residual, expected -224401, is %d", msg->ns_residual);
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
     fail_unless(msg->tow == 407084500, "incorrect value for tow, expected 407084500, is %d", msg->tow);
   }
@@ -170,7 +170,7 @@ START_TEST( test_auto_check_sbp_navigation_35 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1838, "incorrect value for wn, expected 1838, is %d", msg->wn);
-    fail_unless(msg->ns == 223085, "incorrect value for ns, expected 223085, is %d", msg->ns);
+    fail_unless(msg->ns_residual == 223085, "incorrect value for ns_residual, expected 223085, is %d", msg->ns_residual);
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
     fail_unless(msg->tow == 407084600, "incorrect value for tow, expected 407084600, is %d", msg->tow);
   }
@@ -214,7 +214,7 @@ START_TEST( test_auto_check_sbp_navigation_35 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1838, "incorrect value for wn, expected 1838, is %d", msg->wn);
-    fail_unless(msg->ns == -222999, "incorrect value for ns, expected -222999, is %d", msg->ns);
+    fail_unless(msg->ns_residual == -222999, "incorrect value for ns_residual, expected -222999, is %d", msg->ns_residual);
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
     fail_unless(msg->tow == 407084700, "incorrect value for tow, expected 407084700, is %d", msg->tow);
   }
@@ -258,7 +258,7 @@ START_TEST( test_auto_check_sbp_navigation_35 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1838, "incorrect value for wn, expected 1838, is %d", msg->wn);
-    fail_unless(msg->ns == 236272, "incorrect value for ns, expected 236272, is %d", msg->ns);
+    fail_unless(msg->ns_residual == 236272, "incorrect value for ns_residual, expected 236272, is %d", msg->ns_residual);
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
     fail_unless(msg->tow == 407084800, "incorrect value for tow, expected 407084800, is %d", msg->tow);
   }
@@ -302,7 +302,7 @@ START_TEST( test_auto_check_sbp_navigation_35 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1838, "incorrect value for wn, expected 1838, is %d", msg->wn);
-    fail_unless(msg->ns == -236144, "incorrect value for ns, expected -236144, is %d", msg->ns);
+    fail_unless(msg->ns_residual == -236144, "incorrect value for ns_residual, expected -236144, is %d", msg->ns_residual);
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
     fail_unless(msg->tow == 407084900, "incorrect value for tow, expected 407084900, is %d", msg->tow);
   }
@@ -346,7 +346,7 @@ START_TEST( test_auto_check_sbp_navigation_35 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1838, "incorrect value for wn, expected 1838, is %d", msg->wn);
-    fail_unless(msg->ns == -334131, "incorrect value for ns, expected -334131, is %d", msg->ns);
+    fail_unless(msg->ns_residual == -334131, "incorrect value for ns_residual, expected -334131, is %d", msg->ns_residual);
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
     fail_unless(msg->tow == 407151150, "incorrect value for tow, expected 407151150, is %d", msg->tow);
   }

@@ -126,7 +126,7 @@ START_TEST( test_auto_check_sbp_ext_events_32 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->wn == 1840, "incorrect value for wn, expected 1840, is %d", msg->wn);
-    fail_unless(msg->ns == 999882, "incorrect value for ns, expected 999882, is %d", msg->ns);
+    fail_unless(msg->ns_residual == 999882, "incorrect value for ns_residual, expected 999882, is %d", msg->ns_residual);
     fail_unless(msg->flags == 3, "incorrect value for flags, expected 3, is %d", msg->flags);
     fail_unless(msg->tow == 254924999, "incorrect value for tow, expected 254924999, is %d", msg->tow);
     fail_unless(msg->pin == 0, "incorrect value for pin, expected 0, is %d", msg->pin);

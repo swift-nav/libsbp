@@ -66,7 +66,7 @@ these messages.
     GPS week number
   tow : int
     GPS time of week rounded to the nearest millisecond
-  ns : int
+  ns_residual : int
     Nanosecond residual of millisecond-rounded TOW (ranges
 from -500000 to 500000)
 
@@ -79,12 +79,12 @@ from -500000 to 500000)
   _parser = Struct("MsgGPSTime",
                    ULInt16('wn'),
                    ULInt32('tow'),
-                   SLInt32('ns'),
+                   SLInt32('ns_residual'),
                    ULInt8('flags'),)
   __slots__ = [
                'wn',
                'tow',
-               'ns',
+               'ns_residual',
                'flags',
               ]
 
@@ -100,7 +100,7 @@ from -500000 to 500000)
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.wn = kwargs.pop('wn')
       self.tow = kwargs.pop('tow')
-      self.ns = kwargs.pop('ns')
+      self.ns_residual = kwargs.pop('ns_residual')
       self.flags = kwargs.pop('flags')
 
   def __repr__(self):
@@ -176,9 +176,9 @@ which indicate the source of the UTC offset value and source of the time fix.
   minutes : int
     minutes of hour (range 0-59)
   seconds : int
-    seconds of minute (range 0-60)
+    seconds of minute (range 0-60) rounded down
   ns : int
-    Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000)
+    nanoseconds of second (range 0-999999999)
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -192,7 +192,7 @@ which indicate the source of the UTC offset value and source of the time fix.
                    ULInt8('hours'),
                    ULInt8('minutes'),
                    ULInt8('seconds'),
-                   SLInt32('ns'),)
+                   ULInt32('ns'),)
   __slots__ = [
                'flags',
                'tow',
@@ -1313,7 +1313,7 @@ these messages.
     GPS week number
   tow : int
     GPS time of week rounded to the nearest millisecond
-  ns : int
+  ns_residual : int
     Nanosecond residual of millisecond-rounded TOW (ranges
 from -500000 to 500000)
 
@@ -1326,12 +1326,12 @@ from -500000 to 500000)
   _parser = Struct("MsgGPSTimeDepA",
                    ULInt16('wn'),
                    ULInt32('tow'),
-                   SLInt32('ns'),
+                   SLInt32('ns_residual'),
                    ULInt8('flags'),)
   __slots__ = [
                'wn',
                'tow',
-               'ns',
+               'ns_residual',
                'flags',
               ]
 
@@ -1347,7 +1347,7 @@ from -500000 to 500000)
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.wn = kwargs.pop('wn')
       self.tow = kwargs.pop('tow')
-      self.ns = kwargs.pop('ns')
+      self.ns_residual = kwargs.pop('ns_residual')
       self.flags = kwargs.pop('flags')
 
   def __repr__(self):

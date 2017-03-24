@@ -50,14 +50,14 @@ msgGpsTime = 0x0102
 -- other navigation messages referenced to the same time (but lacking the ns
 -- field) and indicates a more precise time of these messages.
 data MsgGpsTime = MsgGpsTime
-  { _msgGpsTime_wn  :: Word16
+  { _msgGpsTime_wn        :: Word16
     -- ^ GPS week number
-  , _msgGpsTime_tow :: Word32
+  , _msgGpsTime_tow       :: Word32
     -- ^ GPS time of week rounded to the nearest millisecond
-  , _msgGpsTime_ns  :: Int32
+  , _msgGpsTime_ns_residual :: Int32
     -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     -- 500000)
-  , _msgGpsTime_flags :: Word8
+  , _msgGpsTime_flags     :: Word8
     -- ^ Status flags (reserved)
   } deriving ( Show, Read, Eq )
 
@@ -65,14 +65,14 @@ instance Binary MsgGpsTime where
   get = do
     _msgGpsTime_wn <- getWord16le
     _msgGpsTime_tow <- getWord32le
-    _msgGpsTime_ns <- fromIntegral <$> getWord32le
+    _msgGpsTime_ns_residual <- fromIntegral <$> getWord32le
     _msgGpsTime_flags <- getWord8
     return MsgGpsTime {..}
 
   put MsgGpsTime {..} = do
     putWord16le _msgGpsTime_wn
     putWord32le _msgGpsTime_tow
-    putWord32le $ fromIntegral _msgGpsTime_ns
+    putWord32le $ fromIntegral _msgGpsTime_ns_residual
     putWord8 _msgGpsTime_flags
 
 $(deriveSBP 'msgGpsTime ''MsgGpsTime)
@@ -105,10 +105,9 @@ data MsgUtcTime = MsgUtcTime
   , _msgUtcTime_minutes :: Word8
     -- ^ minutes of hour (range 0-59)
   , _msgUtcTime_seconds :: Word8
-    -- ^ seconds of minute (range 0-60)
-  , _msgUtcTime_ns    :: Int32
-    -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
-    -- 500000)
+    -- ^ seconds of minute (range 0-60) rounded down
+  , _msgUtcTime_ns    :: Word32
+    -- ^ nanoseconds of second (range 0-999999999)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgUtcTime where
@@ -121,7 +120,7 @@ instance Binary MsgUtcTime where
     _msgUtcTime_hours <- getWord8
     _msgUtcTime_minutes <- getWord8
     _msgUtcTime_seconds <- getWord8
-    _msgUtcTime_ns <- fromIntegral <$> getWord32le
+    _msgUtcTime_ns <- getWord32le
     return MsgUtcTime {..}
 
   put MsgUtcTime {..} = do
@@ -133,7 +132,7 @@ instance Binary MsgUtcTime where
     putWord8 _msgUtcTime_hours
     putWord8 _msgUtcTime_minutes
     putWord8 _msgUtcTime_seconds
-    putWord32le $ fromIntegral _msgUtcTime_ns
+    putWord32le _msgUtcTime_ns
 
 $(deriveSBP 'msgUtcTime ''MsgUtcTime)
 
@@ -609,14 +608,14 @@ msgGpsTimeDepA = 0x0100
 -- other navigation messages referenced to the same time (but lacking the ns
 -- field) and indicates a more precise time of these messages.
 data MsgGpsTimeDepA = MsgGpsTimeDepA
-  { _msgGpsTimeDepA_wn  :: Word16
+  { _msgGpsTimeDepA_wn        :: Word16
     -- ^ GPS week number
-  , _msgGpsTimeDepA_tow :: Word32
+  , _msgGpsTimeDepA_tow       :: Word32
     -- ^ GPS time of week rounded to the nearest millisecond
-  , _msgGpsTimeDepA_ns  :: Int32
+  , _msgGpsTimeDepA_ns_residual :: Int32
     -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     -- 500000)
-  , _msgGpsTimeDepA_flags :: Word8
+  , _msgGpsTimeDepA_flags     :: Word8
     -- ^ Status flags (reserved)
   } deriving ( Show, Read, Eq )
 
@@ -624,14 +623,14 @@ instance Binary MsgGpsTimeDepA where
   get = do
     _msgGpsTimeDepA_wn <- getWord16le
     _msgGpsTimeDepA_tow <- getWord32le
-    _msgGpsTimeDepA_ns <- fromIntegral <$> getWord32le
+    _msgGpsTimeDepA_ns_residual <- fromIntegral <$> getWord32le
     _msgGpsTimeDepA_flags <- getWord8
     return MsgGpsTimeDepA {..}
 
   put MsgGpsTimeDepA {..} = do
     putWord16le _msgGpsTimeDepA_wn
     putWord32le _msgGpsTimeDepA_tow
-    putWord32le $ fromIntegral _msgGpsTimeDepA_ns
+    putWord32le $ fromIntegral _msgGpsTimeDepA_ns_residual
     putWord8 _msgGpsTimeDepA_flags
 
 $(deriveSBP 'msgGpsTimeDepA ''MsgGpsTimeDepA)

@@ -55,11 +55,11 @@ public class MsgUtcTime extends SBPMessage {
     /** minutes of hour (range 0-59) */
     public int minutes;
     
-    /** seconds of minute (range 0-60) */
+    /** seconds of minute (range 0-60) rounded down */
     public int seconds;
     
-    /** Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000) */
-    public int ns;
+    /** nanoseconds of second (range 0-999999999) */
+    public long ns;
     
 
     public MsgUtcTime (int sender) { super(sender, TYPE); }
@@ -80,7 +80,7 @@ public class MsgUtcTime extends SBPMessage {
         hours = parser.getU8();
         minutes = parser.getU8();
         seconds = parser.getU8();
-        ns = parser.getS32();
+        ns = parser.getU32();
     }
 
     @Override
@@ -93,7 +93,7 @@ public class MsgUtcTime extends SBPMessage {
         builder.putU8(hours);
         builder.putU8(minutes);
         builder.putU8(seconds);
-        builder.putS32(ns);
+        builder.putU32(ns);
     }
 
     @Override

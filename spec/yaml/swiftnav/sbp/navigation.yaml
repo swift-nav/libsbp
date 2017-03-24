@@ -53,7 +53,7 @@ definitions:
             type: u32
             units: ms
             desc: GPS time of week rounded to the nearest millisecond
-        - ns:
+        - ns_residual:
             type: s32
             units: ns
             desc: |
@@ -122,12 +122,12 @@ definitions:
         - seconds:
             type: u8
             units: seconds
-            desc: seconds of minute (range 0-60)
+            desc: seconds of minute (range 0-60) rounded down
         - ns:
-            type: s32
+            type: u32
             units: nanoseconds
-            desc: Nanosecond residual of millisecond-rounded TOW (ranges
-                  from -500000 to 500000)
+            desc: nanoseconds of second
+                  (range 0-999999999)
 
  - MSG_DOPS:
     id: 0x0208
@@ -590,7 +590,7 @@ definitions:
             type: u32
             units: ms
             desc: GPS time of week rounded to the nearest millisecond
-        - ns:
+        - ns_residual:
             type: s32
             units: ns
             desc: |

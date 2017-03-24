@@ -71,11 +71,11 @@ typedef struct __attribute__((packed)) {
  * so ns field will be 0.
  */
 typedef struct __attribute__((packed)) {
-  u32 tow;    /**< Milliseconds since start of GPS week [ms] */
-  s32 ns;     /**< Nanosecond residual of millisecond-rounded TOW (ranges
+  u32 tow;            /**< Milliseconds since start of GPS week [ms] */
+  s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOW (ranges
 from -500000 to 500000)
  [ns] */
-  u16 wn;     /**< GPS week number [week] */
+  u16 wn;             /**< GPS week number [week] */
 } gps_time_nano_t;
 
 

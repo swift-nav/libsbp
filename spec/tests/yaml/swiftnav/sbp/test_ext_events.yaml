@@ -7,7 +7,7 @@ tests:
 - msg:
     fields:
       flags: 3
-      ns: 999882
+      ns_residual: 999882
       pin: 0
       tow: 254924999
       wn: 1840
@@ -15,7 +15,7 @@ tests:
     name: MsgExtEvent
   msg_type: '0x101'
   raw_json: '{"sender": 1781, "msg_type": 257, "wn": 1840, "tow": 254924999, "crc":
-    52286, "length": 12, "flags": 3, "pin": 0, "ns": 999882, "preamble": 85, "payload":
+    52286, "length": 12, "flags": 3, "pin": 0, "ns_residual": 999882, "preamble": 85, "payload":
     "MAfH2DEPykEPAAMA"}'
   raw_packet: VQEB9QYMMAfH2DEPykEPAAMAPsw=
   sbp:

@@ -54,12 +54,12 @@
  */
 #define SBP_MSG_GPS_TIME               0x0102
 typedef struct __attribute__((packed)) {
-  u16 wn;       /**< GPS week number [weeks] */
-  u32 tow;      /**< GPS time of week rounded to the nearest millisecond [ms] */
-  s32 ns;       /**< Nanosecond residual of millisecond-rounded TOW (ranges
+  u16 wn;             /**< GPS week number [weeks] */
+  u32 tow;            /**< GPS time of week rounded to the nearest millisecond [ms] */
+  s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOW (ranges
 from -500000 to 500000)
  [ns] */
-  u8 flags;    /**< Status flags (reserved) */
+  u8 flags;          /**< Status flags (reserved) */
 } msg_gps_time_t;
 
 
@@ -77,8 +77,8 @@ typedef struct __attribute__((packed)) {
   u8 day;        /**< days in the month (range 1-31) [day] */
   u8 hours;      /**< hours of day (range 0-23) [hours] */
   u8 minutes;    /**< minutes of hour (range 0-59) [minutes] */
-  u8 seconds;    /**< seconds of minute (range 0-60) [seconds] */
-  s32 ns;         /**< Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000) [nanoseconds] */
+  u8 seconds;    /**< seconds of minute (range 0-60) rounded down [seconds] */
+  u32 ns;         /**< nanoseconds of second (range 0-999999999) [nanoseconds] */
 } msg_utc_time_t;
 
 
@@ -280,12 +280,12 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_GPS_TIME_DEP_A         0x0100
 typedef struct __attribute__((packed)) {
-  u16 wn;       /**< GPS week number [weeks] */
-  u32 tow;      /**< GPS time of week rounded to the nearest millisecond [ms] */
-  s32 ns;       /**< Nanosecond residual of millisecond-rounded TOW (ranges
+  u16 wn;             /**< GPS week number [weeks] */
+  u32 tow;            /**< GPS time of week rounded to the nearest millisecond [ms] */
+  s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOW (ranges
 from -500000 to 500000)
  [ns] */
-  u8 flags;    /**< Status flags (reserved) */
+  u8 flags;          /**< Status flags (reserved) */
 } msg_gps_time_dep_a_t;
 
 
