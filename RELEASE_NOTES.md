@@ -6,6 +6,7 @@ For a detailed index of changes, please see the
 
 Contents
 --------
+ * [v2.2.0](#v2.2.0)
  * [v2.1.8](#v2.1.8)
  * [v2.1.7](#v2.1.7)
  * [v2.1.6](#v2.1.6)
@@ -18,6 +19,16 @@ Contents
  * [v1.0.1](#v1.0.1)
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
+
+v2.2.0 <a name="v2.2.0">
+--------------------------
+* Add Network Status Msg
+* Redefine Nanoseconds field of UTC time message as U32 rather than S32
+* Redefine Seconds field of UTC message as the floor of the current seconds in minute
+* Rename ns field that was a residual to ns_residual
+* Add RTCS/CTS option to python serial driver
+* Increase Network Driver timeouts for connection and reads
+* Add context manager to python client forwarder
 
 v2.1.8 <a name="v2.1.8">
 --------------------------

@@ -1,11 +1,24 @@
 # Change Log
 
-## [v2.1.8](https://github.com/swift-nav/libsbp/tree/v2.1.8)
+## [2.2.0](https://github.com/swift-nav/libsbp/tree/v2.2.0)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.1.8...v2.2.0)
+
+**Merged pull requests:**
+
+- Utc msg fixes [\#452](https://github.com/swift-nav/libsbp/pull/452)
+- Update README to specify explicit Haskell Stack resolver [\#451](https://github.com/swift-nav/libsbp/pull/451)
+- python: pyserial driver.  Add hdw flow control to API [\#450](https://github.com/swift-nav/libsbp/pull/450)
+- Jdiamond/network status [\#449](https://github.com/swift-nav/libsbp/pull/449)
+- Increase timeouts for connections and reads [\#443](https://github.com/swift-nav/libsbp/pull/443)
+- python forwarder: add context [\#433](https://github.com/swift-nav/libsbp/pull/433)
+
+## [v2.1.8](https://github.com/swift-nav/libsbp/tree/v2.1.8) (2017-03-11)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.1.7...v2.1.8)
 
 **Merged pull requests:**
 
+- V2.1.8 branch [\#448](https://github.com/swift-nav/libsbp/pull/448)
 - Split sbp\_process\(\) into two functions.  [\#444](https://github.com/swift-nav/libsbp/pull/444)
 - Add MsgAlmanacGps and MsgAlmanacGlo [\#441](https://github.com/swift-nav/libsbp/pull/441)
 - Pdf publish version fix [\#440](https://github.com/swift-nav/libsbp/pull/440)
