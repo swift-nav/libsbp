@@ -212,7 +212,7 @@ definitions:
         - accuracy:
             type: u16
             units: mm
-            desc: Position accuracy estimate.
+            desc: Position estimated standard deviation
         - n_sats:
             type: u8
             desc: Number of satellites used in solution
@@ -220,13 +220,94 @@ definitions:
             type: u8
             desc: Status flags
             fields:
-              - 7:
-                  desc: RAIM repair flag
-                  values:
-                      - 0: No repair
-                      - 1: Solution came from RAIM repair
-              - 3-6:
+              - 5-7:
                   desc: Reserved
+              - 3-4:
+                  desc: INS status
+                  values:
+                      - 0: Not present
+                      - 1: Error (see INS status msg)
+                      - 2: Warning (see INS status msg)
+                      - 3: Valid
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+
+ - MSG_POS_ECEF_COV:
+    id: 0x0214
+    short_desc: Single-point position in ECEF
+    desc: |
+      The position solution message reports absolute Earth Centered
+      Earth Fixed (ECEF) coordinates and the status (single point vs
+      pseudo-absolute RTK) of the position solution. The message also
+      reports the upper triangular portion of the 3x3 covariance matrix.
+      If the receiver knows the surveyed position of the base station and has
+      an RTK solution, this reports a pseudo-absolute position
+      solution using the base station position and the rover's RTK
+      baseline vector. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - x:
+            type: double
+            units: m
+            desc: ECEF X coordinate
+        - y:
+            type: double
+            units: m
+            desc: ECEF Y coordinate
+        - z:
+            type: double
+            units: m
+            desc: ECEF Z coordinate
+        - cov_x_x:
+            type: float
+            units: m^2
+            desc: Estimated variance of x
+        - cov_x_y:
+            type: float
+            units: m^2
+            desc: Estimated covariance of x and y
+        - cov_x_z:
+            type: float
+            units: m^2
+            desc: Estimated covariance of x and z
+        - cov_y_y:
+            type: float
+            units: m^2
+            desc: Estimated variance of y
+        - cov_y_z:
+            type: float
+            units: m^2
+            desc: Estimated covariance of y and z
+        - cov_z_z:
+            type: float
+            units: m^2
+            desc: Estimated variance of z
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 5-7:
+                  desc: Reserved
+              - 3-4:
+                  desc: INS status
+                  values:
+                      - 0: Not present
+                      - 1: Error (see INS status msg)
+                      - 2: Warning (see INS status msg)
+                      - 3: Valid
               - 0-2:
                   desc: Fix mode
                   values:
@@ -268,11 +349,11 @@ definitions:
         - h_accuracy:
             type: u16
             units: mm
-            desc: Horizontal position accuracy estimate.
+            desc: Horizontal position estimated standard deviation
         - v_accuracy:
             type: u16
             units: mm
-            desc: Vertical position accuracy estimate.
+            desc: Vertical position estimated standard deviation
         - n_sats:
             type: u8
             desc: Number of satellites used in solution.
@@ -280,13 +361,94 @@ definitions:
             type: u8
             desc: Status flags
             fields:
-              - 7:
-                  desc: RAIM repair flag
-                  values:
-                      - 0: No repair
-                      - 1: Solution came from RAIM repair
-              - 3-6:
+              - 5-7:
                   desc: Reserved
+              - 3-4:
+                  desc: INS status
+                  values:
+                      - 0: Not present
+                      - 1: Error (see INS status msg)
+                      - 2: Warning (see INS status msg)
+                      - 3: Valid
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+
+
+ - MSG_POS_LLH_COV:
+    id: 0x0211
+    short_desc: Geodetic Position
+    desc: |
+      This position solution message reports the absolute geodetic
+      coordinates and the status (single point vs pseudo-absolute RTK)
+      of the position solution as well as the upper triangle of the 3x3
+      covariance matrix.  The position information and Fix Mode flags should
+      follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+      in the local-level North, East, Down frame, the covariance terms follow
+      with that convention. Thus, covariances are reported against the "downward"
+      measurement and care should be taken with the sign convention.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: double
+            units: m
+            desc: Height above WGS84 ellipsoid
+        - cov_n_n:
+            type: float
+            units: m^2
+            desc: Estimated variance of northing
+        - cov_n_e:
+            type: float
+            units: m^2
+            desc: Covariance of northing and easting
+        - cov_n_d:
+            type: float
+            units: m^2
+            desc: Covariance of northing and downward measurement
+        - cov_e_e:
+            type: float
+            units: m^2
+            desc: Estimated variance of easting
+        - cov_e_d:
+            type: float
+            units: m^2
+            desc: Covariance of easting and downward measurement
+        - cov_d_d:
+            type: float
+            units: m^2
+            desc: Estimated variance of downward measurement
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution.
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 5-7:
+                  desc: Reserved
+              - 3-4:
+                  desc: INS status
+                  values:
+                      - 0: Not present
+                      - 1: Error (see INS status msg)
+                      - 2: Warning (see INS status msg)
+                      - 3: Valid
               - 0-2:
                   desc: Fix mode
                   values:
@@ -325,7 +487,7 @@ definitions:
           - accuracy:
               type: u16
               units: mm
-              desc: Position accuracy estimate
+              desc: Position estimated standard deviation
           - n_sats:
               type: u8
               desc: Number of satellites used in solution
@@ -379,11 +541,11 @@ definitions:
           - h_accuracy:
               type: u16
               units: mm
-              desc: Horizontal position accuracy estimate
+              desc: Horizontal position estimated standard deviation
           - v_accuracy:
               type: u16
               units: mm
-              desc: Vertical position accuracy estimate
+              desc: Vertical position estimated standard deviation
           - n_sats:
               type: u8
               desc: Number of satellites used in solution
@@ -435,7 +597,7 @@ definitions:
               type: u16
               units: mm/s
               desc: |
-                Velocity accuracy estimate
+                Velocity estimated standard deviation
           - n_sats:
               type: u8
               desc: Number of satellites used in solution
@@ -443,8 +605,86 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 3-7:
+                - 5-7:
                     desc: Reserved
+                - 3-4:
+                    desc: INS status
+                    values:
+                        - 0: Not present
+                        - 1: Error (see INS status msg)
+                        - 2: Warning (see INS status msg)
+                        - 3: Valid
+                - 0-2:
+                    desc: Velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+
+ - MSG_VEL_ECEF_COV:
+    id: 0x0215
+    short_desc: Velocity in ECEF
+    desc: |
+      This message reports the velocity in Earth Centered Earth Fixed
+      (ECEF) coordinates. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - x:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF X coordinate
+          - y:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF Y coordinate
+          - z:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF Z coordinate
+          - cov_x_x:
+              type: float
+              units: m^2/s^2
+              desc: Estimated variance of x
+          - cov_x_y:
+              type: float
+              units: m^2/s^2
+              desc: Estimated covariance of x and y
+          - cov_x_z:
+              type: float
+              units: m^2/s^2
+              desc: Estimated covariance of x and z
+          - cov_y_y:
+              type: float
+              units: m^2/s^2
+              desc: Estimated variance of y
+          - cov_y_z:
+              type: float
+              units: m^2/s^2
+              desc: Estimated covariance of y and z
+          - cov_z_z:
+              type: float
+              units: m^2/s^2
+              desc: Estimated variance of z
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 5-7:
+                    desc: Reserved
+                - 3-4:
+                    desc: INS status
+                    values:
+                        - 0: Not present
+                        - 1: Error (see INS status msg)
+                        - 2: Warning (see INS status msg)
+                        - 3: Valid
                 - 0-2:
                     desc: Velocity mode
                     values:
@@ -481,12 +721,12 @@ definitions:
               type: u16
               units: mm/s
               desc: |
-                Horizontal velocity accuracy estimate
+                Horizontal velocity estimated standard deviation
           - v_accuracy:
               type: u16
               units: mm/s
               desc: |
-                Vertical velocity accuracy estimate
+                Vertical velocity estimated standard deviation
           - n_sats:
               type: u8
               desc: Number of satellites used in solution
@@ -494,8 +734,164 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 3-7:
+                - 5-7:
                     desc: Reserved
+                - 3-4:
+                    desc: INS status
+                    values:
+                        - 0: Not present
+                        - 1: Error (see INS status msg)
+                        - 2: Warning (see INS status msg)
+                        - 3: Valid
+                - 0-2:
+                    desc: GPS Velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+
+ - MSG_VEL_NED_COV:
+    id: 0x0212
+    short_desc: Velocity in NED
+    desc: |
+      This message reports the velocity in local North East Down (NED)
+      coordinates. The NED coordinate system is defined as the local WGS84
+      tangent plane centered at the current position. The full GPS time is
+      given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+      This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+      portion of the 3x3 covariance matrix.
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - n:
+              type: s32
+              units: mm/s
+              desc: Velocity North coordinate
+          - e:
+              type: s32
+              units: mm/s
+              desc: Velocity East coordinate
+          - d:
+              type: s32
+              units: mm/s
+              desc: Velocity Down coordinate
+          - cov_n_n:
+              type: float
+              units: m^2
+              desc: Estimated variance of northward measurement
+          - cov_n_e:
+              type: float
+              units: m^2
+              desc: Covariance of northward and eastward measurement
+          - cov_n_d:
+              type: float
+              units: m^2
+              desc: Covariance of northward and downward measurement
+          - cov_e_e:
+              type: float
+              units: m^2
+              desc: Estimated variance of eastward measurement
+          - cov_e_d:
+              type: float
+              units: m^2
+              desc: Covariance of eastward and downward measurement
+          - cov_d_d:
+              type: float
+              units: m^2
+              desc: Estimated variance of downward measurement
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 5-7:
+                    desc: Reserved
+                - 3-4:
+                    desc: INS status
+                    values:
+                        - 0: Not present
+                        - 1: Error (see INS status msg)
+                        - 2: Warning (see INS status msg)
+                        - 3: Valid
+                - 0-2:
+                    desc: GPS velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+
+ - MSG_VEL_USER_FRAME:
+    id: 0x0213
+    short_desc: Velocity in User Frame
+    desc: |
+      This message reports the velocity in the user frame. By convention,
+      the x-axis should point out the nose of the vehicle and represent the forward
+      direction, while as the y-axis should point out the right hand side of the vehicle.
+      Since this is a right handed system, z should point out the bottom of the vehicle.
+      The orientation and origin of the user frame are specified via the device settings.
+      The full GPS time is given by the preceding MSG_GPS_TIME with the
+      matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - x:
+              type: s32
+              units: mm/s
+              desc: Velocity in x direction
+          - y:
+              type: s32
+              units: mm/s
+              desc: Velocity in y direction
+          - z:
+              type: s32
+              units: mm/s
+              desc: Velocity in z direction
+          - cov_x_x:
+              type: float
+              units: m^2
+              desc: Estimated variance of x
+          - cov_x_y:
+              type: float
+              units: m^2
+              desc: Covariance of x and y
+          - cov_x_z:
+              type: float
+              units: m^2
+              desc: Covariance of x and z
+          - cov_y_y:
+              type: float
+              units: m^2
+              desc: Estimated variance of y
+          - cov_y_z:
+              type: float
+              units: m^2
+              desc: Covariance of y and z
+          - cov_z_z:
+              type: float
+              units: m^2
+              desc: Estimated variance of z
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 5-7:
+                    desc: Reserved
+                - 3-4:
+                    desc: INS status
+                    values:
+                        - 0: Not present
+                        - 1: Error (see INS status msg)
+                        - 2: Warning (see INS status msg)
+                        - 3: Valid
                 - 0-2:
                     desc: Velocity mode
                     values:
