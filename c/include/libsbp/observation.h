@@ -532,7 +532,7 @@ typedef struct __attribute__((packed)) {
 #define SBP_MSG_GROUP_DELAY          0x0092
 typedef struct __attribute__((packed)) {
   sbp_gps_time_t t_op;        /**< Data Predict Time of Week */
-  u8 prn;         /**< Satellite number */
+  sbp_gnss_signal_t sid;         /**< GNSS signal identifier */
   u8 valid;       /**< bit-field indicating validity of the values,
 LSB indicating tgd validity etc.
 1 = value is valid, 0 = value is not valid.

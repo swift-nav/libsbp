@@ -1,4 +1,4 @@
-# Copyright (C) 2015 - 2016 Swift Navigation Inc.
+# Copyright (C) 2015 - 2017 Swift Navigation Inc.
 # Contact: Fergus Noble <fergus@swiftnav.com>
 #          Pasi Miettinen <pasi.miettinen@exafore.com>
 #
@@ -1092,9 +1092,9 @@ definitions:
       - t_op:
           type: GPSTime
           desc: Data Predict Time of Week
-      - prn:
-          type: u8
-          desc: Satellite number
+      - sid:
+          type: GnssSignal
+          desc: GNSS signal identifier
       - valid:
           type: u8
           desc: |
