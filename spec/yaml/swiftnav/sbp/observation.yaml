@@ -1,4 +1,4 @@
-# Copyright (C) 2015 - 2016 Swift Navigation Inc.
+# Copyright (C) 2015 - 2017 Swift Navigation Inc.
 # Contact: Fergus Noble <fergus@swiftnav.com>
 #          Pasi Miettinen <pasi.miettinen@exafore.com>
 #
@@ -188,8 +188,8 @@ definitions:
     short_desc: Common fields for every ephemeris message.
     fields:
         - sid:
-            type: GnssSignal
-            desc: GNSS signal identifier
+            type: GnssSignal16
+            desc: GNSS signal identifier (16 bit)
         - toe:
             type: GPSTime
             desc: Time of Ephemerides
