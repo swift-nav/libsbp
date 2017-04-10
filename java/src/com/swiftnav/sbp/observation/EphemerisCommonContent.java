@@ -24,8 +24,8 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class EphemerisCommonContent extends SBPStruct {
     
-    /** GNSS signal identifier */
-    public GnssSignal sid;
+    /** GNSS signal identifier (16 bit) */
+    public GnssSignal16 sid;
     
     /** Time of Ephemerides */
     public GPSTime toe;
@@ -52,7 +52,7 @@ GLO: 0 = valid, non-zero = invalid
     @Override
     public EphemerisCommonContent parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        sid = new GnssSignal().parse(parser);
+        sid = new GnssSignal16().parse(parser);
         toe = new GPSTime().parse(parser);
         ura = parser.getDouble();
         fit_interval = parser.getU32();

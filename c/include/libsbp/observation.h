@@ -710,6 +710,28 @@ coordinate system
 } msg_almanac_glo_t;
 
 
+/** GLONASS SV orbital and frequency slots mapping information
+ *
+ * The message reports mapping information regarding GLONASS SV orbital and
+ * frequency slots.
+ * Mapped as follow:
+ * index (SV orbital slot)  fcns[index]
+ * 0                        0xFF
+ * 1                        FCN for SV orbital slot 1
+ * ...                      ...
+ * 28                       FCN for SV orbital slot 28
+ * 29                       0xFF
+ * 30                       0xFF
+ * 31                       0xFF
+ */
+#define SBP_MSG_FCNS_GLO             0x0072
+typedef struct __attribute__((packed)) {
+  u16 wn;        /**< GPS Week number [week] */
+  u32 tow_ms;    /**< GPS Time of week [ms] */
+  u8 fcns[32];  /**< GLONASS fequency number per orbital slot */
+} msg_fcns_glo_t;
+
+
 /** \} */
 
 #endif /* LIBSBP_OBSERVATION_MESSAGES_H */
