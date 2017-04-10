@@ -1277,7 +1277,7 @@ MsgSvConfigurationGps.prototype.fieldSpec.push(['l2c_mask', 'writeUInt32LE', 4])
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field t_op GPSTime Data Predict Time of Week
- * @field prn number (unsigned 8-bit int, 1 byte) Satellite number
+ * @field sid GnssSignal GNSS signal identifier
  * @field valid number (unsigned 8-bit int, 1 byte) bit-field indicating validity of the values, LSB indicating tgd validity etc. 1
  *   = value is valid, 0 = value is not valid.
  * @field tgd number (signed 16-bit int, 2 bytes)
@@ -1300,14 +1300,14 @@ MsgGroupDelay.prototype.constructor = MsgGroupDelay;
 MsgGroupDelay.prototype.parser = new Parser()
   .endianess('little')
   .nest('t_op', { type: GPSTime.prototype.parser })
-  .uint8('prn')
+  .nest('sid', { type: GnssSignal.prototype.parser })
   .uint8('valid')
   .int16('tgd')
   .int16('isc_l1ca')
   .int16('isc_l2c');
 MsgGroupDelay.prototype.fieldSpec = [];
 MsgGroupDelay.prototype.fieldSpec.push(['t_op', GPSTime.prototype.fieldSpec]);
-MsgGroupDelay.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
+MsgGroupDelay.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 MsgGroupDelay.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
 MsgGroupDelay.prototype.fieldSpec.push(['tgd', 'writeInt16LE', 2]);
 MsgGroupDelay.prototype.fieldSpec.push(['isc_l1ca', 'writeInt16LE', 2]);

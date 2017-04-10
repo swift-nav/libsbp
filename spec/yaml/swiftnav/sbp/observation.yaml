@@ -1092,9 +1092,9 @@ definitions:
       - t_op:
           type: GPSTime
           desc: Data Predict Time of Week
-      - prn:
-          type: u8
-          desc: Satellite number
+      - sid:
+          type: GnssSignal
+          desc: GNSS signal identifier
       - valid:
           type: u8
           desc: |

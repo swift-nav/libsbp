@@ -1381,8 +1381,8 @@ msgGroupDelay = 0x0092
 data MsgGroupDelay = MsgGroupDelay
   { _msgGroupDelay_t_op   :: GpsTime
     -- ^ Data Predict Time of Week
-  , _msgGroupDelay_prn    :: Word8
-    -- ^ Satellite number
+  , _msgGroupDelay_sid    :: GnssSignal
+    -- ^ GNSS signal identifier
   , _msgGroupDelay_valid  :: Word8
     -- ^ bit-field indicating validity of the values, LSB indicating tgd validity
     -- etc. 1 = value is valid, 0 = value is not valid.
@@ -1394,7 +1394,7 @@ data MsgGroupDelay = MsgGroupDelay
 instance Binary MsgGroupDelay where
   get = do
     _msgGroupDelay_t_op <- get
-    _msgGroupDelay_prn <- getWord8
+    _msgGroupDelay_sid <- get
     _msgGroupDelay_valid <- getWord8
     _msgGroupDelay_tgd <- fromIntegral <$> getWord16le
     _msgGroupDelay_isc_l1ca <- fromIntegral <$> getWord16le
@@ -1403,7 +1403,7 @@ instance Binary MsgGroupDelay where
 
   put MsgGroupDelay {..} = do
     put _msgGroupDelay_t_op
-    putWord8 _msgGroupDelay_prn
+    put _msgGroupDelay_sid
     putWord8 _msgGroupDelay_valid
     putWord16le $ fromIntegral _msgGroupDelay_tgd
     putWord16le $ fromIntegral _msgGroupDelay_isc_l1ca
