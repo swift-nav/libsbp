@@ -54,10 +54,10 @@ typedef struct __attribute__((packed)) {
   s32 x;        /**< 1st imaginary component [N/A] */
   s32 y;        /**< 2nd imaginary component [N/A] */
   s32 z;        /**< 3rd imaginary component [N/A] */
-  float var_w;    /**< Variance of w [N/A] */
-  float var_x;    /**< Variance of x [N/A] */
-  float var_y;    /**< Variance of y [N/A] */
-  float var_z;    /**< Variance of z [N/A] */
+  float acc_w;    /**< Estimated standard deviation of w [N/A] */
+  float acc_x;    /**< Estimated standard deviation of x [N/A] */
+  float acc_y;    /**< Estimated standard deviation of y [N/A] */
+  float acc_z;    /**< Estimated standard deviation of z [N/A] */
   u8 flags;    /**< Status flags */
 } msg_orient_quat_t;
 
@@ -75,18 +75,19 @@ typedef struct __attribute__((packed)) {
   s16 roll;         /**< rotation about the forward axis of the vehicle [milliradians] */
   s16 pitch;        /**< rotation about the rightward axis of the vehicle [milliradians] */
   s16 yaw;          /**< rotation about the downward axis of the vehicle [milliradians] */
-  float var_roll;     /**< Variance of roll [radians^2] */
-  float var_pitch;    /**< Variance of pitch [radians^2] */
-  float var_yaw;      /**< Variance of yaw [radians^2] */
+  float var_roll;     /**< Estimated standard deviation of roll [radians] */
+  float var_pitch;    /**< Estimated standard deviation of pitch [radians] */
+  float var_yaw;      /**< Estimated standard deviation of yaw [radians] */
   u8 flags;        /**< Status flags */
 } msg_orient_euler_t;
 
 
-/** Vehicle Body Axis angular rates
+/** User Frame instantaneous angular rates
  *
- * This message reports the orientation rates in the vehicle body frame. 
+ * This message reports the orientation rates in the user body frame. 
  * The values represent the measurements a strapped down gyroscope would 
  * make and are not equivalent to the time derivative of the Euler angles.
+ * The orientation and origin of the user frame is specified via device settings.
  * By convention, the vehicle x-axis is expected to be aligned with the forward
  * direction, while the vehicle y-axis is expected to be aligned with the right
  * direction, and the vehicle z-axis should be aligned with the down direction.

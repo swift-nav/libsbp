@@ -1,0 +1,34 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgVelNEDCOV .
+generated_on: 2016-04-11 by hand
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+       cov_e_d: 1
+       cov_e_e: 1
+       n_sats: 10
+       cov_n_n: 1
+       cov_n_e: 1
+       tow: 100
+       n: 1
+       cov_n_d: 1
+       flags: 0
+       e: 1
+       cov_d_d: 1
+    module: sbp.navigation
+    name: MsgVelNEDCov
+  msg_type: '0x212'
+  raw_json: '{"cov_e_d": 1, "cov_e_e": 1, "n_sats": 10, "sender": 66, "msg_type": 530, "cov_n_n": 1, "cov_n_e": 1, "tow": 100, "n": 1, "crc": 52568, "length": 42, "cov_n_d": 1, "flags": 0, "e": 1, "cov_d_d": 1, "preamble": 85, "payload": "ZAAAAAEAAAABAAAAAQAAAAAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwoA", "d": 1}'
+  raw_packet: VRICQgAqZAAAAAEAAAABAAAAAQAAAAAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwoAWM0=
+  sbp:
+    payload: ZAAAAAEAAAABAAAAAQAAAAAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwoA 
+    crc: '0xCD58'
+    length:  42 
+    msg_type: '0x212'
+    preamble: '0x55'
+    sender: '0x42'
+
+
+...

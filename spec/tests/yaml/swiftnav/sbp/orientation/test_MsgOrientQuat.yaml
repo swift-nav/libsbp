@@ -1,18 +1,18 @@
 description: Unit tests for swiftnav.sbp.orientation MsgOrientQuat v2.3.
-generated_on: 2017-11-18 21:26:14.478956
+generated_on: 2017-11-18 22:05:54.481738
 package: sbp.orientation
 tests:
 - msg:
-    fields: {acc_w: 3, acc_x: 8, acc_y: 7, acc_z: 2, flags: 5, tow: 8, w: 7, x: 1,
-      y: 4, z: 8}
+    fields: {acc_w: 2, acc_x: 2, acc_y: 8, acc_z: 3, flags: 7, tow: 4, w: 2, x: 2,
+      y: 5, z: 1}
     module: sbp.orientation
     name: MsgOrientQuat
   msg_type: '0x220'
-  raw_json: '{"sender": 66, "msg_type": 544, "tow": 8, "acc_z": 2, "acc_w": 3, "crc":
-    33914, "length": 37, "flags": 5, "w": 7, "y": 4, "x": 1, "z": 8, "preamble": 85,
-    "payload": "CAAAAAcAAAABAAAABAAAAAgAAAAAAEBAAAAAQQAA4EAAAABABQ==", "acc_y": 7,
-    "acc_x": 8}'
-  raw_packet: VSACQgAlCAAAAAcAAAABAAAABAAAAAgAAAAAAEBAAAAAQQAA4EAAAABABXqE
-  sbp: {crc: '0x847a', length: 37, msg_type: '0x220', payload: CAAAAAcAAAABAAAABAAAAAgAAAAAAEBAAAAAQQAA4EAAAABABQ==,
+  raw_json: '{"sender": 66, "msg_type": 544, "tow": 4, "acc_z": 3, "acc_w": 2, "crc":
+    22203, "length": 37, "flags": 7, "w": 2, "y": 5, "x": 2, "z": 1, "preamble": 85,
+    "payload": "BAAAAAIAAAACAAAABQAAAAEAAAAAAABAAAAAQAAAAEEAAEBABw==", "acc_y": 8,
+    "acc_x": 2}'
+  raw_packet: VSACQgAlBAAAAAIAAAACAAAABQAAAAEAAAAAAABAAAAAQAAAAEEAAEBAB7tW
+  sbp: {crc: '0x56bb', length: 37, msg_type: '0x220', payload: BAAAAAIAAAACAAAABQAAAAEAAAAAAABAAAAAQAAAAEEAAEBABw==,
     preamble: '0x55', sender: '0x42'}
 version: '2.3'

@@ -1,17 +1,17 @@
 description: Unit tests for swiftnav.sbp.orientation MsgOrientEuler v2.3.
-generated_on: 2017-11-18 21:26:14.481958
+generated_on: 2017-11-18 22:05:54.484747
 package: sbp.orientation
 tests:
 - msg:
-    fields: {flags: 4, pitch: 2, roll: 2, tow: 3, var_pitch: 8, var_roll: 7, var_yaw: 2,
-      yaw: 6}
+    fields: {flags: 6, pitch: 6, roll: 6, tow: 4, var_pitch: 5, var_roll: 3, var_yaw: 4,
+      yaw: 4}
     module: sbp.orientation
     name: MsgOrientEuler
   msg_type: '0x221'
-  raw_json: '{"var_pitch": 8, "sender": 66, "msg_type": 545, "roll": 2, "yaw": 6,
-    "tow": 3, "var_roll": 7, "crc": 24550, "length": 23, "flags": 4, "pitch": 2, "var_yaw":
-    2, "preamble": 85, "payload": "AwAAAAIAAgAGAAAA4EAAAABBAAAAQAQ="}'
-  raw_packet: VSECQgAXAwAAAAIAAgAGAAAA4EAAAABBAAAAQATmXw==
-  sbp: {crc: '0x5fe6', length: 23, msg_type: '0x221', payload: AwAAAAIAAgAGAAAA4EAAAABBAAAAQAQ=,
+  raw_json: '{"var_pitch": 5, "sender": 66, "msg_type": 545, "roll": 6, "yaw": 4,
+    "tow": 4, "var_roll": 3, "crc": 35551, "length": 23, "flags": 6, "pitch": 6, "var_yaw":
+    4, "preamble": 85, "payload": "BAAAAAYABgAEAAAAQEAAAKBAAACAQAY="}'
+  raw_packet: VSECQgAXBAAAAAYABgAEAAAAQEAAAKBAAACAQAbfig==
+  sbp: {crc: '0x8adf', length: 23, msg_type: '0x221', payload: BAAAAAYABgAEAAAAQEAAAKBAAACAQAY=,
     preamble: '0x55', sender: '0x42'}
 version: '2.3'
