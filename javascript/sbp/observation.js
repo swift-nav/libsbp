@@ -254,7 +254,7 @@ MsgBasePosEcef.prototype.fieldSpec.push(['z', 'writeDoubleLE', 8]);
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field sid GnssSignal16 GNSS signal identifier (16 bit)
+ * @field sid GnssSignal GNSS signal identifier
  * @field toe GPSTime Time of Ephemerides
  * @field ura number (float, 8 bytes) User Range Accuracy
  * @field fit_interval number (unsigned 32-bit int, 4 bytes) Curve fit interval
@@ -276,14 +276,14 @@ EphemerisCommonContent.prototype.messageType = "EphemerisCommonContent";
 EphemerisCommonContent.prototype.constructor = EphemerisCommonContent;
 EphemerisCommonContent.prototype.parser = new Parser()
   .endianess('little')
-  .nest('sid', { type: GnssSignal16.prototype.parser })
+  .nest('sid', { type: GnssSignal.prototype.parser })
   .nest('toe', { type: GPSTime.prototype.parser })
   .doublele('ura')
   .uint32('fit_interval')
   .uint8('valid')
   .uint8('health_bits');
 EphemerisCommonContent.prototype.fieldSpec = [];
-EphemerisCommonContent.prototype.fieldSpec.push(['sid', GnssSignal16.prototype.fieldSpec]);
+EphemerisCommonContent.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 EphemerisCommonContent.prototype.fieldSpec.push(['toe', GPSTime.prototype.fieldSpec]);
 EphemerisCommonContent.prototype.fieldSpec.push(['ura', 'writeDoubleLE', 8]);
 EphemerisCommonContent.prototype.fieldSpec.push(['fit_interval', 'writeUInt32LE', 4]);

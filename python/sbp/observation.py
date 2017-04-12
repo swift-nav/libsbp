@@ -194,8 +194,8 @@ class EphemerisCommonContent(object):
   
   Parameters
   ----------
-  sid : GnssSignal16
-    GNSS signal identifier (16 bit)
+  sid : GnssSignal
+    GNSS signal identifier
   toe : GPSTime
     Time of Ephemerides
   ura : double
@@ -213,7 +213,7 @@ GLO: 0 = valid, non-zero = invalid
 
   """
   _parser = Embedded(Struct("EphemerisCommonContent",
-                     Struct('sid', GnssSignal16._parser),
+                     Struct('sid', GnssSignal._parser),
                      Struct('toe', GPSTime._parser),
                      LFloat64('ura'),
                      ULInt32('fit_interval'),

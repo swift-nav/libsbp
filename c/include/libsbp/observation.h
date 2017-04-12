@@ -132,7 +132,7 @@ typedef struct __attribute__((packed)) {
 
 
 typedef struct __attribute__((packed)) {
-  gnss_signal16_t sid;             /**< GNSS signal identifier (16 bit) */
+  sbp_gnss_signal_t sid;             /**< GNSS signal identifier */
   sbp_gps_time_t toe;             /**< Time of Ephemerides */
   double ura;             /**< User Range Accuracy [m] */
   u32 fit_interval;    /**< Curve fit interval [s] */
