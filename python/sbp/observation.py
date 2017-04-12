@@ -2643,8 +2643,8 @@ class MsgGroupDelay(SBP):
     SBP parent object to inherit from.
   t_op : GPSTime
     Data Predict Time of Week
-  sid : GnssSignal
-    GNSS signal identifier
+  prn : int
+    Satellite number
   valid : int
     bit-field indicating validity of the values,
 LSB indicating tgd validity etc.
@@ -2659,14 +2659,14 @@ LSB indicating tgd validity etc.
   """
   _parser = Struct("MsgGroupDelay",
                    Struct('t_op', GPSTime._parser),
-                   Struct('sid', GnssSignal._parser),
+                   ULInt8('prn'),
                    ULInt8('valid'),
                    SLInt16('tgd'),
                    SLInt16('isc_l1ca'),
                    SLInt16('isc_l2c'),)
   __slots__ = [
                't_op',
-               'sid',
+               'prn',
                'valid',
                'tgd',
                'isc_l1ca',
@@ -2684,7 +2684,7 @@ LSB indicating tgd validity etc.
       self.msg_type = SBP_MSG_GROUP_DELAY
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.t_op = kwargs.pop('t_op')
-      self.sid = kwargs.pop('sid')
+      self.prn = kwargs.pop('prn')
       self.valid = kwargs.pop('valid')
       self.tgd = kwargs.pop('tgd')
       self.isc_l1ca = kwargs.pop('isc_l1ca')
