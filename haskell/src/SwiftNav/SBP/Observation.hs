@@ -273,10 +273,167 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_ephemerisCommonCon
              ''EphemerisCommonContent)
 $(makeLenses ''EphemerisCommonContent)
 
-msgEphemerisGps :: Word16
-msgEphemerisGps = 0x0081
+data EphemerisCommonContentDepA = EphemerisCommonContentDepA
+  { _ephemerisCommonContentDepA_sid        :: GnssSignal
+    -- ^ GNSS signal identifier
+  , _ephemerisCommonContentDepA_toe        :: GpsTime
+    -- ^ Time of Ephemerides
+  , _ephemerisCommonContentDepA_ura        :: Double
+    -- ^ User Range Accuracy
+  , _ephemerisCommonContentDepA_fit_interval :: Word32
+    -- ^ Curve fit interval
+  , _ephemerisCommonContentDepA_valid      :: Word8
+    -- ^ Status of ephemeris, 1 = valid, 0 = invalid
+  , _ephemerisCommonContentDepA_health_bits :: Word8
+    -- ^ Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
+    -- = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
+  } deriving ( Show, Read, Eq )
 
--- | SBP class for message MSG_EPHEMERIS_GPS (0x0081).
+instance Binary EphemerisCommonContentDepA where
+  get = do
+    _ephemerisCommonContentDepA_sid <- get
+    _ephemerisCommonContentDepA_toe <- get
+    _ephemerisCommonContentDepA_ura <- getFloat64le
+    _ephemerisCommonContentDepA_fit_interval <- getWord32le
+    _ephemerisCommonContentDepA_valid <- getWord8
+    _ephemerisCommonContentDepA_health_bits <- getWord8
+    return EphemerisCommonContentDepA {..}
+
+  put EphemerisCommonContentDepA {..} = do
+    put _ephemerisCommonContentDepA_sid
+    put _ephemerisCommonContentDepA_toe
+    putFloat64le _ephemerisCommonContentDepA_ura
+    putWord32le _ephemerisCommonContentDepA_fit_interval
+    putWord8 _ephemerisCommonContentDepA_valid
+    putWord8 _ephemerisCommonContentDepA_health_bits
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_ephemerisCommonContentDepA_" . P.stripPrefix "_ephemerisCommonContentDepA_"}
+             ''EphemerisCommonContentDepA)
+$(makeLenses ''EphemerisCommonContentDepA)
+
+msgEphemerisGpsDepE :: Word16
+msgEphemerisGpsDepE = 0x0081
+
+-- | SBP class for message MSG_EPHEMERIS_GPS_DEP_E (0x0081).
+--
+-- The ephemeris message returns a set of satellite orbit parameters that is
+-- used to calculate GPS satellite position, velocity, and clock offset. Please
+-- see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
+-- Table 20-III) for more details.
+data MsgEphemerisGpsDepE = MsgEphemerisGpsDepE
+  { _msgEphemerisGpsDepE_common :: EphemerisCommonContentDepA
+    -- ^ Values common for all ephemeris types
+  , _msgEphemerisGpsDepE_tgd    :: Double
+    -- ^ Group delay differential between L1 and L2
+  , _msgEphemerisGpsDepE_c_rs   :: Double
+    -- ^ Amplitude of the sine harmonic correction term to the orbit radius
+  , _msgEphemerisGpsDepE_c_rc   :: Double
+    -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
+  , _msgEphemerisGpsDepE_c_uc   :: Double
+    -- ^ Amplitude of the cosine harmonic correction term to the argument of
+    -- latitude
+  , _msgEphemerisGpsDepE_c_us   :: Double
+    -- ^ Amplitude of the sine harmonic correction term to the argument of
+    -- latitude
+  , _msgEphemerisGpsDepE_c_ic   :: Double
+    -- ^ Amplitude of the cosine harmonic correction term to the angle of
+    -- inclination
+  , _msgEphemerisGpsDepE_c_is   :: Double
+    -- ^ Amplitude of the sine harmonic correction term to the angle of
+    -- inclination
+  , _msgEphemerisGpsDepE_dn     :: Double
+    -- ^ Mean motion difference
+  , _msgEphemerisGpsDepE_m0     :: Double
+    -- ^ Mean anomaly at reference time
+  , _msgEphemerisGpsDepE_ecc    :: Double
+    -- ^ Eccentricity of satellite orbit
+  , _msgEphemerisGpsDepE_sqrta  :: Double
+    -- ^ Square root of the semi-major axis of orbit
+  , _msgEphemerisGpsDepE_omega0 :: Double
+    -- ^ Longitude of ascending node of orbit plane at weekly epoch
+  , _msgEphemerisGpsDepE_omegadot :: Double
+    -- ^ Rate of right ascension
+  , _msgEphemerisGpsDepE_w      :: Double
+    -- ^ Argument of perigee
+  , _msgEphemerisGpsDepE_inc    :: Double
+    -- ^ Inclination
+  , _msgEphemerisGpsDepE_inc_dot :: Double
+    -- ^ Inclination first derivative
+  , _msgEphemerisGpsDepE_af0    :: Double
+    -- ^ Polynomial clock correction coefficient (clock bias)
+  , _msgEphemerisGpsDepE_af1    :: Double
+    -- ^ Polynomial clock correction coefficient (clock drift)
+  , _msgEphemerisGpsDepE_af2    :: Double
+    -- ^ Polynomial clock correction coefficient (rate of clock drift)
+  , _msgEphemerisGpsDepE_toc    :: GpsTime
+    -- ^ Clock reference
+  , _msgEphemerisGpsDepE_iode   :: Word8
+    -- ^ Issue of ephemeris data
+  , _msgEphemerisGpsDepE_iodc   :: Word16
+    -- ^ Issue of clock data
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgEphemerisGpsDepE where
+  get = do
+    _msgEphemerisGpsDepE_common <- get
+    _msgEphemerisGpsDepE_tgd <- getFloat64le
+    _msgEphemerisGpsDepE_c_rs <- getFloat64le
+    _msgEphemerisGpsDepE_c_rc <- getFloat64le
+    _msgEphemerisGpsDepE_c_uc <- getFloat64le
+    _msgEphemerisGpsDepE_c_us <- getFloat64le
+    _msgEphemerisGpsDepE_c_ic <- getFloat64le
+    _msgEphemerisGpsDepE_c_is <- getFloat64le
+    _msgEphemerisGpsDepE_dn <- getFloat64le
+    _msgEphemerisGpsDepE_m0 <- getFloat64le
+    _msgEphemerisGpsDepE_ecc <- getFloat64le
+    _msgEphemerisGpsDepE_sqrta <- getFloat64le
+    _msgEphemerisGpsDepE_omega0 <- getFloat64le
+    _msgEphemerisGpsDepE_omegadot <- getFloat64le
+    _msgEphemerisGpsDepE_w <- getFloat64le
+    _msgEphemerisGpsDepE_inc <- getFloat64le
+    _msgEphemerisGpsDepE_inc_dot <- getFloat64le
+    _msgEphemerisGpsDepE_af0 <- getFloat64le
+    _msgEphemerisGpsDepE_af1 <- getFloat64le
+    _msgEphemerisGpsDepE_af2 <- getFloat64le
+    _msgEphemerisGpsDepE_toc <- get
+    _msgEphemerisGpsDepE_iode <- getWord8
+    _msgEphemerisGpsDepE_iodc <- getWord16le
+    return MsgEphemerisGpsDepE {..}
+
+  put MsgEphemerisGpsDepE {..} = do
+    put _msgEphemerisGpsDepE_common
+    putFloat64le _msgEphemerisGpsDepE_tgd
+    putFloat64le _msgEphemerisGpsDepE_c_rs
+    putFloat64le _msgEphemerisGpsDepE_c_rc
+    putFloat64le _msgEphemerisGpsDepE_c_uc
+    putFloat64le _msgEphemerisGpsDepE_c_us
+    putFloat64le _msgEphemerisGpsDepE_c_ic
+    putFloat64le _msgEphemerisGpsDepE_c_is
+    putFloat64le _msgEphemerisGpsDepE_dn
+    putFloat64le _msgEphemerisGpsDepE_m0
+    putFloat64le _msgEphemerisGpsDepE_ecc
+    putFloat64le _msgEphemerisGpsDepE_sqrta
+    putFloat64le _msgEphemerisGpsDepE_omega0
+    putFloat64le _msgEphemerisGpsDepE_omegadot
+    putFloat64le _msgEphemerisGpsDepE_w
+    putFloat64le _msgEphemerisGpsDepE_inc
+    putFloat64le _msgEphemerisGpsDepE_inc_dot
+    putFloat64le _msgEphemerisGpsDepE_af0
+    putFloat64le _msgEphemerisGpsDepE_af1
+    putFloat64le _msgEphemerisGpsDepE_af2
+    put _msgEphemerisGpsDepE_toc
+    putWord8 _msgEphemerisGpsDepE_iode
+    putWord16le _msgEphemerisGpsDepE_iodc
+
+$(deriveSBP 'msgEphemerisGpsDepE ''MsgEphemerisGpsDepE)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGpsDepE_" . P.stripPrefix "_msgEphemerisGpsDepE_"}
+             ''MsgEphemerisGpsDepE)
+$(makeLenses ''MsgEphemerisGpsDepE)
+
+msgEphemerisGps :: Word16
+msgEphemerisGps = 0x0086
+
+-- | SBP class for message MSG_EPHEMERIS_GPS (0x0086).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
 -- used to calculate GPS satellite position, velocity, and clock offset. Please
@@ -393,8 +550,98 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGps_" 
              ''MsgEphemerisGps)
 $(makeLenses ''MsgEphemerisGps)
 
+msgEphemerisSbasDepA :: Word16
+msgEphemerisSbasDepA = 0x0082
+
+data MsgEphemerisSbasDepA = MsgEphemerisSbasDepA
+  { _msgEphemerisSbasDepA_common :: EphemerisCommonContentDepA
+    -- ^ Values common for all ephemeris types
+  , _msgEphemerisSbasDepA_pos  :: [Double]
+    -- ^ Position of the GEO at time toe
+  , _msgEphemerisSbasDepA_vel  :: [Double]
+    -- ^ Velocity of the GEO at time toe
+  , _msgEphemerisSbasDepA_acc  :: [Double]
+    -- ^ Acceleration of the GEO at time toe
+  , _msgEphemerisSbasDepA_a_gf0 :: Double
+    -- ^ Time offset of the GEO clock w.r.t. SBAS Network Time
+  , _msgEphemerisSbasDepA_a_gf1 :: Double
+    -- ^ Drift of the GEO clock w.r.t. SBAS Network Time
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgEphemerisSbasDepA where
+  get = do
+    _msgEphemerisSbasDepA_common <- get
+    _msgEphemerisSbasDepA_pos <- replicateM 3 getFloat64le
+    _msgEphemerisSbasDepA_vel <- replicateM 3 getFloat64le
+    _msgEphemerisSbasDepA_acc <- replicateM 3 getFloat64le
+    _msgEphemerisSbasDepA_a_gf0 <- getFloat64le
+    _msgEphemerisSbasDepA_a_gf1 <- getFloat64le
+    return MsgEphemerisSbasDepA {..}
+
+  put MsgEphemerisSbasDepA {..} = do
+    put _msgEphemerisSbasDepA_common
+    mapM_ putFloat64le _msgEphemerisSbasDepA_pos
+    mapM_ putFloat64le _msgEphemerisSbasDepA_vel
+    mapM_ putFloat64le _msgEphemerisSbasDepA_acc
+    putFloat64le _msgEphemerisSbasDepA_a_gf0
+    putFloat64le _msgEphemerisSbasDepA_a_gf1
+
+$(deriveSBP 'msgEphemerisSbasDepA ''MsgEphemerisSbasDepA)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisSbasDepA_" . P.stripPrefix "_msgEphemerisSbasDepA_"}
+             ''MsgEphemerisSbasDepA)
+$(makeLenses ''MsgEphemerisSbasDepA)
+
+msgEphemerisGloDepA :: Word16
+msgEphemerisGloDepA = 0x0083
+
+-- | SBP class for message MSG_EPHEMERIS_GLO_DEP_A (0x0083).
+--
+-- The ephemeris message returns a set of satellite orbit parameters that is
+-- used to calculate GLO satellite position, velocity, and clock offset. Please
+-- see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
+-- information (ephemeris parameters)" for more details.
+data MsgEphemerisGloDepA = MsgEphemerisGloDepA
+  { _msgEphemerisGloDepA_common :: EphemerisCommonContentDepA
+    -- ^ Values common for all ephemeris types
+  , _msgEphemerisGloDepA_gamma :: Double
+    -- ^ Relative deviation of predicted carrier frequency from nominal
+  , _msgEphemerisGloDepA_tau  :: Double
+    -- ^ Correction to the SV time
+  , _msgEphemerisGloDepA_pos  :: [Double]
+    -- ^ Position of the SV at tb in PZ-90.02 coordinates system
+  , _msgEphemerisGloDepA_vel  :: [Double]
+    -- ^ Velocity vector of the SV at tb in PZ-90.02 coordinates system
+  , _msgEphemerisGloDepA_acc  :: [Double]
+    -- ^ Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgEphemerisGloDepA where
+  get = do
+    _msgEphemerisGloDepA_common <- get
+    _msgEphemerisGloDepA_gamma <- getFloat64le
+    _msgEphemerisGloDepA_tau <- getFloat64le
+    _msgEphemerisGloDepA_pos <- replicateM 3 getFloat64le
+    _msgEphemerisGloDepA_vel <- replicateM 3 getFloat64le
+    _msgEphemerisGloDepA_acc <- replicateM 3 getFloat64le
+    return MsgEphemerisGloDepA {..}
+
+  put MsgEphemerisGloDepA {..} = do
+    put _msgEphemerisGloDepA_common
+    putFloat64le _msgEphemerisGloDepA_gamma
+    putFloat64le _msgEphemerisGloDepA_tau
+    mapM_ putFloat64le _msgEphemerisGloDepA_pos
+    mapM_ putFloat64le _msgEphemerisGloDepA_vel
+    mapM_ putFloat64le _msgEphemerisGloDepA_acc
+
+$(deriveSBP 'msgEphemerisGloDepA ''MsgEphemerisGloDepA)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGloDepA_" . P.stripPrefix "_msgEphemerisGloDepA_"}
+             ''MsgEphemerisGloDepA)
+$(makeLenses ''MsgEphemerisGloDepA)
+
 msgEphemerisSbas :: Word16
-msgEphemerisSbas = 0x0082
+msgEphemerisSbas = 0x0084
 
 data MsgEphemerisSbas = MsgEphemerisSbas
   { _msgEphemerisSbas_common :: EphemerisCommonContent
@@ -436,9 +683,9 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisSbas_"
 $(makeLenses ''MsgEphemerisSbas)
 
 msgEphemerisGlo :: Word16
-msgEphemerisGlo = 0x0083
+msgEphemerisGlo = 0x0085
 
--- | SBP class for message MSG_EPHEMERIS_GLO (0x0083).
+-- | SBP class for message MSG_EPHEMERIS_GLO (0x0085).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
 -- used to calculate GLO satellite position, velocity, and clock offset. Please
@@ -1381,8 +1628,8 @@ msgGroupDelay = 0x0092
 data MsgGroupDelay = MsgGroupDelay
   { _msgGroupDelay_t_op   :: GpsTime
     -- ^ Data Predict Time of Week
-  , _msgGroupDelay_sid    :: GnssSignal
-    -- ^ GNSS signal identifier
+  , _msgGroupDelay_prn    :: Word8
+    -- ^ Satellite number
   , _msgGroupDelay_valid  :: Word8
     -- ^ bit-field indicating validity of the values, LSB indicating tgd validity
     -- etc. 1 = value is valid, 0 = value is not valid.
@@ -1394,7 +1641,7 @@ data MsgGroupDelay = MsgGroupDelay
 instance Binary MsgGroupDelay where
   get = do
     _msgGroupDelay_t_op <- get
-    _msgGroupDelay_sid <- get
+    _msgGroupDelay_prn <- getWord8
     _msgGroupDelay_valid <- getWord8
     _msgGroupDelay_tgd <- fromIntegral <$> getWord16le
     _msgGroupDelay_isc_l1ca <- fromIntegral <$> getWord16le
@@ -1403,7 +1650,7 @@ instance Binary MsgGroupDelay where
 
   put MsgGroupDelay {..} = do
     put _msgGroupDelay_t_op
-    put _msgGroupDelay_sid
+    putWord8 _msgGroupDelay_prn
     putWord8 _msgGroupDelay_valid
     putWord16le $ fromIntegral _msgGroupDelay_tgd
     putWord16le $ fromIntegral _msgGroupDelay_isc_l1ca

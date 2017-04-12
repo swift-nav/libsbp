@@ -1,4 +1,4 @@
-# Copyright (C) 2015 - 2017 Swift Navigation Inc.
+# Copyright (C) 2015 - 2016 Swift Navigation Inc.
 # Contact: Fergus Noble <fergus@swiftnav.com>
 #          Pasi Miettinen <pasi.miettinen@exafore.com>
 #
@@ -212,8 +212,138 @@ definitions:
               SBAS: 0 = valid, non-zero = invalid
               GLO: 0 = valid, non-zero = invalid
 
- - MSG_EPHEMERIS_GPS:
+ - EphemerisCommonContentDepA:
+    short_desc: Common fields for every ephemeris message.
+    replaced_by:
+      - EphemerisCommonContent
+    fields:
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier
+        - toe:
+            type: GPSTime
+            desc: Time of Ephemerides
+        - ura:
+            type: double
+            units: m
+            desc: User Range Accuracy
+        - fit_interval:
+            type: u32
+            units: s
+            desc: Curve fit interval
+        - valid:
+            type: u8
+            desc: Status of ephemeris, 1 = valid, 0 = invalid
+        - health_bits:
+            type: u8
+            desc: |
+              Satellite health status.
+              GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+              SBAS: 0 = valid, non-zero = invalid
+              GLO: 0 = valid, non-zero = invalid
+
+ - MSG_EPHEMERIS_GPS_DEP_E:
     id: 0x0081
+    short_desc: Satellite broadcast ephemeris for GPS
+    replaced_by:
+      - MSG_EPHEMERIS
+    desc: |
+      The ephemeris message returns a set of satellite orbit
+      parameters that is used to calculate GPS satellite position,
+      velocity, and clock offset. Please see the Navstar GPS
+      Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+      20-III) for more details.
+    fields:
+      - common:
+          type: EphemerisCommonContentDepA
+          desc: Values common for all ephemeris types
+      - tgd:
+          type: double
+          units: s
+          desc: Group delay differential between L1 and L2
+      - c_rs:
+          type: double
+          units: m
+          desc: Amplitude of the sine harmonic correction term to the orbit radius
+      - c_rc:
+          type: double
+          units: m
+          desc: Amplitude of the cosine harmonic correction term to the orbit radius
+      - c_uc:
+          type: double
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the argument of latitude
+      - c_us:
+          type: double
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the argument of latitude
+      - c_ic:
+          type: double
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the angle of inclination
+      - c_is:
+          type: double
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the angle of inclination
+      - dn:
+          type: double
+          units: rad/s
+          desc: Mean motion difference
+      - m0:
+          type: double
+          units: rad
+          desc: Mean anomaly at reference time
+      - ecc:
+          type: double
+          desc: Eccentricity of satellite orbit
+      - sqrta:
+          type: double
+          units: m^(1/2)
+          desc: Square root of the semi-major axis of orbit
+      - omega0:
+          type: double
+          units: rad
+          desc: Longitude of ascending node of orbit plane at weekly epoch
+      - omegadot:
+          type: double
+          units: rad/s
+          desc: Rate of right ascension
+      - w:
+          type: double
+          units: rad
+          desc: Argument of perigee
+      - inc:
+          type: double
+          units: rad
+          desc: Inclination
+      - inc_dot:
+          type: double
+          units: rad/s
+          desc: Inclination first derivative
+      - af0:
+          type: double
+          units: s
+          desc: Polynomial clock correction coefficient (clock bias)
+      - af1:
+          type: double
+          units: s/s
+          desc: Polynomial clock correction coefficient (clock drift)
+      - af2:
+          type: double
+          units: s/s^2
+          desc: Polynomial clock correction coefficient (rate of clock drift)
+      - toc:
+          type: GPSTime
+          desc: Clock reference
+      - iode:
+          type: u8
+          desc: Issue of ephemeris data
+      - iodc:
+          type: u16
+          desc: Issue of clock data
+          
+ - MSG_EPHEMERIS_GPS:
+    id: 0x0086
     short_desc: Satellite broadcast ephemeris for GPS
     desc: |
       The ephemeris message returns a set of satellite orbit
@@ -310,8 +440,91 @@ definitions:
           type: u16
           desc: Issue of clock data
 
- - MSG_EPHEMERIS_SBAS:
+ - MSG_EPHEMERIS_SBAS_DEP_A:
     id: 0x0082
+    short_desc: Satellite broadcast ephemeris for SBAS
+    replaced_by:
+      - MSG_EPHEMERIS_SBAS
+    fields:
+      - common:
+          type: EphemerisCommonContentDepA
+          desc: Values common for all ephemeris types
+      - pos:
+          type: array
+          size: 3
+          fill: double
+          map_by: sid
+          desc: Position of the GEO at time toe
+          units: m
+      - vel:
+          type: array
+          size: 3
+          fill: double
+          map_by: sid
+          desc: Velocity of the GEO at time toe
+          units: m/s
+      - acc:
+          type: array
+          size: 3
+          fill: double
+          map_by: sid
+          desc: Acceleration of the GEO at time toe
+          units: m/s^2
+      - a_gf0:
+          type: double
+          desc: Time offset of the GEO clock w.r.t. SBAS Network Time
+          units: s
+      - a_gf1:
+          type: double
+          desc: Drift of the GEO clock w.r.t. SBAS Network Time
+          units: s/s
+
+ - MSG_EPHEMERIS_GLO_DEP_A:
+    id: 0x0083
+    short_desc: Satellite broadcast ephemeris for GLO
+    replaced_by:
+      - MSG_EPHEMERIS_GLO
+    desc: |
+      The ephemeris message returns a set of satellite orbit
+      parameters that is used to calculate GLO satellite position,
+      velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
+      Characteristics of words of immediate information (ephemeris parameters)"
+      for more details.
+    fields:
+      - common:
+          type: EphemerisCommonContentDepA
+          desc: Values common for all ephemeris types
+      - gamma:
+          type: double
+          desc: Relative deviation of predicted carrier frequency from nominal
+      - tau:
+          type: double
+          desc: Correction to the SV time
+          units: s
+      - pos:
+          type: array
+          size: 3
+          fill: double
+          map_by: sid
+          desc: Position of the SV at tb in PZ-90.02 coordinates system
+          units: m
+      - vel:
+          type: array
+          size: 3
+          fill: double
+          map_by: sid
+          desc: Velocity vector of the SV at tb in PZ-90.02 coordinates system
+          units: m/s
+      - acc:
+          type: array
+          size: 3
+          fill: double
+          map_by: sid
+          desc: Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+          units: m/s^2
+          
+ - MSG_EPHEMERIS_SBAS:
+    id: 0x0084
     short_desc: Satellite broadcast ephemeris for SBAS
     fields:
       - common:
@@ -348,7 +561,7 @@ definitions:
           units: s/s
 
  - MSG_EPHEMERIS_GLO:
-    id: 0x0083
+    id: 0x0085
     short_desc: Satellite broadcast ephemeris for GLO
     desc: |
       The ephemeris message returns a set of satellite orbit
@@ -1092,9 +1305,9 @@ definitions:
       - t_op:
           type: GPSTime
           desc: Data Predict Time of Week
-      - sid:
-          type: GnssSignal
-          desc: GNSS signal identifier
+      - prn:
+          type: u8
+          desc: Satellite number
       - valid:
           type: u8
           desc: |
