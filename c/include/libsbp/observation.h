@@ -609,10 +609,28 @@ typedef struct __attribute__((packed)) {
  *
 * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
  */
-#define SBP_MSG_GROUP_DELAY          0x0092
+#define SBP_MSG_GROUP_DELAY_DEP_A    0x0092
 typedef struct __attribute__((packed)) {
   sbp_gps_time_t t_op;        /**< Data Predict Time of Week */
   u8 prn;         /**< Satellite number */
+  u8 valid;       /**< bit-field indicating validity of the values,
+LSB indicating tgd validity etc.
+1 = value is valid, 0 = value is not valid.
+ */
+  s16 tgd;        
+  s16 isc_l1ca;   
+  s16 isc_l2c;    
+} msg_group_delay_dep_a_t;
+
+
+/** Group Delay
+ *
+* Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ */
+#define SBP_MSG_GROUP_DELAY          0x0093
+typedef struct __attribute__((packed)) {
+  sbp_gps_time_t t_op;        /**< Data Predict Time of Week */
+  sbp_gnss_signal_t sid;         /**< GNSS signal identifier */
   u8 valid;       /**< bit-field indicating validity of the values,
 LSB indicating tgd validity etc.
 1 = value is valid, 0 = value is not valid.

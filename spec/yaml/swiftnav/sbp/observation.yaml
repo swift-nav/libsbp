@@ -1297,10 +1297,12 @@ definitions:
           type: u32
           desc: L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
 
- - MSG_GROUP_DELAY:
+ - MSG_GROUP_DELAY_DEP_A:
     id: 0x0092
     short_desc: Group Delay
     desc: Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+    replaced_by:
+      - MSG_GROUP_DELAY
     fields:
       - t_op:
           type: GPSTime
@@ -1308,6 +1310,33 @@ definitions:
       - prn:
           type: u8
           desc: Satellite number
+      - valid:
+          type: u8
+          desc: |
+            bit-field indicating validity of the values,
+            LSB indicating tgd validity etc.
+            1 = value is valid, 0 = value is not valid.
+      - tgd:
+          type: s16
+          units: s * 2^-35
+      - isc_l1ca:
+          type: s16
+          units: s * 2^-35
+      - isc_l2c:
+          type: s16
+          units: s * 2^-35
+
+ - MSG_GROUP_DELAY:
+    id: 0x0093
+    short_desc: Group Delay
+    desc: Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+    fields:
+      - t_op:
+          type: GPSTime
+          desc: Data Predict Time of Week
+      - sid:
+          type: GnssSignal
+          desc: GNSS signal identifier
       - valid:
           type: u8
           desc: |
