@@ -132,7 +132,7 @@ typedef struct __attribute__((packed)) {
 
 
 typedef struct __attribute__((packed)) {
-  sbp_gnss_signal_t sid;             /**< GNSS signal identifier */
+  gnss_signal16_t sid;             /**< GNSS signal identifier (16 bit) */
   sbp_gps_time_t toe;             /**< Time of Ephemerides */
   double ura;             /**< User Range Accuracy [m] */
   u32 fit_interval;    /**< Curve fit interval [s] */
@@ -145,6 +145,20 @@ GLO: 0 = valid, non-zero = invalid
 } ephemeris_common_content_t;
 
 
+typedef struct __attribute__((packed)) {
+  sbp_gnss_signal_t sid;             /**< GNSS signal identifier */
+  sbp_gps_time_t toe;             /**< Time of Ephemerides */
+  double ura;             /**< User Range Accuracy [m] */
+  u32 fit_interval;    /**< Curve fit interval [s] */
+  u8 valid;           /**< Status of ephemeris, 1 = valid, 0 = invalid */
+  u8 health_bits;     /**< Satellite health status.
+GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+SBAS: 0 = valid, non-zero = invalid
+GLO: 0 = valid, non-zero = invalid
+ */
+} ephemeris_common_content_dep_a_t;
+
+
 /** Satellite broadcast ephemeris for GPS
  *
  * The ephemeris message returns a set of satellite orbit
@@ -153,7 +167,43 @@ GLO: 0 = valid, non-zero = invalid
  * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
  * 20-III) for more details.
  */
-#define SBP_MSG_EPHEMERIS_GPS        0x0081
+#define SBP_MSG_EPHEMERIS_GPS_DEP_E  0x0081
+typedef struct __attribute__((packed)) {
+  ephemeris_common_content_dep_a_t common;      /**< Values common for all ephemeris types */
+  double tgd;         /**< Group delay differential between L1 and L2 [s] */
+  double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
+  double c_rc;        /**< Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+  double c_uc;        /**< Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+  double c_us;        /**< Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+  double c_ic;        /**< Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+  double c_is;        /**< Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+  double dn;          /**< Mean motion difference [rad/s] */
+  double m0;          /**< Mean anomaly at reference time [rad] */
+  double ecc;         /**< Eccentricity of satellite orbit */
+  double sqrta;       /**< Square root of the semi-major axis of orbit [m^(1/2)] */
+  double omega0;      /**< Longitude of ascending node of orbit plane at weekly epoch [rad] */
+  double omegadot;    /**< Rate of right ascension [rad/s] */
+  double w;           /**< Argument of perigee [rad] */
+  double inc;         /**< Inclination [rad] */
+  double inc_dot;     /**< Inclination first derivative [rad/s] */
+  double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
+  double af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
+  double af2;         /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+  sbp_gps_time_t toc;         /**< Clock reference */
+  u8 iode;        /**< Issue of ephemeris data */
+  u16 iodc;        /**< Issue of clock data */
+} msg_ephemeris_gps_dep_e_t;
+
+
+/** Satellite broadcast ephemeris for GPS
+ *
+ * The ephemeris message returns a set of satellite orbit
+ * parameters that is used to calculate GPS satellite position,
+ * velocity, and clock offset. Please see the Navstar GPS
+ * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+ * 20-III) for more details.
+ */
+#define SBP_MSG_EPHEMERIS_GPS        0x0086
 typedef struct __attribute__((packed)) {
   ephemeris_common_content_t common;      /**< Values common for all ephemeris types */
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
@@ -181,7 +231,37 @@ typedef struct __attribute__((packed)) {
 } msg_ephemeris_gps_t;
 
 
-#define SBP_MSG_EPHEMERIS_SBAS       0x0082
+#define SBP_MSG_EPHEMERIS_SBAS_DEP_A 0x0082
+typedef struct __attribute__((packed)) {
+  ephemeris_common_content_dep_a_t common;    /**< Values common for all ephemeris types */
+  double pos[3];    /**< Position of the GEO at time toe [m] */
+  double vel[3];    /**< Velocity of the GEO at time toe [m/s] */
+  double acc[3];    /**< Acceleration of the GEO at time toe [m/s^2] */
+  double a_gf0;     /**< Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
+  double a_gf1;     /**< Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
+} msg_ephemeris_sbas_dep_a_t;
+
+
+/** Satellite broadcast ephemeris for GLO
+ *
+ * The ephemeris message returns a set of satellite orbit
+ * parameters that is used to calculate GLO satellite position,
+ * velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
+ * Characteristics of words of immediate information (ephemeris parameters)"
+ * for more details.
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_A  0x0083
+typedef struct __attribute__((packed)) {
+  ephemeris_common_content_dep_a_t common;    /**< Values common for all ephemeris types */
+  double gamma;     /**< Relative deviation of predicted carrier frequency from nominal */
+  double tau;       /**< Correction to the SV time [s] */
+  double pos[3];    /**< Position of the SV at tb in PZ-90.02 coordinates system [m] */
+  double vel[3];    /**< Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
+  double acc[3];    /**< Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
+} msg_ephemeris_glo_dep_a_t;
+
+
+#define SBP_MSG_EPHEMERIS_SBAS       0x0084
 typedef struct __attribute__((packed)) {
   ephemeris_common_content_t common;    /**< Values common for all ephemeris types */
   double pos[3];    /**< Position of the GEO at time toe [m] */
@@ -200,7 +280,7 @@ typedef struct __attribute__((packed)) {
  * Characteristics of words of immediate information (ephemeris parameters)"
  * for more details.
  */
-#define SBP_MSG_EPHEMERIS_GLO        0x0083
+#define SBP_MSG_EPHEMERIS_GLO        0x0085
 typedef struct __attribute__((packed)) {
   ephemeris_common_content_t common;    /**< Values common for all ephemeris types */
   double gamma;     /**< Relative deviation of predicted carrier frequency from nominal */
