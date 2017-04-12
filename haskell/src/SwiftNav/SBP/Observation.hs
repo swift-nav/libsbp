@@ -237,8 +237,8 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBasePosEcef_" .
 $(makeLenses ''MsgBasePosEcef)
 
 data EphemerisCommonContent = EphemerisCommonContent
-  { _ephemerisCommonContent_sid        :: GnssSignal16
-    -- ^ GNSS signal identifier (16 bit)
+  { _ephemerisCommonContent_sid        :: GnssSignal
+    -- ^ GNSS signal identifier
   , _ephemerisCommonContent_toe        :: GpsTime
     -- ^ Time of Ephemerides
   , _ephemerisCommonContent_ura        :: Double
