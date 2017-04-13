@@ -37,8 +37,8 @@ public class MsgGroupDelay extends SBPMessage {
     /** Data Predict Time of Week */
     public GPSTime t_op;
     
-    /** Satellite number */
-    public int prn;
+    /** GNSS signal identifier */
+    public GnssSignal sid;
     
     /** bit-field indicating validity of the values,
 LSB indicating tgd validity etc.
@@ -64,7 +64,7 @@ LSB indicating tgd validity etc.
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         t_op = new GPSTime().parse(parser);
-        prn = parser.getU8();
+        sid = new GnssSignal().parse(parser);
         valid = parser.getU8();
         tgd = parser.getS16();
         isc_l1ca = parser.getS16();
@@ -74,7 +74,7 @@ LSB indicating tgd validity etc.
     @Override
     protected void build(Builder builder) {
         t_op.build(builder);
-        builder.putU8(prn);
+        sid.build(builder);
         builder.putU8(valid);
         builder.putS16(tgd);
         builder.putS16(isc_l1ca);
@@ -85,7 +85,7 @@ LSB indicating tgd validity etc.
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("t_op", t_op.toJSON());
-        obj.put("prn", prn);
+        obj.put("sid", sid.toJSON());
         obj.put("valid", valid);
         obj.put("tgd", tgd);
         obj.put("isc_l1ca", isc_l1ca);

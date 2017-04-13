@@ -1482,3 +1482,33 @@ definitions:
           units: rad
           desc: Argument of perigee at instant of t_lambda
 
+ - MSG_FCNS_GLO:
+    id: 0x0072
+    short_desc: GLONASS SV orbital and frequency slots mapping information
+    desc: |
+      The message reports mapping information regarding GLONASS SV orbital and
+      frequency slots.
+      Mapped as follow:
+      index (SV orbital slot)  fcns[index]
+      0                        0xFF
+      1                        FCN for SV orbital slot 1
+      ...                      ...
+      28                       FCN for SV orbital slot 28
+      29                       0xFF
+      30                       0xFF
+      31                       0xFF
+    fields:
+      - wn:
+          type: u16
+          units: week
+          desc: GPS Week number
+      - tow_ms:
+          type: u32
+          units: ms
+          desc: GPS Time of week
+      - fcns:
+          type: array
+          size: 32
+          fill: u8
+          desc: GLONASS fequency number per orbital slot
+

@@ -3558,6 +3558,107 @@ coordinate system
     d.update(j)
     return d
     
+SBP_MSG_FCNS_GLO = 0x0072
+class MsgFcnsGlo(SBP):
+  """SBP class for message MSG_FCNS_GLO (0x0072).
+
+  You can have MSG_FCNS_GLO inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The message reports mapping information regarding GLONASS SV orbital and
+frequency slots.
+Mapped as follow:
+index (SV orbital slot)  fcns[index]
+0                        0xFF
+1                        FCN for SV orbital slot 1
+...                      ...
+28                       FCN for SV orbital slot 28
+29                       0xFF
+30                       0xFF
+31                       0xFF
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  wn : int
+    GPS Week number
+  tow_ms : int
+    GPS Time of week
+  fcns : array
+    GLONASS fequency number per orbital slot
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgFcnsGlo",
+                   ULInt16('wn'),
+                   ULInt32('tow_ms'),
+                   Struct('fcns', Array(32, ULInt8('fcns'))),)
+  __slots__ = [
+               'wn',
+               'tow_ms',
+               'fcns',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgFcnsGlo,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgFcnsGlo, self).__init__()
+      self.msg_type = SBP_MSG_FCNS_GLO
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.wn = kwargs.pop('wn')
+      self.tow_ms = kwargs.pop('tow_ms')
+      self.fcns = kwargs.pop('fcns')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFcnsGlo.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFcnsGlo(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgFcnsGlo._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgFcnsGlo._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgFcnsGlo, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x004A: MsgObs,
@@ -3582,4 +3683,5 @@ msg_classes = {
   0x0093: MsgGroupDelay,
   0x0070: MsgAlmanacGPS,
   0x0071: MsgAlmanacGlo,
+  0x0072: MsgFcnsGlo,
 }
