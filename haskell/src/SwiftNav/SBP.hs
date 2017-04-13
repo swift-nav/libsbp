@@ -113,6 +113,7 @@ data SBPMsg =
    | SBPMsgGpsTime MsgGpsTime Msg
    | SBPMsgGpsTimeDepA MsgGpsTimeDepA Msg
    | SBPMsgGroupDelay MsgGroupDelay Msg
+   | SBPMsgGroupDelayDepA MsgGroupDelayDepA Msg
    | SBPMsgHeartbeat MsgHeartbeat Msg
    | SBPMsgIarState MsgIarState Msg
    | SBPMsgImuAux MsgImuAux Msg
@@ -236,6 +237,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgGpsTime = SBPMsgGpsTime (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgGpsTimeDepA = SBPMsgGpsTimeDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgGroupDelay = SBPMsgGroupDelay (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgGroupDelayDepA = SBPMsgGroupDelayDepA (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgHeartbeat = SBPMsgHeartbeat (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgIarState = SBPMsgIarState (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgImuAux = SBPMsgImuAux (decode (fromStrict _msgSBPPayload)) m
@@ -351,6 +353,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgGpsTime _ m) = put m
       encode' (SBPMsgGpsTimeDepA _ m) = put m
       encode' (SBPMsgGroupDelay _ m) = put m
+      encode' (SBPMsgGroupDelayDepA _ m) = put m
       encode' (SBPMsgHeartbeat _ m) = put m
       encode' (SBPMsgIarState _ m) = put m
       encode' (SBPMsgImuAux _ m) = put m
@@ -469,6 +472,7 @@ instance FromJSON SBPMsg where
         | msgType == msgGpsTime = SBPMsgGpsTime <$> parseJSON obj <*> parseJSON obj
         | msgType == msgGpsTimeDepA = SBPMsgGpsTimeDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgGroupDelay = SBPMsgGroupDelay <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgGroupDelayDepA = SBPMsgGroupDelayDepA <$> parseJSON obj <*> parseJSON obj
         | msgType == msgHeartbeat = SBPMsgHeartbeat <$> parseJSON obj <*> parseJSON obj
         | msgType == msgIarState = SBPMsgIarState <$> parseJSON obj <*> parseJSON obj
         | msgType == msgImuAux = SBPMsgImuAux <$> parseJSON obj <*> parseJSON obj
@@ -589,6 +593,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgGpsTime n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgGpsTimeDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgGroupDelay n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgGroupDelayDepA n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgHeartbeat n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgIarState n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgImuAux n m) = toJSON n `mergeValues` toJSON m
@@ -703,6 +708,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgGpsTime n m) = SBPMsgGpsTime n <$> f m
   msg f (SBPMsgGpsTimeDepA n m) = SBPMsgGpsTimeDepA n <$> f m
   msg f (SBPMsgGroupDelay n m) = SBPMsgGroupDelay n <$> f m
+  msg f (SBPMsgGroupDelayDepA n m) = SBPMsgGroupDelayDepA n <$> f m
   msg f (SBPMsgHeartbeat n m) = SBPMsgHeartbeat n <$> f m
   msg f (SBPMsgIarState n m) = SBPMsgIarState n <$> f m
   msg f (SBPMsgImuAux n m) = SBPMsgImuAux n <$> f m

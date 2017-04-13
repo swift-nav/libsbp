@@ -1494,13 +1494,56 @@ MsgSvConfigurationGps.prototype.fieldSpec.push(['t_nmct', GPSTime.prototype.fiel
 MsgSvConfigurationGps.prototype.fieldSpec.push(['l2c_mask', 'writeUInt32LE', 4]);
 
 /**
- * SBP class for message MSG_GROUP_DELAY (0x0092).
+ * SBP class for message MSG_GROUP_DELAY_DEP_A (0x0092).
  *
  * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field t_op GPSTime Data Predict Time of Week
  * @field prn number (unsigned 8-bit int, 1 byte) Satellite number
+ * @field valid number (unsigned 8-bit int, 1 byte) bit-field indicating validity of the values, LSB indicating tgd validity etc. 1
+ *   = value is valid, 0 = value is not valid.
+ * @field tgd number (signed 16-bit int, 2 bytes)
+ * @field isc_l1ca number (signed 16-bit int, 2 bytes)
+ * @field isc_l2c number (signed 16-bit int, 2 bytes)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgGroupDelayDepA = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_GROUP_DELAY_DEP_A";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgGroupDelayDepA.prototype = Object.create(SBP.prototype);
+MsgGroupDelayDepA.prototype.messageType = "MSG_GROUP_DELAY_DEP_A";
+MsgGroupDelayDepA.prototype.msg_type = 0x0092;
+MsgGroupDelayDepA.prototype.constructor = MsgGroupDelayDepA;
+MsgGroupDelayDepA.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('t_op', { type: GPSTime.prototype.parser })
+  .uint8('prn')
+  .uint8('valid')
+  .int16('tgd')
+  .int16('isc_l1ca')
+  .int16('isc_l2c');
+MsgGroupDelayDepA.prototype.fieldSpec = [];
+MsgGroupDelayDepA.prototype.fieldSpec.push(['t_op', GPSTime.prototype.fieldSpec]);
+MsgGroupDelayDepA.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
+MsgGroupDelayDepA.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
+MsgGroupDelayDepA.prototype.fieldSpec.push(['tgd', 'writeInt16LE', 2]);
+MsgGroupDelayDepA.prototype.fieldSpec.push(['isc_l1ca', 'writeInt16LE', 2]);
+MsgGroupDelayDepA.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
+
+/**
+ * SBP class for message MSG_GROUP_DELAY (0x0093).
+ *
+ * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field t_op GPSTime Data Predict Time of Week
+ * @field sid GnssSignal GNSS signal identifier
  * @field valid number (unsigned 8-bit int, 1 byte) bit-field indicating validity of the values, LSB indicating tgd validity etc. 1
  *   = value is valid, 0 = value is not valid.
  * @field tgd number (signed 16-bit int, 2 bytes)
@@ -1518,19 +1561,19 @@ var MsgGroupDelay = function (sbp, fields) {
 };
 MsgGroupDelay.prototype = Object.create(SBP.prototype);
 MsgGroupDelay.prototype.messageType = "MSG_GROUP_DELAY";
-MsgGroupDelay.prototype.msg_type = 0x0092;
+MsgGroupDelay.prototype.msg_type = 0x0093;
 MsgGroupDelay.prototype.constructor = MsgGroupDelay;
 MsgGroupDelay.prototype.parser = new Parser()
   .endianess('little')
   .nest('t_op', { type: GPSTime.prototype.parser })
-  .uint8('prn')
+  .nest('sid', { type: GnssSignal.prototype.parser })
   .uint8('valid')
   .int16('tgd')
   .int16('isc_l1ca')
   .int16('isc_l2c');
 MsgGroupDelay.prototype.fieldSpec = [];
 MsgGroupDelay.prototype.fieldSpec.push(['t_op', GPSTime.prototype.fieldSpec]);
-MsgGroupDelay.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
+MsgGroupDelay.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 MsgGroupDelay.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
 MsgGroupDelay.prototype.fieldSpec.push(['tgd', 'writeInt16LE', 2]);
 MsgGroupDelay.prototype.fieldSpec.push(['isc_l1ca', 'writeInt16LE', 2]);
@@ -1738,7 +1781,9 @@ module.exports = {
   MsgIono: MsgIono,
   0x0091: MsgSvConfigurationGps,
   MsgSvConfigurationGps: MsgSvConfigurationGps,
-  0x0092: MsgGroupDelay,
+  0x0092: MsgGroupDelayDepA,
+  MsgGroupDelayDepA: MsgGroupDelayDepA,
+  0x0093: MsgGroupDelay,
   MsgGroupDelay: MsgGroupDelay,
   AlmanacCommonContent: AlmanacCommonContent,
   0x0070: MsgAlmanacGps,

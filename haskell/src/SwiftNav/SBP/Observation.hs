@@ -1619,17 +1619,60 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSvConfiguration
              ''MsgSvConfigurationGps)
 $(makeLenses ''MsgSvConfigurationGps)
 
-msgGroupDelay :: Word16
-msgGroupDelay = 0x0092
+msgGroupDelayDepA :: Word16
+msgGroupDelayDepA = 0x0092
 
--- | SBP class for message MSG_GROUP_DELAY (0x0092).
+-- | SBP class for message MSG_GROUP_DELAY_DEP_A (0x0092).
+--
+-- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+data MsgGroupDelayDepA = MsgGroupDelayDepA
+  { _msgGroupDelayDepA_t_op   :: GpsTime
+    -- ^ Data Predict Time of Week
+  , _msgGroupDelayDepA_prn    :: Word8
+    -- ^ Satellite number
+  , _msgGroupDelayDepA_valid  :: Word8
+    -- ^ bit-field indicating validity of the values, LSB indicating tgd validity
+    -- etc. 1 = value is valid, 0 = value is not valid.
+  , _msgGroupDelayDepA_tgd    :: Int16
+  , _msgGroupDelayDepA_isc_l1ca :: Int16
+  , _msgGroupDelayDepA_isc_l2c :: Int16
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgGroupDelayDepA where
+  get = do
+    _msgGroupDelayDepA_t_op <- get
+    _msgGroupDelayDepA_prn <- getWord8
+    _msgGroupDelayDepA_valid <- getWord8
+    _msgGroupDelayDepA_tgd <- fromIntegral <$> getWord16le
+    _msgGroupDelayDepA_isc_l1ca <- fromIntegral <$> getWord16le
+    _msgGroupDelayDepA_isc_l2c <- fromIntegral <$> getWord16le
+    return MsgGroupDelayDepA {..}
+
+  put MsgGroupDelayDepA {..} = do
+    put _msgGroupDelayDepA_t_op
+    putWord8 _msgGroupDelayDepA_prn
+    putWord8 _msgGroupDelayDepA_valid
+    putWord16le $ fromIntegral _msgGroupDelayDepA_tgd
+    putWord16le $ fromIntegral _msgGroupDelayDepA_isc_l1ca
+    putWord16le $ fromIntegral _msgGroupDelayDepA_isc_l2c
+
+$(deriveSBP 'msgGroupDelayDepA ''MsgGroupDelayDepA)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGroupDelayDepA_" . P.stripPrefix "_msgGroupDelayDepA_"}
+             ''MsgGroupDelayDepA)
+$(makeLenses ''MsgGroupDelayDepA)
+
+msgGroupDelay :: Word16
+msgGroupDelay = 0x0093
+
+-- | SBP class for message MSG_GROUP_DELAY (0x0093).
 --
 -- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 data MsgGroupDelay = MsgGroupDelay
   { _msgGroupDelay_t_op   :: GpsTime
     -- ^ Data Predict Time of Week
-  , _msgGroupDelay_prn    :: Word8
-    -- ^ Satellite number
+  , _msgGroupDelay_sid    :: GnssSignal
+    -- ^ GNSS signal identifier
   , _msgGroupDelay_valid  :: Word8
     -- ^ bit-field indicating validity of the values, LSB indicating tgd validity
     -- etc. 1 = value is valid, 0 = value is not valid.
@@ -1641,7 +1684,7 @@ data MsgGroupDelay = MsgGroupDelay
 instance Binary MsgGroupDelay where
   get = do
     _msgGroupDelay_t_op <- get
-    _msgGroupDelay_prn <- getWord8
+    _msgGroupDelay_sid <- get
     _msgGroupDelay_valid <- getWord8
     _msgGroupDelay_tgd <- fromIntegral <$> getWord16le
     _msgGroupDelay_isc_l1ca <- fromIntegral <$> getWord16le
@@ -1650,7 +1693,7 @@ instance Binary MsgGroupDelay where
 
   put MsgGroupDelay {..} = do
     put _msgGroupDelay_t_op
-    putWord8 _msgGroupDelay_prn
+    put _msgGroupDelay_sid
     putWord8 _msgGroupDelay_valid
     putWord16le $ fromIntegral _msgGroupDelay_tgd
     putWord16le $ fromIntegral _msgGroupDelay_isc_l1ca

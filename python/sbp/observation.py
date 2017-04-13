@@ -3098,11 +3098,11 @@ class MsgSvConfigurationGPS(SBP):
     d.update(j)
     return d
     
-SBP_MSG_GROUP_DELAY = 0x0092
-class MsgGroupDelay(SBP):
-  """SBP class for message MSG_GROUP_DELAY (0x0092).
+SBP_MSG_GROUP_DELAY_DEP_A = 0x0092
+class MsgGroupDelayDepA(SBP):
+  """SBP class for message MSG_GROUP_DELAY_DEP_A (0x0092).
 
-  You can have MSG_GROUP_DELAY inherit its fields directly
+  You can have MSG_GROUP_DELAY_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -3129,7 +3129,7 @@ LSB indicating tgd validity etc.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgGroupDelay",
+  _parser = Struct("MsgGroupDelayDepA",
                    Struct('t_op', GPSTime._parser),
                    ULInt8('prn'),
                    ULInt8('valid'),
@@ -3147,6 +3147,111 @@ LSB indicating tgd validity etc.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
+      super( MsgGroupDelayDepA,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgGroupDelayDepA, self).__init__()
+      self.msg_type = SBP_MSG_GROUP_DELAY_DEP_A
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.t_op = kwargs.pop('t_op')
+      self.prn = kwargs.pop('prn')
+      self.valid = kwargs.pop('valid')
+      self.tgd = kwargs.pop('tgd')
+      self.isc_l1ca = kwargs.pop('isc_l1ca')
+      self.isc_l2c = kwargs.pop('isc_l2c')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgGroupDelayDepA.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgGroupDelayDepA(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgGroupDelayDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgGroupDelayDepA._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgGroupDelayDepA, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_GROUP_DELAY = 0x0093
+class MsgGroupDelay(SBP):
+  """SBP class for message MSG_GROUP_DELAY (0x0093).
+
+  You can have MSG_GROUP_DELAY inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  t_op : GPSTime
+    Data Predict Time of Week
+  sid : GnssSignal
+    GNSS signal identifier
+  valid : int
+    bit-field indicating validity of the values,
+LSB indicating tgd validity etc.
+1 = value is valid, 0 = value is not valid.
+
+  tgd : int
+  isc_l1ca : int
+  isc_l2c : int
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgGroupDelay",
+                   Struct('t_op', GPSTime._parser),
+                   Struct('sid', GnssSignal._parser),
+                   ULInt8('valid'),
+                   SLInt16('tgd'),
+                   SLInt16('isc_l1ca'),
+                   SLInt16('isc_l2c'),)
+  __slots__ = [
+               't_op',
+               'sid',
+               'valid',
+               'tgd',
+               'isc_l1ca',
+               'isc_l2c',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
       super( MsgGroupDelay,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
@@ -3156,7 +3261,7 @@ LSB indicating tgd validity etc.
       self.msg_type = SBP_MSG_GROUP_DELAY
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.t_op = kwargs.pop('t_op')
-      self.prn = kwargs.pop('prn')
+      self.sid = kwargs.pop('sid')
       self.valid = kwargs.pop('valid')
       self.tgd = kwargs.pop('tgd')
       self.isc_l1ca = kwargs.pop('isc_l1ca')
@@ -3473,7 +3578,8 @@ msg_classes = {
   0x0049: MsgObsDepC,
   0x0090: MsgIono,
   0x0091: MsgSvConfigurationGPS,
-  0x0092: MsgGroupDelay,
+  0x0092: MsgGroupDelayDepA,
+  0x0093: MsgGroupDelay,
   0x0070: MsgAlmanacGPS,
   0x0071: MsgAlmanacGlo,
 }
