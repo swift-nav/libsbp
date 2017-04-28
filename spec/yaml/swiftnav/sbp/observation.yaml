@@ -191,7 +191,7 @@ definitions:
             type: GnssSignal16
             desc: GNSS signal identifier (16 bit)
         - toe:
-            type: GPSTime
+            type: GPSTimeSec
             desc: Time of Ephemerides
         - ura:
             type: double
@@ -341,7 +341,7 @@ definitions:
       - iodc:
           type: u16
           desc: Issue of clock data
-          
+
  - MSG_EPHEMERIS_GPS:
     id: 0x0086
     short_desc: Satellite broadcast ephemeris for GPS
@@ -431,7 +431,7 @@ definitions:
           units: s/s^2
           desc: Polynomial clock correction coefficient (rate of clock drift)
       - toc:
-          type: GPSTime
+          type: GPSTimeSec
           desc: Clock reference
       - iode:
           type: u8
@@ -522,7 +522,7 @@ definitions:
           map_by: sid
           desc: Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
           units: m/s^2
-          
+
  - MSG_EPHEMERIS_SBAS:
     id: 0x0084
     short_desc: Satellite broadcast ephemeris for SBAS
@@ -1257,7 +1257,7 @@ definitions:
       Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
     fields:
       - t_nmct:
-          type: GPSTime
+          type: GPSTimeSec
           desc: Navigation Message Correction Table Valitidy Time
       - a0:
           type: double
@@ -1291,7 +1291,7 @@ definitions:
       Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
     fields:
       - t_nmct:
-          type: GPSTime
+          type: GPSTimeSec
           desc: Navigation Message Correction Table Valitidy Time
       - l2c_mask:
           type: u32
@@ -1332,7 +1332,7 @@ definitions:
     desc: Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
     fields:
       - t_op:
-          type: GPSTime
+          type: GPSTimeSec
           desc: Data Predict Time of Week
       - sid:
           type: GnssSignal
@@ -1360,7 +1360,7 @@ definitions:
             type: GnssSignal
             desc: GNSS signal identifier
         - toa:
-            type: GPSTime
+            type: GPSTimeSec
             desc: Reference time of almanac
         - ura:
             type: double
@@ -1384,7 +1384,7 @@ definitions:
                   Components.
               Satellite health status for GLO:
                 See GLO ICD 5.1 table 5.1 for details
-                - bit 0: C(n), "unhealthy" flag that is transmitted within 
+                - bit 0: C(n), "unhealthy" flag that is transmitted within
                   non-immediate data and indicates overall constellation status
                   at the moment of almanac uploading.
                   '0' indicates malfunction of n-satellite.
@@ -1511,4 +1511,3 @@ definitions:
           size: 32
           fill: u8
           desc: GLONASS fequency number per orbital slot
-

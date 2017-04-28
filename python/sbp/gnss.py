@@ -157,6 +157,49 @@ transition.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return GPSTime.build(d)
     
+class GPSTimeSec(object):
+  """GPSTimeSec.
+  
+  A GPS time, defined as the number of
+seconds since beginning of the week on the Saturday/Sunday
+transition.
+
+  
+  Parameters
+  ----------
+  tow : int
+    Seconds since start of GPS week
+  wn : int
+    GPS week number
+
+  """
+  _parser = Embedded(Struct("GPSTimeSec",
+                     ULInt32('tow'),
+                     ULInt16('wn'),))
+  __slots__ = [
+               'tow',
+               'wn',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.tow = kwargs.pop('tow')
+      self.wn = kwargs.pop('wn')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = GPSTimeSec._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GPSTimeSec.build(d)
+    
 class GPSTimeNano(object):
   """GPSTimeNano.
   

@@ -63,6 +63,18 @@ typedef struct __attribute__((packed)) {
 } sbp_gps_time_t;
 
 
+/** Whole second accurate GPS time
+ *
+ * A GPS time, defined as the number of
+ * seconds since beginning of the week on the Saturday/Sunday
+ * transition.
+ */
+typedef struct __attribute__((packed)) {
+  u32 tow;    /**< Seconds since start of GPS week [s] */
+  u16 wn;     /**< GPS week number [week] */
+} gps_time_sec_t;
+
+
 /** Nanosecond-accurate receiver clock time
  *
  * A wire-appropriate receiver clock time, defined as the time

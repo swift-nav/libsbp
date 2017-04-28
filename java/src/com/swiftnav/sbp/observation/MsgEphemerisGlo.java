@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_EPHEMERIS_GLO (0x0083).
+/** SBP class for message MSG_EPHEMERIS_GLO (0x0085).
  *
  * You can have MSG_EPHEMERIS_GLO inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -35,7 +35,7 @@ import org.json.JSONArray;
  * for more details. */
 
 public class MsgEphemerisGlo extends SBPMessage {
-    public static final int TYPE = 0x0083;
+    public static final int TYPE = 0x0085;
 
     
     /** Values common for all ephemeris types */

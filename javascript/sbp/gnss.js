@@ -117,6 +117,36 @@ GPSTime.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
 GPSTime.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 
 /**
+ * SBP class for message fragment GPSTimeSec
+ *
+ * A GPS time, defined as the number of seconds since beginning of the week on the
+ * Saturday/Sunday transition.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) Seconds since start of GPS week
+ * @field wn number (unsigned 16-bit int, 2 bytes) GPS week number
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var GPSTimeSec = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "GPSTimeSec";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+GPSTimeSec.prototype = Object.create(SBP.prototype);
+GPSTimeSec.prototype.messageType = "GPSTimeSec";
+GPSTimeSec.prototype.constructor = GPSTimeSec;
+GPSTimeSec.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .uint16('wn');
+GPSTimeSec.prototype.fieldSpec = [];
+GPSTimeSec.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+GPSTimeSec.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
+
+/**
  * SBP class for message fragment GPSTimeNano
  *
  * A wire-appropriate receiver clock time, defined as the time since the beginning
@@ -185,6 +215,7 @@ module.exports = {
   GnssSignal16: GnssSignal16,
   GnssSignal: GnssSignal,
   GPSTime: GPSTime,
+  GPSTimeSec: GPSTimeSec,
   GPSTimeNano: GPSTimeNano,
   CarrierPhase: CarrierPhase,
 }

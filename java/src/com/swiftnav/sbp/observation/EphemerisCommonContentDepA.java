@@ -22,13 +22,13 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class AlmanacCommonContent extends SBPStruct {
+public class EphemerisCommonContentDepA extends SBPStruct {
     
     /** GNSS signal identifier */
     public GnssSignal sid;
     
-    /** Reference time of almanac */
-    public GPSTimeSec toa;
+    /** Time of Ephemerides */
+    public GPSTime toe;
     
     /** User Range Accuracy */
     public double ura;
@@ -36,35 +36,24 @@ public class AlmanacCommonContent extends SBPStruct {
     /** Curve fit interval */
     public long fit_interval;
     
-    /** Status of almanac, 1 = valid, 0 = invalid */
+    /** Status of ephemeris, 1 = valid, 0 = invalid */
     public int valid;
     
-    /** Satellite health status for GPS:
-  - bits 5-7: NAV data health status. See IS-GPS-200H
-    Table 20-VII: NAV Data Health Indications.
-  - bits 0-4: Signal health status. See IS-GPS-200H
-    Table 20-VIII. Codes for Health of SV Signal
-    Components.
-Satellite health status for GLO:
-  See GLO ICD 5.1 table 5.1 for details
-  - bit 0: C(n), "unhealthy" flag that is transmitted within
-    non-immediate data and indicates overall constellation status
-    at the moment of almanac uploading.
-    '0' indicates malfunction of n-satellite.
-    '1' indicates that n-satellite is operational.
-  - bit 1: Bn(ln), '0' indicates the satellite is operational
-    and suitable for navigation.
+    /** Satellite health status.
+GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+SBAS: 0 = valid, non-zero = invalid
+GLO: 0 = valid, non-zero = invalid
  */
     public int health_bits;
     
 
-    public AlmanacCommonContent () {}
+    public EphemerisCommonContentDepA () {}
 
     @Override
-    public AlmanacCommonContent parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public EphemerisCommonContentDepA parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         sid = new GnssSignal().parse(parser);
-        toa = new GPSTimeSec().parse(parser);
+        toe = new GPSTime().parse(parser);
         ura = parser.getDouble();
         fit_interval = parser.getU32();
         valid = parser.getU8();
@@ -76,7 +65,7 @@ Satellite health status for GLO:
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
         sid.build(builder);
-        toa.build(builder);
+        toe.build(builder);
         builder.putDouble(ura);
         builder.putU32(fit_interval);
         builder.putU8(valid);
@@ -87,7 +76,7 @@ Satellite health status for GLO:
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
         obj.put("sid", sid.toJSON());
-        obj.put("toa", toa.toJSON());
+        obj.put("toe", toe.toJSON());
         obj.put("ura", ura);
         obj.put("fit_interval", fit_interval);
         obj.put("valid", valid);

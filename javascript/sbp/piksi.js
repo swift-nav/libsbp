@@ -28,6 +28,7 @@ var GnssSignal16 = require("./gnss").GnssSignal16;
 var GPSTime = require("./gnss").GPSTime;
 var CarrierPhase = require("./gnss").CarrierPhase;
 var GPSTimeNano = require("./gnss").GPSTimeNano;
+var GPSTimeSec = require("./gnss").GPSTimeSec;
 
 /**
  * SBP class for message MSG_ALMANAC (0x0069).

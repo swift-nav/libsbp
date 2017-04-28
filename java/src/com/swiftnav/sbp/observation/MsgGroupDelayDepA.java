@@ -22,23 +22,23 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_GROUP_DELAY (0x0093).
+/** SBP class for message MSG_GROUP_DELAY_DEP_A (0x0092).
  *
- * You can have MSG_GROUP_DELAY inherent its fields directly from
+ * You can have MSG_GROUP_DELAY_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
 * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details. */
 
-public class MsgGroupDelay extends SBPMessage {
-    public static final int TYPE = 0x0093;
+public class MsgGroupDelayDepA extends SBPMessage {
+    public static final int TYPE = 0x0092;
 
     
     /** Data Predict Time of Week */
-    public GPSTimeSec t_op;
+    public GPSTime t_op;
     
-    /** GNSS signal identifier */
-    public GnssSignal sid;
+    /** Satellite number */
+    public int prn;
     
     /** bit-field indicating validity of the values,
 LSB indicating tgd validity etc.
@@ -53,9 +53,9 @@ LSB indicating tgd validity etc.
     public int isc_l2c;
     
 
-    public MsgGroupDelay (int sender) { super(sender, TYPE); }
-    public MsgGroupDelay () { super(TYPE); }
-    public MsgGroupDelay (SBPMessage msg) throws SBPBinaryException {
+    public MsgGroupDelayDepA (int sender) { super(sender, TYPE); }
+    public MsgGroupDelayDepA () { super(TYPE); }
+    public MsgGroupDelayDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -63,8 +63,8 @@ LSB indicating tgd validity etc.
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        t_op = new GPSTimeSec().parse(parser);
-        sid = new GnssSignal().parse(parser);
+        t_op = new GPSTime().parse(parser);
+        prn = parser.getU8();
         valid = parser.getU8();
         tgd = parser.getS16();
         isc_l1ca = parser.getS16();
@@ -74,7 +74,7 @@ LSB indicating tgd validity etc.
     @Override
     protected void build(Builder builder) {
         t_op.build(builder);
-        sid.build(builder);
+        builder.putU8(prn);
         builder.putU8(valid);
         builder.putS16(tgd);
         builder.putS16(isc_l1ca);
@@ -85,7 +85,7 @@ LSB indicating tgd validity etc.
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("t_op", t_op.toJSON());
-        obj.put("sid", sid.toJSON());
+        obj.put("prn", prn);
         obj.put("valid", valid);
         obj.put("tgd", tgd);
         obj.put("isc_l1ca", isc_l1ca);

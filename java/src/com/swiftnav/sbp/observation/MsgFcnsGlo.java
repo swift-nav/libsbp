@@ -28,10 +28,17 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The message reports mapping information regrding GLONASS SV orbital and
- * frequency slots. Frequency numbers -7 to 6 have been reported as 1 to 14
- * correspondingly. 0xFF for invalid. The 0th element and elements from 29th
- * to 30th of the map are always invalid. */
+ * The message reports mapping information regarding GLONASS SV orbital and
+ * frequency slots.
+ * Mapped as follow:
+ * index (SV orbital slot)  fcns[index]
+ * 0                        0xFF
+ * 1                        FCN for SV orbital slot 1
+ * ...                      ...
+ * 28                       FCN for SV orbital slot 28
+ * 29                       0xFF
+ * 30                       0xFF
+ * 31                       0xFF */
 
 public class MsgFcnsGlo extends SBPMessage {
     public static final int TYPE = 0x0072;
@@ -41,10 +48,10 @@ public class MsgFcnsGlo extends SBPMessage {
     public int wn;
     
     /** GPS Time of week */
-    public double tow;
+    public long tow_ms;
     
     /** GLONASS fequency number per orbital slot */
-    public long[] fcns;
+    public int[] fcns;
     
 
     public MsgFcnsGlo (int sender) { super(sender, TYPE); }
@@ -58,22 +65,22 @@ public class MsgFcnsGlo extends SBPMessage {
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         wn = parser.getU16();
-        tow = parser.getDouble();
-        fcns = parser.getArrayofU32(32);
+        tow_ms = parser.getU32();
+        fcns = parser.getArrayofU8(32);
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU16(wn);
-        builder.putDouble(tow);
-        builder.putArrayofU32(fcns, 32);
+        builder.putU32(tow_ms);
+        builder.putArrayofU8(fcns, 32);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("wn", wn);
-        obj.put("tow", tow);
+        obj.put("tow_ms", tow_ms);
         obj.put("fcns", new JSONArray(fcns));
         return obj;
     }

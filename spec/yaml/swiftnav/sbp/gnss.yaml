@@ -84,6 +84,23 @@ definitions:
             units: week
             desc: GPS week number
 
+
+ - GPSTimeSec:
+    short_desc: Whole second accurate GPS time
+    desc: |
+      A GPS time, defined as the number of
+      seconds since beginning of the week on the Saturday/Sunday
+      transition.
+    fields:
+        - tow:
+            type: u32
+            units: s
+            desc: Seconds since start of GPS week
+        - wn:
+            type: u16
+            units: week
+            desc: GPS week number
+
  - GPSTimeNano:
     short_desc: Nanosecond-accurate receiver clock time
     desc: |

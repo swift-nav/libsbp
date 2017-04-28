@@ -103,6 +103,30 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gpsTime_" . P.stri
              ''GpsTime)
 $(makeLenses ''GpsTime)
 
+-- | GPSTimeSec.
+--
+-- A GPS time, defined as the number of seconds since beginning of the week on
+-- the Saturday/Sunday transition.
+data GpsTimeSec = GpsTimeSec
+  { _gpsTimeSec_tow :: Word32
+    -- ^ Seconds since start of GPS week
+  , _gpsTimeSec_wn :: Word16
+    -- ^ GPS week number
+  } deriving ( Show, Read, Eq )
+
+instance Binary GpsTimeSec where
+  get = do
+    _gpsTimeSec_tow <- getWord32le
+    _gpsTimeSec_wn <- getWord16le
+    return GpsTimeSec {..}
+
+  put GpsTimeSec {..} = do
+    putWord32le _gpsTimeSec_tow
+    putWord16le _gpsTimeSec_wn
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gpsTimeSec_" . P.stripPrefix "_gpsTimeSec_"}
+             ''GpsTimeSec)
+$(makeLenses ''GpsTimeSec)
+
 -- | GPSTimeNano.
 --
 -- A wire-appropriate receiver clock time, defined as the time since the
