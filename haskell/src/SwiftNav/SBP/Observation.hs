@@ -239,7 +239,7 @@ $(makeLenses ''MsgBasePosEcef)
 data EphemerisCommonContent = EphemerisCommonContent
   { _ephemerisCommonContent_sid        :: GnssSignal16
     -- ^ GNSS signal identifier (16 bit)
-  , _ephemerisCommonContent_toe        :: GpsTime
+  , _ephemerisCommonContent_toe        :: GpsTimeSec
     -- ^ Time of Ephemerides
   , _ephemerisCommonContent_ura        :: Double
     -- ^ User Range Accuracy
@@ -484,7 +484,7 @@ data MsgEphemerisGps = MsgEphemerisGps
     -- ^ Polynomial clock correction coefficient (clock drift)
   , _msgEphemerisGps_af2    :: Double
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
-  , _msgEphemerisGps_toc    :: GpsTime
+  , _msgEphemerisGps_toc    :: GpsTimeSec
     -- ^ Clock reference
   , _msgEphemerisGps_iode   :: Word8
     -- ^ Issue of ephemeris data
@@ -1548,7 +1548,7 @@ msgIono = 0x0090
 -- utilize the ionospheric model for computation of the ionospheric delay.
 -- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 data MsgIono = MsgIono
-  { _msgIono_t_nmct :: GpsTime
+  { _msgIono_t_nmct :: GpsTimeSec
     -- ^ Navigation Message Correction Table Valitidy Time
   , _msgIono_a0   :: Double
   , _msgIono_a1   :: Double
@@ -1597,7 +1597,7 @@ msgSvConfigurationGps = 0x0091
 --
 -- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
 data MsgSvConfigurationGps = MsgSvConfigurationGps
-  { _msgSvConfigurationGps_t_nmct :: GpsTime
+  { _msgSvConfigurationGps_t_nmct :: GpsTimeSec
     -- ^ Navigation Message Correction Table Valitidy Time
   , _msgSvConfigurationGps_l2c_mask :: Word32
     -- ^ L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
@@ -1669,7 +1669,7 @@ msgGroupDelay = 0x0093
 --
 -- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 data MsgGroupDelay = MsgGroupDelay
-  { _msgGroupDelay_t_op   :: GpsTime
+  { _msgGroupDelay_t_op   :: GpsTimeSec
     -- ^ Data Predict Time of Week
   , _msgGroupDelay_sid    :: GnssSignal
     -- ^ GNSS signal identifier
@@ -1708,7 +1708,7 @@ $(makeLenses ''MsgGroupDelay)
 data AlmanacCommonContent = AlmanacCommonContent
   { _almanacCommonContent_sid        :: GnssSignal
     -- ^ GNSS signal identifier
-  , _almanacCommonContent_toa        :: GpsTime
+  , _almanacCommonContent_toa        :: GpsTimeSec
     -- ^ Reference time of almanac
   , _almanacCommonContent_ura        :: Double
     -- ^ User Range Accuracy
@@ -1722,7 +1722,7 @@ data AlmanacCommonContent = AlmanacCommonContent
     -- 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
     -- Health of SV Signal     Components. Satellite health status for GLO:
     -- See GLO ICD 5.1 table 5.1 for details   - bit 0: C(n), "unhealthy" flag
-    -- that is transmitted within      non-immediate data and indicates overall
+    -- that is transmitted within     non-immediate data and indicates overall
     -- constellation status     at the moment of almanac uploading.     '0'
     -- indicates malfunction of n-satellite.     '1' indicates that n-satellite
     -- is operational.   - bit 1: Bn(ln), '0' indicates the satellite is

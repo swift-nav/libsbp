@@ -133,7 +133,7 @@ typedef struct __attribute__((packed)) {
 
 typedef struct __attribute__((packed)) {
   gnss_signal16_t sid;             /**< GNSS signal identifier (16 bit) */
-  sbp_gps_time_t toe;             /**< Time of Ephemerides */
+  gps_time_sec_t toe;             /**< Time of Ephemerides */
   double ura;             /**< User Range Accuracy [m] */
   u32 fit_interval;    /**< Curve fit interval [s] */
   u8 valid;           /**< Status of ephemeris, 1 = valid, 0 = invalid */
@@ -225,7 +225,7 @@ typedef struct __attribute__((packed)) {
   double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
   double af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
   double af2;         /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-  sbp_gps_time_t toc;         /**< Clock reference */
+  gps_time_sec_t toc;         /**< Clock reference */
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
 } msg_ephemeris_gps_t;
@@ -582,7 +582,7 @@ satellite being tracked.
  */
 #define SBP_MSG_IONO                 0x0090
 typedef struct __attribute__((packed)) {
-  sbp_gps_time_t t_nmct;    /**< Navigation Message Correction Table Valitidy Time */
+  gps_time_sec_t t_nmct;    /**< Navigation Message Correction Table Valitidy Time */
   double a0;       
   double a1;       
   double a2;       
@@ -600,7 +600,7 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_SV_CONFIGURATION_GPS 0x0091
 typedef struct __attribute__((packed)) {
-  sbp_gps_time_t t_nmct;      /**< Navigation Message Correction Table Valitidy Time */
+  gps_time_sec_t t_nmct;      /**< Navigation Message Correction Table Valitidy Time */
   u32 l2c_mask;    /**< L2C capability mask, SV32 bit being MSB, SV1 bit being LSB */
 } msg_sv_configuration_gps_t;
 
@@ -629,7 +629,7 @@ LSB indicating tgd validity etc.
  */
 #define SBP_MSG_GROUP_DELAY          0x0093
 typedef struct __attribute__((packed)) {
-  sbp_gps_time_t t_op;        /**< Data Predict Time of Week */
+  gps_time_sec_t t_op;        /**< Data Predict Time of Week */
   sbp_gnss_signal_t sid;         /**< GNSS signal identifier */
   u8 valid;       /**< bit-field indicating validity of the values,
 LSB indicating tgd validity etc.
@@ -643,7 +643,7 @@ LSB indicating tgd validity etc.
 
 typedef struct __attribute__((packed)) {
   sbp_gnss_signal_t sid;             /**< GNSS signal identifier */
-  sbp_gps_time_t toa;             /**< Reference time of almanac */
+  gps_time_sec_t toa;             /**< Reference time of almanac */
   double ura;             /**< User Range Accuracy [m] */
   u32 fit_interval;    /**< Curve fit interval [s] */
   u8 valid;           /**< Status of almanac, 1 = valid, 0 = invalid */
@@ -655,7 +655,7 @@ typedef struct __attribute__((packed)) {
     Components.
 Satellite health status for GLO:
   See GLO ICD 5.1 table 5.1 for details
-  - bit 0: C(n), "unhealthy" flag that is transmitted within 
+  - bit 0: C(n), "unhealthy" flag that is transmitted within
     non-immediate data and indicates overall constellation status
     at the moment of almanac uploading.
     '0' indicates malfunction of n-satellite.

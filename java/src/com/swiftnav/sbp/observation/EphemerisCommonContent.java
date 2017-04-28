@@ -28,7 +28,7 @@ public class EphemerisCommonContent extends SBPStruct {
     public GnssSignal16 sid;
     
     /** Time of Ephemerides */
-    public GPSTime toe;
+    public GPSTimeSec toe;
     
     /** User Range Accuracy */
     public double ura;
@@ -53,7 +53,7 @@ GLO: 0 = valid, non-zero = invalid
     public EphemerisCommonContent parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         sid = new GnssSignal16().parse(parser);
-        toe = new GPSTime().parse(parser);
+        toe = new GPSTimeSec().parse(parser);
         ura = parser.getDouble();
         fit_interval = parser.getU32();
         valid = parser.getU8();

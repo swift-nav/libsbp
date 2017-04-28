@@ -196,7 +196,7 @@ class EphemerisCommonContent(object):
   ----------
   sid : GnssSignal16
     GNSS signal identifier (16 bit)
-  toe : GPSTime
+  toe : GPSTimeSec
     Time of Ephemerides
   ura : double
     User Range Accuracy
@@ -214,7 +214,7 @@ GLO: 0 = valid, non-zero = invalid
   """
   _parser = Embedded(Struct("EphemerisCommonContent",
                      Struct('sid', GnssSignal16._parser),
-                     Struct('toe', GPSTime._parser),
+                     Struct('toe', GPSTimeSec._parser),
                      LFloat64('ura'),
                      ULInt32('fit_interval'),
                      ULInt8('valid'),
@@ -589,7 +589,7 @@ class AlmanacCommonContent(object):
   ----------
   sid : GnssSignal
     GNSS signal identifier
-  toa : GPSTime
+  toa : GPSTimeSec
     Reference time of almanac
   ura : double
     User Range Accuracy
@@ -606,7 +606,7 @@ class AlmanacCommonContent(object):
     Components.
 Satellite health status for GLO:
   See GLO ICD 5.1 table 5.1 for details
-  - bit 0: C(n), "unhealthy" flag that is transmitted within 
+  - bit 0: C(n), "unhealthy" flag that is transmitted within
     non-immediate data and indicates overall constellation status
     at the moment of almanac uploading.
     '0' indicates malfunction of n-satellite.
@@ -618,7 +618,7 @@ Satellite health status for GLO:
   """
   _parser = Embedded(Struct("AlmanacCommonContent",
                      Struct('sid', GnssSignal._parser),
-                     Struct('toa', GPSTime._parser),
+                     Struct('toa', GPSTimeSec._parser),
                      LFloat64('ura'),
                      ULInt32('fit_interval'),
                      ULInt8('valid'),
@@ -1195,7 +1195,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Polynomial clock correction coefficient (clock drift)
   af2 : double
     Polynomial clock correction coefficient (rate of clock drift)
-  toc : GPSTime
+  toc : GPSTimeSec
     Clock reference
   iode : int
     Issue of ephemeris data
@@ -1226,7 +1226,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    LFloat64('af0'),
                    LFloat64('af1'),
                    LFloat64('af2'),
-                   Struct('toc', GPSTime._parser),
+                   Struct('toc', GPSTimeSec._parser),
                    ULInt8('iode'),
                    ULInt16('iodc'),)
   __slots__ = [
@@ -2915,7 +2915,7 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  t_nmct : GPSTime
+  t_nmct : GPSTimeSec
     Navigation Message Correction Table Valitidy Time
   a0 : double
   a1 : double
@@ -2930,7 +2930,7 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 
   """
   _parser = Struct("MsgIono",
-                   Struct('t_nmct', GPSTime._parser),
+                   Struct('t_nmct', GPSTimeSec._parser),
                    LFloat64('a0'),
                    LFloat64('a1'),
                    LFloat64('a2'),
@@ -3028,7 +3028,7 @@ class MsgSvConfigurationGPS(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  t_nmct : GPSTime
+  t_nmct : GPSTimeSec
     Navigation Message Correction Table Valitidy Time
   l2c_mask : int
     L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
@@ -3037,7 +3037,7 @@ class MsgSvConfigurationGPS(SBP):
 
   """
   _parser = Struct("MsgSvConfigurationGPS",
-                   Struct('t_nmct', GPSTime._parser),
+                   Struct('t_nmct', GPSTimeSec._parser),
                    ULInt32('l2c_mask'),)
   __slots__ = [
                't_nmct',
@@ -3218,7 +3218,7 @@ class MsgGroupDelay(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  t_op : GPSTime
+  t_op : GPSTimeSec
     Data Predict Time of Week
   sid : GnssSignal
     GNSS signal identifier
@@ -3235,7 +3235,7 @@ LSB indicating tgd validity etc.
 
   """
   _parser = Struct("MsgGroupDelay",
-                   Struct('t_op', GPSTime._parser),
+                   Struct('t_op', GPSTimeSec._parser),
                    Struct('sid', GnssSignal._parser),
                    ULInt8('valid'),
                    SLInt16('tgd'),

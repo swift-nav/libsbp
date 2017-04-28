@@ -23,12 +23,12 @@ import org.json.JSONArray;
 
 
 
-public class MsgEphemerisSbas extends SBPMessage {
-    public static final int TYPE = 0x0084;
+public class MsgEphemerisSbasDepA extends SBPMessage {
+    public static final int TYPE = 0x0082;
 
     
     /** Values common for all ephemeris types */
-    public EphemerisCommonContent common;
+    public EphemerisCommonContentDepA common;
     
     /** Position of the GEO at time toe */
     public double[] pos;
@@ -46,9 +46,9 @@ public class MsgEphemerisSbas extends SBPMessage {
     public double a_gf1;
     
 
-    public MsgEphemerisSbas (int sender) { super(sender, TYPE); }
-    public MsgEphemerisSbas () { super(TYPE); }
-    public MsgEphemerisSbas (SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisSbasDepA (int sender) { super(sender, TYPE); }
+    public MsgEphemerisSbasDepA () { super(TYPE); }
+    public MsgEphemerisSbasDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -56,7 +56,7 @@ public class MsgEphemerisSbas extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        common = new EphemerisCommonContent().parse(parser);
+        common = new EphemerisCommonContentDepA().parse(parser);
         pos = parser.getArrayofDouble(3);
         vel = parser.getArrayofDouble(3);
         acc = parser.getArrayofDouble(3);

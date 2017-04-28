@@ -22,9 +22,9 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_EPHEMERIS_GPS (0x0086).
+/** SBP class for message MSG_EPHEMERIS_GPS_DEP_E (0x0081).
  *
- * You can have MSG_EPHEMERIS_GPS inherent its fields directly from
+ * You can have MSG_EPHEMERIS_GPS_DEP_E inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
@@ -34,12 +34,12 @@ import org.json.JSONArray;
  * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
  * 20-III) for more details. */
 
-public class MsgEphemerisGPS extends SBPMessage {
-    public static final int TYPE = 0x0086;
+public class MsgEphemerisGPSDepE extends SBPMessage {
+    public static final int TYPE = 0x0081;
 
     
     /** Values common for all ephemeris types */
-    public EphemerisCommonContent common;
+    public EphemerisCommonContentDepA common;
     
     /** Group delay differential between L1 and L2 */
     public double tgd;
@@ -99,7 +99,7 @@ public class MsgEphemerisGPS extends SBPMessage {
     public double af2;
     
     /** Clock reference */
-    public GPSTimeSec toc;
+    public GPSTime toc;
     
     /** Issue of ephemeris data */
     public int iode;
@@ -108,9 +108,9 @@ public class MsgEphemerisGPS extends SBPMessage {
     public int iodc;
     
 
-    public MsgEphemerisGPS (int sender) { super(sender, TYPE); }
-    public MsgEphemerisGPS () { super(TYPE); }
-    public MsgEphemerisGPS (SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisGPSDepE (int sender) { super(sender, TYPE); }
+    public MsgEphemerisGPSDepE () { super(TYPE); }
+    public MsgEphemerisGPSDepE (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -118,7 +118,7 @@ public class MsgEphemerisGPS extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        common = new EphemerisCommonContent().parse(parser);
+        common = new EphemerisCommonContentDepA().parse(parser);
         tgd = parser.getDouble();
         c_rs = parser.getDouble();
         c_rc = parser.getDouble();
@@ -138,7 +138,7 @@ public class MsgEphemerisGPS extends SBPMessage {
         af0 = parser.getDouble();
         af1 = parser.getDouble();
         af2 = parser.getDouble();
-        toc = new GPSTimeSec().parse(parser);
+        toc = new GPSTime().parse(parser);
         iode = parser.getU8();
         iodc = parser.getU16();
     }
