@@ -88,7 +88,12 @@ definitions:
               status of this observation.  If this field is 0 it means only the Cn0
               estimate for the signal is valid.
             fields:
-              - 4-7:
+              - 7:
+                  desc: RAIM exclusion
+                  values:
+                      - 0: No exclusion
+                      - 1: Measurement was excluded by SPP RAIM, use with care
+              - 4-6:
                   desc: Reserved
               - 3:
                   desc: Doppler valid
