@@ -11,7 +11,7 @@
 from .base_driver import BaseDriver
 import serial
 import serial.tools.list_ports
-
+import termios
 
 class PySerialDriver(BaseDriver):
   """
@@ -97,3 +97,14 @@ class PySerialDriver(BaseDriver):
         print "Piksi disconnected"
         print
         raise IOError
+
+  def __enter__(self):
+    self.flush()
+    return self
+
+  def __exit__(self, *args):
+    try:
+      self.flush()
+      self.close()
+    except (OSError, termios.error, serial.SerialException) as e:
+      pass
