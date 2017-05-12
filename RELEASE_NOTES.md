@@ -6,6 +6,7 @@ For a detailed index of changes, please see the
 
 Contents
 --------
+ * [v2.2.1](#v2.2.1)
  * [v2.2.0](#v2.2.0)
  * [v2.1.8](#v2.1.8)
  * [v2.1.7](#v2.1.7)
@@ -19,6 +20,12 @@ Contents
  * [v1.0.1](#v1.0.1)
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
+
+v2.2.1 <a name="v2.2.1">
+--------------------------
+* Add decimal msg_id to PDF docs
+* Fix bug in pyserial driver that could hang and prevent exit
+* Fix ephemeris time to be seconds as it exists in all implementation
 
 v2.2.0 <a name="v2.2.0">
 --------------------------

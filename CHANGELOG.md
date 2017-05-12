@@ -1,11 +1,27 @@
 # Change Log
 
-## [2.2.0](https://github.com/swift-nav/libsbp/tree/v2.2.0)
+## [v2.2.1](https://github.com/swift-nav/libsbp/tree/v2.2.1)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.0...v2.2.1)
+
+**Merged pull requests:**
+
+- Add decimal SBP MSG\_ID to doc [\#465](https://github.com/swift-nav/libsbp/pull/465)
+- Add description of the RAIM exclusion bit in MSG\_OBS.flags [\#464](https://github.com/swift-nav/libsbp/pull/464)
+- Fix ephemeris time to be in seconds [\#463](https://github.com/swift-nav/libsbp/pull/463)
+- Pyserial\_driver: except termios\_error in context management [\#462](https://github.com/swift-nav/libsbp/pull/462)
+- Update SBP\_MSG\_GROUP\_DELAY [\#460](https://github.com/swift-nav/libsbp/pull/460)
+- Update SBP MSG EPHEMERIS\* [\#459](https://github.com/swift-nav/libsbp/pull/459)
+- Add SBP\_MSG\_FCNS\_GLO [\#458](https://github.com/swift-nav/libsbp/pull/458)
+- Change SBP\_MSG\_EPHEMERIS\_\* [\#457](https://github.com/swift-nav/libsbp/pull/457)
+- Change MSG\_GROUP\_DELAY [\#456](https://github.com/swift-nav/libsbp/pull/456)
+
+## [v2.2.0](https://github.com/swift-nav/libsbp/tree/v2.2.0) (2017-03-24)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.1.8...v2.2.0)
 
 **Merged pull requests:**
 
+- V2.2.0 branch [\#453](https://github.com/swift-nav/libsbp/pull/453)
 - Utc msg fixes [\#452](https://github.com/swift-nav/libsbp/pull/452)
 - Update README to specify explicit Haskell Stack resolver [\#451](https://github.com/swift-nav/libsbp/pull/451)
 - python: pyserial driver.  Add hdw flow control to API [\#450](https://github.com/swift-nav/libsbp/pull/450)
