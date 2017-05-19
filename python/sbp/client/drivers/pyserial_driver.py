@@ -11,7 +11,12 @@
 from .base_driver import BaseDriver
 import serial
 import serial.tools.list_ports
-import termios
+try:
+  import termios
+  SerialError = termios.error  
+except ImportError:
+  SerialError = None
+  
 
 class PySerialDriver(BaseDriver):
   """
@@ -106,5 +111,5 @@ class PySerialDriver(BaseDriver):
     try:
       self.flush()
       self.close()
-    except (OSError, termios.error, serial.SerialException) as e:
+    except (OSError, SerialError, serial.SerialException) as e:
       pass
