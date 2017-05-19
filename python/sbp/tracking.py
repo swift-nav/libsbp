@@ -34,21 +34,21 @@ measured signal power.
   
   Parameters
   ----------
-  state : int
-    Status of tracking channel
-  sid : GnssSignal
+  sid : GnssSignal16
     GNSS signal being tracked
-  cn0 : float
-    Carrier-to-noise density
+  fcn : int
+    Frequency channel number (GLONASS only)
+  cn0 : int
+    Carrier-to-Noise density.  Zero implies invalid cn0.
 
   """
   _parser = Embedded(Struct("TrackingChannelState",
-                     ULInt8('state'),
-                     Struct('sid', GnssSignal._parser),
-                     LFloat32('cn0'),))
+                     Struct('sid', GnssSignal16._parser),
+                     ULInt8('fcn'),
+                     ULInt8('cn0'),))
   __slots__ = [
-               'state',
                'sid',
+               'fcn',
                'cn0',
               ]
 
@@ -56,8 +56,8 @@ measured signal power.
     if payload:
       self.from_binary(payload)
     else:
-      self.state = kwargs.pop('state')
       self.sid = kwargs.pop('sid')
+      self.fcn = kwargs.pop('fcn')
       self.cn0 = kwargs.pop('cn0')
 
   def __repr__(self):
@@ -157,6 +157,51 @@ class TrackingChannelStateDepA(object):
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return TrackingChannelStateDepA.build(d)
+    
+class TrackingChannelStateDepB(object):
+  """TrackingChannelStateDepB.
+  
+  Deprecated.
+  
+  Parameters
+  ----------
+  state : int
+    Status of tracking channel
+  sid : GnssSignal
+    GNSS signal being tracked
+  cn0 : float
+    Carrier-to-noise density
+
+  """
+  _parser = Embedded(Struct("TrackingChannelStateDepB",
+                     ULInt8('state'),
+                     Struct('sid', GnssSignal._parser),
+                     LFloat32('cn0'),))
+  __slots__ = [
+               'state',
+               'sid',
+               'cn0',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.state = kwargs.pop('state')
+      self.sid = kwargs.pop('sid')
+      self.cn0 = kwargs.pop('cn0')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = TrackingChannelStateDepB._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return TrackingChannelStateDepB.build(d)
     
 SBP_MSG_TRACKING_STATE_DETAILED = 0x0011
 class MsgTrackingStateDetailed(SBP):
@@ -355,9 +400,9 @@ signal is in continuous track.
     d.update(j)
     return d
     
-SBP_MSG_TRACKING_STATE = 0x0013
+SBP_MSG_TRACKING_STATE = 0x0041
 class MsgTrackingState(SBP):
-  """SBP class for message MSG_TRACKING_STATE (0x0013).
+  """SBP class for message MSG_TRACKING_STATE (0x0041).
 
   You can have MSG_TRACKING_STATE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -610,10 +655,91 @@ class MsgTrackingStateDepA(SBP):
     d.update(j)
     return d
     
+SBP_MSG_TRACKING_STATE_DEP_B = 0x0013
+class MsgTrackingStateDepB(SBP):
+  """SBP class for message MSG_TRACKING_STATE_DEP_B (0x0013).
+
+  You can have MSG_TRACKING_STATE_DEP_B inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Deprecated.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  states : array
+    Signal tracking channel state
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgTrackingStateDepB",
+                   OptionalGreedyRange(Struct('states', TrackingChannelStateDepB._parser)),)
+  __slots__ = [
+               'states',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgTrackingStateDepB,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgTrackingStateDepB, self).__init__()
+      self.msg_type = SBP_MSG_TRACKING_STATE_DEP_B
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.states = kwargs.pop('states')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgTrackingStateDepB.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgTrackingStateDepB(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgTrackingStateDepB._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgTrackingStateDepB._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgTrackingStateDepB, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0011: MsgTrackingStateDetailed,
-  0x0013: MsgTrackingState,
+  0x0041: MsgTrackingState,
   0x001C: MsgTrackingIq,
   0x0016: MsgTrackingStateDepA,
+  0x0013: MsgTrackingStateDepB,
 }

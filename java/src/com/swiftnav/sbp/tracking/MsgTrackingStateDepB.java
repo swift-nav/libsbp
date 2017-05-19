@@ -22,27 +22,25 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_TRACKING_STATE (0x0041).
+/** SBP class for message MSG_TRACKING_STATE_DEP_B (0x0013).
  *
- * You can have MSG_TRACKING_STATE inherent its fields directly from
+ * You can have MSG_TRACKING_STATE_DEP_B inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The tracking message returns a variable-length array of tracking
- * channel states. It reports status and carrier-to-noise density
- * measurements for all tracked satellites. */
+* Deprecated. */
 
-public class MsgTrackingState extends SBPMessage {
-    public static final int TYPE = 0x0041;
+public class MsgTrackingStateDepB extends SBPMessage {
+    public static final int TYPE = 0x0013;
 
     
     /** Signal tracking channel state */
-    public TrackingChannelState[] states;
+    public TrackingChannelStateDepB[] states;
     
 
-    public MsgTrackingState (int sender) { super(sender, TYPE); }
-    public MsgTrackingState () { super(TYPE); }
-    public MsgTrackingState (SBPMessage msg) throws SBPBinaryException {
+    public MsgTrackingStateDepB (int sender) { super(sender, TYPE); }
+    public MsgTrackingStateDepB () { super(TYPE); }
+    public MsgTrackingStateDepB (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -50,7 +48,7 @@ public class MsgTrackingState extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        states = parser.getArray(TrackingChannelState.class);
+        states = parser.getArray(TrackingChannelStateDepB.class);
     }
 
     @Override

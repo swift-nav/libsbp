@@ -145,33 +145,33 @@ $(makeLenses ''MsgTrackingStateDetailed)
 -- Tracking channel state for a specific satellite signal and measured signal
 -- power.
 data TrackingChannelState = TrackingChannelState
-  { _trackingChannelState_state :: Word8
-    -- ^ Status of tracking channel
-  , _trackingChannelState_sid :: GnssSignal
+  { _trackingChannelState_sid :: GnssSignal16
     -- ^ GNSS signal being tracked
-  , _trackingChannelState_cn0 :: Float
-    -- ^ Carrier-to-noise density
+  , _trackingChannelState_fcn :: Word8
+    -- ^ Frequency channel number (GLONASS only)
+  , _trackingChannelState_cn0 :: Word8
+    -- ^ Carrier-to-Noise density.  Zero implies invalid cn0.
   } deriving ( Show, Read, Eq )
 
 instance Binary TrackingChannelState where
   get = do
-    _trackingChannelState_state <- getWord8
     _trackingChannelState_sid <- get
-    _trackingChannelState_cn0 <- getFloat32le
+    _trackingChannelState_fcn <- getWord8
+    _trackingChannelState_cn0 <- getWord8
     return TrackingChannelState {..}
 
   put TrackingChannelState {..} = do
-    putWord8 _trackingChannelState_state
     put _trackingChannelState_sid
-    putFloat32le _trackingChannelState_cn0
+    putWord8 _trackingChannelState_fcn
+    putWord8 _trackingChannelState_cn0
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_trackingChannelState_" . P.stripPrefix "_trackingChannelState_"}
              ''TrackingChannelState)
 $(makeLenses ''TrackingChannelState)
 
 msgTrackingState :: Word16
-msgTrackingState = 0x0013
+msgTrackingState = 0x0041
 
--- | SBP class for message MSG_TRACKING_STATE (0x0013).
+-- | SBP class for message MSG_TRACKING_STATE (0x0041).
 --
 -- The tracking message returns a variable-length array of tracking channel
 -- states. It reports status and carrier-to-noise density measurements for all
@@ -303,3 +303,55 @@ $(deriveSBP 'msgTrackingStateDepA ''MsgTrackingStateDepA)
 $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTrackingStateDepA_" . P.stripPrefix "_msgTrackingStateDepA_"}
              ''MsgTrackingStateDepA)
 $(makeLenses ''MsgTrackingStateDepA)
+
+-- | TrackingChannelStateDepB.
+--
+-- Deprecated.
+data TrackingChannelStateDepB = TrackingChannelStateDepB
+  { _trackingChannelStateDepB_state :: Word8
+    -- ^ Status of tracking channel
+  , _trackingChannelStateDepB_sid :: GnssSignal
+    -- ^ GNSS signal being tracked
+  , _trackingChannelStateDepB_cn0 :: Float
+    -- ^ Carrier-to-noise density
+  } deriving ( Show, Read, Eq )
+
+instance Binary TrackingChannelStateDepB where
+  get = do
+    _trackingChannelStateDepB_state <- getWord8
+    _trackingChannelStateDepB_sid <- get
+    _trackingChannelStateDepB_cn0 <- getFloat32le
+    return TrackingChannelStateDepB {..}
+
+  put TrackingChannelStateDepB {..} = do
+    putWord8 _trackingChannelStateDepB_state
+    put _trackingChannelStateDepB_sid
+    putFloat32le _trackingChannelStateDepB_cn0
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_trackingChannelStateDepB_" . P.stripPrefix "_trackingChannelStateDepB_"}
+             ''TrackingChannelStateDepB)
+$(makeLenses ''TrackingChannelStateDepB)
+
+msgTrackingStateDepB :: Word16
+msgTrackingStateDepB = 0x0013
+
+-- | SBP class for message MSG_TRACKING_STATE_DEP_B (0x0013).
+--
+-- Deprecated.
+data MsgTrackingStateDepB = MsgTrackingStateDepB
+  { _msgTrackingStateDepB_states :: [TrackingChannelStateDepB]
+    -- ^ Signal tracking channel state
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgTrackingStateDepB where
+  get = do
+    _msgTrackingStateDepB_states <- whileM (not <$> isEmpty) get
+    return MsgTrackingStateDepB {..}
+
+  put MsgTrackingStateDepB {..} = do
+    mapM_ put _msgTrackingStateDepB_states
+
+$(deriveSBP 'msgTrackingStateDepB ''MsgTrackingStateDepB)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTrackingStateDepB_" . P.stripPrefix "_msgTrackingStateDepB_"}
+             ''MsgTrackingStateDepB)
+$(makeLenses ''MsgTrackingStateDepB)

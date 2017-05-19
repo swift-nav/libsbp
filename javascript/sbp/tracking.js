@@ -129,9 +129,9 @@ MsgTrackingStateDetailed.prototype.fieldSpec.push(['misc_flags', 'writeUInt8', 1
  * power.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field state number (unsigned 8-bit int, 1 byte) Status of tracking channel
- * @field sid GnssSignal GNSS signal being tracked
- * @field cn0 number (float, 4 bytes) Carrier-to-noise density
+ * @field sid GnssSignal16 GNSS signal being tracked
+ * @field fcn number (unsigned 8-bit int, 1 byte) Frequency channel number (GLONASS only)
+ * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density.  Zero implies invalid cn0.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -147,16 +147,16 @@ TrackingChannelState.prototype.messageType = "TrackingChannelState";
 TrackingChannelState.prototype.constructor = TrackingChannelState;
 TrackingChannelState.prototype.parser = new Parser()
   .endianess('little')
-  .uint8('state')
-  .nest('sid', { type: GnssSignal.prototype.parser })
-  .floatle('cn0');
+  .nest('sid', { type: GnssSignal16.prototype.parser })
+  .uint8('fcn')
+  .uint8('cn0');
 TrackingChannelState.prototype.fieldSpec = [];
-TrackingChannelState.prototype.fieldSpec.push(['state', 'writeUInt8', 1]);
-TrackingChannelState.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
-TrackingChannelState.prototype.fieldSpec.push(['cn0', 'writeFloatLE', 4]);
+TrackingChannelState.prototype.fieldSpec.push(['sid', GnssSignal16.prototype.fieldSpec]);
+TrackingChannelState.prototype.fieldSpec.push(['fcn', 'writeUInt8', 1]);
+TrackingChannelState.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
 
 /**
- * SBP class for message MSG_TRACKING_STATE (0x0013).
+ * SBP class for message MSG_TRACKING_STATE (0x0041).
  *
  * The tracking message returns a variable-length array of tracking channel states.
  * It reports status and carrier-to-noise density measurements for all tracked
@@ -176,7 +176,7 @@ var MsgTrackingState = function (sbp, fields) {
 };
 MsgTrackingState.prototype = Object.create(SBP.prototype);
 MsgTrackingState.prototype.messageType = "MSG_TRACKING_STATE";
-MsgTrackingState.prototype.msg_type = 0x0013;
+MsgTrackingState.prototype.msg_type = 0x0041;
 MsgTrackingState.prototype.constructor = MsgTrackingState;
 MsgTrackingState.prototype.parser = new Parser()
   .endianess('little')
@@ -306,11 +306,70 @@ MsgTrackingStateDepA.prototype.parser = new Parser()
 MsgTrackingStateDepA.prototype.fieldSpec = [];
 MsgTrackingStateDepA.prototype.fieldSpec.push(['states', 'array', TrackingChannelStateDepA.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
+/**
+ * SBP class for message fragment TrackingChannelStateDepB
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field state number (unsigned 8-bit int, 1 byte) Status of tracking channel
+ * @field sid GnssSignal GNSS signal being tracked
+ * @field cn0 number (float, 4 bytes) Carrier-to-noise density
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var TrackingChannelStateDepB = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "TrackingChannelStateDepB";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+TrackingChannelStateDepB.prototype = Object.create(SBP.prototype);
+TrackingChannelStateDepB.prototype.messageType = "TrackingChannelStateDepB";
+TrackingChannelStateDepB.prototype.constructor = TrackingChannelStateDepB;
+TrackingChannelStateDepB.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('state')
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .floatle('cn0');
+TrackingChannelStateDepB.prototype.fieldSpec = [];
+TrackingChannelStateDepB.prototype.fieldSpec.push(['state', 'writeUInt8', 1]);
+TrackingChannelStateDepB.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+TrackingChannelStateDepB.prototype.fieldSpec.push(['cn0', 'writeFloatLE', 4]);
+
+/**
+ * SBP class for message MSG_TRACKING_STATE_DEP_B (0x0013).
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field states array Signal tracking channel state
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgTrackingStateDepB = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_TRACKING_STATE_DEP_B";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgTrackingStateDepB.prototype = Object.create(SBP.prototype);
+MsgTrackingStateDepB.prototype.messageType = "MSG_TRACKING_STATE_DEP_B";
+MsgTrackingStateDepB.prototype.msg_type = 0x0013;
+MsgTrackingStateDepB.prototype.constructor = MsgTrackingStateDepB;
+MsgTrackingStateDepB.prototype.parser = new Parser()
+  .endianess('little')
+  .array('states', { type: TrackingChannelStateDepB.prototype.parser, readUntil: 'eof' });
+MsgTrackingStateDepB.prototype.fieldSpec = [];
+MsgTrackingStateDepB.prototype.fieldSpec.push(['states', 'array', TrackingChannelStateDepB.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
 module.exports = {
   0x0011: MsgTrackingStateDetailed,
   MsgTrackingStateDetailed: MsgTrackingStateDetailed,
   TrackingChannelState: TrackingChannelState,
-  0x0013: MsgTrackingState,
+  0x0041: MsgTrackingState,
   MsgTrackingState: MsgTrackingState,
   TrackingChannelCorrelation: TrackingChannelCorrelation,
   0x001C: MsgTrackingIq,
@@ -318,4 +377,7 @@ module.exports = {
   TrackingChannelStateDepA: TrackingChannelStateDepA,
   0x0016: MsgTrackingStateDepA,
   MsgTrackingStateDepA: MsgTrackingStateDepA,
+  TrackingChannelStateDepB: TrackingChannelStateDepB,
+  0x0013: MsgTrackingStateDepB,
+  MsgTrackingStateDepB: MsgTrackingStateDepB,
 }
