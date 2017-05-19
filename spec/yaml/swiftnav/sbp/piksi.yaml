@@ -61,22 +61,6 @@ definitions:
       This message from the host resets the Piksi back into the
       bootloader.
 
- - MSG_CW_RESULTS:
-    id: 0x00C0
-    short_desc: Legacy message for CW interference channel (Piksi => host)
-    desc: |
-      This is an unused legacy message for result reporting from the
-      CW interference channel on the SwiftNAP. This message will be
-      removed in a future release.
-
- - MSG_CW_START:
-    id: 0x00C1
-    short_desc: Legacy message for CW interference channel (host => Piksi)
-    desc: |
-      This is an unused legacy message from the host for starting
-      the CW interference channel on the SwiftNAP. This message will
-      be removed in a future release.
-
  - MSG_RESET_FILTERS:
     id: 0x0022
     short_desc: Reset IAR filters (host => Piksi)
@@ -95,16 +79,6 @@ definitions:
                 values:
                   - 0: DGNSS filter
                   - 1: IAR process
-
- - MSG_INIT_BASE:
-    id: 0x0023
-    short_desc: Initialize IAR from known baseline (host => device)
-    desc: |
-      This message initializes the integer ambiguity resolution (IAR)
-      process on the Piksi to use an assumed baseline position between
-      the base station and rover receivers. Warns via MSG_PRINT if
-      there aren't a shared minimum number (4) of satellite
-      observations between the two.
 
  - MSG_THREAD_STATE:
     id: 0x0017
@@ -241,38 +215,6 @@ definitions:
         - obs_period:
             type: Period
             desc: Observation receipt period
-
-
- - MSG_UART_STATE_DEPA:
-    id: 0x0018
-    short_desc: Deprecated
-    desc: Deprecated
-    fields:
-        - uart_a:
-            type: UARTChannel
-            desc: State of UART A
-        - uart_b:
-            type: UARTChannel
-            desc: State of UART B
-        - uart_ftdi:
-            type: UARTChannel
-            desc: State of UART FTDI (USB logger)
-        - latency:
-            type: Latency
-            desc: UART communication latency
-
- - MSG_IAR_STATE:
-    id: 0x0019
-    short_desc: State of the Integer Ambiguity Resolution (IAR) process
-    desc: |
-      This message reports the state of the Integer Ambiguity
-      Resolution (IAR) process, which resolves unknown integer
-      ambiguities from double-differenced carrier-phase measurements
-      from satellite observations.
-    fields:
-        - num_hyps:
-            type: u32
-            desc: Number of integer ambiguity hypotheses remaining
 
  - MSG_MASK_SATELLITE:
     id: 0x001B

@@ -97,18 +97,3 @@ definitions:
           desc: |
             57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
             on the right.
-
- - MSG_BOOTLOADER_HANDSHAKE_DEP_A:
-    id: 0x00B0
-    public: false
-    short_desc: Deprecated
-    desc: Deprecated.
-    public: False
-    replaced_by:
-      - MSG_BOOTLOADER_HANDSHAKE_REQ
-      - MSG_BOOTLOADER_HANDSHAKE_RESP
-    fields:
-      - handshake:
-          type: array
-          fill: u8
-          desc: Version number string (not NULL terminated)
