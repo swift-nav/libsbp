@@ -1,0 +1,64 @@
+# Packages define a logical collection of SBP messages. Packages can
+# in turn include other packages in the directory hierarchy. A package
+# identifier specifies a directory path for the generated code,
+# followed by an optional description used for documentation. By
+# convention, packages marked as "stable" are unlikely to change much
+# in the future, whereas unstable messages may change with future
+# firmware development. Some packages are purely informative and are
+# omitted from code generation using "render_source".
+
+package: specan
+description: Spectrum analyzer and related interference messages
+render_source: True
+stable: True
+include:
+  # types.yaml defines common primitives used in the spec.
+  - types.yaml
+
+# The definitions in a package can contain both SBP messages and
+# struct definitions.
+
+definitions:
+
+ # A definition contains a series of named keys, many of which are
+ # optional, such as "short_desc", "id", etc. By default, any
+ # definition containing the 'id' field is considered an SBP message;
+ # the 'id' field uniquely identifies the message type of the payload
+ # contents. Defined fields layout the structure of an SBP payload.
+
+ - MSG_SPECAN:
+    id: 0x0050
+    short_desc: Spectrum analyzer
+    desc: |
+        Spectrum analyzer packet.
+
+    # Each message definition has a series of fields, not unlike a C
+    # struct. Each field has a type, which is either a primitive (e.g.,
+    # u32 for 32-bit unsigned integer) or a more complex, predefined
+    # type. You can optionally include units or a description.
+
+    fields:
+        - t:
+            type: GPSTime
+            desc: Receiver time of this observation
+        - freq_ref:
+            type: float
+            desc: |
+                Reference frequency of this packet
+        - freq_step:
+            type: float
+            desc: |
+                Frequency step of points in this packet
+        - amplitude_ref:
+            type: float
+            desc: |
+                Reference amplitude of this packet
+        - amplitude_unit:
+            type: float
+            desc: |
+                Amplitude unit value of points in this packet
+        - amplitude_value:
+            type: array
+            fill: u8
+            desc: |
+                Amplitude values (in the above units) of points in this packet
