@@ -311,23 +311,23 @@ definitions:
     fields:
         - dev_vin:
             type: s16
-            units: V * 1000
+            units: V / 1000
             desc: Device V_in
         - cpu_vint:
             type: s16
-            units: V * 1000
+            units: V / 1000
             desc: Processor V_int
         - cpu_vaux:
             type: s16
-            units: V * 1000
+            units: V / 1000
             desc: Processor V_aux
         - cpu_temperature:
             type: s16
-            units: degrees C * 100
+            units: degrees C / 100
             desc: Processor temperature
         - fe_temperature:
             type: s16
-            units: degrees C * 100
+            units: degrees C / 100
             desc: Frontend temperature (if available)
 
  - MSG_COMMAND_REQ:

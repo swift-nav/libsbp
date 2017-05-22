@@ -79,9 +79,9 @@ signal is in continuous track.
  * measured signal power.
  */
 typedef struct __attribute__((packed)) {
-  u8 state;    /**< Status of tracking channel */
-  sbp_gnss_signal_t sid;      /**< GNSS signal being tracked */
-  float cn0;      /**< Carrier-to-noise density [dB Hz] */
+  gnss_signal16_t sid;    /**< GNSS signal being tracked */
+  u8 fcn;    /**< Frequency channel number (GLONASS only) */
+  u8 cn0;    /**< Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
 } tracking_channel_state_t;
 
 
@@ -91,7 +91,7 @@ typedef struct __attribute__((packed)) {
  * channel states. It reports status and carrier-to-noise density
  * measurements for all tracked satellites.
  */
-#define SBP_MSG_TRACKING_STATE          0x0013
+#define SBP_MSG_TRACKING_STATE          0x0041
 typedef struct __attribute__((packed)) {
   tracking_channel_state_t states[0]; /**< Signal tracking channel state */
 } msg_tracking_state_t;
@@ -139,6 +139,27 @@ typedef struct __attribute__((packed)) {
 typedef struct __attribute__((packed)) {
   tracking_channel_state_dep_a_t states[0]; /**< Satellite tracking channel state */
 } msg_tracking_state_dep_a_t;
+
+
+/** Deprecated.
+ *
+* Deprecated.
+ */
+typedef struct __attribute__((packed)) {
+  u8 state;    /**< Status of tracking channel */
+  sbp_gnss_signal_t sid;      /**< GNSS signal being tracked */
+  float cn0;      /**< Carrier-to-noise density [dB Hz] */
+} tracking_channel_state_dep_b_t;
+
+
+/** Deprecated.
+ *
+* Deprecated.
+ */
+#define SBP_MSG_TRACKING_STATE_DEP_B    0x0013
+typedef struct __attribute__((packed)) {
+  tracking_channel_state_dep_b_t states[0]; /**< Signal tracking channel state */
+} msg_tracking_state_dep_b_t;
 
 
 /** \} */

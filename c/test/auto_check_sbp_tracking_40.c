@@ -122,7 +122,7 @@ START_TEST( test_auto_check_sbp_tracking_40 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_tracking_state_t* msg = ( msg_tracking_state_t *)((void *)last_msg + 6);
+    msg_tracking_state_dep_b_t* msg = ( msg_tracking_state_dep_b_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->states[0].state == 1, "incorrect value for states[0].state, expected 1, is %d", msg->states[0].state);
@@ -217,7 +217,7 @@ START_TEST( test_auto_check_sbp_tracking_40 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_tracking_state_t* msg = ( msg_tracking_state_t *)((void *)last_msg + 6);
+    msg_tracking_state_dep_b_t* msg = ( msg_tracking_state_dep_b_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->states[0].state == 1, "incorrect value for states[0].state, expected 1, is %d", msg->states[0].state);
@@ -312,7 +312,7 @@ START_TEST( test_auto_check_sbp_tracking_40 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_tracking_state_t* msg = ( msg_tracking_state_t *)((void *)last_msg + 6);
+    msg_tracking_state_dep_b_t* msg = ( msg_tracking_state_dep_b_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->states[0].state == 1, "incorrect value for states[0].state, expected 1, is %d", msg->states[0].state);
@@ -407,7 +407,7 @@ START_TEST( test_auto_check_sbp_tracking_40 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_tracking_state_t* msg = ( msg_tracking_state_t *)((void *)last_msg + 6);
+    msg_tracking_state_dep_b_t* msg = ( msg_tracking_state_dep_b_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->states[0].state == 1, "incorrect value for states[0].state, expected 1, is %d", msg->states[0].state);
@@ -502,7 +502,7 @@ START_TEST( test_auto_check_sbp_tracking_40 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_tracking_state_t* msg = ( msg_tracking_state_t *)((void *)last_msg + 6);
+    msg_tracking_state_dep_b_t* msg = ( msg_tracking_state_dep_b_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->states[0].state == 1, "incorrect value for states[0].state, expected 1, is %d", msg->states[0].state);

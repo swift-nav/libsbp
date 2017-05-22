@@ -74,7 +74,7 @@ tests:
           sat: 0
         state: 0
     module: sbp.tracking
-    name: MsgTrackingState
+    name: MsgTrackingStateDepB
   msg_type: '0x13'
   raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 39.24782180786133,
     "sid": {"code": 0, "reserved": 0, "sat": 202}}, {"state": 1, "cn0": 36.09756088256836,
@@ -168,7 +168,7 @@ tests:
           sat: 0
         state: 0
     module: sbp.tracking
-    name: MsgTrackingState
+    name: MsgTrackingStateDepB
   msg_type: '0x13'
   raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 38.994117736816406,
     "sid": {"code": 0, "reserved": 0, "sat": 202}}, {"state": 1, "cn0": 34.889801025390625,
@@ -262,7 +262,7 @@ tests:
           sat: 0
         state: 0
     module: sbp.tracking
-    name: MsgTrackingState
+    name: MsgTrackingStateDepB
   msg_type: '0x13'
   raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 38.95457077026367,
     "sid": {"code": 0, "reserved": 0, "sat": 202}}, {"state": 1, "cn0": 35.813316345214844,
@@ -356,7 +356,7 @@ tests:
           sat: 0
         state: 0
     module: sbp.tracking
-    name: MsgTrackingState
+    name: MsgTrackingStateDepB
   msg_type: '0x13'
   raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 39.369598388671875,
     "sid": {"code": 0, "reserved": 0, "sat": 202}}, {"state": 1, "cn0": 36.52173614501953,
@@ -450,7 +450,7 @@ tests:
           sat: 0
         state: 0
     module: sbp.tracking
-    name: MsgTrackingState
+    name: MsgTrackingStateDepB
   msg_type: '0x13'
   raw_json: '{"sender": 55286, "msg_type": 19, "states": [{"state": 1, "cn0": 39.70351791381836,
     "sid": {"code": 0, "reserved": 0, "sat": 202}}, {"state": 1, "cn0": 36.52388381958008,
