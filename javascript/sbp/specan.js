@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml//specan.yaml with generate.py.
+ * Automatically generated from piksi/yaml/swiftnav/sbp/specan.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:

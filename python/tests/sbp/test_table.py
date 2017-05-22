@@ -13,6 +13,7 @@ from sbp.msg import SBP
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
 from sbp import acquisition as acq
+from sbp import specan as specan
 from sbp import bootload as boot
 from sbp import file_io as file_io
 from sbp import flash as flash
@@ -37,7 +38,7 @@ def test_table_count():
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 113
+  number_of_messages = 114
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_table_unqiue_count():
@@ -45,6 +46,7 @@ def test_table_unqiue_count():
   Test number of messages in packages equals total number of messages.
   """
   number_of_messages = (len(acq.msg_classes)
+                        + len(specan.msg_classes)
                         + len(boot.msg_classes)
                         + len(file_io.msg_classes)
                         + len(flash.msg_classes)

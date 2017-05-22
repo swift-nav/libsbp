@@ -11,7 +11,7 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml//specan.yaml
+ * Automatically generated from yaml/swiftnav/sbp/specan.yaml
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
@@ -24,6 +24,7 @@
 #define LIBSBP_SPECAN_MESSAGES_H
 
 #include "common.h"
+#include "gnss.h"
 
 
 /** Spectrum analyzer

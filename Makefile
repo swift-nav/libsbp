@@ -53,7 +53,7 @@ help:
 	@echo "  test      to run all tests"
 	@echo
 
-all: deps-generator c python javascript java haskell docs
+all: deps-generator c python javascript java haskell
 docs: verify-prereq-docs deps-generator pdf html
 
 c:          deps-c          gen-c          test-c

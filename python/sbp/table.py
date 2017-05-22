@@ -16,6 +16,7 @@ Single dispatch of available SBP messages, keyed by msg_type.
 
 from construct.core import FieldError
 from . import acquisition as acq
+from . import specan as specan
 from . import bootload as boot
 from . import file_io as file_io
 from . import flash as flash
@@ -33,6 +34,7 @@ from . import ndb as ndb
 import warnings
 
 _SBP_TABLE = dict(acq.msg_classes.items()
+                  + specan.msg_classes.items()
                   + boot.msg_classes.items()
                   + file_io.msg_classes.items()
                   + flash.msg_classes.items()
