@@ -14,6 +14,7 @@ stable: True
 include:
   # types.yaml defines common primitives used in the spec.
   - types.yaml
+  - gnss.yaml
 
 # The definitions in a package can contain both SBP messages and
 # struct definitions.

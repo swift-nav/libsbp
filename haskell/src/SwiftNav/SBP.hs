@@ -24,6 +24,7 @@ module SwiftNav.SBP
   , module SwiftNav.SBP.Observation
   , module SwiftNav.SBP.Piksi
   , module SwiftNav.SBP.Settings
+  , module SwiftNav.SBP.Specan
   , module SwiftNav.SBP.System
   , module SwiftNav.SBP.Tracking
   , module SwiftNav.SBP.User
@@ -47,6 +48,7 @@ import SwiftNav.SBP.Ndb
 import SwiftNav.SBP.Observation
 import SwiftNav.SBP.Piksi
 import SwiftNav.SBP.Settings
+import SwiftNav.SBP.Specan
 import SwiftNav.SBP.System
 import SwiftNav.SBP.Tracking
 import SwiftNav.SBP.User
@@ -150,6 +152,7 @@ data SBPMsg =
    | SBPMsgSettingsRegister MsgSettingsRegister Msg
    | SBPMsgSettingsSave MsgSettingsSave Msg
    | SBPMsgSettingsWrite MsgSettingsWrite Msg
+   | SBPMsgSpecan MsgSpecan Msg
    | SBPMsgStartup MsgStartup Msg
    | SBPMsgStmFlashLockSector MsgStmFlashLockSector Msg
    | SBPMsgStmFlashUnlockSector MsgStmFlashUnlockSector Msg
@@ -276,6 +279,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSettingsRegister = SBPMsgSettingsRegister (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgSettingsSave = SBPMsgSettingsSave (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgSettingsWrite = SBPMsgSettingsWrite (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgSpecan = SBPMsgSpecan (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgStmFlashLockSector = SBPMsgStmFlashLockSector (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector (decode (fromStrict _msgSBPPayload)) m
@@ -394,6 +398,7 @@ instance Binary SBPMsg where
       encode' (SBPMsgSettingsRegister _ m) = put m
       encode' (SBPMsgSettingsSave _ m) = put m
       encode' (SBPMsgSettingsWrite _ m) = put m
+      encode' (SBPMsgSpecan _ m) = put m
       encode' (SBPMsgStartup _ m) = put m
       encode' (SBPMsgStmFlashLockSector _ m) = put m
       encode' (SBPMsgStmFlashUnlockSector _ m) = put m
@@ -515,6 +520,7 @@ instance FromJSON SBPMsg where
         | msgType == msgSettingsRegister = SBPMsgSettingsRegister <$> parseJSON obj <*> parseJSON obj
         | msgType == msgSettingsSave = SBPMsgSettingsSave <$> parseJSON obj <*> parseJSON obj
         | msgType == msgSettingsWrite = SBPMsgSettingsWrite <$> parseJSON obj <*> parseJSON obj
+        | msgType == msgSpecan = SBPMsgSpecan <$> parseJSON obj <*> parseJSON obj
         | msgType == msgStartup = SBPMsgStartup <$> parseJSON obj <*> parseJSON obj
         | msgType == msgStmFlashLockSector = SBPMsgStmFlashLockSector <$> parseJSON obj <*> parseJSON obj
         | msgType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector <$> parseJSON obj <*> parseJSON obj
@@ -638,6 +644,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSettingsRegister n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgSettingsSave n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgSettingsWrite n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgSpecan n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgStartup n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgStmFlashLockSector n m) = toJSON n `mergeValues` toJSON m
   toJSON (SBPMsgStmFlashUnlockSector n m) = toJSON n `mergeValues` toJSON m
@@ -755,6 +762,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSettingsRegister n m) = SBPMsgSettingsRegister n <$> f m
   msg f (SBPMsgSettingsSave n m) = SBPMsgSettingsSave n <$> f m
   msg f (SBPMsgSettingsWrite n m) = SBPMsgSettingsWrite n <$> f m
+  msg f (SBPMsgSpecan n m) = SBPMsgSpecan n <$> f m
   msg f (SBPMsgStartup n m) = SBPMsgStartup n <$> f m
   msg f (SBPMsgStmFlashLockSector n m) = SBPMsgStmFlashLockSector n <$> f m
   msg f (SBPMsgStmFlashUnlockSector n m) = SBPMsgStmFlashUnlockSector n <$> f m
