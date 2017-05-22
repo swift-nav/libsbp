@@ -301,6 +301,26 @@ typedef struct __attribute__((packed)) {
 } msg_network_state_resp_t;
 
 
+/** Spectrum analyzer
+ *
+ * Spectrum analyzer packet.
+ */
+#define SBP_MSG_SPECAN             0x0050
+typedef struct __attribute__((packed)) {
+  sbp_gps_time_t t;                  /**< Receiver time of this observation */
+  float freq_ref;           /**< Reference frequency of this packet
+ */
+  float freq_step;          /**< Frequency step of points in this packet
+ */
+  float amplitude_ref;      /**< Reference amplitude of this packet
+ */
+  float amplitude_unit;     /**< Amplitude unit value of points in this packet
+ */
+  u8 amplitude_value[0]; /**< Amplitude values (in the above units) of points in this packet
+ */
+} msg_specan_t;
+
+
 /** \} */
 
 #endif /* LIBSBP_PIKSI_MESSAGES_H */
