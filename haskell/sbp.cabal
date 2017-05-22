@@ -38,7 +38,6 @@ library
                      , SwiftNav.SBP.Observation
                      , SwiftNav.SBP.Piksi
                      , SwiftNav.SBP.Settings
-                     , SwiftNav.SBP.Specan
                      , SwiftNav.SBP.System
                      , SwiftNav.SBP.Tracking
                      , SwiftNav.SBP.User

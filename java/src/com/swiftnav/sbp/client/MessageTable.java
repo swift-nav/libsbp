@@ -83,6 +83,7 @@ import com.swiftnav.sbp.piksi.MsgCommandReq;
 import com.swiftnav.sbp.piksi.MsgCommandResp;
 import com.swiftnav.sbp.piksi.MsgNetworkStateReq;
 import com.swiftnav.sbp.piksi.MsgNetworkStateResp;
+import com.swiftnav.sbp.piksi.MsgSpecan;
 import com.swiftnav.sbp.tracking.MsgTrackingStateDetailed;
 import com.swiftnav.sbp.tracking.MsgTrackingState;
 import com.swiftnav.sbp.tracking.MsgTrackingIq;
@@ -113,7 +114,6 @@ import com.swiftnav.sbp.observation.MsgAlmanacGlo;
 import com.swiftnav.sbp.observation.MsgFcnsGlo;
 import com.swiftnav.sbp.imu.MsgImuRaw;
 import com.swiftnav.sbp.imu.MsgImuAux;
-import com.swiftnav.sbp.specan.MsgSpecan;
 import com.swiftnav.sbp.flash.MsgFlashProgram;
 import com.swiftnav.sbp.flash.MsgFlashDone;
 import com.swiftnav.sbp.flash.MsgFlashReadReq;
@@ -269,6 +269,8 @@ final class MessageTable {
                 return new MsgNetworkStateReq(msg);
             case MsgNetworkStateResp.TYPE:
                 return new MsgNetworkStateResp(msg);
+            case MsgSpecan.TYPE:
+                return new MsgSpecan(msg);
             case MsgTrackingStateDetailed.TYPE:
                 return new MsgTrackingStateDetailed(msg);
             case MsgTrackingState.TYPE:
@@ -329,8 +331,6 @@ final class MessageTable {
                 return new MsgImuRaw(msg);
             case MsgImuAux.TYPE:
                 return new MsgImuAux(msg);
-            case MsgSpecan.TYPE:
-                return new MsgSpecan(msg);
             case MsgFlashProgram.TYPE:
                 return new MsgFlashProgram(msg);
             case MsgFlashDone.TYPE:

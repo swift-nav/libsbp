@@ -24,7 +24,6 @@ module SwiftNav.SBP
   , module SwiftNav.SBP.Observation
   , module SwiftNav.SBP.Piksi
   , module SwiftNav.SBP.Settings
-  , module SwiftNav.SBP.Specan
   , module SwiftNav.SBP.System
   , module SwiftNav.SBP.Tracking
   , module SwiftNav.SBP.User
@@ -48,7 +47,6 @@ import SwiftNav.SBP.Ndb
 import SwiftNav.SBP.Observation
 import SwiftNav.SBP.Piksi
 import SwiftNav.SBP.Settings
-import SwiftNav.SBP.Specan
 import SwiftNav.SBP.System
 import SwiftNav.SBP.Tracking
 import SwiftNav.SBP.User
