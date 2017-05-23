@@ -13,8 +13,16 @@
 #ifndef LIBSBP_EDC_H
 #define LIBSBP_EDC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "common.h"
 
 u16 crc16_ccitt(const u8 *buf, u32 len, u16 crc);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LIBSBP_EDC_H */
