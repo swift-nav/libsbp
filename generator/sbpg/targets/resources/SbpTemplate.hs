@@ -9,7 +9,7 @@
 -- SBP message containers.
 
 module SwiftNav.SBP
-  ( SBPMsg (..)
+  ( module SwiftNav.SBP
   , module SwiftNav.SBP.Types
   ((*- for m in modules *))
   , module (((m)))
