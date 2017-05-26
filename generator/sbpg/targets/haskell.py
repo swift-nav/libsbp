@@ -20,6 +20,7 @@ from sbpg.targets.templating import *
 MESSAGES_TEMPLATE_NAME = "SbpMessagesTemplate.hs"
 CABAL_TEMPLATE_NAME = "sbp-template.cabal"
 SBP_TEMPLATE_NAME = "SbpTemplate.hs"
+MESSAGE_TEMPLATE_NAME = "SbpMessageTemplate.hs"
 
 CONSTRUCT_CODE = {
   'u8': 'Word8',
@@ -205,9 +206,14 @@ def render_sbp(output_dir, package_specs):
     for m in package_spec.definitions:
       if m.static and m.sbp_id:
         msgs.append(to_data(m.identifier))
-  #print sorted(msgs)
-  destination_filename = "%s/src/SwiftNav/SBP.hs" % output_dir
+  destination_filename = "%s/src/SwiftNav/SBP/Msg.hs" % output_dir
   py_template = JENV.get_template(SBP_TEMPLATE_NAME)
+  with open(destination_filename, 'w') as f:
+    f.write(py_template.render(modules=sorted(modules),
+                               pkgs=package_specs,
+                               msgs=sorted(msgs)))
+  destination_filename = "%s/src/SwiftNav/SBP.hs" % output_dir
+  py_template = JENV.get_template(MESSAGE_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(modules=sorted(modules),
                                pkgs=package_specs,

@@ -1,5 +1,5 @@
 -- |
--- Module:      SwiftNav.SBP
+-- Module:      SwiftNav.SBP.Msg
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
 -- License:     LGPL-3
 -- Maintainer:  Mark Fine <dev@swiftnav.com>
@@ -8,13 +8,7 @@
 --
 -- SBP message containers.
 
-module SwiftNav.SBP
-  ( module SwiftNav.SBP
-  , module SwiftNav.SBP.Types
-  ((*- for m in modules *))
-  , module (((m)))
-  ((*- endfor *))
-  ) where
+module SwiftNav.SBP.Msg where
 
 import BasicPrelude             hiding (lookup)
 import Control.Lens             hiding ((.=))

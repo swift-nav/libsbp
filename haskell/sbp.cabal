@@ -25,6 +25,7 @@ source-repository head
 library
   exposed-modules:     SwiftNav.CRC16
                      , SwiftNav.SBP
+                     , SwiftNav.SBP.Msg
                      , SwiftNav.SBP.Acquisition
                      , SwiftNav.SBP.Bootload
                      , SwiftNav.SBP.ExtEvents
