@@ -652,7 +652,7 @@ MsgEphemerisSbas.prototype.fieldSpec.push(['a_gf0', 'writeDoubleLE', 8]);
 MsgEphemerisSbas.prototype.fieldSpec.push(['a_gf1', 'writeDoubleLE', 8]);
 
 /**
- * SBP class for message MSG_EPHEMERIS_GLO (0x0085).
+ * SBP class for message MSG_EPHEMERIS_GLO_DEP_B (0x0085).
  *
  * The ephemeris message returns a set of satellite orbit parameters that is used
  * to calculate GLO satellite position, velocity, and clock offset. Please see the
@@ -669,6 +669,53 @@ MsgEphemerisSbas.prototype.fieldSpec.push(['a_gf1', 'writeDoubleLE', 8]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
+var MsgEphemerisGloDepB = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_EPHEMERIS_GLO_DEP_B";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgEphemerisGloDepB.prototype = Object.create(SBP.prototype);
+MsgEphemerisGloDepB.prototype.messageType = "MSG_EPHEMERIS_GLO_DEP_B";
+MsgEphemerisGloDepB.prototype.msg_type = 0x0085;
+MsgEphemerisGloDepB.prototype.constructor = MsgEphemerisGloDepB;
+MsgEphemerisGloDepB.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('common', { type: EphemerisCommonContent.prototype.parser })
+  .doublele('gamma')
+  .doublele('tau')
+  .array('pos', { length: 3, type: 'doublele' })
+  .array('vel', { length: 3, type: 'doublele' })
+  .array('acc', { length: 3, type: 'doublele' });
+MsgEphemerisGloDepB.prototype.fieldSpec = [];
+MsgEphemerisGloDepB.prototype.fieldSpec.push(['common', EphemerisCommonContent.prototype.fieldSpec]);
+MsgEphemerisGloDepB.prototype.fieldSpec.push(['gamma', 'writeDoubleLE', 8]);
+MsgEphemerisGloDepB.prototype.fieldSpec.push(['tau', 'writeDoubleLE', 8]);
+MsgEphemerisGloDepB.prototype.fieldSpec.push(['pos', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisGloDepB.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisGloDepB.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+
+/**
+ * SBP class for message MSG_EPHEMERIS_GLO (0x0087).
+ *
+ * The ephemeris message returns a set of satellite orbit parameters that is used
+ * to calculate GLO satellite position, velocity, and clock offset. Please see the
+ * GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate information
+ * (ephemeris parameters)" for more details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field common EphemerisCommonContent Values common for all ephemeris types
+ * @field gamma number (float, 8 bytes) Relative deviation of predicted carrier frequency from nominal
+ * @field tau number (float, 8 bytes) Correction to the SV time
+ * @field d_tau number (float, 8 bytes) Equipment delay between L1 and L2
+ * @field pos array Position of the SV at tb in PZ-90.02 coordinates system
+ * @field vel array Velocity vector of the SV at tb in PZ-90.02 coordinates system
+ * @field acc array Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+ * @field fcn number (unsigned 8-bit int, 1 byte) Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
 var MsgEphemerisGlo = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_GLO";
@@ -678,23 +725,27 @@ var MsgEphemerisGlo = function (sbp, fields) {
 };
 MsgEphemerisGlo.prototype = Object.create(SBP.prototype);
 MsgEphemerisGlo.prototype.messageType = "MSG_EPHEMERIS_GLO";
-MsgEphemerisGlo.prototype.msg_type = 0x0085;
+MsgEphemerisGlo.prototype.msg_type = 0x0087;
 MsgEphemerisGlo.prototype.constructor = MsgEphemerisGlo;
 MsgEphemerisGlo.prototype.parser = new Parser()
   .endianess('little')
   .nest('common', { type: EphemerisCommonContent.prototype.parser })
   .doublele('gamma')
   .doublele('tau')
+  .doublele('d_tau')
   .array('pos', { length: 3, type: 'doublele' })
   .array('vel', { length: 3, type: 'doublele' })
-  .array('acc', { length: 3, type: 'doublele' });
+  .array('acc', { length: 3, type: 'doublele' })
+  .uint8('fcn');
 MsgEphemerisGlo.prototype.fieldSpec = [];
 MsgEphemerisGlo.prototype.fieldSpec.push(['common', EphemerisCommonContent.prototype.fieldSpec]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['gamma', 'writeDoubleLE', 8]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['tau', 'writeDoubleLE', 8]);
+MsgEphemerisGlo.prototype.fieldSpec.push(['d_tau', 'writeDoubleLE', 8]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['pos', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisGlo.prototype.fieldSpec.push(['fcn', 'writeUInt8', 1]);
 
 /**
  * SBP class for message MSG_EPHEMERIS_DEP_D (0x0080).
@@ -1794,7 +1845,9 @@ module.exports = {
   MsgEphemerisGloDepA: MsgEphemerisGloDepA,
   0x0084: MsgEphemerisSbas,
   MsgEphemerisSbas: MsgEphemerisSbas,
-  0x0085: MsgEphemerisGlo,
+  0x0085: MsgEphemerisGloDepB,
+  MsgEphemerisGloDepB: MsgEphemerisGloDepB,
+  0x0087: MsgEphemerisGlo,
   MsgEphemerisGlo: MsgEphemerisGlo,
   0x0080: MsgEphemerisDepD,
   MsgEphemerisDepD: MsgEphemerisDepD,
