@@ -76,7 +76,9 @@ class PySerialDriver(BaseDriver):
     """
     try:
       return self.handle.read(size)
-    except (OSError, serial.SerialException):
+    except (OSError, serial.SerialException) as e:
+      if e.message.find('Interrupted system call') >= 0:
+        return ''
       print
       print "Piksi disconnected"
       print
