@@ -100,6 +100,7 @@ deps-python: verify-prereq-python
 deps-javascript: verify-prereq-javascript
 	$(call announce-begin,"Installing Javascript dependencies")
 	cd $(SWIFTNAV_ROOT); npm install
+	cd $(SWIFTNAV_ROOT); npm run webpack
 	$(call announce-end,"Finished installing Javascript dependencies")
 
 deps-java: verify-prereq-java
