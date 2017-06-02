@@ -33,11 +33,12 @@ Parser.prototype.uint64 = function uint64 (fieldName, options) {
 Parser.prototype.compile = function() {
   var compiledCode = this.getCode();
   this.compiled = function (buffer, callback, constructorFn) {
-    var _require = function (x) { return null; };
+    // Need to statically provide dependencies for webpack.
+    var _require = function (x) { if (x === 'cuint') return require('cuint'); throw new Error('Unknown module required: ' + x); };
 
     // Needed for browser support. Webpack will polyfill Buffer, but we need it to
     // be accessible in this eval'd context.
-    if (typeof window != null && window.Buffer == null) window.Buffer = Buffer;
+    if (typeof window !== 'undefined' && typeof window.Buffer === 'undefined') window.Buffer = Buffer;
 
     return (new Function('buffer', 'callback', 'constructorFn', 'require', compiledCode)).call(this, buffer, callback, constructorFn, _require);
   };
