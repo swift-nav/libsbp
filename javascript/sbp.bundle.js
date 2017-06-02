@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 36);
+/******/ 	return __webpack_require__(__webpack_require__.s = 35);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -296,8 +296,8 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.UINT32 = __webpack_require__(40)
-exports.UINT64 = __webpack_require__(41)
+exports.UINT32 = __webpack_require__(39)
+exports.UINT64 = __webpack_require__(40)
 
 /***/ }),
 /* 2 */
@@ -314,7 +314,7 @@ exports.UINT64 = __webpack_require__(41)
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-var assert = __webpack_require__(37);
+var assert = __webpack_require__(36);
 var Int64 = __webpack_require__(3);
 var UInt64 = __webpack_require__(1).UINT64;
 
@@ -761,7 +761,7 @@ Int64.prototype = {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/**
+/* WEBPACK VAR INJECTION */(function(Buffer) {/**
  * Copyright (C) 2016 Swift Navigation Inc.
  * Contact: Joshua Gross <josh@swift-nav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -796,12 +796,19 @@ Parser.prototype.uint64 = function uint64 (fieldName, options) {
 Parser.prototype.compile = function() {
   var compiledCode = this.getCode();
   this.compiled = function (buffer, callback, constructorFn) {
-    return (new Function('buffer', 'callback', 'constructorFn', 'require', compiledCode)).call(this, buffer, callback, constructorFn, !(function webpackMissingModule() { var e = new Error("Cannot find module \".\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+    var _require = function (x) { return null; };
+
+    // Needed for browser support. Webpack will polyfill Buffer, but we need it to
+    // be accessible in this eval'd context.
+    if (typeof window != null && window.Buffer == null) window.Buffer = Buffer;
+
+    return (new Function('buffer', 'callback', 'constructorFn', 'require', compiledCode)).call(this, buffer, callback, constructorFn, _require);
   };
 };
 
 module.exports = Parser;
 
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer))
 
 /***/ }),
 /* 5 */
@@ -818,8 +825,8 @@ module.exports = Parser;
 
 
 
-var base64 = __webpack_require__(38)
-var ieee754 = __webpack_require__(42)
+var base64 = __webpack_require__(37)
+var ieee754 = __webpack_require__(41)
 var isArray = __webpack_require__(17)
 
 exports.Buffer = Buffer
@@ -3072,11 +3079,11 @@ var EE = __webpack_require__(12).EventEmitter;
 var inherits = __webpack_require__(8);
 
 inherits(Stream, EE);
-Stream.Readable = __webpack_require__(45);
-Stream.Writable = __webpack_require__(47);
-Stream.Duplex = __webpack_require__(43);
-Stream.Transform = __webpack_require__(46);
-Stream.PassThrough = __webpack_require__(44);
+Stream.Readable = __webpack_require__(44);
+Stream.Writable = __webpack_require__(46);
+Stream.Duplex = __webpack_require__(42);
+Stream.Transform = __webpack_require__(45);
+Stream.PassThrough = __webpack_require__(43);
 
 // Backwards-compat with node 0.4.x
 Stream.Stream = Stream;
@@ -3753,7 +3760,7 @@ util.inherits = __webpack_require__(8);
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(50)
+  deprecate: __webpack_require__(49)
 };
 /*</replacement>*/
 
@@ -4240,7 +4247,7 @@ function CorkedRequest(state) {
     }
   };
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(49).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(48).setImmediate))
 
 /***/ }),
 /* 16 */
@@ -4250,7 +4257,7 @@ function CorkedRequest(state) {
 // Globals
 //========================================================================================
 
-var Context = __webpack_require__(39).Context;
+var Context = __webpack_require__(38).Context;
 
 var PRIMITIVE_TYPES = {
     'UInt8'    : 1,
@@ -4914,7 +4921,7 @@ util.inherits = __webpack_require__(8);
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(54);
+var debugUtil = __webpack_require__(53);
 var debug = undefined;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -12062,18 +12069,6 @@ module.exports = function(module) {
 
 /***/ }),
 /* 35 */
-/***/ (function(module, exports) {
-
-function webpackEmptyContext(req) {
-	throw new Error("Cannot find module '" + req + "'.");
-}
-webpackEmptyContext.keys = function() { return []; };
-webpackEmptyContext.resolve = webpackEmptyContext;
-module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 35;
-
-/***/ }),
-/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer, module, global) {/**
@@ -12405,7 +12400,7 @@ exposeGlobally(module.exports);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer, __webpack_require__(34)(module), __webpack_require__(7)))
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12477,7 +12472,7 @@ function isBuffer(b) {
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var util = __webpack_require__(53);
+var util = __webpack_require__(52);
 var hasOwn = Object.prototype.hasOwnProperty;
 var pSlice = Array.prototype.slice;
 var functionsHaveNames = (function () {
@@ -12903,7 +12898,7 @@ var objectKeys = Object.keys || function (obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13024,7 +13019,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports) {
 
 //========================================================================================
@@ -13129,7 +13124,7 @@ exports.Context = Context;
 
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -13587,7 +13582,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -14242,7 +14237,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -14332,21 +14327,21 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(6)
 
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(18)
 
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Stream = (function (){
@@ -14364,21 +14359,21 @@ exports.PassThrough = __webpack_require__(18);
 
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(14)
 
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(15)
 
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -14571,7 +14566,7 @@ module.exports = __webpack_require__(15)
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(9)))
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -14624,13 +14619,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(48);
+__webpack_require__(47);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -14704,7 +14699,7 @@ function config (name) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports) {
 
 if (typeof Object.create === 'function') {
@@ -14733,7 +14728,7 @@ if (typeof Object.create === 'function') {
 
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports) {
 
 module.exports = function isBuffer(arg) {
@@ -14744,7 +14739,7 @@ module.exports = function isBuffer(arg) {
 }
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -15272,7 +15267,7 @@ function isPrimitive(arg) {
 }
 exports.isPrimitive = isPrimitive;
 
-exports.isBuffer = __webpack_require__(52);
+exports.isBuffer = __webpack_require__(51);
 
 function objectToString(o) {
   return Object.prototype.toString.call(o);
@@ -15316,7 +15311,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = __webpack_require__(51);
+exports.inherits = __webpack_require__(50);
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -15337,7 +15332,7 @@ function hasOwnProperty(obj, prop) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(9)))
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
