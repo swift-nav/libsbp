@@ -682,10 +682,58 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisSbas_"
              ''MsgEphemerisSbas)
 $(makeLenses ''MsgEphemerisSbas)
 
-msgEphemerisGlo :: Word16
-msgEphemerisGlo = 0x0085
+msgEphemerisGloDepB :: Word16
+msgEphemerisGloDepB = 0x0085
 
--- | SBP class for message MSG_EPHEMERIS_GLO (0x0085).
+-- | SBP class for message MSG_EPHEMERIS_GLO_DEP_B (0x0085).
+--
+-- The ephemeris message returns a set of satellite orbit parameters that is
+-- used to calculate GLO satellite position, velocity, and clock offset. Please
+-- see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
+-- information (ephemeris parameters)" for more details.
+data MsgEphemerisGloDepB = MsgEphemerisGloDepB
+  { _msgEphemerisGloDepB_common :: EphemerisCommonContent
+    -- ^ Values common for all ephemeris types
+  , _msgEphemerisGloDepB_gamma :: Double
+    -- ^ Relative deviation of predicted carrier frequency from nominal
+  , _msgEphemerisGloDepB_tau  :: Double
+    -- ^ Correction to the SV time
+  , _msgEphemerisGloDepB_pos  :: [Double]
+    -- ^ Position of the SV at tb in PZ-90.02 coordinates system
+  , _msgEphemerisGloDepB_vel  :: [Double]
+    -- ^ Velocity vector of the SV at tb in PZ-90.02 coordinates system
+  , _msgEphemerisGloDepB_acc  :: [Double]
+    -- ^ Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgEphemerisGloDepB where
+  get = do
+    _msgEphemerisGloDepB_common <- get
+    _msgEphemerisGloDepB_gamma <- getFloat64le
+    _msgEphemerisGloDepB_tau <- getFloat64le
+    _msgEphemerisGloDepB_pos <- replicateM 3 getFloat64le
+    _msgEphemerisGloDepB_vel <- replicateM 3 getFloat64le
+    _msgEphemerisGloDepB_acc <- replicateM 3 getFloat64le
+    return MsgEphemerisGloDepB {..}
+
+  put MsgEphemerisGloDepB {..} = do
+    put _msgEphemerisGloDepB_common
+    putFloat64le _msgEphemerisGloDepB_gamma
+    putFloat64le _msgEphemerisGloDepB_tau
+    mapM_ putFloat64le _msgEphemerisGloDepB_pos
+    mapM_ putFloat64le _msgEphemerisGloDepB_vel
+    mapM_ putFloat64le _msgEphemerisGloDepB_acc
+
+$(deriveSBP 'msgEphemerisGloDepB ''MsgEphemerisGloDepB)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGloDepB_" . P.stripPrefix "_msgEphemerisGloDepB_"}
+             ''MsgEphemerisGloDepB)
+$(makeLenses ''MsgEphemerisGloDepB)
+
+msgEphemerisGlo :: Word16
+msgEphemerisGlo = 0x0087
+
+-- | SBP class for message MSG_EPHEMERIS_GLO (0x0087).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
 -- used to calculate GLO satellite position, velocity, and clock offset. Please
@@ -698,12 +746,16 @@ data MsgEphemerisGlo = MsgEphemerisGlo
     -- ^ Relative deviation of predicted carrier frequency from nominal
   , _msgEphemerisGlo_tau  :: Double
     -- ^ Correction to the SV time
+  , _msgEphemerisGlo_d_tau :: Double
+    -- ^ Equipment delay between L1 and L2
   , _msgEphemerisGlo_pos  :: [Double]
     -- ^ Position of the SV at tb in PZ-90.02 coordinates system
   , _msgEphemerisGlo_vel  :: [Double]
     -- ^ Velocity vector of the SV at tb in PZ-90.02 coordinates system
   , _msgEphemerisGlo_acc  :: [Double]
     -- ^ Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+  , _msgEphemerisGlo_fcn  :: Word8
+    -- ^ Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgEphemerisGlo where
@@ -711,18 +763,22 @@ instance Binary MsgEphemerisGlo where
     _msgEphemerisGlo_common <- get
     _msgEphemerisGlo_gamma <- getFloat64le
     _msgEphemerisGlo_tau <- getFloat64le
+    _msgEphemerisGlo_d_tau <- getFloat64le
     _msgEphemerisGlo_pos <- replicateM 3 getFloat64le
     _msgEphemerisGlo_vel <- replicateM 3 getFloat64le
     _msgEphemerisGlo_acc <- replicateM 3 getFloat64le
+    _msgEphemerisGlo_fcn <- getWord8
     return MsgEphemerisGlo {..}
 
   put MsgEphemerisGlo {..} = do
     put _msgEphemerisGlo_common
     putFloat64le _msgEphemerisGlo_gamma
     putFloat64le _msgEphemerisGlo_tau
+    putFloat64le _msgEphemerisGlo_d_tau
     mapM_ putFloat64le _msgEphemerisGlo_pos
     mapM_ putFloat64le _msgEphemerisGlo_vel
     mapM_ putFloat64le _msgEphemerisGlo_acc
+    putWord8 _msgEphemerisGlo_fcn
 
 $(deriveSBP 'msgEphemerisGlo ''MsgEphemerisGlo)
 
