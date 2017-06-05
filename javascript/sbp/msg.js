@@ -303,3 +303,23 @@ module.exports = {
     stream.on('data', processData);
   }
 };
+
+/**
+ * For frontend code: expose SBP object in a global context.
+ * This is a noop in a non-browser context.
+ *
+ * Cribbed from Benchmark.js (MIT Licensed).
+ */
+function exposeGlobally (x) {
+  var objectTypes = { 'function': true, 'object': true };
+  var root = (objectTypes[typeof window] && window) || this;
+  var freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports;
+  var freeModule = objectTypes[typeof module] && module && !module.nodeType && module;
+  var freeGlobal = freeExports && freeModule && typeof global == 'object' && global;
+  if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal || freeGlobal.self === freeGlobal)) {
+    root = freeGlobal;
+  }
+  root.SBP = x;
+}
+
+exposeGlobally(module.exports);
