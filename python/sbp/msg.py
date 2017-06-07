@@ -15,6 +15,9 @@ import json
 import struct
 
 import construct
+import numpy as np
+
+from sbp.utils import walk_json_dict
 
 SBP_PREAMBLE = 0x55
 
@@ -22,7 +25,7 @@ SBP_PREAMBLE = 0x55
 # device.
 SENDER_ID = 0x42
 
-crc16_tab = [0x0000,0x1021,0x2042,0x3063,0x4084,0x50a5,0x60c6,0x70e7,
+crc16_tab = (0x0000,0x1021,0x2042,0x3063,0x4084,0x50a5,0x60c6,0x70e7,
              0x8108,0x9129,0xa14a,0xb16b,0xc18c,0xd1ad,0xe1ce,0xf1ef,
              0x1231,0x0210,0x3273,0x2252,0x52b5,0x4294,0x72f7,0x62d6,
              0x9339,0x8318,0xb37b,0xa35a,0xd3bd,0xc39c,0xf3ff,0xe3de,
@@ -53,7 +56,7 @@ crc16_tab = [0x0000,0x1021,0x2042,0x3063,0x4084,0x50a5,0x60c6,0x70e7,
              0xfd2e,0xed0f,0xdd6c,0xcd4d,0xbdaa,0xad8b,0x9de8,0x8dc9,
              0x7c26,0x6c07,0x5c64,0x4c45,0x3ca2,0x2c83,0x1ce0,0x0cc1,
              0xef1f,0xff3e,0xcf5d,0xdf7c,0xaf9b,0xbfba,0x8fd9,0x9ff8,
-             0x6e17,0x7e36,0x4e55,0x5e74,0x2e93,0x3eb2,0x0ed1,0x1ef0]
+             0x6e17,0x7e36,0x4e55,0x5e74,0x2e93,0x3eb2,0x0ed1,0x1ef0)
 
 def crc16(s, crc=0):
   """CRC16 implementation acording to CCITT standards.
@@ -63,6 +66,24 @@ def crc16(s, crc=0):
     crc = ((crc<<8)&0xFFFF) ^ crc16_tab[ ((crc>>8)&0xFF) ^ (ch&0xFF) ]
     crc &= 0xFFFF
   return crc
+
+
+TYPES_NP = {
+  'u8': 'u1',
+  'u16': 'u2',
+  'u32': 'u4',
+  'u64': 'u8',
+  's8': 'i1',
+  's16': 'i2',
+  's32': 'i4',
+  's64': 'i8',
+  'float': 'f4',
+  'double': 'f8',
+}
+
+
+TYPES_KEYS_NP = TYPES_NP.keys()
+
 
 class SBP(object):
   """Swift Binary Protocol container.
@@ -102,8 +123,10 @@ class SBP(object):
       elif self.__slots__ != other.__slots__:
         return False
       else:
-        return all(getattr(self, s) == getattr(other, s) for s in self.__slots__)
-    except AttributeError:
+        self_flat = walk_json_dict(self)
+        other_flat = walk_json_dict(other)
+        return self_flat == other_flat
+    except AttributeError as e:
       return False
 
   def __update(self):
@@ -135,9 +158,13 @@ class SBP(object):
     """Unpack and return a framed binary message.
 
     """
-    p = SBP._parser.parse(d)
-    assert p.preamble == SBP_PREAMBLE, "Invalid preamble 0x%x." % p.preamble
-    return SBP(p.msg_type, p.sender, p.length, p.payload, p.crc)
+    preamble, msg_type, sender, length =\
+      np.asscalar(np.ndarray(1, 'u1, u2, u2, u1', d))
+    payload_len = len(d) - 8
+    payload = np.ndarray((payload_len,), 'u1', d, 6).tobytes()
+    crc = np.asscalar(np.ndarray(1,'u2', d, 6 + payload_len)[0])
+    assert preamble == SBP_PREAMBLE, "Invalid preamble 0x%x." % preamble
+    return SBP(msg_type, sender, length, payload, crc)
 
   def copy(self):
     return copy.deepcopy(self)
@@ -147,6 +174,53 @@ class SBP(object):
          repr(self.payload), self.crc)
     fmt = "<SBP (preamble=0x%X, msg_type=0x%X, sender=%s, length=%d, payload=%s, crc=0x%X)>"
     return fmt % p
+
+  def _from_binary(self, d):
+    offset = 0
+    for t, s in self.__zips__:
+
+      # numpy dtype
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, offset)
+        offset += a.itemsize
+        res = a.item()
+
+      # array
+      elif t.startswith('array'):
+        # get array item and length
+        splits = t.split(':')
+        item = splits[1]
+        a_size = int(splits[2]) if len(splits) > 2 else None
+        res = []
+        is_np_type = item in TYPES_KEYS_NP
+        item = TYPES_NP[item] if is_np_type else self._get_embedded_type(item)
+
+        # iterate array items
+        while (a_size is None or a_size > 0) and offset < len(d):
+          if is_np_type:
+            a = np.ndarray(1, item, d, offset)
+            offset += a.itemsize
+            res.append(a.item())
+          else:
+            o = item()
+            offset += o.from_binary(d, offset)
+            res.append(o)
+          if a_size is not None:
+            a_size -= 1
+ 
+      # string
+      elif t.startswith('str'):
+        count = int(t.split(':')[1]) if ':' in t else -1
+        res = ''.join(chr(c) for c in np.frombuffer(d, 'u1', count, offset))
+        offset += len(res)
+        res = res.ljust(count, '\x00')  
+  
+      # custom embedded type       
+      else:
+        res = self._get_embedded_type(t)()
+        offset += res.from_binary(d, offset)
+
+      setattr(self, s, res)
 
   def to_binary(self):
     ret = struct.pack("<BHHB", SBP_PREAMBLE,
