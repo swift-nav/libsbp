@@ -16,8 +16,11 @@ Various structs shared between modules
 
 from construct import *
 import json
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/gnss.yaml with generate.py.
 # Please do not hand edit!
@@ -44,25 +47,41 @@ class GnssSignal16(object):
                'sat',
                'code',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.sat = kwargs.pop('sat')
-      self.code = kwargs.pop('code')
+  __zips__ = [
+              ('u8', 'sat'),
+              ('u8', 'code'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = GnssSignal16._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in GnssSignal16.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GnssSignal16.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return GnssSignal16.build(d)
+    except:
+      print traceback.print_exc()
     
 class GnssSignal(object):
   """GnssSignal.
@@ -93,26 +112,42 @@ Note: unlike GnssSignal16, GPS satellites are encoded as
                'code',
                'reserved',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.sat = kwargs.pop('sat')
-      self.code = kwargs.pop('code')
-      self.reserved = kwargs.pop('reserved')
+  __zips__ = [
+              ('u16', 'sat'),
+              ('u8', 'code'),
+              ('u8', 'reserved'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = GnssSignal._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in GnssSignal.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GnssSignal.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return GnssSignal.build(d)
+    except:
+      print traceback.print_exc()
     
 class GPSTime(object):
   """GPSTime.
@@ -137,25 +172,41 @@ transition.
                'tow',
                'wn',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.tow = kwargs.pop('tow')
-      self.wn = kwargs.pop('wn')
+  __zips__ = [
+              ('u32', 'tow'),
+              ('u16', 'wn'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = GPSTime._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in GPSTime.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GPSTime.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return GPSTime.build(d)
+    except:
+      print traceback.print_exc()
     
 class GPSTimeSec(object):
   """GPSTimeSec.
@@ -180,25 +231,41 @@ transition.
                'tow',
                'wn',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.tow = kwargs.pop('tow')
-      self.wn = kwargs.pop('wn')
+  __zips__ = [
+              ('u32', 'tow'),
+              ('u16', 'wn'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = GPSTimeSec._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in GPSTimeSec.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GPSTimeSec.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return GPSTimeSec.build(d)
+    except:
+      print traceback.print_exc()
     
 class GPSTimeNano(object):
   """GPSTimeNano.
@@ -230,26 +297,42 @@ from -500000 to 500000)
                'ns_residual',
                'wn',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.tow = kwargs.pop('tow')
-      self.ns_residual = kwargs.pop('ns_residual')
-      self.wn = kwargs.pop('wn')
+  __zips__ = [
+              ('u32', 'tow'),
+              ('s32', 'ns_residual'),
+              ('u16', 'wn'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = GPSTimeNano._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in GPSTimeNano.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GPSTimeNano.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return GPSTimeNano.build(d)
+    except:
+      print traceback.print_exc()
     
 class CarrierPhase(object):
   """CarrierPhase.
@@ -275,25 +358,41 @@ same sign as the pseudorange.
                'i',
                'f',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.i = kwargs.pop('i')
-      self.f = kwargs.pop('f')
+  __zips__ = [
+              ('s32', 'i'),
+              ('u8', 'f'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = CarrierPhase._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in CarrierPhase.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return CarrierPhase.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return CarrierPhase.build(d)
+    except:
+      print traceback.print_exc()
     
 
 msg_classes = {

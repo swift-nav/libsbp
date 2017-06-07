@@ -16,6 +16,7 @@
 EXCLUDE = ['sender', 'msg_type', 'crc', 'length', 'preamble', 'payload']
 
 from construct import Container, Field, OptionalGreedyRange, Rename, StringAdapter
+import traceback
 
 
 def exclude_fields(obj, exclude=EXCLUDE):
@@ -39,6 +40,8 @@ def walk_json_dict(coll):
     return dict((k, walk_json_dict(v)) for (k, v) in coll.iteritems())
   elif hasattr(coll, '__iter__'):
     return [walk_json_dict(seq) for seq in coll]
+  elif hasattr(coll, '__slots__'):
+    return dict([(k, walk_json_dict(getattr(coll, k))) for k in coll.__slots__])
   else:
     return coll
 

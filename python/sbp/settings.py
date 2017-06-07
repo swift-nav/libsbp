@@ -23,8 +23,11 @@ https://github.com/swift-nav/piksi\_firmware/blob/master/docs/settings.pdf
 
 from construct import *
 import json
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/settings.yaml with generate.py.
 # Please do not hand edit!
@@ -45,6 +48,7 @@ configuration to its onboard flash memory file system.
 
   """
   __slots__ = []
+  __zips__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -106,6 +110,9 @@ process to this message when it is received from sender ID
   __slots__ = [
                'setting',
               ]
+  __zips__ = [
+              ( 'str', 'setting'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -141,9 +148,16 @@ process to this message when it is received from sender ID
     the message.
 
     """
-    p = MsgSettingsWrite._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -189,6 +203,9 @@ this message when it is received from sender ID 0x42.
   __slots__ = [
                'setting',
               ]
+  __zips__ = [
+              ( 'str', 'setting'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -224,9 +241,16 @@ this message when it is received from sender ID 0x42.
     the message.
 
     """
-    p = MsgSettingsReadReq._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -271,6 +295,9 @@ class MsgSettingsReadResp(SBP):
   __slots__ = [
                'setting',
               ]
+  __zips__ = [
+              ( 'str', 'setting'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -306,9 +333,16 @@ class MsgSettingsReadResp(SBP):
     the message.
 
     """
-    p = MsgSettingsReadResp._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -358,6 +392,9 @@ this message when it is received from sender ID 0x42.
   __slots__ = [
                'index',
               ]
+  __zips__ = [
+              ( 'u16', 'index'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -393,9 +430,16 @@ this message when it is received from sender ID 0x42.
     the message.
 
     """
-    p = MsgSettingsReadByIndexReq._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -450,6 +494,10 @@ NULL-terminated and delimited string with contents
                'index',
                'setting',
               ]
+  __zips__ = [
+              ( 'u16', 'index'),
+              ( 'str', 'setting'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -486,9 +534,16 @@ NULL-terminated and delimited string with contents
     the message.
 
     """
-    p = MsgSettingsReadByIndexResp._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -519,6 +574,7 @@ class MsgSettingsReadByIndexDone(SBP):
 
   """
   __slots__ = []
+  __zips__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -581,6 +637,9 @@ for this setting to set the initial value.
   __slots__ = [
                'setting',
               ]
+  __zips__ = [
+              ( 'str', 'setting'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -616,9 +675,16 @@ for this setting to set the initial value.
     the message.
 
     """
-    p = MsgSettingsRegister._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

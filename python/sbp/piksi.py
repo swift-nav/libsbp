@@ -19,8 +19,11 @@ may no longer be used.
 
 from construct import *
 import json
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml with generate.py.
@@ -70,29 +73,45 @@ be normalized.
                'tx_buffer_level',
                'rx_buffer_level',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.tx_throughput = kwargs.pop('tx_throughput')
-      self.rx_throughput = kwargs.pop('rx_throughput')
-      self.crc_error_count = kwargs.pop('crc_error_count')
-      self.io_error_count = kwargs.pop('io_error_count')
-      self.tx_buffer_level = kwargs.pop('tx_buffer_level')
-      self.rx_buffer_level = kwargs.pop('rx_buffer_level')
+  __zips__ = [
+              ('float', 'tx_throughput'),
+              ('float', 'rx_throughput'),
+              ('u16', 'crc_error_count'),
+              ('u16', 'io_error_count'),
+              ('u8', 'tx_buffer_level'),
+              ('u8', 'rx_buffer_level'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = UARTChannel._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in UARTChannel.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return UARTChannel.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return UARTChannel.build(d)
+    except:
+      print traceback.print_exc()
     
 class Period(object):
   """Period.
@@ -128,27 +147,43 @@ can cause momentary RTK solution outages.
                'pmax',
                'current',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.avg = kwargs.pop('avg')
-      self.pmin = kwargs.pop('pmin')
-      self.pmax = kwargs.pop('pmax')
-      self.current = kwargs.pop('current')
+  __zips__ = [
+              ('s32', 'avg'),
+              ('s32', 'pmin'),
+              ('s32', 'pmax'),
+              ('s32', 'current'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = Period._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in Period.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return Period.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return Period.build(d)
+    except:
+      print traceback.print_exc()
     
 class Latency(object):
   """Latency.
@@ -183,27 +218,43 @@ communication latency in the system.
                'lmax',
                'current',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.avg = kwargs.pop('avg')
-      self.lmin = kwargs.pop('lmin')
-      self.lmax = kwargs.pop('lmax')
-      self.current = kwargs.pop('current')
+  __zips__ = [
+              ('s32', 'avg'),
+              ('s32', 'lmin'),
+              ('s32', 'lmax'),
+              ('s32', 'current'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = Latency._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in Latency.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return Latency.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return Latency.build(d)
+    except:
+      print traceback.print_exc()
     
 SBP_MSG_ALMANAC = 0x0069
 class MsgAlmanac(SBP):
@@ -220,6 +271,7 @@ alamanac onto the Piksi's flash memory from the host.
 
   """
   __slots__ = []
+  __zips__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -266,6 +318,7 @@ time estimate sent by the host.
 
   """
   __slots__ = []
+  __zips__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -325,6 +378,9 @@ bootloader.
   __slots__ = [
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -360,9 +416,16 @@ bootloader.
     the message.
 
     """
-    p = MsgReset._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -394,6 +457,7 @@ bootloader.
 
   """
   __slots__ = []
+  __zips__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -441,6 +505,7 @@ removed in a future release.
 
   """
   __slots__ = []
+  __zips__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -488,6 +553,7 @@ be removed in a future release.
 
   """
   __slots__ = []
+  __zips__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -547,6 +613,9 @@ Ambiguity Resolution (IAR) process.
   __slots__ = [
                'filter',
               ]
+  __zips__ = [
+              ( 'u8', 'filter'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -582,9 +651,16 @@ Ambiguity Resolution (IAR) process.
     the message.
 
     """
-    p = MsgResetFilters._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -619,6 +695,7 @@ observations between the two.
 
   """
   __slots__ = []
+  __zips__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -689,6 +766,11 @@ thread. The reported percentage values must be normalized.
                'cpu',
                'stack_free',
               ]
+  __zips__ = [
+              ( 'str:20', 'name'),
+              ( 'u16', 'cpu'),
+              ( 'u32', 'stack_free'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -726,9 +808,16 @@ thread. The reported percentage values must be normalized.
     the message.
 
     """
-    p = MsgThreadState._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -796,6 +885,13 @@ period indicates their likelihood of transmission.
                'latency',
                'obs_period',
               ]
+  __zips__ = [
+              ( 'UARTChannel', 'uart_a'),
+              ( 'UARTChannel', 'uart_b'),
+              ( 'UARTChannel', 'uart_ftdi'),
+              ( 'Latency', 'latency'),
+              ( 'Period', 'obs_period'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -835,9 +931,16 @@ period indicates their likelihood of transmission.
     the message.
 
     """
-    p = MsgUartState._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -892,6 +995,12 @@ class MsgUartStateDepa(SBP):
                'uart_ftdi',
                'latency',
               ]
+  __zips__ = [
+              ( 'UARTChannel', 'uart_a'),
+              ( 'UARTChannel', 'uart_b'),
+              ( 'UARTChannel', 'uart_ftdi'),
+              ( 'Latency', 'latency'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -930,9 +1039,16 @@ class MsgUartStateDepa(SBP):
     the message.
 
     """
-    p = MsgUartStateDepa._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -979,6 +1095,9 @@ from satellite observations.
   __slots__ = [
                'num_hyps',
               ]
+  __zips__ = [
+              ( 'u32', 'num_hyps'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1014,9 +1133,16 @@ from satellite observations.
     the message.
 
     """
-    p = MsgIarState._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1065,6 +1191,10 @@ from being used in various Piksi subsystems.
                'mask',
                'sid',
               ]
+  __zips__ = [
+              ( 'u8', 'mask'),
+              ( 'GnssSignal', 'sid'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1101,9 +1231,16 @@ from being used in various Piksi subsystems.
     the message.
 
     """
-    p = MsgMaskSatellite._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1165,6 +1302,13 @@ available.
                'cpu_temperature',
                'fe_temperature',
               ]
+  __zips__ = [
+              ( 's16', 'dev_vin'),
+              ( 's16', 'cpu_vint'),
+              ( 's16', 'cpu_vaux'),
+              ( 's16', 'cpu_temperature'),
+              ( 's16', 'fe_temperature'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1204,9 +1348,16 @@ available.
     the message.
 
     """
-    p = MsgDeviceMonitor._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1256,6 +1407,10 @@ code will be returned with MSG_COMMAND_RESP.
                'sequence',
                'command',
               ]
+  __zips__ = [
+              ( 'u32', 'sequence'),
+              ( 'str', 'command'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1292,9 +1447,16 @@ code will be returned with MSG_COMMAND_RESP.
     the message.
 
     """
-    p = MsgCommandReq._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1343,6 +1505,10 @@ the command.  A return code of zero indicates success.
                'sequence',
                'code',
               ]
+  __zips__ = [
+              ( 'u32', 'sequence'),
+              ( 's32', 'code'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1379,9 +1545,16 @@ the command.  A return code of zero indicates success.
     the message.
 
     """
-    p = MsgCommandResp._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1413,6 +1586,7 @@ Output will be sent in MSG_NETWORK_STATE_RESP messages
 
   """
   __slots__ = []
+  __zips__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1501,6 +1675,16 @@ in c.
                'interface_name',
                'flags',
               ]
+  __zips__ = [
+              ( 'array:u8:4', 'ipv4_address'),
+              ( 'u8', 'ipv4_mask_size'),
+              ( 'array:u8:16', 'ipv6_address'),
+              ( 'u8', 'ipv6_mask_size'),
+              ( 'u32', 'rx_bytes'),
+              ( 'u32', 'tx_bytes'),
+              ( 'str:16', 'interface_name'),
+              ( 'u32', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1543,9 +1727,16 @@ in c.
     the message.
 
     """
-    p = MsgNetworkStateResp._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1614,6 +1805,14 @@ class MsgSpecan(SBP):
                'amplitude_unit',
                'amplitude_value',
               ]
+  __zips__ = [
+              ( 'GPSTime', 't'),
+              ( 'float', 'freq_ref'),
+              ( 'float', 'freq_step'),
+              ( 'float', 'amplitude_ref'),
+              ( 'float', 'amplitude_unit'),
+              ( 'array:u8', 'amplitude_value'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1654,9 +1853,16 @@ class MsgSpecan(SBP):
     the message.
 
     """
-    p = MsgSpecan._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
