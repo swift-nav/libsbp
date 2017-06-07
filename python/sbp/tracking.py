@@ -620,7 +620,7 @@ update interval.
   _parser = Struct("MsgTrackingIq",
                    ULInt8('channel'),
                    Struct('sid', GnssSignal._parser),
-                   Struct('corrs', Array(3, Struct('corrs', TrackingChannelCorrelation._parser))),)
+                   Array(3, Struct('corrs', TrackingChannelCorrelation._parser)),)
   __slots__ = [
                'channel',
                'sid',

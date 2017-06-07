@@ -46,7 +46,7 @@ def walk_json_dict(coll):
     return coll
 
 
-def containerize(coll):
+def containerize(coll, key=None):
   """Walk attribute fields passed from an SBP message and convert to
   Containers where appropriate. Needed for Construct proper
   serialization.
@@ -57,15 +57,10 @@ def containerize(coll):
 
   """
   if isinstance(coll, Container):
-    [setattr(coll, k, containerize(v)) for (k, v) in coll.iteritems()]
+    [setattr(coll, k, containerize(v, k)) for (k, v) in coll.iteritems()]
     return coll
   elif isinstance(coll, dict):
     return containerize(Container(**coll))
-  elif isinstance(coll, list):
-    for j, i in enumerate(coll):
-      if isinstance(i, dict):
-        coll[j] = containerize(Container(**i))
-    return coll
   else:
     return coll
 

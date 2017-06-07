@@ -1657,9 +1657,9 @@ in c.
 
   """
   _parser = Struct("MsgNetworkStateResp",
-                   Struct('ipv4_address', Array(4, ULInt8('ipv4_address'))),
+                   Array(4, ULInt8('ipv4_address')),
                    ULInt8('ipv4_mask_size'),
-                   Struct('ipv6_address', Array(16, ULInt8('ipv6_address'))),
+                   Array(16, ULInt8('ipv6_address')),
                    ULInt8('ipv6_mask_size'),
                    ULInt32('rx_bytes'),
                    ULInt32('tx_bytes'),

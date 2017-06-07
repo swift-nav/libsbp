@@ -85,7 +85,7 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
     f_ = copy.copy(f)
     f_.type_id = fill
     s = f.options.get('size', None).value
-    return "Struct('%s', Array(%d, %s))" % (f.identifier, s, construct_format(f_))
+    return "Array(%d, %s)" % (s, construct_format(f_))
   elif f.type_id == 'array':
     fill = f.options['fill'].value
     f_ = copy.copy(f)
