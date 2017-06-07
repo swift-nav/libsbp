@@ -114,7 +114,8 @@ class Framer(six.Iterator):
 
         # hdr
         hdr = self._readall(5)
-        msg_type, sender, msg_len = np.ndarray(1, 'u2, u2, u1', hdr)[0]
+        msg_type, sender, msg_len = np.asscalar(
+            np.ndarray(1, 'u2, u2, u1', hdr)[0])
 
         # data
         data = self._readall(msg_len)
@@ -122,7 +123,7 @@ class Framer(six.Iterator):
 
         # crc
         crc = self._readall(2)
-        crc = np.ndarray(1, 'u2', crc)[0]
+        crc = np.ndarray(1, 'u2', crc)[0].item()
         if crc != msg_crc:
             if self._verbose:
                 print("crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc))
