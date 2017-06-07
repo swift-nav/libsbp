@@ -15,12 +15,13 @@ Logging and debugging messages from the device.
 
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/logging.yaml with generate.py.
 # Please do not hand edit!
@@ -59,6 +60,10 @@ ERROR, WARNING, DEBUG, INFO logging levels.
                'level',
                'text',
               ]
+  __zips__ = [
+              ( 'u8', 'level'),
+              ( 'str', 'text'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -95,9 +100,16 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     the message.
 
     """
-    p = MsgLog._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -155,6 +167,11 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
                'protocol',
                'fwd_payload',
               ]
+  __zips__ = [
+              ( 'u8', 'source'),
+              ( 'u8', 'protocol'),
+              ( 'str', 'fwd_payload'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -192,9 +209,16 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
     the message.
 
     """
-    p = MsgFwd._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -237,6 +261,9 @@ class MsgPrintDep(SBP):
   __slots__ = [
                'text',
               ]
+  __zips__ = [
+              ( 'str', 'text'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -272,9 +299,16 @@ class MsgPrintDep(SBP):
     the message.
 
     """
-    p = MsgPrintDep._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

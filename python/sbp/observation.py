@@ -14,12 +14,13 @@
 Satellite observation messages from the device.
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml with generate.py.
@@ -49,25 +50,41 @@ counter (ith packet of n)
                't',
                'n_obs',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.t = kwargs.pop('t')
-      self.n_obs = kwargs.pop('n_obs')
+  __zips__ = [
+              ('GPSTime', 't'),
+              ('u8', 'n_obs'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = ObservationHeader._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in ObservationHeader.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return ObservationHeader.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return ObservationHeader.build(d)
+    except:
+      print traceback.print_exc()
     
 class Doppler(object):
   """Doppler.
@@ -93,25 +110,41 @@ as positive for approaching satellites.
                'i',
                'f',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.i = kwargs.pop('i')
-      self.f = kwargs.pop('f')
+  __zips__ = [
+              ('s16', 'i'),
+              ('u8', 'f'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = Doppler._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in Doppler.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return Doppler.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return Doppler.build(d)
+    except:
+      print traceback.print_exc()
     
 class PackedObsContent(object):
   """PackedObsContent.
@@ -169,30 +202,46 @@ estimate for the signal is valid.
                'flags',
                'sid',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.P = kwargs.pop('P')
-      self.L = kwargs.pop('L')
-      self.D = kwargs.pop('D')
-      self.cn0 = kwargs.pop('cn0')
-      self.lock = kwargs.pop('lock')
-      self.flags = kwargs.pop('flags')
-      self.sid = kwargs.pop('sid')
+  __zips__ = [
+              ('u32', 'P'),
+              ('CarrierPhase', 'L'),
+              ('Doppler', 'D'),
+              ('u8', 'cn0'),
+              ('u8', 'lock'),
+              ('u8', 'flags'),
+              ('GnssSignal', 'sid'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = PackedObsContent._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in PackedObsContent.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return PackedObsContent.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return PackedObsContent.build(d)
+    except:
+      print traceback.print_exc()
     
 class EphemerisCommonContent(object):
   """EphemerisCommonContent.
@@ -233,29 +282,45 @@ GLO: 0 = valid, non-zero = invalid
                'valid',
                'health_bits',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.sid = kwargs.pop('sid')
-      self.toe = kwargs.pop('toe')
-      self.ura = kwargs.pop('ura')
-      self.fit_interval = kwargs.pop('fit_interval')
-      self.valid = kwargs.pop('valid')
-      self.health_bits = kwargs.pop('health_bits')
+  __zips__ = [
+              ('GnssSignal', 'sid'),
+              ('GPSTimeSec', 'toe'),
+              ('float', 'ura'),
+              ('u32', 'fit_interval'),
+              ('u8', 'valid'),
+              ('u8', 'health_bits'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = EphemerisCommonContent._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in EphemerisCommonContent.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return EphemerisCommonContent.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return EphemerisCommonContent.build(d)
+    except:
+      print traceback.print_exc()
     
 class EphemerisCommonContentDepB(object):
   """EphemerisCommonContentDepB.
@@ -295,29 +360,45 @@ Others: 0 = valid, non-zero = invalid
                'valid',
                'health_bits',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.sid = kwargs.pop('sid')
-      self.toe = kwargs.pop('toe')
-      self.ura = kwargs.pop('ura')
-      self.fit_interval = kwargs.pop('fit_interval')
-      self.valid = kwargs.pop('valid')
-      self.health_bits = kwargs.pop('health_bits')
+  __zips__ = [
+              ('GnssSignal', 'sid'),
+              ('GPSTimeSec', 'toe'),
+              ('double', 'ura'),
+              ('u32', 'fit_interval'),
+              ('u8', 'valid'),
+              ('u8', 'health_bits'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = EphemerisCommonContentDepB._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in EphemerisCommonContentDepB.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return EphemerisCommonContentDepB.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return EphemerisCommonContentDepB.build(d)
+    except:
+      print traceback.print_exc()
     
 class EphemerisCommonContentDepA(object):
   """EphemerisCommonContentDepA.
@@ -358,29 +439,45 @@ GLO: 0 = valid, non-zero = invalid
                'valid',
                'health_bits',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.sid = kwargs.pop('sid')
-      self.toe = kwargs.pop('toe')
-      self.ura = kwargs.pop('ura')
-      self.fit_interval = kwargs.pop('fit_interval')
-      self.valid = kwargs.pop('valid')
-      self.health_bits = kwargs.pop('health_bits')
+  __zips__ = [
+              ('GnssSignalDep', 'sid'),
+              ('GPSTimeDep', 'toe'),
+              ('double', 'ura'),
+              ('u32', 'fit_interval'),
+              ('u8', 'valid'),
+              ('u8', 'health_bits'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = EphemerisCommonContentDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in EphemerisCommonContentDepA.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return EphemerisCommonContentDepA.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return EphemerisCommonContentDepA.build(d)
+    except:
+      print traceback.print_exc()
     
 class ObservationHeaderDep(object):
   """ObservationHeaderDep.
@@ -405,25 +502,41 @@ counter (ith packet of n)
                't',
                'n_obs',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.t = kwargs.pop('t')
-      self.n_obs = kwargs.pop('n_obs')
+  __zips__ = [
+              ('GPSTimeDep', 't'),
+              ('u8', 'n_obs'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = ObservationHeaderDep._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in ObservationHeaderDep.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return ObservationHeaderDep.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return ObservationHeaderDep.build(d)
+    except:
+      print traceback.print_exc()
     
 class CarrierPhaseDepA(object):
   """CarrierPhaseDepA.
@@ -450,25 +563,41 @@ the opposite sign as the pseudorange.
                'i',
                'f',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.i = kwargs.pop('i')
-      self.f = kwargs.pop('f')
+  __zips__ = [
+              ('s32', 'i'),
+              ('u8', 'f'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = CarrierPhaseDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in CarrierPhaseDepA.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return CarrierPhaseDepA.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return CarrierPhaseDepA.build(d)
+    except:
+      print traceback.print_exc()
     
 class PackedObsContentDepA(object):
   """PackedObsContentDepA.
@@ -505,28 +634,44 @@ carrier phase ambiguity may have changed.
                'lock',
                'prn',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.P = kwargs.pop('P')
-      self.L = kwargs.pop('L')
-      self.cn0 = kwargs.pop('cn0')
-      self.lock = kwargs.pop('lock')
-      self.prn = kwargs.pop('prn')
+  __zips__ = [
+              ('u32', 'P'),
+              ('CarrierPhaseDepA', 'L'),
+              ('u8', 'cn0'),
+              ('u16', 'lock'),
+              ('u8', 'prn'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = PackedObsContentDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in PackedObsContentDepA.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return PackedObsContentDepA.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return PackedObsContentDepA.build(d)
+    except:
+      print traceback.print_exc()
     
 class PackedObsContentDepB(object):
   """PackedObsContentDepB.
@@ -565,28 +710,44 @@ carrier phase ambiguity may have changed.
                'lock',
                'sid',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.P = kwargs.pop('P')
-      self.L = kwargs.pop('L')
-      self.cn0 = kwargs.pop('cn0')
-      self.lock = kwargs.pop('lock')
-      self.sid = kwargs.pop('sid')
+  __zips__ = [
+              ('u32', 'P'),
+              ('CarrierPhaseDepA', 'L'),
+              ('u8', 'cn0'),
+              ('u16', 'lock'),
+              ('GnssSignalDep', 'sid'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = PackedObsContentDepB._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in PackedObsContentDepB.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return PackedObsContentDepB.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return PackedObsContentDepB.build(d)
+    except:
+      print traceback.print_exc()
     
 class PackedObsContentDepC(object):
   """PackedObsContentDepC.
@@ -626,28 +787,44 @@ carrier phase ambiguity may have changed.
                'lock',
                'sid',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.P = kwargs.pop('P')
-      self.L = kwargs.pop('L')
-      self.cn0 = kwargs.pop('cn0')
-      self.lock = kwargs.pop('lock')
-      self.sid = kwargs.pop('sid')
+  __zips__ = [
+              ('u32', 'P'),
+              ('CarrierPhase', 'L'),
+              ('u8', 'cn0'),
+              ('u16', 'lock'),
+              ('GnssSignalDep', 'sid'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = PackedObsContentDepC._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in PackedObsContentDepC.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return PackedObsContentDepC.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return PackedObsContentDepC.build(d)
+    except:
+      print traceback.print_exc()
     
 class GnssCapb(object):
   """GnssCapb.
@@ -724,38 +901,54 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
                'gal_active',
                'gal_e5',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.gps_active = kwargs.pop('gps_active')
-      self.gps_l2c = kwargs.pop('gps_l2c')
-      self.gps_l5 = kwargs.pop('gps_l5')
-      self.glo_active = kwargs.pop('glo_active')
-      self.glo_l2of = kwargs.pop('glo_l2of')
-      self.glo_l3 = kwargs.pop('glo_l3')
-      self.sbas_active = kwargs.pop('sbas_active')
-      self.sbas_l5 = kwargs.pop('sbas_l5')
-      self.bds_active = kwargs.pop('bds_active')
-      self.bds_d2nav = kwargs.pop('bds_d2nav')
-      self.bds_b2 = kwargs.pop('bds_b2')
-      self.bds_b2a = kwargs.pop('bds_b2a')
-      self.qzss_active = kwargs.pop('qzss_active')
-      self.gal_active = kwargs.pop('gal_active')
-      self.gal_e5 = kwargs.pop('gal_e5')
+  __zips__ = [
+              ('u64', 'gps_active'),
+              ('u64', 'gps_l2c'),
+              ('u64', 'gps_l5'),
+              ('u32', 'glo_active'),
+              ('u32', 'glo_l2of'),
+              ('u32', 'glo_l3'),
+              ('u64', 'sbas_active'),
+              ('u64', 'sbas_l5'),
+              ('u64', 'bds_active'),
+              ('u64', 'bds_d2nav'),
+              ('u64', 'bds_b2'),
+              ('u64', 'bds_b2a'),
+              ('u32', 'qzss_active'),
+              ('u64', 'gal_active'),
+              ('u64', 'gal_e5'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = GnssCapb._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in GnssCapb.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GnssCapb.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return GnssCapb.build(d)
+    except:
+      print traceback.print_exc()
     
 class AlmanacCommonContent(object):
   """AlmanacCommonContent.
@@ -807,29 +1000,45 @@ Satellite health status for GLO:
                'valid',
                'health_bits',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.sid = kwargs.pop('sid')
-      self.toa = kwargs.pop('toa')
-      self.ura = kwargs.pop('ura')
-      self.fit_interval = kwargs.pop('fit_interval')
-      self.valid = kwargs.pop('valid')
-      self.health_bits = kwargs.pop('health_bits')
+  __zips__ = [
+              ('GnssSignal', 'sid'),
+              ('GPSTimeSec', 'toa'),
+              ('double', 'ura'),
+              ('u32', 'fit_interval'),
+              ('u8', 'valid'),
+              ('u8', 'health_bits'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = AlmanacCommonContent._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in AlmanacCommonContent.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return AlmanacCommonContent.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return AlmanacCommonContent.build(d)
+    except:
+      print traceback.print_exc()
     
 class AlmanacCommonContentDep(object):
   """AlmanacCommonContentDep.
@@ -881,29 +1090,45 @@ Satellite health status for GLO:
                'valid',
                'health_bits',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.sid = kwargs.pop('sid')
-      self.toa = kwargs.pop('toa')
-      self.ura = kwargs.pop('ura')
-      self.fit_interval = kwargs.pop('fit_interval')
-      self.valid = kwargs.pop('valid')
-      self.health_bits = kwargs.pop('health_bits')
+  __zips__ = [
+              ('GnssSignalDep', 'sid'),
+              ('GPSTimeSec', 'toa'),
+              ('double', 'ura'),
+              ('u32', 'fit_interval'),
+              ('u8', 'valid'),
+              ('u8', 'health_bits'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = AlmanacCommonContentDep._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in AlmanacCommonContentDep.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return AlmanacCommonContentDep.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return AlmanacCommonContentDep.build(d)
+    except:
+      print traceback.print_exc()
     
 SBP_MSG_OBS = 0x004A
 class MsgObs(SBP):
@@ -944,6 +1169,10 @@ satellite being tracked.
                'header',
                'obs',
               ]
+  __zips__ = [
+              ( 'ObservationHeader', 'header'),
+              ( 'array:PackedObsContent', 'obs'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -980,9 +1209,16 @@ satellite being tracked.
     the message.
 
     """
-    p = MsgObs._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1038,6 +1274,11 @@ error in the pseudo-absolute position output.
                'lon',
                'height',
               ]
+  __zips__ = [
+              ( 'double', 'lat'),
+              ( 'double', 'lon'),
+              ( 'double', 'height'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1075,9 +1316,16 @@ error in the pseudo-absolute position output.
     the message.
 
     """
-    p = MsgBasePosLLH._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1134,6 +1382,11 @@ pseudo-absolute position output.
                'y',
                'z',
               ]
+  __zips__ = [
+              ( 'double', 'x'),
+              ( 'double', 'y'),
+              ( 'double', 'z'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1171,9 +1424,16 @@ pseudo-absolute position output.
     the message.
 
     """
-    p = MsgBasePosECEF._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1309,6 +1569,31 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                'iode',
                'iodc',
               ]
+  __zips__ = [
+              ( 'EphemerisCommonContentDepA', 'common'),
+              ( 'double', 'tgd'),
+              ( 'double', 'c_rs'),
+              ( 'double', 'c_rc'),
+              ( 'double', 'c_uc'),
+              ( 'double', 'c_us'),
+              ( 'double', 'c_ic'),
+              ( 'double', 'c_is'),
+              ( 'double', 'dn'),
+              ( 'double', 'm0'),
+              ( 'double', 'ecc'),
+              ( 'double', 'sqrta'),
+              ( 'double', 'omega0'),
+              ( 'double', 'omegadot'),
+              ( 'double', 'w'),
+              ( 'double', 'inc'),
+              ( 'double', 'inc_dot'),
+              ( 'double', 'af0'),
+              ( 'double', 'af1'),
+              ( 'double', 'af2'),
+              ( 'GPSTimeDep', 'toc'),
+              ( 'u8', 'iode'),
+              ( 'u16', 'iodc'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1366,9 +1651,16 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     the message.
 
     """
-    p = MsgEphemerisGPSDepE._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1501,6 +1793,31 @@ ephemeris message using floats for size reduction.
                'iode',
                'iodc',
               ]
+  __zips__ = [
+              ( 'EphemerisCommonContentDepB', 'common'),
+              ( 'double', 'tgd'),
+              ( 'double', 'c_rs'),
+              ( 'double', 'c_rc'),
+              ( 'double', 'c_uc'),
+              ( 'double', 'c_us'),
+              ( 'double', 'c_ic'),
+              ( 'double', 'c_is'),
+              ( 'double', 'dn'),
+              ( 'double', 'm0'),
+              ( 'double', 'ecc'),
+              ( 'double', 'sqrta'),
+              ( 'double', 'omega0'),
+              ( 'double', 'omegadot'),
+              ( 'double', 'w'),
+              ( 'double', 'inc'),
+              ( 'double', 'inc_dot'),
+              ( 'double', 'af0'),
+              ( 'double', 'af1'),
+              ( 'double', 'af2'),
+              ( 'GPSTimeSec', 'toc'),
+              ( 'u8', 'iode'),
+              ( 'u16', 'iodc'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1558,9 +1875,16 @@ ephemeris message using floats for size reduction.
     the message.
 
     """
-    p = MsgEphemerisGPSDepF._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1696,6 +2020,31 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                'iode',
                'iodc',
               ]
+  __zips__ = [
+              ( 'EphemerisCommonContent', 'common'),
+              ( 'float', 'tgd'),
+              ( 'float', 'c_rs'),
+              ( 'float', 'c_rc'),
+              ( 'float', 'c_uc'),
+              ( 'float', 'c_us'),
+              ( 'float', 'c_ic'),
+              ( 'float', 'c_is'),
+              ( 'double', 'dn'),
+              ( 'double', 'm0'),
+              ( 'double', 'ecc'),
+              ( 'double', 'sqrta'),
+              ( 'double', 'omega0'),
+              ( 'double', 'omegadot'),
+              ( 'double', 'w'),
+              ( 'double', 'inc'),
+              ( 'double', 'inc_dot'),
+              ( 'float', 'af0'),
+              ( 'float', 'af1'),
+              ( 'float', 'af2'),
+              ( 'GPSTimeSec', 'toc'),
+              ( 'u8', 'iode'),
+              ( 'u16', 'iodc'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1753,9 +2102,16 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     the message.
 
     """
-    p = MsgEphemerisGPS._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1894,6 +2250,32 @@ Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
                'iode',
                'iodc',
               ]
+  __zips__ = [
+              ( 'EphemerisCommonContent', 'common'),
+              ( 'float', 'tgd1'),
+              ( 'float', 'tgd2'),
+              ( 'float', 'c_rs'),
+              ( 'float', 'c_rc'),
+              ( 'float', 'c_uc'),
+              ( 'float', 'c_us'),
+              ( 'float', 'c_ic'),
+              ( 'float', 'c_is'),
+              ( 'double', 'dn'),
+              ( 'double', 'm0'),
+              ( 'double', 'ecc'),
+              ( 'double', 'sqrta'),
+              ( 'double', 'omega0'),
+              ( 'double', 'omegadot'),
+              ( 'double', 'w'),
+              ( 'double', 'inc'),
+              ( 'double', 'inc_dot'),
+              ( 'double', 'af0'),
+              ( 'float', 'af1'),
+              ( 'float', 'af2'),
+              ( 'GPSTimeSec', 'toc'),
+              ( 'u8', 'iode'),
+              ( 'u16', 'iodc'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1952,9 +2334,16 @@ Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
     the message.
 
     """
-    p = MsgEphemerisBds._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2093,6 +2482,32 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
                'iode',
                'iodc',
               ]
+  __zips__ = [
+              ( 'EphemerisCommonContent', 'common'),
+              ( 'float', 'bgd_e1e5a'),
+              ( 'float', 'bgd_e1e5b'),
+              ( 'float', 'c_rs'),
+              ( 'float', 'c_rc'),
+              ( 'float', 'c_uc'),
+              ( 'float', 'c_us'),
+              ( 'float', 'c_ic'),
+              ( 'float', 'c_is'),
+              ( 'double', 'dn'),
+              ( 'double', 'm0'),
+              ( 'double', 'ecc'),
+              ( 'double', 'sqrta'),
+              ( 'double', 'omega0'),
+              ( 'double', 'omegadot'),
+              ( 'double', 'w'),
+              ( 'double', 'inc'),
+              ( 'double', 'inc_dot'),
+              ( 'double', 'af0'),
+              ( 'double', 'af1'),
+              ( 'float', 'af2'),
+              ( 'GPSTimeSec', 'toc'),
+              ( 'u16', 'iode'),
+              ( 'u16', 'iodc'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2151,9 +2566,16 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
     the message.
 
     """
-    p = MsgEphemerisGal._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2215,6 +2637,14 @@ class MsgEphemerisSbasDepA(SBP):
                'a_gf0',
                'a_gf1',
               ]
+  __zips__ = [
+              ( 'EphemerisCommonContentDepA', 'common'),
+              ( 'array:double:3', 'pos'),
+              ( 'array:double:3', 'vel'),
+              ( 'array:double:3', 'acc'),
+              ( 'double', 'a_gf0'),
+              ( 'double', 'a_gf1'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2255,9 +2685,16 @@ class MsgEphemerisSbasDepA(SBP):
     the message.
 
     """
-    p = MsgEphemerisSbasDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2325,6 +2762,14 @@ for more details.
                'vel',
                'acc',
               ]
+  __zips__ = [
+              ( 'EphemerisCommonContentDepA', 'common'),
+              ( 'double', 'gamma'),
+              ( 'double', 'tau'),
+              ( 'array:double:3', 'pos'),
+              ( 'array:double:3', 'vel'),
+              ( 'array:double:3', 'acc'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2365,9 +2810,16 @@ for more details.
     the message.
 
     """
-    p = MsgEphemerisGloDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2432,6 +2884,14 @@ ephemeris message using floats for size reduction.
                'a_gf0',
                'a_gf1',
               ]
+  __zips__ = [
+              ( 'EphemerisCommonContentDepB', 'common'),
+              ( 'array:double:3', 'pos'),
+              ( 'array:double:3', 'vel'),
+              ( 'array:double:3', 'acc'),
+              ( 'double', 'a_gf0'),
+              ( 'double', 'a_gf1'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2472,9 +2932,16 @@ ephemeris message using floats for size reduction.
     the message.
 
     """
-    p = MsgEphemerisSbasDepB._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2536,6 +3003,14 @@ class MsgEphemerisSbas(SBP):
                'a_gf0',
                'a_gf1',
               ]
+  __zips__ = [
+              ( 'EphemerisCommonContent', 'common'),
+              ( 'array:double:3', 'pos'),
+              ( 'array:float:3', 'vel'),
+              ( 'array:float:3', 'acc'),
+              ( 'float', 'a_gf0'),
+              ( 'float', 'a_gf1'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2576,9 +3051,16 @@ class MsgEphemerisSbas(SBP):
     the message.
 
     """
-    p = MsgEphemerisSbas._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2646,6 +3128,14 @@ for more details.
                'vel',
                'acc',
               ]
+  __zips__ = [
+              ( 'EphemerisCommonContentDepB', 'common'),
+              ( 'double', 'gamma'),
+              ( 'double', 'tau'),
+              ( 'array:double:3', 'pos'),
+              ( 'array:double:3', 'vel'),
+              ( 'array:double:3', 'acc'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2686,9 +3176,16 @@ for more details.
     the message.
 
     """
-    p = MsgEphemerisGloDepB._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2764,6 +3261,16 @@ for more details.
                'acc',
                'fcn',
               ]
+  __zips__ = [
+              ( 'EphemerisCommonContentDepB', 'common'),
+              ( 'double', 'gamma'),
+              ( 'double', 'tau'),
+              ( 'double', 'd_tau'),
+              ( 'array:double:3', 'pos'),
+              ( 'array:double:3', 'vel'),
+              ( 'array:double:3', 'acc'),
+              ( 'u8', 'fcn'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2806,9 +3313,16 @@ for more details.
     the message.
 
     """
-    p = MsgEphemerisGloDepC._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2885,6 +3399,17 @@ ephemeris message using floats for size reduction.
                'fcn',
                'iod',
               ]
+  __zips__ = [
+              ( 'EphemerisCommonContentDepB', 'common'),
+              ( 'double', 'gamma'),
+              ( 'double', 'tau'),
+              ( 'double', 'd_tau'),
+              ( 'array:double:3', 'pos'),
+              ( 'array:double:3', 'vel'),
+              ( 'array:double:3', 'acc'),
+              ( 'u8', 'fcn'),
+              ( 'u8', 'iod'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2928,9 +3453,16 @@ ephemeris message using floats for size reduction.
     the message.
 
     """
-    p = MsgEphemerisGloDepD._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -3010,6 +3542,17 @@ for more details.
                'fcn',
                'iod',
               ]
+  __zips__ = [
+              ( 'EphemerisCommonContent', 'common'),
+              ( 'float', 'gamma'),
+              ( 'float', 'tau'),
+              ( 'float', 'd_tau'),
+              ( 'array:double:3', 'pos'),
+              ( 'array:double:3', 'vel'),
+              ( 'array:float:3', 'acc'),
+              ( 'u8', 'fcn'),
+              ( 'u8', 'iod'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3053,9 +3596,16 @@ for more details.
     the message.
 
     """
-    p = MsgEphemerisGlo._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -3215,6 +3765,37 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                'iodc',
                'reserved',
               ]
+  __zips__ = [
+              ( 'double', 'tgd'),
+              ( 'double', 'c_rs'),
+              ( 'double', 'c_rc'),
+              ( 'double', 'c_uc'),
+              ( 'double', 'c_us'),
+              ( 'double', 'c_ic'),
+              ( 'double', 'c_is'),
+              ( 'double', 'dn'),
+              ( 'double', 'm0'),
+              ( 'double', 'ecc'),
+              ( 'double', 'sqrta'),
+              ( 'double', 'omega0'),
+              ( 'double', 'omegadot'),
+              ( 'double', 'w'),
+              ( 'double', 'inc'),
+              ( 'double', 'inc_dot'),
+              ( 'double', 'af0'),
+              ( 'double', 'af1'),
+              ( 'double', 'af2'),
+              ( 'double', 'toe_tow'),
+              ( 'u16', 'toe_wn'),
+              ( 'double', 'toc_tow'),
+              ( 'u16', 'toc_wn'),
+              ( 'u8', 'valid'),
+              ( 'u8', 'healthy'),
+              ( 'GnssSignalDep', 'sid'),
+              ( 'u8', 'iode'),
+              ( 'u16', 'iodc'),
+              ( 'u32', 'reserved'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3278,9 +3859,16 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     the message.
 
     """
-    p = MsgEphemerisDepD._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -3423,6 +4011,34 @@ class MsgEphemerisDepA(SBP):
                'healthy',
                'prn',
               ]
+  __zips__ = [
+              ( 'double', 'tgd'),
+              ( 'double', 'c_rs'),
+              ( 'double', 'c_rc'),
+              ( 'double', 'c_uc'),
+              ( 'double', 'c_us'),
+              ( 'double', 'c_ic'),
+              ( 'double', 'c_is'),
+              ( 'double', 'dn'),
+              ( 'double', 'm0'),
+              ( 'double', 'ecc'),
+              ( 'double', 'sqrta'),
+              ( 'double', 'omega0'),
+              ( 'double', 'omegadot'),
+              ( 'double', 'w'),
+              ( 'double', 'inc'),
+              ( 'double', 'inc_dot'),
+              ( 'double', 'af0'),
+              ( 'double', 'af1'),
+              ( 'double', 'af2'),
+              ( 'double', 'toe_tow'),
+              ( 'u16', 'toe_wn'),
+              ( 'double', 'toc_tow'),
+              ( 'u16', 'toc_wn'),
+              ( 'u8', 'valid'),
+              ( 'u8', 'healthy'),
+              ( 'u8', 'prn'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3483,9 +4099,16 @@ class MsgEphemerisDepA(SBP):
     the message.
 
     """
-    p = MsgEphemerisDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -3632,6 +4255,35 @@ class MsgEphemerisDepB(SBP):
                'prn',
                'iode',
               ]
+  __zips__ = [
+              ( 'double', 'tgd'),
+              ( 'double', 'c_rs'),
+              ( 'double', 'c_rc'),
+              ( 'double', 'c_uc'),
+              ( 'double', 'c_us'),
+              ( 'double', 'c_ic'),
+              ( 'double', 'c_is'),
+              ( 'double', 'dn'),
+              ( 'double', 'm0'),
+              ( 'double', 'ecc'),
+              ( 'double', 'sqrta'),
+              ( 'double', 'omega0'),
+              ( 'double', 'omegadot'),
+              ( 'double', 'w'),
+              ( 'double', 'inc'),
+              ( 'double', 'inc_dot'),
+              ( 'double', 'af0'),
+              ( 'double', 'af1'),
+              ( 'double', 'af2'),
+              ( 'double', 'toe_tow'),
+              ( 'u16', 'toe_wn'),
+              ( 'double', 'toc_tow'),
+              ( 'u16', 'toc_wn'),
+              ( 'u8', 'valid'),
+              ( 'u8', 'healthy'),
+              ( 'u8', 'prn'),
+              ( 'u8', 'iode'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3693,9 +4345,16 @@ class MsgEphemerisDepB(SBP):
     the message.
 
     """
-    p = MsgEphemerisDepB._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -3855,6 +4514,37 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                'iodc',
                'reserved',
               ]
+  __zips__ = [
+              ( 'double', 'tgd'),
+              ( 'double', 'c_rs'),
+              ( 'double', 'c_rc'),
+              ( 'double', 'c_uc'),
+              ( 'double', 'c_us'),
+              ( 'double', 'c_ic'),
+              ( 'double', 'c_is'),
+              ( 'double', 'dn'),
+              ( 'double', 'm0'),
+              ( 'double', 'ecc'),
+              ( 'double', 'sqrta'),
+              ( 'double', 'omega0'),
+              ( 'double', 'omegadot'),
+              ( 'double', 'w'),
+              ( 'double', 'inc'),
+              ( 'double', 'inc_dot'),
+              ( 'double', 'af0'),
+              ( 'double', 'af1'),
+              ( 'double', 'af2'),
+              ( 'double', 'toe_tow'),
+              ( 'u16', 'toe_wn'),
+              ( 'double', 'toc_tow'),
+              ( 'u16', 'toc_wn'),
+              ( 'u8', 'valid'),
+              ( 'u8', 'healthy'),
+              ( 'GnssSignalDep', 'sid'),
+              ( 'u8', 'iode'),
+              ( 'u16', 'iodc'),
+              ( 'u32', 'reserved'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3918,9 +4608,16 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     the message.
 
     """
-    p = MsgEphemerisDepC._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -3969,6 +4666,10 @@ satellite being tracked.
                'header',
                'obs',
               ]
+  __zips__ = [
+              ( 'ObservationHeaderDep', 'header'),
+              ( 'array:PackedObsContentDepA', 'obs'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -4005,9 +4706,16 @@ satellite being tracked.
     the message.
 
     """
-    p = MsgObsDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -4062,6 +4770,10 @@ satellite being tracked.
                'header',
                'obs',
               ]
+  __zips__ = [
+              ( 'ObservationHeaderDep', 'header'),
+              ( 'array:PackedObsContentDepB', 'obs'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -4098,9 +4810,16 @@ satellite being tracked.
     the message.
 
     """
-    p = MsgObsDepB._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -4156,6 +4875,10 @@ satellite being tracked.
                'header',
                'obs',
               ]
+  __zips__ = [
+              ( 'ObservationHeaderDep', 'header'),
+              ( 'array:PackedObsContentDepC', 'obs'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -4192,9 +4915,16 @@ satellite being tracked.
     the message.
 
     """
-    p = MsgObsDepC._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -4264,6 +4994,17 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
                'b2',
                'b3',
               ]
+  __zips__ = [
+              ( 'GPSTimeSec', 't_nmct'),
+              ( 'double', 'a0'),
+              ( 'double', 'a1'),
+              ( 'double', 'a2'),
+              ( 'double', 'a3'),
+              ( 'double', 'b0'),
+              ( 'double', 'b1'),
+              ( 'double', 'b2'),
+              ( 'double', 'b3'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -4307,9 +5048,16 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
     the message.
 
     """
-    p = MsgIono._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -4357,6 +5105,10 @@ class MsgSvConfigurationGPSDep(SBP):
                't_nmct',
                'l2c_mask',
               ]
+  __zips__ = [
+              ( 'GPSTimeSec', 't_nmct'),
+              ( 'u32', 'l2c_mask'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -4393,9 +5145,16 @@ class MsgSvConfigurationGPSDep(SBP):
     the message.
 
     """
-    p = MsgSvConfigurationGPSDep._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -4441,6 +5200,10 @@ class MsgGnssCapb(SBP):
                't_nmct',
                'gc',
               ]
+  __zips__ = [
+              ( 'GPSTimeSec', 't_nmct'),
+              ( 'GnssCapb', 'gc'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -4477,9 +5240,16 @@ class MsgGnssCapb(SBP):
     the message.
 
     """
-    p = MsgGnssCapb._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -4542,6 +5312,14 @@ LSB indicating tgd validity etc.
                'isc_l1ca',
                'isc_l2c',
               ]
+  __zips__ = [
+              ( 'GPSTimeDep', 't_op'),
+              ( 'u8', 'prn'),
+              ( 'u8', 'valid'),
+              ( 's16', 'tgd'),
+              ( 's16', 'isc_l1ca'),
+              ( 's16', 'isc_l2c'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -4582,9 +5360,16 @@ LSB indicating tgd validity etc.
     the message.
 
     """
-    p = MsgGroupDelayDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -4647,6 +5432,14 @@ LSB indicating tgd validity etc.
                'isc_l1ca',
                'isc_l2c',
               ]
+  __zips__ = [
+              ( 'GPSTimeSec', 't_op'),
+              ( 'GnssSignalDep', 'sid'),
+              ( 'u8', 'valid'),
+              ( 's16', 'tgd'),
+              ( 's16', 'isc_l1ca'),
+              ( 's16', 'isc_l2c'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -4687,9 +5480,16 @@ LSB indicating tgd validity etc.
     the message.
 
     """
-    p = MsgGroupDelayDepB._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -4752,6 +5552,14 @@ LSB indicating tgd validity etc.
                'isc_l1ca',
                'isc_l2c',
               ]
+  __zips__ = [
+              ( 'GPSTimeSec', 't_op'),
+              ( 'GnssSignal', 'sid'),
+              ( 'u8', 'valid'),
+              ( 's16', 'tgd'),
+              ( 's16', 'isc_l1ca'),
+              ( 's16', 'isc_l2c'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -4792,9 +5600,16 @@ LSB indicating tgd validity etc.
     the message.
 
     """
-    p = MsgGroupDelay._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -4877,6 +5692,18 @@ Please see the Navstar GPS Space Segment/Navigation user interfaces
                'af0',
                'af1',
               ]
+  __zips__ = [
+              ( 'AlmanacCommonContentDep', 'common'),
+              ( 'double', 'm0'),
+              ( 'double', 'ecc'),
+              ( 'double', 'sqrta'),
+              ( 'double', 'omega0'),
+              ( 'double', 'omegadot'),
+              ( 'double', 'w'),
+              ( 'double', 'inc'),
+              ( 'double', 'af0'),
+              ( 'double', 'af1'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -4921,9 +5748,16 @@ Please see the Navstar GPS Space Segment/Navigation user interfaces
     the message.
 
     """
-    p = MsgAlmanacGPSDep._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -5006,6 +5840,18 @@ Please see the Navstar GPS Space Segment/Navigation user interfaces
                'af0',
                'af1',
               ]
+  __zips__ = [
+              ( 'AlmanacCommonContent', 'common'),
+              ( 'double', 'm0'),
+              ( 'double', 'ecc'),
+              ( 'double', 'sqrta'),
+              ( 'double', 'omega0'),
+              ( 'double', 'omegadot'),
+              ( 'double', 'w'),
+              ( 'double', 'inc'),
+              ( 'double', 'af0'),
+              ( 'double', 'af1'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -5050,9 +5896,16 @@ Please see the Navstar GPS Space Segment/Navigation user interfaces
     the message.
 
     """
-    p = MsgAlmanacGPS._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -5129,6 +5982,16 @@ coordinate system
                'epsilon',
                'omega',
               ]
+  __zips__ = [
+              ( 'AlmanacCommonContentDep', 'common'),
+              ( 'double', 'lambda_na'),
+              ( 'double', 't_lambda_na'),
+              ( 'double', 'i'),
+              ( 'double', 't'),
+              ( 'double', 't_dot'),
+              ( 'double', 'epsilon'),
+              ( 'double', 'omega'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -5171,9 +6034,16 @@ coordinate system
     the message.
 
     """
-    p = MsgAlmanacGloDep._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -5250,6 +6120,16 @@ coordinate system
                'epsilon',
                'omega',
               ]
+  __zips__ = [
+              ( 'AlmanacCommonContent', 'common'),
+              ( 'double', 'lambda_na'),
+              ( 'double', 't_lambda_na'),
+              ( 'double', 'i'),
+              ( 'double', 't'),
+              ( 'double', 't_dot'),
+              ( 'double', 'epsilon'),
+              ( 'double', 'omega'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -5292,9 +6172,16 @@ coordinate system
     the message.
 
     """
-    p = MsgAlmanacGlo._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -5357,6 +6244,13 @@ manufacturers)
                'l2ca_bias',
                'l2p_bias',
               ]
+  __zips__ = [
+              ( 'u8', 'mask'),
+              ( 's16', 'l1ca_bias'),
+              ( 's16', 'l1p_bias'),
+              ( 's16', 'l2ca_bias'),
+              ( 's16', 'l2p_bias'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -5396,9 +6290,16 @@ manufacturers)
     the message.
 
     """
-    p = MsgGloBiases._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

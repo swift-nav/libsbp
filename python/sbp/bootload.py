@@ -19,12 +19,13 @@ host request and the device response.
 
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/bootload.yaml with generate.py.
 # Please do not hand edit!
@@ -46,6 +47,7 @@ response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
 
   """
   __slots__ = []
+  __zips__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -112,6 +114,10 @@ protocol version number.
                'flags',
                'version',
               ]
+  __zips__ = [
+              ( 'u32', 'flags'),
+              ( 'str', 'version'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -148,9 +154,16 @@ protocol version number.
     the message.
 
     """
-    p = MsgBootloaderHandshakeResp._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -194,6 +207,9 @@ class MsgBootloaderJumpToApp(SBP):
   __slots__ = [
                'jump',
               ]
+  __zips__ = [
+              ( 'u8', 'jump'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -229,9 +245,16 @@ class MsgBootloaderJumpToApp(SBP):
     the message.
 
     """
-    p = MsgBootloaderJumpToApp._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -267,6 +290,7 @@ and not related to the Piksi's serial number.
 
   """
   __slots__ = []
+  __zips__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -332,6 +356,9 @@ on the right.
   __slots__ = [
                'dna',
               ]
+  __zips__ = [
+              ( 'array:u8:8', 'dna'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -367,9 +394,16 @@ on the right.
     the message.
 
     """
-    p = MsgNapDeviceDnaResp._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -412,6 +446,9 @@ class MsgBootloaderHandshakeDepA(SBP):
   __slots__ = [
                'handshake',
               ]
+  __zips__ = [
+              ( 'array:u8', 'handshake'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -447,9 +484,16 @@ class MsgBootloaderHandshakeDepA(SBP):
     the message.
 
     """
-    p = MsgBootloaderHandshakeDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

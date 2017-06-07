@@ -14,12 +14,13 @@
 Orientation Messages
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/orientation.yaml with generate.py.
 # Please do not hand edit!
@@ -67,6 +68,12 @@ that time-matched RTK mode is used when the base station is moving.
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 'u32', 'heading'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -105,9 +112,16 @@ that time-matched RTK mode is used when the base station is moving.
     the message.
 
     """
-    p = MsgBaselineHeading._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -191,6 +205,18 @@ or Duro.
                'z_accuracy',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'w'),
+              ( 's32', 'x'),
+              ( 's32', 'y'),
+              ( 's32', 'z'),
+              ( 'float', 'w_accuracy'),
+              ( 'float', 'x_accuracy'),
+              ( 'float', 'y_accuracy'),
+              ( 'float', 'z_accuracy'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -235,9 +261,16 @@ or Duro.
     the message.
 
     """
-    p = MsgOrientQuat._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -313,6 +346,16 @@ INS versions of Swift Products and is not produced by Piksi Multi or Duro.
                'yaw_accuracy',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'roll'),
+              ( 's32', 'pitch'),
+              ( 's32', 'yaw'),
+              ( 'float', 'roll_accuracy'),
+              ( 'float', 'pitch_accuracy'),
+              ( 'float', 'yaw_accuracy'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -355,9 +398,16 @@ INS versions of Swift Products and is not produced by Piksi Multi or Duro.
     the message.
 
     """
-    p = MsgOrientEuler._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -425,6 +475,13 @@ and is not produced by Piksi Multi or Duro.
                'z',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'x'),
+              ( 's32', 'y'),
+              ( 's32', 'z'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -464,9 +521,16 @@ and is not produced by Piksi Multi or Duro.
     the message.
 
     """
-    p = MsgAngularRate._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

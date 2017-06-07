@@ -19,12 +19,13 @@ to Piksi Multi.
 
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/flash.yaml with generate.py.
 # Please do not hand edit!
@@ -76,6 +77,12 @@ starting address
                'addr_len',
                'data',
               ]
+  __zips__ = [
+              ( 'u8', 'target'),
+              ( 'array:u8:3', 'addr_start'),
+              ( 'u8', 'addr_len'),
+              ( 'array:u8', 'data'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -114,9 +121,16 @@ starting address
     the message.
 
     """
-    p = MsgFlashProgram._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -163,6 +177,9 @@ MSG_FLASH_PROGRAM, may return this message on failure.
   __slots__ = [
                'response',
               ]
+  __zips__ = [
+              ( 'u8', 'response'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -198,9 +215,16 @@ MSG_FLASH_PROGRAM, may return this message on failure.
     the message.
 
     """
-    p = MsgFlashDone._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -260,6 +284,11 @@ starting address
                'addr_start',
                'addr_len',
               ]
+  __zips__ = [
+              ( 'u8', 'target'),
+              ( 'array:u8:3', 'addr_start'),
+              ( 'u8', 'addr_len'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -297,9 +326,16 @@ starting address
     the message.
 
     """
-    p = MsgFlashReadReq._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -359,6 +395,11 @@ starting address
                'addr_start',
                'addr_len',
               ]
+  __zips__ = [
+              ( 'u8', 'target'),
+              ( 'array:u8:3', 'addr_start'),
+              ( 'u8', 'addr_len'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -396,9 +437,16 @@ starting address
     the message.
 
     """
-    p = MsgFlashReadResp._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -452,6 +500,10 @@ the M25)
                'target',
                'sector_num',
               ]
+  __zips__ = [
+              ( 'u8', 'target'),
+              ( 'u32', 'sector_num'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -488,9 +540,16 @@ the M25)
     the message.
 
     """
-    p = MsgFlashErase._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -535,6 +594,9 @@ memory. The device replies with a MSG_FLASH_DONE message.
   __slots__ = [
                'sector',
               ]
+  __zips__ = [
+              ( 'u32', 'sector'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -570,9 +632,16 @@ memory. The device replies with a MSG_FLASH_DONE message.
     the message.
 
     """
-    p = MsgStmFlashLockSector._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -617,6 +686,9 @@ memory. The device replies with a MSG_FLASH_DONE message.
   __slots__ = [
                'sector',
               ]
+  __zips__ = [
+              ( 'u32', 'sector'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -652,9 +724,16 @@ memory. The device replies with a MSG_FLASH_DONE message.
     the message.
 
     """
-    p = MsgStmFlashUnlockSector._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -688,6 +767,7 @@ ID in the payload.
 
   """
   __slots__ = []
+  __zips__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -749,6 +829,9 @@ ID in the payload..
   __slots__ = [
                'stm_id',
               ]
+  __zips__ = [
+              ( 'array:u8:12', 'stm_id'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -784,9 +867,16 @@ ID in the payload..
     the message.
 
     """
-    p = MsgStmUniqueIdResp._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -831,6 +921,9 @@ register. The device replies with a MSG_FLASH_DONE message.
   __slots__ = [
                'status',
               ]
+  __zips__ = [
+              ( 'array:u8:1', 'status'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -866,9 +959,16 @@ register. The device replies with a MSG_FLASH_DONE message.
     the message.
 
     """
-    p = MsgM25FlashWriteStatus._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

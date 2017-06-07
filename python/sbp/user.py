@@ -15,12 +15,13 @@ Messages reserved for use by the user.
 
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/user.yaml with generate.py.
 # Please do not hand edit!
@@ -54,6 +55,9 @@ maximum length of 255 bytes per message.
   __slots__ = [
                'contents',
               ]
+  __zips__ = [
+              ( 'array:u8', 'contents'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -89,9 +93,16 @@ maximum length of 255 bytes per message.
     the message.
 
     """
-    p = MsgUserData._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

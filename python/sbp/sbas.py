@@ -14,12 +14,13 @@
 SBAS data
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/sbas.yaml with generate.py.
@@ -66,6 +67,12 @@ parity of the data block and sends only blocks that pass the check.
                'message_type',
                'data',
               ]
+  __zips__ = [
+              ( 'GnssSignal', 'sid'),
+              ( 'u32', 'tow'),
+              ( 'u8', 'message_type'),
+              ( 'array:u8:27', 'data'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -104,9 +111,16 @@ parity of the data block and sends only blocks that pass the check.
     the message.
 
     """
-    p = MsgSbasRaw._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

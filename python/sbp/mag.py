@@ -14,12 +14,13 @@
 Magnetometer (mag) messages.
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/mag.yaml with generate.py.
 # Please do not hand edit!
@@ -71,6 +72,13 @@ time is unknown or invalid.
                'mag_y',
                'mag_z',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 'u8', 'tow_f'),
+              ( 's16', 'mag_x'),
+              ( 's16', 'mag_y'),
+              ( 's16', 'mag_z'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -110,9 +118,16 @@ time is unknown or invalid.
     the message.
 
     """
-    p = MsgMagRaw._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

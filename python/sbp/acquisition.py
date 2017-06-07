@@ -14,12 +14,13 @@
 Satellite acquisition messages from the device.
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/acquisition.yaml with generate.py.
@@ -89,35 +90,51 @@ The message is used to debug and measure the performance.
                'cf',
                'cp',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.job_type = kwargs.pop('job_type')
-      self.status = kwargs.pop('status')
-      self.cn0 = kwargs.pop('cn0')
-      self.int_time = kwargs.pop('int_time')
-      self.sid = kwargs.pop('sid')
-      self.bin_width = kwargs.pop('bin_width')
-      self.timestamp = kwargs.pop('timestamp')
-      self.time_spent = kwargs.pop('time_spent')
-      self.cf_min = kwargs.pop('cf_min')
-      self.cf_max = kwargs.pop('cf_max')
-      self.cf = kwargs.pop('cf')
-      self.cp = kwargs.pop('cp')
+  __zips__ = [
+              ('u8', 'job_type'),
+              ('u8', 'status'),
+              ('u16', 'cn0'),
+              ('u8', 'int_time'),
+              ('GnssSignal', 'sid'),
+              ('u16', 'bin_width'),
+              ('u32', 'timestamp'),
+              ('u32', 'time_spent'),
+              ('s32', 'cf_min'),
+              ('s32', 'cf_max'),
+              ('s32', 'cf'),
+              ('u32', 'cp'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = AcqSvProfile._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in AcqSvProfile.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return AcqSvProfile.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return AcqSvProfile.build(d)
+    except:
+      print traceback.print_exc()
     
 class AcqSvProfileDep(object):
   """AcqSvProfileDep.
@@ -179,35 +196,51 @@ class AcqSvProfileDep(object):
                'cf',
                'cp',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.job_type = kwargs.pop('job_type')
-      self.status = kwargs.pop('status')
-      self.cn0 = kwargs.pop('cn0')
-      self.int_time = kwargs.pop('int_time')
-      self.sid = kwargs.pop('sid')
-      self.bin_width = kwargs.pop('bin_width')
-      self.timestamp = kwargs.pop('timestamp')
-      self.time_spent = kwargs.pop('time_spent')
-      self.cf_min = kwargs.pop('cf_min')
-      self.cf_max = kwargs.pop('cf_max')
-      self.cf = kwargs.pop('cf')
-      self.cp = kwargs.pop('cp')
+  __zips__ = [
+              ('u8', 'job_type'),
+              ('u8', 'status'),
+              ('u16', 'cn0'),
+              ('u8', 'int_time'),
+              ('GnssSignalDep', 'sid'),
+              ('u16', 'bin_width'),
+              ('u32', 'timestamp'),
+              ('u32', 'time_spent'),
+              ('s32', 'cf_min'),
+              ('s32', 'cf_max'),
+              ('s32', 'cf'),
+              ('u32', 'cp'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = AcqSvProfileDep._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in AcqSvProfileDep.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return AcqSvProfileDep.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return AcqSvProfileDep.build(d)
+    except:
+      print traceback.print_exc()
     
 SBP_MSG_ACQ_RESULT = 0x002F
 class MsgAcqResult(SBP):
@@ -252,6 +285,12 @@ ratio.
                'cf',
                'sid',
               ]
+  __zips__ = [
+              ( 'float', 'cn0'),
+              ( 'float', 'cp'),
+              ( 'float', 'cf'),
+              ( 'GnssSignal', 'sid'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -290,9 +329,16 @@ ratio.
     the message.
 
     """
-    p = MsgAcqResult._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -347,6 +393,12 @@ class MsgAcqResultDepC(SBP):
                'cf',
                'sid',
               ]
+  __zips__ = [
+              ( 'float', 'cn0'),
+              ( 'float', 'cp'),
+              ( 'float', 'cf'),
+              ( 'GnssSignalDep', 'sid'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -385,9 +437,16 @@ class MsgAcqResultDepC(SBP):
     the message.
 
     """
-    p = MsgAcqResultDepC._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -444,6 +503,12 @@ be in units of dB Hz in a later revision of this message.
                'cf',
                'sid',
               ]
+  __zips__ = [
+              ( 'float', 'snr'),
+              ( 'float', 'cp'),
+              ( 'float', 'cf'),
+              ( 'GnssSignalDep', 'sid'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -482,9 +547,16 @@ be in units of dB Hz in a later revision of this message.
     the message.
 
     """
-    p = MsgAcqResultDepB._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -543,6 +615,12 @@ acquisition was attempted
                'cf',
                'prn',
               ]
+  __zips__ = [
+              ( 'float', 'snr'),
+              ( 'float', 'cp'),
+              ( 'float', 'cf'),
+              ( 'u8', 'prn'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -581,9 +659,16 @@ acquisition was attempted
     the message.
 
     """
-    p = MsgAcqResultDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -628,6 +713,9 @@ The message is used to debug and measure the performance.
   __slots__ = [
                'acq_sv_profile',
               ]
+  __zips__ = [
+              ( 'array:AcqSvProfile', 'acq_sv_profile'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -663,9 +751,16 @@ The message is used to debug and measure the performance.
     the message.
 
     """
-    p = MsgAcqSvProfile._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -708,6 +803,9 @@ class MsgAcqSvProfileDep(SBP):
   __slots__ = [
                'acq_sv_profile',
               ]
+  __zips__ = [
+              ( 'array:AcqSvProfileDep', 'acq_sv_profile'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -743,9 +841,16 @@ class MsgAcqSvProfileDep(SBP):
     the message.
 
     """
-    p = MsgAcqSvProfileDep._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

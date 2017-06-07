@@ -16,12 +16,13 @@ e.g. camera shutter time.
 
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/ext_events.yaml with generate.py.
 # Please do not hand edit!
@@ -73,6 +74,13 @@ from -500000 to 500000)
                'flags',
                'pin',
               ]
+  __zips__ = [
+              ( 'u16', 'wn'),
+              ( 'u32', 'tow'),
+              ( 's32', 'ns_residual'),
+              ( 'u8', 'flags'),
+              ( 'u8', 'pin'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -112,9 +120,16 @@ from -500000 to 500000)
     the message.
 
     """
-    p = MsgExtEvent._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

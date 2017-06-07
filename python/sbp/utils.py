@@ -41,6 +41,8 @@ def walk_json_dict(coll):
     return coll.decode('ascii')
   elif hasattr(coll, '__iter__') and not isinstance(coll, str):
     return [walk_json_dict(seq) for seq in coll]
+  elif hasattr(coll, '__slots__'):
+    return dict([(k, walk_json_dict(getattr(coll, k))) for k in coll.__slots__])
   else:
     return coll
 

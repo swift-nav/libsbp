@@ -14,12 +14,13 @@
 Precise State Space Representation (SSR) corrections format
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/ssr.yaml with generate.py.
@@ -48,25 +49,41 @@ The corrections are conform with typical RTCMv3 MT1059 and 1065.
                'code',
                'value',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.code = kwargs.pop('code')
-      self.value = kwargs.pop('value')
+  __zips__ = [
+              ('u8', 'code'),
+              ('s16', 'value'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = CodeBiasesContent._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in CodeBiasesContent.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return CodeBiasesContent.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return CodeBiasesContent.build(d)
+    except:
+      print traceback.print_exc()
     
 class PhaseBiasesContent(object):
   """PhaseBiasesContent.
@@ -104,28 +121,44 @@ Increased for every discontinuity in phase.
                'discontinuity_counter',
                'bias',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.code = kwargs.pop('code')
-      self.integer_indicator = kwargs.pop('integer_indicator')
-      self.widelane_integer_indicator = kwargs.pop('widelane_integer_indicator')
-      self.discontinuity_counter = kwargs.pop('discontinuity_counter')
-      self.bias = kwargs.pop('bias')
+  __zips__ = [
+              ('u8', 'code'),
+              ('u8', 'integer_indicator'),
+              ('u8', 'widelane_integer_indicator'),
+              ('u8', 'discontinuity_counter'),
+              ('s32', 'bias'),
+             ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = PhaseBiasesContent._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in PhaseBiasesContent.__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return PhaseBiasesContent.build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return PhaseBiasesContent.build(d)
+    except:
+      print traceback.print_exc()
     
 SBP_MSG_SSR_ORBIT_CLOCK = 0x05DD
 class MsgSsrOrbitClock(SBP):
@@ -212,6 +245,22 @@ generating configuration
                'c1',
                'c2',
               ]
+  __zips__ = [
+              ( 'GPSTimeSec', 'time'),
+              ( 'GnssSignal', 'sid'),
+              ( 'u8', 'update_interval'),
+              ( 'u8', 'iod_ssr'),
+              ( 'u32', 'iod'),
+              ( 's32', 'radial'),
+              ( 's32', 'along'),
+              ( 's32', 'cross'),
+              ( 's32', 'dot_radial'),
+              ( 's32', 'dot_along'),
+              ( 's32', 'dot_cross'),
+              ( 's32', 'c0'),
+              ( 's32', 'c1'),
+              ( 's32', 'c2'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -260,9 +309,16 @@ generating configuration
     the message.
 
     """
-    p = MsgSsrOrbitClock._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -364,6 +420,22 @@ generating configuration
                'c1',
                'c2',
               ]
+  __zips__ = [
+              ( 'GPSTimeSec', 'time'),
+              ( 'GnssSignal', 'sid'),
+              ( 'u8', 'update_interval'),
+              ( 'u8', 'iod_ssr'),
+              ( 'u8', 'iod'),
+              ( 's32', 'radial'),
+              ( 's32', 'along'),
+              ( 's32', 'cross'),
+              ( 's32', 'dot_radial'),
+              ( 's32', 'dot_along'),
+              ( 's32', 'dot_cross'),
+              ( 's32', 'c0'),
+              ( 's32', 'c1'),
+              ( 's32', 'c2'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -412,9 +484,16 @@ generating configuration
     the message.
 
     """
-    p = MsgSsrOrbitClockDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -480,6 +559,13 @@ generating configuration
                'iod_ssr',
                'biases',
               ]
+  __zips__ = [
+              ( 'GPSTimeSec', 'time'),
+              ( 'GnssSignal', 'sid'),
+              ( 'u8', 'update_interval'),
+              ( 'u8', 'iod_ssr'),
+              ( 'array:CodeBiasesContent', 'biases'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -519,9 +605,16 @@ generating configuration
     the message.
 
     """
-    p = MsgSsrCodeBiases._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -609,6 +702,17 @@ satellite being tracked.
                'yaw_rate',
                'biases',
               ]
+  __zips__ = [
+              ( 'GPSTimeSec', 'time'),
+              ( 'GnssSignal', 'sid'),
+              ( 'u8', 'update_interval'),
+              ( 'u8', 'iod_ssr'),
+              ( 'u8', 'dispersive_bias'),
+              ( 'u8', 'mw_consistency'),
+              ( 'u16', 'yaw'),
+              ( 's8', 'yaw_rate'),
+              ( 'array:PhaseBiasesContent', 'biases'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -652,9 +756,16 @@ satellite being tracked.
     the message.
 
     """
-    p = MsgSsrPhaseBiases._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

@@ -32,12 +32,13 @@ There is no inertial navigation capability on Piksi Multi or Duro.
 
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/navigation.yaml with generate.py.
 # Please do not hand edit!
@@ -96,6 +97,12 @@ from -500000 to 500000)
                'ns_residual',
                'flags',
               ]
+  __zips__ = [
+              ( 'u16', 'wn'),
+              ( 'u32', 'tow'),
+              ( 's32', 'ns_residual'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -134,9 +141,16 @@ from -500000 to 500000)
     the message.
 
     """
-    p = MsgGPSTime._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -213,6 +227,17 @@ which indicate the source of the UTC offset value and source of the time fix.
                'seconds',
                'ns',
               ]
+  __zips__ = [
+              ( 'u8', 'flags'),
+              ( 'u32', 'tow'),
+              ( 'u16', 'year'),
+              ( 'u8', 'month'),
+              ( 'u8', 'day'),
+              ( 'u8', 'hours'),
+              ( 'u8', 'minutes'),
+              ( 'u8', 'seconds'),
+              ( 'u32', 'ns'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -256,9 +281,16 @@ which indicate the source of the UTC offset value and source of the time fix.
     the message.
 
     """
-    p = MsgUtcTime._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -329,6 +361,15 @@ corresponds to differential or SPP solution.
                'vdop',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 'u16', 'gdop'),
+              ( 'u16', 'pdop'),
+              ( 'u16', 'tdop'),
+              ( 'u16', 'hdop'),
+              ( 'u16', 'vdop'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -370,9 +411,16 @@ corresponds to differential or SPP solution.
     the message.
 
     """
-    p = MsgDops._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -447,6 +495,15 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 'double', 'x'),
+              ( 'double', 'y'),
+              ( 'double', 'z'),
+              ( 'u16', 'accuracy'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -488,9 +545,16 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     the message.
 
     """
-    p = MsgPosECEF._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -586,6 +650,20 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 'double', 'x'),
+              ( 'double', 'y'),
+              ( 'double', 'z'),
+              ( 'float', 'cov_x_x'),
+              ( 'float', 'cov_x_y'),
+              ( 'float', 'cov_x_z'),
+              ( 'float', 'cov_y_y'),
+              ( 'float', 'cov_y_z'),
+              ( 'float', 'cov_z_z'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -632,9 +710,16 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     the message.
 
     """
-    p = MsgPosECEFCov._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -713,6 +798,16 @@ matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 'double', 'lat'),
+              ( 'double', 'lon'),
+              ( 'double', 'height'),
+              ( 'u16', 'h_accuracy'),
+              ( 'u16', 'v_accuracy'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -755,9 +850,16 @@ matching time-of-week (tow).
     the message.
 
     """
-    p = MsgPosLLH._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -852,6 +954,20 @@ measurement and care should be taken with the sign convention.
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 'double', 'lat'),
+              ( 'double', 'lon'),
+              ( 'double', 'height'),
+              ( 'float', 'cov_n_n'),
+              ( 'float', 'cov_n_e'),
+              ( 'float', 'cov_n_d'),
+              ( 'float', 'cov_e_e'),
+              ( 'float', 'cov_e_d'),
+              ( 'float', 'cov_d_d'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -898,9 +1014,16 @@ measurement and care should be taken with the sign convention.
     the message.
 
     """
-    p = MsgPosLLHCov._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -972,6 +1095,15 @@ matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'x'),
+              ( 's32', 'y'),
+              ( 's32', 'z'),
+              ( 'u16', 'accuracy'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1013,9 +1145,16 @@ matching time-of-week (tow).
     the message.
 
     """
-    p = MsgBaselineECEF._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1092,6 +1231,16 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'n'),
+              ( 's32', 'e'),
+              ( 's32', 'd'),
+              ( 'u16', 'h_accuracy'),
+              ( 'u16', 'v_accuracy'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1134,9 +1283,16 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     the message.
 
     """
-    p = MsgBaselineNED._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1207,6 +1363,15 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'x'),
+              ( 's32', 'y'),
+              ( 's32', 'z'),
+              ( 'u16', 'accuracy'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1248,9 +1413,16 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     the message.
 
     """
-    p = MsgVelECEF._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1340,6 +1512,20 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'x'),
+              ( 's32', 'y'),
+              ( 's32', 'z'),
+              ( 'float', 'cov_x_x'),
+              ( 'float', 'cov_x_y'),
+              ( 'float', 'cov_x_z'),
+              ( 'float', 'cov_y_y'),
+              ( 'float', 'cov_y_z'),
+              ( 'float', 'cov_z_z'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1386,9 +1572,16 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     the message.
 
     """
-    p = MsgVelECEFCov._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1465,6 +1658,16 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'n'),
+              ( 's32', 'e'),
+              ( 's32', 'd'),
+              ( 'u16', 'h_accuracy'),
+              ( 'u16', 'v_accuracy'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1507,9 +1710,16 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     the message.
 
     """
-    p = MsgVelNED._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1602,6 +1812,20 @@ portion of the 3x3 covariance matrix.
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'n'),
+              ( 's32', 'e'),
+              ( 's32', 'd'),
+              ( 'float', 'cov_n_n'),
+              ( 'float', 'cov_n_e'),
+              ( 'float', 'cov_n_d'),
+              ( 'float', 'cov_e_e'),
+              ( 'float', 'cov_e_d'),
+              ( 'float', 'cov_d_d'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1648,9 +1872,16 @@ portion of the 3x3 covariance matrix.
     the message.
 
     """
-    p = MsgVelNEDCov._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1745,6 +1976,20 @@ products and is not available from Piksi Multi or Duro.
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'x'),
+              ( 's32', 'y'),
+              ( 's32', 'z'),
+              ( 'float', 'cov_x_x'),
+              ( 'float', 'cov_x_y'),
+              ( 'float', 'cov_x_z'),
+              ( 'float', 'cov_y_y'),
+              ( 'float', 'cov_y_z'),
+              ( 'float', 'cov_z_z'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1791,9 +2036,16 @@ products and is not available from Piksi Multi or Duro.
     the message.
 
     """
-    p = MsgVelBody._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1842,6 +2094,10 @@ Differential solution
                'tow',
                'age',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 'u16', 'age'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1878,9 +2134,16 @@ Differential solution
     the message.
 
     """
-    p = MsgAgeCorrections._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1950,6 +2213,12 @@ from -500000 to 500000)
                'ns_residual',
                'flags',
               ]
+  __zips__ = [
+              ( 'u16', 'wn'),
+              ( 'u32', 'tow'),
+              ( 's32', 'ns_residual'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1988,9 +2257,16 @@ from -500000 to 500000)
     the message.
 
     """
-    p = MsgGPSTimeDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2056,6 +2332,14 @@ precision.
                'hdop',
                'vdop',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 'u16', 'gdop'),
+              ( 'u16', 'pdop'),
+              ( 'u16', 'tdop'),
+              ( 'u16', 'hdop'),
+              ( 'u16', 'vdop'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2096,9 +2380,16 @@ precision.
     the message.
 
     """
-    p = MsgDopsDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2175,6 +2466,15 @@ to 0.
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 'double', 'x'),
+              ( 'double', 'y'),
+              ( 'double', 'z'),
+              ( 'u16', 'accuracy'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2216,9 +2516,16 @@ to 0.
     the message.
 
     """
-    p = MsgPosECEFDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2301,6 +2608,16 @@ implemented). Defaults to 0.
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 'double', 'lat'),
+              ( 'double', 'lon'),
+              ( 'double', 'height'),
+              ( 'u16', 'h_accuracy'),
+              ( 'u16', 'v_accuracy'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2343,9 +2660,16 @@ implemented). Defaults to 0.
     the message.
 
     """
-    p = MsgPosLLHDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2418,6 +2742,15 @@ matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'x'),
+              ( 's32', 'y'),
+              ( 's32', 'z'),
+              ( 'u16', 'accuracy'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2459,9 +2792,16 @@ matching time-of-week (tow).
     the message.
 
     """
-    p = MsgBaselineECEFDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2542,6 +2882,16 @@ implemented). Defaults to 0.
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'n'),
+              ( 's32', 'e'),
+              ( 's32', 'd'),
+              ( 'u16', 'h_accuracy'),
+              ( 'u16', 'v_accuracy'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2584,9 +2934,16 @@ implemented). Defaults to 0.
     the message.
 
     """
-    p = MsgBaselineNEDDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2658,6 +3015,15 @@ to 0.
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'x'),
+              ( 's32', 'y'),
+              ( 's32', 'z'),
+              ( 'u16', 'accuracy'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2699,9 +3065,16 @@ to 0.
     the message.
 
     """
-    p = MsgVelECEFDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2780,6 +3153,16 @@ implemented). Defaults to 0.
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 's32', 'n'),
+              ( 's32', 'e'),
+              ( 's32', 'd'),
+              ( 'u16', 'h_accuracy'),
+              ( 'u16', 'v_accuracy'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2822,9 +3205,16 @@ implemented). Defaults to 0.
     the message.
 
     """
-    p = MsgVelNEDDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -2882,6 +3272,12 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
+  __zips__ = [
+              ( 'u32', 'tow'),
+              ( 'u32', 'heading'),
+              ( 'u8', 'n_sats'),
+              ( 'u8', 'flags'),
+             ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2920,9 +3316,16 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     the message.
 
     """
-    p = MsgBaselineHeadingDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
