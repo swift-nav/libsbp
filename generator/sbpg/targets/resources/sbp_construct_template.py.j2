@@ -16,8 +16,11 @@
 
 from construct import *
 import json
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
+                      greedy_string
+import numpy as np
+import traceback
 
 ((*- for i in include *))
 from (((module_path))).(((i))) import *
@@ -55,33 +58,42 @@ class ((( m.identifier )))(object):
                '((( f.identifier )))',
                ((*- endfor *))
               ]
+  __zips__ = [((* for f in m.fields *))
+              ('((( f.type_id )))', '((( f.identifier )))'),
+              ((*- endfor *))
+             ]
   ((*- endif *))
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      ((*- if m.fields *))
-      self.from_binary(payload)
-      ((*- else *))
-      self.payload = payload
-      ((*- endif *))
-      ((*- if m.fields *))
-    else:
-        ((*- for f in m.fields *))
-      self.(((f.identifier))) = kwargs.pop('(((f.identifier)))')
-        ((*- endfor *))
-      ((*- endif *))
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   ((* if m.fields *))
-  def from_binary(self, d):
-    p = ((( m.identifier )))._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, d, offset=0):
+    try:
+      size = 0
+      for t, s in ((( m.identifier ))).__zips__:
+        if t in TYPES_KEYS_NP:
+          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+          size += a.itemsize
+          setattr(self, s, a.item())
+        else:
+          o = globals()[t]()
+          size += o.from_binary(d, size + offset)
+          setattr(self, s, o)
+      return size
+    except:
+      print traceback.print_exc()
+      return 0
 
   def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return ((( m.identifier ))).build(d)
+    try:
+      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+      return ((( m.identifier ))).build(d)
+    except:
+      print traceback.print_exc()
   ((*- endif *))
     ((* endif *))
   ((*- endif *))
@@ -128,8 +140,13 @@ class ((( m.identifier | classnameify )))(SBP):
                '((( f.identifier )))',
                ((*- endfor *))
               ]
+  __zips__ = [((* for f in m.fields *))
+              ( ((( f | construct_py_np ))), '((( f.identifier )))'),
+              ((*- endfor *))
+             ]
   ((*- else *))
   __slots__ = []
+  __zips__ = []
   ((*- endif *))
 
   def __init__(self, sbp=None, **kwargs):
@@ -176,9 +193,16 @@ class ((( m.identifier | classnameify )))(SBP):
     the message.
 
     """
-    p = ((( m.identifier | classnameify )))._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    try:
+      self._from_binary(d)
+    except:
+      print traceback.print_exc()
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
