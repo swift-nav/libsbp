@@ -19,13 +19,12 @@ except ImportError:
 
 
 class PySerialDriver(BaseDriver):
+
     """
     PySerialDriver
-
     The :class:`PySerialDriver` class reads SBP messages from a serial port
     using the pyserial driver.  This is mostly redundant, is the Serial object's
     read and write methods can be used directly.
-
     Parameters
     ----------
     port : string
@@ -38,17 +37,22 @@ class PySerialDriver(BaseDriver):
       http://pyserial.sourceforge.net/pyserial_api.html#urls for more details.
     baud : int
       Baud rate of serial port (defaults to 115200)
-
     """
 
-    def __init__(self, port, baud=115200, rtscts=False):
+    def __init__(self,
+                 port,
+                 baud=115200,
+                 rtscts=False,
+                 timeout=0.03,
+                 blocksize=16 * 1024):
         import serial
         try:
             handle = serial.serial_for_url(port)
             handle.baudrate = baud
-            handle.timeout = 1
+            handle.timeout = timeout
             handle.rtscts = rtscts
             super(PySerialDriver, self).__init__(handle)
+            self.buf = bytes()
         except (OSError, serial.SerialException) as e:
             print()
             print("Error opening serial device '%s':" % port)
@@ -69,14 +73,17 @@ class PySerialDriver(BaseDriver):
     def read(self, size):
         """
         Read wrapper.
-
         Parameters
         ----------
         size : int
           Number of bytes to read.
         """
         try:
-            return self.handle.read(size)
+            while len(self.buf) < size:
+                self.buf += self.handle.read(16 * 1024)
+            ret = self.buf[:size]
+            self.buf = self.buf[size:]
+            return ret
         except (OSError, serial.SerialException):
             print()
             print("Piksi disconnected")
@@ -87,7 +94,6 @@ class PySerialDriver(BaseDriver):
     def write(self, s):
         """
         Write wrapper.
-
         Parameters
         ----------
         s : bytes
@@ -95,8 +101,7 @@ class PySerialDriver(BaseDriver):
         """
         try:
             return self.handle.write(s)
-        except (OSError, serial.SerialException,
-                serial.writeTimeoutError) as e:
+        except (OSError, serial.SerialException, serial.writeTimeoutError) as e:
             if e == serial.writeTimeoutError:
                 print("sbp pyserial_driver: writeTimeoutError")
                 return 0
