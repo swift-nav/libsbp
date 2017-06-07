@@ -36,6 +36,21 @@ CONSTRUCT_CODE = {
   'double': 'LFloat64',
 }
 
+
+CONSTRUCT_CODE_NP = {
+  'u8': 'np.uint8',
+  'u16': 'np.uint16',
+  'u32': 'np.uint32',
+  'u64': 'np.uint64',
+  's8': 'np.int8',
+  's16': 'np.int16',
+  's32': 'np.int32',
+  's64': 'np.int64',
+  'float': 'np.float32',
+  'double': 'np.float64',
+}
+
+
 PYDOC_CODE = {
   'u8': 'int',
   'u16': 'int',
@@ -81,6 +96,33 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
   return formatted
 
 
+def construct_format_np(f, type_map=CONSTRUCT_CODE_NP):
+  """
+  Formats for Construct.
+  """
+  formatted = ""
+  if type_map.get(f.type_id, None):
+    return "'%s'" % (f.type_id)
+  elif f.type_id == 'string' and f.options.get('size', None):
+    return "'str:%d'" % (f.options['size'].value)
+  elif f.type_id == 'string':
+    return "'str'"
+  elif f.type_id == 'array' and f.options.get('size', None):
+    fill = f.options['fill'].value
+    f_ = copy.copy(f)
+    f_.type_id = fill
+    s = f.options.get('size', None).value
+    return "'array:%s:%d'" % (construct_format_np(f_).replace('\'', ''), s)
+  elif f.type_id == 'array':
+    fill = f.options['fill'].value
+    f_ = copy.copy(f)
+    f_.type_id = fill
+    return "'array:%s'" % construct_format_np(f_).replace('\'', '')
+  else:
+    return "'%s'" % (f.type_id)
+  return formatted
+
+
 def pydoc_format(type_id, pydoc=PYDOC_CODE):
   """
   Formats type for pydoc.
@@ -95,6 +137,7 @@ def classnameify(s):
   return ''.join(w if w in ACRONYMS else w.title() for w in s.split('_'))
 
 JENV.filters['construct_py'] = construct_format
+JENV.filters['construct_py_np'] = construct_format_np
 JENV.filters['classnameify'] = classnameify
 JENV.filters['pydoc'] = pydoc_format
 
