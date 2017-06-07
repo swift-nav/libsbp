@@ -16,7 +16,10 @@ SBP message handling.
 import collections
 import threading
 import weakref
-from Queue import Queue
+
+from collections import deque
+from time import sleep
+
 
 class Handler(object):
   """
@@ -251,23 +254,29 @@ class Handler(object):
     messages into the queue, and iterable interface for getting them out.
     """
     def __init__(self, maxsize):
-      self._queue = Queue(maxsize)
+      self._queue = deque()
       self._broken = False
 
     def __iter__(self):
       return self
 
     def __call__(self, msg, **metadata):
-      self._queue.put((msg, metadata), False)
+      self._queue.append((msg, metadata))
 
     def breakiter(self):
       self._broken = True
-      self._queue.put(None, True, 1.0)
+      self._queue.append(None)
 
     def next(self):
-       if self._broken and self._queue.empty():
-         raise StopIteration
-       m = self._queue.get(True)
+       m = None
+       while True:
+         if self._broken and not self._queue:
+           raise StopIteration
+         if self._queue:
+           m = self._queue.popleft()
+           break
+         else:
+           sleep(0.5)
        if self._broken and m is None:
          raise StopIteration
        return m
