@@ -9,3 +9,4 @@ pylibftdi==0.14.2
 pyserial==2.7
 pyyaml==3.11
 tox==1.8.1
+numpy
