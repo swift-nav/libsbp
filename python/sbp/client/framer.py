@@ -17,6 +17,8 @@ import time
 import uuid
 import six
 
+import numpy as np
+
 
 class Framer(six.Iterator):
     """
@@ -109,25 +111,28 @@ class Framer(six.Iterator):
             if self._verbose:
                 print("Host Side Unhandled byte: 0x%02x" % ord(preamble))
             return None
+
         # hdr
         hdr = self._readall(5)
-        msg_crc = crc16(hdr)
-        msg_type, sender, msg_len = struct.unpack("<HHB", hdr)
+        msg_type, sender, msg_len = np.ndarray(1, 'u2, u2, u1', hdr)[0]
+
         # data
         data = self._readall(msg_len)
-        msg_crc = crc16(data, msg_crc)
+        msg_crc = crc16(hdr + data)
+
         # crc
         crc = self._readall(2)
-        crc, = struct.unpack("<H", crc)
+        crc = np.ndarray(1, 'u2', crc)[0]
         if crc != msg_crc:
             if self._verbose:
                 print("crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc))
             return None
+
         msg = SBP(msg_type, sender, msg_len, data, crc)
         try:
             msg = self._dispatch(msg)
         except:
-            pass
+            print 'Error dispatching sbp msg of type:', msg_type
         return msg
 
     def __call__(self, *msgs, **metadata):
