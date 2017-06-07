@@ -40,14 +40,20 @@ class PySerialDriver(BaseDriver):
     Baud rate of serial port (defaults to 115200)
 
   """
-  def __init__(self, port, baud=115200, rtscts=False):
+  def __init__(self,
+               port,
+               baud=115200,
+               rtscts=False,
+               timeout=0.03,
+               blocksize=16*1024):
     import serial
     try:
       handle = serial.serial_for_url(port)
       handle.baudrate = baud
-      handle.timeout = 1
+      handle.timeout = timeout
       handle.rtscts = rtscts
       super(PySerialDriver, self).__init__(handle)
+      self.buf = bytes()
     except (OSError, serial.SerialException) as e:
       print
       print "Error opening serial device '%s':" % port
@@ -75,7 +81,11 @@ class PySerialDriver(BaseDriver):
       Number of bytes to read.
     """
     try:
-      return self.handle.read(size)
+      while len(self.buf) < size:
+        self.buf += self.handle.read(16*1024)
+      ret = self.buf[:size]
+      self.buf = self.buf[size:]
+      return ret
     except (OSError, serial.SerialException):
       print
       print "Piksi disconnected"
@@ -113,3 +123,4 @@ class PySerialDriver(BaseDriver):
       self.close()
     except (OSError, SerialError, serial.SerialException) as e:
       pass
+
