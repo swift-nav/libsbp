@@ -352,7 +352,7 @@ on the right.
 
   """
   _parser = Struct("MsgNapDeviceDnaResp",
-                   Array(8, ULInt8('dna')),)
+                   Struct('dna', Array(8, ULInt8('dna'))),)
   __slots__ = [
                'dna',
               ]

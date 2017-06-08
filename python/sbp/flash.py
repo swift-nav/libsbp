@@ -68,7 +68,7 @@ starting address
   """
   _parser = Struct("MsgFlashProgram",
                    ULInt8('target'),
-                   Array(3, ULInt8('addr_start')),
+                   Struct('addr_start', Array(3, ULInt8('addr_start'))),
                    ULInt8('addr_len'),
                    OptionalGreedyRange(ULInt8('data')),)
   __slots__ = [
@@ -277,7 +277,7 @@ starting address
   """
   _parser = Struct("MsgFlashReadReq",
                    ULInt8('target'),
-                   Array(3, ULInt8('addr_start')),
+                   Struct('addr_start', Array(3, ULInt8('addr_start'))),
                    ULInt8('addr_len'),)
   __slots__ = [
                'target',
@@ -388,7 +388,7 @@ starting address
   """
   _parser = Struct("MsgFlashReadResp",
                    ULInt8('target'),
-                   Array(3, ULInt8('addr_start')),
+                   Struct('addr_start', Array(3, ULInt8('addr_start'))),
                    ULInt8('addr_len'),)
   __slots__ = [
                'target',
@@ -825,7 +825,7 @@ ID in the payload..
 
   """
   _parser = Struct("MsgStmUniqueIdResp",
-                   Array(12, ULInt8('stm_id')),)
+                   Struct('stm_id', Array(12, ULInt8('stm_id'))),)
   __slots__ = [
                'stm_id',
               ]
@@ -917,7 +917,7 @@ register. The device replies with a MSG_FLASH_DONE message.
 
   """
   _parser = Struct("MsgM25FlashWriteStatus",
-                   Array(1, ULInt8('status')),)
+                   Struct('status', Array(1, ULInt8('status'))),)
   __slots__ = [
                'status',
               ]

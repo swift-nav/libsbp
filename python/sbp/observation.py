@@ -1640,9 +1640,9 @@ class MsgEphemerisSbasDepA(SBP):
   """
   _parser = Struct("MsgEphemerisSbasDepA",
                    Struct('common', EphemerisCommonContentDepA._parser),
-                   Array(3, LFloat64('pos')),
-                   Array(3, LFloat64('vel')),
-                   Array(3, LFloat64('acc')),
+                   Struct('pos', Array(3, LFloat64('pos'))),
+                   Struct('vel', Array(3, LFloat64('vel'))),
+                   Struct('acc', Array(3, LFloat64('acc'))),
                    LFloat64('a_gf0'),
                    LFloat64('a_gf1'),)
   __slots__ = [
@@ -1767,9 +1767,9 @@ for more details.
                    Struct('common', EphemerisCommonContentDepA._parser),
                    LFloat64('gamma'),
                    LFloat64('tau'),
-                   Array(3, LFloat64('pos')),
-                   Array(3, LFloat64('vel')),
-                   Array(3, LFloat64('acc')),)
+                   Struct('pos', Array(3, LFloat64('pos'))),
+                   Struct('vel', Array(3, LFloat64('vel'))),
+                   Struct('acc', Array(3, LFloat64('acc'))),)
   __slots__ = [
                'common',
                'gamma',
@@ -1884,9 +1884,9 @@ class MsgEphemerisSbas(SBP):
   """
   _parser = Struct("MsgEphemerisSbas",
                    Struct('common', EphemerisCommonContent._parser),
-                   Array(3, LFloat64('pos')),
-                   Array(3, LFloat64('vel')),
-                   Array(3, LFloat64('acc')),
+                   Struct('pos', Array(3, LFloat64('pos'))),
+                   Struct('vel', Array(3, LFloat64('vel'))),
+                   Struct('acc', Array(3, LFloat64('acc'))),
                    LFloat64('a_gf0'),
                    LFloat64('a_gf1'),)
   __slots__ = [
@@ -2011,9 +2011,9 @@ for more details.
                    Struct('common', EphemerisCommonContent._parser),
                    LFloat64('gamma'),
                    LFloat64('tau'),
-                   Array(3, LFloat64('pos')),
-                   Array(3, LFloat64('vel')),
-                   Array(3, LFloat64('acc')),)
+                   Struct('pos', Array(3, LFloat64('pos'))),
+                   Struct('vel', Array(3, LFloat64('vel'))),
+                   Struct('acc', Array(3, LFloat64('acc'))),)
   __slots__ = [
                'common',
                'gamma',
@@ -2141,9 +2141,9 @@ for more details.
                    LFloat64('gamma'),
                    LFloat64('tau'),
                    LFloat64('d_tau'),
-                   Array(3, LFloat64('pos')),
-                   Array(3, LFloat64('vel')),
-                   Array(3, LFloat64('acc')),
+                   Struct('pos', Array(3, LFloat64('pos'))),
+                   Struct('vel', Array(3, LFloat64('vel'))),
+                   Struct('acc', Array(3, LFloat64('acc'))),
                    ULInt8('fcn'),)
   __slots__ = [
                'common',
@@ -4347,7 +4347,7 @@ index (SV orbital slot)  fcns[index]
   _parser = Struct("MsgFcnsGlo",
                    ULInt16('wn'),
                    ULInt32('tow_ms'),
-                   Array(32, ULInt8('fcns')),)
+                   Struct('fcns', Array(32, ULInt8('fcns'))),)
   __slots__ = [
                'wn',
                'tow_ms',
