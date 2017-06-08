@@ -55,9 +55,9 @@ maximum length of 255 bytes per message.
   __slots__ = [
                'contents',
               ]
-  __zips__ = [
-              ( 'array:u8', 'contents'),
-             ]
+  _fields = [
+             ( 'array:u8', 'contents' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

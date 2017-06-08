@@ -58,10 +58,10 @@ class ((( m.identifier )))(object):
                '((( f.identifier )))',
                ((*- endfor *))
               ]
-  __zips__ = [((* for f in m.fields *))
-              ('((( f.type_id )))', '((( f.identifier )))'),
-              ((*- endfor *))
-             ]
+  _fields = [((* for f in m.fields *))
+             ( '((( f.type_id )))', '((( f.identifier )))' ),
+             ((*- endfor *))
+            ]
   ((*- endif *))
 
   def __repr__(self):
@@ -74,7 +74,7 @@ class ((( m.identifier )))(object):
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in ((( m.identifier ))).__zips__:
+      for t, s in ((( m.identifier )))._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -140,13 +140,13 @@ class ((( m.identifier | classnameify )))(SBP):
                '((( f.identifier )))',
                ((*- endfor *))
               ]
-  __zips__ = [((* for f in m.fields *))
-              ( ((( f | construct_py_np ))), '((( f.identifier )))'),
-              ((*- endfor *))
-             ]
+  _fields = [((* for f in m.fields *))
+             ( ((( f | construct_py_np ))), '((( f.identifier )))' ),
+             ((*- endfor *))
+            ]
   ((*- else *))
   __slots__ = []
-  __zips__ = []
+  _fields = []
   ((*- endif *))
 
   def __init__(self, sbp=None, **kwargs):

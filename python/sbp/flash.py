@@ -77,12 +77,12 @@ starting address
                'addr_len',
                'data',
               ]
-  __zips__ = [
-              ( 'u8', 'target'),
-              ( 'array:u8:3', 'addr_start'),
-              ( 'u8', 'addr_len'),
-              ( 'array:u8', 'data'),
-             ]
+  _fields = [
+             ( 'u8', 'target' ),
+             ( 'array:u8:3', 'addr_start' ),
+             ( 'u8', 'addr_len' ),
+             ( 'array:u8', 'data' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -177,9 +177,9 @@ MSG_FLASH_PROGRAM, may return this message on failure.
   __slots__ = [
                'response',
               ]
-  __zips__ = [
-              ( 'u8', 'response'),
-             ]
+  _fields = [
+             ( 'u8', 'response' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -284,11 +284,11 @@ starting address
                'addr_start',
                'addr_len',
               ]
-  __zips__ = [
-              ( 'u8', 'target'),
-              ( 'array:u8:3', 'addr_start'),
-              ( 'u8', 'addr_len'),
-             ]
+  _fields = [
+             ( 'u8', 'target' ),
+             ( 'array:u8:3', 'addr_start' ),
+             ( 'u8', 'addr_len' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -395,11 +395,11 @@ starting address
                'addr_start',
                'addr_len',
               ]
-  __zips__ = [
-              ( 'u8', 'target'),
-              ( 'array:u8:3', 'addr_start'),
-              ( 'u8', 'addr_len'),
-             ]
+  _fields = [
+             ( 'u8', 'target' ),
+             ( 'array:u8:3', 'addr_start' ),
+             ( 'u8', 'addr_len' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -500,10 +500,10 @@ the M25)
                'target',
                'sector_num',
               ]
-  __zips__ = [
-              ( 'u8', 'target'),
-              ( 'u32', 'sector_num'),
-             ]
+  _fields = [
+             ( 'u8', 'target' ),
+             ( 'u32', 'sector_num' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -594,9 +594,9 @@ memory. The device replies with a MSG_FLASH_DONE message.
   __slots__ = [
                'sector',
               ]
-  __zips__ = [
-              ( 'u32', 'sector'),
-             ]
+  _fields = [
+             ( 'u32', 'sector' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -686,9 +686,9 @@ memory. The device replies with a MSG_FLASH_DONE message.
   __slots__ = [
                'sector',
               ]
-  __zips__ = [
-              ( 'u32', 'sector'),
-             ]
+  _fields = [
+             ( 'u32', 'sector' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -767,7 +767,7 @@ ID in the payload.
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -829,9 +829,9 @@ ID in the payload..
   __slots__ = [
                'stm_id',
               ]
-  __zips__ = [
-              ( 'array:u8:12', 'stm_id'),
-             ]
+  _fields = [
+             ( 'array:u8:12', 'stm_id' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -921,9 +921,9 @@ register. The device replies with a MSG_FLASH_DONE message.
   __slots__ = [
                'status',
               ]
-  __zips__ = [
-              ( 'array:u8:1', 'status'),
-             ]
+  _fields = [
+             ( 'array:u8:1', 'status' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

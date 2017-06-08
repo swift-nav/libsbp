@@ -176,7 +176,7 @@ class SBP(object):
 
   def _from_binary(self, d):
     offset = 0
-    for t, s in self.__zips__:
+    for t, s in self._fields:
 
       # numpy dtype
       if t in TYPES_KEYS_NP:

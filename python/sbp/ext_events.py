@@ -74,13 +74,13 @@ from -500000 to 500000)
                'flags',
                'pin',
               ]
-  __zips__ = [
-              ( 'u16', 'wn'),
-              ( 'u32', 'tow'),
-              ( 's32', 'ns_residual'),
-              ( 'u8', 'flags'),
-              ( 'u8', 'pin'),
-             ]
+  _fields = [
+             ( 'u16', 'wn' ),
+             ( 'u32', 'tow' ),
+             ( 's32', 'ns_residual' ),
+             ( 'u8', 'flags' ),
+             ( 'u8', 'pin' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

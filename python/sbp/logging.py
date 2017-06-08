@@ -60,10 +60,10 @@ ERROR, WARNING, DEBUG, INFO logging levels.
                'level',
                'text',
               ]
-  __zips__ = [
-              ( 'u8', 'level'),
-              ( 'str', 'text'),
-             ]
+  _fields = [
+             ( 'u8', 'level' ),
+             ( 'str', 'text' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -167,11 +167,11 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
                'protocol',
                'fwd_payload',
               ]
-  __zips__ = [
-              ( 'u8', 'source'),
-              ( 'u8', 'protocol'),
-              ( 'str', 'fwd_payload'),
-             ]
+  _fields = [
+             ( 'u8', 'source' ),
+             ( 'u8', 'protocol' ),
+             ( 'str', 'fwd_payload' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -261,9 +261,9 @@ class MsgTweet(SBP):
   __slots__ = [
                'tweet',
               ]
-  __zips__ = [
-              ( 'str:140', 'tweet'),
-             ]
+  _fields = [
+             ( 'str:140', 'tweet' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -351,9 +351,9 @@ class MsgPrintDep(SBP):
   __slots__ = [
                'text',
               ]
-  __zips__ = [
-              ( 'str', 'text'),
-             ]
+  _fields = [
+             ( 'str', 'text' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

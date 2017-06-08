@@ -54,11 +54,11 @@ measured signal power.
                'fcn',
                'cn0',
               ]
-  __zips__ = [
-              ('GnssSignal16', 'sid'),
-              ('u8', 'fcn'),
-              ('u8', 'cn0'),
-             ]
+  _fields = [
+             ( 'GnssSignal16', 'sid' ),
+             ( 'u8', 'fcn' ),
+             ( 'u8', 'cn0' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -70,7 +70,7 @@ measured signal power.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in TrackingChannelState.__zips__:
+      for t, s in TrackingChannelState._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -112,10 +112,10 @@ class TrackingChannelCorrelation(object):
                'I',
                'Q',
               ]
-  __zips__ = [
-              ('s32', 'I'),
-              ('s32', 'Q'),
-             ]
+  _fields = [
+             ( 's32', 'I' ),
+             ( 's32', 'Q' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -127,7 +127,7 @@ class TrackingChannelCorrelation(object):
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in TrackingChannelCorrelation.__zips__:
+      for t, s in TrackingChannelCorrelation._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -172,11 +172,11 @@ class TrackingChannelStateDepA(object):
                'prn',
                'cn0',
               ]
-  __zips__ = [
-              ('u8', 'state'),
-              ('u8', 'prn'),
-              ('float', 'cn0'),
-             ]
+  _fields = [
+             ( 'u8', 'state' ),
+             ( 'u8', 'prn' ),
+             ( 'float', 'cn0' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -188,7 +188,7 @@ class TrackingChannelStateDepA(object):
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in TrackingChannelStateDepA.__zips__:
+      for t, s in TrackingChannelStateDepA._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -233,11 +233,11 @@ class TrackingChannelStateDepB(object):
                'sid',
                'cn0',
               ]
-  __zips__ = [
-              ('u8', 'state'),
-              ('GnssSignal', 'sid'),
-              ('float', 'cn0'),
-             ]
+  _fields = [
+             ( 'u8', 'state' ),
+             ( 'GnssSignal', 'sid' ),
+             ( 'float', 'cn0' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -249,7 +249,7 @@ class TrackingChannelStateDepB(object):
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in TrackingChannelStateDepB.__zips__:
+      for t, s in TrackingChannelStateDepB._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -393,29 +393,29 @@ signal is in continuous track.
                'pset_flags',
                'misc_flags',
               ]
-  __zips__ = [
-              ( 'u64', 'recv_time'),
-              ( 'GPSTime', 'tot'),
-              ( 'u32', 'P'),
-              ( 'u16', 'P_std'),
-              ( 'CarrierPhase', 'L'),
-              ( 'u8', 'cn0'),
-              ( 'u16', 'lock'),
-              ( 'GnssSignal', 'sid'),
-              ( 's32', 'doppler'),
-              ( 'u16', 'doppler_std'),
-              ( 'u32', 'uptime'),
-              ( 's16', 'clock_offset'),
-              ( 's16', 'clock_drift'),
-              ( 'u16', 'corr_spacing'),
-              ( 's8', 'acceleration'),
-              ( 'u8', 'sync_flags'),
-              ( 'u8', 'tow_flags'),
-              ( 'u8', 'track_flags'),
-              ( 'u8', 'nav_flags'),
-              ( 'u8', 'pset_flags'),
-              ( 'u8', 'misc_flags'),
-             ]
+  _fields = [
+             ( 'u64', 'recv_time' ),
+             ( 'GPSTime', 'tot' ),
+             ( 'u32', 'P' ),
+             ( 'u16', 'P_std' ),
+             ( 'CarrierPhase', 'L' ),
+             ( 'u8', 'cn0' ),
+             ( 'u16', 'lock' ),
+             ( 'GnssSignal', 'sid' ),
+             ( 's32', 'doppler' ),
+             ( 'u16', 'doppler_std' ),
+             ( 'u32', 'uptime' ),
+             ( 's16', 'clock_offset' ),
+             ( 's16', 'clock_drift' ),
+             ( 'u16', 'corr_spacing' ),
+             ( 's8', 'acceleration' ),
+             ( 'u8', 'sync_flags' ),
+             ( 'u8', 'tow_flags' ),
+             ( 'u8', 'track_flags' ),
+             ( 'u8', 'nav_flags' ),
+             ( 'u8', 'pset_flags' ),
+             ( 'u8', 'misc_flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -526,9 +526,9 @@ measurements for all tracked satellites.
   __slots__ = [
                'states',
               ]
-  __zips__ = [
-              ( 'array:TrackingChannelState', 'states'),
-             ]
+  _fields = [
+             ( 'array:TrackingChannelState', 'states' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -626,11 +626,11 @@ update interval.
                'sid',
                'corrs',
               ]
-  __zips__ = [
-              ( 'u8', 'channel'),
-              ( 'GnssSignal', 'sid'),
-              ( 'array:TrackingChannelCorrelation:3', 'corrs'),
-             ]
+  _fields = [
+             ( 'u8', 'channel' ),
+             ( 'GnssSignal', 'sid' ),
+             ( 'array:TrackingChannelCorrelation:3', 'corrs' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -720,9 +720,9 @@ class MsgTrackingStateDepA(SBP):
   __slots__ = [
                'states',
               ]
-  __zips__ = [
-              ( 'array:TrackingChannelStateDepA', 'states'),
-             ]
+  _fields = [
+             ( 'array:TrackingChannelStateDepA', 'states' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -810,9 +810,9 @@ class MsgTrackingStateDepB(SBP):
   __slots__ = [
                'states',
               ]
-  __zips__ = [
-              ( 'array:TrackingChannelStateDepB', 'states'),
-             ]
+  _fields = [
+             ( 'array:TrackingChannelStateDepB', 'states' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

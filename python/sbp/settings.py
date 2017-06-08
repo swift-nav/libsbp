@@ -48,7 +48,7 @@ configuration to its onboard flash memory file system.
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -110,9 +110,9 @@ process to this message when it is received from sender ID
   __slots__ = [
                'setting',
               ]
-  __zips__ = [
-              ( 'str', 'setting'),
-             ]
+  _fields = [
+             ( 'str', 'setting' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -203,9 +203,9 @@ this message when it is received from sender ID 0x42.
   __slots__ = [
                'setting',
               ]
-  __zips__ = [
-              ( 'str', 'setting'),
-             ]
+  _fields = [
+             ( 'str', 'setting' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -295,9 +295,9 @@ class MsgSettingsReadResp(SBP):
   __slots__ = [
                'setting',
               ]
-  __zips__ = [
-              ( 'str', 'setting'),
-             ]
+  _fields = [
+             ( 'str', 'setting' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -392,9 +392,9 @@ this message when it is received from sender ID 0x42.
   __slots__ = [
                'index',
               ]
-  __zips__ = [
-              ( 'u16', 'index'),
-             ]
+  _fields = [
+             ( 'u16', 'index' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -494,10 +494,10 @@ NULL-terminated and delimited string with contents
                'index',
                'setting',
               ]
-  __zips__ = [
-              ( 'u16', 'index'),
-              ( 'str', 'setting'),
-             ]
+  _fields = [
+             ( 'u16', 'index' ),
+             ( 'str', 'setting' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -574,7 +574,7 @@ class MsgSettingsReadByIndexDone(SBP):
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -637,9 +637,9 @@ for this setting to set the initial value.
   __slots__ = [
                'setting',
               ]
-  __zips__ = [
-              ( 'str', 'setting'),
-             ]
+  _fields = [
+             ( 'str', 'setting' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

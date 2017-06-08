@@ -47,10 +47,10 @@ class GnssSignal16(object):
                'sat',
                'code',
               ]
-  __zips__ = [
-              ('u8', 'sat'),
-              ('u8', 'code'),
-             ]
+  _fields = [
+             ( 'u8', 'sat' ),
+             ( 'u8', 'code' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -62,7 +62,7 @@ class GnssSignal16(object):
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in GnssSignal16.__zips__:
+      for t, s in GnssSignal16._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -112,11 +112,11 @@ Note: unlike GnssSignal16, GPS satellites are encoded as
                'code',
                'reserved',
               ]
-  __zips__ = [
-              ('u16', 'sat'),
-              ('u8', 'code'),
-              ('u8', 'reserved'),
-             ]
+  _fields = [
+             ( 'u16', 'sat' ),
+             ( 'u8', 'code' ),
+             ( 'u8', 'reserved' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -128,7 +128,7 @@ Note: unlike GnssSignal16, GPS satellites are encoded as
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in GnssSignal.__zips__:
+      for t, s in GnssSignal._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -172,10 +172,10 @@ transition.
                'tow',
                'wn',
               ]
-  __zips__ = [
-              ('u32', 'tow'),
-              ('u16', 'wn'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'u16', 'wn' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -187,7 +187,7 @@ transition.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in GPSTime.__zips__:
+      for t, s in GPSTime._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -231,10 +231,10 @@ transition.
                'tow',
                'wn',
               ]
-  __zips__ = [
-              ('u32', 'tow'),
-              ('u16', 'wn'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'u16', 'wn' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -246,7 +246,7 @@ transition.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in GPSTimeSec.__zips__:
+      for t, s in GPSTimeSec._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -297,11 +297,11 @@ from -500000 to 500000)
                'ns_residual',
                'wn',
               ]
-  __zips__ = [
-              ('u32', 'tow'),
-              ('s32', 'ns_residual'),
-              ('u16', 'wn'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'ns_residual' ),
+             ( 'u16', 'wn' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -313,7 +313,7 @@ from -500000 to 500000)
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in GPSTimeNano.__zips__:
+      for t, s in GPSTimeNano._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -358,10 +358,10 @@ same sign as the pseudorange.
                'i',
                'f',
               ]
-  __zips__ = [
-              ('s32', 'i'),
-              ('u8', 'f'),
-             ]
+  _fields = [
+             ( 's32', 'i' ),
+             ( 'u8', 'f' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -373,7 +373,7 @@ same sign as the pseudorange.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in CarrierPhase.__zips__:
+      for t, s in CarrierPhase._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize

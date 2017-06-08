@@ -64,11 +64,11 @@ or configuration requests.
                'startup_type',
                'reserved',
               ]
-  __zips__ = [
-              ( 'u8', 'cause'),
-              ( 'u8', 'startup_type'),
-              ( 'u16', 'reserved'),
-             ]
+  _fields = [
+             ( 'u8', 'cause' ),
+             ( 'u8', 'startup_type' ),
+             ( 'u16', 'reserved' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -173,12 +173,12 @@ corrections packet.
                'num_signals',
                'source',
               ]
-  __zips__ = [
-              ( 'u8', 'flags'),
-              ( 'u16', 'latency'),
-              ( 'u8', 'num_signals'),
-              ( 'str', 'source'),
-             ]
+  _fields = [
+             ( 'u8', 'flags' ),
+             ( 'u16', 'latency' ),
+             ( 'u8', 'num_signals' ),
+             ( 'str', 'source' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -279,9 +279,9 @@ the remaining error flags should be inspected.
   __slots__ = [
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

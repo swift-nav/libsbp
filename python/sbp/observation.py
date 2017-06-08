@@ -50,10 +50,10 @@ counter (ith packet of n)
                't',
                'n_obs',
               ]
-  __zips__ = [
-              ('GPSTimeNano', 't'),
-              ('u8', 'n_obs'),
-             ]
+  _fields = [
+             ( 'GPSTimeNano', 't' ),
+             ( 'u8', 'n_obs' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -65,7 +65,7 @@ counter (ith packet of n)
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in ObservationHeader.__zips__:
+      for t, s in ObservationHeader._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -110,10 +110,10 @@ as positive for approaching satellites.
                'i',
                'f',
               ]
-  __zips__ = [
-              ('s16', 'i'),
-              ('u8', 'f'),
-             ]
+  _fields = [
+             ( 's16', 'i' ),
+             ( 'u8', 'f' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -125,7 +125,7 @@ as positive for approaching satellites.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in Doppler.__zips__:
+      for t, s in Doppler._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -198,15 +198,15 @@ estimate for the signal is valid.
                'flags',
                'sid',
               ]
-  __zips__ = [
-              ('u32', 'P'),
-              ('CarrierPhase', 'L'),
-              ('Doppler', 'D'),
-              ('u8', 'cn0'),
-              ('u8', 'lock'),
-              ('u8', 'flags'),
-              ('GnssSignal16', 'sid'),
-             ]
+  _fields = [
+             ( 'u32', 'P' ),
+             ( 'CarrierPhase', 'L' ),
+             ( 'Doppler', 'D' ),
+             ( 'u8', 'cn0' ),
+             ( 'u8', 'lock' ),
+             ( 'u8', 'flags' ),
+             ( 'GnssSignal16', 'sid' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -218,7 +218,7 @@ estimate for the signal is valid.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in PackedObsContent.__zips__:
+      for t, s in PackedObsContent._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -278,14 +278,14 @@ GLO: 0 = valid, non-zero = invalid
                'valid',
                'health_bits',
               ]
-  __zips__ = [
-              ('GnssSignal16', 'sid'),
-              ('GPSTimeSec', 'toe'),
-              ('double', 'ura'),
-              ('u32', 'fit_interval'),
-              ('u8', 'valid'),
-              ('u8', 'health_bits'),
-             ]
+  _fields = [
+             ( 'GnssSignal16', 'sid' ),
+             ( 'GPSTimeSec', 'toe' ),
+             ( 'double', 'ura' ),
+             ( 'u32', 'fit_interval' ),
+             ( 'u8', 'valid' ),
+             ( 'u8', 'health_bits' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -297,7 +297,7 @@ GLO: 0 = valid, non-zero = invalid
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in EphemerisCommonContent.__zips__:
+      for t, s in EphemerisCommonContent._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -357,14 +357,14 @@ GLO: 0 = valid, non-zero = invalid
                'valid',
                'health_bits',
               ]
-  __zips__ = [
-              ('GnssSignal', 'sid'),
-              ('GPSTime', 'toe'),
-              ('double', 'ura'),
-              ('u32', 'fit_interval'),
-              ('u8', 'valid'),
-              ('u8', 'health_bits'),
-             ]
+  _fields = [
+             ( 'GnssSignal', 'sid' ),
+             ( 'GPSTime', 'toe' ),
+             ( 'double', 'ura' ),
+             ( 'u32', 'fit_interval' ),
+             ( 'u8', 'valid' ),
+             ( 'u8', 'health_bits' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -376,7 +376,7 @@ GLO: 0 = valid, non-zero = invalid
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in EphemerisCommonContentDepA.__zips__:
+      for t, s in EphemerisCommonContentDepA._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -420,10 +420,10 @@ counter (ith packet of n)
                't',
                'n_obs',
               ]
-  __zips__ = [
-              ('GPSTime', 't'),
-              ('u8', 'n_obs'),
-             ]
+  _fields = [
+             ( 'GPSTime', 't' ),
+             ( 'u8', 'n_obs' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -435,7 +435,7 @@ counter (ith packet of n)
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in ObservationHeaderDep.__zips__:
+      for t, s in ObservationHeaderDep._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -481,10 +481,10 @@ the opposite sign as the pseudorange.
                'i',
                'f',
               ]
-  __zips__ = [
-              ('s32', 'i'),
-              ('u8', 'f'),
-             ]
+  _fields = [
+             ( 's32', 'i' ),
+             ( 'u8', 'f' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -496,7 +496,7 @@ the opposite sign as the pseudorange.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in CarrierPhaseDepA.__zips__:
+      for t, s in CarrierPhaseDepA._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -552,13 +552,13 @@ carrier phase ambiguity may have changed.
                'lock',
                'prn',
               ]
-  __zips__ = [
-              ('u32', 'P'),
-              ('CarrierPhaseDepA', 'L'),
-              ('u8', 'cn0'),
-              ('u16', 'lock'),
-              ('u8', 'prn'),
-             ]
+  _fields = [
+             ( 'u32', 'P' ),
+             ( 'CarrierPhaseDepA', 'L' ),
+             ( 'u8', 'cn0' ),
+             ( 'u16', 'lock' ),
+             ( 'u8', 'prn' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -570,7 +570,7 @@ carrier phase ambiguity may have changed.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in PackedObsContentDepA.__zips__:
+      for t, s in PackedObsContentDepA._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -628,13 +628,13 @@ carrier phase ambiguity may have changed.
                'lock',
                'sid',
               ]
-  __zips__ = [
-              ('u32', 'P'),
-              ('CarrierPhaseDepA', 'L'),
-              ('u8', 'cn0'),
-              ('u16', 'lock'),
-              ('GnssSignal', 'sid'),
-             ]
+  _fields = [
+             ( 'u32', 'P' ),
+             ( 'CarrierPhaseDepA', 'L' ),
+             ( 'u8', 'cn0' ),
+             ( 'u16', 'lock' ),
+             ( 'GnssSignal', 'sid' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -646,7 +646,7 @@ carrier phase ambiguity may have changed.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in PackedObsContentDepB.__zips__:
+      for t, s in PackedObsContentDepB._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -705,13 +705,13 @@ carrier phase ambiguity may have changed.
                'lock',
                'sid',
               ]
-  __zips__ = [
-              ('u32', 'P'),
-              ('CarrierPhase', 'L'),
-              ('u8', 'cn0'),
-              ('u16', 'lock'),
-              ('GnssSignal', 'sid'),
-             ]
+  _fields = [
+             ( 'u32', 'P' ),
+             ( 'CarrierPhase', 'L' ),
+             ( 'u8', 'cn0' ),
+             ( 'u16', 'lock' ),
+             ( 'GnssSignal', 'sid' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -723,7 +723,7 @@ carrier phase ambiguity may have changed.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in PackedObsContentDepC.__zips__:
+      for t, s in PackedObsContentDepC._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -794,14 +794,14 @@ Satellite health status for GLO:
                'valid',
                'health_bits',
               ]
-  __zips__ = [
-              ('GnssSignal', 'sid'),
-              ('GPSTimeSec', 'toa'),
-              ('double', 'ura'),
-              ('u32', 'fit_interval'),
-              ('u8', 'valid'),
-              ('u8', 'health_bits'),
-             ]
+  _fields = [
+             ( 'GnssSignal', 'sid' ),
+             ( 'GPSTimeSec', 'toa' ),
+             ( 'double', 'ura' ),
+             ( 'u32', 'fit_interval' ),
+             ( 'u8', 'valid' ),
+             ( 'u8', 'health_bits' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -813,7 +813,7 @@ Satellite health status for GLO:
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in AlmanacCommonContent.__zips__:
+      for t, s in AlmanacCommonContent._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -873,10 +873,10 @@ satellite being tracked.
                'header',
                'obs',
               ]
-  __zips__ = [
-              ( 'ObservationHeader', 'header'),
-              ( 'array:PackedObsContent', 'obs'),
-             ]
+  _fields = [
+             ( 'ObservationHeader', 'header' ),
+             ( 'array:PackedObsContent', 'obs' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -978,11 +978,11 @@ error in the pseudo-absolute position output.
                'lon',
                'height',
               ]
-  __zips__ = [
-              ( 'double', 'lat'),
-              ( 'double', 'lon'),
-              ( 'double', 'height'),
-             ]
+  _fields = [
+             ( 'double', 'lat' ),
+             ( 'double', 'lon' ),
+             ( 'double', 'height' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1086,11 +1086,11 @@ pseudo-absolute position output.
                'y',
                'z',
               ]
-  __zips__ = [
-              ( 'double', 'x'),
-              ( 'double', 'y'),
-              ( 'double', 'z'),
-             ]
+  _fields = [
+             ( 'double', 'x' ),
+             ( 'double', 'y' ),
+             ( 'double', 'z' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1273,31 +1273,31 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                'iode',
                'iodc',
               ]
-  __zips__ = [
-              ( 'EphemerisCommonContentDepA', 'common'),
-              ( 'double', 'tgd'),
-              ( 'double', 'c_rs'),
-              ( 'double', 'c_rc'),
-              ( 'double', 'c_uc'),
-              ( 'double', 'c_us'),
-              ( 'double', 'c_ic'),
-              ( 'double', 'c_is'),
-              ( 'double', 'dn'),
-              ( 'double', 'm0'),
-              ( 'double', 'ecc'),
-              ( 'double', 'sqrta'),
-              ( 'double', 'omega0'),
-              ( 'double', 'omegadot'),
-              ( 'double', 'w'),
-              ( 'double', 'inc'),
-              ( 'double', 'inc_dot'),
-              ( 'double', 'af0'),
-              ( 'double', 'af1'),
-              ( 'double', 'af2'),
-              ( 'GPSTime', 'toc'),
-              ( 'u8', 'iode'),
-              ( 'u16', 'iodc'),
-             ]
+  _fields = [
+             ( 'EphemerisCommonContentDepA', 'common' ),
+             ( 'double', 'tgd' ),
+             ( 'double', 'c_rs' ),
+             ( 'double', 'c_rc' ),
+             ( 'double', 'c_uc' ),
+             ( 'double', 'c_us' ),
+             ( 'double', 'c_ic' ),
+             ( 'double', 'c_is' ),
+             ( 'double', 'dn' ),
+             ( 'double', 'm0' ),
+             ( 'double', 'ecc' ),
+             ( 'double', 'sqrta' ),
+             ( 'double', 'omega0' ),
+             ( 'double', 'omegadot' ),
+             ( 'double', 'w' ),
+             ( 'double', 'inc' ),
+             ( 'double', 'inc_dot' ),
+             ( 'double', 'af0' ),
+             ( 'double', 'af1' ),
+             ( 'double', 'af2' ),
+             ( 'GPSTime', 'toc' ),
+             ( 'u8', 'iode' ),
+             ( 'u16', 'iodc' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1500,31 +1500,31 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                'iode',
                'iodc',
               ]
-  __zips__ = [
-              ( 'EphemerisCommonContent', 'common'),
-              ( 'double', 'tgd'),
-              ( 'double', 'c_rs'),
-              ( 'double', 'c_rc'),
-              ( 'double', 'c_uc'),
-              ( 'double', 'c_us'),
-              ( 'double', 'c_ic'),
-              ( 'double', 'c_is'),
-              ( 'double', 'dn'),
-              ( 'double', 'm0'),
-              ( 'double', 'ecc'),
-              ( 'double', 'sqrta'),
-              ( 'double', 'omega0'),
-              ( 'double', 'omegadot'),
-              ( 'double', 'w'),
-              ( 'double', 'inc'),
-              ( 'double', 'inc_dot'),
-              ( 'double', 'af0'),
-              ( 'double', 'af1'),
-              ( 'double', 'af2'),
-              ( 'GPSTimeSec', 'toc'),
-              ( 'u8', 'iode'),
-              ( 'u16', 'iodc'),
-             ]
+  _fields = [
+             ( 'EphemerisCommonContent', 'common' ),
+             ( 'double', 'tgd' ),
+             ( 'double', 'c_rs' ),
+             ( 'double', 'c_rc' ),
+             ( 'double', 'c_uc' ),
+             ( 'double', 'c_us' ),
+             ( 'double', 'c_ic' ),
+             ( 'double', 'c_is' ),
+             ( 'double', 'dn' ),
+             ( 'double', 'm0' ),
+             ( 'double', 'ecc' ),
+             ( 'double', 'sqrta' ),
+             ( 'double', 'omega0' ),
+             ( 'double', 'omegadot' ),
+             ( 'double', 'w' ),
+             ( 'double', 'inc' ),
+             ( 'double', 'inc_dot' ),
+             ( 'double', 'af0' ),
+             ( 'double', 'af1' ),
+             ( 'double', 'af2' ),
+             ( 'GPSTimeSec', 'toc' ),
+             ( 'u8', 'iode' ),
+             ( 'u16', 'iodc' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1653,14 +1653,14 @@ class MsgEphemerisSbasDepA(SBP):
                'a_gf0',
                'a_gf1',
               ]
-  __zips__ = [
-              ( 'EphemerisCommonContentDepA', 'common'),
-              ( 'array:double:3', 'pos'),
-              ( 'array:double:3', 'vel'),
-              ( 'array:double:3', 'acc'),
-              ( 'double', 'a_gf0'),
-              ( 'double', 'a_gf1'),
-             ]
+  _fields = [
+             ( 'EphemerisCommonContentDepA', 'common' ),
+             ( 'array:double:3', 'pos' ),
+             ( 'array:double:3', 'vel' ),
+             ( 'array:double:3', 'acc' ),
+             ( 'double', 'a_gf0' ),
+             ( 'double', 'a_gf1' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1778,14 +1778,14 @@ for more details.
                'vel',
                'acc',
               ]
-  __zips__ = [
-              ( 'EphemerisCommonContentDepA', 'common'),
-              ( 'double', 'gamma'),
-              ( 'double', 'tau'),
-              ( 'array:double:3', 'pos'),
-              ( 'array:double:3', 'vel'),
-              ( 'array:double:3', 'acc'),
-             ]
+  _fields = [
+             ( 'EphemerisCommonContentDepA', 'common' ),
+             ( 'double', 'gamma' ),
+             ( 'double', 'tau' ),
+             ( 'array:double:3', 'pos' ),
+             ( 'array:double:3', 'vel' ),
+             ( 'array:double:3', 'acc' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1897,14 +1897,14 @@ class MsgEphemerisSbas(SBP):
                'a_gf0',
                'a_gf1',
               ]
-  __zips__ = [
-              ( 'EphemerisCommonContent', 'common'),
-              ( 'array:double:3', 'pos'),
-              ( 'array:double:3', 'vel'),
-              ( 'array:double:3', 'acc'),
-              ( 'double', 'a_gf0'),
-              ( 'double', 'a_gf1'),
-             ]
+  _fields = [
+             ( 'EphemerisCommonContent', 'common' ),
+             ( 'array:double:3', 'pos' ),
+             ( 'array:double:3', 'vel' ),
+             ( 'array:double:3', 'acc' ),
+             ( 'double', 'a_gf0' ),
+             ( 'double', 'a_gf1' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2022,14 +2022,14 @@ for more details.
                'vel',
                'acc',
               ]
-  __zips__ = [
-              ( 'EphemerisCommonContent', 'common'),
-              ( 'double', 'gamma'),
-              ( 'double', 'tau'),
-              ( 'array:double:3', 'pos'),
-              ( 'array:double:3', 'vel'),
-              ( 'array:double:3', 'acc'),
-             ]
+  _fields = [
+             ( 'EphemerisCommonContent', 'common' ),
+             ( 'double', 'gamma' ),
+             ( 'double', 'tau' ),
+             ( 'array:double:3', 'pos' ),
+             ( 'array:double:3', 'vel' ),
+             ( 'array:double:3', 'acc' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2155,16 +2155,16 @@ for more details.
                'acc',
                'fcn',
               ]
-  __zips__ = [
-              ( 'EphemerisCommonContent', 'common'),
-              ( 'double', 'gamma'),
-              ( 'double', 'tau'),
-              ( 'double', 'd_tau'),
-              ( 'array:double:3', 'pos'),
-              ( 'array:double:3', 'vel'),
-              ( 'array:double:3', 'acc'),
-              ( 'u8', 'fcn'),
-             ]
+  _fields = [
+             ( 'EphemerisCommonContent', 'common' ),
+             ( 'double', 'gamma' ),
+             ( 'double', 'tau' ),
+             ( 'double', 'd_tau' ),
+             ( 'array:double:3', 'pos' ),
+             ( 'array:double:3', 'vel' ),
+             ( 'array:double:3', 'acc' ),
+             ( 'u8', 'fcn' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2376,37 +2376,37 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                'iodc',
                'reserved',
               ]
-  __zips__ = [
-              ( 'double', 'tgd'),
-              ( 'double', 'c_rs'),
-              ( 'double', 'c_rc'),
-              ( 'double', 'c_uc'),
-              ( 'double', 'c_us'),
-              ( 'double', 'c_ic'),
-              ( 'double', 'c_is'),
-              ( 'double', 'dn'),
-              ( 'double', 'm0'),
-              ( 'double', 'ecc'),
-              ( 'double', 'sqrta'),
-              ( 'double', 'omega0'),
-              ( 'double', 'omegadot'),
-              ( 'double', 'w'),
-              ( 'double', 'inc'),
-              ( 'double', 'inc_dot'),
-              ( 'double', 'af0'),
-              ( 'double', 'af1'),
-              ( 'double', 'af2'),
-              ( 'double', 'toe_tow'),
-              ( 'u16', 'toe_wn'),
-              ( 'double', 'toc_tow'),
-              ( 'u16', 'toc_wn'),
-              ( 'u8', 'valid'),
-              ( 'u8', 'healthy'),
-              ( 'GnssSignal', 'sid'),
-              ( 'u8', 'iode'),
-              ( 'u16', 'iodc'),
-              ( 'u32', 'reserved'),
-             ]
+  _fields = [
+             ( 'double', 'tgd' ),
+             ( 'double', 'c_rs' ),
+             ( 'double', 'c_rc' ),
+             ( 'double', 'c_uc' ),
+             ( 'double', 'c_us' ),
+             ( 'double', 'c_ic' ),
+             ( 'double', 'c_is' ),
+             ( 'double', 'dn' ),
+             ( 'double', 'm0' ),
+             ( 'double', 'ecc' ),
+             ( 'double', 'sqrta' ),
+             ( 'double', 'omega0' ),
+             ( 'double', 'omegadot' ),
+             ( 'double', 'w' ),
+             ( 'double', 'inc' ),
+             ( 'double', 'inc_dot' ),
+             ( 'double', 'af0' ),
+             ( 'double', 'af1' ),
+             ( 'double', 'af2' ),
+             ( 'double', 'toe_tow' ),
+             ( 'u16', 'toe_wn' ),
+             ( 'double', 'toc_tow' ),
+             ( 'u16', 'toc_wn' ),
+             ( 'u8', 'valid' ),
+             ( 'u8', 'healthy' ),
+             ( 'GnssSignal', 'sid' ),
+             ( 'u8', 'iode' ),
+             ( 'u16', 'iodc' ),
+             ( 'u32', 'reserved' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2622,34 +2622,34 @@ class MsgEphemerisDepA(SBP):
                'healthy',
                'prn',
               ]
-  __zips__ = [
-              ( 'double', 'tgd'),
-              ( 'double', 'c_rs'),
-              ( 'double', 'c_rc'),
-              ( 'double', 'c_uc'),
-              ( 'double', 'c_us'),
-              ( 'double', 'c_ic'),
-              ( 'double', 'c_is'),
-              ( 'double', 'dn'),
-              ( 'double', 'm0'),
-              ( 'double', 'ecc'),
-              ( 'double', 'sqrta'),
-              ( 'double', 'omega0'),
-              ( 'double', 'omegadot'),
-              ( 'double', 'w'),
-              ( 'double', 'inc'),
-              ( 'double', 'inc_dot'),
-              ( 'double', 'af0'),
-              ( 'double', 'af1'),
-              ( 'double', 'af2'),
-              ( 'double', 'toe_tow'),
-              ( 'u16', 'toe_wn'),
-              ( 'double', 'toc_tow'),
-              ( 'u16', 'toc_wn'),
-              ( 'u8', 'valid'),
-              ( 'u8', 'healthy'),
-              ( 'u8', 'prn'),
-             ]
+  _fields = [
+             ( 'double', 'tgd' ),
+             ( 'double', 'c_rs' ),
+             ( 'double', 'c_rc' ),
+             ( 'double', 'c_uc' ),
+             ( 'double', 'c_us' ),
+             ( 'double', 'c_ic' ),
+             ( 'double', 'c_is' ),
+             ( 'double', 'dn' ),
+             ( 'double', 'm0' ),
+             ( 'double', 'ecc' ),
+             ( 'double', 'sqrta' ),
+             ( 'double', 'omega0' ),
+             ( 'double', 'omegadot' ),
+             ( 'double', 'w' ),
+             ( 'double', 'inc' ),
+             ( 'double', 'inc_dot' ),
+             ( 'double', 'af0' ),
+             ( 'double', 'af1' ),
+             ( 'double', 'af2' ),
+             ( 'double', 'toe_tow' ),
+             ( 'u16', 'toe_wn' ),
+             ( 'double', 'toc_tow' ),
+             ( 'u16', 'toc_wn' ),
+             ( 'u8', 'valid' ),
+             ( 'u8', 'healthy' ),
+             ( 'u8', 'prn' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2866,35 +2866,35 @@ class MsgEphemerisDepB(SBP):
                'prn',
                'iode',
               ]
-  __zips__ = [
-              ( 'double', 'tgd'),
-              ( 'double', 'c_rs'),
-              ( 'double', 'c_rc'),
-              ( 'double', 'c_uc'),
-              ( 'double', 'c_us'),
-              ( 'double', 'c_ic'),
-              ( 'double', 'c_is'),
-              ( 'double', 'dn'),
-              ( 'double', 'm0'),
-              ( 'double', 'ecc'),
-              ( 'double', 'sqrta'),
-              ( 'double', 'omega0'),
-              ( 'double', 'omegadot'),
-              ( 'double', 'w'),
-              ( 'double', 'inc'),
-              ( 'double', 'inc_dot'),
-              ( 'double', 'af0'),
-              ( 'double', 'af1'),
-              ( 'double', 'af2'),
-              ( 'double', 'toe_tow'),
-              ( 'u16', 'toe_wn'),
-              ( 'double', 'toc_tow'),
-              ( 'u16', 'toc_wn'),
-              ( 'u8', 'valid'),
-              ( 'u8', 'healthy'),
-              ( 'u8', 'prn'),
-              ( 'u8', 'iode'),
-             ]
+  _fields = [
+             ( 'double', 'tgd' ),
+             ( 'double', 'c_rs' ),
+             ( 'double', 'c_rc' ),
+             ( 'double', 'c_uc' ),
+             ( 'double', 'c_us' ),
+             ( 'double', 'c_ic' ),
+             ( 'double', 'c_is' ),
+             ( 'double', 'dn' ),
+             ( 'double', 'm0' ),
+             ( 'double', 'ecc' ),
+             ( 'double', 'sqrta' ),
+             ( 'double', 'omega0' ),
+             ( 'double', 'omegadot' ),
+             ( 'double', 'w' ),
+             ( 'double', 'inc' ),
+             ( 'double', 'inc_dot' ),
+             ( 'double', 'af0' ),
+             ( 'double', 'af1' ),
+             ( 'double', 'af2' ),
+             ( 'double', 'toe_tow' ),
+             ( 'u16', 'toe_wn' ),
+             ( 'double', 'toc_tow' ),
+             ( 'u16', 'toc_wn' ),
+             ( 'u8', 'valid' ),
+             ( 'u8', 'healthy' ),
+             ( 'u8', 'prn' ),
+             ( 'u8', 'iode' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3125,37 +3125,37 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                'iodc',
                'reserved',
               ]
-  __zips__ = [
-              ( 'double', 'tgd'),
-              ( 'double', 'c_rs'),
-              ( 'double', 'c_rc'),
-              ( 'double', 'c_uc'),
-              ( 'double', 'c_us'),
-              ( 'double', 'c_ic'),
-              ( 'double', 'c_is'),
-              ( 'double', 'dn'),
-              ( 'double', 'm0'),
-              ( 'double', 'ecc'),
-              ( 'double', 'sqrta'),
-              ( 'double', 'omega0'),
-              ( 'double', 'omegadot'),
-              ( 'double', 'w'),
-              ( 'double', 'inc'),
-              ( 'double', 'inc_dot'),
-              ( 'double', 'af0'),
-              ( 'double', 'af1'),
-              ( 'double', 'af2'),
-              ( 'double', 'toe_tow'),
-              ( 'u16', 'toe_wn'),
-              ( 'double', 'toc_tow'),
-              ( 'u16', 'toc_wn'),
-              ( 'u8', 'valid'),
-              ( 'u8', 'healthy'),
-              ( 'GnssSignal', 'sid'),
-              ( 'u8', 'iode'),
-              ( 'u16', 'iodc'),
-              ( 'u32', 'reserved'),
-             ]
+  _fields = [
+             ( 'double', 'tgd' ),
+             ( 'double', 'c_rs' ),
+             ( 'double', 'c_rc' ),
+             ( 'double', 'c_uc' ),
+             ( 'double', 'c_us' ),
+             ( 'double', 'c_ic' ),
+             ( 'double', 'c_is' ),
+             ( 'double', 'dn' ),
+             ( 'double', 'm0' ),
+             ( 'double', 'ecc' ),
+             ( 'double', 'sqrta' ),
+             ( 'double', 'omega0' ),
+             ( 'double', 'omegadot' ),
+             ( 'double', 'w' ),
+             ( 'double', 'inc' ),
+             ( 'double', 'inc_dot' ),
+             ( 'double', 'af0' ),
+             ( 'double', 'af1' ),
+             ( 'double', 'af2' ),
+             ( 'double', 'toe_tow' ),
+             ( 'u16', 'toe_wn' ),
+             ( 'double', 'toc_tow' ),
+             ( 'u16', 'toc_wn' ),
+             ( 'u8', 'valid' ),
+             ( 'u8', 'healthy' ),
+             ( 'GnssSignal', 'sid' ),
+             ( 'u8', 'iode' ),
+             ( 'u16', 'iodc' ),
+             ( 'u32', 'reserved' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3277,10 +3277,10 @@ satellite being tracked.
                'header',
                'obs',
               ]
-  __zips__ = [
-              ( 'ObservationHeaderDep', 'header'),
-              ( 'array:PackedObsContentDepA', 'obs'),
-             ]
+  _fields = [
+             ( 'ObservationHeaderDep', 'header' ),
+             ( 'array:PackedObsContentDepA', 'obs' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3381,10 +3381,10 @@ satellite being tracked.
                'header',
                'obs',
               ]
-  __zips__ = [
-              ( 'ObservationHeaderDep', 'header'),
-              ( 'array:PackedObsContentDepB', 'obs'),
-             ]
+  _fields = [
+             ( 'ObservationHeaderDep', 'header' ),
+             ( 'array:PackedObsContentDepB', 'obs' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3486,10 +3486,10 @@ satellite being tracked.
                'header',
                'obs',
               ]
-  __zips__ = [
-              ( 'ObservationHeaderDep', 'header'),
-              ( 'array:PackedObsContentDepC', 'obs'),
-             ]
+  _fields = [
+             ( 'ObservationHeaderDep', 'header' ),
+             ( 'array:PackedObsContentDepC', 'obs' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3605,17 +3605,17 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
                'b2',
                'b3',
               ]
-  __zips__ = [
-              ( 'GPSTimeSec', 't_nmct'),
-              ( 'double', 'a0'),
-              ( 'double', 'a1'),
-              ( 'double', 'a2'),
-              ( 'double', 'a3'),
-              ( 'double', 'b0'),
-              ( 'double', 'b1'),
-              ( 'double', 'b2'),
-              ( 'double', 'b3'),
-             ]
+  _fields = [
+             ( 'GPSTimeSec', 't_nmct' ),
+             ( 'double', 'a0' ),
+             ( 'double', 'a1' ),
+             ( 'double', 'a2' ),
+             ( 'double', 'a3' ),
+             ( 'double', 'b0' ),
+             ( 'double', 'b1' ),
+             ( 'double', 'b2' ),
+             ( 'double', 'b3' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3716,10 +3716,10 @@ class MsgSvConfigurationGPS(SBP):
                't_nmct',
                'l2c_mask',
               ]
-  __zips__ = [
-              ( 'GPSTimeSec', 't_nmct'),
-              ( 'u32', 'l2c_mask'),
-             ]
+  _fields = [
+             ( 'GPSTimeSec', 't_nmct' ),
+             ( 'u32', 'l2c_mask' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3828,14 +3828,14 @@ LSB indicating tgd validity etc.
                'isc_l1ca',
                'isc_l2c',
               ]
-  __zips__ = [
-              ( 'GPSTime', 't_op'),
-              ( 'u8', 'prn'),
-              ( 'u8', 'valid'),
-              ( 's16', 'tgd'),
-              ( 's16', 'isc_l1ca'),
-              ( 's16', 'isc_l2c'),
-             ]
+  _fields = [
+             ( 'GPSTime', 't_op' ),
+             ( 'u8', 'prn' ),
+             ( 'u8', 'valid' ),
+             ( 's16', 'tgd' ),
+             ( 's16', 'isc_l1ca' ),
+             ( 's16', 'isc_l2c' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3948,14 +3948,14 @@ LSB indicating tgd validity etc.
                'isc_l1ca',
                'isc_l2c',
               ]
-  __zips__ = [
-              ( 'GPSTimeSec', 't_op'),
-              ( 'GnssSignal', 'sid'),
-              ( 'u8', 'valid'),
-              ( 's16', 'tgd'),
-              ( 's16', 'isc_l1ca'),
-              ( 's16', 'isc_l2c'),
-             ]
+  _fields = [
+             ( 'GPSTimeSec', 't_op' ),
+             ( 'GnssSignal', 'sid' ),
+             ( 'u8', 'valid' ),
+             ( 's16', 'tgd' ),
+             ( 's16', 'isc_l1ca' ),
+             ( 's16', 'isc_l2c' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -4088,18 +4088,18 @@ Please see the Navstar GPS Space Segment/Navigation user interfaces
                'af0',
                'af1',
               ]
-  __zips__ = [
-              ( 'AlmanacCommonContent', 'common'),
-              ( 'double', 'm0'),
-              ( 'double', 'ecc'),
-              ( 'double', 'sqrta'),
-              ( 'double', 'omega0'),
-              ( 'double', 'omegadot'),
-              ( 'double', 'w'),
-              ( 'double', 'inc'),
-              ( 'double', 'af0'),
-              ( 'double', 'af1'),
-             ]
+  _fields = [
+             ( 'AlmanacCommonContent', 'common' ),
+             ( 'double', 'm0' ),
+             ( 'double', 'ecc' ),
+             ( 'double', 'sqrta' ),
+             ( 'double', 'omega0' ),
+             ( 'double', 'omegadot' ),
+             ( 'double', 'w' ),
+             ( 'double', 'inc' ),
+             ( 'double', 'af0' ),
+             ( 'double', 'af1' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -4230,16 +4230,16 @@ coordinate system
                'epsilon',
                'omega',
               ]
-  __zips__ = [
-              ( 'AlmanacCommonContent', 'common'),
-              ( 'double', 'lambda_na'),
-              ( 'double', 't_lambda_na'),
-              ( 'double', 'i'),
-              ( 'double', 't'),
-              ( 'double', 't_dot'),
-              ( 'double', 'epsilon'),
-              ( 'double', 'omega'),
-             ]
+  _fields = [
+             ( 'AlmanacCommonContent', 'common' ),
+             ( 'double', 'lambda_na' ),
+             ( 'double', 't_lambda_na' ),
+             ( 'double', 'i' ),
+             ( 'double', 't' ),
+             ( 'double', 't_dot' ),
+             ( 'double', 'epsilon' ),
+             ( 'double', 'omega' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -4353,11 +4353,11 @@ index (SV orbital slot)  fcns[index]
                'tow_ms',
                'fcns',
               ]
-  __zips__ = [
-              ( 'u16', 'wn'),
-              ( 'u32', 'tow_ms'),
-              ( 'array:u8:32', 'fcns'),
-             ]
+  _fields = [
+             ( 'u16', 'wn' ),
+             ( 'u32', 'tow_ms' ),
+             ( 'array:u8:32', 'fcns' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

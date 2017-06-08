@@ -95,16 +95,16 @@ of other data_source.
                'src_sid',
                'original_sender',
               ]
-  __zips__ = [
-              ( 'u64', 'recv_time'),
-              ( 'u8', 'event'),
-              ( 'u8', 'object_type'),
-              ( 'u8', 'result'),
-              ( 'u8', 'data_source'),
-              ( 'GnssSignal16', 'object_sid'),
-              ( 'GnssSignal16', 'src_sid'),
-              ( 'u16', 'original_sender'),
-             ]
+  _fields = [
+             ( 'u64', 'recv_time' ),
+             ( 'u8', 'event' ),
+             ( 'u8', 'object_type' ),
+             ( 'u8', 'result' ),
+             ( 'u8', 'data_source' ),
+             ( 'GnssSignal16', 'object_sid' ),
+             ( 'GnssSignal16', 'src_sid' ),
+             ( 'u16', 'original_sender' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
