@@ -59,17 +59,17 @@ class GnssSignal16(object):
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in GnssSignal16._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in GnssSignal16._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -118,17 +118,17 @@ Note: unlike GnssSignal16, GPS satellites are encoded as
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in GnssSignal._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in GnssSignal._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -170,17 +170,17 @@ transition.
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in GPSTime._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in GPSTime._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -222,17 +222,17 @@ transition.
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in GPSTimeSec._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in GPSTimeSec._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -282,17 +282,17 @@ from -500000 to 500000)
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in GPSTimeNano._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in GPSTimeNano._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -335,17 +335,17 @@ same sign as the pseudorange.
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in CarrierPhase._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in CarrierPhase._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):

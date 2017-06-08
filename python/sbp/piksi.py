@@ -89,17 +89,17 @@ be normalized.
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in UARTChannel._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in UARTChannel._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -154,17 +154,17 @@ can cause momentary RTK solution outages.
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in Period._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in Period._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -218,17 +218,17 @@ communication latency in the system.
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in Latency._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in Latency._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):

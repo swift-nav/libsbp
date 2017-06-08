@@ -174,57 +174,57 @@ class SBP(object):
     fmt = "<SBP (preamble=0x%X, msg_type=0x%X, sender=%s, length=%d, payload=%s, crc=0x%X)>"
     return fmt % p
 
-  def _from_binary(self, d):
+  def _from_binary(self, data):
     offset = 0
-    for t, s in self._fields:
+    for field_type, field_name in self._fields:
 
       # numpy dtype
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, offset)
-        offset += a.itemsize
-        res = a.item()
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, offset)
+        offset += parsed.itemsize
+        res = parsed.item()
 
       # array
-      elif t.startswith('array'):
+      elif field_type.startswith('array'):
         # get array item and length
-        splits = t.split(':')
+        splits = field_type.split(':')
         item = splits[1]
-        a_size = int(splits[2]) if len(splits) > 2 else None
+        array_size = int(splits[2]) if len(splits) > 2 else None
         res = []
         is_np_type = item in TYPES_KEYS_NP
         item = TYPES_NP[item] if is_np_type else self._get_embedded_type(item)
 
         # iterate array items
-        while (a_size is None or a_size > 0) and offset < len(d):
+        while (array_size is None or array_size > 0) and offset < len(data):
           if is_np_type:
-            a = np.ndarray(1, item, d, offset)
-            offset += a.itemsize
-            res.append(a.item())
+            parsed = np.ndarray(1, item, data, offset)
+            offset += parsed.itemsize
+            res.append(parsed.item())
           else:
-            o = item()
-            offset += o.from_binary(d, offset)
-            res.append(o)
-          if a_size is not None:
-            a_size -= 1
+            obj = item()
+            offset += obj.from_binary(data, offset)
+            res.append(obj)
+          if array_size is not None:
+            array_size -= 1
 
         # for backwards compatibility with Struct('x', Array(3, LFloat64('x')))
         # style dual packaging
-        if a_size is not None:
-          res = Container(**{s: res})
+        if array_size is not None:
+          res = Container(**{field_name: res})
  
       # string
-      elif t.startswith('str'):
-        count = int(t.split(':')[1]) if ':' in t else -1
-        res = ''.join(chr(c) for c in np.frombuffer(d, 'u1', count, offset))
+      elif field_type.startswith('str'):
+        count = int(field_type.split(':')[1]) if ':' in field_type else -1
+        res = ''.join(chr(c) for c in np.frombuffer(data, 'u1', count, offset))
         offset += len(res)
         res = res.ljust(count, '\x00')  
   
       # custom embedded type       
       else:
-        res = self._get_embedded_type(t)()
-        offset += res.from_binary(d, offset)
+        res = self._get_embedded_type(field_type)()
+        offset += res.from_binary(data, offset)
 
-      setattr(self, s, res)
+      setattr(self, field_name, res)
 
   def to_binary(self):
     ret = struct.pack("<BHHB", SBP_PREAMBLE,
