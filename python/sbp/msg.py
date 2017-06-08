@@ -207,6 +207,11 @@ class SBP(object):
             res.append(o)
           if a_size is not None:
             a_size -= 1
+
+        # for backwards compatibility with Struct('x', Array(3, LFloat64('x')))
+        # style dual packaging
+        if a_size is not None:
+          res = Container(**{s: res})
  
       # string
       elif t.startswith('str'):
