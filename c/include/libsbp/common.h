@@ -22,6 +22,16 @@
 #ifndef COMMON_INT_TYPES
 #define COMMON_INT_TYPES
 
+/* Determine Toolchain */
+
+#if defined _MSC_VER
+#define TOOLCHAIN_ATTR_PACKED    /* Intentionally empty */
+#define TOOLCHAIN_PRAGMA_PACK
+#else
+#define TOOLCHAIN_ATTR_PACKED  __attribute__((packed))
+#undef TOOLCHAIN_PRAGMA_PACK 
+#endif
+
 /** \defgroup common_inttypes Integer types
  * Specified-width integer type definitions for shorter and nicer code.
  *
