@@ -62,17 +62,17 @@ counter (ith packet of n)
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in ObservationHeader._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in ObservationHeader._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -115,17 +115,17 @@ as positive for approaching satellites.
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in Doppler._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in Doppler._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -205,17 +205,17 @@ estimate for the signal is valid.
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in PackedObsContent._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in PackedObsContent._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -277,17 +277,17 @@ GLO: 0 = valid, non-zero = invalid
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in EphemerisCommonContent._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in EphemerisCommonContent._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -348,17 +348,17 @@ Others: 0 = valid, non-zero = invalid
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in EphemerisCommonContentDepB._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in EphemerisCommonContentDepB._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -420,17 +420,17 @@ GLO: 0 = valid, non-zero = invalid
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in EphemerisCommonContentDepA._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in EphemerisCommonContentDepA._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -472,17 +472,17 @@ counter (ith packet of n)
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in ObservationHeaderDep._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in ObservationHeaderDep._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -526,17 +526,17 @@ the opposite sign as the pseudorange.
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in CarrierPhaseDepA._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in CarrierPhaseDepA._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -593,17 +593,17 @@ carrier phase ambiguity may have changed.
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in PackedObsContentDepA._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in PackedObsContentDepA._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -662,17 +662,17 @@ carrier phase ambiguity may have changed.
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in PackedObsContentDepB._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in PackedObsContentDepB._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -732,17 +732,17 @@ carrier phase ambiguity may have changed.
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in PackedObsContentDepC._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in PackedObsContentDepC._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -849,17 +849,17 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in GnssCapb._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in GnssCapb._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -932,17 +932,17 @@ Satellite health status for GLO:
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in AlmanacCommonContent._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in AlmanacCommonContent._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -1015,17 +1015,17 @@ Satellite health status for GLO:
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in AlmanacCommonContentDep._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in AlmanacCommonContentDep._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):

@@ -112,17 +112,17 @@ The message is used to debug and measure the performance.
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in AcqSvProfile._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in AcqSvProfile._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
@@ -211,17 +211,17 @@ class AcqSvProfileDep(object):
     return getattr(self, item)
 
   
-  def from_binary(self, d, offset=0):
+  def from_binary(self, data, offset=0):
     size = 0
-    for t, s in AcqSvProfileDep._fields:
-      if t in TYPES_KEYS_NP:
-        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-        size += a.itemsize
-        setattr(self, s, a.item())
+    for field_type, field_name in AcqSvProfileDep._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
       else:
-        o = globals()[t]()
-        size += o.from_binary(d, size + offset)
-        setattr(self, s, o)
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
     return size
 
   def to_binary(self):
