@@ -4,8 +4,7 @@ httpretty
 requests>=2.8.1
 futures==2.2.0
 requests-futures>=0.9.5
-pyftdi==0.6.3
-pylibftdi==0.14.2
+pyftdi
+pylibftdi
 pyserial==2.7
 pyyaml==3.11
-tox==1.8.1
