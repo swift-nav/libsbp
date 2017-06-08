@@ -90,28 +90,21 @@ be normalized.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in UARTChannel._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in UARTChannel._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return UARTChannel.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return UARTChannel.build(d)
     
 class Period(object):
   """Period.
@@ -162,28 +155,21 @@ can cause momentary RTK solution outages.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in Period._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in Period._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return Period.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return Period.build(d)
     
 class Latency(object):
   """Latency.
@@ -233,28 +219,21 @@ communication latency in the system.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in Latency._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in Latency._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return Latency.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return Latency.build(d)
     
 class NetworkUsage(object):
   """NetworkUsage.
@@ -310,28 +289,21 @@ though may not necessarily be populated with a value.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in NetworkUsage._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in NetworkUsage._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return NetworkUsage.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return NetworkUsage.build(d)
     
 SBP_MSG_ALMANAC = 0x0069
 class MsgAlmanac(SBP):
@@ -493,10 +465,7 @@ bootloader.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -728,10 +697,7 @@ Ambiguity Resolution (IAR) process.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -885,10 +851,7 @@ thread. The reported percentage values must be normalized.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1008,10 +971,7 @@ period indicates their likelihood of transmission.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1116,10 +1076,7 @@ class MsgUartStateDepa(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1210,10 +1167,7 @@ from satellite observations.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1308,10 +1262,7 @@ from being used in various Piksi subsystems.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1404,10 +1355,7 @@ class MsgMaskSatelliteDep(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1521,10 +1469,7 @@ available.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1620,10 +1565,7 @@ code will be returned with MSG_COMMAND_RESP.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1718,10 +1660,7 @@ the command.  A return code of zero indicates success.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1818,10 +1757,7 @@ the correct command.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2000,10 +1936,7 @@ in c.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2091,10 +2024,7 @@ class MsgNetworkBandwidthUsage(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2196,10 +2126,7 @@ of the modem and its various parameters.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2327,10 +2254,7 @@ class MsgSpecanDep(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2459,10 +2383,7 @@ class MsgSpecan(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2561,10 +2482,7 @@ A negative value implies an error for the particular gain stage as reported by t
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)

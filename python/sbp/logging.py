@@ -100,10 +100,7 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -209,10 +206,7 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -235,6 +229,96 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
     d.update(j)
     return d
     
+<<<<<<< 4010119a3e67ff9cc3150fa84fb606cecb511561
+=======
+SBP_MSG_TWEET = 0x0012
+class MsgTweet(SBP):
+  """SBP class for message MSG_TWEET (0x0012).
+
+  You can have MSG_TWEET inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  All the news fit to tweet.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tweet : string
+    Human-readable string
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tweet'/ construct.Bytes(140),)
+  __slots__ = [
+               'tweet',
+              ]
+  _fields = [
+             ( 'str:140', 'tweet' ),
+            ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgTweet,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgTweet, self).__init__()
+      self.msg_type = SBP_MSG_TWEET
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tweet = kwargs.pop('tweet')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgTweet.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgTweet(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgTweet._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgTweet, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+>>>>>>> Remove try catch blocks as per review
 SBP_MSG_PRINT_DEP = 0x0010
 class MsgPrintDep(SBP):
   """SBP class for message MSG_PRINT_DEP (0x0010).
@@ -299,10 +383,7 @@ class MsgPrintDep(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
