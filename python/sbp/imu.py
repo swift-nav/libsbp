@@ -137,10 +137,7 @@ time is unknown or invalid.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -242,10 +239,7 @@ depends on the value of `imu_type`.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)

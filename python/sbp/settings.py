@@ -148,10 +148,7 @@ process to this message when it is received from sender ID
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -241,10 +238,7 @@ this message when it is received from sender ID 0x42.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -333,10 +327,7 @@ class MsgSettingsReadResp(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -430,10 +421,7 @@ this message when it is received from sender ID 0x42.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -534,10 +522,7 @@ NULL-terminated and delimited string with contents
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -675,10 +660,7 @@ for this setting to set the initial value.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)

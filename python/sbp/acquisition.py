@@ -113,28 +113,21 @@ The message is used to debug and measure the performance.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in AcqSvProfile._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in AcqSvProfile._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return AcqSvProfile.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return AcqSvProfile.build(d)
     
 SBP_MSG_ACQ_RESULT = 0x001F
 class MsgAcqResult(SBP):
@@ -223,10 +216,7 @@ ratio.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -333,10 +323,7 @@ be in units of dB Hz in a later revision of this message.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -445,10 +432,7 @@ acquisition was attempted
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -537,10 +521,7 @@ The message is used to debug and measure the performance.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)

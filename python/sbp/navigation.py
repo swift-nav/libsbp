@@ -134,10 +134,7 @@ from -500000 to 500000)
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -274,10 +271,7 @@ which indicate the source of the UTC offset value and source of the time fix.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -404,10 +398,7 @@ corresponds to differential or SPP solution.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -538,10 +529,7 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -678,10 +666,7 @@ matching time-of-week (tow).
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -809,10 +794,7 @@ matching time-of-week (tow).
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -947,10 +929,7 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1078,10 +1057,7 @@ to 0.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1218,10 +1194,7 @@ implemented). Defaults to 0.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1330,10 +1303,7 @@ that time-matched RTK mode is used when the base station is moving.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1428,10 +1398,7 @@ Differential solution
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1551,10 +1518,7 @@ from -500000 to 500000)
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1674,10 +1638,7 @@ precision.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1810,10 +1771,7 @@ to 0.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1954,10 +1912,7 @@ implemented). Defaults to 0.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2087,10 +2042,7 @@ to 0.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2229,10 +2181,7 @@ implemented). Defaults to 0.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2360,10 +2309,7 @@ to 0.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2500,10 +2446,7 @@ implemented). Defaults to 0.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2611,10 +2554,7 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)

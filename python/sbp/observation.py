@@ -63,28 +63,21 @@ counter (ith packet of n)
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in ObservationHeader._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in ObservationHeader._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return ObservationHeader.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return ObservationHeader.build(d)
     
 class Doppler(object):
   """Doppler.
@@ -123,28 +116,21 @@ as positive for approaching satellites.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in Doppler._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in Doppler._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return Doppler.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return Doppler.build(d)
     
 class PackedObsContent(object):
   """PackedObsContent.
@@ -216,28 +202,21 @@ estimate for the signal is valid.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in PackedObsContent._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in PackedObsContent._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return PackedObsContent.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return PackedObsContent.build(d)
     
 class EphemerisCommonContent(object):
   """EphemerisCommonContent.
@@ -295,28 +274,21 @@ GLO: 0 = valid, non-zero = invalid
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in EphemerisCommonContent._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in EphemerisCommonContent._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return EphemerisCommonContent.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return EphemerisCommonContent.build(d)
     
 class EphemerisCommonContentDepA(object):
   """EphemerisCommonContentDepA.
@@ -374,28 +346,21 @@ GLO: 0 = valid, non-zero = invalid
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in EphemerisCommonContentDepA._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in EphemerisCommonContentDepA._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return EphemerisCommonContentDepA.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return EphemerisCommonContentDepA.build(d)
     
 class ObservationHeaderDep(object):
   """ObservationHeaderDep.
@@ -433,28 +398,21 @@ counter (ith packet of n)
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in ObservationHeaderDep._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in ObservationHeaderDep._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return ObservationHeaderDep.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return ObservationHeaderDep.build(d)
     
 class CarrierPhaseDepA(object):
   """CarrierPhaseDepA.
@@ -494,28 +452,21 @@ the opposite sign as the pseudorange.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in CarrierPhaseDepA._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in CarrierPhaseDepA._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return CarrierPhaseDepA.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return CarrierPhaseDepA.build(d)
     
 class PackedObsContentDepA(object):
   """PackedObsContentDepA.
@@ -568,28 +519,21 @@ carrier phase ambiguity may have changed.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in PackedObsContentDepA._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in PackedObsContentDepA._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return PackedObsContentDepA.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return PackedObsContentDepA.build(d)
     
 class PackedObsContentDepB(object):
   """PackedObsContentDepB.
@@ -644,28 +588,21 @@ carrier phase ambiguity may have changed.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in PackedObsContentDepB._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in PackedObsContentDepB._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return PackedObsContentDepB.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return PackedObsContentDepB.build(d)
     
 class PackedObsContentDepC(object):
   """PackedObsContentDepC.
@@ -721,28 +658,21 @@ carrier phase ambiguity may have changed.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in PackedObsContentDepC._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in PackedObsContentDepC._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return PackedObsContentDepC.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return PackedObsContentDepC.build(d)
     
 class AlmanacCommonContent(object):
   """AlmanacCommonContent.
@@ -811,28 +741,21 @@ Satellite health status for GLO:
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in AlmanacCommonContent._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in AlmanacCommonContent._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return AlmanacCommonContent.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return AlmanacCommonContent.build(d)
     
 SBP_MSG_OBS = 0x004A
 class MsgObs(SBP):
@@ -913,10 +836,7 @@ satellite being tracked.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1020,10 +940,7 @@ error in the pseudo-absolute position output.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1128,10 +1045,7 @@ pseudo-absolute position output.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1355,10 +1269,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1582,10 +1493,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1701,10 +1609,7 @@ class MsgEphemerisSbasDepA(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1826,10 +1731,7 @@ for more details.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -1945,10 +1847,7 @@ class MsgEphemerisSbas(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2070,10 +1969,7 @@ for more details.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2207,10 +2103,7 @@ for more details.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2470,10 +2363,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2710,10 +2600,7 @@ class MsgEphemerisDepA(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -2956,10 +2843,7 @@ class MsgEphemerisDepB(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -3219,10 +3103,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -3317,10 +3198,7 @@ satellite being tracked.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -3421,10 +3299,7 @@ satellite being tracked.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -3526,10 +3401,7 @@ satellite being tracked.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -3659,10 +3531,7 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -3756,10 +3625,7 @@ class MsgSvConfigurationGPS(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -3876,10 +3742,7 @@ LSB indicating tgd validity etc.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -3996,10 +3859,7 @@ LSB indicating tgd validity etc.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -4144,10 +4004,7 @@ Please see the Navstar GPS Space Segment/Navigation user interfaces
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -4282,10 +4139,7 @@ coordinate system
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -4395,10 +4249,7 @@ index (SV orbital slot)  fcns[index]
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)

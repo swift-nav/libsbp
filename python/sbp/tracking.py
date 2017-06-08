@@ -68,28 +68,21 @@ measured signal power.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in TrackingChannelState._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in TrackingChannelState._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return TrackingChannelState.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return TrackingChannelState.build(d)
     
 class TrackingChannelCorrelation(object):
   """TrackingChannelCorrelation.
@@ -125,28 +118,21 @@ class TrackingChannelCorrelation(object):
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in TrackingChannelCorrelation._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in TrackingChannelCorrelation._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return TrackingChannelCorrelation.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return TrackingChannelCorrelation.build(d)
     
 class TrackingChannelStateDepA(object):
   """TrackingChannelStateDepA.
@@ -186,28 +172,21 @@ class TrackingChannelStateDepA(object):
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in TrackingChannelStateDepA._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in TrackingChannelStateDepA._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return TrackingChannelStateDepA.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return TrackingChannelStateDepA.build(d)
     
 class TrackingChannelStateDepB(object):
   """TrackingChannelStateDepB.
@@ -247,28 +226,21 @@ class TrackingChannelStateDepB(object):
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in TrackingChannelStateDepB._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in TrackingChannelStateDepB._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return TrackingChannelStateDepB.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return TrackingChannelStateDepB.build(d)
     
 SBP_MSG_TRACKING_STATE_DETAILED = 0x0011
 class MsgTrackingStateDetailed(SBP):
@@ -471,10 +443,7 @@ signal is in continuous track.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -564,10 +533,7 @@ measurements for all tracked satellites.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -668,10 +634,7 @@ update interval.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -758,10 +721,7 @@ class MsgTrackingStateDepA(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -848,10 +808,7 @@ class MsgTrackingStateDepB(SBP):
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)

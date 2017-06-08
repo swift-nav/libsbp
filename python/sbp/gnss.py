@@ -60,28 +60,21 @@ class GnssSignal16(object):
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in GnssSignal16._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in GnssSignal16._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return GnssSignal16.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GnssSignal16.build(d)
     
 class GnssSignal(object):
   """GnssSignal.
@@ -126,28 +119,21 @@ Note: unlike GnssSignal16, GPS satellites are encoded as
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in GnssSignal._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in GnssSignal._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return GnssSignal.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GnssSignal.build(d)
     
 class GPSTime(object):
   """GPSTime.
@@ -185,28 +171,21 @@ transition.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in GPSTime._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in GPSTime._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return GPSTime.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GPSTime.build(d)
     
 class GPSTimeSec(object):
   """GPSTimeSec.
@@ -244,28 +223,21 @@ transition.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in GPSTimeSec._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in GPSTimeSec._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return GPSTimeSec.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GPSTimeSec.build(d)
     
 class GPSTimeNano(object):
   """GPSTimeNano.
@@ -311,28 +283,21 @@ from -500000 to 500000)
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in GPSTimeNano._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in GPSTimeNano._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return GPSTimeNano.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GPSTimeNano.build(d)
     
 class CarrierPhase(object):
   """CarrierPhase.
@@ -371,28 +336,21 @@ same sign as the pseudorange.
 
   
   def from_binary(self, d, offset=0):
-    try:
-      size = 0
-      for t, s in CarrierPhase._fields:
-        if t in TYPES_KEYS_NP:
-          a = np.ndarray(1, TYPES_NP[t], d, size + offset)
-          size += a.itemsize
-          setattr(self, s, a.item())
-        else:
-          o = globals()[t]()
-          size += o.from_binary(d, size + offset)
-          setattr(self, s, o)
-      return size
-    except:
-      print traceback.print_exc()
-      return 0
+    size = 0
+    for t, s in CarrierPhase._fields:
+      if t in TYPES_KEYS_NP:
+        a = np.ndarray(1, TYPES_NP[t], d, size + offset)
+        size += a.itemsize
+        setattr(self, s, a.item())
+      else:
+        o = globals()[t]()
+        size += o.from_binary(d, size + offset)
+        setattr(self, s, o)
+    return size
 
   def to_binary(self):
-    try:
-      d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-      return CarrierPhase.build(d)
-    except:
-      print traceback.print_exc()
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return CarrierPhase.build(d)
     
 
 msg_classes = {
