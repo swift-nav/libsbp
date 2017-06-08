@@ -67,12 +67,12 @@ parity of the data block and sends only blocks that pass the check.
                'message_type',
                'data',
               ]
-  __zips__ = [
-              ( 'GnssSignal', 'sid'),
-              ( 'u32', 'tow'),
-              ( 'u8', 'message_type'),
-              ( 'array:u8:27', 'data'),
-             ]
+  _fields = [
+             ( 'GnssSignal', 'sid' ),
+             ( 'u32', 'tow' ),
+             ( 'u8', 'message_type' ),
+             ( 'array:u8:27', 'data' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

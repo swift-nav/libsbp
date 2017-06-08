@@ -69,11 +69,11 @@ for the exact source of this timestamp.
                'velocity',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'velocity'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'velocity' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

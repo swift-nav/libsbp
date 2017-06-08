@@ -90,20 +90,20 @@ The message is used to debug and measure the performance.
                'cf',
                'cp',
               ]
-  __zips__ = [
-              ('u8', 'job_type'),
-              ('u8', 'status'),
-              ('u16', 'cn0'),
-              ('u8', 'int_time'),
-              ('GnssSignal', 'sid'),
-              ('u16', 'bin_width'),
-              ('u32', 'timestamp'),
-              ('u32', 'time_spent'),
-              ('s32', 'cf_min'),
-              ('s32', 'cf_max'),
-              ('s32', 'cf'),
-              ('u32', 'cp'),
-             ]
+  _fields = [
+             ( 'u8', 'job_type' ),
+             ( 'u8', 'status' ),
+             ( 'u16', 'cn0' ),
+             ( 'u8', 'int_time' ),
+             ( 'GnssSignal', 'sid' ),
+             ( 'u16', 'bin_width' ),
+             ( 'u32', 'timestamp' ),
+             ( 'u32', 'time_spent' ),
+             ( 's32', 'cf_min' ),
+             ( 's32', 'cf_max' ),
+             ( 's32', 'cf' ),
+             ( 'u32', 'cp' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -115,7 +115,7 @@ The message is used to debug and measure the performance.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in AcqSvProfile.__zips__:
+      for t, s in AcqSvProfile._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -196,20 +196,20 @@ class AcqSvProfileDep(object):
                'cf',
                'cp',
               ]
-  __zips__ = [
-              ('u8', 'job_type'),
-              ('u8', 'status'),
-              ('u16', 'cn0'),
-              ('u8', 'int_time'),
-              ('GnssSignalDep', 'sid'),
-              ('u16', 'bin_width'),
-              ('u32', 'timestamp'),
-              ('u32', 'time_spent'),
-              ('s32', 'cf_min'),
-              ('s32', 'cf_max'),
-              ('s32', 'cf'),
-              ('u32', 'cp'),
-             ]
+  _fields = [
+             ( 'u8', 'job_type' ),
+             ( 'u8', 'status' ),
+             ( 'u16', 'cn0' ),
+             ( 'u8', 'int_time' ),
+             ( 'GnssSignalDep', 'sid' ),
+             ( 'u16', 'bin_width' ),
+             ( 'u32', 'timestamp' ),
+             ( 'u32', 'time_spent' ),
+             ( 's32', 'cf_min' ),
+             ( 's32', 'cf_max' ),
+             ( 's32', 'cf' ),
+             ( 'u32', 'cp' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -221,7 +221,7 @@ class AcqSvProfileDep(object):
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in AcqSvProfileDep.__zips__:
+      for t, s in AcqSvProfileDep._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -285,12 +285,12 @@ ratio.
                'cf',
                'sid',
               ]
-  __zips__ = [
-              ( 'float', 'cn0'),
-              ( 'float', 'cp'),
-              ( 'float', 'cf'),
-              ( 'GnssSignal', 'sid'),
-             ]
+  _fields = [
+             ( 'float', 'cn0' ),
+             ( 'float', 'cp' ),
+             ( 'float', 'cf' ),
+             ( 'GnssSignal', 'sid' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -393,12 +393,12 @@ class MsgAcqResultDepC(SBP):
                'cf',
                'sid',
               ]
-  __zips__ = [
-              ( 'float', 'cn0'),
-              ( 'float', 'cp'),
-              ( 'float', 'cf'),
-              ( 'GnssSignalDep', 'sid'),
-             ]
+  _fields = [
+             ( 'float', 'cn0' ),
+             ( 'float', 'cp' ),
+             ( 'float', 'cf' ),
+             ( 'GnssSignalDep', 'sid' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -503,12 +503,12 @@ be in units of dB Hz in a later revision of this message.
                'cf',
                'sid',
               ]
-  __zips__ = [
-              ( 'float', 'snr'),
-              ( 'float', 'cp'),
-              ( 'float', 'cf'),
-              ( 'GnssSignalDep', 'sid'),
-             ]
+  _fields = [
+             ( 'float', 'snr' ),
+             ( 'float', 'cp' ),
+             ( 'float', 'cf' ),
+             ( 'GnssSignalDep', 'sid' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -615,12 +615,12 @@ acquisition was attempted
                'cf',
                'prn',
               ]
-  __zips__ = [
-              ( 'float', 'snr'),
-              ( 'float', 'cp'),
-              ( 'float', 'cf'),
-              ( 'u8', 'prn'),
-             ]
+  _fields = [
+             ( 'float', 'snr' ),
+             ( 'float', 'cp' ),
+             ( 'float', 'cf' ),
+             ( 'u8', 'prn' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -713,9 +713,9 @@ The message is used to debug and measure the performance.
   __slots__ = [
                'acq_sv_profile',
               ]
-  __zips__ = [
-              ( 'array:AcqSvProfile', 'acq_sv_profile'),
-             ]
+  _fields = [
+             ( 'array:AcqSvProfile', 'acq_sv_profile' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -803,9 +803,9 @@ class MsgAcqSvProfileDep(SBP):
   __slots__ = [
                'acq_sv_profile',
               ]
-  __zips__ = [
-              ( 'array:AcqSvProfileDep', 'acq_sv_profile'),
-             ]
+  _fields = [
+             ( 'array:AcqSvProfileDep', 'acq_sv_profile' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

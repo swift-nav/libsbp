@@ -71,13 +71,13 @@ consumers of CPU on the system.
                'tname',
                'cmdline',
               ]
-  __zips__ = [
-              ( 'u8', 'index'),
-              ( 'u16', 'pid'),
-              ( 'u8', 'pcpu'),
-              ( 'str:15', 'tname'),
-              ( 'str', 'cmdline'),
-             ]
+  _fields = [
+             ( 'u8', 'index' ),
+             ( 'u16', 'pid' ),
+             ( 'u8', 'pcpu' ),
+             ( 'str:15', 'tname' ),
+             ( 'str', 'cmdline' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -187,13 +187,13 @@ consumers of memory on the system.
                'tname',
                'cmdline',
               ]
-  __zips__ = [
-              ( 'u8', 'index'),
-              ( 'u16', 'pid'),
-              ( 'u8', 'pmem'),
-              ( 'str:15', 'tname'),
-              ( 'str', 'cmdline'),
-             ]
+  _fields = [
+             ( 'u8', 'index' ),
+             ( 'u16', 'pid' ),
+             ( 'u8', 'pmem' ),
+             ( 'str:15', 'tname' ),
+             ( 'str', 'cmdline' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -306,14 +306,14 @@ class MsgLinuxSysState(SBP):
                'procs_stopping',
                'pid_count',
               ]
-  __zips__ = [
-              ( 'u16', 'mem_total'),
-              ( 'u8', 'pcpu'),
-              ( 'u8', 'pmem'),
-              ( 'u16', 'procs_starting'),
-              ( 'u16', 'procs_stopping'),
-              ( 'u16', 'pid_count'),
-             ]
+  _fields = [
+             ( 'u16', 'mem_total' ),
+             ( 'u8', 'pcpu' ),
+             ( 'u8', 'pmem' ),
+             ( 'u16', 'procs_starting' ),
+             ( 'u16', 'procs_stopping' ),
+             ( 'u16', 'pid_count' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -435,14 +435,14 @@ class MsgLinuxProcessSocketCounts(SBP):
                'socket_states',
                'cmdline',
               ]
-  __zips__ = [
-              ( 'u8', 'index'),
-              ( 'u16', 'pid'),
-              ( 'u16', 'socket_count'),
-              ( 'u16', 'socket_types'),
-              ( 'u16', 'socket_states'),
-              ( 'str', 'cmdline'),
-             ]
+  _fields = [
+             ( 'u8', 'index' ),
+             ( 'u16', 'pid' ),
+             ( 'u16', 'socket_count' ),
+             ( 'u16', 'socket_types' ),
+             ( 'u16', 'socket_states' ),
+             ( 'str', 'cmdline' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -574,16 +574,16 @@ of the connection.
                'address_of_largest',
                'cmdline',
               ]
-  __zips__ = [
-              ( 'u8', 'index'),
-              ( 'u16', 'pid'),
-              ( 'u16', 'recv_queued'),
-              ( 'u16', 'send_queued'),
-              ( 'u16', 'socket_types'),
-              ( 'u16', 'socket_states'),
-              ( 'str:64', 'address_of_largest'),
-              ( 'str', 'cmdline'),
-             ]
+  _fields = [
+             ( 'u8', 'index' ),
+             ( 'u16', 'pid' ),
+             ( 'u16', 'recv_queued' ),
+             ( 'u16', 'send_queued' ),
+             ( 'u16', 'socket_types' ),
+             ( 'u16', 'socket_states' ),
+             ( 'str:64', 'address_of_largest' ),
+             ( 'str', 'cmdline' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -695,12 +695,12 @@ the first entry corresponds to the first enabled bit in `types_reported`.
                'socket_state_counts',
                'socket_type_counts',
               ]
-  __zips__ = [
-              ( 'u32', 'avg_queue_depth'),
-              ( 'u32', 'max_queue_depth'),
-              ( 'array:u16:16', 'socket_state_counts'),
-              ( 'array:u16:16', 'socket_type_counts'),
-             ]
+  _fields = [
+             ( 'u32', 'avg_queue_depth' ),
+             ( 'u32', 'max_queue_depth' ),
+             ( 'array:u16:16', 'socket_state_counts' ),
+             ( 'array:u16:16', 'socket_type_counts' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -804,12 +804,12 @@ class MsgLinuxProcessFdCount(SBP):
                'fd_count',
                'cmdline',
               ]
-  __zips__ = [
-              ( 'u8', 'index'),
-              ( 'u16', 'pid'),
-              ( 'u16', 'fd_count'),
-              ( 'str', 'cmdline'),
-             ]
+  _fields = [
+             ( 'u8', 'index' ),
+             ( 'u16', 'pid' ),
+             ( 'u16', 'fd_count' ),
+             ( 'str', 'cmdline' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -909,10 +909,10 @@ of the list being 2 NULL terminators in a row.
                'sys_fd_count',
                'most_opened',
               ]
-  __zips__ = [
-              ( 'u32', 'sys_fd_count'),
-              ( 'str', 'most_opened'),
-             ]
+  _fields = [
+             ( 'u32', 'sys_fd_count' ),
+             ( 'str', 'most_opened' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

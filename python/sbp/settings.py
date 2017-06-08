@@ -67,7 +67,7 @@ configuration to its onboard flash memory file system.
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -134,9 +134,9 @@ An example string that could be sent to a device is
   __slots__ = [
                'setting',
               ]
-  __zips__ = [
-              ( 'str', 'setting'),
-             ]
+  _fields = [
+             ( 'str', 'setting' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -237,10 +237,10 @@ are omitted. An example string that could be sent from device is
                'status',
                'setting',
               ]
-  __zips__ = [
-              ( 'u8', 'status'),
-              ( 'str', 'setting'),
-             ]
+  _fields = [
+             ( 'u8', 'status' ),
+             ( 'str', 'setting' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -339,9 +339,9 @@ message (msg_id 0x00A5).
   __slots__ = [
                'setting',
               ]
-  __zips__ = [
-              ( 'str', 'setting'),
-             ]
+  _fields = [
+             ( 'str', 'setting' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -439,9 +439,9 @@ example string that could be sent from device is
   __slots__ = [
                'setting',
               ]
-  __zips__ = [
-              ( 'str', 'setting'),
-             ]
+  _fields = [
+             ( 'str', 'setting' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -534,9 +534,9 @@ values. A device will respond to this message with a
   __slots__ = [
                'index',
               ]
-  __zips__ = [
-              ( 'u16', 'index'),
-             ]
+  _fields = [
+             ( 'u16', 'index' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -642,10 +642,10 @@ the device is "simulator\0enabled\0True\0enum:True,False\0"
                'index',
                'setting',
               ]
-  __zips__ = [
-              ( 'u16', 'index'),
-              ( 'str', 'setting'),
-             ]
+  _fields = [
+             ( 'u16', 'index' ),
+             ( 'str', 'setting' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -722,7 +722,7 @@ class MsgSettingsReadByIndexDone(SBP):
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -785,9 +785,9 @@ for this setting to set the initial value.
   __slots__ = [
                'setting',
               ]
-  __zips__ = [
-              ( 'str', 'setting'),
-             ]
+  _fields = [
+             ( 'str', 'setting' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -886,10 +886,10 @@ according to the status field.
                'status',
                'setting',
               ]
-  __zips__ = [
-              ( 'u8', 'status'),
-              ( 'str', 'setting'),
-             ]
+  _fields = [
+             ( 'u8', 'status' ),
+             ( 'str', 'setting' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

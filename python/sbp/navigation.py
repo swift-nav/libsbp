@@ -97,12 +97,12 @@ from -500000 to 500000)
                'ns_residual',
                'flags',
               ]
-  __zips__ = [
-              ( 'u16', 'wn'),
-              ( 'u32', 'tow'),
-              ( 's32', 'ns_residual'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u16', 'wn' ),
+             ( 'u32', 'tow' ),
+             ( 's32', 'ns_residual' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -227,17 +227,17 @@ which indicate the source of the UTC offset value and source of the time fix.
                'seconds',
                'ns',
               ]
-  __zips__ = [
-              ( 'u8', 'flags'),
-              ( 'u32', 'tow'),
-              ( 'u16', 'year'),
-              ( 'u8', 'month'),
-              ( 'u8', 'day'),
-              ( 'u8', 'hours'),
-              ( 'u8', 'minutes'),
-              ( 'u8', 'seconds'),
-              ( 'u32', 'ns'),
-             ]
+  _fields = [
+             ( 'u8', 'flags' ),
+             ( 'u32', 'tow' ),
+             ( 'u16', 'year' ),
+             ( 'u8', 'month' ),
+             ( 'u8', 'day' ),
+             ( 'u8', 'hours' ),
+             ( 'u8', 'minutes' ),
+             ( 'u8', 'seconds' ),
+             ( 'u32', 'ns' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -361,15 +361,15 @@ corresponds to differential or SPP solution.
                'vdop',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 'u16', 'gdop'),
-              ( 'u16', 'pdop'),
-              ( 'u16', 'tdop'),
-              ( 'u16', 'hdop'),
-              ( 'u16', 'vdop'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'u16', 'gdop' ),
+             ( 'u16', 'pdop' ),
+             ( 'u16', 'tdop' ),
+             ( 'u16', 'hdop' ),
+             ( 'u16', 'vdop' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -495,15 +495,15 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 'double', 'x'),
-              ( 'double', 'y'),
-              ( 'double', 'z'),
-              ( 'u16', 'accuracy'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'double', 'x' ),
+             ( 'double', 'y' ),
+             ( 'double', 'z' ),
+             ( 'u16', 'accuracy' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -650,20 +650,20 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 'double', 'x'),
-              ( 'double', 'y'),
-              ( 'double', 'z'),
-              ( 'float', 'cov_x_x'),
-              ( 'float', 'cov_x_y'),
-              ( 'float', 'cov_x_z'),
-              ( 'float', 'cov_y_y'),
-              ( 'float', 'cov_y_z'),
-              ( 'float', 'cov_z_z'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'double', 'x' ),
+             ( 'double', 'y' ),
+             ( 'double', 'z' ),
+             ( 'float', 'cov_x_x' ),
+             ( 'float', 'cov_x_y' ),
+             ( 'float', 'cov_x_z' ),
+             ( 'float', 'cov_y_y' ),
+             ( 'float', 'cov_y_z' ),
+             ( 'float', 'cov_z_z' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -798,16 +798,16 @@ matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 'double', 'lat'),
-              ( 'double', 'lon'),
-              ( 'double', 'height'),
-              ( 'u16', 'h_accuracy'),
-              ( 'u16', 'v_accuracy'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'double', 'lat' ),
+             ( 'double', 'lon' ),
+             ( 'double', 'height' ),
+             ( 'u16', 'h_accuracy' ),
+             ( 'u16', 'v_accuracy' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -954,20 +954,20 @@ measurement and care should be taken with the sign convention.
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 'double', 'lat'),
-              ( 'double', 'lon'),
-              ( 'double', 'height'),
-              ( 'float', 'cov_n_n'),
-              ( 'float', 'cov_n_e'),
-              ( 'float', 'cov_n_d'),
-              ( 'float', 'cov_e_e'),
-              ( 'float', 'cov_e_d'),
-              ( 'float', 'cov_d_d'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'double', 'lat' ),
+             ( 'double', 'lon' ),
+             ( 'double', 'height' ),
+             ( 'float', 'cov_n_n' ),
+             ( 'float', 'cov_n_e' ),
+             ( 'float', 'cov_n_d' ),
+             ( 'float', 'cov_e_e' ),
+             ( 'float', 'cov_e_d' ),
+             ( 'float', 'cov_d_d' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1095,15 +1095,15 @@ matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'x'),
-              ( 's32', 'y'),
-              ( 's32', 'z'),
-              ( 'u16', 'accuracy'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'x' ),
+             ( 's32', 'y' ),
+             ( 's32', 'z' ),
+             ( 'u16', 'accuracy' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1231,16 +1231,16 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'n'),
-              ( 's32', 'e'),
-              ( 's32', 'd'),
-              ( 'u16', 'h_accuracy'),
-              ( 'u16', 'v_accuracy'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'n' ),
+             ( 's32', 'e' ),
+             ( 's32', 'd' ),
+             ( 'u16', 'h_accuracy' ),
+             ( 'u16', 'v_accuracy' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1363,15 +1363,15 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'x'),
-              ( 's32', 'y'),
-              ( 's32', 'z'),
-              ( 'u16', 'accuracy'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'x' ),
+             ( 's32', 'y' ),
+             ( 's32', 'z' ),
+             ( 'u16', 'accuracy' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1512,20 +1512,20 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'x'),
-              ( 's32', 'y'),
-              ( 's32', 'z'),
-              ( 'float', 'cov_x_x'),
-              ( 'float', 'cov_x_y'),
-              ( 'float', 'cov_x_z'),
-              ( 'float', 'cov_y_y'),
-              ( 'float', 'cov_y_z'),
-              ( 'float', 'cov_z_z'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'x' ),
+             ( 's32', 'y' ),
+             ( 's32', 'z' ),
+             ( 'float', 'cov_x_x' ),
+             ( 'float', 'cov_x_y' ),
+             ( 'float', 'cov_x_z' ),
+             ( 'float', 'cov_y_y' ),
+             ( 'float', 'cov_y_z' ),
+             ( 'float', 'cov_z_z' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1658,16 +1658,16 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'n'),
-              ( 's32', 'e'),
-              ( 's32', 'd'),
-              ( 'u16', 'h_accuracy'),
-              ( 'u16', 'v_accuracy'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'n' ),
+             ( 's32', 'e' ),
+             ( 's32', 'd' ),
+             ( 'u16', 'h_accuracy' ),
+             ( 'u16', 'v_accuracy' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1812,20 +1812,20 @@ portion of the 3x3 covariance matrix.
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'n'),
-              ( 's32', 'e'),
-              ( 's32', 'd'),
-              ( 'float', 'cov_n_n'),
-              ( 'float', 'cov_n_e'),
-              ( 'float', 'cov_n_d'),
-              ( 'float', 'cov_e_e'),
-              ( 'float', 'cov_e_d'),
-              ( 'float', 'cov_d_d'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'n' ),
+             ( 's32', 'e' ),
+             ( 's32', 'd' ),
+             ( 'float', 'cov_n_n' ),
+             ( 'float', 'cov_n_e' ),
+             ( 'float', 'cov_n_d' ),
+             ( 'float', 'cov_e_e' ),
+             ( 'float', 'cov_e_d' ),
+             ( 'float', 'cov_d_d' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1976,20 +1976,20 @@ products and is not available from Piksi Multi or Duro.
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'x'),
-              ( 's32', 'y'),
-              ( 's32', 'z'),
-              ( 'float', 'cov_x_x'),
-              ( 'float', 'cov_x_y'),
-              ( 'float', 'cov_x_z'),
-              ( 'float', 'cov_y_y'),
-              ( 'float', 'cov_y_z'),
-              ( 'float', 'cov_z_z'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'x' ),
+             ( 's32', 'y' ),
+             ( 's32', 'z' ),
+             ( 'float', 'cov_x_x' ),
+             ( 'float', 'cov_x_y' ),
+             ( 'float', 'cov_x_z' ),
+             ( 'float', 'cov_y_y' ),
+             ( 'float', 'cov_y_z' ),
+             ( 'float', 'cov_z_z' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2094,10 +2094,10 @@ Differential solution
                'tow',
                'age',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 'u16', 'age'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'u16', 'age' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2213,12 +2213,12 @@ from -500000 to 500000)
                'ns_residual',
                'flags',
               ]
-  __zips__ = [
-              ( 'u16', 'wn'),
-              ( 'u32', 'tow'),
-              ( 's32', 'ns_residual'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u16', 'wn' ),
+             ( 'u32', 'tow' ),
+             ( 's32', 'ns_residual' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2332,14 +2332,14 @@ precision.
                'hdop',
                'vdop',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 'u16', 'gdop'),
-              ( 'u16', 'pdop'),
-              ( 'u16', 'tdop'),
-              ( 'u16', 'hdop'),
-              ( 'u16', 'vdop'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'u16', 'gdop' ),
+             ( 'u16', 'pdop' ),
+             ( 'u16', 'tdop' ),
+             ( 'u16', 'hdop' ),
+             ( 'u16', 'vdop' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2466,15 +2466,15 @@ to 0.
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 'double', 'x'),
-              ( 'double', 'y'),
-              ( 'double', 'z'),
-              ( 'u16', 'accuracy'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'double', 'x' ),
+             ( 'double', 'y' ),
+             ( 'double', 'z' ),
+             ( 'u16', 'accuracy' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2608,16 +2608,16 @@ implemented). Defaults to 0.
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 'double', 'lat'),
-              ( 'double', 'lon'),
-              ( 'double', 'height'),
-              ( 'u16', 'h_accuracy'),
-              ( 'u16', 'v_accuracy'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'double', 'lat' ),
+             ( 'double', 'lon' ),
+             ( 'double', 'height' ),
+             ( 'u16', 'h_accuracy' ),
+             ( 'u16', 'v_accuracy' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2742,15 +2742,15 @@ matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'x'),
-              ( 's32', 'y'),
-              ( 's32', 'z'),
-              ( 'u16', 'accuracy'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'x' ),
+             ( 's32', 'y' ),
+             ( 's32', 'z' ),
+             ( 'u16', 'accuracy' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2882,16 +2882,16 @@ implemented). Defaults to 0.
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'n'),
-              ( 's32', 'e'),
-              ( 's32', 'd'),
-              ( 'u16', 'h_accuracy'),
-              ( 'u16', 'v_accuracy'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'n' ),
+             ( 's32', 'e' ),
+             ( 's32', 'd' ),
+             ( 'u16', 'h_accuracy' ),
+             ( 'u16', 'v_accuracy' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3015,15 +3015,15 @@ to 0.
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'x'),
-              ( 's32', 'y'),
-              ( 's32', 'z'),
-              ( 'u16', 'accuracy'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'x' ),
+             ( 's32', 'y' ),
+             ( 's32', 'z' ),
+             ( 'u16', 'accuracy' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3153,16 +3153,16 @@ implemented). Defaults to 0.
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'n'),
-              ( 's32', 'e'),
-              ( 's32', 'd'),
-              ( 'u16', 'h_accuracy'),
-              ( 'u16', 'v_accuracy'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'n' ),
+             ( 's32', 'e' ),
+             ( 's32', 'd' ),
+             ( 'u16', 'h_accuracy' ),
+             ( 'u16', 'v_accuracy' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -3272,12 +3272,12 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 'u32', 'heading'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'u32', 'heading' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

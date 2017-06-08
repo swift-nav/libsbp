@@ -72,13 +72,13 @@ time is unknown or invalid.
                'mag_y',
                'mag_z',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 'u8', 'tow_f'),
-              ( 's16', 'mag_x'),
-              ( 's16', 'mag_y'),
-              ( 's16', 'mag_z'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'u8', 'tow_f' ),
+             ( 's16', 'mag_x' ),
+             ( 's16', 'mag_y' ),
+             ( 's16', 'mag_z' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

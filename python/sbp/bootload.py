@@ -47,7 +47,7 @@ response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -114,10 +114,10 @@ protocol version number.
                'flags',
                'version',
               ]
-  __zips__ = [
-              ( 'u32', 'flags'),
-              ( 'str', 'version'),
-             ]
+  _fields = [
+             ( 'u32', 'flags' ),
+             ( 'str', 'version' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -207,9 +207,9 @@ class MsgBootloaderJumpToApp(SBP):
   __slots__ = [
                'jump',
               ]
-  __zips__ = [
-              ( 'u8', 'jump'),
-             ]
+  _fields = [
+             ( 'u8', 'jump' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -290,7 +290,7 @@ and not related to the Piksi's serial number.
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -356,9 +356,9 @@ on the right.
   __slots__ = [
                'dna',
               ]
-  __zips__ = [
-              ( 'array:u8:8', 'dna'),
-             ]
+  _fields = [
+             ( 'array:u8:8', 'dna' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -446,9 +446,9 @@ class MsgBootloaderHandshakeDepA(SBP):
   __slots__ = [
                'handshake',
               ]
-  __zips__ = [
-              ( 'array:u8', 'handshake'),
-             ]
+  _fields = [
+             ( 'array:u8', 'handshake' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

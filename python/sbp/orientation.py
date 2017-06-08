@@ -68,12 +68,12 @@ that time-matched RTK mode is used when the base station is moving.
                'n_sats',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 'u32', 'heading'),
-              ( 'u8', 'n_sats'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'u32', 'heading' ),
+             ( 'u8', 'n_sats' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -205,18 +205,18 @@ or Duro.
                'z_accuracy',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'w'),
-              ( 's32', 'x'),
-              ( 's32', 'y'),
-              ( 's32', 'z'),
-              ( 'float', 'w_accuracy'),
-              ( 'float', 'x_accuracy'),
-              ( 'float', 'y_accuracy'),
-              ( 'float', 'z_accuracy'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'w' ),
+             ( 's32', 'x' ),
+             ( 's32', 'y' ),
+             ( 's32', 'z' ),
+             ( 'float', 'w_accuracy' ),
+             ( 'float', 'x_accuracy' ),
+             ( 'float', 'y_accuracy' ),
+             ( 'float', 'z_accuracy' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -346,16 +346,16 @@ INS versions of Swift Products and is not produced by Piksi Multi or Duro.
                'yaw_accuracy',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'roll'),
-              ( 's32', 'pitch'),
-              ( 's32', 'yaw'),
-              ( 'float', 'roll_accuracy'),
-              ( 'float', 'pitch_accuracy'),
-              ( 'float', 'yaw_accuracy'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'roll' ),
+             ( 's32', 'pitch' ),
+             ( 's32', 'yaw' ),
+             ( 'float', 'roll_accuracy' ),
+             ( 'float', 'pitch_accuracy' ),
+             ( 'float', 'yaw_accuracy' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -475,13 +475,13 @@ and is not produced by Piksi Multi or Duro.
                'z',
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 's32', 'x'),
-              ( 's32', 'y'),
-              ( 's32', 'z'),
-              ( 'u8', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 's32', 'x' ),
+             ( 's32', 'y' ),
+             ( 's32', 'z' ),
+             ( 'u8', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

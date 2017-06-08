@@ -80,12 +80,12 @@ to this message when it is received from sender ID 0x42.
                'chunk_size',
                'filename',
               ]
-  __zips__ = [
-              ( 'u32', 'sequence'),
-              ( 'u32', 'offset'),
-              ( 'u8', 'chunk_size'),
-              ( 'str', 'filename'),
-             ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'u32', 'offset' ),
+             ( 'u8', 'chunk_size' ),
+             ( 'str', 'filename' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -185,10 +185,10 @@ preserved from the request.
                'sequence',
                'contents',
               ]
-  __zips__ = [
-              ( 'u32', 'sequence'),
-              ( 'array:u8', 'contents'),
-             ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'array:u8', 'contents' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -296,11 +296,11 @@ from sender ID 0x42.
                'offset',
                'dirname',
               ]
-  __zips__ = [
-              ( 'u32', 'sequence'),
-              ( 'u32', 'offset'),
-              ( 'str', 'dirname'),
-             ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'u32', 'offset' ),
+             ( 'str', 'dirname' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -400,10 +400,10 @@ the response is preserved from the request.
                'sequence',
                'contents',
               ]
-  __zips__ = [
-              ( 'u32', 'sequence'),
-              ( 'array:u8', 'contents'),
-             ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'array:u8', 'contents' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -496,9 +496,9 @@ process this message when it is received from sender ID 0x42.
   __slots__ = [
                'filename',
               ]
-  __zips__ = [
-              ( 'str', 'filename'),
-             ]
+  _fields = [
+             ( 'str', 'filename' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -606,12 +606,12 @@ only  process this message when it is received from sender ID
                'filename',
                'data',
               ]
-  __zips__ = [
-              ( 'u32', 'sequence'),
-              ( 'u32', 'offset'),
-              ( 'str', 'filename'),
-              ( 'array:u8', 'data'),
-             ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'u32', 'offset' ),
+             ( 'str', 'filename' ),
+             ( 'array:u8', 'data' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -707,9 +707,9 @@ request.
   __slots__ = [
                'sequence',
               ]
-  __zips__ = [
-              ( 'u32', 'sequence'),
-             ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -801,9 +801,9 @@ that can be in-flight during read or write operations.
   __slots__ = [
                'sequence',
               ]
-  __zips__ = [
-              ( 'u32', 'sequence'),
-             ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -907,12 +907,12 @@ that can be in-flight during read or write operations.
                'batch_size',
                'fileio_version',
               ]
-  __zips__ = [
-              ( 'u32', 'sequence'),
-              ( 'u32', 'window_size'),
-              ( 'u32', 'batch_size'),
-              ( 'u32', 'fileio_version'),
-             ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'u32', 'window_size' ),
+             ( 'u32', 'batch_size' ),
+             ( 'u32', 'fileio_version' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

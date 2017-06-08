@@ -87,16 +87,16 @@ time is unknown or invalid.
                'gyr_y',
                'gyr_z',
               ]
-  __zips__ = [
-              ( 'u32', 'tow'),
-              ( 'u8', 'tow_f'),
-              ( 's16', 'acc_x'),
-              ( 's16', 'acc_y'),
-              ( 's16', 'acc_z'),
-              ( 's16', 'gyr_x'),
-              ( 's16', 'gyr_y'),
-              ( 's16', 'gyr_z'),
-             ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'u8', 'tow_f' ),
+             ( 's16', 'acc_x' ),
+             ( 's16', 'acc_y' ),
+             ( 's16', 'acc_z' ),
+             ( 's16', 'gyr_x' ),
+             ( 's16', 'gyr_y' ),
+             ( 's16', 'gyr_z' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -202,11 +202,11 @@ depends on the value of `imu_type`.
                'temp',
                'imu_conf',
               ]
-  __zips__ = [
-              ( 'u8', 'imu_type'),
-              ( 's16', 'temp'),
-              ( 'u8', 'imu_conf'),
-             ]
+  _fields = [
+             ( 'u8', 'imu_type' ),
+             ( 's16', 'temp' ),
+             ( 'u8', 'imu_conf' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

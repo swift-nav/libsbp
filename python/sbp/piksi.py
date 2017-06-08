@@ -73,14 +73,14 @@ be normalized.
                'tx_buffer_level',
                'rx_buffer_level',
               ]
-  __zips__ = [
-              ('float', 'tx_throughput'),
-              ('float', 'rx_throughput'),
-              ('u16', 'crc_error_count'),
-              ('u16', 'io_error_count'),
-              ('u8', 'tx_buffer_level'),
-              ('u8', 'rx_buffer_level'),
-             ]
+  _fields = [
+             ( 'float', 'tx_throughput' ),
+             ( 'float', 'rx_throughput' ),
+             ( 'u16', 'crc_error_count' ),
+             ( 'u16', 'io_error_count' ),
+             ( 'u8', 'tx_buffer_level' ),
+             ( 'u8', 'rx_buffer_level' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -92,7 +92,7 @@ be normalized.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in UARTChannel.__zips__:
+      for t, s in UARTChannel._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -147,12 +147,12 @@ can cause momentary RTK solution outages.
                'pmax',
                'current',
               ]
-  __zips__ = [
-              ('s32', 'avg'),
-              ('s32', 'pmin'),
-              ('s32', 'pmax'),
-              ('s32', 'current'),
-             ]
+  _fields = [
+             ( 's32', 'avg' ),
+             ( 's32', 'pmin' ),
+             ( 's32', 'pmax' ),
+             ( 's32', 'current' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -164,7 +164,7 @@ can cause momentary RTK solution outages.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in Period.__zips__:
+      for t, s in Period._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -218,12 +218,12 @@ communication latency in the system.
                'lmax',
                'current',
               ]
-  __zips__ = [
-              ('s32', 'avg'),
-              ('s32', 'lmin'),
-              ('s32', 'lmax'),
-              ('s32', 'current'),
-             ]
+  _fields = [
+             ( 's32', 'avg' ),
+             ( 's32', 'lmin' ),
+             ( 's32', 'lmax' ),
+             ( 's32', 'current' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -235,7 +235,7 @@ communication latency in the system.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in Latency.__zips__:
+      for t, s in Latency._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -294,13 +294,13 @@ though may not necessarily be populated with a value.
                'tx_bytes',
                'interface_name',
               ]
-  __zips__ = [
-              ('u64', 'duration'),
-              ('u64', 'total_bytes'),
-              ('u32', 'rx_bytes'),
-              ('u32', 'tx_bytes'),
-              ('string', 'interface_name'),
-             ]
+  _fields = [
+             ( 'u64', 'duration' ),
+             ( 'u64', 'total_bytes' ),
+             ( 'u32', 'rx_bytes' ),
+             ( 'u32', 'tx_bytes' ),
+             ( 'string', 'interface_name' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -312,7 +312,7 @@ though may not necessarily be populated with a value.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in NetworkUsage.__zips__:
+      for t, s in NetworkUsage._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -348,7 +348,7 @@ alamanac onto the Piksi's flash memory from the host.
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -395,7 +395,7 @@ time estimate sent by the host.
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -455,9 +455,9 @@ bootloader.
   __slots__ = [
                'flags',
               ]
-  __zips__ = [
-              ( 'u32', 'flags'),
-             ]
+  _fields = [
+             ( 'u32', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -534,7 +534,7 @@ bootloader.
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -582,7 +582,7 @@ removed in a future release.
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -630,7 +630,7 @@ be removed in a future release.
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -690,9 +690,9 @@ Ambiguity Resolution (IAR) process.
   __slots__ = [
                'filter',
               ]
-  __zips__ = [
-              ( 'u8', 'filter'),
-             ]
+  _fields = [
+             ( 'u8', 'filter' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -772,7 +772,7 @@ observations between the two.
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -843,11 +843,11 @@ thread. The reported percentage values must be normalized.
                'cpu',
                'stack_free',
               ]
-  __zips__ = [
-              ( 'str:20', 'name'),
-              ( 'u16', 'cpu'),
-              ( 'u32', 'stack_free'),
-             ]
+  _fields = [
+             ( 'str:20', 'name' ),
+             ( 'u16', 'cpu' ),
+             ( 'u32', 'stack_free' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -962,13 +962,13 @@ period indicates their likelihood of transmission.
                'latency',
                'obs_period',
               ]
-  __zips__ = [
-              ( 'UARTChannel', 'uart_a'),
-              ( 'UARTChannel', 'uart_b'),
-              ( 'UARTChannel', 'uart_ftdi'),
-              ( 'Latency', 'latency'),
-              ( 'Period', 'obs_period'),
-             ]
+  _fields = [
+             ( 'UARTChannel', 'uart_a' ),
+             ( 'UARTChannel', 'uart_b' ),
+             ( 'UARTChannel', 'uart_ftdi' ),
+             ( 'Latency', 'latency' ),
+             ( 'Period', 'obs_period' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1072,12 +1072,12 @@ class MsgUartStateDepa(SBP):
                'uart_ftdi',
                'latency',
               ]
-  __zips__ = [
-              ( 'UARTChannel', 'uart_a'),
-              ( 'UARTChannel', 'uart_b'),
-              ( 'UARTChannel', 'uart_ftdi'),
-              ( 'Latency', 'latency'),
-             ]
+  _fields = [
+             ( 'UARTChannel', 'uart_a' ),
+             ( 'UARTChannel', 'uart_b' ),
+             ( 'UARTChannel', 'uart_ftdi' ),
+             ( 'Latency', 'latency' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1172,9 +1172,9 @@ from satellite observations.
   __slots__ = [
                'num_hyps',
               ]
-  __zips__ = [
-              ( 'u32', 'num_hyps'),
-             ]
+  _fields = [
+             ( 'u32', 'num_hyps' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1268,10 +1268,10 @@ from being used in various Piksi subsystems.
                'mask',
                'sid',
               ]
-  __zips__ = [
-              ( 'u8', 'mask'),
-              ( 'GnssSignal', 'sid'),
-             ]
+  _fields = [
+             ( 'u8', 'mask' ),
+             ( 'GnssSignal', 'sid' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1364,10 +1364,10 @@ class MsgMaskSatelliteDep(SBP):
                'mask',
                'sid',
               ]
-  __zips__ = [
-              ( 'u8', 'mask'),
-              ( 'GnssSignalDep', 'sid'),
-             ]
+  _fields = [
+             ( 'u8', 'mask' ),
+             ( 'GnssSignalDep', 'sid' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1475,13 +1475,13 @@ available.
                'cpu_temperature',
                'fe_temperature',
               ]
-  __zips__ = [
-              ( 's16', 'dev_vin'),
-              ( 's16', 'cpu_vint'),
-              ( 's16', 'cpu_vaux'),
-              ( 's16', 'cpu_temperature'),
-              ( 's16', 'fe_temperature'),
-             ]
+  _fields = [
+             ( 's16', 'dev_vin' ),
+             ( 's16', 'cpu_vint' ),
+             ( 's16', 'cpu_vaux' ),
+             ( 's16', 'cpu_temperature' ),
+             ( 's16', 'fe_temperature' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1580,10 +1580,10 @@ code will be returned with MSG_COMMAND_RESP.
                'sequence',
                'command',
               ]
-  __zips__ = [
-              ( 'u32', 'sequence'),
-              ( 'str', 'command'),
-             ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'str', 'command' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1678,10 +1678,10 @@ the command.  A return code of zero indicates success.
                'sequence',
                'code',
               ]
-  __zips__ = [
-              ( 'u32', 'sequence'),
-              ( 's32', 'code'),
-             ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 's32', 'code' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1778,10 +1778,10 @@ the correct command.
                'sequence',
                'line',
               ]
-  __zips__ = [
-              ( 'u32', 'sequence'),
-              ( 'str', 'line'),
-             ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'str', 'line' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1859,7 +1859,7 @@ Output will be sent in MSG_NETWORK_STATE_RESP messages
 
   """
   __slots__ = []
-  __zips__ = []
+  _fields = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1948,16 +1948,16 @@ in c.
                'interface_name',
                'flags',
               ]
-  __zips__ = [
-              ( 'array:u8:4', 'ipv4_address'),
-              ( 'u8', 'ipv4_mask_size'),
-              ( 'array:u8:16', 'ipv6_address'),
-              ( 'u8', 'ipv6_mask_size'),
-              ( 'u32', 'rx_bytes'),
-              ( 'u32', 'tx_bytes'),
-              ( 'str:16', 'interface_name'),
-              ( 'u32', 'flags'),
-             ]
+  _fields = [
+             ( 'array:u8:4', 'ipv4_address' ),
+             ( 'u8', 'ipv4_mask_size' ),
+             ( 'array:u8:16', 'ipv6_address' ),
+             ( 'u8', 'ipv6_mask_size' ),
+             ( 'u32', 'rx_bytes' ),
+             ( 'u32', 'tx_bytes' ),
+             ( 'str:16', 'interface_name' ),
+             ( 'u32', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2053,9 +2053,9 @@ class MsgNetworkBandwidthUsage(SBP):
   __slots__ = [
                'interfaces',
               ]
-  __zips__ = [
-              ( 'array:NetworkUsage', 'interfaces'),
-             ]
+  _fields = [
+             ( 'array:NetworkUsage', 'interfaces' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2154,11 +2154,11 @@ of the modem and its various parameters.
                'signal_error_rate',
                'reserved',
               ]
-  __zips__ = [
-              ( 's8', 'signal_strength'),
-              ( 'float', 'signal_error_rate'),
-              ( 'array:u8', 'reserved'),
-             ]
+  _fields = [
+             ( 's8', 'signal_strength' ),
+             ( 'float', 'signal_error_rate' ),
+             ( 'array:u8', 'reserved' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2277,15 +2277,15 @@ class MsgSpecanDep(SBP):
                'amplitude_unit',
                'amplitude_value',
               ]
-  __zips__ = [
-              ( 'u16', 'channel_tag'),
-              ( 'GPSTimeDep', 't'),
-              ( 'float', 'freq_ref'),
-              ( 'float', 'freq_step'),
-              ( 'float', 'amplitude_ref'),
-              ( 'float', 'amplitude_unit'),
-              ( 'array:u8', 'amplitude_value'),
-             ]
+  _fields = [
+             ( 'u16', 'channel_tag' ),
+             ( 'GPSTimeDep', 't' ),
+             ( 'float', 'freq_ref' ),
+             ( 'float', 'freq_step' ),
+             ( 'float', 'amplitude_ref' ),
+             ( 'float', 'amplitude_unit' ),
+             ( 'array:u8', 'amplitude_value' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2409,15 +2409,15 @@ class MsgSpecan(SBP):
                'amplitude_unit',
                'amplitude_value',
               ]
-  __zips__ = [
-              ( 'u16', 'channel_tag'),
-              ( 'GPSTime', 't'),
-              ( 'float', 'freq_ref'),
-              ( 'float', 'freq_step'),
-              ( 'float', 'amplitude_ref'),
-              ( 'float', 'amplitude_unit'),
-              ( 'array:u8', 'amplitude_value'),
-             ]
+  _fields = [
+             ( 'u16', 'channel_tag' ),
+             ( 'GPSTime', 't' ),
+             ( 'float', 'freq_ref' ),
+             ( 'float', 'freq_step' ),
+             ( 'float', 'amplitude_ref' ),
+             ( 'float', 'amplitude_unit' ),
+             ( 'array:u8', 'amplitude_value' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -2521,10 +2521,10 @@ A negative value implies an error for the particular gain stage as reported by t
                'rf_gain',
                'if_gain',
               ]
-  __zips__ = [
-              ( 'array:s8:8', 'rf_gain'),
-              ( 'array:s8:8', 'if_gain'),
-             ]
+  _fields = [
+             ( 'array:s8:8', 'rf_gain' ),
+             ( 'array:s8:8', 'if_gain' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:

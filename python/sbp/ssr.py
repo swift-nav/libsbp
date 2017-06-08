@@ -49,10 +49,10 @@ The corrections are conform with typical RTCMv3 MT1059 and 1065.
                'code',
                'value',
               ]
-  __zips__ = [
-              ('u8', 'code'),
-              ('s16', 'value'),
-             ]
+  _fields = [
+             ( 'u8', 'code' ),
+             ( 's16', 'value' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -64,7 +64,7 @@ The corrections are conform with typical RTCMv3 MT1059 and 1065.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in CodeBiasesContent.__zips__:
+      for t, s in CodeBiasesContent._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -121,13 +121,13 @@ Increased for every discontinuity in phase.
                'discontinuity_counter',
                'bias',
               ]
-  __zips__ = [
-              ('u8', 'code'),
-              ('u8', 'integer_indicator'),
-              ('u8', 'widelane_integer_indicator'),
-              ('u8', 'discontinuity_counter'),
-              ('s32', 'bias'),
-             ]
+  _fields = [
+             ( 'u8', 'code' ),
+             ( 'u8', 'integer_indicator' ),
+             ( 'u8', 'widelane_integer_indicator' ),
+             ( 'u8', 'discontinuity_counter' ),
+             ( 's32', 'bias' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
@@ -139,7 +139,7 @@ Increased for every discontinuity in phase.
   def from_binary(self, d, offset=0):
     try:
       size = 0
-      for t, s in PhaseBiasesContent.__zips__:
+      for t, s in PhaseBiasesContent._fields:
         if t in TYPES_KEYS_NP:
           a = np.ndarray(1, TYPES_NP[t], d, size + offset)
           size += a.itemsize
@@ -245,22 +245,22 @@ generating configuration
                'c1',
                'c2',
               ]
-  __zips__ = [
-              ( 'GPSTimeSec', 'time'),
-              ( 'GnssSignal', 'sid'),
-              ( 'u8', 'update_interval'),
-              ( 'u8', 'iod_ssr'),
-              ( 'u32', 'iod'),
-              ( 's32', 'radial'),
-              ( 's32', 'along'),
-              ( 's32', 'cross'),
-              ( 's32', 'dot_radial'),
-              ( 's32', 'dot_along'),
-              ( 's32', 'dot_cross'),
-              ( 's32', 'c0'),
-              ( 's32', 'c1'),
-              ( 's32', 'c2'),
-             ]
+  _fields = [
+             ( 'GPSTimeSec', 'time' ),
+             ( 'GnssSignal', 'sid' ),
+             ( 'u8', 'update_interval' ),
+             ( 'u8', 'iod_ssr' ),
+             ( 'u32', 'iod' ),
+             ( 's32', 'radial' ),
+             ( 's32', 'along' ),
+             ( 's32', 'cross' ),
+             ( 's32', 'dot_radial' ),
+             ( 's32', 'dot_along' ),
+             ( 's32', 'dot_cross' ),
+             ( 's32', 'c0' ),
+             ( 's32', 'c1' ),
+             ( 's32', 'c2' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -420,22 +420,22 @@ generating configuration
                'c1',
                'c2',
               ]
-  __zips__ = [
-              ( 'GPSTimeSec', 'time'),
-              ( 'GnssSignal', 'sid'),
-              ( 'u8', 'update_interval'),
-              ( 'u8', 'iod_ssr'),
-              ( 'u8', 'iod'),
-              ( 's32', 'radial'),
-              ( 's32', 'along'),
-              ( 's32', 'cross'),
-              ( 's32', 'dot_radial'),
-              ( 's32', 'dot_along'),
-              ( 's32', 'dot_cross'),
-              ( 's32', 'c0'),
-              ( 's32', 'c1'),
-              ( 's32', 'c2'),
-             ]
+  _fields = [
+             ( 'GPSTimeSec', 'time' ),
+             ( 'GnssSignal', 'sid' ),
+             ( 'u8', 'update_interval' ),
+             ( 'u8', 'iod_ssr' ),
+             ( 'u8', 'iod' ),
+             ( 's32', 'radial' ),
+             ( 's32', 'along' ),
+             ( 's32', 'cross' ),
+             ( 's32', 'dot_radial' ),
+             ( 's32', 'dot_along' ),
+             ( 's32', 'dot_cross' ),
+             ( 's32', 'c0' ),
+             ( 's32', 'c1' ),
+             ( 's32', 'c2' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -559,13 +559,13 @@ generating configuration
                'iod_ssr',
                'biases',
               ]
-  __zips__ = [
-              ( 'GPSTimeSec', 'time'),
-              ( 'GnssSignal', 'sid'),
-              ( 'u8', 'update_interval'),
-              ( 'u8', 'iod_ssr'),
-              ( 'array:CodeBiasesContent', 'biases'),
-             ]
+  _fields = [
+             ( 'GPSTimeSec', 'time' ),
+             ( 'GnssSignal', 'sid' ),
+             ( 'u8', 'update_interval' ),
+             ( 'u8', 'iod_ssr' ),
+             ( 'array:CodeBiasesContent', 'biases' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -702,17 +702,17 @@ satellite being tracked.
                'yaw_rate',
                'biases',
               ]
-  __zips__ = [
-              ( 'GPSTimeSec', 'time'),
-              ( 'GnssSignal', 'sid'),
-              ( 'u8', 'update_interval'),
-              ( 'u8', 'iod_ssr'),
-              ( 'u8', 'dispersive_bias'),
-              ( 'u8', 'mw_consistency'),
-              ( 'u16', 'yaw'),
-              ( 's8', 'yaw_rate'),
-              ( 'array:PhaseBiasesContent', 'biases'),
-             ]
+  _fields = [
+             ( 'GPSTimeSec', 'time' ),
+             ( 'GnssSignal', 'sid' ),
+             ( 'u8', 'update_interval' ),
+             ( 'u8', 'iod_ssr' ),
+             ( 'u8', 'dispersive_bias' ),
+             ( 'u8', 'mw_consistency' ),
+             ( 'u16', 'yaw' ),
+             ( 's8', 'yaw_rate' ),
+             ( 'array:PhaseBiasesContent', 'biases' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
