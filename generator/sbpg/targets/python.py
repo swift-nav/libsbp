@@ -19,8 +19,6 @@ files.
 from sbpg.targets.templating import JENV, ACRONYMS
 import copy
 
-from construct import *
-
 TEMPLATE_NAME = "sbp_construct_template.py.j2"
 
 CONSTRUCT_CODE = {

@@ -20,7 +20,6 @@ from sbpg.targets.templating import JENV
 import copy
 import textwrap
 
-from construct import *
 
 TEMPLATE_NAME = "sbp_js.js.j2"
 

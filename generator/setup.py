@@ -22,6 +22,11 @@ setup(name='sbp_gen',
       maintainer='Bhaskar Mookerji',
       maintainer_email='mookerji@swiftnav.com',
       url='https://github.com/swift-nav/libsbp/generator',
+      install_requires=[
+          'Jinja2',
+          'PyYAML',
+          'voluptuous'
+      ],
       keywords='',
       classifiers=['Intended Audience :: Developers',
                    'Intended Audience :: Science/Research',
@@ -33,7 +38,5 @@ setup(name='sbp_gen',
                    'Programming Language :: Python :: 2.7'
                    ],
       packages=find_packages(),
-      platforms="Linux,Windows,Mac",
-      py_modules=['libsbp'],
       use_2to3=False,
       zip_safe=False)
