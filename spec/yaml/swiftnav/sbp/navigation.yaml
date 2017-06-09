@@ -435,8 +435,7 @@ definitions:
               type: u16
               units: mm/s
               desc: |
-                Velocity accuracy estimate (not implemented). Defaults
-                to 0.
+                Velocity accuracy estimate
           - n_sats:
               type: u8
               desc: Number of satellites used in solution
@@ -482,14 +481,12 @@ definitions:
               type: u16
               units: mm/s
               desc: |
-                Horizontal velocity accuracy estimate (not
-                implemented). Defaults to 0.
+                Horizontal velocity accuracy estimate
           - v_accuracy:
               type: u16
               units: mm/s
               desc: |
-                Vertical velocity accuracy estimate (not
-                implemented). Defaults to 0.
+                Vertical velocity accuracy estimate
           - n_sats:
               type: u8
               desc: Number of satellites used in solution
@@ -801,8 +798,7 @@ definitions:
               type: u16
               units: mm
               desc: |
-                Position accuracy estimate (not implemented). Defaults
-                to 0.
+                Position accuracy estimate
           - n_sats:
               type: u8
               desc: Number of satellites used in solution
