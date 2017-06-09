@@ -28,6 +28,7 @@ before_install:
   - mv node_modules npm
   - npm/.bin/npm --version
   - npm/.bin/npm install
+  - pip install --user tox
 
 install:
   # - tlmgr update --self
