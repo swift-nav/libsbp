@@ -47,7 +47,8 @@ class ((( m.identifier )))(object):
 
   """
   ((*- if m.fields *))
-  _parser = Embedded(Struct("(((m.identifier )))",
+  # _parser = Embedded(Struct("(((m.identifier )))",
+  _parser = Embedded(Struct(
                      ((*- for f in m.fields *))
                      ((( f | construct_py ))),
                      ((*- endfor *))))
@@ -120,7 +121,8 @@ class ((( m.identifier | classnameify )))(SBP):
 
   """
   ((*- if m.fields *))
-  _parser = Struct("(((m.identifier | classnameify )))",
+  # _parser = Struct("(((m.identifier | classnameify )))",
+  _parser = Struct(
                    ((*- for f in m.fields *))
                    ((( f | construct_py ))),
                    ((*- endfor *)))

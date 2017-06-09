@@ -68,13 +68,14 @@ class SBP(object):
 
   """
 
-  _parser = Struct("SBP",
-                   ULInt8('preamble'),
-                   ULInt16('msg_type'),
-                   ULInt16('sender'),
-                   ULInt8('length'),
-                   Bytes("payload", lambda ctx: ctx.length),
-                   ULInt16('crc'),)
+  # _parser = Struct("SBP",
+  _parser = Struct(
+                   'preamble'/Int8ul,
+                   'msg_type'/Int16ul,
+                   'sender'/Int16ul,
+                   'length'/Int8ul,
+                   'payload'/Bytes(lambda ctx: ctx.length),
+                   'crc'/Int16ul,)
   __slots__ = ['preamble',
                'msg_type',
                'sender',
