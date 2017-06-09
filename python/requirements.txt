@@ -1,10 +1,10 @@
-boto==2.42.0
 construct==2.5.2
-httpretty
 requests>=2.8.1
-futures==2.2.0
 requests-futures>=0.9.5
+futures>=2.2.0
+boto
+httpretty
 pyftdi
 pylibftdi
-pyserial==2.7
-pyyaml==3.11
+pyserial
+pyyaml
