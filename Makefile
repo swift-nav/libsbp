@@ -191,7 +191,7 @@ test-c:
 
 test-python:
 	$(call announce-begin,"Running Python tests")
-	cd $(SWIFTNAV_ROOT)/python/ && python -m pip install --user -r requirements.txt && python -m tox
+	cd $(SWIFTNAV_ROOT)/python/ && python -m pip install --user -r requirements.txt && pip install --user -r test_requirements.txt && python -m tox
 	$(call announce-end,"Finished running Python tests")
 
 test-javascript:
