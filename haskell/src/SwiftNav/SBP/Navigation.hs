@@ -434,7 +434,7 @@ data MsgVelEcef = MsgVelEcef
   , _msgVelEcef_z      :: Int32
     -- ^ Velocity ECEF Z coordinate
   , _msgVelEcef_accuracy :: Word16
-    -- ^ Velocity accuracy estimate (not implemented). Defaults to 0.
+    -- ^ Velocity accuracy estimate
   , _msgVelEcef_n_sats :: Word8
     -- ^ Number of satellites used in solution
   , _msgVelEcef_flags  :: Word8
@@ -486,9 +486,9 @@ data MsgVelNed = MsgVelNed
   , _msgVelNed_d        :: Int32
     -- ^ Velocity Down coordinate
   , _msgVelNed_h_accuracy :: Word16
-    -- ^ Horizontal velocity accuracy estimate (not implemented). Defaults to 0.
+    -- ^ Horizontal velocity accuracy estimate
   , _msgVelNed_v_accuracy :: Word16
-    -- ^ Vertical velocity accuracy estimate (not implemented). Defaults to 0.
+    -- ^ Vertical velocity accuracy estimate
   , _msgVelNed_n_sats   :: Word8
     -- ^ Number of satellites used in solution
   , _msgVelNed_flags    :: Word8
@@ -818,7 +818,7 @@ data MsgBaselineEcefDepA = MsgBaselineEcefDepA
   , _msgBaselineEcefDepA_z      :: Int32
     -- ^ Baseline ECEF Z coordinate
   , _msgBaselineEcefDepA_accuracy :: Word16
-    -- ^ Position accuracy estimate (not implemented). Defaults to 0.
+    -- ^ Position accuracy estimate
   , _msgBaselineEcefDepA_n_sats :: Word8
     -- ^ Number of satellites used in solution
   , _msgBaselineEcefDepA_flags  :: Word8

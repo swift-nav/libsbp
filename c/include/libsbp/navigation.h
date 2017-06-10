@@ -202,8 +202,7 @@ typedef struct __attribute__((packed)) {
   s32 x;           /**< Velocity ECEF X coordinate [mm/s] */
   s32 y;           /**< Velocity ECEF Y coordinate [mm/s] */
   s32 z;           /**< Velocity ECEF Z coordinate [mm/s] */
-  u16 accuracy;    /**< Velocity accuracy estimate (not implemented). Defaults
-to 0.
+  u16 accuracy;    /**< Velocity accuracy estimate
  [mm/s] */
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
@@ -223,11 +222,9 @@ typedef struct __attribute__((packed)) {
   s32 n;             /**< Velocity North coordinate [mm/s] */
   s32 e;             /**< Velocity East coordinate [mm/s] */
   s32 d;             /**< Velocity Down coordinate [mm/s] */
-  u16 h_accuracy;    /**< Horizontal velocity accuracy estimate (not
-implemented). Defaults to 0.
+  u16 h_accuracy;    /**< Horizontal velocity accuracy estimate
  [mm/s] */
-  u16 v_accuracy;    /**< Vertical velocity accuracy estimate (not
-implemented). Defaults to 0.
+  u16 v_accuracy;    /**< Vertical velocity accuracy estimate
  [mm/s] */
   u8 n_sats;        /**< Number of satellites used in solution */
   u8 flags;         /**< Status flags */
@@ -373,8 +370,7 @@ typedef struct __attribute__((packed)) {
   s32 x;           /**< Baseline ECEF X coordinate [mm] */
   s32 y;           /**< Baseline ECEF Y coordinate [mm] */
   s32 z;           /**< Baseline ECEF Z coordinate [mm] */
-  u16 accuracy;    /**< Position accuracy estimate (not implemented). Defaults
-to 0.
+  u16 accuracy;    /**< Position accuracy estimate
  [mm] */
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */

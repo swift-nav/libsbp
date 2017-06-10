@@ -1,11 +1,39 @@
 # Change Log
 
-## [v2.2.1](https://github.com/swift-nav/libsbp/tree/v2.2.1)
+## [v2.2.4](https://github.com/swift-nav/libsbp/tree/v2.2.4)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.3...v2.2.4)
+
+**Closed issues:**
+
+- Update developer landing pages for SBP 2.0 [\#445](https://github.com/swift-nav/libsbp/issues/445)
+
+**Merged pull requests:**
+
+- remove not implemented notes [\#481](https://github.com/swift-nav/libsbp/pull/481)
+- Python deps [\#478](https://github.com/swift-nav/libsbp/pull/478)
+- Generate bundled, browser-friendly version of libsbp  [\#476](https://github.com/swift-nav/libsbp/pull/476)
+- Add FCN and d\_tau to MSG\_EPHEMERIS\_GLO [\#474](https://github.com/swift-nav/libsbp/pull/474)
+
+## [v2.2.3](https://github.com/swift-nav/libsbp/tree/v2.2.3) (2017-05-26)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.2...v2.2.3)
+
+## [v2.2.2](https://github.com/swift-nav/libsbp/tree/v2.2.2) (2017-05-25)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.1...v2.2.2)
+
+**Merged pull requests:**
+
+- Adding `extern "C"` to sbp.h for inclusion into C++ programs [\#471](https://github.com/swift-nav/libsbp/pull/471)
+- adding the spectrum analyzer message [\#470](https://github.com/swift-nav/libsbp/pull/470)
+- New MSG\_TRACKING\_STATE. [\#469](https://github.com/swift-nav/libsbp/pull/469)
+- Fixup termios.error exception handling for Windows [\#468](https://github.com/swift-nav/libsbp/pull/468)
+
+## [v2.2.1](https://github.com/swift-nav/libsbp/tree/v2.2.1) (2017-05-12)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.0...v2.2.1)
 
 **Merged pull requests:**
 
+- V2.2.1 branch [\#466](https://github.com/swift-nav/libsbp/pull/466)
 - Add decimal SBP MSG\_ID to doc [\#465](https://github.com/swift-nav/libsbp/pull/465)
 - Add description of the RAIM exclusion bit in MSG\_OBS.flags [\#464](https://github.com/swift-nav/libsbp/pull/464)
 - Fix ephemeris time to be in seconds [\#463](https://github.com/swift-nav/libsbp/pull/463)

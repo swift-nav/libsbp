@@ -48,13 +48,11 @@ public class MsgVelNED extends SBPMessage {
     /** Velocity Down coordinate */
     public int d;
     
-    /** Horizontal velocity accuracy estimate (not
-implemented). Defaults to 0.
+    /** Horizontal velocity accuracy estimate
  */
     public int h_accuracy;
     
-    /** Vertical velocity accuracy estimate (not
-implemented). Defaults to 0.
+    /** Vertical velocity accuracy estimate
  */
     public int v_accuracy;
     

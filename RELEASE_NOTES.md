@@ -6,6 +6,8 @@ For a detailed index of changes, please see the
 
 Contents
 --------
+ * [v2.2.4](#v2.2.4)
+ * [v2.2.2](#v2.2.2)
  * [v2.2.1](#v2.2.1)
  * [v2.2.0](#v2.2.0)
  * [v2.1.8](#v2.1.8)
@@ -20,6 +22,17 @@ Contents
  * [v1.0.1](#v1.0.1)
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
+
+v2.2.4 <a name="v2.2.4">
+--------------------------
+* Change python dependencies
+* Remove not implemented note for estimated accuracy fields
+
+v2.2.2 <a name="v2.2.2">
+--------------------------
+* Add extern "C" for c++
+* New MSG_TRACKING_STATE
+* New Spectrum analyzer message
 
 v2.2.1 <a name="v2.2.1">
 --------------------------
