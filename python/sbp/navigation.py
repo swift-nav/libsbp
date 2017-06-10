@@ -884,8 +884,7 @@ MSG_GPS_TIME with the matching time-of-week (tow).
   z : int
     Velocity ECEF Z coordinate
   accuracy : int
-    Velocity accuracy estimate (not implemented). Defaults
-to 0.
+    Velocity accuracy estimate
 
   n_sats : int
     Number of satellites used in solution
@@ -1000,12 +999,10 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
   d : int
     Velocity Down coordinate
   h_accuracy : int
-    Horizontal velocity accuracy estimate (not
-implemented). Defaults to 0.
+    Horizontal velocity accuracy estimate
 
   v_accuracy : int
-    Vertical velocity accuracy estimate (not
-implemented). Defaults to 0.
+    Vertical velocity accuracy estimate
 
   n_sats : int
     Number of satellites used in solution
@@ -1775,8 +1772,7 @@ matching time-of-week (tow).
   z : int
     Baseline ECEF Z coordinate
   accuracy : int
-    Position accuracy estimate (not implemented). Defaults
-to 0.
+    Position accuracy estimate
 
   n_sats : int
     Number of satellites used in solution

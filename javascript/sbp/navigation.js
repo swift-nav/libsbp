@@ -388,7 +388,7 @@ MsgBaselineNed.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field x number (signed 32-bit int, 4 bytes) Velocity ECEF X coordinate
  * @field y number (signed 32-bit int, 4 bytes) Velocity ECEF Y coordinate
  * @field z number (signed 32-bit int, 4 bytes) Velocity ECEF Z coordinate
- * @field accuracy number (unsigned 16-bit int, 2 bytes) Velocity accuracy estimate (not implemented). Defaults to 0.
+ * @field accuracy number (unsigned 16-bit int, 2 bytes) Velocity accuracy estimate
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
@@ -436,8 +436,8 @@ MsgVelEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field n number (signed 32-bit int, 4 bytes) Velocity North coordinate
  * @field e number (signed 32-bit int, 4 bytes) Velocity East coordinate
  * @field d number (signed 32-bit int, 4 bytes) Velocity Down coordinate
- * @field h_accuracy number (unsigned 16-bit int, 2 bytes) Horizontal velocity accuracy estimate (not implemented). Defaults to 0.
- * @field v_accuracy number (unsigned 16-bit int, 2 bytes) Vertical velocity accuracy estimate (not implemented). Defaults to 0.
+ * @field h_accuracy number (unsigned 16-bit int, 2 bytes) Horizontal velocity accuracy estimate
+ * @field v_accuracy number (unsigned 16-bit int, 2 bytes) Vertical velocity accuracy estimate
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
@@ -747,7 +747,7 @@ MsgPosLlhDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field x number (signed 32-bit int, 4 bytes) Baseline ECEF X coordinate
  * @field y number (signed 32-bit int, 4 bytes) Baseline ECEF Y coordinate
  * @field z number (signed 32-bit int, 4 bytes) Baseline ECEF Z coordinate
- * @field accuracy number (unsigned 16-bit int, 2 bytes) Position accuracy estimate (not implemented). Defaults to 0.
+ * @field accuracy number (unsigned 16-bit int, 2 bytes) Position accuracy estimate
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
