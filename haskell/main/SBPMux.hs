@@ -14,20 +14,14 @@ import           BasicPrelude
 import           Control.Concurrent.Async
 import           Control.Concurrent.STM
 import           Control.Concurrent.STM.TBMQueue
+import           Control.Lens
 import           Control.Monad.Trans.Resource
-import           Data.Aeson
-import           Data.Aeson.Encode
-import           Data.ByteString.Builder
-import qualified Data.ByteString.Lazy              as BL
 import           Data.Conduit
 import           Data.Conduit.Binary
+import qualified Data.Conduit.List                 as CL
 import           Data.Conduit.Serialization.Binary
 import           SwiftNav.SBP
 import           System.IO
-
--- | Encode a SBPMsg to a line of JSON.
-encodeLine :: SBPMsg -> ByteString
-encodeLine v = BL.toStrict $ toLazyByteString $ encodeToBuilder (toJSON v) <> "\n"
 
 -- Read a queue into a conduit
 sourceQueue :: MonadIO m => TBMQueue o -> ConduitM i o m ()
@@ -71,12 +65,16 @@ parSources sources queueLength = bracketP initialize cleanup finalSource
         cancel a
     finalSource (_, queue) = sourceQueue queue
 
+-- Set the SBP sender ID to zero
+zeroSenderId :: SBPMsg -> SBPMsg
+zeroSenderId = msgSBPSender .~ 0
+
 main :: IO ()
 main =
   runConduitRes $
-    parSources [basePipe, roverPipe] 10 =$=
-    conduitEncode                       $$
+    parSources [baseSource, roverSource] 10 =$=
+    conduitEncode                           $$
     sinkHandle stdout
   where
-    basePipe  = sourceFile "base.sbp" =$= conduitDecode :: ConduitM () SBPMsg (ResourceT IO) ()
-    roverPipe = sourceFile "rover.sbp" =$= conduitDecode :: ConduitM () SBPMsg (ResourceT IO) ()
+    baseSource  = sourceFile "base.sbp"  $= conduitDecode $= CL.map zeroSenderId
+    roverSource = sourceFile "rover.sbp" $= conduitDecode
