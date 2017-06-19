@@ -2,7 +2,6 @@
 
 from setuptools import setup
 import os
-from sbp.version import VERSION
 
 CLASSIFIERS = [
   'Intended Audience :: Developers',
@@ -29,10 +28,6 @@ PLATFORMS = [
   'win32',
 ]
 
-PACKAGE_DATA = { 'sbp' : [
-  'RELEASE-VERSION',
-] }
-
 cwd = os.path.abspath(os.path.dirname(__file__))
 with open(cwd + '/README.rst') as f:
   readme = f.read()
@@ -46,14 +41,14 @@ with open(cwd + '/test_requirements.txt') as f:
 setup(name='sbp',
       description='Python bindings for Swift Binary Protocol',
       long_description=readme,
-      version=VERSION,
+      use_scm_version = {'root': '..', 'relative_to': __file__},
+      setup_requires=['setuptools_scm'],
       author='Swift Navigation',
       author_email='dev@swiftnav.com',
       url='https://github.com/swift-nav/libsbp',
       classifiers=CLASSIFIERS,
       packages=PACKAGES,
       platforms=PLATFORMS,
-      package_data=PACKAGE_DATA,
       install_requires=INSTALL_REQUIRES,
       tests_require=TEST_REQUIRES,
       use_2to3=False,
