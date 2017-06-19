@@ -1578,6 +1578,8 @@ class MsgSpecan(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
+  channel_tag : int
+    Channel ID
   t : GPSTime
     Receiver time of this observation
   freq_ref : float
@@ -1600,6 +1602,7 @@ class MsgSpecan(SBP):
 
   """
   _parser = Struct("MsgSpecan",
+                   ULInt16('channel_tag'),
                    Struct('t', GPSTime._parser),
                    LFloat32('freq_ref'),
                    LFloat32('freq_step'),
@@ -1607,6 +1610,7 @@ class MsgSpecan(SBP):
                    LFloat32('amplitude_unit'),
                    OptionalGreedyRange(ULInt8('amplitude_value')),)
   __slots__ = [
+               'channel_tag',
                't',
                'freq_ref',
                'freq_step',
@@ -1625,6 +1629,7 @@ class MsgSpecan(SBP):
       super( MsgSpecan, self).__init__()
       self.msg_type = SBP_MSG_SPECAN
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.channel_tag = kwargs.pop('channel_tag')
       self.t = kwargs.pop('t')
       self.freq_ref = kwargs.pop('freq_ref')
       self.freq_step = kwargs.pop('freq_step')

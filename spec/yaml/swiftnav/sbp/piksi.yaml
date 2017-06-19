@@ -446,23 +446,30 @@ definitions:
         Spectrum analyzer packet.
 
     fields:
+        - channel_tag:
+            type: u16
+            desc: Channel ID
         - t:
             type: GPSTime
             desc: Receiver time of this observation
         - freq_ref:
             type: float
+            units: MHz
             desc: |
                 Reference frequency of this packet
         - freq_step:
             type: float
+            units: MHz
             desc: |
                 Frequency step of points in this packet
         - amplitude_ref:
             type: float
+            units: dB
             desc: |
                 Reference amplitude of this packet
         - amplitude_unit:
             type: float
+            units: dB
             desc: |
                 Amplitude unit value of points in this packet
         - amplitude_value:

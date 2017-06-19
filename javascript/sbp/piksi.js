@@ -700,6 +700,7 @@ MsgNetworkStateResp.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  * Spectrum analyzer packet.
  *
  * Fields in the SBP payload (`sbp.payload`):
+ * @field channel_tag number (unsigned 16-bit int, 2 bytes) Channel ID
  * @field t GPSTime Receiver time of this observation
  * @field freq_ref number (float, 4 bytes) Reference frequency of this packet
  * @field freq_step number (float, 4 bytes) Frequency step of points in this packet
@@ -722,6 +723,7 @@ MsgSpecan.prototype.msg_type = 0x0050;
 MsgSpecan.prototype.constructor = MsgSpecan;
 MsgSpecan.prototype.parser = new Parser()
   .endianess('little')
+  .uint16('channel_tag')
   .nest('t', { type: GPSTime.prototype.parser })
   .floatle('freq_ref')
   .floatle('freq_step')
@@ -729,6 +731,7 @@ MsgSpecan.prototype.parser = new Parser()
   .floatle('amplitude_unit')
   .array('amplitude_value', { type: 'uint8', readUntil: 'eof' });
 MsgSpecan.prototype.fieldSpec = [];
+MsgSpecan.prototype.fieldSpec.push(['channel_tag', 'writeUInt16LE', 2]);
 MsgSpecan.prototype.fieldSpec.push(['t', GPSTime.prototype.fieldSpec]);
 MsgSpecan.prototype.fieldSpec.push(['freq_ref', 'writeFloatLE', 4]);
 MsgSpecan.prototype.fieldSpec.push(['freq_step', 'writeFloatLE', 4]);
