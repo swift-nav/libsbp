@@ -696,7 +696,9 @@ msgSpecan = 0x0050
 --
 -- Spectrum analyzer packet.
 data MsgSpecan = MsgSpecan
-  { _msgSpecan_t             :: GpsTime
+  { _msgSpecan_channel_tag   :: Word16
+    -- ^ Channel ID
+  , _msgSpecan_t             :: GpsTime
     -- ^ Receiver time of this observation
   , _msgSpecan_freq_ref      :: Float
     -- ^ Reference frequency of this packet
@@ -712,6 +714,7 @@ data MsgSpecan = MsgSpecan
 
 instance Binary MsgSpecan where
   get = do
+    _msgSpecan_channel_tag <- getWord16le
     _msgSpecan_t <- get
     _msgSpecan_freq_ref <- getFloat32le
     _msgSpecan_freq_step <- getFloat32le
@@ -721,6 +724,7 @@ instance Binary MsgSpecan where
     return MsgSpecan {..}
 
   put MsgSpecan {..} = do
+    putWord16le _msgSpecan_channel_tag
     put _msgSpecan_t
     putFloat32le _msgSpecan_freq_ref
     putFloat32le _msgSpecan_freq_step

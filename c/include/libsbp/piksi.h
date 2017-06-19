@@ -307,15 +307,16 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_SPECAN             0x0050
 typedef struct __attribute__((packed)) {
+  u16 channel_tag;        /**< Channel ID */
   sbp_gps_time_t t;                  /**< Receiver time of this observation */
   float freq_ref;           /**< Reference frequency of this packet
- */
+ [MHz] */
   float freq_step;          /**< Frequency step of points in this packet
- */
+ [MHz] */
   float amplitude_ref;      /**< Reference amplitude of this packet
- */
+ [dB] */
   float amplitude_unit;     /**< Amplitude unit value of points in this packet
- */
+ [dB] */
   u8 amplitude_value[0]; /**< Amplitude values (in the above units) of points in this packet
  */
 } msg_specan_t;
