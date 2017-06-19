@@ -21,6 +21,8 @@ JENV = jinja2.Environment(block_start_string = '((*',
                           variable_end_string = ')))',
                           comment_start_string = '((=',
                           comment_end_string = '=))',
-                          loader=jinja2.FileSystemLoader("./sbpg/targets/resources/"))
+                          loader=jinja2.PackageLoader('sbpg',
+                                                      'targets/resources'),
+                          )
 
 ACRONYMS = ['GPS', 'ECEF', 'LLH', 'NED', 'IO']

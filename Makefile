@@ -7,10 +7,10 @@ SWIFTNAV_ROOT := $(shell pwd)
 MAKEFLAGS += SWIFTNAV_ROOT=$(SWIFTNAV_ROOT)
 SBP_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/yaml/swiftnav/sbp/
 SBP_TESTS_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/tests/yaml/
-SBP_GEN_BIN := python sbpg/generator.py
-export PYTHONPATH := .:$(shell echo $$PYTHONPATH)
+PYTHON := $(SWIFTNAV_ROOT)/.venv/bin/python
+SBP_GEN_BIN := $(PYTHON) -m sbpg.generator
 
-SBP_VERSION := $(shell PYTHONPATH=python python python/sbp/version.py)
+SBP_VERSION := $(shell python2 python/sbp/version.py)
 SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
 SBP_MINOR_VERSION := $(word 2, $(subst ., , $(SBP_VERSION)))
 SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
@@ -109,7 +109,8 @@ deps-haskell: verify-prereq-haskell
 
 deps-generator: verify-prereq-generator
 	$(call announce-begin,"Installing generator dependencies")
-	cd $(SWIFTNAV_ROOT)/generator; python -m pip install --user -r requirements.txt
+	virtualenv -p python2 $(SWIFTNAV_ROOT)/.venv
+	$(PYTHON) -m pip install $(SWIFTNAV_ROOT)/generator/
 	$(call announce-end,"Finished installing generator dependencies")
 
 # Generators
@@ -191,7 +192,7 @@ test-c:
 
 test-python:
 	$(call announce-begin,"Running Python tests")
-	cd $(SWIFTNAV_ROOT)/python/ && python -m pip install --user -r requirements.txt && pip install --user -r test_requirements.txt && python -m tox
+	cd $(SWIFTNAV_ROOT)/python/ && tox
 	$(call announce-end,"Finished running Python tests")
 
 test-javascript:
