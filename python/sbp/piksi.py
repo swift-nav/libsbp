@@ -1398,6 +1398,95 @@ the command.  A return code of zero indicates success.
     d.update(j)
     return d
     
+SBP_MSG_COMMAND_OUTPUT = 0x00BC
+class MsgCommandOutput(SBP):
+  """SBP class for message MSG_COMMAND_OUTPUT (0x00BC).
+
+  You can have MSG_COMMAND_OUTPUT inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Returns the standard output and standard error of the
+command requested by MSG_COMMAND_REQ.
+The sequence number can be used to filter for filtering
+the correct command.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  sequence : int
+    Sequence number
+  line : string
+    Line of standard output or standard error
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = Struct("MsgCommandOutput",
+                   ULInt32('sequence'),
+                   greedy_string('line'),)
+  __slots__ = [
+               'sequence',
+               'line',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgCommandOutput,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgCommandOutput, self).__init__()
+      self.msg_type = SBP_MSG_COMMAND_OUTPUT
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.sequence = kwargs.pop('sequence')
+      self.line = kwargs.pop('line')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgCommandOutput.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgCommandOutput(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgCommandOutput._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgCommandOutput._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgCommandOutput, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_NETWORK_STATE_REQ = 0x00BA
 class MsgNetworkStateReq(SBP):
   """SBP class for message MSG_NETWORK_STATE_REQ (0x00BA).
@@ -1696,6 +1785,7 @@ msg_classes = {
   0x00B5: MsgDeviceMonitor,
   0x00B8: MsgCommandReq,
   0x00B9: MsgCommandResp,
+  0x00BC: MsgCommandOutput,
   0x00BA: MsgNetworkStateReq,
   0x00BB: MsgNetworkStateResp,
   0x0050: MsgSpecan,

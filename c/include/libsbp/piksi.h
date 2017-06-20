@@ -274,6 +274,20 @@ typedef struct __attribute__((packed)) {
 } msg_command_resp_t;
 
 
+/** Command output
+ *
+ * Returns the standard output and standard error of the
+ * command requested by MSG_COMMAND_REQ.
+ * The sequence number can be used to filter for filtering
+ * the correct command.
+ */
+#define SBP_MSG_COMMAND_OUTPUT     0x00BC
+typedef struct __attribute__((packed)) {
+  u32 sequence;    /**< Sequence number */
+  char line[0];     /**< Line of standard output or standard error */
+} msg_command_output_t;
+
+
 /** Request state of Piksi network interfaces
  *
  * Request state of Piksi network interfaces.

@@ -612,6 +612,37 @@ $(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCommandResp_" .
              ''MsgCommandResp)
 $(makeLenses ''MsgCommandResp)
 
+msgCommandOutput :: Word16
+msgCommandOutput = 0x00BC
+
+-- | SBP class for message MSG_COMMAND_OUTPUT (0x00BC).
+--
+-- Returns the standard output and standard error of the command requested by
+-- MSG_COMMAND_REQ. The sequence number can be used to filter for filtering the
+-- correct command.
+data MsgCommandOutput = MsgCommandOutput
+  { _msgCommandOutput_sequence :: Word32
+    -- ^ Sequence number
+  , _msgCommandOutput_line   :: Text
+    -- ^ Line of standard output or standard error
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgCommandOutput where
+  get = do
+    _msgCommandOutput_sequence <- getWord32le
+    _msgCommandOutput_line <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    return MsgCommandOutput {..}
+
+  put MsgCommandOutput {..} = do
+    putWord32le _msgCommandOutput_sequence
+    putByteString $ encodeUtf8 _msgCommandOutput_line
+
+$(deriveSBP 'msgCommandOutput ''MsgCommandOutput)
+
+$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCommandOutput_" . P.stripPrefix "_msgCommandOutput_"}
+             ''MsgCommandOutput)
+$(makeLenses ''MsgCommandOutput)
+
 msgNetworkStateReq :: Word16
 msgNetworkStateReq = 0x00BA
 

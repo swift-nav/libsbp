@@ -81,6 +81,7 @@ import com.swiftnav.sbp.piksi.MsgMaskSatellite;
 import com.swiftnav.sbp.piksi.MsgDeviceMonitor;
 import com.swiftnav.sbp.piksi.MsgCommandReq;
 import com.swiftnav.sbp.piksi.MsgCommandResp;
+import com.swiftnav.sbp.piksi.MsgCommandOutput;
 import com.swiftnav.sbp.piksi.MsgNetworkStateReq;
 import com.swiftnav.sbp.piksi.MsgNetworkStateResp;
 import com.swiftnav.sbp.piksi.MsgSpecan;
@@ -266,6 +267,8 @@ final class MessageTable {
                 return new MsgCommandReq(msg);
             case MsgCommandResp.TYPE:
                 return new MsgCommandResp(msg);
+            case MsgCommandOutput.TYPE:
+                return new MsgCommandOutput(msg);
             case MsgNetworkStateReq.TYPE:
                 return new MsgNetworkStateReq(msg);
             case MsgNetworkStateResp.TYPE:
