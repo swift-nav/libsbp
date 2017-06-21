@@ -623,6 +623,38 @@ MsgCommandResp.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
 MsgCommandResp.prototype.fieldSpec.push(['code', 'writeInt32LE', 4]);
 
 /**
+ * SBP class for message MSG_COMMAND_OUTPUT (0x00BC).
+ *
+ * Returns the standard output and standard error of the command requested by
+ * MSG_COMMAND_REQ. The sequence number can be used to filter for filtering the
+ * correct command.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sequence number (unsigned 32-bit int, 4 bytes) Sequence number
+ * @field line string Line of standard output or standard error
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgCommandOutput = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_COMMAND_OUTPUT";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgCommandOutput.prototype = Object.create(SBP.prototype);
+MsgCommandOutput.prototype.messageType = "MSG_COMMAND_OUTPUT";
+MsgCommandOutput.prototype.msg_type = 0x00BC;
+MsgCommandOutput.prototype.constructor = MsgCommandOutput;
+MsgCommandOutput.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('sequence')
+  .string('line', { greedy: true });
+MsgCommandOutput.prototype.fieldSpec = [];
+MsgCommandOutput.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
+MsgCommandOutput.prototype.fieldSpec.push(['line', 'string', null]);
+
+/**
  * SBP class for message MSG_NETWORK_STATE_REQ (0x00BA).
  *
  * Request state of Piksi network interfaces. Output will be sent in
@@ -775,6 +807,8 @@ module.exports = {
   MsgCommandReq: MsgCommandReq,
   0x00B9: MsgCommandResp,
   MsgCommandResp: MsgCommandResp,
+  0x00BC: MsgCommandOutput,
+  MsgCommandOutput: MsgCommandOutput,
   0x00BA: MsgNetworkStateReq,
   MsgNetworkStateReq: MsgNetworkStateReq,
   0x00BB: MsgNetworkStateResp,
