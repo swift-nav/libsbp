@@ -11,7 +11,7 @@
 
 from sbp.msg import SBP
 from sbp.client.loggers.base_logger import LogIterator
-from sbp.client.loggers.json_logger import JSONLogIterator, MultiJSONLogIterator
+from sbp.client.loggers.json_logger import JSONLogIterator
 from sbp.client.loggers.rotating_logger import RotatingFileLogger
 from sbp.client.loggers.udp_logger import UdpLogger
 from sbp.acquisition import MsgAcqResultDepA
@@ -51,29 +51,6 @@ def test_json_log():
         warnings.simplefilter("always")
         assert len(w) == 0
   assert count == 2650
-
-def test_multi_json_log():
-  """
-  Multi JSON log iterator sanity tests.
-  """
-  log_datafiles = ['./data/serial_link_log_20150310-115522-test.log.dat',
-                   './data/serial_link_log_20150423-154336_test.log.dat']
-  handles = [open(f, 'r') for f in log_datafiles]
-  count = 0
-  past = 0
-  with warnings.catch_warnings(record=True) as w:
-    with MultiJSONLogIterator(handles) as log:
-      for msg, metadata in log.next():
-        assert type(metadata['time']) == unicode
-        assert isinstance(msg, SBP) or issubclass(type(msg), SBP)
-        assert type(metadata['metadata']) == dict
-        assert not metadata['metadata']
-        assert metadata['time'] >= past
-        past = metadata['time']
-        count += 1
-      warnings.simplefilter("always")
-      assert len(w) == 0
-  assert count == 2650 + 1451
 
 def test_non_utf8_json_log():
   """

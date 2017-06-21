@@ -11,10 +11,6 @@
 from ...msg import SBP
 from ...table import dispatch
 from .base_logger import BaseLogger, LogIterator
-from boto.s3.connection import S3Connection
-from cStringIO import StringIO
-from gzip import GzipFile
-from operator import itemgetter
 import json
 import warnings
 
@@ -91,86 +87,3 @@ class JSONLogIterator(LogIterator):
         warnings.warn(warn, RuntimeWarning)
     self.handle.seek(0, 0)
     raise StopIteration
-
-class MultiJSONLogIterator(JSONLogIterator):
-  """
-  MultiJSONLogIterator
-
-  The :class:`MultiJSONLogIterator` is an iterator for reading JSON logs
-  of SBP data out of multiple handles.
-
-  Parameters
-  ----------
-  handler : [handles]
-    List of handles
-
-  """
-  def __init__(self, handles, dispatcher=dispatch):
-    self.handles = handles
-    self.dispatcher = dispatcher
-
-  def flush(self):
-    for handle in self.handles:
-      handle.flush()
-
-  def close(self):
-    for handle in self.handles:
-      handle.close()
-
-  def next(self):
-    """
-    Return the next record tuple from log files containing
-    JSON-serialized SBP. If an unknown SBP message type
-    is found, it'll return the raw SBP. If EOF, throws
-    exception and then returns to start of file.
-
-    Returns
-    -------
-    Tuple(sbp MSG object, {'time':'ISO 8601 time'})
-      Second item is for metadata. There used to be multiple fields and
-      there could be more in the future.
-
-    """
-    datas = []
-    for handle in self.handles:
-      for line in handle:
-        try:
-          datas.append(json.loads(line))
-        except (ValueError, UnicodeDecodeError):
-          warn = "Bad JSON decoding for line %s" % line
-          warnings.warn(warn, RuntimeWarning)
-
-    for data in sorted(datas, key=itemgetter('time')):
-      item = SBP.from_json_dict(data.pop('data'))
-      msg = self.dispatch(item)
-      yield (msg, data)
-
-    for handle in self.handles:
-      handle.seek(0, 0)
-      raise StopIteration
-
-  @staticmethod
-  def s3_handles(aws_access_key, aws_secret_key, bucket, keys):
-    """
-    Return handles for S3 objects matching keys in bucket.
-
-    Parameters
-    ----------
-    aws_access_key : string
-      AWS access key from credentials.
-    aws_secret_key : string
-      AWS secret key from credentials.
-    bucket : string
-      S3 bucket to read objects from.
-    keys : [string]
-      List of keys in bucket to iterate over.
-
-    """
-    handles = []
-    bucket = S3Connection(aws_access_key, aws_secret_key).get_bucket(bucket)
-    for key in keys:
-      for k in bucket.list(prefix=key):
-        s = k.get_contents_as_string()
-        gz = GzipFile(fileobj=StringIO(s))
-        handles.append(StringIO(gz.read()))
-    return handles
