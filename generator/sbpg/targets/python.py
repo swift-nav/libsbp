@@ -60,21 +60,16 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
   if type_map.get(f.type_id, None):
     return "'{identifier}' / {type_id}".format(type_id=type_map.get(f.type_id),
                                              identifier=f.identifier)
-    # return "%s('%s')" % (type_map.get(f.type_id), f.identifier)
   elif f.type_id == 'string' and f.options.get('size', None):
     return "'{id}'/ String({size}, paddir='left')".format(id=f.identifier,
                                                    size=f.options['size'].value)
-    # return "String('%s', %d)" % (f.identifier, f.options['size'].value)
   elif f.type_id == 'string':
     return "'{id}' / GreedyString(encoding='utf8')".format(id=f.identifier)
-    # return "greedy_string('%s')" % (f.identifier)
   elif f.type_id == 'array' and f.options.get('size', None):
     fill = f.options['fill'].value
     f_ = copy.copy(f)
     f_.type_id = fill
     s = f.options.get('size', None).value
-    # return "Struct(Array(%d, %s))" % (f.identifier, s, construct_format(f_))
-    # return "Struct('{id}' / Array({size}, {type}))".format(id=f.identifier, size=s, type=type_map.get(f_.type_id))
     return "'{id}' / Array({size}, {type})".format(id=f.identifier, size=s, type=type_map.get(f_.type_id, 'Byte'))
   elif f.type_id == 'array':
     fill = f.options['fill'].value
@@ -83,7 +78,6 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
     return "GreedyRange(%s)" % construct_format(f_)
   else:
     return "'%s' / Struct(%s._parser)" % (f.identifier, f.type_id)
-    # return "Struct('%s', %s._parser)" % (f.identifier, f.type_id)
   return formatted
 
 

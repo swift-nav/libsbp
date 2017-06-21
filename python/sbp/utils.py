@@ -74,12 +74,3 @@ def fmt_repr(obj):
   """
   items = ["%s = %r" % (k, v) for k, v in exclude_fields(obj).items()]
   return "<%s: {%s}>" % (obj.__class__.__name__, ', '.join(items))
-
-# TODO: Once https://github.com/construct/construct/pull/59 is published
-#       to pypi, remove this in favor of construct.GreedyString
-def greedy_string(name):
-    pass
-#   """
-#   Variable-length string field.
-#   """
-#   return Rename(name, StringAdapter(OptionalGreedyRange(Field(None, 1))))

@@ -17,7 +17,7 @@
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 ((*- for i in include *))
 from (((module_path))).(((i))) import *
@@ -47,7 +47,6 @@ class ((( m.identifier )))(object):
 
   """
   ((*- if m.fields *))
-  # _parser = Embedded(Struct("(((m.identifier )))",
   _parser = Embedded(Struct(
                      ((*- for f in m.fields *))
                      ((( f | construct_py ))),
@@ -121,7 +120,6 @@ class ((( m.identifier | classnameify )))(SBP):
 
   """
   ((*- if m.fields *))
-  # _parser = Struct("(((m.identifier | classnameify )))",
   _parser = Struct(
                    ((*- for f in m.fields *))
                    ((( f | construct_py ))),
