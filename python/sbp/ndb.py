@@ -73,15 +73,16 @@ of other data_source.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgNdbEvent",
-                   ULInt64('recv_time'),
-                   ULInt8('event'),
-                   ULInt8('object_type'),
-                   ULInt8('result'),
-                   ULInt8('data_source'),
-                   Struct('object_sid', GnssSignal16._parser),
-                   Struct('src_sid', GnssSignal16._parser),
-                   ULInt16('original_sender'),)
+  # _parser = Struct("MsgNdbEvent",
+  _parser = Struct(
+                   'recv_time' / Int64ul,
+                   'event' / Int8ul,
+                   'object_type' / Int8ul,
+                   'result' / Int8ul,
+                   'data_source' / Int8ul,
+                   'object_sid' / Struct(GnssSignal16._parser),
+                   'src_sid' / Struct(GnssSignal16._parser),
+                   'original_sender' / Int16ul,)
   __slots__ = [
                'recv_time',
                'event',

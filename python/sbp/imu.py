@@ -63,15 +63,16 @@ time is unknown or invalid.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgImuRaw",
-                   ULInt32('tow'),
-                   ULInt8('tow_f'),
-                   SLInt16('acc_x'),
-                   SLInt16('acc_y'),
-                   SLInt16('acc_z'),
-                   SLInt16('gyr_x'),
-                   SLInt16('gyr_y'),
-                   SLInt16('gyr_z'),)
+  # _parser = Struct("MsgImuRaw",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'tow_f' / Int8ul,
+                   'acc_x' / Int16sl,
+                   'acc_y' / Int16sl,
+                   'acc_z' / Int16sl,
+                   'gyr_x' / Int16sl,
+                   'gyr_y' / Int16sl,
+                   'gyr_z' / Int16sl,)
   __slots__ = [
                'tow',
                'tow_f',
@@ -171,10 +172,11 @@ depends on the value of `imu_type`.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgImuAux",
-                   ULInt8('imu_type'),
-                   SLInt16('temp'),
-                   ULInt8('imu_conf'),)
+  # _parser = Struct("MsgImuAux",
+  _parser = Struct(
+                   'imu_type' / Int8ul,
+                   'temp' / Int16sl,
+                   'imu_conf' / Int8ul,)
   __slots__ = [
                'imu_type',
                'temp',

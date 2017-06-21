@@ -58,12 +58,13 @@ from -500000 to 500000)
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgExtEvent",
-                   ULInt16('wn'),
-                   ULInt32('tow'),
-                   SLInt32('ns_residual'),
-                   ULInt8('flags'),
-                   ULInt8('pin'),)
+  # _parser = Struct("MsgExtEvent",
+  _parser = Struct(
+                   'wn' / Int16ul,
+                   'tow' / Int32ul,
+                   'ns_residual' / Int32sl,
+                   'flags' / Int8ul,
+                   'pin' / Int8ul,)
   __slots__ = [
                'wn',
                'tow',

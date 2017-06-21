@@ -47,8 +47,9 @@ maximum length of 255 bytes per message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgUserData",
-                   OptionalGreedyRange(ULInt8('contents')),)
+  # _parser = Struct("MsgUserData",
+  _parser = Struct(
+                   GreedyRange('contents' / Int8ul),)
   __slots__ = [
                'contents',
               ]

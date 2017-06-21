@@ -55,13 +55,14 @@ be normalized.
 
 
   """
-  _parser = Embedded(Struct("UARTChannel",
-                     LFloat32('tx_throughput'),
-                     LFloat32('rx_throughput'),
-                     ULInt16('crc_error_count'),
-                     ULInt16('io_error_count'),
-                     ULInt8('tx_buffer_level'),
-                     ULInt8('rx_buffer_level'),))
+  # _parser = Embedded(Struct("UARTChannel",
+  _parser = Embedded(Struct(
+                     'tx_throughput' / Float32l,
+                     'rx_throughput' / Float32l,
+                     'crc_error_count' / Int16ul,
+                     'io_error_count' / Int16ul,
+                     'tx_buffer_level' / Int8ul,
+                     'rx_buffer_level' / Int8ul,))
   __slots__ = [
                'tx_throughput',
                'rx_throughput',
@@ -117,11 +118,12 @@ can cause momentary RTK solution outages.
     Smoothed estimate of the current period
 
   """
-  _parser = Embedded(Struct("Period",
-                     SLInt32('avg'),
-                     SLInt32('pmin'),
-                     SLInt32('pmax'),
-                     SLInt32('current'),))
+  # _parser = Embedded(Struct("Period",
+  _parser = Embedded(Struct(
+                     'avg' / Int32sl,
+                     'pmin' / Int32sl,
+                     'pmax' / Int32sl,
+                     'current' / Int32sl,))
   __slots__ = [
                'avg',
                'pmin',
@@ -172,11 +174,12 @@ communication latency in the system.
     Smoothed estimate of the current latency
 
   """
-  _parser = Embedded(Struct("Latency",
-                     SLInt32('avg'),
-                     SLInt32('lmin'),
-                     SLInt32('lmax'),
-                     SLInt32('current'),))
+  # _parser = Embedded(Struct("Latency",
+  _parser = Embedded(Struct(
+                     'avg' / Int32sl,
+                     'lmin' / Int32sl,
+                     'lmax' / Int32sl,
+                     'current' / Int32sl,))
   __slots__ = [
                'avg',
                'lmin',
@@ -320,8 +323,9 @@ bootloader.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgReset",
-                   ULInt32('flags'),)
+  # _parser = Struct("MsgReset",
+  _parser = Struct(
+                   'flags' / Int32ul,)
   __slots__ = [
                'flags',
               ]
@@ -542,8 +546,9 @@ Ambiguity Resolution (IAR) process.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgResetFilters",
-                   ULInt8('filter'),)
+  # _parser = Struct("MsgResetFilters",
+  _parser = Struct(
+                   'filter' / Int8ul,)
   __slots__ = [
                'filter',
               ]
@@ -680,10 +685,11 @@ thread. The reported percentage values must be normalized.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgThreadState",
-                   String('name', 20),
-                   ULInt16('cpu'),
-                   ULInt32('stack_free'),)
+  # _parser = Struct("MsgThreadState",
+  _parser = Struct(
+                   'name'/ String(20, paddir='left'),
+                   'cpu' / Int16ul,
+                   'stack_free' / Int32ul,)
   __slots__ = [
                'name',
                'cpu',
@@ -783,12 +789,13 @@ period indicates their likelihood of transmission.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgUartState",
-                   Struct('uart_a', UARTChannel._parser),
-                   Struct('uart_b', UARTChannel._parser),
-                   Struct('uart_ftdi', UARTChannel._parser),
-                   Struct('latency', Latency._parser),
-                   Struct('obs_period', Period._parser),)
+  # _parser = Struct("MsgUartState",
+  _parser = Struct(
+                   'uart_a' / Struct(UARTChannel._parser),
+                   'uart_b' / Struct(UARTChannel._parser),
+                   'uart_ftdi' / Struct(UARTChannel._parser),
+                   'latency' / Struct(Latency._parser),
+                   'obs_period' / Struct(Period._parser),)
   __slots__ = [
                'uart_a',
                'uart_b',
@@ -881,11 +888,12 @@ class MsgUartStateDepa(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgUartStateDepa",
-                   Struct('uart_a', UARTChannel._parser),
-                   Struct('uart_b', UARTChannel._parser),
-                   Struct('uart_ftdi', UARTChannel._parser),
-                   Struct('latency', Latency._parser),)
+  # _parser = Struct("MsgUartStateDepa",
+  _parser = Struct(
+                   'uart_a' / Struct(UARTChannel._parser),
+                   'uart_b' / Struct(UARTChannel._parser),
+                   'uart_ftdi' / Struct(UARTChannel._parser),
+                   'latency' / Struct(Latency._parser),)
   __slots__ = [
                'uart_a',
                'uart_b',
@@ -974,8 +982,9 @@ from satellite observations.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgIarState",
-                   ULInt32('num_hyps'),)
+  # _parser = Struct("MsgIarState",
+  _parser = Struct(
+                   'num_hyps' / Int32ul,)
   __slots__ = [
                'num_hyps',
               ]
@@ -1058,9 +1067,10 @@ from being used in various Piksi subsystems.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgMaskSatellite",
-                   ULInt8('mask'),
-                   Struct('sid', GnssSignal._parser),)
+  # _parser = Struct("MsgMaskSatellite",
+  _parser = Struct(
+                   'mask' / Int8ul,
+                   'sid' / Struct(GnssSignal._parser),)
   __slots__ = [
                'mask',
                'sid',
@@ -1152,12 +1162,13 @@ available.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgDeviceMonitor",
-                   SLInt16('dev_vin'),
-                   SLInt16('cpu_vint'),
-                   SLInt16('cpu_vaux'),
-                   SLInt16('cpu_temperature'),
-                   SLInt16('fe_temperature'),)
+  # _parser = Struct("MsgDeviceMonitor",
+  _parser = Struct(
+                   'dev_vin' / Int16sl,
+                   'cpu_vint' / Int16sl,
+                   'cpu_vaux' / Int16sl,
+                   'cpu_temperature' / Int16sl,
+                   'fe_temperature' / Int16sl,)
   __slots__ = [
                'dev_vin',
                'cpu_vint',
@@ -1249,9 +1260,10 @@ code will be returned with MSG_COMMAND_RESP.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgCommandReq",
-                   ULInt32('sequence'),
-                   greedy_string('command'),)
+  # _parser = Struct("MsgCommandReq",
+  _parser = Struct(
+                   'sequence' / Int32ul,
+                   'command' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'sequence',
                'command',
@@ -1336,9 +1348,10 @@ the command.  A return code of zero indicates success.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgCommandResp",
-                   ULInt32('sequence'),
-                   SLInt32('code'),)
+  # _parser = Struct("MsgCommandResp",
+  _parser = Struct(
+                   'sequence' / Int32ul,
+                   'code' / Int32sl,)
   __slots__ = [
                'sequence',
                'code',
@@ -1571,15 +1584,16 @@ in c.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgNetworkStateResp",
-                   Struct('ipv4_address', Array(4, ULInt8('ipv4_address'))),
-                   ULInt8('ipv4_mask_size'),
-                   Struct('ipv6_address', Array(16, ULInt8('ipv6_address'))),
-                   ULInt8('ipv6_mask_size'),
-                   ULInt32('rx_bytes'),
-                   ULInt32('tx_bytes'),
-                   String('interface_name', 16),
-                   ULInt32('flags'),)
+  # _parser = Struct("MsgNetworkStateResp",
+  _parser = Struct(
+                   'ipv4_address' / Array(4, Int8ul),
+                   'ipv4_mask_size' / Int8ul,
+                   'ipv6_address' / Array(16, Int8ul),
+                   'ipv6_mask_size' / Int8ul,
+                   'rx_bytes' / Int32ul,
+                   'tx_bytes' / Int32ul,
+                   'interface_name'/ String(16, paddir='left'),
+                   'flags' / Int32ul,)
   __slots__ = [
                'ipv4_address',
                'ipv4_mask_size',
@@ -1690,14 +1704,15 @@ class MsgSpecan(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSpecan",
-                   ULInt16('channel_tag'),
-                   Struct('t', GPSTime._parser),
-                   LFloat32('freq_ref'),
-                   LFloat32('freq_step'),
-                   LFloat32('amplitude_ref'),
-                   LFloat32('amplitude_unit'),
-                   OptionalGreedyRange(ULInt8('amplitude_value')),)
+  # _parser = Struct("MsgSpecan",
+  _parser = Struct(
+                   'channel_tag' / Int16ul,
+                   't' / Struct(GPSTime._parser),
+                   'freq_ref' / Float32l,
+                   'freq_step' / Float32l,
+                   'amplitude_ref' / Float32l,
+                   'amplitude_unit' / Float32l,
+                   GreedyRange('amplitude_value' / Int8ul),)
   __slots__ = [
                'channel_tag',
                't',

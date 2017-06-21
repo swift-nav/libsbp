@@ -60,19 +60,20 @@ The message is used to debug and measure the performance.
     Codephase of detected peak. Only valid if status is '1'
 
   """
-  _parser = Embedded(Struct("AcqSvProfile",
-                     ULInt8('job_type'),
-                     ULInt8('status'),
-                     ULInt16('cn0'),
-                     ULInt8('int_time'),
-                     Struct('sid', GnssSignal._parser),
-                     ULInt16('bin_width'),
-                     ULInt32('timestamp'),
-                     ULInt32('time_spent'),
-                     SLInt32('cf_min'),
-                     SLInt32('cf_max'),
-                     SLInt32('cf'),
-                     ULInt32('cp'),))
+  # _parser = Embedded(Struct("AcqSvProfile",
+  _parser = Embedded(Struct(
+                     'job_type' / Int8ul,
+                     'status' / Int8ul,
+                     'cn0' / Int16ul,
+                     'int_time' / Int8ul,
+                     'sid' / Struct(GnssSignal._parser),
+                     'bin_width' / Int16ul,
+                     'timestamp' / Int32ul,
+                     'time_spent' / Int32ul,
+                     'cf_min' / Int32sl,
+                     'cf_max' / Int32sl,
+                     'cf' / Int32sl,
+                     'cp' / Int32ul,))
   __slots__ = [
                'job_type',
                'status',
@@ -149,11 +150,12 @@ ratio.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgAcqResult",
-                   LFloat32('cn0'),
-                   LFloat32('cp'),
-                   LFloat32('cf'),
-                   Struct('sid', GnssSignal._parser),)
+  # _parser = Struct("MsgAcqResult",
+  _parser = Struct(
+                   'cn0' / Float32l,
+                   'cp' / Float32l,
+                   'cf' / Float32l,
+                   'sid' / Struct(GnssSignal._parser),)
   __slots__ = [
                'cn0',
                'cp',
@@ -246,11 +248,12 @@ be in units of dB Hz in a later revision of this message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgAcqResultDepB",
-                   LFloat32('snr'),
-                   LFloat32('cp'),
-                   LFloat32('cf'),
-                   Struct('sid', GnssSignal._parser),)
+  # _parser = Struct("MsgAcqResultDepB",
+  _parser = Struct(
+                   'snr' / Float32l,
+                   'cp' / Float32l,
+                   'cf' / Float32l,
+                   'sid' / Struct(GnssSignal._parser),)
   __slots__ = [
                'snr',
                'cp',
@@ -345,11 +348,12 @@ acquisition was attempted
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgAcqResultDepA",
-                   LFloat32('snr'),
-                   LFloat32('cp'),
-                   LFloat32('cf'),
-                   ULInt8('prn'),)
+  # _parser = Struct("MsgAcqResultDepA",
+  _parser = Struct(
+                   'snr' / Float32l,
+                   'cp' / Float32l,
+                   'cf' / Float32l,
+                   'prn' / Int8ul,)
   __slots__ = [
                'snr',
                'cp',
@@ -436,8 +440,9 @@ The message is used to debug and measure the performance.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgAcqSvProfile",
-                   OptionalGreedyRange(Struct('acq_sv_profile', AcqSvProfile._parser)),)
+  # _parser = Struct("MsgAcqSvProfile",
+  _parser = Struct(
+                   GreedyRange('acq_sv_profile' / Struct(AcqSvProfile._parser)),)
   __slots__ = [
                'acq_sv_profile',
               ]

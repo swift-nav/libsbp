@@ -40,9 +40,10 @@ counter (ith packet of n)
 
 
   """
-  _parser = Embedded(Struct("ObservationHeader",
-                     Struct('t', GPSTimeNano._parser),
-                     ULInt8('n_obs'),))
+  # _parser = Embedded(Struct("ObservationHeader",
+  _parser = Embedded(Struct(
+                     't' / Struct(GPSTimeNano._parser),
+                     'n_obs' / Int8ul,))
   __slots__ = [
                't',
                'n_obs',
@@ -84,9 +85,10 @@ as positive for approaching satellites.
     Doppler fractional part
 
   """
-  _parser = Embedded(Struct("Doppler",
-                     SLInt16('i'),
-                     ULInt8('f'),))
+  # _parser = Embedded(Struct("Doppler",
+  _parser = Embedded(Struct(
+                     'i' / Int16sl,
+                     'f' / Int8ul,))
   __slots__ = [
                'i',
                'f',
@@ -146,14 +148,15 @@ estimate for the signal is valid.
     GNSS signal identifier (16 bit)
 
   """
-  _parser = Embedded(Struct("PackedObsContent",
-                     ULInt32('P'),
-                     Struct('L', CarrierPhase._parser),
-                     Struct('D', Doppler._parser),
-                     ULInt8('cn0'),
-                     ULInt8('lock'),
-                     ULInt8('flags'),
-                     Struct('sid', GnssSignal16._parser),))
+  # _parser = Embedded(Struct("PackedObsContent",
+  _parser = Embedded(Struct(
+                     'P' / Int32ul,
+                     'L' / Struct(CarrierPhase._parser),
+                     'D' / Struct(Doppler._parser),
+                     'cn0' / Int8ul,
+                     'lock' / Int8ul,
+                     'flags' / Int8ul,
+                     'sid' / Struct(GnssSignal16._parser),))
   __slots__ = [
                'P',
                'L',
@@ -212,13 +215,14 @@ GLO: 0 = valid, non-zero = invalid
 
 
   """
-  _parser = Embedded(Struct("EphemerisCommonContent",
-                     Struct('sid', GnssSignal16._parser),
-                     Struct('toe', GPSTimeSec._parser),
-                     LFloat64('ura'),
-                     ULInt32('fit_interval'),
-                     ULInt8('valid'),
-                     ULInt8('health_bits'),))
+  # _parser = Embedded(Struct("EphemerisCommonContent",
+  _parser = Embedded(Struct(
+                     'sid' / Struct(GnssSignal16._parser),
+                     'toe' / Struct(GPSTimeSec._parser),
+                     'ura' / Float64l,
+                     'fit_interval' / Int32ul,
+                     'valid' / Int8ul,
+                     'health_bits' / Int8ul,))
   __slots__ = [
                'sid',
                'toe',
@@ -275,13 +279,14 @@ GLO: 0 = valid, non-zero = invalid
 
 
   """
-  _parser = Embedded(Struct("EphemerisCommonContentDepA",
-                     Struct('sid', GnssSignal._parser),
-                     Struct('toe', GPSTime._parser),
-                     LFloat64('ura'),
-                     ULInt32('fit_interval'),
-                     ULInt8('valid'),
-                     ULInt8('health_bits'),))
+  # _parser = Embedded(Struct("EphemerisCommonContentDepA",
+  _parser = Embedded(Struct(
+                     'sid' / Struct(GnssSignal._parser),
+                     'toe' / Struct(GPSTime._parser),
+                     'ura' / Float64l,
+                     'fit_interval' / Int32ul,
+                     'valid' / Int8ul,
+                     'health_bits' / Int8ul,))
   __slots__ = [
                'sid',
                'toe',
@@ -330,9 +335,10 @@ counter (ith packet of n)
 
 
   """
-  _parser = Embedded(Struct("ObservationHeaderDep",
-                     Struct('t', GPSTime._parser),
-                     ULInt8('n_obs'),))
+  # _parser = Embedded(Struct("ObservationHeaderDep",
+  _parser = Embedded(Struct(
+                     't' / Struct(GPSTime._parser),
+                     'n_obs' / Int8ul,))
   __slots__ = [
                't',
                'n_obs',
@@ -375,9 +381,10 @@ the opposite sign as the pseudorange.
     Carrier phase fractional part
 
   """
-  _parser = Embedded(Struct("CarrierPhaseDepA",
-                     SLInt32('i'),
-                     ULInt8('f'),))
+  # _parser = Embedded(Struct("CarrierPhaseDepA",
+  _parser = Embedded(Struct(
+                     'i' / Int32sl,
+                     'f' / Int8ul,))
   __slots__ = [
                'i',
                'f',
@@ -424,12 +431,13 @@ carrier phase ambiguity may have changed.
     PRN-1 identifier of the satellite signal
 
   """
-  _parser = Embedded(Struct("PackedObsContentDepA",
-                     ULInt32('P'),
-                     Struct('L', CarrierPhaseDepA._parser),
-                     ULInt8('cn0'),
-                     ULInt16('lock'),
-                     ULInt8('prn'),))
+  # _parser = Embedded(Struct("PackedObsContentDepA",
+  _parser = Embedded(Struct(
+                     'P' / Int32ul,
+                     'L' / Struct(CarrierPhaseDepA._parser),
+                     'cn0' / Int8ul,
+                     'lock' / Int16ul,
+                     'prn' / Int8ul,))
   __slots__ = [
                'P',
                'L',
@@ -484,12 +492,13 @@ carrier phase ambiguity may have changed.
     GNSS signal identifier
 
   """
-  _parser = Embedded(Struct("PackedObsContentDepB",
-                     ULInt32('P'),
-                     Struct('L', CarrierPhaseDepA._parser),
-                     ULInt8('cn0'),
-                     ULInt16('lock'),
-                     Struct('sid', GnssSignal._parser),))
+  # _parser = Embedded(Struct("PackedObsContentDepB",
+  _parser = Embedded(Struct(
+                     'P' / Int32ul,
+                     'L' / Struct(CarrierPhaseDepA._parser),
+                     'cn0' / Int8ul,
+                     'lock' / Int16ul,
+                     'sid' / Struct(GnssSignal._parser),))
   __slots__ = [
                'P',
                'L',
@@ -545,12 +554,13 @@ carrier phase ambiguity may have changed.
     GNSS signal identifier
 
   """
-  _parser = Embedded(Struct("PackedObsContentDepC",
-                     ULInt32('P'),
-                     Struct('L', CarrierPhase._parser),
-                     ULInt8('cn0'),
-                     ULInt16('lock'),
-                     Struct('sid', GnssSignal._parser),))
+  # _parser = Embedded(Struct("PackedObsContentDepC",
+  _parser = Embedded(Struct(
+                     'P' / Int32ul,
+                     'L' / Struct(CarrierPhase._parser),
+                     'cn0' / Int8ul,
+                     'lock' / Int16ul,
+                     'sid' / Struct(GnssSignal._parser),))
   __slots__ = [
                'P',
                'L',
@@ -616,13 +626,14 @@ Satellite health status for GLO:
 
 
   """
-  _parser = Embedded(Struct("AlmanacCommonContent",
-                     Struct('sid', GnssSignal._parser),
-                     Struct('toa', GPSTimeSec._parser),
-                     LFloat64('ura'),
-                     ULInt32('fit_interval'),
-                     ULInt8('valid'),
-                     ULInt8('health_bits'),))
+  # _parser = Embedded(Struct("AlmanacCommonContent",
+  _parser = Embedded(Struct(
+                     'sid' / Struct(GnssSignal._parser),
+                     'toa' / Struct(GPSTimeSec._parser),
+                     'ura' / Float64l,
+                     'fit_interval' / Int32ul,
+                     'valid' / Int8ul,
+                     'health_bits' / Int8ul,))
   __slots__ = [
                'sid',
                'toa',
@@ -687,9 +698,10 @@ satellite being tracked.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgObs",
-                   Struct('header', ObservationHeader._parser),
-                   OptionalGreedyRange(Struct('obs', PackedObsContent._parser)),)
+  # _parser = Struct("MsgObs",
+  _parser = Struct(
+                   'header' / Struct(ObservationHeader._parser),
+                   GreedyRange('obs' / Struct(PackedObsContent._parser)),)
   __slots__ = [
                'header',
                'obs',
@@ -779,10 +791,11 @@ error in the pseudo-absolute position output.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBasePosLLH",
-                   LFloat64('lat'),
-                   LFloat64('lon'),
-                   LFloat64('height'),)
+  # _parser = Struct("MsgBasePosLLH",
+  _parser = Struct(
+                   'lat' / Float64l,
+                   'lon' / Float64l,
+                   'height' / Float64l,)
   __slots__ = [
                'lat',
                'lon',
@@ -875,10 +888,11 @@ pseudo-absolute position output.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBasePosECEF",
-                   LFloat64('x'),
-                   LFloat64('y'),
-                   LFloat64('z'),)
+  # _parser = Struct("MsgBasePosECEF",
+  _parser = Struct(
+                   'x' / Float64l,
+                   'y' / Float64l,
+                   'z' / Float64l,)
   __slots__ = [
                'x',
                'y',
@@ -1010,30 +1024,31 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgEphemerisGPSDepE",
-                   Struct('common', EphemerisCommonContentDepA._parser),
-                   LFloat64('tgd'),
-                   LFloat64('c_rs'),
-                   LFloat64('c_rc'),
-                   LFloat64('c_uc'),
-                   LFloat64('c_us'),
-                   LFloat64('c_ic'),
-                   LFloat64('c_is'),
-                   LFloat64('dn'),
-                   LFloat64('m0'),
-                   LFloat64('ecc'),
-                   LFloat64('sqrta'),
-                   LFloat64('omega0'),
-                   LFloat64('omegadot'),
-                   LFloat64('w'),
-                   LFloat64('inc'),
-                   LFloat64('inc_dot'),
-                   LFloat64('af0'),
-                   LFloat64('af1'),
-                   LFloat64('af2'),
-                   Struct('toc', GPSTime._parser),
-                   ULInt8('iode'),
-                   ULInt16('iodc'),)
+  # _parser = Struct("MsgEphemerisGPSDepE",
+  _parser = Struct(
+                   'common' / Struct(EphemerisCommonContentDepA._parser),
+                   'tgd' / Float64l,
+                   'c_rs' / Float64l,
+                   'c_rc' / Float64l,
+                   'c_uc' / Float64l,
+                   'c_us' / Float64l,
+                   'c_ic' / Float64l,
+                   'c_is' / Float64l,
+                   'dn' / Float64l,
+                   'm0' / Float64l,
+                   'ecc' / Float64l,
+                   'sqrta' / Float64l,
+                   'omega0' / Float64l,
+                   'omegadot' / Float64l,
+                   'w' / Float64l,
+                   'inc' / Float64l,
+                   'inc_dot' / Float64l,
+                   'af0' / Float64l,
+                   'af1' / Float64l,
+                   'af2' / Float64l,
+                   'toc' / Struct(GPSTime._parser),
+                   'iode' / Int8ul,
+                   'iodc' / Int16ul,)
   __slots__ = [
                'common',
                'tgd',
@@ -1205,30 +1220,31 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgEphemerisGPS",
-                   Struct('common', EphemerisCommonContent._parser),
-                   LFloat64('tgd'),
-                   LFloat64('c_rs'),
-                   LFloat64('c_rc'),
-                   LFloat64('c_uc'),
-                   LFloat64('c_us'),
-                   LFloat64('c_ic'),
-                   LFloat64('c_is'),
-                   LFloat64('dn'),
-                   LFloat64('m0'),
-                   LFloat64('ecc'),
-                   LFloat64('sqrta'),
-                   LFloat64('omega0'),
-                   LFloat64('omegadot'),
-                   LFloat64('w'),
-                   LFloat64('inc'),
-                   LFloat64('inc_dot'),
-                   LFloat64('af0'),
-                   LFloat64('af1'),
-                   LFloat64('af2'),
-                   Struct('toc', GPSTimeSec._parser),
-                   ULInt8('iode'),
-                   ULInt16('iodc'),)
+  # _parser = Struct("MsgEphemerisGPS",
+  _parser = Struct(
+                   'common' / Struct(EphemerisCommonContent._parser),
+                   'tgd' / Float64l,
+                   'c_rs' / Float64l,
+                   'c_rc' / Float64l,
+                   'c_uc' / Float64l,
+                   'c_us' / Float64l,
+                   'c_ic' / Float64l,
+                   'c_is' / Float64l,
+                   'dn' / Float64l,
+                   'm0' / Float64l,
+                   'ecc' / Float64l,
+                   'sqrta' / Float64l,
+                   'omega0' / Float64l,
+                   'omegadot' / Float64l,
+                   'w' / Float64l,
+                   'inc' / Float64l,
+                   'inc_dot' / Float64l,
+                   'af0' / Float64l,
+                   'af1' / Float64l,
+                   'af2' / Float64l,
+                   'toc' / Struct(GPSTimeSec._parser),
+                   'iode' / Int8ul,
+                   'iodc' / Int16ul,)
   __slots__ = [
                'common',
                'tgd',
@@ -1360,13 +1376,14 @@ class MsgEphemerisSbasDepA(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgEphemerisSbasDepA",
-                   Struct('common', EphemerisCommonContentDepA._parser),
-                   Struct('pos', Array(3, LFloat64('pos'))),
-                   Struct('vel', Array(3, LFloat64('vel'))),
-                   Struct('acc', Array(3, LFloat64('acc'))),
-                   LFloat64('a_gf0'),
-                   LFloat64('a_gf1'),)
+  # _parser = Struct("MsgEphemerisSbasDepA",
+  _parser = Struct(
+                   'common' / Struct(EphemerisCommonContentDepA._parser),
+                   'pos' / Array(3, Float64l),
+                   'vel' / Array(3, Float64l),
+                   'acc' / Array(3, Float64l),
+                   'a_gf0' / Float64l,
+                   'a_gf1' / Float64l,)
   __slots__ = [
                'common',
                'pos',
@@ -1470,13 +1487,14 @@ for more details.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgEphemerisGloDepA",
-                   Struct('common', EphemerisCommonContentDepA._parser),
-                   LFloat64('gamma'),
-                   LFloat64('tau'),
-                   Struct('pos', Array(3, LFloat64('pos'))),
-                   Struct('vel', Array(3, LFloat64('vel'))),
-                   Struct('acc', Array(3, LFloat64('acc'))),)
+  # _parser = Struct("MsgEphemerisGloDepA",
+  _parser = Struct(
+                   'common' / Struct(EphemerisCommonContentDepA._parser),
+                   'gamma' / Float64l,
+                   'tau' / Float64l,
+                   'pos' / Array(3, Float64l),
+                   'vel' / Array(3, Float64l),
+                   'acc' / Array(3, Float64l),)
   __slots__ = [
                'common',
                'gamma',
@@ -1574,13 +1592,14 @@ class MsgEphemerisSbas(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgEphemerisSbas",
-                   Struct('common', EphemerisCommonContent._parser),
-                   Struct('pos', Array(3, LFloat64('pos'))),
-                   Struct('vel', Array(3, LFloat64('vel'))),
-                   Struct('acc', Array(3, LFloat64('acc'))),
-                   LFloat64('a_gf0'),
-                   LFloat64('a_gf1'),)
+  # _parser = Struct("MsgEphemerisSbas",
+  _parser = Struct(
+                   'common' / Struct(EphemerisCommonContent._parser),
+                   'pos' / Array(3, Float64l),
+                   'vel' / Array(3, Float64l),
+                   'acc' / Array(3, Float64l),
+                   'a_gf0' / Float64l,
+                   'a_gf1' / Float64l,)
   __slots__ = [
                'common',
                'pos',
@@ -1684,13 +1703,14 @@ for more details.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgEphemerisGloDepB",
-                   Struct('common', EphemerisCommonContent._parser),
-                   LFloat64('gamma'),
-                   LFloat64('tau'),
-                   Struct('pos', Array(3, LFloat64('pos'))),
-                   Struct('vel', Array(3, LFloat64('vel'))),
-                   Struct('acc', Array(3, LFloat64('acc'))),)
+  # _parser = Struct("MsgEphemerisGloDepB",
+  _parser = Struct(
+                   'common' / Struct(EphemerisCommonContent._parser),
+                   'gamma' / Float64l,
+                   'tau' / Float64l,
+                   'pos' / Array(3, Float64l),
+                   'vel' / Array(3, Float64l),
+                   'acc' / Array(3, Float64l),)
   __slots__ = [
                'common',
                'gamma',
@@ -1798,15 +1818,16 @@ for more details.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgEphemerisGloDepC",
-                   Struct('common', EphemerisCommonContent._parser),
-                   LFloat64('gamma'),
-                   LFloat64('tau'),
-                   LFloat64('d_tau'),
-                   Struct('pos', Array(3, LFloat64('pos'))),
-                   Struct('vel', Array(3, LFloat64('vel'))),
-                   Struct('acc', Array(3, LFloat64('acc'))),
-                   ULInt8('fcn'),)
+  # _parser = Struct("MsgEphemerisGloDepC",
+  _parser = Struct(
+                   'common' / Struct(EphemerisCommonContent._parser),
+                   'gamma' / Float64l,
+                   'tau' / Float64l,
+                   'd_tau' / Float64l,
+                   'pos' / Array(3, Float64l),
+                   'vel' / Array(3, Float64l),
+                   'acc' / Array(3, Float64l),
+                   'fcn' / Int8ul,)
   __slots__ = [
                'common',
                'gamma',
@@ -1920,16 +1941,17 @@ for more details.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgEphemerisGlo",
-                   Struct('common', EphemerisCommonContent._parser),
-                   LFloat64('gamma'),
-                   LFloat64('tau'),
-                   LFloat64('d_tau'),
-                   Struct('pos', Array(3, LFloat64('pos'))),
-                   Struct('vel', Array(3, LFloat64('vel'))),
-                   Struct('acc', Array(3, LFloat64('acc'))),
-                   ULInt8('fcn'),
-                   ULInt8('iod'),)
+  # _parser = Struct("MsgEphemerisGlo",
+  _parser = Struct(
+                   'common' / Struct(EphemerisCommonContent._parser),
+                   'gamma' / Float64l,
+                   'tau' / Float64l,
+                   'd_tau' / Float64l,
+                   'pos' / Array(3, Float64l),
+                   'vel' / Array(3, Float64l),
+                   'acc' / Array(3, Float64l),
+                   'fcn' / Int8ul,
+                   'iod' / Int8ul,)
   __slots__ = [
                'common',
                'gamma',
@@ -2085,36 +2107,37 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgEphemerisDepD",
-                   LFloat64('tgd'),
-                   LFloat64('c_rs'),
-                   LFloat64('c_rc'),
-                   LFloat64('c_uc'),
-                   LFloat64('c_us'),
-                   LFloat64('c_ic'),
-                   LFloat64('c_is'),
-                   LFloat64('dn'),
-                   LFloat64('m0'),
-                   LFloat64('ecc'),
-                   LFloat64('sqrta'),
-                   LFloat64('omega0'),
-                   LFloat64('omegadot'),
-                   LFloat64('w'),
-                   LFloat64('inc'),
-                   LFloat64('inc_dot'),
-                   LFloat64('af0'),
-                   LFloat64('af1'),
-                   LFloat64('af2'),
-                   LFloat64('toe_tow'),
-                   ULInt16('toe_wn'),
-                   LFloat64('toc_tow'),
-                   ULInt16('toc_wn'),
-                   ULInt8('valid'),
-                   ULInt8('healthy'),
-                   Struct('sid', GnssSignal._parser),
-                   ULInt8('iode'),
-                   ULInt16('iodc'),
-                   ULInt32('reserved'),)
+  # _parser = Struct("MsgEphemerisDepD",
+  _parser = Struct(
+                   'tgd' / Float64l,
+                   'c_rs' / Float64l,
+                   'c_rc' / Float64l,
+                   'c_uc' / Float64l,
+                   'c_us' / Float64l,
+                   'c_ic' / Float64l,
+                   'c_is' / Float64l,
+                   'dn' / Float64l,
+                   'm0' / Float64l,
+                   'ecc' / Float64l,
+                   'sqrta' / Float64l,
+                   'omega0' / Float64l,
+                   'omegadot' / Float64l,
+                   'w' / Float64l,
+                   'inc' / Float64l,
+                   'inc_dot' / Float64l,
+                   'af0' / Float64l,
+                   'af1' / Float64l,
+                   'af2' / Float64l,
+                   'toe_tow' / Float64l,
+                   'toe_wn' / Int16ul,
+                   'toc_tow' / Float64l,
+                   'toc_wn' / Int16ul,
+                   'valid' / Int8ul,
+                   'healthy' / Int8ul,
+                   'sid' / Struct(GnssSignal._parser),
+                   'iode' / Int8ul,
+                   'iodc' / Int16ul,
+                   'reserved' / Int32ul,)
   __slots__ = [
                'tgd',
                'c_rs',
@@ -2299,33 +2322,34 @@ class MsgEphemerisDepA(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgEphemerisDepA",
-                   LFloat64('tgd'),
-                   LFloat64('c_rs'),
-                   LFloat64('c_rc'),
-                   LFloat64('c_uc'),
-                   LFloat64('c_us'),
-                   LFloat64('c_ic'),
-                   LFloat64('c_is'),
-                   LFloat64('dn'),
-                   LFloat64('m0'),
-                   LFloat64('ecc'),
-                   LFloat64('sqrta'),
-                   LFloat64('omega0'),
-                   LFloat64('omegadot'),
-                   LFloat64('w'),
-                   LFloat64('inc'),
-                   LFloat64('inc_dot'),
-                   LFloat64('af0'),
-                   LFloat64('af1'),
-                   LFloat64('af2'),
-                   LFloat64('toe_tow'),
-                   ULInt16('toe_wn'),
-                   LFloat64('toc_tow'),
-                   ULInt16('toc_wn'),
-                   ULInt8('valid'),
-                   ULInt8('healthy'),
-                   ULInt8('prn'),)
+  # _parser = Struct("MsgEphemerisDepA",
+  _parser = Struct(
+                   'tgd' / Float64l,
+                   'c_rs' / Float64l,
+                   'c_rc' / Float64l,
+                   'c_uc' / Float64l,
+                   'c_us' / Float64l,
+                   'c_ic' / Float64l,
+                   'c_is' / Float64l,
+                   'dn' / Float64l,
+                   'm0' / Float64l,
+                   'ecc' / Float64l,
+                   'sqrta' / Float64l,
+                   'omega0' / Float64l,
+                   'omegadot' / Float64l,
+                   'w' / Float64l,
+                   'inc' / Float64l,
+                   'inc_dot' / Float64l,
+                   'af0' / Float64l,
+                   'af1' / Float64l,
+                   'af2' / Float64l,
+                   'toe_tow' / Float64l,
+                   'toe_wn' / Int16ul,
+                   'toc_tow' / Float64l,
+                   'toc_wn' / Int16ul,
+                   'valid' / Int8ul,
+                   'healthy' / Int8ul,
+                   'prn' / Int8ul,)
   __slots__ = [
                'tgd',
                'c_rs',
@@ -2506,34 +2530,35 @@ class MsgEphemerisDepB(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgEphemerisDepB",
-                   LFloat64('tgd'),
-                   LFloat64('c_rs'),
-                   LFloat64('c_rc'),
-                   LFloat64('c_uc'),
-                   LFloat64('c_us'),
-                   LFloat64('c_ic'),
-                   LFloat64('c_is'),
-                   LFloat64('dn'),
-                   LFloat64('m0'),
-                   LFloat64('ecc'),
-                   LFloat64('sqrta'),
-                   LFloat64('omega0'),
-                   LFloat64('omegadot'),
-                   LFloat64('w'),
-                   LFloat64('inc'),
-                   LFloat64('inc_dot'),
-                   LFloat64('af0'),
-                   LFloat64('af1'),
-                   LFloat64('af2'),
-                   LFloat64('toe_tow'),
-                   ULInt16('toe_wn'),
-                   LFloat64('toc_tow'),
-                   ULInt16('toc_wn'),
-                   ULInt8('valid'),
-                   ULInt8('healthy'),
-                   ULInt8('prn'),
-                   ULInt8('iode'),)
+  # _parser = Struct("MsgEphemerisDepB",
+  _parser = Struct(
+                   'tgd' / Float64l,
+                   'c_rs' / Float64l,
+                   'c_rc' / Float64l,
+                   'c_uc' / Float64l,
+                   'c_us' / Float64l,
+                   'c_ic' / Float64l,
+                   'c_is' / Float64l,
+                   'dn' / Float64l,
+                   'm0' / Float64l,
+                   'ecc' / Float64l,
+                   'sqrta' / Float64l,
+                   'omega0' / Float64l,
+                   'omegadot' / Float64l,
+                   'w' / Float64l,
+                   'inc' / Float64l,
+                   'inc_dot' / Float64l,
+                   'af0' / Float64l,
+                   'af1' / Float64l,
+                   'af2' / Float64l,
+                   'toe_tow' / Float64l,
+                   'toe_wn' / Int16ul,
+                   'toc_tow' / Float64l,
+                   'toc_wn' / Int16ul,
+                   'valid' / Int8ul,
+                   'healthy' / Int8ul,
+                   'prn' / Int8ul,
+                   'iode' / Int8ul,)
   __slots__ = [
                'tgd',
                'c_rs',
@@ -2725,36 +2750,37 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgEphemerisDepC",
-                   LFloat64('tgd'),
-                   LFloat64('c_rs'),
-                   LFloat64('c_rc'),
-                   LFloat64('c_uc'),
-                   LFloat64('c_us'),
-                   LFloat64('c_ic'),
-                   LFloat64('c_is'),
-                   LFloat64('dn'),
-                   LFloat64('m0'),
-                   LFloat64('ecc'),
-                   LFloat64('sqrta'),
-                   LFloat64('omega0'),
-                   LFloat64('omegadot'),
-                   LFloat64('w'),
-                   LFloat64('inc'),
-                   LFloat64('inc_dot'),
-                   LFloat64('af0'),
-                   LFloat64('af1'),
-                   LFloat64('af2'),
-                   LFloat64('toe_tow'),
-                   ULInt16('toe_wn'),
-                   LFloat64('toc_tow'),
-                   ULInt16('toc_wn'),
-                   ULInt8('valid'),
-                   ULInt8('healthy'),
-                   Struct('sid', GnssSignal._parser),
-                   ULInt8('iode'),
-                   ULInt16('iodc'),
-                   ULInt32('reserved'),)
+  # _parser = Struct("MsgEphemerisDepC",
+  _parser = Struct(
+                   'tgd' / Float64l,
+                   'c_rs' / Float64l,
+                   'c_rc' / Float64l,
+                   'c_uc' / Float64l,
+                   'c_us' / Float64l,
+                   'c_ic' / Float64l,
+                   'c_is' / Float64l,
+                   'dn' / Float64l,
+                   'm0' / Float64l,
+                   'ecc' / Float64l,
+                   'sqrta' / Float64l,
+                   'omega0' / Float64l,
+                   'omegadot' / Float64l,
+                   'w' / Float64l,
+                   'inc' / Float64l,
+                   'inc_dot' / Float64l,
+                   'af0' / Float64l,
+                   'af1' / Float64l,
+                   'af2' / Float64l,
+                   'toe_tow' / Float64l,
+                   'toe_wn' / Int16ul,
+                   'toc_tow' / Float64l,
+                   'toc_wn' / Int16ul,
+                   'valid' / Int8ul,
+                   'healthy' / Int8ul,
+                   'sid' / Struct(GnssSignal._parser),
+                   'iode' / Int8ul,
+                   'iodc' / Int16ul,
+                   'reserved' / Int32ul,)
   __slots__ = [
                'tgd',
                'c_rs',
@@ -2893,9 +2919,10 @@ satellite being tracked.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgObsDepA",
-                   Struct('header', ObservationHeaderDep._parser),
-                   OptionalGreedyRange(Struct('obs', PackedObsContentDepA._parser)),)
+  # _parser = Struct("MsgObsDepA",
+  _parser = Struct(
+                   'header' / Struct(ObservationHeaderDep._parser),
+                   GreedyRange('obs' / Struct(PackedObsContentDepA._parser)),)
   __slots__ = [
                'header',
                'obs',
@@ -2986,9 +3013,10 @@ satellite being tracked.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgObsDepB",
-                   Struct('header', ObservationHeaderDep._parser),
-                   OptionalGreedyRange(Struct('obs', PackedObsContentDepB._parser)),)
+  # _parser = Struct("MsgObsDepB",
+  _parser = Struct(
+                   'header' / Struct(ObservationHeaderDep._parser),
+                   GreedyRange('obs' / Struct(PackedObsContentDepB._parser)),)
   __slots__ = [
                'header',
                'obs',
@@ -3080,9 +3108,10 @@ satellite being tracked.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgObsDepC",
-                   Struct('header', ObservationHeaderDep._parser),
-                   OptionalGreedyRange(Struct('obs', PackedObsContentDepC._parser)),)
+  # _parser = Struct("MsgObsDepC",
+  _parser = Struct(
+                   'header' / Struct(ObservationHeaderDep._parser),
+                   GreedyRange('obs' / Struct(PackedObsContentDepC._parser)),)
   __slots__ = [
                'header',
                'obs',
@@ -3174,16 +3203,17 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgIono",
-                   Struct('t_nmct', GPSTimeSec._parser),
-                   LFloat64('a0'),
-                   LFloat64('a1'),
-                   LFloat64('a2'),
-                   LFloat64('a3'),
-                   LFloat64('b0'),
-                   LFloat64('b1'),
-                   LFloat64('b2'),
-                   LFloat64('b3'),)
+  # _parser = Struct("MsgIono",
+  _parser = Struct(
+                   't_nmct' / Struct(GPSTimeSec._parser),
+                   'a0' / Float64l,
+                   'a1' / Float64l,
+                   'a2' / Float64l,
+                   'a3' / Float64l,
+                   'b0' / Float64l,
+                   'b1' / Float64l,
+                   'b2' / Float64l,
+                   'b3' / Float64l,)
   __slots__ = [
                't_nmct',
                'a0',
@@ -3281,9 +3311,10 @@ class MsgSvConfigurationGPS(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSvConfigurationGPS",
-                   Struct('t_nmct', GPSTimeSec._parser),
-                   ULInt32('l2c_mask'),)
+  # _parser = Struct("MsgSvConfigurationGPS",
+  _parser = Struct(
+                   't_nmct' / Struct(GPSTimeSec._parser),
+                   'l2c_mask' / Int32ul,)
   __slots__ = [
                't_nmct',
                'l2c_mask',
@@ -3374,13 +3405,14 @@ LSB indicating tgd validity etc.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgGroupDelayDepA",
-                   Struct('t_op', GPSTime._parser),
-                   ULInt8('prn'),
-                   ULInt8('valid'),
-                   SLInt16('tgd'),
-                   SLInt16('isc_l1ca'),
-                   SLInt16('isc_l2c'),)
+  # _parser = Struct("MsgGroupDelayDepA",
+  _parser = Struct(
+                   't_op' / Struct(GPSTime._parser),
+                   'prn' / Int8ul,
+                   'valid' / Int8ul,
+                   'tgd' / Int16sl,
+                   'isc_l1ca' / Int16sl,
+                   'isc_l2c' / Int16sl,)
   __slots__ = [
                't_op',
                'prn',
@@ -3479,13 +3511,14 @@ LSB indicating tgd validity etc.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgGroupDelay",
-                   Struct('t_op', GPSTimeSec._parser),
-                   Struct('sid', GnssSignal._parser),
-                   ULInt8('valid'),
-                   SLInt16('tgd'),
-                   SLInt16('isc_l1ca'),
-                   SLInt16('isc_l2c'),)
+  # _parser = Struct("MsgGroupDelay",
+  _parser = Struct(
+                   't_op' / Struct(GPSTimeSec._parser),
+                   'sid' / Struct(GnssSignal._parser),
+                   'valid' / Int8ul,
+                   'tgd' / Int16sl,
+                   'isc_l1ca' / Int16sl,
+                   'isc_l2c' / Int16sl,)
   __slots__ = [
                't_op',
                'sid',
@@ -3596,17 +3629,18 @@ Please see the Navstar GPS Space Segment/Navigation user interfaces
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgAlmanacGPS",
-                   Struct('common', AlmanacCommonContent._parser),
-                   LFloat64('m0'),
-                   LFloat64('ecc'),
-                   LFloat64('sqrta'),
-                   LFloat64('omega0'),
-                   LFloat64('omegadot'),
-                   LFloat64('w'),
-                   LFloat64('inc'),
-                   LFloat64('af0'),
-                   LFloat64('af1'),)
+  # _parser = Struct("MsgAlmanacGPS",
+  _parser = Struct(
+                   'common' / Struct(AlmanacCommonContent._parser),
+                   'm0' / Float64l,
+                   'ecc' / Float64l,
+                   'sqrta' / Float64l,
+                   'omega0' / Float64l,
+                   'omegadot' / Float64l,
+                   'w' / Float64l,
+                   'inc' / Float64l,
+                   'af0' / Float64l,
+                   'af1' / Float64l,)
   __slots__ = [
                'common',
                'm0',
@@ -3723,15 +3757,16 @@ coordinate system
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgAlmanacGlo",
-                   Struct('common', AlmanacCommonContent._parser),
-                   LFloat64('lambda_na'),
-                   LFloat64('t_lambda_na'),
-                   LFloat64('i'),
-                   LFloat64('t'),
-                   LFloat64('t_dot'),
-                   LFloat64('epsilon'),
-                   LFloat64('omega'),)
+  # _parser = Struct("MsgAlmanacGlo",
+  _parser = Struct(
+                   'common' / Struct(AlmanacCommonContent._parser),
+                   'lambda_na' / Float64l,
+                   't_lambda_na' / Float64l,
+                   'i' / Float64l,
+                   't' / Float64l,
+                   't_dot' / Float64l,
+                   'epsilon' / Float64l,
+                   'omega' / Float64l,)
   __slots__ = [
                'common',
                'lambda_na',
@@ -3839,10 +3874,11 @@ index (SV orbital slot)  fcns[index]
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFcnsGlo",
-                   ULInt16('wn'),
-                   ULInt32('tow_ms'),
-                   Struct('fcns', Array(32, ULInt8('fcns'))),)
+  # _parser = Struct("MsgFcnsGlo",
+  _parser = Struct(
+                   'wn' / Int16ul,
+                   'tow_ms' / Int32ul,
+                   'fcns' / Array(32, Int8ul),)
   __slots__ = [
                'wn',
                'tow_ms',

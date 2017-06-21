@@ -76,11 +76,12 @@ from -500000 to 500000)
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgGPSTime",
-                   ULInt16('wn'),
-                   ULInt32('tow'),
-                   SLInt32('ns_residual'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgGPSTime",
+  _parser = Struct(
+                   'wn' / Int16ul,
+                   'tow' / Int32ul,
+                   'ns_residual' / Int32sl,
+                   'flags' / Int8ul,)
   __slots__ = [
                'wn',
                'tow',
@@ -183,16 +184,17 @@ which indicate the source of the UTC offset value and source of the time fix.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgUtcTime",
-                   ULInt8('flags'),
-                   ULInt32('tow'),
-                   ULInt16('year'),
-                   ULInt8('month'),
-                   ULInt8('day'),
-                   ULInt8('hours'),
-                   ULInt8('minutes'),
-                   ULInt8('seconds'),
-                   ULInt32('ns'),)
+  # _parser = Struct("MsgUtcTime",
+  _parser = Struct(
+                   'flags' / Int8ul,
+                   'tow' / Int32ul,
+                   'year' / Int16ul,
+                   'month' / Int8ul,
+                   'day' / Int8ul,
+                   'hours' / Int8ul,
+                   'minutes' / Int8ul,
+                   'seconds' / Int8ul,
+                   'ns' / Int32ul,)
   __slots__ = [
                'flags',
                'tow',
@@ -303,14 +305,15 @@ corresponds to differential or SPP solution.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgDops",
-                   ULInt32('tow'),
-                   ULInt16('gdop'),
-                   ULInt16('pdop'),
-                   ULInt16('tdop'),
-                   ULInt16('hdop'),
-                   ULInt16('vdop'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgDops",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'gdop' / Int16ul,
+                   'pdop' / Int16ul,
+                   'tdop' / Int16ul,
+                   'hdop' / Int16ul,
+                   'vdop' / Int16ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'gdop',
@@ -421,14 +424,15 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgPosECEF",
-                   ULInt32('tow'),
-                   LFloat64('x'),
-                   LFloat64('y'),
-                   LFloat64('z'),
-                   ULInt16('accuracy'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgPosECEF",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'x' / Float64l,
+                   'y' / Float64l,
+                   'z' / Float64l,
+                   'accuracy' / Int16ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'x',
@@ -541,15 +545,16 @@ matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgPosLLH",
-                   ULInt32('tow'),
-                   LFloat64('lat'),
-                   LFloat64('lon'),
-                   LFloat64('height'),
-                   ULInt16('h_accuracy'),
-                   ULInt16('v_accuracy'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgPosLLH",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'lat' / Float64l,
+                   'lon' / Float64l,
+                   'height' / Float64l,
+                   'h_accuracy' / Int16ul,
+                   'v_accuracy' / Int16ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'lat',
@@ -659,14 +664,15 @@ matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBaselineECEF",
-                   ULInt32('tow'),
-                   SLInt32('x'),
-                   SLInt32('y'),
-                   SLInt32('z'),
-                   ULInt16('accuracy'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgBaselineECEF",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'x' / Int32sl,
+                   'y' / Int32sl,
+                   'z' / Int32sl,
+                   'accuracy' / Int16ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'x',
@@ -777,15 +783,16 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBaselineNED",
-                   ULInt32('tow'),
-                   SLInt32('n'),
-                   SLInt32('e'),
-                   SLInt32('d'),
-                   ULInt16('h_accuracy'),
-                   ULInt16('v_accuracy'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgBaselineNED",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'n' / Int32sl,
+                   'e' / Int32sl,
+                   'd' / Int32sl,
+                   'h_accuracy' / Int16ul,
+                   'v_accuracy' / Int16ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'n',
@@ -894,14 +901,15 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgVelECEF",
-                   ULInt32('tow'),
-                   SLInt32('x'),
-                   SLInt32('y'),
-                   SLInt32('z'),
-                   ULInt16('accuracy'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgVelECEF",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'x' / Int32sl,
+                   'y' / Int32sl,
+                   'z' / Int32sl,
+                   'accuracy' / Int16ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'x',
@@ -1012,15 +1020,16 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgVelNED",
-                   ULInt32('tow'),
-                   SLInt32('n'),
-                   SLInt32('e'),
-                   SLInt32('d'),
-                   ULInt16('h_accuracy'),
-                   ULInt16('v_accuracy'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgVelNED",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'n' / Int32sl,
+                   'e' / Int32sl,
+                   'd' / Int32sl,
+                   'h_accuracy' / Int16ul,
+                   'v_accuracy' / Int16ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'n',
@@ -1123,11 +1132,12 @@ that time-matched RTK mode is used when the base station is moving.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBaselineHeading",
-                   ULInt32('tow'),
-                   ULInt32('heading'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgBaselineHeading",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'heading' / Int32ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'heading',
@@ -1216,9 +1226,10 @@ Differential solution
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgAgeCorrections",
-                   ULInt32('tow'),
-                   ULInt16('age'),)
+  # _parser = Struct("MsgAgeCorrections",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'age' / Int16ul,)
   __slots__ = [
                'tow',
                'age',
@@ -1320,11 +1331,12 @@ from -500000 to 500000)
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgGPSTimeDepA",
-                   ULInt16('wn'),
-                   ULInt32('tow'),
-                   SLInt32('ns_residual'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgGPSTimeDepA",
+  _parser = Struct(
+                   'wn' / Int16ul,
+                   'tow' / Int32ul,
+                   'ns_residual' / Int32sl,
+                   'flags' / Int8ul,)
   __slots__ = [
                'wn',
                'tow',
@@ -1422,13 +1434,14 @@ precision.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgDopsDepA",
-                   ULInt32('tow'),
-                   ULInt16('gdop'),
-                   ULInt16('pdop'),
-                   ULInt16('tdop'),
-                   ULInt16('hdop'),
-                   ULInt16('vdop'),)
+  # _parser = Struct("MsgDopsDepA",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'gdop' / Int16ul,
+                   'pdop' / Int16ul,
+                   'tdop' / Int16ul,
+                   'hdop' / Int16ul,
+                   'vdop' / Int16ul,)
   __slots__ = [
                'tow',
                'gdop',
@@ -1539,14 +1552,15 @@ to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgPosECEFDepA",
-                   ULInt32('tow'),
-                   LFloat64('x'),
-                   LFloat64('y'),
-                   LFloat64('z'),
-                   ULInt16('accuracy'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgPosECEFDepA",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'x' / Float64l,
+                   'y' / Float64l,
+                   'z' / Float64l,
+                   'accuracy' / Int16ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'x',
@@ -1663,15 +1677,16 @@ implemented). Defaults to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgPosLLHDepA",
-                   ULInt32('tow'),
-                   LFloat64('lat'),
-                   LFloat64('lon'),
-                   LFloat64('height'),
-                   ULInt16('h_accuracy'),
-                   ULInt16('v_accuracy'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgPosLLHDepA",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'lat' / Float64l,
+                   'lon' / Float64l,
+                   'height' / Float64l,
+                   'h_accuracy' / Int16ul,
+                   'v_accuracy' / Int16ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'lat',
@@ -1782,14 +1797,15 @@ matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBaselineECEFDepA",
-                   ULInt32('tow'),
-                   SLInt32('x'),
-                   SLInt32('y'),
-                   SLInt32('z'),
-                   ULInt16('accuracy'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgBaselineECEFDepA",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'x' / Int32sl,
+                   'y' / Int32sl,
+                   'z' / Int32sl,
+                   'accuracy' / Int16ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'x',
@@ -1904,15 +1920,16 @@ implemented). Defaults to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBaselineNEDDepA",
-                   ULInt32('tow'),
-                   SLInt32('n'),
-                   SLInt32('e'),
-                   SLInt32('d'),
-                   ULInt16('h_accuracy'),
-                   ULInt16('v_accuracy'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgBaselineNEDDepA",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'n' / Int32sl,
+                   'e' / Int32sl,
+                   'd' / Int32sl,
+                   'h_accuracy' / Int16ul,
+                   'v_accuracy' / Int16ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'n',
@@ -2022,14 +2039,15 @@ to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgVelECEFDepA",
-                   ULInt32('tow'),
-                   SLInt32('x'),
-                   SLInt32('y'),
-                   SLInt32('z'),
-                   ULInt16('accuracy'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgVelECEFDepA",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'x' / Int32sl,
+                   'y' / Int32sl,
+                   'z' / Int32sl,
+                   'accuracy' / Int16ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'x',
@@ -2142,15 +2160,16 @@ implemented). Defaults to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgVelNEDDepA",
-                   ULInt32('tow'),
-                   SLInt32('n'),
-                   SLInt32('e'),
-                   SLInt32('d'),
-                   ULInt16('h_accuracy'),
-                   ULInt16('v_accuracy'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgVelNEDDepA",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'n' / Int32sl,
+                   'e' / Int32sl,
+                   'd' / Int32sl,
+                   'h_accuracy' / Int16ul,
+                   'v_accuracy' / Int16ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'n',
@@ -2252,11 +2271,12 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBaselineHeadingDepA",
-                   ULInt32('tow'),
-                   ULInt32('heading'),
-                   ULInt8('n_sats'),
-                   ULInt8('flags'),)
+  # _parser = Struct("MsgBaselineHeadingDepA",
+  _parser = Struct(
+                   'tow' / Int32ul,
+                   'heading' / Int32ul,
+                   'n_sats' / Int8ul,
+                   'flags' / Int8ul,)
   __slots__ = [
                'tow',
                'heading',

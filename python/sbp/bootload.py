@@ -103,9 +103,10 @@ protocol version number.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBootloaderHandshakeResp",
-                   ULInt32('flags'),
-                   greedy_string('version'),)
+  # _parser = Struct("MsgBootloaderHandshakeResp",
+  _parser = Struct(
+                   'flags' / Int32ul,
+                   'version' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'flags',
                'version',
@@ -187,8 +188,9 @@ class MsgBootloaderJumpToApp(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBootloaderJumpToApp",
-                   ULInt8('jump'),)
+  # _parser = Struct("MsgBootloaderJumpToApp",
+  _parser = Struct(
+                   'jump' / Int8ul,)
   __slots__ = [
                'jump',
               ]
@@ -325,8 +327,9 @@ on the right.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgNapDeviceDnaResp",
-                   Struct('dna', Array(8, ULInt8('dna'))),)
+  # _parser = Struct("MsgNapDeviceDnaResp",
+  _parser = Struct(
+                   'dna' / Array(8, Int8ul),)
   __slots__ = [
                'dna',
               ]
@@ -405,8 +408,9 @@ class MsgBootloaderHandshakeDepA(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBootloaderHandshakeDepA",
-                   OptionalGreedyRange(ULInt8('handshake')),)
+  # _parser = Struct("MsgBootloaderHandshakeDepA",
+  _parser = Struct(
+                   GreedyRange('handshake' / Int8ul),)
   __slots__ = [
                'handshake',
               ]

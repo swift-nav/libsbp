@@ -101,8 +101,9 @@ process to this message when it is received from sender ID
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSettingsWrite",
-                   greedy_string('setting'),)
+  # _parser = Struct("MsgSettingsWrite",
+  _parser = Struct(
+                   'setting' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'setting',
               ]
@@ -184,8 +185,9 @@ this message when it is received from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSettingsReadReq",
-                   greedy_string('setting'),)
+  # _parser = Struct("MsgSettingsReadReq",
+  _parser = Struct(
+                   'setting' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'setting',
               ]
@@ -266,8 +268,9 @@ class MsgSettingsReadResp(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSettingsReadResp",
-                   greedy_string('setting'),)
+  # _parser = Struct("MsgSettingsReadResp",
+  _parser = Struct(
+                   'setting' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'setting',
               ]
@@ -353,8 +356,9 @@ this message when it is received from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSettingsReadByIndexReq",
-                   ULInt16('index'),)
+  # _parser = Struct("MsgSettingsReadByIndexReq",
+  _parser = Struct(
+                   'index' / Int16ul,)
   __slots__ = [
                'index',
               ]
@@ -443,9 +447,10 @@ NULL-terminated and delimited string with contents
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSettingsReadByIndexResp",
-                   ULInt16('index'),
-                   greedy_string('setting'),)
+  # _parser = Struct("MsgSettingsReadByIndexResp",
+  _parser = Struct(
+                   'index' / Int16ul,
+                   'setting' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'index',
                'setting',
@@ -576,8 +581,9 @@ for this setting to set the initial value.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSettingsRegister",
-                   greedy_string('setting'),)
+  # _parser = Struct("MsgSettingsRegister",
+  _parser = Struct(
+                   'setting' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'setting',
               ]

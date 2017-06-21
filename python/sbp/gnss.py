@@ -37,9 +37,10 @@ class GnssSignal16(object):
     Signal constellation, band and code
 
   """
-  _parser = Embedded(Struct("GnssSignal16",
-                     ULInt8('sat'),
-                     ULInt8('code'),))
+  # _parser = Embedded(Struct("GnssSignal16",
+  _parser = Embedded(Struct(
+                     'sat' / Int8ul,
+                     'code' / Int8ul,))
   __slots__ = [
                'sat',
                'code',
@@ -84,10 +85,11 @@ Note: unlike GnssSignal16, GPS satellites are encoded as
     Reserved
 
   """
-  _parser = Embedded(Struct("GnssSignal",
-                     ULInt16('sat'),
-                     ULInt8('code'),
-                     ULInt8('reserved'),))
+  # _parser = Embedded(Struct("GnssSignal",
+  _parser = Embedded(Struct(
+                     'sat' / Int16ul,
+                     'code' / Int8ul,
+                     'reserved' / Int8ul,))
   __slots__ = [
                'sat',
                'code',
@@ -130,9 +132,10 @@ transition.
     GPS week number
 
   """
-  _parser = Embedded(Struct("GPSTime",
-                     ULInt32('tow'),
-                     ULInt16('wn'),))
+  # _parser = Embedded(Struct("GPSTime",
+  _parser = Embedded(Struct(
+                     'tow' / Int32ul,
+                     'wn' / Int16ul,))
   __slots__ = [
                'tow',
                'wn',
@@ -173,9 +176,10 @@ transition.
     GPS week number
 
   """
-  _parser = Embedded(Struct("GPSTimeSec",
-                     ULInt32('tow'),
-                     ULInt16('wn'),))
+  # _parser = Embedded(Struct("GPSTimeSec",
+  _parser = Embedded(Struct(
+                     'tow' / Int32ul,
+                     'wn' / Int16ul,))
   __slots__ = [
                'tow',
                'wn',
@@ -221,10 +225,11 @@ from -500000 to 500000)
     GPS week number
 
   """
-  _parser = Embedded(Struct("GPSTimeNano",
-                     ULInt32('tow'),
-                     SLInt32('ns_residual'),
-                     ULInt16('wn'),))
+  # _parser = Embedded(Struct("GPSTimeNano",
+  _parser = Embedded(Struct(
+                     'tow' / Int32ul,
+                     'ns_residual' / Int32sl,
+                     'wn' / Int16ul,))
   __slots__ = [
                'tow',
                'ns_residual',
@@ -268,9 +273,10 @@ same sign as the pseudorange.
     Carrier phase fractional part
 
   """
-  _parser = Embedded(Struct("CarrierPhase",
-                     SLInt32('i'),
-                     ULInt8('f'),))
+  # _parser = Embedded(Struct("CarrierPhase",
+  _parser = Embedded(Struct(
+                     'i' / Int32sl,
+                     'f' / Int8ul,))
   __slots__ = [
                'i',
                'f',

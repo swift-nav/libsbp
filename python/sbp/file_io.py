@@ -66,11 +66,12 @@ to this message when it is received from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioReadReq",
-                   ULInt32('sequence'),
-                   ULInt32('offset'),
-                   ULInt8('chunk_size'),
-                   greedy_string('filename'),)
+  # _parser = Struct("MsgFileioReadReq",
+  _parser = Struct(
+                   'sequence' / Int32ul,
+                   'offset' / Int32ul,
+                   'chunk_size' / Int8ul,
+                   'filename' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'sequence',
                'offset',
@@ -162,9 +163,10 @@ preserved from the request.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioReadResp",
-                   ULInt32('sequence'),
-                   OptionalGreedyRange(ULInt8('contents')),)
+  # _parser = Struct("MsgFileioReadResp",
+  _parser = Struct(
+                   'sequence' / Int32ul,
+                   GreedyRange('contents' / Int8ul),)
   __slots__ = [
                'sequence',
                'contents',
@@ -260,10 +262,11 @@ from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioReadDirReq",
-                   ULInt32('sequence'),
-                   ULInt32('offset'),
-                   greedy_string('dirname'),)
+  # _parser = Struct("MsgFileioReadDirReq",
+  _parser = Struct(
+                   'sequence' / Int32ul,
+                   'offset' / Int32ul,
+                   'dirname' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'sequence',
                'offset',
@@ -354,9 +357,10 @@ the response is preserved from the request.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioReadDirResp",
-                   ULInt32('sequence'),
-                   OptionalGreedyRange(ULInt8('contents')),)
+  # _parser = Struct("MsgFileioReadDirResp",
+  _parser = Struct(
+                   'sequence' / Int32ul,
+                   GreedyRange('contents' / Int8ul),)
   __slots__ = [
                'sequence',
                'contents',
@@ -441,8 +445,9 @@ process this message when it is received from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioRemove",
-                   greedy_string('filename'),)
+  # _parser = Struct("MsgFileioRemove",
+  _parser = Struct(
+                   'filename' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'filename',
               ]
@@ -535,11 +540,12 @@ only  process this message when it is received from sender ID
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioWriteReq",
-                   ULInt32('sequence'),
-                   ULInt32('offset'),
-                   greedy_string('filename'),
-                   OptionalGreedyRange(ULInt8('data')),)
+  # _parser = Struct("MsgFileioWriteReq",
+  _parser = Struct(
+                   'sequence' / Int32ul,
+                   'offset' / Int32ul,
+                   'filename' / GreedyString(encoding='utf8'),
+                   GreedyRange('data' / Int8ul),)
   __slots__ = [
                'sequence',
                'offset',
@@ -629,8 +635,9 @@ request.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioWriteResp",
-                   ULInt32('sequence'),)
+  # _parser = Struct("MsgFileioWriteResp",
+  _parser = Struct(
+                   'sequence' / Int32ul,)
   __slots__ = [
                'sequence',
               ]

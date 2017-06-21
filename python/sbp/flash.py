@@ -63,11 +63,12 @@ starting address
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFlashProgram",
-                   ULInt8('target'),
-                   Struct('addr_start', Array(3, ULInt8('addr_start'))),
-                   ULInt8('addr_len'),
-                   OptionalGreedyRange(ULInt8('data')),)
+  # _parser = Struct("MsgFlashProgram",
+  _parser = Struct(
+                   'target' / Int8ul,
+                   'addr_start' / Array(3, Int8ul),
+                   'addr_len' / Int8ul,
+                   GreedyRange('data' / Int8ul),)
   __slots__ = [
                'target',
                'addr_start',
@@ -156,8 +157,9 @@ MSG_FLASH_PROGRAM, may return this message on failure.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFlashDone",
-                   ULInt8('response'),)
+  # _parser = Struct("MsgFlashDone",
+  _parser = Struct(
+                   'response' / Int8ul,)
   __slots__ = [
                'response',
               ]
@@ -249,10 +251,11 @@ starting address
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFlashReadReq",
-                   ULInt8('target'),
-                   Struct('addr_start', Array(3, ULInt8('addr_start'))),
-                   ULInt8('addr_len'),)
+  # _parser = Struct("MsgFlashReadReq",
+  _parser = Struct(
+                   'target' / Int8ul,
+                   'addr_start' / Array(3, Int8ul),
+                   'addr_len' / Int8ul,)
   __slots__ = [
                'target',
                'addr_start',
@@ -348,10 +351,11 @@ starting address
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFlashReadResp",
-                   ULInt8('target'),
-                   Struct('addr_start', Array(3, ULInt8('addr_start'))),
-                   ULInt8('addr_len'),)
+  # _parser = Struct("MsgFlashReadResp",
+  _parser = Struct(
+                   'target' / Int8ul,
+                   'addr_start' / Array(3, Int8ul),
+                   'addr_len' / Int8ul,)
   __slots__ = [
                'target',
                'addr_start',
@@ -443,9 +447,10 @@ the M25)
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFlashErase",
-                   ULInt8('target'),
-                   ULInt32('sector_num'),)
+  # _parser = Struct("MsgFlashErase",
+  _parser = Struct(
+                   'target' / Int8ul,
+                   'sector_num' / Int32ul,)
   __slots__ = [
                'target',
                'sector_num',
@@ -528,8 +533,9 @@ memory. The device replies with a MSG_FLASH_DONE message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgStmFlashLockSector",
-                   ULInt32('sector'),)
+  # _parser = Struct("MsgStmFlashLockSector",
+  _parser = Struct(
+                   'sector' / Int32ul,)
   __slots__ = [
                'sector',
               ]
@@ -610,8 +616,9 @@ memory. The device replies with a MSG_FLASH_DONE message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgStmFlashUnlockSector",
-                   ULInt32('sector'),)
+  # _parser = Struct("MsgStmFlashUnlockSector",
+  _parser = Struct(
+                   'sector' / Int32ul,)
   __slots__ = [
                'sector',
               ]
@@ -742,8 +749,9 @@ ID in the payload..
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgStmUniqueIdResp",
-                   Struct('stm_id', Array(12, ULInt8('stm_id'))),)
+  # _parser = Struct("MsgStmUniqueIdResp",
+  _parser = Struct(
+                   'stm_id' / Array(12, Int8ul),)
   __slots__ = [
                'stm_id',
               ]
@@ -824,8 +832,9 @@ register. The device replies with a MSG_FLASH_DONE message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgM25FlashWriteStatus",
-                   Struct('status', Array(1, ULInt8('status'))),)
+  # _parser = Struct("MsgM25FlashWriteStatus",
+  _parser = Struct(
+                   'status' / Array(1, Int8ul),)
   __slots__ = [
                'status',
               ]

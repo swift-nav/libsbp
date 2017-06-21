@@ -42,10 +42,11 @@ measured signal power.
     Carrier-to-Noise density.  Zero implies invalid cn0.
 
   """
-  _parser = Embedded(Struct("TrackingChannelState",
-                     Struct('sid', GnssSignal16._parser),
-                     ULInt8('fcn'),
-                     ULInt8('cn0'),))
+  # _parser = Embedded(Struct("TrackingChannelState",
+  _parser = Embedded(Struct(
+                     'sid' / Struct(GnssSignal16._parser),
+                     'fcn' / Int8ul,
+                     'cn0' / Int8ul,))
   __slots__ = [
                'sid',
                'fcn',
@@ -86,9 +87,10 @@ class TrackingChannelCorrelation(object):
     Quadrature correlation
 
   """
-  _parser = Embedded(Struct("TrackingChannelCorrelation",
-                     SLInt32('I'),
-                     SLInt32('Q'),))
+  # _parser = Embedded(Struct("TrackingChannelCorrelation",
+  _parser = Embedded(Struct(
+                     'I' / Int32sl,
+                     'Q' / Int32sl,))
   __slots__ = [
                'I',
                'Q',
@@ -128,10 +130,11 @@ class TrackingChannelStateDepA(object):
     Carrier-to-noise density
 
   """
-  _parser = Embedded(Struct("TrackingChannelStateDepA",
-                     ULInt8('state'),
-                     ULInt8('prn'),
-                     LFloat32('cn0'),))
+  # _parser = Embedded(Struct("TrackingChannelStateDepA",
+  _parser = Embedded(Struct(
+                     'state' / Int8ul,
+                     'prn' / Int8ul,
+                     'cn0' / Float32l,))
   __slots__ = [
                'state',
                'prn',
@@ -173,10 +176,11 @@ class TrackingChannelStateDepB(object):
     Carrier-to-noise density
 
   """
-  _parser = Embedded(Struct("TrackingChannelStateDepB",
-                     ULInt8('state'),
-                     Struct('sid', GnssSignal._parser),
-                     LFloat32('cn0'),))
+  # _parser = Embedded(Struct("TrackingChannelStateDepB",
+  _parser = Embedded(Struct(
+                     'state' / Int8ul,
+                     'sid' / Struct(GnssSignal._parser),
+                     'cn0' / Float32l,))
   __slots__ = [
                'state',
                'sid',
@@ -281,28 +285,29 @@ signal is in continuous track.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgTrackingStateDetailed",
-                   ULInt64('recv_time'),
-                   Struct('tot', GPSTime._parser),
-                   ULInt32('P'),
-                   ULInt16('P_std'),
-                   Struct('L', CarrierPhase._parser),
-                   ULInt8('cn0'),
-                   ULInt16('lock'),
-                   Struct('sid', GnssSignal._parser),
-                   SLInt32('doppler'),
-                   ULInt16('doppler_std'),
-                   ULInt32('uptime'),
-                   SLInt16('clock_offset'),
-                   SLInt16('clock_drift'),
-                   ULInt16('corr_spacing'),
-                   SLInt8('acceleration'),
-                   ULInt8('sync_flags'),
-                   ULInt8('tow_flags'),
-                   ULInt8('track_flags'),
-                   ULInt8('nav_flags'),
-                   ULInt8('pset_flags'),
-                   ULInt8('misc_flags'),)
+  # _parser = Struct("MsgTrackingStateDetailed",
+  _parser = Struct(
+                   'recv_time' / Int64ul,
+                   'tot' / Struct(GPSTime._parser),
+                   'P' / Int32ul,
+                   'P_std' / Int16ul,
+                   'L' / Struct(CarrierPhase._parser),
+                   'cn0' / Int8ul,
+                   'lock' / Int16ul,
+                   'sid' / Struct(GnssSignal._parser),
+                   'doppler' / Int32sl,
+                   'doppler_std' / Int16ul,
+                   'uptime' / Int32ul,
+                   'clock_offset' / Int16sl,
+                   'clock_drift' / Int16sl,
+                   'corr_spacing' / Int16ul,
+                   'acceleration' / Int8sl,
+                   'sync_flags' / Int8ul,
+                   'tow_flags' / Int8ul,
+                   'track_flags' / Int8ul,
+                   'nav_flags' / Int8ul,
+                   'pset_flags' / Int8ul,
+                   'misc_flags' / Int8ul,)
   __slots__ = [
                'recv_time',
                'tot',
@@ -424,8 +429,9 @@ measurements for all tracked satellites.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgTrackingState",
-                   OptionalGreedyRange(Struct('states', TrackingChannelState._parser)),)
+  # _parser = Struct("MsgTrackingState",
+  _parser = Struct(
+                   GreedyRange('states' / Struct(TrackingChannelState._parser)),)
   __slots__ = [
                'states',
               ]
@@ -510,10 +516,11 @@ update interval.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgTrackingIq",
-                   ULInt8('channel'),
-                   Struct('sid', GnssSignal._parser),
-                   Struct('corrs', Array(3, Struct('corrs', TrackingChannelCorrelation._parser))),)
+  # _parser = Struct("MsgTrackingIq",
+  _parser = Struct(
+                   'channel' / Int8ul,
+                   'sid' / Struct(GnssSignal._parser),
+                   'corrs' / Array(3, Byte),)
   __slots__ = [
                'channel',
                'sid',
@@ -596,8 +603,9 @@ class MsgTrackingStateDepA(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgTrackingStateDepA",
-                   OptionalGreedyRange(Struct('states', TrackingChannelStateDepA._parser)),)
+  # _parser = Struct("MsgTrackingStateDepA",
+  _parser = Struct(
+                   GreedyRange('states' / Struct(TrackingChannelStateDepA._parser)),)
   __slots__ = [
                'states',
               ]
@@ -676,8 +684,9 @@ class MsgTrackingStateDepB(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgTrackingStateDepB",
-                   OptionalGreedyRange(Struct('states', TrackingChannelStateDepB._parser)),)
+  # _parser = Struct("MsgTrackingStateDepB",
+  _parser = Struct(
+                   GreedyRange('states' / Struct(TrackingChannelStateDepB._parser)),)
   __slots__ = [
                'states',
               ]

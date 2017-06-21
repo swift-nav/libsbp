@@ -52,10 +52,11 @@ or configuration requests.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgStartup",
-                   ULInt8('cause'),
-                   ULInt8('startup_type'),
-                   ULInt16('reserved'),)
+  # _parser = Struct("MsgStartup",
+  _parser = Struct(
+                   'cause' / Int8ul,
+                   'startup_type' / Int8ul,
+                   'reserved' / Int16ul,)
   __slots__ = [
                'cause',
                'startup_type',
@@ -147,11 +148,12 @@ corrections packet.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgDgnssStatus",
-                   ULInt8('flags'),
-                   ULInt16('latency'),
-                   ULInt8('num_signals'),
-                   greedy_string('source'),)
+  # _parser = Struct("MsgDgnssStatus",
+  _parser = Struct(
+                   'flags' / Int8ul,
+                   'latency' / Int16ul,
+                   'num_signals' / Int8ul,
+                   'source' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'flags',
                'latency',
@@ -246,8 +248,9 @@ the remaining error flags should be inspected.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgHeartbeat",
-                   ULInt32('flags'),)
+  # _parser = Struct("MsgHeartbeat",
+  _parser = Struct(
+                   'flags' / Int32ul,)
   __slots__ = [
                'flags',
               ]

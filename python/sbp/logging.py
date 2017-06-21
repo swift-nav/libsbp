@@ -50,9 +50,10 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgLog",
-                   ULInt8('level'),
-                   greedy_string('text'),)
+  # _parser = Struct("MsgLog",
+  _parser = Struct(
+                   'level' / Int8ul,
+                   'text' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'level',
                'text',
@@ -144,10 +145,11 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFwd",
-                   ULInt8('source'),
-                   ULInt8('protocol'),
-                   greedy_string('fwd_payload'),)
+  # _parser = Struct("MsgFwd",
+  _parser = Struct(
+                   'source' / Int8ul,
+                   'protocol' / Int8ul,
+                   'fwd_payload' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'source',
                'protocol',
@@ -230,8 +232,9 @@ class MsgTweet(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgTweet",
-                   String('tweet', 140),)
+  # _parser = Struct("MsgTweet",
+  _parser = Struct(
+                   'tweet'/ String(140, paddir='left'),)
   __slots__ = [
                'tweet',
               ]
@@ -310,8 +313,9 @@ class MsgPrintDep(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgPrintDep",
-                   greedy_string('text'),)
+  # _parser = Struct("MsgPrintDep",
+  _parser = Struct(
+                   'text' / GreedyString(encoding='utf8'),)
   __slots__ = [
                'text',
               ]
