@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_EPHEMERIS_GLO (0x0087).
+/** SBP class for message MSG_EPHEMERIS_GLO (0x0088).
  *
  * You can have MSG_EPHEMERIS_GLO inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -35,7 +35,7 @@ import org.json.JSONArray;
  * for more details. */
 
 public class MsgEphemerisGlo extends SBPMessage {
-    public static final int TYPE = 0x0087;
+    public static final int TYPE = 0x0088;
 
     
     /** Values common for all ephemeris types */
@@ -62,6 +62,9 @@ public class MsgEphemerisGlo extends SBPMessage {
     /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
     public int fcn;
     
+    /** Issue of ephemeris data */
+    public int iod;
+    
 
     public MsgEphemerisGlo (int sender) { super(sender, TYPE); }
     public MsgEphemerisGlo () { super(TYPE); }
@@ -81,6 +84,7 @@ public class MsgEphemerisGlo extends SBPMessage {
         vel = parser.getArrayofDouble(3);
         acc = parser.getArrayofDouble(3);
         fcn = parser.getU8();
+        iod = parser.getU8();
     }
 
     @Override
@@ -93,6 +97,7 @@ public class MsgEphemerisGlo extends SBPMessage {
         builder.putArrayofDouble(vel, 3);
         builder.putArrayofDouble(acc, 3);
         builder.putU8(fcn);
+        builder.putU8(iod);
     }
 
     @Override
@@ -106,6 +111,7 @@ public class MsgEphemerisGlo extends SBPMessage {
         obj.put("vel", new JSONArray(vel));
         obj.put("acc", new JSONArray(acc));
         obj.put("fcn", fcn);
+        obj.put("iod", iod);
         return obj;
     }
 }
