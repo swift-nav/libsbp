@@ -19,7 +19,7 @@ e.g. camera shutter time.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/ext_events.yaml with generate.py.
 # Please do not hand edit!
@@ -58,7 +58,6 @@ from -500000 to 500000)
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgExtEvent",
   _parser = Struct(
                    'wn' / Int16ul,
                    'tow' / Int32ul,

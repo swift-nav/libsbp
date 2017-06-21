@@ -20,7 +20,7 @@ may no longer be used.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml with generate.py.
@@ -55,7 +55,6 @@ be normalized.
 
 
   """
-  # _parser = Embedded(Struct("UARTChannel",
   _parser = Embedded(Struct(
                      'tx_throughput' / Float32l,
                      'rx_throughput' / Float32l,
@@ -118,7 +117,6 @@ can cause momentary RTK solution outages.
     Smoothed estimate of the current period
 
   """
-  # _parser = Embedded(Struct("Period",
   _parser = Embedded(Struct(
                      'avg' / Int32sl,
                      'pmin' / Int32sl,
@@ -174,7 +172,6 @@ communication latency in the system.
     Smoothed estimate of the current latency
 
   """
-  # _parser = Embedded(Struct("Latency",
   _parser = Embedded(Struct(
                      'avg' / Int32sl,
                      'lmin' / Int32sl,
@@ -323,7 +320,6 @@ bootloader.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgReset",
   _parser = Struct(
                    'flags' / Int32ul,)
   __slots__ = [
@@ -546,7 +542,6 @@ Ambiguity Resolution (IAR) process.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgResetFilters",
   _parser = Struct(
                    'filter' / Int8ul,)
   __slots__ = [
@@ -685,7 +680,6 @@ thread. The reported percentage values must be normalized.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgThreadState",
   _parser = Struct(
                    'name'/ String(20, paddir='left'),
                    'cpu' / Int16ul,
@@ -789,7 +783,6 @@ period indicates their likelihood of transmission.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgUartState",
   _parser = Struct(
                    'uart_a' / Struct(UARTChannel._parser),
                    'uart_b' / Struct(UARTChannel._parser),
@@ -888,7 +881,6 @@ class MsgUartStateDepa(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgUartStateDepa",
   _parser = Struct(
                    'uart_a' / Struct(UARTChannel._parser),
                    'uart_b' / Struct(UARTChannel._parser),
@@ -982,7 +974,6 @@ from satellite observations.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgIarState",
   _parser = Struct(
                    'num_hyps' / Int32ul,)
   __slots__ = [
@@ -1067,7 +1058,6 @@ from being used in various Piksi subsystems.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgMaskSatellite",
   _parser = Struct(
                    'mask' / Int8ul,
                    'sid' / Struct(GnssSignal._parser),)
@@ -1162,7 +1152,6 @@ available.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgDeviceMonitor",
   _parser = Struct(
                    'dev_vin' / Int16sl,
                    'cpu_vint' / Int16sl,
@@ -1260,7 +1249,6 @@ code will be returned with MSG_COMMAND_RESP.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgCommandReq",
   _parser = Struct(
                    'sequence' / Int32ul,
                    'command' / GreedyString(encoding='utf8'),)
@@ -1348,7 +1336,6 @@ the command.  A return code of zero indicates success.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgCommandResp",
   _parser = Struct(
                    'sequence' / Int32ul,
                    'code' / Int32sl,)
@@ -1584,7 +1571,6 @@ in c.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgNetworkStateResp",
   _parser = Struct(
                    'ipv4_address' / Array(4, Int8ul),
                    'ipv4_mask_size' / Int8ul,
@@ -1704,7 +1690,6 @@ class MsgSpecan(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgSpecan",
   _parser = Struct(
                    'channel_tag' / Int16ul,
                    't' / Struct(GPSTime._parser),

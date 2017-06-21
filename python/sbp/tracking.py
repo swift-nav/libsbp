@@ -18,7 +18,7 @@ Satellite code and carrier-phase tracking messages from the device.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml with generate.py.
@@ -42,7 +42,6 @@ measured signal power.
     Carrier-to-Noise density.  Zero implies invalid cn0.
 
   """
-  # _parser = Embedded(Struct("TrackingChannelState",
   _parser = Embedded(Struct(
                      'sid' / Struct(GnssSignal16._parser),
                      'fcn' / Int8ul,
@@ -87,7 +86,6 @@ class TrackingChannelCorrelation(object):
     Quadrature correlation
 
   """
-  # _parser = Embedded(Struct("TrackingChannelCorrelation",
   _parser = Embedded(Struct(
                      'I' / Int32sl,
                      'Q' / Int32sl,))
@@ -130,7 +128,6 @@ class TrackingChannelStateDepA(object):
     Carrier-to-noise density
 
   """
-  # _parser = Embedded(Struct("TrackingChannelStateDepA",
   _parser = Embedded(Struct(
                      'state' / Int8ul,
                      'prn' / Int8ul,
@@ -176,7 +173,6 @@ class TrackingChannelStateDepB(object):
     Carrier-to-noise density
 
   """
-  # _parser = Embedded(Struct("TrackingChannelStateDepB",
   _parser = Embedded(Struct(
                      'state' / Int8ul,
                      'sid' / Struct(GnssSignal._parser),
@@ -285,7 +281,6 @@ signal is in continuous track.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgTrackingStateDetailed",
   _parser = Struct(
                    'recv_time' / Int64ul,
                    'tot' / Struct(GPSTime._parser),
@@ -429,7 +424,6 @@ measurements for all tracked satellites.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgTrackingState",
   _parser = Struct(
                    GreedyRange('states' / Struct(TrackingChannelState._parser)),)
   __slots__ = [
@@ -516,7 +510,6 @@ update interval.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgTrackingIq",
   _parser = Struct(
                    'channel' / Int8ul,
                    'sid' / Struct(GnssSignal._parser),
@@ -603,7 +596,6 @@ class MsgTrackingStateDepA(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgTrackingStateDepA",
   _parser = Struct(
                    GreedyRange('states' / Struct(TrackingChannelStateDepA._parser)),)
   __slots__ = [
@@ -684,7 +676,6 @@ class MsgTrackingStateDepB(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgTrackingStateDepB",
   _parser = Struct(
                    GreedyRange('states' / Struct(TrackingChannelStateDepB._parser)),)
   __slots__ = [

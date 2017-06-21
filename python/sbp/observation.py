@@ -17,7 +17,7 @@ Satellite observation messages from the device.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml with generate.py.
@@ -40,7 +40,6 @@ counter (ith packet of n)
 
 
   """
-  # _parser = Embedded(Struct("ObservationHeader",
   _parser = Embedded(Struct(
                      't' / Struct(GPSTimeNano._parser),
                      'n_obs' / Int8ul,))
@@ -85,7 +84,6 @@ as positive for approaching satellites.
     Doppler fractional part
 
   """
-  # _parser = Embedded(Struct("Doppler",
   _parser = Embedded(Struct(
                      'i' / Int16sl,
                      'f' / Int8ul,))
@@ -148,7 +146,6 @@ estimate for the signal is valid.
     GNSS signal identifier (16 bit)
 
   """
-  # _parser = Embedded(Struct("PackedObsContent",
   _parser = Embedded(Struct(
                      'P' / Int32ul,
                      'L' / Struct(CarrierPhase._parser),
@@ -215,7 +212,6 @@ GLO: 0 = valid, non-zero = invalid
 
 
   """
-  # _parser = Embedded(Struct("EphemerisCommonContent",
   _parser = Embedded(Struct(
                      'sid' / Struct(GnssSignal16._parser),
                      'toe' / Struct(GPSTimeSec._parser),
@@ -279,7 +275,6 @@ GLO: 0 = valid, non-zero = invalid
 
 
   """
-  # _parser = Embedded(Struct("EphemerisCommonContentDepA",
   _parser = Embedded(Struct(
                      'sid' / Struct(GnssSignal._parser),
                      'toe' / Struct(GPSTime._parser),
@@ -335,7 +330,6 @@ counter (ith packet of n)
 
 
   """
-  # _parser = Embedded(Struct("ObservationHeaderDep",
   _parser = Embedded(Struct(
                      't' / Struct(GPSTime._parser),
                      'n_obs' / Int8ul,))
@@ -381,7 +375,6 @@ the opposite sign as the pseudorange.
     Carrier phase fractional part
 
   """
-  # _parser = Embedded(Struct("CarrierPhaseDepA",
   _parser = Embedded(Struct(
                      'i' / Int32sl,
                      'f' / Int8ul,))
@@ -431,7 +424,6 @@ carrier phase ambiguity may have changed.
     PRN-1 identifier of the satellite signal
 
   """
-  # _parser = Embedded(Struct("PackedObsContentDepA",
   _parser = Embedded(Struct(
                      'P' / Int32ul,
                      'L' / Struct(CarrierPhaseDepA._parser),
@@ -492,7 +484,6 @@ carrier phase ambiguity may have changed.
     GNSS signal identifier
 
   """
-  # _parser = Embedded(Struct("PackedObsContentDepB",
   _parser = Embedded(Struct(
                      'P' / Int32ul,
                      'L' / Struct(CarrierPhaseDepA._parser),
@@ -554,7 +545,6 @@ carrier phase ambiguity may have changed.
     GNSS signal identifier
 
   """
-  # _parser = Embedded(Struct("PackedObsContentDepC",
   _parser = Embedded(Struct(
                      'P' / Int32ul,
                      'L' / Struct(CarrierPhase._parser),
@@ -626,7 +616,6 @@ Satellite health status for GLO:
 
 
   """
-  # _parser = Embedded(Struct("AlmanacCommonContent",
   _parser = Embedded(Struct(
                      'sid' / Struct(GnssSignal._parser),
                      'toa' / Struct(GPSTimeSec._parser),
@@ -698,7 +687,6 @@ satellite being tracked.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgObs",
   _parser = Struct(
                    'header' / Struct(ObservationHeader._parser),
                    GreedyRange('obs' / Struct(PackedObsContent._parser)),)
@@ -791,7 +779,6 @@ error in the pseudo-absolute position output.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgBasePosLLH",
   _parser = Struct(
                    'lat' / Float64l,
                    'lon' / Float64l,
@@ -888,7 +875,6 @@ pseudo-absolute position output.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgBasePosECEF",
   _parser = Struct(
                    'x' / Float64l,
                    'y' / Float64l,
@@ -1024,7 +1010,6 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgEphemerisGPSDepE",
   _parser = Struct(
                    'common' / Struct(EphemerisCommonContentDepA._parser),
                    'tgd' / Float64l,
@@ -1220,7 +1205,6 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgEphemerisGPS",
   _parser = Struct(
                    'common' / Struct(EphemerisCommonContent._parser),
                    'tgd' / Float64l,
@@ -1376,7 +1360,6 @@ class MsgEphemerisSbasDepA(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgEphemerisSbasDepA",
   _parser = Struct(
                    'common' / Struct(EphemerisCommonContentDepA._parser),
                    'pos' / Array(3, Float64l),
@@ -1487,7 +1470,6 @@ for more details.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgEphemerisGloDepA",
   _parser = Struct(
                    'common' / Struct(EphemerisCommonContentDepA._parser),
                    'gamma' / Float64l,
@@ -1592,7 +1574,6 @@ class MsgEphemerisSbas(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgEphemerisSbas",
   _parser = Struct(
                    'common' / Struct(EphemerisCommonContent._parser),
                    'pos' / Array(3, Float64l),
@@ -1703,7 +1684,6 @@ for more details.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgEphemerisGloDepB",
   _parser = Struct(
                    'common' / Struct(EphemerisCommonContent._parser),
                    'gamma' / Float64l,
@@ -1818,7 +1798,6 @@ for more details.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgEphemerisGloDepC",
   _parser = Struct(
                    'common' / Struct(EphemerisCommonContent._parser),
                    'gamma' / Float64l,
@@ -1941,7 +1920,6 @@ for more details.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgEphemerisGlo",
   _parser = Struct(
                    'common' / Struct(EphemerisCommonContent._parser),
                    'gamma' / Float64l,
@@ -2107,7 +2085,6 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgEphemerisDepD",
   _parser = Struct(
                    'tgd' / Float64l,
                    'c_rs' / Float64l,
@@ -2322,7 +2299,6 @@ class MsgEphemerisDepA(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgEphemerisDepA",
   _parser = Struct(
                    'tgd' / Float64l,
                    'c_rs' / Float64l,
@@ -2530,7 +2506,6 @@ class MsgEphemerisDepB(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgEphemerisDepB",
   _parser = Struct(
                    'tgd' / Float64l,
                    'c_rs' / Float64l,
@@ -2750,7 +2725,6 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgEphemerisDepC",
   _parser = Struct(
                    'tgd' / Float64l,
                    'c_rs' / Float64l,
@@ -2919,7 +2893,6 @@ satellite being tracked.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgObsDepA",
   _parser = Struct(
                    'header' / Struct(ObservationHeaderDep._parser),
                    GreedyRange('obs' / Struct(PackedObsContentDepA._parser)),)
@@ -3013,7 +2986,6 @@ satellite being tracked.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgObsDepB",
   _parser = Struct(
                    'header' / Struct(ObservationHeaderDep._parser),
                    GreedyRange('obs' / Struct(PackedObsContentDepB._parser)),)
@@ -3108,7 +3080,6 @@ satellite being tracked.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgObsDepC",
   _parser = Struct(
                    'header' / Struct(ObservationHeaderDep._parser),
                    GreedyRange('obs' / Struct(PackedObsContentDepC._parser)),)
@@ -3203,7 +3174,6 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgIono",
   _parser = Struct(
                    't_nmct' / Struct(GPSTimeSec._parser),
                    'a0' / Float64l,
@@ -3311,7 +3281,6 @@ class MsgSvConfigurationGPS(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgSvConfigurationGPS",
   _parser = Struct(
                    't_nmct' / Struct(GPSTimeSec._parser),
                    'l2c_mask' / Int32ul,)
@@ -3405,7 +3374,6 @@ LSB indicating tgd validity etc.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgGroupDelayDepA",
   _parser = Struct(
                    't_op' / Struct(GPSTime._parser),
                    'prn' / Int8ul,
@@ -3511,7 +3479,6 @@ LSB indicating tgd validity etc.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgGroupDelay",
   _parser = Struct(
                    't_op' / Struct(GPSTimeSec._parser),
                    'sid' / Struct(GnssSignal._parser),
@@ -3629,7 +3596,6 @@ Please see the Navstar GPS Space Segment/Navigation user interfaces
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgAlmanacGPS",
   _parser = Struct(
                    'common' / Struct(AlmanacCommonContent._parser),
                    'm0' / Float64l,
@@ -3757,7 +3723,6 @@ coordinate system
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgAlmanacGlo",
   _parser = Struct(
                    'common' / Struct(AlmanacCommonContent._parser),
                    'lambda_na' / Float64l,
@@ -3874,7 +3839,6 @@ index (SV orbital slot)  fcns[index]
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFcnsGlo",
   _parser = Struct(
                    'wn' / Int16ul,
                    'tow_ms' / Int32ul,

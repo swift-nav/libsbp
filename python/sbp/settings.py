@@ -24,7 +24,7 @@ https://github.com/swift-nav/piksi\_firmware/blob/master/docs/settings.pdf
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/settings.yaml with generate.py.
 # Please do not hand edit!
@@ -101,7 +101,6 @@ process to this message when it is received from sender ID
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgSettingsWrite",
   _parser = Struct(
                    'setting' / GreedyString(encoding='utf8'),)
   __slots__ = [
@@ -185,7 +184,6 @@ this message when it is received from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgSettingsReadReq",
   _parser = Struct(
                    'setting' / GreedyString(encoding='utf8'),)
   __slots__ = [
@@ -268,7 +266,6 @@ class MsgSettingsReadResp(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgSettingsReadResp",
   _parser = Struct(
                    'setting' / GreedyString(encoding='utf8'),)
   __slots__ = [
@@ -356,7 +353,6 @@ this message when it is received from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgSettingsReadByIndexReq",
   _parser = Struct(
                    'index' / Int16ul,)
   __slots__ = [
@@ -447,7 +443,6 @@ NULL-terminated and delimited string with contents
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgSettingsReadByIndexResp",
   _parser = Struct(
                    'index' / Int16ul,
                    'setting' / GreedyString(encoding='utf8'),)
@@ -581,7 +576,6 @@ for this setting to set the initial value.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgSettingsRegister",
   _parser = Struct(
                    'setting' / GreedyString(encoding='utf8'),)
   __slots__ = [

@@ -25,7 +25,7 @@ host request and the device response.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/file_io.yaml with generate.py.
 # Please do not hand edit!
@@ -66,7 +66,6 @@ to this message when it is received from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFileioReadReq",
   _parser = Struct(
                    'sequence' / Int32ul,
                    'offset' / Int32ul,
@@ -163,7 +162,6 @@ preserved from the request.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFileioReadResp",
   _parser = Struct(
                    'sequence' / Int32ul,
                    GreedyRange('contents' / Int8ul),)
@@ -262,7 +260,6 @@ from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFileioReadDirReq",
   _parser = Struct(
                    'sequence' / Int32ul,
                    'offset' / Int32ul,
@@ -357,7 +354,6 @@ the response is preserved from the request.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFileioReadDirResp",
   _parser = Struct(
                    'sequence' / Int32ul,
                    GreedyRange('contents' / Int8ul),)
@@ -445,7 +441,6 @@ process this message when it is received from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFileioRemove",
   _parser = Struct(
                    'filename' / GreedyString(encoding='utf8'),)
   __slots__ = [
@@ -540,7 +535,6 @@ only  process this message when it is received from sender ID
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFileioWriteReq",
   _parser = Struct(
                    'sequence' / Int32ul,
                    'offset' / Int32ul,
@@ -635,7 +629,6 @@ request.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFileioWriteResp",
   _parser = Struct(
                    'sequence' / Int32ul,)
   __slots__ = [

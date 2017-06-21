@@ -22,7 +22,7 @@ host request and the device response.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/bootload.yaml with generate.py.
 # Please do not hand edit!
@@ -103,7 +103,6 @@ protocol version number.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgBootloaderHandshakeResp",
   _parser = Struct(
                    'flags' / Int32ul,
                    'version' / GreedyString(encoding='utf8'),)
@@ -188,7 +187,6 @@ class MsgBootloaderJumpToApp(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgBootloaderJumpToApp",
   _parser = Struct(
                    'jump' / Int8ul,)
   __slots__ = [
@@ -327,7 +325,6 @@ on the right.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgNapDeviceDnaResp",
   _parser = Struct(
                    'dna' / Array(8, Int8ul),)
   __slots__ = [
@@ -408,7 +405,6 @@ class MsgBootloaderHandshakeDepA(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgBootloaderHandshakeDepA",
   _parser = Struct(
                    GreedyRange('handshake' / Int8ul),)
   __slots__ = [

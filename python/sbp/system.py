@@ -17,7 +17,7 @@ Standardized system messages from Swift Navigation devices.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/system.yaml with generate.py.
 # Please do not hand edit!
@@ -52,7 +52,6 @@ or configuration requests.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgStartup",
   _parser = Struct(
                    'cause' / Int8ul,
                    'startup_type' / Int8ul,
@@ -148,7 +147,6 @@ corrections packet.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgDgnssStatus",
   _parser = Struct(
                    'flags' / Int8ul,
                    'latency' / Int16ul,
@@ -248,7 +246,6 @@ the remaining error flags should be inspected.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgHeartbeat",
   _parser = Struct(
                    'flags' / Int32ul,)
   __slots__ = [

@@ -17,7 +17,7 @@ Satellite acquisition messages from the device.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/acquisition.yaml with generate.py.
@@ -60,7 +60,6 @@ The message is used to debug and measure the performance.
     Codephase of detected peak. Only valid if status is '1'
 
   """
-  # _parser = Embedded(Struct("AcqSvProfile",
   _parser = Embedded(Struct(
                      'job_type' / Int8ul,
                      'status' / Int8ul,
@@ -150,7 +149,6 @@ ratio.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgAcqResult",
   _parser = Struct(
                    'cn0' / Float32l,
                    'cp' / Float32l,
@@ -248,7 +246,6 @@ be in units of dB Hz in a later revision of this message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgAcqResultDepB",
   _parser = Struct(
                    'snr' / Float32l,
                    'cp' / Float32l,
@@ -348,7 +345,6 @@ acquisition was attempted
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgAcqResultDepA",
   _parser = Struct(
                    'snr' / Float32l,
                    'cp' / Float32l,
@@ -440,7 +436,6 @@ The message is used to debug and measure the performance.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgAcqSvProfile",
   _parser = Struct(
                    GreedyRange('acq_sv_profile' / Struct(AcqSvProfile._parser)),)
   __slots__ = [

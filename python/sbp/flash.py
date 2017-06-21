@@ -22,7 +22,7 @@ to Piksi Multi.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/flash.yaml with generate.py.
 # Please do not hand edit!
@@ -63,7 +63,6 @@ starting address
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFlashProgram",
   _parser = Struct(
                    'target' / Int8ul,
                    'addr_start' / Array(3, Int8ul),
@@ -157,7 +156,6 @@ MSG_FLASH_PROGRAM, may return this message on failure.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFlashDone",
   _parser = Struct(
                    'response' / Int8ul,)
   __slots__ = [
@@ -251,7 +249,6 @@ starting address
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFlashReadReq",
   _parser = Struct(
                    'target' / Int8ul,
                    'addr_start' / Array(3, Int8ul),
@@ -351,7 +348,6 @@ starting address
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFlashReadResp",
   _parser = Struct(
                    'target' / Int8ul,
                    'addr_start' / Array(3, Int8ul),
@@ -447,7 +443,6 @@ the M25)
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFlashErase",
   _parser = Struct(
                    'target' / Int8ul,
                    'sector_num' / Int32ul,)
@@ -533,7 +528,6 @@ memory. The device replies with a MSG_FLASH_DONE message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgStmFlashLockSector",
   _parser = Struct(
                    'sector' / Int32ul,)
   __slots__ = [
@@ -616,7 +610,6 @@ memory. The device replies with a MSG_FLASH_DONE message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgStmFlashUnlockSector",
   _parser = Struct(
                    'sector' / Int32ul,)
   __slots__ = [
@@ -749,7 +742,6 @@ ID in the payload..
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgStmUniqueIdResp",
   _parser = Struct(
                    'stm_id' / Array(12, Int8ul),)
   __slots__ = [
@@ -832,7 +824,6 @@ register. The device replies with a MSG_FLASH_DONE message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgM25FlashWriteStatus",
   _parser = Struct(
                    'status' / Array(1, Int8ul),)
   __slots__ = [

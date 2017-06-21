@@ -18,7 +18,7 @@ Messages for logging NDB events.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/ndb.yaml with generate.py.
@@ -73,7 +73,6 @@ of other data_source.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgNdbEvent",
   _parser = Struct(
                    'recv_time' / Int64ul,
                    'event' / Int8ul,

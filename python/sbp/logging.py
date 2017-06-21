@@ -18,7 +18,7 @@ Logging and debugging messages from the device.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/logging.yaml with generate.py.
 # Please do not hand edit!
@@ -50,7 +50,6 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgLog",
   _parser = Struct(
                    'level' / Int8ul,
                    'text' / GreedyString(encoding='utf8'),)
@@ -145,7 +144,6 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgFwd",
   _parser = Struct(
                    'source' / Int8ul,
                    'protocol' / Int8ul,
@@ -232,7 +230,6 @@ class MsgTweet(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgTweet",
   _parser = Struct(
                    'tweet'/ String(140, paddir='left'),)
   __slots__ = [
@@ -313,7 +310,6 @@ class MsgPrintDep(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgPrintDep",
   _parser = Struct(
                    'text' / GreedyString(encoding='utf8'),)
   __slots__ = [

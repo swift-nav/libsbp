@@ -28,7 +28,7 @@ and the RTK solution in tandem.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/navigation.yaml with generate.py.
 # Please do not hand edit!
@@ -76,7 +76,6 @@ from -500000 to 500000)
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgGPSTime",
   _parser = Struct(
                    'wn' / Int16ul,
                    'tow' / Int32ul,
@@ -184,7 +183,6 @@ which indicate the source of the UTC offset value and source of the time fix.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgUtcTime",
   _parser = Struct(
                    'flags' / Int8ul,
                    'tow' / Int32ul,
@@ -305,7 +303,6 @@ corresponds to differential or SPP solution.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgDops",
   _parser = Struct(
                    'tow' / Int32ul,
                    'gdop' / Int16ul,
@@ -424,7 +421,6 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgPosECEF",
   _parser = Struct(
                    'tow' / Int32ul,
                    'x' / Float64l,
@@ -545,7 +541,6 @@ matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgPosLLH",
   _parser = Struct(
                    'tow' / Int32ul,
                    'lat' / Float64l,
@@ -664,7 +659,6 @@ matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgBaselineECEF",
   _parser = Struct(
                    'tow' / Int32ul,
                    'x' / Int32sl,
@@ -783,7 +777,6 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgBaselineNED",
   _parser = Struct(
                    'tow' / Int32ul,
                    'n' / Int32sl,
@@ -901,7 +894,6 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgVelECEF",
   _parser = Struct(
                    'tow' / Int32ul,
                    'x' / Int32sl,
@@ -1020,7 +1012,6 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgVelNED",
   _parser = Struct(
                    'tow' / Int32ul,
                    'n' / Int32sl,
@@ -1132,7 +1123,6 @@ that time-matched RTK mode is used when the base station is moving.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgBaselineHeading",
   _parser = Struct(
                    'tow' / Int32ul,
                    'heading' / Int32ul,
@@ -1226,7 +1216,6 @@ Differential solution
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgAgeCorrections",
   _parser = Struct(
                    'tow' / Int32ul,
                    'age' / Int16ul,)
@@ -1331,7 +1320,6 @@ from -500000 to 500000)
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgGPSTimeDepA",
   _parser = Struct(
                    'wn' / Int16ul,
                    'tow' / Int32ul,
@@ -1434,7 +1422,6 @@ precision.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgDopsDepA",
   _parser = Struct(
                    'tow' / Int32ul,
                    'gdop' / Int16ul,
@@ -1552,7 +1539,6 @@ to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgPosECEFDepA",
   _parser = Struct(
                    'tow' / Int32ul,
                    'x' / Float64l,
@@ -1677,7 +1663,6 @@ implemented). Defaults to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgPosLLHDepA",
   _parser = Struct(
                    'tow' / Int32ul,
                    'lat' / Float64l,
@@ -1797,7 +1782,6 @@ matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgBaselineECEFDepA",
   _parser = Struct(
                    'tow' / Int32ul,
                    'x' / Int32sl,
@@ -1920,7 +1904,6 @@ implemented). Defaults to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgBaselineNEDDepA",
   _parser = Struct(
                    'tow' / Int32ul,
                    'n' / Int32sl,
@@ -2039,7 +2022,6 @@ to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgVelECEFDepA",
   _parser = Struct(
                    'tow' / Int32ul,
                    'x' / Int32sl,
@@ -2160,7 +2142,6 @@ implemented). Defaults to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgVelNEDDepA",
   _parser = Struct(
                    'tow' / Int32ul,
                    'n' / Int32sl,
@@ -2271,7 +2252,6 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgBaselineHeadingDepA",
   _parser = Struct(
                    'tow' / Int32ul,
                    'heading' / Int32ul,

@@ -17,7 +17,7 @@ Various structs shared between modules
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/gnss.yaml with generate.py.
 # Please do not hand edit!
@@ -37,7 +37,6 @@ class GnssSignal16(object):
     Signal constellation, band and code
 
   """
-  # _parser = Embedded(Struct("GnssSignal16",
   _parser = Embedded(Struct(
                      'sat' / Int8ul,
                      'code' / Int8ul,))
@@ -85,7 +84,6 @@ Note: unlike GnssSignal16, GPS satellites are encoded as
     Reserved
 
   """
-  # _parser = Embedded(Struct("GnssSignal",
   _parser = Embedded(Struct(
                      'sat' / Int16ul,
                      'code' / Int8ul,
@@ -132,7 +130,6 @@ transition.
     GPS week number
 
   """
-  # _parser = Embedded(Struct("GPSTime",
   _parser = Embedded(Struct(
                      'tow' / Int32ul,
                      'wn' / Int16ul,))
@@ -176,7 +173,6 @@ transition.
     GPS week number
 
   """
-  # _parser = Embedded(Struct("GPSTimeSec",
   _parser = Embedded(Struct(
                      'tow' / Int32ul,
                      'wn' / Int16ul,))
@@ -225,7 +221,6 @@ from -500000 to 500000)
     GPS week number
 
   """
-  # _parser = Embedded(Struct("GPSTimeNano",
   _parser = Embedded(Struct(
                      'tow' / Int32ul,
                      'ns_residual' / Int32sl,
@@ -273,7 +268,6 @@ same sign as the pseudorange.
     Carrier phase fractional part
 
   """
-  # _parser = Embedded(Struct("CarrierPhase",
   _parser = Embedded(Struct(
                      'i' / Int32sl,
                      'f' / Int8ul,))

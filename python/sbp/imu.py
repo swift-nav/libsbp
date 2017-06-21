@@ -17,7 +17,7 @@ Inertial Measurement Unit (IMU) messages.
 from construct import *
 import json
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/imu.yaml with generate.py.
 # Please do not hand edit!
@@ -63,7 +63,6 @@ time is unknown or invalid.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgImuRaw",
   _parser = Struct(
                    'tow' / Int32ul,
                    'tow_f' / Int8ul,
@@ -172,7 +171,6 @@ depends on the value of `imu_type`.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  # _parser = Struct("MsgImuAux",
   _parser = Struct(
                    'imu_type' / Int8ul,
                    'temp' / Int16sl,
