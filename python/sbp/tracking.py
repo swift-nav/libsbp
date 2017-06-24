@@ -15,8 +15,10 @@ Satellite code and carrier-phase tracking messages from the device.
 
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 from sbp.gnss import *
@@ -42,10 +44,10 @@ measured signal power.
     Carrier-to-Noise density.  Zero implies invalid cn0.
 
   """
-  _parser = Embedded(Struct(
-                     'sid' / Struct(GnssSignal16._parser),
-                     'fcn' / Int8ul,
-                     'cn0' / Int8ul,))
+  _parser = construct.Embedded(construct.Struct(
+                     'sid' / construct.Struct(GnssSignal16._parser),
+                     'fcn' / construct.Int8ul,
+                     'cn0' / construct.Int8ul,))
   __slots__ = [
                'sid',
                'fcn',
@@ -86,9 +88,9 @@ class TrackingChannelCorrelation(object):
     Quadrature correlation
 
   """
-  _parser = Embedded(Struct(
-                     'I' / Int32sl,
-                     'Q' / Int32sl,))
+  _parser = construct.Embedded(construct.Struct(
+                     'I' / construct.Int32sl,
+                     'Q' / construct.Int32sl,))
   __slots__ = [
                'I',
                'Q',
@@ -128,10 +130,10 @@ class TrackingChannelStateDepA(object):
     Carrier-to-noise density
 
   """
-  _parser = Embedded(Struct(
-                     'state' / Int8ul,
-                     'prn' / Int8ul,
-                     'cn0' / Float32l,))
+  _parser = construct.Embedded(construct.Struct(
+                     'state' / construct.Int8ul,
+                     'prn' / construct.Int8ul,
+                     'cn0' / construct.Float32l,))
   __slots__ = [
                'state',
                'prn',
@@ -173,10 +175,10 @@ class TrackingChannelStateDepB(object):
     Carrier-to-noise density
 
   """
-  _parser = Embedded(Struct(
-                     'state' / Int8ul,
-                     'sid' / Struct(GnssSignal._parser),
-                     'cn0' / Float32l,))
+  _parser = construct.Embedded(construct.Struct(
+                     'state' / construct.Int8ul,
+                     'sid' / construct.Struct(GnssSignal._parser),
+                     'cn0' / construct.Float32l,))
   __slots__ = [
                'state',
                'sid',
@@ -281,28 +283,28 @@ signal is in continuous track.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'recv_time' / Int64ul,
-                   'tot' / Struct(GPSTime._parser),
-                   'P' / Int32ul,
-                   'P_std' / Int16ul,
-                   'L' / Struct(CarrierPhase._parser),
-                   'cn0' / Int8ul,
-                   'lock' / Int16ul,
-                   'sid' / Struct(GnssSignal._parser),
-                   'doppler' / Int32sl,
-                   'doppler_std' / Int16ul,
-                   'uptime' / Int32ul,
-                   'clock_offset' / Int16sl,
-                   'clock_drift' / Int16sl,
-                   'corr_spacing' / Int16ul,
-                   'acceleration' / Int8sl,
-                   'sync_flags' / Int8ul,
-                   'tow_flags' / Int8ul,
-                   'track_flags' / Int8ul,
-                   'nav_flags' / Int8ul,
-                   'pset_flags' / Int8ul,
-                   'misc_flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'recv_time' / construct.Int64ul,
+                   'tot' / construct.Struct(GPSTime._parser),
+                   'P' / construct.Int32ul,
+                   'P_std' / construct.Int16ul,
+                   'L' / construct.Struct(CarrierPhase._parser),
+                   'cn0' / construct.Int8ul,
+                   'lock' / construct.Int16ul,
+                   'sid' / construct.Struct(GnssSignal._parser),
+                   'doppler' / construct.Int32sl,
+                   'doppler_std' / construct.Int16ul,
+                   'uptime' / construct.Int32ul,
+                   'clock_offset' / construct.Int16sl,
+                   'clock_drift' / construct.Int16sl,
+                   'corr_spacing' / construct.Int16ul,
+                   'acceleration' / construct.Int8sl,
+                   'sync_flags' / construct.Int8ul,
+                   'tow_flags' / construct.Int8ul,
+                   'track_flags' / construct.Int8ul,
+                   'nav_flags' / construct.Int8ul,
+                   'pset_flags' / construct.Int8ul,
+                   'misc_flags' / construct.Int8ul,)
   __slots__ = [
                'recv_time',
                'tot',
@@ -424,8 +426,8 @@ measurements for all tracked satellites.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   GreedyRange('states' / Struct(TrackingChannelState._parser)),)
+  _parser = construct.Struct(
+                   construct.GreedyRange('states' / construct.Struct(TrackingChannelState._parser)),)
   __slots__ = [
                'states',
               ]
@@ -510,10 +512,10 @@ update interval.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'channel' / Int8ul,
-                   'sid' / Struct(GnssSignal._parser),
-                   'corrs' / Array(3, Byte),)
+  _parser = construct.Struct(
+                   'channel' / construct.Int8ul,
+                   'sid' / construct.Struct(GnssSignal._parser),
+                   'corrs' / construct.Array(3, construct.Byte),)
   __slots__ = [
                'channel',
                'sid',
@@ -596,8 +598,8 @@ class MsgTrackingStateDepA(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   GreedyRange('states' / Struct(TrackingChannelStateDepA._parser)),)
+  _parser = construct.Struct(
+                   construct.GreedyRange('states' / construct.Struct(TrackingChannelStateDepA._parser)),)
   __slots__ = [
                'states',
               ]
@@ -676,8 +678,8 @@ class MsgTrackingStateDepB(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   GreedyRange('states' / Struct(TrackingChannelStateDepB._parser)),)
+  _parser = construct.Struct(
+                   construct.GreedyRange('states' / construct.Struct(TrackingChannelStateDepB._parser)),)
   __slots__ = [
                'states',
               ]

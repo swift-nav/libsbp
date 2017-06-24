@@ -15,8 +15,10 @@ Messages reserved for use by the user.
 
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
@@ -47,8 +49,8 @@ maximum length of 255 bytes per message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   GreedyRange('contents' / Int8ul),)
+  _parser = construct.Struct(
+                   construct.GreedyRange('contents' / construct.Int8ul),)
   __slots__ = [
                'contents',
               ]

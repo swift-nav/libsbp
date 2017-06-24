@@ -19,8 +19,10 @@ host request and the device response.
 
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
@@ -103,9 +105,9 @@ protocol version number.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'flags' / Int32ul,
-                   'version' / GreedyString(encoding='utf8'),)
+  _parser = construct.Struct(
+                   'flags' / construct.Int32ul,
+                   'version' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'flags',
                'version',
@@ -187,8 +189,8 @@ class MsgBootloaderJumpToApp(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'jump' / Int8ul,)
+  _parser = construct.Struct(
+                   'jump' / construct.Int8ul,)
   __slots__ = [
                'jump',
               ]
@@ -325,8 +327,8 @@ on the right.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'dna' / Array(8, Int8ul),)
+  _parser = construct.Struct(
+                   'dna' / construct.Array(8, construct.Int8ul),)
   __slots__ = [
                'dna',
               ]
@@ -405,8 +407,8 @@ class MsgBootloaderHandshakeDepA(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   GreedyRange('handshake' / Int8ul),)
+  _parser = construct.Struct(
+                   construct.GreedyRange('handshake' / construct.Int8ul),)
   __slots__ = [
                'handshake',
               ]

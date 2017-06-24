@@ -15,8 +15,10 @@ Messages for logging NDB events.
 
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 from sbp.gnss import *
@@ -73,15 +75,15 @@ of other data_source.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'recv_time' / Int64ul,
-                   'event' / Int8ul,
-                   'object_type' / Int8ul,
-                   'result' / Int8ul,
-                   'data_source' / Int8ul,
-                   'object_sid' / Struct(GnssSignal16._parser),
-                   'src_sid' / Struct(GnssSignal16._parser),
-                   'original_sender' / Int16ul,)
+  _parser = construct.Struct(
+                   'recv_time' / construct.Int64ul,
+                   'event' / construct.Int8ul,
+                   'object_type' / construct.Int8ul,
+                   'result' / construct.Int8ul,
+                   'data_source' / construct.Int8ul,
+                   'object_sid' / construct.Struct(GnssSignal16._parser),
+                   'src_sid' / construct.Struct(GnssSignal16._parser),
+                   'original_sender' / construct.Int16ul,)
   __slots__ = [
                'recv_time',
                'event',

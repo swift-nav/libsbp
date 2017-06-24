@@ -25,8 +25,10 @@ and the RTK solution in tandem.
 
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
@@ -76,11 +78,11 @@ from -500000 to 500000)
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'wn' / Int16ul,
-                   'tow' / Int32ul,
-                   'ns_residual' / Int32sl,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'wn' / construct.Int16ul,
+                   'tow' / construct.Int32ul,
+                   'ns_residual' / construct.Int32sl,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'wn',
                'tow',
@@ -183,16 +185,16 @@ which indicate the source of the UTC offset value and source of the time fix.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'flags' / Int8ul,
-                   'tow' / Int32ul,
-                   'year' / Int16ul,
-                   'month' / Int8ul,
-                   'day' / Int8ul,
-                   'hours' / Int8ul,
-                   'minutes' / Int8ul,
-                   'seconds' / Int8ul,
-                   'ns' / Int32ul,)
+  _parser = construct.Struct(
+                   'flags' / construct.Int8ul,
+                   'tow' / construct.Int32ul,
+                   'year' / construct.Int16ul,
+                   'month' / construct.Int8ul,
+                   'day' / construct.Int8ul,
+                   'hours' / construct.Int8ul,
+                   'minutes' / construct.Int8ul,
+                   'seconds' / construct.Int8ul,
+                   'ns' / construct.Int32ul,)
   __slots__ = [
                'flags',
                'tow',
@@ -303,14 +305,14 @@ corresponds to differential or SPP solution.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'gdop' / Int16ul,
-                   'pdop' / Int16ul,
-                   'tdop' / Int16ul,
-                   'hdop' / Int16ul,
-                   'vdop' / Int16ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'gdop' / construct.Int16ul,
+                   'pdop' / construct.Int16ul,
+                   'tdop' / construct.Int16ul,
+                   'hdop' / construct.Int16ul,
+                   'vdop' / construct.Int16ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'gdop',
@@ -421,14 +423,14 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'x' / Float64l,
-                   'y' / Float64l,
-                   'z' / Float64l,
-                   'accuracy' / Int16ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Float64l,
+                   'y' / construct.Float64l,
+                   'z' / construct.Float64l,
+                   'accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'x',
@@ -541,15 +543,15 @@ matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'lat' / Float64l,
-                   'lon' / Float64l,
-                   'height' / Float64l,
-                   'h_accuracy' / Int16ul,
-                   'v_accuracy' / Int16ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'lat' / construct.Float64l,
+                   'lon' / construct.Float64l,
+                   'height' / construct.Float64l,
+                   'h_accuracy' / construct.Int16ul,
+                   'v_accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'lat',
@@ -659,14 +661,14 @@ matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'x' / Int32sl,
-                   'y' / Int32sl,
-                   'z' / Int32sl,
-                   'accuracy' / Int16ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Int32sl,
+                   'y' / construct.Int32sl,
+                   'z' / construct.Int32sl,
+                   'accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'x',
@@ -777,15 +779,15 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'n' / Int32sl,
-                   'e' / Int32sl,
-                   'd' / Int32sl,
-                   'h_accuracy' / Int16ul,
-                   'v_accuracy' / Int16ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'n' / construct.Int32sl,
+                   'e' / construct.Int32sl,
+                   'd' / construct.Int32sl,
+                   'h_accuracy' / construct.Int16ul,
+                   'v_accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'n',
@@ -894,14 +896,14 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'x' / Int32sl,
-                   'y' / Int32sl,
-                   'z' / Int32sl,
-                   'accuracy' / Int16ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Int32sl,
+                   'y' / construct.Int32sl,
+                   'z' / construct.Int32sl,
+                   'accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'x',
@@ -1012,15 +1014,15 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'n' / Int32sl,
-                   'e' / Int32sl,
-                   'd' / Int32sl,
-                   'h_accuracy' / Int16ul,
-                   'v_accuracy' / Int16ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'n' / construct.Int32sl,
+                   'e' / construct.Int32sl,
+                   'd' / construct.Int32sl,
+                   'h_accuracy' / construct.Int16ul,
+                   'v_accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'n',
@@ -1123,11 +1125,11 @@ that time-matched RTK mode is used when the base station is moving.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'heading' / Int32ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'heading' / construct.Int32ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'heading',
@@ -1216,9 +1218,9 @@ Differential solution
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'age' / Int16ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'age' / construct.Int16ul,)
   __slots__ = [
                'tow',
                'age',
@@ -1320,11 +1322,11 @@ from -500000 to 500000)
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'wn' / Int16ul,
-                   'tow' / Int32ul,
-                   'ns_residual' / Int32sl,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'wn' / construct.Int16ul,
+                   'tow' / construct.Int32ul,
+                   'ns_residual' / construct.Int32sl,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'wn',
                'tow',
@@ -1422,13 +1424,13 @@ precision.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'gdop' / Int16ul,
-                   'pdop' / Int16ul,
-                   'tdop' / Int16ul,
-                   'hdop' / Int16ul,
-                   'vdop' / Int16ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'gdop' / construct.Int16ul,
+                   'pdop' / construct.Int16ul,
+                   'tdop' / construct.Int16ul,
+                   'hdop' / construct.Int16ul,
+                   'vdop' / construct.Int16ul,)
   __slots__ = [
                'tow',
                'gdop',
@@ -1539,14 +1541,14 @@ to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'x' / Float64l,
-                   'y' / Float64l,
-                   'z' / Float64l,
-                   'accuracy' / Int16ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Float64l,
+                   'y' / construct.Float64l,
+                   'z' / construct.Float64l,
+                   'accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'x',
@@ -1663,15 +1665,15 @@ implemented). Defaults to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'lat' / Float64l,
-                   'lon' / Float64l,
-                   'height' / Float64l,
-                   'h_accuracy' / Int16ul,
-                   'v_accuracy' / Int16ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'lat' / construct.Float64l,
+                   'lon' / construct.Float64l,
+                   'height' / construct.Float64l,
+                   'h_accuracy' / construct.Int16ul,
+                   'v_accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'lat',
@@ -1782,14 +1784,14 @@ matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'x' / Int32sl,
-                   'y' / Int32sl,
-                   'z' / Int32sl,
-                   'accuracy' / Int16ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Int32sl,
+                   'y' / construct.Int32sl,
+                   'z' / construct.Int32sl,
+                   'accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'x',
@@ -1904,15 +1906,15 @@ implemented). Defaults to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'n' / Int32sl,
-                   'e' / Int32sl,
-                   'd' / Int32sl,
-                   'h_accuracy' / Int16ul,
-                   'v_accuracy' / Int16ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'n' / construct.Int32sl,
+                   'e' / construct.Int32sl,
+                   'd' / construct.Int32sl,
+                   'h_accuracy' / construct.Int16ul,
+                   'v_accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'n',
@@ -2022,14 +2024,14 @@ to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'x' / Int32sl,
-                   'y' / Int32sl,
-                   'z' / Int32sl,
-                   'accuracy' / Int16ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Int32sl,
+                   'y' / construct.Int32sl,
+                   'z' / construct.Int32sl,
+                   'accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'x',
@@ -2142,15 +2144,15 @@ implemented). Defaults to 0.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'n' / Int32sl,
-                   'e' / Int32sl,
-                   'd' / Int32sl,
-                   'h_accuracy' / Int16ul,
-                   'v_accuracy' / Int16ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'n' / construct.Int32sl,
+                   'e' / construct.Int32sl,
+                   'd' / construct.Int32sl,
+                   'h_accuracy' / construct.Int16ul,
+                   'v_accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'n',
@@ -2252,11 +2254,11 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'heading' / Int32ul,
-                   'n_sats' / Int8ul,
-                   'flags' / Int8ul,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'heading' / construct.Int32ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'heading',

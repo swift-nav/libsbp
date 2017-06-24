@@ -15,8 +15,10 @@ Logging and debugging messages from the device.
 
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
@@ -50,9 +52,9 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'level' / Int8ul,
-                   'text' / GreedyString(encoding='utf8'),)
+  _parser = construct.Struct(
+                   'level' / construct.Int8ul,
+                   'text' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'level',
                'text',
@@ -144,10 +146,10 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'source' / Int8ul,
-                   'protocol' / Int8ul,
-                   'fwd_payload' / GreedyString(encoding='utf8'),)
+  _parser = construct.Struct(
+                   'source' / construct.Int8ul,
+                   'protocol' / construct.Int8ul,
+                   'fwd_payload' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'source',
                'protocol',
@@ -230,8 +232,8 @@ class MsgTweet(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tweet'/ String(140, paddir='left'),)
+  _parser = construct.Struct(
+                   'tweet'/ construct.String(140, paddir='left'),)
   __slots__ = [
                'tweet',
               ]
@@ -310,8 +312,8 @@ class MsgPrintDep(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'text' / GreedyString(encoding='utf8'),)
+  _parser = construct.Struct(
+                   'text' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'text',
               ]

@@ -19,8 +19,10 @@ to Piksi Multi.
 
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
@@ -63,11 +65,11 @@ starting address
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'target' / Int8ul,
-                   'addr_start' / Array(3, Int8ul),
-                   'addr_len' / Int8ul,
-                   GreedyRange('data' / Int8ul),)
+  _parser = construct.Struct(
+                   'target' / construct.Int8ul,
+                   'addr_start' / construct.Array(3, construct.Int8ul),
+                   'addr_len' / construct.Int8ul,
+                   construct.GreedyRange('data' / construct.Int8ul),)
   __slots__ = [
                'target',
                'addr_start',
@@ -156,8 +158,8 @@ MSG_FLASH_PROGRAM, may return this message on failure.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'response' / Int8ul,)
+  _parser = construct.Struct(
+                   'response' / construct.Int8ul,)
   __slots__ = [
                'response',
               ]
@@ -249,10 +251,10 @@ starting address
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'target' / Int8ul,
-                   'addr_start' / Array(3, Int8ul),
-                   'addr_len' / Int8ul,)
+  _parser = construct.Struct(
+                   'target' / construct.Int8ul,
+                   'addr_start' / construct.Array(3, construct.Int8ul),
+                   'addr_len' / construct.Int8ul,)
   __slots__ = [
                'target',
                'addr_start',
@@ -348,10 +350,10 @@ starting address
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'target' / Int8ul,
-                   'addr_start' / Array(3, Int8ul),
-                   'addr_len' / Int8ul,)
+  _parser = construct.Struct(
+                   'target' / construct.Int8ul,
+                   'addr_start' / construct.Array(3, construct.Int8ul),
+                   'addr_len' / construct.Int8ul,)
   __slots__ = [
                'target',
                'addr_start',
@@ -443,9 +445,9 @@ the M25)
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'target' / Int8ul,
-                   'sector_num' / Int32ul,)
+  _parser = construct.Struct(
+                   'target' / construct.Int8ul,
+                   'sector_num' / construct.Int32ul,)
   __slots__ = [
                'target',
                'sector_num',
@@ -528,8 +530,8 @@ memory. The device replies with a MSG_FLASH_DONE message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'sector' / Int32ul,)
+  _parser = construct.Struct(
+                   'sector' / construct.Int32ul,)
   __slots__ = [
                'sector',
               ]
@@ -610,8 +612,8 @@ memory. The device replies with a MSG_FLASH_DONE message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'sector' / Int32ul,)
+  _parser = construct.Struct(
+                   'sector' / construct.Int32ul,)
   __slots__ = [
                'sector',
               ]
@@ -742,8 +744,8 @@ ID in the payload..
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'stm_id' / Array(12, Int8ul),)
+  _parser = construct.Struct(
+                   'stm_id' / construct.Array(12, construct.Int8ul),)
   __slots__ = [
                'stm_id',
               ]
@@ -824,8 +826,8 @@ register. The device replies with a MSG_FLASH_DONE message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'status' / Array(1, Int8ul),)
+  _parser = construct.Struct(
+                   'status' / construct.Array(1, construct.Int8ul),)
   __slots__ = [
                'status',
               ]

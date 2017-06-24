@@ -14,8 +14,10 @@
 Satellite acquisition messages from the device.
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 from sbp.gnss import *
@@ -60,19 +62,19 @@ The message is used to debug and measure the performance.
     Codephase of detected peak. Only valid if status is '1'
 
   """
-  _parser = Embedded(Struct(
-                     'job_type' / Int8ul,
-                     'status' / Int8ul,
-                     'cn0' / Int16ul,
-                     'int_time' / Int8ul,
-                     'sid' / Struct(GnssSignal._parser),
-                     'bin_width' / Int16ul,
-                     'timestamp' / Int32ul,
-                     'time_spent' / Int32ul,
-                     'cf_min' / Int32sl,
-                     'cf_max' / Int32sl,
-                     'cf' / Int32sl,
-                     'cp' / Int32ul,))
+  _parser = construct.Embedded(construct.Struct(
+                     'job_type' / construct.Int8ul,
+                     'status' / construct.Int8ul,
+                     'cn0' / construct.Int16ul,
+                     'int_time' / construct.Int8ul,
+                     'sid' / construct.Struct(GnssSignal._parser),
+                     'bin_width' / construct.Int16ul,
+                     'timestamp' / construct.Int32ul,
+                     'time_spent' / construct.Int32ul,
+                     'cf_min' / construct.Int32sl,
+                     'cf_max' / construct.Int32sl,
+                     'cf' / construct.Int32sl,
+                     'cp' / construct.Int32ul,))
   __slots__ = [
                'job_type',
                'status',
@@ -149,11 +151,11 @@ ratio.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'cn0' / Float32l,
-                   'cp' / Float32l,
-                   'cf' / Float32l,
-                   'sid' / Struct(GnssSignal._parser),)
+  _parser = construct.Struct(
+                   'cn0' / construct.Float32l,
+                   'cp' / construct.Float32l,
+                   'cf' / construct.Float32l,
+                   'sid' / construct.Struct(GnssSignal._parser),)
   __slots__ = [
                'cn0',
                'cp',
@@ -246,11 +248,11 @@ be in units of dB Hz in a later revision of this message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'snr' / Float32l,
-                   'cp' / Float32l,
-                   'cf' / Float32l,
-                   'sid' / Struct(GnssSignal._parser),)
+  _parser = construct.Struct(
+                   'snr' / construct.Float32l,
+                   'cp' / construct.Float32l,
+                   'cf' / construct.Float32l,
+                   'sid' / construct.Struct(GnssSignal._parser),)
   __slots__ = [
                'snr',
                'cp',
@@ -345,11 +347,11 @@ acquisition was attempted
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'snr' / Float32l,
-                   'cp' / Float32l,
-                   'cf' / Float32l,
-                   'prn' / Int8ul,)
+  _parser = construct.Struct(
+                   'snr' / construct.Float32l,
+                   'cp' / construct.Float32l,
+                   'cf' / construct.Float32l,
+                   'prn' / construct.Int8ul,)
   __slots__ = [
                'snr',
                'cp',
@@ -436,8 +438,8 @@ The message is used to debug and measure the performance.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   GreedyRange('acq_sv_profile' / Struct(AcqSvProfile._parser)),)
+  _parser = construct.Struct(
+                   construct.GreedyRange('acq_sv_profile' / construct.Struct(AcqSvProfile._parser)),)
   __slots__ = [
                'acq_sv_profile',
               ]

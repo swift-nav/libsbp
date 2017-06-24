@@ -14,8 +14,10 @@
 Inertial Measurement Unit (IMU) messages.
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
@@ -63,15 +65,15 @@ time is unknown or invalid.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'tow' / Int32ul,
-                   'tow_f' / Int8ul,
-                   'acc_x' / Int16sl,
-                   'acc_y' / Int16sl,
-                   'acc_z' / Int16sl,
-                   'gyr_x' / Int16sl,
-                   'gyr_y' / Int16sl,
-                   'gyr_z' / Int16sl,)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'tow_f' / construct.Int8ul,
+                   'acc_x' / construct.Int16sl,
+                   'acc_y' / construct.Int16sl,
+                   'acc_z' / construct.Int16sl,
+                   'gyr_x' / construct.Int16sl,
+                   'gyr_y' / construct.Int16sl,
+                   'gyr_z' / construct.Int16sl,)
   __slots__ = [
                'tow',
                'tow_f',
@@ -171,10 +173,10 @@ depends on the value of `imu_type`.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'imu_type' / Int8ul,
-                   'temp' / Int16sl,
-                   'imu_conf' / Int8ul,)
+  _parser = construct.Struct(
+                   'imu_type' / construct.Int8ul,
+                   'temp' / construct.Int16sl,
+                   'imu_conf' / construct.Int8ul,)
   __slots__ = [
                'imu_type',
                'temp',

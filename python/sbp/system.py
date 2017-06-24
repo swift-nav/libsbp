@@ -14,8 +14,10 @@
 Standardized system messages from Swift Navigation devices.
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
@@ -52,10 +54,10 @@ or configuration requests.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'cause' / Int8ul,
-                   'startup_type' / Int8ul,
-                   'reserved' / Int16ul,)
+  _parser = construct.Struct(
+                   'cause' / construct.Int8ul,
+                   'startup_type' / construct.Int8ul,
+                   'reserved' / construct.Int16ul,)
   __slots__ = [
                'cause',
                'startup_type',
@@ -147,11 +149,11 @@ corrections packet.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'flags' / Int8ul,
-                   'latency' / Int16ul,
-                   'num_signals' / Int8ul,
-                   'source' / GreedyString(encoding='utf8'),)
+  _parser = construct.Struct(
+                   'flags' / construct.Int8ul,
+                   'latency' / construct.Int16ul,
+                   'num_signals' / construct.Int8ul,
+                   'source' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'flags',
                'latency',
@@ -246,8 +248,8 @@ the remaining error flags should be inspected.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct(
-                   'flags' / Int32ul,)
+  _parser = construct.Struct(
+                   'flags' / construct.Int32ul,)
   __slots__ = [
                'flags',
               ]
