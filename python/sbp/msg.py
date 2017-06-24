@@ -9,11 +9,12 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-from construct import *
 import base64
 import copy
 import json
 import struct
+
+import construct
 
 SBP_PREAMBLE = 0x55
 
@@ -69,13 +70,13 @@ class SBP(object):
   """
 
   # _parser = Struct("SBP",
-  _parser = Struct(
-                   'preamble'/Int8ul,
-                   'msg_type'/Int16ul,
-                   'sender'/Int16ul,
-                   'length'/Int8ul,
-                   'payload'/Bytes(lambda ctx: ctx.length),
-                   'crc'/Int16ul,)
+  _parser = construct.Struct(
+                   'preamble'/construct.Int8ul,
+                   'msg_type'/construct.Int16ul,
+                   'sender'/construct.Int16ul,
+                   'length'/construct.Int8ul,
+                   'payload'/construct.Bytes(lambda ctx: ctx.length),
+                   'crc'/construct.Int16ul,)
   __slots__ = ['preamble',
                'msg_type',
                'sender',
