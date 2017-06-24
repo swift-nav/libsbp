@@ -17,8 +17,8 @@ include:
 definitions:
 
  - SBP:
-    desc: Packet structure for Swift Navigation Binary Protocol (SBP).
     desc: |
+      Packet structure for Swift Navigation Binary Protocol (SBP).
       Definition of the over-the-wire message framing format and packet
       structure for Swift Navigation Binary Protocol (SBP), a minimal
       binary protocol for communicating with Swift devices. It is used
