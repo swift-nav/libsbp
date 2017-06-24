@@ -22,16 +22,16 @@ import copy
 TEMPLATE_NAME = "sbp_construct_template.py.j2"
 
 CONSTRUCT_CODE = {
-  'u8': 'Int8ul',
-  'u16': 'Int16ul',
-  'u32': 'Int32ul',
-  'u64': 'Int64ul',
-  's8': 'Int8sl',
-  's16': 'Int16sl',
-  's32': 'Int32sl',
-  's64': 'Int64sl',
-  'float': 'Float32l',
-  'double': 'Float64l',
+  'u8': 'construct.Int8ul',
+  'u16': 'construct.Int16ul',
+  'u32': 'construct.Int32ul',
+  'u64': 'construct.Int64ul',
+  's8': 'construct.Int8sl',
+  's16': 'construct.Int16sl',
+  's32': 'construct.Int32sl',
+  's64': 'construct.Int64sl',
+  'float': 'construct.Float32l',
+  'double': 'construct.Float64l',
 }
 
 PYDOC_CODE = {
@@ -61,23 +61,23 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
     return "'{identifier}' / {type_id}".format(type_id=type_map.get(f.type_id),
                                              identifier=f.identifier)
   elif f.type_id == 'string' and f.options.get('size', None):
-    return "'{id}'/ String({size}, paddir='left')".format(id=f.identifier,
+    return "'{id}'/ construct.String({size}, paddir='left')".format(id=f.identifier,
                                                    size=f.options['size'].value)
   elif f.type_id == 'string':
-    return "'{id}' / GreedyString(encoding='utf8')".format(id=f.identifier)
+    return "'{id}' / construct.GreedyString(encoding='utf8')".format(id=f.identifier)
   elif f.type_id == 'array' and f.options.get('size', None):
     fill = f.options['fill'].value
     f_ = copy.copy(f)
     f_.type_id = fill
     s = f.options.get('size', None).value
-    return "'{id}' / Array({size}, {type})".format(id=f.identifier, size=s, type=type_map.get(f_.type_id, 'Byte'))
+    return "'{id}' / construct.Array({size}, {type})".format(id=f.identifier, size=s, type=type_map.get(f_.type_id, 'construct.Byte'))
   elif f.type_id == 'array':
     fill = f.options['fill'].value
     f_ = copy.copy(f)
     f_.type_id = fill
-    return "GreedyRange(%s)" % construct_format(f_)
+    return "construct.GreedyRange(%s)" % construct_format(f_)
   else:
-    return "'%s' / Struct(%s._parser)" % (f.identifier, f.type_id)
+    return "'%s' / construct.Struct(%s._parser)" % (f.identifier, f.type_id)
   return formatted
 
 

@@ -14,8 +14,10 @@
 (((description)))
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
@@ -47,7 +49,7 @@ class ((( m.identifier )))(object):
 
   """
   ((*- if m.fields *))
-  _parser = Embedded(Struct(
+  _parser = construct.Embedded(construct.Struct(
                      ((*- for f in m.fields *))
                      ((( f | construct_py ))),
                      ((*- endfor *))))
@@ -120,7 +122,7 @@ class ((( m.identifier | classnameify )))(SBP):
 
   """
   ((*- if m.fields *))
-  _parser = Struct(
+  _parser = construct.Struct(
                    ((*- for f in m.fields *))
                    ((( f | construct_py ))),
                    ((*- endfor *)))
