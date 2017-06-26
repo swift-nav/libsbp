@@ -1427,9 +1427,9 @@ the correct command.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgCommandOutput",
-                   ULInt32('sequence'),
-                   greedy_string('line'),)
+  _parser = construct.Struct(
+                   'sequence' / construct.Int32ul,
+                   'line' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'sequence',
                'line',
