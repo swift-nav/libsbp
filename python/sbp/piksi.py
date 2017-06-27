@@ -17,10 +17,12 @@ may no longer be used.
 
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml with generate.py.
@@ -55,13 +57,13 @@ be normalized.
 
 
   """
-  _parser = Embedded(Struct("UARTChannel",
-                     LFloat32('tx_throughput'),
-                     LFloat32('rx_throughput'),
-                     ULInt16('crc_error_count'),
-                     ULInt16('io_error_count'),
-                     ULInt8('tx_buffer_level'),
-                     ULInt8('rx_buffer_level'),))
+  _parser = construct.Embedded(construct.Struct(
+                     'tx_throughput' / construct.Float32l,
+                     'rx_throughput' / construct.Float32l,
+                     'crc_error_count' / construct.Int16ul,
+                     'io_error_count' / construct.Int16ul,
+                     'tx_buffer_level' / construct.Int8ul,
+                     'rx_buffer_level' / construct.Int8ul,))
   __slots__ = [
                'tx_throughput',
                'rx_throughput',
@@ -117,11 +119,11 @@ can cause momentary RTK solution outages.
     Smoothed estimate of the current period
 
   """
-  _parser = Embedded(Struct("Period",
-                     SLInt32('avg'),
-                     SLInt32('pmin'),
-                     SLInt32('pmax'),
-                     SLInt32('current'),))
+  _parser = construct.Embedded(construct.Struct(
+                     'avg' / construct.Int32sl,
+                     'pmin' / construct.Int32sl,
+                     'pmax' / construct.Int32sl,
+                     'current' / construct.Int32sl,))
   __slots__ = [
                'avg',
                'pmin',
@@ -172,11 +174,11 @@ communication latency in the system.
     Smoothed estimate of the current latency
 
   """
-  _parser = Embedded(Struct("Latency",
-                     SLInt32('avg'),
-                     SLInt32('lmin'),
-                     SLInt32('lmax'),
-                     SLInt32('current'),))
+  _parser = construct.Embedded(construct.Struct(
+                     'avg' / construct.Int32sl,
+                     'lmin' / construct.Int32sl,
+                     'lmax' / construct.Int32sl,
+                     'current' / construct.Int32sl,))
   __slots__ = [
                'avg',
                'lmin',
@@ -320,8 +322,8 @@ bootloader.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgReset",
-                   ULInt32('flags'),)
+  _parser = construct.Struct(
+                   'flags' / construct.Int32ul,)
   __slots__ = [
                'flags',
               ]
@@ -542,8 +544,8 @@ Ambiguity Resolution (IAR) process.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgResetFilters",
-                   ULInt8('filter'),)
+  _parser = construct.Struct(
+                   'filter' / construct.Int8ul,)
   __slots__ = [
                'filter',
               ]
@@ -680,10 +682,10 @@ thread. The reported percentage values must be normalized.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgThreadState",
-                   String('name', 20),
-                   ULInt16('cpu'),
-                   ULInt32('stack_free'),)
+  _parser = construct.Struct(
+                   'name'/ construct.String(20, paddir='left'),
+                   'cpu' / construct.Int16ul,
+                   'stack_free' / construct.Int32ul,)
   __slots__ = [
                'name',
                'cpu',
@@ -783,12 +785,12 @@ period indicates their likelihood of transmission.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgUartState",
-                   Struct('uart_a', UARTChannel._parser),
-                   Struct('uart_b', UARTChannel._parser),
-                   Struct('uart_ftdi', UARTChannel._parser),
-                   Struct('latency', Latency._parser),
-                   Struct('obs_period', Period._parser),)
+  _parser = construct.Struct(
+                   'uart_a' / construct.Struct(UARTChannel._parser),
+                   'uart_b' / construct.Struct(UARTChannel._parser),
+                   'uart_ftdi' / construct.Struct(UARTChannel._parser),
+                   'latency' / construct.Struct(Latency._parser),
+                   'obs_period' / construct.Struct(Period._parser),)
   __slots__ = [
                'uart_a',
                'uart_b',
@@ -881,11 +883,11 @@ class MsgUartStateDepa(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgUartStateDepa",
-                   Struct('uart_a', UARTChannel._parser),
-                   Struct('uart_b', UARTChannel._parser),
-                   Struct('uart_ftdi', UARTChannel._parser),
-                   Struct('latency', Latency._parser),)
+  _parser = construct.Struct(
+                   'uart_a' / construct.Struct(UARTChannel._parser),
+                   'uart_b' / construct.Struct(UARTChannel._parser),
+                   'uart_ftdi' / construct.Struct(UARTChannel._parser),
+                   'latency' / construct.Struct(Latency._parser),)
   __slots__ = [
                'uart_a',
                'uart_b',
@@ -974,8 +976,8 @@ from satellite observations.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgIarState",
-                   ULInt32('num_hyps'),)
+  _parser = construct.Struct(
+                   'num_hyps' / construct.Int32ul,)
   __slots__ = [
                'num_hyps',
               ]
@@ -1058,9 +1060,9 @@ from being used in various Piksi subsystems.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgMaskSatellite",
-                   ULInt8('mask'),
-                   Struct('sid', GnssSignal._parser),)
+  _parser = construct.Struct(
+                   'mask' / construct.Int8ul,
+                   'sid' / construct.Struct(GnssSignal._parser),)
   __slots__ = [
                'mask',
                'sid',
@@ -1152,12 +1154,12 @@ available.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgDeviceMonitor",
-                   SLInt16('dev_vin'),
-                   SLInt16('cpu_vint'),
-                   SLInt16('cpu_vaux'),
-                   SLInt16('cpu_temperature'),
-                   SLInt16('fe_temperature'),)
+  _parser = construct.Struct(
+                   'dev_vin' / construct.Int16sl,
+                   'cpu_vint' / construct.Int16sl,
+                   'cpu_vaux' / construct.Int16sl,
+                   'cpu_temperature' / construct.Int16sl,
+                   'fe_temperature' / construct.Int16sl,)
   __slots__ = [
                'dev_vin',
                'cpu_vint',
@@ -1249,9 +1251,9 @@ code will be returned with MSG_COMMAND_RESP.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgCommandReq",
-                   ULInt32('sequence'),
-                   greedy_string('command'),)
+  _parser = construct.Struct(
+                   'sequence' / construct.Int32ul,
+                   'command' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'sequence',
                'command',
@@ -1336,9 +1338,9 @@ the command.  A return code of zero indicates success.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgCommandResp",
-                   ULInt32('sequence'),
-                   SLInt32('code'),)
+  _parser = construct.Struct(
+                   'sequence' / construct.Int32ul,
+                   'code' / construct.Int32sl,)
   __slots__ = [
                'sequence',
                'code',
@@ -1425,9 +1427,9 @@ the correct command.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgCommandOutput",
-                   ULInt32('sequence'),
-                   greedy_string('line'),)
+  _parser = construct.Struct(
+                   'sequence' / construct.Int32ul,
+                   'line' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'sequence',
                'line',
@@ -1571,15 +1573,15 @@ in c.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgNetworkStateResp",
-                   Struct('ipv4_address', Array(4, ULInt8('ipv4_address'))),
-                   ULInt8('ipv4_mask_size'),
-                   Struct('ipv6_address', Array(16, ULInt8('ipv6_address'))),
-                   ULInt8('ipv6_mask_size'),
-                   ULInt32('rx_bytes'),
-                   ULInt32('tx_bytes'),
-                   String('interface_name', 16),
-                   ULInt32('flags'),)
+  _parser = construct.Struct(
+                   'ipv4_address' / construct.Array(4, construct.Int8ul),
+                   'ipv4_mask_size' / construct.Int8ul,
+                   'ipv6_address' / construct.Array(16, construct.Int8ul),
+                   'ipv6_mask_size' / construct.Int8ul,
+                   'rx_bytes' / construct.Int32ul,
+                   'tx_bytes' / construct.Int32ul,
+                   'interface_name'/ construct.String(16, paddir='left'),
+                   'flags' / construct.Int32ul,)
   __slots__ = [
                'ipv4_address',
                'ipv4_mask_size',
@@ -1690,14 +1692,14 @@ class MsgSpecan(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSpecan",
-                   ULInt16('channel_tag'),
-                   Struct('t', GPSTime._parser),
-                   LFloat32('freq_ref'),
-                   LFloat32('freq_step'),
-                   LFloat32('amplitude_ref'),
-                   LFloat32('amplitude_unit'),
-                   OptionalGreedyRange(ULInt8('amplitude_value')),)
+  _parser = construct.Struct(
+                   'channel_tag' / construct.Int16ul,
+                   't' / construct.Struct(GPSTime._parser),
+                   'freq_ref' / construct.Float32l,
+                   'freq_step' / construct.Float32l,
+                   'amplitude_ref' / construct.Float32l,
+                   'amplitude_unit' / construct.Float32l,
+                   construct.GreedyRange('amplitude_value' / construct.Int8ul),)
   __slots__ = [
                'channel_tag',
                't',

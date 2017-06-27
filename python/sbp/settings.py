@@ -21,10 +21,12 @@ https://github.com/swift-nav/piksi\_firmware/blob/master/docs/settings.pdf
 
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/settings.yaml with generate.py.
 # Please do not hand edit!
@@ -101,8 +103,8 @@ process to this message when it is received from sender ID
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSettingsWrite",
-                   greedy_string('setting'),)
+  _parser = construct.Struct(
+                   'setting' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'setting',
               ]
@@ -184,8 +186,8 @@ this message when it is received from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSettingsReadReq",
-                   greedy_string('setting'),)
+  _parser = construct.Struct(
+                   'setting' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'setting',
               ]
@@ -266,8 +268,8 @@ class MsgSettingsReadResp(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSettingsReadResp",
-                   greedy_string('setting'),)
+  _parser = construct.Struct(
+                   'setting' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'setting',
               ]
@@ -353,8 +355,8 @@ this message when it is received from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSettingsReadByIndexReq",
-                   ULInt16('index'),)
+  _parser = construct.Struct(
+                   'index' / construct.Int16ul,)
   __slots__ = [
                'index',
               ]
@@ -443,9 +445,9 @@ NULL-terminated and delimited string with contents
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSettingsReadByIndexResp",
-                   ULInt16('index'),
-                   greedy_string('setting'),)
+  _parser = construct.Struct(
+                   'index' / construct.Int16ul,
+                   'setting' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'index',
                'setting',
@@ -576,8 +578,8 @@ for this setting to set the initial value.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgSettingsRegister",
-                   greedy_string('setting'),)
+  _parser = construct.Struct(
+                   'setting' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'setting',
               ]

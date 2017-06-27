@@ -22,16 +22,16 @@ import copy
 TEMPLATE_NAME = "sbp_construct_template.py.j2"
 
 CONSTRUCT_CODE = {
-  'u8': 'ULInt8',
-  'u16': 'ULInt16',
-  'u32': 'ULInt32',
-  'u64': 'ULInt64',
-  's8': 'SLInt8',
-  's16': 'SLInt16',
-  's32': 'SLInt32',
-  's64': 'SLInt64',
-  'float': 'LFloat32',
-  'double': 'LFloat64',
+  'u8': 'construct.Int8ul',
+  'u16': 'construct.Int16ul',
+  'u32': 'construct.Int32ul',
+  'u64': 'construct.Int64ul',
+  's8': 'construct.Int8sl',
+  's16': 'construct.Int16sl',
+  's32': 'construct.Int32sl',
+  's64': 'construct.Int64sl',
+  'float': 'construct.Float32l',
+  'double': 'construct.Float64l',
 }
 
 PYDOC_CODE = {
@@ -58,24 +58,26 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
   """
   formatted = ""
   if type_map.get(f.type_id, None):
-    return "%s('%s')" % (type_map.get(f.type_id), f.identifier)
+    return "'{identifier}' / {type_id}".format(type_id=type_map.get(f.type_id),
+                                             identifier=f.identifier)
   elif f.type_id == 'string' and f.options.get('size', None):
-    return "String('%s', %d)" % (f.identifier, f.options['size'].value)
+    return "'{id}'/ construct.String({size}, paddir='left')".format(id=f.identifier,
+                                                   size=f.options['size'].value)
   elif f.type_id == 'string':
-    return "greedy_string('%s')" % (f.identifier)
+    return "'{id}' / construct.GreedyString(encoding='utf8')".format(id=f.identifier)
   elif f.type_id == 'array' and f.options.get('size', None):
     fill = f.options['fill'].value
     f_ = copy.copy(f)
     f_.type_id = fill
     s = f.options.get('size', None).value
-    return "Struct('%s', Array(%d, %s))" % (f.identifier, s, construct_format(f_))
+    return "'{id}' / construct.Array({size}, {type})".format(id=f.identifier, size=s, type=type_map.get(f_.type_id, 'construct.Byte'))
   elif f.type_id == 'array':
     fill = f.options['fill'].value
     f_ = copy.copy(f)
     f_.type_id = fill
-    return "OptionalGreedyRange(%s)" % construct_format(f_)
+    return "construct.GreedyRange(%s)" % construct_format(f_)
   else:
-    return "Struct('%s', %s._parser)" % (f.identifier, f.type_id)
+    return "'%s' / construct.Struct(%s._parser)" % (f.identifier, f.type_id)
   return formatted
 
 

@@ -20,8 +20,10 @@ import sbpg.specs.yaml_test_schema as t
 import sbpg.syntax as sbp
 import sbpg.test_structs as sbp_test
 import sys
-import yaml
 import inspect
+
+from ruamel.yaml import YAML
+yaml = YAML(typ='safe')
 
 ##############################################################################
 #
@@ -52,7 +54,7 @@ def read_spec(filename, verbose=False):
   """
   contents = None
   with open(filename, 'r') as f:
-    contents = yaml.safe_load(f)
+    contents = yaml.load(f)
     if contents is None:
       raise Exception("Empty yaml file: %s." % filename)
     try:
@@ -87,7 +89,7 @@ def read_test_spec(filename, verbose=False):
   """
   contents = None
   with open(filename, 'r') as f:
-    contents = yaml.safe_load(f)
+    contents = yaml.load(f)
     if contents is None:
       raise Exception("Empty yaml file: %s." % filename)
     try:

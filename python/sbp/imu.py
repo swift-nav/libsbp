@@ -14,10 +14,12 @@
 Inertial Measurement Unit (IMU) messages.
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/imu.yaml with generate.py.
 # Please do not hand edit!
@@ -63,15 +65,15 @@ time is unknown or invalid.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgImuRaw",
-                   ULInt32('tow'),
-                   ULInt8('tow_f'),
-                   SLInt16('acc_x'),
-                   SLInt16('acc_y'),
-                   SLInt16('acc_z'),
-                   SLInt16('gyr_x'),
-                   SLInt16('gyr_y'),
-                   SLInt16('gyr_z'),)
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'tow_f' / construct.Int8ul,
+                   'acc_x' / construct.Int16sl,
+                   'acc_y' / construct.Int16sl,
+                   'acc_z' / construct.Int16sl,
+                   'gyr_x' / construct.Int16sl,
+                   'gyr_y' / construct.Int16sl,
+                   'gyr_z' / construct.Int16sl,)
   __slots__ = [
                'tow',
                'tow_f',
@@ -171,10 +173,10 @@ depends on the value of `imu_type`.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgImuAux",
-                   ULInt8('imu_type'),
-                   SLInt16('temp'),
-                   ULInt8('imu_conf'),)
+  _parser = construct.Struct(
+                   'imu_type' / construct.Int8ul,
+                   'temp' / construct.Int16sl,
+                   'imu_conf' / construct.Int8ul,)
   __slots__ = [
                'imu_type',
                'temp',

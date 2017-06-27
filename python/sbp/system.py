@@ -14,10 +14,12 @@
 Standardized system messages from Swift Navigation devices.
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/system.yaml with generate.py.
 # Please do not hand edit!
@@ -52,10 +54,10 @@ or configuration requests.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgStartup",
-                   ULInt8('cause'),
-                   ULInt8('startup_type'),
-                   ULInt16('reserved'),)
+  _parser = construct.Struct(
+                   'cause' / construct.Int8ul,
+                   'startup_type' / construct.Int8ul,
+                   'reserved' / construct.Int16ul,)
   __slots__ = [
                'cause',
                'startup_type',
@@ -147,11 +149,11 @@ corrections packet.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgDgnssStatus",
-                   ULInt8('flags'),
-                   ULInt16('latency'),
-                   ULInt8('num_signals'),
-                   greedy_string('source'),)
+  _parser = construct.Struct(
+                   'flags' / construct.Int8ul,
+                   'latency' / construct.Int16ul,
+                   'num_signals' / construct.Int8ul,
+                   'source' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'flags',
                'latency',
@@ -246,8 +248,8 @@ the remaining error flags should be inspected.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgHeartbeat",
-                   ULInt32('flags'),)
+  _parser = construct.Struct(
+                   'flags' / construct.Int32ul,)
   __slots__ = [
                'flags',
               ]

@@ -893,7 +893,6 @@ definitions:
     id: 0x0204
     public: false
     short_desc: Velocity in ECEF
-    public: False
     desc: |
       This message reports the velocity in Earth Centered Earth Fixed
       (ECEF) coordinates. The full GPS time is given by the preceding

@@ -22,10 +22,12 @@ host request and the device response.
 
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/file_io.yaml with generate.py.
 # Please do not hand edit!
@@ -66,11 +68,11 @@ to this message when it is received from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioReadReq",
-                   ULInt32('sequence'),
-                   ULInt32('offset'),
-                   ULInt8('chunk_size'),
-                   greedy_string('filename'),)
+  _parser = construct.Struct(
+                   'sequence' / construct.Int32ul,
+                   'offset' / construct.Int32ul,
+                   'chunk_size' / construct.Int8ul,
+                   'filename' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'sequence',
                'offset',
@@ -162,9 +164,9 @@ preserved from the request.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioReadResp",
-                   ULInt32('sequence'),
-                   OptionalGreedyRange(ULInt8('contents')),)
+  _parser = construct.Struct(
+                   'sequence' / construct.Int32ul,
+                   construct.GreedyRange('contents' / construct.Int8ul),)
   __slots__ = [
                'sequence',
                'contents',
@@ -260,10 +262,10 @@ from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioReadDirReq",
-                   ULInt32('sequence'),
-                   ULInt32('offset'),
-                   greedy_string('dirname'),)
+  _parser = construct.Struct(
+                   'sequence' / construct.Int32ul,
+                   'offset' / construct.Int32ul,
+                   'dirname' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'sequence',
                'offset',
@@ -354,9 +356,9 @@ the response is preserved from the request.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioReadDirResp",
-                   ULInt32('sequence'),
-                   OptionalGreedyRange(ULInt8('contents')),)
+  _parser = construct.Struct(
+                   'sequence' / construct.Int32ul,
+                   construct.GreedyRange('contents' / construct.Int8ul),)
   __slots__ = [
                'sequence',
                'contents',
@@ -441,8 +443,8 @@ process this message when it is received from sender ID 0x42.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioRemove",
-                   greedy_string('filename'),)
+  _parser = construct.Struct(
+                   'filename' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'filename',
               ]
@@ -535,11 +537,11 @@ only  process this message when it is received from sender ID
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioWriteReq",
-                   ULInt32('sequence'),
-                   ULInt32('offset'),
-                   greedy_string('filename'),
-                   OptionalGreedyRange(ULInt8('data')),)
+  _parser = construct.Struct(
+                   'sequence' / construct.Int32ul,
+                   'offset' / construct.Int32ul,
+                   'filename' / construct.GreedyString(encoding='utf8'),
+                   construct.GreedyRange('data' / construct.Int8ul),)
   __slots__ = [
                'sequence',
                'offset',
@@ -629,8 +631,8 @@ request.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgFileioWriteResp",
-                   ULInt32('sequence'),)
+  _parser = construct.Struct(
+                   'sequence' / construct.Int32ul,)
   __slots__ = [
                'sequence',
               ]

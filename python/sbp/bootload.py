@@ -19,10 +19,12 @@ host request and the device response.
 
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/bootload.yaml with generate.py.
 # Please do not hand edit!
@@ -103,9 +105,9 @@ protocol version number.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBootloaderHandshakeResp",
-                   ULInt32('flags'),
-                   greedy_string('version'),)
+  _parser = construct.Struct(
+                   'flags' / construct.Int32ul,
+                   'version' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'flags',
                'version',
@@ -187,8 +189,8 @@ class MsgBootloaderJumpToApp(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBootloaderJumpToApp",
-                   ULInt8('jump'),)
+  _parser = construct.Struct(
+                   'jump' / construct.Int8ul,)
   __slots__ = [
                'jump',
               ]
@@ -325,8 +327,8 @@ on the right.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgNapDeviceDnaResp",
-                   Struct('dna', Array(8, ULInt8('dna'))),)
+  _parser = construct.Struct(
+                   'dna' / construct.Array(8, construct.Int8ul),)
   __slots__ = [
                'dna',
               ]
@@ -405,8 +407,8 @@ class MsgBootloaderHandshakeDepA(SBP):
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgBootloaderHandshakeDepA",
-                   OptionalGreedyRange(ULInt8('handshake')),)
+  _parser = construct.Struct(
+                   construct.GreedyRange('handshake' / construct.Int8ul),)
   __slots__ = [
                'handshake',
               ]

@@ -14,10 +14,12 @@
 Satellite acquisition messages from the device.
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/acquisition.yaml with generate.py.
@@ -60,19 +62,19 @@ The message is used to debug and measure the performance.
     Codephase of detected peak. Only valid if status is '1'
 
   """
-  _parser = Embedded(Struct("AcqSvProfile",
-                     ULInt8('job_type'),
-                     ULInt8('status'),
-                     ULInt16('cn0'),
-                     ULInt8('int_time'),
-                     Struct('sid', GnssSignal._parser),
-                     ULInt16('bin_width'),
-                     ULInt32('timestamp'),
-                     ULInt32('time_spent'),
-                     SLInt32('cf_min'),
-                     SLInt32('cf_max'),
-                     SLInt32('cf'),
-                     ULInt32('cp'),))
+  _parser = construct.Embedded(construct.Struct(
+                     'job_type' / construct.Int8ul,
+                     'status' / construct.Int8ul,
+                     'cn0' / construct.Int16ul,
+                     'int_time' / construct.Int8ul,
+                     'sid' / construct.Struct(GnssSignal._parser),
+                     'bin_width' / construct.Int16ul,
+                     'timestamp' / construct.Int32ul,
+                     'time_spent' / construct.Int32ul,
+                     'cf_min' / construct.Int32sl,
+                     'cf_max' / construct.Int32sl,
+                     'cf' / construct.Int32sl,
+                     'cp' / construct.Int32ul,))
   __slots__ = [
                'job_type',
                'status',
@@ -149,11 +151,11 @@ ratio.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgAcqResult",
-                   LFloat32('cn0'),
-                   LFloat32('cp'),
-                   LFloat32('cf'),
-                   Struct('sid', GnssSignal._parser),)
+  _parser = construct.Struct(
+                   'cn0' / construct.Float32l,
+                   'cp' / construct.Float32l,
+                   'cf' / construct.Float32l,
+                   'sid' / construct.Struct(GnssSignal._parser),)
   __slots__ = [
                'cn0',
                'cp',
@@ -246,11 +248,11 @@ be in units of dB Hz in a later revision of this message.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgAcqResultDepB",
-                   LFloat32('snr'),
-                   LFloat32('cp'),
-                   LFloat32('cf'),
-                   Struct('sid', GnssSignal._parser),)
+  _parser = construct.Struct(
+                   'snr' / construct.Float32l,
+                   'cp' / construct.Float32l,
+                   'cf' / construct.Float32l,
+                   'sid' / construct.Struct(GnssSignal._parser),)
   __slots__ = [
                'snr',
                'cp',
@@ -345,11 +347,11 @@ acquisition was attempted
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgAcqResultDepA",
-                   LFloat32('snr'),
-                   LFloat32('cp'),
-                   LFloat32('cf'),
-                   ULInt8('prn'),)
+  _parser = construct.Struct(
+                   'snr' / construct.Float32l,
+                   'cp' / construct.Float32l,
+                   'cf' / construct.Float32l,
+                   'prn' / construct.Int8ul,)
   __slots__ = [
                'snr',
                'cp',
@@ -436,8 +438,8 @@ The message is used to debug and measure the performance.
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgAcqSvProfile",
-                   OptionalGreedyRange(Struct('acq_sv_profile', AcqSvProfile._parser)),)
+  _parser = construct.Struct(
+                   construct.GreedyRange('acq_sv_profile' / construct.Struct(AcqSvProfile._parser)),)
   __slots__ = [
                'acq_sv_profile',
               ]

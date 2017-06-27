@@ -16,10 +16,12 @@ e.g. camera shutter time.
 
 """
 
-from construct import *
 import json
+
+import construct
+
 from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize, greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/ext_events.yaml with generate.py.
 # Please do not hand edit!
@@ -58,12 +60,12 @@ from -500000 to 500000)
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  _parser = Struct("MsgExtEvent",
-                   ULInt16('wn'),
-                   ULInt32('tow'),
-                   SLInt32('ns_residual'),
-                   ULInt8('flags'),
-                   ULInt8('pin'),)
+  _parser = construct.Struct(
+                   'wn' / construct.Int16ul,
+                   'tow' / construct.Int32ul,
+                   'ns_residual' / construct.Int32sl,
+                   'flags' / construct.Int8ul,
+                   'pin' / construct.Int8ul,)
   __slots__ = [
                'wn',
                'tow',
