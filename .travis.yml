@@ -6,6 +6,7 @@ addons:
     - check
     - doxygen
     - cmake
+    - openjdk-7-jdk
     - gradle
     - libgmp-dev
 
@@ -41,5 +42,6 @@ install:
   - (cd haskell && stack setup)
 
 script:
+  - export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
   - make test
   # - make docs
