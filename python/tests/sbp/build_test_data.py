@@ -58,8 +58,10 @@ from sbp.utils import walk_json_dict
 import base64
 import datetime
 import warnings
-import yaml
 import os
+from ruamel.yaml import YAML
+
+yaml = YAML(typ='safe')
 
 def _to_readable_dict(msg):
   """
