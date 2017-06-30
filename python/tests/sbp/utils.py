@@ -17,7 +17,9 @@ from sbp.msg import SBP
 from sbp.table import dispatch, _SBP_TABLE
 import base64
 import json
-import yaml
+from ruamel.yaml import YAML
+
+yaml = YAML(typ='safe')
 
 def _assert_sbp(sbp, test_case):
   """

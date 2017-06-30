@@ -110,7 +110,7 @@ deps-haskell: verify-prereq-haskell
 deps-generator: verify-prereq-generator
 	$(call announce-begin,"Installing generator dependencies")
 	virtualenv -p python2 $(SWIFTNAV_ROOT)/.venv
-	$(PYTHON) -m pip install $(SWIFTNAV_ROOT)/generator/
+	$(PYTHON) -m pip install -U $(SWIFTNAV_ROOT)/generator/
 	$(call announce-end,"Finished installing generator dependencies")
 
 # Generators
