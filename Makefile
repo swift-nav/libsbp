@@ -202,6 +202,11 @@ test-javascript:
 	$(call announce-end,"Finished running JavaScript tests")
 
 test-java:
+	$(call announce-begin,"Running Java build")
+	cd $(SWIFTNAV_ROOT)/java
+	gradle build
+	gradle javadoc
+	$(call announce-end,"Finished running Java build")
 	$(call announce-begin,"No Java tests - TODO")
 
 test-haskell:
