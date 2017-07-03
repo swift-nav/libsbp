@@ -541,13 +541,13 @@ START_TEST( test_auto_check_sbp_observation_36 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless((msg->dn*100 - 4.88841790794e-09*100) < 0.05, "incorrect value for dn, expected 4.88841790794e-09, is %f", msg->dn);
     fail_unless(msg->toc_wn == 1838, "incorrect value for toc_wn, expected 1838, is %d", msg->toc_wn);
-    fail_unless((msg->c_is*100 - -1.56462192535e-07*100) < 0.05, "incorrect value for c_is, expected -1.56462192535e-07, is %f", msg->c_is);
+    fail_unless((msg->tgd*100 - -6.51925802231e-09*100) < 0.05, "incorrect value for tgd, expected -6.51925802231e-09, is %f", msg->tgd);
     fail_unless((msg->c_ic*100 - 6.33299350739e-08*100) < 0.05, "incorrect value for c_ic, expected 6.33299350739e-08, is %f", msg->c_ic);
     fail_unless((msg->c_rs*100 - -74.90625*100) < 0.05, "incorrect value for c_rs, expected -74.90625, is %f", msg->c_rs);
     fail_unless(msg->toe_wn == 1838, "incorrect value for toe_wn, expected 1838, is %d", msg->toe_wn);
     fail_unless(msg->prn == 3, "incorrect value for prn, expected 3, is %d", msg->prn);
     fail_unless((msg->inc_dot*100 - -3.29656588663e-10*100) < 0.05, "incorrect value for inc_dot, expected -3.29656588663e-10, is %f", msg->inc_dot);
-    fail_unless((msg->tgd*100 - -6.51925802231e-09*100) < 0.05, "incorrect value for tgd, expected -6.51925802231e-09, is %f", msg->tgd);
+    fail_unless((msg->c_is*100 - -1.56462192535e-07*100) < 0.05, "incorrect value for c_is, expected -1.56462192535e-07, is %f", msg->c_is);
     fail_unless((msg->c_rc*100 - 234.375*100) < 0.05, "incorrect value for c_rc, expected 234.375, is %f", msg->c_rc);
     fail_unless((msg->ecc*100 - 0.0111326099141*100) < 0.05, "incorrect value for ecc, expected 0.0111326099141, is %f", msg->ecc);
     fail_unless((msg->sqrta*100 - 5153.71430397*100) < 0.05, "incorrect value for sqrta, expected 5153.71430397, is %f", msg->sqrta);
@@ -555,17 +555,17 @@ START_TEST( test_auto_check_sbp_observation_36 )
     fail_unless((msg->inc*100 - 0.939552483058*100) < 0.05, "incorrect value for inc, expected 0.939552483058, is %f", msg->inc);
     fail_unless((msg->toe_tow*100 - 410400.0*100) < 0.05, "incorrect value for toe_tow, expected 410400.0, is %f", msg->toe_tow);
     fail_unless((msg->c_uc*100 - -3.93763184547e-06*100) < 0.05, "incorrect value for c_uc, expected -3.93763184547e-06, is %f", msg->c_uc);
+    fail_unless((msg->toc_tow*100 - 410400.0*100) < 0.05, "incorrect value for toc_tow, expected 410400.0, is %f", msg->toc_tow);
     fail_unless(msg->healthy == 1, "incorrect value for healthy, expected 1, is %d", msg->healthy);
     fail_unless(msg->iode == 0, "incorrect value for iode, expected 0, is %d", msg->iode);
-    fail_unless((msg->omega0*100 - -0.946898543748*100) < 0.05, "incorrect value for omega0, expected -0.946898543748, is %f", msg->omega0);
+    fail_unless((msg->af1*100 - -9.09494701773e-13*100) < 0.05, "incorrect value for af1, expected -9.09494701773e-13, is %f", msg->af1);
     fail_unless((msg->c_us*100 - 6.9122761488e-06*100) < 0.05, "incorrect value for c_us, expected 6.9122761488e-06, is %f", msg->c_us);
     fail_unless(msg->valid == 1, "incorrect value for valid, expected 1, is %d", msg->valid);
-    fail_unless((msg->af2*100 - 0.0*100) < 0.05, "incorrect value for af2, expected 0.0, is %f", msg->af2);
     fail_unless((msg->m0*100 - 2.46734839563*100) < 0.05, "incorrect value for m0, expected 2.46734839563, is %f", msg->m0);
     fail_unless((msg->w*100 - 1.05250472004*100) < 0.05, "incorrect value for w, expected 1.05250472004, is %f", msg->w);
     fail_unless((msg->af0*100 - -1.0350253433e-05*100) < 0.05, "incorrect value for af0, expected -1.0350253433e-05, is %f", msg->af0);
-    fail_unless((msg->af1*100 - -9.09494701773e-13*100) < 0.05, "incorrect value for af1, expected -9.09494701773e-13, is %f", msg->af1);
-    fail_unless((msg->toc_tow*100 - 410400.0*100) < 0.05, "incorrect value for toc_tow, expected 410400.0, is %f", msg->toc_tow);
+    fail_unless((msg->omega0*100 - -0.946898543748*100) < 0.05, "incorrect value for omega0, expected -0.946898543748, is %f", msg->omega0);
+    fail_unless((msg->af2*100 - 0.0*100) < 0.05, "incorrect value for af2, expected 0.0, is %f", msg->af2);
   }
   // Test successful parsing of a message
   {
@@ -608,13 +608,13 @@ START_TEST( test_auto_check_sbp_observation_36 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless((msg->dn*100 - 4.86198823561e-09*100) < 0.05, "incorrect value for dn, expected 4.86198823561e-09, is %f", msg->dn);
     fail_unless(msg->toc_wn == 1838, "incorrect value for toc_wn, expected 1838, is %d", msg->toc_wn);
-    fail_unless((msg->c_is*100 - 1.19209289551e-07*100) < 0.05, "incorrect value for c_is, expected 1.19209289551e-07, is %f", msg->c_is);
+    fail_unless((msg->tgd*100 - -9.31322574615e-09*100) < 0.05, "incorrect value for tgd, expected -9.31322574615e-09, is %f", msg->tgd);
     fail_unless((msg->c_ic*100 - 1.34110450745e-07*100) < 0.05, "incorrect value for c_ic, expected 1.34110450745e-07, is %f", msg->c_ic);
     fail_unless((msg->c_rs*100 - 36.5625*100) < 0.05, "incorrect value for c_rs, expected 36.5625, is %f", msg->c_rs);
     fail_unless(msg->toe_wn == 1838, "incorrect value for toe_wn, expected 1838, is %d", msg->toe_wn);
     fail_unless(msg->prn == 13, "incorrect value for prn, expected 13, is %d", msg->prn);
     fail_unless((msg->inc_dot*100 - 2.62510934634e-10*100) < 0.05, "incorrect value for inc_dot, expected 2.62510934634e-10, is %f", msg->inc_dot);
-    fail_unless((msg->tgd*100 - -9.31322574615e-09*100) < 0.05, "incorrect value for tgd, expected -9.31322574615e-09, is %f", msg->tgd);
+    fail_unless((msg->c_is*100 - 1.19209289551e-07*100) < 0.05, "incorrect value for c_is, expected 1.19209289551e-07, is %f", msg->c_is);
     fail_unless((msg->c_rc*100 - 315.78125*100) < 0.05, "incorrect value for c_rc, expected 315.78125, is %f", msg->c_rc);
     fail_unless((msg->ecc*100 - 0.00792274158448*100) < 0.05, "incorrect value for ecc, expected 0.00792274158448, is %f", msg->ecc);
     fail_unless((msg->sqrta*100 - 5153.57085609*100) < 0.05, "incorrect value for sqrta, expected 5153.57085609, is %f", msg->sqrta);
@@ -622,17 +622,17 @@ START_TEST( test_auto_check_sbp_observation_36 )
     fail_unless((msg->inc*100 - 0.966901291823*100) < 0.05, "incorrect value for inc, expected 0.966901291823, is %f", msg->inc);
     fail_unless((msg->toe_tow*100 - 410400.0*100) < 0.05, "incorrect value for toe_tow, expected 410400.0, is %f", msg->toe_tow);
     fail_unless((msg->c_uc*100 - 2.06381082535e-06*100) < 0.05, "incorrect value for c_uc, expected 2.06381082535e-06, is %f", msg->c_uc);
+    fail_unless((msg->toc_tow*100 - 410400.0*100) < 0.05, "incorrect value for toc_tow, expected 410400.0, is %f", msg->toc_tow);
     fail_unless(msg->healthy == 1, "incorrect value for healthy, expected 1, is %d", msg->healthy);
     fail_unless(msg->iode == 0, "incorrect value for iode, expected 0, is %d", msg->iode);
-    fail_unless((msg->omega0*100 - 1.23791994157*100) < 0.05, "incorrect value for omega0, expected 1.23791994157, is %f", msg->omega0);
+    fail_unless((msg->af1*100 - -2.84217094304e-12*100) < 0.05, "incorrect value for af1, expected -2.84217094304e-12, is %f", msg->af1);
     fail_unless((msg->c_us*100 - 3.41422855854e-06*100) < 0.05, "incorrect value for c_us, expected 3.41422855854e-06, is %f", msg->c_us);
     fail_unless(msg->valid == 1, "incorrect value for valid, expected 1, is %d", msg->valid);
-    fail_unless((msg->af2*100 - 0.0*100) < 0.05, "incorrect value for af2, expected 0.0, is %f", msg->af2);
     fail_unless((msg->m0*100 - -1.58816085572*100) < 0.05, "incorrect value for m0, expected -1.58816085572, is %f", msg->m0);
     fail_unless((msg->w*100 - -1.97360228379*100) < 0.05, "incorrect value for w, expected -1.97360228379, is %f", msg->w);
     fail_unless((msg->af0*100 - 7.38454982638e-05*100) < 0.05, "incorrect value for af0, expected 7.38454982638e-05, is %f", msg->af0);
-    fail_unless((msg->af1*100 - -2.84217094304e-12*100) < 0.05, "incorrect value for af1, expected -2.84217094304e-12, is %f", msg->af1);
-    fail_unless((msg->toc_tow*100 - 410400.0*100) < 0.05, "incorrect value for toc_tow, expected 410400.0, is %f", msg->toc_tow);
+    fail_unless((msg->omega0*100 - 1.23791994157*100) < 0.05, "incorrect value for omega0, expected 1.23791994157, is %f", msg->omega0);
+    fail_unless((msg->af2*100 - 0.0*100) < 0.05, "incorrect value for af2, expected 0.0, is %f", msg->af2);
   }
   // Test successful parsing of a message
   {
@@ -675,13 +675,13 @@ START_TEST( test_auto_check_sbp_observation_36 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless((msg->dn*100 - 4.46375736198e-09*100) < 0.05, "incorrect value for dn, expected 4.46375736198e-09, is %f", msg->dn);
     fail_unless(msg->toc_wn == 1838, "incorrect value for toc_wn, expected 1838, is %d", msg->toc_wn);
-    fail_unless((msg->c_is*100 - -2.60770320892e-08*100) < 0.05, "incorrect value for c_is, expected -2.60770320892e-08, is %f", msg->c_is);
+    fail_unless((msg->tgd*100 - 5.58793544769e-09*100) < 0.05, "incorrect value for tgd, expected 5.58793544769e-09, is %f", msg->tgd);
     fail_unless((msg->c_ic*100 - -4.65661287308e-08*100) < 0.05, "incorrect value for c_ic, expected -4.65661287308e-08, is %f", msg->c_ic);
     fail_unless((msg->c_rs*100 - -68.625*100) < 0.05, "incorrect value for c_rs, expected -68.625, is %f", msg->c_rs);
     fail_unless(msg->toe_wn == 1838, "incorrect value for toe_wn, expected 1838, is %d", msg->toe_wn);
     fail_unless(msg->prn == 0, "incorrect value for prn, expected 0, is %d", msg->prn);
     fail_unless((msg->inc_dot*100 - -3.36442585613e-10*100) < 0.05, "incorrect value for inc_dot, expected -3.36442585613e-10, is %f", msg->inc_dot);
-    fail_unless((msg->tgd*100 - 5.58793544769e-09*100) < 0.05, "incorrect value for tgd, expected 5.58793544769e-09, is %f", msg->tgd);
+    fail_unless((msg->c_is*100 - -2.60770320892e-08*100) < 0.05, "incorrect value for c_is, expected -2.60770320892e-08, is %f", msg->c_is);
     fail_unless((msg->c_rc*100 - 236.03125*100) < 0.05, "incorrect value for c_rc, expected 236.03125, is %f", msg->c_rc);
     fail_unless((msg->ecc*100 - 0.00404041714501*100) < 0.05, "incorrect value for ecc, expected 0.00404041714501, is %f", msg->ecc);
     fail_unless((msg->sqrta*100 - 5153.66935349*100) < 0.05, "incorrect value for sqrta, expected 5153.66935349, is %f", msg->sqrta);
@@ -689,17 +689,17 @@ START_TEST( test_auto_check_sbp_observation_36 )
     fail_unless((msg->inc*100 - 0.96190219207*100) < 0.05, "incorrect value for inc, expected 0.96190219207, is %f", msg->inc);
     fail_unless((msg->toe_tow*100 - 410400.0*100) < 0.05, "incorrect value for toe_tow, expected 410400.0, is %f", msg->toe_tow);
     fail_unless((msg->c_uc*100 - -3.47010791302e-06*100) < 0.05, "incorrect value for c_uc, expected -3.47010791302e-06, is %f", msg->c_uc);
+    fail_unless((msg->toc_tow*100 - 410400.0*100) < 0.05, "incorrect value for toc_tow, expected 410400.0, is %f", msg->toc_tow);
     fail_unless(msg->healthy == 1, "incorrect value for healthy, expected 1, is %d", msg->healthy);
     fail_unless(msg->iode == 0, "incorrect value for iode, expected 0, is %d", msg->iode);
-    fail_unless((msg->omega0*100 - -0.925877094132*100) < 0.05, "incorrect value for omega0, expected -0.925877094132, is %f", msg->omega0);
+    fail_unless((msg->af1*100 - 4.54747350886e-13*100) < 0.05, "incorrect value for af1, expected 4.54747350886e-13, is %f", msg->af1);
     fail_unless((msg->c_us*100 - 7.46175646782e-06*100) < 0.05, "incorrect value for c_us, expected 7.46175646782e-06, is %f", msg->c_us);
     fail_unless(msg->valid == 1, "incorrect value for valid, expected 1, is %d", msg->valid);
-    fail_unless((msg->af2*100 - 0.0*100) < 0.05, "incorrect value for af2, expected 0.0, is %f", msg->af2);
     fail_unless((msg->m0*100 - 2.70552550587*100) < 0.05, "incorrect value for m0, expected 2.70552550587, is %f", msg->m0);
     fail_unless((msg->w*100 - 0.378735666146*100) < 0.05, "incorrect value for w, expected 0.378735666146, is %f", msg->w);
     fail_unless((msg->af0*100 - -7.24941492081e-06*100) < 0.05, "incorrect value for af0, expected -7.24941492081e-06, is %f", msg->af0);
-    fail_unless((msg->af1*100 - 4.54747350886e-13*100) < 0.05, "incorrect value for af1, expected 4.54747350886e-13, is %f", msg->af1);
-    fail_unless((msg->toc_tow*100 - 410400.0*100) < 0.05, "incorrect value for toc_tow, expected 410400.0, is %f", msg->toc_tow);
+    fail_unless((msg->omega0*100 - -0.925877094132*100) < 0.05, "incorrect value for omega0, expected -0.925877094132, is %f", msg->omega0);
+    fail_unless((msg->af2*100 - 0.0*100) < 0.05, "incorrect value for af2, expected 0.0, is %f", msg->af2);
   }
   // Test successful parsing of a message
   {
@@ -742,13 +742,13 @@ START_TEST( test_auto_check_sbp_observation_36 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless((msg->dn*100 - 4.86198823561e-09*100) < 0.05, "incorrect value for dn, expected 4.86198823561e-09, is %f", msg->dn);
     fail_unless(msg->toc_wn == 1838, "incorrect value for toc_wn, expected 1838, is %d", msg->toc_wn);
-    fail_unless((msg->c_is*100 - 1.19209289551e-07*100) < 0.05, "incorrect value for c_is, expected 1.19209289551e-07, is %f", msg->c_is);
+    fail_unless((msg->tgd*100 - -9.31322574615e-09*100) < 0.05, "incorrect value for tgd, expected -9.31322574615e-09, is %f", msg->tgd);
     fail_unless((msg->c_ic*100 - 1.34110450745e-07*100) < 0.05, "incorrect value for c_ic, expected 1.34110450745e-07, is %f", msg->c_ic);
     fail_unless((msg->c_rs*100 - 36.5625*100) < 0.05, "incorrect value for c_rs, expected 36.5625, is %f", msg->c_rs);
     fail_unless(msg->toe_wn == 1838, "incorrect value for toe_wn, expected 1838, is %d", msg->toe_wn);
     fail_unless(msg->prn == 13, "incorrect value for prn, expected 13, is %d", msg->prn);
     fail_unless((msg->inc_dot*100 - 2.62510934634e-10*100) < 0.05, "incorrect value for inc_dot, expected 2.62510934634e-10, is %f", msg->inc_dot);
-    fail_unless((msg->tgd*100 - -9.31322574615e-09*100) < 0.05, "incorrect value for tgd, expected -9.31322574615e-09, is %f", msg->tgd);
+    fail_unless((msg->c_is*100 - 1.19209289551e-07*100) < 0.05, "incorrect value for c_is, expected 1.19209289551e-07, is %f", msg->c_is);
     fail_unless((msg->c_rc*100 - 315.78125*100) < 0.05, "incorrect value for c_rc, expected 315.78125, is %f", msg->c_rc);
     fail_unless((msg->ecc*100 - 0.00792274158448*100) < 0.05, "incorrect value for ecc, expected 0.00792274158448, is %f", msg->ecc);
     fail_unless((msg->sqrta*100 - 5153.57085609*100) < 0.05, "incorrect value for sqrta, expected 5153.57085609, is %f", msg->sqrta);
@@ -756,17 +756,17 @@ START_TEST( test_auto_check_sbp_observation_36 )
     fail_unless((msg->inc*100 - 0.966901291823*100) < 0.05, "incorrect value for inc, expected 0.966901291823, is %f", msg->inc);
     fail_unless((msg->toe_tow*100 - 410400.0*100) < 0.05, "incorrect value for toe_tow, expected 410400.0, is %f", msg->toe_tow);
     fail_unless((msg->c_uc*100 - 2.06381082535e-06*100) < 0.05, "incorrect value for c_uc, expected 2.06381082535e-06, is %f", msg->c_uc);
+    fail_unless((msg->toc_tow*100 - 410400.0*100) < 0.05, "incorrect value for toc_tow, expected 410400.0, is %f", msg->toc_tow);
     fail_unless(msg->healthy == 1, "incorrect value for healthy, expected 1, is %d", msg->healthy);
     fail_unless(msg->iode == 0, "incorrect value for iode, expected 0, is %d", msg->iode);
-    fail_unless((msg->omega0*100 - 1.23791994157*100) < 0.05, "incorrect value for omega0, expected 1.23791994157, is %f", msg->omega0);
+    fail_unless((msg->af1*100 - -2.84217094304e-12*100) < 0.05, "incorrect value for af1, expected -2.84217094304e-12, is %f", msg->af1);
     fail_unless((msg->c_us*100 - 3.41422855854e-06*100) < 0.05, "incorrect value for c_us, expected 3.41422855854e-06, is %f", msg->c_us);
     fail_unless(msg->valid == 1, "incorrect value for valid, expected 1, is %d", msg->valid);
-    fail_unless((msg->af2*100 - 0.0*100) < 0.05, "incorrect value for af2, expected 0.0, is %f", msg->af2);
     fail_unless((msg->m0*100 - -1.58816085572*100) < 0.05, "incorrect value for m0, expected -1.58816085572, is %f", msg->m0);
     fail_unless((msg->w*100 - -1.97360228379*100) < 0.05, "incorrect value for w, expected -1.97360228379, is %f", msg->w);
     fail_unless((msg->af0*100 - 7.38454982638e-05*100) < 0.05, "incorrect value for af0, expected 7.38454982638e-05, is %f", msg->af0);
-    fail_unless((msg->af1*100 - -2.84217094304e-12*100) < 0.05, "incorrect value for af1, expected -2.84217094304e-12, is %f", msg->af1);
-    fail_unless((msg->toc_tow*100 - 410400.0*100) < 0.05, "incorrect value for toc_tow, expected 410400.0, is %f", msg->toc_tow);
+    fail_unless((msg->omega0*100 - 1.23791994157*100) < 0.05, "incorrect value for omega0, expected 1.23791994157, is %f", msg->omega0);
+    fail_unless((msg->af2*100 - 0.0*100) < 0.05, "incorrect value for af2, expected 0.0, is %f", msg->af2);
   }
   // Test successful parsing of a message
   {
@@ -809,13 +809,13 @@ START_TEST( test_auto_check_sbp_observation_36 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless((msg->dn*100 - 5.26057626697e-09*100) < 0.05, "incorrect value for dn, expected 5.26057626697e-09, is %f", msg->dn);
     fail_unless(msg->toc_wn == 1838, "incorrect value for toc_wn, expected 1838, is %d", msg->toc_wn);
-    fail_unless((msg->c_is*100 - -2.06753611565e-07*100) < 0.05, "incorrect value for c_is, expected -2.06753611565e-07, is %f", msg->c_is);
+    fail_unless((msg->tgd*100 - -2.00234353542e-08*100) < 0.05, "incorrect value for tgd, expected -2.00234353542e-08, is %f", msg->tgd);
     fail_unless((msg->c_ic*100 - -3.16649675369e-08*100) < 0.05, "incorrect value for c_ic, expected -3.16649675369e-08, is %f", msg->c_ic);
     fail_unless((msg->c_rs*100 - 43.21875*100) < 0.05, "incorrect value for c_rs, expected 43.21875, is %f", msg->c_rs);
     fail_unless(msg->toe_wn == 1838, "incorrect value for toe_wn, expected 1838, is %d", msg->toe_wn);
     fail_unless(msg->prn == 22, "incorrect value for prn, expected 22, is %d", msg->prn);
     fail_unless((msg->inc_dot*100 - 3.00012496725e-10*100) < 0.05, "incorrect value for inc_dot, expected 3.00012496725e-10, is %f", msg->inc_dot);
-    fail_unless((msg->tgd*100 - -2.00234353542e-08*100) < 0.05, "incorrect value for tgd, expected -2.00234353542e-08, is %f", msg->tgd);
+    fail_unless((msg->c_is*100 - -2.06753611565e-07*100) < 0.05, "incorrect value for c_is, expected -2.06753611565e-07, is %f", msg->c_is);
     fail_unless((msg->c_rc*100 - 305.21875*100) < 0.05, "incorrect value for c_rc, expected 305.21875, is %f", msg->c_rc);
     fail_unless((msg->ecc*100 - 0.00992374494672*100) < 0.05, "incorrect value for ecc, expected 0.00992374494672, is %f", msg->ecc);
     fail_unless((msg->sqrta*100 - 5153.63666725*100) < 0.05, "incorrect value for sqrta, expected 5153.63666725, is %f", msg->sqrta);
@@ -823,17 +823,17 @@ START_TEST( test_auto_check_sbp_observation_36 )
     fail_unless((msg->inc*100 - 0.948751322181*100) < 0.05, "incorrect value for inc, expected 0.948751322181, is %f", msg->inc);
     fail_unless((msg->toe_tow*100 - 410400.0*100) < 0.05, "incorrect value for toe_tow, expected 410400.0, is %f", msg->toe_tow);
     fail_unless((msg->c_uc*100 - 2.10106372833e-06*100) < 0.05, "incorrect value for c_uc, expected 2.10106372833e-06, is %f", msg->c_uc);
+    fail_unless((msg->toc_tow*100 - 410400.0*100) < 0.05, "incorrect value for toc_tow, expected 410400.0, is %f", msg->toc_tow);
     fail_unless(msg->healthy == 1, "incorrect value for healthy, expected 1, is %d", msg->healthy);
     fail_unless(msg->iode == 0, "incorrect value for iode, expected 0, is %d", msg->iode);
-    fail_unless((msg->omega0*100 - 1.16695519726*100) < 0.05, "incorrect value for omega0, expected 1.16695519726, is %f", msg->omega0);
+    fail_unless((msg->af1*100 - -2.50111042988e-12*100) < 0.05, "incorrect value for af1, expected -2.50111042988e-12, is %f", msg->af1);
     fail_unless((msg->c_us*100 - 3.76626849174e-06*100) < 0.05, "incorrect value for c_us, expected 3.76626849174e-06, is %f", msg->c_us);
     fail_unless(msg->valid == 1, "incorrect value for valid, expected 1, is %d", msg->valid);
-    fail_unless((msg->af2*100 - 0.0*100) < 0.05, "incorrect value for af2, expected 0.0, is %f", msg->af2);
     fail_unless((msg->m0*100 - -2.66616027191*100) < 0.05, "incorrect value for m0, expected -2.66616027191, is %f", msg->m0);
     fail_unless((msg->w*100 - -2.70212414527*100) < 0.05, "incorrect value for w, expected -2.70212414527, is %f", msg->w);
     fail_unless((msg->af0*100 - -9.92552377284e-05*100) < 0.05, "incorrect value for af0, expected -9.92552377284e-05, is %f", msg->af0);
-    fail_unless((msg->af1*100 - -2.50111042988e-12*100) < 0.05, "incorrect value for af1, expected -2.50111042988e-12, is %f", msg->af1);
-    fail_unless((msg->toc_tow*100 - 410400.0*100) < 0.05, "incorrect value for toc_tow, expected 410400.0, is %f", msg->toc_tow);
+    fail_unless((msg->omega0*100 - 1.16695519726*100) < 0.05, "incorrect value for omega0, expected 1.16695519726, is %f", msg->omega0);
+    fail_unless((msg->af2*100 - 0.0*100) < 0.05, "incorrect value for af2, expected 0.0, is %f", msg->af2);
   }
   // Test successful parsing of a message
   {
@@ -876,13 +876,13 @@ START_TEST( test_auto_check_sbp_observation_36 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless((msg->dn*100 - 4.40089760076e-09*100) < 0.05, "incorrect value for dn, expected 4.40089760076e-09, is %f", msg->dn);
     fail_unless(msg->toc_wn == 1838, "incorrect value for toc_wn, expected 1838, is %d", msg->toc_wn);
-    fail_unless((msg->c_is*100 - 5.21540641785e-08*100) < 0.05, "incorrect value for c_is, expected 5.21540641785e-08, is %f", msg->c_is);
+    fail_unless((msg->tgd*100 - -1.35041773319e-08*100) < 0.05, "incorrect value for tgd, expected -1.35041773319e-08, is %f", msg->tgd);
     fail_unless((msg->c_ic*100 - 9.12696123123e-08*100) < 0.05, "incorrect value for c_ic, expected 9.12696123123e-08, is %f", msg->c_ic);
     fail_unless((msg->c_rs*100 - -77.90625*100) < 0.05, "incorrect value for c_rs, expected -77.90625, is %f", msg->c_rs);
     fail_unless(msg->toe_wn == 1838, "incorrect value for toe_wn, expected 1838, is %d", msg->toe_wn);
     fail_unless(msg->prn == 30, "incorrect value for prn, expected 30, is %d", msg->prn);
     fail_unless((msg->inc_dot*100 - -5.88238788221e-10*100) < 0.05, "incorrect value for inc_dot, expected -5.88238788221e-10, is %f", msg->inc_dot);
-    fail_unless((msg->tgd*100 - -1.35041773319e-08*100) < 0.05, "incorrect value for tgd, expected -1.35041773319e-08, is %f", msg->tgd);
+    fail_unless((msg->c_is*100 - 5.21540641785e-08*100) < 0.05, "incorrect value for c_is, expected 5.21540641785e-08, is %f", msg->c_is);
     fail_unless((msg->c_rc*100 - 247.28125*100) < 0.05, "incorrect value for c_rc, expected 247.28125, is %f", msg->c_rc);
     fail_unless((msg->ecc*100 - 0.00817864493001*100) < 0.05, "incorrect value for ecc, expected 0.00817864493001, is %f", msg->ecc);
     fail_unless((msg->sqrta*100 - 5153.75399208*100) < 0.05, "incorrect value for sqrta, expected 5153.75399208, is %f", msg->sqrta);
@@ -890,17 +890,17 @@ START_TEST( test_auto_check_sbp_observation_36 )
     fail_unless((msg->inc*100 - 0.975512201725*100) < 0.05, "incorrect value for inc, expected 0.975512201725, is %f", msg->inc);
     fail_unless((msg->toe_tow*100 - 410400.0*100) < 0.05, "incorrect value for toe_tow, expected 410400.0, is %f", msg->toe_tow);
     fail_unless((msg->c_uc*100 - -3.72342765331e-06*100) < 0.05, "incorrect value for c_uc, expected -3.72342765331e-06, is %f", msg->c_uc);
+    fail_unless((msg->toc_tow*100 - 410400.0*100) < 0.05, "incorrect value for toc_tow, expected 410400.0, is %f", msg->toc_tow);
     fail_unless(msg->healthy == 1, "incorrect value for healthy, expected 1, is %d", msg->healthy);
     fail_unless(msg->iode == 0, "incorrect value for iode, expected 0, is %d", msg->iode);
-    fail_unless((msg->omega0*100 - 2.24186802893*100) < 0.05, "incorrect value for omega0, expected 2.24186802893, is %f", msg->omega0);
+    fail_unless((msg->af1*100 - -1.02318153949e-12*100) < 0.05, "incorrect value for af1, expected -1.02318153949e-12, is %f", msg->af1);
     fail_unless((msg->c_us*100 - 7.17863440514e-06*100) < 0.05, "incorrect value for c_us, expected 7.17863440514e-06, is %f", msg->c_us);
     fail_unless(msg->valid == 1, "incorrect value for valid, expected 1, is %d", msg->valid);
-    fail_unless((msg->af2*100 - 0.0*100) < 0.05, "incorrect value for af2, expected 0.0, is %f", msg->af2);
     fail_unless((msg->m0*100 - 1.94018234598*100) < 0.05, "incorrect value for m0, expected 1.94018234598, is %f", msg->m0);
     fail_unless((msg->w*100 - -0.523790171609*100) < 0.05, "incorrect value for w, expected -0.523790171609, is %f", msg->w);
     fail_unless((msg->af0*100 - 0.000319611746818*100) < 0.05, "incorrect value for af0, expected 0.000319611746818, is %f", msg->af0);
-    fail_unless((msg->af1*100 - -1.02318153949e-12*100) < 0.05, "incorrect value for af1, expected -1.02318153949e-12, is %f", msg->af1);
-    fail_unless((msg->toc_tow*100 - 410400.0*100) < 0.05, "incorrect value for toc_tow, expected 410400.0, is %f", msg->toc_tow);
+    fail_unless((msg->omega0*100 - 2.24186802893*100) < 0.05, "incorrect value for omega0, expected 2.24186802893, is %f", msg->omega0);
+    fail_unless((msg->af2*100 - 0.0*100) < 0.05, "incorrect value for af2, expected 0.0, is %f", msg->af2);
   }
 }
 END_TEST

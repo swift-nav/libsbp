@@ -756,16 +756,11 @@ coordinate system
 /** GLONASS SV orbital and frequency slots mapping information
  *
  * The message reports mapping information regarding GLONASS SV orbital and
- * frequency slots.
- * Mapped as follow:
- * index (SV orbital slot)  fcns[index]
- * 0                        0xFF
- * 1                        FCN for SV orbital slot 1
- * ...                      ...
- * 28                       FCN for SV orbital slot 28
- * 29                       0xFF
- * 30                       0xFF
- * 31                       0xFF
+ * frequency slots. Indexes 0, 29, 30, 31 are not used and always
+ * contain 0 or 0xFF. Other indexes mapped as follow:
+ * 1 -- FCN for orbital slot 1, ..., 28 -- FCN for orbital slot 28.
+ * FCN values are shifted by 8 and coded as follow: 
+ * 1 corresponds to FCN -7, ..., 14 corresponds to FCN 6
  */
 #define SBP_MSG_FCNS_GLO             0x0072
 typedef struct __attribute__((packed)) {

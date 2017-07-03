@@ -127,8 +127,8 @@ START_TEST( test_auto_check_sbp_system_27 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->latency == 50, "incorrect value for latency, expected 50, is %d", msg->latency);
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->num_signals == 12, "incorrect value for num_signals, expected 12, is %d", msg->num_signals);
     fail_unless(strstr(msg->source, ((char []){(char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107,0})) != NULL, "incorrect value for msg->source, expected string '%s', is '%s'", ((char []){(char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107,0}), msg->source);
+    fail_unless(msg->num_signals == 12, "incorrect value for num_signals, expected 12, is %d", msg->num_signals);
   }
 }
 END_TEST

@@ -126,12 +126,12 @@ START_TEST( test_auto_check_sbp_navigation_16 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 14, "incorrect value for n_sats, expected 14, is %d", msg->n_sats);
-    fail_unless(msg->x == -8, "incorrect value for x, expected -8, is %d", msg->x);
-    fail_unless(msg->y == -5, "incorrect value for y, expected -5, is %d", msg->y);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->z == 10, "incorrect value for z, expected 10, is %d", msg->z);
-    fail_unless(msg->tow == 326825000, "incorrect value for tow, expected 326825000, is %d", msg->tow);
     fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    fail_unless(msg->y == -5, "incorrect value for y, expected -5, is %d", msg->y);
+    fail_unless(msg->x == -8, "incorrect value for x, expected -8, is %d", msg->x);
+    fail_unless(msg->z == 10, "incorrect value for z, expected 10, is %d", msg->z);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 326825000, "incorrect value for tow, expected 326825000, is %d", msg->tow);
   }
   // Test successful parsing of a message
   {
@@ -173,12 +173,12 @@ START_TEST( test_auto_check_sbp_navigation_16 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
-    fail_unless(msg->x == -12, "incorrect value for x, expected -12, is %d", msg->x);
-    fail_unless(msg->y == -18, "incorrect value for y, expected -18, is %d", msg->y);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->z == 11, "incorrect value for z, expected 11, is %d", msg->z);
-    fail_unless(msg->tow == 326825500, "incorrect value for tow, expected 326825500, is %d", msg->tow);
     fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    fail_unless(msg->y == -18, "incorrect value for y, expected -18, is %d", msg->y);
+    fail_unless(msg->x == -12, "incorrect value for x, expected -12, is %d", msg->x);
+    fail_unless(msg->z == 11, "incorrect value for z, expected 11, is %d", msg->z);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 326825500, "incorrect value for tow, expected 326825500, is %d", msg->tow);
   }
   // Test successful parsing of a message
   {
@@ -220,12 +220,12 @@ START_TEST( test_auto_check_sbp_navigation_16 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
-    fail_unless(msg->x == -8, "incorrect value for x, expected -8, is %d", msg->x);
-    fail_unless(msg->y == -6, "incorrect value for y, expected -6, is %d", msg->y);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->z == 7, "incorrect value for z, expected 7, is %d", msg->z);
-    fail_unless(msg->tow == 326826000, "incorrect value for tow, expected 326826000, is %d", msg->tow);
     fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    fail_unless(msg->y == -6, "incorrect value for y, expected -6, is %d", msg->y);
+    fail_unless(msg->x == -8, "incorrect value for x, expected -8, is %d", msg->x);
+    fail_unless(msg->z == 7, "incorrect value for z, expected 7, is %d", msg->z);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 326826000, "incorrect value for tow, expected 326826000, is %d", msg->tow);
   }
   // Test successful parsing of a message
   {
@@ -267,12 +267,12 @@ START_TEST( test_auto_check_sbp_navigation_16 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
-    fail_unless(msg->x == -7, "incorrect value for x, expected -7, is %d", msg->x);
-    fail_unless(msg->y == -17, "incorrect value for y, expected -17, is %d", msg->y);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->z == 16, "incorrect value for z, expected 16, is %d", msg->z);
-    fail_unless(msg->tow == 326826500, "incorrect value for tow, expected 326826500, is %d", msg->tow);
     fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    fail_unless(msg->y == -17, "incorrect value for y, expected -17, is %d", msg->y);
+    fail_unless(msg->x == -7, "incorrect value for x, expected -7, is %d", msg->x);
+    fail_unless(msg->z == 16, "incorrect value for z, expected 16, is %d", msg->z);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 326826500, "incorrect value for tow, expected 326826500, is %d", msg->tow);
   }
   // Test successful parsing of a message
   {
@@ -314,12 +314,12 @@ START_TEST( test_auto_check_sbp_navigation_16 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
-    fail_unless(msg->x == -9, "incorrect value for x, expected -9, is %d", msg->x);
-    fail_unless(msg->y == -13, "incorrect value for y, expected -13, is %d", msg->y);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->z == 14, "incorrect value for z, expected 14, is %d", msg->z);
-    fail_unless(msg->tow == 326827000, "incorrect value for tow, expected 326827000, is %d", msg->tow);
     fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    fail_unless(msg->y == -13, "incorrect value for y, expected -13, is %d", msg->y);
+    fail_unless(msg->x == -9, "incorrect value for x, expected -9, is %d", msg->x);
+    fail_unless(msg->z == 14, "incorrect value for z, expected 14, is %d", msg->z);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 326827000, "incorrect value for tow, expected 326827000, is %d", msg->tow);
   }
 }
 END_TEST
