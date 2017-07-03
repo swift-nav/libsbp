@@ -1,3 +1,5 @@
+{-# LANGUAGE TemplateHaskell   #-}
+
 -- |
 -- Module:      SwiftNav.SBP.TH
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.

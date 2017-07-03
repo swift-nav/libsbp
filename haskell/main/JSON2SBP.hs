@@ -1,3 +1,6 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 -- |
 -- Module:      JSON2SBP
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.

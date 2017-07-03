@@ -1,3 +1,8 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE RecordWildCards   #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 -- |
 -- Module:      SwiftNav.SBP.Msg
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.

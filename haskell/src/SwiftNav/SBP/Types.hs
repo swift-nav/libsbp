@@ -1,3 +1,8 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE RecordWildCards   #-}
+{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 -- |
 -- Module:      SwiftNav.SBP.Types
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.

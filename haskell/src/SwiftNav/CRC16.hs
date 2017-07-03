@@ -1,3 +1,5 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 -- |
 -- Module:      SwiftNav.SBP
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
