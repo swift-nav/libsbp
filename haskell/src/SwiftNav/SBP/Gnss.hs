@@ -35,9 +35,9 @@ import SwiftNav.SBP.Types
 --
 -- Signal identifier containing constellation, band, and satellite identifier
 data GnssSignal16 = GnssSignal16
-  { _gnssSignal16_sat :: Word8
+  { _gnssSignal16_sat :: !Word8
     -- ^ Constellation-specific satellite identifier
-  , _gnssSignal16_code :: Word8
+  , _gnssSignal16_code :: !Word8
     -- ^ Signal constellation, band and code
   } deriving ( Show, Read, Eq )
 
@@ -58,13 +58,13 @@ $(makeLenses ''GnssSignal16)
 --
 -- Signal identifier containing constellation, band, and satellite identifier
 data GnssSignal = GnssSignal
-  { _gnssSignal_sat    :: Word16
+  { _gnssSignal_sat    :: !Word16
     -- ^ Constellation-specific satellite identifier.  Note: unlike GnssSignal16,
     -- GPS satellites are encoded as (PRN - 1). Other constellations do not
     -- have this offset.
-  , _gnssSignal_code   :: Word8
+  , _gnssSignal_code   :: !Word8
     -- ^ Signal constellation, band and code
-  , _gnssSignal_reserved :: Word8
+  , _gnssSignal_reserved :: !Word8
     -- ^ Reserved
   } deriving ( Show, Read, Eq )
 
@@ -88,9 +88,9 @@ $(makeLenses ''GnssSignal)
 -- A wire-appropriate GPS time, defined as the number of milliseconds since
 -- beginning of the week on the Saturday/Sunday transition.
 data GpsTime = GpsTime
-  { _gpsTime_tow :: Word32
+  { _gpsTime_tow :: !Word32
     -- ^ Milliseconds since start of GPS week
-  , _gpsTime_wn :: Word16
+  , _gpsTime_wn :: !Word16
     -- ^ GPS week number
   } deriving ( Show, Read, Eq )
 
@@ -112,9 +112,9 @@ $(makeLenses ''GpsTime)
 -- A GPS time, defined as the number of seconds since beginning of the week on
 -- the Saturday/Sunday transition.
 data GpsTimeSec = GpsTimeSec
-  { _gpsTimeSec_tow :: Word32
+  { _gpsTimeSec_tow :: !Word32
     -- ^ Seconds since start of GPS week
-  , _gpsTimeSec_wn :: Word16
+  , _gpsTimeSec_wn :: !Word16
     -- ^ GPS week number
   } deriving ( Show, Read, Eq )
 
@@ -137,12 +137,12 @@ $(makeLenses ''GpsTimeSec)
 -- beginning of the week on the Saturday/Sunday transition. In most cases,
 -- observations are epoch aligned so ns field will be 0.
 data GpsTimeNano = GpsTimeNano
-  { _gpsTimeNano_tow       :: Word32
+  { _gpsTimeNano_tow       :: !Word32
     -- ^ Milliseconds since start of GPS week
-  , _gpsTimeNano_ns_residual :: Int32
+  , _gpsTimeNano_ns_residual :: !Int32
     -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     -- 500000)
-  , _gpsTimeNano_wn        :: Word16
+  , _gpsTimeNano_wn        :: !Word16
     -- ^ GPS week number
   } deriving ( Show, Read, Eq )
 
@@ -167,9 +167,9 @@ $(makeLenses ''GpsTimeNano)
 -- number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
 -- fractional cycles. This phase has the same sign as the pseudorange.
 data CarrierPhase = CarrierPhase
-  { _carrierPhase_i :: Int32
+  { _carrierPhase_i :: !Int32
     -- ^ Carrier phase whole cycles
-  , _carrierPhase_f :: Word8
+  , _carrierPhase_f :: !Word8
     -- ^ Carrier phase fractional part
   } deriving ( Show, Read, Eq )
 

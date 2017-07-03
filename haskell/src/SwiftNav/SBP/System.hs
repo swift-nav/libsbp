@@ -40,11 +40,11 @@ msgStartup = 0xFF00
 -- host or other attached devices that the system has started and is now ready
 -- to respond to commands or configuration requests.
 data MsgStartup = MsgStartup
-  { _msgStartup_cause      :: Word8
+  { _msgStartup_cause      :: !Word8
     -- ^ Cause of startup
-  , _msgStartup_startup_type :: Word8
+  , _msgStartup_startup_type :: !Word8
     -- ^ Startup type
-  , _msgStartup_reserved   :: Word16
+  , _msgStartup_reserved   :: !Word16
     -- ^ Reserved
   } deriving ( Show, Read, Eq )
 
@@ -75,13 +75,13 @@ msgDgnssStatus = 0xFF02
 -- corrections.  It is expected to be sent with each receipt of a complete
 -- corrections packet.
 data MsgDgnssStatus = MsgDgnssStatus
-  { _msgDgnssStatus_flags     :: Word8
+  { _msgDgnssStatus_flags     :: !Word8
     -- ^ Status flags
-  , _msgDgnssStatus_latency   :: Word16
+  , _msgDgnssStatus_latency   :: !Word16
     -- ^ Latency of observation receipt
-  , _msgDgnssStatus_num_signals :: Word8
+  , _msgDgnssStatus_num_signals :: !Word8
     -- ^ Number of signals from base station
-  , _msgDgnssStatus_source    :: Text
+  , _msgDgnssStatus_source    :: !Text
     -- ^ Corrections source string
   } deriving ( Show, Read, Eq )
 
@@ -118,7 +118,7 @@ msgHeartbeat = 0xFFFF
 -- indicate that an error has occurred in the system. To determine the source
 -- of the error, the remaining error flags should be inspected.
 data MsgHeartbeat = MsgHeartbeat
-  { _msgHeartbeat_flags :: Word32
+  { _msgHeartbeat_flags :: !Word32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 

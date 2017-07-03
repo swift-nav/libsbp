@@ -40,9 +40,9 @@ msgLog = 0x0401
 -- containing errors, warnings and informational messages at ERROR, WARNING,
 -- DEBUG, INFO logging levels.
 data MsgLog = MsgLog
-  { _msgLog_level :: Word8
+  { _msgLog_level :: !Word8
     -- ^ Logging level
-  , _msgLog_text :: Text
+  , _msgLog_text :: !Text
     -- ^ Human-readable string
   } deriving ( Show, Read, Eq )
 
@@ -75,11 +75,11 @@ msgFwd = 0x0402
 -- Protocol 0 represents SBP and the remaining values are implementation
 -- defined.
 data MsgFwd = MsgFwd
-  { _msgFwd_source    :: Word8
+  { _msgFwd_source    :: !Word8
     -- ^ source identifier
-  , _msgFwd_protocol  :: Word8
+  , _msgFwd_protocol  :: !Word8
     -- ^ protocol identifier
-  , _msgFwd_fwd_payload :: Text
+  , _msgFwd_fwd_payload :: !Text
     -- ^ variable length wrapped binary message
   } deriving ( Show, Read, Eq )
 
@@ -108,7 +108,7 @@ msgTweet = 0x0012
 --
 -- All the news fit to tweet.
 data MsgTweet = MsgTweet
-  { _msgTweet_tweet :: Text
+  { _msgTweet_tweet :: !Text
     -- ^ Human-readable string
   } deriving ( Show, Read, Eq )
 
@@ -133,7 +133,7 @@ msgPrintDep = 0x0010
 --
 -- Deprecated.
 data MsgPrintDep = MsgPrintDep
-  { _msgPrintDep_text :: Text
+  { _msgPrintDep_text :: !Text
     -- ^ Human-readable string
   } deriving ( Show, Read, Eq )
 

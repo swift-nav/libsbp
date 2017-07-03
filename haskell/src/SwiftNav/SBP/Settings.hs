@@ -65,7 +65,7 @@ msgSettingsWrite = 0x00A0
 --
 -- The setting message writes the device configuration.
 data MsgSettingsWrite = MsgSettingsWrite
-  { _msgSettingsWrite_setting :: Text
+  { _msgSettingsWrite_setting :: !Text
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING, VALUE]. A device will only process to this message when it is
     -- received from sender ID 0x42.
@@ -92,7 +92,7 @@ msgSettingsReadReq = 0x00A4
 --
 -- The setting message reads the device configuration.
 data MsgSettingsReadReq = MsgSettingsReadReq
-  { _msgSettingsReadReq_setting :: Text
+  { _msgSettingsReadReq_setting :: !Text
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING]. A device will only respond to this message when it is received
     -- from sender ID 0x42.
@@ -119,7 +119,7 @@ msgSettingsReadResp = 0x00A5
 --
 -- The setting message reads the device configuration.
 data MsgSettingsReadResp = MsgSettingsReadResp
-  { _msgSettingsReadResp_setting :: Text
+  { _msgSettingsReadResp_setting :: !Text
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING, VALUE].
   } deriving ( Show, Read, Eq )
@@ -148,7 +148,7 @@ msgSettingsReadByIndexReq = 0x00A2
 -- with contents [SECTION_SETTING, SETTING, VALUE]. A device will only respond
 -- to this message when it is received from sender ID 0x42.
 data MsgSettingsReadByIndexReq = MsgSettingsReadByIndexReq
-  { _msgSettingsReadByIndexReq_index :: Word16
+  { _msgSettingsReadByIndexReq_index :: !Word16
     -- ^ An index into the device settings, with values ranging from 0 to
     -- length(settings)
   } deriving ( Show, Read, Eq )
@@ -176,10 +176,10 @@ msgSettingsReadByIndexResp = 0x00A7
 -- the setting at an index, returning a NULL-terminated and delimited string
 -- with contents [SECTION_SETTING, SETTING, VALUE].
 data MsgSettingsReadByIndexResp = MsgSettingsReadByIndexResp
-  { _msgSettingsReadByIndexResp_index :: Word16
+  { _msgSettingsReadByIndexResp_index :: !Word16
     -- ^ An index into the device settings, with values ranging from 0 to
     -- length(settings)
-  , _msgSettingsReadByIndexResp_setting :: Text
+  , _msgSettingsReadByIndexResp_setting :: !Text
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING, VALUE].
   } deriving ( Show, Read, Eq )
@@ -231,7 +231,7 @@ msgSettingsRegister = 0x00AE
 -- settings daemon.  The host should reply with MSG_SETTINGS_WRITE for this
 -- setting to set the initial value.
 data MsgSettingsRegister = MsgSettingsRegister
-  { _msgSettingsRegister_setting :: Text
+  { _msgSettingsRegister_setting :: !Text
     -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
     -- SETTING, VALUE].
   } deriving ( Show, Read, Eq )

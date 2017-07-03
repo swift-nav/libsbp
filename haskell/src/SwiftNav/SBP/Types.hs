@@ -44,19 +44,19 @@ defaultSender = 0x42
 -- messages, as well as receive messages from the host operating
 -- system.
 data Msg = Msg
-  { _msgSBPType    :: Word16
+  { _msgSBPType    :: !Word16
     -- ^ Uniquely identifies the type of the payload contents
-  , _msgSBPSender  :: Word16
+  , _msgSBPSender  :: !Word16
     -- ^ A unique identifier of the sending hardware. For v1.0,
     -- set to the 2 least significant bytes of the device serial
     -- number
-  , _msgSBPLen     :: Word8
+  , _msgSBPLen     :: !Word8
     -- ^ Byte-length of the payload field
   , _msgSBPPayload :: !ByteString
     -- ^ Binary data of the message, as identified by Message Type and
     -- Length. Usually contains the in-memory binary representation of
     -- a C struct (see documentation on individual message types)
-  , _msgSBPCrc     :: Word16
+  , _msgSBPCrc     :: !Word16
     -- ^ Cyclic Redundancy Check (CRC) of the packet's binary data from
     -- the Message Type up to the end of Payload (does not include the
     -- Preamble)
