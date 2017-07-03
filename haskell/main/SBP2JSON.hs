@@ -15,8 +15,6 @@
 import           BasicPrelude
 import           Control.Monad.Trans.Resource
 import           Data.Aeson
-import           Data.Aeson.Encode
-import           Data.ByteString.Builder
 import qualified Data.ByteString.Lazy as BL
 import           Data.Conduit
 import           Data.Conduit.Binary
@@ -27,7 +25,7 @@ import           System.IO
 
 -- | Encode a SBPMsg to a line of JSON.
 encodeLine :: SBPMsg -> ByteString
-encodeLine v = BL.toStrict $ toLazyByteString $ encodeToBuilder (toJSON v) <> "\n"
+encodeLine v = BL.toStrict $ encode v <> "\n"
 
 main :: IO ()
 main =
