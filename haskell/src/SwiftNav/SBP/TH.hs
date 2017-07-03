@@ -1,4 +1,6 @@
-{-# LANGUAGE TemplateHaskell   #-}
+{-# OPTIONS_GHC -fno-warn-unused-imports #-}
+{-# LANGUAGE NoImplicitPrelude           #-}
+{-# LANGUAGE TemplateHaskell             #-}
 
 -- |
 -- Module:      SwiftNav.SBP.TH

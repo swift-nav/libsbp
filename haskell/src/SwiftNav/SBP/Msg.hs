@@ -1,7 +1,8 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TemplateHaskell   #-}
-{-# LANGUAGE RecordWildCards   #-}
-{-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -fno-warn-unused-imports #-}
+{-# LANGUAGE NoImplicitPrelude           #-}
+{-# LANGUAGE TemplateHaskell             #-}
+{-# LANGUAGE RecordWildCards             #-}
+{-# LANGUAGE OverloadedStrings           #-}
 
 -- |
 -- Module:      SwiftNav.SBP.Msg
