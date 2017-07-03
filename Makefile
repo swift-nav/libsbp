@@ -10,7 +10,7 @@ SBP_TESTS_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/tests/yaml/
 PYTHON := $(SWIFTNAV_ROOT)/.venv/bin/python
 SBP_GEN_BIN := $(PYTHON) -m sbpg.generator
 
-SBP_VERSION := $(shell python2 python/sbp/version.py)
+SBP_VERSION := $(shell python2.7 python/sbp/version.py)
 SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
 SBP_MINOR_VERSION := $(word 2, $(subst ., , $(SBP_VERSION)))
 SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
@@ -109,7 +109,7 @@ deps-haskell: verify-prereq-haskell
 
 deps-generator: verify-prereq-generator
 	$(call announce-begin,"Installing generator dependencies")
-	virtualenv -p python2 $(SWIFTNAV_ROOT)/.venv
+	virtualenv -p python2.7 $(SWIFTNAV_ROOT)/.venv
 	$(PYTHON) -m pip install -U $(SWIFTNAV_ROOT)/generator/
 	$(call announce-end,"Finished installing generator dependencies")
 
