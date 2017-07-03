@@ -1,4 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
+{-# LANGUAGE NoImplicitPrelude           #-}
+{-# LANGUAGE TemplateHaskell             #-}
+{-# LANGUAGE RecordWildCards             #-}
+
 -- |
 -- Module:      SwiftNav.SBP.User
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
@@ -35,7 +39,7 @@ msgUserData = 0x0800
 -- This message can contain any application specific user data up to a maximum
 -- length of 255 bytes per message.
 data MsgUserData = MsgUserData
-  { _msgUserData_contents :: [Word8]
+  { _msgUserData_contents :: ![Word8]
     -- ^ User data payload
   } deriving ( Show, Read, Eq )
 

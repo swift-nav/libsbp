@@ -1,5 +1,1 @@
-resolver: lts-6.30
-flags: {}
-packages:
-  - '.'
-extra-deps: []
+stack-lts-5.yaml

@@ -1,4 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
+{-# LANGUAGE NoImplicitPrelude           #-}
+{-# LANGUAGE TemplateHaskell             #-}
+{-# LANGUAGE RecordWildCards             #-}
+
 -- |
 -- Module:      SwiftNav.SBP.Tracking
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
@@ -36,53 +40,53 @@ msgTrackingStateDetailed = 0x0011
 -- The tracking message returns a set tracking channel parameters for a single
 -- tracking channel useful for debugging issues.
 data MsgTrackingStateDetailed = MsgTrackingStateDetailed
-  { _msgTrackingStateDetailed_recv_time  :: Word64
+  { _msgTrackingStateDetailed_recv_time  :: !Word64
     -- ^ Receiver clock time.
-  , _msgTrackingStateDetailed_tot        :: GpsTime
+  , _msgTrackingStateDetailed_tot        :: !GpsTime
     -- ^ Time of transmission of signal from satellite. TOW only valid when TOW
     -- status is decoded or propagated. WN only valid when week number valid
     -- flag is set.
-  , _msgTrackingStateDetailed_P          :: Word32
+  , _msgTrackingStateDetailed_P          :: !Word32
     -- ^ Pseudorange observation. Valid only when pseudorange valid flag is set.
-  , _msgTrackingStateDetailed_P_std      :: Word16
+  , _msgTrackingStateDetailed_P_std      :: !Word16
     -- ^ Pseudorange observation standard deviation. Valid only when pseudorange
     -- valid flag is set.
-  , _msgTrackingStateDetailed_L          :: CarrierPhase
+  , _msgTrackingStateDetailed_L          :: !CarrierPhase
     -- ^ Carrier phase observation with typical sign convention. Valid only when
     -- PLL pessimistic lock is achieved.
-  , _msgTrackingStateDetailed_cn0        :: Word8
+  , _msgTrackingStateDetailed_cn0        :: !Word8
     -- ^ Carrier-to-Noise density
-  , _msgTrackingStateDetailed_lock       :: Word16
+  , _msgTrackingStateDetailed_lock       :: !Word16
     -- ^ Lock time. It is encoded according to DF402 from the RTCM 10403.2
     -- Amendment 2 specification. Valid values range from 0 to 15.
-  , _msgTrackingStateDetailed_sid        :: GnssSignal
+  , _msgTrackingStateDetailed_sid        :: !GnssSignal
     -- ^ GNSS signal identifier.
-  , _msgTrackingStateDetailed_doppler    :: Int32
+  , _msgTrackingStateDetailed_doppler    :: !Int32
     -- ^ Carrier Doppler frequency.
-  , _msgTrackingStateDetailed_doppler_std :: Word16
+  , _msgTrackingStateDetailed_doppler_std :: !Word16
     -- ^ Carrier Doppler frequency standard deviation.
-  , _msgTrackingStateDetailed_uptime     :: Word32
+  , _msgTrackingStateDetailed_uptime     :: !Word32
     -- ^ Number of seconds of continuous tracking. Specifies how much time signal
     -- is in continuous track.
-  , _msgTrackingStateDetailed_clock_offset :: Int16
+  , _msgTrackingStateDetailed_clock_offset :: !Int16
     -- ^ TCXO clock offset. Valid only when valid clock valid flag is set.
-  , _msgTrackingStateDetailed_clock_drift :: Int16
+  , _msgTrackingStateDetailed_clock_drift :: !Int16
     -- ^ TCXO clock drift. Valid only when valid clock valid flag is set.
-  , _msgTrackingStateDetailed_corr_spacing :: Word16
+  , _msgTrackingStateDetailed_corr_spacing :: !Word16
     -- ^ Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
-  , _msgTrackingStateDetailed_acceleration :: Int8
+  , _msgTrackingStateDetailed_acceleration :: !Int8
     -- ^ Acceleration. Valid only when acceleration valid flag is set.
-  , _msgTrackingStateDetailed_sync_flags :: Word8
+  , _msgTrackingStateDetailed_sync_flags :: !Word8
     -- ^ Synchronization status flags.
-  , _msgTrackingStateDetailed_tow_flags  :: Word8
+  , _msgTrackingStateDetailed_tow_flags  :: !Word8
     -- ^ TOW status flags.
-  , _msgTrackingStateDetailed_track_flags :: Word8
+  , _msgTrackingStateDetailed_track_flags :: !Word8
     -- ^ Tracking loop status flags.
-  , _msgTrackingStateDetailed_nav_flags  :: Word8
+  , _msgTrackingStateDetailed_nav_flags  :: !Word8
     -- ^ Navigation data status flags.
-  , _msgTrackingStateDetailed_pset_flags :: Word8
+  , _msgTrackingStateDetailed_pset_flags :: !Word8
     -- ^ Parameters sets flags.
-  , _msgTrackingStateDetailed_misc_flags :: Word8
+  , _msgTrackingStateDetailed_misc_flags :: !Word8
     -- ^ Miscellaneous flags.
   } deriving ( Show, Read, Eq )
 
@@ -145,11 +149,11 @@ $(makeLenses ''MsgTrackingStateDetailed)
 -- Tracking channel state for a specific satellite signal and measured signal
 -- power.
 data TrackingChannelState = TrackingChannelState
-  { _trackingChannelState_sid :: GnssSignal16
+  { _trackingChannelState_sid :: !GnssSignal16
     -- ^ GNSS signal being tracked
-  , _trackingChannelState_fcn :: Word8
+  , _trackingChannelState_fcn :: !Word8
     -- ^ Frequency channel number (GLONASS only)
-  , _trackingChannelState_cn0 :: Word8
+  , _trackingChannelState_cn0 :: !Word8
     -- ^ Carrier-to-Noise density.  Zero implies invalid cn0.
   } deriving ( Show, Read, Eq )
 
@@ -177,7 +181,7 @@ msgTrackingState = 0x0041
 -- states. It reports status and carrier-to-noise density measurements for all
 -- tracked satellites.
 data MsgTrackingState = MsgTrackingState
-  { _msgTrackingState_states :: [TrackingChannelState]
+  { _msgTrackingState_states :: ![TrackingChannelState]
     -- ^ Signal tracking channel state
   } deriving ( Show, Read, Eq )
 
@@ -199,9 +203,9 @@ $(makeLenses ''MsgTrackingState)
 --
 -- Structure containing in-phase and quadrature correlation components.
 data TrackingChannelCorrelation = TrackingChannelCorrelation
-  { _trackingChannelCorrelation_I :: Int32
+  { _trackingChannelCorrelation_I :: !Int32
     -- ^ In-phase correlation
-  , _trackingChannelCorrelation_Q :: Int32
+  , _trackingChannelCorrelation_Q :: !Int32
     -- ^ Quadrature correlation
   } deriving ( Show, Read, Eq )
 
@@ -226,11 +230,11 @@ msgTrackingIq = 0x001C
 -- When enabled, a tracking channel can output the correlations at each update
 -- interval.
 data MsgTrackingIq = MsgTrackingIq
-  { _msgTrackingIq_channel :: Word8
+  { _msgTrackingIq_channel :: !Word8
     -- ^ Tracking channel of origin
-  , _msgTrackingIq_sid   :: GnssSignal
+  , _msgTrackingIq_sid   :: !GnssSignal
     -- ^ GNSS signal identifier
-  , _msgTrackingIq_corrs :: [TrackingChannelCorrelation]
+  , _msgTrackingIq_corrs :: ![TrackingChannelCorrelation]
     -- ^ Early, Prompt and Late correlations
   } deriving ( Show, Read, Eq )
 
@@ -256,11 +260,11 @@ $(makeLenses ''MsgTrackingIq)
 --
 -- Deprecated.
 data TrackingChannelStateDepA = TrackingChannelStateDepA
-  { _trackingChannelStateDepA_state :: Word8
+  { _trackingChannelStateDepA_state :: !Word8
     -- ^ Status of tracking channel
-  , _trackingChannelStateDepA_prn :: Word8
+  , _trackingChannelStateDepA_prn :: !Word8
     -- ^ PRN-1 being tracked
-  , _trackingChannelStateDepA_cn0 :: Float
+  , _trackingChannelStateDepA_cn0 :: !Float
     -- ^ Carrier-to-noise density
   } deriving ( Show, Read, Eq )
 
@@ -286,7 +290,7 @@ msgTrackingStateDepA = 0x0016
 --
 -- Deprecated.
 data MsgTrackingStateDepA = MsgTrackingStateDepA
-  { _msgTrackingStateDepA_states :: [TrackingChannelStateDepA]
+  { _msgTrackingStateDepA_states :: ![TrackingChannelStateDepA]
     -- ^ Satellite tracking channel state
   } deriving ( Show, Read, Eq )
 
@@ -308,11 +312,11 @@ $(makeLenses ''MsgTrackingStateDepA)
 --
 -- Deprecated.
 data TrackingChannelStateDepB = TrackingChannelStateDepB
-  { _trackingChannelStateDepB_state :: Word8
+  { _trackingChannelStateDepB_state :: !Word8
     -- ^ Status of tracking channel
-  , _trackingChannelStateDepB_sid :: GnssSignal
+  , _trackingChannelStateDepB_sid :: !GnssSignal
     -- ^ GNSS signal being tracked
-  , _trackingChannelStateDepB_cn0 :: Float
+  , _trackingChannelStateDepB_cn0 :: !Float
     -- ^ Carrier-to-noise density
   } deriving ( Show, Read, Eq )
 
@@ -338,7 +342,7 @@ msgTrackingStateDepB = 0x0013
 --
 -- Deprecated.
 data MsgTrackingStateDepB = MsgTrackingStateDepB
-  { _msgTrackingStateDepB_states :: [TrackingChannelStateDepB]
+  { _msgTrackingStateDepB_states :: ![TrackingChannelStateDepB]
     -- ^ Signal tracking channel state
   } deriving ( Show, Read, Eq )
 

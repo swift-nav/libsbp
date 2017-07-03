@@ -1,3 +1,6 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 -- |
 -- Module:      SBP2YAML
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.

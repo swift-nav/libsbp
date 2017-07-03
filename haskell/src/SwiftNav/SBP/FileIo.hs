@@ -1,4 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
+{-# LANGUAGE NoImplicitPrelude           #-}
+{-# LANGUAGE TemplateHaskell             #-}
+{-# LANGUAGE RecordWildCards             #-}
+
 -- |
 -- Module:      SwiftNav.SBP.FileIo
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
@@ -45,13 +49,13 @@ msgFileioReadReq = 0x00A8
 -- fileio read message". A device will only respond to this message when it is
 -- received from sender ID 0x42.
 data MsgFileioReadReq = MsgFileioReadReq
-  { _msgFileioReadReq_sequence :: Word32
+  { _msgFileioReadReq_sequence :: !Word32
     -- ^ Read sequence number
-  , _msgFileioReadReq_offset   :: Word32
+  , _msgFileioReadReq_offset   :: !Word32
     -- ^ File offset
-  , _msgFileioReadReq_chunk_size :: Word8
+  , _msgFileioReadReq_chunk_size :: !Word8
     -- ^ Chunk size to read
-  , _msgFileioReadReq_filename :: Text
+  , _msgFileioReadReq_filename :: !Text
     -- ^ Name of the file to read from
   } deriving ( Show, Read, Eq )
 
@@ -85,9 +89,9 @@ msgFileioReadResp = 0x00A3
 -- length field indicates how many bytes were succesfully read. The sequence
 -- number in the response is preserved from the request.
 data MsgFileioReadResp = MsgFileioReadResp
-  { _msgFileioReadResp_sequence :: Word32
+  { _msgFileioReadResp_sequence :: !Word32
     -- ^ Read sequence number
-  , _msgFileioReadResp_contents :: [Word8]
+  , _msgFileioReadResp_contents :: ![Word8]
     -- ^ Contents of read file
   } deriving ( Show, Read, Eq )
 
@@ -121,11 +125,11 @@ msgFileioReadDirReq = 0x00A9
 -- MSG_PRINT message will print "Invalid fileio read message". A device will
 -- only respond to this message when it is received from sender ID 0x42.
 data MsgFileioReadDirReq = MsgFileioReadDirReq
-  { _msgFileioReadDirReq_sequence :: Word32
+  { _msgFileioReadDirReq_sequence :: !Word32
     -- ^ Read sequence number
-  , _msgFileioReadDirReq_offset :: Word32
+  , _msgFileioReadDirReq_offset :: !Word32
     -- ^ The offset to skip the first n elements of the file list
-  , _msgFileioReadDirReq_dirname :: Text
+  , _msgFileioReadDirReq_dirname :: !Text
     -- ^ Name of the directory to list
   } deriving ( Show, Read, Eq )
 
@@ -158,9 +162,9 @@ msgFileioReadDirResp = 0x00AA
 -- of the list is identified by an entry containing just the character 0xFF.
 -- The sequence number in the response is preserved from the request.
 data MsgFileioReadDirResp = MsgFileioReadDirResp
-  { _msgFileioReadDirResp_sequence :: Word32
+  { _msgFileioReadDirResp_sequence :: !Word32
     -- ^ Read sequence number
-  , _msgFileioReadDirResp_contents :: [Word8]
+  , _msgFileioReadDirResp_contents :: ![Word8]
     -- ^ Contents of read directory
   } deriving ( Show, Read, Eq )
 
@@ -190,7 +194,7 @@ msgFileioRemove = 0x00AC
 -- message". A device will only process this message when it is received from
 -- sender ID 0x42.
 data MsgFileioRemove = MsgFileioRemove
-  { _msgFileioRemove_filename :: Text
+  { _msgFileioRemove_filename :: !Text
     -- ^ Name of the file to delete
   } deriving ( Show, Read, Eq )
 
@@ -221,13 +225,13 @@ msgFileioWriteReq = 0x00AD
 -- message". A device will only  process this message when it is received from
 -- sender ID 0x42.
 data MsgFileioWriteReq = MsgFileioWriteReq
-  { _msgFileioWriteReq_sequence :: Word32
+  { _msgFileioWriteReq_sequence :: !Word32
     -- ^ Write sequence number
-  , _msgFileioWriteReq_offset :: Word32
+  , _msgFileioWriteReq_offset :: !Word32
     -- ^ Offset into the file at which to start writing in bytes
-  , _msgFileioWriteReq_filename :: Text
+  , _msgFileioWriteReq_filename :: !Text
     -- ^ Name of the file to write to
-  , _msgFileioWriteReq_data   :: [Word8]
+  , _msgFileioWriteReq_data   :: ![Word8]
     -- ^ Variable-length array of data to write
   } deriving ( Show, Read, Eq )
 
@@ -261,7 +265,7 @@ msgFileioWriteResp = 0x00AB
 -- MSG_FILEIO_WRITE_REQ message to check integrity of the write. The sequence
 -- number in the response is preserved from the request.
 data MsgFileioWriteResp = MsgFileioWriteResp
-  { _msgFileioWriteResp_sequence :: Word32
+  { _msgFileioWriteResp_sequence :: !Word32
     -- ^ Write sequence number
   } deriving ( Show, Read, Eq )
 

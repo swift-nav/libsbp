@@ -1,4 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
+{-# LANGUAGE NoImplicitPrelude           #-}
+{-# LANGUAGE TemplateHaskell             #-}
+{-# LANGUAGE RecordWildCards             #-}
+
 -- |
 -- Module:      SwiftNav.SBP.Imu
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
@@ -35,22 +39,22 @@ msgImuRaw = 0x0900
 -- Raw data from the Inertial Measurement Unit, containing accelerometer and
 -- gyroscope readings.
 data MsgImuRaw = MsgImuRaw
-  { _msgImuRaw_tow :: Word32
+  { _msgImuRaw_tow :: !Word32
     -- ^ Milliseconds since start of GPS week. If the high bit is set, the time
     -- is unknown or invalid.
-  , _msgImuRaw_tow_f :: Word8
+  , _msgImuRaw_tow_f :: !Word8
     -- ^ Milliseconds since start of GPS week, fractional part
-  , _msgImuRaw_acc_x :: Int16
+  , _msgImuRaw_acc_x :: !Int16
     -- ^ Acceleration in the body frame X axis
-  , _msgImuRaw_acc_y :: Int16
+  , _msgImuRaw_acc_y :: !Int16
     -- ^ Acceleration in the body frame Y axis
-  , _msgImuRaw_acc_z :: Int16
+  , _msgImuRaw_acc_z :: !Int16
     -- ^ Acceleration in the body frame Z axis
-  , _msgImuRaw_gyr_x :: Int16
+  , _msgImuRaw_gyr_x :: !Int16
     -- ^ Angular rate around the body frame X axis
-  , _msgImuRaw_gyr_y :: Int16
+  , _msgImuRaw_gyr_y :: !Int16
     -- ^ Angular rate around the body frame Y axis
-  , _msgImuRaw_gyr_z :: Int16
+  , _msgImuRaw_gyr_z :: !Int16
     -- ^ Angular rate around the body frame Z axis
   } deriving ( Show, Read, Eq )
 
@@ -91,11 +95,11 @@ msgImuAux = 0x0901
 -- always be consistent but the rest of the payload is device specific and
 -- depends on the value of `imu_type`.
 data MsgImuAux = MsgImuAux
-  { _msgImuAux_imu_type :: Word8
+  { _msgImuAux_imu_type :: !Word8
     -- ^ IMU type
-  , _msgImuAux_temp   :: Int16
+  , _msgImuAux_temp   :: !Int16
     -- ^ Raw IMU temperature
-  , _msgImuAux_imu_conf :: Word8
+  , _msgImuAux_imu_conf :: !Word8
     -- ^ IMU configuration
   } deriving ( Show, Read, Eq )
 

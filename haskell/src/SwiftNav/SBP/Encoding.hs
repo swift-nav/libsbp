@@ -1,4 +1,6 @@
-{-# OPTIONS -fno-warn-orphans #-}
+{-# OPTIONS -fno-warn-orphans  #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+
 -- |
 -- Module:      SwiftNav.SBP.Encoding
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.

@@ -1,4 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
+{-# LANGUAGE NoImplicitPrelude           #-}
+{-# LANGUAGE TemplateHaskell             #-}
+{-# LANGUAGE RecordWildCards             #-}
+
 -- |
 -- Module:      (((module_name)))
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
@@ -49,12 +53,12 @@ data (((m.identifier|to_data))) = (((m.identifier|to_data)))
 ((*- endif *))
 ((*- for f in m.fields *))
 ((*- if loop.first *))
-  { (((("_"+(m.identifier|to_global)+"_"+(f.identifier)).ljust(m|max_fid_len)))) :: (((f|to_type)))
+  { (((("_"+(m.identifier|to_global)+"_"+(f.identifier)).ljust(m|max_fid_len)))) :: !(((f|to_type)))
     ((*- if f.desc *))
     -- ^ (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n    -- "))))
     ((*- endif *))
 ((*- else *))
-  , (((("_"+(m.identifier|to_global)+"_"+(f.identifier)).ljust(m|max_fid_len)))) :: (((f|to_type)))
+  , (((("_"+(m.identifier|to_global)+"_"+(f.identifier)).ljust(m|max_fid_len)))) :: !(((f|to_type)))
     ((*- if f.desc *))
     -- ^ (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n    -- "))))
     ((*- endif *))

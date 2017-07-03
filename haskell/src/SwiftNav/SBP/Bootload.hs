@@ -1,4 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
+{-# LANGUAGE NoImplicitPrelude           #-}
+{-# LANGUAGE TemplateHaskell             #-}
+{-# LANGUAGE RecordWildCards             #-}
+
 -- |
 -- Module:      SwiftNav.SBP.Bootload
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
@@ -63,9 +67,9 @@ msgBootloaderHandshakeResp = 0x00B4
 -- MSG_BOOTLOADER_HANDSHAKE_REQ.  The payload contains the bootloader version
 -- number and the SBP protocol version number.
 data MsgBootloaderHandshakeResp = MsgBootloaderHandshakeResp
-  { _msgBootloaderHandshakeResp_flags :: Word32
+  { _msgBootloaderHandshakeResp_flags :: !Word32
     -- ^ Bootloader flags
-  , _msgBootloaderHandshakeResp_version :: Text
+  , _msgBootloaderHandshakeResp_version :: !Text
     -- ^ Bootloader version number
   } deriving ( Show, Read, Eq )
 
@@ -92,7 +96,7 @@ msgBootloaderJumpToApp = 0x00B1
 --
 -- The host initiates the bootloader to jump to the application.
 data MsgBootloaderJumpToApp = MsgBootloaderJumpToApp
-  { _msgBootloaderJumpToApp_jump :: Word8
+  { _msgBootloaderJumpToApp_jump :: !Word8
     -- ^ Ignored by the device
   } deriving ( Show, Read, Eq )
 
@@ -148,7 +152,7 @@ msgNapDeviceDnaResp = 0x00DD
 -- that this ID is tied to the FPGA, and not related to the Piksi's serial
 -- number.
 data MsgNapDeviceDnaResp = MsgNapDeviceDnaResp
-  { _msgNapDeviceDnaResp_dna :: [Word8]
+  { _msgNapDeviceDnaResp_dna :: ![Word8]
     -- ^ 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
   } deriving ( Show, Read, Eq )
 
@@ -173,7 +177,7 @@ msgBootloaderHandshakeDepA = 0x00B0
 --
 -- Deprecated.
 data MsgBootloaderHandshakeDepA = MsgBootloaderHandshakeDepA
-  { _msgBootloaderHandshakeDepA_handshake :: [Word8]
+  { _msgBootloaderHandshakeDepA_handshake :: ![Word8]
     -- ^ Version number string (not NULL terminated)
   } deriving ( Show, Read, Eq )
 
