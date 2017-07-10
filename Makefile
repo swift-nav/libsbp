@@ -54,6 +54,7 @@ help:
 	@echo
 
 all: deps-generator c python javascript java haskell docs
+gen: gen-c gen-python gen-javascript gen-java gen-haskell
 docs: verify-prereq-docs deps-generator pdf html
 
 c:          deps-c          gen-c          test-c
