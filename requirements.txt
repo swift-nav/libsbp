@@ -1,0 +1,2 @@
+-r generator/requirements.txt
+-e generator
