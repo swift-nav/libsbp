@@ -28,6 +28,10 @@
 #include "(((i)))"
 ((*- endfor *))
 
+#ifdef _MSC_VER
+#pragma pack(1)
+#endif
+
 ((* for m in msgs *))
 ((*- if m.desc *))
 /** (((m.short_desc)))
@@ -39,7 +43,11 @@
 #define SBP_(((m.identifier.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
 ((*- endif *))
 ((*- if m.fields *))
+#ifdef _MSC_VER
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   ((*- for f in m.fields *))
   ((*- if f.desc *))
   (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4)))) /**< (((f.desc))) ((* if f.units *))[(((f.units)))] ((* endif *))*/
@@ -52,5 +60,9 @@ typedef struct __attribute__((packed)) {
 
 ((* endfor *))
 /** \} */
+
+#ifdef _MSC_VER
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */
