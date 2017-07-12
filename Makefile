@@ -8,7 +8,7 @@ MAKEFLAGS += SWIFTNAV_ROOT=$(SWIFTNAV_ROOT)
 SBP_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/yaml/swiftnav/sbp/
 SBP_TESTS_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/tests/yaml/
 PYTHON := $(SWIFTNAV_ROOT)/.venv/bin/python
-SBP_GEN_BIN := $(PYTHON) -m sbpg.generator
+SBP_GEN_BIN := tox --
 
 SBP_VERSION := $(shell python2.7 python/sbp/version.py)
 SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
@@ -107,15 +107,9 @@ deps-java: verify-prereq-java
 
 deps-haskell: verify-prereq-haskell
 
-deps-generator: verify-prereq-generator
-	$(call announce-begin,"Installing generator dependencies")
-	virtualenv -p python2.7 $(SWIFTNAV_ROOT)/.venv
-	$(PYTHON) -m pip install -U $(SWIFTNAV_ROOT)/generator/
-	$(call announce-end,"Finished installing generator dependencies")
-
 # Generators
 
-gen-c: deps-generator
+gen-c:
 	$(call announce-begin,"Generating C headers")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
@@ -133,7 +127,7 @@ gen-c: deps-generator
 
 	$(call announce-end,"Finished generating C. Please check $(SWIFTNAV_ROOT)/c/include/libsbp.")
 
-gen-python: deps-generator
+gen-python:
 	$(call announce-begin,"Generating Python bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
@@ -142,7 +136,7 @@ gen-python: deps-generator
 		       --python
 	$(call announce-end,"Finished generating Python bindings. Please check $(SWIFTNAV_ROOT)/python/sbp")
 
-gen-javascript: deps-generator
+gen-javascript:
 	$(call announce-begin,"Generating JavaScript bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
@@ -154,7 +148,7 @@ gen-javascript: deps-generator
 	@- npm version "v$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" --no-git-tag-version >/dev/null 2>&1
 	$(call announce-end,"Finished generating JavaScript bindings. Please check $(SWIFTNAV_ROOT)/javascript/sbp")
 
-gen-java: deps-generator
+gen-java:
 	$(call announce-begin,"Generating Java bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
@@ -163,7 +157,7 @@ gen-java: deps-generator
 		       --java
 	$(call announce-end,"Finished generating Java bindings. Please check $(SWIFTNAV_ROOT)/java/src/sbp")
 
-gen-haskell: deps-generator
+gen-haskell:
 	$(call announce-begin,"Generating Haskell bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
