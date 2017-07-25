@@ -13,12 +13,13 @@
 --
 -- (((description | replace("\n", " ") | wordwrap(width=76, wrapstring="\n-- "))))
 
-module (((module_name))) where
+module (((module_name)))
+  ( module (((module_name)))
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -27,7 +28,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 ((*- for m in module_includes *))
 import (((m)))
@@ -86,14 +87,12 @@ instance Binary (((m.identifier|to_data))) where
 ((*- for f in m.fields *))
     (((f|to_put))) ((("_"+(m.identifier|to_global)+"_"+(f.identifier))))
 ((*- endfor *))
-((*- endif *))
+((* endif *))
 
 ((*- if m.sbp_id *))
-
-$(deriveSBP '(((m.identifier|to_global))) ''(((m.identifier|to_data))))
-((* endif *))
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_(((m.identifier|to_global)))_" . P.stripPrefix "_(((m.identifier|to_global)))_"}
-             ''(((m.identifier|to_data))))
+$(makeSBP '(((m.identifier|to_global))) ''(((m.identifier|to_data))))
+((*- endif *))
+$(makeJSON "_(((m.identifier|to_global)))_" ''(((m.identifier|to_data))))
 $(makeLenses ''(((m.identifier|to_data))))
 
 ((*- endif *))

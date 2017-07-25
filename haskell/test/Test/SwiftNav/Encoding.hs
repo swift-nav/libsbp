@@ -2,14 +2,14 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Test.SwiftNav.SBP.Encoding
+module Test.SwiftNav.Encoding
   ( tests
   ) where
 
 import           BasicPrelude
 import qualified Data.Aeson            as A
 import           Data.ByteString       as BS
-import           SwiftNav.SBP.Encoding ()
+import           SwiftNav.Internal     ()
 import           Test.QuickCheck
 import           Test.Tasty
 import           Test.Tasty.HUnit

@@ -13,12 +13,13 @@
 --
 -- Various structs shared between modules
 
-module SwiftNav.SBP.Gnss where
+module SwiftNav.SBP.Gnss
+  ( module SwiftNav.SBP.Gnss
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -27,7 +28,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
@@ -50,8 +51,8 @@ instance Binary GnssSignal16 where
   put GnssSignal16 {..} = do
     putWord8 _gnssSignal16_sat
     putWord8 _gnssSignal16_code
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gnssSignal16_" . P.stripPrefix "_gnssSignal16_"}
-             ''GnssSignal16)
+
+$(makeJSON "_gnssSignal16_" ''GnssSignal16)
 $(makeLenses ''GnssSignal16)
 
 -- | GnssSignal.
@@ -79,8 +80,8 @@ instance Binary GnssSignal where
     putWord16le _gnssSignal_sat
     putWord8 _gnssSignal_code
     putWord8 _gnssSignal_reserved
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gnssSignal_" . P.stripPrefix "_gnssSignal_"}
-             ''GnssSignal)
+
+$(makeJSON "_gnssSignal_" ''GnssSignal)
 $(makeLenses ''GnssSignal)
 
 -- | GPSTime.
@@ -103,8 +104,8 @@ instance Binary GpsTime where
   put GpsTime {..} = do
     putWord32le _gpsTime_tow
     putWord16le _gpsTime_wn
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gpsTime_" . P.stripPrefix "_gpsTime_"}
-             ''GpsTime)
+
+$(makeJSON "_gpsTime_" ''GpsTime)
 $(makeLenses ''GpsTime)
 
 -- | GPSTimeSec.
@@ -127,8 +128,8 @@ instance Binary GpsTimeSec where
   put GpsTimeSec {..} = do
     putWord32le _gpsTimeSec_tow
     putWord16le _gpsTimeSec_wn
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gpsTimeSec_" . P.stripPrefix "_gpsTimeSec_"}
-             ''GpsTimeSec)
+
+$(makeJSON "_gpsTimeSec_" ''GpsTimeSec)
 $(makeLenses ''GpsTimeSec)
 
 -- | GPSTimeNano.
@@ -157,8 +158,8 @@ instance Binary GpsTimeNano where
     putWord32le _gpsTimeNano_tow
     putWord32le $ fromIntegral _gpsTimeNano_ns_residual
     putWord16le _gpsTimeNano_wn
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_gpsTimeNano_" . P.stripPrefix "_gpsTimeNano_"}
-             ''GpsTimeNano)
+
+$(makeJSON "_gpsTimeNano_" ''GpsTimeNano)
 $(makeLenses ''GpsTimeNano)
 
 -- | CarrierPhase.
@@ -182,6 +183,6 @@ instance Binary CarrierPhase where
   put CarrierPhase {..} = do
     putWord32le $ fromIntegral _carrierPhase_i
     putWord8 _carrierPhase_f
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_carrierPhase_" . P.stripPrefix "_carrierPhase_"}
-             ''CarrierPhase)
+
+$(makeJSON "_carrierPhase_" ''CarrierPhase)
 $(makeLenses ''CarrierPhase)

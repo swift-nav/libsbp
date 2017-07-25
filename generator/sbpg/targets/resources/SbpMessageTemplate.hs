@@ -14,11 +14,13 @@
 --
 -- SBP message containers.
 
-module SwiftNav.SBP.Msg where
+module SwiftNav.SBP.Msg
+  ( module SwiftNav.SBP.Msg
+  ) where
 
-import BasicPrelude             hiding (lookup)
-import Control.Lens             hiding ((.=))
-import Data.Aeson               hiding (decode, decode')
+import BasicPrelude
+import Control.Lens
+import Data.Aeson               hiding (decode)
 import Data.Binary
 import Data.ByteString.Lazy     hiding (ByteString)
 ((*- for m in modules *))
@@ -50,8 +52,8 @@ instance Binary SBPMsg where
   get = do
     preamble <- getWord8
     if preamble /= msgSBPPreamble then get else do
-      decode' <$> get where
-        decode' m@Msg {..}
+      decoder <$> get where
+        decoder m@Msg {..}
           | checkCrc m /= _msgSBPCrc = SBPMsgBadCrc m
           ((*- for m in msgs *))
           | _msgSBPType == (((m | to_global))) = SBP(((m))) (decode (fromStrict _msgSBPPayload)) m
@@ -60,33 +62,34 @@ instance Binary SBPMsg where
 
   put sm = do
     putWord8 msgSBPPreamble
-    encode' sm where
+    encoder sm where
       ((*- for m in msgs *))
-      encode' (SBP(((m))) _ m) = put m
+      encoder (SBP(((m))) _ m) = put m
       ((*- endfor *))
-      encode' (SBPMsgUnknown m) = put m
-      encode' (SBPMsgBadCrc m) = put m
+      encoder (SBPMsgUnknown m) = put m
+      encoder (SBPMsgBadCrc m) = put m
 
 instance FromJSON SBPMsg where
   parseJSON obj@(Object o) = do
     msgType <- o .: "msg_type"
-    decode' msgType where
-      decode' msgType
+    payload <- o .: "payload"
+    decoder msgType payload where
+      decoder msgType payload
 ((*- for m in msgs *))
-        | msgType == (((m | to_global))) = SBP(((m))) <$> parseJSON obj <*> parseJSON obj
+        | msgType == (((m | to_global))) = SBP(((m))) <$> pure (decode (fromStrict payload)) <*> parseJSON obj
 ((*- endfor *))
         | otherwise = SBPMsgUnknown <$> parseJSON obj
   parseJSON _ = mzero
 
-mergeValues :: Value -> Value -> Value
-mergeValues (Object a) (Object b) = Object (a <> b)
-mergeValues (Object a) _          = Object a
-mergeValues _          (Object b) = Object b
-mergeValues _          v          = v
+(<<>>) :: Value -> Value -> Value
+(Object a) <<>> (Object b) = Object (a <> b)
+(Object a) <<>> _          = Object a
+_          <<>> (Object b) = Object b
+_          <<>> v          = v
 
 instance ToJSON SBPMsg where
 ((*- for m in msgs *))
-  toJSON (SBP(((m))) n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBP(((m))) n m) = toJSON n <<>> toJSON m
 ((*- endfor *))
   toJSON (SBPMsgBadCrc m) = toJSON m
   toJSON (SBPMsgUnknown m) = toJSON m

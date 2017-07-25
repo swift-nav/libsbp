@@ -13,12 +13,13 @@
 --
 -- Standardized system messages from Swift Navigation devices.
 
-module SwiftNav.SBP.System where
+module SwiftNav.SBP.System
+  ( module SwiftNav.SBP.System
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -27,7 +28,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
@@ -60,10 +61,8 @@ instance Binary MsgStartup where
     putWord8 _msgStartup_startup_type
     putWord16le _msgStartup_reserved
 
-$(deriveSBP 'msgStartup ''MsgStartup)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStartup_" . P.stripPrefix "_msgStartup_"}
-             ''MsgStartup)
+$(makeSBP 'msgStartup ''MsgStartup)
+$(makeJSON "_msgStartup_" ''MsgStartup)
 $(makeLenses ''MsgStartup)
 
 msgDgnssStatus :: Word16
@@ -99,10 +98,8 @@ instance Binary MsgDgnssStatus where
     putWord8 _msgDgnssStatus_num_signals
     putByteString $ encodeUtf8 _msgDgnssStatus_source
 
-$(deriveSBP 'msgDgnssStatus ''MsgDgnssStatus)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDgnssStatus_" . P.stripPrefix "_msgDgnssStatus_"}
-             ''MsgDgnssStatus)
+$(makeSBP 'msgDgnssStatus ''MsgDgnssStatus)
+$(makeJSON "_msgDgnssStatus_" ''MsgDgnssStatus)
 $(makeLenses ''MsgDgnssStatus)
 
 msgHeartbeat :: Word16
@@ -130,8 +127,6 @@ instance Binary MsgHeartbeat where
   put MsgHeartbeat {..} = do
     putWord32le _msgHeartbeat_flags
 
-$(deriveSBP 'msgHeartbeat ''MsgHeartbeat)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgHeartbeat_" . P.stripPrefix "_msgHeartbeat_"}
-             ''MsgHeartbeat)
+$(makeSBP 'msgHeartbeat ''MsgHeartbeat)
+$(makeJSON "_msgHeartbeat_" ''MsgHeartbeat)
 $(makeLenses ''MsgHeartbeat)

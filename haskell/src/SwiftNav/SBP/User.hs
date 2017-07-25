@@ -13,12 +13,13 @@
 --
 -- Messages reserved for use by the user.
 
-module SwiftNav.SBP.User where
+module SwiftNav.SBP.User
+  ( module SwiftNav.SBP.User
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -27,7 +28,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
@@ -51,8 +52,6 @@ instance Binary MsgUserData where
   put MsgUserData {..} = do
     mapM_ putWord8 _msgUserData_contents
 
-$(deriveSBP 'msgUserData ''MsgUserData)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUserData_" . P.stripPrefix "_msgUserData_"}
-             ''MsgUserData)
+$(makeSBP 'msgUserData ''MsgUserData)
+$(makeJSON "_msgUserData_" ''MsgUserData)
 $(makeLenses ''MsgUserData)

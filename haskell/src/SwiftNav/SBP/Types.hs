@@ -13,8 +13,11 @@
 --
 -- Common SBP type requirements, containers, and serialization
 -- utilities.
+--
 
-module SwiftNav.SBP.Types where
+module SwiftNav.SBP.Types
+  ( module SwiftNav.SBP.Types
+  ) where
 
 import BasicPrelude            hiding (lookup)
 import Control.Lens            hiding ((.=))
@@ -24,14 +27,16 @@ import Data.Binary.Get
 import Data.Binary.Put
 import Data.ByteString.Builder
 import SwiftNav.CRC16
-import SwiftNav.SBP.Encoding   ()
+import SwiftNav.Encoding       ()
 
 -- | Denotes the start of frame transmission. For v1.0, always 0x55.
+--
 msgSBPPreamble :: Word8
 msgSBPPreamble = 0x55
 
 -- | Default sender ID. Intended for messages sent from the host to
 -- the device.
+--
 defaultSender :: Word16
 defaultSender = 0x42
 
@@ -43,6 +48,7 @@ defaultSender = 0x42
 -- to transmit solutions, observations, status and debugging
 -- messages, as well as receive messages from the host operating
 -- system.
+--
 data Msg = Msg
   { _msgSBPType    :: !Word16
     -- ^ Uniquely identifies the type of the payload contents
@@ -66,19 +72,19 @@ $(makeClassy ''Msg)
 
 instance Binary Msg where
   get = do
-    _msgSBPType <- getWord16le
-    _msgSBPSender <- getWord16le
-    _msgSBPLen <- getWord8
+    _msgSBPType    <- getWord16le
+    _msgSBPSender  <- getWord16le
+    _msgSBPLen     <- getWord8
     _msgSBPPayload <- getByteString $ fromIntegral _msgSBPLen
-    _msgSBPCrc <- getWord16le
+    _msgSBPCrc     <- getWord16le
     return Msg {..}
 
   put Msg {..} = do
-    putWord16le _msgSBPType
-    putWord16le _msgSBPSender
-    putWord8 _msgSBPLen
+    putWord16le   _msgSBPType
+    putWord16le   _msgSBPSender
+    putWord8      _msgSBPLen
     putByteString _msgSBPPayload
-    putWord16le _msgSBPCrc
+    putWord16le   _msgSBPCrc
 
 checkCrc :: Msg -> Word16
 checkCrc Msg {..} =
@@ -101,14 +107,15 @@ instance ToJSON Msg where
   toJSON Msg {..} = object
     [ "preamble" .= msgSBPPreamble
     , "msg_type" .= _msgSBPType
-    , "sender" .= _msgSBPSender
-    , "length" .= _msgSBPLen
-    , "payload" .= _msgSBPPayload
-    , "crc" .= _msgSBPCrc
+    , "sender"   .= _msgSBPSender
+    , "length"   .= _msgSBPLen
+    , "payload"  .= _msgSBPPayload
+    , "crc"      .= _msgSBPCrc
     ]
 
 -- | Class of generic representation of specialized SBP messages into
 -- SBP message frames.
+--
 class Binary a => ToSBP a where
     -- | Convert an SBP message record that is serializable and a two-byte
     -- senderID to a binary into an SBP message frame.

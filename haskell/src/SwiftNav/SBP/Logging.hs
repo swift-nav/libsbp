@@ -13,12 +13,13 @@
 --
 -- Logging and debugging messages from the device.
 
-module SwiftNav.SBP.Logging where
+module SwiftNav.SBP.Logging
+  ( module SwiftNav.SBP.Logging
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -27,7 +28,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
@@ -56,10 +57,8 @@ instance Binary MsgLog where
     putWord8 _msgLog_level
     putByteString $ encodeUtf8 _msgLog_text
 
-$(deriveSBP 'msgLog ''MsgLog)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgLog_" . P.stripPrefix "_msgLog_"}
-             ''MsgLog)
+$(makeSBP 'msgLog ''MsgLog)
+$(makeJSON "_msgLog_" ''MsgLog)
 $(makeLenses ''MsgLog)
 
 msgFwd :: Word16
@@ -95,10 +94,8 @@ instance Binary MsgFwd where
     putWord8 _msgFwd_protocol
     putByteString $ encodeUtf8 _msgFwd_fwd_payload
 
-$(deriveSBP 'msgFwd ''MsgFwd)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFwd_" . P.stripPrefix "_msgFwd_"}
-             ''MsgFwd)
+$(makeSBP 'msgFwd ''MsgFwd)
+$(makeJSON "_msgFwd_" ''MsgFwd)
 $(makeLenses ''MsgFwd)
 
 msgTweet :: Word16
@@ -120,10 +117,8 @@ instance Binary MsgTweet where
   put MsgTweet {..} = do
     putByteString $ encodeUtf8 _msgTweet_tweet
 
-$(deriveSBP 'msgTweet ''MsgTweet)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTweet_" . P.stripPrefix "_msgTweet_"}
-             ''MsgTweet)
+$(makeSBP 'msgTweet ''MsgTweet)
+$(makeJSON "_msgTweet_" ''MsgTweet)
 $(makeLenses ''MsgTweet)
 
 msgPrintDep :: Word16
@@ -145,8 +140,6 @@ instance Binary MsgPrintDep where
   put MsgPrintDep {..} = do
     putByteString $ encodeUtf8 _msgPrintDep_text
 
-$(deriveSBP 'msgPrintDep ''MsgPrintDep)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPrintDep_" . P.stripPrefix "_msgPrintDep_"}
-             ''MsgPrintDep)
+$(makeSBP 'msgPrintDep ''MsgPrintDep)
+$(makeJSON "_msgPrintDep_" ''MsgPrintDep)
 $(makeLenses ''MsgPrintDep)

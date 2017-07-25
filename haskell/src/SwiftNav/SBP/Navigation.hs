@@ -21,12 +21,13 @@
 -- provided, well-surveyed base station position (if available) and the RTK
 -- solution in tandem.
 
-module SwiftNav.SBP.Navigation where
+module SwiftNav.SBP.Navigation
+  ( module SwiftNav.SBP.Navigation
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -35,7 +36,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
@@ -79,10 +80,8 @@ instance Binary MsgGpsTime where
     putWord32le $ fromIntegral _msgGpsTime_ns_residual
     putWord8 _msgGpsTime_flags
 
-$(deriveSBP 'msgGpsTime ''MsgGpsTime)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGpsTime_" . P.stripPrefix "_msgGpsTime_"}
-             ''MsgGpsTime)
+$(makeSBP 'msgGpsTime ''MsgGpsTime)
+$(makeJSON "_msgGpsTime_" ''MsgGpsTime)
 $(makeLenses ''MsgGpsTime)
 
 msgUtcTime :: Word16
@@ -138,10 +137,8 @@ instance Binary MsgUtcTime where
     putWord8 _msgUtcTime_seconds
     putWord32le _msgUtcTime_ns
 
-$(deriveSBP 'msgUtcTime ''MsgUtcTime)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUtcTime_" . P.stripPrefix "_msgUtcTime_"}
-             ''MsgUtcTime)
+$(makeSBP 'msgUtcTime ''MsgUtcTime)
+$(makeJSON "_msgUtcTime_" ''MsgUtcTime)
 $(makeLenses ''MsgUtcTime)
 
 msgDops :: Word16
@@ -190,10 +187,8 @@ instance Binary MsgDops where
     putWord16le _msgDops_vdop
     putWord8 _msgDops_flags
 
-$(deriveSBP 'msgDops ''MsgDops)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDops_" . P.stripPrefix "_msgDops_"}
-             ''MsgDops)
+$(makeSBP 'msgDops ''MsgDops)
+$(makeJSON "_msgDops_" ''MsgDops)
 $(makeLenses ''MsgDops)
 
 msgPosEcef :: Word16
@@ -245,10 +240,8 @@ instance Binary MsgPosEcef where
     putWord8 _msgPosEcef_n_sats
     putWord8 _msgPosEcef_flags
 
-$(deriveSBP 'msgPosEcef ''MsgPosEcef)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosEcef_" . P.stripPrefix "_msgPosEcef_"}
-             ''MsgPosEcef)
+$(makeSBP 'msgPosEcef ''MsgPosEcef)
+$(makeJSON "_msgPosEcef_" ''MsgPosEcef)
 $(makeLenses ''MsgPosEcef)
 
 msgPosLlh :: Word16
@@ -304,10 +297,8 @@ instance Binary MsgPosLlh where
     putWord8 _msgPosLlh_n_sats
     putWord8 _msgPosLlh_flags
 
-$(deriveSBP 'msgPosLlh ''MsgPosLlh)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosLlh_" . P.stripPrefix "_msgPosLlh_"}
-             ''MsgPosLlh)
+$(makeSBP 'msgPosLlh ''MsgPosLlh)
+$(makeJSON "_msgPosLlh_" ''MsgPosLlh)
 $(makeLenses ''MsgPosLlh)
 
 msgBaselineEcef :: Word16
@@ -356,10 +347,8 @@ instance Binary MsgBaselineEcef where
     putWord8 _msgBaselineEcef_n_sats
     putWord8 _msgBaselineEcef_flags
 
-$(deriveSBP 'msgBaselineEcef ''MsgBaselineEcef)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineEcef_" . P.stripPrefix "_msgBaselineEcef_"}
-             ''MsgBaselineEcef)
+$(makeSBP 'msgBaselineEcef ''MsgBaselineEcef)
+$(makeJSON "_msgBaselineEcef_" ''MsgBaselineEcef)
 $(makeLenses ''MsgBaselineEcef)
 
 msgBaselineNed :: Word16
@@ -414,10 +403,8 @@ instance Binary MsgBaselineNed where
     putWord8 _msgBaselineNed_n_sats
     putWord8 _msgBaselineNed_flags
 
-$(deriveSBP 'msgBaselineNed ''MsgBaselineNed)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineNed_" . P.stripPrefix "_msgBaselineNed_"}
-             ''MsgBaselineNed)
+$(makeSBP 'msgBaselineNed ''MsgBaselineNed)
+$(makeJSON "_msgBaselineNed_" ''MsgBaselineNed)
 $(makeLenses ''MsgBaselineNed)
 
 msgVelEcef :: Word16
@@ -465,10 +452,8 @@ instance Binary MsgVelEcef where
     putWord8 _msgVelEcef_n_sats
     putWord8 _msgVelEcef_flags
 
-$(deriveSBP 'msgVelEcef ''MsgVelEcef)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelEcef_" . P.stripPrefix "_msgVelEcef_"}
-             ''MsgVelEcef)
+$(makeSBP 'msgVelEcef ''MsgVelEcef)
+$(makeJSON "_msgVelEcef_" ''MsgVelEcef)
 $(makeLenses ''MsgVelEcef)
 
 msgVelNed :: Word16
@@ -521,10 +506,8 @@ instance Binary MsgVelNed where
     putWord8 _msgVelNed_n_sats
     putWord8 _msgVelNed_flags
 
-$(deriveSBP 'msgVelNed ''MsgVelNed)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelNed_" . P.stripPrefix "_msgVelNed_"}
-             ''MsgVelNed)
+$(makeSBP 'msgVelNed ''MsgVelNed)
+$(makeJSON "_msgVelNed_" ''MsgVelNed)
 $(makeLenses ''MsgVelNed)
 
 msgBaselineHeading :: Word16
@@ -561,10 +544,8 @@ instance Binary MsgBaselineHeading where
     putWord8 _msgBaselineHeading_n_sats
     putWord8 _msgBaselineHeading_flags
 
-$(deriveSBP 'msgBaselineHeading ''MsgBaselineHeading)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineHeading_" . P.stripPrefix "_msgBaselineHeading_"}
-             ''MsgBaselineHeading)
+$(makeSBP 'msgBaselineHeading ''MsgBaselineHeading)
+$(makeJSON "_msgBaselineHeading_" ''MsgBaselineHeading)
 $(makeLenses ''MsgBaselineHeading)
 
 msgAgeCorrections :: Word16
@@ -591,10 +572,8 @@ instance Binary MsgAgeCorrections where
     putWord32le _msgAgeCorrections_tow
     putWord16le _msgAgeCorrections_age
 
-$(deriveSBP 'msgAgeCorrections ''MsgAgeCorrections)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAgeCorrections_" . P.stripPrefix "_msgAgeCorrections_"}
-             ''MsgAgeCorrections)
+$(makeSBP 'msgAgeCorrections ''MsgAgeCorrections)
+$(makeJSON "_msgAgeCorrections_" ''MsgAgeCorrections)
 $(makeLenses ''MsgAgeCorrections)
 
 msgGpsTimeDepA :: Word16
@@ -637,10 +616,8 @@ instance Binary MsgGpsTimeDepA where
     putWord32le $ fromIntegral _msgGpsTimeDepA_ns_residual
     putWord8 _msgGpsTimeDepA_flags
 
-$(deriveSBP 'msgGpsTimeDepA ''MsgGpsTimeDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGpsTimeDepA_" . P.stripPrefix "_msgGpsTimeDepA_"}
-             ''MsgGpsTimeDepA)
+$(makeSBP 'msgGpsTimeDepA ''MsgGpsTimeDepA)
+$(makeJSON "_msgGpsTimeDepA_" ''MsgGpsTimeDepA)
 $(makeLenses ''MsgGpsTimeDepA)
 
 msgDopsDepA :: Word16
@@ -683,10 +660,8 @@ instance Binary MsgDopsDepA where
     putWord16le _msgDopsDepA_hdop
     putWord16le _msgDopsDepA_vdop
 
-$(deriveSBP 'msgDopsDepA ''MsgDopsDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDopsDepA_" . P.stripPrefix "_msgDopsDepA_"}
-             ''MsgDopsDepA)
+$(makeSBP 'msgDopsDepA ''MsgDopsDepA)
+$(makeJSON "_msgDopsDepA_" ''MsgDopsDepA)
 $(makeLenses ''MsgDopsDepA)
 
 msgPosEcefDepA :: Word16
@@ -738,10 +713,8 @@ instance Binary MsgPosEcefDepA where
     putWord8 _msgPosEcefDepA_n_sats
     putWord8 _msgPosEcefDepA_flags
 
-$(deriveSBP 'msgPosEcefDepA ''MsgPosEcefDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosEcefDepA_" . P.stripPrefix "_msgPosEcefDepA_"}
-             ''MsgPosEcefDepA)
+$(makeSBP 'msgPosEcefDepA ''MsgPosEcefDepA)
+$(makeJSON "_msgPosEcefDepA_" ''MsgPosEcefDepA)
 $(makeLenses ''MsgPosEcefDepA)
 
 msgPosLlhDepA :: Word16
@@ -797,10 +770,8 @@ instance Binary MsgPosLlhDepA where
     putWord8 _msgPosLlhDepA_n_sats
     putWord8 _msgPosLlhDepA_flags
 
-$(deriveSBP 'msgPosLlhDepA ''MsgPosLlhDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgPosLlhDepA_" . P.stripPrefix "_msgPosLlhDepA_"}
-             ''MsgPosLlhDepA)
+$(makeSBP 'msgPosLlhDepA ''MsgPosLlhDepA)
+$(makeJSON "_msgPosLlhDepA_" ''MsgPosLlhDepA)
 $(makeLenses ''MsgPosLlhDepA)
 
 msgBaselineEcefDepA :: Word16
@@ -849,10 +820,8 @@ instance Binary MsgBaselineEcefDepA where
     putWord8 _msgBaselineEcefDepA_n_sats
     putWord8 _msgBaselineEcefDepA_flags
 
-$(deriveSBP 'msgBaselineEcefDepA ''MsgBaselineEcefDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineEcefDepA_" . P.stripPrefix "_msgBaselineEcefDepA_"}
-             ''MsgBaselineEcefDepA)
+$(makeSBP 'msgBaselineEcefDepA ''MsgBaselineEcefDepA)
+$(makeJSON "_msgBaselineEcefDepA_" ''MsgBaselineEcefDepA)
 $(makeLenses ''MsgBaselineEcefDepA)
 
 msgBaselineNedDepA :: Word16
@@ -907,10 +876,8 @@ instance Binary MsgBaselineNedDepA where
     putWord8 _msgBaselineNedDepA_n_sats
     putWord8 _msgBaselineNedDepA_flags
 
-$(deriveSBP 'msgBaselineNedDepA ''MsgBaselineNedDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineNedDepA_" . P.stripPrefix "_msgBaselineNedDepA_"}
-             ''MsgBaselineNedDepA)
+$(makeSBP 'msgBaselineNedDepA ''MsgBaselineNedDepA)
+$(makeJSON "_msgBaselineNedDepA_" ''MsgBaselineNedDepA)
 $(makeLenses ''MsgBaselineNedDepA)
 
 msgVelEcefDepA :: Word16
@@ -958,10 +925,8 @@ instance Binary MsgVelEcefDepA where
     putWord8 _msgVelEcefDepA_n_sats
     putWord8 _msgVelEcefDepA_flags
 
-$(deriveSBP 'msgVelEcefDepA ''MsgVelEcefDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelEcefDepA_" . P.stripPrefix "_msgVelEcefDepA_"}
-             ''MsgVelEcefDepA)
+$(makeSBP 'msgVelEcefDepA ''MsgVelEcefDepA)
+$(makeJSON "_msgVelEcefDepA_" ''MsgVelEcefDepA)
 $(makeLenses ''MsgVelEcefDepA)
 
 msgVelNedDepA :: Word16
@@ -1014,10 +979,8 @@ instance Binary MsgVelNedDepA where
     putWord8 _msgVelNedDepA_n_sats
     putWord8 _msgVelNedDepA_flags
 
-$(deriveSBP 'msgVelNedDepA ''MsgVelNedDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgVelNedDepA_" . P.stripPrefix "_msgVelNedDepA_"}
-             ''MsgVelNedDepA)
+$(makeSBP 'msgVelNedDepA ''MsgVelNedDepA)
+$(makeJSON "_msgVelNedDepA_" ''MsgVelNedDepA)
 $(makeLenses ''MsgVelNedDepA)
 
 msgBaselineHeadingDepA :: Word16
@@ -1053,8 +1016,6 @@ instance Binary MsgBaselineHeadingDepA where
     putWord8 _msgBaselineHeadingDepA_n_sats
     putWord8 _msgBaselineHeadingDepA_flags
 
-$(deriveSBP 'msgBaselineHeadingDepA ''MsgBaselineHeadingDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBaselineHeadingDepA_" . P.stripPrefix "_msgBaselineHeadingDepA_"}
-             ''MsgBaselineHeadingDepA)
+$(makeSBP 'msgBaselineHeadingDepA ''MsgBaselineHeadingDepA)
+$(makeJSON "_msgBaselineHeadingDepA_" ''MsgBaselineHeadingDepA)
 $(makeLenses ''MsgBaselineHeadingDepA)

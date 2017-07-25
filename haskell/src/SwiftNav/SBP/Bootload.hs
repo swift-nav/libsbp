@@ -15,12 +15,13 @@
 -- group does not apply to Piksi Multi.  Note that some of these messages share
 -- the same message type ID for both the host request and the device response.
 
-module SwiftNav.SBP.Bootload where
+module SwiftNav.SBP.Bootload
+  ( module SwiftNav.SBP.Bootload
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -29,7 +30,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
@@ -50,11 +51,8 @@ instance Binary MsgBootloaderHandshakeReq where
 
   put MsgBootloaderHandshakeReq =
     return ()
-
-$(deriveSBP 'msgBootloaderHandshakeReq ''MsgBootloaderHandshakeReq)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeReq_" . P.stripPrefix "_msgBootloaderHandshakeReq_"}
-             ''MsgBootloaderHandshakeReq)
+$(makeSBP 'msgBootloaderHandshakeReq ''MsgBootloaderHandshakeReq)
+$(makeJSON "_msgBootloaderHandshakeReq_" ''MsgBootloaderHandshakeReq)
 $(makeLenses ''MsgBootloaderHandshakeReq)
 
 msgBootloaderHandshakeResp :: Word16
@@ -83,10 +81,8 @@ instance Binary MsgBootloaderHandshakeResp where
     putWord32le _msgBootloaderHandshakeResp_flags
     putByteString $ encodeUtf8 _msgBootloaderHandshakeResp_version
 
-$(deriveSBP 'msgBootloaderHandshakeResp ''MsgBootloaderHandshakeResp)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeResp_" . P.stripPrefix "_msgBootloaderHandshakeResp_"}
-             ''MsgBootloaderHandshakeResp)
+$(makeSBP 'msgBootloaderHandshakeResp ''MsgBootloaderHandshakeResp)
+$(makeJSON "_msgBootloaderHandshakeResp_" ''MsgBootloaderHandshakeResp)
 $(makeLenses ''MsgBootloaderHandshakeResp)
 
 msgBootloaderJumpToApp :: Word16
@@ -108,10 +104,8 @@ instance Binary MsgBootloaderJumpToApp where
   put MsgBootloaderJumpToApp {..} = do
     putWord8 _msgBootloaderJumpToApp_jump
 
-$(deriveSBP 'msgBootloaderJumpToApp ''MsgBootloaderJumpToApp)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderJumpToApp_" . P.stripPrefix "_msgBootloaderJumpToApp_"}
-             ''MsgBootloaderJumpToApp)
+$(makeSBP 'msgBootloaderJumpToApp ''MsgBootloaderJumpToApp)
+$(makeJSON "_msgBootloaderJumpToApp_" ''MsgBootloaderJumpToApp)
 $(makeLenses ''MsgBootloaderJumpToApp)
 
 msgNapDeviceDnaReq :: Word16
@@ -133,11 +127,8 @@ instance Binary MsgNapDeviceDnaReq where
 
   put MsgNapDeviceDnaReq =
     return ()
-
-$(deriveSBP 'msgNapDeviceDnaReq ''MsgNapDeviceDnaReq)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNapDeviceDnaReq_" . P.stripPrefix "_msgNapDeviceDnaReq_"}
-             ''MsgNapDeviceDnaReq)
+$(makeSBP 'msgNapDeviceDnaReq ''MsgNapDeviceDnaReq)
+$(makeJSON "_msgNapDeviceDnaReq_" ''MsgNapDeviceDnaReq)
 $(makeLenses ''MsgNapDeviceDnaReq)
 
 msgNapDeviceDnaResp :: Word16
@@ -164,10 +155,8 @@ instance Binary MsgNapDeviceDnaResp where
   put MsgNapDeviceDnaResp {..} = do
     mapM_ putWord8 _msgNapDeviceDnaResp_dna
 
-$(deriveSBP 'msgNapDeviceDnaResp ''MsgNapDeviceDnaResp)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNapDeviceDnaResp_" . P.stripPrefix "_msgNapDeviceDnaResp_"}
-             ''MsgNapDeviceDnaResp)
+$(makeSBP 'msgNapDeviceDnaResp ''MsgNapDeviceDnaResp)
+$(makeJSON "_msgNapDeviceDnaResp_" ''MsgNapDeviceDnaResp)
 $(makeLenses ''MsgNapDeviceDnaResp)
 
 msgBootloaderHandshakeDepA :: Word16
@@ -189,8 +178,6 @@ instance Binary MsgBootloaderHandshakeDepA where
   put MsgBootloaderHandshakeDepA {..} = do
     mapM_ putWord8 _msgBootloaderHandshakeDepA_handshake
 
-$(deriveSBP 'msgBootloaderHandshakeDepA ''MsgBootloaderHandshakeDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBootloaderHandshakeDepA_" . P.stripPrefix "_msgBootloaderHandshakeDepA_"}
-             ''MsgBootloaderHandshakeDepA)
+$(makeSBP 'msgBootloaderHandshakeDepA ''MsgBootloaderHandshakeDepA)
+$(makeJSON "_msgBootloaderHandshakeDepA_" ''MsgBootloaderHandshakeDepA)
 $(makeLenses ''MsgBootloaderHandshakeDepA)

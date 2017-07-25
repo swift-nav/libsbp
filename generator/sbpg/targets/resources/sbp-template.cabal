@@ -23,10 +23,11 @@ source-repository head
   location:            git@github.com:swift-nav/libsbp.git
 
 library
-  exposed-modules:     SwiftNav.CRC16
+  exposed-modules:     SwiftNav.Internal
                      , SwiftNav.SBP
-                     , SwiftNav.SBP.Encoding
-  other-modules:       SwiftNav.SBP.Msg
+  other-modules:       SwiftNav.CRC16
+                     , SwiftNav.Encoding
+                     , SwiftNav.SBP.Msg
                      , SwiftNav.SBP.TH
                      , SwiftNav.SBP.Types
 ((*- for m in modules *))
@@ -101,7 +102,7 @@ test-suite test
   hs-source-dirs:      test
   main-is:             Test.hs
   other-modules:       Test.SwiftNav.CRC16
-                     , Test.SwiftNav.SBP.Encoding
+                     , Test.SwiftNav.Encoding
   build-depends:       aeson
                      , base
                      , base64-bytestring

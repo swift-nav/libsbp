@@ -13,12 +13,13 @@
 --
 -- Inertial Measurement Unit (IMU) messages.
 
-module SwiftNav.SBP.Imu where
+module SwiftNav.SBP.Imu
+  ( module SwiftNav.SBP.Imu
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -27,7 +28,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
@@ -80,10 +81,8 @@ instance Binary MsgImuRaw where
     putWord16le $ fromIntegral _msgImuRaw_gyr_y
     putWord16le $ fromIntegral _msgImuRaw_gyr_z
 
-$(deriveSBP 'msgImuRaw ''MsgImuRaw)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgImuRaw_" . P.stripPrefix "_msgImuRaw_"}
-             ''MsgImuRaw)
+$(makeSBP 'msgImuRaw ''MsgImuRaw)
+$(makeJSON "_msgImuRaw_" ''MsgImuRaw)
 $(makeLenses ''MsgImuRaw)
 
 msgImuAux :: Word16
@@ -115,8 +114,6 @@ instance Binary MsgImuAux where
     putWord16le $ fromIntegral _msgImuAux_temp
     putWord8 _msgImuAux_imu_conf
 
-$(deriveSBP 'msgImuAux ''MsgImuAux)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgImuAux_" . P.stripPrefix "_msgImuAux_"}
-             ''MsgImuAux)
+$(makeSBP 'msgImuAux ''MsgImuAux)
+$(makeJSON "_msgImuAux_" ''MsgImuAux)
 $(makeLenses ''MsgImuAux)

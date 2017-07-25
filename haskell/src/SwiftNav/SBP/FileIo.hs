@@ -18,12 +18,13 @@
 -- reading and writing files.  Note that some of these messages share the same
 -- message type ID for both the host request and the device response.
 
-module SwiftNav.SBP.FileIo where
+module SwiftNav.SBP.FileIo
+  ( module SwiftNav.SBP.FileIo
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -32,7 +33,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
@@ -73,10 +74,8 @@ instance Binary MsgFileioReadReq where
     putWord8 _msgFileioReadReq_chunk_size
     putByteString $ encodeUtf8 _msgFileioReadReq_filename
 
-$(deriveSBP 'msgFileioReadReq ''MsgFileioReadReq)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadReq_" . P.stripPrefix "_msgFileioReadReq_"}
-             ''MsgFileioReadReq)
+$(makeSBP 'msgFileioReadReq ''MsgFileioReadReq)
+$(makeJSON "_msgFileioReadReq_" ''MsgFileioReadReq)
 $(makeLenses ''MsgFileioReadReq)
 
 msgFileioReadResp :: Word16
@@ -105,10 +104,8 @@ instance Binary MsgFileioReadResp where
     putWord32le _msgFileioReadResp_sequence
     mapM_ putWord8 _msgFileioReadResp_contents
 
-$(deriveSBP 'msgFileioReadResp ''MsgFileioReadResp)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadResp_" . P.stripPrefix "_msgFileioReadResp_"}
-             ''MsgFileioReadResp)
+$(makeSBP 'msgFileioReadResp ''MsgFileioReadResp)
+$(makeJSON "_msgFileioReadResp_" ''MsgFileioReadResp)
 $(makeLenses ''MsgFileioReadResp)
 
 msgFileioReadDirReq :: Word16
@@ -145,10 +142,8 @@ instance Binary MsgFileioReadDirReq where
     putWord32le _msgFileioReadDirReq_offset
     putByteString $ encodeUtf8 _msgFileioReadDirReq_dirname
 
-$(deriveSBP 'msgFileioReadDirReq ''MsgFileioReadDirReq)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadDirReq_" . P.stripPrefix "_msgFileioReadDirReq_"}
-             ''MsgFileioReadDirReq)
+$(makeSBP 'msgFileioReadDirReq ''MsgFileioReadDirReq)
+$(makeJSON "_msgFileioReadDirReq_" ''MsgFileioReadDirReq)
 $(makeLenses ''MsgFileioReadDirReq)
 
 msgFileioReadDirResp :: Word16
@@ -178,10 +173,8 @@ instance Binary MsgFileioReadDirResp where
     putWord32le _msgFileioReadDirResp_sequence
     mapM_ putWord8 _msgFileioReadDirResp_contents
 
-$(deriveSBP 'msgFileioReadDirResp ''MsgFileioReadDirResp)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioReadDirResp_" . P.stripPrefix "_msgFileioReadDirResp_"}
-             ''MsgFileioReadDirResp)
+$(makeSBP 'msgFileioReadDirResp ''MsgFileioReadDirResp)
+$(makeJSON "_msgFileioReadDirResp_" ''MsgFileioReadDirResp)
 $(makeLenses ''MsgFileioReadDirResp)
 
 msgFileioRemove :: Word16
@@ -206,10 +199,8 @@ instance Binary MsgFileioRemove where
   put MsgFileioRemove {..} = do
     putByteString $ encodeUtf8 _msgFileioRemove_filename
 
-$(deriveSBP 'msgFileioRemove ''MsgFileioRemove)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioRemove_" . P.stripPrefix "_msgFileioRemove_"}
-             ''MsgFileioRemove)
+$(makeSBP 'msgFileioRemove ''MsgFileioRemove)
+$(makeJSON "_msgFileioRemove_" ''MsgFileioRemove)
 $(makeLenses ''MsgFileioRemove)
 
 msgFileioWriteReq :: Word16
@@ -249,10 +240,8 @@ instance Binary MsgFileioWriteReq where
     putByteString $ encodeUtf8 _msgFileioWriteReq_filename
     mapM_ putWord8 _msgFileioWriteReq_data
 
-$(deriveSBP 'msgFileioWriteReq ''MsgFileioWriteReq)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioWriteReq_" . P.stripPrefix "_msgFileioWriteReq_"}
-             ''MsgFileioWriteReq)
+$(makeSBP 'msgFileioWriteReq ''MsgFileioWriteReq)
+$(makeJSON "_msgFileioWriteReq_" ''MsgFileioWriteReq)
 $(makeLenses ''MsgFileioWriteReq)
 
 msgFileioWriteResp :: Word16
@@ -277,8 +266,6 @@ instance Binary MsgFileioWriteResp where
   put MsgFileioWriteResp {..} = do
     putWord32le _msgFileioWriteResp_sequence
 
-$(deriveSBP 'msgFileioWriteResp ''MsgFileioWriteResp)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFileioWriteResp_" . P.stripPrefix "_msgFileioWriteResp_"}
-             ''MsgFileioWriteResp)
+$(makeSBP 'msgFileioWriteResp ''MsgFileioWriteResp)
+$(makeJSON "_msgFileioWriteResp_" ''MsgFileioWriteResp)
 $(makeLenses ''MsgFileioWriteResp)

@@ -1,5 +1,3 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-
 -- |
 -- Module:      SwiftNav.SBP
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
@@ -11,15 +9,11 @@
 -- SBP message containers.
 
 module SwiftNav.SBP
-  ( module SwiftNav.SBP.Msg
-  , module SwiftNav.SBP.Types
-  ((*- for m in modules *))
-  , module (((m)))
-  ((*- endfor *))
+  ( module Exports
   ) where
 
-import SwiftNav.SBP.Msg
-import SwiftNav.SBP.Types
+import SwiftNav.SBP.Msg as Exports
+import SwiftNav.SBP.Types as Exports
 ((*- for m in modules *))
-import (((m)))
+import (((m))) as Exports
 ((*- endfor *))

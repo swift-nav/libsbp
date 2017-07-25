@@ -13,12 +13,13 @@
 --
 -- Satellite acquisition messages from the device.
 
-module SwiftNav.SBP.Acquisition where
+module SwiftNav.SBP.Acquisition
+  ( module SwiftNav.SBP.Acquisition
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -27,7 +28,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 import SwiftNav.SBP.Gnss
@@ -66,10 +67,8 @@ instance Binary MsgAcqResult where
     putFloat32le _msgAcqResult_cf
     put _msgAcqResult_sid
 
-$(deriveSBP 'msgAcqResult ''MsgAcqResult)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResult_" . P.stripPrefix "_msgAcqResult_"}
-             ''MsgAcqResult)
+$(makeSBP 'msgAcqResult ''MsgAcqResult)
+$(makeJSON "_msgAcqResult_" ''MsgAcqResult)
 $(makeLenses ''MsgAcqResult)
 
 msgAcqResultDepB :: Word16
@@ -104,10 +103,8 @@ instance Binary MsgAcqResultDepB where
     putFloat32le _msgAcqResultDepB_cf
     put _msgAcqResultDepB_sid
 
-$(deriveSBP 'msgAcqResultDepB ''MsgAcqResultDepB)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResultDepB_" . P.stripPrefix "_msgAcqResultDepB_"}
-             ''MsgAcqResultDepB)
+$(makeSBP 'msgAcqResultDepB ''MsgAcqResultDepB)
+$(makeJSON "_msgAcqResultDepB_" ''MsgAcqResultDepB)
 $(makeLenses ''MsgAcqResultDepB)
 
 msgAcqResultDepA :: Word16
@@ -143,10 +140,8 @@ instance Binary MsgAcqResultDepA where
     putFloat32le _msgAcqResultDepA_cf
     putWord8 _msgAcqResultDepA_prn
 
-$(deriveSBP 'msgAcqResultDepA ''MsgAcqResultDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqResultDepA_" . P.stripPrefix "_msgAcqResultDepA_"}
-             ''MsgAcqResultDepA)
+$(makeSBP 'msgAcqResultDepA ''MsgAcqResultDepA)
+$(makeJSON "_msgAcqResultDepA_" ''MsgAcqResultDepA)
 $(makeLenses ''MsgAcqResultDepA)
 
 -- | AcqSvProfile.
@@ -210,8 +205,8 @@ instance Binary AcqSvProfile where
     putWord32le $ fromIntegral _acqSvProfile_cf_max
     putWord32le $ fromIntegral _acqSvProfile_cf
     putWord32le _acqSvProfile_cp
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_acqSvProfile_" . P.stripPrefix "_acqSvProfile_"}
-             ''AcqSvProfile)
+
+$(makeJSON "_acqSvProfile_" ''AcqSvProfile)
 $(makeLenses ''AcqSvProfile)
 
 msgAcqSvProfile :: Word16
@@ -234,8 +229,6 @@ instance Binary MsgAcqSvProfile where
   put MsgAcqSvProfile {..} = do
     mapM_ put _msgAcqSvProfile_acq_sv_profile
 
-$(deriveSBP 'msgAcqSvProfile ''MsgAcqSvProfile)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAcqSvProfile_" . P.stripPrefix "_msgAcqSvProfile_"}
-             ''MsgAcqSvProfile)
+$(makeSBP 'msgAcqSvProfile ''MsgAcqSvProfile)
+$(makeJSON "_msgAcqSvProfile_" ''MsgAcqSvProfile)
 $(makeLenses ''MsgAcqSvProfile)
