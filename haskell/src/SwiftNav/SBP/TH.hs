@@ -34,11 +34,11 @@ makeSBP msgType name =
          where
            payload = toStrict $ encode m
            len     = fromIntegral $ length payload
-           encoded = Msg $(varE msgType) senderID len payload 0
+           encoded = Msg $(varE msgType) senderID len (Bytes payload) 0
     |]
 
 -- | Derive JSON stripping out prefixes of the implemented type.
 makeJSON :: String -> Name -> Q [Dec]
 makeJSON prefix = deriveJSON defaultOptions
-  { fieldLabelModifier = fromMaybe prefix . stripPrefix prefix
+  { fieldLabelModifier = ap fromMaybe $ stripPrefix prefix
   }

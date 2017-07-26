@@ -21,6 +21,7 @@ module SwiftNav.SBP.Msg
 import BasicPrelude
 import Control.Lens
 import Data.Aeson               hiding (decode)
+import Data.Aeson.Lens
 import Data.Binary
 import Data.ByteString.Lazy     hiding (ByteString)
 import SwiftNav.SBP.Acquisition
@@ -173,127 +174,127 @@ $(makePrisms ''SBPMsg)
 instance Binary SBPMsg where
   get = do
     preamble <- getWord8
-    if preamble /= msgSBPPreamble then get else do
+    if preamble /= msgSBPPreamble then get else
       decoder <$> get where
         decoder m@Msg {..}
           | checkCrc m /= _msgSBPCrc = SBPMsgBadCrc m
-          | _msgSBPType == msgAcqResult = SBPMsgAcqResult (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgAcqResultDepA = SBPMsgAcqResultDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgAcqResultDepB = SBPMsgAcqResultDepB (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgAcqSvProfile = SBPMsgAcqSvProfile (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgAgeCorrections = SBPMsgAgeCorrections (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgAlmanac = SBPMsgAlmanac (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgAlmanacGlo = SBPMsgAlmanacGlo (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgAlmanacGps = SBPMsgAlmanacGps (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgBasePosEcef = SBPMsgBasePosEcef (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgBasePosLlh = SBPMsgBasePosLlh (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgBaselineEcef = SBPMsgBaselineEcef (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgBaselineEcefDepA = SBPMsgBaselineEcefDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgBaselineHeading = SBPMsgBaselineHeading (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgBaselineHeadingDepA = SBPMsgBaselineHeadingDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgBaselineNed = SBPMsgBaselineNed (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgBaselineNedDepA = SBPMsgBaselineNedDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgCommandOutput = SBPMsgCommandOutput (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgCommandReq = SBPMsgCommandReq (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgCommandResp = SBPMsgCommandResp (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgCwResults = SBPMsgCwResults (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgCwStart = SBPMsgCwStart (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgDeviceMonitor = SBPMsgDeviceMonitor (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgDgnssStatus = SBPMsgDgnssStatus (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgDops = SBPMsgDops (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgDopsDepA = SBPMsgDopsDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgEphemerisDepC = SBPMsgEphemerisDepC (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgEphemerisDepD = SBPMsgEphemerisDepD (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgEphemerisGlo = SBPMsgEphemerisGlo (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgEphemerisGloDepA = SBPMsgEphemerisGloDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgEphemerisGloDepB = SBPMsgEphemerisGloDepB (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgEphemerisGloDepC = SBPMsgEphemerisGloDepC (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgEphemerisGps = SBPMsgEphemerisGps (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgEphemerisGpsDepE = SBPMsgEphemerisGpsDepE (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgEphemerisSbas = SBPMsgEphemerisSbas (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgExtEvent = SBPMsgExtEvent (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFcnsGlo = SBPMsgFcnsGlo (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFileioReadDirReq = SBPMsgFileioReadDirReq (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFileioReadDirResp = SBPMsgFileioReadDirResp (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFileioReadReq = SBPMsgFileioReadReq (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFileioReadResp = SBPMsgFileioReadResp (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFileioRemove = SBPMsgFileioRemove (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFileioWriteReq = SBPMsgFileioWriteReq (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFileioWriteResp = SBPMsgFileioWriteResp (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFlashDone = SBPMsgFlashDone (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFlashErase = SBPMsgFlashErase (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFlashProgram = SBPMsgFlashProgram (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFlashReadReq = SBPMsgFlashReadReq (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFlashReadResp = SBPMsgFlashReadResp (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgFwd = SBPMsgFwd (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgGpsTime = SBPMsgGpsTime (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgGpsTimeDepA = SBPMsgGpsTimeDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgGroupDelay = SBPMsgGroupDelay (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgGroupDelayDepA = SBPMsgGroupDelayDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgHeartbeat = SBPMsgHeartbeat (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgIarState = SBPMsgIarState (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgImuAux = SBPMsgImuAux (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgImuRaw = SBPMsgImuRaw (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgInitBase = SBPMsgInitBase (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgIono = SBPMsgIono (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgLog = SBPMsgLog (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgMaskSatellite = SBPMsgMaskSatellite (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgNdbEvent = SBPMsgNdbEvent (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgNetworkStateReq = SBPMsgNetworkStateReq (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgNetworkStateResp = SBPMsgNetworkStateResp (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgObs = SBPMsgObs (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgObsDepA = SBPMsgObsDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgObsDepB = SBPMsgObsDepB (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgObsDepC = SBPMsgObsDepC (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgPosEcef = SBPMsgPosEcef (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgPosEcefDepA = SBPMsgPosEcefDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgPosLlh = SBPMsgPosLlh (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgPosLlhDepA = SBPMsgPosLlhDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgReset = SBPMsgReset (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgResetDep = SBPMsgResetDep (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgResetFilters = SBPMsgResetFilters (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgSetTime = SBPMsgSetTime (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgSettingsReadReq = SBPMsgSettingsReadReq (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgSettingsReadResp = SBPMsgSettingsReadResp (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgSettingsRegister = SBPMsgSettingsRegister (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgSettingsSave = SBPMsgSettingsSave (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgSettingsWrite = SBPMsgSettingsWrite (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgSpecan = SBPMsgSpecan (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgStmFlashLockSector = SBPMsgStmFlashLockSector (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgSvConfigurationGps = SBPMsgSvConfigurationGps (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgThreadState = SBPMsgThreadState (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgTrackingIq = SBPMsgTrackingIq (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgTrackingState = SBPMsgTrackingState (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgTrackingStateDepA = SBPMsgTrackingStateDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgTrackingStateDepB = SBPMsgTrackingStateDepB (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgTrackingStateDetailed = SBPMsgTrackingStateDetailed (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgTweet = SBPMsgTweet (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgUartStateDepa = SBPMsgUartStateDepa (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgUserData = SBPMsgUserData (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgUtcTime = SBPMsgUtcTime (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgVelEcefDepA = SBPMsgVelEcefDepA (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgVelNed = SBPMsgVelNed (decode (fromStrict _msgSBPPayload)) m
-          | _msgSBPType == msgVelNedDepA = SBPMsgVelNedDepA (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == msgAcqResult = SBPMsgAcqResult (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgAcqResultDepA = SBPMsgAcqResultDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgAcqResultDepB = SBPMsgAcqResultDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgAcqSvProfile = SBPMsgAcqSvProfile (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgAgeCorrections = SBPMsgAgeCorrections (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgAlmanac = SBPMsgAlmanac (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgAlmanacGlo = SBPMsgAlmanacGlo (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgAlmanacGps = SBPMsgAlmanacGps (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgBasePosEcef = SBPMsgBasePosEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgBasePosLlh = SBPMsgBasePosLlh (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgBaselineEcef = SBPMsgBaselineEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgBaselineEcefDepA = SBPMsgBaselineEcefDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgBaselineHeading = SBPMsgBaselineHeading (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgBaselineHeadingDepA = SBPMsgBaselineHeadingDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgBaselineNed = SBPMsgBaselineNed (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgBaselineNedDepA = SBPMsgBaselineNedDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgCommandOutput = SBPMsgCommandOutput (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgCommandReq = SBPMsgCommandReq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgCommandResp = SBPMsgCommandResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgCwResults = SBPMsgCwResults (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgCwStart = SBPMsgCwStart (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgDeviceMonitor = SBPMsgDeviceMonitor (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgDgnssStatus = SBPMsgDgnssStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgDops = SBPMsgDops (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgDopsDepA = SBPMsgDopsDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisDepC = SBPMsgEphemerisDepC (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisDepD = SBPMsgEphemerisDepD (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisGlo = SBPMsgEphemerisGlo (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisGloDepA = SBPMsgEphemerisGloDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisGloDepB = SBPMsgEphemerisGloDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisGloDepC = SBPMsgEphemerisGloDepC (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisGps = SBPMsgEphemerisGps (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisGpsDepE = SBPMsgEphemerisGpsDepE (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisSbas = SBPMsgEphemerisSbas (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgExtEvent = SBPMsgExtEvent (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFcnsGlo = SBPMsgFcnsGlo (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFileioReadDirReq = SBPMsgFileioReadDirReq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFileioReadDirResp = SBPMsgFileioReadDirResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFileioReadReq = SBPMsgFileioReadReq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFileioReadResp = SBPMsgFileioReadResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFileioRemove = SBPMsgFileioRemove (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFileioWriteReq = SBPMsgFileioWriteReq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFileioWriteResp = SBPMsgFileioWriteResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFlashDone = SBPMsgFlashDone (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFlashErase = SBPMsgFlashErase (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFlashProgram = SBPMsgFlashProgram (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFlashReadReq = SBPMsgFlashReadReq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFlashReadResp = SBPMsgFlashReadResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFwd = SBPMsgFwd (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgGpsTime = SBPMsgGpsTime (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgGpsTimeDepA = SBPMsgGpsTimeDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgGroupDelay = SBPMsgGroupDelay (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgGroupDelayDepA = SBPMsgGroupDelayDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgHeartbeat = SBPMsgHeartbeat (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgIarState = SBPMsgIarState (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgImuAux = SBPMsgImuAux (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgImuRaw = SBPMsgImuRaw (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgInitBase = SBPMsgInitBase (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgIono = SBPMsgIono (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgLog = SBPMsgLog (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgMaskSatellite = SBPMsgMaskSatellite (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgNdbEvent = SBPMsgNdbEvent (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgNetworkStateReq = SBPMsgNetworkStateReq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgNetworkStateResp = SBPMsgNetworkStateResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgObs = SBPMsgObs (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgObsDepA = SBPMsgObsDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgObsDepB = SBPMsgObsDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgObsDepC = SBPMsgObsDepC (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgPosEcef = SBPMsgPosEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgPosEcefDepA = SBPMsgPosEcefDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgPosLlh = SBPMsgPosLlh (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgPosLlhDepA = SBPMsgPosLlhDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgReset = SBPMsgReset (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgResetDep = SBPMsgResetDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgResetFilters = SBPMsgResetFilters (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSetTime = SBPMsgSetTime (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSettingsReadReq = SBPMsgSettingsReadReq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSettingsReadResp = SBPMsgSettingsReadResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSettingsRegister = SBPMsgSettingsRegister (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSettingsSave = SBPMsgSettingsSave (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSettingsWrite = SBPMsgSettingsWrite (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSpecan = SBPMsgSpecan (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgStmFlashLockSector = SBPMsgStmFlashLockSector (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSvConfigurationGps = SBPMsgSvConfigurationGps (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgThreadState = SBPMsgThreadState (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgTrackingIq = SBPMsgTrackingIq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgTrackingState = SBPMsgTrackingState (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgTrackingStateDepA = SBPMsgTrackingStateDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgTrackingStateDepB = SBPMsgTrackingStateDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgTrackingStateDetailed = SBPMsgTrackingStateDetailed (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgTweet = SBPMsgTweet (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgUartStateDepa = SBPMsgUartStateDepa (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgUserData = SBPMsgUserData (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgUtcTime = SBPMsgUtcTime (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgVelEcefDepA = SBPMsgVelEcefDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgVelNed = SBPMsgVelNed (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgVelNedDepA = SBPMsgVelNedDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | otherwise = SBPMsgUnknown m
 
   put sm = do
@@ -425,131 +426,131 @@ instance FromJSON SBPMsg where
     payload <- o .: "payload"
     decoder msgType payload where
       decoder msgType payload
-        | msgType == msgAcqResult = SBPMsgAcqResult <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgAcqResultDepA = SBPMsgAcqResultDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgAcqResultDepB = SBPMsgAcqResultDepB <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgAcqSvProfile = SBPMsgAcqSvProfile <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgAgeCorrections = SBPMsgAgeCorrections <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgAlmanac = SBPMsgAlmanac <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgAlmanacGlo = SBPMsgAlmanacGlo <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgAlmanacGps = SBPMsgAlmanacGps <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgBasePosEcef = SBPMsgBasePosEcef <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgBasePosLlh = SBPMsgBasePosLlh <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgBaselineEcef = SBPMsgBaselineEcef <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgBaselineEcefDepA = SBPMsgBaselineEcefDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgBaselineHeading = SBPMsgBaselineHeading <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgBaselineHeadingDepA = SBPMsgBaselineHeadingDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgBaselineNed = SBPMsgBaselineNed <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgBaselineNedDepA = SBPMsgBaselineNedDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgCommandOutput = SBPMsgCommandOutput <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgCommandReq = SBPMsgCommandReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgCommandResp = SBPMsgCommandResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgCwResults = SBPMsgCwResults <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgCwStart = SBPMsgCwStart <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgDeviceMonitor = SBPMsgDeviceMonitor <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgDgnssStatus = SBPMsgDgnssStatus <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgDops = SBPMsgDops <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgDopsDepA = SBPMsgDopsDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgEphemerisDepC = SBPMsgEphemerisDepC <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgEphemerisDepD = SBPMsgEphemerisDepD <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgEphemerisGlo = SBPMsgEphemerisGlo <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgEphemerisGloDepA = SBPMsgEphemerisGloDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgEphemerisGloDepB = SBPMsgEphemerisGloDepB <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgEphemerisGloDepC = SBPMsgEphemerisGloDepC <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgEphemerisGps = SBPMsgEphemerisGps <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgEphemerisGpsDepE = SBPMsgEphemerisGpsDepE <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgEphemerisSbas = SBPMsgEphemerisSbas <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgExtEvent = SBPMsgExtEvent <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFcnsGlo = SBPMsgFcnsGlo <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFileioReadDirReq = SBPMsgFileioReadDirReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFileioReadDirResp = SBPMsgFileioReadDirResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFileioReadReq = SBPMsgFileioReadReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFileioReadResp = SBPMsgFileioReadResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFileioRemove = SBPMsgFileioRemove <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFileioWriteReq = SBPMsgFileioWriteReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFileioWriteResp = SBPMsgFileioWriteResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFlashDone = SBPMsgFlashDone <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFlashErase = SBPMsgFlashErase <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFlashProgram = SBPMsgFlashProgram <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFlashReadReq = SBPMsgFlashReadReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFlashReadResp = SBPMsgFlashReadResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgFwd = SBPMsgFwd <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgGpsTime = SBPMsgGpsTime <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgGpsTimeDepA = SBPMsgGpsTimeDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgGroupDelay = SBPMsgGroupDelay <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgGroupDelayDepA = SBPMsgGroupDelayDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgHeartbeat = SBPMsgHeartbeat <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgIarState = SBPMsgIarState <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgImuAux = SBPMsgImuAux <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgImuRaw = SBPMsgImuRaw <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgInitBase = SBPMsgInitBase <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgIono = SBPMsgIono <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgLog = SBPMsgLog <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgMaskSatellite = SBPMsgMaskSatellite <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgNdbEvent = SBPMsgNdbEvent <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgNetworkStateReq = SBPMsgNetworkStateReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgNetworkStateResp = SBPMsgNetworkStateResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgObs = SBPMsgObs <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgObsDepA = SBPMsgObsDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgObsDepB = SBPMsgObsDepB <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgObsDepC = SBPMsgObsDepC <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgPosEcef = SBPMsgPosEcef <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgPosEcefDepA = SBPMsgPosEcefDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgPosLlh = SBPMsgPosLlh <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgPosLlhDepA = SBPMsgPosLlhDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgPrintDep = SBPMsgPrintDep <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgReset = SBPMsgReset <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgResetDep = SBPMsgResetDep <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgResetFilters = SBPMsgResetFilters <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgSetTime = SBPMsgSetTime <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgSettingsReadReq = SBPMsgSettingsReadReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgSettingsReadResp = SBPMsgSettingsReadResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgSettingsRegister = SBPMsgSettingsRegister <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgSettingsSave = SBPMsgSettingsSave <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgSettingsWrite = SBPMsgSettingsWrite <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgSpecan = SBPMsgSpecan <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgStartup = SBPMsgStartup <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgStmFlashLockSector = SBPMsgStmFlashLockSector <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgSvConfigurationGps = SBPMsgSvConfigurationGps <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgThreadState = SBPMsgThreadState <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgTrackingIq = SBPMsgTrackingIq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgTrackingState = SBPMsgTrackingState <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgTrackingStateDepA = SBPMsgTrackingStateDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgTrackingStateDepB = SBPMsgTrackingStateDepB <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgTrackingStateDetailed = SBPMsgTrackingStateDetailed <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgTweet = SBPMsgTweet <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgUartState = SBPMsgUartState <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgUartStateDepa = SBPMsgUartStateDepa <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgUserData = SBPMsgUserData <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgUtcTime = SBPMsgUtcTime <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgVelEcef = SBPMsgVelEcef <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgVelEcefDepA = SBPMsgVelEcefDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgVelNed = SBPMsgVelNed <$> pure (decode (fromStrict payload)) <*> parseJSON obj
-        | msgType == msgVelNedDepA = SBPMsgVelNedDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgAcqResult = SBPMsgAcqResult <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgAcqResultDepA = SBPMsgAcqResultDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgAcqResultDepB = SBPMsgAcqResultDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgAcqSvProfile = SBPMsgAcqSvProfile <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgAgeCorrections = SBPMsgAgeCorrections <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgAlmanac = SBPMsgAlmanac <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgAlmanacGlo = SBPMsgAlmanacGlo <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgAlmanacGps = SBPMsgAlmanacGps <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgBasePosEcef = SBPMsgBasePosEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgBasePosLlh = SBPMsgBasePosLlh <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgBaselineEcef = SBPMsgBaselineEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgBaselineEcefDepA = SBPMsgBaselineEcefDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgBaselineHeading = SBPMsgBaselineHeading <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgBaselineHeadingDepA = SBPMsgBaselineHeadingDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgBaselineNed = SBPMsgBaselineNed <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgBaselineNedDepA = SBPMsgBaselineNedDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgCommandOutput = SBPMsgCommandOutput <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgCommandReq = SBPMsgCommandReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgCommandResp = SBPMsgCommandResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgCwResults = SBPMsgCwResults <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgCwStart = SBPMsgCwStart <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgDeviceMonitor = SBPMsgDeviceMonitor <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgDgnssStatus = SBPMsgDgnssStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgDops = SBPMsgDops <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgDopsDepA = SBPMsgDopsDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisDepC = SBPMsgEphemerisDepC <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisDepD = SBPMsgEphemerisDepD <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisGlo = SBPMsgEphemerisGlo <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisGloDepA = SBPMsgEphemerisGloDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisGloDepB = SBPMsgEphemerisGloDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisGloDepC = SBPMsgEphemerisGloDepC <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisGps = SBPMsgEphemerisGps <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisGpsDepE = SBPMsgEphemerisGpsDepE <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisSbas = SBPMsgEphemerisSbas <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgExtEvent = SBPMsgExtEvent <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFcnsGlo = SBPMsgFcnsGlo <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFileioReadDirReq = SBPMsgFileioReadDirReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFileioReadDirResp = SBPMsgFileioReadDirResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFileioReadReq = SBPMsgFileioReadReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFileioReadResp = SBPMsgFileioReadResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFileioRemove = SBPMsgFileioRemove <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFileioWriteReq = SBPMsgFileioWriteReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFileioWriteResp = SBPMsgFileioWriteResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFlashDone = SBPMsgFlashDone <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFlashErase = SBPMsgFlashErase <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFlashProgram = SBPMsgFlashProgram <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFlashReadReq = SBPMsgFlashReadReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFlashReadResp = SBPMsgFlashReadResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFwd = SBPMsgFwd <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgGpsTime = SBPMsgGpsTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgGpsTimeDepA = SBPMsgGpsTimeDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgGroupDelay = SBPMsgGroupDelay <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgGroupDelayDepA = SBPMsgGroupDelayDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgHeartbeat = SBPMsgHeartbeat <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgIarState = SBPMsgIarState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgImuAux = SBPMsgImuAux <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgImuRaw = SBPMsgImuRaw <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgInitBase = SBPMsgInitBase <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgIono = SBPMsgIono <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgLog = SBPMsgLog <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgMaskSatellite = SBPMsgMaskSatellite <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgNdbEvent = SBPMsgNdbEvent <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgNetworkStateReq = SBPMsgNetworkStateReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgNetworkStateResp = SBPMsgNetworkStateResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgObs = SBPMsgObs <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgObsDepA = SBPMsgObsDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgObsDepB = SBPMsgObsDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgObsDepC = SBPMsgObsDepC <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgPosEcef = SBPMsgPosEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgPosEcefDepA = SBPMsgPosEcefDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgPosLlh = SBPMsgPosLlh <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgPosLlhDepA = SBPMsgPosLlhDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgPrintDep = SBPMsgPrintDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgReset = SBPMsgReset <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgResetDep = SBPMsgResetDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgResetFilters = SBPMsgResetFilters <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSetTime = SBPMsgSetTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSettingsReadReq = SBPMsgSettingsReadReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSettingsReadResp = SBPMsgSettingsReadResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSettingsRegister = SBPMsgSettingsRegister <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSettingsSave = SBPMsgSettingsSave <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSettingsWrite = SBPMsgSettingsWrite <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSpecan = SBPMsgSpecan <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgStartup = SBPMsgStartup <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgStmFlashLockSector = SBPMsgStmFlashLockSector <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSvConfigurationGps = SBPMsgSvConfigurationGps <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgThreadState = SBPMsgThreadState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgTrackingIq = SBPMsgTrackingIq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgTrackingState = SBPMsgTrackingState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgTrackingStateDepA = SBPMsgTrackingStateDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgTrackingStateDepB = SBPMsgTrackingStateDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgTrackingStateDetailed = SBPMsgTrackingStateDetailed <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgTweet = SBPMsgTweet <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgUartState = SBPMsgUartState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgUartStateDepa = SBPMsgUartStateDepa <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgUserData = SBPMsgUserData <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgUtcTime = SBPMsgUtcTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgVelEcef = SBPMsgVelEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgVelEcefDepA = SBPMsgVelEcefDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgVelNed = SBPMsgVelNed <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgVelNedDepA = SBPMsgVelNedDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | otherwise = SBPMsgUnknown <$> parseJSON obj
   parseJSON _ = mzero
 
 (<<>>) :: Value -> Value -> Value
-(Object a) <<>> (Object b) = Object (a <> b)
-(Object a) <<>> _          = Object a
-_          <<>> (Object b) = Object b
-_          <<>> v          = v
+(<<>>) a b = fromMaybe Null $ do
+  a' <- preview _Object a
+  b' <- preview _Object b
+  return $ review _Object $ a' <> b'
 
 instance ToJSON SBPMsg where
   toJSON (SBPMsgAcqResult n m) = toJSON n <<>> toJSON m

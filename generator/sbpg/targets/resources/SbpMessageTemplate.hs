@@ -21,6 +21,7 @@ module SwiftNav.SBP.Msg
 import BasicPrelude
 import Control.Lens
 import Data.Aeson               hiding (decode)
+import Data.Aeson.Lens
 import Data.Binary
 import Data.ByteString.Lazy     hiding (ByteString)
 ((*- for m in modules *))
@@ -51,12 +52,12 @@ $(makePrisms ''SBPMsg)
 instance Binary SBPMsg where
   get = do
     preamble <- getWord8
-    if preamble /= msgSBPPreamble then get else do
+    if preamble /= msgSBPPreamble then get else
       decoder <$> get where
         decoder m@Msg {..}
           | checkCrc m /= _msgSBPCrc = SBPMsgBadCrc m
           ((*- for m in msgs *))
-          | _msgSBPType == (((m | to_global))) = SBP(((m))) (decode (fromStrict _msgSBPPayload)) m
+          | _msgSBPType == (((m | to_global))) = SBP(((m))) (decode (fromStrict (unBytes _msgSBPPayload))) m
           ((*- endfor *))
           | otherwise = SBPMsgUnknown m
 
@@ -76,16 +77,16 @@ instance FromJSON SBPMsg where
     decoder msgType payload where
       decoder msgType payload
 ((*- for m in msgs *))
-        | msgType == (((m | to_global))) = SBP(((m))) <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == (((m | to_global))) = SBP(((m))) <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
 ((*- endfor *))
         | otherwise = SBPMsgUnknown <$> parseJSON obj
   parseJSON _ = mzero
 
 (<<>>) :: Value -> Value -> Value
-(Object a) <<>> (Object b) = Object (a <> b)
-(Object a) <<>> _          = Object a
-_          <<>> (Object b) = Object b
-_          <<>> v          = v
+(<<>>) a b = fromMaybe Null $ do
+  a' <- preview _Object a
+  b' <- preview _Object b
+  return $ review _Object $ a' <> b'
 
 instance ToJSON SBPMsg where
 ((*- for m in msgs *))

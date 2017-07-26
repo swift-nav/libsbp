@@ -23,11 +23,9 @@ source-repository head
   location:            git@github.com:swift-nav/libsbp.git
 
 library
-  exposed-modules:     SwiftNav.Internal
+  exposed-modules:     SwiftNav.CRC16
                      , SwiftNav.SBP
-  other-modules:       SwiftNav.CRC16
-                     , SwiftNav.Encoding
-                     , SwiftNav.SBP.Msg
+  other-modules:       SwiftNav.SBP.Msg
                      , SwiftNav.SBP.TH
                      , SwiftNav.SBP.Types
 ((*- for m in modules *))
@@ -45,6 +43,7 @@ library
                      , bytestring
                      , data-binary-ieee754
                      , lens
+                     , lens-aeson
                      , monad-loops
                      , template-haskell
                      , text
@@ -60,7 +59,6 @@ executable sbp2json
                      , binary-conduit
                      , bytestring
                      , conduit
-                     , conduit-combinators
                      , conduit-extra
                      , resourcet
                      , sbp
@@ -74,9 +72,7 @@ executable json2sbp
                      , base
                      , basic-prelude
                      , binary-conduit
-                     , bytestring
                      , conduit
-                     , conduit-combinators
                      , conduit-extra
                      , resourcet
                      , sbp
@@ -102,7 +98,6 @@ test-suite test
   hs-source-dirs:      test
   main-is:             Test.hs
   other-modules:       Test.SwiftNav.CRC16
-                     , Test.SwiftNav.Encoding
   build-depends:       aeson
                      , base
                      , base64-bytestring
