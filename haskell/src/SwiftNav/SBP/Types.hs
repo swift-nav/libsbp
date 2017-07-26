@@ -1,7 +1,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards   #-}
 {-# LANGUAGE TemplateHaskell   #-}
-{-# LANGUAGE OverloadedStrings #-}
 
 -- |
 -- Module:      SwiftNav.SBP.Types
@@ -19,26 +19,31 @@ module SwiftNav.SBP.Types
   ( module SwiftNav.SBP.Types
   ) where
 
-import BasicPrelude            hiding (lookup)
-import Control.Lens            hiding ((.=))
-import Data.Aeson              hiding (decode, decode')
+import BasicPrelude
+import Control.Lens             hiding ((.=))
+import Data.Aeson
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.Put
+import Data.ByteString.Base64   as Base64
 import Data.ByteString.Builder
+import Data.Text.Encoding
+import Data.Text.Encoding.Error
 import SwiftNav.CRC16
-import SwiftNav.Encoding       ()
 
 -- | Denotes the start of frame transmission. For v1.0, always 0x55.
---
 msgSBPPreamble :: Word8
 msgSBPPreamble = 0x55
 
 -- | Default sender ID. Intended for messages sent from the host to
 -- the device.
---
 defaultSender :: Word16
 defaultSender = 0x42
+
+-- | Wrapper around ByteString for *JSON and Binary typeclass instances.
+newtype Bytes = Bytes
+  { unBytes :: ByteString
+  } deriving ( Show, Read, Eq )
 
 -- | Packet structure for Swift Navigation Binary Protocol (SBP).
 --
@@ -48,7 +53,6 @@ defaultSender = 0x42
 -- to transmit solutions, observations, status and debugging
 -- messages, as well as receive messages from the host operating
 -- system.
---
 data Msg = Msg
   { _msgSBPType    :: !Word16
     -- ^ Uniquely identifies the type of the payload contents
@@ -58,7 +62,7 @@ data Msg = Msg
     -- number
   , _msgSBPLen     :: !Word8
     -- ^ Byte-length of the payload field
-  , _msgSBPPayload :: !ByteString
+  , _msgSBPPayload :: !Bytes
     -- ^ Binary data of the message, as identified by Message Type and
     -- Length. Usually contains the in-memory binary representation of
     -- a C struct (see documentation on individual message types)
@@ -75,7 +79,7 @@ instance Binary Msg where
     _msgSBPType    <- getWord16le
     _msgSBPSender  <- getWord16le
     _msgSBPLen     <- getWord8
-    _msgSBPPayload <- getByteString $ fromIntegral _msgSBPLen
+    _msgSBPPayload <- fmap Bytes $ getByteString $ fromIntegral _msgSBPLen
     _msgSBPCrc     <- getWord16le
     return Msg {..}
 
@@ -83,25 +87,23 @@ instance Binary Msg where
     putWord16le   _msgSBPType
     putWord16le   _msgSBPSender
     putWord8      _msgSBPLen
-    putByteString _msgSBPPayload
+    putByteString (unBytes _msgSBPPayload)
     putWord16le   _msgSBPCrc
 
-checkCrc :: Msg -> Word16
-checkCrc Msg {..} =
-  crc16 $ toLazyByteString $
-    word16LE _msgSBPType   <>
-    word16LE _msgSBPSender <>
-    word8 _msgSBPLen       <>
-    byteString _msgSBPPayload
+instance FromJSON Bytes where
+  parseJSON = withText "ByteString" (pure . Bytes . Base64.decodeLenient . encodeUtf8)
 
 instance FromJSON Msg where
-  parseJSON (Object v) = do
+  parseJSON (Object v) =
     Msg <$> v .: "msg_type"
         <*> v .: "sender"
         <*> v .: "length"
         <*> v .: "payload"
         <*> v .: "crc"
   parseJSON _ = mzero
+
+instance ToJSON Bytes where
+  toJSON = toJSON . decodeUtf8With ignore . Base64.encode . unBytes
 
 instance ToJSON Msg where
   toJSON Msg {..} = object
@@ -115,8 +117,15 @@ instance ToJSON Msg where
 
 -- | Class of generic representation of specialized SBP messages into
 -- SBP message frames.
---
 class Binary a => ToSBP a where
     -- | Convert an SBP message record that is serializable and a two-byte
     -- senderID to a binary into an SBP message frame.
     toSBP :: a -> Word16 -> Msg
+
+checkCrc :: Msg -> Word16
+checkCrc Msg {..} =
+  crc16 $ toLazyByteString $
+    word16LE _msgSBPType   <>
+    word16LE _msgSBPSender <>
+    word8 _msgSBPLen       <>
+    byteString (unBytes _msgSBPPayload)

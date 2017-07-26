@@ -12,25 +12,25 @@
 -- SBP to JSON tool - reads SBP binary from stdin and sends SBP JSON
 -- to stdout.
 
-import           BasicPrelude
-import           Control.Monad.Trans.Resource
-import           Data.Aeson
-import qualified Data.ByteString.Lazy as BL
-import           Data.Conduit
-import           Data.Conduit.Binary
-import qualified Data.Conduit.List as CL
-import           Data.Conduit.Serialization.Binary
-import           SwiftNav.SBP
-import           System.IO
+import BasicPrelude                      hiding (map)
+import Control.Monad.Trans.Resource
+import Data.Aeson
+import Data.ByteString.Lazy              hiding (ByteString, map)
+import Data.Conduit
+import Data.Conduit.Binary
+import Data.Conduit.List
+import Data.Conduit.Serialization.Binary
+import SwiftNav.SBP
+import System.IO
 
 -- | Encode a SBPMsg to a line of JSON.
 encodeLine :: SBPMsg -> ByteString
-encodeLine v = BL.toStrict $ encode v <> "\n"
+encodeLine v = toStrict $ encode v <> "\n"
 
 main :: IO ()
 main =
   runResourceT $
     sourceHandle stdin  =$=
       conduitDecode     =$=
-      CL.map encodeLine $$
+      map encodeLine    $$
       sinkHandle stdout
