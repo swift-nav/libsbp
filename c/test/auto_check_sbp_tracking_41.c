@@ -135,8 +135,7 @@ START_TEST( test_auto_check_sbp_tracking_41 )
     fail_unless(msg->L.i == 1319, "incorrect value for L.i, expected 1319, is %d", msg->L.i);
     fail_unless(msg->L.f == 169, "incorrect value for L.f, expected 169, is %d", msg->L.f);
     fail_unless(msg->clock_drift == 0, "incorrect value for clock_drift, expected 0, is %d", msg->clock_drift);
-    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
-    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
+    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
     fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
     fail_unless(msg->acceleration == 108, "incorrect value for acceleration, expected 108, is %d", msg->acceleration);
     fail_unless(msg->uptime == 1, "incorrect value for uptime, expected 1, is %d", msg->uptime);
@@ -144,7 +143,8 @@ START_TEST( test_auto_check_sbp_tracking_41 )
     fail_unless(msg->cn0 == 177, "incorrect value for cn0, expected 177, is %d", msg->cn0);
     fail_unless(msg->doppler_std == 39, "incorrect value for doppler_std, expected 39, is %d", msg->doppler_std);
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
-    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
+    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
+    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
     fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
     fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
     fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
@@ -200,8 +200,7 @@ START_TEST( test_auto_check_sbp_tracking_41 )
     fail_unless(msg->L.i == 1810, "incorrect value for L.i, expected 1810, is %d", msg->L.i);
     fail_unless(msg->L.f == 14, "incorrect value for L.f, expected 14, is %d", msg->L.f);
     fail_unless(msg->clock_drift == 0, "incorrect value for clock_drift, expected 0, is %d", msg->clock_drift);
-    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
-    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
+    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
     fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
     fail_unless(msg->acceleration == -32, "incorrect value for acceleration, expected -32, is %d", msg->acceleration);
     fail_unless(msg->uptime == 1, "incorrect value for uptime, expected 1, is %d", msg->uptime);
@@ -209,7 +208,8 @@ START_TEST( test_auto_check_sbp_tracking_41 )
     fail_unless(msg->cn0 == 175, "incorrect value for cn0, expected 175, is %d", msg->cn0);
     fail_unless(msg->doppler_std == 30, "incorrect value for doppler_std, expected 30, is %d", msg->doppler_std);
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
-    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
+    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
+    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
     fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
     fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
     fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
@@ -265,8 +265,7 @@ START_TEST( test_auto_check_sbp_tracking_41 )
     fail_unless(msg->L.i == 2298, "incorrect value for L.i, expected 2298, is %d", msg->L.i);
     fail_unless(msg->L.f == 8, "incorrect value for L.f, expected 8, is %d", msg->L.f);
     fail_unless(msg->clock_drift == 0, "incorrect value for clock_drift, expected 0, is %d", msg->clock_drift);
-    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
-    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
+    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
     fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
     fail_unless(msg->acceleration == 27, "incorrect value for acceleration, expected 27, is %d", msg->acceleration);
     fail_unless(msg->uptime == 2, "incorrect value for uptime, expected 2, is %d", msg->uptime);
@@ -274,7 +273,8 @@ START_TEST( test_auto_check_sbp_tracking_41 )
     fail_unless(msg->cn0 == 179, "incorrect value for cn0, expected 179, is %d", msg->cn0);
     fail_unless(msg->doppler_std == 22, "incorrect value for doppler_std, expected 22, is %d", msg->doppler_std);
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
-    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
+    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
+    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
     fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
     fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
     fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
@@ -330,8 +330,7 @@ START_TEST( test_auto_check_sbp_tracking_41 )
     fail_unless(msg->L.i == 2786, "incorrect value for L.i, expected 2786, is %d", msg->L.i);
     fail_unless(msg->L.f == 125, "incorrect value for L.f, expected 125, is %d", msg->L.f);
     fail_unless(msg->clock_drift == 0, "incorrect value for clock_drift, expected 0, is %d", msg->clock_drift);
-    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
-    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
+    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
     fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
     fail_unless(msg->acceleration == -36, "incorrect value for acceleration, expected -36, is %d", msg->acceleration);
     fail_unless(msg->uptime == 2, "incorrect value for uptime, expected 2, is %d", msg->uptime);
@@ -339,7 +338,8 @@ START_TEST( test_auto_check_sbp_tracking_41 )
     fail_unless(msg->cn0 == 181, "incorrect value for cn0, expected 181, is %d", msg->cn0);
     fail_unless(msg->doppler_std == 10, "incorrect value for doppler_std, expected 10, is %d", msg->doppler_std);
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
-    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
+    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
+    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
     fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
     fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
     fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
@@ -395,8 +395,7 @@ START_TEST( test_auto_check_sbp_tracking_41 )
     fail_unless(msg->L.i == 3275, "incorrect value for L.i, expected 3275, is %d", msg->L.i);
     fail_unless(msg->L.f == 64, "incorrect value for L.f, expected 64, is %d", msg->L.f);
     fail_unless(msg->clock_drift == 0, "incorrect value for clock_drift, expected 0, is %d", msg->clock_drift);
-    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
-    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
+    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
     fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
     fail_unless(msg->acceleration == 2, "incorrect value for acceleration, expected 2, is %d", msg->acceleration);
     fail_unless(msg->uptime == 3, "incorrect value for uptime, expected 3, is %d", msg->uptime);
@@ -404,7 +403,8 @@ START_TEST( test_auto_check_sbp_tracking_41 )
     fail_unless(msg->cn0 == 184, "incorrect value for cn0, expected 184, is %d", msg->cn0);
     fail_unless(msg->doppler_std == 4, "incorrect value for doppler_std, expected 4, is %d", msg->doppler_std);
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
-    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
+    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
+    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
     fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
     fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
     fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
