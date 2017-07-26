@@ -15,12 +15,13 @@
 -- L1 receiver, including a variety of legacy messages that may no longer be
 -- used.
 
-module SwiftNav.SBP.Piksi where
+module SwiftNav.SBP.Piksi
+  ( module SwiftNav.SBP.Piksi
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -29,7 +30,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 import SwiftNav.SBP.Gnss
@@ -50,11 +51,8 @@ instance Binary MsgAlmanac where
 
   put MsgAlmanac =
     return ()
-
-$(deriveSBP 'msgAlmanac ''MsgAlmanac)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAlmanac_" . P.stripPrefix "_msgAlmanac_"}
-             ''MsgAlmanac)
+$(makeSBP 'msgAlmanac ''MsgAlmanac)
+$(makeJSON "_msgAlmanac_" ''MsgAlmanac)
 $(makeLenses ''MsgAlmanac)
 
 msgSetTime :: Word16
@@ -73,11 +71,8 @@ instance Binary MsgSetTime where
 
   put MsgSetTime =
     return ()
-
-$(deriveSBP 'msgSetTime ''MsgSetTime)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSetTime_" . P.stripPrefix "_msgSetTime_"}
-             ''MsgSetTime)
+$(makeSBP 'msgSetTime ''MsgSetTime)
+$(makeJSON "_msgSetTime_" ''MsgSetTime)
 $(makeLenses ''MsgSetTime)
 
 msgReset :: Word16
@@ -99,10 +94,8 @@ instance Binary MsgReset where
   put MsgReset {..} = do
     putWord32le _msgReset_flags
 
-$(deriveSBP 'msgReset ''MsgReset)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgReset_" . P.stripPrefix "_msgReset_"}
-             ''MsgReset)
+$(makeSBP 'msgReset ''MsgReset)
+$(makeJSON "_msgReset_" ''MsgReset)
 $(makeLenses ''MsgReset)
 
 msgResetDep :: Word16
@@ -120,11 +113,8 @@ instance Binary MsgResetDep where
 
   put MsgResetDep =
     return ()
-
-$(deriveSBP 'msgResetDep ''MsgResetDep)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgResetDep_" . P.stripPrefix "_msgResetDep_"}
-             ''MsgResetDep)
+$(makeSBP 'msgResetDep ''MsgResetDep)
+$(makeJSON "_msgResetDep_" ''MsgResetDep)
 $(makeLenses ''MsgResetDep)
 
 msgCwResults :: Word16
@@ -144,11 +134,8 @@ instance Binary MsgCwResults where
 
   put MsgCwResults =
     return ()
-
-$(deriveSBP 'msgCwResults ''MsgCwResults)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCwResults_" . P.stripPrefix "_msgCwResults_"}
-             ''MsgCwResults)
+$(makeSBP 'msgCwResults ''MsgCwResults)
+$(makeJSON "_msgCwResults_" ''MsgCwResults)
 $(makeLenses ''MsgCwResults)
 
 msgCwStart :: Word16
@@ -168,11 +155,8 @@ instance Binary MsgCwStart where
 
   put MsgCwStart =
     return ()
-
-$(deriveSBP 'msgCwStart ''MsgCwStart)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCwStart_" . P.stripPrefix "_msgCwStart_"}
-             ''MsgCwStart)
+$(makeSBP 'msgCwStart ''MsgCwStart)
+$(makeJSON "_msgCwStart_" ''MsgCwStart)
 $(makeLenses ''MsgCwStart)
 
 msgResetFilters :: Word16
@@ -195,10 +179,8 @@ instance Binary MsgResetFilters where
   put MsgResetFilters {..} = do
     putWord8 _msgResetFilters_filter
 
-$(deriveSBP 'msgResetFilters ''MsgResetFilters)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgResetFilters_" . P.stripPrefix "_msgResetFilters_"}
-             ''MsgResetFilters)
+$(makeSBP 'msgResetFilters ''MsgResetFilters)
+$(makeJSON "_msgResetFilters_" ''MsgResetFilters)
 $(makeLenses ''MsgResetFilters)
 
 msgInitBase :: Word16
@@ -219,11 +201,8 @@ instance Binary MsgInitBase where
 
   put MsgInitBase =
     return ()
-
-$(deriveSBP 'msgInitBase ''MsgInitBase)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgInitBase_" . P.stripPrefix "_msgInitBase_"}
-             ''MsgInitBase)
+$(makeSBP 'msgInitBase ''MsgInitBase)
+$(makeJSON "_msgInitBase_" ''MsgInitBase)
 $(makeLenses ''MsgInitBase)
 
 msgThreadState :: Word16
@@ -256,10 +235,8 @@ instance Binary MsgThreadState where
     putWord16le _msgThreadState_cpu
     putWord32le _msgThreadState_stack_free
 
-$(deriveSBP 'msgThreadState ''MsgThreadState)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgThreadState_" . P.stripPrefix "_msgThreadState_"}
-             ''MsgThreadState)
+$(makeSBP 'msgThreadState ''MsgThreadState)
+$(makeJSON "_msgThreadState_" ''MsgThreadState)
 $(makeLenses ''MsgThreadState)
 
 -- | UARTChannel.
@@ -298,8 +275,8 @@ instance Binary UARTChannel where
     putWord16le _uARTChannel_io_error_count
     putWord8 _uARTChannel_tx_buffer_level
     putWord8 _uARTChannel_rx_buffer_level
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_uARTChannel_" . P.stripPrefix "_uARTChannel_"}
-             ''UARTChannel)
+
+$(makeJSON "_uARTChannel_" ''UARTChannel)
 $(makeLenses ''UARTChannel)
 
 -- | Period.
@@ -333,8 +310,8 @@ instance Binary Period where
     putWord32le $ fromIntegral _period_pmin
     putWord32le $ fromIntegral _period_pmax
     putWord32le $ fromIntegral _period_current
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_period_" . P.stripPrefix "_period_"}
-             ''Period)
+
+$(makeJSON "_period_" ''Period)
 $(makeLenses ''Period)
 
 -- | Latency.
@@ -367,8 +344,8 @@ instance Binary Latency where
     putWord32le $ fromIntegral _latency_lmin
     putWord32le $ fromIntegral _latency_lmax
     putWord32le $ fromIntegral _latency_current
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_latency_" . P.stripPrefix "_latency_"}
-             ''Latency)
+
+$(makeJSON "_latency_" ''Latency)
 $(makeLenses ''Latency)
 
 msgUartState :: Word16
@@ -413,10 +390,8 @@ instance Binary MsgUartState where
     put _msgUartState_latency
     put _msgUartState_obs_period
 
-$(deriveSBP 'msgUartState ''MsgUartState)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUartState_" . P.stripPrefix "_msgUartState_"}
-             ''MsgUartState)
+$(makeSBP 'msgUartState ''MsgUartState)
+$(makeJSON "_msgUartState_" ''MsgUartState)
 $(makeLenses ''MsgUartState)
 
 msgUartStateDepa :: Word16
@@ -450,10 +425,8 @@ instance Binary MsgUartStateDepa where
     put _msgUartStateDepa_uart_ftdi
     put _msgUartStateDepa_latency
 
-$(deriveSBP 'msgUartStateDepa ''MsgUartStateDepa)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgUartStateDepa_" . P.stripPrefix "_msgUartStateDepa_"}
-             ''MsgUartStateDepa)
+$(makeSBP 'msgUartStateDepa ''MsgUartStateDepa)
+$(makeJSON "_msgUartStateDepa_" ''MsgUartStateDepa)
 $(makeLenses ''MsgUartStateDepa)
 
 msgIarState :: Word16
@@ -477,10 +450,8 @@ instance Binary MsgIarState where
   put MsgIarState {..} = do
     putWord32le _msgIarState_num_hyps
 
-$(deriveSBP 'msgIarState ''MsgIarState)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgIarState_" . P.stripPrefix "_msgIarState_"}
-             ''MsgIarState)
+$(makeSBP 'msgIarState ''MsgIarState)
+$(makeJSON "_msgIarState_" ''MsgIarState)
 $(makeLenses ''MsgIarState)
 
 msgMaskSatellite :: Word16
@@ -507,10 +478,8 @@ instance Binary MsgMaskSatellite where
     putWord8 _msgMaskSatellite_mask
     put _msgMaskSatellite_sid
 
-$(deriveSBP 'msgMaskSatellite ''MsgMaskSatellite)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgMaskSatellite_" . P.stripPrefix "_msgMaskSatellite_"}
-             ''MsgMaskSatellite)
+$(makeSBP 'msgMaskSatellite ''MsgMaskSatellite)
+$(makeJSON "_msgMaskSatellite_" ''MsgMaskSatellite)
 $(makeLenses ''MsgMaskSatellite)
 
 msgDeviceMonitor :: Word16
@@ -550,10 +519,8 @@ instance Binary MsgDeviceMonitor where
     putWord16le $ fromIntegral _msgDeviceMonitor_cpu_temperature
     putWord16le $ fromIntegral _msgDeviceMonitor_fe_temperature
 
-$(deriveSBP 'msgDeviceMonitor ''MsgDeviceMonitor)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgDeviceMonitor_" . P.stripPrefix "_msgDeviceMonitor_"}
-             ''MsgDeviceMonitor)
+$(makeSBP 'msgDeviceMonitor ''MsgDeviceMonitor)
+$(makeJSON "_msgDeviceMonitor_" ''MsgDeviceMonitor)
 $(makeLenses ''MsgDeviceMonitor)
 
 msgCommandReq :: Word16
@@ -580,10 +547,8 @@ instance Binary MsgCommandReq where
     putWord32le _msgCommandReq_sequence
     putByteString $ encodeUtf8 _msgCommandReq_command
 
-$(deriveSBP 'msgCommandReq ''MsgCommandReq)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCommandReq_" . P.stripPrefix "_msgCommandReq_"}
-             ''MsgCommandReq)
+$(makeSBP 'msgCommandReq ''MsgCommandReq)
+$(makeJSON "_msgCommandReq_" ''MsgCommandReq)
 $(makeLenses ''MsgCommandReq)
 
 msgCommandResp :: Word16
@@ -610,10 +575,8 @@ instance Binary MsgCommandResp where
     putWord32le _msgCommandResp_sequence
     putWord32le $ fromIntegral _msgCommandResp_code
 
-$(deriveSBP 'msgCommandResp ''MsgCommandResp)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCommandResp_" . P.stripPrefix "_msgCommandResp_"}
-             ''MsgCommandResp)
+$(makeSBP 'msgCommandResp ''MsgCommandResp)
+$(makeJSON "_msgCommandResp_" ''MsgCommandResp)
 $(makeLenses ''MsgCommandResp)
 
 msgCommandOutput :: Word16
@@ -641,10 +604,8 @@ instance Binary MsgCommandOutput where
     putWord32le _msgCommandOutput_sequence
     putByteString $ encodeUtf8 _msgCommandOutput_line
 
-$(deriveSBP 'msgCommandOutput ''MsgCommandOutput)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgCommandOutput_" . P.stripPrefix "_msgCommandOutput_"}
-             ''MsgCommandOutput)
+$(makeSBP 'msgCommandOutput ''MsgCommandOutput)
+$(makeJSON "_msgCommandOutput_" ''MsgCommandOutput)
 $(makeLenses ''MsgCommandOutput)
 
 msgNetworkStateReq :: Word16
@@ -663,11 +624,8 @@ instance Binary MsgNetworkStateReq where
 
   put MsgNetworkStateReq =
     return ()
-
-$(deriveSBP 'msgNetworkStateReq ''MsgNetworkStateReq)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNetworkStateReq_" . P.stripPrefix "_msgNetworkStateReq_"}
-             ''MsgNetworkStateReq)
+$(makeSBP 'msgNetworkStateReq ''MsgNetworkStateReq)
+$(makeJSON "_msgNetworkStateReq_" ''MsgNetworkStateReq)
 $(makeLenses ''MsgNetworkStateReq)
 
 msgNetworkStateResp :: Word16
@@ -718,10 +676,8 @@ instance Binary MsgNetworkStateResp where
     putByteString $ encodeUtf8 _msgNetworkStateResp_interface_name
     putWord32le _msgNetworkStateResp_flags
 
-$(deriveSBP 'msgNetworkStateResp ''MsgNetworkStateResp)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNetworkStateResp_" . P.stripPrefix "_msgNetworkStateResp_"}
-             ''MsgNetworkStateResp)
+$(makeSBP 'msgNetworkStateResp ''MsgNetworkStateResp)
+$(makeJSON "_msgNetworkStateResp_" ''MsgNetworkStateResp)
 $(makeLenses ''MsgNetworkStateResp)
 
 msgSpecan :: Word16
@@ -767,8 +723,6 @@ instance Binary MsgSpecan where
     putFloat32le _msgSpecan_amplitude_unit
     mapM_ putWord8 _msgSpecan_amplitude_value
 
-$(deriveSBP 'msgSpecan ''MsgSpecan)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSpecan_" . P.stripPrefix "_msgSpecan_"}
-             ''MsgSpecan)
+$(makeSBP 'msgSpecan ''MsgSpecan)
+$(makeJSON "_msgSpecan_" ''MsgSpecan)
 $(makeLenses ''MsgSpecan)

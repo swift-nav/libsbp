@@ -6,7 +6,7 @@ module Test.SwiftNav.CRC16
   ) where
 
 import BasicPrelude
-import SwiftNav.CRC16
+import SwiftNav.Internal
 import Test.Tasty
 import Test.Tasty.HUnit
 

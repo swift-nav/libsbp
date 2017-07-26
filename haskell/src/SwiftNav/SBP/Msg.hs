@@ -14,11 +14,13 @@
 --
 -- SBP message containers.
 
-module SwiftNav.SBP.Msg where
+module SwiftNav.SBP.Msg
+  ( module SwiftNav.SBP.Msg
+  ) where
 
-import BasicPrelude             hiding (lookup)
-import Control.Lens             hiding ((.=))
-import Data.Aeson               hiding (decode, decode')
+import BasicPrelude
+import Control.Lens
+import Data.Aeson               hiding (decode)
 import Data.Binary
 import Data.ByteString.Lazy     hiding (ByteString)
 import SwiftNav.SBP.Acquisition
@@ -172,8 +174,8 @@ instance Binary SBPMsg where
   get = do
     preamble <- getWord8
     if preamble /= msgSBPPreamble then get else do
-      decode' <$> get where
-        decode' m@Msg {..}
+      decoder <$> get where
+        decoder m@Msg {..}
           | checkCrc m /= _msgSBPCrc = SBPMsgBadCrc m
           | _msgSBPType == msgAcqResult = SBPMsgAcqResult (decode (fromStrict _msgSBPPayload)) m
           | _msgSBPType == msgAcqResultDepA = SBPMsgAcqResultDepA (decode (fromStrict _msgSBPPayload)) m
@@ -296,376 +298,377 @@ instance Binary SBPMsg where
 
   put sm = do
     putWord8 msgSBPPreamble
-    encode' sm where
-      encode' (SBPMsgAcqResult _ m) = put m
-      encode' (SBPMsgAcqResultDepA _ m) = put m
-      encode' (SBPMsgAcqResultDepB _ m) = put m
-      encode' (SBPMsgAcqSvProfile _ m) = put m
-      encode' (SBPMsgAgeCorrections _ m) = put m
-      encode' (SBPMsgAlmanac _ m) = put m
-      encode' (SBPMsgAlmanacGlo _ m) = put m
-      encode' (SBPMsgAlmanacGps _ m) = put m
-      encode' (SBPMsgBasePosEcef _ m) = put m
-      encode' (SBPMsgBasePosLlh _ m) = put m
-      encode' (SBPMsgBaselineEcef _ m) = put m
-      encode' (SBPMsgBaselineEcefDepA _ m) = put m
-      encode' (SBPMsgBaselineHeading _ m) = put m
-      encode' (SBPMsgBaselineHeadingDepA _ m) = put m
-      encode' (SBPMsgBaselineNed _ m) = put m
-      encode' (SBPMsgBaselineNedDepA _ m) = put m
-      encode' (SBPMsgBootloaderHandshakeDepA _ m) = put m
-      encode' (SBPMsgBootloaderHandshakeReq _ m) = put m
-      encode' (SBPMsgBootloaderHandshakeResp _ m) = put m
-      encode' (SBPMsgBootloaderJumpToApp _ m) = put m
-      encode' (SBPMsgCommandOutput _ m) = put m
-      encode' (SBPMsgCommandReq _ m) = put m
-      encode' (SBPMsgCommandResp _ m) = put m
-      encode' (SBPMsgCwResults _ m) = put m
-      encode' (SBPMsgCwStart _ m) = put m
-      encode' (SBPMsgDeviceMonitor _ m) = put m
-      encode' (SBPMsgDgnssStatus _ m) = put m
-      encode' (SBPMsgDops _ m) = put m
-      encode' (SBPMsgDopsDepA _ m) = put m
-      encode' (SBPMsgEphemerisDepA _ m) = put m
-      encode' (SBPMsgEphemerisDepB _ m) = put m
-      encode' (SBPMsgEphemerisDepC _ m) = put m
-      encode' (SBPMsgEphemerisDepD _ m) = put m
-      encode' (SBPMsgEphemerisGlo _ m) = put m
-      encode' (SBPMsgEphemerisGloDepA _ m) = put m
-      encode' (SBPMsgEphemerisGloDepB _ m) = put m
-      encode' (SBPMsgEphemerisGloDepC _ m) = put m
-      encode' (SBPMsgEphemerisGps _ m) = put m
-      encode' (SBPMsgEphemerisGpsDepE _ m) = put m
-      encode' (SBPMsgEphemerisSbas _ m) = put m
-      encode' (SBPMsgEphemerisSbasDepA _ m) = put m
-      encode' (SBPMsgExtEvent _ m) = put m
-      encode' (SBPMsgFcnsGlo _ m) = put m
-      encode' (SBPMsgFileioReadDirReq _ m) = put m
-      encode' (SBPMsgFileioReadDirResp _ m) = put m
-      encode' (SBPMsgFileioReadReq _ m) = put m
-      encode' (SBPMsgFileioReadResp _ m) = put m
-      encode' (SBPMsgFileioRemove _ m) = put m
-      encode' (SBPMsgFileioWriteReq _ m) = put m
-      encode' (SBPMsgFileioWriteResp _ m) = put m
-      encode' (SBPMsgFlashDone _ m) = put m
-      encode' (SBPMsgFlashErase _ m) = put m
-      encode' (SBPMsgFlashProgram _ m) = put m
-      encode' (SBPMsgFlashReadReq _ m) = put m
-      encode' (SBPMsgFlashReadResp _ m) = put m
-      encode' (SBPMsgFwd _ m) = put m
-      encode' (SBPMsgGpsTime _ m) = put m
-      encode' (SBPMsgGpsTimeDepA _ m) = put m
-      encode' (SBPMsgGroupDelay _ m) = put m
-      encode' (SBPMsgGroupDelayDepA _ m) = put m
-      encode' (SBPMsgHeartbeat _ m) = put m
-      encode' (SBPMsgIarState _ m) = put m
-      encode' (SBPMsgImuAux _ m) = put m
-      encode' (SBPMsgImuRaw _ m) = put m
-      encode' (SBPMsgInitBase _ m) = put m
-      encode' (SBPMsgIono _ m) = put m
-      encode' (SBPMsgLog _ m) = put m
-      encode' (SBPMsgM25FlashWriteStatus _ m) = put m
-      encode' (SBPMsgMaskSatellite _ m) = put m
-      encode' (SBPMsgNapDeviceDnaReq _ m) = put m
-      encode' (SBPMsgNapDeviceDnaResp _ m) = put m
-      encode' (SBPMsgNdbEvent _ m) = put m
-      encode' (SBPMsgNetworkStateReq _ m) = put m
-      encode' (SBPMsgNetworkStateResp _ m) = put m
-      encode' (SBPMsgObs _ m) = put m
-      encode' (SBPMsgObsDepA _ m) = put m
-      encode' (SBPMsgObsDepB _ m) = put m
-      encode' (SBPMsgObsDepC _ m) = put m
-      encode' (SBPMsgPosEcef _ m) = put m
-      encode' (SBPMsgPosEcefDepA _ m) = put m
-      encode' (SBPMsgPosLlh _ m) = put m
-      encode' (SBPMsgPosLlhDepA _ m) = put m
-      encode' (SBPMsgPrintDep _ m) = put m
-      encode' (SBPMsgReset _ m) = put m
-      encode' (SBPMsgResetDep _ m) = put m
-      encode' (SBPMsgResetFilters _ m) = put m
-      encode' (SBPMsgSetTime _ m) = put m
-      encode' (SBPMsgSettingsReadByIndexDone _ m) = put m
-      encode' (SBPMsgSettingsReadByIndexReq _ m) = put m
-      encode' (SBPMsgSettingsReadByIndexResp _ m) = put m
-      encode' (SBPMsgSettingsReadReq _ m) = put m
-      encode' (SBPMsgSettingsReadResp _ m) = put m
-      encode' (SBPMsgSettingsRegister _ m) = put m
-      encode' (SBPMsgSettingsSave _ m) = put m
-      encode' (SBPMsgSettingsWrite _ m) = put m
-      encode' (SBPMsgSpecan _ m) = put m
-      encode' (SBPMsgStartup _ m) = put m
-      encode' (SBPMsgStmFlashLockSector _ m) = put m
-      encode' (SBPMsgStmFlashUnlockSector _ m) = put m
-      encode' (SBPMsgStmUniqueIdReq _ m) = put m
-      encode' (SBPMsgStmUniqueIdResp _ m) = put m
-      encode' (SBPMsgSvConfigurationGps _ m) = put m
-      encode' (SBPMsgThreadState _ m) = put m
-      encode' (SBPMsgTrackingIq _ m) = put m
-      encode' (SBPMsgTrackingState _ m) = put m
-      encode' (SBPMsgTrackingStateDepA _ m) = put m
-      encode' (SBPMsgTrackingStateDepB _ m) = put m
-      encode' (SBPMsgTrackingStateDetailed _ m) = put m
-      encode' (SBPMsgTweet _ m) = put m
-      encode' (SBPMsgUartState _ m) = put m
-      encode' (SBPMsgUartStateDepa _ m) = put m
-      encode' (SBPMsgUserData _ m) = put m
-      encode' (SBPMsgUtcTime _ m) = put m
-      encode' (SBPMsgVelEcef _ m) = put m
-      encode' (SBPMsgVelEcefDepA _ m) = put m
-      encode' (SBPMsgVelNed _ m) = put m
-      encode' (SBPMsgVelNedDepA _ m) = put m
-      encode' (SBPMsgUnknown m) = put m
-      encode' (SBPMsgBadCrc m) = put m
+    encoder sm where
+      encoder (SBPMsgAcqResult _ m) = put m
+      encoder (SBPMsgAcqResultDepA _ m) = put m
+      encoder (SBPMsgAcqResultDepB _ m) = put m
+      encoder (SBPMsgAcqSvProfile _ m) = put m
+      encoder (SBPMsgAgeCorrections _ m) = put m
+      encoder (SBPMsgAlmanac _ m) = put m
+      encoder (SBPMsgAlmanacGlo _ m) = put m
+      encoder (SBPMsgAlmanacGps _ m) = put m
+      encoder (SBPMsgBasePosEcef _ m) = put m
+      encoder (SBPMsgBasePosLlh _ m) = put m
+      encoder (SBPMsgBaselineEcef _ m) = put m
+      encoder (SBPMsgBaselineEcefDepA _ m) = put m
+      encoder (SBPMsgBaselineHeading _ m) = put m
+      encoder (SBPMsgBaselineHeadingDepA _ m) = put m
+      encoder (SBPMsgBaselineNed _ m) = put m
+      encoder (SBPMsgBaselineNedDepA _ m) = put m
+      encoder (SBPMsgBootloaderHandshakeDepA _ m) = put m
+      encoder (SBPMsgBootloaderHandshakeReq _ m) = put m
+      encoder (SBPMsgBootloaderHandshakeResp _ m) = put m
+      encoder (SBPMsgBootloaderJumpToApp _ m) = put m
+      encoder (SBPMsgCommandOutput _ m) = put m
+      encoder (SBPMsgCommandReq _ m) = put m
+      encoder (SBPMsgCommandResp _ m) = put m
+      encoder (SBPMsgCwResults _ m) = put m
+      encoder (SBPMsgCwStart _ m) = put m
+      encoder (SBPMsgDeviceMonitor _ m) = put m
+      encoder (SBPMsgDgnssStatus _ m) = put m
+      encoder (SBPMsgDops _ m) = put m
+      encoder (SBPMsgDopsDepA _ m) = put m
+      encoder (SBPMsgEphemerisDepA _ m) = put m
+      encoder (SBPMsgEphemerisDepB _ m) = put m
+      encoder (SBPMsgEphemerisDepC _ m) = put m
+      encoder (SBPMsgEphemerisDepD _ m) = put m
+      encoder (SBPMsgEphemerisGlo _ m) = put m
+      encoder (SBPMsgEphemerisGloDepA _ m) = put m
+      encoder (SBPMsgEphemerisGloDepB _ m) = put m
+      encoder (SBPMsgEphemerisGloDepC _ m) = put m
+      encoder (SBPMsgEphemerisGps _ m) = put m
+      encoder (SBPMsgEphemerisGpsDepE _ m) = put m
+      encoder (SBPMsgEphemerisSbas _ m) = put m
+      encoder (SBPMsgEphemerisSbasDepA _ m) = put m
+      encoder (SBPMsgExtEvent _ m) = put m
+      encoder (SBPMsgFcnsGlo _ m) = put m
+      encoder (SBPMsgFileioReadDirReq _ m) = put m
+      encoder (SBPMsgFileioReadDirResp _ m) = put m
+      encoder (SBPMsgFileioReadReq _ m) = put m
+      encoder (SBPMsgFileioReadResp _ m) = put m
+      encoder (SBPMsgFileioRemove _ m) = put m
+      encoder (SBPMsgFileioWriteReq _ m) = put m
+      encoder (SBPMsgFileioWriteResp _ m) = put m
+      encoder (SBPMsgFlashDone _ m) = put m
+      encoder (SBPMsgFlashErase _ m) = put m
+      encoder (SBPMsgFlashProgram _ m) = put m
+      encoder (SBPMsgFlashReadReq _ m) = put m
+      encoder (SBPMsgFlashReadResp _ m) = put m
+      encoder (SBPMsgFwd _ m) = put m
+      encoder (SBPMsgGpsTime _ m) = put m
+      encoder (SBPMsgGpsTimeDepA _ m) = put m
+      encoder (SBPMsgGroupDelay _ m) = put m
+      encoder (SBPMsgGroupDelayDepA _ m) = put m
+      encoder (SBPMsgHeartbeat _ m) = put m
+      encoder (SBPMsgIarState _ m) = put m
+      encoder (SBPMsgImuAux _ m) = put m
+      encoder (SBPMsgImuRaw _ m) = put m
+      encoder (SBPMsgInitBase _ m) = put m
+      encoder (SBPMsgIono _ m) = put m
+      encoder (SBPMsgLog _ m) = put m
+      encoder (SBPMsgM25FlashWriteStatus _ m) = put m
+      encoder (SBPMsgMaskSatellite _ m) = put m
+      encoder (SBPMsgNapDeviceDnaReq _ m) = put m
+      encoder (SBPMsgNapDeviceDnaResp _ m) = put m
+      encoder (SBPMsgNdbEvent _ m) = put m
+      encoder (SBPMsgNetworkStateReq _ m) = put m
+      encoder (SBPMsgNetworkStateResp _ m) = put m
+      encoder (SBPMsgObs _ m) = put m
+      encoder (SBPMsgObsDepA _ m) = put m
+      encoder (SBPMsgObsDepB _ m) = put m
+      encoder (SBPMsgObsDepC _ m) = put m
+      encoder (SBPMsgPosEcef _ m) = put m
+      encoder (SBPMsgPosEcefDepA _ m) = put m
+      encoder (SBPMsgPosLlh _ m) = put m
+      encoder (SBPMsgPosLlhDepA _ m) = put m
+      encoder (SBPMsgPrintDep _ m) = put m
+      encoder (SBPMsgReset _ m) = put m
+      encoder (SBPMsgResetDep _ m) = put m
+      encoder (SBPMsgResetFilters _ m) = put m
+      encoder (SBPMsgSetTime _ m) = put m
+      encoder (SBPMsgSettingsReadByIndexDone _ m) = put m
+      encoder (SBPMsgSettingsReadByIndexReq _ m) = put m
+      encoder (SBPMsgSettingsReadByIndexResp _ m) = put m
+      encoder (SBPMsgSettingsReadReq _ m) = put m
+      encoder (SBPMsgSettingsReadResp _ m) = put m
+      encoder (SBPMsgSettingsRegister _ m) = put m
+      encoder (SBPMsgSettingsSave _ m) = put m
+      encoder (SBPMsgSettingsWrite _ m) = put m
+      encoder (SBPMsgSpecan _ m) = put m
+      encoder (SBPMsgStartup _ m) = put m
+      encoder (SBPMsgStmFlashLockSector _ m) = put m
+      encoder (SBPMsgStmFlashUnlockSector _ m) = put m
+      encoder (SBPMsgStmUniqueIdReq _ m) = put m
+      encoder (SBPMsgStmUniqueIdResp _ m) = put m
+      encoder (SBPMsgSvConfigurationGps _ m) = put m
+      encoder (SBPMsgThreadState _ m) = put m
+      encoder (SBPMsgTrackingIq _ m) = put m
+      encoder (SBPMsgTrackingState _ m) = put m
+      encoder (SBPMsgTrackingStateDepA _ m) = put m
+      encoder (SBPMsgTrackingStateDepB _ m) = put m
+      encoder (SBPMsgTrackingStateDetailed _ m) = put m
+      encoder (SBPMsgTweet _ m) = put m
+      encoder (SBPMsgUartState _ m) = put m
+      encoder (SBPMsgUartStateDepa _ m) = put m
+      encoder (SBPMsgUserData _ m) = put m
+      encoder (SBPMsgUtcTime _ m) = put m
+      encoder (SBPMsgVelEcef _ m) = put m
+      encoder (SBPMsgVelEcefDepA _ m) = put m
+      encoder (SBPMsgVelNed _ m) = put m
+      encoder (SBPMsgVelNedDepA _ m) = put m
+      encoder (SBPMsgUnknown m) = put m
+      encoder (SBPMsgBadCrc m) = put m
 
 instance FromJSON SBPMsg where
   parseJSON obj@(Object o) = do
     msgType <- o .: "msg_type"
-    decode' msgType where
-      decode' msgType
-        | msgType == msgAcqResult = SBPMsgAcqResult <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgAcqResultDepA = SBPMsgAcqResultDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgAcqResultDepB = SBPMsgAcqResultDepB <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgAcqSvProfile = SBPMsgAcqSvProfile <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgAgeCorrections = SBPMsgAgeCorrections <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgAlmanac = SBPMsgAlmanac <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgAlmanacGlo = SBPMsgAlmanacGlo <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgAlmanacGps = SBPMsgAlmanacGps <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgBasePosEcef = SBPMsgBasePosEcef <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgBasePosLlh = SBPMsgBasePosLlh <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgBaselineEcef = SBPMsgBaselineEcef <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgBaselineEcefDepA = SBPMsgBaselineEcefDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgBaselineHeading = SBPMsgBaselineHeading <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgBaselineHeadingDepA = SBPMsgBaselineHeadingDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgBaselineNed = SBPMsgBaselineNed <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgBaselineNedDepA = SBPMsgBaselineNedDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgCommandOutput = SBPMsgCommandOutput <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgCommandReq = SBPMsgCommandReq <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgCommandResp = SBPMsgCommandResp <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgCwResults = SBPMsgCwResults <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgCwStart = SBPMsgCwStart <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgDeviceMonitor = SBPMsgDeviceMonitor <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgDgnssStatus = SBPMsgDgnssStatus <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgDops = SBPMsgDops <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgDopsDepA = SBPMsgDopsDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgEphemerisDepC = SBPMsgEphemerisDepC <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgEphemerisDepD = SBPMsgEphemerisDepD <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgEphemerisGlo = SBPMsgEphemerisGlo <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgEphemerisGloDepA = SBPMsgEphemerisGloDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgEphemerisGloDepB = SBPMsgEphemerisGloDepB <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgEphemerisGloDepC = SBPMsgEphemerisGloDepC <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgEphemerisGps = SBPMsgEphemerisGps <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgEphemerisGpsDepE = SBPMsgEphemerisGpsDepE <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgEphemerisSbas = SBPMsgEphemerisSbas <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgExtEvent = SBPMsgExtEvent <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFcnsGlo = SBPMsgFcnsGlo <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFileioReadDirReq = SBPMsgFileioReadDirReq <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFileioReadDirResp = SBPMsgFileioReadDirResp <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFileioReadReq = SBPMsgFileioReadReq <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFileioReadResp = SBPMsgFileioReadResp <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFileioRemove = SBPMsgFileioRemove <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFileioWriteReq = SBPMsgFileioWriteReq <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFileioWriteResp = SBPMsgFileioWriteResp <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFlashDone = SBPMsgFlashDone <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFlashErase = SBPMsgFlashErase <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFlashProgram = SBPMsgFlashProgram <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFlashReadReq = SBPMsgFlashReadReq <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFlashReadResp = SBPMsgFlashReadResp <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgFwd = SBPMsgFwd <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgGpsTime = SBPMsgGpsTime <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgGpsTimeDepA = SBPMsgGpsTimeDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgGroupDelay = SBPMsgGroupDelay <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgGroupDelayDepA = SBPMsgGroupDelayDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgHeartbeat = SBPMsgHeartbeat <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgIarState = SBPMsgIarState <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgImuAux = SBPMsgImuAux <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgImuRaw = SBPMsgImuRaw <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgInitBase = SBPMsgInitBase <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgIono = SBPMsgIono <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgLog = SBPMsgLog <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgMaskSatellite = SBPMsgMaskSatellite <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgNdbEvent = SBPMsgNdbEvent <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgNetworkStateReq = SBPMsgNetworkStateReq <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgNetworkStateResp = SBPMsgNetworkStateResp <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgObs = SBPMsgObs <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgObsDepA = SBPMsgObsDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgObsDepB = SBPMsgObsDepB <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgObsDepC = SBPMsgObsDepC <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgPosEcef = SBPMsgPosEcef <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgPosEcefDepA = SBPMsgPosEcefDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgPosLlh = SBPMsgPosLlh <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgPosLlhDepA = SBPMsgPosLlhDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgPrintDep = SBPMsgPrintDep <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgReset = SBPMsgReset <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgResetDep = SBPMsgResetDep <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgResetFilters = SBPMsgResetFilters <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgSetTime = SBPMsgSetTime <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgSettingsReadReq = SBPMsgSettingsReadReq <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgSettingsReadResp = SBPMsgSettingsReadResp <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgSettingsRegister = SBPMsgSettingsRegister <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgSettingsSave = SBPMsgSettingsSave <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgSettingsWrite = SBPMsgSettingsWrite <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgSpecan = SBPMsgSpecan <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgStartup = SBPMsgStartup <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgStmFlashLockSector = SBPMsgStmFlashLockSector <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgSvConfigurationGps = SBPMsgSvConfigurationGps <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgThreadState = SBPMsgThreadState <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgTrackingIq = SBPMsgTrackingIq <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgTrackingState = SBPMsgTrackingState <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgTrackingStateDepA = SBPMsgTrackingStateDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgTrackingStateDepB = SBPMsgTrackingStateDepB <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgTrackingStateDetailed = SBPMsgTrackingStateDetailed <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgTweet = SBPMsgTweet <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgUartState = SBPMsgUartState <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgUartStateDepa = SBPMsgUartStateDepa <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgUserData = SBPMsgUserData <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgUtcTime = SBPMsgUtcTime <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgVelEcef = SBPMsgVelEcef <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgVelEcefDepA = SBPMsgVelEcefDepA <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgVelNed = SBPMsgVelNed <$> parseJSON obj <*> parseJSON obj
-        | msgType == msgVelNedDepA = SBPMsgVelNedDepA <$> parseJSON obj <*> parseJSON obj
+    payload <- o .: "payload"
+    decoder msgType payload where
+      decoder msgType payload
+        | msgType == msgAcqResult = SBPMsgAcqResult <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgAcqResultDepA = SBPMsgAcqResultDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgAcqResultDepB = SBPMsgAcqResultDepB <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgAcqSvProfile = SBPMsgAcqSvProfile <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgAgeCorrections = SBPMsgAgeCorrections <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgAlmanac = SBPMsgAlmanac <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgAlmanacGlo = SBPMsgAlmanacGlo <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgAlmanacGps = SBPMsgAlmanacGps <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgBasePosEcef = SBPMsgBasePosEcef <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgBasePosLlh = SBPMsgBasePosLlh <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgBaselineEcef = SBPMsgBaselineEcef <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgBaselineEcefDepA = SBPMsgBaselineEcefDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgBaselineHeading = SBPMsgBaselineHeading <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgBaselineHeadingDepA = SBPMsgBaselineHeadingDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgBaselineNed = SBPMsgBaselineNed <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgBaselineNedDepA = SBPMsgBaselineNedDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgBootloaderHandshakeDepA = SBPMsgBootloaderHandshakeDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgCommandOutput = SBPMsgCommandOutput <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgCommandReq = SBPMsgCommandReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgCommandResp = SBPMsgCommandResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgCwResults = SBPMsgCwResults <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgCwStart = SBPMsgCwStart <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgDeviceMonitor = SBPMsgDeviceMonitor <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgDgnssStatus = SBPMsgDgnssStatus <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgDops = SBPMsgDops <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgDopsDepA = SBPMsgDopsDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgEphemerisDepC = SBPMsgEphemerisDepC <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgEphemerisDepD = SBPMsgEphemerisDepD <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgEphemerisGlo = SBPMsgEphemerisGlo <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgEphemerisGloDepA = SBPMsgEphemerisGloDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgEphemerisGloDepB = SBPMsgEphemerisGloDepB <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgEphemerisGloDepC = SBPMsgEphemerisGloDepC <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgEphemerisGps = SBPMsgEphemerisGps <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgEphemerisGpsDepE = SBPMsgEphemerisGpsDepE <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgEphemerisSbas = SBPMsgEphemerisSbas <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgExtEvent = SBPMsgExtEvent <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFcnsGlo = SBPMsgFcnsGlo <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFileioReadDirReq = SBPMsgFileioReadDirReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFileioReadDirResp = SBPMsgFileioReadDirResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFileioReadReq = SBPMsgFileioReadReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFileioReadResp = SBPMsgFileioReadResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFileioRemove = SBPMsgFileioRemove <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFileioWriteReq = SBPMsgFileioWriteReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFileioWriteResp = SBPMsgFileioWriteResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFlashDone = SBPMsgFlashDone <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFlashErase = SBPMsgFlashErase <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFlashProgram = SBPMsgFlashProgram <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFlashReadReq = SBPMsgFlashReadReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFlashReadResp = SBPMsgFlashReadResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgFwd = SBPMsgFwd <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgGpsTime = SBPMsgGpsTime <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgGpsTimeDepA = SBPMsgGpsTimeDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgGroupDelay = SBPMsgGroupDelay <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgGroupDelayDepA = SBPMsgGroupDelayDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgHeartbeat = SBPMsgHeartbeat <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgIarState = SBPMsgIarState <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgImuAux = SBPMsgImuAux <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgImuRaw = SBPMsgImuRaw <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgInitBase = SBPMsgInitBase <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgIono = SBPMsgIono <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgLog = SBPMsgLog <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgMaskSatellite = SBPMsgMaskSatellite <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgNdbEvent = SBPMsgNdbEvent <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgNetworkStateReq = SBPMsgNetworkStateReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgNetworkStateResp = SBPMsgNetworkStateResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgObs = SBPMsgObs <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgObsDepA = SBPMsgObsDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgObsDepB = SBPMsgObsDepB <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgObsDepC = SBPMsgObsDepC <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgPosEcef = SBPMsgPosEcef <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgPosEcefDepA = SBPMsgPosEcefDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgPosLlh = SBPMsgPosLlh <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgPosLlhDepA = SBPMsgPosLlhDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgPrintDep = SBPMsgPrintDep <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgReset = SBPMsgReset <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgResetDep = SBPMsgResetDep <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgResetFilters = SBPMsgResetFilters <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgSetTime = SBPMsgSetTime <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgSettingsReadByIndexResp = SBPMsgSettingsReadByIndexResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgSettingsReadReq = SBPMsgSettingsReadReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgSettingsReadResp = SBPMsgSettingsReadResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgSettingsRegister = SBPMsgSettingsRegister <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgSettingsSave = SBPMsgSettingsSave <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgSettingsWrite = SBPMsgSettingsWrite <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgSpecan = SBPMsgSpecan <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgStartup = SBPMsgStartup <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgStmFlashLockSector = SBPMsgStmFlashLockSector <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgSvConfigurationGps = SBPMsgSvConfigurationGps <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgThreadState = SBPMsgThreadState <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgTrackingIq = SBPMsgTrackingIq <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgTrackingState = SBPMsgTrackingState <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgTrackingStateDepA = SBPMsgTrackingStateDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgTrackingStateDepB = SBPMsgTrackingStateDepB <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgTrackingStateDetailed = SBPMsgTrackingStateDetailed <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgTweet = SBPMsgTweet <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgUartState = SBPMsgUartState <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgUartStateDepa = SBPMsgUartStateDepa <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgUserData = SBPMsgUserData <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgUtcTime = SBPMsgUtcTime <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgVelEcef = SBPMsgVelEcef <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgVelEcefDepA = SBPMsgVelEcefDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgVelNed = SBPMsgVelNed <$> pure (decode (fromStrict payload)) <*> parseJSON obj
+        | msgType == msgVelNedDepA = SBPMsgVelNedDepA <$> pure (decode (fromStrict payload)) <*> parseJSON obj
         | otherwise = SBPMsgUnknown <$> parseJSON obj
   parseJSON _ = mzero
 
-mergeValues :: Value -> Value -> Value
-mergeValues (Object a) (Object b) = Object (a <> b)
-mergeValues (Object a) _          = Object a
-mergeValues _          (Object b) = Object b
-mergeValues _          v          = v
+(<<>>) :: Value -> Value -> Value
+(Object a) <<>> (Object b) = Object (a <> b)
+(Object a) <<>> _          = Object a
+_          <<>> (Object b) = Object b
+_          <<>> v          = v
 
 instance ToJSON SBPMsg where
-  toJSON (SBPMsgAcqResult n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgAcqResultDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgAcqResultDepB n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgAcqSvProfile n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgAgeCorrections n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgAlmanac n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgAlmanacGlo n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgAlmanacGps n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgBasePosEcef n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgBasePosLlh n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgBaselineEcef n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgBaselineEcefDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgBaselineHeading n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgBaselineHeadingDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgBaselineNed n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgBaselineNedDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgBootloaderHandshakeDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgBootloaderHandshakeReq n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgBootloaderHandshakeResp n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgBootloaderJumpToApp n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgCommandOutput n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgCommandReq n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgCommandResp n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgCwResults n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgCwStart n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgDeviceMonitor n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgDgnssStatus n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgDops n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgDopsDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgEphemerisDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgEphemerisDepB n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgEphemerisDepC n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgEphemerisDepD n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgEphemerisGlo n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgEphemerisGloDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgEphemerisGloDepB n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgEphemerisGloDepC n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgEphemerisGps n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgEphemerisGpsDepE n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgEphemerisSbas n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgEphemerisSbasDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgExtEvent n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFcnsGlo n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFileioReadDirReq n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFileioReadDirResp n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFileioReadReq n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFileioReadResp n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFileioRemove n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFileioWriteReq n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFileioWriteResp n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFlashDone n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFlashErase n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFlashProgram n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFlashReadReq n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFlashReadResp n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgFwd n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgGpsTime n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgGpsTimeDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgGroupDelay n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgGroupDelayDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgHeartbeat n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgIarState n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgImuAux n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgImuRaw n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgInitBase n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgIono n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgLog n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgM25FlashWriteStatus n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgMaskSatellite n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgNapDeviceDnaReq n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgNapDeviceDnaResp n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgNdbEvent n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgNetworkStateReq n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgNetworkStateResp n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgObs n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgObsDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgObsDepB n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgObsDepC n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgPosEcef n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgPosEcefDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgPosLlh n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgPosLlhDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgPrintDep n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgReset n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgResetDep n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgResetFilters n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgSetTime n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgSettingsReadByIndexDone n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgSettingsReadByIndexReq n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgSettingsReadByIndexResp n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgSettingsReadReq n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgSettingsReadResp n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgSettingsRegister n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgSettingsSave n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgSettingsWrite n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgSpecan n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgStartup n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgStmFlashLockSector n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgStmFlashUnlockSector n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgStmUniqueIdReq n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgStmUniqueIdResp n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgSvConfigurationGps n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgThreadState n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgTrackingIq n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgTrackingState n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgTrackingStateDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgTrackingStateDepB n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgTrackingStateDetailed n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgTweet n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgUartState n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgUartStateDepa n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgUserData n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgUtcTime n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgVelEcef n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgVelEcefDepA n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgVelNed n m) = toJSON n `mergeValues` toJSON m
-  toJSON (SBPMsgVelNedDepA n m) = toJSON n `mergeValues` toJSON m
+  toJSON (SBPMsgAcqResult n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgAcqResultDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgAcqResultDepB n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgAcqSvProfile n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgAgeCorrections n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgAlmanac n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgAlmanacGlo n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgAlmanacGps n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgBasePosEcef n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgBasePosLlh n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgBaselineEcef n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgBaselineEcefDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgBaselineHeading n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgBaselineHeadingDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgBaselineNed n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgBaselineNedDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgBootloaderHandshakeDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgBootloaderHandshakeReq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgBootloaderHandshakeResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgBootloaderJumpToApp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgCommandOutput n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgCommandReq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgCommandResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgCwResults n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgCwStart n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgDeviceMonitor n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgDgnssStatus n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgDops n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgDopsDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisDepB n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisDepC n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisDepD n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisGlo n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisGloDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisGloDepB n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisGloDepC n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisGps n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisGpsDepE n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisSbas n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisSbasDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgExtEvent n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFcnsGlo n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFileioReadDirReq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFileioReadDirResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFileioReadReq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFileioReadResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFileioRemove n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFileioWriteReq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFileioWriteResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFlashDone n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFlashErase n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFlashProgram n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFlashReadReq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFlashReadResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFwd n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgGpsTime n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgGpsTimeDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgGroupDelay n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgGroupDelayDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgHeartbeat n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgIarState n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgImuAux n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgImuRaw n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgInitBase n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgIono n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgLog n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgM25FlashWriteStatus n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgMaskSatellite n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgNapDeviceDnaReq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgNapDeviceDnaResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgNdbEvent n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgNetworkStateReq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgNetworkStateResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgObs n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgObsDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgObsDepB n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgObsDepC n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgPosEcef n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgPosEcefDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgPosLlh n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgPosLlhDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgPrintDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgReset n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgResetDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgResetFilters n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSetTime n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSettingsReadByIndexDone n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSettingsReadByIndexReq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSettingsReadByIndexResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSettingsReadReq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSettingsReadResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSettingsRegister n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSettingsSave n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSettingsWrite n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSpecan n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgStartup n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgStmFlashLockSector n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgStmFlashUnlockSector n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgStmUniqueIdReq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgStmUniqueIdResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSvConfigurationGps n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgThreadState n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgTrackingIq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgTrackingState n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgTrackingStateDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgTrackingStateDepB n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgTrackingStateDetailed n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgTweet n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgUartState n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgUartStateDepa n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgUserData n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgUtcTime n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgVelEcef n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgVelEcefDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgVelNed n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgVelNedDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgBadCrc m) = toJSON m
   toJSON (SBPMsgUnknown m) = toJSON m
 

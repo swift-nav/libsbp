@@ -1,5 +1,3 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-
 -- |
 -- Module:      SwiftNav.SBP
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
@@ -11,41 +9,24 @@
 -- SBP message containers.
 
 module SwiftNav.SBP
-  ( module SwiftNav.SBP.Msg
-  , module SwiftNav.SBP.Types
-  , module SwiftNav.SBP.Acquisition
-  , module SwiftNav.SBP.Bootload
-  , module SwiftNav.SBP.ExtEvents
-  , module SwiftNav.SBP.FileIo
-  , module SwiftNav.SBP.Flash
-  , module SwiftNav.SBP.Gnss
-  , module SwiftNav.SBP.Imu
-  , module SwiftNav.SBP.Logging
-  , module SwiftNav.SBP.Navigation
-  , module SwiftNav.SBP.Ndb
-  , module SwiftNav.SBP.Observation
-  , module SwiftNav.SBP.Piksi
-  , module SwiftNav.SBP.Settings
-  , module SwiftNav.SBP.System
-  , module SwiftNav.SBP.Tracking
-  , module SwiftNav.SBP.User
+  ( module Exports
   ) where
 
-import SwiftNav.SBP.Msg
-import SwiftNav.SBP.Types
-import SwiftNav.SBP.Acquisition
-import SwiftNav.SBP.Bootload
-import SwiftNav.SBP.ExtEvents
-import SwiftNav.SBP.FileIo
-import SwiftNav.SBP.Flash
-import SwiftNav.SBP.Gnss
-import SwiftNav.SBP.Imu
-import SwiftNav.SBP.Logging
-import SwiftNav.SBP.Navigation
-import SwiftNav.SBP.Ndb
-import SwiftNav.SBP.Observation
-import SwiftNav.SBP.Piksi
-import SwiftNav.SBP.Settings
-import SwiftNav.SBP.System
-import SwiftNav.SBP.Tracking
-import SwiftNav.SBP.User
+import SwiftNav.SBP.Msg as Exports
+import SwiftNav.SBP.Types as Exports
+import SwiftNav.SBP.Acquisition as Exports
+import SwiftNav.SBP.Bootload as Exports
+import SwiftNav.SBP.ExtEvents as Exports
+import SwiftNav.SBP.FileIo as Exports
+import SwiftNav.SBP.Flash as Exports
+import SwiftNav.SBP.Gnss as Exports
+import SwiftNav.SBP.Imu as Exports
+import SwiftNav.SBP.Logging as Exports
+import SwiftNav.SBP.Navigation as Exports
+import SwiftNav.SBP.Ndb as Exports
+import SwiftNav.SBP.Observation as Exports
+import SwiftNav.SBP.Piksi as Exports
+import SwiftNav.SBP.Settings as Exports
+import SwiftNav.SBP.System as Exports
+import SwiftNav.SBP.Tracking as Exports
+import SwiftNav.SBP.User as Exports

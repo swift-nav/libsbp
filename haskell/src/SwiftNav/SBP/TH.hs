@@ -1,6 +1,5 @@
-{-# OPTIONS_GHC -fno-warn-unused-imports #-}
-{-# LANGUAGE NoImplicitPrelude           #-}
-{-# LANGUAGE TemplateHaskell             #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell   #-}
 
 -- |
 -- Module:      SwiftNav.SBP.TH
@@ -10,28 +9,36 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Templated generation of SBP interfaces.
+-- Templated generation of SBP and JSON interfaces.
 
-module SwiftNav.SBP.TH where
+module SwiftNav.SBP.TH
+  ( makeSBP
+  , makeJSON
+  ) where
 
-import BasicPrelude
+import BasicPrelude         hiding (length)
 import Control.Lens
+import Data.Aeson.TH
 import Data.Binary
 import Data.ByteString
-import Data.ByteString.Lazy hiding (ByteString)
+import Data.ByteString.Lazy hiding (length)
 import Language.Haskell.TH
 import SwiftNav.SBP.Types
-import Control.Exception.Base (assert)
 
 -- | Derive ToSBP typeclass, given an SBP message type name and the
 -- name of the implemented type.
-deriveSBP :: Name -> Name -> Q [Dec]
-deriveSBP msgType name =
+makeSBP :: Name -> Name -> Q [Dec]
+makeSBP msgType name =
   [d|instance ToSBP $(conT name) where
        toSBP m senderID = encoded & msgSBPCrc .~ checkCrc encoded
          where
            payload = toStrict $ encode m
-           len' = Data.ByteString.length payload
-           len = assert (len' < 256) $ fromIntegral len'
+           len     = fromIntegral $ length payload
            encoded = Msg $(varE msgType) senderID len payload 0
     |]
+
+-- | Derive JSON stripping out prefixes of the implemented type.
+makeJSON :: String -> Name -> Q [Dec]
+makeJSON prefix = deriveJSON defaultOptions
+  { fieldLabelModifier = fromMaybe prefix . stripPrefix prefix
+  }

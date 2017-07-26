@@ -14,12 +14,13 @@
 -- Messages reporting accurately-timestamped external events, e.g. camera
 -- shutter time.
 
-module SwiftNav.SBP.ExtEvents where
+module SwiftNav.SBP.ExtEvents
+  ( module SwiftNav.SBP.ExtEvents
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -28,7 +29,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
@@ -69,8 +70,6 @@ instance Binary MsgExtEvent where
     putWord8 _msgExtEvent_flags
     putWord8 _msgExtEvent_pin
 
-$(deriveSBP 'msgExtEvent ''MsgExtEvent)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgExtEvent_" . P.stripPrefix "_msgExtEvent_"}
-             ''MsgExtEvent)
+$(makeSBP 'msgExtEvent ''MsgExtEvent)
+$(makeJSON "_msgExtEvent_" ''MsgExtEvent)
 $(makeLenses ''MsgExtEvent)

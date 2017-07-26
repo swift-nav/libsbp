@@ -1,6 +1,8 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 import           BasicPrelude
-import qualified Test.SwiftNav.CRC16        as CRC16
-import qualified Test.SwiftNav.SBP.Encoding as Encoding
+import qualified Test.SwiftNav.CRC16    as CRC16
+import qualified Test.SwiftNav.Encoding as Encoding
 import           Test.Tasty
 
 tests :: TestTree

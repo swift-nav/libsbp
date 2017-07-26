@@ -13,12 +13,13 @@
 --
 -- Satellite observation messages from the device.
 
-module SwiftNav.SBP.Observation where
+module SwiftNav.SBP.Observation
+  ( module SwiftNav.SBP.Observation
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -27,7 +28,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 import SwiftNav.SBP.Gnss
@@ -52,8 +53,8 @@ instance Binary ObservationHeader where
   put ObservationHeader {..} = do
     put _observationHeader_t
     putWord8 _observationHeader_n_obs
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_observationHeader_" . P.stripPrefix "_observationHeader_"}
-             ''ObservationHeader)
+
+$(makeJSON "_observationHeader_" ''ObservationHeader)
 $(makeLenses ''ObservationHeader)
 
 -- | Doppler.
@@ -77,8 +78,8 @@ instance Binary Doppler where
   put Doppler {..} = do
     putWord16le $ fromIntegral _doppler_i
     putWord8 _doppler_f
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_doppler_" . P.stripPrefix "_doppler_"}
-             ''Doppler)
+
+$(makeJSON "_doppler_" ''Doppler)
 $(makeLenses ''Doppler)
 
 -- | PackedObsContent.
@@ -129,8 +130,8 @@ instance Binary PackedObsContent where
     putWord8 _packedObsContent_lock
     putWord8 _packedObsContent_flags
     put _packedObsContent_sid
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContent_" . P.stripPrefix "_packedObsContent_"}
-             ''PackedObsContent)
+
+$(makeJSON "_packedObsContent_" ''PackedObsContent)
 $(makeLenses ''PackedObsContent)
 
 msgObs :: Word16
@@ -161,10 +162,8 @@ instance Binary MsgObs where
     put _msgObs_header
     mapM_ put _msgObs_obs
 
-$(deriveSBP 'msgObs ''MsgObs)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObs_" . P.stripPrefix "_msgObs_"}
-             ''MsgObs)
+$(makeSBP 'msgObs ''MsgObs)
+$(makeJSON "_msgObs_" ''MsgObs)
 $(makeLenses ''MsgObs)
 
 msgBasePosLlh :: Word16
@@ -197,10 +196,8 @@ instance Binary MsgBasePosLlh where
     putFloat64le _msgBasePosLlh_lon
     putFloat64le _msgBasePosLlh_height
 
-$(deriveSBP 'msgBasePosLlh ''MsgBasePosLlh)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBasePosLlh_" . P.stripPrefix "_msgBasePosLlh_"}
-             ''MsgBasePosLlh)
+$(makeSBP 'msgBasePosLlh ''MsgBasePosLlh)
+$(makeJSON "_msgBasePosLlh_" ''MsgBasePosLlh)
 $(makeLenses ''MsgBasePosLlh)
 
 msgBasePosEcef :: Word16
@@ -234,10 +231,8 @@ instance Binary MsgBasePosEcef where
     putFloat64le _msgBasePosEcef_y
     putFloat64le _msgBasePosEcef_z
 
-$(deriveSBP 'msgBasePosEcef ''MsgBasePosEcef)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgBasePosEcef_" . P.stripPrefix "_msgBasePosEcef_"}
-             ''MsgBasePosEcef)
+$(makeSBP 'msgBasePosEcef ''MsgBasePosEcef)
+$(makeJSON "_msgBasePosEcef_" ''MsgBasePosEcef)
 $(makeLenses ''MsgBasePosEcef)
 
 data EphemerisCommonContent = EphemerisCommonContent
@@ -273,8 +268,8 @@ instance Binary EphemerisCommonContent where
     putWord32le _ephemerisCommonContent_fit_interval
     putWord8 _ephemerisCommonContent_valid
     putWord8 _ephemerisCommonContent_health_bits
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_ephemerisCommonContent_" . P.stripPrefix "_ephemerisCommonContent_"}
-             ''EphemerisCommonContent)
+
+$(makeJSON "_ephemerisCommonContent_" ''EphemerisCommonContent)
 $(makeLenses ''EphemerisCommonContent)
 
 data EphemerisCommonContentDepA = EphemerisCommonContentDepA
@@ -310,8 +305,8 @@ instance Binary EphemerisCommonContentDepA where
     putWord32le _ephemerisCommonContentDepA_fit_interval
     putWord8 _ephemerisCommonContentDepA_valid
     putWord8 _ephemerisCommonContentDepA_health_bits
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_ephemerisCommonContentDepA_" . P.stripPrefix "_ephemerisCommonContentDepA_"}
-             ''EphemerisCommonContentDepA)
+
+$(makeJSON "_ephemerisCommonContentDepA_" ''EphemerisCommonContentDepA)
 $(makeLenses ''EphemerisCommonContentDepA)
 
 msgEphemerisGpsDepE :: Word16
@@ -428,10 +423,8 @@ instance Binary MsgEphemerisGpsDepE where
     putWord8 _msgEphemerisGpsDepE_iode
     putWord16le _msgEphemerisGpsDepE_iodc
 
-$(deriveSBP 'msgEphemerisGpsDepE ''MsgEphemerisGpsDepE)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGpsDepE_" . P.stripPrefix "_msgEphemerisGpsDepE_"}
-             ''MsgEphemerisGpsDepE)
+$(makeSBP 'msgEphemerisGpsDepE ''MsgEphemerisGpsDepE)
+$(makeJSON "_msgEphemerisGpsDepE_" ''MsgEphemerisGpsDepE)
 $(makeLenses ''MsgEphemerisGpsDepE)
 
 msgEphemerisGps :: Word16
@@ -548,10 +541,8 @@ instance Binary MsgEphemerisGps where
     putWord8 _msgEphemerisGps_iode
     putWord16le _msgEphemerisGps_iodc
 
-$(deriveSBP 'msgEphemerisGps ''MsgEphemerisGps)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGps_" . P.stripPrefix "_msgEphemerisGps_"}
-             ''MsgEphemerisGps)
+$(makeSBP 'msgEphemerisGps ''MsgEphemerisGps)
+$(makeJSON "_msgEphemerisGps_" ''MsgEphemerisGps)
 $(makeLenses ''MsgEphemerisGps)
 
 msgEphemerisSbasDepA :: Word16
@@ -590,10 +581,8 @@ instance Binary MsgEphemerisSbasDepA where
     putFloat64le _msgEphemerisSbasDepA_a_gf0
     putFloat64le _msgEphemerisSbasDepA_a_gf1
 
-$(deriveSBP 'msgEphemerisSbasDepA ''MsgEphemerisSbasDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisSbasDepA_" . P.stripPrefix "_msgEphemerisSbasDepA_"}
-             ''MsgEphemerisSbasDepA)
+$(makeSBP 'msgEphemerisSbasDepA ''MsgEphemerisSbasDepA)
+$(makeJSON "_msgEphemerisSbasDepA_" ''MsgEphemerisSbasDepA)
 $(makeLenses ''MsgEphemerisSbasDepA)
 
 msgEphemerisGloDepA :: Word16
@@ -638,10 +627,8 @@ instance Binary MsgEphemerisGloDepA where
     mapM_ putFloat64le _msgEphemerisGloDepA_vel
     mapM_ putFloat64le _msgEphemerisGloDepA_acc
 
-$(deriveSBP 'msgEphemerisGloDepA ''MsgEphemerisGloDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGloDepA_" . P.stripPrefix "_msgEphemerisGloDepA_"}
-             ''MsgEphemerisGloDepA)
+$(makeSBP 'msgEphemerisGloDepA ''MsgEphemerisGloDepA)
+$(makeJSON "_msgEphemerisGloDepA_" ''MsgEphemerisGloDepA)
 $(makeLenses ''MsgEphemerisGloDepA)
 
 msgEphemerisSbas :: Word16
@@ -680,10 +667,8 @@ instance Binary MsgEphemerisSbas where
     putFloat64le _msgEphemerisSbas_a_gf0
     putFloat64le _msgEphemerisSbas_a_gf1
 
-$(deriveSBP 'msgEphemerisSbas ''MsgEphemerisSbas)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisSbas_" . P.stripPrefix "_msgEphemerisSbas_"}
-             ''MsgEphemerisSbas)
+$(makeSBP 'msgEphemerisSbas ''MsgEphemerisSbas)
+$(makeJSON "_msgEphemerisSbas_" ''MsgEphemerisSbas)
 $(makeLenses ''MsgEphemerisSbas)
 
 msgEphemerisGloDepB :: Word16
@@ -728,10 +713,8 @@ instance Binary MsgEphemerisGloDepB where
     mapM_ putFloat64le _msgEphemerisGloDepB_vel
     mapM_ putFloat64le _msgEphemerisGloDepB_acc
 
-$(deriveSBP 'msgEphemerisGloDepB ''MsgEphemerisGloDepB)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGloDepB_" . P.stripPrefix "_msgEphemerisGloDepB_"}
-             ''MsgEphemerisGloDepB)
+$(makeSBP 'msgEphemerisGloDepB ''MsgEphemerisGloDepB)
+$(makeJSON "_msgEphemerisGloDepB_" ''MsgEphemerisGloDepB)
 $(makeLenses ''MsgEphemerisGloDepB)
 
 msgEphemerisGloDepC :: Word16
@@ -784,10 +767,8 @@ instance Binary MsgEphemerisGloDepC where
     mapM_ putFloat64le _msgEphemerisGloDepC_acc
     putWord8 _msgEphemerisGloDepC_fcn
 
-$(deriveSBP 'msgEphemerisGloDepC ''MsgEphemerisGloDepC)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGloDepC_" . P.stripPrefix "_msgEphemerisGloDepC_"}
-             ''MsgEphemerisGloDepC)
+$(makeSBP 'msgEphemerisGloDepC ''MsgEphemerisGloDepC)
+$(makeJSON "_msgEphemerisGloDepC_" ''MsgEphemerisGloDepC)
 $(makeLenses ''MsgEphemerisGloDepC)
 
 msgEphemerisGlo :: Word16
@@ -844,10 +825,8 @@ instance Binary MsgEphemerisGlo where
     putWord8 _msgEphemerisGlo_fcn
     putWord8 _msgEphemerisGlo_iod
 
-$(deriveSBP 'msgEphemerisGlo ''MsgEphemerisGlo)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisGlo_" . P.stripPrefix "_msgEphemerisGlo_"}
-             ''MsgEphemerisGlo)
+$(makeSBP 'msgEphemerisGlo ''MsgEphemerisGlo)
+$(makeJSON "_msgEphemerisGlo_" ''MsgEphemerisGlo)
 $(makeLenses ''MsgEphemerisGlo)
 
 msgEphemerisDepD :: Word16
@@ -988,10 +967,8 @@ instance Binary MsgEphemerisDepD where
     putWord16le _msgEphemerisDepD_iodc
     putWord32le _msgEphemerisDepD_reserved
 
-$(deriveSBP 'msgEphemerisDepD ''MsgEphemerisDepD)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepD_" . P.stripPrefix "_msgEphemerisDepD_"}
-             ''MsgEphemerisDepD)
+$(makeSBP 'msgEphemerisDepD ''MsgEphemerisDepD)
+$(makeJSON "_msgEphemerisDepD_" ''MsgEphemerisDepD)
 $(makeLenses ''MsgEphemerisDepD)
 
 msgEphemerisDepA :: Word16
@@ -1117,10 +1094,8 @@ instance Binary MsgEphemerisDepA where
     putWord8 _msgEphemerisDepA_healthy
     putWord8 _msgEphemerisDepA_prn
 
-$(deriveSBP 'msgEphemerisDepA ''MsgEphemerisDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepA_" . P.stripPrefix "_msgEphemerisDepA_"}
-             ''MsgEphemerisDepA)
+$(makeSBP 'msgEphemerisDepA ''MsgEphemerisDepA)
+$(makeJSON "_msgEphemerisDepA_" ''MsgEphemerisDepA)
 $(makeLenses ''MsgEphemerisDepA)
 
 msgEphemerisDepB :: Word16
@@ -1250,10 +1225,8 @@ instance Binary MsgEphemerisDepB where
     putWord8 _msgEphemerisDepB_prn
     putWord8 _msgEphemerisDepB_iode
 
-$(deriveSBP 'msgEphemerisDepB ''MsgEphemerisDepB)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepB_" . P.stripPrefix "_msgEphemerisDepB_"}
-             ''MsgEphemerisDepB)
+$(makeSBP 'msgEphemerisDepB ''MsgEphemerisDepB)
+$(makeJSON "_msgEphemerisDepB_" ''MsgEphemerisDepB)
 $(makeLenses ''MsgEphemerisDepB)
 
 msgEphemerisDepC :: Word16
@@ -1394,10 +1367,8 @@ instance Binary MsgEphemerisDepC where
     putWord16le _msgEphemerisDepC_iodc
     putWord32le _msgEphemerisDepC_reserved
 
-$(deriveSBP 'msgEphemerisDepC ''MsgEphemerisDepC)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgEphemerisDepC_" . P.stripPrefix "_msgEphemerisDepC_"}
-             ''MsgEphemerisDepC)
+$(makeSBP 'msgEphemerisDepC ''MsgEphemerisDepC)
+$(makeJSON "_msgEphemerisDepC_" ''MsgEphemerisDepC)
 $(makeLenses ''MsgEphemerisDepC)
 
 -- | ObservationHeaderDep.
@@ -1420,8 +1391,8 @@ instance Binary ObservationHeaderDep where
   put ObservationHeaderDep {..} = do
     put _observationHeaderDep_t
     putWord8 _observationHeaderDep_n_obs
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_observationHeaderDep_" . P.stripPrefix "_observationHeaderDep_"}
-             ''ObservationHeaderDep)
+
+$(makeJSON "_observationHeaderDep_" ''ObservationHeaderDep)
 $(makeLenses ''ObservationHeaderDep)
 
 -- | CarrierPhaseDepA.
@@ -1446,8 +1417,8 @@ instance Binary CarrierPhaseDepA where
   put CarrierPhaseDepA {..} = do
     putWord32le $ fromIntegral _carrierPhaseDepA_i
     putWord8 _carrierPhaseDepA_f
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_carrierPhaseDepA_" . P.stripPrefix "_carrierPhaseDepA_"}
-             ''CarrierPhaseDepA)
+
+$(makeJSON "_carrierPhaseDepA_" ''CarrierPhaseDepA)
 $(makeLenses ''CarrierPhaseDepA)
 
 -- | PackedObsContentDepA.
@@ -1483,8 +1454,8 @@ instance Binary PackedObsContentDepA where
     putWord8 _packedObsContentDepA_cn0
     putWord16le _packedObsContentDepA_lock
     putWord8 _packedObsContentDepA_prn
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDepA_" . P.stripPrefix "_packedObsContentDepA_"}
-             ''PackedObsContentDepA)
+
+$(makeJSON "_packedObsContentDepA_" ''PackedObsContentDepA)
 $(makeLenses ''PackedObsContentDepA)
 
 -- | PackedObsContentDepB.
@@ -1521,8 +1492,8 @@ instance Binary PackedObsContentDepB where
     putWord8 _packedObsContentDepB_cn0
     putWord16le _packedObsContentDepB_lock
     put _packedObsContentDepB_sid
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDepB_" . P.stripPrefix "_packedObsContentDepB_"}
-             ''PackedObsContentDepB)
+
+$(makeJSON "_packedObsContentDepB_" ''PackedObsContentDepB)
 $(makeLenses ''PackedObsContentDepB)
 
 -- | PackedObsContentDepC.
@@ -1560,8 +1531,8 @@ instance Binary PackedObsContentDepC where
     putWord8 _packedObsContentDepC_cn0
     putWord16le _packedObsContentDepC_lock
     put _packedObsContentDepC_sid
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_packedObsContentDepC_" . P.stripPrefix "_packedObsContentDepC_"}
-             ''PackedObsContentDepC)
+
+$(makeJSON "_packedObsContentDepC_" ''PackedObsContentDepC)
 $(makeLenses ''PackedObsContentDepC)
 
 msgObsDepA :: Word16
@@ -1587,10 +1558,8 @@ instance Binary MsgObsDepA where
     put _msgObsDepA_header
     mapM_ put _msgObsDepA_obs
 
-$(deriveSBP 'msgObsDepA ''MsgObsDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepA_" . P.stripPrefix "_msgObsDepA_"}
-             ''MsgObsDepA)
+$(makeSBP 'msgObsDepA ''MsgObsDepA)
+$(makeJSON "_msgObsDepA_" ''MsgObsDepA)
 $(makeLenses ''MsgObsDepA)
 
 msgObsDepB :: Word16
@@ -1619,10 +1588,8 @@ instance Binary MsgObsDepB where
     put _msgObsDepB_header
     mapM_ put _msgObsDepB_obs
 
-$(deriveSBP 'msgObsDepB ''MsgObsDepB)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepB_" . P.stripPrefix "_msgObsDepB_"}
-             ''MsgObsDepB)
+$(makeSBP 'msgObsDepB ''MsgObsDepB)
+$(makeJSON "_msgObsDepB_" ''MsgObsDepB)
 $(makeLenses ''MsgObsDepB)
 
 msgObsDepC :: Word16
@@ -1653,10 +1620,8 @@ instance Binary MsgObsDepC where
     put _msgObsDepC_header
     mapM_ put _msgObsDepC_obs
 
-$(deriveSBP 'msgObsDepC ''MsgObsDepC)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgObsDepC_" . P.stripPrefix "_msgObsDepC_"}
-             ''MsgObsDepC)
+$(makeSBP 'msgObsDepC ''MsgObsDepC)
+$(makeJSON "_msgObsDepC_" ''MsgObsDepC)
 $(makeLenses ''MsgObsDepC)
 
 msgIono :: Word16
@@ -1704,10 +1669,8 @@ instance Binary MsgIono where
     putFloat64le _msgIono_b2
     putFloat64le _msgIono_b3
 
-$(deriveSBP 'msgIono ''MsgIono)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgIono_" . P.stripPrefix "_msgIono_"}
-             ''MsgIono)
+$(makeSBP 'msgIono ''MsgIono)
+$(makeJSON "_msgIono_" ''MsgIono)
 $(makeLenses ''MsgIono)
 
 msgSvConfigurationGps :: Word16
@@ -1733,10 +1696,8 @@ instance Binary MsgSvConfigurationGps where
     put _msgSvConfigurationGps_t_nmct
     putWord32le _msgSvConfigurationGps_l2c_mask
 
-$(deriveSBP 'msgSvConfigurationGps ''MsgSvConfigurationGps)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgSvConfigurationGps_" . P.stripPrefix "_msgSvConfigurationGps_"}
-             ''MsgSvConfigurationGps)
+$(makeSBP 'msgSvConfigurationGps ''MsgSvConfigurationGps)
+$(makeJSON "_msgSvConfigurationGps_" ''MsgSvConfigurationGps)
 $(makeLenses ''MsgSvConfigurationGps)
 
 msgGroupDelayDepA :: Word16
@@ -1776,10 +1737,8 @@ instance Binary MsgGroupDelayDepA where
     putWord16le $ fromIntegral _msgGroupDelayDepA_isc_l1ca
     putWord16le $ fromIntegral _msgGroupDelayDepA_isc_l2c
 
-$(deriveSBP 'msgGroupDelayDepA ''MsgGroupDelayDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGroupDelayDepA_" . P.stripPrefix "_msgGroupDelayDepA_"}
-             ''MsgGroupDelayDepA)
+$(makeSBP 'msgGroupDelayDepA ''MsgGroupDelayDepA)
+$(makeJSON "_msgGroupDelayDepA_" ''MsgGroupDelayDepA)
 $(makeLenses ''MsgGroupDelayDepA)
 
 msgGroupDelay :: Word16
@@ -1819,10 +1778,8 @@ instance Binary MsgGroupDelay where
     putWord16le $ fromIntegral _msgGroupDelay_isc_l1ca
     putWord16le $ fromIntegral _msgGroupDelay_isc_l2c
 
-$(deriveSBP 'msgGroupDelay ''MsgGroupDelay)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgGroupDelay_" . P.stripPrefix "_msgGroupDelay_"}
-             ''MsgGroupDelay)
+$(makeSBP 'msgGroupDelay ''MsgGroupDelay)
+$(makeJSON "_msgGroupDelay_" ''MsgGroupDelay)
 $(makeLenses ''MsgGroupDelay)
 
 data AlmanacCommonContent = AlmanacCommonContent
@@ -1866,8 +1823,8 @@ instance Binary AlmanacCommonContent where
     putWord32le _almanacCommonContent_fit_interval
     putWord8 _almanacCommonContent_valid
     putWord8 _almanacCommonContent_health_bits
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_almanacCommonContent_" . P.stripPrefix "_almanacCommonContent_"}
-             ''AlmanacCommonContent)
+
+$(makeJSON "_almanacCommonContent_" ''AlmanacCommonContent)
 $(makeLenses ''AlmanacCommonContent)
 
 msgAlmanacGps :: Word16
@@ -1928,10 +1885,8 @@ instance Binary MsgAlmanacGps where
     putFloat64le _msgAlmanacGps_af0
     putFloat64le _msgAlmanacGps_af1
 
-$(deriveSBP 'msgAlmanacGps ''MsgAlmanacGps)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAlmanacGps_" . P.stripPrefix "_msgAlmanacGps_"}
-             ''MsgAlmanacGps)
+$(makeSBP 'msgAlmanacGps ''MsgAlmanacGps)
+$(makeJSON "_msgAlmanacGps_" ''MsgAlmanacGps)
 $(makeLenses ''MsgAlmanacGps)
 
 msgAlmanacGlo :: Word16
@@ -1985,10 +1940,8 @@ instance Binary MsgAlmanacGlo where
     putFloat64le _msgAlmanacGlo_epsilon
     putFloat64le _msgAlmanacGlo_omega
 
-$(deriveSBP 'msgAlmanacGlo ''MsgAlmanacGlo)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgAlmanacGlo_" . P.stripPrefix "_msgAlmanacGlo_"}
-             ''MsgAlmanacGlo)
+$(makeSBP 'msgAlmanacGlo ''MsgAlmanacGlo)
+$(makeJSON "_msgAlmanacGlo_" ''MsgAlmanacGlo)
 $(makeLenses ''MsgAlmanacGlo)
 
 msgFcnsGlo :: Word16
@@ -2022,8 +1975,6 @@ instance Binary MsgFcnsGlo where
     putWord32le _msgFcnsGlo_tow_ms
     mapM_ putWord8 _msgFcnsGlo_fcns
 
-$(deriveSBP 'msgFcnsGlo ''MsgFcnsGlo)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFcnsGlo_" . P.stripPrefix "_msgFcnsGlo_"}
-             ''MsgFcnsGlo)
+$(makeSBP 'msgFcnsGlo ''MsgFcnsGlo)
+$(makeJSON "_msgFcnsGlo_" ''MsgFcnsGlo)
 $(makeLenses ''MsgFcnsGlo)

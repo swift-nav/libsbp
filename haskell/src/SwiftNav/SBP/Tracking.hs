@@ -13,12 +13,13 @@
 --
 -- Satellite code and carrier-phase tracking messages from the device.
 
-module SwiftNav.SBP.Tracking where
+module SwiftNav.SBP.Tracking
+  ( module SwiftNav.SBP.Tracking
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -27,7 +28,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 import SwiftNav.SBP.Gnss
@@ -138,10 +139,8 @@ instance Binary MsgTrackingStateDetailed where
     putWord8 _msgTrackingStateDetailed_pset_flags
     putWord8 _msgTrackingStateDetailed_misc_flags
 
-$(deriveSBP 'msgTrackingStateDetailed ''MsgTrackingStateDetailed)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTrackingStateDetailed_" . P.stripPrefix "_msgTrackingStateDetailed_"}
-             ''MsgTrackingStateDetailed)
+$(makeSBP 'msgTrackingStateDetailed ''MsgTrackingStateDetailed)
+$(makeJSON "_msgTrackingStateDetailed_" ''MsgTrackingStateDetailed)
 $(makeLenses ''MsgTrackingStateDetailed)
 
 -- | TrackingChannelState.
@@ -168,8 +167,8 @@ instance Binary TrackingChannelState where
     put _trackingChannelState_sid
     putWord8 _trackingChannelState_fcn
     putWord8 _trackingChannelState_cn0
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_trackingChannelState_" . P.stripPrefix "_trackingChannelState_"}
-             ''TrackingChannelState)
+
+$(makeJSON "_trackingChannelState_" ''TrackingChannelState)
 $(makeLenses ''TrackingChannelState)
 
 msgTrackingState :: Word16
@@ -193,10 +192,8 @@ instance Binary MsgTrackingState where
   put MsgTrackingState {..} = do
     mapM_ put _msgTrackingState_states
 
-$(deriveSBP 'msgTrackingState ''MsgTrackingState)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTrackingState_" . P.stripPrefix "_msgTrackingState_"}
-             ''MsgTrackingState)
+$(makeSBP 'msgTrackingState ''MsgTrackingState)
+$(makeJSON "_msgTrackingState_" ''MsgTrackingState)
 $(makeLenses ''MsgTrackingState)
 
 -- | TrackingChannelCorrelation.
@@ -218,8 +215,8 @@ instance Binary TrackingChannelCorrelation where
   put TrackingChannelCorrelation {..} = do
     putWord32le $ fromIntegral _trackingChannelCorrelation_I
     putWord32le $ fromIntegral _trackingChannelCorrelation_Q
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_trackingChannelCorrelation_" . P.stripPrefix "_trackingChannelCorrelation_"}
-             ''TrackingChannelCorrelation)
+
+$(makeJSON "_trackingChannelCorrelation_" ''TrackingChannelCorrelation)
 $(makeLenses ''TrackingChannelCorrelation)
 
 msgTrackingIq :: Word16
@@ -250,10 +247,8 @@ instance Binary MsgTrackingIq where
     put _msgTrackingIq_sid
     mapM_ put _msgTrackingIq_corrs
 
-$(deriveSBP 'msgTrackingIq ''MsgTrackingIq)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTrackingIq_" . P.stripPrefix "_msgTrackingIq_"}
-             ''MsgTrackingIq)
+$(makeSBP 'msgTrackingIq ''MsgTrackingIq)
+$(makeJSON "_msgTrackingIq_" ''MsgTrackingIq)
 $(makeLenses ''MsgTrackingIq)
 
 -- | TrackingChannelStateDepA.
@@ -279,8 +274,8 @@ instance Binary TrackingChannelStateDepA where
     putWord8 _trackingChannelStateDepA_state
     putWord8 _trackingChannelStateDepA_prn
     putFloat32le _trackingChannelStateDepA_cn0
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_trackingChannelStateDepA_" . P.stripPrefix "_trackingChannelStateDepA_"}
-             ''TrackingChannelStateDepA)
+
+$(makeJSON "_trackingChannelStateDepA_" ''TrackingChannelStateDepA)
 $(makeLenses ''TrackingChannelStateDepA)
 
 msgTrackingStateDepA :: Word16
@@ -302,10 +297,8 @@ instance Binary MsgTrackingStateDepA where
   put MsgTrackingStateDepA {..} = do
     mapM_ put _msgTrackingStateDepA_states
 
-$(deriveSBP 'msgTrackingStateDepA ''MsgTrackingStateDepA)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTrackingStateDepA_" . P.stripPrefix "_msgTrackingStateDepA_"}
-             ''MsgTrackingStateDepA)
+$(makeSBP 'msgTrackingStateDepA ''MsgTrackingStateDepA)
+$(makeJSON "_msgTrackingStateDepA_" ''MsgTrackingStateDepA)
 $(makeLenses ''MsgTrackingStateDepA)
 
 -- | TrackingChannelStateDepB.
@@ -331,8 +324,8 @@ instance Binary TrackingChannelStateDepB where
     putWord8 _trackingChannelStateDepB_state
     put _trackingChannelStateDepB_sid
     putFloat32le _trackingChannelStateDepB_cn0
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_trackingChannelStateDepB_" . P.stripPrefix "_trackingChannelStateDepB_"}
-             ''TrackingChannelStateDepB)
+
+$(makeJSON "_trackingChannelStateDepB_" ''TrackingChannelStateDepB)
 $(makeLenses ''TrackingChannelStateDepB)
 
 msgTrackingStateDepB :: Word16
@@ -354,8 +347,6 @@ instance Binary MsgTrackingStateDepB where
   put MsgTrackingStateDepB {..} = do
     mapM_ put _msgTrackingStateDepB_states
 
-$(deriveSBP 'msgTrackingStateDepB ''MsgTrackingStateDepB)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgTrackingStateDepB_" . P.stripPrefix "_msgTrackingStateDepB_"}
-             ''MsgTrackingStateDepB)
+$(makeSBP 'msgTrackingStateDepB ''MsgTrackingStateDepB)
+$(makeJSON "_msgTrackingStateDepB_" ''MsgTrackingStateDepB)
 $(makeLenses ''MsgTrackingStateDepB)

@@ -13,12 +13,13 @@
 --
 -- Messages for logging NDB events.
 
-module SwiftNav.SBP.Ndb where
+module SwiftNav.SBP.Ndb
+  ( module SwiftNav.SBP.Ndb
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -27,7 +28,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 import SwiftNav.SBP.Gnss
@@ -86,8 +87,6 @@ instance Binary MsgNdbEvent where
     put _msgNdbEvent_src_sid
     putWord16le _msgNdbEvent_original_sender
 
-$(deriveSBP 'msgNdbEvent ''MsgNdbEvent)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgNdbEvent_" . P.stripPrefix "_msgNdbEvent_"}
-             ''MsgNdbEvent)
+$(makeSBP 'msgNdbEvent ''MsgNdbEvent)
+$(makeJSON "_msgNdbEvent_" ''MsgNdbEvent)
 $(makeLenses ''MsgNdbEvent)

@@ -16,12 +16,13 @@
 -- Navigation devices: the STM32 flash and the M25Pxx FPGA configuration flash
 -- from Piksi 2.3.1.  This module does not apply  to Piksi Multi.
 
-module SwiftNav.SBP.Flash where
+module SwiftNav.SBP.Flash
+  ( module SwiftNav.SBP.Flash
+  ) where
 
-import BasicPrelude as P
+import BasicPrelude
 import Control.Lens
 import Control.Monad.Loops
-import Data.Aeson.TH           (defaultOptions, deriveJSON, fieldLabelModifier)
 import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
@@ -30,7 +31,7 @@ import Data.ByteString
 import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Encoding
+import SwiftNav.Encoding       ()
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
@@ -69,10 +70,8 @@ instance Binary MsgFlashProgram where
     putWord8 _msgFlashProgram_addr_len
     mapM_ putWord8 _msgFlashProgram_data
 
-$(deriveSBP 'msgFlashProgram ''MsgFlashProgram)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashProgram_" . P.stripPrefix "_msgFlashProgram_"}
-             ''MsgFlashProgram)
+$(makeSBP 'msgFlashProgram ''MsgFlashProgram)
+$(makeJSON "_msgFlashProgram_" ''MsgFlashProgram)
 $(makeLenses ''MsgFlashProgram)
 
 msgFlashDone :: Word16
@@ -97,10 +96,8 @@ instance Binary MsgFlashDone where
   put MsgFlashDone {..} = do
     putWord8 _msgFlashDone_response
 
-$(deriveSBP 'msgFlashDone ''MsgFlashDone)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashDone_" . P.stripPrefix "_msgFlashDone_"}
-             ''MsgFlashDone)
+$(makeSBP 'msgFlashDone ''MsgFlashDone)
+$(makeJSON "_msgFlashDone_" ''MsgFlashDone)
 $(makeLenses ''MsgFlashDone)
 
 msgFlashReadReq :: Word16
@@ -135,10 +132,8 @@ instance Binary MsgFlashReadReq where
     mapM_ putWord8 _msgFlashReadReq_addr_start
     putWord8 _msgFlashReadReq_addr_len
 
-$(deriveSBP 'msgFlashReadReq ''MsgFlashReadReq)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashReadReq_" . P.stripPrefix "_msgFlashReadReq_"}
-             ''MsgFlashReadReq)
+$(makeSBP 'msgFlashReadReq ''MsgFlashReadReq)
+$(makeJSON "_msgFlashReadReq_" ''MsgFlashReadReq)
 $(makeLenses ''MsgFlashReadReq)
 
 msgFlashReadResp :: Word16
@@ -173,10 +168,8 @@ instance Binary MsgFlashReadResp where
     mapM_ putWord8 _msgFlashReadResp_addr_start
     putWord8 _msgFlashReadResp_addr_len
 
-$(deriveSBP 'msgFlashReadResp ''MsgFlashReadResp)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashReadResp_" . P.stripPrefix "_msgFlashReadResp_"}
-             ''MsgFlashReadResp)
+$(makeSBP 'msgFlashReadResp ''MsgFlashReadResp)
+$(makeJSON "_msgFlashReadResp_" ''MsgFlashReadResp)
 $(makeLenses ''MsgFlashReadResp)
 
 msgFlashErase :: Word16
@@ -205,10 +198,8 @@ instance Binary MsgFlashErase where
     putWord8 _msgFlashErase_target
     putWord32le _msgFlashErase_sector_num
 
-$(deriveSBP 'msgFlashErase ''MsgFlashErase)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgFlashErase_" . P.stripPrefix "_msgFlashErase_"}
-             ''MsgFlashErase)
+$(makeSBP 'msgFlashErase ''MsgFlashErase)
+$(makeJSON "_msgFlashErase_" ''MsgFlashErase)
 $(makeLenses ''MsgFlashErase)
 
 msgStmFlashLockSector :: Word16
@@ -231,10 +222,8 @@ instance Binary MsgStmFlashLockSector where
   put MsgStmFlashLockSector {..} = do
     putWord32le _msgStmFlashLockSector_sector
 
-$(deriveSBP 'msgStmFlashLockSector ''MsgStmFlashLockSector)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmFlashLockSector_" . P.stripPrefix "_msgStmFlashLockSector_"}
-             ''MsgStmFlashLockSector)
+$(makeSBP 'msgStmFlashLockSector ''MsgStmFlashLockSector)
+$(makeJSON "_msgStmFlashLockSector_" ''MsgStmFlashLockSector)
 $(makeLenses ''MsgStmFlashLockSector)
 
 msgStmFlashUnlockSector :: Word16
@@ -257,10 +246,8 @@ instance Binary MsgStmFlashUnlockSector where
   put MsgStmFlashUnlockSector {..} = do
     putWord32le _msgStmFlashUnlockSector_sector
 
-$(deriveSBP 'msgStmFlashUnlockSector ''MsgStmFlashUnlockSector)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmFlashUnlockSector_" . P.stripPrefix "_msgStmFlashUnlockSector_"}
-             ''MsgStmFlashUnlockSector)
+$(makeSBP 'msgStmFlashUnlockSector ''MsgStmFlashUnlockSector)
+$(makeJSON "_msgStmFlashUnlockSector_" ''MsgStmFlashUnlockSector)
 $(makeLenses ''MsgStmFlashUnlockSector)
 
 msgStmUniqueIdReq :: Word16
@@ -280,11 +267,8 @@ instance Binary MsgStmUniqueIdReq where
 
   put MsgStmUniqueIdReq =
     return ()
-
-$(deriveSBP 'msgStmUniqueIdReq ''MsgStmUniqueIdReq)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmUniqueIdReq_" . P.stripPrefix "_msgStmUniqueIdReq_"}
-             ''MsgStmUniqueIdReq)
+$(makeSBP 'msgStmUniqueIdReq ''MsgStmUniqueIdReq)
+$(makeJSON "_msgStmUniqueIdReq_" ''MsgStmUniqueIdReq)
 $(makeLenses ''MsgStmUniqueIdReq)
 
 msgStmUniqueIdResp :: Word16
@@ -308,10 +292,8 @@ instance Binary MsgStmUniqueIdResp where
   put MsgStmUniqueIdResp {..} = do
     mapM_ putWord8 _msgStmUniqueIdResp_stm_id
 
-$(deriveSBP 'msgStmUniqueIdResp ''MsgStmUniqueIdResp)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgStmUniqueIdResp_" . P.stripPrefix "_msgStmUniqueIdResp_"}
-             ''MsgStmUniqueIdResp)
+$(makeSBP 'msgStmUniqueIdResp ''MsgStmUniqueIdResp)
+$(makeJSON "_msgStmUniqueIdResp_" ''MsgStmUniqueIdResp)
 $(makeLenses ''MsgStmUniqueIdResp)
 
 msgM25FlashWriteStatus :: Word16
@@ -334,8 +316,6 @@ instance Binary MsgM25FlashWriteStatus where
   put MsgM25FlashWriteStatus {..} = do
     mapM_ putWord8 _msgM25FlashWriteStatus_status
 
-$(deriveSBP 'msgM25FlashWriteStatus ''MsgM25FlashWriteStatus)
-
-$(deriveJSON defaultOptions {fieldLabelModifier = fromMaybe "_msgM25FlashWriteStatus_" . P.stripPrefix "_msgM25FlashWriteStatus_"}
-             ''MsgM25FlashWriteStatus)
+$(makeSBP 'msgM25FlashWriteStatus ''MsgM25FlashWriteStatus)
+$(makeJSON "_msgM25FlashWriteStatus_" ''MsgM25FlashWriteStatus)
 $(makeLenses ''MsgM25FlashWriteStatus)
