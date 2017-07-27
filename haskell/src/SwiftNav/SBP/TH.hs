@@ -16,14 +16,14 @@ module SwiftNav.SBP.TH
   , makeJSON
   ) where
 
-import BasicPrelude         hiding (length)
-import Control.Lens
-import Data.Aeson.TH
-import Data.Binary
-import Data.ByteString
-import Data.ByteString.Lazy hiding (length)
-import Language.Haskell.TH
-import SwiftNav.SBP.Types
+import           BasicPrelude
+import           Control.Lens
+import           Data.Aeson.TH
+import           Data.Binary
+import qualified Data.ByteString      as BS
+import qualified Data.ByteString.Lazy as LBS
+import           Language.Haskell.TH
+import           SwiftNav.SBP.Types
 
 -- | Derive ToSBP typeclass, given an SBP message type name and the
 -- name of the implemented type.
@@ -32,8 +32,8 @@ makeSBP msgType name =
   [d|instance ToSBP $(conT name) where
        toSBP m senderID = encoded & msgSBPCrc .~ checkCrc encoded
          where
-           payload = toStrict $ encode m
-           len     = fromIntegral $ length payload
+           payload = LBS.toStrict $ encode m
+           len     = fromIntegral $ BS.length payload
            encoded = Msg $(varE msgType) senderID len (Bytes payload) 0
     |]
 
