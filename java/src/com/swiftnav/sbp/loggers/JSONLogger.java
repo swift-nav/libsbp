@@ -20,17 +20,17 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 
 public class JSONLogger implements SBPSender {
     private OutputStream stream;
-    private long starttime;
 
     public JSONLogger(OutputStream stream_) {
         stream = stream_;
-        starttime = ISOTimestamp();
     }
 
     private String ISOTimestamp() {

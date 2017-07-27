@@ -13,6 +13,8 @@
 
 package com.swiftnav.sbp.file_io;
 
+import java.math.BigInteger;
+
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;

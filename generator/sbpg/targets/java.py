@@ -28,11 +28,11 @@ TEMPLATE_TABLE_NAME = "MessageTable.java.j2"
 JAVA_TYPE_MAP = {'u8': 'int',
                  'u16': 'int',
                  'u32': 'long',
-                 'u64': 'long',
+                 'u64': 'BigInteger',
                  's8': 'int',
                  's16': 'int',
                  's32': 'int',
-                 's64': 'long',
+                 's64': 'BigInteger',
                  'float': 'float',
                  'double': 'double',
                  'string': 'String'}

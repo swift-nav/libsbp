@@ -13,6 +13,8 @@
 
 package com.swiftnav.sbp.tracking;
 
+import java.math.BigInteger;
+
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
@@ -36,7 +38,7 @@ public class MsgTrackingStateDetailed extends SBPMessage {
 
     
     /** Receiver clock time. */
-    public long recv_time;
+    public BigInteger recv_time;
     
     /** Time of transmission of signal from satellite. TOW only valid when
 TOW status is decoded or propagated. WN only valid when week

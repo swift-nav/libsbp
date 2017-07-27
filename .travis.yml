@@ -1,5 +1,7 @@
 sudo: false
 
+language: c
+
 addons:
   apt:
     packages:
@@ -8,6 +10,11 @@ addons:
     - cmake
     - gradle
     - libgmp-dev
+    - oracle-java8-installer
+    - oracle-java8-set-default
+
+env:
+  - JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
 cache:
   apt: true
@@ -41,5 +48,6 @@ install:
   - (cd haskell && stack setup)
 
 script:
+  - export JAVA_HOME=/usr/lib/jvm/java-8-oracle
   - make test
   # - make docs
