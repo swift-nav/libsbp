@@ -132,7 +132,6 @@ def main():
         c.render_version(output_dir, args.release[0])
       elif args.haskell:
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
-        hs.render_cabal(output_dir, parsed, args.release[0])
         hs.render_sbp(output_dir, parsed)
       elif args.java:
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]

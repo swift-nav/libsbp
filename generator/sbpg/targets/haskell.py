@@ -18,7 +18,6 @@ import copy
 from sbpg.targets.templating import *
 
 MESSAGES_TEMPLATE_NAME = "SbpMessagesTemplate.hs"
-CABAL_TEMPLATE_NAME = "sbp-template.cabal"
 SBP_TEMPLATE_NAME = "SbpTemplate.hs"
 MESSAGE_TEMPLATE_NAME = "SbpMessageTemplate.hs"
 
@@ -175,22 +174,6 @@ def render_source(output_dir, package_spec):
                                description=package_spec.description,
                                module_name=full_module_name,
                                module_includes=module_includes))
-
-def render_cabal(output_dir, package_specs, release):
-  modules = []
-  module_prefix = "SwiftNav.SBP"
-  for package_spec in package_specs:
-    if not package_spec.render_source:
-      continue
-    path, name = package_spec.filepath
-    module_name = camel_case(name)
-    full_module_name = ".".join([module_prefix, module_name])
-    modules.append(full_module_name)
-  destination_filename = "%s/sbp.cabal" % output_dir
-  py_template = JENV.get_template(CABAL_TEMPLATE_NAME)
-  with open(destination_filename, 'w') as f:
-    f.write(py_template.render(modules=sorted(modules),
-                               release=release))
 
 def render_sbp(output_dir, package_specs):
   modules = []
