@@ -17,7 +17,7 @@ install from Hackage using `stack`:
 
 or
 
-    $ stack install --resolver lts-8.23 sbp # (LTS-8)
+    $ stack install --resolver lts-8.24 sbp # (LTS-8)
 
 Note that we explicitly specify the resolvers to use, as installing `libsbp` may
 fail to build with more recent resolvers.
