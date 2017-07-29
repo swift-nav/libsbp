@@ -33,6 +33,11 @@ import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 import SwiftNav.SBP.Gnss
 
+{-# ANN module ("HLint: ignore Use camelCase"::String) #-}
+{-# ANN module ("HLint: ignore Redundant do"::String) #-}
+{-# ANN module ("HLint: ignore Use newtype instead of data"::String) #-}
+
+
 msgAlmanac :: Word16
 msgAlmanac = 0x0069
 

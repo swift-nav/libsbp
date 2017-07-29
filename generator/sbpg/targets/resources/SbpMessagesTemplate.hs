@@ -31,6 +31,11 @@ import SwiftNav.SBP.TH
 ((*- for m in module_includes *))
 import (((m)))
 ((*- endfor *))
+
+{-# ANN module ("HLint: ignore Use camelCase"::String) #-}
+{-# ANN module ("HLint: ignore Redundant do"::String) #-}
+{-# ANN module ("HLint: ignore Use newtype instead of data"::String) #-}
+
 ((* for m in msgs *))
 ((*- if m.static *))
 ((*- if m.sbp_id *))

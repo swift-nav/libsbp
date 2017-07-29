@@ -30,6 +30,11 @@ import Data.Word
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
 
+{-# ANN module ("HLint: ignore Use camelCase"::String) #-}
+{-# ANN module ("HLint: ignore Redundant do"::String) #-}
+{-# ANN module ("HLint: ignore Use newtype instead of data"::String) #-}
+
+
 msgUserData :: Word16
 msgUserData = 0x0800
 
