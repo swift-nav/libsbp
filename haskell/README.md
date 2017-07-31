@@ -42,7 +42,12 @@ To deploy to Hackage:
 
     $ stack upload
 
-## Usage Examples (TODO)
+## Publishing
+
+To publish to [Hackage](http://hackage.haskell.org/package/sbp), use the
+`publish-lower` recipe in the `Shakefile.hs` with LTS-6 `stack.yaml`:
+
+    $ STACK_YAML=stack-lts-6.yaml ./Shakefile.hs publish-lower
 
 ## References
 
