@@ -1946,38 +1946,3 @@ instance Binary MsgAlmanacGlo where
 $(makeSBP 'msgAlmanacGlo ''MsgAlmanacGlo)
 $(makeJSON "_msgAlmanacGlo_" ''MsgAlmanacGlo)
 $(makeLenses ''MsgAlmanacGlo)
-
-msgFcnsGlo :: Word16
-msgFcnsGlo = 0x0072
-
--- | SBP class for message MSG_FCNS_GLO (0x0072).
---
--- The message reports mapping information regarding GLONASS SV orbital and
--- frequency slots. Mapped as follow: index (SV orbital slot)  fcns[index] 0
--- 0xFF 1                        FCN for SV orbital slot 1 ...
--- ... 28                       FCN for SV orbital slot 28 29
--- 0xFF 30                       0xFF 31                       0xFF
-data MsgFcnsGlo = MsgFcnsGlo
-  { _msgFcnsGlo_wn   :: !Word16
-    -- ^ GPS Week number
-  , _msgFcnsGlo_tow_ms :: !Word32
-    -- ^ GPS Time of week
-  , _msgFcnsGlo_fcns :: ![Word8]
-    -- ^ GLONASS fequency number per orbital slot
-  } deriving ( Show, Read, Eq )
-
-instance Binary MsgFcnsGlo where
-  get = do
-    _msgFcnsGlo_wn <- getWord16le
-    _msgFcnsGlo_tow_ms <- getWord32le
-    _msgFcnsGlo_fcns <- replicateM 32 getWord8
-    return MsgFcnsGlo {..}
-
-  put MsgFcnsGlo {..} = do
-    putWord16le _msgFcnsGlo_wn
-    putWord32le _msgFcnsGlo_tow_ms
-    mapM_ putWord8 _msgFcnsGlo_fcns
-
-$(makeSBP 'msgFcnsGlo ''MsgFcnsGlo)
-$(makeJSON "_msgFcnsGlo_" ''MsgFcnsGlo)
-$(makeLenses ''MsgFcnsGlo)
