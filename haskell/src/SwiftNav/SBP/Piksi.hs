@@ -50,10 +50,10 @@ data MsgAlmanac = MsgAlmanac
 
 instance Binary MsgAlmanac where
   get =
-    return MsgAlmanac
+    pure MsgAlmanac
 
   put MsgAlmanac =
-    return ()
+    pure ()
 $(makeSBP 'msgAlmanac ''MsgAlmanac)
 $(makeJSON "_msgAlmanac_" ''MsgAlmanac)
 $(makeLenses ''MsgAlmanac)
@@ -70,10 +70,10 @@ data MsgSetTime = MsgSetTime
 
 instance Binary MsgSetTime where
   get =
-    return MsgSetTime
+    pure MsgSetTime
 
   put MsgSetTime =
-    return ()
+    pure ()
 $(makeSBP 'msgSetTime ''MsgSetTime)
 $(makeJSON "_msgSetTime_" ''MsgSetTime)
 $(makeLenses ''MsgSetTime)
@@ -92,7 +92,7 @@ data MsgReset = MsgReset
 instance Binary MsgReset where
   get = do
     _msgReset_flags <- getWord32le
-    return MsgReset {..}
+    pure MsgReset {..}
 
   put MsgReset {..} = do
     putWord32le _msgReset_flags
@@ -112,10 +112,10 @@ data MsgResetDep = MsgResetDep
 
 instance Binary MsgResetDep where
   get =
-    return MsgResetDep
+    pure MsgResetDep
 
   put MsgResetDep =
-    return ()
+    pure ()
 $(makeSBP 'msgResetDep ''MsgResetDep)
 $(makeJSON "_msgResetDep_" ''MsgResetDep)
 $(makeLenses ''MsgResetDep)
@@ -133,10 +133,10 @@ data MsgCwResults = MsgCwResults
 
 instance Binary MsgCwResults where
   get =
-    return MsgCwResults
+    pure MsgCwResults
 
   put MsgCwResults =
-    return ()
+    pure ()
 $(makeSBP 'msgCwResults ''MsgCwResults)
 $(makeJSON "_msgCwResults_" ''MsgCwResults)
 $(makeLenses ''MsgCwResults)
@@ -154,10 +154,10 @@ data MsgCwStart = MsgCwStart
 
 instance Binary MsgCwStart where
   get =
-    return MsgCwStart
+    pure MsgCwStart
 
   put MsgCwStart =
-    return ()
+    pure ()
 $(makeSBP 'msgCwStart ''MsgCwStart)
 $(makeJSON "_msgCwStart_" ''MsgCwStart)
 $(makeLenses ''MsgCwStart)
@@ -177,7 +177,7 @@ data MsgResetFilters = MsgResetFilters
 instance Binary MsgResetFilters where
   get = do
     _msgResetFilters_filter <- getWord8
-    return MsgResetFilters {..}
+    pure MsgResetFilters {..}
 
   put MsgResetFilters {..} = do
     putWord8 _msgResetFilters_filter
@@ -200,10 +200,10 @@ data MsgInitBase = MsgInitBase
 
 instance Binary MsgInitBase where
   get =
-    return MsgInitBase
+    pure MsgInitBase
 
   put MsgInitBase =
-    return ()
+    pure ()
 $(makeSBP 'msgInitBase ''MsgInitBase)
 $(makeJSON "_msgInitBase_" ''MsgInitBase)
 $(makeLenses ''MsgInitBase)
@@ -231,7 +231,7 @@ instance Binary MsgThreadState where
     _msgThreadState_name <- decodeUtf8 <$> getByteString 20
     _msgThreadState_cpu <- getWord16le
     _msgThreadState_stack_free <- getWord32le
-    return MsgThreadState {..}
+    pure MsgThreadState {..}
 
   put MsgThreadState {..} = do
     putByteString $ encodeUtf8 _msgThreadState_name
@@ -269,7 +269,7 @@ instance Binary UARTChannel where
     _uARTChannel_io_error_count <- getWord16le
     _uARTChannel_tx_buffer_level <- getWord8
     _uARTChannel_rx_buffer_level <- getWord8
-    return UARTChannel {..}
+    pure UARTChannel {..}
 
   put UARTChannel {..} = do
     putFloat32le _uARTChannel_tx_throughput
@@ -306,7 +306,7 @@ instance Binary Period where
     _period_pmin <- fromIntegral <$> getWord32le
     _period_pmax <- fromIntegral <$> getWord32le
     _period_current <- fromIntegral <$> getWord32le
-    return Period {..}
+    pure Period {..}
 
   put Period {..} = do
     putWord32le $ fromIntegral _period_avg
@@ -340,7 +340,7 @@ instance Binary Latency where
     _latency_lmin <- fromIntegral <$> getWord32le
     _latency_lmax <- fromIntegral <$> getWord32le
     _latency_current <- fromIntegral <$> getWord32le
-    return Latency {..}
+    pure Latency {..}
 
   put Latency {..} = do
     putWord32le $ fromIntegral _latency_avg
@@ -384,7 +384,7 @@ instance Binary MsgUartState where
     _msgUartState_uart_ftdi <- get
     _msgUartState_latency <- get
     _msgUartState_obs_period <- get
-    return MsgUartState {..}
+    pure MsgUartState {..}
 
   put MsgUartState {..} = do
     put _msgUartState_uart_a
@@ -420,7 +420,7 @@ instance Binary MsgUartStateDepa where
     _msgUartStateDepa_uart_b <- get
     _msgUartStateDepa_uart_ftdi <- get
     _msgUartStateDepa_latency <- get
-    return MsgUartStateDepa {..}
+    pure MsgUartStateDepa {..}
 
   put MsgUartStateDepa {..} = do
     put _msgUartStateDepa_uart_a
@@ -448,7 +448,7 @@ data MsgIarState = MsgIarState
 instance Binary MsgIarState where
   get = do
     _msgIarState_num_hyps <- getWord32le
-    return MsgIarState {..}
+    pure MsgIarState {..}
 
   put MsgIarState {..} = do
     putWord32le _msgIarState_num_hyps
@@ -475,7 +475,7 @@ instance Binary MsgMaskSatellite where
   get = do
     _msgMaskSatellite_mask <- getWord8
     _msgMaskSatellite_sid <- get
-    return MsgMaskSatellite {..}
+    pure MsgMaskSatellite {..}
 
   put MsgMaskSatellite {..} = do
     putWord8 _msgMaskSatellite_mask
@@ -513,7 +513,7 @@ instance Binary MsgDeviceMonitor where
     _msgDeviceMonitor_cpu_vaux <- fromIntegral <$> getWord16le
     _msgDeviceMonitor_cpu_temperature <- fromIntegral <$> getWord16le
     _msgDeviceMonitor_fe_temperature <- fromIntegral <$> getWord16le
-    return MsgDeviceMonitor {..}
+    pure MsgDeviceMonitor {..}
 
   put MsgDeviceMonitor {..} = do
     putWord16le $ fromIntegral _msgDeviceMonitor_dev_vin
@@ -544,7 +544,7 @@ instance Binary MsgCommandReq where
   get = do
     _msgCommandReq_sequence <- getWord32le
     _msgCommandReq_command <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgCommandReq {..}
+    pure MsgCommandReq {..}
 
   put MsgCommandReq {..} = do
     putWord32le _msgCommandReq_sequence
@@ -572,7 +572,7 @@ instance Binary MsgCommandResp where
   get = do
     _msgCommandResp_sequence <- getWord32le
     _msgCommandResp_code <- fromIntegral <$> getWord32le
-    return MsgCommandResp {..}
+    pure MsgCommandResp {..}
 
   put MsgCommandResp {..} = do
     putWord32le _msgCommandResp_sequence
@@ -601,7 +601,7 @@ instance Binary MsgCommandOutput where
   get = do
     _msgCommandOutput_sequence <- getWord32le
     _msgCommandOutput_line <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgCommandOutput {..}
+    pure MsgCommandOutput {..}
 
   put MsgCommandOutput {..} = do
     putWord32le _msgCommandOutput_sequence
@@ -623,10 +623,10 @@ data MsgNetworkStateReq = MsgNetworkStateReq
 
 instance Binary MsgNetworkStateReq where
   get =
-    return MsgNetworkStateReq
+    pure MsgNetworkStateReq
 
   put MsgNetworkStateReq =
-    return ()
+    pure ()
 $(makeSBP 'msgNetworkStateReq ''MsgNetworkStateReq)
 $(makeJSON "_msgNetworkStateReq_" ''MsgNetworkStateReq)
 $(makeLenses ''MsgNetworkStateReq)
@@ -667,7 +667,7 @@ instance Binary MsgNetworkStateResp where
     _msgNetworkStateResp_tx_bytes <- getWord32le
     _msgNetworkStateResp_interface_name <- decodeUtf8 <$> getByteString 16
     _msgNetworkStateResp_flags <- getWord32le
-    return MsgNetworkStateResp {..}
+    pure MsgNetworkStateResp {..}
 
   put MsgNetworkStateResp {..} = do
     mapM_ putWord8 _msgNetworkStateResp_ipv4_address
@@ -715,7 +715,7 @@ instance Binary MsgSpecan where
     _msgSpecan_amplitude_ref <- getFloat32le
     _msgSpecan_amplitude_unit <- getFloat32le
     _msgSpecan_amplitude_value <- whileM (not <$> isEmpty) getWord8
-    return MsgSpecan {..}
+    pure MsgSpecan {..}
 
   put MsgSpecan {..} = do
     putWord16le _msgSpecan_channel_tag

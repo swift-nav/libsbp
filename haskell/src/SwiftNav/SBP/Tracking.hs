@@ -117,7 +117,7 @@ instance Binary MsgTrackingStateDetailed where
     _msgTrackingStateDetailed_nav_flags <- getWord8
     _msgTrackingStateDetailed_pset_flags <- getWord8
     _msgTrackingStateDetailed_misc_flags <- getWord8
-    return MsgTrackingStateDetailed {..}
+    pure MsgTrackingStateDetailed {..}
 
   put MsgTrackingStateDetailed {..} = do
     putWord64le _msgTrackingStateDetailed_recv_time
@@ -164,7 +164,7 @@ instance Binary TrackingChannelState where
     _trackingChannelState_sid <- get
     _trackingChannelState_fcn <- getWord8
     _trackingChannelState_cn0 <- getWord8
-    return TrackingChannelState {..}
+    pure TrackingChannelState {..}
 
   put TrackingChannelState {..} = do
     put _trackingChannelState_sid
@@ -190,7 +190,7 @@ data MsgTrackingState = MsgTrackingState
 instance Binary MsgTrackingState where
   get = do
     _msgTrackingState_states <- whileM (not <$> isEmpty) get
-    return MsgTrackingState {..}
+    pure MsgTrackingState {..}
 
   put MsgTrackingState {..} = do
     mapM_ put _msgTrackingState_states
@@ -213,7 +213,7 @@ instance Binary TrackingChannelCorrelation where
   get = do
     _trackingChannelCorrelation_I <- fromIntegral <$> getWord32le
     _trackingChannelCorrelation_Q <- fromIntegral <$> getWord32le
-    return TrackingChannelCorrelation {..}
+    pure TrackingChannelCorrelation {..}
 
   put TrackingChannelCorrelation {..} = do
     putWord32le $ fromIntegral _trackingChannelCorrelation_I
@@ -243,7 +243,7 @@ instance Binary MsgTrackingIq where
     _msgTrackingIq_channel <- getWord8
     _msgTrackingIq_sid <- get
     _msgTrackingIq_corrs <- replicateM 3 get
-    return MsgTrackingIq {..}
+    pure MsgTrackingIq {..}
 
   put MsgTrackingIq {..} = do
     putWord8 _msgTrackingIq_channel
@@ -271,7 +271,7 @@ instance Binary TrackingChannelStateDepA where
     _trackingChannelStateDepA_state <- getWord8
     _trackingChannelStateDepA_prn <- getWord8
     _trackingChannelStateDepA_cn0 <- getFloat32le
-    return TrackingChannelStateDepA {..}
+    pure TrackingChannelStateDepA {..}
 
   put TrackingChannelStateDepA {..} = do
     putWord8 _trackingChannelStateDepA_state
@@ -295,7 +295,7 @@ data MsgTrackingStateDepA = MsgTrackingStateDepA
 instance Binary MsgTrackingStateDepA where
   get = do
     _msgTrackingStateDepA_states <- whileM (not <$> isEmpty) get
-    return MsgTrackingStateDepA {..}
+    pure MsgTrackingStateDepA {..}
 
   put MsgTrackingStateDepA {..} = do
     mapM_ put _msgTrackingStateDepA_states
@@ -321,7 +321,7 @@ instance Binary TrackingChannelStateDepB where
     _trackingChannelStateDepB_state <- getWord8
     _trackingChannelStateDepB_sid <- get
     _trackingChannelStateDepB_cn0 <- getFloat32le
-    return TrackingChannelStateDepB {..}
+    pure TrackingChannelStateDepB {..}
 
   put TrackingChannelStateDepB {..} = do
     putWord8 _trackingChannelStateDepB_state
@@ -345,7 +345,7 @@ data MsgTrackingStateDepB = MsgTrackingStateDepB
 instance Binary MsgTrackingStateDepB where
   get = do
     _msgTrackingStateDepB_states <- whileM (not <$> isEmpty) get
-    return MsgTrackingStateDepB {..}
+    pure MsgTrackingStateDepB {..}
 
   put MsgTrackingStateDepB {..} = do
     mapM_ put _msgTrackingStateDepB_states

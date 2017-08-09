@@ -86,7 +86,7 @@ instance FromJSON SBPMsg where
 (<<>>) a b = fromMaybe Null $ do
   a' <- preview _Object a
   b' <- preview _Object b
-  return $ review _Object $ a' <> b'
+  pure $ review _Object $ a' <> b'
 
 instance ToJSON SBPMsg where
 ((*- for m in msgs *))

@@ -65,7 +65,7 @@ instance Binary MsgFlashProgram where
     _msgFlashProgram_addr_start <- replicateM 3 getWord8
     _msgFlashProgram_addr_len <- getWord8
     _msgFlashProgram_data <- whileM (not <$> isEmpty) getWord8
-    return MsgFlashProgram {..}
+    pure MsgFlashProgram {..}
 
   put MsgFlashProgram {..} = do
     putWord8 _msgFlashProgram_target
@@ -94,7 +94,7 @@ data MsgFlashDone = MsgFlashDone
 instance Binary MsgFlashDone where
   get = do
     _msgFlashDone_response <- getWord8
-    return MsgFlashDone {..}
+    pure MsgFlashDone {..}
 
   put MsgFlashDone {..} = do
     putWord8 _msgFlashDone_response
@@ -128,7 +128,7 @@ instance Binary MsgFlashReadReq where
     _msgFlashReadReq_target <- getWord8
     _msgFlashReadReq_addr_start <- replicateM 3 getWord8
     _msgFlashReadReq_addr_len <- getWord8
-    return MsgFlashReadReq {..}
+    pure MsgFlashReadReq {..}
 
   put MsgFlashReadReq {..} = do
     putWord8 _msgFlashReadReq_target
@@ -164,7 +164,7 @@ instance Binary MsgFlashReadResp where
     _msgFlashReadResp_target <- getWord8
     _msgFlashReadResp_addr_start <- replicateM 3 getWord8
     _msgFlashReadResp_addr_len <- getWord8
-    return MsgFlashReadResp {..}
+    pure MsgFlashReadResp {..}
 
   put MsgFlashReadResp {..} = do
     putWord8 _msgFlashReadResp_target
@@ -195,7 +195,7 @@ instance Binary MsgFlashErase where
   get = do
     _msgFlashErase_target <- getWord8
     _msgFlashErase_sector_num <- getWord32le
-    return MsgFlashErase {..}
+    pure MsgFlashErase {..}
 
   put MsgFlashErase {..} = do
     putWord8 _msgFlashErase_target
@@ -220,7 +220,7 @@ data MsgStmFlashLockSector = MsgStmFlashLockSector
 instance Binary MsgStmFlashLockSector where
   get = do
     _msgStmFlashLockSector_sector <- getWord32le
-    return MsgStmFlashLockSector {..}
+    pure MsgStmFlashLockSector {..}
 
   put MsgStmFlashLockSector {..} = do
     putWord32le _msgStmFlashLockSector_sector
@@ -244,7 +244,7 @@ data MsgStmFlashUnlockSector = MsgStmFlashUnlockSector
 instance Binary MsgStmFlashUnlockSector where
   get = do
     _msgStmFlashUnlockSector_sector <- getWord32le
-    return MsgStmFlashUnlockSector {..}
+    pure MsgStmFlashUnlockSector {..}
 
   put MsgStmFlashUnlockSector {..} = do
     putWord32le _msgStmFlashUnlockSector_sector
@@ -266,10 +266,10 @@ data MsgStmUniqueIdReq = MsgStmUniqueIdReq
 
 instance Binary MsgStmUniqueIdReq where
   get =
-    return MsgStmUniqueIdReq
+    pure MsgStmUniqueIdReq
 
   put MsgStmUniqueIdReq =
-    return ()
+    pure ()
 $(makeSBP 'msgStmUniqueIdReq ''MsgStmUniqueIdReq)
 $(makeJSON "_msgStmUniqueIdReq_" ''MsgStmUniqueIdReq)
 $(makeLenses ''MsgStmUniqueIdReq)
@@ -290,7 +290,7 @@ data MsgStmUniqueIdResp = MsgStmUniqueIdResp
 instance Binary MsgStmUniqueIdResp where
   get = do
     _msgStmUniqueIdResp_stm_id <- replicateM 12 getWord8
-    return MsgStmUniqueIdResp {..}
+    pure MsgStmUniqueIdResp {..}
 
   put MsgStmUniqueIdResp {..} = do
     mapM_ putWord8 _msgStmUniqueIdResp_stm_id
@@ -314,7 +314,7 @@ data MsgM25FlashWriteStatus = MsgM25FlashWriteStatus
 instance Binary MsgM25FlashWriteStatus where
   get = do
     _msgM25FlashWriteStatus_status <- replicateM 1 getWord8
-    return MsgM25FlashWriteStatus {..}
+    pure MsgM25FlashWriteStatus {..}
 
   put MsgM25FlashWriteStatus {..} = do
     mapM_ putWord8 _msgM25FlashWriteStatus_status

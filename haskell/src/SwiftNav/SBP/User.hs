@@ -50,7 +50,7 @@ data MsgUserData = MsgUserData
 instance Binary MsgUserData where
   get = do
     _msgUserData_contents <- whileM (not <$> isEmpty) getWord8
-    return MsgUserData {..}
+    pure MsgUserData {..}
 
   put MsgUserData {..} = do
     mapM_ putWord8 _msgUserData_contents

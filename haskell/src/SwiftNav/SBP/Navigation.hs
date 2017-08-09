@@ -75,7 +75,7 @@ instance Binary MsgGpsTime where
     _msgGpsTime_tow <- getWord32le
     _msgGpsTime_ns_residual <- fromIntegral <$> getWord32le
     _msgGpsTime_flags <- getWord8
-    return MsgGpsTime {..}
+    pure MsgGpsTime {..}
 
   put MsgGpsTime {..} = do
     putWord16le _msgGpsTime_wn
@@ -127,7 +127,7 @@ instance Binary MsgUtcTime where
     _msgUtcTime_minutes <- getWord8
     _msgUtcTime_seconds <- getWord8
     _msgUtcTime_ns <- getWord32le
-    return MsgUtcTime {..}
+    pure MsgUtcTime {..}
 
   put MsgUtcTime {..} = do
     putWord8 _msgUtcTime_flags
@@ -179,7 +179,7 @@ instance Binary MsgDops where
     _msgDops_hdop <- getWord16le
     _msgDops_vdop <- getWord16le
     _msgDops_flags <- getWord8
-    return MsgDops {..}
+    pure MsgDops {..}
 
   put MsgDops {..} = do
     putWord32le _msgDops_tow
@@ -232,7 +232,7 @@ instance Binary MsgPosEcef where
     _msgPosEcef_accuracy <- getWord16le
     _msgPosEcef_n_sats <- getWord8
     _msgPosEcef_flags <- getWord8
-    return MsgPosEcef {..}
+    pure MsgPosEcef {..}
 
   put MsgPosEcef {..} = do
     putWord32le _msgPosEcef_tow
@@ -288,7 +288,7 @@ instance Binary MsgPosLlh where
     _msgPosLlh_v_accuracy <- getWord16le
     _msgPosLlh_n_sats <- getWord8
     _msgPosLlh_flags <- getWord8
-    return MsgPosLlh {..}
+    pure MsgPosLlh {..}
 
   put MsgPosLlh {..} = do
     putWord32le _msgPosLlh_tow
@@ -339,7 +339,7 @@ instance Binary MsgBaselineEcef where
     _msgBaselineEcef_accuracy <- getWord16le
     _msgBaselineEcef_n_sats <- getWord8
     _msgBaselineEcef_flags <- getWord8
-    return MsgBaselineEcef {..}
+    pure MsgBaselineEcef {..}
 
   put MsgBaselineEcef {..} = do
     putWord32le _msgBaselineEcef_tow
@@ -394,7 +394,7 @@ instance Binary MsgBaselineNed where
     _msgBaselineNed_v_accuracy <- getWord16le
     _msgBaselineNed_n_sats <- getWord8
     _msgBaselineNed_flags <- getWord8
-    return MsgBaselineNed {..}
+    pure MsgBaselineNed {..}
 
   put MsgBaselineNed {..} = do
     putWord32le _msgBaselineNed_tow
@@ -444,7 +444,7 @@ instance Binary MsgVelEcef where
     _msgVelEcef_accuracy <- getWord16le
     _msgVelEcef_n_sats <- getWord8
     _msgVelEcef_flags <- getWord8
-    return MsgVelEcef {..}
+    pure MsgVelEcef {..}
 
   put MsgVelEcef {..} = do
     putWord32le _msgVelEcef_tow
@@ -497,7 +497,7 @@ instance Binary MsgVelNed where
     _msgVelNed_v_accuracy <- getWord16le
     _msgVelNed_n_sats <- getWord8
     _msgVelNed_flags <- getWord8
-    return MsgVelNed {..}
+    pure MsgVelNed {..}
 
   put MsgVelNed {..} = do
     putWord32le _msgVelNed_tow
@@ -539,7 +539,7 @@ instance Binary MsgBaselineHeading where
     _msgBaselineHeading_heading <- getWord32le
     _msgBaselineHeading_n_sats <- getWord8
     _msgBaselineHeading_flags <- getWord8
-    return MsgBaselineHeading {..}
+    pure MsgBaselineHeading {..}
 
   put MsgBaselineHeading {..} = do
     putWord32le _msgBaselineHeading_tow
@@ -569,7 +569,7 @@ instance Binary MsgAgeCorrections where
   get = do
     _msgAgeCorrections_tow <- getWord32le
     _msgAgeCorrections_age <- getWord16le
-    return MsgAgeCorrections {..}
+    pure MsgAgeCorrections {..}
 
   put MsgAgeCorrections {..} = do
     putWord32le _msgAgeCorrections_tow
@@ -611,7 +611,7 @@ instance Binary MsgGpsTimeDepA where
     _msgGpsTimeDepA_tow <- getWord32le
     _msgGpsTimeDepA_ns_residual <- fromIntegral <$> getWord32le
     _msgGpsTimeDepA_flags <- getWord8
-    return MsgGpsTimeDepA {..}
+    pure MsgGpsTimeDepA {..}
 
   put MsgGpsTimeDepA {..} = do
     putWord16le _msgGpsTimeDepA_wn
@@ -653,7 +653,7 @@ instance Binary MsgDopsDepA where
     _msgDopsDepA_tdop <- getWord16le
     _msgDopsDepA_hdop <- getWord16le
     _msgDopsDepA_vdop <- getWord16le
-    return MsgDopsDepA {..}
+    pure MsgDopsDepA {..}
 
   put MsgDopsDepA {..} = do
     putWord32le _msgDopsDepA_tow
@@ -705,7 +705,7 @@ instance Binary MsgPosEcefDepA where
     _msgPosEcefDepA_accuracy <- getWord16le
     _msgPosEcefDepA_n_sats <- getWord8
     _msgPosEcefDepA_flags <- getWord8
-    return MsgPosEcefDepA {..}
+    pure MsgPosEcefDepA {..}
 
   put MsgPosEcefDepA {..} = do
     putWord32le _msgPosEcefDepA_tow
@@ -761,7 +761,7 @@ instance Binary MsgPosLlhDepA where
     _msgPosLlhDepA_v_accuracy <- getWord16le
     _msgPosLlhDepA_n_sats <- getWord8
     _msgPosLlhDepA_flags <- getWord8
-    return MsgPosLlhDepA {..}
+    pure MsgPosLlhDepA {..}
 
   put MsgPosLlhDepA {..} = do
     putWord32le _msgPosLlhDepA_tow
@@ -812,7 +812,7 @@ instance Binary MsgBaselineEcefDepA where
     _msgBaselineEcefDepA_accuracy <- getWord16le
     _msgBaselineEcefDepA_n_sats <- getWord8
     _msgBaselineEcefDepA_flags <- getWord8
-    return MsgBaselineEcefDepA {..}
+    pure MsgBaselineEcefDepA {..}
 
   put MsgBaselineEcefDepA {..} = do
     putWord32le _msgBaselineEcefDepA_tow
@@ -867,7 +867,7 @@ instance Binary MsgBaselineNedDepA where
     _msgBaselineNedDepA_v_accuracy <- getWord16le
     _msgBaselineNedDepA_n_sats <- getWord8
     _msgBaselineNedDepA_flags <- getWord8
-    return MsgBaselineNedDepA {..}
+    pure MsgBaselineNedDepA {..}
 
   put MsgBaselineNedDepA {..} = do
     putWord32le _msgBaselineNedDepA_tow
@@ -917,7 +917,7 @@ instance Binary MsgVelEcefDepA where
     _msgVelEcefDepA_accuracy <- getWord16le
     _msgVelEcefDepA_n_sats <- getWord8
     _msgVelEcefDepA_flags <- getWord8
-    return MsgVelEcefDepA {..}
+    pure MsgVelEcefDepA {..}
 
   put MsgVelEcefDepA {..} = do
     putWord32le _msgVelEcefDepA_tow
@@ -970,7 +970,7 @@ instance Binary MsgVelNedDepA where
     _msgVelNedDepA_v_accuracy <- getWord16le
     _msgVelNedDepA_n_sats <- getWord8
     _msgVelNedDepA_flags <- getWord8
-    return MsgVelNedDepA {..}
+    pure MsgVelNedDepA {..}
 
   put MsgVelNedDepA {..} = do
     putWord32le _msgVelNedDepA_tow
@@ -1011,7 +1011,7 @@ instance Binary MsgBaselineHeadingDepA where
     _msgBaselineHeadingDepA_heading <- getWord32le
     _msgBaselineHeadingDepA_n_sats <- getWord8
     _msgBaselineHeadingDepA_flags <- getWord8
-    return MsgBaselineHeadingDepA {..}
+    pure MsgBaselineHeadingDepA {..}
 
   put MsgBaselineHeadingDepA {..} = do
     putWord32le _msgBaselineHeadingDepA_tow

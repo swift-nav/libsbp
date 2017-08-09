@@ -49,7 +49,7 @@ instance Binary GnssSignal16 where
   get = do
     _gnssSignal16_sat <- getWord8
     _gnssSignal16_code <- getWord8
-    return GnssSignal16 {..}
+    pure GnssSignal16 {..}
 
   put GnssSignal16 {..} = do
     putWord8 _gnssSignal16_sat
@@ -77,7 +77,7 @@ instance Binary GnssSignal where
     _gnssSignal_sat <- getWord16le
     _gnssSignal_code <- getWord8
     _gnssSignal_reserved <- getWord8
-    return GnssSignal {..}
+    pure GnssSignal {..}
 
   put GnssSignal {..} = do
     putWord16le _gnssSignal_sat
@@ -102,7 +102,7 @@ instance Binary GpsTime where
   get = do
     _gpsTime_tow <- getWord32le
     _gpsTime_wn <- getWord16le
-    return GpsTime {..}
+    pure GpsTime {..}
 
   put GpsTime {..} = do
     putWord32le _gpsTime_tow
@@ -126,7 +126,7 @@ instance Binary GpsTimeSec where
   get = do
     _gpsTimeSec_tow <- getWord32le
     _gpsTimeSec_wn <- getWord16le
-    return GpsTimeSec {..}
+    pure GpsTimeSec {..}
 
   put GpsTimeSec {..} = do
     putWord32le _gpsTimeSec_tow
@@ -155,7 +155,7 @@ instance Binary GpsTimeNano where
     _gpsTimeNano_tow <- getWord32le
     _gpsTimeNano_ns_residual <- fromIntegral <$> getWord32le
     _gpsTimeNano_wn <- getWord16le
-    return GpsTimeNano {..}
+    pure GpsTimeNano {..}
 
   put GpsTimeNano {..} = do
     putWord32le _gpsTimeNano_tow
@@ -181,7 +181,7 @@ instance Binary CarrierPhase where
   get = do
     _carrierPhase_i <- fromIntegral <$> getWord32le
     _carrierPhase_f <- getWord8
-    return CarrierPhase {..}
+    pure CarrierPhase {..}
 
   put CarrierPhase {..} = do
     putWord32le $ fromIntegral _carrierPhase_i

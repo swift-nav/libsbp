@@ -62,7 +62,7 @@ instance Binary MsgAcqResult where
     _msgAcqResult_cp <- getFloat32le
     _msgAcqResult_cf <- getFloat32le
     _msgAcqResult_sid <- get
-    return MsgAcqResult {..}
+    pure MsgAcqResult {..}
 
   put MsgAcqResult {..} = do
     putFloat32le _msgAcqResult_cn0
@@ -98,7 +98,7 @@ instance Binary MsgAcqResultDepB where
     _msgAcqResultDepB_cp <- getFloat32le
     _msgAcqResultDepB_cf <- getFloat32le
     _msgAcqResultDepB_sid <- get
-    return MsgAcqResultDepB {..}
+    pure MsgAcqResultDepB {..}
 
   put MsgAcqResultDepB {..} = do
     putFloat32le _msgAcqResultDepB_snr
@@ -135,7 +135,7 @@ instance Binary MsgAcqResultDepA where
     _msgAcqResultDepA_cp <- getFloat32le
     _msgAcqResultDepA_cf <- getFloat32le
     _msgAcqResultDepA_prn <- getWord8
-    return MsgAcqResultDepA {..}
+    pure MsgAcqResultDepA {..}
 
   put MsgAcqResultDepA {..} = do
     putFloat32le _msgAcqResultDepA_snr
@@ -193,7 +193,7 @@ instance Binary AcqSvProfile where
     _acqSvProfile_cf_max <- fromIntegral <$> getWord32le
     _acqSvProfile_cf <- fromIntegral <$> getWord32le
     _acqSvProfile_cp <- getWord32le
-    return AcqSvProfile {..}
+    pure AcqSvProfile {..}
 
   put AcqSvProfile {..} = do
     putWord8 _acqSvProfile_job_type
@@ -227,7 +227,7 @@ data MsgAcqSvProfile = MsgAcqSvProfile
 instance Binary MsgAcqSvProfile where
   get = do
     _msgAcqSvProfile_acq_sv_profile <- whileM (not <$> isEmpty) get
-    return MsgAcqSvProfile {..}
+    pure MsgAcqSvProfile {..}
 
   put MsgAcqSvProfile {..} = do
     mapM_ put _msgAcqSvProfile_acq_sv_profile

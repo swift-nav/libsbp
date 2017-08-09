@@ -64,7 +64,7 @@ instance Binary MsgExtEvent where
     _msgExtEvent_ns_residual <- fromIntegral <$> getWord32le
     _msgExtEvent_flags <- getWord8
     _msgExtEvent_pin <- getWord8
-    return MsgExtEvent {..}
+    pure MsgExtEvent {..}
 
   put MsgExtEvent {..} = do
     putWord16le _msgExtEvent_wn

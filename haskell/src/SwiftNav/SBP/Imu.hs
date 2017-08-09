@@ -72,7 +72,7 @@ instance Binary MsgImuRaw where
     _msgImuRaw_gyr_x <- fromIntegral <$> getWord16le
     _msgImuRaw_gyr_y <- fromIntegral <$> getWord16le
     _msgImuRaw_gyr_z <- fromIntegral <$> getWord16le
-    return MsgImuRaw {..}
+    pure MsgImuRaw {..}
 
   put MsgImuRaw {..} = do
     putWord32le _msgImuRaw_tow
@@ -110,7 +110,7 @@ instance Binary MsgImuAux where
     _msgImuAux_imu_type <- getWord8
     _msgImuAux_temp <- fromIntegral <$> getWord16le
     _msgImuAux_imu_conf <- getWord8
-    return MsgImuAux {..}
+    pure MsgImuAux {..}
 
   put MsgImuAux {..} = do
     putWord8 _msgImuAux_imu_type

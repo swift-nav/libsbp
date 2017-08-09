@@ -78,7 +78,7 @@ instance Binary MsgNdbEvent where
     _msgNdbEvent_object_sid <- get
     _msgNdbEvent_src_sid <- get
     _msgNdbEvent_original_sender <- getWord16le
-    return MsgNdbEvent {..}
+    pure MsgNdbEvent {..}
 
   put MsgNdbEvent {..} = do
     putWord64le _msgNdbEvent_recv_time

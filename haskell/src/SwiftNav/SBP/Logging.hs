@@ -54,7 +54,7 @@ instance Binary MsgLog where
   get = do
     _msgLog_level <- getWord8
     _msgLog_text <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgLog {..}
+    pure MsgLog {..}
 
   put MsgLog {..} = do
     putWord8 _msgLog_level
@@ -90,7 +90,7 @@ instance Binary MsgFwd where
     _msgFwd_source <- getWord8
     _msgFwd_protocol <- getWord8
     _msgFwd_fwd_payload <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgFwd {..}
+    pure MsgFwd {..}
 
   put MsgFwd {..} = do
     putWord8 _msgFwd_source
@@ -115,7 +115,7 @@ data MsgTweet = MsgTweet
 instance Binary MsgTweet where
   get = do
     _msgTweet_tweet <- decodeUtf8 <$> getByteString 140
-    return MsgTweet {..}
+    pure MsgTweet {..}
 
   put MsgTweet {..} = do
     putByteString $ encodeUtf8 _msgTweet_tweet
@@ -138,7 +138,7 @@ data MsgPrintDep = MsgPrintDep
 instance Binary MsgPrintDep where
   get = do
     _msgPrintDep_text <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgPrintDep {..}
+    pure MsgPrintDep {..}
 
   put MsgPrintDep {..} = do
     putByteString $ encodeUtf8 _msgPrintDep_text

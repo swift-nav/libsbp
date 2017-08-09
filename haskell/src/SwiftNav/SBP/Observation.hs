@@ -51,7 +51,7 @@ instance Binary ObservationHeader where
   get = do
     _observationHeader_t <- get
     _observationHeader_n_obs <- getWord8
-    return ObservationHeader {..}
+    pure ObservationHeader {..}
 
   put ObservationHeader {..} = do
     put _observationHeader_t
@@ -76,7 +76,7 @@ instance Binary Doppler where
   get = do
     _doppler_i <- fromIntegral <$> getWord16le
     _doppler_f <- getWord8
-    return Doppler {..}
+    pure Doppler {..}
 
   put Doppler {..} = do
     putWord16le $ fromIntegral _doppler_i
@@ -123,7 +123,7 @@ instance Binary PackedObsContent where
     _packedObsContent_lock <- getWord8
     _packedObsContent_flags <- getWord8
     _packedObsContent_sid <- get
-    return PackedObsContent {..}
+    pure PackedObsContent {..}
 
   put PackedObsContent {..} = do
     putWord32le _packedObsContent_P
@@ -159,7 +159,7 @@ instance Binary MsgObs where
   get = do
     _msgObs_header <- get
     _msgObs_obs <- whileM (not <$> isEmpty) get
-    return MsgObs {..}
+    pure MsgObs {..}
 
   put MsgObs {..} = do
     put _msgObs_header
@@ -192,7 +192,7 @@ instance Binary MsgBasePosLlh where
     _msgBasePosLlh_lat <- getFloat64le
     _msgBasePosLlh_lon <- getFloat64le
     _msgBasePosLlh_height <- getFloat64le
-    return MsgBasePosLlh {..}
+    pure MsgBasePosLlh {..}
 
   put MsgBasePosLlh {..} = do
     putFloat64le _msgBasePosLlh_lat
@@ -227,7 +227,7 @@ instance Binary MsgBasePosEcef where
     _msgBasePosEcef_x <- getFloat64le
     _msgBasePosEcef_y <- getFloat64le
     _msgBasePosEcef_z <- getFloat64le
-    return MsgBasePosEcef {..}
+    pure MsgBasePosEcef {..}
 
   put MsgBasePosEcef {..} = do
     putFloat64le _msgBasePosEcef_x
@@ -262,7 +262,7 @@ instance Binary EphemerisCommonContent where
     _ephemerisCommonContent_fit_interval <- getWord32le
     _ephemerisCommonContent_valid <- getWord8
     _ephemerisCommonContent_health_bits <- getWord8
-    return EphemerisCommonContent {..}
+    pure EphemerisCommonContent {..}
 
   put EphemerisCommonContent {..} = do
     put _ephemerisCommonContent_sid
@@ -299,7 +299,7 @@ instance Binary EphemerisCommonContentDepA where
     _ephemerisCommonContentDepA_fit_interval <- getWord32le
     _ephemerisCommonContentDepA_valid <- getWord8
     _ephemerisCommonContentDepA_health_bits <- getWord8
-    return EphemerisCommonContentDepA {..}
+    pure EphemerisCommonContentDepA {..}
 
   put EphemerisCommonContentDepA {..} = do
     put _ephemerisCommonContentDepA_sid
@@ -399,7 +399,7 @@ instance Binary MsgEphemerisGpsDepE where
     _msgEphemerisGpsDepE_toc <- get
     _msgEphemerisGpsDepE_iode <- getWord8
     _msgEphemerisGpsDepE_iodc <- getWord16le
-    return MsgEphemerisGpsDepE {..}
+    pure MsgEphemerisGpsDepE {..}
 
   put MsgEphemerisGpsDepE {..} = do
     put _msgEphemerisGpsDepE_common
@@ -517,7 +517,7 @@ instance Binary MsgEphemerisGps where
     _msgEphemerisGps_toc <- get
     _msgEphemerisGps_iode <- getWord8
     _msgEphemerisGps_iodc <- getWord16le
-    return MsgEphemerisGps {..}
+    pure MsgEphemerisGps {..}
 
   put MsgEphemerisGps {..} = do
     put _msgEphemerisGps_common
@@ -574,7 +574,7 @@ instance Binary MsgEphemerisSbasDepA where
     _msgEphemerisSbasDepA_acc <- replicateM 3 getFloat64le
     _msgEphemerisSbasDepA_a_gf0 <- getFloat64le
     _msgEphemerisSbasDepA_a_gf1 <- getFloat64le
-    return MsgEphemerisSbasDepA {..}
+    pure MsgEphemerisSbasDepA {..}
 
   put MsgEphemerisSbasDepA {..} = do
     put _msgEphemerisSbasDepA_common
@@ -620,7 +620,7 @@ instance Binary MsgEphemerisGloDepA where
     _msgEphemerisGloDepA_pos <- replicateM 3 getFloat64le
     _msgEphemerisGloDepA_vel <- replicateM 3 getFloat64le
     _msgEphemerisGloDepA_acc <- replicateM 3 getFloat64le
-    return MsgEphemerisGloDepA {..}
+    pure MsgEphemerisGloDepA {..}
 
   put MsgEphemerisGloDepA {..} = do
     put _msgEphemerisGloDepA_common
@@ -660,7 +660,7 @@ instance Binary MsgEphemerisSbas where
     _msgEphemerisSbas_acc <- replicateM 3 getFloat64le
     _msgEphemerisSbas_a_gf0 <- getFloat64le
     _msgEphemerisSbas_a_gf1 <- getFloat64le
-    return MsgEphemerisSbas {..}
+    pure MsgEphemerisSbas {..}
 
   put MsgEphemerisSbas {..} = do
     put _msgEphemerisSbas_common
@@ -706,7 +706,7 @@ instance Binary MsgEphemerisGloDepB where
     _msgEphemerisGloDepB_pos <- replicateM 3 getFloat64le
     _msgEphemerisGloDepB_vel <- replicateM 3 getFloat64le
     _msgEphemerisGloDepB_acc <- replicateM 3 getFloat64le
-    return MsgEphemerisGloDepB {..}
+    pure MsgEphemerisGloDepB {..}
 
   put MsgEphemerisGloDepB {..} = do
     put _msgEphemerisGloDepB_common
@@ -758,7 +758,7 @@ instance Binary MsgEphemerisGloDepC where
     _msgEphemerisGloDepC_vel <- replicateM 3 getFloat64le
     _msgEphemerisGloDepC_acc <- replicateM 3 getFloat64le
     _msgEphemerisGloDepC_fcn <- getWord8
-    return MsgEphemerisGloDepC {..}
+    pure MsgEphemerisGloDepC {..}
 
   put MsgEphemerisGloDepC {..} = do
     put _msgEphemerisGloDepC_common
@@ -815,7 +815,7 @@ instance Binary MsgEphemerisGlo where
     _msgEphemerisGlo_acc <- replicateM 3 getFloat64le
     _msgEphemerisGlo_fcn <- getWord8
     _msgEphemerisGlo_iod <- getWord8
-    return MsgEphemerisGlo {..}
+    pure MsgEphemerisGlo {..}
 
   put MsgEphemerisGlo {..} = do
     put _msgEphemerisGlo_common
@@ -937,7 +937,7 @@ instance Binary MsgEphemerisDepD where
     _msgEphemerisDepD_iode <- getWord8
     _msgEphemerisDepD_iodc <- getWord16le
     _msgEphemerisDepD_reserved <- getWord32le
-    return MsgEphemerisDepD {..}
+    pure MsgEphemerisDepD {..}
 
   put MsgEphemerisDepD {..} = do
     putFloat64le _msgEphemerisDepD_tgd
@@ -1067,7 +1067,7 @@ instance Binary MsgEphemerisDepA where
     _msgEphemerisDepA_valid <- getWord8
     _msgEphemerisDepA_healthy <- getWord8
     _msgEphemerisDepA_prn <- getWord8
-    return MsgEphemerisDepA {..}
+    pure MsgEphemerisDepA {..}
 
   put MsgEphemerisDepA {..} = do
     putFloat64le _msgEphemerisDepA_tgd
@@ -1197,7 +1197,7 @@ instance Binary MsgEphemerisDepB where
     _msgEphemerisDepB_healthy <- getWord8
     _msgEphemerisDepB_prn <- getWord8
     _msgEphemerisDepB_iode <- getWord8
-    return MsgEphemerisDepB {..}
+    pure MsgEphemerisDepB {..}
 
   put MsgEphemerisDepB {..} = do
     putFloat64le _msgEphemerisDepB_tgd
@@ -1337,7 +1337,7 @@ instance Binary MsgEphemerisDepC where
     _msgEphemerisDepC_iode <- getWord8
     _msgEphemerisDepC_iodc <- getWord16le
     _msgEphemerisDepC_reserved <- getWord32le
-    return MsgEphemerisDepC {..}
+    pure MsgEphemerisDepC {..}
 
   put MsgEphemerisDepC {..} = do
     putFloat64le _msgEphemerisDepC_tgd
@@ -1389,7 +1389,7 @@ instance Binary ObservationHeaderDep where
   get = do
     _observationHeaderDep_t <- get
     _observationHeaderDep_n_obs <- getWord8
-    return ObservationHeaderDep {..}
+    pure ObservationHeaderDep {..}
 
   put ObservationHeaderDep {..} = do
     put _observationHeaderDep_t
@@ -1415,7 +1415,7 @@ instance Binary CarrierPhaseDepA where
   get = do
     _carrierPhaseDepA_i <- fromIntegral <$> getWord32le
     _carrierPhaseDepA_f <- getWord8
-    return CarrierPhaseDepA {..}
+    pure CarrierPhaseDepA {..}
 
   put CarrierPhaseDepA {..} = do
     putWord32le $ fromIntegral _carrierPhaseDepA_i
@@ -1449,7 +1449,7 @@ instance Binary PackedObsContentDepA where
     _packedObsContentDepA_cn0 <- getWord8
     _packedObsContentDepA_lock <- getWord16le
     _packedObsContentDepA_prn <- getWord8
-    return PackedObsContentDepA {..}
+    pure PackedObsContentDepA {..}
 
   put PackedObsContentDepA {..} = do
     putWord32le _packedObsContentDepA_P
@@ -1487,7 +1487,7 @@ instance Binary PackedObsContentDepB where
     _packedObsContentDepB_cn0 <- getWord8
     _packedObsContentDepB_lock <- getWord16le
     _packedObsContentDepB_sid <- get
-    return PackedObsContentDepB {..}
+    pure PackedObsContentDepB {..}
 
   put PackedObsContentDepB {..} = do
     putWord32le _packedObsContentDepB_P
@@ -1526,7 +1526,7 @@ instance Binary PackedObsContentDepC where
     _packedObsContentDepC_cn0 <- getWord8
     _packedObsContentDepC_lock <- getWord16le
     _packedObsContentDepC_sid <- get
-    return PackedObsContentDepC {..}
+    pure PackedObsContentDepC {..}
 
   put PackedObsContentDepC {..} = do
     putWord32le _packedObsContentDepC_P
@@ -1555,7 +1555,7 @@ instance Binary MsgObsDepA where
   get = do
     _msgObsDepA_header <- get
     _msgObsDepA_obs <- whileM (not <$> isEmpty) get
-    return MsgObsDepA {..}
+    pure MsgObsDepA {..}
 
   put MsgObsDepA {..} = do
     put _msgObsDepA_header
@@ -1585,7 +1585,7 @@ instance Binary MsgObsDepB where
   get = do
     _msgObsDepB_header <- get
     _msgObsDepB_obs <- whileM (not <$> isEmpty) get
-    return MsgObsDepB {..}
+    pure MsgObsDepB {..}
 
   put MsgObsDepB {..} = do
     put _msgObsDepB_header
@@ -1617,7 +1617,7 @@ instance Binary MsgObsDepC where
   get = do
     _msgObsDepC_header <- get
     _msgObsDepC_obs <- whileM (not <$> isEmpty) get
-    return MsgObsDepC {..}
+    pure MsgObsDepC {..}
 
   put MsgObsDepC {..} = do
     put _msgObsDepC_header
@@ -1659,7 +1659,7 @@ instance Binary MsgIono where
     _msgIono_b1 <- getFloat64le
     _msgIono_b2 <- getFloat64le
     _msgIono_b3 <- getFloat64le
-    return MsgIono {..}
+    pure MsgIono {..}
 
   put MsgIono {..} = do
     put _msgIono_t_nmct
@@ -1693,7 +1693,7 @@ instance Binary MsgSvConfigurationGps where
   get = do
     _msgSvConfigurationGps_t_nmct <- get
     _msgSvConfigurationGps_l2c_mask <- getWord32le
-    return MsgSvConfigurationGps {..}
+    pure MsgSvConfigurationGps {..}
 
   put MsgSvConfigurationGps {..} = do
     put _msgSvConfigurationGps_t_nmct
@@ -1730,7 +1730,7 @@ instance Binary MsgGroupDelayDepA where
     _msgGroupDelayDepA_tgd <- fromIntegral <$> getWord16le
     _msgGroupDelayDepA_isc_l1ca <- fromIntegral <$> getWord16le
     _msgGroupDelayDepA_isc_l2c <- fromIntegral <$> getWord16le
-    return MsgGroupDelayDepA {..}
+    pure MsgGroupDelayDepA {..}
 
   put MsgGroupDelayDepA {..} = do
     put _msgGroupDelayDepA_t_op
@@ -1771,7 +1771,7 @@ instance Binary MsgGroupDelay where
     _msgGroupDelay_tgd <- fromIntegral <$> getWord16le
     _msgGroupDelay_isc_l1ca <- fromIntegral <$> getWord16le
     _msgGroupDelay_isc_l2c <- fromIntegral <$> getWord16le
-    return MsgGroupDelay {..}
+    pure MsgGroupDelay {..}
 
   put MsgGroupDelay {..} = do
     put _msgGroupDelay_t_op
@@ -1817,7 +1817,7 @@ instance Binary AlmanacCommonContent where
     _almanacCommonContent_fit_interval <- getWord32le
     _almanacCommonContent_valid <- getWord8
     _almanacCommonContent_health_bits <- getWord8
-    return AlmanacCommonContent {..}
+    pure AlmanacCommonContent {..}
 
   put AlmanacCommonContent {..} = do
     put _almanacCommonContent_sid
@@ -1874,7 +1874,7 @@ instance Binary MsgAlmanacGps where
     _msgAlmanacGps_inc <- getFloat64le
     _msgAlmanacGps_af0 <- getFloat64le
     _msgAlmanacGps_af1 <- getFloat64le
-    return MsgAlmanacGps {..}
+    pure MsgAlmanacGps {..}
 
   put MsgAlmanacGps {..} = do
     put _msgAlmanacGps_common
@@ -1931,7 +1931,7 @@ instance Binary MsgAlmanacGlo where
     _msgAlmanacGlo_t_dot <- getFloat64le
     _msgAlmanacGlo_epsilon <- getFloat64le
     _msgAlmanacGlo_omega <- getFloat64le
-    return MsgAlmanacGlo {..}
+    pure MsgAlmanacGlo {..}
 
   put MsgAlmanacGlo {..} = do
     put _msgAlmanacGlo_common

@@ -75,16 +75,16 @@ data (((m.identifier|to_data))) = (((m.identifier|to_data)))
 instance Binary (((m.identifier|to_data))) where
 ((*- if not m.fields *))
   get =
-    return (((m.identifier|to_data)))
+    pure (((m.identifier|to_data)))
 
   put (((m.identifier|to_data))) =
-    return ()
+    pure ()
 ((*- else *))
   get = do
 ((*- for f in m.fields *))
     ((("_"+(m.identifier|to_global)+"_"+(f.identifier)))) <- (((f|to_get)))
 ((*- endfor *))
-    return (((m.identifier|to_data))) {..}
+    pure (((m.identifier|to_data))) {..}
 
   put (((m.identifier|to_data))) {..} = do
 ((*- for f in m.fields *))

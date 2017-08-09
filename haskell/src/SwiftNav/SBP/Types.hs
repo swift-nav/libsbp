@@ -81,7 +81,7 @@ instance Binary Msg where
     _msgSBPLen     <- getWord8
     _msgSBPPayload <- fmap Bytes $ getByteString $ fromIntegral _msgSBPLen
     _msgSBPCrc     <- getWord16le
-    return Msg {..}
+    pure Msg {..}
 
   put Msg {..} = do
     putWord16le   _msgSBPType

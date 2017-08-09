@@ -57,7 +57,7 @@ instance Binary MsgStartup where
     _msgStartup_cause <- getWord8
     _msgStartup_startup_type <- getWord8
     _msgStartup_reserved <- getWord16le
-    return MsgStartup {..}
+    pure MsgStartup {..}
 
   put MsgStartup {..} = do
     putWord8 _msgStartup_cause
@@ -93,7 +93,7 @@ instance Binary MsgDgnssStatus where
     _msgDgnssStatus_latency <- getWord16le
     _msgDgnssStatus_num_signals <- getWord8
     _msgDgnssStatus_source <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgDgnssStatus {..}
+    pure MsgDgnssStatus {..}
 
   put MsgDgnssStatus {..} = do
     putWord8 _msgDgnssStatus_flags
@@ -125,7 +125,7 @@ data MsgHeartbeat = MsgHeartbeat
 instance Binary MsgHeartbeat where
   get = do
     _msgHeartbeat_flags <- getWord32le
-    return MsgHeartbeat {..}
+    pure MsgHeartbeat {..}
 
   put MsgHeartbeat {..} = do
     putWord32le _msgHeartbeat_flags

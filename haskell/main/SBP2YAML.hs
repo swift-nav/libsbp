@@ -12,7 +12,6 @@
 -- to stdout.
 
 import BasicPrelude                      hiding (map)
-import Control.Monad.Trans.Resource
 import Data.Conduit
 import Data.Conduit.Binary
 import Data.Conduit.List
@@ -23,8 +22,8 @@ import System.IO
 
 main :: IO ()
 main =
-  runResourceT $
-    sourceHandle stdin                   =$=
-    conduitDecode                        =$=
-    map (encode :: SBPMsg -> ByteString) $$
-    sinkHandle stdout
+  runConduitRes $
+    sourceHandle stdin
+      =$= conduitDecode
+      =$= map (encode :: SBPMsg -> ByteString)
+      $$  sinkHandle stdout

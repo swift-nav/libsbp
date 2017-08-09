@@ -50,10 +50,10 @@ data MsgBootloaderHandshakeReq = MsgBootloaderHandshakeReq
 
 instance Binary MsgBootloaderHandshakeReq where
   get =
-    return MsgBootloaderHandshakeReq
+    pure MsgBootloaderHandshakeReq
 
   put MsgBootloaderHandshakeReq =
-    return ()
+    pure ()
 $(makeSBP 'msgBootloaderHandshakeReq ''MsgBootloaderHandshakeReq)
 $(makeJSON "_msgBootloaderHandshakeReq_" ''MsgBootloaderHandshakeReq)
 $(makeLenses ''MsgBootloaderHandshakeReq)
@@ -78,7 +78,7 @@ instance Binary MsgBootloaderHandshakeResp where
   get = do
     _msgBootloaderHandshakeResp_flags <- getWord32le
     _msgBootloaderHandshakeResp_version <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgBootloaderHandshakeResp {..}
+    pure MsgBootloaderHandshakeResp {..}
 
   put MsgBootloaderHandshakeResp {..} = do
     putWord32le _msgBootloaderHandshakeResp_flags
@@ -102,7 +102,7 @@ data MsgBootloaderJumpToApp = MsgBootloaderJumpToApp
 instance Binary MsgBootloaderJumpToApp where
   get = do
     _msgBootloaderJumpToApp_jump <- getWord8
-    return MsgBootloaderJumpToApp {..}
+    pure MsgBootloaderJumpToApp {..}
 
   put MsgBootloaderJumpToApp {..} = do
     putWord8 _msgBootloaderJumpToApp_jump
@@ -126,10 +126,10 @@ data MsgNapDeviceDnaReq = MsgNapDeviceDnaReq
 
 instance Binary MsgNapDeviceDnaReq where
   get =
-    return MsgNapDeviceDnaReq
+    pure MsgNapDeviceDnaReq
 
   put MsgNapDeviceDnaReq =
-    return ()
+    pure ()
 $(makeSBP 'msgNapDeviceDnaReq ''MsgNapDeviceDnaReq)
 $(makeJSON "_msgNapDeviceDnaReq_" ''MsgNapDeviceDnaReq)
 $(makeLenses ''MsgNapDeviceDnaReq)
@@ -153,7 +153,7 @@ data MsgNapDeviceDnaResp = MsgNapDeviceDnaResp
 instance Binary MsgNapDeviceDnaResp where
   get = do
     _msgNapDeviceDnaResp_dna <- replicateM 8 getWord8
-    return MsgNapDeviceDnaResp {..}
+    pure MsgNapDeviceDnaResp {..}
 
   put MsgNapDeviceDnaResp {..} = do
     mapM_ putWord8 _msgNapDeviceDnaResp_dna
@@ -176,7 +176,7 @@ data MsgBootloaderHandshakeDepA = MsgBootloaderHandshakeDepA
 instance Binary MsgBootloaderHandshakeDepA where
   get = do
     _msgBootloaderHandshakeDepA_handshake <- whileM (not <$> isEmpty) getWord8
-    return MsgBootloaderHandshakeDepA {..}
+    pure MsgBootloaderHandshakeDepA {..}
 
   put MsgBootloaderHandshakeDepA {..} = do
     mapM_ putWord8 _msgBootloaderHandshakeDepA_handshake

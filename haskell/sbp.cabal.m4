@@ -73,7 +73,6 @@ executable sbp2json
                      , bytestring
                      , conduit
                      , conduit-extra
-                     , resourcet
                      , sbp
   default-language:    Haskell2010
 
@@ -87,7 +86,6 @@ executable json2sbp
                      , binary-conduit
                      , conduit
                      , conduit-extra
-                     , resourcet
                      , sbp
   default-language:    Haskell2010
 
@@ -101,7 +99,6 @@ executable sbp2yaml
                      , bytestring
                      , conduit
                      , conduit-extra
-                     , resourcet
                      , sbp
                      , yaml
   default-language:    Haskell2010

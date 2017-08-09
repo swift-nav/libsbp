@@ -51,10 +51,10 @@ data MsgSettingsSave = MsgSettingsSave
 
 instance Binary MsgSettingsSave where
   get =
-    return MsgSettingsSave
+    pure MsgSettingsSave
 
   put MsgSettingsSave =
-    return ()
+    pure ()
 $(makeSBP 'msgSettingsSave ''MsgSettingsSave)
 $(makeJSON "_msgSettingsSave_" ''MsgSettingsSave)
 $(makeLenses ''MsgSettingsSave)
@@ -75,7 +75,7 @@ data MsgSettingsWrite = MsgSettingsWrite
 instance Binary MsgSettingsWrite where
   get = do
     _msgSettingsWrite_setting <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgSettingsWrite {..}
+    pure MsgSettingsWrite {..}
 
   put MsgSettingsWrite {..} = do
     putByteString $ encodeUtf8 _msgSettingsWrite_setting
@@ -100,7 +100,7 @@ data MsgSettingsReadReq = MsgSettingsReadReq
 instance Binary MsgSettingsReadReq where
   get = do
     _msgSettingsReadReq_setting <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgSettingsReadReq {..}
+    pure MsgSettingsReadReq {..}
 
   put MsgSettingsReadReq {..} = do
     putByteString $ encodeUtf8 _msgSettingsReadReq_setting
@@ -124,7 +124,7 @@ data MsgSettingsReadResp = MsgSettingsReadResp
 instance Binary MsgSettingsReadResp where
   get = do
     _msgSettingsReadResp_setting <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgSettingsReadResp {..}
+    pure MsgSettingsReadResp {..}
 
   put MsgSettingsReadResp {..} = do
     putByteString $ encodeUtf8 _msgSettingsReadResp_setting
@@ -151,7 +151,7 @@ data MsgSettingsReadByIndexReq = MsgSettingsReadByIndexReq
 instance Binary MsgSettingsReadByIndexReq where
   get = do
     _msgSettingsReadByIndexReq_index <- getWord16le
-    return MsgSettingsReadByIndexReq {..}
+    pure MsgSettingsReadByIndexReq {..}
 
   put MsgSettingsReadByIndexReq {..} = do
     putWord16le _msgSettingsReadByIndexReq_index
@@ -181,7 +181,7 @@ instance Binary MsgSettingsReadByIndexResp where
   get = do
     _msgSettingsReadByIndexResp_index <- getWord16le
     _msgSettingsReadByIndexResp_setting <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgSettingsReadByIndexResp {..}
+    pure MsgSettingsReadByIndexResp {..}
 
   put MsgSettingsReadByIndexResp {..} = do
     putWord16le _msgSettingsReadByIndexResp_index
@@ -202,10 +202,10 @@ data MsgSettingsReadByIndexDone = MsgSettingsReadByIndexDone
 
 instance Binary MsgSettingsReadByIndexDone where
   get =
-    return MsgSettingsReadByIndexDone
+    pure MsgSettingsReadByIndexDone
 
   put MsgSettingsReadByIndexDone =
-    return ()
+    pure ()
 $(makeSBP 'msgSettingsReadByIndexDone ''MsgSettingsReadByIndexDone)
 $(makeJSON "_msgSettingsReadByIndexDone_" ''MsgSettingsReadByIndexDone)
 $(makeLenses ''MsgSettingsReadByIndexDone)
@@ -227,7 +227,7 @@ data MsgSettingsRegister = MsgSettingsRegister
 instance Binary MsgSettingsRegister where
   get = do
     _msgSettingsRegister_setting <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgSettingsRegister {..}
+    pure MsgSettingsRegister {..}
 
   put MsgSettingsRegister {..} = do
     putByteString $ encodeUtf8 _msgSettingsRegister_setting

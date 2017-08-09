@@ -69,7 +69,7 @@ instance Binary MsgFileioReadReq where
     _msgFileioReadReq_offset <- getWord32le
     _msgFileioReadReq_chunk_size <- getWord8
     _msgFileioReadReq_filename <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgFileioReadReq {..}
+    pure MsgFileioReadReq {..}
 
   put MsgFileioReadReq {..} = do
     putWord32le _msgFileioReadReq_sequence
@@ -101,7 +101,7 @@ instance Binary MsgFileioReadResp where
   get = do
     _msgFileioReadResp_sequence <- getWord32le
     _msgFileioReadResp_contents <- whileM (not <$> isEmpty) getWord8
-    return MsgFileioReadResp {..}
+    pure MsgFileioReadResp {..}
 
   put MsgFileioReadResp {..} = do
     putWord32le _msgFileioReadResp_sequence
@@ -138,7 +138,7 @@ instance Binary MsgFileioReadDirReq where
     _msgFileioReadDirReq_sequence <- getWord32le
     _msgFileioReadDirReq_offset <- getWord32le
     _msgFileioReadDirReq_dirname <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgFileioReadDirReq {..}
+    pure MsgFileioReadDirReq {..}
 
   put MsgFileioReadDirReq {..} = do
     putWord32le _msgFileioReadDirReq_sequence
@@ -170,7 +170,7 @@ instance Binary MsgFileioReadDirResp where
   get = do
     _msgFileioReadDirResp_sequence <- getWord32le
     _msgFileioReadDirResp_contents <- whileM (not <$> isEmpty) getWord8
-    return MsgFileioReadDirResp {..}
+    pure MsgFileioReadDirResp {..}
 
   put MsgFileioReadDirResp {..} = do
     putWord32le _msgFileioReadDirResp_sequence
@@ -197,7 +197,7 @@ data MsgFileioRemove = MsgFileioRemove
 instance Binary MsgFileioRemove where
   get = do
     _msgFileioRemove_filename <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    return MsgFileioRemove {..}
+    pure MsgFileioRemove {..}
 
   put MsgFileioRemove {..} = do
     putByteString $ encodeUtf8 _msgFileioRemove_filename
@@ -235,7 +235,7 @@ instance Binary MsgFileioWriteReq where
     _msgFileioWriteReq_offset <- getWord32le
     _msgFileioWriteReq_filename <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
     _msgFileioWriteReq_data <- whileM (not <$> isEmpty) getWord8
-    return MsgFileioWriteReq {..}
+    pure MsgFileioWriteReq {..}
 
   put MsgFileioWriteReq {..} = do
     putWord32le _msgFileioWriteReq_sequence
@@ -264,7 +264,7 @@ data MsgFileioWriteResp = MsgFileioWriteResp
 instance Binary MsgFileioWriteResp where
   get = do
     _msgFileioWriteResp_sequence <- getWord32le
-    return MsgFileioWriteResp {..}
+    pure MsgFileioWriteResp {..}
 
   put MsgFileioWriteResp {..} = do
     putWord32le _msgFileioWriteResp_sequence

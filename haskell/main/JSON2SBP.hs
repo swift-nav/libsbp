@@ -13,7 +13,6 @@
 -- stdout.
 
 import BasicPrelude                      hiding (lines, mapMaybe)
-import Control.Monad.Trans.Resource
 import Data.Aeson
 import Data.Conduit
 import Data.Conduit.Binary
@@ -31,14 +30,15 @@ instance FromJSON SBPMsgData where
   parseJSON _ = mzero
 
 -- | Decode a SBPMsg from JSON.
+--
 decodeSBPMsg :: ByteString -> Maybe SBPMsg
 decodeSBPMsg v = decodeStrict v <|> sbpMsgData <$> decodeStrict v
 
 main :: IO ()
 main =
-  runResourceT $
-    sourceHandle stdin    =$=
-    lines                 =$=
-    mapMaybe decodeSBPMsg =$=
-    conduitEncode         $$
-    sinkHandle stdout
+  runConduitRes $
+    sourceHandle stdin
+      =$= lines
+      =$= mapMaybe decodeSBPMsg
+      =$= conduitEncode
+      $$  sinkHandle stdout
