@@ -23,7 +23,7 @@ import System.IO
 
 main :: IO ()
 main =
-  runResourceT $ runConduit $
+  runResourceT $
     sourceHandle stdin
       =$= conduitDecode
       =$= map (encode :: SBPMsg -> ByteString)

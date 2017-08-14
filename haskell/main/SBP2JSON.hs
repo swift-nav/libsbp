@@ -29,7 +29,7 @@ encodeLine v = toStrict $ encode v <> "\n"
 
 main :: IO ()
 main =
-  runResourceT $ runConduit $
+  runResourceT $
     sourceHandle stdin
       =$= conduitDecode
       =$= map encodeLine

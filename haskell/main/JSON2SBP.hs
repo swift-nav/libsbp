@@ -37,7 +37,7 @@ decodeSBPMsg v = decodeStrict v <|> sbpMsgData <$> decodeStrict v
 
 main :: IO ()
 main =
-  runResourceT $ runConduit $
+  runResourceT $
     sourceHandle stdin
       =$= lines
       =$= mapMaybe decodeSBPMsg
