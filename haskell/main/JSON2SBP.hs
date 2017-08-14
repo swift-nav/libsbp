@@ -13,6 +13,7 @@
 -- stdout.
 
 import BasicPrelude                      hiding (lines, mapMaybe)
+import Control.Monad.Trans.Resource
 import Data.Aeson
 import Data.Conduit
 import Data.Conduit.Binary
@@ -36,7 +37,7 @@ decodeSBPMsg v = decodeStrict v <|> sbpMsgData <$> decodeStrict v
 
 main :: IO ()
 main =
-  runConduitRes $
+  runResourceT $ runConduit $
     sourceHandle stdin
       =$= lines
       =$= mapMaybe decodeSBPMsg
