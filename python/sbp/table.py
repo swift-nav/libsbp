@@ -37,26 +37,16 @@ from . import sbas as sbas
 
 import warnings
 
-_SBP_TABLE = dict(acq.msg_classes.items()
-                  + boot.msg_classes.items()
-                  + file_io.msg_classes.items()
-                  + flash.msg_classes.items()
-                  + log.msg_classes.items()
-                  + nav.msg_classes.items()
-                  + obs.msg_classes.items()
-                  + piksi.msg_classes.items()
-                  + settings.msg_classes.items()
-                  + sys.msg_classes.items()
-                  + trac.msg_classes.items()
-                  + user.msg_classes.items()
-                  + imu.msg_classes.items()
-                  + mag.msg_classes.items()
-                  + ext_events.msg_classes.items()
-                  + ndb.msg_classes.items()
-                  + vehicle.msg_classes.items()
-                  + orientation.msg_classes.items()
-                  + sbas.msg_classes.items()
-                  )
+def _merge_dicts(dicts):
+    res = dicts[0].copy()
+    for d in dicts[1:]:
+        res.update(d)
+    return res
+
+msg_cats = (acq, boot, file_io, flash, log, nav, obs, piksi, settings, sys, trac,
+     user, imu, ext_events, ndb, mag, vehicle, orientation, sbas)
+
+_SBP_TABLE = _merge_dicts([ c.msg_classes for c in msg_cats ])
 
 class InvalidSBPMessageType(NotImplementedError):
   """
