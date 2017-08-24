@@ -8,29 +8,31 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+
 class NullLogger(object):
-  """
-  NullLogger
+    """
+    NullLogger
 
-  The :class:`NullLogger` does not log records.
-  """
-  def __call__(self, msg, **metadata):
-    pass
+    The :class:`NullLogger` does not log records.
+    """
 
-  def __enter__(self):
-    return self
+    def __call__(self, msg, **metadata):
+        pass
 
-  def flush(self):
-    pass
+    def __enter__(self):
+        return self
 
-  def read(self, s=None):
-    pass
+    def flush(self):
+        pass
 
-  def write(self, s=None):
-    pass
+    def read(self, s=None):
+        pass
 
-  def close(self):
-    pass
+    def write(self, s=None):
+        pass
 
-  def __exit__(self, *args):
-    pass
+    def close(self):
+        pass
+
+    def __exit__(self, *args):
+        pass

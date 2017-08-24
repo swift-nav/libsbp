@@ -10,64 +10,65 @@
 
 from .base_driver import BaseDriver
 
+
 class CdcDriver(BaseDriver):
-  """
-  CdcDriver
-  The :class:`CdcDriver` class wraps IO sources of SBP messages and provides
-  context management.  It is intended for the devices that use the USB Gadget
-  CDC ACM drivers and is preferred over PySerial for these devices.
-
-  Parameters
-  ----------
-  handle : port
-    Stream of bytes to read from and write to.
-  """
-
-  def read(self, size):
     """
-    Read wrapper.
+    CdcDriver
+    The :class:`CdcDriver` class wraps IO sources of SBP messages and provides
+    context management.  It is intended for the devices that use the USB Gadget
+    CDC ACM drivers and is preferred over PySerial for these devices.
 
     Parameters
     ----------
-    size : int
-      Number of bytes to read.
+    handle : port
+      Stream of bytes to read from and write to.
     """
-    try:
-      return_val = self.handle.read(size)
-      if return_val == '':
-        print
-        print "Piksi disconnected"
-        print
-        raise IOError
-      return return_val
-    except OSError:
-      print
-      print "Piksi disconnected"
-      print
-      raise IOError
 
-  def write(self, s):
-    """
-    Write wrapper.
+    def read(self, size):
+        """
+        Read wrapper.
 
-    Parameters
-    ----------
-    s : bytes
-      Bytes to write
-    """
-    try:
-      return self.handle.write(s)
-    except OSError:
-      print
-      print "Piksi disconnected"
-      print
-      raise IOError
+        Parameters
+        ----------
+        size : int
+          Number of bytes to read.
+        """
+        try:
+            return_val = self.handle.read(size)
+            if return_val == '':
+                print
+                print "Piksi disconnected"
+                print
+                raise IOError
+            return return_val
+        except OSError:
+            print
+            print "Piksi disconnected"
+            print
+            raise IOError
 
-  def close(self):
-    """
-    Close wrapper.
-    """
-    try:
-      self.handle.close()
-    except OSError, IOError:
-      pass
+    def write(self, s):
+        """
+        Write wrapper.
+
+        Parameters
+        ----------
+        s : bytes
+          Bytes to write
+        """
+        try:
+            return self.handle.write(s)
+        except OSError:
+            print
+            print "Piksi disconnected"
+            print
+            raise IOError
+
+    def close(self):
+        """
+        Close wrapper.
+        """
+        try:
+            self.handle.close()
+        except OSError, IOError:
+            pass

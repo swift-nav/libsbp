@@ -23,34 +23,36 @@ import twitter
 
 twit = None
 
+
 def main():
 
-  import argparse
-  parser = argparse.ArgumentParser(description="Swift Navigation Tweetxample.")
-  parser.add_argument("TOKEN")
-  parser.add_argument("TOKEN_KEY")
-  parser.add_argument("CON_SEC")
-  parser.add_argument("CON_SEC_KEY")
-  parser.add_argument("-p", "--port",
-                      default=['/dev/ttyUSB0'], nargs=1,
-                      help="specify the serial port to use.")
-  args = parser.parse_args()
+    import argparse
+    parser = argparse.ArgumentParser(
+        description="Swift Navigation Tweetxample.")
+    parser.add_argument("TOKEN")
+    parser.add_argument("TOKEN_KEY")
+    parser.add_argument("CON_SEC")
+    parser.add_argument("CON_SEC_KEY")
+    parser.add_argument("-p", "--port",
+                        default=['/dev/ttyUSB0'], nargs=1,
+                        help="specify the serial port to use.")
+    args = parser.parse_args()
 
-  my_auth = twitter.OAuth(args.TOKEN, args.TOKEN_KEY,
-                          args.CON_SEC, args.CON_SEC_KEY)
-  twit = twitter.Twitter(auth=my_auth)
+    my_auth = twitter.OAuth(args.TOKEN, args.TOKEN_KEY,
+                            args.CON_SEC, args.CON_SEC_KEY)
+    twit = twitter.Twitter(auth=my_auth)
 
-  # Open a connection to Piksi using the default baud rate (1Mbaud)
-  with PySerialDriver(args.port[0], baud=1000000) as driver:
-    # Create a handler to connect our Piksi driver to our callbacks
-    with Handler(driver.read, driver.write, verbose=True) as handler:
-      try:
-        for msg, metadata in handler.filter(SBP_MSG_TWEET):
-          if twit is not None:
-            twit.statuses.update(msg)
-      except KeyboardInterrupt:
-        pass
+    # Open a connection to Piksi using the default baud rate (1Mbaud)
+    with PySerialDriver(args.port[0], baud=1000000) as driver:
+        # Create a handler to connect our Piksi driver to our callbacks
+        with Handler(driver.read, driver.write, verbose=True) as handler:
+            try:
+                for msg, metadata in handler.filter(SBP_MSG_TWEET):
+                    if twit is not None:
+                        twit.statuses.update(msg)
+            except KeyboardInterrupt:
+                pass
+
 
 if __name__ == "__main__":
-  main()
-
+    main()

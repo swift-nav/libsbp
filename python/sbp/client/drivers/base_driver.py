@@ -8,59 +8,61 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+
 class BaseDriver(object):
-  """
-  BaseDriver
-
-  The :class:`BaseDriver` class wraps IO sources of SBP messages and provides
-  context management.
-
-  Parameters
-  ----------
-  handle : port
-    Stream of bytes to read from and write to.
-  """
-  def __init__(self, handle):
-    self.handle = handle
-
-  def __enter__(self):
-    self.flush()
-    return self
-
-  def __exit__(self, *args):
-    self.flush()
-    self.close()
-
-  def read(self, size):
     """
-    Read wrapper.
+    BaseDriver
+
+    The :class:`BaseDriver` class wraps IO sources of SBP messages and provides
+    context management.
 
     Parameters
     ----------
-    size : int
-      Number of bytes to read.
+    handle : port
+      Stream of bytes to read from and write to.
     """
-    return self.handle.read(size)
 
-  def write(self, s):
-    """
-    Write wrapper.
+    def __init__(self, handle):
+        self.handle = handle
 
-    Parameters
-    ----------
-    s : bytes
-      Bytes to write
-    """
-    return self.handle.write(s)
+    def __enter__(self):
+        self.flush()
+        return self
 
-  def flush(self):
-    """
-    Flush wrapper.
-    """
-    self.handle.flush()
+    def __exit__(self, *args):
+        self.flush()
+        self.close()
 
-  def close(self):
-    """
-    Close wrapper.
-    """
-    self.handle.close()
+    def read(self, size):
+        """
+        Read wrapper.
+
+        Parameters
+        ----------
+        size : int
+          Number of bytes to read.
+        """
+        return self.handle.read(size)
+
+    def write(self, s):
+        """
+        Write wrapper.
+
+        Parameters
+        ----------
+        s : bytes
+          Bytes to write
+        """
+        return self.handle.write(s)
+
+    def flush(self):
+        """
+        Flush wrapper.
+        """
+        self.handle.flush()
+
+    def close(self):
+        """
+        Close wrapper.
+        """
+        self.handle.close()

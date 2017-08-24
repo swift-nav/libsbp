@@ -16,48 +16,48 @@ import logging
 import threading
 import time
 
+
 class RotatingFileLogger(JSONLogger):
-  """RotatingFileLogger
+    """RotatingFileLogger
 
-  The :class:`RotatingFileLogger` JSON logs SBP messages to a rotating
-  file handler that's turned over at a specified time interval
-  (defaults to 30 minutes). Intended to be a very low-overhead,
-  cross-platform rolling logger for field testing.
+    The :class:`RotatingFileLogger` JSON logs SBP messages to a rotating
+    file handler that's turned over at a specified time interval
+    (defaults to 30 minutes). Intended to be a very low-overhead,
+    cross-platform rolling logger for field testing.
 
-  Parameters
-  ----------
-  filename : string
-    Path to file to write SBP messages to.
-  when : str
-    Specifies a type of interval
-  interval : int
-    Specifies length of interval
-  backupCount : int
-    Number of backups to keep around
-  tags : dict
-    Tags to add to SBP message envelope
-  dispatcher: dict
-    SBP dispatch table
+    Parameters
+    ----------
+    filename : string
+      Path to file to write SBP messages to.
+    when : str
+      Specifies a type of interval
+    interval : int
+      Specifies length of interval
+    backupCount : int
+      Number of backups to keep around
+    tags : dict
+      Tags to add to SBP message envelope
+    dispatcher: dict
+      SBP dispatch table
 
-  """
+    """
 
-  def __init__(self, filename, when='M', interval=30, backupCount=3, **kwargs):
-    super(RotatingFileLogger, self).__init__(None, **kwargs)
-    self.handler = TimedRotatingFileHandler(filename, when, interval,
-                                            backupCount)
-    self.logger = logging.getLogger("Rotating Log")
-    self.logger.setLevel(logging.INFO)
-    self.logger.addHandler(self.handler)
+    def __init__(self, filename, when='M', interval=30, backupCount=3, **kwargs):
+        super(RotatingFileLogger, self).__init__(None, **kwargs)
+        self.handler = TimedRotatingFileHandler(filename, when, interval,
+                                                backupCount)
+        self.logger = logging.getLogger("Rotating Log")
+        self.logger.setLevel(logging.INFO)
+        self.logger.addHandler(self.handler)
 
-  def __call__(self, msg, **metadata):
-    self.call(msg, **metadata)
+    def __call__(self, msg, **metadata):
+        self.call(msg, **metadata)
 
-  def flush(self):
-    self.handler.flush()
+    def flush(self):
+        self.handler.flush()
 
-  def close(self):
-    self.handler.close()
+    def close(self):
+        self.handler.close()
 
-  def call(self, msg, **metadata):
-    self.logger.info(self.dump(msg, **metadata))
-
+    def call(self, msg, **metadata):
+        self.logger.info(self.dump(msg, **metadata))

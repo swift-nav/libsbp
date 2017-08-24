@@ -20,23 +20,25 @@ from sbp.client.loggers.json_logger import JSONLogger
 from sbp.navigation import SBP_MSG_BASELINE_NED, MsgBaselineNED
 import argparse
 
-def main():
-  parser = argparse.ArgumentParser(description="Swift Navigation SBP Example.")
-  parser.add_argument("-p", "--port",
-                      default=['/dev/ttyUSB0'], nargs=1,
-                      help="specify the serial port to use.")
-  args = parser.parse_args()
 
-  # Open a connection to Piksi using the default baud rate (1Mbaud)
-  with PySerialDriver(args.port[0], baud=1000000) as driver:
-    with Handler(Framer(driver.read, None, verbose=True)) as source:
-      try:
-        for msg, metadata in source.filter(SBP_MSG_BASELINE_NED):
-          # Print out the N, E, D coordinates of the baseline
-          print "%.4f,%.4f,%.4f" % (msg.n * 1e-3, msg.e * 1e-3, msg.d * 1e-3)
-      except KeyboardInterrupt:
-        pass
+def main():
+    parser = argparse.ArgumentParser(
+        description="Swift Navigation SBP Example.")
+    parser.add_argument("-p", "--port",
+                        default=['/dev/ttyUSB0'], nargs=1,
+                        help="specify the serial port to use.")
+    args = parser.parse_args()
+
+    # Open a connection to Piksi using the default baud rate (1Mbaud)
+    with PySerialDriver(args.port[0], baud=1000000) as driver:
+        with Handler(Framer(driver.read, None, verbose=True)) as source:
+            try:
+                for msg, metadata in source.filter(SBP_MSG_BASELINE_NED):
+                    # Print out the N, E, D coordinates of the baseline
+                    print "%.4f,%.4f,%.4f" % (msg.n * 1e-3, msg.e * 1e-3, msg.d * 1e-3)
+            except KeyboardInterrupt:
+                pass
+
 
 if __name__ == "__main__":
-  main()
-
+    main()

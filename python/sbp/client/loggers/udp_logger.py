@@ -13,31 +13,33 @@ import socket
 
 
 class UdpLogger(BaseLogger):
-  """
-  UdpLogger
+    """
+    UdpLogger
 
-  The :class:`UdpLogger` logs SBP messages over UDP.
+    The :class:`UdpLogger` logs SBP messages over UDP.
 
-  Parameters
-  ----------
-  address : string
-    IP Address to send UDP packets to.
-  port : int
-    IP Port to send UDP packets to.
-  """
-  def __init__(self, address, port):
-    self.handle = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    self.address = address
-    self.port = port
+    Parameters
+    ----------
+    address : string
+      IP Address to send UDP packets to.
+    port : int
+      IP Port to send UDP packets to.
+    """
 
-  def __call__(self, msg, **metadata):
-    self.call(msg, **metadata)
+    def __init__(self, address, port):
+        self.handle = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.address = address
+        self.port = port
 
-  def fmt_msg(self, msg, **metadata):
-    return msg.pack()
+    def __call__(self, msg, **metadata):
+        self.call(msg, **metadata)
 
-  def flush(self):
-    pass
+    def fmt_msg(self, msg, **metadata):
+        return msg.pack()
 
-  def call(self, msg, **metadata):
-    self.handle.sendto(self.fmt_msg(msg, **metadata), (self.address, self.port))
+    def flush(self):
+        pass
+
+    def call(self, msg, **metadata):
+        self.handle.sendto(self.fmt_msg(msg, **metadata),
+                           (self.address, self.port))
