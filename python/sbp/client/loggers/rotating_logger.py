@@ -42,7 +42,12 @@ class RotatingFileLogger(JSONLogger):
 
     """
 
-    def __init__(self, filename, when='M', interval=30, backupCount=3, **kwargs):
+    def __init__(self,
+                 filename,
+                 when='M',
+                 interval=30,
+                 backupCount=3,
+                 **kwargs):
         super(RotatingFileLogger, self).__init__(None, **kwargs)
         self.handler = TimedRotatingFileHandler(filename, when, interval,
                                                 backupCount)

@@ -41,5 +41,5 @@ class UdpLogger(BaseLogger):
         pass
 
     def call(self, msg, **metadata):
-        self.handle.sendto(self.fmt_msg(msg, **metadata),
-                           (self.address, self.port))
+        self.handle.sendto(
+            self.fmt_msg(msg, **metadata), (self.address, self.port))

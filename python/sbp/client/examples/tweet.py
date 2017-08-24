@@ -7,7 +7,6 @@
 # THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-
 """
 the :mod:`sbp.client.examples.tweet` module contains a basic example of
 reading SBP messages from a serial port, decoding TWEET messages and pushing
@@ -33,13 +32,16 @@ def main():
     parser.add_argument("TOKEN_KEY")
     parser.add_argument("CON_SEC")
     parser.add_argument("CON_SEC_KEY")
-    parser.add_argument("-p", "--port",
-                        default=['/dev/ttyUSB0'], nargs=1,
-                        help="specify the serial port to use.")
+    parser.add_argument(
+        "-p",
+        "--port",
+        default=['/dev/ttyUSB0'],
+        nargs=1,
+        help="specify the serial port to use.")
     args = parser.parse_args()
 
-    my_auth = twitter.OAuth(args.TOKEN, args.TOKEN_KEY,
-                            args.CON_SEC, args.CON_SEC_KEY)
+    my_auth = twitter.OAuth(args.TOKEN, args.TOKEN_KEY, args.CON_SEC,
+                            args.CON_SEC_KEY)
     twit = twitter.Twitter(auth=my_auth)
 
     # Open a connection to Piksi using the default baud rate (1Mbaud)

@@ -7,7 +7,6 @@
 # THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-
 """TCP and HTTP networking client components.
 
 """
@@ -125,28 +124,32 @@ class HTTPDriver(BaseDriver):
 
     """
 
-    def __init__(self,
-                 device_uid=None,
-                 url="https://broker.staging.skylark.swiftnav.com",
-                 retries=DEFAULT_RETRIES,
-                 timeout=DEFAULT_TIMEOUT,):
-        self._retry = Retry(connect=DEFAULT_RETRIES[0],
-                            read=DEFAULT_RETRIES[1],
-                            redirect=MAX_REDIRECTS,
-                            status_forcelist=[500],
-                            backoff_factor=DEFAULT_BACKOFF_FACTOR)
+    def __init__(
+            self,
+            device_uid=None,
+            url="https://broker.staging.skylark.swiftnav.com",
+            retries=DEFAULT_RETRIES,
+            timeout=DEFAULT_TIMEOUT, ):
+        self._retry = Retry(
+            connect=DEFAULT_RETRIES[0],
+            read=DEFAULT_RETRIES[1],
+            redirect=MAX_REDIRECTS,
+            status_forcelist=[500],
+            backoff_factor=DEFAULT_BACKOFF_FACTOR)
         self.url = url
         self.read_session = requests.Session()
         self.read_session.mount("http://",
-                                HTTPAdapter(pool_connections=DEFAULT_POOLSIZE,
-                                            pool_maxsize=DEFAULT_POOLSIZE,
-                                            pool_block=DEFAULT_POOLBLOCK,
-                                            max_retries=self._retry))
+                                HTTPAdapter(
+                                    pool_connections=DEFAULT_POOLSIZE,
+                                    pool_maxsize=DEFAULT_POOLSIZE,
+                                    pool_block=DEFAULT_POOLBLOCK,
+                                    max_retries=self._retry))
         self.read_session.mount("https://",
-                                HTTPAdapter(pool_connections=DEFAULT_POOLSIZE,
-                                            pool_maxsize=DEFAULT_POOLSIZE,
-                                            pool_block=DEFAULT_POOLBLOCK,
-                                            max_retries=self._retry))
+                                HTTPAdapter(
+                                    pool_connections=DEFAULT_POOLSIZE,
+                                    pool_maxsize=DEFAULT_POOLSIZE,
+                                    pool_block=DEFAULT_POOLBLOCK,
+                                    max_retries=self._retry))
         self.write_session = None
         self.device_uid = device_uid
         self.timeout = timeout
@@ -193,23 +196,28 @@ class HTTPDriver(BaseDriver):
 
         """
         header_device_uid = device_uid or self.device_uid
-        headers = {'Device-Uid': header_device_uid,
-                   'Content-Type': BROKER_SBP_TYPE, 'Pragma': pragma}
+        headers = {
+            'Device-Uid': header_device_uid,
+            'Content-Type': BROKER_SBP_TYPE,
+            'Pragma': pragma
+        }
         if not pragma:
             del headers['Pragma']
         try:
             self.executor = ThreadPoolExecutor(max_workers=DEFAULT_POOLSIZE)
             self.write_session = FuturesSession(executor=self.executor)
             self.write_session.mount("http://",
-                                     HTTPAdapter(pool_connections=DEFAULT_POOLSIZE,
-                                                 pool_maxsize=DEFAULT_POOLSIZE,
-                                                 pool_block=DEFAULT_POOLBLOCK,
-                                                 max_retries=self._retry))
+                                     HTTPAdapter(
+                                         pool_connections=DEFAULT_POOLSIZE,
+                                         pool_maxsize=DEFAULT_POOLSIZE,
+                                         pool_block=DEFAULT_POOLBLOCK,
+                                         max_retries=self._retry))
             self.write_session.mount("https://",
-                                     HTTPAdapter(pool_connections=DEFAULT_POOLSIZE,
-                                                 pool_maxsize=DEFAULT_POOLSIZE,
-                                                 pool_block=DEFAULT_POOLBLOCK,
-                                                 max_retries=self._retry))
+                                     HTTPAdapter(
+                                         pool_connections=DEFAULT_POOLSIZE,
+                                         pool_maxsize=DEFAULT_POOLSIZE,
+                                         pool_block=DEFAULT_POOLBLOCK,
+                                         max_retries=self._retry))
             self.source = source.filter(whitelist)
             gen = (msg.pack() for msg, _ in self.source)
             self.write_session.put(self.url, data=gen, headers=headers)
@@ -272,15 +280,16 @@ class HTTPDriver(BaseDriver):
 
         """
         header_device_uid = device_uid or self.device_uid
-        headers = {'Device-Uid': header_device_uid,
-                   'Accept': BROKER_SBP_TYPE, 'Pragma': pragma}
+        headers = {
+            'Device-Uid': header_device_uid,
+            'Accept': BROKER_SBP_TYPE,
+            'Pragma': pragma
+        }
         if not pragma:
             del headers['Pragma']
         try:
-            self.read_response = self.read_session.get(self.url,
-                                                       stream=True,
-                                                       headers=headers,
-                                                       timeout=self.timeout)
+            self.read_response = self.read_session.get(
+                self.url, stream=True, headers=headers, timeout=self.timeout)
         except requests.exceptions.ConnectionError as err:
             msg = "Client connection error to %s with [GET] headers %s: msg=%s" \
                   % (self.url, headers, err.message)

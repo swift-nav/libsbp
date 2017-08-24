@@ -7,7 +7,6 @@
 # THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-
 """
 the :mod:`sbp.client.examples.udp` module contains an example of reading SBP
 messages from a serial port and sending them to a UDP socket.
@@ -36,18 +35,30 @@ def get_args():
     import argparse
     parser = argparse.ArgumentParser(
         description="Swift Navigation SBP Example.")
-    parser.add_argument("-s", "--serial-port",
-                        default=[DEFAULT_SERIAL_PORT], nargs=1,
-                        help="specify the serial port to use.")
-    parser.add_argument("-b", "--baud",
-                        default=[DEFAULT_SERIAL_BAUD], nargs=1,
-                        help="specify the baud rate to use.")
-    parser.add_argument("-a", "--address",
-                        default=[DEFAULT_UDP_ADDRESS], nargs=1,
-                        help="specify the serial port to use.")
-    parser.add_argument("-p", "--udp-port",
-                        default=[DEFAULT_UDP_PORT], nargs=1,
-                        help="specify the baud rate to use.")
+    parser.add_argument(
+        "-s",
+        "--serial-port",
+        default=[DEFAULT_SERIAL_PORT],
+        nargs=1,
+        help="specify the serial port to use.")
+    parser.add_argument(
+        "-b",
+        "--baud",
+        default=[DEFAULT_SERIAL_BAUD],
+        nargs=1,
+        help="specify the baud rate to use.")
+    parser.add_argument(
+        "-a",
+        "--address",
+        default=[DEFAULT_UDP_ADDRESS],
+        nargs=1,
+        help="specify the serial port to use.")
+    parser.add_argument(
+        "-p",
+        "--udp-port",
+        default=[DEFAULT_UDP_PORT],
+        nargs=1,
+        help="specify the baud rate to use.")
     return parser.parse_args()
 
 

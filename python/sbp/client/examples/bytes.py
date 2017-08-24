@@ -26,15 +26,24 @@ def get_args():
     import argparse
     parser = argparse.ArgumentParser(
         description="Swift Navigation SBP Bytes Example.")
-    parser.add_argument("-s", "--serial-port",
-                        default=[DEFAULT_SERIAL_PORT], nargs=1,
-                        help="specify the serial port to use.")
-    parser.add_argument("-b", "--baud",
-                        default=[DEFAULT_SERIAL_BAUD], nargs=1,
-                        help="specify the baud rate to use.")
-    parser.add_argument("-f", "--filename",
-                        default=[DEFAULT_LOG_FILENAME], nargs=1,
-                        help="specify the filename to write to.")
+    parser.add_argument(
+        "-s",
+        "--serial-port",
+        default=[DEFAULT_SERIAL_PORT],
+        nargs=1,
+        help="specify the serial port to use.")
+    parser.add_argument(
+        "-b",
+        "--baud",
+        default=[DEFAULT_SERIAL_BAUD],
+        nargs=1,
+        help="specify the baud rate to use.")
+    parser.add_argument(
+        "-f",
+        "--filename",
+        default=[DEFAULT_LOG_FILENAME],
+        nargs=1,
+        help="specify the filename to write to.")
     return parser.parse_args()
 
 

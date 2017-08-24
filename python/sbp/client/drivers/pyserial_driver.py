@@ -94,7 +94,8 @@ class PySerialDriver(BaseDriver):
         """
         try:
             return self.handle.write(s)
-        except (OSError, serial.SerialException, serial.writeTimeoutError) as e:
+        except (OSError, serial.SerialException,
+                serial.writeTimeoutError) as e:
             if e == serial.writeTimeoutError:
                 print "sbp pyserial_driver: writeTimeoutError"
                 return 0

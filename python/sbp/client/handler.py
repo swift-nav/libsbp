@@ -7,7 +7,6 @@
 # THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-
 """
 The :mod:`sbp.client.handler` module contains classes related to
 SBP message handling.
@@ -88,6 +87,7 @@ class Handler(object):
                 i(msg, **metadata)
             else:
                 raise Handler._DeadCallbackException
+
         self.add_callback(feediter, msg_type)
         return iterator
 
@@ -220,6 +220,7 @@ class Handler(object):
         def cb(sbp_msg, **metadata):
             payload['data'] = sbp_msg
             event.set()
+
         self.add_callback(cb, msg_type)
         event.wait(timeout)
         self.remove_callback(cb, msg_type)
@@ -244,6 +245,7 @@ class Handler(object):
         def cb(msg, **metadata):
             callback(msg, **metadata)
             event.set()
+
         self.add_callback(cb, msg_type)
         event.wait(timeout)
         self.remove_callback(cb, msg_type)
