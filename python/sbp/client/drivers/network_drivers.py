@@ -17,6 +17,7 @@ from requests.adapters import DEFAULT_POOLBLOCK, DEFAULT_POOLSIZE, HTTPAdapter
 from requests.packages.urllib3.util import Retry
 from requests_futures.sessions import FuturesSession
 import requests
+from functools import partial
 import socket
 import threading
 import time
@@ -38,15 +39,24 @@ class TCPDriver(BaseDriver):
 
     """
 
-    def __init__(self, host, port):
-        self.handle = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.handle.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        try:
-            self.handle.connect((host, port))
-        except socket.error, msg:
-            pass
+    def __init__(self, host, port, timeout=5):
+        self._address = (host, port)
+        print(host, port)
+        self._create_connection = partial(socket.create_connection,
+                                          (host, port),
+                                          timeout=timeout
+                                          )
+        self._connect()
         super(TCPDriver, self).__init__(self.handle)
         self._write_lock = threading.Lock()
+
+    def _connect(self):
+        while True:
+            try:
+                self.handle = self._create_connection()
+                return
+            except socket.timeout:
+                pass
 
     def read(self, size):
         """
@@ -62,6 +72,8 @@ class TCPDriver(BaseDriver):
             if not data:
                 raise IOError
             return data
+        except socket.timeout:
+            self._connect()
         except socket.error, msg:
             raise IOError
 
@@ -80,6 +92,8 @@ class TCPDriver(BaseDriver):
         try:
             self._write_lock.acquire()
             self.handle.sendall(s)
+        except socket.timeout:
+            self._connect()
         except socket.error, msg:
             raise IOError
         finally:
