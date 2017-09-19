@@ -1,7 +1,7 @@
 construct==2.8.12
 futures>=2.2.0
 httpretty
-pyftdi
+pyftdi==0.13.4
 pylibftdi
 pyserial
 requests>=2.8.1
