@@ -93,13 +93,16 @@ var sbpImports = {
   ext_events: require('./ext_events.js'),
   file_io: require('./file_io.js'),
   flash: require('./flash.js'),
+  gnss: require('./gnss.js'),
+  imu: require('./imu.js'),
   logging: require('./logging.js'),
   navigation: require('./navigation.js'),
   observation: require('./observation.js'),
   piksi: require('./piksi.js'),
   settings: require('./settings.js'),
   system: require('./system.js'),
-  tracking: require('./tracking.js')
+  tracking: require('./tracking.js'),
+  user: require('./user.js')
 };
 
 var sbpIdTable = Object.keys(sbpImports).reduce(function (prev, key) {

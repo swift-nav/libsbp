@@ -17,6 +17,7 @@ to parse individual binary messages.packets.
 
 ### Requirements
 ```
+pip install tox
 brew install nodejs
 npm install -g mocha
 ```
