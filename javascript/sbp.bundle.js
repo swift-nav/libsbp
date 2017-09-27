@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 40);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -296,8 +296,8 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.UINT32 = __webpack_require__(44)
-exports.UINT64 = __webpack_require__(45)
+exports.UINT32 = __webpack_require__(46)
+exports.UINT64 = __webpack_require__(47)
 
 /***/ }),
 /* 2 */
@@ -314,7 +314,7 @@ exports.UINT64 = __webpack_require__(45)
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-var assert = __webpack_require__(41);
+var assert = __webpack_require__(43);
 var Int64 = __webpack_require__(3);
 var UInt64 = __webpack_require__(1).UINT64;
 
@@ -772,7 +772,7 @@ Int64.prototype = {
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-var Parser = __webpack_require__(16).Parser;
+var Parser = __webpack_require__(12).Parser;
 
 /**
  * Add `uint64` to Parser prototype.
@@ -853,8 +853,8 @@ module.exports = g;
 
 
 
-var base64 = __webpack_require__(42)
-var ieee754 = __webpack_require__(46)
+var base64 = __webpack_require__(44)
+var ieee754 = __webpack_require__(48)
 var isArray = __webpack_require__(17)
 
 exports.Buffer = Buffer
@@ -2690,7 +2690,7 @@ util.inherits = __webpack_require__(8);
 /*</replacement>*/
 
 var Readable = __webpack_require__(19);
-var Writable = __webpack_require__(13);
+var Writable = __webpack_require__(14);
 
 util.inherits(Duplex, Readable);
 
@@ -3151,6 +3151,585 @@ function nextTick(fn, arg1, arg2, arg3) {
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+//========================================================================================
+// Globals
+//========================================================================================
+
+var Context = __webpack_require__(45).Context;
+
+var PRIMITIVE_TYPES = {
+    'UInt8'    : 1,
+    'UInt16LE' : 2,
+    'UInt16BE' : 2,
+    'UInt32LE' : 4,
+    'UInt32BE' : 4,
+    'Int8'     : 1,
+    'Int16LE'  : 2,
+    'Int16BE'  : 2,
+    'Int32LE'  : 4,
+    'Int32BE'  : 4,
+    'FloatLE'  : 4,
+    'FloatBE'  : 4,
+    'DoubleLE' : 8,
+    'DoubleBE' : 8
+};
+
+var SPECIAL_TYPES = {
+    'String'   : null,
+    'Buffer'   : null,
+    'Array'    : null,
+    'Skip'     : null,
+    'Choice'   : null,
+    'Nest'     : null,
+    'Bit'      : null
+};
+
+var BIT_RANGE = [];
+(function() {
+    var i;
+    for (i = 1; i <= 32; i++) {
+        BIT_RANGE.push(i);
+    }
+})();
+
+// Converts Parser's method names to internal type names
+var NAME_MAP = {};
+Object.keys(PRIMITIVE_TYPES)
+    .concat(Object.keys(SPECIAL_TYPES))
+    .forEach(function(type) {
+        NAME_MAP[type.toLowerCase()] = type;
+    });
+
+//========================================================================================
+// class Parser
+//========================================================================================
+
+//----------------------------------------------------------------------------------------
+// constructor
+//----------------------------------------------------------------------------------------
+
+var Parser = function() {
+    this.varName = '';
+    this.type = '';
+    this.options = {};
+    this.next = null;
+    this.head = null;
+    this.compiled = null;
+    this.endian = 'be';
+    this.constructorFn = null;
+};
+
+//----------------------------------------------------------------------------------------
+// public methods
+//----------------------------------------------------------------------------------------
+
+Parser.start = function() {
+    return new Parser();
+};
+
+Object.keys(PRIMITIVE_TYPES)
+    .forEach(function(type) {
+        Parser.prototype[type.toLowerCase()] = function(varName, options) {
+            return this.setNextParser(type.toLowerCase(), varName, options);
+        };
+
+        var typeWithoutEndian = type.replace(/BE|LE/, '').toLowerCase();
+        if (!(typeWithoutEndian in Parser.prototype)) {
+            Parser.prototype[typeWithoutEndian] = function(varName, options) {
+                return this[typeWithoutEndian + this.endian](varName, options);
+            };
+        }
+    });
+
+BIT_RANGE.forEach(function(i) {
+    Parser.prototype['bit' + i.toString()] = function(varName, options) {
+        if (!options) {
+            options = {};
+        }
+        options.length = i;
+        return this.setNextParser('bit', varName, options);
+    };
+});
+
+Parser.prototype.skip = function(length, options) {
+    if (options && options.assert) {
+        throw new Error('assert option on skip is not allowed.');
+    }
+
+    return this.setNextParser('skip', '', {length: length});
+};
+
+Parser.prototype.string = function(varName, options) {
+    if (!options.zeroTerminated && !options.length && !options.greedy) {
+        throw new Error('Neither length, zeroTerminated, nor greedy is defined for string.');
+    }
+    if ((options.zeroTerminated || options.length) && options.greedy) {
+        throw new Error('greedy is mutually exclusive with length and zeroTerminated for string.');
+    }
+    if (options.stripNull && !(options.length || options.greedy)) {
+        throw new Error('Length or greedy must be defined if stripNull is defined.');
+    }
+    options.encoding = options.encoding || 'utf8';
+
+    return this.setNextParser('string', varName, options);
+};
+
+Parser.prototype.buffer = function(varName, options) {
+    if (!options.length && !options.readUntil) {
+        throw new Error('Length nor readUntil is defined in buffer parser');
+    }
+
+    return this.setNextParser('buffer', varName, options);
+};
+
+Parser.prototype.array = function(varName, options) {
+    if (!options.readUntil && !options.length) {
+        throw new Error('Length option of array is not defined.');
+    }
+    if (!options.type) {
+        throw new Error('Type option of array is not defined.');
+    }
+    if (typeof options.type === 'string' && Object.keys(PRIMITIVE_TYPES).indexOf(NAME_MAP[options.type]) < 0) {
+        throw new Error('Specified primitive type "' + options.type + '" is not supported.');
+    }
+
+    return this.setNextParser('array', varName, options);
+};
+
+Parser.prototype.choice = function(varName, options) {
+    if (!options.tag) {
+        throw new Error('Tag option of array is not defined.');
+    }
+    if (!options.choices) {
+        throw new Error('Choices option of array is not defined.');
+    }
+    Object.keys(options.choices).forEach(function(key) {
+        if (isNaN(parseInt(key, 10))) {
+            throw new Error('Key of choices must be a number.');
+        }
+        if (!options.choices[key]) {
+            throw new Error('Choice Case ' + key + ' of ' + varName + ' is not valid.');
+        }
+
+        if (typeof options.choices[key] === 'string' && Object.keys(PRIMITIVE_TYPES).indexOf(NAME_MAP[options.choices[key]]) < 0) {
+            throw new Error('Specified primitive type "' +  options.choices[key] + '" is not supported.');
+        }
+    });
+
+    return this.setNextParser('choice', varName, options);
+};
+
+Parser.prototype.nest = function(varName, options) {
+    if (!options.type) {
+        throw new Error('Type option of nest is not defined.');
+    }
+    if (!(options.type instanceof Parser)) {
+        throw new Error('Type option of nest must be a Parser object.');
+    }
+
+    return this.setNextParser('nest', varName, options);
+};
+
+Parser.prototype.endianess = function(endianess) {
+    switch (endianess.toLowerCase()) {
+    case 'little':
+        this.endian = 'le';
+        break;
+    case 'big':
+        this.endian = 'be';
+        break;
+    default:
+        throw new Error('Invalid endianess: ' + endianess);
+    }
+
+    return this;
+};
+
+Parser.prototype.create = function(constructorFn) {
+    if (!(constructorFn instanceof Function)) {
+        throw new Error('Constructor must be a Function object.');
+    }
+
+    this.constructorFn = constructorFn;
+
+    return this;
+};
+
+Parser.prototype.getCode = function() {
+    var ctx = new Context();
+
+    if (this.constructorFn) {
+        ctx.pushCode('var vars = new constructorFn();');
+    } else {
+        ctx.pushCode('var vars = {};');
+    }
+    ctx.pushCode('var offset = 0;');
+    ctx.pushCode('if (!Buffer.isBuffer(buffer)) {');
+    ctx.generateError('"argument buffer is not a Buffer object"');
+    ctx.pushCode('}');
+
+    this.generate(ctx);
+
+    ctx.pushCode('return vars;');
+
+    return ctx.code;
+};
+
+Parser.prototype.compile = function() {
+    this.compiled = new Function('buffer', 'callback', 'constructorFn', this.getCode());
+};
+
+Parser.prototype.sizeOf = function() {
+    var size = NaN;
+
+    if (Object.keys(PRIMITIVE_TYPES).indexOf(this.type) >= 0) {
+        size = PRIMITIVE_TYPES[this.type];
+
+    // if this is a fixed length string
+    } else if (this.type === 'String' && typeof this.options.length === 'number') {
+        size = this.options.length;
+
+    // if this is a fixed length array
+    } else if (this.type === 'Array' && typeof this.options.length === 'number') {
+        var elementSize = NaN;
+        if (typeof this.options.type === 'string'){
+            elementSize = PRIMITIVE_TYPES[NAME_MAP[this.options.type]];
+        } else if (this.options.type instanceof Parser) {
+            elementSize = this.options.type.sizeOf();
+        }
+        size = this.options.length * elementSize;
+
+    // if this a skip
+    } else if (this.type === 'Skip') {
+        size = this.options.length;
+
+    } else if (!this.type) {
+        size = 0;
+    }
+
+    if (this.next) {
+        size += this.next.sizeOf();
+    }
+
+    return size;
+};
+
+// Follow the parser chain till the root and start parsing from there
+Parser.prototype.parse = function(buffer, callback) {
+    if (!this.compiled) {
+        this.compile();
+    }
+
+    return this.compiled(buffer, callback, this.constructorFn);
+};
+
+//----------------------------------------------------------------------------------------
+// private methods
+//----------------------------------------------------------------------------------------
+
+Parser.prototype.setNextParser = function(type, varName, options) {
+    var parser = new Parser();
+
+    parser.type = NAME_MAP[type];
+    parser.varName = varName;
+    parser.options = options || parser.options;
+    parser.endian = this.endian;
+
+    if (this.head) {
+        this.head.next = parser;
+    } else {
+        this.next = parser;
+    }
+    this.head = parser;
+
+    return this;
+};
+
+// Call code generator for this parser
+Parser.prototype.generate = function(ctx) {
+    if (this.type) {
+        this['generate' + this.type](ctx);
+        this.generateAssert(ctx);
+    }
+
+    var varName = ctx.generateVariable(this.varName);
+    if (this.options.formatter) {
+        this.generateFormatter(ctx, varName, this.options.formatter);
+    }
+
+    return this.generateNext(ctx);
+};
+
+Parser.prototype.generateAssert = function(ctx) {
+    if (!this.options.assert) {
+        return;
+    }
+
+    var varName = ctx.generateVariable(this.varName);
+
+    switch (typeof this.options.assert) {
+        case 'function':
+            ctx.pushCode('if (!({0}).call(vars, {1})) {', this.options.assert, varName);
+        break;
+        case 'number':
+            ctx.pushCode('if ({0} !== {1}) {', this.options.assert, varName);
+        break;
+        case 'string':
+            ctx.pushCode('if ("{0}" !== {1}) {', this.options.assert, varName);
+        break;
+        default:
+            throw new Error('Assert option supports only strings, numbers and assert functions.');
+    }
+    ctx.generateError('"Assert error: {0} is " + {0}', varName);
+    ctx.pushCode('}');
+};
+
+// Recursively call code generators and append results
+Parser.prototype.generateNext = function(ctx) {
+    if (this.next) {
+        ctx = this.next.generate(ctx);
+    }
+
+    return ctx;
+};
+
+Object.keys(PRIMITIVE_TYPES).forEach(function(type) {
+    Parser.prototype['generate' + type] = function(ctx) {
+        ctx.pushCode('{0} = buffer.read{1}(offset);', ctx.generateVariable(this.varName), type);
+        ctx.pushCode('offset += {0};', PRIMITIVE_TYPES[type]);
+    };
+});
+
+Parser.prototype.generateBit = function(ctx) {
+    // TODO find better method to handle nested bit fields
+    var parser = JSON.parse(JSON.stringify(this));
+    parser.varName = ctx.generateVariable(parser.varName);
+    ctx.bitFields.push(parser);
+
+    if (!this.next || (this.next && ['Bit', 'Nest'].indexOf(this.next.type) < 0)) {
+        var sum = 0;
+        ctx.bitFields.forEach(function(parser) {
+            sum += parser.options.length;
+        });
+
+        var val = ctx.generateTmpVariable();
+
+        if (sum <= 8) {
+            ctx.pushCode('var {0} = buffer.readUInt8(offset);', val);
+            sum = 8;
+        } else if (sum <= 16) {
+            ctx.pushCode('var {0} = buffer.readUInt16BE(offset);', val);
+            sum = 16;
+        } else if (sum <= 24) {
+            var val1 = ctx.generateTmpVariable();
+            var val2 = ctx.generateTmpVariable();
+            ctx.pushCode('var {0} = buffer.readUInt16BE(offset);', val1);
+            ctx.pushCode('var {0} = buffer.readUInt8(offset + 2);', val2);
+            ctx.pushCode('var {2} = ({0} << 8) | {1};', val1, val2, val);
+            sum = 24;
+        } else if (sum <= 32) {
+            ctx.pushCode('var {0} = buffer.readUInt32BE(offset);', val);
+            sum = 32;
+        } else {
+            throw new Error('Currently, bit field sequence longer than 4-bytes is not supported.');
+        }
+        ctx.pushCode('offset += {0};', sum / 8);
+
+        var bitOffset = 0;
+        var isBigEndian = this.endian === 'be';
+        ctx.bitFields.forEach(function(parser) {
+            ctx.pushCode('{0} = {1} >> {2} & {3};',
+                parser.varName,
+                val,
+                isBigEndian ? sum - bitOffset - parser.options.length : bitOffset,
+                (1 << parser.options.length) - 1
+            );
+            bitOffset += parser.options.length;
+        });
+
+        ctx.bitFields = [];
+    }
+};
+
+Parser.prototype.generateSkip = function(ctx) {
+    var length = ctx.generateOption(this.options.length);
+    ctx.pushCode('offset += {0};', length);
+};
+
+Parser.prototype.generateString = function(ctx) {
+    var name = ctx.generateVariable(this.varName);
+    var start = ctx.generateTmpVariable();
+
+    if (this.options.length && this.options.zeroTerminated) {
+        ctx.pushCode('var {0} = offset;', start);
+        ctx.pushCode('while(buffer.readUInt8(offset++) !== 0 && offset - {0}  < {1});',
+            start,
+            this.options.length
+        );
+        ctx.pushCode('{0} = buffer.toString(\'{1}\', {2}, offset - {2} < {3} ? offset - 1 : offset);',
+            name,
+            this.options.encoding,
+            start,
+            this.options.length
+        );
+    } else if(this.options.length) {
+        ctx.pushCode('{0} = buffer.toString(\'{1}\', offset, offset + {2});',
+                            name,
+                            this.options.encoding,
+                            ctx.generateOption(this.options.length)
+                        );
+        ctx.pushCode('offset += {0};', ctx.generateOption(this.options.length));
+    } else if (this.options.zeroTerminated) {
+        ctx.pushCode('var {0} = offset;', start);
+        ctx.pushCode('while(buffer.readUInt8(offset++) !== 0);');
+        ctx.pushCode('{0} = buffer.toString(\'{1}\', {2}, offset - 1);',
+            name,
+            this.options.encoding,
+            start
+        );
+    } else if (this.options.greedy) {
+        ctx.pushCode('var {0} = offset;', start);
+        ctx.pushCode('while(buffer.length > offset++);');
+        ctx.pushCode('{0} = buffer.toString(\'{1}\', {2}, offset);',
+            name,
+            this.options.encoding,
+            start
+        );
+    }
+    if(this.options.stripNull) {
+        ctx.pushCode('{0} = {0}.replace(/\\x00+$/g, \'\')', name);
+    }
+};
+
+Parser.prototype.generateBuffer = function(ctx) {
+    if (this.options.readUntil === 'eof') {
+        ctx.pushCode('{0} = buffer.slice(offset, buffer.length - 1);',
+            ctx.generateVariable(this.varName)
+            );
+    } else {
+        ctx.pushCode('{0} = buffer.slice(offset, offset + {1});',
+            ctx.generateVariable(this.varName),
+            ctx.generateOption(this.options.length)
+            );
+        ctx.pushCode('offset += {0};', ctx.generateOption(this.options.length));
+    }
+
+    if (this.options.clone) {
+        var buf = ctx.generateTmpVariable();
+
+        ctx.pushCode('var {0} = new Buffer({1}.length);', buf, ctx.generateVariable(this.varName));
+        ctx.pushCode('{0}.copy({1});', ctx.generateVariable(this.varName), buf);
+        ctx.pushCode('{0} = {1}', ctx.generateVariable(this.varName), buf);
+    }
+};
+
+Parser.prototype.generateArray = function(ctx) {
+    var length = ctx.generateOption(this.options.length);
+    var type = this.options.type;
+    var counter = ctx.generateTmpVariable();
+    var lhs = ctx.generateVariable(this.varName);
+    var item = ctx.generateTmpVariable();
+    var key = this.options.key;
+    var isHash = typeof key === 'string';
+
+    if (isHash) {
+        ctx.pushCode('{0} = {};', lhs);
+    } else {
+        ctx.pushCode('{0} = [];', lhs);
+    }
+    if (typeof this.options.readUntil === 'function') {
+        ctx.pushCode('do {');
+    } else if (this.options.readUntil === 'eof') {
+        ctx.pushCode('for (var {0} = 0; offset < buffer.length; {0}++) {', counter);
+    } else {
+        ctx.pushCode('for (var {0} = 0; {0} < {1}; {0}++) {', counter, length);
+    }
+
+    if (typeof type === 'string') {
+        ctx.pushCode('var {0} = buffer.read{1}(offset);', item, NAME_MAP[type]);
+        ctx.pushCode('offset += {0};', PRIMITIVE_TYPES[NAME_MAP[type]]);
+    } else if (type instanceof Parser) {
+        ctx.pushCode('var {0} = {};', item);
+
+        ctx.pushScope(item);
+        type.generate(ctx);
+        ctx.popScope();
+    }
+
+    if (isHash) {
+        ctx.pushCode('{0}[{2}.{1}] = {2};', lhs, key, item);
+    } else {
+        ctx.pushCode('{0}.push({1});', lhs, item);
+    }
+
+    ctx.pushCode('}');
+
+    if (typeof this.options.readUntil === 'function') {
+        ctx.pushCode(' while (!({0}).call(this, {1}, buffer.slice(offset)));', this.options.readUntil, item);
+    }
+};
+
+Parser.prototype.generateChoiceCase = function(ctx, varName, type) {
+    if (typeof type === 'string') {
+        ctx.pushCode('{0} = buffer.read{1}(offset);', ctx.generateVariable(this.varName), NAME_MAP[type]);
+        ctx.pushCode('offset += {0};', PRIMITIVE_TYPES[NAME_MAP[type]]);
+    } else if (type instanceof Parser) {
+        ctx.pushPath(varName);
+        type.generate(ctx);
+        ctx.popPath();
+    }
+};
+
+Parser.prototype.generateChoice = function(ctx) {
+    var tag = ctx.generateOption(this.options.tag);
+
+    ctx.pushCode('{0} = {};', ctx.generateVariable(this.varName));
+    ctx.pushCode('switch({0}) {', tag);
+    Object.keys(this.options.choices).forEach(function(tag) {
+        var type = this.options.choices[tag];
+
+        ctx.pushCode('case {0}:', tag);
+        this.generateChoiceCase(ctx, this.varName, type);
+        ctx.pushCode('break;');
+    }, this);
+    ctx.pushCode('default:');
+    if (this.options.defaultChoice) {
+        this.generateChoiceCase(ctx, this.varName, this.options.defaultChoice);
+    } else {
+        ctx.generateError('"Met undefined tag value " + {0} + " at choice"', tag);
+    }
+    ctx.pushCode('}');
+};
+
+Parser.prototype.generateNest = function(ctx) {
+    var nestVar = ctx.generateVariable(this.varName);
+    ctx.pushCode('{0} = {};', nestVar);
+    ctx.pushPath(this.varName);
+    this.options.type.generate(ctx);
+    ctx.popPath();
+};
+
+Parser.prototype.generateFormatter = function(ctx, varName, formatter) {
+    if (typeof formatter === 'function') {
+        ctx.pushCode('{0} = ({1}).call(this, {0});', varName, formatter);
+    }
+};
+
+Parser.prototype.isInteger = function() {
+    return !!this.type.match(/U?Int[8|16|32][BE|LE]?|Bit\d+/);
+};
+
+//========================================================================================
+// Exports
+//========================================================================================
+
+exports.Parser = Parser;
+
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -3458,7 +4037,7 @@ function isUndefined(arg) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3534,7 +4113,7 @@ util.inherits = __webpack_require__(8);
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(55)
+  deprecate: __webpack_require__(57)
 };
 /*</replacement>*/
 
@@ -3543,7 +4122,7 @@ var Stream = __webpack_require__(22);
 /*</replacement>*/
 
 /*<replacement>*/
-var Buffer = __webpack_require__(15).Buffer;
+var Buffer = __webpack_require__(16).Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
@@ -4126,23 +4705,23 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(54).setImmediate, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(56).setImmediate, __webpack_require__(5)))
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(19);
 exports.Stream = exports;
 exports.Readable = exports;
-exports.Writable = __webpack_require__(13);
+exports.Writable = __webpack_require__(14);
 exports.Duplex = __webpack_require__(7);
 exports.Transform = __webpack_require__(20);
-exports.PassThrough = __webpack_require__(48);
+exports.PassThrough = __webpack_require__(50);
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint-disable node/no-deprecated-api */
@@ -4207,585 +4786,6 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   }
   return buffer.SlowBuffer(size)
 }
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-//========================================================================================
-// Globals
-//========================================================================================
-
-var Context = __webpack_require__(43).Context;
-
-var PRIMITIVE_TYPES = {
-    'UInt8'    : 1,
-    'UInt16LE' : 2,
-    'UInt16BE' : 2,
-    'UInt32LE' : 4,
-    'UInt32BE' : 4,
-    'Int8'     : 1,
-    'Int16LE'  : 2,
-    'Int16BE'  : 2,
-    'Int32LE'  : 4,
-    'Int32BE'  : 4,
-    'FloatLE'  : 4,
-    'FloatBE'  : 4,
-    'DoubleLE' : 8,
-    'DoubleBE' : 8
-};
-
-var SPECIAL_TYPES = {
-    'String'   : null,
-    'Buffer'   : null,
-    'Array'    : null,
-    'Skip'     : null,
-    'Choice'   : null,
-    'Nest'     : null,
-    'Bit'      : null
-};
-
-var BIT_RANGE = [];
-(function() {
-    var i;
-    for (i = 1; i <= 32; i++) {
-        BIT_RANGE.push(i);
-    }
-})();
-
-// Converts Parser's method names to internal type names
-var NAME_MAP = {};
-Object.keys(PRIMITIVE_TYPES)
-    .concat(Object.keys(SPECIAL_TYPES))
-    .forEach(function(type) {
-        NAME_MAP[type.toLowerCase()] = type;
-    });
-
-//========================================================================================
-// class Parser
-//========================================================================================
-
-//----------------------------------------------------------------------------------------
-// constructor
-//----------------------------------------------------------------------------------------
-
-var Parser = function() {
-    this.varName = '';
-    this.type = '';
-    this.options = {};
-    this.next = null;
-    this.head = null;
-    this.compiled = null;
-    this.endian = 'be';
-    this.constructorFn = null;
-};
-
-//----------------------------------------------------------------------------------------
-// public methods
-//----------------------------------------------------------------------------------------
-
-Parser.start = function() {
-    return new Parser();
-};
-
-Object.keys(PRIMITIVE_TYPES)
-    .forEach(function(type) {
-        Parser.prototype[type.toLowerCase()] = function(varName, options) {
-            return this.setNextParser(type.toLowerCase(), varName, options);
-        };
-
-        var typeWithoutEndian = type.replace(/BE|LE/, '').toLowerCase();
-        if (!(typeWithoutEndian in Parser.prototype)) {
-            Parser.prototype[typeWithoutEndian] = function(varName, options) {
-                return this[typeWithoutEndian + this.endian](varName, options);
-            };
-        }
-    });
-
-BIT_RANGE.forEach(function(i) {
-    Parser.prototype['bit' + i.toString()] = function(varName, options) {
-        if (!options) {
-            options = {};
-        }
-        options.length = i;
-        return this.setNextParser('bit', varName, options);
-    };
-});
-
-Parser.prototype.skip = function(length, options) {
-    if (options && options.assert) {
-        throw new Error('assert option on skip is not allowed.');
-    }
-
-    return this.setNextParser('skip', '', {length: length});
-};
-
-Parser.prototype.string = function(varName, options) {
-    if (!options.zeroTerminated && !options.length && !options.greedy) {
-        throw new Error('Neither length, zeroTerminated, nor greedy is defined for string.');
-    }
-    if ((options.zeroTerminated || options.length) && options.greedy) {
-        throw new Error('greedy is mutually exclusive with length and zeroTerminated for string.');
-    }
-    if (options.stripNull && !(options.length || options.greedy)) {
-        throw new Error('Length or greedy must be defined if stripNull is defined.');
-    }
-    options.encoding = options.encoding || 'utf8';
-
-    return this.setNextParser('string', varName, options);
-};
-
-Parser.prototype.buffer = function(varName, options) {
-    if (!options.length && !options.readUntil) {
-        throw new Error('Length nor readUntil is defined in buffer parser');
-    }
-
-    return this.setNextParser('buffer', varName, options);
-};
-
-Parser.prototype.array = function(varName, options) {
-    if (!options.readUntil && !options.length) {
-        throw new Error('Length option of array is not defined.');
-    }
-    if (!options.type) {
-        throw new Error('Type option of array is not defined.');
-    }
-    if (typeof options.type === 'string' && Object.keys(PRIMITIVE_TYPES).indexOf(NAME_MAP[options.type]) < 0) {
-        throw new Error('Specified primitive type "' + options.type + '" is not supported.');
-    }
-
-    return this.setNextParser('array', varName, options);
-};
-
-Parser.prototype.choice = function(varName, options) {
-    if (!options.tag) {
-        throw new Error('Tag option of array is not defined.');
-    }
-    if (!options.choices) {
-        throw new Error('Choices option of array is not defined.');
-    }
-    Object.keys(options.choices).forEach(function(key) {
-        if (isNaN(parseInt(key, 10))) {
-            throw new Error('Key of choices must be a number.');
-        }
-        if (!options.choices[key]) {
-            throw new Error('Choice Case ' + key + ' of ' + varName + ' is not valid.');
-        }
-
-        if (typeof options.choices[key] === 'string' && Object.keys(PRIMITIVE_TYPES).indexOf(NAME_MAP[options.choices[key]]) < 0) {
-            throw new Error('Specified primitive type "' +  options.choices[key] + '" is not supported.');
-        }
-    });
-
-    return this.setNextParser('choice', varName, options);
-};
-
-Parser.prototype.nest = function(varName, options) {
-    if (!options.type) {
-        throw new Error('Type option of nest is not defined.');
-    }
-    if (!(options.type instanceof Parser)) {
-        throw new Error('Type option of nest must be a Parser object.');
-    }
-
-    return this.setNextParser('nest', varName, options);
-};
-
-Parser.prototype.endianess = function(endianess) {
-    switch (endianess.toLowerCase()) {
-    case 'little':
-        this.endian = 'le';
-        break;
-    case 'big':
-        this.endian = 'be';
-        break;
-    default:
-        throw new Error('Invalid endianess: ' + endianess);
-    }
-
-    return this;
-};
-
-Parser.prototype.create = function(constructorFn) {
-    if (!(constructorFn instanceof Function)) {
-        throw new Error('Constructor must be a Function object.');
-    }
-
-    this.constructorFn = constructorFn;
-
-    return this;
-};
-
-Parser.prototype.getCode = function() {
-    var ctx = new Context();
-
-    if (this.constructorFn) {
-        ctx.pushCode('var vars = new constructorFn();');
-    } else {
-        ctx.pushCode('var vars = {};');
-    }
-    ctx.pushCode('var offset = 0;');
-    ctx.pushCode('if (!Buffer.isBuffer(buffer)) {');
-    ctx.generateError('"argument buffer is not a Buffer object"');
-    ctx.pushCode('}');
-
-    this.generate(ctx);
-
-    ctx.pushCode('return vars;');
-
-    return ctx.code;
-};
-
-Parser.prototype.compile = function() {
-    this.compiled = new Function('buffer', 'callback', 'constructorFn', this.getCode());
-};
-
-Parser.prototype.sizeOf = function() {
-    var size = NaN;
-
-    if (Object.keys(PRIMITIVE_TYPES).indexOf(this.type) >= 0) {
-        size = PRIMITIVE_TYPES[this.type];
-
-    // if this is a fixed length string
-    } else if (this.type === 'String' && typeof this.options.length === 'number') {
-        size = this.options.length;
-
-    // if this is a fixed length array
-    } else if (this.type === 'Array' && typeof this.options.length === 'number') {
-        var elementSize = NaN;
-        if (typeof this.options.type === 'string'){
-            elementSize = PRIMITIVE_TYPES[NAME_MAP[this.options.type]];
-        } else if (this.options.type instanceof Parser) {
-            elementSize = this.options.type.sizeOf();
-        }
-        size = this.options.length * elementSize;
-
-    // if this a skip
-    } else if (this.type === 'Skip') {
-        size = this.options.length;
-
-    } else if (!this.type) {
-        size = 0;
-    }
-
-    if (this.next) {
-        size += this.next.sizeOf();
-    }
-
-    return size;
-};
-
-// Follow the parser chain till the root and start parsing from there
-Parser.prototype.parse = function(buffer, callback) {
-    if (!this.compiled) {
-        this.compile();
-    }
-
-    return this.compiled(buffer, callback, this.constructorFn);
-};
-
-//----------------------------------------------------------------------------------------
-// private methods
-//----------------------------------------------------------------------------------------
-
-Parser.prototype.setNextParser = function(type, varName, options) {
-    var parser = new Parser();
-
-    parser.type = NAME_MAP[type];
-    parser.varName = varName;
-    parser.options = options || parser.options;
-    parser.endian = this.endian;
-
-    if (this.head) {
-        this.head.next = parser;
-    } else {
-        this.next = parser;
-    }
-    this.head = parser;
-
-    return this;
-};
-
-// Call code generator for this parser
-Parser.prototype.generate = function(ctx) {
-    if (this.type) {
-        this['generate' + this.type](ctx);
-        this.generateAssert(ctx);
-    }
-
-    var varName = ctx.generateVariable(this.varName);
-    if (this.options.formatter) {
-        this.generateFormatter(ctx, varName, this.options.formatter);
-    }
-
-    return this.generateNext(ctx);
-};
-
-Parser.prototype.generateAssert = function(ctx) {
-    if (!this.options.assert) {
-        return;
-    }
-
-    var varName = ctx.generateVariable(this.varName);
-
-    switch (typeof this.options.assert) {
-        case 'function':
-            ctx.pushCode('if (!({0}).call(vars, {1})) {', this.options.assert, varName);
-        break;
-        case 'number':
-            ctx.pushCode('if ({0} !== {1}) {', this.options.assert, varName);
-        break;
-        case 'string':
-            ctx.pushCode('if ("{0}" !== {1}) {', this.options.assert, varName);
-        break;
-        default:
-            throw new Error('Assert option supports only strings, numbers and assert functions.');
-    }
-    ctx.generateError('"Assert error: {0} is " + {0}', varName);
-    ctx.pushCode('}');
-};
-
-// Recursively call code generators and append results
-Parser.prototype.generateNext = function(ctx) {
-    if (this.next) {
-        ctx = this.next.generate(ctx);
-    }
-
-    return ctx;
-};
-
-Object.keys(PRIMITIVE_TYPES).forEach(function(type) {
-    Parser.prototype['generate' + type] = function(ctx) {
-        ctx.pushCode('{0} = buffer.read{1}(offset);', ctx.generateVariable(this.varName), type);
-        ctx.pushCode('offset += {0};', PRIMITIVE_TYPES[type]);
-    };
-});
-
-Parser.prototype.generateBit = function(ctx) {
-    // TODO find better method to handle nested bit fields
-    var parser = JSON.parse(JSON.stringify(this));
-    parser.varName = ctx.generateVariable(parser.varName);
-    ctx.bitFields.push(parser);
-
-    if (!this.next || (this.next && ['Bit', 'Nest'].indexOf(this.next.type) < 0)) {
-        var sum = 0;
-        ctx.bitFields.forEach(function(parser) {
-            sum += parser.options.length;
-        });
-
-        var val = ctx.generateTmpVariable();
-
-        if (sum <= 8) {
-            ctx.pushCode('var {0} = buffer.readUInt8(offset);', val);
-            sum = 8;
-        } else if (sum <= 16) {
-            ctx.pushCode('var {0} = buffer.readUInt16BE(offset);', val);
-            sum = 16;
-        } else if (sum <= 24) {
-            var val1 = ctx.generateTmpVariable();
-            var val2 = ctx.generateTmpVariable();
-            ctx.pushCode('var {0} = buffer.readUInt16BE(offset);', val1);
-            ctx.pushCode('var {0} = buffer.readUInt8(offset + 2);', val2);
-            ctx.pushCode('var {2} = ({0} << 8) | {1};', val1, val2, val);
-            sum = 24;
-        } else if (sum <= 32) {
-            ctx.pushCode('var {0} = buffer.readUInt32BE(offset);', val);
-            sum = 32;
-        } else {
-            throw new Error('Currently, bit field sequence longer than 4-bytes is not supported.');
-        }
-        ctx.pushCode('offset += {0};', sum / 8);
-
-        var bitOffset = 0;
-        var isBigEndian = this.endian === 'be';
-        ctx.bitFields.forEach(function(parser) {
-            ctx.pushCode('{0} = {1} >> {2} & {3};',
-                parser.varName,
-                val,
-                isBigEndian ? sum - bitOffset - parser.options.length : bitOffset,
-                (1 << parser.options.length) - 1
-            );
-            bitOffset += parser.options.length;
-        });
-
-        ctx.bitFields = [];
-    }
-};
-
-Parser.prototype.generateSkip = function(ctx) {
-    var length = ctx.generateOption(this.options.length);
-    ctx.pushCode('offset += {0};', length);
-};
-
-Parser.prototype.generateString = function(ctx) {
-    var name = ctx.generateVariable(this.varName);
-    var start = ctx.generateTmpVariable();
-
-    if (this.options.length && this.options.zeroTerminated) {
-        ctx.pushCode('var {0} = offset;', start);
-        ctx.pushCode('while(buffer.readUInt8(offset++) !== 0 && offset - {0}  < {1});',
-            start,
-            this.options.length
-        );
-        ctx.pushCode('{0} = buffer.toString(\'{1}\', {2}, offset - {2} < {3} ? offset - 1 : offset);',
-            name,
-            this.options.encoding,
-            start,
-            this.options.length
-        );
-    } else if(this.options.length) {
-        ctx.pushCode('{0} = buffer.toString(\'{1}\', offset, offset + {2});',
-                            name,
-                            this.options.encoding,
-                            ctx.generateOption(this.options.length)
-                        );
-        ctx.pushCode('offset += {0};', ctx.generateOption(this.options.length));
-    } else if (this.options.zeroTerminated) {
-        ctx.pushCode('var {0} = offset;', start);
-        ctx.pushCode('while(buffer.readUInt8(offset++) !== 0);');
-        ctx.pushCode('{0} = buffer.toString(\'{1}\', {2}, offset - 1);',
-            name,
-            this.options.encoding,
-            start
-        );
-    } else if (this.options.greedy) {
-        ctx.pushCode('var {0} = offset;', start);
-        ctx.pushCode('while(buffer.length > offset++);');
-        ctx.pushCode('{0} = buffer.toString(\'{1}\', {2}, offset);',
-            name,
-            this.options.encoding,
-            start
-        );
-    }
-    if(this.options.stripNull) {
-        ctx.pushCode('{0} = {0}.replace(/\\x00+$/g, \'\')', name);
-    }
-};
-
-Parser.prototype.generateBuffer = function(ctx) {
-    if (this.options.readUntil === 'eof') {
-        ctx.pushCode('{0} = buffer.slice(offset, buffer.length - 1);',
-            ctx.generateVariable(this.varName)
-            );
-    } else {
-        ctx.pushCode('{0} = buffer.slice(offset, offset + {1});',
-            ctx.generateVariable(this.varName),
-            ctx.generateOption(this.options.length)
-            );
-        ctx.pushCode('offset += {0};', ctx.generateOption(this.options.length));
-    }
-
-    if (this.options.clone) {
-        var buf = ctx.generateTmpVariable();
-
-        ctx.pushCode('var {0} = new Buffer({1}.length);', buf, ctx.generateVariable(this.varName));
-        ctx.pushCode('{0}.copy({1});', ctx.generateVariable(this.varName), buf);
-        ctx.pushCode('{0} = {1}', ctx.generateVariable(this.varName), buf);
-    }
-};
-
-Parser.prototype.generateArray = function(ctx) {
-    var length = ctx.generateOption(this.options.length);
-    var type = this.options.type;
-    var counter = ctx.generateTmpVariable();
-    var lhs = ctx.generateVariable(this.varName);
-    var item = ctx.generateTmpVariable();
-    var key = this.options.key;
-    var isHash = typeof key === 'string';
-
-    if (isHash) {
-        ctx.pushCode('{0} = {};', lhs);
-    } else {
-        ctx.pushCode('{0} = [];', lhs);
-    }
-    if (typeof this.options.readUntil === 'function') {
-        ctx.pushCode('do {');
-    } else if (this.options.readUntil === 'eof') {
-        ctx.pushCode('for (var {0} = 0; offset < buffer.length; {0}++) {', counter);
-    } else {
-        ctx.pushCode('for (var {0} = 0; {0} < {1}; {0}++) {', counter, length);
-    }
-
-    if (typeof type === 'string') {
-        ctx.pushCode('var {0} = buffer.read{1}(offset);', item, NAME_MAP[type]);
-        ctx.pushCode('offset += {0};', PRIMITIVE_TYPES[NAME_MAP[type]]);
-    } else if (type instanceof Parser) {
-        ctx.pushCode('var {0} = {};', item);
-
-        ctx.pushScope(item);
-        type.generate(ctx);
-        ctx.popScope();
-    }
-
-    if (isHash) {
-        ctx.pushCode('{0}[{2}.{1}] = {2};', lhs, key, item);
-    } else {
-        ctx.pushCode('{0}.push({1});', lhs, item);
-    }
-
-    ctx.pushCode('}');
-
-    if (typeof this.options.readUntil === 'function') {
-        ctx.pushCode(' while (!({0}).call(this, {1}, buffer.slice(offset)));', this.options.readUntil, item);
-    }
-};
-
-Parser.prototype.generateChoiceCase = function(ctx, varName, type) {
-    if (typeof type === 'string') {
-        ctx.pushCode('{0} = buffer.read{1}(offset);', ctx.generateVariable(this.varName), NAME_MAP[type]);
-        ctx.pushCode('offset += {0};', PRIMITIVE_TYPES[NAME_MAP[type]]);
-    } else if (type instanceof Parser) {
-        ctx.pushPath(varName);
-        type.generate(ctx);
-        ctx.popPath();
-    }
-};
-
-Parser.prototype.generateChoice = function(ctx) {
-    var tag = ctx.generateOption(this.options.tag);
-
-    ctx.pushCode('{0} = {};', ctx.generateVariable(this.varName));
-    ctx.pushCode('switch({0}) {', tag);
-    Object.keys(this.options.choices).forEach(function(tag) {
-        var type = this.options.choices[tag];
-
-        ctx.pushCode('case {0}:', tag);
-        this.generateChoiceCase(ctx, this.varName, type);
-        ctx.pushCode('break;');
-    }, this);
-    ctx.pushCode('default:');
-    if (this.options.defaultChoice) {
-        this.generateChoiceCase(ctx, this.varName, this.options.defaultChoice);
-    } else {
-        ctx.generateError('"Met undefined tag value " + {0} + " at choice"', tag);
-    }
-    ctx.pushCode('}');
-};
-
-Parser.prototype.generateNest = function(ctx) {
-    var nestVar = ctx.generateVariable(this.varName);
-    ctx.pushCode('{0} = {};', nestVar);
-    ctx.pushPath(this.varName);
-    this.options.type.generate(ctx);
-    ctx.popPath();
-};
-
-Parser.prototype.generateFormatter = function(ctx, varName, formatter) {
-    if (typeof formatter === 'function') {
-        ctx.pushCode('{0} = ({1}).call(this, {0});', varName, formatter);
-    }
-};
-
-Parser.prototype.isInteger = function() {
-    return !!this.type.match(/U?Int[8|16|32][BE|LE]?|Bit\d+/);
-};
-
-//========================================================================================
-// Exports
-//========================================================================================
-
-exports.Parser = Parser;
 
 
 /***/ }),
@@ -5072,7 +5072,7 @@ var Duplex;
 Readable.ReadableState = ReadableState;
 
 /*<replacement>*/
-var EE = __webpack_require__(12).EventEmitter;
+var EE = __webpack_require__(13).EventEmitter;
 
 var EElistenerCount = function (emitter, type) {
   return emitter.listeners(type).length;
@@ -5086,7 +5086,7 @@ var Stream = __webpack_require__(22);
 // TODO(bmeurer): Change this back to const once hole checks are
 // properly optimized away early in Ignition+TurboFan.
 /*<replacement>*/
-var Buffer = __webpack_require__(15).Buffer;
+var Buffer = __webpack_require__(16).Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
@@ -5102,7 +5102,7 @@ util.inherits = __webpack_require__(8);
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(59);
+var debugUtil = __webpack_require__(61);
 var debug = void 0;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -5111,7 +5111,7 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(49);
+var BufferList = __webpack_require__(51);
 var destroyImpl = __webpack_require__(21);
 var StringDecoder;
 
@@ -6342,7 +6342,7 @@ module.exports = {
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(12).EventEmitter;
+module.exports = __webpack_require__(13).EventEmitter;
 
 
 /***/ }),
@@ -8872,6 +8872,100 @@ module.exports = {
  */
 
 /**********************
+ * Automatically generated from piksi/yaml/swiftnav/sbp/ndb.yaml with generate.py.
+ * Don't edit this by hand!
+ **********************
+ * Package description:
+ *
+ * Messages for logging NDB events.
+***********************/
+
+var SBP = __webpack_require__(2);
+var Parser = __webpack_require__(4);
+var Int64 = __webpack_require__(3);
+var UInt64 = __webpack_require__(1).UINT64;
+var GnssSignal = __webpack_require__(0).GnssSignal;
+var GnssSignal16 = __webpack_require__(0).GnssSignal16;
+var GPSTime = __webpack_require__(0).GPSTime;
+var CarrierPhase = __webpack_require__(0).CarrierPhase;
+var GPSTimeNano = __webpack_require__(0).GPSTimeNano;
+var GPSTimeSec = __webpack_require__(0).GPSTimeSec;
+
+/**
+ * SBP class for message MSG_NDB_EVENT (0x0400).
+ *
+ * This message is sent out when an object is stored into NDB. If needed message
+ * could also be sent out when fetching an object from NDB.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field recv_time number (unsigned 64-bit int, 8 bytes) HW time in milliseconds.
+ * @field event number (unsigned 8-bit int, 1 byte) Event type.
+ * @field object_type number (unsigned 8-bit int, 1 byte) Event object type.
+ * @field result number (unsigned 8-bit int, 1 byte) Event result.
+ * @field data_source number (unsigned 8-bit int, 1 byte) Data source for STORE event, reserved for other events.
+ * @field object_sid GnssSignal16 GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid indicates
+ *   for which signal the object belongs to. Reserved in other cases.
+ * @field src_sid GnssSignal16 GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR L2C
+ *   capabilities AND data_source is NDB_DS_RECEIVER sid indicates from which SV data
+ *   was decoded. Reserved in other cases.
+ * @field original_sender number (unsigned 16-bit int, 2 bytes) A unique identifier of the sending hardware. For v1.0, set to the 2 least
+ *   significant bytes of the device serial number, valid only if data_source is
+ *   NDB_DS_SBP. Reserved in case of other data_source.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgNdbEvent = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_NDB_EVENT";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgNdbEvent.prototype = Object.create(SBP.prototype);
+MsgNdbEvent.prototype.messageType = "MSG_NDB_EVENT";
+MsgNdbEvent.prototype.msg_type = 0x0400;
+MsgNdbEvent.prototype.constructor = MsgNdbEvent;
+MsgNdbEvent.prototype.parser = new Parser()
+  .endianess('little')
+  .uint64('recv_time')
+  .uint8('event')
+  .uint8('object_type')
+  .uint8('result')
+  .uint8('data_source')
+  .nest('object_sid', { type: GnssSignal16.prototype.parser })
+  .nest('src_sid', { type: GnssSignal16.prototype.parser })
+  .uint16('original_sender');
+MsgNdbEvent.prototype.fieldSpec = [];
+MsgNdbEvent.prototype.fieldSpec.push(['recv_time', 'writeUInt64LE', 8]);
+MsgNdbEvent.prototype.fieldSpec.push(['event', 'writeUInt8', 1]);
+MsgNdbEvent.prototype.fieldSpec.push(['object_type', 'writeUInt8', 1]);
+MsgNdbEvent.prototype.fieldSpec.push(['result', 'writeUInt8', 1]);
+MsgNdbEvent.prototype.fieldSpec.push(['data_source', 'writeUInt8', 1]);
+MsgNdbEvent.prototype.fieldSpec.push(['object_sid', GnssSignal16.prototype.fieldSpec]);
+MsgNdbEvent.prototype.fieldSpec.push(['src_sid', GnssSignal16.prototype.fieldSpec]);
+MsgNdbEvent.prototype.fieldSpec.push(['original_sender', 'writeUInt16LE', 2]);
+
+module.exports = {
+  0x0400: MsgNdbEvent,
+  MsgNdbEvent: MsgNdbEvent,
+}
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (C) 2015 Swift Navigation Inc.
+ * Contact: Joshua Gross <josh@swift-nav.com>
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**********************
  * Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml with generate.py.
  * Don't edit this by hand!
  **********************
@@ -10702,43 +10796,6 @@ MsgAlmanacGlo.prototype.fieldSpec.push(['t_dot', 'writeDoubleLE', 8]);
 MsgAlmanacGlo.prototype.fieldSpec.push(['epsilon', 'writeDoubleLE', 8]);
 MsgAlmanacGlo.prototype.fieldSpec.push(['omega', 'writeDoubleLE', 8]);
 
-/**
- * SBP class for message MSG_FCNS_GLO (0x0072).
- *
- * The message reports mapping information regarding GLONASS SV orbital and
- * frequency slots. Mapped as follow: index (SV orbital slot)  fcns[index] 0
- * 0xFF 1                        FCN for SV orbital slot 1 ...
- * ... 28                       FCN for SV orbital slot 28 29
- * 0xFF 30                       0xFF 31                       0xFF
- *
- * Fields in the SBP payload (`sbp.payload`):
- * @field wn number (unsigned 16-bit int, 2 bytes) GPS Week number
- * @field tow_ms number (unsigned 32-bit int, 4 bytes) GPS Time of week
- * @field fcns array GLONASS fequency number per orbital slot
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-var MsgFcnsGlo = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "MSG_FCNS_GLO";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-MsgFcnsGlo.prototype = Object.create(SBP.prototype);
-MsgFcnsGlo.prototype.messageType = "MSG_FCNS_GLO";
-MsgFcnsGlo.prototype.msg_type = 0x0072;
-MsgFcnsGlo.prototype.constructor = MsgFcnsGlo;
-MsgFcnsGlo.prototype.parser = new Parser()
-  .endianess('little')
-  .uint16('wn')
-  .uint32('tow_ms')
-  .array('fcns', { length: 32, type: 'uint8' });
-MsgFcnsGlo.prototype.fieldSpec = [];
-MsgFcnsGlo.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
-MsgFcnsGlo.prototype.fieldSpec.push(['tow_ms', 'writeUInt32LE', 4]);
-MsgFcnsGlo.prototype.fieldSpec.push(['fcns', 'array', 'writeUInt8', function () { return 1; }, 32]);
-
 module.exports = {
   ObservationHeader: ObservationHeader,
   Doppler: Doppler,
@@ -10799,12 +10856,10 @@ module.exports = {
   MsgAlmanacGps: MsgAlmanacGps,
   0x0071: MsgAlmanacGlo,
   MsgAlmanacGlo: MsgAlmanacGlo,
-  0x0072: MsgFcnsGlo,
-  MsgFcnsGlo: MsgFcnsGlo,
 }
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -11627,7 +11682,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -11905,7 +11960,70 @@ module.exports = {
 }
 
 /***/ }),
-/* 34 */
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (C) 2015 Swift Navigation Inc.
+ * Contact: Joshua Gross <josh@swift-nav.com>
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**********************
+ * Automatically generated from piksi/yaml/swiftnav/sbp/signal.yaml with generate.py.
+ * Don't edit this by hand!
+ **********************
+ * Package description:
+ *
+ * Struct to represent the signal (constellation, band, satellite identifier).
+***********************/
+
+var SBP = __webpack_require__(2);
+var Parser = __webpack_require__(12).Parser;
+
+/**
+ * SBP class for message fragment SBPSignal
+ *
+ * Signal identifier containing constellation, band, and satellite identifier
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sat number (unsigned 16-bit int, 2 bytes) Constellation-specific satellite identifier
+ * @field band number (unsigned 8-bit int, 1 byte) Signal band
+ * @field constellation number (unsigned 8-bit int, 1 byte) Constellation to which the satellite belongs
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var SBPSignal = function (sbp) {
+  SBP.call(this, sbp);
+  this.messageType = "SBPSignal";
+  this.fields = this.parser.parse(sbp.payload);
+
+  return this;
+};
+SBPSignal.prototype = Object.create(SBP.prototype);
+SBPSignal.prototype.constructor = SBPSignal;
+SBPSignal.prototype.parser = new Parser()
+  .endianess('little')
+  .uint16('sat')
+  .uint8('band')
+  .uint8('constellation');
+SBPSignal.prototype.fieldSpec = [];
+SBPSignal.prototype.fieldSpec.push(['sat', 'writeUInt16LE', 2]);
+SBPSignal.prototype.fieldSpec.push(['band', 'writeUInt8', 1]);
+SBPSignal.prototype.fieldSpec.push(['constellation', 'writeUInt8', 1]);
+
+module.exports = {
+  SBPSignal: SBPSignal,
+}
+
+
+/***/ }),
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -12048,7 +12166,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -12436,7 +12554,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -12498,7 +12616,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -12729,7 +12847,7 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -12755,15 +12873,15 @@ var substr = 'ab'.substr(-1) === 'b'
 
 module.exports = Stream;
 
-var EE = __webpack_require__(12).EventEmitter;
+var EE = __webpack_require__(13).EventEmitter;
 var inherits = __webpack_require__(8);
 
 inherits(Stream, EE);
-Stream.Readable = __webpack_require__(14);
-Stream.Writable = __webpack_require__(52);
-Stream.Duplex = __webpack_require__(47);
-Stream.Transform = __webpack_require__(51);
-Stream.PassThrough = __webpack_require__(50);
+Stream.Readable = __webpack_require__(15);
+Stream.Writable = __webpack_require__(54);
+Stream.Duplex = __webpack_require__(49);
+Stream.Transform = __webpack_require__(53);
+Stream.PassThrough = __webpack_require__(52);
 
 // Backwards-compat with node 0.4.x
 Stream.Stream = Stream;
@@ -12862,7 +12980,7 @@ Stream.prototype.pipe = function(dest, options) {
 
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -12890,7 +13008,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer, module, global) {/**
@@ -12904,9 +13022,9 @@ module.exports = function(module) {
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-var Parser = __webpack_require__(16).Parser;
-var path = __webpack_require__(37);
-var streams = __webpack_require__(38);
+var Parser = __webpack_require__(12).Parser;
+var path = __webpack_require__(39);
+var streams = __webpack_require__(40);
 var SBP = __webpack_require__(2);
 
 var SBP_PREAMBLE = 0x55;
@@ -12992,12 +13110,14 @@ var sbpImports = {
   imu: __webpack_require__(28),
   logging: __webpack_require__(29),
   navigation: __webpack_require__(30),
-  observation: __webpack_require__(31),
-  piksi: __webpack_require__(32),
-  settings: __webpack_require__(33),
-  system: __webpack_require__(34),
-  tracking: __webpack_require__(35),
-  user: __webpack_require__(36)
+  ndb: __webpack_require__(31),
+  observation: __webpack_require__(32),
+  piksi: __webpack_require__(33),
+  settings: __webpack_require__(34),
+  signal: __webpack_require__(35),
+  system: __webpack_require__(36),
+  tracking: __webpack_require__(37),
+  user: __webpack_require__(38)
 };
 
 var sbpIdTable = Object.keys(sbpImports).reduce(function (prev, key) {
@@ -13222,10 +13342,10 @@ function exposeGlobally (x) {
 
 exposeGlobally(module.exports);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer, __webpack_require__(39)(module), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer, __webpack_require__(41)(module), __webpack_require__(5)))
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13297,7 +13417,7 @@ function isBuffer(b) {
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var util = __webpack_require__(58);
+var util = __webpack_require__(60);
 var hasOwn = Object.prototype.hasOwnProperty;
 var pSlice = Array.prototype.slice;
 var functionsHaveNames = (function () {
@@ -13723,7 +13843,7 @@ var objectKeys = Object.keys || function (obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13844,7 +13964,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports) {
 
 //========================================================================================
@@ -13949,7 +14069,7 @@ exports.Context = Context;
 
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -14407,7 +14527,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -15062,7 +15182,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -15152,14 +15272,14 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(7);
 
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15212,7 +15332,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 };
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15222,7 +15342,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Buffer = __webpack_require__(15).Buffer;
+var Buffer = __webpack_require__(16).Buffer;
 /*</replacement>*/
 
 function copyBuffer(src, target, offset) {
@@ -15292,28 +15412,28 @@ module.exports = function () {
 }();
 
 /***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(14).PassThrough
-
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(14).Transform
-
-
-/***/ }),
 /* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(15).PassThrough
 
 
 /***/ }),
 /* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(15).Transform
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(14);
+
+
+/***/ }),
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -15506,7 +15626,7 @@ module.exports = __webpack_require__(13);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -15559,13 +15679,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(53);
+__webpack_require__(55);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -15639,7 +15759,7 @@ function config (name) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports) {
 
 if (typeof Object.create === 'function') {
@@ -15668,7 +15788,7 @@ if (typeof Object.create === 'function') {
 
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports) {
 
 module.exports = function isBuffer(arg) {
@@ -15679,7 +15799,7 @@ module.exports = function isBuffer(arg) {
 }
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -16207,7 +16327,7 @@ function isPrimitive(arg) {
 }
 exports.isPrimitive = isPrimitive;
 
-exports.isBuffer = __webpack_require__(57);
+exports.isBuffer = __webpack_require__(59);
 
 function objectToString(o) {
   return Object.prototype.toString.call(o);
@@ -16251,7 +16371,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = __webpack_require__(56);
+exports.inherits = __webpack_require__(58);
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -16272,7 +16392,7 @@ function hasOwnProperty(obj, prop) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
