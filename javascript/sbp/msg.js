@@ -97,9 +97,11 @@ var sbpImports = {
   imu: require('./imu.js'),
   logging: require('./logging.js'),
   navigation: require('./navigation.js'),
+  ndb: require('./ndb.js'),
   observation: require('./observation.js'),
   piksi: require('./piksi.js'),
   settings: require('./settings.js'),
+  signal: require('./signal.js'),
   system: require('./system.js'),
   tracking: require('./tracking.js'),
   user: require('./user.js')
