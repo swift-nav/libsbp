@@ -1840,43 +1840,6 @@ MsgAlmanacGlo.prototype.fieldSpec.push(['t_dot', 'writeDoubleLE', 8]);
 MsgAlmanacGlo.prototype.fieldSpec.push(['epsilon', 'writeDoubleLE', 8]);
 MsgAlmanacGlo.prototype.fieldSpec.push(['omega', 'writeDoubleLE', 8]);
 
-/**
- * SBP class for message MSG_FCNS_GLO (0x0072).
- *
- * The message reports mapping information regarding GLONASS SV orbital and
- * frequency slots. Mapped as follow: index (SV orbital slot)  fcns[index] 0
- * 0xFF 1                        FCN for SV orbital slot 1 ...
- * ... 28                       FCN for SV orbital slot 28 29
- * 0xFF 30                       0xFF 31                       0xFF
- *
- * Fields in the SBP payload (`sbp.payload`):
- * @field wn number (unsigned 16-bit int, 2 bytes) GPS Week number
- * @field tow_ms number (unsigned 32-bit int, 4 bytes) GPS Time of week
- * @field fcns array GLONASS fequency number per orbital slot
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-var MsgFcnsGlo = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "MSG_FCNS_GLO";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-MsgFcnsGlo.prototype = Object.create(SBP.prototype);
-MsgFcnsGlo.prototype.messageType = "MSG_FCNS_GLO";
-MsgFcnsGlo.prototype.msg_type = 0x0072;
-MsgFcnsGlo.prototype.constructor = MsgFcnsGlo;
-MsgFcnsGlo.prototype.parser = new Parser()
-  .endianess('little')
-  .uint16('wn')
-  .uint32('tow_ms')
-  .array('fcns', { length: 32, type: 'uint8' });
-MsgFcnsGlo.prototype.fieldSpec = [];
-MsgFcnsGlo.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
-MsgFcnsGlo.prototype.fieldSpec.push(['tow_ms', 'writeUInt32LE', 4]);
-MsgFcnsGlo.prototype.fieldSpec.push(['fcns', 'array', 'writeUInt8', function () { return 1; }, 32]);
-
 module.exports = {
   ObservationHeader: ObservationHeader,
   Doppler: Doppler,
@@ -1937,6 +1900,4 @@ module.exports = {
   MsgAlmanacGps: MsgAlmanacGps,
   0x0071: MsgAlmanacGlo,
   MsgAlmanacGlo: MsgAlmanacGlo,
-  0x0072: MsgFcnsGlo,
-  MsgFcnsGlo: MsgFcnsGlo,
 }

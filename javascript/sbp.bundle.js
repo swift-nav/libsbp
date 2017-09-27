@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 38);
+/******/ 	return __webpack_require__(__webpack_require__.s = 40);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -296,8 +296,8 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.UINT32 = __webpack_require__(42)
-exports.UINT64 = __webpack_require__(43)
+exports.UINT32 = __webpack_require__(44)
+exports.UINT64 = __webpack_require__(45)
 
 /***/ }),
 /* 2 */
@@ -314,7 +314,7 @@ exports.UINT64 = __webpack_require__(43)
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-var assert = __webpack_require__(39);
+var assert = __webpack_require__(41);
 var Int64 = __webpack_require__(3);
 var UInt64 = __webpack_require__(1).UINT64;
 
@@ -853,8 +853,8 @@ module.exports = g;
 
 
 
-var base64 = __webpack_require__(40)
-var ieee754 = __webpack_require__(44)
+var base64 = __webpack_require__(42)
+var ieee754 = __webpack_require__(46)
 var isArray = __webpack_require__(17)
 
 exports.Buffer = Buffer
@@ -3534,7 +3534,7 @@ util.inherits = __webpack_require__(8);
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(53)
+  deprecate: __webpack_require__(55)
 };
 /*</replacement>*/
 
@@ -4126,7 +4126,7 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(52).setImmediate, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(54).setImmediate, __webpack_require__(5)))
 
 /***/ }),
 /* 14 */
@@ -4138,7 +4138,7 @@ exports.Readable = exports;
 exports.Writable = __webpack_require__(13);
 exports.Duplex = __webpack_require__(7);
 exports.Transform = __webpack_require__(20);
-exports.PassThrough = __webpack_require__(46);
+exports.PassThrough = __webpack_require__(48);
 
 
 /***/ }),
@@ -4217,7 +4217,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 // Globals
 //========================================================================================
 
-var Context = __webpack_require__(41).Context;
+var Context = __webpack_require__(43).Context;
 
 var PRIMITIVE_TYPES = {
     'UInt8'    : 1,
@@ -5102,7 +5102,7 @@ util.inherits = __webpack_require__(8);
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(57);
+var debugUtil = __webpack_require__(59);
 var debug = void 0;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -5111,7 +5111,7 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(47);
+var BufferList = __webpack_require__(49);
 var destroyImpl = __webpack_require__(21);
 var StringDecoder;
 
@@ -7568,6 +7568,127 @@ module.exports = {
  */
 
 /**********************
+ * Automatically generated from piksi/yaml/swiftnav/sbp/imu.yaml with generate.py.
+ * Don't edit this by hand!
+ **********************
+ * Package description:
+ *
+ * Inertial Measurement Unit (IMU) messages.
+***********************/
+
+var SBP = __webpack_require__(2);
+var Parser = __webpack_require__(4);
+var Int64 = __webpack_require__(3);
+var UInt64 = __webpack_require__(1).UINT64;
+
+/**
+ * SBP class for message MSG_IMU_RAW (0x0900).
+ *
+ * Raw data from the Inertial Measurement Unit, containing accelerometer and
+ * gyroscope readings.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) Milliseconds since start of GPS week. If the high bit is set, the time is
+ *   unknown or invalid.
+ * @field tow_f number (unsigned 8-bit int, 1 byte) Milliseconds since start of GPS week, fractional part
+ * @field acc_x number (signed 16-bit int, 2 bytes) Acceleration in the body frame X axis
+ * @field acc_y number (signed 16-bit int, 2 bytes) Acceleration in the body frame Y axis
+ * @field acc_z number (signed 16-bit int, 2 bytes) Acceleration in the body frame Z axis
+ * @field gyr_x number (signed 16-bit int, 2 bytes) Angular rate around the body frame X axis
+ * @field gyr_y number (signed 16-bit int, 2 bytes) Angular rate around the body frame Y axis
+ * @field gyr_z number (signed 16-bit int, 2 bytes) Angular rate around the body frame Z axis
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgImuRaw = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_IMU_RAW";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgImuRaw.prototype = Object.create(SBP.prototype);
+MsgImuRaw.prototype.messageType = "MSG_IMU_RAW";
+MsgImuRaw.prototype.msg_type = 0x0900;
+MsgImuRaw.prototype.constructor = MsgImuRaw;
+MsgImuRaw.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .uint8('tow_f')
+  .int16('acc_x')
+  .int16('acc_y')
+  .int16('acc_z')
+  .int16('gyr_x')
+  .int16('gyr_y')
+  .int16('gyr_z');
+MsgImuRaw.prototype.fieldSpec = [];
+MsgImuRaw.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgImuRaw.prototype.fieldSpec.push(['tow_f', 'writeUInt8', 1]);
+MsgImuRaw.prototype.fieldSpec.push(['acc_x', 'writeInt16LE', 2]);
+MsgImuRaw.prototype.fieldSpec.push(['acc_y', 'writeInt16LE', 2]);
+MsgImuRaw.prototype.fieldSpec.push(['acc_z', 'writeInt16LE', 2]);
+MsgImuRaw.prototype.fieldSpec.push(['gyr_x', 'writeInt16LE', 2]);
+MsgImuRaw.prototype.fieldSpec.push(['gyr_y', 'writeInt16LE', 2]);
+MsgImuRaw.prototype.fieldSpec.push(['gyr_z', 'writeInt16LE', 2]);
+
+/**
+ * SBP class for message MSG_IMU_AUX (0x0901).
+ *
+ * Auxiliary data specific to a particular IMU. The `imu_type` field will always be
+ * consistent but the rest of the payload is device specific and depends on the
+ * value of `imu_type`.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field imu_type number (unsigned 8-bit int, 1 byte) IMU type
+ * @field temp number (signed 16-bit int, 2 bytes) Raw IMU temperature
+ * @field imu_conf number (unsigned 8-bit int, 1 byte) IMU configuration
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgImuAux = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_IMU_AUX";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgImuAux.prototype = Object.create(SBP.prototype);
+MsgImuAux.prototype.messageType = "MSG_IMU_AUX";
+MsgImuAux.prototype.msg_type = 0x0901;
+MsgImuAux.prototype.constructor = MsgImuAux;
+MsgImuAux.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('imu_type')
+  .int16('temp')
+  .uint8('imu_conf');
+MsgImuAux.prototype.fieldSpec = [];
+MsgImuAux.prototype.fieldSpec.push(['imu_type', 'writeUInt8', 1]);
+MsgImuAux.prototype.fieldSpec.push(['temp', 'writeInt16LE', 2]);
+MsgImuAux.prototype.fieldSpec.push(['imu_conf', 'writeUInt8', 1]);
+
+module.exports = {
+  0x0900: MsgImuRaw,
+  MsgImuRaw: MsgImuRaw,
+  0x0901: MsgImuAux,
+  MsgImuAux: MsgImuAux,
+}
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (C) 2015 Swift Navigation Inc.
+ * Contact: Joshua Gross <josh@swift-nav.com>
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**********************
  * Automatically generated from piksi/yaml/swiftnav/sbp/logging.yaml with generate.py.
  * Don't edit this by hand!
  **********************
@@ -7717,7 +7838,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -8736,7 +8857,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -9438,7 +9559,7 @@ MsgEphemerisGloDepB.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', f
 MsgEphemerisGloDepB.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
 
 /**
- * SBP class for message MSG_EPHEMERIS_GLO (0x0087).
+ * SBP class for message MSG_EPHEMERIS_GLO_DEP_C (0x0087).
  *
  * The ephemeris message returns a set of satellite orbit parameters that is used
  * to calculate GLO satellite position, velocity, and clock offset. Please see the
@@ -9457,6 +9578,58 @@ MsgEphemerisGloDepB.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', f
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
+var MsgEphemerisGloDepC = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_EPHEMERIS_GLO_DEP_C";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgEphemerisGloDepC.prototype = Object.create(SBP.prototype);
+MsgEphemerisGloDepC.prototype.messageType = "MSG_EPHEMERIS_GLO_DEP_C";
+MsgEphemerisGloDepC.prototype.msg_type = 0x0087;
+MsgEphemerisGloDepC.prototype.constructor = MsgEphemerisGloDepC;
+MsgEphemerisGloDepC.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('common', { type: EphemerisCommonContent.prototype.parser })
+  .doublele('gamma')
+  .doublele('tau')
+  .doublele('d_tau')
+  .array('pos', { length: 3, type: 'doublele' })
+  .array('vel', { length: 3, type: 'doublele' })
+  .array('acc', { length: 3, type: 'doublele' })
+  .uint8('fcn');
+MsgEphemerisGloDepC.prototype.fieldSpec = [];
+MsgEphemerisGloDepC.prototype.fieldSpec.push(['common', EphemerisCommonContent.prototype.fieldSpec]);
+MsgEphemerisGloDepC.prototype.fieldSpec.push(['gamma', 'writeDoubleLE', 8]);
+MsgEphemerisGloDepC.prototype.fieldSpec.push(['tau', 'writeDoubleLE', 8]);
+MsgEphemerisGloDepC.prototype.fieldSpec.push(['d_tau', 'writeDoubleLE', 8]);
+MsgEphemerisGloDepC.prototype.fieldSpec.push(['pos', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisGloDepC.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisGloDepC.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisGloDepC.prototype.fieldSpec.push(['fcn', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_EPHEMERIS_GLO (0x0088).
+ *
+ * The ephemeris message returns a set of satellite orbit parameters that is used
+ * to calculate GLO satellite position, velocity, and clock offset. Please see the
+ * GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate information
+ * (ephemeris parameters)" for more details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field common EphemerisCommonContent Values common for all ephemeris types
+ * @field gamma number (float, 8 bytes) Relative deviation of predicted carrier frequency from nominal
+ * @field tau number (float, 8 bytes) Correction to the SV time
+ * @field d_tau number (float, 8 bytes) Equipment delay between L1 and L2
+ * @field pos array Position of the SV at tb in PZ-90.02 coordinates system
+ * @field vel array Velocity vector of the SV at tb in PZ-90.02 coordinates system
+ * @field acc array Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+ * @field fcn number (unsigned 8-bit int, 1 byte) Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+ * @field iod number (unsigned 8-bit int, 1 byte) Issue of ephemeris data
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
 var MsgEphemerisGlo = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_GLO";
@@ -9466,7 +9639,7 @@ var MsgEphemerisGlo = function (sbp, fields) {
 };
 MsgEphemerisGlo.prototype = Object.create(SBP.prototype);
 MsgEphemerisGlo.prototype.messageType = "MSG_EPHEMERIS_GLO";
-MsgEphemerisGlo.prototype.msg_type = 0x0087;
+MsgEphemerisGlo.prototype.msg_type = 0x0088;
 MsgEphemerisGlo.prototype.constructor = MsgEphemerisGlo;
 MsgEphemerisGlo.prototype.parser = new Parser()
   .endianess('little')
@@ -9477,7 +9650,8 @@ MsgEphemerisGlo.prototype.parser = new Parser()
   .array('pos', { length: 3, type: 'doublele' })
   .array('vel', { length: 3, type: 'doublele' })
   .array('acc', { length: 3, type: 'doublele' })
-  .uint8('fcn');
+  .uint8('fcn')
+  .uint8('iod');
 MsgEphemerisGlo.prototype.fieldSpec = [];
 MsgEphemerisGlo.prototype.fieldSpec.push(['common', EphemerisCommonContent.prototype.fieldSpec]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['gamma', 'writeDoubleLE', 8]);
@@ -9487,6 +9661,7 @@ MsgEphemerisGlo.prototype.fieldSpec.push(['pos', 'array', 'writeDoubleLE', funct
 MsgEphemerisGlo.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['fcn', 'writeUInt8', 1]);
+MsgEphemerisGlo.prototype.fieldSpec.push(['iod', 'writeUInt8', 1]);
 
 /**
  * SBP class for message MSG_EPHEMERIS_DEP_D (0x0080).
@@ -10588,7 +10763,9 @@ module.exports = {
   MsgEphemerisSbas: MsgEphemerisSbas,
   0x0085: MsgEphemerisGloDepB,
   MsgEphemerisGloDepB: MsgEphemerisGloDepB,
-  0x0087: MsgEphemerisGlo,
+  0x0087: MsgEphemerisGloDepC,
+  MsgEphemerisGloDepC: MsgEphemerisGloDepC,
+  0x0088: MsgEphemerisGlo,
   MsgEphemerisGlo: MsgEphemerisGlo,
   0x0080: MsgEphemerisDepD,
   MsgEphemerisDepD: MsgEphemerisDepD,
@@ -10627,7 +10804,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -11450,7 +11627,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -11728,7 +11905,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -11871,7 +12048,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -12259,7 +12436,69 @@ module.exports = {
 }
 
 /***/ }),
-/* 35 */
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (C) 2015 Swift Navigation Inc.
+ * Contact: Joshua Gross <josh@swift-nav.com>
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**********************
+ * Automatically generated from piksi/yaml/swiftnav/sbp/user.yaml with generate.py.
+ * Don't edit this by hand!
+ **********************
+ * Package description:
+ *
+ * Messages reserved for use by the user.
+***********************/
+
+var SBP = __webpack_require__(2);
+var Parser = __webpack_require__(4);
+var Int64 = __webpack_require__(3);
+var UInt64 = __webpack_require__(1).UINT64;
+
+/**
+ * SBP class for message MSG_USER_DATA (0x0800).
+ *
+ * This message can contain any application specific user data up to a maximum
+ * length of 255 bytes per message.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field contents array User data payload
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgUserData = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_USER_DATA";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgUserData.prototype = Object.create(SBP.prototype);
+MsgUserData.prototype.messageType = "MSG_USER_DATA";
+MsgUserData.prototype.msg_type = 0x0800;
+MsgUserData.prototype.constructor = MsgUserData;
+MsgUserData.prototype.parser = new Parser()
+  .endianess('little')
+  .array('contents', { type: 'uint8', readUntil: 'eof' });
+MsgUserData.prototype.fieldSpec = [];
+MsgUserData.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8', function () { return 1; }, null]);
+
+module.exports = {
+  0x0800: MsgUserData,
+  MsgUserData: MsgUserData,
+}
+
+/***/ }),
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -12490,7 +12729,7 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -12521,10 +12760,10 @@ var inherits = __webpack_require__(8);
 
 inherits(Stream, EE);
 Stream.Readable = __webpack_require__(14);
-Stream.Writable = __webpack_require__(50);
-Stream.Duplex = __webpack_require__(45);
-Stream.Transform = __webpack_require__(49);
-Stream.PassThrough = __webpack_require__(48);
+Stream.Writable = __webpack_require__(52);
+Stream.Duplex = __webpack_require__(47);
+Stream.Transform = __webpack_require__(51);
+Stream.PassThrough = __webpack_require__(50);
 
 // Backwards-compat with node 0.4.x
 Stream.Stream = Stream;
@@ -12623,7 +12862,7 @@ Stream.prototype.pipe = function(dest, options) {
 
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -12651,7 +12890,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer, module, global) {/**
@@ -12666,8 +12905,8 @@ module.exports = function(module) {
  */
 
 var Parser = __webpack_require__(16).Parser;
-var path = __webpack_require__(35);
-var streams = __webpack_require__(36);
+var path = __webpack_require__(37);
+var streams = __webpack_require__(38);
 var SBP = __webpack_require__(2);
 
 var SBP_PREAMBLE = 0x55;
@@ -12749,13 +12988,16 @@ var sbpImports = {
   ext_events: __webpack_require__(25),
   file_io: __webpack_require__(26),
   flash: __webpack_require__(27),
-  logging: __webpack_require__(28),
-  navigation: __webpack_require__(29),
-  observation: __webpack_require__(30),
-  piksi: __webpack_require__(31),
-  settings: __webpack_require__(32),
-  system: __webpack_require__(33),
-  tracking: __webpack_require__(34)
+  gnss: __webpack_require__(0),
+  imu: __webpack_require__(28),
+  logging: __webpack_require__(29),
+  navigation: __webpack_require__(30),
+  observation: __webpack_require__(31),
+  piksi: __webpack_require__(32),
+  settings: __webpack_require__(33),
+  system: __webpack_require__(34),
+  tracking: __webpack_require__(35),
+  user: __webpack_require__(36)
 };
 
 var sbpIdTable = Object.keys(sbpImports).reduce(function (prev, key) {
@@ -12980,10 +13222,10 @@ function exposeGlobally (x) {
 
 exposeGlobally(module.exports);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer, __webpack_require__(37)(module), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer, __webpack_require__(39)(module), __webpack_require__(5)))
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13055,7 +13297,7 @@ function isBuffer(b) {
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var util = __webpack_require__(56);
+var util = __webpack_require__(58);
 var hasOwn = Object.prototype.hasOwnProperty;
 var pSlice = Array.prototype.slice;
 var functionsHaveNames = (function () {
@@ -13481,7 +13723,7 @@ var objectKeys = Object.keys || function (obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13602,7 +13844,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports) {
 
 //========================================================================================
@@ -13707,7 +13949,7 @@ exports.Context = Context;
 
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -14165,7 +14407,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -14820,7 +15062,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -14910,14 +15152,14 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(7);
 
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14970,7 +15212,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 };
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15050,28 +15292,28 @@ module.exports = function () {
 }();
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(14).PassThrough
 
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(14).Transform
 
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(13);
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -15264,7 +15506,7 @@ module.exports = __webpack_require__(13);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -15317,13 +15559,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(51);
+__webpack_require__(53);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -15397,7 +15639,7 @@ function config (name) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports) {
 
 if (typeof Object.create === 'function') {
@@ -15426,7 +15668,7 @@ if (typeof Object.create === 'function') {
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports) {
 
 module.exports = function isBuffer(arg) {
@@ -15437,7 +15679,7 @@ module.exports = function isBuffer(arg) {
 }
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -15965,7 +16207,7 @@ function isPrimitive(arg) {
 }
 exports.isPrimitive = isPrimitive;
 
-exports.isBuffer = __webpack_require__(55);
+exports.isBuffer = __webpack_require__(57);
 
 function objectToString(o) {
   return Object.prototype.toString.call(o);
@@ -16009,7 +16251,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = __webpack_require__(54);
+exports.inherits = __webpack_require__(56);
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -16030,7 +16272,7 @@ function hasOwnProperty(obj, prop) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
