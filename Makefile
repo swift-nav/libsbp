@@ -41,7 +41,6 @@ help:
 	@echo "  help      to display this help message"
 	@echo "  all       to make SBP clients across all languages"
 	@echo "  c         to make C headers"
-	@echo "  deps      to install dependencies"
 	@echo "  dist      to distribute packages"
 	@echo "  docs      to make HTML and pdf documentation"
 	@echo "  html      to make all HTML language docs"
@@ -64,32 +63,32 @@ haskell:    deps-haskell    gen-haskell    test-haskell
 
 # Prerequisite verification
 verify-prereq-generator:
-	@command -v python 1>/dev/null 2>/dev/null || { echo >&2 "I require \`python\` but it's not installed. Aborting.\n\nHave you installed Python?"; exit 1; }
-	@command -v pip    1>/dev/null 2>/dev/null || { echo >&2 "I require \`pip\` but it's not installed.  Aborting.\n\nHave you installed pip?"; exit 1; }
+	@command -v python 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`python\` but it's not installed. Aborting.\n\nHave you installed Python?\n"; exit 1; }
+	@command -v pip    1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pip\` but it's not installed.  Aborting.\n\nHave you installed pip?\n"; exit 1; }
 
 verify-prereq-c:
-	@command -v checkmk      1>/dev/null 2>/dev/null || { echo >&2 "I require \`checkmk\` but it's not installed. Aborting.\n\nHave you installed checkmk? See the C readme at \`c/README.md\` for setup instructions."; exit 1; }
-	@command -v cmake        1>/dev/null 2>/dev/null || { echo >&2 "I require \`cmake\` but it's not installed. Aborting.\n\nHave you installed cmake? See the C readme at \`c/README.md\` for setup instructions."; exit 1; }
-	@command -v pkg-config   1>/dev/null 2>/dev/null || { echo >&2 "I require \`pkg-config\` but it's not installed. Aborting.\n\nHave you installed pkg-config? See the C readme at \`c/README.md\` for setup instructions."; exit 1; }
-	@command -v doxygen      1>/dev/null 2>/dev/null || { echo >&2 "I require \`doxygen\` but it's not installed. Aborting.\n\nHave you installed doxygen? See the C readme at \`c/README.md\` for setup instructions."; exit 1; }
+	@command -v checkmk      1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`checkmk\` but it's not installed. Aborting.\n\nHave you installed checkmk? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
+	@command -v cmake        1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`cmake\` but it's not installed. Aborting.\n\nHave you installed cmake? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
+	@command -v pkg-config   1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pkg-config\` but it's not installed. Aborting.\n\nHave you installed pkg-config? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
+	@command -v doxygen      1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`doxygen\` but it's not installed. Aborting.\n\nHave you installed doxygen? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 
 verify-prereq-python:
-	@command -v python 1>/dev/null 2>/dev/null || { echo >&2 "I require \`python\` but it's not installed. Aborting.\n\nHave you installed Python? See the Python readme at \`python/README.rst\` for setup instructions."; exit 1; }
-	@command -v pip 1>/dev/null 2>/dev/null    || { echo >&2 "I require \`pip\` but it's not installed. Aborting.\n\nHave you installed pip? See the Python readme at \`python/README.rst\` for setup instructions."; exit 1; }
-	@command -v tox 1>/dev/null 2>/dev/null    || { echo >&2 "I require \`tox\` but it's not installed. Aborting.\n\nHave you installed tox? See the Python readme at \`python/README.rst\` for setup instructions."; exit 1; }
-	@command -v pandoc 1>/dev/null 2>/dev/null || { echo >&2 "I require \`pandoc\` but it's not installed. Aborting.\n\nHave you installed pandoc? See the Python readme at \`python/README.rst\` for setup instructions."; exit 1; }
+	@command -v python 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`python\` but it's not installed. Aborting.\n\nHave you installed Python? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
+	@command -v pip 1>/dev/null 2>/dev/null    || { echo >&2 -e "I require \`pip\` but it's not installed. Aborting.\n\nHave you installed pip? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
+	@command -v tox 1>/dev/null 2>/dev/null    || { echo >&2 -e "I require \`tox\` but it's not installed. Aborting.\n\nHave you installed tox? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
+	@command -v pandoc 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pandoc\` but it's not installed. Aborting.\n\nHave you installed pandoc? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
 
 verify-prereq-javascript:
-	@command -v node   1>/dev/null 2>/dev/null || { echo >&2 "I require \`node\` but it's not installed. Aborting.\n\nHave you installed Node.js? See the JavaScript readme at \`javascript/README.md\` for setup instructions."; exit 1; }
-	@command -v npm    1>/dev/null 2>/dev/null || { echo >&2 "I require \`npm\` but it's not installed. Aborting.\n\nHave you installed NPM? See the JavaScript readme at \`javascript/README.md\` for setup instructions."; exit 1; }
-	@command -v mocha  1>/dev/null 2>/dev/null || { echo >&2 "I require \`mocha\` but it's not installed. Aborting.\n\nHave you installed mocha? See the JavaScript readme at \`javascript/README.md\` for setup instructions."; exit 1; }
+	@command -v node   1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`node\` but it's not installed. Aborting.\n\nHave you installed Node.js? See the JavaScript readme at \`javascript/README.md\` for setup instructions.\n"; exit 1; }
+	@command -v npm    1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`npm\` but it's not installed. Aborting.\n\nHave you installed NPM? See the JavaScript readme at \`javascript/README.md\` for setup instructions.\n"; exit 1; }
+	@command -v mocha  1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`mocha\` but it's not installed. Aborting.\n\nHave you installed mocha? See the JavaScript readme at \`javascript/README.md\` for setup instructions.\n"; exit 1; }
 
 verify-prereq-java: ;
 
 verify-prereq-haskell: ;
 
 verify-prereq-docs:
-	@command -v pdflatex  1>/dev/null 2>/dev/null || { echo >&2 "I require \`pdflatex\` but it's not installed. Aborting.\n\nHave you installed pdflatex? See the generator readme (Installing instructions) at \`generator/README.md\` for setup instructions."; exit 1; }
+	@command -v pdflatex  1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pdflatex\` but it's not installed. Aborting.\n\nHave you installed pdflatex? See the generator readme (Installing instructions) at \`generator/README.md\` for setup instructions.\n"; exit 1; }
 
 # Dependencies
 
