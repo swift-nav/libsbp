@@ -46,7 +46,7 @@ a static library `libsbp-static`.
 ## Usage
 
 For now, documentation for libsbp is available with
-[libswiftnav](http://docs.swift-nav.com/libswiftnav/group__sbp.html). A
+[libswiftnav](https://swift-nav.github.io/libsbp/c/build/docs/html). A
 separate tutorial for applying SBP is at
 https://github.com/swift-nav/sbp_tutorial.
 
