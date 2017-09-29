@@ -20,23 +20,28 @@ void setup_port()
 {
   int result;
 
-  result = sp_set_baudrate(piksi_port, 1000000);
+  printf("Attempting to configure the serial port...\n");
+
+  result = sp_set_baudrate(piksi_port, 115200);
   if (result != SP_OK) {
     fprintf(stderr, "Cannot set port baud rate!\n");
     exit(EXIT_FAILURE);
   }
+  printf("Configured the baud rate...\n");
 
   result = sp_set_flowcontrol(piksi_port, SP_FLOWCONTROL_NONE);
   if (result != SP_OK) {
     fprintf(stderr, "Cannot set flow control!\n");
     exit(EXIT_FAILURE);
   }
+  printf("Configured the flow control...\n");
 
   result = sp_set_bits(piksi_port, 8);
   if (result != SP_OK) {
     fprintf(stderr, "Cannot set data bits!\n");
     exit(EXIT_FAILURE);
   }
+  printf("Configured the number of data bits...\n");
 
   result = sp_set_parity(piksi_port, SP_PARITY_NONE);
   if (result != SP_OK) {
@@ -44,11 +49,15 @@ void setup_port()
     exit(EXIT_FAILURE);
   }
 
+  printf("Configured the parity...\n");
+
   result = sp_set_stopbits(piksi_port, 1);
   if (result != SP_OK) {
     fprintf(stderr, "Cannot set stop bits!\n");
     exit(EXIT_FAILURE);
   }
+
+  printf("Configured the number of stop bits... done.\n");
 }
 
 void heartbeat_callback(u16 sender_id, u8 len, u8 msg[], void *context)
@@ -106,6 +115,8 @@ int main(int argc, char **argv)
     fprintf(stderr, "Cannot find provided serial port!\n");
     exit(EXIT_FAILURE);
   }
+
+  printf("Attempting to open the serial port...\n");
 
   result = sp_open(piksi_port, SP_MODE_READ);
   if (result != SP_OK) {
