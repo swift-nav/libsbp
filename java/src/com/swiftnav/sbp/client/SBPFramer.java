@@ -11,79 +11,146 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class SBPFramer extends SBPIterable implements SBPSender {
-    private static final byte PREAMBLE = 0x55;
+public class SBPFramer {
+    private static final int    PREAMBLE_SIZE = 1;
+    private static final byte   PREAMBLE_VALUE = 0x55;
 
-    private static final int PREAMBLE_SIZE = 1;
-    private static final int HEADER_SIZE = 5;
-    private static final int CRC_SIZE = 2;
+    private static final int    HEADER_SIZE = 5;
+    private              byte[] mHeaderByteArray = new byte[HEADER_SIZE];
+    private              int    mHeaderByteIndex;
+    private              int    mHeaderType;
+    private              int    mHeaderSender;
+    private              int    mHeaderLen;
 
-    private SBPDriver driver;
+    private              byte[] mPayloadByteArray;
+    private              int    mPayloadByteIndex;
 
-    public SBPFramer(SBPDriver driver_) {
-        driver = driver_;
+    private static final int    CRC_SIZE = 2;
+    private              byte[] mCrcByteArray = new byte[CRC_SIZE];
+    private              int    mCrcByteIndex;
+
+    public int mCrcErrorCount = 0;
+    public int mPayloadDecodeErrorCount = 0;
+
+    private enum DecodeState {
+        PREAMBLE,
+        HEADER,
+        PAYLOAD,
+        CRC
     }
 
-    @Override
-    protected SBPMessage getNext() {
-        try {
-            return receive();
-        } catch (IOException e) {
-            throw new NoSuchElementException();
-        }
+    private DecodeState mDecodeState = DecodeState.PREAMBLE;
+
+    public SBPFramer() {
+        ;
     }
 
-    private SBPMessage receive() throws IOException {
-        /* Wait for a preamble to be received */
-        byte[] preamble;
-        do {
-            preamble = driver.read(PREAMBLE_SIZE);
-            if (preamble == null) {
-                throw new IOException("SBPDriver read() returned null!");
+    public SBPMessage parseByte(byte dataByte) {
+        SBPMessage msg = null;
+
+        switch (mDecodeState) {
+            default:
+            case PREAMBLE: {
+                // Reset module data for reception of next message.
+                mHeaderByteIndex = 0;
+                mPayloadByteIndex = 0;
+                mPayloadByteArray = null;
+                mCrcByteIndex = 0;
+
+                // Check for preamble reception.
+                if (dataByte == PREAMBLE_VALUE) {
+                    mDecodeState = DecodeState.HEADER;
+                }
+                break;
             }
-        } while (preamble[0] != PREAMBLE);
+            case HEADER: {
+                // Append header byte.
+                mHeaderByteArray[mHeaderByteIndex] = dataByte;
+                mHeaderByteIndex++;
 
-        /* Read the header */
-        byte[] header = driver.read(HEADER_SIZE);
-        int calccrc = CRC16.crc16(header);
-        /* Unpack fields from received header */
-        ByteBuffer bb = ByteBuffer.wrap(header).order(ByteOrder.LITTLE_ENDIAN);
-        int type = bb.getShort() & 0xffff;
-        int sender = bb.getShort() & 0xffff;
-        int len = bb.get() & 0xff;
+                // Entire header received ?
+                if (mHeaderByteIndex >= HEADER_SIZE) {
+                    // Unpack header fields.
+                    ByteBuffer bb = ByteBuffer.wrap(mHeaderByteArray).order(ByteOrder.LITTLE_ENDIAN);
+                    mHeaderType = bb.getShort() & 0xffff;
+                    mHeaderSender = bb.getShort() & 0xffff;
+                    mHeaderLen = bb.get() & 0xff;
+                    
+                    // Setup payload storage.
+                    mPayloadByteArray = new byte[mHeaderLen];
 
-        byte[] payload = driver.read(len);
-        calccrc = CRC16.crc16(payload, calccrc);
+                    // Move to receiving the payload.
+                    // - Check for payload length validity not performed. 'mHeaderLen' is only one byte in size so
+                    //   any received payload length value is valid.
+                    mDecodeState = DecodeState.PAYLOAD;
+                }
+                break;
+            }
+            case PAYLOAD: {
+                // Append payload byte.
+                mPayloadByteArray[mPayloadByteIndex] = dataByte;
+                mPayloadByteIndex++;
 
-        int crc = ByteBuffer.wrap(driver.read(CRC_SIZE))
-                .order(ByteOrder.LITTLE_ENDIAN).getShort() & 0xffff;
-        if (crc != calccrc) {
-            System.err.println("CRC error in received SBPMessage");
-            return null;
+                // Entire payload received ?
+                if (mPayloadByteIndex >= mHeaderLen) {
+                    mDecodeState = DecodeState.CRC;
+                }
+                break;
+            }
+            case CRC: {
+                // Append CRC byte.
+                mCrcByteArray[mCrcByteIndex] = dataByte;
+                mCrcByteIndex++;
+
+                // Entire header received ?
+                if (mCrcByteIndex >= CRC_SIZE) {
+                    // Calculate CRC of received data.
+                    int calccrc = CRC16.crc16(mHeaderByteArray);
+                    calccrc = CRC16.crc16(mPayloadByteArray, calccrc);
+
+                    // Unpack received CRC.
+                    int crc = ByteBuffer.wrap(mCrcByteArray).order(ByteOrder.LITTLE_ENDIAN).getShort() & 0xffff;
+
+                    // CRCs match ?
+                    if (crc == calccrc) {
+                        msg = new SBPMessage(mHeaderSender, mHeaderType, mPayloadByteArray);
+                        try {
+                            msg = MessageTable.dispatch(msg);
+                        } catch (SBPBinaryException e) {
+                            // Error decoding binary payload.
+                            msg = null;
+                            mPayloadDecodeErrorCount++;
+                        }
+                    }
+                    else
+                    {
+                        // Mismatch in calculate CRC vs that received.
+                        mCrcErrorCount++;
+                    }
+
+                    // Reset to perform parsing of next message.
+                    mDecodeState = DecodeState.PREAMBLE;
+                }
+                break;
+            }
         }
 
-        SBPMessage msg = new SBPMessage(sender, type, payload);
-        try {
-            msg = MessageTable.dispatch(msg);
-        } catch (SBPBinaryException e) {
-            System.err.print("Error decoding binary payload");
-            e.printStackTrace();
-        }
         return msg;
     }
 
-    /** Send an SBPMessage using the driver */
-    public void sendMessage(SBPMessage msg) throws IOException {
+    /** Encode an SBPMessage */
+    public ByteBuffer encodeMessage(SBPMessage msg) {
         byte[] payload = msg.getPayload();
         byte[] binmsg = new byte[PREAMBLE_SIZE + HEADER_SIZE + payload.length + CRC_SIZE];
         ByteBuffer bb = ByteBuffer.wrap(binmsg).order(ByteOrder.LITTLE_ENDIAN);
-        bb.put(PREAMBLE);
+        bb.put(PREAMBLE_VALUE);
         bb.putShort((short) msg.type);
         bb.putShort((short) msg.sender);
         bb.put((byte)payload.length);
         bb.put(payload);
         int crc = CRC16.crc16(Arrays.copyOfRange(binmsg, 1, payload.length + 6));
         bb.putShort((short) crc);
-        driver.write(bb.array());
+
+        return bb;
     }
 }
