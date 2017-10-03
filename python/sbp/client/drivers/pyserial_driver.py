@@ -48,6 +48,7 @@ class PySerialDriver(BaseDriver):
             handle.baudrate = baud
             handle.timeout = 1
             handle.rtscts = rtscts
+            handle.set_buffer_size(8192)
             super(PySerialDriver, self).__init__(handle)
         except (OSError, serial.SerialException) as e:
             print
