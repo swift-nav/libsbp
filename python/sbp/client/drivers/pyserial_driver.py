@@ -21,7 +21,7 @@ class Buf(Protocol):
     def __init__(self):
         self.buffer = bytearray()
         self.transport = None
-        self.new_data = threading.Event()
+        self.new_data = threading.Condition()
 
     def connection_made(self, transport):
         self.transport = transport
@@ -32,15 +32,10 @@ class Buf(Protocol):
 
     def data_received(self, data):
         """Buffer received data, find TERMINATOR, call handle_packet"""
-        # print('pre: prod acq')
-        # self.new_data.acquire()
-        # print('post: prod acq')
-        self.buffer.extend(data)
-        self.new_data.set()
-        self.new_data.clear()
+        with self.new_data:
+            self.buffer.extend(data)
+            self.new_data.notify()
 
-        # self.new_data.notify()
-        # self.new_data.release()
 
 
 try:
@@ -114,13 +109,12 @@ class PySerialDriver(BaseDriver):
         # print('pre: consume acq')
         # self._proto.new_data.acquire()
         # print('post: consume acq')
-        while len(self._proto.buffer) < size:
-            self._proto.new_data.wait()
-            # time.sleep(0.1)
-            # self._proto.new_data.wait()
-        res = self._proto.buffer[:size]
-        del self._proto.buffer[:size]
-        return bytes(res)
+        with self._proto.new_data:
+            while len(self._proto.buffer) < size:
+                self._proto.new_data.wait()
+            res = bytes(self._proto.buffer[:size])
+            del self._proto.buffer[:size]
+        return res
 
         # try:
         #     self._proto.new_data.acquire()
