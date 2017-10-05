@@ -148,6 +148,9 @@ class PySerialDriver(BaseDriver):
                 print
                 raise IOError
 
+    def close(self):
+        self._t.close()
+
     def __enter__(self):
         self.flush()
         return self
