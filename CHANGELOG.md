@@ -1,7 +1,114 @@
 # Change Log
 
-## [v2.2.4](https://github.com/swift-nav/libsbp/tree/v2.2.4)
+## [v2.2.15](https://github.com/swift-nav/libsbp/tree/v2.2.15)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.14...v2.2.15)
+
+**Closed issues:**
+
+- Missing test coverage for many current packet types [\#284](https://github.com/swift-nav/libsbp/issues/284)
+
+**Merged pull requests:**
+
+- Remove `deps` target; fix help/hint text [\#515](https://github.com/swift-nav/libsbp/pull/515)
+- Change default baud rate, make example more verbose [\#514](https://github.com/swift-nav/libsbp/pull/514)
+- Added ndb and signal messages to msg.js [\#512](https://github.com/swift-nav/libsbp/pull/512)
+- added tox as requirement to readme - added gnss, imu, and user to msg.js [\#511](https://github.com/swift-nav/libsbp/pull/511)
+
+## [v2.2.14](https://github.com/swift-nav/libsbp/tree/v2.2.14) (2017-09-19)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.13...v2.2.14)
+
+**Merged pull requests:**
+
+- python: pin pyftdi version to 0.13.4 [\#510](https://github.com/swift-nav/libsbp/pull/510)
+
+## [v2.2.13](https://github.com/swift-nav/libsbp/tree/v2.2.13) (2017-09-08)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.12...v2.2.13)
+
+**Closed issues:**
+
+- No messages print out when run simple.py [\#497](https://github.com/swift-nav/libsbp/issues/497)
+
+**Merged pull requests:**
+
+- python client cleanup, improvements [\#509](https://github.com/swift-nav/libsbp/pull/509)
+
+## [v2.2.12](https://github.com/swift-nav/libsbp/tree/v2.2.12) (2017-08-09)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.11...v2.2.12)
+
+**Merged pull requests:**
+
+- Remove MSG\_FCNS\_GLO [\#507](https://github.com/swift-nav/libsbp/pull/507)
+
+## [v2.2.11](https://github.com/swift-nav/libsbp/tree/v2.2.11) (2017-07-27)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.10...v2.2.11)
+
+**Closed issues:**
+
+- Java Build is Broken [\#495](https://github.com/swift-nav/libsbp/issues/495)
+
+## [v2.2.10](https://github.com/swift-nav/libsbp/tree/v2.2.10) (2017-07-27)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.8...v2.2.10)
+
+**Fixed bugs:**
+
+- Haskell library should decode from the binary payload rather than the expanded JSON data [\#461](https://github.com/swift-nav/libsbp/issues/461)
+
+**Closed issues:**
+
+- Piksi GPS setting reading using Java [\#502](https://github.com/swift-nav/libsbp/issues/502)
+- Support setup.py without a git repository [\#243](https://github.com/swift-nav/libsbp/issues/243)
+- Python generator should install dependencies from requirements.txt [\#134](https://github.com/swift-nav/libsbp/issues/134)
+
+**Merged pull requests:**
+
+- Building java. [\#506](https://github.com/swift-nav/libsbp/pull/506)
+- Refactoring haskell sdk [\#505](https://github.com/swift-nav/libsbp/pull/505)
+- Decode JSON on payload value + cleanup [\#504](https://github.com/swift-nav/libsbp/pull/504)
+- Update sbp.pdf [\#503](https://github.com/swift-nav/libsbp/pull/503)
+- use tox to create and manage venv [\#500](https://github.com/swift-nav/libsbp/pull/500)
+
+## [v2.2.8](https://github.com/swift-nav/libsbp/tree/v2.2.8) (2017-07-12)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.7...v2.2.8)
+
+**Closed issues:**
+
+- Compile failure / inaccurate version bounds with sbp-2.1.1 [\#416](https://github.com/swift-nav/libsbp/issues/416)
+
+## [v2.2.7](https://github.com/swift-nav/libsbp/tree/v2.2.7) (2017-07-03)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.6...v2.2.7)
+
+**Closed issues:**
+
+- httpretty listed twice in requirements.txt [\#492](https://github.com/swift-nav/libsbp/issues/492)
+
+**Merged pull requests:**
+
+- Support lts-8 [\#498](https://github.com/swift-nav/libsbp/pull/498)
+- fixes before 2.2.7 pypi release [\#494](https://github.com/swift-nav/libsbp/pull/494)
+- Remove dupe httpretty in requirements.txt and sort by alphabet [\#493](https://github.com/swift-nav/libsbp/pull/493)
+- generator and python library improvements [\#489](https://github.com/swift-nav/libsbp/pull/489)
+
+## [v2.2.6](https://github.com/swift-nav/libsbp/tree/v2.2.6) (2017-06-21)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.5...v2.2.6)
+
+**Merged pull requests:**
+
+- Pull out S3 Multi Log Iterator [\#490](https://github.com/swift-nav/libsbp/pull/490)
+- Command output [\#488](https://github.com/swift-nav/libsbp/pull/488)
+- Add IOD to SBP\_MSG\_EPHEMERIS\_GLO [\#487](https://github.com/swift-nav/libsbp/pull/487)
+- added channel ID tag to spectrum analyzer [\#486](https://github.com/swift-nav/libsbp/pull/486)
+- use setuptools\_scm for python versioning [\#485](https://github.com/swift-nav/libsbp/pull/485)
+- generator cleanup [\#480](https://github.com/swift-nav/libsbp/pull/480)
+
+## [v2.2.5](https://github.com/swift-nav/libsbp/tree/v2.2.5) (2017-06-13)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.4...v2.2.5)
+
+**Merged pull requests:**
+
+- renamed MANIFEST.IN to make it work on linux [\#483](https://github.com/swift-nav/libsbp/pull/483)
+
+## [v2.2.4](https://github.com/swift-nav/libsbp/tree/v2.2.4) (2017-06-10)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.3...v2.2.4)
 
 **Closed issues:**
@@ -10,6 +117,7 @@
 
 **Merged pull requests:**
 
+- V2.2.4 branch [\#482](https://github.com/swift-nav/libsbp/pull/482)
 - remove not implemented notes [\#481](https://github.com/swift-nav/libsbp/pull/481)
 - Python deps [\#478](https://github.com/swift-nav/libsbp/pull/478)
 - Generate bundled, browser-friendly version of libsbp  [\#476](https://github.com/swift-nav/libsbp/pull/476)

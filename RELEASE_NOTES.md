@@ -2,10 +2,18 @@ libsbp Release Notes
 ============================
 
 For a detailed index of changes, please see the
-[`CHANGELOG.md`](CHANGELOG).
+[`CHANGELOG.md`](CHANGELOG.md).
 
 Contents
 --------
+ * [v2.2.15](#v2.2.15)
+ * [v2.2.14](#v2.2.14)
+ * [v2.2.13](#v2.2.13)
+ * [v2.2.12](#v2.2.12)
+ * [v2.2.10](#v2.2.10)
+ * [v2.2.7](#v2.2.7)
+ * [v2.2.6](#v2.2.6)
+ * [v2.2.5](#v2.2.5)
  * [v2.2.4](#v2.2.4)
  * [v2.2.2](#v2.2.2)
  * [v2.2.1](#v2.2.1)
@@ -23,6 +31,45 @@ Contents
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
 
+v2.2.15 <a name="v2.2.15">
+--------------------------
+* Improve c example code (update baudrate for Piksi Multi and more debug info)
+* Update javascript bindings for missing messages
+
+v2.2.14 <a name="v2.2.14">
+--------------------------
+* update python dependencies
+
+v2.2.13 <a name="v2.2.13">
+--------------------------
+* Python client improvements and simple.py fixes
+* Python formatting updated to pep8
+* Python TCPClient autoreconnect
+
+v2.2.12 <a name="v2.2.12">
+--------------------------
+* Remove MSG\_FCNS\_GLO
+
+v2.2.10 <a name="v2.2.10">
+--------------------------
+* Haskell SDK improvements: Haskell library now decodes from binary payload
+* Fix broken Java build
+
+v2.2.7 <a name="v2.2.7">
+--------------------------
+* Python dependency fixes
+* Haskell: Support lts-8
+
+v2.2.6 <a name="v2.2.6">
+--------------------------
+* Add IOD to GLONASS Ephemeris Msg
+* Add channel ID tag to spectrum analyer message
+* Use setuptools\_scm for python versioning
+
+v2.2.5 <a name="v2.2.5">
+--------------------------
+* Renamed MANIFEST.IN to make it work on linux 
+
 v2.2.4 <a name="v2.2.4">
 --------------------------
 * Change python dependencies
@@ -32,7 +79,97 @@ v2.2.2 <a name="v2.2.2">
 --------------------------
 * Add extern "C" for c++
 * New MSG_TRACKING_STATE
-* New Spectrum analyzer message
+* New message
+
+v2.2.1 <a name="v2.2.1">
+--------------------------
+* Add decimal msg_id to PDF docs
+* Fix bug in pyserial driver that could hang and prevent exit
+* Fix ephemeris time to be seconds as it exists in all implementation
+
+v2.2.0 <a name="v2.2.0">
+--------------------------
+* Add Network Status Msg
+* Redefine Nanoseconds field of UTC time message as U32 rather than S32
+* Redefine Seconds field of UTC message as the floor of the current seconds in minute
+* Rename ns field that was a residual to ns_residual
+* Add RTCS/CTS option to python serial driver
+* Increase Network Driver timeouts for connection and reads
+* Add context manager to python client forwarder
+
+v2.1.8 <a name="v2.1.8">
+--------------------------
+* Add MSG_ALMANAC_GPS (0x70)
+* Add MSG_ALMANC_GLO (0x71)
+
+v2.1.7 <a name="v2.1.7">
+--------------------------
+* python client improvments (threadsafe write)
+* Python network driver improvements (verbosity in connection issues)
+
+v2.1.6 <a name="v2.1.6">
+--------------------------
+* Add MSG_NDB_EVENT
+
+v2.1.5 <a name="v2.1.5">
+--------------------------
+* Add CDC driver for usb CDC AMC devices
+
+v2.2.4 <a name="v2.2.4">
+--------------------------
+* Change python dependencies
+* Remove not implemented note for estimated accuracy fields
+
+v2.2.2 <a name="v2.2.2">
+--------------------------
+* Add extern "C" for c++
+* New MSG_TRACKING_STATE
+* New message
+
+v2.2.1 <a name="v2.2.1">
+--------------------------
+* Add decimal msg_id to PDF docs
+* Fix bug in pyserial driver that could hang and prevent exit
+* Fix ephemeris time to be seconds as it exists in all implementation
+
+v2.2.0 <a name="v2.2.0">
+--------------------------
+* Add Network Status Msg
+* Redefine Nanoseconds field of UTC time message as U32 rather than S32
+* Redefine Seconds field of UTC message as the floor of the current seconds in minute
+* Rename ns field that was a residual to ns_residual
+* Add RTCS/CTS option to python serial driver
+* Increase Network Driver timeouts for connection and reads
+* Add context manager to python client forwarder
+
+v2.1.8 <a name="v2.1.8">
+--------------------------
+* Add MSG_ALMANAC_GPS (0x70)
+* Add MSG_ALMANC_GLO (0x71)
+
+v2.1.7 <a name="v2.1.7">
+--------------------------
+* python client improvments (threadsafe write)
+* Python network driver improvements (verbosity in connection issues)
+
+v2.1.6 <a name="v2.1.6">
+--------------------------
+* Add MSG_NDB_EVENT
+
+v2.1.5 <a name="v2.1.5">
+--------------------------
+* Add CDC driver for usb CDC AMC devices
+
+v2.2.4 <a name="v2.2.4">
+--------------------------
+* Change python dependencies
+* Remove not implemented note for estimated accuracy fields
+
+v2.2.2 <a name="v2.2.2">
+--------------------------
+* Add extern "C" for c++
+* New MSG_TRACKING_STATE
+* New message
 
 v2.2.1 <a name="v2.2.1">
 --------------------------
