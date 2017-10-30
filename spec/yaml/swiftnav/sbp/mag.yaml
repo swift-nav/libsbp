@@ -1,0 +1,44 @@
+# Copyright (C) 2017 Swift Navigation Inc.
+# Contact: Jonathan Diamond <jonathan@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.mag
+description: Magnetometer (mag) messages.
+stable: False
+public: True
+include:
+  - types.yaml
+definitions:
+
+ - MSG_MAG_RAW:
+    id: 0x0902
+    short_desc: Raw magnetometer data
+    desc: |
+      Raw data from the magnetometer.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: |
+              Milliseconds since start of GPS week. If the high bit is set, the
+              time is unknown or invalid.
+        - tow_f:
+            type: u8
+            units: ms / 256
+            desc: |
+              Milliseconds since start of GPS week, fractional part
+        - mag_x:
+            type: s16
+            desc: Magnetic field in the body frame X axis
+        - mag_y:
+            type: s16
+            desc: Magnetic field in the body frame Y axis
+        - mag_z:
+            type: s16
+            desc: Magnetic field in the body frame Z axis
