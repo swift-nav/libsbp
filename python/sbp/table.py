@@ -29,6 +29,7 @@ from . import tracking as trac
 from . import ext_events as ext_events
 from . import user as user
 from . import imu as imu
+from . import mag as mag
 from . import ndb as ndb
 import warnings
 
@@ -45,6 +46,7 @@ _SBP_TABLE = dict(acq.msg_classes.items()
                   + trac.msg_classes.items()
                   + user.msg_classes.items()
                   + imu.msg_classes.items()
+                  + mag.msg_classes.items()
                   + ext_events.msg_classes.items()
                   + ndb.msg_classes.items())
 
