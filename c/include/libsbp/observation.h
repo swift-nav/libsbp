@@ -79,6 +79,28 @@ estimate for the signal is valid.
 } packed_obs_content_t;
 
 
+/** Header for observation message.
+ *
+* Header of a GNSS observation message.
+ */
+typedef struct __attribute__((packed)) {
+  u16 wn;     /**< GPS week number */
+  u32 tow;    /**< Time of week
+ */
+} az_el_header_t;
+
+
+/** Azimuth/elevation of observations.
+ *
+* Azimuth/elevation of observations.
+ */
+typedef struct __attribute__((packed)) {
+  gnss_signal16_t sid;    /**< GNSS signal being tracked */
+  u8 az;     /**< Azimuth [2 degrees] */
+  u8 el;     /**< Elevation. [degrees] */
+} packed_az_el_content_t;
+
+
 /** GPS satellite observations
  *
  * The GPS observations message reports all the raw pseudorange and
@@ -751,6 +773,18 @@ coordinate system
   double epsilon;        /**< Eccentricity at instant of t_lambda */
   double omega;          /**< Argument of perigee at instant of t_lambda [rad] */
 } msg_almanac_glo_t;
+
+
+/** Satellite azimuth and elevation
+ *
+ * Satellite azimuth and elevation.
+ */
+#define SBP_SBP_MSG_AZ_EL            0x0073
+typedef struct __attribute__((packed)) {
+  az_el_header_t header;    /**< Header of a azimuth/elevation message */
+  packed_az_el_content_t obs[0];    /**< Azimuth and elevation for a
+satellite being tracked. */
+} sbp_msg_az_el_t;
 
 
 /** \} */

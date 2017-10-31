@@ -118,6 +118,32 @@ definitions:
         - sid:
             type: GnssSignal16
             desc: GNSS signal identifier (16 bit)
+ - AzElHeader:
+    short_desc: Header for observation message.
+    desc: Header of a GNSS observation message.
+    fields:
+        - wn:
+            type: u16
+            desc: GPS week number
+        - tow:
+            type: u32
+            desc: |
+              Time of week
+ - PackedAzElContent:
+    short_desc: Azimuth/elevation of observations.
+    desc: Azimuth/elevation of observations.
+    fields:
+        - sid:
+            type: GnssSignal16
+            desc: GNSS signal being tracked
+        - az:
+            type: u8
+            units: 2 degrees
+            desc: Azimuth
+        - el:
+            type: u8
+            units: degrees
+            desc: Elevation.
 
  - MSG_OBS:
     id: 0x004A
@@ -1591,3 +1617,20 @@ definitions:
           type: double
           units: rad
           desc: Argument of perigee at instant of t_lambda
+
+ - SBP_MSG_AZ_EL:
+    id: 0x0073
+    short_desc: Satellite azimuth and elevation
+    desc: |
+      Satellite azimuth and elevation.
+    fields:
+        - header:
+            type: AzElHeader
+            desc: Header of a azimuth/elevation message
+        - obs:
+            type: array
+            fill: PackedAzElContent
+            map_by: sid
+            desc: |
+              Azimuth and elevation for a
+              satellite being tracked.

@@ -3804,7 +3804,87 @@ coordinate system
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
-    
+
+
+SBP_MSG_AZ_EL = 0x0073
+class MsgAzEl(SBP):
+    """SBP class for message SBP_MSG_AZ_EL (0x0073).
+
+    You can have MSG_TRACKING_STATE_DEP_B inherit its fields directly
+    from an inherited SBP object, or construct it inline using a dict
+    of its fields.
+
+
+    Deprecated.
+
+    Parameters
+    ----------
+    sbp : SBP
+      SBP parent object to inherit from.
+    states : array
+      Signal tracking channel state
+    sender : int
+      Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+    """
+    _parser = construct.Struct(
+        construct.GreedyRange('states' / construct.Struct(MsgAzEl._parser)),)
+    __slots__ = [
+        'states',
+    ]
+
+    def __init__(self, sbp=None, **kwargs):
+        if sbp:
+            super( MsgAzEl,
+                   self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                                  sbp.payload, sbp.crc)
+            self.from_binary(sbp.payload)
+        else:
+            super( MsgAzEl, self).__init__()
+            self.msg_type = SBP_MSG_AZ_EL
+            self.sender = kwargs.pop('sender', SENDER_ID)
+            self.states = kwargs.pop('states')
+
+    def __repr__(self):
+        return fmt_repr(self)
+
+    @staticmethod
+    def from_json(s):
+        """Given a JSON-encoded string s, build a message object.
+
+        """
+        d = json.loads(s)
+        return MsgAzEl.from_json_dict(d)
+
+    @staticmethod
+    def from_json_dict(d):
+        sbp = SBP.from_json_dict(d)
+        return MsgAzEl(sbp, **d)
+
+
+    def from_binary(self, d):
+        """Given a binary payload d, update the appropriate payload fields of
+        the message.
+
+        """
+        p = MsgAzEl._parser.parse(d)
+        for n in self.__class__.__slots__:
+            setattr(self, n, getattr(p, n))
+
+    def to_binary(self):
+        """Produce a framed/packed SBP message.
+
+        """
+        c = containerize(exclude_fields(self))
+        self.payload = MsgAzEl._parser.build(c)
+        return self.pack()
+
+    def to_json_dict(self):
+        self.to_binary()
+        d = super( MsgAzEl, self).to_json_dict()
+        j = walk_json_dict(exclude_fields(self))
+        d.update(j)
+        return d
 
 msg_classes = {
   0x004A: MsgObs,
@@ -3831,4 +3911,5 @@ msg_classes = {
   0x0093: MsgGroupDelay,
   0x0070: MsgAlmanacGPS,
   0x0071: MsgAlmanacGlo,
+  0x0073  : MsgAzEl,
 }
