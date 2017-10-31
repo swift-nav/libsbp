@@ -190,6 +190,92 @@ estimate for the signal is valid.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return PackedObsContent.build(d)
     
+class AzElHeader(object):
+  """AzElHeader.
+  
+  Header of a GNSS observation message.
+  
+  Parameters
+  ----------
+  wn : int
+    GPS week number
+  tow : int
+    Time of week
+
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'wn' / construct.Int16ul,
+                     'tow' / construct.Int32ul,))
+  __slots__ = [
+               'wn',
+               'tow',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.wn = kwargs.pop('wn')
+      self.tow = kwargs.pop('tow')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = AzElHeader._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return AzElHeader.build(d)
+    
+class PackedAzElContent(object):
+  """PackedAzElContent.
+  
+  Azimuth/elevation of observations.
+  
+  Parameters
+  ----------
+  sid : GnssSignal16
+    GNSS signal being tracked
+  az : int
+    Azimuth
+  el : int
+    Elevation.
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'sid' / construct.Struct(GnssSignal16._parser),
+                     'az' / construct.Int8ul,
+                     'el' / construct.Int8ul,))
+  __slots__ = [
+               'sid',
+               'az',
+               'el',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sid = kwargs.pop('sid')
+      self.az = kwargs.pop('az')
+      self.el = kwargs.pop('el')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = PackedAzElContent._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return PackedAzElContent.build(d)
+    
 class EphemerisCommonContent(object):
   """EphemerisCommonContent.
   
@@ -3805,6 +3891,93 @@ coordinate system
     d.update(j)
     return d
     
+SBP_SBP_MSG_AZ_EL = 0x0073
+class SbpMsgAzEl(SBP):
+  """SBP class for message SBP_MSG_AZ_EL (0x0073).
+
+  You can have SBP_MSG_AZ_EL inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Satellite azimuth and elevation.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : AzElHeader
+    Header of a azimuth/elevation message
+  obs : array
+    Azimuth and elevation for a
+satellite being tracked.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / construct.Struct(AzElHeader._parser),
+                   construct.GreedyRange('obs' / construct.Struct(PackedAzElContent._parser)),)
+  __slots__ = [
+               'header',
+               'obs',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( SbpMsgAzEl,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( SbpMsgAzEl, self).__init__()
+      self.msg_type = SBP_SBP_MSG_AZ_EL
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.obs = kwargs.pop('obs')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return SbpMsgAzEl.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return SbpMsgAzEl(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = SbpMsgAzEl._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = SbpMsgAzEl._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( SbpMsgAzEl, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x004A: MsgObs,
@@ -3831,4 +4004,5 @@ msg_classes = {
   0x0093: MsgGroupDelay,
   0x0070: MsgAlmanacGPS,
   0x0071: MsgAlmanacGlo,
+  0x0073: SbpMsgAzEl,
 }
