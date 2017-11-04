@@ -1,8 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
-{-# LANGUAGE NoImplicitPrelude           #-}
-{-# LANGUAGE TemplateHaskell             #-}
-{-# LANGUAGE RecordWildCards             #-}
-{-# LANGUAGE OverloadedStrings           #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards   #-}
+{-# LANGUAGE TemplateHaskell   #-}
 
 -- |
 -- Module:      SwiftNav.SBP.Msg
@@ -39,8 +39,8 @@ import SwiftNav.SBP.Piksi
 import SwiftNav.SBP.Settings
 import SwiftNav.SBP.System
 import SwiftNav.SBP.Tracking
-import SwiftNav.SBP.User
 import SwiftNav.SBP.Types
+import SwiftNav.SBP.User
 
 
 -- | An SBP message ADT composed of all defined SBP messages.
