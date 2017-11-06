@@ -458,9 +458,9 @@ $(makeJSON "_msgIarState_" ''MsgIarState)
 $(makeLenses ''MsgIarState)
 
 msgMaskSatellite :: Word16
-msgMaskSatellite = 0x001B
+msgMaskSatellite = 0x002B
 
--- | SBP class for message MSG_MASK_SATELLITE (0x001B).
+-- | SBP class for message MSG_MASK_SATELLITE (0x002B).
 --
 -- This message allows setting a mask to prevent a particular satellite from
 -- being used in various Piksi subsystems.
@@ -484,6 +484,33 @@ instance Binary MsgMaskSatellite where
 $(makeSBP 'msgMaskSatellite ''MsgMaskSatellite)
 $(makeJSON "_msgMaskSatellite_" ''MsgMaskSatellite)
 $(makeLenses ''MsgMaskSatellite)
+
+msgMaskSatelliteDep :: Word16
+msgMaskSatelliteDep = 0x001B
+
+-- | SBP class for message MSG_MASK_SATELLITE_DEP (0x001B).
+--
+-- Deprecated.
+data MsgMaskSatelliteDep = MsgMaskSatelliteDep
+  { _msgMaskSatelliteDep_mask :: !Word8
+    -- ^ Mask of systems that should ignore this satellite.
+  , _msgMaskSatelliteDep_sid :: !GnssSignalDep
+    -- ^ GNSS signal for which the mask is applied
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgMaskSatelliteDep where
+  get = do
+    _msgMaskSatelliteDep_mask <- getWord8
+    _msgMaskSatelliteDep_sid <- get
+    pure MsgMaskSatelliteDep {..}
+
+  put MsgMaskSatelliteDep {..} = do
+    putWord8 _msgMaskSatelliteDep_mask
+    put _msgMaskSatelliteDep_sid
+
+$(makeSBP 'msgMaskSatelliteDep ''MsgMaskSatelliteDep)
+$(makeJSON "_msgMaskSatelliteDep_" ''MsgMaskSatelliteDep)
+$(makeLenses ''MsgMaskSatelliteDep)
 
 msgDeviceMonitor :: Word16
 msgDeviceMonitor = 0x00B5
@@ -683,10 +710,57 @@ $(makeSBP 'msgNetworkStateResp ''MsgNetworkStateResp)
 $(makeJSON "_msgNetworkStateResp_" ''MsgNetworkStateResp)
 $(makeLenses ''MsgNetworkStateResp)
 
-msgSpecan :: Word16
-msgSpecan = 0x0050
+msgSpecanDep :: Word16
+msgSpecanDep = 0x0050
 
--- | SBP class for message MSG_SPECAN (0x0050).
+-- | SBP class for message MSG_SPECAN_DEP (0x0050).
+--
+-- Deprecated.
+data MsgSpecanDep = MsgSpecanDep
+  { _msgSpecanDep_channel_tag   :: !Word16
+    -- ^ Channel ID
+  , _msgSpecanDep_t             :: !GpsTimeDep
+    -- ^ Receiver time of this observation
+  , _msgSpecanDep_freq_ref      :: !Float
+    -- ^ Reference frequency of this packet
+  , _msgSpecanDep_freq_step     :: !Float
+    -- ^ Frequency step of points in this packet
+  , _msgSpecanDep_amplitude_ref :: !Float
+    -- ^ Reference amplitude of this packet
+  , _msgSpecanDep_amplitude_unit :: !Float
+    -- ^ Amplitude unit value of points in this packet
+  , _msgSpecanDep_amplitude_value :: ![Word8]
+    -- ^ Amplitude values (in the above units) of points in this packet
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSpecanDep where
+  get = do
+    _msgSpecanDep_channel_tag <- getWord16le
+    _msgSpecanDep_t <- get
+    _msgSpecanDep_freq_ref <- getFloat32le
+    _msgSpecanDep_freq_step <- getFloat32le
+    _msgSpecanDep_amplitude_ref <- getFloat32le
+    _msgSpecanDep_amplitude_unit <- getFloat32le
+    _msgSpecanDep_amplitude_value <- whileM (not <$> isEmpty) getWord8
+    pure MsgSpecanDep {..}
+
+  put MsgSpecanDep {..} = do
+    putWord16le _msgSpecanDep_channel_tag
+    put _msgSpecanDep_t
+    putFloat32le _msgSpecanDep_freq_ref
+    putFloat32le _msgSpecanDep_freq_step
+    putFloat32le _msgSpecanDep_amplitude_ref
+    putFloat32le _msgSpecanDep_amplitude_unit
+    mapM_ putWord8 _msgSpecanDep_amplitude_value
+
+$(makeSBP 'msgSpecanDep ''MsgSpecanDep)
+$(makeJSON "_msgSpecanDep_" ''MsgSpecanDep)
+$(makeLenses ''MsgSpecanDep)
+
+msgSpecan :: Word16
+msgSpecan = 0x0051
+
+-- | SBP class for message MSG_SPECAN (0x0051).
 --
 -- Spectrum analyzer packet.
 data MsgSpecan = MsgSpecan

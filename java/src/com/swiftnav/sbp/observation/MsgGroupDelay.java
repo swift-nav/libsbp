@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_GROUP_DELAY (0x0093).
+/** SBP class for message MSG_GROUP_DELAY (0x0094).
  *
  * You can have MSG_GROUP_DELAY inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -33,7 +33,7 @@ import org.json.JSONArray;
 * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details. */
 
 public class MsgGroupDelay extends SBPMessage {
-    public static final int TYPE = 0x0093;
+    public static final int TYPE = 0x0094;
 
     
     /** Data Predict Time of Week */

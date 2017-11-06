@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_MASK_SATELLITE (0x001B).
+/** SBP class for message MSG_MASK_SATELLITE (0x002B).
  *
  * You can have MSG_MASK_SATELLITE inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -34,7 +34,7 @@ import org.json.JSONArray;
  * from being used in various Piksi subsystems. */
 
 public class MsgMaskSatellite extends SBPMessage {
-    public static final int TYPE = 0x001B;
+    public static final int TYPE = 0x002B;
 
     
     /** Mask of systems that should ignore this satellite. */

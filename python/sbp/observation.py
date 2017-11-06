@@ -33,7 +33,7 @@ class ObservationHeader(object):
   
   Parameters
   ----------
-  t : GPSTimeNano
+  t : GPSTime
     GNSS time of this observation
   n_obs : int
     Total number of observations. First nibble is the size
@@ -43,7 +43,7 @@ counter (ith packet of n)
 
   """
   _parser = construct.Embedded(construct.Struct(
-                     't' / construct.Struct(GPSTimeNano._parser),
+                     't' / construct.Struct(GPSTime._parser),
                      'n_obs' / construct.Int8ul,))
   __slots__ = [
                't',
@@ -144,7 +144,7 @@ from 0 to 15 and the most significant nibble is reserved for future use.
 status of this observation.  If this field is 0 it means only the Cn0
 estimate for the signal is valid.
 
-  sid : GnssSignal16
+  sid : GnssSignal
     GNSS signal identifier (16 bit)
 
   """
@@ -155,7 +155,7 @@ estimate for the signal is valid.
                      'cn0' / construct.Int8ul,
                      'lock' / construct.Int8ul,
                      'flags' / construct.Int8ul,
-                     'sid' / construct.Struct(GnssSignal16._parser),))
+                     'sid' / construct.Struct(GnssSignal._parser),))
   __slots__ = [
                'P',
                'L',
@@ -196,7 +196,7 @@ class EphemerisCommonContent(object):
   
   Parameters
   ----------
-  sid : GnssSignal16
+  sid : GnssSignal
     GNSS signal identifier (16 bit)
   toe : GPSTimeSec
     Time of Ephemerides
@@ -215,7 +215,7 @@ GLO: 0 = valid, non-zero = invalid
 
   """
   _parser = construct.Embedded(construct.Struct(
-                     'sid' / construct.Struct(GnssSignal16._parser),
+                     'sid' / construct.Struct(GnssSignal._parser),
                      'toe' / construct.Struct(GPSTimeSec._parser),
                      'ura' / construct.Float64l,
                      'fit_interval' / construct.Int32ul,
@@ -259,9 +259,9 @@ class EphemerisCommonContentDepA(object):
   
   Parameters
   ----------
-  sid : GnssSignal
+  sid : GnssSignalDep
     GNSS signal identifier
-  toe : GPSTime
+  toe : GPSTimeDep
     Time of Ephemerides
   ura : double
     User Range Accuracy
@@ -278,8 +278,8 @@ GLO: 0 = valid, non-zero = invalid
 
   """
   _parser = construct.Embedded(construct.Struct(
-                     'sid' / construct.Struct(GnssSignal._parser),
-                     'toe' / construct.Struct(GPSTime._parser),
+                     'sid' / construct.Struct(GnssSignalDep._parser),
+                     'toe' / construct.Struct(GPSTimeDep._parser),
                      'ura' / construct.Float64l,
                      'fit_interval' / construct.Int32ul,
                      'valid' / construct.Int8ul,
@@ -323,7 +323,7 @@ class ObservationHeaderDep(object):
   
   Parameters
   ----------
-  t : GPSTime
+  t : GPSTimeDep
     GPS time of this observation
   n_obs : int
     Total number of observations. First nibble is the size
@@ -333,7 +333,7 @@ counter (ith packet of n)
 
   """
   _parser = construct.Embedded(construct.Struct(
-                     't' / construct.Struct(GPSTime._parser),
+                     't' / construct.Struct(GPSTimeDep._parser),
                      'n_obs' / construct.Int8ul,))
   __slots__ = [
                't',
@@ -482,7 +482,7 @@ tracked.  Pseudoranges are referenced to a nominal pseudorange.
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
 
-  sid : GnssSignal
+  sid : GnssSignalDep
     GNSS signal identifier
 
   """
@@ -491,7 +491,7 @@ carrier phase ambiguity may have changed.
                      'L' / construct.Struct(CarrierPhaseDepA._parser),
                      'cn0' / construct.Int8ul,
                      'lock' / construct.Int16ul,
-                     'sid' / construct.Struct(GnssSignal._parser),))
+                     'sid' / construct.Struct(GnssSignalDep._parser),))
   __slots__ = [
                'P',
                'L',
@@ -543,7 +543,7 @@ receivers and conform with typical RTCMv3 GNSS observations.
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
 
-  sid : GnssSignal
+  sid : GnssSignalDep
     GNSS signal identifier
 
   """
@@ -552,7 +552,7 @@ carrier phase ambiguity may have changed.
                      'L' / construct.Struct(CarrierPhase._parser),
                      'cn0' / construct.Int8ul,
                      'lock' / construct.Int16ul,
-                     'sid' / construct.Struct(GnssSignal._parser),))
+                     'sid' / construct.Struct(GnssSignalDep._parser),))
   __slots__ = [
                'P',
                'L',
@@ -656,6 +656,80 @@ Satellite health status for GLO:
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return AlmanacCommonContent.build(d)
+    
+class AlmanacCommonContentDep(object):
+  """AlmanacCommonContentDep.
+  
+  
+  Parameters
+  ----------
+  sid : GnssSignalDep
+    GNSS signal identifier
+  toa : GPSTimeSec
+    Reference time of almanac
+  ura : double
+    User Range Accuracy
+  fit_interval : int
+    Curve fit interval
+  valid : int
+    Status of almanac, 1 = valid, 0 = invalid
+  health_bits : int
+    Satellite health status for GPS:
+  - bits 5-7: NAV data health status. See IS-GPS-200H
+    Table 20-VII: NAV Data Health Indications.
+  - bits 0-4: Signal health status. See IS-GPS-200H
+    Table 20-VIII. Codes for Health of SV Signal
+    Components.
+Satellite health status for GLO:
+  See GLO ICD 5.1 table 5.1 for details
+  - bit 0: C(n), "unhealthy" flag that is transmitted within
+    non-immediate data and indicates overall constellation status
+    at the moment of almanac uploading.
+    '0' indicates malfunction of n-satellite.
+    '1' indicates that n-satellite is operational.
+  - bit 1: Bn(ln), '0' indicates the satellite is operational
+    and suitable for navigation.
+
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'sid' / construct.Struct(GnssSignalDep._parser),
+                     'toa' / construct.Struct(GPSTimeSec._parser),
+                     'ura' / construct.Float64l,
+                     'fit_interval' / construct.Int32ul,
+                     'valid' / construct.Int8ul,
+                     'health_bits' / construct.Int8ul,))
+  __slots__ = [
+               'sid',
+               'toa',
+               'ura',
+               'fit_interval',
+               'valid',
+               'health_bits',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sid = kwargs.pop('sid')
+      self.toa = kwargs.pop('toa')
+      self.ura = kwargs.pop('ura')
+      self.fit_interval = kwargs.pop('fit_interval')
+      self.valid = kwargs.pop('valid')
+      self.health_bits = kwargs.pop('health_bits')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = AlmanacCommonContentDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return AlmanacCommonContentDep.build(d)
     
 SBP_MSG_OBS = 0x004A
 class MsgObs(SBP):
@@ -1002,7 +1076,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Polynomial clock correction coefficient (clock drift)
   af2 : double
     Polynomial clock correction coefficient (rate of clock drift)
-  toc : GPSTime
+  toc : GPSTimeDep
     Clock reference
   iode : int
     Issue of ephemeris data
@@ -1033,7 +1107,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    'af0' / construct.Float64l,
                    'af1' / construct.Float64l,
                    'af2' / construct.Float64l,
-                   'toc' / construct.Struct(GPSTime._parser),
+                   'toc' / construct.Struct(GPSTimeDep._parser),
                    'iode' / construct.Int8ul,
                    'iodc' / construct.Int16ul,)
   __slots__ = [
@@ -2075,7 +2149,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Is valid?
   healthy : int
     Satellite is healthy?
-  sid : GnssSignal
+  sid : GnssSignalDep
     GNSS signal identifier
   iode : int
     Issue of ephemeris data
@@ -2113,7 +2187,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    'toc_wn' / construct.Int16ul,
                    'valid' / construct.Int8ul,
                    'healthy' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'sid' / construct.Struct(GnssSignalDep._parser),
                    'iode' / construct.Int8ul,
                    'iodc' / construct.Int16ul,
                    'reserved' / construct.Int32ul,)
@@ -2715,7 +2789,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     Is valid?
   healthy : int
     Satellite is healthy?
-  sid : GnssSignal
+  sid : GnssSignalDep
     GNSS signal identifier
   iode : int
     Issue of ephemeris data
@@ -2753,7 +2827,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    'toc_wn' / construct.Int16ul,
                    'valid' / construct.Int8ul,
                    'healthy' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'sid' / construct.Struct(GnssSignalDep._parser),
                    'iode' / construct.Int8ul,
                    'iodc' / construct.Int16ul,
                    'reserved' / construct.Int32ul,)
@@ -3360,7 +3434,7 @@ class MsgGroupDelayDepA(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  t_op : GPSTime
+  t_op : GPSTimeDep
     Data Predict Time of Week
   prn : int
     Satellite number
@@ -3377,7 +3451,7 @@ LSB indicating tgd validity etc.
 
   """
   _parser = construct.Struct(
-                   't_op' / construct.Struct(GPSTime._parser),
+                   't_op' / construct.Struct(GPSTimeDep._parser),
                    'prn' / construct.Int8ul,
                    'valid' / construct.Int8ul,
                    'tgd' / construct.Int16sl,
@@ -3450,9 +3524,114 @@ LSB indicating tgd validity etc.
     d.update(j)
     return d
     
-SBP_MSG_GROUP_DELAY = 0x0093
+SBP_MSG_GROUP_DELAY_DEP_B = 0x0093
+class MsgGroupDelayDepB(SBP):
+  """SBP class for message MSG_GROUP_DELAY_DEP_B (0x0093).
+
+  You can have MSG_GROUP_DELAY_DEP_B inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  t_op : GPSTimeSec
+    Data Predict Time of Week
+  sid : GnssSignalDep
+    GNSS signal identifier
+  valid : int
+    bit-field indicating validity of the values,
+LSB indicating tgd validity etc.
+1 = value is valid, 0 = value is not valid.
+
+  tgd : int
+  isc_l1ca : int
+  isc_l2c : int
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   't_op' / construct.Struct(GPSTimeSec._parser),
+                   'sid' / construct.Struct(GnssSignalDep._parser),
+                   'valid' / construct.Int8ul,
+                   'tgd' / construct.Int16sl,
+                   'isc_l1ca' / construct.Int16sl,
+                   'isc_l2c' / construct.Int16sl,)
+  __slots__ = [
+               't_op',
+               'sid',
+               'valid',
+               'tgd',
+               'isc_l1ca',
+               'isc_l2c',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgGroupDelayDepB,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgGroupDelayDepB, self).__init__()
+      self.msg_type = SBP_MSG_GROUP_DELAY_DEP_B
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.t_op = kwargs.pop('t_op')
+      self.sid = kwargs.pop('sid')
+      self.valid = kwargs.pop('valid')
+      self.tgd = kwargs.pop('tgd')
+      self.isc_l1ca = kwargs.pop('isc_l1ca')
+      self.isc_l2c = kwargs.pop('isc_l2c')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgGroupDelayDepB.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgGroupDelayDepB(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgGroupDelayDepB._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgGroupDelayDepB._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgGroupDelayDepB, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_GROUP_DELAY = 0x0094
 class MsgGroupDelay(SBP):
-  """SBP class for message MSG_GROUP_DELAY (0x0093).
+  """SBP class for message MSG_GROUP_DELAY (0x0094).
 
   You can have MSG_GROUP_DELAY inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -3555,9 +3734,138 @@ LSB indicating tgd validity etc.
     d.update(j)
     return d
     
-SBP_MSG_ALMANAC_GPS = 0x0070
+SBP_MSG_ALMANAC_GPS_DEP = 0x0070
+class MsgAlmanacGPSDep(SBP):
+  """SBP class for message MSG_ALMANAC_GPS_DEP (0x0070).
+
+  You can have MSG_ALMANAC_GPS_DEP inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The almanac message returns a set of satellite orbit parameters. Almanac
+data is not very precise and is considered valid for up to several months.
+Please see the Navstar GPS Space Segment/Navigation user interfaces
+(ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  common : AlmanacCommonContentDep
+    Values common for all almanac types
+  m0 : double
+    Mean anomaly at reference time
+  ecc : double
+    Eccentricity of satellite orbit
+  sqrta : double
+    Square root of the semi-major axis of orbit
+  omega0 : double
+    Longitude of ascending node of orbit plane at weekly epoch
+  omegadot : double
+    Rate of right ascension
+  w : double
+    Argument of perigee
+  inc : double
+    Inclination
+  af0 : double
+    Polynomial clock correction coefficient (clock bias)
+  af1 : double
+    Polynomial clock correction coefficient (clock drift)
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'common' / construct.Struct(AlmanacCommonContentDep._parser),
+                   'm0' / construct.Float64l,
+                   'ecc' / construct.Float64l,
+                   'sqrta' / construct.Float64l,
+                   'omega0' / construct.Float64l,
+                   'omegadot' / construct.Float64l,
+                   'w' / construct.Float64l,
+                   'inc' / construct.Float64l,
+                   'af0' / construct.Float64l,
+                   'af1' / construct.Float64l,)
+  __slots__ = [
+               'common',
+               'm0',
+               'ecc',
+               'sqrta',
+               'omega0',
+               'omegadot',
+               'w',
+               'inc',
+               'af0',
+               'af1',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgAlmanacGPSDep,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgAlmanacGPSDep, self).__init__()
+      self.msg_type = SBP_MSG_ALMANAC_GPS_DEP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.common = kwargs.pop('common')
+      self.m0 = kwargs.pop('m0')
+      self.ecc = kwargs.pop('ecc')
+      self.sqrta = kwargs.pop('sqrta')
+      self.omega0 = kwargs.pop('omega0')
+      self.omegadot = kwargs.pop('omegadot')
+      self.w = kwargs.pop('w')
+      self.inc = kwargs.pop('inc')
+      self.af0 = kwargs.pop('af0')
+      self.af1 = kwargs.pop('af1')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgAlmanacGPSDep.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgAlmanacGPSDep(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgAlmanacGPSDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgAlmanacGPSDep._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgAlmanacGPSDep, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_ALMANAC_GPS = 0x0072
 class MsgAlmanacGPS(SBP):
-  """SBP class for message MSG_ALMANAC_GPS (0x0070).
+  """SBP class for message MSG_ALMANAC_GPS (0x0072).
 
   You can have MSG_ALMANAC_GPS inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -3684,9 +3992,130 @@ Please see the Navstar GPS Space Segment/Navigation user interfaces
     d.update(j)
     return d
     
-SBP_MSG_ALMANAC_GLO = 0x0071
+SBP_MSG_ALMANAC_GLO_DEP = 0x0071
+class MsgAlmanacGloDep(SBP):
+  """SBP class for message MSG_ALMANAC_GLO_DEP (0x0071).
+
+  You can have MSG_ALMANAC_GLO_DEP inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The almanac message returns a set of satellite orbit parameters. Almanac
+data is not very precise and is considered valid for up to several months.
+Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
+almanac" for details.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  common : AlmanacCommonContentDep
+    Values common for all almanac types
+  lambda_na : double
+    Longitude of the first ascending node of the orbit in PZ-90.02
+coordinate system
+
+  t_lambda_na : double
+    Time of the first ascending node passage
+  i : double
+    Value of inclination at instant of t_lambda
+  t : double
+    Value of Draconian period at instant of t_lambda
+  t_dot : double
+    Rate of change of the Draconian period
+  epsilon : double
+    Eccentricity at instant of t_lambda
+  omega : double
+    Argument of perigee at instant of t_lambda
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'common' / construct.Struct(AlmanacCommonContentDep._parser),
+                   'lambda_na' / construct.Float64l,
+                   't_lambda_na' / construct.Float64l,
+                   'i' / construct.Float64l,
+                   't' / construct.Float64l,
+                   't_dot' / construct.Float64l,
+                   'epsilon' / construct.Float64l,
+                   'omega' / construct.Float64l,)
+  __slots__ = [
+               'common',
+               'lambda_na',
+               't_lambda_na',
+               'i',
+               't',
+               't_dot',
+               'epsilon',
+               'omega',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgAlmanacGloDep,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgAlmanacGloDep, self).__init__()
+      self.msg_type = SBP_MSG_ALMANAC_GLO_DEP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.common = kwargs.pop('common')
+      self.lambda_na = kwargs.pop('lambda_na')
+      self.t_lambda_na = kwargs.pop('t_lambda_na')
+      self.i = kwargs.pop('i')
+      self.t = kwargs.pop('t')
+      self.t_dot = kwargs.pop('t_dot')
+      self.epsilon = kwargs.pop('epsilon')
+      self.omega = kwargs.pop('omega')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgAlmanacGloDep.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgAlmanacGloDep(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgAlmanacGloDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgAlmanacGloDep._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgAlmanacGloDep, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_ALMANAC_GLO = 0x0073
 class MsgAlmanacGlo(SBP):
-  """SBP class for message MSG_ALMANAC_GLO (0x0071).
+  """SBP class for message MSG_ALMANAC_GLO (0x0073).
 
   You can have MSG_ALMANAC_GLO inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -3828,7 +4257,10 @@ msg_classes = {
   0x0090: MsgIono,
   0x0091: MsgSvConfigurationGPS,
   0x0092: MsgGroupDelayDepA,
-  0x0093: MsgGroupDelay,
-  0x0070: MsgAlmanacGPS,
-  0x0071: MsgAlmanacGlo,
+  0x0093: MsgGroupDelayDepB,
+  0x0094: MsgGroupDelay,
+  0x0070: MsgAlmanacGPSDep,
+  0x0072: MsgAlmanacGPS,
+  0x0071: MsgAlmanacGloDep,
+  0x0073: MsgAlmanacGlo,
 }

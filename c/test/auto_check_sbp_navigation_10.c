@@ -126,9 +126,9 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
     fail_unless(msg->ns_residual == 166900, "incorrect value for ns_residual, expected 166900, is %d", msg->ns_residual);
     fail_unless(msg->tow == 326825000, "incorrect value for tow, expected 326825000, is %d", msg->tow);
+    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
   }
   // Test successful parsing of a message
   {
@@ -170,9 +170,9 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
     fail_unless(msg->ns_residual == 256638, "incorrect value for ns_residual, expected 256638, is %d", msg->ns_residual);
     fail_unless(msg->tow == 326825500, "incorrect value for tow, expected 326825500, is %d", msg->tow);
+    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
   }
   // Test successful parsing of a message
   {
@@ -214,9 +214,9 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
     fail_unless(msg->ns_residual == 265345, "incorrect value for ns_residual, expected 265345, is %d", msg->ns_residual);
     fail_unless(msg->tow == 326826000, "incorrect value for tow, expected 326826000, is %d", msg->tow);
+    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
   }
   // Test successful parsing of a message
   {
@@ -258,9 +258,9 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
     fail_unless(msg->ns_residual == 314505, "incorrect value for ns_residual, expected 314505, is %d", msg->ns_residual);
     fail_unless(msg->tow == 326826500, "incorrect value for tow, expected 326826500, is %d", msg->tow);
+    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
   }
   // Test successful parsing of a message
   {
@@ -302,9 +302,9 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
     fail_unless(msg->ns_residual == 362933, "incorrect value for ns_residual, expected 362933, is %d", msg->ns_residual);
     fail_unless(msg->tow == 326827000, "incorrect value for tow, expected 326827000, is %d", msg->tow);
+    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
   }
 }
 END_TEST

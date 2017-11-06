@@ -19,7 +19,7 @@ include:
 definitions:
 
  - MSG_TRACKING_STATE_DETAILED:
-    id: 0x0011
+    id: 0x0021
     short_desc: Detailed signal tracking channel states
     public: False
     desc: |
@@ -244,6 +244,232 @@ definitions:
                         - 2: Reserved
                         - 3: Reserved
 
+ - MSG_TRACKING_STATE_DETAILED_DEP:
+    id: 0x0011
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: False
+    replaced_by:
+      - MSG_TRACKING_STATE_DETAILED
+    fields:
+        - recv_time:
+            type: u64
+            units: ns
+            desc: Receiver clock time.
+        - tot:
+            type: GPSTimeDep
+            desc: |
+              Time of transmission of signal from satellite. TOW only valid when
+              TOW status is decoded or propagated. WN only valid when week
+              number valid flag is set.
+        - P:
+            type: u32
+            units: 2 cm
+            desc: |
+              Pseudorange observation. Valid only when pseudorange valid flag is
+              set.
+        - P_std:
+            type: u16
+            units: 2 cm
+            desc: |
+              Pseudorange observation standard deviation. Valid only when
+              pseudorange valid flag is set.
+        - L:
+            type: CarrierPhase
+            units: cycles
+            desc: |
+              Carrier phase observation with typical sign convention. Valid only
+              when PLL pessimistic lock is achieved.
+        - cn0:
+            type: u8
+            units: dB Hz / 4
+            desc: Carrier-to-Noise density
+        - lock:
+            type: u16
+            desc: |
+              Lock time. It is encoded according to DF402 from the RTCM 10403.2
+              Amendment 2 specification. Valid values range from 0 to 15.
+        - sid:
+            type: GnssSignalDep
+            desc: GNSS signal identifier.
+        - doppler:
+            type: s32
+            units: Hz / 16
+            desc: Carrier Doppler frequency.
+        - doppler_std:
+            type: u16
+            units: Hz / 16
+            desc: Carrier Doppler frequency standard deviation.
+        - uptime:
+            type: u32
+            units: s
+            desc: |
+              Number of seconds of continuous tracking. Specifies how much time
+              signal is in continuous track.
+        - clock_offset:
+            type: s16
+            units: s / (2 ^ 20)
+            desc: |
+              TCXO clock offset. Valid only when valid clock valid flag is set.
+        - clock_drift:
+            type: s16
+            units: (s / s) / (2 ^ 31)
+            desc: |
+              TCXO clock drift. Valid only when valid clock valid flag is set.
+        - corr_spacing:
+            type: u16
+            units: ns
+            desc: Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
+        - acceleration:
+            type: s8
+            units: g / 8
+            desc: Acceleration. Valid only when acceleration valid flag is set.
+        - sync_flags:
+            type: u8
+            desc: Synchronization status flags.
+            fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: Synchronization status.
+                    values:
+                        - 0: No synchronization
+                        - 1: Bit synchronization
+                        - 2: Word synchronization (L1 C/A only)
+                        - 3: |
+                            Sub-frame synchronization (L1 C/A) /
+                            message synchronization (L2C)
+                        - 4: Reserved
+                        - 5: Reserved
+                        - 6: Reserved
+                        - 7: Reserved
+        - tow_flags:
+            type: u8
+            desc: TOW status flags.
+            fields:
+                - 4-7:
+                    desc: Reserved
+                - 3:
+                    desc: Week number validity status.
+                    values:
+                        - 0: Week number is not valid
+                        - 1: Week number is valid
+                - 0-2:
+                    desc: TOW status.
+                    values:
+                        - 0: TOW is not available
+                        - 1: Decoded TOW is available
+                        - 2: Propagated TOW is available
+                        - 3: Reserved
+                        - 4: Reserved
+                        - 5: Reserved
+                        - 6: Reserved
+                        - 7: Reserved
+        - track_flags:
+            type: u8
+            desc: Tracking loop status flags.
+            fields:
+                - 5-7:
+                    desc: Reserved
+                - 4:
+                    desc: FLL status.
+                    values:
+                        - 0: FLL is inactive
+                        - 1: FLL is active
+                - 3:
+                    desc: PLL status.
+                    values:
+                        - 0: PLL is inactive
+                        - 1: PLL is active
+                - 0-2:
+                    desc: Tracking loop status.
+                    values:
+                        - 0: No locks
+                        - 1: FLL/DLL lock
+                        - 2: PLL optimistic lock
+                        - 3: PLL pessimistic lock
+                        - 4: Reserved
+                        - 5: Reserved
+                        - 6: Reserved
+                        - 7: Reserved
+        - nav_flags:
+            type: u8
+            desc: Navigation data status flags.
+            fields:
+                - 5-7:
+                    desc: Reserved
+                - 4:
+                    desc: Almanac availability status.
+                    values:
+                        - 0: Almanac is not available
+                        - 1: Almanac is available
+                - 3:
+                    desc: Ephemeris availability status.
+                    values:
+                        - 0: Ephemeris is not available
+                        - 1: Ephemeris is available
+                - 0-2:
+                    desc: Health status.
+                    values:
+                        - 0: Health is unknown
+                        - 1: Signal is unhealthy
+                        - 2: Signal is healthy
+                        - 3: Reserved
+                        - 4: Reserved
+                        - 5: Reserved
+                        - 6: Reserved
+                        - 7: Reserved
+        - pset_flags:
+            type: u8
+            desc: Parameters sets flags.
+            fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: Parameter sets.
+                    values:
+                        - 0: 1 ms integration time
+                        - 1: 5 ms integration time
+                        - 2: 10 ms integration time
+                        - 3: 20 ms integration time
+                        - 4: Reserved
+                        - 5: Reserved
+                        - 6: Reserved
+                        - 7: Reserved
+        - misc_flags:
+            type: u8
+            desc: Miscellaneous flags.
+            fields:
+                - 6-7:
+                    desc: Reserved
+                - 5:
+                    desc: Clock validity status.
+                    values:
+                        - 0: Clock offset and drift is not valid
+                        - 1: Clock offset and drift is valid
+                - 4:
+                    desc: Pseudorange validity status.
+                    values:
+                        - 0: Pseudorange is not valid
+                        - 1: Pseudorange is valid
+                - 3:
+                    desc: Acceleration validity status.
+                    values:
+                        - 0: Acceleration is not valid
+                        - 1: Acceleration is valid
+                - 2:
+                    desc: Carrier half cycle ambiguity status.
+                    values:
+                        - 0: Unresolved
+                        - 1: Resolved
+                - 0-1:
+                    desc: Tracking channel status.
+                    values:
+                        - 0: Re-acquisition
+                        - 1: Running
+                        - 2: Reserved
+                        - 3: Reserved
+
  - TrackingChannelState:
     short_desc: Signal tracking channel state
     desc: |
@@ -251,7 +477,7 @@ definitions:
       measured signal power.
     fields:
         - sid:
-            type: GnssSignal16
+            type: GnssSignal
             desc: GNSS signal being tracked
         - fcn:
             type: u8
@@ -287,7 +513,7 @@ definitions:
             desc: Quadrature correlation
 
  - MSG_TRACKING_IQ:
-    id: 0x001C
+    id: 0x002C
     short_desc: Tracking channel correlations
     desc: |
       When enabled, a tracking channel can output the correlations at each
@@ -298,6 +524,26 @@ definitions:
           desc: Tracking channel of origin
       - sid:
           type: GnssSignal
+          desc: GNSS signal identifier
+      - corrs:
+          type: array
+          fill: TrackingChannelCorrelation
+          size: 3
+          desc: Early, Prompt and Late correlations
+
+ - MSG_TRACKING_IQ_DEP:
+    id: 0x001C
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: False
+    replaced_by:
+      - MSG_TRACKING_IQ
+    fields:
+      - channel:
+          type: u8
+          desc: Tracking channel of origin
+      - sid:
+          type: GnssSignalDep
           desc: GNSS signal identifier
       - corrs:
           type: array
@@ -361,7 +607,7 @@ definitions:
                         - 0: Disabled
                         - 1: Running
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal being tracked
         - cn0:
             type: float

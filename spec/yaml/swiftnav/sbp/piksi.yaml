@@ -275,7 +275,7 @@ definitions:
             desc: Number of integer ambiguity hypotheses remaining
 
  - MSG_MASK_SATELLITE:
-    id: 0x001B
+    id: 0x002B
     short_desc: Mask a satellite from use in Piksi subsystems
     desc: |
       This message allows setting a mask to prevent a particular satellite
@@ -299,6 +299,34 @@ definitions:
                         - 1: Skip this satellite on future acquisitions
         - sid:
             type: GnssSignal
+            desc: GNSS signal for which the mask is applied
+
+ - MSG_MASK_SATELLITE_DEP:
+    id: 0x001B
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: False
+    replaced_by:
+      - MSG_MASK_SATELLITE
+    fields:
+        - mask:
+            type: u8
+            desc: Mask of systems that should ignore this satellite.
+            fields:
+                - 2-7:
+                    desc: Reserved
+                - 1:
+                    desc: Tracking channels
+                    values:
+                        - 0: Enabled
+                        - 1: Drop this PRN if currently tracking
+                - 0:
+                    desc: Acquisition channel
+                    values:
+                        - 0: Enabled
+                        - 1: Skip this satellite on future acquisitions
+        - sid:
+            type: GnssSignalDep
             desc: GNSS signal for which the mask is applied
 
  - MSG_DEVICE_MONITOR:
@@ -455,8 +483,48 @@ definitions:
             - 0:
                 desc: IFF_UP - interface is up
 
- - MSG_SPECAN:
+ - MSG_SPECAN_DEP:
     id: 0x0050
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: False
+    replaced_by:
+      - MSG_SPECAN
+    fields:
+        - channel_tag:
+            type: u16
+            desc: Channel ID
+        - t:
+            type: GPSTimeDep
+            desc: Receiver time of this observation
+        - freq_ref:
+            type: float
+            units: MHz
+            desc: |
+                Reference frequency of this packet
+        - freq_step:
+            type: float
+            units: MHz
+            desc: |
+                Frequency step of points in this packet
+        - amplitude_ref:
+            type: float
+            units: dB
+            desc: |
+                Reference amplitude of this packet
+        - amplitude_unit:
+            type: float
+            units: dB
+            desc: |
+                Amplitude unit value of points in this packet
+        - amplitude_value:
+            type: array
+            fill: u8
+            desc: |
+                Amplitude values (in the above units) of points in this packet
+
+ - MSG_SPECAN:
+    id: 0x0051
     short_desc: Spectrum analyzer
     desc: |
         Spectrum analyzer packet.

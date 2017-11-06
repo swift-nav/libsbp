@@ -37,9 +37,9 @@ import SwiftNav.SBP.Gnss
 
 
 msgAcqResult :: Word16
-msgAcqResult = 0x001F
+msgAcqResult = 0x002F
 
--- | SBP class for message MSG_ACQ_RESULT (0x001F).
+-- | SBP class for message MSG_ACQ_RESULT (0x002F).
 --
 -- This message describes the results from an attempted GPS signal acquisition
 -- search for a satellite PRN over a code phase/carrier frequency range. It
@@ -74,6 +74,41 @@ $(makeSBP 'msgAcqResult ''MsgAcqResult)
 $(makeJSON "_msgAcqResult_" ''MsgAcqResult)
 $(makeLenses ''MsgAcqResult)
 
+msgAcqResultDepC :: Word16
+msgAcqResultDepC = 0x001F
+
+-- | SBP class for message MSG_ACQ_RESULT_DEP_C (0x001F).
+--
+-- Deprecated.
+data MsgAcqResultDepC = MsgAcqResultDepC
+  { _msgAcqResultDepC_cn0 :: !Float
+    -- ^ CN/0 of best point
+  , _msgAcqResultDepC_cp :: !Float
+    -- ^ Code phase of best point
+  , _msgAcqResultDepC_cf :: !Float
+    -- ^ Carrier frequency of best point
+  , _msgAcqResultDepC_sid :: !GnssSignalDep
+    -- ^ GNSS signal for which acquisition was attempted
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgAcqResultDepC where
+  get = do
+    _msgAcqResultDepC_cn0 <- getFloat32le
+    _msgAcqResultDepC_cp <- getFloat32le
+    _msgAcqResultDepC_cf <- getFloat32le
+    _msgAcqResultDepC_sid <- get
+    pure MsgAcqResultDepC {..}
+
+  put MsgAcqResultDepC {..} = do
+    putFloat32le _msgAcqResultDepC_cn0
+    putFloat32le _msgAcqResultDepC_cp
+    putFloat32le _msgAcqResultDepC_cf
+    put _msgAcqResultDepC_sid
+
+$(makeSBP 'msgAcqResultDepC ''MsgAcqResultDepC)
+$(makeJSON "_msgAcqResultDepC_" ''MsgAcqResultDepC)
+$(makeLenses ''MsgAcqResultDepC)
+
 msgAcqResultDepB :: Word16
 msgAcqResultDepB = 0x0014
 
@@ -88,7 +123,7 @@ data MsgAcqResultDepB = MsgAcqResultDepB
     -- ^ Code phase of best point
   , _msgAcqResultDepB_cf :: !Float
     -- ^ Carrier frequency of best point
-  , _msgAcqResultDepB_sid :: !GnssSignal
+  , _msgAcqResultDepB_sid :: !GnssSignalDep
     -- ^ GNSS signal for which acquisition was attempted
   } deriving ( Show, Read, Eq )
 
@@ -212,10 +247,73 @@ instance Binary AcqSvProfile where
 $(makeJSON "_acqSvProfile_" ''AcqSvProfile)
 $(makeLenses ''AcqSvProfile)
 
-msgAcqSvProfile :: Word16
-msgAcqSvProfile = 0x001E
+-- | AcqSvProfileDep.
+--
+-- Deprecated.
+data AcqSvProfileDep = AcqSvProfileDep
+  { _acqSvProfileDep_job_type :: !Word8
+    -- ^ SV search job type (deep, fallback, etc)
+  , _acqSvProfileDep_status   :: !Word8
+    -- ^ Acquisition status 1 is Success, 0 is Failure
+  , _acqSvProfileDep_cn0      :: !Word16
+    -- ^ CN0 value. Only valid if status is '1'
+  , _acqSvProfileDep_int_time :: !Word8
+    -- ^ Acquisition integration time
+  , _acqSvProfileDep_sid      :: !GnssSignalDep
+    -- ^ GNSS signal for which acquisition was attempted
+  , _acqSvProfileDep_bin_width :: !Word16
+    -- ^ Acq frequency bin width
+  , _acqSvProfileDep_timestamp :: !Word32
+    -- ^ Timestamp of the job complete event
+  , _acqSvProfileDep_time_spent :: !Word32
+    -- ^ Time spent to search for sid.code
+  , _acqSvProfileDep_cf_min   :: !Int32
+    -- ^ Doppler range lowest frequency
+  , _acqSvProfileDep_cf_max   :: !Int32
+    -- ^ Doppler range highest frequency
+  , _acqSvProfileDep_cf       :: !Int32
+    -- ^ Doppler value of detected peak. Only valid if status is '1'
+  , _acqSvProfileDep_cp       :: !Word32
+    -- ^ Codephase of detected peak. Only valid if status is '1'
+  } deriving ( Show, Read, Eq )
 
--- | SBP class for message MSG_ACQ_SV_PROFILE (0x001E).
+instance Binary AcqSvProfileDep where
+  get = do
+    _acqSvProfileDep_job_type <- getWord8
+    _acqSvProfileDep_status <- getWord8
+    _acqSvProfileDep_cn0 <- getWord16le
+    _acqSvProfileDep_int_time <- getWord8
+    _acqSvProfileDep_sid <- get
+    _acqSvProfileDep_bin_width <- getWord16le
+    _acqSvProfileDep_timestamp <- getWord32le
+    _acqSvProfileDep_time_spent <- getWord32le
+    _acqSvProfileDep_cf_min <- fromIntegral <$> getWord32le
+    _acqSvProfileDep_cf_max <- fromIntegral <$> getWord32le
+    _acqSvProfileDep_cf <- fromIntegral <$> getWord32le
+    _acqSvProfileDep_cp <- getWord32le
+    pure AcqSvProfileDep {..}
+
+  put AcqSvProfileDep {..} = do
+    putWord8 _acqSvProfileDep_job_type
+    putWord8 _acqSvProfileDep_status
+    putWord16le _acqSvProfileDep_cn0
+    putWord8 _acqSvProfileDep_int_time
+    put _acqSvProfileDep_sid
+    putWord16le _acqSvProfileDep_bin_width
+    putWord32le _acqSvProfileDep_timestamp
+    putWord32le _acqSvProfileDep_time_spent
+    putWord32le $ fromIntegral _acqSvProfileDep_cf_min
+    putWord32le $ fromIntegral _acqSvProfileDep_cf_max
+    putWord32le $ fromIntegral _acqSvProfileDep_cf
+    putWord32le _acqSvProfileDep_cp
+
+$(makeJSON "_acqSvProfileDep_" ''AcqSvProfileDep)
+$(makeLenses ''AcqSvProfileDep)
+
+msgAcqSvProfile :: Word16
+msgAcqSvProfile = 0x002E
+
+-- | SBP class for message MSG_ACQ_SV_PROFILE (0x002E).
 --
 -- The message describes all SV profiles during acquisition time. The message
 -- is used to debug and measure the performance.
@@ -235,3 +333,26 @@ instance Binary MsgAcqSvProfile where
 $(makeSBP 'msgAcqSvProfile ''MsgAcqSvProfile)
 $(makeJSON "_msgAcqSvProfile_" ''MsgAcqSvProfile)
 $(makeLenses ''MsgAcqSvProfile)
+
+msgAcqSvProfileDep :: Word16
+msgAcqSvProfileDep = 0x001E
+
+-- | SBP class for message MSG_ACQ_SV_PROFILE_DEP (0x001E).
+--
+-- Deprecated.
+data MsgAcqSvProfileDep = MsgAcqSvProfileDep
+  { _msgAcqSvProfileDep_acq_sv_profile :: ![AcqSvProfileDep]
+    -- ^ SV profiles during acquisition time
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgAcqSvProfileDep where
+  get = do
+    _msgAcqSvProfileDep_acq_sv_profile <- whileM (not <$> isEmpty) get
+    pure MsgAcqSvProfileDep {..}
+
+  put MsgAcqSvProfileDep {..} = do
+    mapM_ put _msgAcqSvProfileDep_acq_sv_profile
+
+$(makeSBP 'msgAcqSvProfileDep ''MsgAcqSvProfileDep)
+$(makeJSON "_msgAcqSvProfileDep_" ''MsgAcqSvProfileDep)
+$(makeLenses ''MsgAcqSvProfileDep)

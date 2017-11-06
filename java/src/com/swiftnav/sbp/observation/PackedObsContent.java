@@ -54,7 +54,7 @@ estimate for the signal is valid.
     public int flags;
     
     /** GNSS signal identifier (16 bit) */
-    public GnssSignal16 sid;
+    public GnssSignal sid;
     
 
     public PackedObsContent () {}
@@ -68,7 +68,7 @@ estimate for the signal is valid.
         cn0 = parser.getU8();
         lock = parser.getU8();
         flags = parser.getU8();
-        sid = new GnssSignal16().parse(parser);
+        sid = new GnssSignal().parse(parser);
         return this;
     }
 

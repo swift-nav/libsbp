@@ -40,7 +40,7 @@ import SwiftNav.SBP.Gnss
 --
 -- Header of a GNSS observation message.
 data ObservationHeader = ObservationHeader
-  { _observationHeader_t   :: !GpsTimeNano
+  { _observationHeader_t   :: !GpsTime
     -- ^ GNSS time of this observation
   , _observationHeader_n_obs :: !Word8
     -- ^ Total number of observations. First nibble is the size of the sequence
@@ -110,7 +110,7 @@ data PackedObsContent = PackedObsContent
     -- ^ Measurement status flags. A bit field of flags providing the status of
     -- this observation.  If this field is 0 it means only the Cn0 estimate for
     -- the signal is valid.
-  , _packedObsContent_sid :: !GnssSignal16
+  , _packedObsContent_sid :: !GnssSignal
     -- ^ GNSS signal identifier (16 bit)
   } deriving ( Show, Read, Eq )
 
@@ -239,7 +239,7 @@ $(makeJSON "_msgBasePosEcef_" ''MsgBasePosEcef)
 $(makeLenses ''MsgBasePosEcef)
 
 data EphemerisCommonContent = EphemerisCommonContent
-  { _ephemerisCommonContent_sid        :: !GnssSignal16
+  { _ephemerisCommonContent_sid        :: !GnssSignal
     -- ^ GNSS signal identifier (16 bit)
   , _ephemerisCommonContent_toe        :: !GpsTimeSec
     -- ^ Time of Ephemerides
@@ -276,9 +276,9 @@ $(makeJSON "_ephemerisCommonContent_" ''EphemerisCommonContent)
 $(makeLenses ''EphemerisCommonContent)
 
 data EphemerisCommonContentDepA = EphemerisCommonContentDepA
-  { _ephemerisCommonContentDepA_sid        :: !GnssSignal
+  { _ephemerisCommonContentDepA_sid        :: !GnssSignalDep
     -- ^ GNSS signal identifier
-  , _ephemerisCommonContentDepA_toe        :: !GpsTime
+  , _ephemerisCommonContentDepA_toe        :: !GpsTimeDep
     -- ^ Time of Ephemerides
   , _ephemerisCommonContentDepA_ura        :: !Double
     -- ^ User Range Accuracy
@@ -366,7 +366,7 @@ data MsgEphemerisGpsDepE = MsgEphemerisGpsDepE
     -- ^ Polynomial clock correction coefficient (clock drift)
   , _msgEphemerisGpsDepE_af2    :: !Double
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
-  , _msgEphemerisGpsDepE_toc    :: !GpsTime
+  , _msgEphemerisGpsDepE_toc    :: !GpsTimeDep
     -- ^ Clock reference
   , _msgEphemerisGpsDepE_iode   :: !Word8
     -- ^ Issue of ephemeris data
@@ -896,7 +896,7 @@ data MsgEphemerisDepD = MsgEphemerisDepD
     -- ^ Is valid?
   , _msgEphemerisDepD_healthy :: !Word8
     -- ^ Satellite is healthy?
-  , _msgEphemerisDepD_sid    :: !GnssSignal
+  , _msgEphemerisDepD_sid    :: !GnssSignalDep
     -- ^ GNSS signal identifier
   , _msgEphemerisDepD_iode   :: !Word8
     -- ^ Issue of ephemeris data
@@ -1296,7 +1296,7 @@ data MsgEphemerisDepC = MsgEphemerisDepC
     -- ^ Is valid?
   , _msgEphemerisDepC_healthy :: !Word8
     -- ^ Satellite is healthy?
-  , _msgEphemerisDepC_sid    :: !GnssSignal
+  , _msgEphemerisDepC_sid    :: !GnssSignalDep
     -- ^ GNSS signal identifier
   , _msgEphemerisDepC_iode   :: !Word8
     -- ^ Issue of ephemeris data
@@ -1378,7 +1378,7 @@ $(makeLenses ''MsgEphemerisDepC)
 --
 -- Header of a GPS observation message.
 data ObservationHeaderDep = ObservationHeaderDep
-  { _observationHeaderDep_t   :: !GpsTime
+  { _observationHeaderDep_t   :: !GpsTimeDep
     -- ^ GPS time of this observation
   , _observationHeaderDep_n_obs :: !Word8
     -- ^ Total number of observations. First nibble is the size of the sequence
@@ -1476,7 +1476,7 @@ data PackedObsContentDepB = PackedObsContentDepB
     -- ^ Lock indicator. This value changes whenever a satellite signal has lost
     -- and regained lock, indicating that the carrier phase ambiguity may have
     -- changed.
-  , _packedObsContentDepB_sid :: !GnssSignal
+  , _packedObsContentDepB_sid :: !GnssSignalDep
     -- ^ GNSS signal identifier
   } deriving ( Show, Read, Eq )
 
@@ -1515,7 +1515,7 @@ data PackedObsContentDepC = PackedObsContentDepC
     -- ^ Lock indicator. This value changes whenever a satellite signal has lost
     -- and regained lock, indicating that the carrier phase ambiguity may have
     -- changed.
-  , _packedObsContentDepC_sid :: !GnssSignal
+  , _packedObsContentDepC_sid :: !GnssSignalDep
     -- ^ GNSS signal identifier
   } deriving ( Show, Read, Eq )
 
@@ -1710,7 +1710,7 @@ msgGroupDelayDepA = 0x0092
 --
 -- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 data MsgGroupDelayDepA = MsgGroupDelayDepA
-  { _msgGroupDelayDepA_t_op   :: !GpsTime
+  { _msgGroupDelayDepA_t_op   :: !GpsTimeDep
     -- ^ Data Predict Time of Week
   , _msgGroupDelayDepA_prn    :: !Word8
     -- ^ Satellite number
@@ -1744,10 +1744,51 @@ $(makeSBP 'msgGroupDelayDepA ''MsgGroupDelayDepA)
 $(makeJSON "_msgGroupDelayDepA_" ''MsgGroupDelayDepA)
 $(makeLenses ''MsgGroupDelayDepA)
 
-msgGroupDelay :: Word16
-msgGroupDelay = 0x0093
+msgGroupDelayDepB :: Word16
+msgGroupDelayDepB = 0x0093
 
--- | SBP class for message MSG_GROUP_DELAY (0x0093).
+-- | SBP class for message MSG_GROUP_DELAY_DEP_B (0x0093).
+--
+-- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+data MsgGroupDelayDepB = MsgGroupDelayDepB
+  { _msgGroupDelayDepB_t_op   :: !GpsTimeSec
+    -- ^ Data Predict Time of Week
+  , _msgGroupDelayDepB_sid    :: !GnssSignalDep
+    -- ^ GNSS signal identifier
+  , _msgGroupDelayDepB_valid  :: !Word8
+    -- ^ bit-field indicating validity of the values, LSB indicating tgd validity
+    -- etc. 1 = value is valid, 0 = value is not valid.
+  , _msgGroupDelayDepB_tgd    :: !Int16
+  , _msgGroupDelayDepB_isc_l1ca :: !Int16
+  , _msgGroupDelayDepB_isc_l2c :: !Int16
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgGroupDelayDepB where
+  get = do
+    _msgGroupDelayDepB_t_op <- get
+    _msgGroupDelayDepB_sid <- get
+    _msgGroupDelayDepB_valid <- getWord8
+    _msgGroupDelayDepB_tgd <- fromIntegral <$> getWord16le
+    _msgGroupDelayDepB_isc_l1ca <- fromIntegral <$> getWord16le
+    _msgGroupDelayDepB_isc_l2c <- fromIntegral <$> getWord16le
+    pure MsgGroupDelayDepB {..}
+
+  put MsgGroupDelayDepB {..} = do
+    put _msgGroupDelayDepB_t_op
+    put _msgGroupDelayDepB_sid
+    putWord8 _msgGroupDelayDepB_valid
+    putWord16le $ fromIntegral _msgGroupDelayDepB_tgd
+    putWord16le $ fromIntegral _msgGroupDelayDepB_isc_l1ca
+    putWord16le $ fromIntegral _msgGroupDelayDepB_isc_l2c
+
+$(makeSBP 'msgGroupDelayDepB ''MsgGroupDelayDepB)
+$(makeJSON "_msgGroupDelayDepB_" ''MsgGroupDelayDepB)
+$(makeLenses ''MsgGroupDelayDepB)
+
+msgGroupDelay :: Word16
+msgGroupDelay = 0x0094
+
+-- | SBP class for message MSG_GROUP_DELAY (0x0094).
 --
 -- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 data MsgGroupDelay = MsgGroupDelay
@@ -1830,10 +1871,117 @@ instance Binary AlmanacCommonContent where
 $(makeJSON "_almanacCommonContent_" ''AlmanacCommonContent)
 $(makeLenses ''AlmanacCommonContent)
 
-msgAlmanacGps :: Word16
-msgAlmanacGps = 0x0070
+data AlmanacCommonContentDep = AlmanacCommonContentDep
+  { _almanacCommonContentDep_sid        :: !GnssSignalDep
+    -- ^ GNSS signal identifier
+  , _almanacCommonContentDep_toa        :: !GpsTimeSec
+    -- ^ Reference time of almanac
+  , _almanacCommonContentDep_ura        :: !Double
+    -- ^ User Range Accuracy
+  , _almanacCommonContentDep_fit_interval :: !Word32
+    -- ^ Curve fit interval
+  , _almanacCommonContentDep_valid      :: !Word8
+    -- ^ Status of almanac, 1 = valid, 0 = invalid
+  , _almanacCommonContentDep_health_bits :: !Word8
+    -- ^ Satellite health status for GPS:   - bits 5-7: NAV data health status.
+    -- See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
+    -- 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
+    -- Health of SV Signal     Components. Satellite health status for GLO:
+    -- See GLO ICD 5.1 table 5.1 for details   - bit 0: C(n), "unhealthy" flag
+    -- that is transmitted within     non-immediate data and indicates overall
+    -- constellation status     at the moment of almanac uploading.     '0'
+    -- indicates malfunction of n-satellite.     '1' indicates that n-satellite
+    -- is operational.   - bit 1: Bn(ln), '0' indicates the satellite is
+    -- operational     and suitable for navigation.
+  } deriving ( Show, Read, Eq )
 
--- | SBP class for message MSG_ALMANAC_GPS (0x0070).
+instance Binary AlmanacCommonContentDep where
+  get = do
+    _almanacCommonContentDep_sid <- get
+    _almanacCommonContentDep_toa <- get
+    _almanacCommonContentDep_ura <- getFloat64le
+    _almanacCommonContentDep_fit_interval <- getWord32le
+    _almanacCommonContentDep_valid <- getWord8
+    _almanacCommonContentDep_health_bits <- getWord8
+    pure AlmanacCommonContentDep {..}
+
+  put AlmanacCommonContentDep {..} = do
+    put _almanacCommonContentDep_sid
+    put _almanacCommonContentDep_toa
+    putFloat64le _almanacCommonContentDep_ura
+    putWord32le _almanacCommonContentDep_fit_interval
+    putWord8 _almanacCommonContentDep_valid
+    putWord8 _almanacCommonContentDep_health_bits
+
+$(makeJSON "_almanacCommonContentDep_" ''AlmanacCommonContentDep)
+$(makeLenses ''AlmanacCommonContentDep)
+
+msgAlmanacGpsDep :: Word16
+msgAlmanacGpsDep = 0x0070
+
+-- | SBP class for message MSG_ALMANAC_GPS_DEP (0x0070).
+--
+-- The almanac message returns a set of satellite orbit parameters. Almanac
+-- data is not very precise and is considered valid for up to several months.
+-- Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+-- GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+data MsgAlmanacGpsDep = MsgAlmanacGpsDep
+  { _msgAlmanacGpsDep_common :: !AlmanacCommonContentDep
+    -- ^ Values common for all almanac types
+  , _msgAlmanacGpsDep_m0     :: !Double
+    -- ^ Mean anomaly at reference time
+  , _msgAlmanacGpsDep_ecc    :: !Double
+    -- ^ Eccentricity of satellite orbit
+  , _msgAlmanacGpsDep_sqrta  :: !Double
+    -- ^ Square root of the semi-major axis of orbit
+  , _msgAlmanacGpsDep_omega0 :: !Double
+    -- ^ Longitude of ascending node of orbit plane at weekly epoch
+  , _msgAlmanacGpsDep_omegadot :: !Double
+    -- ^ Rate of right ascension
+  , _msgAlmanacGpsDep_w      :: !Double
+    -- ^ Argument of perigee
+  , _msgAlmanacGpsDep_inc    :: !Double
+    -- ^ Inclination
+  , _msgAlmanacGpsDep_af0    :: !Double
+    -- ^ Polynomial clock correction coefficient (clock bias)
+  , _msgAlmanacGpsDep_af1    :: !Double
+    -- ^ Polynomial clock correction coefficient (clock drift)
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgAlmanacGpsDep where
+  get = do
+    _msgAlmanacGpsDep_common <- get
+    _msgAlmanacGpsDep_m0 <- getFloat64le
+    _msgAlmanacGpsDep_ecc <- getFloat64le
+    _msgAlmanacGpsDep_sqrta <- getFloat64le
+    _msgAlmanacGpsDep_omega0 <- getFloat64le
+    _msgAlmanacGpsDep_omegadot <- getFloat64le
+    _msgAlmanacGpsDep_w <- getFloat64le
+    _msgAlmanacGpsDep_inc <- getFloat64le
+    _msgAlmanacGpsDep_af0 <- getFloat64le
+    _msgAlmanacGpsDep_af1 <- getFloat64le
+    pure MsgAlmanacGpsDep {..}
+
+  put MsgAlmanacGpsDep {..} = do
+    put _msgAlmanacGpsDep_common
+    putFloat64le _msgAlmanacGpsDep_m0
+    putFloat64le _msgAlmanacGpsDep_ecc
+    putFloat64le _msgAlmanacGpsDep_sqrta
+    putFloat64le _msgAlmanacGpsDep_omega0
+    putFloat64le _msgAlmanacGpsDep_omegadot
+    putFloat64le _msgAlmanacGpsDep_w
+    putFloat64le _msgAlmanacGpsDep_inc
+    putFloat64le _msgAlmanacGpsDep_af0
+    putFloat64le _msgAlmanacGpsDep_af1
+
+$(makeSBP 'msgAlmanacGpsDep ''MsgAlmanacGpsDep)
+$(makeJSON "_msgAlmanacGpsDep_" ''MsgAlmanacGpsDep)
+$(makeLenses ''MsgAlmanacGpsDep)
+
+msgAlmanacGps :: Word16
+msgAlmanacGps = 0x0072
+
+-- | SBP class for message MSG_ALMANAC_GPS (0x0072).
 --
 -- The almanac message returns a set of satellite orbit parameters. Almanac
 -- data is not very precise and is considered valid for up to several months.
@@ -1892,10 +2040,65 @@ $(makeSBP 'msgAlmanacGps ''MsgAlmanacGps)
 $(makeJSON "_msgAlmanacGps_" ''MsgAlmanacGps)
 $(makeLenses ''MsgAlmanacGps)
 
-msgAlmanacGlo :: Word16
-msgAlmanacGlo = 0x0071
+msgAlmanacGloDep :: Word16
+msgAlmanacGloDep = 0x0071
 
--- | SBP class for message MSG_ALMANAC_GLO (0x0071).
+-- | SBP class for message MSG_ALMANAC_GLO_DEP (0x0071).
+--
+-- The almanac message returns a set of satellite orbit parameters. Almanac
+-- data is not very precise and is considered valid for up to several months.
+-- Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
+-- almanac" for details.
+data MsgAlmanacGloDep = MsgAlmanacGloDep
+  { _msgAlmanacGloDep_common    :: !AlmanacCommonContentDep
+    -- ^ Values common for all almanac types
+  , _msgAlmanacGloDep_lambda_na :: !Double
+    -- ^ Longitude of the first ascending node of the orbit in PZ-90.02
+    -- coordinate system
+  , _msgAlmanacGloDep_t_lambda_na :: !Double
+    -- ^ Time of the first ascending node passage
+  , _msgAlmanacGloDep_i         :: !Double
+    -- ^ Value of inclination at instant of t_lambda
+  , _msgAlmanacGloDep_t         :: !Double
+    -- ^ Value of Draconian period at instant of t_lambda
+  , _msgAlmanacGloDep_t_dot     :: !Double
+    -- ^ Rate of change of the Draconian period
+  , _msgAlmanacGloDep_epsilon   :: !Double
+    -- ^ Eccentricity at instant of t_lambda
+  , _msgAlmanacGloDep_omega     :: !Double
+    -- ^ Argument of perigee at instant of t_lambda
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgAlmanacGloDep where
+  get = do
+    _msgAlmanacGloDep_common <- get
+    _msgAlmanacGloDep_lambda_na <- getFloat64le
+    _msgAlmanacGloDep_t_lambda_na <- getFloat64le
+    _msgAlmanacGloDep_i <- getFloat64le
+    _msgAlmanacGloDep_t <- getFloat64le
+    _msgAlmanacGloDep_t_dot <- getFloat64le
+    _msgAlmanacGloDep_epsilon <- getFloat64le
+    _msgAlmanacGloDep_omega <- getFloat64le
+    pure MsgAlmanacGloDep {..}
+
+  put MsgAlmanacGloDep {..} = do
+    put _msgAlmanacGloDep_common
+    putFloat64le _msgAlmanacGloDep_lambda_na
+    putFloat64le _msgAlmanacGloDep_t_lambda_na
+    putFloat64le _msgAlmanacGloDep_i
+    putFloat64le _msgAlmanacGloDep_t
+    putFloat64le _msgAlmanacGloDep_t_dot
+    putFloat64le _msgAlmanacGloDep_epsilon
+    putFloat64le _msgAlmanacGloDep_omega
+
+$(makeSBP 'msgAlmanacGloDep ''MsgAlmanacGloDep)
+$(makeJSON "_msgAlmanacGloDep_" ''MsgAlmanacGloDep)
+$(makeLenses ''MsgAlmanacGloDep)
+
+msgAlmanacGlo :: Word16
+msgAlmanacGlo = 0x0073
+
+-- | SBP class for message MSG_ALMANAC_GLO (0x0073).
 --
 -- The almanac message returns a set of satellite orbit parameters. Almanac
 -- data is not very precise and is considered valid for up to several months.

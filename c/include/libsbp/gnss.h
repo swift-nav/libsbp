@@ -33,22 +33,22 @@
 typedef struct __attribute__((packed)) {
   u8 sat;     /**< Constellation-specific satellite identifier */
   u8 code;    /**< Signal constellation, band and code */
-} gnss_signal16_t;
+} sbp_gnss_signal_t;
 
 
-/** Represents all the relevant information about the signal
+/** Deprecated
  *
- * Signal identifier containing constellation, band, and satellite identifier
+* Deprecated.
  */
 typedef struct __attribute__((packed)) {
   u16 sat;         /**< Constellation-specific satellite identifier.
 
-Note: unlike GnssSignal16, GPS satellites are encoded as
+Note: unlike GnssSignal, GPS satellites are encoded as
 (PRN - 1). Other constellations do not have this offset.
  */
   u8 code;        /**< Signal constellation, band and code */
   u8 reserved;    /**< Reserved */
-} sbp_gnss_signal_t;
+} gnss_signal_dep_t;
 
 
 /** Millisecond-accurate GPS time
@@ -60,7 +60,7 @@ Note: unlike GnssSignal16, GPS satellites are encoded as
 typedef struct __attribute__((packed)) {
   u32 tow;    /**< Milliseconds since start of GPS week [ms] */
   u16 wn;     /**< GPS week number [week] */
-} sbp_gps_time_t;
+} gps_time_dep_t;
 
 
 /** Whole second accurate GPS time
@@ -88,7 +88,7 @@ typedef struct __attribute__((packed)) {
 from -500000 to 500000)
  [ns] */
   u16 wn;             /**< GPS week number [week] */
-} gps_time_nano_t;
+} sbp_gps_time_t;
 
 
 /** GNSS carrier phase measurement.

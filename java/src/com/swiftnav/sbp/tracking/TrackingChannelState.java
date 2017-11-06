@@ -27,7 +27,7 @@ import com.swiftnav.sbp.SBPStruct;
 public class TrackingChannelState extends SBPStruct {
     
     /** GNSS signal being tracked */
-    public GnssSignal16 sid;
+    public GnssSignal sid;
     
     /** Frequency channel number (GLONASS only) */
     public int fcn;
@@ -41,7 +41,7 @@ public class TrackingChannelState extends SBPStruct {
     @Override
     public TrackingChannelState parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        sid = new GnssSignal16().parse(parser);
+        sid = new GnssSignal().parse(parser);
         fcn = parser.getU8();
         cn0 = parser.getU8();
         return this;

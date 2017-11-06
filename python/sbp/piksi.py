@@ -1035,9 +1035,9 @@ from satellite observations.
     d.update(j)
     return d
     
-SBP_MSG_MASK_SATELLITE = 0x001B
+SBP_MSG_MASK_SATELLITE = 0x002B
 class MsgMaskSatellite(SBP):
-  """SBP class for message MSG_MASK_SATELLITE (0x001B).
+  """SBP class for message MSG_MASK_SATELLITE (0x002B).
 
   You can have MSG_MASK_SATELLITE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -1118,6 +1118,91 @@ from being used in various Piksi subsystems.
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgMaskSatellite, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_MASK_SATELLITE_DEP = 0x001B
+class MsgMaskSatelliteDep(SBP):
+  """SBP class for message MSG_MASK_SATELLITE_DEP (0x001B).
+
+  You can have MSG_MASK_SATELLITE_DEP inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Deprecated.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  mask : int
+    Mask of systems that should ignore this satellite.
+  sid : GnssSignalDep
+    GNSS signal for which the mask is applied
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'mask' / construct.Int8ul,
+                   'sid' / construct.Struct(GnssSignalDep._parser),)
+  __slots__ = [
+               'mask',
+               'sid',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgMaskSatelliteDep,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgMaskSatelliteDep, self).__init__()
+      self.msg_type = SBP_MSG_MASK_SATELLITE_DEP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.mask = kwargs.pop('mask')
+      self.sid = kwargs.pop('sid')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgMaskSatelliteDep.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgMaskSatelliteDep(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgMaskSatelliteDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgMaskSatelliteDep._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgMaskSatelliteDep, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -1653,9 +1738,124 @@ in c.
     d.update(j)
     return d
     
-SBP_MSG_SPECAN = 0x0050
+SBP_MSG_SPECAN_DEP = 0x0050
+class MsgSpecanDep(SBP):
+  """SBP class for message MSG_SPECAN_DEP (0x0050).
+
+  You can have MSG_SPECAN_DEP inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Deprecated.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  channel_tag : int
+    Channel ID
+  t : GPSTimeDep
+    Receiver time of this observation
+  freq_ref : float
+    Reference frequency of this packet
+
+  freq_step : float
+    Frequency step of points in this packet
+
+  amplitude_ref : float
+    Reference amplitude of this packet
+
+  amplitude_unit : float
+    Amplitude unit value of points in this packet
+
+  amplitude_value : array
+    Amplitude values (in the above units) of points in this packet
+
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'channel_tag' / construct.Int16ul,
+                   't' / construct.Struct(GPSTimeDep._parser),
+                   'freq_ref' / construct.Float32l,
+                   'freq_step' / construct.Float32l,
+                   'amplitude_ref' / construct.Float32l,
+                   'amplitude_unit' / construct.Float32l,
+                   construct.GreedyRange('amplitude_value' / construct.Int8ul),)
+  __slots__ = [
+               'channel_tag',
+               't',
+               'freq_ref',
+               'freq_step',
+               'amplitude_ref',
+               'amplitude_unit',
+               'amplitude_value',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSpecanDep,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSpecanDep, self).__init__()
+      self.msg_type = SBP_MSG_SPECAN_DEP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.channel_tag = kwargs.pop('channel_tag')
+      self.t = kwargs.pop('t')
+      self.freq_ref = kwargs.pop('freq_ref')
+      self.freq_step = kwargs.pop('freq_step')
+      self.amplitude_ref = kwargs.pop('amplitude_ref')
+      self.amplitude_unit = kwargs.pop('amplitude_unit')
+      self.amplitude_value = kwargs.pop('amplitude_value')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSpecanDep.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSpecanDep(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSpecanDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSpecanDep._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSpecanDep, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SPECAN = 0x0051
 class MsgSpecan(SBP):
-  """SBP class for message MSG_SPECAN (0x0050).
+  """SBP class for message MSG_SPECAN (0x0051).
 
   You can have MSG_SPECAN inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -1783,12 +1983,14 @@ msg_classes = {
   0x001D: MsgUartState,
   0x0018: MsgUartStateDepa,
   0x0019: MsgIarState,
-  0x001B: MsgMaskSatellite,
+  0x002B: MsgMaskSatellite,
+  0x001B: MsgMaskSatelliteDep,
   0x00B5: MsgDeviceMonitor,
   0x00B8: MsgCommandReq,
   0x00B9: MsgCommandResp,
   0x00BC: MsgCommandOutput,
   0x00BA: MsgNetworkStateReq,
   0x00BB: MsgNetworkStateResp,
-  0x0050: MsgSpecan,
+  0x0050: MsgSpecanDep,
+  0x0051: MsgSpecan,
 }

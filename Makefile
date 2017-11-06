@@ -117,7 +117,6 @@ gen-c:
 	               --c
 
 	$(call announce-begin,"Generating C tests")
-	rm -f $(SWIFTNAV_ROOT)/c/test/auto_check*.c; \
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/c/test \

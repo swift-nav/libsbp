@@ -92,13 +92,13 @@ definitions:
                     - 2: NDB_DS_RECEIVER
                     - 3: NDB_DS_SBP
       - object_sid:
-           type: GnssSignal16
+           type: GnssSignal
            desc: |
              GNSS signal identifier,
              If object_type is Ephemeris OR Almanac, sid indicates for which
              signal the object belongs to. Reserved in other cases.
       - src_sid:
-           type: GnssSignal16
+           type: GnssSignal
            desc: |
              GNSS signal identifier,
              If object_type is Almanac, Almanac WN, Iono OR L2C capabilities

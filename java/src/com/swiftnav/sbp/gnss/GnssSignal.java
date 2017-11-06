@@ -25,18 +25,11 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class GnssSignal extends SBPStruct {
     
-    /** Constellation-specific satellite identifier.
-
-Note: unlike GnssSignal16, GPS satellites are encoded as
-(PRN - 1). Other constellations do not have this offset.
- */
+    /** Constellation-specific satellite identifier */
     public int sat;
     
     /** Signal constellation, band and code */
     public int code;
-    
-    /** Reserved */
-    public int reserved;
     
 
     public GnssSignal () {}
@@ -44,18 +37,16 @@ Note: unlike GnssSignal16, GPS satellites are encoded as
     @Override
     public GnssSignal parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        sat = parser.getU16();
+        sat = parser.getU8();
         code = parser.getU8();
-        reserved = parser.getU8();
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        builder.putU16(sat);
+        builder.putU8(sat);
         builder.putU8(code);
-        builder.putU8(reserved);
     }
 
     @Override
@@ -63,7 +54,6 @@ Note: unlike GnssSignal16, GPS satellites are encoded as
         JSONObject obj = new JSONObject();
         obj.put("sat", sat);
         obj.put("code", code);
-        obj.put("reserved", reserved);
         return obj;
     }
 }

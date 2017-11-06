@@ -1,5 +1,5 @@
 ---
-description: Unit tests for swiftnav.sbp.acquisition MsgAcqResult vNone.
+description: Unit tests for swiftnav.sbp.acquisition MsgAcqResultDepC vNone.
 generated_on: 2016-10-27 13:09:43.307936
 package: sbp.acquisition
 tests:
@@ -14,7 +14,7 @@ tests:
         reserved: 0
         sat: 10
     module: sbp.acquisition
-    name: MsgAcqResult
+    name: MsgAcqResultDepC
   msg_type: '0x1f'
   raw_json: '{"sender": 3112, "msg_type": 31, "cf": 1769.06591796875, "cn0": 40.509063720703125,
     "crc": 48393, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 10}, "cp":
@@ -38,7 +38,7 @@ tests:
         reserved: 0
         sat: 6
     module: sbp.acquisition
-    name: MsgAcqResult
+    name: MsgAcqResultDepC
   msg_type: '0x1f'
   raw_json: '{"sender": 3112, "msg_type": 31, "cf": -505.4473876953125, "cn0": 43.49464416503906,
     "crc": 47496, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 6}, "cp":
@@ -62,7 +62,7 @@ tests:
         reserved: 0
         sat: 13
     module: sbp.acquisition
-    name: MsgAcqResult
+    name: MsgAcqResultDepC
   msg_type: '0x1f'
   raw_json: '{"sender": 3112, "msg_type": 31, "cf": -1263.618408203125, "cn0": 38.2183952331543,
     "crc": 41366, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 13}, "cp":
@@ -86,7 +86,7 @@ tests:
         reserved: 0
         sat: 1
     module: sbp.acquisition
-    name: MsgAcqResult
+    name: MsgAcqResultDepC
   msg_type: '0x1f'
   raw_json: '{"sender": 3112, "msg_type": 31, "cf": 3032.684326171875, "cn0": 37.313968658447266,
     "crc": 53613, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 1}, "cp":
@@ -110,7 +110,7 @@ tests:
         reserved: 0
         sat: 27
     module: sbp.acquisition
-    name: MsgAcqResult
+    name: MsgAcqResultDepC
   msg_type: '0x1f'
   raw_json: '{"sender": 3112, "msg_type": 31, "cf": 2527.23681640625, "cn0": 47.53466033935547,
     "crc": 17243, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 27}, "cp":

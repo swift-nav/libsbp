@@ -54,12 +54,12 @@ message could also be sent out when fetching an object from NDB.
     Event result.
   data_source : int
     Data source for STORE event, reserved for other events.
-  object_sid : GnssSignal16
+  object_sid : GnssSignal
     GNSS signal identifier,
 If object_type is Ephemeris OR Almanac, sid indicates for which
 signal the object belongs to. Reserved in other cases.
 
-  src_sid : GnssSignal16
+  src_sid : GnssSignal
     GNSS signal identifier,
 If object_type is Almanac, Almanac WN, Iono OR L2C capabilities
 AND data_source is NDB_DS_RECEIVER sid indicates from which SV
@@ -81,8 +81,8 @@ of other data_source.
                    'object_type' / construct.Int8ul,
                    'result' / construct.Int8ul,
                    'data_source' / construct.Int8ul,
-                   'object_sid' / construct.Struct(GnssSignal16._parser),
-                   'src_sid' / construct.Struct(GnssSignal16._parser),
+                   'object_sid' / construct.Struct(GnssSignal._parser),
+                   'src_sid' / construct.Struct(GnssSignal._parser),
                    'original_sender' / construct.Int16ul,)
   __slots__ = [
                'recv_time',

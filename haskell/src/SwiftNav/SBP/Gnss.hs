@@ -35,81 +35,81 @@ import SwiftNav.SBP.Types
 {-# ANN module ("HLint: ignore Use newtype instead of data"::String) #-}
 
 
--- | GnssSignal16.
---
--- Signal identifier containing constellation, band, and satellite identifier
-data GnssSignal16 = GnssSignal16
-  { _gnssSignal16_sat :: !Word8
-    -- ^ Constellation-specific satellite identifier
-  , _gnssSignal16_code :: !Word8
-    -- ^ Signal constellation, band and code
-  } deriving ( Show, Read, Eq )
-
-instance Binary GnssSignal16 where
-  get = do
-    _gnssSignal16_sat <- getWord8
-    _gnssSignal16_code <- getWord8
-    pure GnssSignal16 {..}
-
-  put GnssSignal16 {..} = do
-    putWord8 _gnssSignal16_sat
-    putWord8 _gnssSignal16_code
-
-$(makeJSON "_gnssSignal16_" ''GnssSignal16)
-$(makeLenses ''GnssSignal16)
-
 -- | GnssSignal.
 --
 -- Signal identifier containing constellation, band, and satellite identifier
 data GnssSignal = GnssSignal
-  { _gnssSignal_sat    :: !Word16
-    -- ^ Constellation-specific satellite identifier.  Note: unlike GnssSignal16,
-    -- GPS satellites are encoded as (PRN - 1). Other constellations do not
-    -- have this offset.
-  , _gnssSignal_code   :: !Word8
+  { _gnssSignal_sat :: !Word8
+    -- ^ Constellation-specific satellite identifier
+  , _gnssSignal_code :: !Word8
     -- ^ Signal constellation, band and code
-  , _gnssSignal_reserved :: !Word8
-    -- ^ Reserved
   } deriving ( Show, Read, Eq )
 
 instance Binary GnssSignal where
   get = do
-    _gnssSignal_sat <- getWord16le
+    _gnssSignal_sat <- getWord8
     _gnssSignal_code <- getWord8
-    _gnssSignal_reserved <- getWord8
     pure GnssSignal {..}
 
   put GnssSignal {..} = do
-    putWord16le _gnssSignal_sat
+    putWord8 _gnssSignal_sat
     putWord8 _gnssSignal_code
-    putWord8 _gnssSignal_reserved
 
 $(makeJSON "_gnssSignal_" ''GnssSignal)
 $(makeLenses ''GnssSignal)
 
--- | GPSTime.
+-- | GnssSignalDep.
+--
+-- Deprecated.
+data GnssSignalDep = GnssSignalDep
+  { _gnssSignalDep_sat    :: !Word16
+    -- ^ Constellation-specific satellite identifier.  Note: unlike GnssSignal,
+    -- GPS satellites are encoded as (PRN - 1). Other constellations do not
+    -- have this offset.
+  , _gnssSignalDep_code   :: !Word8
+    -- ^ Signal constellation, band and code
+  , _gnssSignalDep_reserved :: !Word8
+    -- ^ Reserved
+  } deriving ( Show, Read, Eq )
+
+instance Binary GnssSignalDep where
+  get = do
+    _gnssSignalDep_sat <- getWord16le
+    _gnssSignalDep_code <- getWord8
+    _gnssSignalDep_reserved <- getWord8
+    pure GnssSignalDep {..}
+
+  put GnssSignalDep {..} = do
+    putWord16le _gnssSignalDep_sat
+    putWord8 _gnssSignalDep_code
+    putWord8 _gnssSignalDep_reserved
+
+$(makeJSON "_gnssSignalDep_" ''GnssSignalDep)
+$(makeLenses ''GnssSignalDep)
+
+-- | GPSTimeDep.
 --
 -- A wire-appropriate GPS time, defined as the number of milliseconds since
 -- beginning of the week on the Saturday/Sunday transition.
-data GpsTime = GpsTime
-  { _gpsTime_tow :: !Word32
+data GpsTimeDep = GpsTimeDep
+  { _gpsTimeDep_tow :: !Word32
     -- ^ Milliseconds since start of GPS week
-  , _gpsTime_wn :: !Word16
+  , _gpsTimeDep_wn :: !Word16
     -- ^ GPS week number
   } deriving ( Show, Read, Eq )
 
-instance Binary GpsTime where
+instance Binary GpsTimeDep where
   get = do
-    _gpsTime_tow <- getWord32le
-    _gpsTime_wn <- getWord16le
-    pure GpsTime {..}
+    _gpsTimeDep_tow <- getWord32le
+    _gpsTimeDep_wn <- getWord16le
+    pure GpsTimeDep {..}
 
-  put GpsTime {..} = do
-    putWord32le _gpsTime_tow
-    putWord16le _gpsTime_wn
+  put GpsTimeDep {..} = do
+    putWord32le _gpsTimeDep_tow
+    putWord16le _gpsTimeDep_wn
 
-$(makeJSON "_gpsTime_" ''GpsTime)
-$(makeLenses ''GpsTime)
+$(makeJSON "_gpsTimeDep_" ''GpsTimeDep)
+$(makeLenses ''GpsTimeDep)
 
 -- | GPSTimeSec.
 --
@@ -135,35 +135,35 @@ instance Binary GpsTimeSec where
 $(makeJSON "_gpsTimeSec_" ''GpsTimeSec)
 $(makeLenses ''GpsTimeSec)
 
--- | GPSTimeNano.
+-- | GPSTime.
 --
 -- A wire-appropriate receiver clock time, defined as the time since the
 -- beginning of the week on the Saturday/Sunday transition. In most cases,
 -- observations are epoch aligned so ns field will be 0.
-data GpsTimeNano = GpsTimeNano
-  { _gpsTimeNano_tow       :: !Word32
+data GpsTime = GpsTime
+  { _gpsTime_tow       :: !Word32
     -- ^ Milliseconds since start of GPS week
-  , _gpsTimeNano_ns_residual :: !Int32
+  , _gpsTime_ns_residual :: !Int32
     -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     -- 500000)
-  , _gpsTimeNano_wn        :: !Word16
+  , _gpsTime_wn        :: !Word16
     -- ^ GPS week number
   } deriving ( Show, Read, Eq )
 
-instance Binary GpsTimeNano where
+instance Binary GpsTime where
   get = do
-    _gpsTimeNano_tow <- getWord32le
-    _gpsTimeNano_ns_residual <- fromIntegral <$> getWord32le
-    _gpsTimeNano_wn <- getWord16le
-    pure GpsTimeNano {..}
+    _gpsTime_tow <- getWord32le
+    _gpsTime_ns_residual <- fromIntegral <$> getWord32le
+    _gpsTime_wn <- getWord16le
+    pure GpsTime {..}
 
-  put GpsTimeNano {..} = do
-    putWord32le _gpsTimeNano_tow
-    putWord32le $ fromIntegral _gpsTimeNano_ns_residual
-    putWord16le _gpsTimeNano_wn
+  put GpsTime {..} = do
+    putWord32le _gpsTime_tow
+    putWord32le $ fromIntegral _gpsTime_ns_residual
+    putWord16le _gpsTime_wn
 
-$(makeJSON "_gpsTimeNano_" ''GpsTimeNano)
-$(makeLenses ''GpsTimeNano)
+$(makeJSON "_gpsTime_" ''GpsTime)
+$(makeLenses ''GpsTime)
 
 -- | CarrierPhase.
 --

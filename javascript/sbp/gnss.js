@@ -24,45 +24,13 @@ var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
 
 /**
- * SBP class for message fragment GnssSignal16
+ * SBP class for message fragment GnssSignal
  *
  * Signal identifier containing constellation, band, and satellite identifier
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sat number (unsigned 8-bit int, 1 byte) Constellation-specific satellite identifier
  * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-var GnssSignal16 = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "GnssSignal16";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-GnssSignal16.prototype = Object.create(SBP.prototype);
-GnssSignal16.prototype.messageType = "GnssSignal16";
-GnssSignal16.prototype.constructor = GnssSignal16;
-GnssSignal16.prototype.parser = new Parser()
-  .endianess('little')
-  .uint8('sat')
-  .uint8('code');
-GnssSignal16.prototype.fieldSpec = [];
-GnssSignal16.prototype.fieldSpec.push(['sat', 'writeUInt8', 1]);
-GnssSignal16.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
-
-/**
- * SBP class for message fragment GnssSignal
- *
- * Signal identifier containing constellation, band, and satellite identifier
- *
- * Fields in the SBP payload (`sbp.payload`):
- * @field sat number (unsigned 16-bit int, 2 bytes) Constellation-specific satellite identifier.  Note: unlike GnssSignal16, GPS
- *   satellites are encoded as (PRN - 1). Other constellations do not have this
- *   offset.
- * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
- * @field reserved number (unsigned 8-bit int, 1 byte) Reserved
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -78,16 +46,48 @@ GnssSignal.prototype.messageType = "GnssSignal";
 GnssSignal.prototype.constructor = GnssSignal;
 GnssSignal.prototype.parser = new Parser()
   .endianess('little')
+  .uint8('sat')
+  .uint8('code');
+GnssSignal.prototype.fieldSpec = [];
+GnssSignal.prototype.fieldSpec.push(['sat', 'writeUInt8', 1]);
+GnssSignal.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message fragment GnssSignalDep
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sat number (unsigned 16-bit int, 2 bytes) Constellation-specific satellite identifier.  Note: unlike GnssSignal, GPS
+ *   satellites are encoded as (PRN - 1). Other constellations do not have this
+ *   offset.
+ * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
+ * @field reserved number (unsigned 8-bit int, 1 byte) Reserved
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var GnssSignalDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "GnssSignalDep";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+GnssSignalDep.prototype = Object.create(SBP.prototype);
+GnssSignalDep.prototype.messageType = "GnssSignalDep";
+GnssSignalDep.prototype.constructor = GnssSignalDep;
+GnssSignalDep.prototype.parser = new Parser()
+  .endianess('little')
   .uint16('sat')
   .uint8('code')
   .uint8('reserved');
-GnssSignal.prototype.fieldSpec = [];
-GnssSignal.prototype.fieldSpec.push(['sat', 'writeUInt16LE', 2]);
-GnssSignal.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
-GnssSignal.prototype.fieldSpec.push(['reserved', 'writeUInt8', 1]);
+GnssSignalDep.prototype.fieldSpec = [];
+GnssSignalDep.prototype.fieldSpec.push(['sat', 'writeUInt16LE', 2]);
+GnssSignalDep.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
+GnssSignalDep.prototype.fieldSpec.push(['reserved', 'writeUInt8', 1]);
 
 /**
- * SBP class for message fragment GPSTime
+ * SBP class for message fragment GPSTimeDep
  *
  * A wire-appropriate GPS time, defined as the number of milliseconds since
  * beginning of the week on the Saturday/Sunday transition.
@@ -98,23 +98,23 @@ GnssSignal.prototype.fieldSpec.push(['reserved', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var GPSTime = function (sbp, fields) {
+var GPSTimeDep = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "GPSTime";
+  this.messageType = "GPSTimeDep";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-GPSTime.prototype = Object.create(SBP.prototype);
-GPSTime.prototype.messageType = "GPSTime";
-GPSTime.prototype.constructor = GPSTime;
-GPSTime.prototype.parser = new Parser()
+GPSTimeDep.prototype = Object.create(SBP.prototype);
+GPSTimeDep.prototype.messageType = "GPSTimeDep";
+GPSTimeDep.prototype.constructor = GPSTimeDep;
+GPSTimeDep.prototype.parser = new Parser()
   .endianess('little')
   .uint32('tow')
   .uint16('wn');
-GPSTime.prototype.fieldSpec = [];
-GPSTime.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
-GPSTime.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
+GPSTimeDep.prototype.fieldSpec = [];
+GPSTimeDep.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+GPSTimeDep.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 
 /**
  * SBP class for message fragment GPSTimeSec
@@ -147,7 +147,7 @@ GPSTimeSec.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
 GPSTimeSec.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 
 /**
- * SBP class for message fragment GPSTimeNano
+ * SBP class for message fragment GPSTime
  *
  * A wire-appropriate receiver clock time, defined as the time since the beginning
  * of the week on the Saturday/Sunday transition. In most cases, observations are
@@ -160,25 +160,25 @@ GPSTimeSec.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var GPSTimeNano = function (sbp, fields) {
+var GPSTime = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "GPSTimeNano";
+  this.messageType = "GPSTime";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-GPSTimeNano.prototype = Object.create(SBP.prototype);
-GPSTimeNano.prototype.messageType = "GPSTimeNano";
-GPSTimeNano.prototype.constructor = GPSTimeNano;
-GPSTimeNano.prototype.parser = new Parser()
+GPSTime.prototype = Object.create(SBP.prototype);
+GPSTime.prototype.messageType = "GPSTime";
+GPSTime.prototype.constructor = GPSTime;
+GPSTime.prototype.parser = new Parser()
   .endianess('little')
   .uint32('tow')
   .int32('ns_residual')
   .uint16('wn');
-GPSTimeNano.prototype.fieldSpec = [];
-GPSTimeNano.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
-GPSTimeNano.prototype.fieldSpec.push(['ns_residual', 'writeInt32LE', 4]);
-GPSTimeNano.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
+GPSTime.prototype.fieldSpec = [];
+GPSTime.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+GPSTime.prototype.fieldSpec.push(['ns_residual', 'writeInt32LE', 4]);
+GPSTime.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 
 /**
  * SBP class for message fragment CarrierPhase
@@ -212,10 +212,10 @@ CarrierPhase.prototype.fieldSpec.push(['i', 'writeInt32LE', 4]);
 CarrierPhase.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
 
 module.exports = {
-  GnssSignal16: GnssSignal16,
   GnssSignal: GnssSignal,
-  GPSTime: GPSTime,
+  GnssSignalDep: GnssSignalDep,
+  GPSTimeDep: GPSTimeDep,
   GPSTimeSec: GPSTimeSec,
-  GPSTimeNano: GPSTimeNano,
+  GPSTime: GPSTime,
   CarrierPhase: CarrierPhase,
 }

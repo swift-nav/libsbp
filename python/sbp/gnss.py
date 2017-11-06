@@ -25,8 +25,8 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 # Please do not hand edit!
 
 
-class GnssSignal16(object):
-  """GnssSignal16.
+class GnssSignal(object):
+  """GnssSignal.
   
   Signal identifier containing constellation, band, and satellite identifier
 
@@ -58,26 +58,25 @@ class GnssSignal16(object):
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = GnssSignal16._parser.parse(d)
+    p = GnssSignal._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GnssSignal16.build(d)
+    return GnssSignal.build(d)
     
-class GnssSignal(object):
-  """GnssSignal.
+class GnssSignalDep(object):
+  """GnssSignalDep.
   
-  Signal identifier containing constellation, band, and satellite identifier
-
+  Deprecated.
   
   Parameters
   ----------
   sat : int
     Constellation-specific satellite identifier.
 
-Note: unlike GnssSignal16, GPS satellites are encoded as
+Note: unlike GnssSignal, GPS satellites are encoded as
 (PRN - 1). Other constellations do not have this offset.
 
   code : int
@@ -108,16 +107,16 @@ Note: unlike GnssSignal16, GPS satellites are encoded as
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = GnssSignal._parser.parse(d)
+    p = GnssSignalDep._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GnssSignal.build(d)
+    return GnssSignalDep.build(d)
     
-class GPSTime(object):
-  """GPSTime.
+class GPSTimeDep(object):
+  """GPSTimeDep.
   
   A wire-appropriate GPS time, defined as the number of
 milliseconds since beginning of the week on the Saturday/Sunday
@@ -151,13 +150,13 @@ transition.
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = GPSTime._parser.parse(d)
+    p = GPSTimeDep._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GPSTime.build(d)
+    return GPSTimeDep.build(d)
     
 class GPSTimeSec(object):
   """GPSTimeSec.
@@ -202,8 +201,8 @@ transition.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return GPSTimeSec.build(d)
     
-class GPSTimeNano(object):
-  """GPSTimeNano.
+class GPSTime(object):
+  """GPSTime.
   
   A wire-appropriate receiver clock time, defined as the time
 since the beginning of the week on the Saturday/Sunday
@@ -245,13 +244,13 @@ from -500000 to 500000)
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = GPSTimeNano._parser.parse(d)
+    p = GPSTime._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GPSTimeNano.build(d)
+    return GPSTime.build(d)
     
 class CarrierPhase(object):
   """CarrierPhase.

@@ -116,7 +116,7 @@ public class MsgEphemerisDepD extends SBPMessage {
     public int healthy;
     
     /** GNSS signal identifier */
-    public GnssSignal sid;
+    public GnssSignalDep sid;
     
     /** Issue of ephemeris data */
     public int iode;
@@ -163,7 +163,7 @@ public class MsgEphemerisDepD extends SBPMessage {
         toc_wn = parser.getU16();
         valid = parser.getU8();
         healthy = parser.getU8();
-        sid = new GnssSignal().parse(parser);
+        sid = new GnssSignalDep().parse(parser);
         iode = parser.getU8();
         iodc = parser.getU16();
         reserved = parser.getU32();

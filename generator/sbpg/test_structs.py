@@ -73,3 +73,8 @@ class TestSpecification(object):
   @property
   def fields(self):
     return self.msg.get('fields', None) or []
+
+  @property
+  def fieldskeys(self):
+    return sorted(self.msg.get('fields', None) or [])
+

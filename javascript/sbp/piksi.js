@@ -24,11 +24,12 @@ var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
 var GnssSignal = require("./gnss").GnssSignal;
-var GnssSignal16 = require("./gnss").GnssSignal16;
+var GnssSignalDep = require("./gnss").GnssSignalDep;
 var GPSTime = require("./gnss").GPSTime;
 var CarrierPhase = require("./gnss").CarrierPhase;
-var GPSTimeNano = require("./gnss").GPSTimeNano;
+var GPSTime = require("./gnss").GPSTime;
 var GPSTimeSec = require("./gnss").GPSTimeSec;
+var GPSTimeDep = require("./gnss").GPSTimeDep;
 
 /**
  * SBP class for message MSG_ALMANAC (0x0069).
@@ -490,7 +491,7 @@ MsgIarState.prototype.fieldSpec = [];
 MsgIarState.prototype.fieldSpec.push(['num_hyps', 'writeUInt32LE', 4]);
 
 /**
- * SBP class for message MSG_MASK_SATELLITE (0x001B).
+ * SBP class for message MSG_MASK_SATELLITE (0x002B).
  *
  * This message allows setting a mask to prevent a particular satellite from being
  * used in various Piksi subsystems.
@@ -510,7 +511,7 @@ var MsgMaskSatellite = function (sbp, fields) {
 };
 MsgMaskSatellite.prototype = Object.create(SBP.prototype);
 MsgMaskSatellite.prototype.messageType = "MSG_MASK_SATELLITE";
-MsgMaskSatellite.prototype.msg_type = 0x001B;
+MsgMaskSatellite.prototype.msg_type = 0x002B;
 MsgMaskSatellite.prototype.constructor = MsgMaskSatellite;
 MsgMaskSatellite.prototype.parser = new Parser()
   .endianess('little')
@@ -519,6 +520,36 @@ MsgMaskSatellite.prototype.parser = new Parser()
 MsgMaskSatellite.prototype.fieldSpec = [];
 MsgMaskSatellite.prototype.fieldSpec.push(['mask', 'writeUInt8', 1]);
 MsgMaskSatellite.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+
+/**
+ * SBP class for message MSG_MASK_SATELLITE_DEP (0x001B).
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field mask number (unsigned 8-bit int, 1 byte) Mask of systems that should ignore this satellite.
+ * @field sid GnssSignalDep GNSS signal for which the mask is applied
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgMaskSatelliteDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_MASK_SATELLITE_DEP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgMaskSatelliteDep.prototype = Object.create(SBP.prototype);
+MsgMaskSatelliteDep.prototype.messageType = "MSG_MASK_SATELLITE_DEP";
+MsgMaskSatelliteDep.prototype.msg_type = 0x001B;
+MsgMaskSatelliteDep.prototype.constructor = MsgMaskSatelliteDep;
+MsgMaskSatelliteDep.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('mask')
+  .nest('sid', { type: GnssSignalDep.prototype.parser });
+MsgMaskSatelliteDep.prototype.fieldSpec = [];
+MsgMaskSatelliteDep.prototype.fieldSpec.push(['mask', 'writeUInt8', 1]);
+MsgMaskSatelliteDep.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
 
 /**
  * SBP class for message MSG_DEVICE_MONITOR (0x00B5).
@@ -727,7 +758,52 @@ MsgNetworkStateResp.prototype.fieldSpec.push(['interface_name', 'string', 16]);
 MsgNetworkStateResp.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
 /**
- * SBP class for message MSG_SPECAN (0x0050).
+ * SBP class for message MSG_SPECAN_DEP (0x0050).
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field channel_tag number (unsigned 16-bit int, 2 bytes) Channel ID
+ * @field t GPSTimeDep Receiver time of this observation
+ * @field freq_ref number (float, 4 bytes) Reference frequency of this packet
+ * @field freq_step number (float, 4 bytes) Frequency step of points in this packet
+ * @field amplitude_ref number (float, 4 bytes) Reference amplitude of this packet
+ * @field amplitude_unit number (float, 4 bytes) Amplitude unit value of points in this packet
+ * @field amplitude_value array Amplitude values (in the above units) of points in this packet
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSpecanDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SPECAN_DEP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSpecanDep.prototype = Object.create(SBP.prototype);
+MsgSpecanDep.prototype.messageType = "MSG_SPECAN_DEP";
+MsgSpecanDep.prototype.msg_type = 0x0050;
+MsgSpecanDep.prototype.constructor = MsgSpecanDep;
+MsgSpecanDep.prototype.parser = new Parser()
+  .endianess('little')
+  .uint16('channel_tag')
+  .nest('t', { type: GPSTimeDep.prototype.parser })
+  .floatle('freq_ref')
+  .floatle('freq_step')
+  .floatle('amplitude_ref')
+  .floatle('amplitude_unit')
+  .array('amplitude_value', { type: 'uint8', readUntil: 'eof' });
+MsgSpecanDep.prototype.fieldSpec = [];
+MsgSpecanDep.prototype.fieldSpec.push(['channel_tag', 'writeUInt16LE', 2]);
+MsgSpecanDep.prototype.fieldSpec.push(['t', GPSTimeDep.prototype.fieldSpec]);
+MsgSpecanDep.prototype.fieldSpec.push(['freq_ref', 'writeFloatLE', 4]);
+MsgSpecanDep.prototype.fieldSpec.push(['freq_step', 'writeFloatLE', 4]);
+MsgSpecanDep.prototype.fieldSpec.push(['amplitude_ref', 'writeFloatLE', 4]);
+MsgSpecanDep.prototype.fieldSpec.push(['amplitude_unit', 'writeFloatLE', 4]);
+MsgSpecanDep.prototype.fieldSpec.push(['amplitude_value', 'array', 'writeUInt8', function () { return 1; }, null]);
+
+/**
+ * SBP class for message MSG_SPECAN (0x0051).
  *
  * Spectrum analyzer packet.
  *
@@ -751,7 +827,7 @@ var MsgSpecan = function (sbp, fields) {
 };
 MsgSpecan.prototype = Object.create(SBP.prototype);
 MsgSpecan.prototype.messageType = "MSG_SPECAN";
-MsgSpecan.prototype.msg_type = 0x0050;
+MsgSpecan.prototype.msg_type = 0x0051;
 MsgSpecan.prototype.constructor = MsgSpecan;
 MsgSpecan.prototype.parser = new Parser()
   .endianess('little')
@@ -799,8 +875,10 @@ module.exports = {
   MsgUartStateDepa: MsgUartStateDepa,
   0x0019: MsgIarState,
   MsgIarState: MsgIarState,
-  0x001B: MsgMaskSatellite,
+  0x002B: MsgMaskSatellite,
   MsgMaskSatellite: MsgMaskSatellite,
+  0x001B: MsgMaskSatelliteDep,
+  MsgMaskSatelliteDep: MsgMaskSatelliteDep,
   0x00B5: MsgDeviceMonitor,
   MsgDeviceMonitor: MsgDeviceMonitor,
   0x00B8: MsgCommandReq,
@@ -813,6 +891,8 @@ module.exports = {
   MsgNetworkStateReq: MsgNetworkStateReq,
   0x00BB: MsgNetworkStateResp,
   MsgNetworkStateResp: MsgNetworkStateResp,
-  0x0050: MsgSpecan,
+  0x0050: MsgSpecanDep,
+  MsgSpecanDep: MsgSpecanDep,
+  0x0051: MsgSpecan,
   MsgSpecan: MsgSpecan,
 }

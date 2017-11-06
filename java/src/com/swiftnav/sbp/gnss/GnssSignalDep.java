@@ -23,45 +23,47 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class GPSTimeNano extends SBPStruct {
+public class GnssSignalDep extends SBPStruct {
     
-    /** Milliseconds since start of GPS week */
-    public long tow;
-    
-    /** Nanosecond residual of millisecond-rounded TOW (ranges
-from -500000 to 500000)
+    /** Constellation-specific satellite identifier.
+
+Note: unlike GnssSignal, GPS satellites are encoded as
+(PRN - 1). Other constellations do not have this offset.
  */
-    public int ns_residual;
+    public int sat;
     
-    /** GPS week number */
-    public int wn;
+    /** Signal constellation, band and code */
+    public int code;
+    
+    /** Reserved */
+    public int reserved;
     
 
-    public GPSTimeNano () {}
+    public GnssSignalDep () {}
 
     @Override
-    public GPSTimeNano parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public GnssSignalDep parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        tow = parser.getU32();
-        ns_residual = parser.getS32();
-        wn = parser.getU16();
+        sat = parser.getU16();
+        code = parser.getU8();
+        reserved = parser.getU8();
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        builder.putU32(tow);
-        builder.putS32(ns_residual);
-        builder.putU16(wn);
+        builder.putU16(sat);
+        builder.putU8(code);
+        builder.putU8(reserved);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("tow", tow);
-        obj.put("ns_residual", ns_residual);
-        obj.put("wn", wn);
+        obj.put("sat", sat);
+        obj.put("code", code);
+        obj.put("reserved", reserved);
         return obj;
     }
 }

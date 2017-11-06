@@ -226,11 +226,22 @@ typedef struct __attribute__((packed)) {
  * This message allows setting a mask to prevent a particular satellite
  * from being used in various Piksi subsystems.
  */
-#define SBP_MSG_MASK_SATELLITE     0x001B
+#define SBP_MSG_MASK_SATELLITE     0x002B
 typedef struct __attribute__((packed)) {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   sbp_gnss_signal_t sid;     /**< GNSS signal for which the mask is applied */
 } msg_mask_satellite_t;
+
+
+/** Deprecated
+ *
+* Deprecated.
+ */
+#define SBP_MSG_MASK_SATELLITE_DEP 0x001B
+typedef struct __attribute__((packed)) {
+  u8 mask;    /**< Mask of systems that should ignore this satellite. */
+  gnss_signal_dep_t sid;     /**< GNSS signal for which the mask is applied */
+} msg_mask_satellite_dep_t;
 
 
 /** Device temperature and voltage levels
@@ -315,11 +326,32 @@ typedef struct __attribute__((packed)) {
 } msg_network_state_resp_t;
 
 
+/** Deprecated
+ *
+* Deprecated.
+ */
+#define SBP_MSG_SPECAN_DEP         0x0050
+typedef struct __attribute__((packed)) {
+  u16 channel_tag;        /**< Channel ID */
+  gps_time_dep_t t;                  /**< Receiver time of this observation */
+  float freq_ref;           /**< Reference frequency of this packet
+ [MHz] */
+  float freq_step;          /**< Frequency step of points in this packet
+ [MHz] */
+  float amplitude_ref;      /**< Reference amplitude of this packet
+ [dB] */
+  float amplitude_unit;     /**< Amplitude unit value of points in this packet
+ [dB] */
+  u8 amplitude_value[0]; /**< Amplitude values (in the above units) of points in this packet
+ */
+} msg_specan_dep_t;
+
+
 /** Spectrum analyzer
  *
  * Spectrum analyzer packet.
  */
-#define SBP_MSG_SPECAN             0x0050
+#define SBP_MSG_SPECAN             0x0051
 typedef struct __attribute__((packed)) {
   u16 channel_tag;        /**< Channel ID */
   sbp_gps_time_t t;                  /**< Receiver time of this observation */
