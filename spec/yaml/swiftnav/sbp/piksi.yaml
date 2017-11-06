@@ -298,7 +298,7 @@ definitions:
                         - 0: Enabled
                         - 1: Skip this satellite on future acquisitions
         - sid:
-            type: GnssSignal16
+            type: GnssSignal
             desc: GNSS signal for which the mask is applied
 
  - MSG_MASK_SATELLITE_DEP:
@@ -326,7 +326,7 @@ definitions:
                         - 0: Enabled
                         - 1: Skip this satellite on future acquisitions
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal for which the mask is applied
 
  - MSG_DEVICE_MONITOR:

@@ -64,7 +64,7 @@ definitions:
               Lock time. It is encoded according to DF402 from the RTCM 10403.2
               Amendment 2 specification. Valid values range from 0 to 15.
         - sid:
-            type: GnssSignal16
+            type: GnssSignal
             desc: GNSS signal identifier.
         - doppler:
             type: s32
@@ -290,7 +290,7 @@ definitions:
               Lock time. It is encoded according to DF402 from the RTCM 10403.2
               Amendment 2 specification. Valid values range from 0 to 15.
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal identifier.
         - doppler:
             type: s32
@@ -477,7 +477,7 @@ definitions:
       measured signal power.
     fields:
         - sid:
-            type: GnssSignal16
+            type: GnssSignal
             desc: GNSS signal being tracked
         - fcn:
             type: u8
@@ -523,7 +523,7 @@ definitions:
           type: u8
           desc: Tracking channel of origin
       - sid:
-          type: GnssSignal
+          type: GnssSignalDep
           desc: GNSS signal identifier
       - corrs:
           type: array
@@ -543,7 +543,7 @@ definitions:
           type: u8
           desc: Tracking channel of origin
       - sid:
-          type: GnssSignal
+          type: GnssSignalDep
           desc: GNSS signal identifier
       - corrs:
           type: array
@@ -607,7 +607,7 @@ definitions:
                         - 0: Disabled
                         - 1: Running
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal being tracked
         - cn0:
             type: float

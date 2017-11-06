@@ -17,7 +17,7 @@ include:
 
 definitions:
 
- - GnssSignal16:
+ - GnssSignal:
     short_desc: Represents all the relevant information about the signal
     desc: |
         Signal identifier containing constellation, band, and satellite identifier
@@ -39,17 +39,16 @@ definitions:
                       - 5: GPS L1P
                       - 6: GPS L2P
 
- - GnssSignal:
-    short_desc: Represents all the relevant information about the signal
-    desc: |
-        Signal identifier containing constellation, band, and satellite identifier
+ - GnssSignalDep:
+    short_desc: Deprecated
+    desc: Deprecated.
     fields:
         - sat:
             type: u16
             desc: |
                 Constellation-specific satellite identifier.
 
-                Note: unlike GnssSignal16, GPS satellites are encoded as
+                Note: unlike GnssSignal, GPS satellites are encoded as
                 (PRN - 1). Other constellations do not have this offset.
         - code:
             type: u8

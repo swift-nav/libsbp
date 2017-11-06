@@ -116,7 +116,7 @@ definitions:
                       - 0: Invalid pseudorange measurement
                       - 1: Valid pseudorange measurement and coarse TOW decoded
         - sid:
-            type: GnssSignal16
+            type: GnssSignal
             desc: GNSS signal identifier (16 bit)
 
  - MSG_OBS:
@@ -193,7 +193,7 @@ definitions:
     short_desc: Common fields for every ephemeris message.
     fields:
         - sid:
-            type: GnssSignal16
+            type: GnssSignal
             desc: GNSS signal identifier (16 bit)
         - toe:
             type: GPSTimeSec
@@ -223,7 +223,7 @@ definitions:
       - EphemerisCommonContent
     fields:
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal identifier
         - toe:
             type: GPSTime
@@ -821,7 +821,7 @@ definitions:
           type: u8
           desc: Satellite is healthy?
       - sid:
-          type: GnssSignal
+          type: GnssSignalDep
           desc: GNSS signal identifier
       - iode:
           type: u8
@@ -1163,7 +1163,7 @@ definitions:
           type: u8
           desc: Satellite is healthy?
       - sid:
-          type: GnssSignal
+          type: GnssSignalDep
           desc: GNSS signal identifier
       - iode:
           type: u8
@@ -1256,7 +1256,7 @@ definitions:
               signal has lost and regained lock, indicating that the
               carrier phase ambiguity may have changed.
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal identifier
 
  - PackedObsContentDepC:
@@ -1285,7 +1285,7 @@ definitions:
               signal has lost and regained lock, indicating that the
               carrier phase ambiguity may have changed.
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal identifier
 
  - MSG_OBS_DEP_A:
@@ -1445,7 +1445,7 @@ definitions:
           type: GPSTimeSec
           desc: Data Predict Time of Week
       - sid:
-          type: GnssSignal
+          type: GnssSignalDep
           desc: GNSS signal identifier
       - valid:
           type: u8
@@ -1467,7 +1467,7 @@ definitions:
     short_desc: Common fields for every almanac message.
     fields:
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal identifier
         - toa:
             type: GPSTimeSec

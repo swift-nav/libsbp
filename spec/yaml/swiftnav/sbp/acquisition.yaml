@@ -40,7 +40,7 @@ definitions:
             units: hz
             desc: Carrier frequency of best point
         - sid:
-            type: GnssSignal16
+            type: GnssSignal
             desc: GNSS signal for which acquisition was attempted
 
  - MSG_ACQ_RESULT_DEP_C:
@@ -64,7 +64,7 @@ definitions:
             units: hz
             desc: Carrier frequency of best point
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal for which acquisition was attempted
 
  - MSG_ACQ_RESULT_DEP_B:
@@ -89,7 +89,7 @@ definitions:
             units: hz
             desc: Carrier frequency of best point
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal for which acquisition was attempted
 
  - MSG_ACQ_RESULT_DEP_A:
@@ -141,7 +141,7 @@ definitions:
             units: ms
             desc: Acquisition integration time
         - sid:
-            type: GnssSignal16
+            type: GnssSignal
             desc: GNSS signal for which acquisition was attempted
         - bin_width:
             type: u16
@@ -191,7 +191,7 @@ definitions:
             units: ms
             desc: Acquisition integration time
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal for which acquisition was attempted
         - bin_width:
             type: u16
