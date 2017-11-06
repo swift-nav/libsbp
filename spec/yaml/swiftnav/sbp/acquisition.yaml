@@ -18,7 +18,7 @@ include:
 definitions:
 
  - MSG_ACQ_RESULT:
-    id: 0x001F
+    id: 0x002F
     short_desc: Satellite acquisition result
     desc: |
       This message describes the results from an attempted GPS signal
@@ -26,6 +26,30 @@ definitions:
       frequency range. It contains the parameters of the point in the
       acquisition search space with the best carrier-to-noise (CN/0)
       ratio.
+    fields:
+        - cn0:
+            type: float
+            units: dB Hz
+            desc: CN/0 of best point
+        - cp:
+            type: float
+            units: chips
+            desc: Code phase of best point
+        - cf:
+            type: float
+            units: hz
+            desc: Carrier frequency of best point
+        - sid:
+            type: GnssSignal16
+            desc: GNSS signal for which acquisition was attempted
+
+ - MSG_ACQ_RESULT_DEP_C:
+    id: 0x001F
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: False
+    replaced_by:
+      - MSG_ACQ_RESULT
     fields:
         - cn0:
             type: float
@@ -48,6 +72,8 @@ definitions:
     short_desc: Deprecated
     desc: Deprecated.
     public: False
+    replaced_by:
+      - MSG_ACQ_RESULT
     fields:
         - snr:
             type: float
@@ -115,6 +141,56 @@ definitions:
             units: ms
             desc: Acquisition integration time
         - sid:
+            type: GnssSignal16
+            desc: GNSS signal for which acquisition was attempted
+        - bin_width:
+            type: u16
+            units: Hz
+            desc: Acq frequency bin width
+        - timestamp:
+            type: u32
+            units: ms
+            desc: Timestamp of the job complete event
+        - time_spent:
+            type: u32
+            units: us
+            desc: Time spent to search for sid.code
+        - cf_min:
+            type: s32
+            units: Hz
+            desc: Doppler range lowest frequency
+        - cf_max:
+            type: s32
+            units: Hz
+            desc: Doppler range highest frequency
+        - cf:
+            type: s32
+            units: Hz
+            desc: Doppler value of detected peak. Only valid if status is '1'
+        - cp:
+            type: u32
+            units: chips*10
+            desc: Codephase of detected peak. Only valid if status is '1'
+
+ - AcqSvProfileDep:
+    short_desc: Deprecated
+    desc: Deprecated.
+    fields:
+        - job_type:
+            type: u8
+            desc: SV search job type (deep, fallback, etc)
+        - status:
+            type: u8
+            desc: Acquisition status 1 is Success, 0 is Failure
+        - cn0:
+            type: u16
+            desc: CN0 value. Only valid if status is '1'
+            units: dB-Hz*10
+        - int_time:
+            type: u8
+            units: ms
+            desc: Acquisition integration time
+        - sid:
             type: GnssSignal
             desc: GNSS signal for which acquisition was attempted
         - bin_width:
@@ -147,7 +223,7 @@ definitions:
             desc: Codephase of detected peak. Only valid if status is '1'
 
  - MSG_ACQ_SV_PROFILE:
-    id: 0x001E
+    id: 0x002E
     short_desc: Acquisition perfomance measurement and debug
     desc: |
       The message describes all SV profiles during acquisition time.
@@ -157,3 +233,17 @@ definitions:
             type: array
             fill: AcqSvProfile
             desc: SV profiles during acquisition time
+
+ - MSG_ACQ_SV_PROFILE_DEP:
+    id: 0x001E
+    short_desc: Deprecated.
+    desc: Deprecated.
+    public: False
+    replaced_by:
+      - MSG_ACQ_SV_PROFILE
+    fields:
+        - acq_sv_profile:
+            type: array
+            fill: AcqSvProfileDep
+            desc: SV profiles during acquisition time
+
