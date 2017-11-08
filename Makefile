@@ -145,6 +145,7 @@ gen-javascript:
 	cd $(SWIFTNAV_ROOT)
 	$(call announce-begin,"Bumping NPM version")
 	@- npm version "v$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" --no-git-tag-version >/dev/null 2>&1
+	@- npm run webpack >/dev/null 2>&1
 	$(call announce-end,"Finished generating JavaScript bindings. Please check $(SWIFTNAV_ROOT)/javascript/sbp")
 
 gen-java:
