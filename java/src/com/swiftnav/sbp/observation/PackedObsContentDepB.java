@@ -42,7 +42,7 @@ carrier phase ambiguity may have changed.
     public int lock;
     
     /** GNSS signal identifier */
-    public GnssSignal sid;
+    public GnssSignalDep sid;
     
 
     public PackedObsContentDepB () {}
@@ -54,7 +54,7 @@ carrier phase ambiguity may have changed.
         L = new CarrierPhaseDepA().parse(parser);
         cn0 = parser.getU8();
         lock = parser.getU16();
-        sid = new GnssSignal().parse(parser);
+        sid = new GnssSignalDep().parse(parser);
         return this;
     }
 

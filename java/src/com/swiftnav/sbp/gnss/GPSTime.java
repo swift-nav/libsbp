@@ -28,6 +28,11 @@ public class GPSTime extends SBPStruct {
     /** Milliseconds since start of GPS week */
     public long tow;
     
+    /** Nanosecond residual of millisecond-rounded TOW (ranges
+from -500000 to 500000)
+ */
+    public int ns_residual;
+    
     /** GPS week number */
     public int wn;
     
@@ -38,6 +43,7 @@ public class GPSTime extends SBPStruct {
     public GPSTime parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         tow = parser.getU32();
+        ns_residual = parser.getS32();
         wn = parser.getU16();
         return this;
     }
@@ -46,6 +52,7 @@ public class GPSTime extends SBPStruct {
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
         builder.putU32(tow);
+        builder.putS32(ns_residual);
         builder.putU16(wn);
     }
 
@@ -53,6 +60,7 @@ public class GPSTime extends SBPStruct {
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
         obj.put("tow", tow);
+        obj.put("ns_residual", ns_residual);
         obj.put("wn", wn);
         return obj;
     }

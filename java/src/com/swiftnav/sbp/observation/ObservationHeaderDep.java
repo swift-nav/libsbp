@@ -27,7 +27,7 @@ import com.swiftnav.sbp.SBPStruct;
 public class ObservationHeaderDep extends SBPStruct {
     
     /** GPS time of this observation */
-    public GPSTime t;
+    public GPSTimeDep t;
     
     /** Total number of observations. First nibble is the size
 of the sequence (n), second nibble is the zero-indexed
@@ -41,7 +41,7 @@ counter (ith packet of n)
     @Override
     public ObservationHeaderDep parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        t = new GPSTime().parse(parser);
+        t = new GPSTimeDep().parse(parser);
         n_obs = parser.getU8();
         return this;
     }

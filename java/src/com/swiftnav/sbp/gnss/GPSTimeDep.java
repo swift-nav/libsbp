@@ -23,37 +23,37 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class GnssSignal16 extends SBPStruct {
+public class GPSTimeDep extends SBPStruct {
     
-    /** Constellation-specific satellite identifier */
-    public int sat;
+    /** Milliseconds since start of GPS week */
+    public long tow;
     
-    /** Signal constellation, band and code */
-    public int code;
+    /** GPS week number */
+    public int wn;
     
 
-    public GnssSignal16 () {}
+    public GPSTimeDep () {}
 
     @Override
-    public GnssSignal16 parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public GPSTimeDep parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        sat = parser.getU8();
-        code = parser.getU8();
+        tow = parser.getU32();
+        wn = parser.getU16();
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        builder.putU8(sat);
-        builder.putU8(code);
+        builder.putU32(tow);
+        builder.putU16(wn);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("sat", sat);
-        obj.put("code", code);
+        obj.put("tow", tow);
+        obj.put("wn", wn);
         return obj;
     }
 }

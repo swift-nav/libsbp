@@ -32,7 +32,7 @@
 * Header of a GNSS observation message.
  */
 typedef struct __attribute__((packed)) {
-  gps_time_nano_t t;        /**< GNSS time of this observation */
+  sbp_gps_time_t t;        /**< GNSS time of this observation */
   u8 n_obs;    /**< Total number of observations. First nibble is the size
 of the sequence (n), second nibble is the zero-indexed
 counter (ith packet of n)
@@ -75,7 +75,7 @@ from 0 to 15 and the most significant nibble is reserved for future use.
 status of this observation.  If this field is 0 it means only the Cn0
 estimate for the signal is valid.
  */
-  gnss_signal16_t sid;      /**< GNSS signal identifier (16 bit) */
+  sbp_gnss_signal_t sid;      /**< GNSS signal identifier (16 bit) */
 } packed_obs_content_t;
 
 
@@ -132,7 +132,7 @@ typedef struct __attribute__((packed)) {
 
 
 typedef struct __attribute__((packed)) {
-  gnss_signal16_t sid;             /**< GNSS signal identifier (16 bit) */
+  sbp_gnss_signal_t sid;             /**< GNSS signal identifier (16 bit) */
   gps_time_sec_t toe;             /**< Time of Ephemerides */
   double ura;             /**< User Range Accuracy [m] */
   u32 fit_interval;    /**< Curve fit interval [s] */
@@ -146,8 +146,8 @@ GLO: 0 = valid, non-zero = invalid
 
 
 typedef struct __attribute__((packed)) {
-  sbp_gnss_signal_t sid;             /**< GNSS signal identifier */
-  sbp_gps_time_t toe;             /**< Time of Ephemerides */
+  gnss_signal_dep_t sid;             /**< GNSS signal identifier */
+  gps_time_dep_t toe;             /**< Time of Ephemerides */
   double ura;             /**< User Range Accuracy [m] */
   u32 fit_interval;    /**< Curve fit interval [s] */
   u8 valid;           /**< Status of ephemeris, 1 = valid, 0 = invalid */
@@ -189,7 +189,7 @@ typedef struct __attribute__((packed)) {
   double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
   double af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
   double af2;         /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-  sbp_gps_time_t toc;         /**< Clock reference */
+  gps_time_dep_t toc;         /**< Clock reference */
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
 } msg_ephemeris_gps_dep_e_t;
@@ -369,7 +369,7 @@ typedef struct __attribute__((packed)) {
   u16 toc_wn;      /**< Clock reference week number [week] */
   u8 valid;       /**< Is valid? */
   u8 healthy;     /**< Satellite is healthy? */
-  sbp_gnss_signal_t sid;         /**< GNSS signal identifier */
+  gnss_signal_dep_t sid;         /**< GNSS signal identifier */
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
   u32 reserved;    /**< Reserved field */
@@ -482,7 +482,7 @@ typedef struct __attribute__((packed)) {
   u16 toc_wn;      /**< Clock reference week number [week] */
   u8 valid;       /**< Is valid? */
   u8 healthy;     /**< Satellite is healthy? */
-  sbp_gnss_signal_t sid;         /**< GNSS signal identifier */
+  gnss_signal_dep_t sid;         /**< GNSS signal identifier */
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
   u32 reserved;    /**< Reserved field */
@@ -494,7 +494,7 @@ typedef struct __attribute__((packed)) {
 * Header of a GPS observation message.
  */
 typedef struct __attribute__((packed)) {
-  sbp_gps_time_t t;        /**< GPS time of this observation */
+  gps_time_dep_t t;        /**< GPS time of this observation */
   u8 n_obs;    /**< Total number of observations. First nibble is the size
 of the sequence (n), second nibble is the zero-indexed
 counter (ith packet of n)
@@ -545,7 +545,7 @@ typedef struct __attribute__((packed)) {
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
  */
-  sbp_gnss_signal_t sid;     /**< GNSS signal identifier */
+  gnss_signal_dep_t sid;     /**< GNSS signal identifier */
 } packed_obs_content_dep_b_t;
 
 
@@ -563,7 +563,7 @@ typedef struct __attribute__((packed)) {
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
  */
-  sbp_gnss_signal_t sid;     /**< GNSS signal identifier */
+  gnss_signal_dep_t sid;     /**< GNSS signal identifier */
 } packed_obs_content_dep_c_t;
 
 
@@ -654,7 +654,7 @@ typedef struct __attribute__((packed)) {
  */
 #define SBP_MSG_GROUP_DELAY_DEP_A    0x0092
 typedef struct __attribute__((packed)) {
-  sbp_gps_time_t t_op;        /**< Data Predict Time of Week */
+  gps_time_dep_t t_op;        /**< Data Predict Time of Week */
   u8 prn;         /**< Satellite number */
   u8 valid;       /**< bit-field indicating validity of the values,
 LSB indicating tgd validity etc.
@@ -670,7 +670,25 @@ LSB indicating tgd validity etc.
  *
 * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
  */
-#define SBP_MSG_GROUP_DELAY          0x0093
+#define SBP_MSG_GROUP_DELAY_DEP_B    0x0093
+typedef struct __attribute__((packed)) {
+  gps_time_sec_t t_op;        /**< Data Predict Time of Week */
+  gnss_signal_dep_t sid;         /**< GNSS signal identifier */
+  u8 valid;       /**< bit-field indicating validity of the values,
+LSB indicating tgd validity etc.
+1 = value is valid, 0 = value is not valid.
+ */
+  s16 tgd;        
+  s16 isc_l1ca;   
+  s16 isc_l2c;    
+} msg_group_delay_dep_b_t;
+
+
+/** Group Delay
+ *
+* Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ */
+#define SBP_MSG_GROUP_DELAY          0x0094
 typedef struct __attribute__((packed)) {
   gps_time_sec_t t_op;        /**< Data Predict Time of Week */
   sbp_gnss_signal_t sid;         /**< GNSS signal identifier */
@@ -709,6 +727,31 @@ Satellite health status for GLO:
 } almanac_common_content_t;
 
 
+typedef struct __attribute__((packed)) {
+  gnss_signal_dep_t sid;             /**< GNSS signal identifier */
+  gps_time_sec_t toa;             /**< Reference time of almanac */
+  double ura;             /**< User Range Accuracy [m] */
+  u32 fit_interval;    /**< Curve fit interval [s] */
+  u8 valid;           /**< Status of almanac, 1 = valid, 0 = invalid */
+  u8 health_bits;     /**< Satellite health status for GPS:
+  - bits 5-7: NAV data health status. See IS-GPS-200H
+    Table 20-VII: NAV Data Health Indications.
+  - bits 0-4: Signal health status. See IS-GPS-200H
+    Table 20-VIII. Codes for Health of SV Signal
+    Components.
+Satellite health status for GLO:
+  See GLO ICD 5.1 table 5.1 for details
+  - bit 0: C(n), "unhealthy" flag that is transmitted within
+    non-immediate data and indicates overall constellation status
+    at the moment of almanac uploading.
+    '0' indicates malfunction of n-satellite.
+    '1' indicates that n-satellite is operational.
+  - bit 1: Bn(ln), '0' indicates the satellite is operational
+    and suitable for navigation.
+ */
+} almanac_common_content_dep_t;
+
+
 /** Satellite broadcast ephemeris for GPS
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac
@@ -716,7 +759,29 @@ Satellite health status for GLO:
  * Please see the Navstar GPS Space Segment/Navigation user interfaces
  * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
  */
-#define SBP_MSG_ALMANAC_GPS          0x0070
+#define SBP_MSG_ALMANAC_GPS_DEP      0x0070
+typedef struct __attribute__((packed)) {
+  almanac_common_content_dep_t common;      /**< Values common for all almanac types */
+  double m0;          /**< Mean anomaly at reference time [rad] */
+  double ecc;         /**< Eccentricity of satellite orbit */
+  double sqrta;       /**< Square root of the semi-major axis of orbit [m^(1/2)] */
+  double omega0;      /**< Longitude of ascending node of orbit plane at weekly epoch [rad] */
+  double omegadot;    /**< Rate of right ascension [rad/s] */
+  double w;           /**< Argument of perigee [rad] */
+  double inc;         /**< Inclination [rad] */
+  double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
+  double af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
+} msg_almanac_gps_dep_t;
+
+
+/** Satellite broadcast ephemeris for GPS
+ *
+ * The almanac message returns a set of satellite orbit parameters. Almanac
+ * data is not very precise and is considered valid for up to several months.
+ * Please see the Navstar GPS Space Segment/Navigation user interfaces
+ * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+ */
+#define SBP_MSG_ALMANAC_GPS          0x0072
 typedef struct __attribute__((packed)) {
   almanac_common_content_t common;      /**< Values common for all almanac types */
   double m0;          /**< Mean anomaly at reference time [rad] */
@@ -738,7 +803,29 @@ typedef struct __attribute__((packed)) {
  * Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
  * almanac" for details.
  */
-#define SBP_MSG_ALMANAC_GLO          0x0071
+#define SBP_MSG_ALMANAC_GLO_DEP      0x0071
+typedef struct __attribute__((packed)) {
+  almanac_common_content_dep_t common;         /**< Values common for all almanac types */
+  double lambda_na;      /**< Longitude of the first ascending node of the orbit in PZ-90.02
+coordinate system
+ [rad] */
+  double t_lambda_na;    /**< Time of the first ascending node passage [s] */
+  double i;              /**< Value of inclination at instant of t_lambda [rad] */
+  double t;              /**< Value of Draconian period at instant of t_lambda [s/orbital period] */
+  double t_dot;          /**< Rate of change of the Draconian period [s/(orbital period^2)] */
+  double epsilon;        /**< Eccentricity at instant of t_lambda */
+  double omega;          /**< Argument of perigee at instant of t_lambda [rad] */
+} msg_almanac_glo_dep_t;
+
+
+/** Satellite broadcast ephemeris for GLO
+ *
+ * The almanac message returns a set of satellite orbit parameters. Almanac
+ * data is not very precise and is considered valid for up to several months.
+ * Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
+ * almanac" for details.
+ */
+#define SBP_MSG_ALMANAC_GLO          0x0073
 typedef struct __attribute__((packed)) {
   almanac_common_content_t common;         /**< Values common for all almanac types */
   double lambda_na;      /**< Longitude of the first ascending node of the orbit in PZ-90.02

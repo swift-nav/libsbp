@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_ACQ_SV_PROFILE (0x001E).
+/** SBP class for message MSG_ACQ_SV_PROFILE (0x002E).
  *
  * You can have MSG_ACQ_SV_PROFILE inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -34,7 +34,7 @@ import org.json.JSONArray;
  * The message is used to debug and measure the performance. */
 
 public class MsgAcqSvProfile extends SBPMessage {
-    public static final int TYPE = 0x001E;
+    public static final int TYPE = 0x002E;
 
     
     /** SV profiles during acquisition time */

@@ -37,7 +37,7 @@ public class MsgGroupDelayDepA extends SBPMessage {
 
     
     /** Data Predict Time of Week */
-    public GPSTime t_op;
+    public GPSTimeDep t_op;
     
     /** Satellite number */
     public int prn;
@@ -65,7 +65,7 @@ LSB indicating tgd validity etc.
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        t_op = new GPSTime().parse(parser);
+        t_op = new GPSTimeDep().parse(parser);
         prn = parser.getU8();
         valid = parser.getU8();
         tgd = parser.getS16();

@@ -96,45 +96,13 @@ var Int64 = __webpack_require__(3);
 var UInt64 = __webpack_require__(1).UINT64;
 
 /**
- * SBP class for message fragment GnssSignal16
+ * SBP class for message fragment GnssSignal
  *
  * Signal identifier containing constellation, band, and satellite identifier
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sat number (unsigned 8-bit int, 1 byte) Constellation-specific satellite identifier
  * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-var GnssSignal16 = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "GnssSignal16";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-GnssSignal16.prototype = Object.create(SBP.prototype);
-GnssSignal16.prototype.messageType = "GnssSignal16";
-GnssSignal16.prototype.constructor = GnssSignal16;
-GnssSignal16.prototype.parser = new Parser()
-  .endianess('little')
-  .uint8('sat')
-  .uint8('code');
-GnssSignal16.prototype.fieldSpec = [];
-GnssSignal16.prototype.fieldSpec.push(['sat', 'writeUInt8', 1]);
-GnssSignal16.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
-
-/**
- * SBP class for message fragment GnssSignal
- *
- * Signal identifier containing constellation, band, and satellite identifier
- *
- * Fields in the SBP payload (`sbp.payload`):
- * @field sat number (unsigned 16-bit int, 2 bytes) Constellation-specific satellite identifier.  Note: unlike GnssSignal16, GPS
- *   satellites are encoded as (PRN - 1). Other constellations do not have this
- *   offset.
- * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
- * @field reserved number (unsigned 8-bit int, 1 byte) Reserved
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -150,16 +118,48 @@ GnssSignal.prototype.messageType = "GnssSignal";
 GnssSignal.prototype.constructor = GnssSignal;
 GnssSignal.prototype.parser = new Parser()
   .endianess('little')
+  .uint8('sat')
+  .uint8('code');
+GnssSignal.prototype.fieldSpec = [];
+GnssSignal.prototype.fieldSpec.push(['sat', 'writeUInt8', 1]);
+GnssSignal.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message fragment GnssSignalDep
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sat number (unsigned 16-bit int, 2 bytes) Constellation-specific satellite identifier.  Note: unlike GnssSignal, GPS
+ *   satellites are encoded as (PRN - 1). Other constellations do not have this
+ *   offset.
+ * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
+ * @field reserved number (unsigned 8-bit int, 1 byte) Reserved
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var GnssSignalDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "GnssSignalDep";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+GnssSignalDep.prototype = Object.create(SBP.prototype);
+GnssSignalDep.prototype.messageType = "GnssSignalDep";
+GnssSignalDep.prototype.constructor = GnssSignalDep;
+GnssSignalDep.prototype.parser = new Parser()
+  .endianess('little')
   .uint16('sat')
   .uint8('code')
   .uint8('reserved');
-GnssSignal.prototype.fieldSpec = [];
-GnssSignal.prototype.fieldSpec.push(['sat', 'writeUInt16LE', 2]);
-GnssSignal.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
-GnssSignal.prototype.fieldSpec.push(['reserved', 'writeUInt8', 1]);
+GnssSignalDep.prototype.fieldSpec = [];
+GnssSignalDep.prototype.fieldSpec.push(['sat', 'writeUInt16LE', 2]);
+GnssSignalDep.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
+GnssSignalDep.prototype.fieldSpec.push(['reserved', 'writeUInt8', 1]);
 
 /**
- * SBP class for message fragment GPSTime
+ * SBP class for message fragment GPSTimeDep
  *
  * A wire-appropriate GPS time, defined as the number of milliseconds since
  * beginning of the week on the Saturday/Sunday transition.
@@ -170,23 +170,23 @@ GnssSignal.prototype.fieldSpec.push(['reserved', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var GPSTime = function (sbp, fields) {
+var GPSTimeDep = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "GPSTime";
+  this.messageType = "GPSTimeDep";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-GPSTime.prototype = Object.create(SBP.prototype);
-GPSTime.prototype.messageType = "GPSTime";
-GPSTime.prototype.constructor = GPSTime;
-GPSTime.prototype.parser = new Parser()
+GPSTimeDep.prototype = Object.create(SBP.prototype);
+GPSTimeDep.prototype.messageType = "GPSTimeDep";
+GPSTimeDep.prototype.constructor = GPSTimeDep;
+GPSTimeDep.prototype.parser = new Parser()
   .endianess('little')
   .uint32('tow')
   .uint16('wn');
-GPSTime.prototype.fieldSpec = [];
-GPSTime.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
-GPSTime.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
+GPSTimeDep.prototype.fieldSpec = [];
+GPSTimeDep.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+GPSTimeDep.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 
 /**
  * SBP class for message fragment GPSTimeSec
@@ -219,7 +219,7 @@ GPSTimeSec.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
 GPSTimeSec.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 
 /**
- * SBP class for message fragment GPSTimeNano
+ * SBP class for message fragment GPSTime
  *
  * A wire-appropriate receiver clock time, defined as the time since the beginning
  * of the week on the Saturday/Sunday transition. In most cases, observations are
@@ -232,25 +232,25 @@ GPSTimeSec.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var GPSTimeNano = function (sbp, fields) {
+var GPSTime = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "GPSTimeNano";
+  this.messageType = "GPSTime";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-GPSTimeNano.prototype = Object.create(SBP.prototype);
-GPSTimeNano.prototype.messageType = "GPSTimeNano";
-GPSTimeNano.prototype.constructor = GPSTimeNano;
-GPSTimeNano.prototype.parser = new Parser()
+GPSTime.prototype = Object.create(SBP.prototype);
+GPSTime.prototype.messageType = "GPSTime";
+GPSTime.prototype.constructor = GPSTime;
+GPSTime.prototype.parser = new Parser()
   .endianess('little')
   .uint32('tow')
   .int32('ns_residual')
   .uint16('wn');
-GPSTimeNano.prototype.fieldSpec = [];
-GPSTimeNano.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
-GPSTimeNano.prototype.fieldSpec.push(['ns_residual', 'writeInt32LE', 4]);
-GPSTimeNano.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
+GPSTime.prototype.fieldSpec = [];
+GPSTime.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+GPSTime.prototype.fieldSpec.push(['ns_residual', 'writeInt32LE', 4]);
+GPSTime.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 
 /**
  * SBP class for message fragment CarrierPhase
@@ -284,11 +284,11 @@ CarrierPhase.prototype.fieldSpec.push(['i', 'writeInt32LE', 4]);
 CarrierPhase.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
 
 module.exports = {
-  GnssSignal16: GnssSignal16,
   GnssSignal: GnssSignal,
-  GPSTime: GPSTime,
+  GnssSignalDep: GnssSignalDep,
+  GPSTimeDep: GPSTimeDep,
   GPSTimeSec: GPSTimeSec,
-  GPSTimeNano: GPSTimeNano,
+  GPSTime: GPSTime,
   CarrierPhase: CarrierPhase,
 }
 
@@ -6374,14 +6374,15 @@ var Parser = __webpack_require__(4);
 var Int64 = __webpack_require__(3);
 var UInt64 = __webpack_require__(1).UINT64;
 var GnssSignal = __webpack_require__(0).GnssSignal;
-var GnssSignal16 = __webpack_require__(0).GnssSignal16;
+var GnssSignalDep = __webpack_require__(0).GnssSignalDep;
 var GPSTime = __webpack_require__(0).GPSTime;
 var CarrierPhase = __webpack_require__(0).CarrierPhase;
-var GPSTimeNano = __webpack_require__(0).GPSTimeNano;
+var GPSTime = __webpack_require__(0).GPSTime;
 var GPSTimeSec = __webpack_require__(0).GPSTimeSec;
+var GPSTimeDep = __webpack_require__(0).GPSTimeDep;
 
 /**
- * SBP class for message MSG_ACQ_RESULT (0x001F).
+ * SBP class for message MSG_ACQ_RESULT (0x002F).
  *
  * This message describes the results from an attempted GPS signal acquisition
  * search for a satellite PRN over a code phase/carrier frequency range. It
@@ -6405,7 +6406,7 @@ var MsgAcqResult = function (sbp, fields) {
 };
 MsgAcqResult.prototype = Object.create(SBP.prototype);
 MsgAcqResult.prototype.messageType = "MSG_ACQ_RESULT";
-MsgAcqResult.prototype.msg_type = 0x001F;
+MsgAcqResult.prototype.msg_type = 0x002F;
 MsgAcqResult.prototype.constructor = MsgAcqResult;
 MsgAcqResult.prototype.parser = new Parser()
   .endianess('little')
@@ -6420,6 +6421,42 @@ MsgAcqResult.prototype.fieldSpec.push(['cf', 'writeFloatLE', 4]);
 MsgAcqResult.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 
 /**
+ * SBP class for message MSG_ACQ_RESULT_DEP_C (0x001F).
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field cn0 number (float, 4 bytes) CN/0 of best point
+ * @field cp number (float, 4 bytes) Code phase of best point
+ * @field cf number (float, 4 bytes) Carrier frequency of best point
+ * @field sid GnssSignalDep GNSS signal for which acquisition was attempted
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgAcqResultDepC = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ACQ_RESULT_DEP_C";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgAcqResultDepC.prototype = Object.create(SBP.prototype);
+MsgAcqResultDepC.prototype.messageType = "MSG_ACQ_RESULT_DEP_C";
+MsgAcqResultDepC.prototype.msg_type = 0x001F;
+MsgAcqResultDepC.prototype.constructor = MsgAcqResultDepC;
+MsgAcqResultDepC.prototype.parser = new Parser()
+  .endianess('little')
+  .floatle('cn0')
+  .floatle('cp')
+  .floatle('cf')
+  .nest('sid', { type: GnssSignalDep.prototype.parser });
+MsgAcqResultDepC.prototype.fieldSpec = [];
+MsgAcqResultDepC.prototype.fieldSpec.push(['cn0', 'writeFloatLE', 4]);
+MsgAcqResultDepC.prototype.fieldSpec.push(['cp', 'writeFloatLE', 4]);
+MsgAcqResultDepC.prototype.fieldSpec.push(['cf', 'writeFloatLE', 4]);
+MsgAcqResultDepC.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
+
+/**
  * SBP class for message MSG_ACQ_RESULT_DEP_B (0x0014).
  *
  * Deprecated.
@@ -6429,7 +6466,7 @@ MsgAcqResult.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
  *   Hz in a later revision of this message.
  * @field cp number (float, 4 bytes) Code phase of best point
  * @field cf number (float, 4 bytes) Carrier frequency of best point
- * @field sid GnssSignal GNSS signal for which acquisition was attempted
+ * @field sid GnssSignalDep GNSS signal for which acquisition was attempted
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -6449,12 +6486,12 @@ MsgAcqResultDepB.prototype.parser = new Parser()
   .floatle('snr')
   .floatle('cp')
   .floatle('cf')
-  .nest('sid', { type: GnssSignal.prototype.parser });
+  .nest('sid', { type: GnssSignalDep.prototype.parser });
 MsgAcqResultDepB.prototype.fieldSpec = [];
 MsgAcqResultDepB.prototype.fieldSpec.push(['snr', 'writeFloatLE', 4]);
 MsgAcqResultDepB.prototype.fieldSpec.push(['cp', 'writeFloatLE', 4]);
 MsgAcqResultDepB.prototype.fieldSpec.push(['cf', 'writeFloatLE', 4]);
-MsgAcqResultDepB.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgAcqResultDepB.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
 
 /**
  * SBP class for message MSG_ACQ_RESULT_DEP_A (0x0015).
@@ -6555,7 +6592,66 @@ AcqSvProfile.prototype.fieldSpec.push(['cf', 'writeInt32LE', 4]);
 AcqSvProfile.prototype.fieldSpec.push(['cp', 'writeUInt32LE', 4]);
 
 /**
- * SBP class for message MSG_ACQ_SV_PROFILE (0x001E).
+ * SBP class for message fragment AcqSvProfileDep
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field job_type number (unsigned 8-bit int, 1 byte) SV search job type (deep, fallback, etc)
+ * @field status number (unsigned 8-bit int, 1 byte) Acquisition status 1 is Success, 0 is Failure
+ * @field cn0 number (unsigned 16-bit int, 2 bytes) CN0 value. Only valid if status is '1'
+ * @field int_time number (unsigned 8-bit int, 1 byte) Acquisition integration time
+ * @field sid GnssSignalDep GNSS signal for which acquisition was attempted
+ * @field bin_width number (unsigned 16-bit int, 2 bytes) Acq frequency bin width
+ * @field timestamp number (unsigned 32-bit int, 4 bytes) Timestamp of the job complete event
+ * @field time_spent number (unsigned 32-bit int, 4 bytes) Time spent to search for sid.code
+ * @field cf_min number (signed 32-bit int, 4 bytes) Doppler range lowest frequency
+ * @field cf_max number (signed 32-bit int, 4 bytes) Doppler range highest frequency
+ * @field cf number (signed 32-bit int, 4 bytes) Doppler value of detected peak. Only valid if status is '1'
+ * @field cp number (unsigned 32-bit int, 4 bytes) Codephase of detected peak. Only valid if status is '1'
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var AcqSvProfileDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "AcqSvProfileDep";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+AcqSvProfileDep.prototype = Object.create(SBP.prototype);
+AcqSvProfileDep.prototype.messageType = "AcqSvProfileDep";
+AcqSvProfileDep.prototype.constructor = AcqSvProfileDep;
+AcqSvProfileDep.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('job_type')
+  .uint8('status')
+  .uint16('cn0')
+  .uint8('int_time')
+  .nest('sid', { type: GnssSignalDep.prototype.parser })
+  .uint16('bin_width')
+  .uint32('timestamp')
+  .uint32('time_spent')
+  .int32('cf_min')
+  .int32('cf_max')
+  .int32('cf')
+  .uint32('cp');
+AcqSvProfileDep.prototype.fieldSpec = [];
+AcqSvProfileDep.prototype.fieldSpec.push(['job_type', 'writeUInt8', 1]);
+AcqSvProfileDep.prototype.fieldSpec.push(['status', 'writeUInt8', 1]);
+AcqSvProfileDep.prototype.fieldSpec.push(['cn0', 'writeUInt16LE', 2]);
+AcqSvProfileDep.prototype.fieldSpec.push(['int_time', 'writeUInt8', 1]);
+AcqSvProfileDep.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
+AcqSvProfileDep.prototype.fieldSpec.push(['bin_width', 'writeUInt16LE', 2]);
+AcqSvProfileDep.prototype.fieldSpec.push(['timestamp', 'writeUInt32LE', 4]);
+AcqSvProfileDep.prototype.fieldSpec.push(['time_spent', 'writeUInt32LE', 4]);
+AcqSvProfileDep.prototype.fieldSpec.push(['cf_min', 'writeInt32LE', 4]);
+AcqSvProfileDep.prototype.fieldSpec.push(['cf_max', 'writeInt32LE', 4]);
+AcqSvProfileDep.prototype.fieldSpec.push(['cf', 'writeInt32LE', 4]);
+AcqSvProfileDep.prototype.fieldSpec.push(['cp', 'writeUInt32LE', 4]);
+
+/**
+ * SBP class for message MSG_ACQ_SV_PROFILE (0x002E).
  *
  * The message describes all SV profiles during acquisition time. The message is
  * used to debug and measure the performance.
@@ -6574,7 +6670,7 @@ var MsgAcqSvProfile = function (sbp, fields) {
 };
 MsgAcqSvProfile.prototype = Object.create(SBP.prototype);
 MsgAcqSvProfile.prototype.messageType = "MSG_ACQ_SV_PROFILE";
-MsgAcqSvProfile.prototype.msg_type = 0x001E;
+MsgAcqSvProfile.prototype.msg_type = 0x002E;
 MsgAcqSvProfile.prototype.constructor = MsgAcqSvProfile;
 MsgAcqSvProfile.prototype.parser = new Parser()
   .endianess('little')
@@ -6582,16 +6678,48 @@ MsgAcqSvProfile.prototype.parser = new Parser()
 MsgAcqSvProfile.prototype.fieldSpec = [];
 MsgAcqSvProfile.prototype.fieldSpec.push(['acq_sv_profile', 'array', AcqSvProfile.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
+/**
+ * SBP class for message MSG_ACQ_SV_PROFILE_DEP (0x001E).
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field acq_sv_profile array SV profiles during acquisition time
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgAcqSvProfileDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ACQ_SV_PROFILE_DEP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgAcqSvProfileDep.prototype = Object.create(SBP.prototype);
+MsgAcqSvProfileDep.prototype.messageType = "MSG_ACQ_SV_PROFILE_DEP";
+MsgAcqSvProfileDep.prototype.msg_type = 0x001E;
+MsgAcqSvProfileDep.prototype.constructor = MsgAcqSvProfileDep;
+MsgAcqSvProfileDep.prototype.parser = new Parser()
+  .endianess('little')
+  .array('acq_sv_profile', { type: AcqSvProfileDep.prototype.parser, readUntil: 'eof' });
+MsgAcqSvProfileDep.prototype.fieldSpec = [];
+MsgAcqSvProfileDep.prototype.fieldSpec.push(['acq_sv_profile', 'array', AcqSvProfileDep.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
 module.exports = {
-  0x001F: MsgAcqResult,
+  0x002F: MsgAcqResult,
   MsgAcqResult: MsgAcqResult,
+  0x001F: MsgAcqResultDepC,
+  MsgAcqResultDepC: MsgAcqResultDepC,
   0x0014: MsgAcqResultDepB,
   MsgAcqResultDepB: MsgAcqResultDepB,
   0x0015: MsgAcqResultDepA,
   MsgAcqResultDepA: MsgAcqResultDepA,
   AcqSvProfile: AcqSvProfile,
-  0x001E: MsgAcqSvProfile,
+  AcqSvProfileDep: AcqSvProfileDep,
+  0x002E: MsgAcqSvProfile,
   MsgAcqSvProfile: MsgAcqSvProfile,
+  0x001E: MsgAcqSvProfileDep,
+  MsgAcqSvProfileDep: MsgAcqSvProfileDep,
 }
 
 /***/ }),
@@ -8959,11 +9087,12 @@ var Parser = __webpack_require__(4);
 var Int64 = __webpack_require__(3);
 var UInt64 = __webpack_require__(1).UINT64;
 var GnssSignal = __webpack_require__(0).GnssSignal;
-var GnssSignal16 = __webpack_require__(0).GnssSignal16;
+var GnssSignalDep = __webpack_require__(0).GnssSignalDep;
 var GPSTime = __webpack_require__(0).GPSTime;
 var CarrierPhase = __webpack_require__(0).CarrierPhase;
-var GPSTimeNano = __webpack_require__(0).GPSTimeNano;
+var GPSTime = __webpack_require__(0).GPSTime;
 var GPSTimeSec = __webpack_require__(0).GPSTimeSec;
+var GPSTimeDep = __webpack_require__(0).GPSTimeDep;
 
 /**
  * SBP class for message MSG_NDB_EVENT (0x0400).
@@ -8977,9 +9106,9 @@ var GPSTimeSec = __webpack_require__(0).GPSTimeSec;
  * @field object_type number (unsigned 8-bit int, 1 byte) Event object type.
  * @field result number (unsigned 8-bit int, 1 byte) Event result.
  * @field data_source number (unsigned 8-bit int, 1 byte) Data source for STORE event, reserved for other events.
- * @field object_sid GnssSignal16 GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid indicates
+ * @field object_sid GnssSignal GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid indicates
  *   for which signal the object belongs to. Reserved in other cases.
- * @field src_sid GnssSignal16 GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR L2C
+ * @field src_sid GnssSignal GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR L2C
  *   capabilities AND data_source is NDB_DS_RECEIVER sid indicates from which SV data
  *   was decoded. Reserved in other cases.
  * @field original_sender number (unsigned 16-bit int, 2 bytes) A unique identifier of the sending hardware. For v1.0, set to the 2 least
@@ -9006,8 +9135,8 @@ MsgNdbEvent.prototype.parser = new Parser()
   .uint8('object_type')
   .uint8('result')
   .uint8('data_source')
-  .nest('object_sid', { type: GnssSignal16.prototype.parser })
-  .nest('src_sid', { type: GnssSignal16.prototype.parser })
+  .nest('object_sid', { type: GnssSignal.prototype.parser })
+  .nest('src_sid', { type: GnssSignal.prototype.parser })
   .uint16('original_sender');
 MsgNdbEvent.prototype.fieldSpec = [];
 MsgNdbEvent.prototype.fieldSpec.push(['recv_time', 'writeUInt64LE', 8]);
@@ -9015,8 +9144,8 @@ MsgNdbEvent.prototype.fieldSpec.push(['event', 'writeUInt8', 1]);
 MsgNdbEvent.prototype.fieldSpec.push(['object_type', 'writeUInt8', 1]);
 MsgNdbEvent.prototype.fieldSpec.push(['result', 'writeUInt8', 1]);
 MsgNdbEvent.prototype.fieldSpec.push(['data_source', 'writeUInt8', 1]);
-MsgNdbEvent.prototype.fieldSpec.push(['object_sid', GnssSignal16.prototype.fieldSpec]);
-MsgNdbEvent.prototype.fieldSpec.push(['src_sid', GnssSignal16.prototype.fieldSpec]);
+MsgNdbEvent.prototype.fieldSpec.push(['object_sid', GnssSignal.prototype.fieldSpec]);
+MsgNdbEvent.prototype.fieldSpec.push(['src_sid', GnssSignal.prototype.fieldSpec]);
 MsgNdbEvent.prototype.fieldSpec.push(['original_sender', 'writeUInt16LE', 2]);
 
 module.exports = {
@@ -9053,11 +9182,12 @@ var Parser = __webpack_require__(4);
 var Int64 = __webpack_require__(3);
 var UInt64 = __webpack_require__(1).UINT64;
 var GnssSignal = __webpack_require__(0).GnssSignal;
-var GnssSignal16 = __webpack_require__(0).GnssSignal16;
+var GnssSignalDep = __webpack_require__(0).GnssSignalDep;
 var GPSTime = __webpack_require__(0).GPSTime;
 var CarrierPhase = __webpack_require__(0).CarrierPhase;
-var GPSTimeNano = __webpack_require__(0).GPSTimeNano;
+var GPSTime = __webpack_require__(0).GPSTime;
 var GPSTimeSec = __webpack_require__(0).GPSTimeSec;
+var GPSTimeDep = __webpack_require__(0).GPSTimeDep;
 
 /**
  * SBP class for message fragment ObservationHeader
@@ -9065,7 +9195,7 @@ var GPSTimeSec = __webpack_require__(0).GPSTimeSec;
  * Header of a GNSS observation message.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field t GPSTimeNano GNSS time of this observation
+ * @field t GPSTime GNSS time of this observation
  * @field n_obs number (unsigned 8-bit int, 1 byte) Total number of observations. First nibble is the size of the sequence (n),
  *   second nibble is the zero-indexed counter (ith packet of n)
  *
@@ -9083,10 +9213,10 @@ ObservationHeader.prototype.messageType = "ObservationHeader";
 ObservationHeader.prototype.constructor = ObservationHeader;
 ObservationHeader.prototype.parser = new Parser()
   .endianess('little')
-  .nest('t', { type: GPSTimeNano.prototype.parser })
+  .nest('t', { type: GPSTime.prototype.parser })
   .uint8('n_obs');
 ObservationHeader.prototype.fieldSpec = [];
-ObservationHeader.prototype.fieldSpec.push(['t', GPSTimeNano.prototype.fieldSpec]);
+ObservationHeader.prototype.fieldSpec.push(['t', GPSTime.prototype.fieldSpec]);
 ObservationHeader.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
 
 /**
@@ -9140,7 +9270,7 @@ Doppler.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
  * @field flags number (unsigned 8-bit int, 1 byte) Measurement status flags. A bit field of flags providing the status of this
  *   observation.  If this field is 0 it means only the Cn0 estimate for the signal
  *   is valid.
- * @field sid GnssSignal16 GNSS signal identifier (16 bit)
+ * @field sid GnssSignal GNSS signal identifier (16 bit)
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -9162,7 +9292,7 @@ PackedObsContent.prototype.parser = new Parser()
   .uint8('cn0')
   .uint8('lock')
   .uint8('flags')
-  .nest('sid', { type: GnssSignal16.prototype.parser });
+  .nest('sid', { type: GnssSignal.prototype.parser });
 PackedObsContent.prototype.fieldSpec = [];
 PackedObsContent.prototype.fieldSpec.push(['P', 'writeUInt32LE', 4]);
 PackedObsContent.prototype.fieldSpec.push(['L', CarrierPhase.prototype.fieldSpec]);
@@ -9170,7 +9300,7 @@ PackedObsContent.prototype.fieldSpec.push(['D', Doppler.prototype.fieldSpec]);
 PackedObsContent.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
 PackedObsContent.prototype.fieldSpec.push(['lock', 'writeUInt8', 1]);
 PackedObsContent.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
-PackedObsContent.prototype.fieldSpec.push(['sid', GnssSignal16.prototype.fieldSpec]);
+PackedObsContent.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 
 /**
  * SBP class for message MSG_OBS (0x004A).
@@ -9285,7 +9415,7 @@ MsgBasePosEcef.prototype.fieldSpec.push(['z', 'writeDoubleLE', 8]);
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field sid GnssSignal16 GNSS signal identifier (16 bit)
+ * @field sid GnssSignal GNSS signal identifier (16 bit)
  * @field toe GPSTimeSec Time of Ephemerides
  * @field ura number (float, 8 bytes) User Range Accuracy
  * @field fit_interval number (unsigned 32-bit int, 4 bytes) Curve fit interval
@@ -9307,14 +9437,14 @@ EphemerisCommonContent.prototype.messageType = "EphemerisCommonContent";
 EphemerisCommonContent.prototype.constructor = EphemerisCommonContent;
 EphemerisCommonContent.prototype.parser = new Parser()
   .endianess('little')
-  .nest('sid', { type: GnssSignal16.prototype.parser })
+  .nest('sid', { type: GnssSignal.prototype.parser })
   .nest('toe', { type: GPSTimeSec.prototype.parser })
   .doublele('ura')
   .uint32('fit_interval')
   .uint8('valid')
   .uint8('health_bits');
 EphemerisCommonContent.prototype.fieldSpec = [];
-EphemerisCommonContent.prototype.fieldSpec.push(['sid', GnssSignal16.prototype.fieldSpec]);
+EphemerisCommonContent.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 EphemerisCommonContent.prototype.fieldSpec.push(['toe', GPSTimeSec.prototype.fieldSpec]);
 EphemerisCommonContent.prototype.fieldSpec.push(['ura', 'writeDoubleLE', 8]);
 EphemerisCommonContent.prototype.fieldSpec.push(['fit_interval', 'writeUInt32LE', 4]);
@@ -9326,8 +9456,8 @@ EphemerisCommonContent.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1]
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field sid GnssSignal GNSS signal identifier
- * @field toe GPSTime Time of Ephemerides
+ * @field sid GnssSignalDep GNSS signal identifier
+ * @field toe GPSTimeDep Time of Ephemerides
  * @field ura number (float, 8 bytes) User Range Accuracy
  * @field fit_interval number (unsigned 32-bit int, 4 bytes) Curve fit interval
  * @field valid number (unsigned 8-bit int, 1 byte) Status of ephemeris, 1 = valid, 0 = invalid
@@ -9348,15 +9478,15 @@ EphemerisCommonContentDepA.prototype.messageType = "EphemerisCommonContentDepA";
 EphemerisCommonContentDepA.prototype.constructor = EphemerisCommonContentDepA;
 EphemerisCommonContentDepA.prototype.parser = new Parser()
   .endianess('little')
-  .nest('sid', { type: GnssSignal.prototype.parser })
-  .nest('toe', { type: GPSTime.prototype.parser })
+  .nest('sid', { type: GnssSignalDep.prototype.parser })
+  .nest('toe', { type: GPSTimeDep.prototype.parser })
   .doublele('ura')
   .uint32('fit_interval')
   .uint8('valid')
   .uint8('health_bits');
 EphemerisCommonContentDepA.prototype.fieldSpec = [];
-EphemerisCommonContentDepA.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
-EphemerisCommonContentDepA.prototype.fieldSpec.push(['toe', GPSTime.prototype.fieldSpec]);
+EphemerisCommonContentDepA.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
+EphemerisCommonContentDepA.prototype.fieldSpec.push(['toe', GPSTimeDep.prototype.fieldSpec]);
 EphemerisCommonContentDepA.prototype.fieldSpec.push(['ura', 'writeDoubleLE', 8]);
 EphemerisCommonContentDepA.prototype.fieldSpec.push(['fit_interval', 'writeUInt32LE', 4]);
 EphemerisCommonContentDepA.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
@@ -9391,7 +9521,7 @@ EphemerisCommonContentDepA.prototype.fieldSpec.push(['health_bits', 'writeUInt8'
  * @field af0 number (float, 8 bytes) Polynomial clock correction coefficient (clock bias)
  * @field af1 number (float, 8 bytes) Polynomial clock correction coefficient (clock drift)
  * @field af2 number (float, 8 bytes) Polynomial clock correction coefficient (rate of clock drift)
- * @field toc GPSTime Clock reference
+ * @field toc GPSTimeDep Clock reference
  * @field iode number (unsigned 8-bit int, 1 byte) Issue of ephemeris data
  * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data
  *
@@ -9430,7 +9560,7 @@ MsgEphemerisGpsDepE.prototype.parser = new Parser()
   .doublele('af0')
   .doublele('af1')
   .doublele('af2')
-  .nest('toc', { type: GPSTime.prototype.parser })
+  .nest('toc', { type: GPSTimeDep.prototype.parser })
   .uint8('iode')
   .uint16('iodc');
 MsgEphemerisGpsDepE.prototype.fieldSpec = [];
@@ -9454,7 +9584,7 @@ MsgEphemerisGpsDepE.prototype.fieldSpec.push(['inc_dot', 'writeDoubleLE', 8]);
 MsgEphemerisGpsDepE.prototype.fieldSpec.push(['af0', 'writeDoubleLE', 8]);
 MsgEphemerisGpsDepE.prototype.fieldSpec.push(['af1', 'writeDoubleLE', 8]);
 MsgEphemerisGpsDepE.prototype.fieldSpec.push(['af2', 'writeDoubleLE', 8]);
-MsgEphemerisGpsDepE.prototype.fieldSpec.push(['toc', GPSTime.prototype.fieldSpec]);
+MsgEphemerisGpsDepE.prototype.fieldSpec.push(['toc', GPSTimeDep.prototype.fieldSpec]);
 MsgEphemerisGpsDepE.prototype.fieldSpec.push(['iode', 'writeUInt8', 1]);
 MsgEphemerisGpsDepE.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
 
@@ -9865,7 +9995,7 @@ MsgEphemerisGlo.prototype.fieldSpec.push(['iod', 'writeUInt8', 1]);
  * @field toc_wn number (unsigned 16-bit int, 2 bytes) Clock reference week number
  * @field valid number (unsigned 8-bit int, 1 byte) Is valid?
  * @field healthy number (unsigned 8-bit int, 1 byte) Satellite is healthy?
- * @field sid GnssSignal GNSS signal identifier
+ * @field sid GnssSignalDep GNSS signal identifier
  * @field iode number (unsigned 8-bit int, 1 byte) Issue of ephemeris data
  * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data
  * @field reserved number (unsigned 32-bit int, 4 bytes) Reserved field
@@ -9910,7 +10040,7 @@ MsgEphemerisDepD.prototype.parser = new Parser()
   .uint16('toc_wn')
   .uint8('valid')
   .uint8('healthy')
-  .nest('sid', { type: GnssSignal.prototype.parser })
+  .nest('sid', { type: GnssSignalDep.prototype.parser })
   .uint8('iode')
   .uint16('iodc')
   .uint32('reserved');
@@ -9940,7 +10070,7 @@ MsgEphemerisDepD.prototype.fieldSpec.push(['toc_tow', 'writeDoubleLE', 8]);
 MsgEphemerisDepD.prototype.fieldSpec.push(['toc_wn', 'writeUInt16LE', 2]);
 MsgEphemerisDepD.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
 MsgEphemerisDepD.prototype.fieldSpec.push(['healthy', 'writeUInt8', 1]);
-MsgEphemerisDepD.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgEphemerisDepD.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
 MsgEphemerisDepD.prototype.fieldSpec.push(['iode', 'writeUInt8', 1]);
 MsgEphemerisDepD.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
 MsgEphemerisDepD.prototype.fieldSpec.push(['reserved', 'writeUInt32LE', 4]);
@@ -10186,7 +10316,7 @@ MsgEphemerisDepB.prototype.fieldSpec.push(['iode', 'writeUInt8', 1]);
  * @field toc_wn number (unsigned 16-bit int, 2 bytes) Clock reference week number
  * @field valid number (unsigned 8-bit int, 1 byte) Is valid?
  * @field healthy number (unsigned 8-bit int, 1 byte) Satellite is healthy?
- * @field sid GnssSignal GNSS signal identifier
+ * @field sid GnssSignalDep GNSS signal identifier
  * @field iode number (unsigned 8-bit int, 1 byte) Issue of ephemeris data
  * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data
  * @field reserved number (unsigned 32-bit int, 4 bytes) Reserved field
@@ -10231,7 +10361,7 @@ MsgEphemerisDepC.prototype.parser = new Parser()
   .uint16('toc_wn')
   .uint8('valid')
   .uint8('healthy')
-  .nest('sid', { type: GnssSignal.prototype.parser })
+  .nest('sid', { type: GnssSignalDep.prototype.parser })
   .uint8('iode')
   .uint16('iodc')
   .uint32('reserved');
@@ -10261,7 +10391,7 @@ MsgEphemerisDepC.prototype.fieldSpec.push(['toc_tow', 'writeDoubleLE', 8]);
 MsgEphemerisDepC.prototype.fieldSpec.push(['toc_wn', 'writeUInt16LE', 2]);
 MsgEphemerisDepC.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
 MsgEphemerisDepC.prototype.fieldSpec.push(['healthy', 'writeUInt8', 1]);
-MsgEphemerisDepC.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgEphemerisDepC.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
 MsgEphemerisDepC.prototype.fieldSpec.push(['iode', 'writeUInt8', 1]);
 MsgEphemerisDepC.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
 MsgEphemerisDepC.prototype.fieldSpec.push(['reserved', 'writeUInt32LE', 4]);
@@ -10272,7 +10402,7 @@ MsgEphemerisDepC.prototype.fieldSpec.push(['reserved', 'writeUInt32LE', 4]);
  * Header of a GPS observation message.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field t GPSTime GPS time of this observation
+ * @field t GPSTimeDep GPS time of this observation
  * @field n_obs number (unsigned 8-bit int, 1 byte) Total number of observations. First nibble is the size of the sequence (n),
  *   second nibble is the zero-indexed counter (ith packet of n)
  *
@@ -10290,10 +10420,10 @@ ObservationHeaderDep.prototype.messageType = "ObservationHeaderDep";
 ObservationHeaderDep.prototype.constructor = ObservationHeaderDep;
 ObservationHeaderDep.prototype.parser = new Parser()
   .endianess('little')
-  .nest('t', { type: GPSTime.prototype.parser })
+  .nest('t', { type: GPSTimeDep.prototype.parser })
   .uint8('n_obs');
 ObservationHeaderDep.prototype.fieldSpec = [];
-ObservationHeaderDep.prototype.fieldSpec.push(['t', GPSTime.prototype.fieldSpec]);
+ObservationHeaderDep.prototype.fieldSpec.push(['t', GPSTimeDep.prototype.fieldSpec]);
 ObservationHeaderDep.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
 
 /**
@@ -10379,7 +10509,7 @@ PackedObsContentDepA.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
  * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density
  * @field lock number (unsigned 16-bit int, 2 bytes) Lock indicator. This value changes whenever a satellite signal has lost and
  *   regained lock, indicating that the carrier phase ambiguity may have changed.
- * @field sid GnssSignal GNSS signal identifier
+ * @field sid GnssSignalDep GNSS signal identifier
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -10399,13 +10529,13 @@ PackedObsContentDepB.prototype.parser = new Parser()
   .nest('L', { type: CarrierPhaseDepA.prototype.parser })
   .uint8('cn0')
   .uint16('lock')
-  .nest('sid', { type: GnssSignal.prototype.parser });
+  .nest('sid', { type: GnssSignalDep.prototype.parser });
 PackedObsContentDepB.prototype.fieldSpec = [];
 PackedObsContentDepB.prototype.fieldSpec.push(['P', 'writeUInt32LE', 4]);
 PackedObsContentDepB.prototype.fieldSpec.push(['L', CarrierPhaseDepA.prototype.fieldSpec]);
 PackedObsContentDepB.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
 PackedObsContentDepB.prototype.fieldSpec.push(['lock', 'writeUInt16LE', 2]);
-PackedObsContentDepB.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+PackedObsContentDepB.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
 
 /**
  * SBP class for message fragment PackedObsContentDepC
@@ -10420,7 +10550,7 @@ PackedObsContentDepB.prototype.fieldSpec.push(['sid', GnssSignal.prototype.field
  * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density
  * @field lock number (unsigned 16-bit int, 2 bytes) Lock indicator. This value changes whenever a satellite signal has lost and
  *   regained lock, indicating that the carrier phase ambiguity may have changed.
- * @field sid GnssSignal GNSS signal identifier
+ * @field sid GnssSignalDep GNSS signal identifier
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -10440,13 +10570,13 @@ PackedObsContentDepC.prototype.parser = new Parser()
   .nest('L', { type: CarrierPhase.prototype.parser })
   .uint8('cn0')
   .uint16('lock')
-  .nest('sid', { type: GnssSignal.prototype.parser });
+  .nest('sid', { type: GnssSignalDep.prototype.parser });
 PackedObsContentDepC.prototype.fieldSpec = [];
 PackedObsContentDepC.prototype.fieldSpec.push(['P', 'writeUInt32LE', 4]);
 PackedObsContentDepC.prototype.fieldSpec.push(['L', CarrierPhase.prototype.fieldSpec]);
 PackedObsContentDepC.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
 PackedObsContentDepC.prototype.fieldSpec.push(['lock', 'writeUInt16LE', 2]);
-PackedObsContentDepC.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+PackedObsContentDepC.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
 
 /**
  * SBP class for message MSG_OBS_DEP_A (0x0045).
@@ -10635,7 +10765,7 @@ MsgSvConfigurationGps.prototype.fieldSpec.push(['l2c_mask', 'writeUInt32LE', 4])
  * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field t_op GPSTime Data Predict Time of Week
+ * @field t_op GPSTimeDep Data Predict Time of Week
  * @field prn number (unsigned 8-bit int, 1 byte) Satellite number
  * @field valid number (unsigned 8-bit int, 1 byte) bit-field indicating validity of the values, LSB indicating tgd validity etc. 1
  *   = value is valid, 0 = value is not valid.
@@ -10658,14 +10788,14 @@ MsgGroupDelayDepA.prototype.msg_type = 0x0092;
 MsgGroupDelayDepA.prototype.constructor = MsgGroupDelayDepA;
 MsgGroupDelayDepA.prototype.parser = new Parser()
   .endianess('little')
-  .nest('t_op', { type: GPSTime.prototype.parser })
+  .nest('t_op', { type: GPSTimeDep.prototype.parser })
   .uint8('prn')
   .uint8('valid')
   .int16('tgd')
   .int16('isc_l1ca')
   .int16('isc_l2c');
 MsgGroupDelayDepA.prototype.fieldSpec = [];
-MsgGroupDelayDepA.prototype.fieldSpec.push(['t_op', GPSTime.prototype.fieldSpec]);
+MsgGroupDelayDepA.prototype.fieldSpec.push(['t_op', GPSTimeDep.prototype.fieldSpec]);
 MsgGroupDelayDepA.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
 MsgGroupDelayDepA.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
 MsgGroupDelayDepA.prototype.fieldSpec.push(['tgd', 'writeInt16LE', 2]);
@@ -10673,7 +10803,50 @@ MsgGroupDelayDepA.prototype.fieldSpec.push(['isc_l1ca', 'writeInt16LE', 2]);
 MsgGroupDelayDepA.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
 
 /**
- * SBP class for message MSG_GROUP_DELAY (0x0093).
+ * SBP class for message MSG_GROUP_DELAY_DEP_B (0x0093).
+ *
+ * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field t_op GPSTimeSec Data Predict Time of Week
+ * @field sid GnssSignalDep GNSS signal identifier
+ * @field valid number (unsigned 8-bit int, 1 byte) bit-field indicating validity of the values, LSB indicating tgd validity etc. 1
+ *   = value is valid, 0 = value is not valid.
+ * @field tgd number (signed 16-bit int, 2 bytes)
+ * @field isc_l1ca number (signed 16-bit int, 2 bytes)
+ * @field isc_l2c number (signed 16-bit int, 2 bytes)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgGroupDelayDepB = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_GROUP_DELAY_DEP_B";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgGroupDelayDepB.prototype = Object.create(SBP.prototype);
+MsgGroupDelayDepB.prototype.messageType = "MSG_GROUP_DELAY_DEP_B";
+MsgGroupDelayDepB.prototype.msg_type = 0x0093;
+MsgGroupDelayDepB.prototype.constructor = MsgGroupDelayDepB;
+MsgGroupDelayDepB.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('t_op', { type: GPSTimeSec.prototype.parser })
+  .nest('sid', { type: GnssSignalDep.prototype.parser })
+  .uint8('valid')
+  .int16('tgd')
+  .int16('isc_l1ca')
+  .int16('isc_l2c');
+MsgGroupDelayDepB.prototype.fieldSpec = [];
+MsgGroupDelayDepB.prototype.fieldSpec.push(['t_op', GPSTimeSec.prototype.fieldSpec]);
+MsgGroupDelayDepB.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
+MsgGroupDelayDepB.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
+MsgGroupDelayDepB.prototype.fieldSpec.push(['tgd', 'writeInt16LE', 2]);
+MsgGroupDelayDepB.prototype.fieldSpec.push(['isc_l1ca', 'writeInt16LE', 2]);
+MsgGroupDelayDepB.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
+
+/**
+ * SBP class for message MSG_GROUP_DELAY (0x0094).
  *
  * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
  *
@@ -10697,7 +10870,7 @@ var MsgGroupDelay = function (sbp, fields) {
 };
 MsgGroupDelay.prototype = Object.create(SBP.prototype);
 MsgGroupDelay.prototype.messageType = "MSG_GROUP_DELAY";
-MsgGroupDelay.prototype.msg_type = 0x0093;
+MsgGroupDelay.prototype.msg_type = 0x0094;
 MsgGroupDelay.prototype.constructor = MsgGroupDelay;
 MsgGroupDelay.prototype.parser = new Parser()
   .endianess('little')
@@ -10764,7 +10937,112 @@ AlmanacCommonContent.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
 AlmanacCommonContent.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1]);
 
 /**
- * SBP class for message MSG_ALMANAC_GPS (0x0070).
+ * SBP class for message fragment AlmanacCommonContentDep
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sid GnssSignalDep GNSS signal identifier
+ * @field toa GPSTimeSec Reference time of almanac
+ * @field ura number (float, 8 bytes) User Range Accuracy
+ * @field fit_interval number (unsigned 32-bit int, 4 bytes) Curve fit interval
+ * @field valid number (unsigned 8-bit int, 1 byte) Status of almanac, 1 = valid, 0 = invalid
+ * @field health_bits number (unsigned 8-bit int, 1 byte) Satellite health status for GPS:   - bits 5-7: NAV data health status. See IS-
+ *   GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits 0-4: Signal
+ *   health status. See IS-GPS-200H     Table 20-VIII. Codes for Health of SV Signal
+ *   Components. Satellite health status for GLO:   See GLO ICD 5.1 table 5.1 for
+ *   details   - bit 0: C(n), "unhealthy" flag that is transmitted within     non-
+ *   immediate data and indicates overall constellation status     at the moment of
+ *   almanac uploading.     '0' indicates malfunction of n-satellite.     '1'
+ *   indicates that n-satellite is operational.   - bit 1: Bn(ln), '0' indicates the
+ *   satellite is operational     and suitable for navigation.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var AlmanacCommonContentDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "AlmanacCommonContentDep";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+AlmanacCommonContentDep.prototype = Object.create(SBP.prototype);
+AlmanacCommonContentDep.prototype.messageType = "AlmanacCommonContentDep";
+AlmanacCommonContentDep.prototype.constructor = AlmanacCommonContentDep;
+AlmanacCommonContentDep.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('sid', { type: GnssSignalDep.prototype.parser })
+  .nest('toa', { type: GPSTimeSec.prototype.parser })
+  .doublele('ura')
+  .uint32('fit_interval')
+  .uint8('valid')
+  .uint8('health_bits');
+AlmanacCommonContentDep.prototype.fieldSpec = [];
+AlmanacCommonContentDep.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
+AlmanacCommonContentDep.prototype.fieldSpec.push(['toa', GPSTimeSec.prototype.fieldSpec]);
+AlmanacCommonContentDep.prototype.fieldSpec.push(['ura', 'writeDoubleLE', 8]);
+AlmanacCommonContentDep.prototype.fieldSpec.push(['fit_interval', 'writeUInt32LE', 4]);
+AlmanacCommonContentDep.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
+AlmanacCommonContentDep.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_ALMANAC_GPS_DEP (0x0070).
+ *
+ * The almanac message returns a set of satellite orbit parameters. Almanac data is
+ * not very precise and is considered valid for up to several months. Please see
+ * the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200, Chapter
+ * 20.3.3.5.1.2 Almanac Data) for more details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field common AlmanacCommonContentDep Values common for all almanac types
+ * @field m0 number (float, 8 bytes) Mean anomaly at reference time
+ * @field ecc number (float, 8 bytes) Eccentricity of satellite orbit
+ * @field sqrta number (float, 8 bytes) Square root of the semi-major axis of orbit
+ * @field omega0 number (float, 8 bytes) Longitude of ascending node of orbit plane at weekly epoch
+ * @field omegadot number (float, 8 bytes) Rate of right ascension
+ * @field w number (float, 8 bytes) Argument of perigee
+ * @field inc number (float, 8 bytes) Inclination
+ * @field af0 number (float, 8 bytes) Polynomial clock correction coefficient (clock bias)
+ * @field af1 number (float, 8 bytes) Polynomial clock correction coefficient (clock drift)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgAlmanacGpsDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ALMANAC_GPS_DEP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgAlmanacGpsDep.prototype = Object.create(SBP.prototype);
+MsgAlmanacGpsDep.prototype.messageType = "MSG_ALMANAC_GPS_DEP";
+MsgAlmanacGpsDep.prototype.msg_type = 0x0070;
+MsgAlmanacGpsDep.prototype.constructor = MsgAlmanacGpsDep;
+MsgAlmanacGpsDep.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('common', { type: AlmanacCommonContentDep.prototype.parser })
+  .doublele('m0')
+  .doublele('ecc')
+  .doublele('sqrta')
+  .doublele('omega0')
+  .doublele('omegadot')
+  .doublele('w')
+  .doublele('inc')
+  .doublele('af0')
+  .doublele('af1');
+MsgAlmanacGpsDep.prototype.fieldSpec = [];
+MsgAlmanacGpsDep.prototype.fieldSpec.push(['common', AlmanacCommonContentDep.prototype.fieldSpec]);
+MsgAlmanacGpsDep.prototype.fieldSpec.push(['m0', 'writeDoubleLE', 8]);
+MsgAlmanacGpsDep.prototype.fieldSpec.push(['ecc', 'writeDoubleLE', 8]);
+MsgAlmanacGpsDep.prototype.fieldSpec.push(['sqrta', 'writeDoubleLE', 8]);
+MsgAlmanacGpsDep.prototype.fieldSpec.push(['omega0', 'writeDoubleLE', 8]);
+MsgAlmanacGpsDep.prototype.fieldSpec.push(['omegadot', 'writeDoubleLE', 8]);
+MsgAlmanacGpsDep.prototype.fieldSpec.push(['w', 'writeDoubleLE', 8]);
+MsgAlmanacGpsDep.prototype.fieldSpec.push(['inc', 'writeDoubleLE', 8]);
+MsgAlmanacGpsDep.prototype.fieldSpec.push(['af0', 'writeDoubleLE', 8]);
+MsgAlmanacGpsDep.prototype.fieldSpec.push(['af1', 'writeDoubleLE', 8]);
+
+/**
+ * SBP class for message MSG_ALMANAC_GPS (0x0072).
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac data is
  * not very precise and is considered valid for up to several months. Please see
@@ -10794,7 +11072,7 @@ var MsgAlmanacGps = function (sbp, fields) {
 };
 MsgAlmanacGps.prototype = Object.create(SBP.prototype);
 MsgAlmanacGps.prototype.messageType = "MSG_ALMANAC_GPS";
-MsgAlmanacGps.prototype.msg_type = 0x0070;
+MsgAlmanacGps.prototype.msg_type = 0x0072;
 MsgAlmanacGps.prototype.constructor = MsgAlmanacGps;
 MsgAlmanacGps.prototype.parser = new Parser()
   .endianess('little')
@@ -10821,7 +11099,57 @@ MsgAlmanacGps.prototype.fieldSpec.push(['af0', 'writeDoubleLE', 8]);
 MsgAlmanacGps.prototype.fieldSpec.push(['af1', 'writeDoubleLE', 8]);
 
 /**
- * SBP class for message MSG_ALMANAC_GLO (0x0071).
+ * SBP class for message MSG_ALMANAC_GLO_DEP (0x0071).
+ *
+ * The almanac message returns a set of satellite orbit parameters. Almanac data is
+ * not very precise and is considered valid for up to several months. Please see
+ * the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and almanac" for details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field common AlmanacCommonContentDep Values common for all almanac types
+ * @field lambda_na number (float, 8 bytes) Longitude of the first ascending node of the orbit in PZ-90.02 coordinate system
+ * @field t_lambda_na number (float, 8 bytes) Time of the first ascending node passage
+ * @field i number (float, 8 bytes) Value of inclination at instant of t_lambda
+ * @field t number (float, 8 bytes) Value of Draconian period at instant of t_lambda
+ * @field t_dot number (float, 8 bytes) Rate of change of the Draconian period
+ * @field epsilon number (float, 8 bytes) Eccentricity at instant of t_lambda
+ * @field omega number (float, 8 bytes) Argument of perigee at instant of t_lambda
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgAlmanacGloDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ALMANAC_GLO_DEP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgAlmanacGloDep.prototype = Object.create(SBP.prototype);
+MsgAlmanacGloDep.prototype.messageType = "MSG_ALMANAC_GLO_DEP";
+MsgAlmanacGloDep.prototype.msg_type = 0x0071;
+MsgAlmanacGloDep.prototype.constructor = MsgAlmanacGloDep;
+MsgAlmanacGloDep.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('common', { type: AlmanacCommonContentDep.prototype.parser })
+  .doublele('lambda_na')
+  .doublele('t_lambda_na')
+  .doublele('i')
+  .doublele('t')
+  .doublele('t_dot')
+  .doublele('epsilon')
+  .doublele('omega');
+MsgAlmanacGloDep.prototype.fieldSpec = [];
+MsgAlmanacGloDep.prototype.fieldSpec.push(['common', AlmanacCommonContentDep.prototype.fieldSpec]);
+MsgAlmanacGloDep.prototype.fieldSpec.push(['lambda_na', 'writeDoubleLE', 8]);
+MsgAlmanacGloDep.prototype.fieldSpec.push(['t_lambda_na', 'writeDoubleLE', 8]);
+MsgAlmanacGloDep.prototype.fieldSpec.push(['i', 'writeDoubleLE', 8]);
+MsgAlmanacGloDep.prototype.fieldSpec.push(['t', 'writeDoubleLE', 8]);
+MsgAlmanacGloDep.prototype.fieldSpec.push(['t_dot', 'writeDoubleLE', 8]);
+MsgAlmanacGloDep.prototype.fieldSpec.push(['epsilon', 'writeDoubleLE', 8]);
+MsgAlmanacGloDep.prototype.fieldSpec.push(['omega', 'writeDoubleLE', 8]);
+
+/**
+ * SBP class for message MSG_ALMANAC_GLO (0x0073).
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac data is
  * not very precise and is considered valid for up to several months. Please see
@@ -10848,7 +11176,7 @@ var MsgAlmanacGlo = function (sbp, fields) {
 };
 MsgAlmanacGlo.prototype = Object.create(SBP.prototype);
 MsgAlmanacGlo.prototype.messageType = "MSG_ALMANAC_GLO";
-MsgAlmanacGlo.prototype.msg_type = 0x0071;
+MsgAlmanacGlo.prototype.msg_type = 0x0073;
 MsgAlmanacGlo.prototype.constructor = MsgAlmanacGlo;
 MsgAlmanacGlo.prototype.parser = new Parser()
   .endianess('little')
@@ -10923,12 +11251,19 @@ module.exports = {
   MsgSvConfigurationGps: MsgSvConfigurationGps,
   0x0092: MsgGroupDelayDepA,
   MsgGroupDelayDepA: MsgGroupDelayDepA,
-  0x0093: MsgGroupDelay,
+  0x0093: MsgGroupDelayDepB,
+  MsgGroupDelayDepB: MsgGroupDelayDepB,
+  0x0094: MsgGroupDelay,
   MsgGroupDelay: MsgGroupDelay,
   AlmanacCommonContent: AlmanacCommonContent,
-  0x0070: MsgAlmanacGps,
+  AlmanacCommonContentDep: AlmanacCommonContentDep,
+  0x0070: MsgAlmanacGpsDep,
+  MsgAlmanacGpsDep: MsgAlmanacGpsDep,
+  0x0072: MsgAlmanacGps,
   MsgAlmanacGps: MsgAlmanacGps,
-  0x0071: MsgAlmanacGlo,
+  0x0071: MsgAlmanacGloDep,
+  MsgAlmanacGloDep: MsgAlmanacGloDep,
+  0x0073: MsgAlmanacGlo,
   MsgAlmanacGlo: MsgAlmanacGlo,
 }
 
@@ -10962,11 +11297,12 @@ var Parser = __webpack_require__(4);
 var Int64 = __webpack_require__(3);
 var UInt64 = __webpack_require__(1).UINT64;
 var GnssSignal = __webpack_require__(0).GnssSignal;
-var GnssSignal16 = __webpack_require__(0).GnssSignal16;
+var GnssSignalDep = __webpack_require__(0).GnssSignalDep;
 var GPSTime = __webpack_require__(0).GPSTime;
 var CarrierPhase = __webpack_require__(0).CarrierPhase;
-var GPSTimeNano = __webpack_require__(0).GPSTimeNano;
+var GPSTime = __webpack_require__(0).GPSTime;
 var GPSTimeSec = __webpack_require__(0).GPSTimeSec;
+var GPSTimeDep = __webpack_require__(0).GPSTimeDep;
 
 /**
  * SBP class for message MSG_ALMANAC (0x0069).
@@ -11428,7 +11764,7 @@ MsgIarState.prototype.fieldSpec = [];
 MsgIarState.prototype.fieldSpec.push(['num_hyps', 'writeUInt32LE', 4]);
 
 /**
- * SBP class for message MSG_MASK_SATELLITE (0x001B).
+ * SBP class for message MSG_MASK_SATELLITE (0x002B).
  *
  * This message allows setting a mask to prevent a particular satellite from being
  * used in various Piksi subsystems.
@@ -11448,7 +11784,7 @@ var MsgMaskSatellite = function (sbp, fields) {
 };
 MsgMaskSatellite.prototype = Object.create(SBP.prototype);
 MsgMaskSatellite.prototype.messageType = "MSG_MASK_SATELLITE";
-MsgMaskSatellite.prototype.msg_type = 0x001B;
+MsgMaskSatellite.prototype.msg_type = 0x002B;
 MsgMaskSatellite.prototype.constructor = MsgMaskSatellite;
 MsgMaskSatellite.prototype.parser = new Parser()
   .endianess('little')
@@ -11457,6 +11793,36 @@ MsgMaskSatellite.prototype.parser = new Parser()
 MsgMaskSatellite.prototype.fieldSpec = [];
 MsgMaskSatellite.prototype.fieldSpec.push(['mask', 'writeUInt8', 1]);
 MsgMaskSatellite.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+
+/**
+ * SBP class for message MSG_MASK_SATELLITE_DEP (0x001B).
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field mask number (unsigned 8-bit int, 1 byte) Mask of systems that should ignore this satellite.
+ * @field sid GnssSignalDep GNSS signal for which the mask is applied
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgMaskSatelliteDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_MASK_SATELLITE_DEP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgMaskSatelliteDep.prototype = Object.create(SBP.prototype);
+MsgMaskSatelliteDep.prototype.messageType = "MSG_MASK_SATELLITE_DEP";
+MsgMaskSatelliteDep.prototype.msg_type = 0x001B;
+MsgMaskSatelliteDep.prototype.constructor = MsgMaskSatelliteDep;
+MsgMaskSatelliteDep.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('mask')
+  .nest('sid', { type: GnssSignalDep.prototype.parser });
+MsgMaskSatelliteDep.prototype.fieldSpec = [];
+MsgMaskSatelliteDep.prototype.fieldSpec.push(['mask', 'writeUInt8', 1]);
+MsgMaskSatelliteDep.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
 
 /**
  * SBP class for message MSG_DEVICE_MONITOR (0x00B5).
@@ -11665,7 +12031,52 @@ MsgNetworkStateResp.prototype.fieldSpec.push(['interface_name', 'string', 16]);
 MsgNetworkStateResp.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
 /**
- * SBP class for message MSG_SPECAN (0x0050).
+ * SBP class for message MSG_SPECAN_DEP (0x0050).
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field channel_tag number (unsigned 16-bit int, 2 bytes) Channel ID
+ * @field t GPSTimeDep Receiver time of this observation
+ * @field freq_ref number (float, 4 bytes) Reference frequency of this packet
+ * @field freq_step number (float, 4 bytes) Frequency step of points in this packet
+ * @field amplitude_ref number (float, 4 bytes) Reference amplitude of this packet
+ * @field amplitude_unit number (float, 4 bytes) Amplitude unit value of points in this packet
+ * @field amplitude_value array Amplitude values (in the above units) of points in this packet
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSpecanDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SPECAN_DEP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSpecanDep.prototype = Object.create(SBP.prototype);
+MsgSpecanDep.prototype.messageType = "MSG_SPECAN_DEP";
+MsgSpecanDep.prototype.msg_type = 0x0050;
+MsgSpecanDep.prototype.constructor = MsgSpecanDep;
+MsgSpecanDep.prototype.parser = new Parser()
+  .endianess('little')
+  .uint16('channel_tag')
+  .nest('t', { type: GPSTimeDep.prototype.parser })
+  .floatle('freq_ref')
+  .floatle('freq_step')
+  .floatle('amplitude_ref')
+  .floatle('amplitude_unit')
+  .array('amplitude_value', { type: 'uint8', readUntil: 'eof' });
+MsgSpecanDep.prototype.fieldSpec = [];
+MsgSpecanDep.prototype.fieldSpec.push(['channel_tag', 'writeUInt16LE', 2]);
+MsgSpecanDep.prototype.fieldSpec.push(['t', GPSTimeDep.prototype.fieldSpec]);
+MsgSpecanDep.prototype.fieldSpec.push(['freq_ref', 'writeFloatLE', 4]);
+MsgSpecanDep.prototype.fieldSpec.push(['freq_step', 'writeFloatLE', 4]);
+MsgSpecanDep.prototype.fieldSpec.push(['amplitude_ref', 'writeFloatLE', 4]);
+MsgSpecanDep.prototype.fieldSpec.push(['amplitude_unit', 'writeFloatLE', 4]);
+MsgSpecanDep.prototype.fieldSpec.push(['amplitude_value', 'array', 'writeUInt8', function () { return 1; }, null]);
+
+/**
+ * SBP class for message MSG_SPECAN (0x0051).
  *
  * Spectrum analyzer packet.
  *
@@ -11689,7 +12100,7 @@ var MsgSpecan = function (sbp, fields) {
 };
 MsgSpecan.prototype = Object.create(SBP.prototype);
 MsgSpecan.prototype.messageType = "MSG_SPECAN";
-MsgSpecan.prototype.msg_type = 0x0050;
+MsgSpecan.prototype.msg_type = 0x0051;
 MsgSpecan.prototype.constructor = MsgSpecan;
 MsgSpecan.prototype.parser = new Parser()
   .endianess('little')
@@ -11737,8 +12148,10 @@ module.exports = {
   MsgUartStateDepa: MsgUartStateDepa,
   0x0019: MsgIarState,
   MsgIarState: MsgIarState,
-  0x001B: MsgMaskSatellite,
+  0x002B: MsgMaskSatellite,
   MsgMaskSatellite: MsgMaskSatellite,
+  0x001B: MsgMaskSatelliteDep,
+  MsgMaskSatelliteDep: MsgMaskSatelliteDep,
   0x00B5: MsgDeviceMonitor,
   MsgDeviceMonitor: MsgDeviceMonitor,
   0x00B8: MsgCommandReq,
@@ -11751,7 +12164,9 @@ module.exports = {
   MsgNetworkStateReq: MsgNetworkStateReq,
   0x00BB: MsgNetworkStateResp,
   MsgNetworkStateResp: MsgNetworkStateResp,
-  0x0050: MsgSpecan,
+  0x0050: MsgSpecanDep,
+  MsgSpecanDep: MsgSpecanDep,
+  0x0051: MsgSpecan,
   MsgSpecan: MsgSpecan,
 }
 
@@ -12268,14 +12683,15 @@ var Parser = __webpack_require__(4);
 var Int64 = __webpack_require__(3);
 var UInt64 = __webpack_require__(1).UINT64;
 var GnssSignal = __webpack_require__(0).GnssSignal;
-var GnssSignal16 = __webpack_require__(0).GnssSignal16;
+var GnssSignalDep = __webpack_require__(0).GnssSignalDep;
 var GPSTime = __webpack_require__(0).GPSTime;
 var CarrierPhase = __webpack_require__(0).CarrierPhase;
-var GPSTimeNano = __webpack_require__(0).GPSTimeNano;
+var GPSTime = __webpack_require__(0).GPSTime;
 var GPSTimeSec = __webpack_require__(0).GPSTimeSec;
+var GPSTimeDep = __webpack_require__(0).GPSTimeDep;
 
 /**
- * SBP class for message MSG_TRACKING_STATE_DETAILED (0x0011).
+ * SBP class for message MSG_TRACKING_STATE_DETAILED (0x0021).
  *
  * The tracking message returns a set tracking channel parameters for a single
  * tracking channel useful for debugging issues.
@@ -12319,7 +12735,7 @@ var MsgTrackingStateDetailed = function (sbp, fields) {
 };
 MsgTrackingStateDetailed.prototype = Object.create(SBP.prototype);
 MsgTrackingStateDetailed.prototype.messageType = "MSG_TRACKING_STATE_DETAILED";
-MsgTrackingStateDetailed.prototype.msg_type = 0x0011;
+MsgTrackingStateDetailed.prototype.msg_type = 0x0021;
 MsgTrackingStateDetailed.prototype.constructor = MsgTrackingStateDetailed;
 MsgTrackingStateDetailed.prototype.parser = new Parser()
   .endianess('little')
@@ -12368,13 +12784,105 @@ MsgTrackingStateDetailed.prototype.fieldSpec.push(['pset_flags', 'writeUInt8', 1
 MsgTrackingStateDetailed.prototype.fieldSpec.push(['misc_flags', 'writeUInt8', 1]);
 
 /**
+ * SBP class for message MSG_TRACKING_STATE_DETAILED_DEP (0x0011).
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field recv_time number (unsigned 64-bit int, 8 bytes) Receiver clock time.
+ * @field tot GPSTimeDep Time of transmission of signal from satellite. TOW only valid when TOW status is
+ *   decoded or propagated. WN only valid when week number valid flag is set.
+ * @field P number (unsigned 32-bit int, 4 bytes) Pseudorange observation. Valid only when pseudorange valid flag is set.
+ * @field P_std number (unsigned 16-bit int, 2 bytes) Pseudorange observation standard deviation. Valid only when pseudorange valid
+ *   flag is set.
+ * @field L CarrierPhase Carrier phase observation with typical sign convention. Valid only when PLL
+ *   pessimistic lock is achieved.
+ * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density
+ * @field lock number (unsigned 16-bit int, 2 bytes) Lock time. It is encoded according to DF402 from the RTCM 10403.2 Amendment 2
+ *   specification. Valid values range from 0 to 15.
+ * @field sid GnssSignalDep GNSS signal identifier.
+ * @field doppler number (signed 32-bit int, 4 bytes) Carrier Doppler frequency.
+ * @field doppler_std number (unsigned 16-bit int, 2 bytes) Carrier Doppler frequency standard deviation.
+ * @field uptime number (unsigned 32-bit int, 4 bytes) Number of seconds of continuous tracking. Specifies how much time signal is in
+ *   continuous track.
+ * @field clock_offset number (signed 16-bit int, 2 bytes) TCXO clock offset. Valid only when valid clock valid flag is set.
+ * @field clock_drift number (signed 16-bit int, 2 bytes) TCXO clock drift. Valid only when valid clock valid flag is set.
+ * @field corr_spacing number (unsigned 16-bit int, 2 bytes) Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
+ * @field acceleration number (signed 8-bit int, 1 byte) Acceleration. Valid only when acceleration valid flag is set.
+ * @field sync_flags number (unsigned 8-bit int, 1 byte) Synchronization status flags.
+ * @field tow_flags number (unsigned 8-bit int, 1 byte) TOW status flags.
+ * @field track_flags number (unsigned 8-bit int, 1 byte) Tracking loop status flags.
+ * @field nav_flags number (unsigned 8-bit int, 1 byte) Navigation data status flags.
+ * @field pset_flags number (unsigned 8-bit int, 1 byte) Parameters sets flags.
+ * @field misc_flags number (unsigned 8-bit int, 1 byte) Miscellaneous flags.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgTrackingStateDetailedDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_TRACKING_STATE_DETAILED_DEP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgTrackingStateDetailedDep.prototype = Object.create(SBP.prototype);
+MsgTrackingStateDetailedDep.prototype.messageType = "MSG_TRACKING_STATE_DETAILED_DEP";
+MsgTrackingStateDetailedDep.prototype.msg_type = 0x0011;
+MsgTrackingStateDetailedDep.prototype.constructor = MsgTrackingStateDetailedDep;
+MsgTrackingStateDetailedDep.prototype.parser = new Parser()
+  .endianess('little')
+  .uint64('recv_time')
+  .nest('tot', { type: GPSTimeDep.prototype.parser })
+  .uint32('P')
+  .uint16('P_std')
+  .nest('L', { type: CarrierPhase.prototype.parser })
+  .uint8('cn0')
+  .uint16('lock')
+  .nest('sid', { type: GnssSignalDep.prototype.parser })
+  .int32('doppler')
+  .uint16('doppler_std')
+  .uint32('uptime')
+  .int16('clock_offset')
+  .int16('clock_drift')
+  .uint16('corr_spacing')
+  .int8('acceleration')
+  .uint8('sync_flags')
+  .uint8('tow_flags')
+  .uint8('track_flags')
+  .uint8('nav_flags')
+  .uint8('pset_flags')
+  .uint8('misc_flags');
+MsgTrackingStateDetailedDep.prototype.fieldSpec = [];
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['recv_time', 'writeUInt64LE', 8]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['tot', GPSTimeDep.prototype.fieldSpec]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['P', 'writeUInt32LE', 4]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['P_std', 'writeUInt16LE', 2]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['L', CarrierPhase.prototype.fieldSpec]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['lock', 'writeUInt16LE', 2]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['doppler', 'writeInt32LE', 4]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['doppler_std', 'writeUInt16LE', 2]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['uptime', 'writeUInt32LE', 4]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['clock_offset', 'writeInt16LE', 2]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['clock_drift', 'writeInt16LE', 2]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['corr_spacing', 'writeUInt16LE', 2]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['acceleration', 'writeInt8', 1]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['sync_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['tow_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['track_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['nav_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['pset_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['misc_flags', 'writeUInt8', 1]);
+
+/**
  * SBP class for message fragment TrackingChannelState
  *
  * Tracking channel state for a specific satellite signal and measured signal
  * power.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field sid GnssSignal16 GNSS signal being tracked
+ * @field sid GnssSignal GNSS signal being tracked
  * @field fcn number (unsigned 8-bit int, 1 byte) Frequency channel number (GLONASS only)
  * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density.  Zero implies invalid cn0.
  *
@@ -12392,11 +12900,11 @@ TrackingChannelState.prototype.messageType = "TrackingChannelState";
 TrackingChannelState.prototype.constructor = TrackingChannelState;
 TrackingChannelState.prototype.parser = new Parser()
   .endianess('little')
-  .nest('sid', { type: GnssSignal16.prototype.parser })
+  .nest('sid', { type: GnssSignal.prototype.parser })
   .uint8('fcn')
   .uint8('cn0');
 TrackingChannelState.prototype.fieldSpec = [];
-TrackingChannelState.prototype.fieldSpec.push(['sid', GnssSignal16.prototype.fieldSpec]);
+TrackingChannelState.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 TrackingChannelState.prototype.fieldSpec.push(['fcn', 'writeUInt8', 1]);
 TrackingChannelState.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
 
@@ -12459,7 +12967,7 @@ TrackingChannelCorrelation.prototype.fieldSpec.push(['I', 'writeInt32LE', 4]);
 TrackingChannelCorrelation.prototype.fieldSpec.push(['Q', 'writeInt32LE', 4]);
 
 /**
- * SBP class for message MSG_TRACKING_IQ (0x001C).
+ * SBP class for message MSG_TRACKING_IQ (0x002C).
  *
  * When enabled, a tracking channel can output the correlations at each update
  * interval.
@@ -12480,7 +12988,7 @@ var MsgTrackingIq = function (sbp, fields) {
 };
 MsgTrackingIq.prototype = Object.create(SBP.prototype);
 MsgTrackingIq.prototype.messageType = "MSG_TRACKING_IQ";
-MsgTrackingIq.prototype.msg_type = 0x001C;
+MsgTrackingIq.prototype.msg_type = 0x002C;
 MsgTrackingIq.prototype.constructor = MsgTrackingIq;
 MsgTrackingIq.prototype.parser = new Parser()
   .endianess('little')
@@ -12491,6 +12999,39 @@ MsgTrackingIq.prototype.fieldSpec = [];
 MsgTrackingIq.prototype.fieldSpec.push(['channel', 'writeUInt8', 1]);
 MsgTrackingIq.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 MsgTrackingIq.prototype.fieldSpec.push(['corrs', 'array', TrackingChannelCorrelation.prototype.fieldSpec, function () { return this.fields.array.length; }, 3]);
+
+/**
+ * SBP class for message MSG_TRACKING_IQ_DEP (0x001C).
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field channel number (unsigned 8-bit int, 1 byte) Tracking channel of origin
+ * @field sid GnssSignalDep GNSS signal identifier
+ * @field corrs array Early, Prompt and Late correlations
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgTrackingIqDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_TRACKING_IQ_DEP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgTrackingIqDep.prototype = Object.create(SBP.prototype);
+MsgTrackingIqDep.prototype.messageType = "MSG_TRACKING_IQ_DEP";
+MsgTrackingIqDep.prototype.msg_type = 0x001C;
+MsgTrackingIqDep.prototype.constructor = MsgTrackingIqDep;
+MsgTrackingIqDep.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('channel')
+  .nest('sid', { type: GnssSignalDep.prototype.parser })
+  .array('corrs', { length: 3, type: TrackingChannelCorrelation.prototype.parser });
+MsgTrackingIqDep.prototype.fieldSpec = [];
+MsgTrackingIqDep.prototype.fieldSpec.push(['channel', 'writeUInt8', 1]);
+MsgTrackingIqDep.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
+MsgTrackingIqDep.prototype.fieldSpec.push(['corrs', 'array', TrackingChannelCorrelation.prototype.fieldSpec, function () { return this.fields.array.length; }, 3]);
 
 /**
  * SBP class for message fragment TrackingChannelStateDepA
@@ -12558,7 +13099,7 @@ MsgTrackingStateDepA.prototype.fieldSpec.push(['states', 'array', TrackingChanne
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field state number (unsigned 8-bit int, 1 byte) Status of tracking channel
- * @field sid GnssSignal GNSS signal being tracked
+ * @field sid GnssSignalDep GNSS signal being tracked
  * @field cn0 number (float, 4 bytes) Carrier-to-noise density
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -12576,11 +13117,11 @@ TrackingChannelStateDepB.prototype.constructor = TrackingChannelStateDepB;
 TrackingChannelStateDepB.prototype.parser = new Parser()
   .endianess('little')
   .uint8('state')
-  .nest('sid', { type: GnssSignal.prototype.parser })
+  .nest('sid', { type: GnssSignalDep.prototype.parser })
   .floatle('cn0');
 TrackingChannelStateDepB.prototype.fieldSpec = [];
 TrackingChannelStateDepB.prototype.fieldSpec.push(['state', 'writeUInt8', 1]);
-TrackingChannelStateDepB.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+TrackingChannelStateDepB.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
 TrackingChannelStateDepB.prototype.fieldSpec.push(['cn0', 'writeFloatLE', 4]);
 
 /**
@@ -12611,14 +13152,18 @@ MsgTrackingStateDepB.prototype.fieldSpec = [];
 MsgTrackingStateDepB.prototype.fieldSpec.push(['states', 'array', TrackingChannelStateDepB.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 module.exports = {
-  0x0011: MsgTrackingStateDetailed,
+  0x0021: MsgTrackingStateDetailed,
   MsgTrackingStateDetailed: MsgTrackingStateDetailed,
+  0x0011: MsgTrackingStateDetailedDep,
+  MsgTrackingStateDetailedDep: MsgTrackingStateDetailedDep,
   TrackingChannelState: TrackingChannelState,
   0x0041: MsgTrackingState,
   MsgTrackingState: MsgTrackingState,
   TrackingChannelCorrelation: TrackingChannelCorrelation,
-  0x001C: MsgTrackingIq,
+  0x002C: MsgTrackingIq,
   MsgTrackingIq: MsgTrackingIq,
+  0x001C: MsgTrackingIqDep,
+  MsgTrackingIqDep: MsgTrackingIqDep,
   TrackingChannelStateDepA: TrackingChannelStateDepA,
   0x0016: MsgTrackingStateDepA,
   MsgTrackingStateDepA: MsgTrackingStateDepA,

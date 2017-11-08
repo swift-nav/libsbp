@@ -54,11 +54,11 @@ data MsgNdbEvent = MsgNdbEvent
     -- ^ Event result.
   , _msgNdbEvent_data_source   :: !Word8
     -- ^ Data source for STORE event, reserved for other events.
-  , _msgNdbEvent_object_sid    :: !GnssSignal16
+  , _msgNdbEvent_object_sid    :: !GnssSignal
     -- ^ GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid
     -- indicates for which signal the object belongs to. Reserved in other
     -- cases.
-  , _msgNdbEvent_src_sid       :: !GnssSignal16
+  , _msgNdbEvent_src_sid       :: !GnssSignal
     -- ^ GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR
     -- L2C capabilities AND data_source is NDB_DS_RECEIVER sid indicates from
     -- which SV data was decoded. Reserved in other cases.

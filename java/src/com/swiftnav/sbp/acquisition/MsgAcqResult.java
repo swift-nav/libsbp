@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_ACQ_RESULT (0x001F).
+/** SBP class for message MSG_ACQ_RESULT (0x002F).
  *
  * You can have MSG_ACQ_RESULT inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -37,7 +37,7 @@ import org.json.JSONArray;
  * ratio. */
 
 public class MsgAcqResult extends SBPMessage {
-    public static final int TYPE = 0x001F;
+    public static final int TYPE = 0x002F;
 
     
     /** CN/0 of best point */

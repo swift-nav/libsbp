@@ -30,7 +30,7 @@ public class TrackingChannelStateDepB extends SBPStruct {
     public int state;
     
     /** GNSS signal being tracked */
-    public GnssSignal sid;
+    public GnssSignalDep sid;
     
     /** Carrier-to-noise density */
     public float cn0;
@@ -42,7 +42,7 @@ public class TrackingChannelStateDepB extends SBPStruct {
     public TrackingChannelStateDepB parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         state = parser.getU8();
-        sid = new GnssSignal().parse(parser);
+        sid = new GnssSignalDep().parse(parser);
         cn0 = parser.getFloat();
         return this;
     }

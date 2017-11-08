@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_TRACKING_STATE_DETAILED (0x0011).
+/** SBP class for message MSG_TRACKING_STATE_DETAILED (0x0021).
  *
  * You can have MSG_TRACKING_STATE_DETAILED inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -34,7 +34,7 @@ import org.json.JSONArray;
  * single tracking channel useful for debugging issues. */
 
 public class MsgTrackingStateDetailed extends SBPMessage {
-    public static final int TYPE = 0x0011;
+    public static final int TYPE = 0x0021;
 
     
     /** Receiver clock time. */

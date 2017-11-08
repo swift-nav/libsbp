@@ -23,7 +23,7 @@ definitions:
     desc: Header of a GNSS observation message.
     fields:
         - t:
-            type: GPSTimeNano
+            type: GPSTime
             desc: GNSS time of this observation
         - n_obs:
             type: u8
@@ -116,7 +116,7 @@ definitions:
                       - 0: Invalid pseudorange measurement
                       - 1: Valid pseudorange measurement and coarse TOW decoded
         - sid:
-            type: GnssSignal16
+            type: GnssSignal
             desc: GNSS signal identifier (16 bit)
 
  - MSG_OBS:
@@ -193,7 +193,7 @@ definitions:
     short_desc: Common fields for every ephemeris message.
     fields:
         - sid:
-            type: GnssSignal16
+            type: GnssSignal
             desc: GNSS signal identifier (16 bit)
         - toe:
             type: GPSTimeSec
@@ -223,10 +223,10 @@ definitions:
       - EphemerisCommonContent
     fields:
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal identifier
         - toe:
-            type: GPSTime
+            type: GPSTimeDep
             desc: Time of Ephemerides
         - ura:
             type: double
@@ -338,7 +338,7 @@ definitions:
           units: s/s^2
           desc: Polynomial clock correction coefficient (rate of clock drift)
       - toc:
-          type: GPSTime
+          type: GPSTimeDep
           desc: Clock reference
       - iode:
           type: u8
@@ -821,7 +821,7 @@ definitions:
           type: u8
           desc: Satellite is healthy?
       - sid:
-          type: GnssSignal
+          type: GnssSignalDep
           desc: GNSS signal identifier
       - iode:
           type: u8
@@ -1163,7 +1163,7 @@ definitions:
           type: u8
           desc: Satellite is healthy?
       - sid:
-          type: GnssSignal
+          type: GnssSignalDep
           desc: GNSS signal identifier
       - iode:
           type: u8
@@ -1180,7 +1180,7 @@ definitions:
     desc: Header of a GPS observation message.
     fields:
         - t:
-            type: GPSTime
+            type: GPSTimeDep
             desc: GPS time of this observation
         - n_obs:
             type: u8
@@ -1256,7 +1256,7 @@ definitions:
               signal has lost and regained lock, indicating that the
               carrier phase ambiguity may have changed.
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal identifier
 
  - PackedObsContentDepC:
@@ -1285,7 +1285,7 @@ definitions:
               signal has lost and regained lock, indicating that the
               carrier phase ambiguity may have changed.
         - sid:
-            type: GnssSignal
+            type: GnssSignalDep
             desc: GNSS signal identifier
 
  - MSG_OBS_DEP_A:
@@ -1415,7 +1415,7 @@ definitions:
       - MSG_GROUP_DELAY
     fields:
       - t_op:
-          type: GPSTime
+          type: GPSTimeDep
           desc: Data Predict Time of Week
       - prn:
           type: u8
@@ -1436,8 +1436,37 @@ definitions:
           type: s16
           units: s * 2^-35
 
- - MSG_GROUP_DELAY:
+ - MSG_GROUP_DELAY_DEP_B:
     id: 0x0093
+    short_desc: Group Delay
+    desc: Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+    replaced_by:
+      - MSG_GROUP_DELAY
+    fields:
+      - t_op:
+          type: GPSTimeSec
+          desc: Data Predict Time of Week
+      - sid:
+          type: GnssSignalDep
+          desc: GNSS signal identifier
+      - valid:
+          type: u8
+          desc: |
+            bit-field indicating validity of the values,
+            LSB indicating tgd validity etc.
+            1 = value is valid, 0 = value is not valid.
+      - tgd:
+          type: s16
+          units: s * 2^-35
+      - isc_l1ca:
+          type: s16
+          units: s * 2^-35
+      - isc_l2c:
+          type: s16
+          units: s * 2^-35
+
+ - MSG_GROUP_DELAY:
+    id: 0x0094
     short_desc: Group Delay
     desc: Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
     fields:
@@ -1502,8 +1531,98 @@ definitions:
                 - bit 1: Bn(ln), '0' indicates the satellite is operational
                   and suitable for navigation.
 
- - MSG_ALMANAC_GPS:
+ - AlmanacCommonContentDep:
+    short_desc: Common fields for every almanac message.
+    fields:
+        - sid:
+            type: GnssSignalDep
+            desc: GNSS signal identifier
+        - toa:
+            type: GPSTimeSec
+            desc: Reference time of almanac
+        - ura:
+            type: double
+            units: m
+            desc: User Range Accuracy
+        - fit_interval:
+            type: u32
+            units: s
+            desc: Curve fit interval
+        - valid:
+            type: u8
+            desc: Status of almanac, 1 = valid, 0 = invalid
+        - health_bits:
+            type: u8
+            desc: |
+              Satellite health status for GPS:
+                - bits 5-7: NAV data health status. See IS-GPS-200H
+                  Table 20-VII: NAV Data Health Indications.
+                - bits 0-4: Signal health status. See IS-GPS-200H
+                  Table 20-VIII. Codes for Health of SV Signal
+                  Components.
+              Satellite health status for GLO:
+                See GLO ICD 5.1 table 5.1 for details
+                - bit 0: C(n), "unhealthy" flag that is transmitted within
+                  non-immediate data and indicates overall constellation status
+                  at the moment of almanac uploading.
+                  '0' indicates malfunction of n-satellite.
+                  '1' indicates that n-satellite is operational.
+                - bit 1: Bn(ln), '0' indicates the satellite is operational
+                  and suitable for navigation.
+
+ - MSG_ALMANAC_GPS_DEP:
     id: 0x0070
+    short_desc: Satellite broadcast ephemeris for GPS
+    desc: |
+      The almanac message returns a set of satellite orbit parameters. Almanac
+      data is not very precise and is considered valid for up to several months.
+      Please see the Navstar GPS Space Segment/Navigation user interfaces
+      (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+    public: False
+    replaced_by:
+      - MSG_ALMANAC_GPS
+    fields:
+      - common:
+          type: AlmanacCommonContentDep
+          desc: Values common for all almanac types
+      - m0:
+          type: double
+          units: rad
+          desc: Mean anomaly at reference time
+      - ecc:
+          type: double
+          desc: Eccentricity of satellite orbit
+      - sqrta:
+          type: double
+          units: m^(1/2)
+          desc: Square root of the semi-major axis of orbit
+      - omega0:
+          type: double
+          units: rad
+          desc: Longitude of ascending node of orbit plane at weekly epoch
+      - omegadot:
+          type: double
+          units: rad/s
+          desc: Rate of right ascension
+      - w:
+          type: double
+          units: rad
+          desc: Argument of perigee
+      - inc:
+          type: double
+          units: rad
+          desc: Inclination
+      - af0:
+          type: double
+          units: s
+          desc: Polynomial clock correction coefficient (clock bias)
+      - af1:
+          type: double
+          units: s/s
+          desc: Polynomial clock correction coefficient (clock drift)
+
+ - MSG_ALMANAC_GPS:
+    id: 0x0072
     short_desc: Satellite broadcast ephemeris for GPS
     desc: |
       The almanac message returns a set of satellite orbit parameters. Almanac
@@ -1550,8 +1669,53 @@ definitions:
           units: s/s
           desc: Polynomial clock correction coefficient (clock drift)
 
- - MSG_ALMANAC_GLO:
+ - MSG_ALMANAC_GLO_DEP:
     id: 0x0071
+    short_desc: Satellite broadcast ephemeris for GLO
+    desc: |
+      The almanac message returns a set of satellite orbit parameters. Almanac
+      data is not very precise and is considered valid for up to several months.
+      Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
+      almanac" for details.
+    public: False
+    replaced_by:
+      - MSG_ALMANAC_GPS
+    fields:
+      - common:
+          type: AlmanacCommonContentDep
+          desc: Values common for all almanac types
+      - lambda_na:
+          type: double
+          units: rad
+          desc: |
+            Longitude of the first ascending node of the orbit in PZ-90.02
+            coordinate system
+      - t_lambda_na:
+          type: double
+          units: s
+          desc: Time of the first ascending node passage
+      - i:
+          type: double
+          units: rad
+          desc: Value of inclination at instant of t_lambda
+      - t:
+          type: double
+          units: s/orbital period
+          desc: Value of Draconian period at instant of t_lambda
+      - t_dot:
+          type: double
+          units: s/(orbital period^2)
+          desc: Rate of change of the Draconian period
+      - epsilon:
+          type: double
+          desc: Eccentricity at instant of t_lambda
+      - omega:
+          type: double
+          units: rad
+          desc: Argument of perigee at instant of t_lambda
+
+ - MSG_ALMANAC_GLO:
+    id: 0x0073
     short_desc: Satellite broadcast ephemeris for GLO
     desc: |
       The almanac message returns a set of satellite orbit parameters. Almanac

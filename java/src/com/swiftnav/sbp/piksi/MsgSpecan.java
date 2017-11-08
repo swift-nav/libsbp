@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_SPECAN (0x0050).
+/** SBP class for message MSG_SPECAN (0x0051).
  *
  * You can have MSG_SPECAN inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -33,7 +33,7 @@ import org.json.JSONArray;
  * Spectrum analyzer packet. */
 
 public class MsgSpecan extends SBPMessage {
-    public static final int TYPE = 0x0050;
+    public static final int TYPE = 0x0051;
 
     
     /** Channel ID */

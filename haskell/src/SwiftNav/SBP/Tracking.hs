@@ -37,9 +37,9 @@ import SwiftNav.SBP.Gnss
 
 
 msgTrackingStateDetailed :: Word16
-msgTrackingStateDetailed = 0x0011
+msgTrackingStateDetailed = 0x0021
 
--- | SBP class for message MSG_TRACKING_STATE_DETAILED (0x0011).
+-- | SBP class for message MSG_TRACKING_STATE_DETAILED (0x0021).
 --
 -- The tracking message returns a set tracking channel parameters for a single
 -- tracking channel useful for debugging issues.
@@ -146,12 +146,121 @@ $(makeSBP 'msgTrackingStateDetailed ''MsgTrackingStateDetailed)
 $(makeJSON "_msgTrackingStateDetailed_" ''MsgTrackingStateDetailed)
 $(makeLenses ''MsgTrackingStateDetailed)
 
+msgTrackingStateDetailedDep :: Word16
+msgTrackingStateDetailedDep = 0x0011
+
+-- | SBP class for message MSG_TRACKING_STATE_DETAILED_DEP (0x0011).
+--
+-- Deprecated.
+data MsgTrackingStateDetailedDep = MsgTrackingStateDetailedDep
+  { _msgTrackingStateDetailedDep_recv_time  :: !Word64
+    -- ^ Receiver clock time.
+  , _msgTrackingStateDetailedDep_tot        :: !GpsTimeDep
+    -- ^ Time of transmission of signal from satellite. TOW only valid when TOW
+    -- status is decoded or propagated. WN only valid when week number valid
+    -- flag is set.
+  , _msgTrackingStateDetailedDep_P          :: !Word32
+    -- ^ Pseudorange observation. Valid only when pseudorange valid flag is set.
+  , _msgTrackingStateDetailedDep_P_std      :: !Word16
+    -- ^ Pseudorange observation standard deviation. Valid only when pseudorange
+    -- valid flag is set.
+  , _msgTrackingStateDetailedDep_L          :: !CarrierPhase
+    -- ^ Carrier phase observation with typical sign convention. Valid only when
+    -- PLL pessimistic lock is achieved.
+  , _msgTrackingStateDetailedDep_cn0        :: !Word8
+    -- ^ Carrier-to-Noise density
+  , _msgTrackingStateDetailedDep_lock       :: !Word16
+    -- ^ Lock time. It is encoded according to DF402 from the RTCM 10403.2
+    -- Amendment 2 specification. Valid values range from 0 to 15.
+  , _msgTrackingStateDetailedDep_sid        :: !GnssSignalDep
+    -- ^ GNSS signal identifier.
+  , _msgTrackingStateDetailedDep_doppler    :: !Int32
+    -- ^ Carrier Doppler frequency.
+  , _msgTrackingStateDetailedDep_doppler_std :: !Word16
+    -- ^ Carrier Doppler frequency standard deviation.
+  , _msgTrackingStateDetailedDep_uptime     :: !Word32
+    -- ^ Number of seconds of continuous tracking. Specifies how much time signal
+    -- is in continuous track.
+  , _msgTrackingStateDetailedDep_clock_offset :: !Int16
+    -- ^ TCXO clock offset. Valid only when valid clock valid flag is set.
+  , _msgTrackingStateDetailedDep_clock_drift :: !Int16
+    -- ^ TCXO clock drift. Valid only when valid clock valid flag is set.
+  , _msgTrackingStateDetailedDep_corr_spacing :: !Word16
+    -- ^ Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
+  , _msgTrackingStateDetailedDep_acceleration :: !Int8
+    -- ^ Acceleration. Valid only when acceleration valid flag is set.
+  , _msgTrackingStateDetailedDep_sync_flags :: !Word8
+    -- ^ Synchronization status flags.
+  , _msgTrackingStateDetailedDep_tow_flags  :: !Word8
+    -- ^ TOW status flags.
+  , _msgTrackingStateDetailedDep_track_flags :: !Word8
+    -- ^ Tracking loop status flags.
+  , _msgTrackingStateDetailedDep_nav_flags  :: !Word8
+    -- ^ Navigation data status flags.
+  , _msgTrackingStateDetailedDep_pset_flags :: !Word8
+    -- ^ Parameters sets flags.
+  , _msgTrackingStateDetailedDep_misc_flags :: !Word8
+    -- ^ Miscellaneous flags.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgTrackingStateDetailedDep where
+  get = do
+    _msgTrackingStateDetailedDep_recv_time <- getWord64le
+    _msgTrackingStateDetailedDep_tot <- get
+    _msgTrackingStateDetailedDep_P <- getWord32le
+    _msgTrackingStateDetailedDep_P_std <- getWord16le
+    _msgTrackingStateDetailedDep_L <- get
+    _msgTrackingStateDetailedDep_cn0 <- getWord8
+    _msgTrackingStateDetailedDep_lock <- getWord16le
+    _msgTrackingStateDetailedDep_sid <- get
+    _msgTrackingStateDetailedDep_doppler <- fromIntegral <$> getWord32le
+    _msgTrackingStateDetailedDep_doppler_std <- getWord16le
+    _msgTrackingStateDetailedDep_uptime <- getWord32le
+    _msgTrackingStateDetailedDep_clock_offset <- fromIntegral <$> getWord16le
+    _msgTrackingStateDetailedDep_clock_drift <- fromIntegral <$> getWord16le
+    _msgTrackingStateDetailedDep_corr_spacing <- getWord16le
+    _msgTrackingStateDetailedDep_acceleration <- fromIntegral <$> getWord8
+    _msgTrackingStateDetailedDep_sync_flags <- getWord8
+    _msgTrackingStateDetailedDep_tow_flags <- getWord8
+    _msgTrackingStateDetailedDep_track_flags <- getWord8
+    _msgTrackingStateDetailedDep_nav_flags <- getWord8
+    _msgTrackingStateDetailedDep_pset_flags <- getWord8
+    _msgTrackingStateDetailedDep_misc_flags <- getWord8
+    pure MsgTrackingStateDetailedDep {..}
+
+  put MsgTrackingStateDetailedDep {..} = do
+    putWord64le _msgTrackingStateDetailedDep_recv_time
+    put _msgTrackingStateDetailedDep_tot
+    putWord32le _msgTrackingStateDetailedDep_P
+    putWord16le _msgTrackingStateDetailedDep_P_std
+    put _msgTrackingStateDetailedDep_L
+    putWord8 _msgTrackingStateDetailedDep_cn0
+    putWord16le _msgTrackingStateDetailedDep_lock
+    put _msgTrackingStateDetailedDep_sid
+    putWord32le $ fromIntegral _msgTrackingStateDetailedDep_doppler
+    putWord16le _msgTrackingStateDetailedDep_doppler_std
+    putWord32le _msgTrackingStateDetailedDep_uptime
+    putWord16le $ fromIntegral _msgTrackingStateDetailedDep_clock_offset
+    putWord16le $ fromIntegral _msgTrackingStateDetailedDep_clock_drift
+    putWord16le _msgTrackingStateDetailedDep_corr_spacing
+    putWord8 $ fromIntegral _msgTrackingStateDetailedDep_acceleration
+    putWord8 _msgTrackingStateDetailedDep_sync_flags
+    putWord8 _msgTrackingStateDetailedDep_tow_flags
+    putWord8 _msgTrackingStateDetailedDep_track_flags
+    putWord8 _msgTrackingStateDetailedDep_nav_flags
+    putWord8 _msgTrackingStateDetailedDep_pset_flags
+    putWord8 _msgTrackingStateDetailedDep_misc_flags
+
+$(makeSBP 'msgTrackingStateDetailedDep ''MsgTrackingStateDetailedDep)
+$(makeJSON "_msgTrackingStateDetailedDep_" ''MsgTrackingStateDetailedDep)
+$(makeLenses ''MsgTrackingStateDetailedDep)
+
 -- | TrackingChannelState.
 --
 -- Tracking channel state for a specific satellite signal and measured signal
 -- power.
 data TrackingChannelState = TrackingChannelState
-  { _trackingChannelState_sid :: !GnssSignal16
+  { _trackingChannelState_sid :: !GnssSignal
     -- ^ GNSS signal being tracked
   , _trackingChannelState_fcn :: !Word8
     -- ^ Frequency channel number (GLONASS only)
@@ -223,9 +332,9 @@ $(makeJSON "_trackingChannelCorrelation_" ''TrackingChannelCorrelation)
 $(makeLenses ''TrackingChannelCorrelation)
 
 msgTrackingIq :: Word16
-msgTrackingIq = 0x001C
+msgTrackingIq = 0x002C
 
--- | SBP class for message MSG_TRACKING_IQ (0x001C).
+-- | SBP class for message MSG_TRACKING_IQ (0x002C).
 --
 -- When enabled, a tracking channel can output the correlations at each update
 -- interval.
@@ -253,6 +362,37 @@ instance Binary MsgTrackingIq where
 $(makeSBP 'msgTrackingIq ''MsgTrackingIq)
 $(makeJSON "_msgTrackingIq_" ''MsgTrackingIq)
 $(makeLenses ''MsgTrackingIq)
+
+msgTrackingIqDep :: Word16
+msgTrackingIqDep = 0x001C
+
+-- | SBP class for message MSG_TRACKING_IQ_DEP (0x001C).
+--
+-- Deprecated.
+data MsgTrackingIqDep = MsgTrackingIqDep
+  { _msgTrackingIqDep_channel :: !Word8
+    -- ^ Tracking channel of origin
+  , _msgTrackingIqDep_sid   :: !GnssSignalDep
+    -- ^ GNSS signal identifier
+  , _msgTrackingIqDep_corrs :: ![TrackingChannelCorrelation]
+    -- ^ Early, Prompt and Late correlations
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgTrackingIqDep where
+  get = do
+    _msgTrackingIqDep_channel <- getWord8
+    _msgTrackingIqDep_sid <- get
+    _msgTrackingIqDep_corrs <- replicateM 3 get
+    pure MsgTrackingIqDep {..}
+
+  put MsgTrackingIqDep {..} = do
+    putWord8 _msgTrackingIqDep_channel
+    put _msgTrackingIqDep_sid
+    mapM_ put _msgTrackingIqDep_corrs
+
+$(makeSBP 'msgTrackingIqDep ''MsgTrackingIqDep)
+$(makeJSON "_msgTrackingIqDep_" ''MsgTrackingIqDep)
+$(makeLenses ''MsgTrackingIqDep)
 
 -- | TrackingChannelStateDepA.
 --
@@ -310,7 +450,7 @@ $(makeLenses ''MsgTrackingStateDepA)
 data TrackingChannelStateDepB = TrackingChannelStateDepB
   { _trackingChannelStateDepB_state :: !Word8
     -- ^ Status of tracking channel
-  , _trackingChannelStateDepB_sid :: !GnssSignal
+  , _trackingChannelStateDepB_sid :: !GnssSignalDep
     -- ^ GNSS signal being tracked
   , _trackingChannelStateDepB_cn0 :: !Float
     -- ^ Carrier-to-noise density

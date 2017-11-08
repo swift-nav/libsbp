@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_ALMANAC_GPS (0x0070).
+/** SBP class for message MSG_ALMANAC_GPS (0x0072).
  *
  * You can have MSG_ALMANAC_GPS inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -36,7 +36,7 @@ import org.json.JSONArray;
  * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details. */
 
 public class MsgAlmanacGPS extends SBPMessage {
-    public static final int TYPE = 0x0070;
+    public static final int TYPE = 0x0072;
 
     
     /** Values common for all almanac types */

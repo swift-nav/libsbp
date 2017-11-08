@@ -23,11 +23,12 @@ var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
 var GnssSignal = require("./gnss").GnssSignal;
-var GnssSignal16 = require("./gnss").GnssSignal16;
+var GnssSignalDep = require("./gnss").GnssSignalDep;
 var GPSTime = require("./gnss").GPSTime;
 var CarrierPhase = require("./gnss").CarrierPhase;
-var GPSTimeNano = require("./gnss").GPSTimeNano;
+var GPSTime = require("./gnss").GPSTime;
 var GPSTimeSec = require("./gnss").GPSTimeSec;
+var GPSTimeDep = require("./gnss").GPSTimeDep;
 
 /**
  * SBP class for message MSG_NDB_EVENT (0x0400).
@@ -41,9 +42,9 @@ var GPSTimeSec = require("./gnss").GPSTimeSec;
  * @field object_type number (unsigned 8-bit int, 1 byte) Event object type.
  * @field result number (unsigned 8-bit int, 1 byte) Event result.
  * @field data_source number (unsigned 8-bit int, 1 byte) Data source for STORE event, reserved for other events.
- * @field object_sid GnssSignal16 GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid indicates
+ * @field object_sid GnssSignal GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid indicates
  *   for which signal the object belongs to. Reserved in other cases.
- * @field src_sid GnssSignal16 GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR L2C
+ * @field src_sid GnssSignal GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR L2C
  *   capabilities AND data_source is NDB_DS_RECEIVER sid indicates from which SV data
  *   was decoded. Reserved in other cases.
  * @field original_sender number (unsigned 16-bit int, 2 bytes) A unique identifier of the sending hardware. For v1.0, set to the 2 least
@@ -70,8 +71,8 @@ MsgNdbEvent.prototype.parser = new Parser()
   .uint8('object_type')
   .uint8('result')
   .uint8('data_source')
-  .nest('object_sid', { type: GnssSignal16.prototype.parser })
-  .nest('src_sid', { type: GnssSignal16.prototype.parser })
+  .nest('object_sid', { type: GnssSignal.prototype.parser })
+  .nest('src_sid', { type: GnssSignal.prototype.parser })
   .uint16('original_sender');
 MsgNdbEvent.prototype.fieldSpec = [];
 MsgNdbEvent.prototype.fieldSpec.push(['recv_time', 'writeUInt64LE', 8]);
@@ -79,8 +80,8 @@ MsgNdbEvent.prototype.fieldSpec.push(['event', 'writeUInt8', 1]);
 MsgNdbEvent.prototype.fieldSpec.push(['object_type', 'writeUInt8', 1]);
 MsgNdbEvent.prototype.fieldSpec.push(['result', 'writeUInt8', 1]);
 MsgNdbEvent.prototype.fieldSpec.push(['data_source', 'writeUInt8', 1]);
-MsgNdbEvent.prototype.fieldSpec.push(['object_sid', GnssSignal16.prototype.fieldSpec]);
-MsgNdbEvent.prototype.fieldSpec.push(['src_sid', GnssSignal16.prototype.fieldSpec]);
+MsgNdbEvent.prototype.fieldSpec.push(['object_sid', GnssSignal.prototype.fieldSpec]);
+MsgNdbEvent.prototype.fieldSpec.push(['src_sid', GnssSignal.prototype.fieldSpec]);
 MsgNdbEvent.prototype.fieldSpec.push(['original_sender', 'writeUInt16LE', 2]);
 
 module.exports = {

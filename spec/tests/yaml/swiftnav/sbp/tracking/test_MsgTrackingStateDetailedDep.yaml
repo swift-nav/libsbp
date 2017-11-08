@@ -1,5 +1,5 @@
 ---
-description: Unit tests for swiftnav.sbp.tracking MsgTrackingStateDetailed vNone.
+description: Unit tests for swiftnav.sbp.tracking MsgTrackingStateDetailedDep vNone.
 generated_on: 2016-11-03 08:54:53.536946
 package: sbp.tracking
 tests:
@@ -35,7 +35,7 @@ tests:
       track_flags: 11
       uptime: 1
     module: sbp.tracking
-    name: MsgTrackingStateDetailed
+    name: MsgTrackingStateDetailedDep
   msg_type: '0x11'
   raw_json: '{"track_flags": 11, "doppler": 15701, "clock_offset": 0, "msg_type":
     17, "lock": 14032, "nav_flags": 0, "P_std": 0, "L": {"i": 1319, "f": 169}, "pset_flags":
@@ -84,7 +84,7 @@ tests:
       track_flags: 11
       uptime: 1
     module: sbp.tracking
-    name: MsgTrackingStateDetailed
+    name: MsgTrackingStateDetailedDep
   msg_type: '0x11'
   raw_json: '{"track_flags": 11, "doppler": 15667, "clock_offset": 0, "msg_type":
     17, "lock": 14032, "nav_flags": 0, "P_std": 0, "L": {"i": 1810, "f": 14}, "pset_flags":
@@ -133,7 +133,7 @@ tests:
       track_flags: 11
       uptime: 2
     module: sbp.tracking
-    name: MsgTrackingStateDetailed
+    name: MsgTrackingStateDetailedDep
   msg_type: '0x11'
   raw_json: '{"track_flags": 11, "doppler": 15683, "clock_offset": 0, "msg_type":
     17, "lock": 14032, "nav_flags": 0, "P_std": 0, "L": {"i": 2298, "f": 8}, "pset_flags":
@@ -182,7 +182,7 @@ tests:
       track_flags: 11
       uptime: 2
     module: sbp.tracking
-    name: MsgTrackingStateDetailed
+    name: MsgTrackingStateDetailedDep
   msg_type: '0x11'
   raw_json: '{"track_flags": 11, "doppler": 15645, "clock_offset": 0, "msg_type":
     17, "lock": 14032, "nav_flags": 0, "P_std": 0, "L": {"i": 2786, "f": 125}, "pset_flags":
@@ -231,7 +231,7 @@ tests:
       track_flags: 11
       uptime: 3
     module: sbp.tracking
-    name: MsgTrackingStateDetailed
+    name: MsgTrackingStateDetailedDep
   msg_type: '0x11'
   raw_json: '{"track_flags": 11, "doppler": 15640, "clock_offset": 0, "msg_type":
     17, "lock": 14032, "nav_flags": 0, "P_std": 0, "L": {"i": 3275, "f": 64}, "pset_flags":

@@ -52,6 +52,7 @@ JENV.filters['convert'] = convert
 JENV.filters['type'] = type
 JENV.filters['str_escape'] = strEscape
 JENV.filters['toStr'] = toStr
+JENV.filters['sorted'] = sorted
 
 JENV.tests['stringType'] = stringType
 JENV.tests['arrayType'] = arrayType

@@ -48,7 +48,7 @@ be in units of dB Hz in a later revision of this message.
     public float cf;
     
     /** GNSS signal for which acquisition was attempted */
-    public GnssSignal sid;
+    public GnssSignalDep sid;
     
 
     public MsgAcqResultDepB (int sender) { super(sender, TYPE); }
@@ -64,7 +64,7 @@ be in units of dB Hz in a later revision of this message.
         snr = parser.getFloat();
         cp = parser.getFloat();
         cf = parser.getFloat();
-        sid = new GnssSignal().parse(parser);
+        sid = new GnssSignalDep().parse(parser);
     }
 
     @Override
