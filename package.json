@@ -1,5 +1,5 @@
 {
-  "name": "libsbp",
+  "name": "sbp",
   "version": "2.2.17",
   "description": "libsbp bindings for JavaScript. More information here: http://swift-nav.github.io/libsbp/",
   "files": [
@@ -11,7 +11,7 @@
     "test": "node --version; cd javascript && mocha -R spec tests",
     "webpack": "webpack --config ./javascript/webpack.config.js"
   },
-  "author": "josh@swift-nav.com",
+  "author": "dev@swift-nav.com",
   "license": "LGPL-3.0",
   "dependencies": {
     "binary-parser": "git://github.com/JoshuaGross/binary-parser.git#jgross-greedy-string",
