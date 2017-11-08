@@ -36,6 +36,7 @@ library
                      , SwiftNav.SBP.Gnss
                      , SwiftNav.SBP.Imu
                      , SwiftNav.SBP.Logging
+                     , SwiftNav.SBP.Mag
                      , SwiftNav.SBP.Navigation
                      , SwiftNav.SBP.Ndb
                      , SwiftNav.SBP.Observation
@@ -73,8 +74,8 @@ executable sbp2json
                      , bytestring
                      , conduit
                      , conduit-extra
-                     , sbp
                      , resourcet
+                     , sbp
   default-language:    Haskell2010
 
 executable json2sbp
@@ -87,8 +88,8 @@ executable json2sbp
                      , binary-conduit
                      , conduit
                      , conduit-extra
-                     , sbp
                      , resourcet
+                     , sbp
   default-language:    Haskell2010
 
 executable sbp2yaml
@@ -101,8 +102,8 @@ executable sbp2yaml
                      , bytestring
                      , conduit
                      , conduit-extra
-                     , sbp
                      , resourcet
+                     , sbp
                      , yaml
   default-language:    Haskell2010
 
