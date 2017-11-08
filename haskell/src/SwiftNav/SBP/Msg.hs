@@ -32,6 +32,7 @@ import SwiftNav.SBP.Flash
 import SwiftNav.SBP.Gnss
 import SwiftNav.SBP.Imu
 import SwiftNav.SBP.Logging
+import SwiftNav.SBP.Mag
 import SwiftNav.SBP.Navigation
 import SwiftNav.SBP.Ndb
 import SwiftNav.SBP.Observation
@@ -115,6 +116,7 @@ data SBPMsg =
    | SBPMsgIono MsgIono Msg
    | SBPMsgLog MsgLog Msg
    | SBPMsgM25FlashWriteStatus MsgM25FlashWriteStatus Msg
+   | SBPMsgMagRaw MsgMagRaw Msg
    | SBPMsgMaskSatellite MsgMaskSatellite Msg
    | SBPMsgNapDeviceDnaReq MsgNapDeviceDnaReq Msg
    | SBPMsgNapDeviceDnaResp MsgNapDeviceDnaResp Msg
@@ -244,6 +246,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgIono = SBPMsgIono (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLog = SBPMsgLog (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgMagRaw = SBPMsgMagRaw (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgMaskSatellite = SBPMsgMaskSatellite (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -365,6 +368,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgIono _ m) = put m
       encoder (SBPMsgLog _ m) = put m
       encoder (SBPMsgM25FlashWriteStatus _ m) = put m
+      encoder (SBPMsgMagRaw _ m) = put m
       encoder (SBPMsgMaskSatellite _ m) = put m
       encoder (SBPMsgNapDeviceDnaReq _ m) = put m
       encoder (SBPMsgNapDeviceDnaResp _ m) = put m
@@ -490,6 +494,7 @@ instance FromJSON SBPMsg where
         | msgType == msgIono = SBPMsgIono <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLog = SBPMsgLog <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgMagRaw = SBPMsgMagRaw <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgMaskSatellite = SBPMsgMaskSatellite <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -616,6 +621,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgIono n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLog n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgM25FlashWriteStatus n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgMagRaw n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgMaskSatellite n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgNapDeviceDnaReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgNapDeviceDnaResp n m) = toJSON n <<>> toJSON m
@@ -736,6 +742,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgIono n m) = SBPMsgIono n <$> f m
   msg f (SBPMsgLog n m) = SBPMsgLog n <$> f m
   msg f (SBPMsgM25FlashWriteStatus n m) = SBPMsgM25FlashWriteStatus n <$> f m
+  msg f (SBPMsgMagRaw n m) = SBPMsgMagRaw n <$> f m
   msg f (SBPMsgMaskSatellite n m) = SBPMsgMaskSatellite n <$> f m
   msg f (SBPMsgNapDeviceDnaReq n m) = SBPMsgNapDeviceDnaReq n <$> f m
   msg f (SBPMsgNapDeviceDnaResp n m) = SBPMsgNapDeviceDnaResp n <$> f m

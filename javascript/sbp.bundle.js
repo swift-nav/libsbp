@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 42);
+/******/ 	return __webpack_require__(__webpack_require__.s = 43);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -296,8 +296,8 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.UINT32 = __webpack_require__(46)
-exports.UINT64 = __webpack_require__(47)
+exports.UINT32 = __webpack_require__(47)
+exports.UINT64 = __webpack_require__(48)
 
 /***/ }),
 /* 2 */
@@ -314,7 +314,7 @@ exports.UINT64 = __webpack_require__(47)
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-var assert = __webpack_require__(43);
+var assert = __webpack_require__(44);
 var Int64 = __webpack_require__(3);
 var UInt64 = __webpack_require__(1).UINT64;
 
@@ -853,8 +853,8 @@ module.exports = g;
 
 
 
-var base64 = __webpack_require__(44)
-var ieee754 = __webpack_require__(48)
+var base64 = __webpack_require__(45)
+var ieee754 = __webpack_require__(49)
 var isArray = __webpack_require__(17)
 
 exports.Buffer = Buffer
@@ -3157,7 +3157,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 // Globals
 //========================================================================================
 
-var Context = __webpack_require__(45).Context;
+var Context = __webpack_require__(46).Context;
 
 var PRIMITIVE_TYPES = {
     'UInt8'    : 1,
@@ -4113,7 +4113,7 @@ util.inherits = __webpack_require__(8);
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(57)
+  deprecate: __webpack_require__(58)
 };
 /*</replacement>*/
 
@@ -4705,7 +4705,7 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(56).setImmediate, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(57).setImmediate, __webpack_require__(5)))
 
 /***/ }),
 /* 15 */
@@ -4717,7 +4717,7 @@ exports.Readable = exports;
 exports.Writable = __webpack_require__(14);
 exports.Duplex = __webpack_require__(7);
 exports.Transform = __webpack_require__(20);
-exports.PassThrough = __webpack_require__(50);
+exports.PassThrough = __webpack_require__(51);
 
 
 /***/ }),
@@ -5102,7 +5102,7 @@ util.inherits = __webpack_require__(8);
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(61);
+var debugUtil = __webpack_require__(62);
 var debug = void 0;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -5111,7 +5111,7 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(51);
+var BufferList = __webpack_require__(52);
 var destroyImpl = __webpack_require__(21);
 var StringDecoder;
 
@@ -7853,6 +7853,80 @@ module.exports = {
  */
 
 /**********************
+ * Automatically generated from piksi/yaml/swiftnav/sbp/mag.yaml with generate.py.
+ * Don't edit this by hand!
+ **********************
+ * Package description:
+ *
+ * Magnetometer (mag) messages.
+***********************/
+
+var SBP = __webpack_require__(2);
+var Parser = __webpack_require__(4);
+var Int64 = __webpack_require__(3);
+var UInt64 = __webpack_require__(1).UINT64;
+
+/**
+ * SBP class for message MSG_MAG_RAW (0x0902).
+ *
+ * Raw data from the magnetometer.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) Milliseconds since start of GPS week. If the high bit is set, the time is
+ *   unknown or invalid.
+ * @field tow_f number (unsigned 8-bit int, 1 byte) Milliseconds since start of GPS week, fractional part
+ * @field mag_x number (signed 16-bit int, 2 bytes) Magnetic field in the body frame X axis
+ * @field mag_y number (signed 16-bit int, 2 bytes) Magnetic field in the body frame Y axis
+ * @field mag_z number (signed 16-bit int, 2 bytes) Magnetic field in the body frame Z axis
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgMagRaw = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_MAG_RAW";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgMagRaw.prototype = Object.create(SBP.prototype);
+MsgMagRaw.prototype.messageType = "MSG_MAG_RAW";
+MsgMagRaw.prototype.msg_type = 0x0902;
+MsgMagRaw.prototype.constructor = MsgMagRaw;
+MsgMagRaw.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .uint8('tow_f')
+  .int16('mag_x')
+  .int16('mag_y')
+  .int16('mag_z');
+MsgMagRaw.prototype.fieldSpec = [];
+MsgMagRaw.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgMagRaw.prototype.fieldSpec.push(['tow_f', 'writeUInt8', 1]);
+MsgMagRaw.prototype.fieldSpec.push(['mag_x', 'writeInt16LE', 2]);
+MsgMagRaw.prototype.fieldSpec.push(['mag_y', 'writeInt16LE', 2]);
+MsgMagRaw.prototype.fieldSpec.push(['mag_z', 'writeInt16LE', 2]);
+
+module.exports = {
+  0x0902: MsgMagRaw,
+  MsgMagRaw: MsgMagRaw,
+}
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (C) 2015 Swift Navigation Inc.
+ * Contact: Joshua Gross <josh@swift-nav.com>
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**********************
  * Automatically generated from piksi/yaml/swiftnav/sbp/navigation.yaml with generate.py.
  * Don't edit this by hand!
  **********************
@@ -8857,7 +8931,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -8951,7 +9025,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -10859,7 +10933,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -11682,7 +11756,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -11960,7 +12034,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -12023,7 +12097,7 @@ module.exports = {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -12166,7 +12240,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -12554,7 +12628,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -12616,7 +12690,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -12847,7 +12921,7 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -12878,10 +12952,10 @@ var inherits = __webpack_require__(8);
 
 inherits(Stream, EE);
 Stream.Readable = __webpack_require__(15);
-Stream.Writable = __webpack_require__(54);
-Stream.Duplex = __webpack_require__(49);
-Stream.Transform = __webpack_require__(53);
-Stream.PassThrough = __webpack_require__(52);
+Stream.Writable = __webpack_require__(55);
+Stream.Duplex = __webpack_require__(50);
+Stream.Transform = __webpack_require__(54);
+Stream.PassThrough = __webpack_require__(53);
 
 // Backwards-compat with node 0.4.x
 Stream.Stream = Stream;
@@ -12980,7 +13054,7 @@ Stream.prototype.pipe = function(dest, options) {
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -13008,7 +13082,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer, module, global) {/**
@@ -13023,8 +13097,8 @@ module.exports = function(module) {
  */
 
 var Parser = __webpack_require__(12).Parser;
-var path = __webpack_require__(39);
-var streams = __webpack_require__(40);
+var path = __webpack_require__(40);
+var streams = __webpack_require__(41);
 var SBP = __webpack_require__(2);
 
 var SBP_PREAMBLE = 0x55;
@@ -13109,15 +13183,16 @@ var sbpImports = {
   gnss: __webpack_require__(0),
   imu: __webpack_require__(28),
   logging: __webpack_require__(29),
-  navigation: __webpack_require__(30),
-  ndb: __webpack_require__(31),
-  observation: __webpack_require__(32),
-  piksi: __webpack_require__(33),
-  settings: __webpack_require__(34),
-  signal: __webpack_require__(35),
-  system: __webpack_require__(36),
-  tracking: __webpack_require__(37),
-  user: __webpack_require__(38)
+  mag: __webpack_require__(30),
+  navigation: __webpack_require__(31),
+  ndb: __webpack_require__(32),
+  observation: __webpack_require__(33),
+  piksi: __webpack_require__(34),
+  settings: __webpack_require__(35),
+  signal: __webpack_require__(36),
+  system: __webpack_require__(37),
+  tracking: __webpack_require__(38),
+  user: __webpack_require__(39)
 };
 
 var sbpIdTable = Object.keys(sbpImports).reduce(function (prev, key) {
@@ -13342,10 +13417,10 @@ function exposeGlobally (x) {
 
 exposeGlobally(module.exports);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer, __webpack_require__(41)(module), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer, __webpack_require__(42)(module), __webpack_require__(5)))
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13417,7 +13492,7 @@ function isBuffer(b) {
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var util = __webpack_require__(60);
+var util = __webpack_require__(61);
 var hasOwn = Object.prototype.hasOwnProperty;
 var pSlice = Array.prototype.slice;
 var functionsHaveNames = (function () {
@@ -13843,7 +13918,7 @@ var objectKeys = Object.keys || function (obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13964,7 +14039,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports) {
 
 //========================================================================================
@@ -14069,7 +14144,7 @@ exports.Context = Context;
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -14527,7 +14602,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -15182,7 +15257,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -15272,14 +15347,14 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(7);
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15332,7 +15407,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 };
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15412,28 +15487,28 @@ module.exports = function () {
 }();
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(15).PassThrough
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(15).Transform
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(14);
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -15626,7 +15701,7 @@ module.exports = __webpack_require__(14);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -15679,13 +15754,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(55);
+__webpack_require__(56);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -15759,7 +15834,7 @@ function config (name) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports) {
 
 if (typeof Object.create === 'function') {
@@ -15788,7 +15863,7 @@ if (typeof Object.create === 'function') {
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports) {
 
 module.exports = function isBuffer(arg) {
@@ -15799,7 +15874,7 @@ module.exports = function isBuffer(arg) {
 }
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -16327,7 +16402,7 @@ function isPrimitive(arg) {
 }
 exports.isPrimitive = isPrimitive;
 
-exports.isBuffer = __webpack_require__(59);
+exports.isBuffer = __webpack_require__(60);
 
 function objectToString(o) {
   return Object.prototype.toString.call(o);
@@ -16371,7 +16446,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = __webpack_require__(58);
+exports.inherits = __webpack_require__(59);
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -16392,7 +16467,7 @@ function hasOwnProperty(obj, prop) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
