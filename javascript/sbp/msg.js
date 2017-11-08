@@ -96,6 +96,7 @@ var sbpImports = {
   gnss: require('./gnss.js'),
   imu: require('./imu.js'),
   logging: require('./logging.js'),
+  mag: require('./mag.js'),
   navigation: require('./navigation.js'),
   ndb: require('./ndb.js'),
   observation: require('./observation.js'),
