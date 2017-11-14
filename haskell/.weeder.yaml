@@ -1,0 +1,18 @@
+- package:
+  - name: sbp
+  - section:
+    - name: library
+    - message:
+      - name: Unused import
+      - module:
+        - name: SwiftNav.SBP.Gnss
+        - identifier: SwiftNav.SBP.Types
+      - module:
+        - name: SwiftNav.SBP.Msg
+        - identifier: SwiftNav.SBP.Gnss
+  - section:
+    - name: test:test
+    - message:
+      - name: Redundant build-depends entry
+      - depends: base
+

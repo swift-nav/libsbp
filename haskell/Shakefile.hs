@@ -37,8 +37,9 @@ main = shakeMain $ do
 
   -- | sanity
   --
-  fake "." pats "sanity" $ const $
-    need [ "tests-error", "lint", "weed" ]
+  fake "." pats "sanity" $ const $ do
+    need [ "tests-error" ]
+    need [ "lint", "weed" ]
 
   -- | Default things to run.
   --
