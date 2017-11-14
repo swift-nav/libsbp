@@ -4234,6 +4234,110 @@ coordinate system
     d.update(j)
     return d
     
+SBP_MSG_GLO_BIASES = 0x0075
+class MsgGloBiases(SBP):
+  """SBP class for message MSG_GLO_BIASES (0x0075).
+
+  You can have MSG_GLO_BIASES inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The GLONASS L1/L2 Code-Phase biases allows to perform 
+GPS+GLONASS integer ambiguity resolution for baselines
+with mixed receiver types (e.g. receiver of different
+manufacturers)
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  mask : int
+    GLONASS FDMA signals mask
+  l1ca_bias : int
+    GLONASS L1 C/A Code-Phase Bias
+  l1p_bias : int
+    GLONASS L1 P Code-Phase Bias
+  l2ca_bias : int
+    GLONASS L2 C/A Code-Phase Bias
+  l2p_bias : int
+    GLONASS L2 P Code-Phase Bias
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'mask' / construct.Int8ul,
+                   'l1ca_bias' / construct.Int16sl,
+                   'l1p_bias' / construct.Int16sl,
+                   'l2ca_bias' / construct.Int16sl,
+                   'l2p_bias' / construct.Int16sl,)
+  __slots__ = [
+               'mask',
+               'l1ca_bias',
+               'l1p_bias',
+               'l2ca_bias',
+               'l2p_bias',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgGloBiases,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgGloBiases, self).__init__()
+      self.msg_type = SBP_MSG_GLO_BIASES
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.mask = kwargs.pop('mask')
+      self.l1ca_bias = kwargs.pop('l1ca_bias')
+      self.l1p_bias = kwargs.pop('l1p_bias')
+      self.l2ca_bias = kwargs.pop('l2ca_bias')
+      self.l2p_bias = kwargs.pop('l2p_bias')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgGloBiases.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgGloBiases(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgGloBiases._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgGloBiases._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgGloBiases, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x004A: MsgObs,
@@ -4263,4 +4367,5 @@ msg_classes = {
   0x0072: MsgAlmanacGPS,
   0x0071: MsgAlmanacGloDep,
   0x0073: MsgAlmanacGlo,
+  0x0075: MsgGloBiases,
 }

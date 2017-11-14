@@ -61,6 +61,7 @@ library
                      , monad-loops
                      , template-haskell
                      , text
+                     , unordered-containers
 
 executable sbp2json
   hs-source-dirs:      main
@@ -111,10 +112,15 @@ test-suite test
   hs-source-dirs:      test
   main-is:             Test.hs
   other-modules:       Test.SwiftNav.CRC16
-  build-depends:       base
+  build-depends:       aeson
+                     , base
+                     , base64-bytestring
                      , basic-prelude
+                     , bytestring
+                     , QuickCheck
                      , sbp
                      , tasty
                      , tasty-hunit
+                     , tasty-quickcheck
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall
   default-language:    Haskell2010

@@ -1755,3 +1755,33 @@ definitions:
           type: double
           units: rad
           desc: Argument of perigee at instant of t_lambda
+          
+ - MSG_GLO_BIASES:
+    id: 0x0075
+    short_desc: GLONASS L1/L2 Code-Phase biases
+    desc: |
+      The GLONASS L1/L2 Code-Phase biases allows to perform 
+      GPS+GLONASS integer ambiguity resolution for baselines
+      with mixed receiver types (e.g. receiver of different
+      manufacturers)
+    fields:
+        - mask:
+            type: u8
+            units: boolean
+            desc: GLONASS FDMA signals mask
+        - l1ca_bias:
+            type: s16
+            units: m * 0.02
+            desc: GLONASS L1 C/A Code-Phase Bias
+        - l1p_bias:
+            type: s16
+            units: m * 0.02
+            desc: GLONASS L1 P Code-Phase Bias
+        - l2ca_bias:
+            type: s16
+            units: m * 0.02
+            desc: GLONASS L2 C/A Code-Phase Bias
+        - l2p_bias:
+            type: s16
+            units: m * 0.02
+            desc: GLONASS L2 P Code-Phase Bias            
