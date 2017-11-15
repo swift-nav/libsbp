@@ -840,6 +840,23 @@ coordinate system
 } msg_almanac_glo_t;
 
 
+/** GLONASS L1/L2 Code-Phase biases
+ *
+ * The GLONASS L1/L2 Code-Phase biases allows to perform 
+ * GPS+GLONASS integer ambiguity resolution for baselines
+ * with mixed receiver types (e.g. receiver of different
+ * manufacturers)
+ */
+#define SBP_MSG_GLO_BIASES           0x0075
+typedef struct __attribute__((packed)) {
+  u8 mask;         /**< GLONASS FDMA signals mask [boolean] */
+  s16 l1ca_bias;    /**< GLONASS L1 C/A Code-Phase Bias [m * 0.02] */
+  s16 l1p_bias;     /**< GLONASS L1 P Code-Phase Bias [m * 0.02] */
+  s16 l2ca_bias;    /**< GLONASS L2 C/A Code-Phase Bias [m * 0.02] */
+  s16 l2p_bias;     /**< GLONASS L2 P Code-Phase Bias [m * 0.02] */
+} msg_glo_biases_t;
+
+
 /** \} */
 
 #endif /* LIBSBP_OBSERVATION_MESSAGES_H */

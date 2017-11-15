@@ -2149,3 +2149,44 @@ instance Binary MsgAlmanacGlo where
 $(makeSBP 'msgAlmanacGlo ''MsgAlmanacGlo)
 $(makeJSON "_msgAlmanacGlo_" ''MsgAlmanacGlo)
 $(makeLenses ''MsgAlmanacGlo)
+
+msgGloBiases :: Word16
+msgGloBiases = 0x0075
+
+-- | SBP class for message MSG_GLO_BIASES (0x0075).
+--
+-- The GLONASS L1/L2 Code-Phase biases allows to perform  GPS+GLONASS integer
+-- ambiguity resolution for baselines with mixed receiver types (e.g. receiver
+-- of different manufacturers)
+data MsgGloBiases = MsgGloBiases
+  { _msgGloBiases_mask    :: !Word8
+    -- ^ GLONASS FDMA signals mask
+  , _msgGloBiases_l1ca_bias :: !Int16
+    -- ^ GLONASS L1 C/A Code-Phase Bias
+  , _msgGloBiases_l1p_bias :: !Int16
+    -- ^ GLONASS L1 P Code-Phase Bias
+  , _msgGloBiases_l2ca_bias :: !Int16
+    -- ^ GLONASS L2 C/A Code-Phase Bias
+  , _msgGloBiases_l2p_bias :: !Int16
+    -- ^ GLONASS L2 P Code-Phase Bias
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgGloBiases where
+  get = do
+    _msgGloBiases_mask <- getWord8
+    _msgGloBiases_l1ca_bias <- fromIntegral <$> getWord16le
+    _msgGloBiases_l1p_bias <- fromIntegral <$> getWord16le
+    _msgGloBiases_l2ca_bias <- fromIntegral <$> getWord16le
+    _msgGloBiases_l2p_bias <- fromIntegral <$> getWord16le
+    pure MsgGloBiases {..}
+
+  put MsgGloBiases {..} = do
+    putWord8 _msgGloBiases_mask
+    putWord16le $ fromIntegral _msgGloBiases_l1ca_bias
+    putWord16le $ fromIntegral _msgGloBiases_l1p_bias
+    putWord16le $ fromIntegral _msgGloBiases_l2ca_bias
+    putWord16le $ fromIntegral _msgGloBiases_l2p_bias
+
+$(makeSBP 'msgGloBiases ''MsgGloBiases)
+$(makeJSON "_msgGloBiases_" ''MsgGloBiases)
+$(makeLenses ''MsgGloBiases)
