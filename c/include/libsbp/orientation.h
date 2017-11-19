@@ -44,7 +44,7 @@ typedef struct __attribute__((packed)) {
 
 /** Quaternion 4 component vector
  *
- * This message reports the quaternion vector describing the vehicle orientation
+ * This message reports the quaternion vector describing the vehcile body frame's orientation
  * with respect to a local-level NED frame.  
  */
 #define SBP_MSG_ORIENT_QUAT      0x0220
@@ -66,25 +66,25 @@ typedef struct __attribute__((packed)) {
  *
  * This message reports the yaw, pitch, and roll angles of the vehicle body frame.
  * The rotations should applied intrinsically in the order yaw, pitch, and roll 
- * in order to rotate the from a frame aligned with hte local-level NED frame 
+ * in order to rotate the from a frame aligned with the local-level NED frame 
  * to the vehicle body frame.
  */
 #define SBP_MSG_ORIENT_EULER     0x0221
 typedef struct __attribute__((packed)) {
   u32 tow;          /**< GPS Time of Week [ms] */
-  s16 roll;         /**< rotation about the forward axis of the vehicle [milliradians] */
-  s16 pitch;        /**< rotation about the rightward axis of the vehicle [milliradians] */
-  s16 yaw;          /**< rotation about the downward axis of the vehicle [milliradians] */
-  float var_roll;     /**< Estimated standard deviation of roll [radians] */
-  float var_pitch;    /**< Estimated standard deviation of pitch [radians] */
-  float var_yaw;      /**< Estimated standard deviation of yaw [radians] */
+  s16 roll;         /**< rotation about the forward axis of the vehicle [centidegrees] */
+  s16 pitch;        /**< rotation about the rightward axis of the vehicle [centidegrees] */
+  s16 yaw;          /**< rotation about the downward axis of the vehicle [centidegrees] */
+  float var_roll;     /**< Estimated standard deviation of roll [degrees] */
+  float var_pitch;    /**< Estimated standard deviation of pitch [degrees] */
+  float var_yaw;      /**< Estimated standard deviation of yaw [degrees] */
   u8 flags;        /**< Status flags */
 } msg_orient_euler_t;
 
 
-/** User Frame instantaneous angular rates
+/** Vehicle Body Frame instantaneous angular rates
  *
- * This message reports the orientation rates in the user body frame. 
+ * This message reports the orientation rates in the vehicle body frame. 
  * The values represent the measurements a strapped down gyroscope would 
  * make and are not equivalent to the time derivative of the Euler angles.
  * The orientation and origin of the user frame is specified via device settings.
@@ -95,9 +95,9 @@ typedef struct __attribute__((packed)) {
 #define SBP_MSG_ANGULAR_RATE     0x0222
 typedef struct __attribute__((packed)) {
   u32 tow;      /**< GPS Time of Week [ms] */
-  s16 x;        /**< angular rate about x axis [milliradians/s] */
-  s16 y;        /**< angular rate about y axis [milliradians/s] */
-  s16 z;        /**< angular rate about z axis [milliradians/s] */
+  s16 x;        /**< angular rate about x axis [decidegrees/s] */
+  s16 y;        /**< angular rate about y axis [decidegrees/s] */
+  s16 z;        /**< angular rate about z axis [decidegrees/s] */
   u8 flags;    /**< Status flags */
 } msg_angular_rate_t;
 

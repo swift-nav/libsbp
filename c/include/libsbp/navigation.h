@@ -28,6 +28,12 @@
  * phase ambiguity. The pseudo-absolute position solution uses a
  * user-provided, well-surveyed base station position (if available)
  * and the RTK solution in tandem.
+ * 
+ * When the inertial navigation mode indicates that the IMU is used,
+ * all messages are reported in the vehicle body frame as defined by
+ * device settings.  By default, the vehicle body frame is configured to be
+ * coincident with the antenna phase center.  When there is no inertial 
+ * navigation, the solution will be reported at the phase center of the antenna.
  * \{ */
 
 #ifndef LIBSBP_NAVIGATION_MESSAGES_H
@@ -339,15 +345,15 @@ typedef struct __attribute__((packed)) {
 
 /** Velocity in User Frame
  *
- * This message reports the velocity in the user frame. By convention,
+ * This message reports the velocity in the Vehicle Body Frame. By convention,
  * the x-axis should point out the nose of the vehicle and represent the forward
  * direction, while as the y-axis should point out the right hand side of the vehicle.
  * Since this is a right handed system, z should point out the bottom of the vehicle.
- * The orientation and origin of the user frame are specified via the device settings.
+ * The orientation and origin of the Vehicle Body Frame are specified via the device settings.
  * The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  */
-#define SBP_MSG_VEL_USER_FRAME         0x0213
+#define SBP_MSG_VEL_BODY               0x0213
 typedef struct __attribute__((packed)) {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 x;          /**< Velocity in x direction [mm/s] */
@@ -361,7 +367,7 @@ typedef struct __attribute__((packed)) {
   float cov_z_z;    /**< Estimated variance of z [m^2] */
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
-} msg_vel_user_frame_t;
+} msg_vel_body_t;
 
 
 /** Age of corrections
