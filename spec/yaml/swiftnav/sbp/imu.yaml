@@ -21,7 +21,8 @@ definitions:
     short_desc: Raw IMU data
     desc: |
       Raw data from the Inertial Measurement Unit, containing accelerometer and
-      gyroscope readings.
+      gyroscope readings. The sense of the measurements are to be aligned with 
+      the indications on the device itself.
     fields:
         - tow:
             type: u32
@@ -36,22 +37,22 @@ definitions:
               Milliseconds since start of GPS week, fractional part
         - acc_x:
             type: s16
-            desc: Acceleration in the body frame X axis
+            desc: Acceleration in the IMU frame X axis
         - acc_y:
             type: s16
-            desc: Acceleration in the body frame Y axis
+            desc: Acceleration in the IMU frame Y axis
         - acc_z:
             type: s16
-            desc: Acceleration in the body frame Z axis
+            desc: Acceleration in the IMU frame Z axis
         - gyr_x:
             type: s16
-            desc: Angular rate around the body frame X axis
+            desc: Angular rate around IMU frame X axis
         - gyr_y:
             type: s16
-            desc: Angular rate around the body frame Y axis
+            desc: Angular rate around IMU frame Y axis
         - gyr_z:
             type: s16
-            desc: Angular rate around the body frame Z axis
+            desc: Angular rate around IMU frame Z axis
 
  - MSG_IMU_AUX:
     id: 0x0901
