@@ -36,11 +36,13 @@ import SwiftNav.SBP.Mag
 import SwiftNav.SBP.Navigation
 import SwiftNav.SBP.Ndb
 import SwiftNav.SBP.Observation
+import SwiftNav.SBP.Orientation
 import SwiftNav.SBP.Piksi
 import SwiftNav.SBP.Settings
 import SwiftNav.SBP.System
 import SwiftNav.SBP.Tracking
 import SwiftNav.SBP.User
+import SwiftNav.SBP.Vehicle
 import SwiftNav.SBP.Types
 
 
@@ -61,6 +63,7 @@ data SBPMsg =
    | SBPMsgAlmanacGloDep MsgAlmanacGloDep Msg
    | SBPMsgAlmanacGps MsgAlmanacGps Msg
    | SBPMsgAlmanacGpsDep MsgAlmanacGpsDep Msg
+   | SBPMsgAngularRate MsgAngularRate Msg
    | SBPMsgBasePosEcef MsgBasePosEcef Msg
    | SBPMsgBasePosLlh MsgBasePosLlh Msg
    | SBPMsgBaselineEcef MsgBaselineEcef Msg
@@ -134,9 +137,14 @@ data SBPMsg =
    | SBPMsgObsDepA MsgObsDepA Msg
    | SBPMsgObsDepB MsgObsDepB Msg
    | SBPMsgObsDepC MsgObsDepC Msg
+   | SBPMsgOdometry MsgOdometry Msg
+   | SBPMsgOrientEuler MsgOrientEuler Msg
+   | SBPMsgOrientQuat MsgOrientQuat Msg
    | SBPMsgPosEcef MsgPosEcef Msg
+   | SBPMsgPosEcefCov MsgPosEcefCov Msg
    | SBPMsgPosEcefDepA MsgPosEcefDepA Msg
    | SBPMsgPosLlh MsgPosLlh Msg
+   | SBPMsgPosLlhCov MsgPosLlhCov Msg
    | SBPMsgPosLlhDepA MsgPosLlhDepA Msg
    | SBPMsgPrintDep MsgPrintDep Msg
    | SBPMsgReset MsgReset Msg
@@ -173,9 +181,12 @@ data SBPMsg =
    | SBPMsgUartStateDepa MsgUartStateDepa Msg
    | SBPMsgUserData MsgUserData Msg
    | SBPMsgUtcTime MsgUtcTime Msg
+   | SBPMsgVelBody MsgVelBody Msg
    | SBPMsgVelEcef MsgVelEcef Msg
+   | SBPMsgVelEcefCov MsgVelEcefCov Msg
    | SBPMsgVelEcefDepA MsgVelEcefDepA Msg
    | SBPMsgVelNed MsgVelNed Msg
+   | SBPMsgVelNedCov MsgVelNedCov Msg
    | SBPMsgVelNedDepA MsgVelNedDepA Msg
    | SBPMsgBadCrc Msg
    | SBPMsgUnknown Msg
@@ -202,6 +213,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgAlmanacGloDep = SBPMsgAlmanacGloDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgAlmanacGps = SBPMsgAlmanacGps (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgAlmanacGpsDep = SBPMsgAlmanacGpsDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgAngularRate = SBPMsgAngularRate (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgBasePosEcef = SBPMsgBasePosEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgBasePosLlh = SBPMsgBasePosLlh (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgBaselineEcef = SBPMsgBaselineEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -275,9 +287,14 @@ instance Binary SBPMsg where
           | _msgSBPType == msgObsDepA = SBPMsgObsDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgObsDepB = SBPMsgObsDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgObsDepC = SBPMsgObsDepC (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgOdometry = SBPMsgOdometry (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgOrientEuler = SBPMsgOrientEuler (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgOrientQuat = SBPMsgOrientQuat (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosEcef = SBPMsgPosEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgPosEcefCov = SBPMsgPosEcefCov (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosEcefDepA = SBPMsgPosEcefDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlh = SBPMsgPosLlh (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgPosLlhCov = SBPMsgPosLlhCov (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlhDepA = SBPMsgPosLlhDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgReset = SBPMsgReset (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -314,9 +331,12 @@ instance Binary SBPMsg where
           | _msgSBPType == msgUartStateDepa = SBPMsgUartStateDepa (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUserData = SBPMsgUserData (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUtcTime = SBPMsgUtcTime (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgVelBody = SBPMsgVelBody (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgVelEcefCov = SBPMsgVelEcefCov (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelEcefDepA = SBPMsgVelEcefDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelNed = SBPMsgVelNed (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgVelNedCov = SBPMsgVelNedCov (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelNedDepA = SBPMsgVelNedDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | otherwise = SBPMsgUnknown m
 
@@ -335,6 +355,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgAlmanacGloDep _ m) = put m
       encoder (SBPMsgAlmanacGps _ m) = put m
       encoder (SBPMsgAlmanacGpsDep _ m) = put m
+      encoder (SBPMsgAngularRate _ m) = put m
       encoder (SBPMsgBasePosEcef _ m) = put m
       encoder (SBPMsgBasePosLlh _ m) = put m
       encoder (SBPMsgBaselineEcef _ m) = put m
@@ -408,9 +429,14 @@ instance Binary SBPMsg where
       encoder (SBPMsgObsDepA _ m) = put m
       encoder (SBPMsgObsDepB _ m) = put m
       encoder (SBPMsgObsDepC _ m) = put m
+      encoder (SBPMsgOdometry _ m) = put m
+      encoder (SBPMsgOrientEuler _ m) = put m
+      encoder (SBPMsgOrientQuat _ m) = put m
       encoder (SBPMsgPosEcef _ m) = put m
+      encoder (SBPMsgPosEcefCov _ m) = put m
       encoder (SBPMsgPosEcefDepA _ m) = put m
       encoder (SBPMsgPosLlh _ m) = put m
+      encoder (SBPMsgPosLlhCov _ m) = put m
       encoder (SBPMsgPosLlhDepA _ m) = put m
       encoder (SBPMsgPrintDep _ m) = put m
       encoder (SBPMsgReset _ m) = put m
@@ -447,9 +473,12 @@ instance Binary SBPMsg where
       encoder (SBPMsgUartStateDepa _ m) = put m
       encoder (SBPMsgUserData _ m) = put m
       encoder (SBPMsgUtcTime _ m) = put m
+      encoder (SBPMsgVelBody _ m) = put m
       encoder (SBPMsgVelEcef _ m) = put m
+      encoder (SBPMsgVelEcefCov _ m) = put m
       encoder (SBPMsgVelEcefDepA _ m) = put m
       encoder (SBPMsgVelNed _ m) = put m
+      encoder (SBPMsgVelNedCov _ m) = put m
       encoder (SBPMsgVelNedDepA _ m) = put m
       encoder (SBPMsgUnknown m) = put m
       encoder (SBPMsgBadCrc m) = put m
@@ -472,6 +501,7 @@ instance FromJSON SBPMsg where
         | msgType == msgAlmanacGloDep = SBPMsgAlmanacGloDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgAlmanacGps = SBPMsgAlmanacGps <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgAlmanacGpsDep = SBPMsgAlmanacGpsDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgAngularRate = SBPMsgAngularRate <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgBasePosEcef = SBPMsgBasePosEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgBasePosLlh = SBPMsgBasePosLlh <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgBaselineEcef = SBPMsgBaselineEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -545,9 +575,14 @@ instance FromJSON SBPMsg where
         | msgType == msgObsDepA = SBPMsgObsDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgObsDepB = SBPMsgObsDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgObsDepC = SBPMsgObsDepC <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgOdometry = SBPMsgOdometry <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgOrientEuler = SBPMsgOrientEuler <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgOrientQuat = SBPMsgOrientQuat <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosEcef = SBPMsgPosEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgPosEcefCov = SBPMsgPosEcefCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosEcefDepA = SBPMsgPosEcefDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlh = SBPMsgPosLlh <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgPosLlhCov = SBPMsgPosLlhCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlhDepA = SBPMsgPosLlhDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPrintDep = SBPMsgPrintDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgReset = SBPMsgReset <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -584,9 +619,12 @@ instance FromJSON SBPMsg where
         | msgType == msgUartStateDepa = SBPMsgUartStateDepa <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUserData = SBPMsgUserData <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUtcTime = SBPMsgUtcTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgVelBody = SBPMsgVelBody <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelEcef = SBPMsgVelEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgVelEcefCov = SBPMsgVelEcefCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelEcefDepA = SBPMsgVelEcefDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelNed = SBPMsgVelNed <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgVelNedCov = SBPMsgVelNedCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelNedDepA = SBPMsgVelNedDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | otherwise = SBPMsgUnknown <$> parseJSON obj
   parseJSON _ = mzero
@@ -610,6 +648,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgAlmanacGloDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgAlmanacGps n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgAlmanacGpsDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgAngularRate n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgBasePosEcef n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgBasePosLlh n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgBaselineEcef n m) = toJSON n <<>> toJSON m
@@ -683,9 +722,14 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgObsDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgObsDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgObsDepC n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgOdometry n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgOrientEuler n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgOrientQuat n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosEcef n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgPosEcefCov n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosEcefDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlh n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgPosLlhCov n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlhDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPrintDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgReset n m) = toJSON n <<>> toJSON m
@@ -722,9 +766,12 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgUartStateDepa n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUserData n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUtcTime n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgVelBody n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelEcef n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgVelEcefCov n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelEcefDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelNed n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgVelNedCov n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelNedDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgBadCrc m) = toJSON m
   toJSON (SBPMsgUnknown m) = toJSON m
@@ -742,6 +789,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgAlmanacGloDep n m) = SBPMsgAlmanacGloDep n <$> f m
   msg f (SBPMsgAlmanacGps n m) = SBPMsgAlmanacGps n <$> f m
   msg f (SBPMsgAlmanacGpsDep n m) = SBPMsgAlmanacGpsDep n <$> f m
+  msg f (SBPMsgAngularRate n m) = SBPMsgAngularRate n <$> f m
   msg f (SBPMsgBasePosEcef n m) = SBPMsgBasePosEcef n <$> f m
   msg f (SBPMsgBasePosLlh n m) = SBPMsgBasePosLlh n <$> f m
   msg f (SBPMsgBaselineEcef n m) = SBPMsgBaselineEcef n <$> f m
@@ -815,9 +863,14 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgObsDepA n m) = SBPMsgObsDepA n <$> f m
   msg f (SBPMsgObsDepB n m) = SBPMsgObsDepB n <$> f m
   msg f (SBPMsgObsDepC n m) = SBPMsgObsDepC n <$> f m
+  msg f (SBPMsgOdometry n m) = SBPMsgOdometry n <$> f m
+  msg f (SBPMsgOrientEuler n m) = SBPMsgOrientEuler n <$> f m
+  msg f (SBPMsgOrientQuat n m) = SBPMsgOrientQuat n <$> f m
   msg f (SBPMsgPosEcef n m) = SBPMsgPosEcef n <$> f m
+  msg f (SBPMsgPosEcefCov n m) = SBPMsgPosEcefCov n <$> f m
   msg f (SBPMsgPosEcefDepA n m) = SBPMsgPosEcefDepA n <$> f m
   msg f (SBPMsgPosLlh n m) = SBPMsgPosLlh n <$> f m
+  msg f (SBPMsgPosLlhCov n m) = SBPMsgPosLlhCov n <$> f m
   msg f (SBPMsgPosLlhDepA n m) = SBPMsgPosLlhDepA n <$> f m
   msg f (SBPMsgPrintDep n m) = SBPMsgPrintDep n <$> f m
   msg f (SBPMsgReset n m) = SBPMsgReset n <$> f m
@@ -854,9 +907,12 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgUartStateDepa n m) = SBPMsgUartStateDepa n <$> f m
   msg f (SBPMsgUserData n m) = SBPMsgUserData n <$> f m
   msg f (SBPMsgUtcTime n m) = SBPMsgUtcTime n <$> f m
+  msg f (SBPMsgVelBody n m) = SBPMsgVelBody n <$> f m
   msg f (SBPMsgVelEcef n m) = SBPMsgVelEcef n <$> f m
+  msg f (SBPMsgVelEcefCov n m) = SBPMsgVelEcefCov n <$> f m
   msg f (SBPMsgVelEcefDepA n m) = SBPMsgVelEcefDepA n <$> f m
   msg f (SBPMsgVelNed n m) = SBPMsgVelNed n <$> f m
+  msg f (SBPMsgVelNedCov n m) = SBPMsgVelNedCov n <$> f m
   msg f (SBPMsgVelNedDepA n m) = SBPMsgVelNedDepA n <$> f m
   msg f (SBPMsgUnknown m) = SBPMsgUnknown <$> f m
   msg f (SBPMsgBadCrc m) = SBPMsgBadCrc <$> f m

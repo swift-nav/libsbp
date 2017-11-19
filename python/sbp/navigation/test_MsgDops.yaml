@@ -1,0 +1,122 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgDops vNone.
+generated_on: 2016-11-03 20:14:43.928083
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      gdop: 106
+      hdop: 59
+      pdop: 96
+      tdop: 45
+      tow: 513527000
+      vdop: 76
+    module: sbp.navigation
+    name: MsgDops
+  msg_type: '0x206'
+  raw_json: '{"gdop": 106, "tdop": 45, "vdop": 76, "sender": 16991, "msg_type": 518,
+    "pdop": 96, "tow": 513527000, "crc": 56510, "length": 14, "preamble": 85, "payload":
+    "2MybHmoAYAAtADsATAA=", "hdop": 59}'
+  raw_packet: VQYCX0IO2MybHmoAYAAtADsATAC+3A==
+  sbp:
+    crc: '0xdcbe'
+    length: 14
+    msg_type: '0x208'
+    payload: 2MybHmoAYAAtADsATAA=
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      gdop: 106
+      hdop: 59
+      pdop: 96
+      tdop: 45
+      tow: 513532000
+      vdop: 76
+    module: sbp.navigation
+    name: MsgDops
+  msg_type: '0x206'
+  raw_json: '{"gdop": 106, "tdop": 45, "vdop": 76, "sender": 16991, "msg_type": 518,
+    "pdop": 96, "tow": 513532000, "crc": 6156, "length": 14, "preamble": 85, "payload":
+    "YOCbHmoAYAAtADsATAA=", "hdop": 59}'
+  raw_packet: VQYCX0IOYOCbHmoAYAAtADsATAAMGA==
+  sbp:
+    crc: '0x180c'
+    length: 14
+    msg_type: '0x208'
+    payload: YOCbHmoAYAAtADsATAA=
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      gdop: 140
+      hdop: 95
+      pdop: 127
+      tdop: 58
+      tow: 513537000
+      vdop: 85
+    module: sbp.navigation
+    name: MsgDops
+  msg_type: '0x206'
+  raw_json: '{"gdop": 140, "tdop": 58, "vdop": 85, "sender": 16991, "msg_type": 518,
+    "pdop": 127, "tow": 513537000, "crc": 48623, "length": 14, "preamble": 85, "payload":
+    "6PObHowAfwA6AF8AVQA=", "hdop": 95}'
+  raw_packet: VQYCX0IO6PObHowAfwA6AF8AVQDvvQ==
+  sbp:
+    crc: '0xbdef'
+    length: 14
+    msg_type: '0x208'
+    payload: 6PObHowAfwA6AF8AVQA=
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      gdop: 107
+      hdop: 60
+      pdop: 97
+      tdop: 45
+      tow: 513542000
+      vdop: 77
+    module: sbp.navigation
+    name: MsgDops
+  msg_type: '0x206'
+  raw_json: '{"gdop": 107, "tdop": 45, "vdop": 77, "sender": 16991, "msg_type": 518,
+    "pdop": 97, "tow": 513542000, "crc": 37930, "length": 14, "preamble": 85, "payload":
+    "cAecHmsAYQAtADwATQA=", "hdop": 60}'
+  raw_packet: VQYCX0IOcAecHmsAYQAtADwATQAqlA==
+  sbp:
+    crc: '0x942a'
+    length: 14
+    msg_type: '0x208'
+    payload: cAecHmsAYQAtADwATQA=
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      gdop: 106
+      hdop: 59
+      pdop: 96
+      tdop: 45
+      tow: 513547000
+      vdop: 76
+    module: sbp.navigation
+    name: MsgDops
+  msg_type: '0x206'
+  raw_json: '{"gdop": 106, "tdop": 45, "vdop": 76, "sender": 16991, "msg_type": 518,
+    "pdop": 96, "tow": 513547000, "crc": 16277, "length": 14, "preamble": 85, "payload":
+    "+BqcHmoAYAAtADsATAA=", "hdop": 59}'
+  raw_packet: VQYCX0IO+BqcHmoAYAAtADsATACVPw==
+  sbp:
+    crc: '0x3f95'
+    length: 14
+    msg_type: '0x208'
+    payload: +BqcHmoAYAAtADsATAA=
+    preamble: '0x55'
+    sender: '0x425f'
+version: null
+...

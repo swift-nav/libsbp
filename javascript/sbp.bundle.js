@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 43);
+/******/ 	return __webpack_require__(__webpack_require__.s = 44);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -296,8 +296,8 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.UINT32 = __webpack_require__(47)
-exports.UINT64 = __webpack_require__(48)
+exports.UINT32 = __webpack_require__(48)
+exports.UINT64 = __webpack_require__(49)
 
 /***/ }),
 /* 2 */
@@ -314,7 +314,7 @@ exports.UINT64 = __webpack_require__(48)
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-var assert = __webpack_require__(44);
+var assert = __webpack_require__(45);
 var Int64 = __webpack_require__(3);
 var UInt64 = __webpack_require__(1).UINT64;
 
@@ -480,7 +480,7 @@ SBP.prototype.toBase64 = function toBase64 () {
 
 module.exports = SBP;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer))
 
 /***/ }),
 /* 3 */
@@ -755,7 +755,7 @@ Int64.prototype = {
   }
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer))
 
 /***/ }),
 /* 4 */
@@ -772,7 +772,7 @@ Int64.prototype = {
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-var Parser = __webpack_require__(12).Parser;
+var Parser = __webpack_require__(11).Parser;
 
 /**
  * Add `uint64` to Parser prototype.
@@ -809,37 +809,10 @@ Parser.prototype.compile = function() {
 
 module.exports = Parser;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer))
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -853,8 +826,8 @@ module.exports = g;
 
 
 
-var base64 = __webpack_require__(45)
-var ieee754 = __webpack_require__(49)
+var base64 = __webpack_require__(46)
+var ieee754 = __webpack_require__(50)
 var isArray = __webpack_require__(17)
 
 exports.Buffer = Buffer
@@ -2633,34 +2606,42 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 // a duplex stream is just a stream that is both readable and writable.
 // Since JS doesn't have multiple prototypal inheritance, this class
 // prototypally inherits from Readable, and then parasitically from
@@ -2670,10 +2651,6 @@ function isnan (val) {
 
 /*<replacement>*/
 
-var processNextTick = __webpack_require__(11);
-/*</replacement>*/
-
-/*<replacement>*/
 var objectKeys = Object.keys || function (obj) {
   var keys = [];
   for (var key in obj) {
@@ -2685,8 +2662,12 @@ var objectKeys = Object.keys || function (obj) {
 module.exports = Duplex;
 
 /*<replacement>*/
+var processNextTick = __webpack_require__(13);
+/*</replacement>*/
+
+/*<replacement>*/
 var util = __webpack_require__(10);
-util.inherits = __webpack_require__(8);
+util.inherits = __webpack_require__(6);
 /*</replacement>*/
 
 var Readable = __webpack_require__(19);
@@ -2731,34 +2712,6 @@ function onEndNT(self) {
   self.end();
 }
 
-Object.defineProperty(Duplex.prototype, 'destroyed', {
-  get: function () {
-    if (this._readableState === undefined || this._writableState === undefined) {
-      return false;
-    }
-    return this._readableState.destroyed && this._writableState.destroyed;
-  },
-  set: function (value) {
-    // we ignore the value if the stream
-    // has not been initialized yet
-    if (this._readableState === undefined || this._writableState === undefined) {
-      return;
-    }
-
-    // backward compatibility, the user is explicitly
-    // managing destroyed
-    this._readableState.destroyed = value;
-    this._writableState.destroyed = value;
-  }
-});
-
-Duplex.prototype._destroy = function (err, cb) {
-  this.push(null);
-  this.end();
-
-  processNextTick(cb, err);
-};
-
 function forEach(xs, f) {
   for (var i = 0, l = xs.length; i < l; i++) {
     f(xs[i], i);
@@ -2769,29 +2722,27 @@ function forEach(xs, f) {
 /* 8 */
 /***/ (function(module, exports) {
 
-if (typeof Object.create === 'function') {
-  // implementation from standard node.js 'util' module
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    ctor.prototype = Object.create(superCtor.prototype, {
-      constructor: {
-        value: ctor,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-  };
-} else {
-  // old school shim for old browsers
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    var TempCtor = function () {}
-    TempCtor.prototype = superCtor.prototype
-    ctor.prototype = new TempCtor()
-    ctor.prototype.constructor = ctor
-  }
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
 }
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
@@ -3096,68 +3047,17 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer))
 
 /***/ }),
 /* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-if (!process.version ||
-    process.version.indexOf('v0.') === 0 ||
-    process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
-  module.exports = nextTick;
-} else {
-  module.exports = process.nextTick;
-}
-
-function nextTick(fn, arg1, arg2, arg3) {
-  if (typeof fn !== 'function') {
-    throw new TypeError('"callback" argument must be a function');
-  }
-  var len = arguments.length;
-  var args, i;
-  switch (len) {
-  case 0:
-  case 1:
-    return process.nextTick(fn);
-  case 2:
-    return process.nextTick(function afterTickOne() {
-      fn.call(null, arg1);
-    });
-  case 3:
-    return process.nextTick(function afterTickTwo() {
-      fn.call(null, arg1, arg2);
-    });
-  case 4:
-    return process.nextTick(function afterTickThree() {
-      fn.call(null, arg1, arg2, arg3);
-    });
-  default:
-    args = new Array(len - 1);
-    i = 0;
-    while (i < args.length) {
-      args[i++] = arguments[i];
-    }
-    return process.nextTick(function afterTick() {
-      fn.apply(null, args);
-    });
-  }
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
-
-/***/ }),
-/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //========================================================================================
 // Globals
 //========================================================================================
 
-var Context = __webpack_require__(46).Context;
+var Context = __webpack_require__(47).Context;
 
 var PRIMITIVE_TYPES = {
     'UInt8'    : 1,
@@ -3729,7 +3629,7 @@ exports.Parser = Parser;
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -4037,64 +3937,72 @@ function isUndefined(arg) {
 
 
 /***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+if (!process.version ||
+    process.version.indexOf('v0.') === 0 ||
+    process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
+  module.exports = nextTick;
+} else {
+  module.exports = process.nextTick;
+}
+
+function nextTick(fn, arg1, arg2, arg3) {
+  if (typeof fn !== 'function') {
+    throw new TypeError('"callback" argument must be a function');
+  }
+  var len = arguments.length;
+  var args, i;
+  switch (len) {
+  case 0:
+  case 1:
+    return process.nextTick(fn);
+  case 2:
+    return process.nextTick(function afterTickOne() {
+      fn.call(null, arg1);
+    });
+  case 3:
+    return process.nextTick(function afterTickTwo() {
+      fn.call(null, arg1, arg2);
+    });
+  case 4:
+    return process.nextTick(function afterTickThree() {
+      fn.call(null, arg1, arg2, arg3);
+    });
+  default:
+    args = new Array(len - 1);
+    i = 0;
+    while (i < args.length) {
+      args[i++] = arguments[i];
+    }
+    return process.nextTick(function afterTick() {
+      fn.apply(null, args);
+    });
+  }
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
+
+/***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process, setImmediate, global) {// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// A bit simpler than readable streams.
+/* WEBPACK VAR INJECTION */(function(process, setImmediate) {// A bit simpler than readable streams.
 // Implement an async ._write(chunk, encoding, cb), and it'll handle all
 // the drain event emission and buffering.
 
 
 
-/*<replacement>*/
-
-var processNextTick = __webpack_require__(11);
-/*</replacement>*/
-
 module.exports = Writable;
 
-/* <replacement> */
-function WriteReq(chunk, encoding, cb) {
-  this.chunk = chunk;
-  this.encoding = encoding;
-  this.callback = cb;
-  this.next = null;
-}
-
-// It seems a linked list but it is not
-// there will be only 2 of these for each stream
-function CorkedRequest(state) {
-  var _this = this;
-
-  this.next = null;
-  this.entry = null;
-  this.finish = function () {
-    onCorkedFinish(_this, state);
-  };
-}
-/* </replacement> */
+/*<replacement>*/
+var processNextTick = __webpack_require__(13);
+/*</replacement>*/
 
 /*<replacement>*/
 var asyncWrite = !process.browser && ['v0.10', 'v0.9.'].indexOf(process.version.slice(0, 5)) > -1 ? setImmediate : processNextTick;
@@ -4108,35 +4016,33 @@ Writable.WritableState = WritableState;
 
 /*<replacement>*/
 var util = __webpack_require__(10);
-util.inherits = __webpack_require__(8);
+util.inherits = __webpack_require__(6);
 /*</replacement>*/
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(58)
+  deprecate: __webpack_require__(59)
 };
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(22);
+var Stream = __webpack_require__(21);
 /*</replacement>*/
 
 /*<replacement>*/
 var Buffer = __webpack_require__(16).Buffer;
-var OurUint8Array = global.Uint8Array || function () {};
-function _uint8ArrayToBuffer(chunk) {
-  return Buffer.from(chunk);
-}
-function _isUint8Array(obj) {
-  return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
-}
 /*</replacement>*/
-
-var destroyImpl = __webpack_require__(21);
 
 util.inherits(Writable, Stream);
 
 function nop() {}
+
+function WriteReq(chunk, encoding, cb) {
+  this.chunk = chunk;
+  this.encoding = encoding;
+  this.callback = cb;
+  this.next = null;
+}
 
 function WritableState(options, stream) {
   Duplex = Duplex || __webpack_require__(7);
@@ -4157,10 +4063,7 @@ function WritableState(options, stream) {
   this.highWaterMark = hwm || hwm === 0 ? hwm : defaultHwm;
 
   // cast to ints.
-  this.highWaterMark = Math.floor(this.highWaterMark);
-
-  // if _final has been called
-  this.finalCalled = false;
+  this.highWaterMark = ~~this.highWaterMark;
 
   // drain event flag.
   this.needDrain = false;
@@ -4170,9 +4073,6 @@ function WritableState(options, stream) {
   this.ended = false;
   // when 'finish' is emitted
   this.finished = false;
-
-  // has it been destroyed
-  this.destroyed = false;
 
   // should we decode strings into buffers before passing to _write?
   // this is here so that some node-core streams can optimize string
@@ -4255,7 +4155,7 @@ WritableState.prototype.getBuffer = function getBuffer() {
     Object.defineProperty(WritableState.prototype, 'buffer', {
       get: internalUtil.deprecate(function () {
         return this.getBuffer();
-      }, '_writableState.buffer is deprecated. Use _writableState.getBuffer ' + 'instead.', 'DEP0003')
+      }, '_writableState.buffer is deprecated. Use _writableState.getBuffer ' + 'instead.')
     });
   } catch (_) {}
 })();
@@ -4301,10 +4201,6 @@ function Writable(options) {
     if (typeof options.write === 'function') this._write = options.write;
 
     if (typeof options.writev === 'function') this._writev = options.writev;
-
-    if (typeof options.destroy === 'function') this._destroy = options.destroy;
-
-    if (typeof options.final === 'function') this._final = options.final;
   }
 
   Stream.call(this);
@@ -4345,11 +4241,7 @@ function validChunk(stream, state, chunk, cb) {
 Writable.prototype.write = function (chunk, encoding, cb) {
   var state = this._writableState;
   var ret = false;
-  var isBuf = _isUint8Array(chunk) && !state.objectMode;
-
-  if (isBuf && !Buffer.isBuffer(chunk)) {
-    chunk = _uint8ArrayToBuffer(chunk);
-  }
+  var isBuf = Buffer.isBuffer(chunk);
 
   if (typeof encoding === 'function') {
     cb = encoding;
@@ -4404,12 +4296,8 @@ function decodeChunk(state, chunk, encoding) {
 // If we return false, then we need a drain event, so set that flag.
 function writeOrBuffer(stream, state, isBuf, chunk, encoding, cb) {
   if (!isBuf) {
-    var newChunk = decodeChunk(state, chunk, encoding);
-    if (chunk !== newChunk) {
-      isBuf = true;
-      encoding = 'buffer';
-      chunk = newChunk;
-    }
+    chunk = decodeChunk(state, chunk, encoding);
+    if (Buffer.isBuffer(chunk)) encoding = 'buffer';
   }
   var len = state.objectMode ? 1 : chunk.length;
 
@@ -4421,13 +4309,7 @@ function writeOrBuffer(stream, state, isBuf, chunk, encoding, cb) {
 
   if (state.writing || state.corked) {
     var last = state.lastBufferedRequest;
-    state.lastBufferedRequest = {
-      chunk: chunk,
-      encoding: encoding,
-      isBuf: isBuf,
-      callback: cb,
-      next: null
-    };
+    state.lastBufferedRequest = new WriteReq(chunk, encoding, cb);
     if (last) {
       last.next = state.lastBufferedRequest;
     } else {
@@ -4452,26 +4334,10 @@ function doWrite(stream, state, writev, len, chunk, encoding, cb) {
 
 function onwriteError(stream, state, sync, er, cb) {
   --state.pendingcb;
+  if (sync) processNextTick(cb, er);else cb(er);
 
-  if (sync) {
-    // defer the callback if we are being called synchronously
-    // to avoid piling up things on the stack
-    processNextTick(cb, er);
-    // this can emit finish, and it will always happen
-    // after error
-    processNextTick(finishMaybe, stream, state);
-    stream._writableState.errorEmitted = true;
-    stream.emit('error', er);
-  } else {
-    // the caller expect this to happen before if
-    // it is async
-    cb(er);
-    stream._writableState.errorEmitted = true;
-    stream.emit('error', er);
-    // this can emit finish, but finish must
-    // always follow error
-    finishMaybe(stream, state);
-  }
+  stream._writableState.errorEmitted = true;
+  stream.emit('error', er);
 }
 
 function onwriteStateUpdate(state) {
@@ -4536,14 +4402,11 @@ function clearBuffer(stream, state) {
     holder.entry = entry;
 
     var count = 0;
-    var allBuffers = true;
     while (entry) {
       buffer[count] = entry;
-      if (!entry.isBuf) allBuffers = false;
       entry = entry.next;
       count += 1;
     }
-    buffer.allBuffers = allBuffers;
 
     doWrite(stream, state, true, state.length, buffer, '', holder.finish);
 
@@ -4617,37 +4480,23 @@ Writable.prototype.end = function (chunk, encoding, cb) {
 function needFinish(state) {
   return state.ending && state.length === 0 && state.bufferedRequest === null && !state.finished && !state.writing;
 }
-function callFinal(stream, state) {
-  stream._final(function (err) {
-    state.pendingcb--;
-    if (err) {
-      stream.emit('error', err);
-    }
+
+function prefinish(stream, state) {
+  if (!state.prefinished) {
     state.prefinished = true;
     stream.emit('prefinish');
-    finishMaybe(stream, state);
-  });
-}
-function prefinish(stream, state) {
-  if (!state.prefinished && !state.finalCalled) {
-    if (typeof stream._final === 'function') {
-      state.pendingcb++;
-      state.finalCalled = true;
-      processNextTick(callFinal, stream, state);
-    } else {
-      state.prefinished = true;
-      stream.emit('prefinish');
-    }
   }
 }
 
 function finishMaybe(stream, state) {
   var need = needFinish(state);
   if (need) {
-    prefinish(stream, state);
     if (state.pendingcb === 0) {
+      prefinish(stream, state);
       state.finished = true;
       stream.emit('finish');
+    } else {
+      prefinish(stream, state);
     }
   }
   return need;
@@ -4663,49 +4512,30 @@ function endWritable(stream, state, cb) {
   stream.writable = false;
 }
 
-function onCorkedFinish(corkReq, state, err) {
-  var entry = corkReq.entry;
-  corkReq.entry = null;
-  while (entry) {
-    var cb = entry.callback;
-    state.pendingcb--;
-    cb(err);
-    entry = entry.next;
-  }
-  if (state.corkedRequestsFree) {
-    state.corkedRequestsFree.next = corkReq;
-  } else {
-    state.corkedRequestsFree = corkReq;
-  }
+// It seems a linked list but it is not
+// there will be only 2 of these for each stream
+function CorkedRequest(state) {
+  var _this = this;
+
+  this.next = null;
+  this.entry = null;
+  this.finish = function (err) {
+    var entry = _this.entry;
+    _this.entry = null;
+    while (entry) {
+      var cb = entry.callback;
+      state.pendingcb--;
+      cb(err);
+      entry = entry.next;
+    }
+    if (state.corkedRequestsFree) {
+      state.corkedRequestsFree.next = _this;
+    } else {
+      state.corkedRequestsFree = _this;
+    }
+  };
 }
-
-Object.defineProperty(Writable.prototype, 'destroyed', {
-  get: function () {
-    if (this._writableState === undefined) {
-      return false;
-    }
-    return this._writableState.destroyed;
-  },
-  set: function (value) {
-    // we ignore the value if the stream
-    // has not been initialized yet
-    if (!this._writableState) {
-      return;
-    }
-
-    // backward compatibility, the user is explicitly
-    // managing destroyed
-    this._writableState.destroyed = value;
-  }
-});
-
-Writable.prototype.destroy = destroyImpl.destroy;
-Writable.prototype._undestroy = destroyImpl.undestroy;
-Writable.prototype._destroy = function (err, cb) {
-  this.end();
-  cb(err);
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(57).setImmediate, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(58).setImmediate))
 
 /***/ }),
 /* 15 */
@@ -4717,75 +4547,14 @@ exports.Readable = exports;
 exports.Writable = __webpack_require__(14);
 exports.Duplex = __webpack_require__(7);
 exports.Transform = __webpack_require__(20);
-exports.PassThrough = __webpack_require__(51);
+exports.PassThrough = __webpack_require__(52);
 
 
 /***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* eslint-disable node/no-deprecated-api */
-var buffer = __webpack_require__(6)
-var Buffer = buffer.Buffer
-
-// alternative to using Object.keys for old browsers
-function copyProps (src, dst) {
-  for (var key in src) {
-    dst[key] = src[key]
-  }
-}
-if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
-  module.exports = buffer
-} else {
-  // Copy properties from require('buffer')
-  copyProps(buffer, exports)
-  exports.Buffer = SafeBuffer
-}
-
-function SafeBuffer (arg, encodingOrOffset, length) {
-  return Buffer(arg, encodingOrOffset, length)
-}
-
-// Copy static methods from Buffer
-copyProps(Buffer, SafeBuffer)
-
-SafeBuffer.from = function (arg, encodingOrOffset, length) {
-  if (typeof arg === 'number') {
-    throw new TypeError('Argument must not be a number')
-  }
-  return Buffer(arg, encodingOrOffset, length)
-}
-
-SafeBuffer.alloc = function (size, fill, encoding) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  var buf = Buffer(size)
-  if (fill !== undefined) {
-    if (typeof encoding === 'string') {
-      buf.fill(fill, encoding)
-    } else {
-      buf.fill(fill)
-    }
-  } else {
-    buf.fill(0)
-  }
-  return buf
-}
-
-SafeBuffer.allocUnsafe = function (size) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  return Buffer(size)
-}
-
-SafeBuffer.allocUnsafeSlow = function (size) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  return buffer.SlowBuffer(size)
-}
+module.exports = __webpack_require__(5)
 
 
 /***/ }),
@@ -4824,7 +4593,7 @@ module.exports = Array.isArray || function (arr) {
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var Buffer = __webpack_require__(6).Buffer;
+var Buffer = __webpack_require__(5).Buffer;
 
 var isBufferEncoding = Buffer.isEncoding
   || function(encoding) {
@@ -5031,35 +4800,13 @@ function base64DetectIncompleteChar(buffer) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-/*<replacement>*/
-
-var processNextTick = __webpack_require__(11);
-/*</replacement>*/
+/* WEBPACK VAR INJECTION */(function(process) {
 
 module.exports = Readable;
+
+/*<replacement>*/
+var processNextTick = __webpack_require__(13);
+/*</replacement>*/
 
 /*<replacement>*/
 var isArray = __webpack_require__(17);
@@ -5072,7 +4819,7 @@ var Duplex;
 Readable.ReadableState = ReadableState;
 
 /*<replacement>*/
-var EE = __webpack_require__(13).EventEmitter;
+var EE = __webpack_require__(12).EventEmitter;
 
 var EElistenerCount = function (emitter, type) {
   return emitter.listeners(type).length;
@@ -5080,25 +4827,16 @@ var EElistenerCount = function (emitter, type) {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(22);
+var Stream = __webpack_require__(21);
 /*</replacement>*/
 
-// TODO(bmeurer): Change this back to const once hole checks are
-// properly optimized away early in Ignition+TurboFan.
 /*<replacement>*/
 var Buffer = __webpack_require__(16).Buffer;
-var OurUint8Array = global.Uint8Array || function () {};
-function _uint8ArrayToBuffer(chunk) {
-  return Buffer.from(chunk);
-}
-function _isUint8Array(obj) {
-  return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
-}
 /*</replacement>*/
 
 /*<replacement>*/
 var util = __webpack_require__(10);
-util.inherits = __webpack_require__(8);
+util.inherits = __webpack_require__(6);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -5111,8 +4849,7 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(52);
-var destroyImpl = __webpack_require__(21);
+var BufferList = __webpack_require__(53);
 var StringDecoder;
 
 util.inherits(Readable, Stream);
@@ -5151,7 +4888,7 @@ function ReadableState(options, stream) {
   this.highWaterMark = hwm || hwm === 0 ? hwm : defaultHwm;
 
   // cast to ints.
-  this.highWaterMark = Math.floor(this.highWaterMark);
+  this.highWaterMark = ~~this.highWaterMark;
 
   // A linked list is used to store data chunks instead of an array because the
   // linked list can remove elements from the beginning faster than
@@ -5165,10 +4902,10 @@ function ReadableState(options, stream) {
   this.endEmitted = false;
   this.reading = false;
 
-  // a flag to be able to tell if the event 'readable'/'data' is emitted
-  // immediately, or on a later tick.  We set this to true at first, because
-  // any actions that shouldn't happen until "later" should generally also
-  // not happen before the first read call.
+  // a flag to be able to tell if the onwrite cb is called immediately,
+  // or on a later tick.  We set this to true at first, because any
+  // actions that shouldn't happen until "later" should generally also
+  // not happen before the first write call.
   this.sync = true;
 
   // whenever we return null, then we set a flag to say
@@ -5178,13 +4915,14 @@ function ReadableState(options, stream) {
   this.readableListening = false;
   this.resumeScheduled = false;
 
-  // has it been destroyed
-  this.destroyed = false;
-
   // Crypto is kind of old and crusty.  Historically, its default string
   // encoding is 'binary' so we have to make this configurable.
   // Everything else in the universe uses 'utf8', though.
   this.defaultEncoding = options.defaultEncoding || 'utf8';
+
+  // when piping, we only care about 'readable' events that happen
+  // after read()ing all the bytes and not getting any pushback.
+  this.ranOut = false;
 
   // the number of writers that are awaiting a drain event in .pipe()s
   this.awaitDrain = 0;
@@ -5211,41 +4949,10 @@ function Readable(options) {
   // legacy
   this.readable = true;
 
-  if (options) {
-    if (typeof options.read === 'function') this._read = options.read;
-
-    if (typeof options.destroy === 'function') this._destroy = options.destroy;
-  }
+  if (options && typeof options.read === 'function') this._read = options.read;
 
   Stream.call(this);
 }
-
-Object.defineProperty(Readable.prototype, 'destroyed', {
-  get: function () {
-    if (this._readableState === undefined) {
-      return false;
-    }
-    return this._readableState.destroyed;
-  },
-  set: function (value) {
-    // we ignore the value if the stream
-    // has not been initialized yet
-    if (!this._readableState) {
-      return;
-    }
-
-    // backward compatibility, the user is explicitly
-    // managing destroyed
-    this._readableState.destroyed = value;
-  }
-});
-
-Readable.prototype.destroy = destroyImpl.destroy;
-Readable.prototype._undestroy = destroyImpl.undestroy;
-Readable.prototype._destroy = function (err, cb) {
-  this.push(null);
-  cb(err);
-};
 
 // Manually shove something into the read() buffer.
 // This returns true if the highWaterMark has not been hit yet,
@@ -5253,85 +4960,74 @@ Readable.prototype._destroy = function (err, cb) {
 // write() some more.
 Readable.prototype.push = function (chunk, encoding) {
   var state = this._readableState;
-  var skipChunkCheck;
 
-  if (!state.objectMode) {
-    if (typeof chunk === 'string') {
-      encoding = encoding || state.defaultEncoding;
-      if (encoding !== state.encoding) {
-        chunk = Buffer.from(chunk, encoding);
-        encoding = '';
-      }
-      skipChunkCheck = true;
+  if (!state.objectMode && typeof chunk === 'string') {
+    encoding = encoding || state.defaultEncoding;
+    if (encoding !== state.encoding) {
+      chunk = Buffer.from(chunk, encoding);
+      encoding = '';
     }
-  } else {
-    skipChunkCheck = true;
   }
 
-  return readableAddChunk(this, chunk, encoding, false, skipChunkCheck);
+  return readableAddChunk(this, state, chunk, encoding, false);
 };
 
 // Unshift should *always* be something directly out of read()
 Readable.prototype.unshift = function (chunk) {
-  return readableAddChunk(this, chunk, null, true, false);
+  var state = this._readableState;
+  return readableAddChunk(this, state, chunk, '', true);
 };
 
-function readableAddChunk(stream, chunk, encoding, addToFront, skipChunkCheck) {
-  var state = stream._readableState;
-  if (chunk === null) {
+Readable.prototype.isPaused = function () {
+  return this._readableState.flowing === false;
+};
+
+function readableAddChunk(stream, state, chunk, encoding, addToFront) {
+  var er = chunkInvalid(state, chunk);
+  if (er) {
+    stream.emit('error', er);
+  } else if (chunk === null) {
     state.reading = false;
     onEofChunk(stream, state);
-  } else {
-    var er;
-    if (!skipChunkCheck) er = chunkInvalid(state, chunk);
-    if (er) {
-      stream.emit('error', er);
-    } else if (state.objectMode || chunk && chunk.length > 0) {
-      if (typeof chunk !== 'string' && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer.prototype) {
-        chunk = _uint8ArrayToBuffer(chunk);
+  } else if (state.objectMode || chunk && chunk.length > 0) {
+    if (state.ended && !addToFront) {
+      var e = new Error('stream.push() after EOF');
+      stream.emit('error', e);
+    } else if (state.endEmitted && addToFront) {
+      var _e = new Error('stream.unshift() after end event');
+      stream.emit('error', _e);
+    } else {
+      var skipAdd;
+      if (state.decoder && !addToFront && !encoding) {
+        chunk = state.decoder.write(chunk);
+        skipAdd = !state.objectMode && chunk.length === 0;
       }
 
-      if (addToFront) {
-        if (state.endEmitted) stream.emit('error', new Error('stream.unshift() after end event'));else addChunk(stream, state, chunk, true);
-      } else if (state.ended) {
-        stream.emit('error', new Error('stream.push() after EOF'));
-      } else {
-        state.reading = false;
-        if (state.decoder && !encoding) {
-          chunk = state.decoder.write(chunk);
-          if (state.objectMode || chunk.length !== 0) addChunk(stream, state, chunk, false);else maybeReadMore(stream, state);
+      if (!addToFront) state.reading = false;
+
+      // Don't add to the buffer if we've decoded to an empty string chunk and
+      // we're not in object mode
+      if (!skipAdd) {
+        // if we want the data now, just emit it.
+        if (state.flowing && state.length === 0 && !state.sync) {
+          stream.emit('data', chunk);
+          stream.read(0);
         } else {
-          addChunk(stream, state, chunk, false);
+          // update the buffer info.
+          state.length += state.objectMode ? 1 : chunk.length;
+          if (addToFront) state.buffer.unshift(chunk);else state.buffer.push(chunk);
+
+          if (state.needReadable) emitReadable(stream);
         }
       }
-    } else if (!addToFront) {
-      state.reading = false;
+
+      maybeReadMore(stream, state);
     }
+  } else if (!addToFront) {
+    state.reading = false;
   }
 
   return needMoreData(state);
-}
-
-function addChunk(stream, state, chunk, addToFront) {
-  if (state.flowing && state.length === 0 && !state.sync) {
-    stream.emit('data', chunk);
-    stream.read(0);
-  } else {
-    // update the buffer info.
-    state.length += state.objectMode ? 1 : chunk.length;
-    if (addToFront) state.buffer.unshift(chunk);else state.buffer.push(chunk);
-
-    if (state.needReadable) emitReadable(stream);
-  }
-  maybeReadMore(stream, state);
-}
-
-function chunkInvalid(state, chunk) {
-  var er;
-  if (!_isUint8Array(chunk) && typeof chunk !== 'string' && chunk !== undefined && !state.objectMode) {
-    er = new TypeError('Invalid non-string/buffer chunk');
-  }
-  return er;
 }
 
 // if it's past the high water mark, we can push in some more.
@@ -5344,10 +5040,6 @@ function chunkInvalid(state, chunk) {
 function needMoreData(state) {
   return !state.ended && (state.needReadable || state.length < state.highWaterMark || state.length === 0);
 }
-
-Readable.prototype.isPaused = function () {
-  return this._readableState.flowing === false;
-};
 
 // backwards compatibility.
 Readable.prototype.setEncoding = function (enc) {
@@ -5497,6 +5189,14 @@ Readable.prototype.read = function (n) {
   return ret;
 };
 
+function chunkInvalid(state, chunk) {
+  var er = null;
+  if (!Buffer.isBuffer(chunk) && typeof chunk !== 'string' && chunk !== null && chunk !== undefined && !state.objectMode) {
+    er = new TypeError('Invalid non-string/buffer chunk');
+  }
+  return er;
+}
+
 function onEofChunk(stream, state) {
   if (state.ended) return;
   if (state.decoder) {
@@ -5588,13 +5288,10 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
   if (state.endEmitted) processNextTick(endFn);else src.once('end', endFn);
 
   dest.on('unpipe', onunpipe);
-  function onunpipe(readable, unpipeInfo) {
+  function onunpipe(readable) {
     debug('onunpipe');
     if (readable === src) {
-      if (unpipeInfo && unpipeInfo.hasUnpiped === false) {
-        unpipeInfo.hasUnpiped = true;
-        cleanup();
-      }
+      cleanup();
     }
   }
 
@@ -5713,7 +5410,6 @@ function pipeOnDrain(src) {
 
 Readable.prototype.unpipe = function (dest) {
   var state = this._readableState;
-  var unpipeInfo = { hasUnpiped: false };
 
   // if we're not piping anywhere, then do nothing.
   if (state.pipesCount === 0) return this;
@@ -5729,7 +5425,7 @@ Readable.prototype.unpipe = function (dest) {
     state.pipes = null;
     state.pipesCount = 0;
     state.flowing = false;
-    if (dest) dest.emit('unpipe', this, unpipeInfo);
+    if (dest) dest.emit('unpipe', this);
     return this;
   }
 
@@ -5744,7 +5440,7 @@ Readable.prototype.unpipe = function (dest) {
     state.flowing = false;
 
     for (var i = 0; i < len; i++) {
-      dests[i].emit('unpipe', this, unpipeInfo);
+      dests[i].emit('unpipe', this);
     }return this;
   }
 
@@ -5756,7 +5452,7 @@ Readable.prototype.unpipe = function (dest) {
   state.pipesCount -= 1;
   if (state.pipesCount === 1) state.pipes = state.pipes[0];
 
-  dest.emit('unpipe', this, unpipeInfo);
+  dest.emit('unpipe', this);
 
   return this;
 };
@@ -5777,7 +5473,7 @@ Readable.prototype.on = function (ev, fn) {
       if (!state.reading) {
         processNextTick(nReadingNextTick, this);
       } else if (state.length) {
-        emitReadable(this);
+        emitReadable(this, state);
       }
     }
   }
@@ -6038,34 +5734,13 @@ function indexOf(xs, x) {
   }
   return -1;
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -6116,7 +5791,7 @@ var Duplex = __webpack_require__(7);
 
 /*<replacement>*/
 var util = __webpack_require__(10);
-util.inherits = __webpack_require__(8);
+util.inherits = __webpack_require__(6);
 /*</replacement>*/
 
 util.inherits(Transform, Duplex);
@@ -6139,9 +5814,7 @@ function afterTransform(stream, er, data) {
 
   var cb = ts.writecb;
 
-  if (!cb) {
-    return stream.emit('error', new Error('write callback called multiple times'));
-  }
+  if (!cb) return stream.emit('error', new Error('no writecb in Transform class'));
 
   ts.writechunk = null;
   ts.writecb = null;
@@ -6234,15 +5907,6 @@ Transform.prototype._read = function (n) {
   }
 };
 
-Transform.prototype._destroy = function (err, cb) {
-  var _this = this;
-
-  Duplex.prototype._destroy.call(this, err, function (err2) {
-    cb(err2);
-    _this.emit('close');
-  });
-};
-
 function done(stream, er, data) {
   if (er) return stream.emit('error', er);
 
@@ -6264,89 +5928,11 @@ function done(stream, er, data) {
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+module.exports = __webpack_require__(12).EventEmitter;
 
-
-/*<replacement>*/
-
-var processNextTick = __webpack_require__(11);
-/*</replacement>*/
-
-// undocumented cb() API, needed for core, not for public API
-function destroy(err, cb) {
-  var _this = this;
-
-  var readableDestroyed = this._readableState && this._readableState.destroyed;
-  var writableDestroyed = this._writableState && this._writableState.destroyed;
-
-  if (readableDestroyed || writableDestroyed) {
-    if (cb) {
-      cb(err);
-    } else if (err && (!this._writableState || !this._writableState.errorEmitted)) {
-      processNextTick(emitErrorNT, this, err);
-    }
-    return;
-  }
-
-  // we set destroyed to true before firing error callbacks in order
-  // to make it re-entrance safe in case destroy() is called within callbacks
-
-  if (this._readableState) {
-    this._readableState.destroyed = true;
-  }
-
-  // if this is a duplex stream mark the writable part as destroyed as well
-  if (this._writableState) {
-    this._writableState.destroyed = true;
-  }
-
-  this._destroy(err || null, function (err) {
-    if (!cb && err) {
-      processNextTick(emitErrorNT, _this, err);
-      if (_this._writableState) {
-        _this._writableState.errorEmitted = true;
-      }
-    } else if (cb) {
-      cb(err);
-    }
-  });
-}
-
-function undestroy() {
-  if (this._readableState) {
-    this._readableState.destroyed = false;
-    this._readableState.reading = false;
-    this._readableState.ended = false;
-    this._readableState.endEmitted = false;
-  }
-
-  if (this._writableState) {
-    this._writableState.destroyed = false;
-    this._writableState.ended = false;
-    this._writableState.ending = false;
-    this._writableState.finished = false;
-    this._writableState.errorEmitted = false;
-  }
-}
-
-function emitErrorNT(self, err) {
-  self.emit('error', err);
-}
-
-module.exports = {
-  destroy: destroy,
-  undestroy: undestroy
-};
 
 /***/ }),
 /* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(13).EventEmitter;
-
-
-/***/ }),
-/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -6723,7 +6309,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -6937,7 +6523,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -7012,7 +6598,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -7313,7 +6899,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -7681,7 +7267,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -7713,18 +7299,19 @@ var UInt64 = __webpack_require__(1).UINT64;
  * SBP class for message MSG_IMU_RAW (0x0900).
  *
  * Raw data from the Inertial Measurement Unit, containing accelerometer and
- * gyroscope readings.
+ * gyroscope readings. The sense of the measurements are to be aligned with  the
+ * indications on the device itself.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) Milliseconds since start of GPS week. If the high bit is set, the time is
  *   unknown or invalid.
  * @field tow_f number (unsigned 8-bit int, 1 byte) Milliseconds since start of GPS week, fractional part
- * @field acc_x number (signed 16-bit int, 2 bytes) Acceleration in the body frame X axis
- * @field acc_y number (signed 16-bit int, 2 bytes) Acceleration in the body frame Y axis
- * @field acc_z number (signed 16-bit int, 2 bytes) Acceleration in the body frame Z axis
- * @field gyr_x number (signed 16-bit int, 2 bytes) Angular rate around the body frame X axis
- * @field gyr_y number (signed 16-bit int, 2 bytes) Angular rate around the body frame Y axis
- * @field gyr_z number (signed 16-bit int, 2 bytes) Angular rate around the body frame Z axis
+ * @field acc_x number (signed 16-bit int, 2 bytes) Acceleration in the IMU frame X axis
+ * @field acc_y number (signed 16-bit int, 2 bytes) Acceleration in the IMU frame Y axis
+ * @field acc_z number (signed 16-bit int, 2 bytes) Acceleration in the IMU frame Z axis
+ * @field gyr_x number (signed 16-bit int, 2 bytes) Angular rate around IMU frame X axis
+ * @field gyr_y number (signed 16-bit int, 2 bytes) Angular rate around IMU frame Y axis
+ * @field gyr_z number (signed 16-bit int, 2 bytes) Angular rate around IMU frame Z axis
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -7802,7 +7389,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -7966,7 +7553,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -8040,7 +7627,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -8068,6 +7655,11 @@ module.exports = {
  * solution, which can use either a fixed/integer or floating carrier phase
  * ambiguity. The pseudo-absolute position solution uses a user-provided, well-
  * surveyed base station position (if available) and the RTK solution in tandem.
+ * When the inertial navigation mode indicates that the IMU is used, all messages
+ * are reported in the vehicle body frame as defined by device settings.  By
+ * default, the vehicle body frame is configured to be coincident with the antenna
+ * phase center.  When there is no inertial  navigation, the solution will be
+ * reported at the phase center of the antenna.
 ***********************/
 
 var SBP = __webpack_require__(2);
@@ -8233,7 +7825,7 @@ MsgDops.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field x number (float, 8 bytes) ECEF X coordinate
  * @field y number (float, 8 bytes) ECEF Y coordinate
  * @field z number (float, 8 bytes) ECEF Z coordinate
- * @field accuracy number (unsigned 16-bit int, 2 bytes) Position accuracy estimate.
+ * @field accuracy number (unsigned 16-bit int, 2 bytes) Position estimated standard deviation
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
@@ -8269,6 +7861,73 @@ MsgPosEcef.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
 MsgPosEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
+ * SBP class for message MSG_POS_ECEF_COV (0x0214).
+ *
+ * The position solution message reports absolute Earth Centered Earth Fixed (ECEF)
+ * coordinates and the status (single point vs pseudo-absolute RTK) of the position
+ * solution. The message also reports the upper triangular portion of the 3x3
+ * covariance matrix. If the receiver knows the surveyed position of the base
+ * station and has an RTK solution, this reports a pseudo-absolute position
+ * solution using the base station position and the rover's RTK baseline vector.
+ * The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-
+ * of-week (tow).
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field x number (float, 8 bytes) ECEF X coordinate
+ * @field y number (float, 8 bytes) ECEF Y coordinate
+ * @field z number (float, 8 bytes) ECEF Z coordinate
+ * @field cov_x_x number (float, 4 bytes) Estimated variance of x
+ * @field cov_x_y number (float, 4 bytes) Estimated covariance of x and y
+ * @field cov_x_z number (float, 4 bytes) Estimated covariance of x and z
+ * @field cov_y_y number (float, 4 bytes) Estimated variance of y
+ * @field cov_y_z number (float, 4 bytes) Estimated covariance of y and z
+ * @field cov_z_z number (float, 4 bytes) Estimated variance of z
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgPosEcefCov = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_POS_ECEF_COV";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgPosEcefCov.prototype = Object.create(SBP.prototype);
+MsgPosEcefCov.prototype.messageType = "MSG_POS_ECEF_COV";
+MsgPosEcefCov.prototype.msg_type = 0x0214;
+MsgPosEcefCov.prototype.constructor = MsgPosEcefCov;
+MsgPosEcefCov.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .doublele('x')
+  .doublele('y')
+  .doublele('z')
+  .floatle('cov_x_x')
+  .floatle('cov_x_y')
+  .floatle('cov_x_z')
+  .floatle('cov_y_y')
+  .floatle('cov_y_z')
+  .floatle('cov_z_z')
+  .uint8('n_sats')
+  .uint8('flags');
+MsgPosEcefCov.prototype.fieldSpec = [];
+MsgPosEcefCov.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgPosEcefCov.prototype.fieldSpec.push(['x', 'writeDoubleLE', 8]);
+MsgPosEcefCov.prototype.fieldSpec.push(['y', 'writeDoubleLE', 8]);
+MsgPosEcefCov.prototype.fieldSpec.push(['z', 'writeDoubleLE', 8]);
+MsgPosEcefCov.prototype.fieldSpec.push(['cov_x_x', 'writeFloatLE', 4]);
+MsgPosEcefCov.prototype.fieldSpec.push(['cov_x_y', 'writeFloatLE', 4]);
+MsgPosEcefCov.prototype.fieldSpec.push(['cov_x_z', 'writeFloatLE', 4]);
+MsgPosEcefCov.prototype.fieldSpec.push(['cov_y_y', 'writeFloatLE', 4]);
+MsgPosEcefCov.prototype.fieldSpec.push(['cov_y_z', 'writeFloatLE', 4]);
+MsgPosEcefCov.prototype.fieldSpec.push(['cov_z_z', 'writeFloatLE', 4]);
+MsgPosEcefCov.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgPosEcefCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
  * SBP class for message MSG_POS_LLH (0x020A).
  *
  * This position solution message reports the absolute geodetic coordinates and the
@@ -8283,8 +7942,8 @@ MsgPosEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field lat number (float, 8 bytes) Latitude
  * @field lon number (float, 8 bytes) Longitude
  * @field height number (float, 8 bytes) Height above WGS84 ellipsoid
- * @field h_accuracy number (unsigned 16-bit int, 2 bytes) Horizontal position accuracy estimate.
- * @field v_accuracy number (unsigned 16-bit int, 2 bytes) Vertical position accuracy estimate.
+ * @field h_accuracy number (unsigned 16-bit int, 2 bytes) Horizontal position estimated standard deviation
+ * @field v_accuracy number (unsigned 16-bit int, 2 bytes) Vertical position estimated standard deviation
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution.
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
@@ -8322,6 +7981,72 @@ MsgPosLlh.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
 MsgPosLlh.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
+ * SBP class for message MSG_POS_LLH_COV (0x0211).
+ *
+ * This position solution message reports the absolute geodetic coordinates and the
+ * status (single point vs pseudo-absolute RTK) of the position solution as well as
+ * the upper triangle of the 3x3 covariance matrix.  The position information and
+ * Fix Mode flags should follow the MSG_POS_LLH message.  Since the covariance
+ * matrix is computed in the local-level North, East, Down frame, the covariance
+ * terms follow with that convention. Thus, covariances are reported against the
+ * "downward" measurement and care should be taken with the sign convention.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field lat number (float, 8 bytes) Latitude
+ * @field lon number (float, 8 bytes) Longitude
+ * @field height number (float, 8 bytes) Height above WGS84 ellipsoid
+ * @field cov_n_n number (float, 4 bytes) Estimated variance of northing
+ * @field cov_n_e number (float, 4 bytes) Covariance of northing and easting
+ * @field cov_n_d number (float, 4 bytes) Covariance of northing and downward measurement
+ * @field cov_e_e number (float, 4 bytes) Estimated variance of easting
+ * @field cov_e_d number (float, 4 bytes) Covariance of easting and downward measurement
+ * @field cov_d_d number (float, 4 bytes) Estimated variance of downward measurement
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution.
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgPosLlhCov = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_POS_LLH_COV";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgPosLlhCov.prototype = Object.create(SBP.prototype);
+MsgPosLlhCov.prototype.messageType = "MSG_POS_LLH_COV";
+MsgPosLlhCov.prototype.msg_type = 0x0211;
+MsgPosLlhCov.prototype.constructor = MsgPosLlhCov;
+MsgPosLlhCov.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .doublele('lat')
+  .doublele('lon')
+  .doublele('height')
+  .floatle('cov_n_n')
+  .floatle('cov_n_e')
+  .floatle('cov_n_d')
+  .floatle('cov_e_e')
+  .floatle('cov_e_d')
+  .floatle('cov_d_d')
+  .uint8('n_sats')
+  .uint8('flags');
+MsgPosLlhCov.prototype.fieldSpec = [];
+MsgPosLlhCov.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgPosLlhCov.prototype.fieldSpec.push(['lat', 'writeDoubleLE', 8]);
+MsgPosLlhCov.prototype.fieldSpec.push(['lon', 'writeDoubleLE', 8]);
+MsgPosLlhCov.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
+MsgPosLlhCov.prototype.fieldSpec.push(['cov_n_n', 'writeFloatLE', 4]);
+MsgPosLlhCov.prototype.fieldSpec.push(['cov_n_e', 'writeFloatLE', 4]);
+MsgPosLlhCov.prototype.fieldSpec.push(['cov_n_d', 'writeFloatLE', 4]);
+MsgPosLlhCov.prototype.fieldSpec.push(['cov_e_e', 'writeFloatLE', 4]);
+MsgPosLlhCov.prototype.fieldSpec.push(['cov_e_d', 'writeFloatLE', 4]);
+MsgPosLlhCov.prototype.fieldSpec.push(['cov_d_d', 'writeFloatLE', 4]);
+MsgPosLlhCov.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgPosLlhCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
  * SBP class for message MSG_BASELINE_ECEF (0x020B).
  *
  * This message reports the baseline solution in Earth Centered Earth Fixed (ECEF)
@@ -8334,7 +8059,7 @@ MsgPosLlh.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field x number (signed 32-bit int, 4 bytes) Baseline ECEF X coordinate
  * @field y number (signed 32-bit int, 4 bytes) Baseline ECEF Y coordinate
  * @field z number (signed 32-bit int, 4 bytes) Baseline ECEF Z coordinate
- * @field accuracy number (unsigned 16-bit int, 2 bytes) Position accuracy estimate
+ * @field accuracy number (unsigned 16-bit int, 2 bytes) Position estimated standard deviation
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
@@ -8383,8 +8108,8 @@ MsgBaselineEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field n number (signed 32-bit int, 4 bytes) Baseline North coordinate
  * @field e number (signed 32-bit int, 4 bytes) Baseline East coordinate
  * @field d number (signed 32-bit int, 4 bytes) Baseline Down coordinate
- * @field h_accuracy number (unsigned 16-bit int, 2 bytes) Horizontal position accuracy estimate
- * @field v_accuracy number (unsigned 16-bit int, 2 bytes) Vertical position accuracy estimate
+ * @field h_accuracy number (unsigned 16-bit int, 2 bytes) Horizontal position estimated standard deviation
+ * @field v_accuracy number (unsigned 16-bit int, 2 bytes) Vertical position estimated standard deviation
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
@@ -8433,7 +8158,7 @@ MsgBaselineNed.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field x number (signed 32-bit int, 4 bytes) Velocity ECEF X coordinate
  * @field y number (signed 32-bit int, 4 bytes) Velocity ECEF Y coordinate
  * @field z number (signed 32-bit int, 4 bytes) Velocity ECEF Z coordinate
- * @field accuracy number (unsigned 16-bit int, 2 bytes) Velocity accuracy estimate
+ * @field accuracy number (unsigned 16-bit int, 2 bytes) Velocity estimated standard deviation
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
@@ -8469,6 +8194,68 @@ MsgVelEcef.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
 MsgVelEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
+ * SBP class for message MSG_VEL_ECEF_COV (0x0215).
+ *
+ * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+ * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with the
+ * matching time-of-week (tow).
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field x number (signed 32-bit int, 4 bytes) Velocity ECEF X coordinate
+ * @field y number (signed 32-bit int, 4 bytes) Velocity ECEF Y coordinate
+ * @field z number (signed 32-bit int, 4 bytes) Velocity ECEF Z coordinate
+ * @field cov_x_x number (float, 4 bytes) Estimated variance of x
+ * @field cov_x_y number (float, 4 bytes) Estimated covariance of x and y
+ * @field cov_x_z number (float, 4 bytes) Estimated covariance of x and z
+ * @field cov_y_y number (float, 4 bytes) Estimated variance of y
+ * @field cov_y_z number (float, 4 bytes) Estimated covariance of y and z
+ * @field cov_z_z number (float, 4 bytes) Estimated variance of z
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgVelEcefCov = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_VEL_ECEF_COV";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgVelEcefCov.prototype = Object.create(SBP.prototype);
+MsgVelEcefCov.prototype.messageType = "MSG_VEL_ECEF_COV";
+MsgVelEcefCov.prototype.msg_type = 0x0215;
+MsgVelEcefCov.prototype.constructor = MsgVelEcefCov;
+MsgVelEcefCov.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .int32('x')
+  .int32('y')
+  .int32('z')
+  .floatle('cov_x_x')
+  .floatle('cov_x_y')
+  .floatle('cov_x_z')
+  .floatle('cov_y_y')
+  .floatle('cov_y_z')
+  .floatle('cov_z_z')
+  .uint8('n_sats')
+  .uint8('flags');
+MsgVelEcefCov.prototype.fieldSpec = [];
+MsgVelEcefCov.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgVelEcefCov.prototype.fieldSpec.push(['x', 'writeInt32LE', 4]);
+MsgVelEcefCov.prototype.fieldSpec.push(['y', 'writeInt32LE', 4]);
+MsgVelEcefCov.prototype.fieldSpec.push(['z', 'writeInt32LE', 4]);
+MsgVelEcefCov.prototype.fieldSpec.push(['cov_x_x', 'writeFloatLE', 4]);
+MsgVelEcefCov.prototype.fieldSpec.push(['cov_x_y', 'writeFloatLE', 4]);
+MsgVelEcefCov.prototype.fieldSpec.push(['cov_x_z', 'writeFloatLE', 4]);
+MsgVelEcefCov.prototype.fieldSpec.push(['cov_y_y', 'writeFloatLE', 4]);
+MsgVelEcefCov.prototype.fieldSpec.push(['cov_y_z', 'writeFloatLE', 4]);
+MsgVelEcefCov.prototype.fieldSpec.push(['cov_z_z', 'writeFloatLE', 4]);
+MsgVelEcefCov.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgVelEcefCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
  * SBP class for message MSG_VEL_NED (0x020E).
  *
  * This message reports the velocity in local North East Down (NED) coordinates.
@@ -8481,8 +8268,8 @@ MsgVelEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field n number (signed 32-bit int, 4 bytes) Velocity North coordinate
  * @field e number (signed 32-bit int, 4 bytes) Velocity East coordinate
  * @field d number (signed 32-bit int, 4 bytes) Velocity Down coordinate
- * @field h_accuracy number (unsigned 16-bit int, 2 bytes) Horizontal velocity accuracy estimate
- * @field v_accuracy number (unsigned 16-bit int, 2 bytes) Vertical velocity accuracy estimate
+ * @field h_accuracy number (unsigned 16-bit int, 2 bytes) Horizontal velocity estimated standard deviation
+ * @field v_accuracy number (unsigned 16-bit int, 2 bytes) Vertical velocity estimated standard deviation
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
@@ -8520,43 +8307,135 @@ MsgVelNed.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
 MsgVelNed.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
- * SBP class for message MSG_BASELINE_HEADING (0x020F).
+ * SBP class for message MSG_VEL_NED_COV (0x0212).
  *
- * This message reports the baseline heading pointing from the base station to the
- * rover relative to True North. The full GPS time is given by the preceding
- * MSG_GPS_TIME with the matching time-of-week (tow). It is intended that time-
- * matched RTK mode is used when the base station is moving.
+ * This message reports the velocity in local North East Down (NED) coordinates.
+ * The NED coordinate system is defined as the local WGS84 tangent plane centered
+ * at the current position. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow). This message is similar to
+ * the MSG_VEL_NED, but it includes the upper triangular portion of the 3x3
+ * covariance matrix.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
- * @field heading number (unsigned 32-bit int, 4 bytes) Heading
+ * @field n number (signed 32-bit int, 4 bytes) Velocity North coordinate
+ * @field e number (signed 32-bit int, 4 bytes) Velocity East coordinate
+ * @field d number (signed 32-bit int, 4 bytes) Velocity Down coordinate
+ * @field cov_n_n number (float, 4 bytes) Estimated variance of northward measurement
+ * @field cov_n_e number (float, 4 bytes) Covariance of northward and eastward measurement
+ * @field cov_n_d number (float, 4 bytes) Covariance of northward and downward measurement
+ * @field cov_e_e number (float, 4 bytes) Estimated variance of eastward measurement
+ * @field cov_e_d number (float, 4 bytes) Covariance of eastward and downward measurement
+ * @field cov_d_d number (float, 4 bytes) Estimated variance of downward measurement
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBaselineHeading = function (sbp, fields) {
+var MsgVelNedCov = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_BASELINE_HEADING";
+  this.messageType = "MSG_VEL_NED_COV";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgBaselineHeading.prototype = Object.create(SBP.prototype);
-MsgBaselineHeading.prototype.messageType = "MSG_BASELINE_HEADING";
-MsgBaselineHeading.prototype.msg_type = 0x020F;
-MsgBaselineHeading.prototype.constructor = MsgBaselineHeading;
-MsgBaselineHeading.prototype.parser = new Parser()
+MsgVelNedCov.prototype = Object.create(SBP.prototype);
+MsgVelNedCov.prototype.messageType = "MSG_VEL_NED_COV";
+MsgVelNedCov.prototype.msg_type = 0x0212;
+MsgVelNedCov.prototype.constructor = MsgVelNedCov;
+MsgVelNedCov.prototype.parser = new Parser()
   .endianess('little')
   .uint32('tow')
-  .uint32('heading')
+  .int32('n')
+  .int32('e')
+  .int32('d')
+  .floatle('cov_n_n')
+  .floatle('cov_n_e')
+  .floatle('cov_n_d')
+  .floatle('cov_e_e')
+  .floatle('cov_e_d')
+  .floatle('cov_d_d')
   .uint8('n_sats')
   .uint8('flags');
-MsgBaselineHeading.prototype.fieldSpec = [];
-MsgBaselineHeading.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
-MsgBaselineHeading.prototype.fieldSpec.push(['heading', 'writeUInt32LE', 4]);
-MsgBaselineHeading.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
-MsgBaselineHeading.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+MsgVelNedCov.prototype.fieldSpec = [];
+MsgVelNedCov.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgVelNedCov.prototype.fieldSpec.push(['n', 'writeInt32LE', 4]);
+MsgVelNedCov.prototype.fieldSpec.push(['e', 'writeInt32LE', 4]);
+MsgVelNedCov.prototype.fieldSpec.push(['d', 'writeInt32LE', 4]);
+MsgVelNedCov.prototype.fieldSpec.push(['cov_n_n', 'writeFloatLE', 4]);
+MsgVelNedCov.prototype.fieldSpec.push(['cov_n_e', 'writeFloatLE', 4]);
+MsgVelNedCov.prototype.fieldSpec.push(['cov_n_d', 'writeFloatLE', 4]);
+MsgVelNedCov.prototype.fieldSpec.push(['cov_e_e', 'writeFloatLE', 4]);
+MsgVelNedCov.prototype.fieldSpec.push(['cov_e_d', 'writeFloatLE', 4]);
+MsgVelNedCov.prototype.fieldSpec.push(['cov_d_d', 'writeFloatLE', 4]);
+MsgVelNedCov.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgVelNedCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_VEL_BODY (0x0213).
+ *
+ * This message reports the velocity in the Vehicle Body Frame. By convention, the
+ * x-axis should point out the nose of the vehicle and represent the forward
+ * direction, while as the y-axis should point out the right hand side of the
+ * vehicle. Since this is a right handed system, z should point out the bottom of
+ * the vehicle. The orientation and origin of the Vehicle Body Frame are specified
+ * via the device settings. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field x number (signed 32-bit int, 4 bytes) Velocity in x direction
+ * @field y number (signed 32-bit int, 4 bytes) Velocity in y direction
+ * @field z number (signed 32-bit int, 4 bytes) Velocity in z direction
+ * @field cov_x_x number (float, 4 bytes) Estimated variance of x
+ * @field cov_x_y number (float, 4 bytes) Covariance of x and y
+ * @field cov_x_z number (float, 4 bytes) Covariance of x and z
+ * @field cov_y_y number (float, 4 bytes) Estimated variance of y
+ * @field cov_y_z number (float, 4 bytes) Covariance of y and z
+ * @field cov_z_z number (float, 4 bytes) Estimated variance of z
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgVelBody = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_VEL_BODY";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgVelBody.prototype = Object.create(SBP.prototype);
+MsgVelBody.prototype.messageType = "MSG_VEL_BODY";
+MsgVelBody.prototype.msg_type = 0x0213;
+MsgVelBody.prototype.constructor = MsgVelBody;
+MsgVelBody.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .int32('x')
+  .int32('y')
+  .int32('z')
+  .floatle('cov_x_x')
+  .floatle('cov_x_y')
+  .floatle('cov_x_z')
+  .floatle('cov_y_y')
+  .floatle('cov_y_z')
+  .floatle('cov_z_z')
+  .uint8('n_sats')
+  .uint8('flags');
+MsgVelBody.prototype.fieldSpec = [];
+MsgVelBody.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgVelBody.prototype.fieldSpec.push(['x', 'writeInt32LE', 4]);
+MsgVelBody.prototype.fieldSpec.push(['y', 'writeInt32LE', 4]);
+MsgVelBody.prototype.fieldSpec.push(['z', 'writeInt32LE', 4]);
+MsgVelBody.prototype.fieldSpec.push(['cov_x_x', 'writeFloatLE', 4]);
+MsgVelBody.prototype.fieldSpec.push(['cov_x_y', 'writeFloatLE', 4]);
+MsgVelBody.prototype.fieldSpec.push(['cov_x_z', 'writeFloatLE', 4]);
+MsgVelBody.prototype.fieldSpec.push(['cov_y_y', 'writeFloatLE', 4]);
+MsgVelBody.prototype.fieldSpec.push(['cov_y_z', 'writeFloatLE', 4]);
+MsgVelBody.prototype.fieldSpec.push(['cov_z_z', 'writeFloatLE', 4]);
+MsgVelBody.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgVelBody.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
  * SBP class for message MSG_AGE_CORRECTIONS (0x0210).
@@ -9024,18 +8903,26 @@ module.exports = {
   MsgDops: MsgDops,
   0x0209: MsgPosEcef,
   MsgPosEcef: MsgPosEcef,
+  0x0214: MsgPosEcefCov,
+  MsgPosEcefCov: MsgPosEcefCov,
   0x020A: MsgPosLlh,
   MsgPosLlh: MsgPosLlh,
+  0x0211: MsgPosLlhCov,
+  MsgPosLlhCov: MsgPosLlhCov,
   0x020B: MsgBaselineEcef,
   MsgBaselineEcef: MsgBaselineEcef,
   0x020C: MsgBaselineNed,
   MsgBaselineNed: MsgBaselineNed,
   0x020D: MsgVelEcef,
   MsgVelEcef: MsgVelEcef,
+  0x0215: MsgVelEcefCov,
+  MsgVelEcefCov: MsgVelEcefCov,
   0x020E: MsgVelNed,
   MsgVelNed: MsgVelNed,
-  0x020F: MsgBaselineHeading,
-  MsgBaselineHeading: MsgBaselineHeading,
+  0x0212: MsgVelNedCov,
+  MsgVelNedCov: MsgVelNedCov,
+  0x0213: MsgVelBody,
+  MsgVelBody: MsgVelBody,
   0x0210: MsgAgeCorrections,
   MsgAgeCorrections: MsgAgeCorrections,
   0x0100: MsgGpsTimeDepA,
@@ -9059,7 +8946,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -9154,7 +9041,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -11311,6 +11198,236 @@ module.exports = {
 }
 
 /***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (C) 2015 Swift Navigation Inc.
+ * Contact: Joshua Gross <josh@swift-nav.com>
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**********************
+ * Automatically generated from piksi/yaml/swiftnav/sbp/orientation.yaml with generate.py.
+ * Don't edit this by hand!
+ **********************
+ * Package description:
+ *
+ * Orientation Messages
+***********************/
+
+var SBP = __webpack_require__(2);
+var Parser = __webpack_require__(4);
+var Int64 = __webpack_require__(3);
+var UInt64 = __webpack_require__(1).UINT64;
+
+/**
+ * SBP class for message MSG_BASELINE_HEADING (0x020F).
+ *
+ * This message reports the baseline heading pointing from the base station to the
+ * rover relative to True North. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow). It is intended that time-
+ * matched RTK mode is used when the base station is moving.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field heading number (unsigned 32-bit int, 4 bytes) Heading
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgBaselineHeading = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_BASELINE_HEADING";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgBaselineHeading.prototype = Object.create(SBP.prototype);
+MsgBaselineHeading.prototype.messageType = "MSG_BASELINE_HEADING";
+MsgBaselineHeading.prototype.msg_type = 0x020F;
+MsgBaselineHeading.prototype.constructor = MsgBaselineHeading;
+MsgBaselineHeading.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .uint32('heading')
+  .uint8('n_sats')
+  .uint8('flags');
+MsgBaselineHeading.prototype.fieldSpec = [];
+MsgBaselineHeading.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgBaselineHeading.prototype.fieldSpec.push(['heading', 'writeUInt32LE', 4]);
+MsgBaselineHeading.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgBaselineHeading.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_ORIENT_QUAT (0x0220).
+ *
+ * This message reports the quaternion vector describing the vehcile body frame's
+ * orientation with respect to a local-level NED frame.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field w number (signed 32-bit int, 4 bytes) Real component
+ * @field x number (signed 32-bit int, 4 bytes) 1st imaginary component
+ * @field y number (signed 32-bit int, 4 bytes) 2nd imaginary component
+ * @field z number (signed 32-bit int, 4 bytes) 3rd imaginary component
+ * @field acc_w number (float, 4 bytes) Estimated standard deviation of w
+ * @field acc_x number (float, 4 bytes) Estimated standard deviation of x
+ * @field acc_y number (float, 4 bytes) Estimated standard deviation of y
+ * @field acc_z number (float, 4 bytes) Estimated standard deviation of z
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgOrientQuat = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ORIENT_QUAT";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgOrientQuat.prototype = Object.create(SBP.prototype);
+MsgOrientQuat.prototype.messageType = "MSG_ORIENT_QUAT";
+MsgOrientQuat.prototype.msg_type = 0x0220;
+MsgOrientQuat.prototype.constructor = MsgOrientQuat;
+MsgOrientQuat.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .int32('w')
+  .int32('x')
+  .int32('y')
+  .int32('z')
+  .floatle('acc_w')
+  .floatle('acc_x')
+  .floatle('acc_y')
+  .floatle('acc_z')
+  .uint8('flags');
+MsgOrientQuat.prototype.fieldSpec = [];
+MsgOrientQuat.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['w', 'writeInt32LE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['x', 'writeInt32LE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['y', 'writeInt32LE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['z', 'writeInt32LE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['acc_w', 'writeFloatLE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['acc_x', 'writeFloatLE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['acc_y', 'writeFloatLE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['acc_z', 'writeFloatLE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_ORIENT_EULER (0x0221).
+ *
+ * This message reports the yaw, pitch, and roll angles of the vehicle body frame.
+ * The rotations should applied intrinsically in the order yaw, pitch, and roll  in
+ * order to rotate the from a frame aligned with the local-level NED frame  to the
+ * vehicle body frame.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field roll number (signed 16-bit int, 2 bytes) rotation about the forward axis of the vehicle
+ * @field pitch number (signed 16-bit int, 2 bytes) rotation about the rightward axis of the vehicle
+ * @field yaw number (signed 16-bit int, 2 bytes) rotation about the downward axis of the vehicle
+ * @field var_roll number (float, 4 bytes) Estimated standard deviation of roll
+ * @field var_pitch number (float, 4 bytes) Estimated standard deviation of pitch
+ * @field var_yaw number (float, 4 bytes) Estimated standard deviation of yaw
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgOrientEuler = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ORIENT_EULER";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgOrientEuler.prototype = Object.create(SBP.prototype);
+MsgOrientEuler.prototype.messageType = "MSG_ORIENT_EULER";
+MsgOrientEuler.prototype.msg_type = 0x0221;
+MsgOrientEuler.prototype.constructor = MsgOrientEuler;
+MsgOrientEuler.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .int16('roll')
+  .int16('pitch')
+  .int16('yaw')
+  .floatle('var_roll')
+  .floatle('var_pitch')
+  .floatle('var_yaw')
+  .uint8('flags');
+MsgOrientEuler.prototype.fieldSpec = [];
+MsgOrientEuler.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgOrientEuler.prototype.fieldSpec.push(['roll', 'writeInt16LE', 2]);
+MsgOrientEuler.prototype.fieldSpec.push(['pitch', 'writeInt16LE', 2]);
+MsgOrientEuler.prototype.fieldSpec.push(['yaw', 'writeInt16LE', 2]);
+MsgOrientEuler.prototype.fieldSpec.push(['var_roll', 'writeFloatLE', 4]);
+MsgOrientEuler.prototype.fieldSpec.push(['var_pitch', 'writeFloatLE', 4]);
+MsgOrientEuler.prototype.fieldSpec.push(['var_yaw', 'writeFloatLE', 4]);
+MsgOrientEuler.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_ANGULAR_RATE (0x0222).
+ *
+ * This message reports the orientation rates in the vehicle body frame.  The
+ * values represent the measurements a strapped down gyroscope would  make and are
+ * not equivalent to the time derivative of the Euler angles. The orientation and
+ * origin of the user frame is specified via device settings. By convention, the
+ * vehicle x-axis is expected to be aligned with the forward direction, while the
+ * vehicle y-axis is expected to be aligned with the right direction, and the
+ * vehicle z-axis should be aligned with the down direction.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field x number (signed 16-bit int, 2 bytes) angular rate about x axis
+ * @field y number (signed 16-bit int, 2 bytes) angular rate about y axis
+ * @field z number (signed 16-bit int, 2 bytes) angular rate about z axis
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgAngularRate = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ANGULAR_RATE";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgAngularRate.prototype = Object.create(SBP.prototype);
+MsgAngularRate.prototype.messageType = "MSG_ANGULAR_RATE";
+MsgAngularRate.prototype.msg_type = 0x0222;
+MsgAngularRate.prototype.constructor = MsgAngularRate;
+MsgAngularRate.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .int16('x')
+  .int16('y')
+  .int16('z')
+  .uint8('flags');
+MsgAngularRate.prototype.fieldSpec = [];
+MsgAngularRate.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgAngularRate.prototype.fieldSpec.push(['x', 'writeInt16LE', 2]);
+MsgAngularRate.prototype.fieldSpec.push(['y', 'writeInt16LE', 2]);
+MsgAngularRate.prototype.fieldSpec.push(['z', 'writeInt16LE', 2]);
+MsgAngularRate.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+module.exports = {
+  0x020F: MsgBaselineHeading,
+  MsgBaselineHeading: MsgBaselineHeading,
+  0x0220: MsgOrientQuat,
+  MsgOrientQuat: MsgOrientQuat,
+  0x0221: MsgOrientEuler,
+  MsgOrientEuler: MsgOrientEuler,
+  0x0222: MsgAngularRate,
+  MsgAngularRate: MsgAngularRate,
+}
+
+/***/ }),
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12550,7 +12667,7 @@ module.exports = {
 ***********************/
 
 var SBP = __webpack_require__(2);
-var Parser = __webpack_require__(12).Parser;
+var Parser = __webpack_require__(11).Parser;
 
 /**
  * SBP class for message fragment SBPSignal
@@ -13315,6 +13432,79 @@ module.exports = {
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/**
+ * Copyright (C) 2015 Swift Navigation Inc.
+ * Contact: Joshua Gross <josh@swift-nav.com>
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**********************
+ * Automatically generated from piksi/yaml/swiftnav/sbp/vehicle.yaml with generate.py.
+ * Don't edit this by hand!
+ **********************
+ * Package description:
+ *
+ * Messages from a vehicle.
+***********************/
+
+var SBP = __webpack_require__(2);
+var Parser = __webpack_require__(4);
+var Int64 = __webpack_require__(3);
+var UInt64 = __webpack_require__(1).UINT64;
+
+/**
+ * SBP class for message MSG_ODOMETRY (0x0903).
+ *
+ * Message representing the x component of vehicle velocity in the user frame at
+ * the odometry reference point(s) specified by the user. The offset for the
+ * odometry reference point and  the definition and origin of the user frame are
+ * defined through the device settings interface. There are 4 possible user-defined
+ * sources of this message  which are labeled arbitrarily  source 0 through 3.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) Time field representing either milliseconds in the GPS Week or local CPU time
+ *   from the producing system in milliseconds.  See the tow_source flag for the
+ *   exact source of this timestamp.
+ * @field velocity number (signed 32-bit int, 4 bytes) The signed forward component of vehicle velocity.
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgOdometry = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ODOMETRY";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgOdometry.prototype = Object.create(SBP.prototype);
+MsgOdometry.prototype.messageType = "MSG_ODOMETRY";
+MsgOdometry.prototype.msg_type = 0x0903;
+MsgOdometry.prototype.constructor = MsgOdometry;
+MsgOdometry.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .int32('velocity')
+  .uint8('flags');
+MsgOdometry.prototype.fieldSpec = [];
+MsgOdometry.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgOdometry.prototype.fieldSpec.push(['velocity', 'writeInt32LE', 4]);
+MsgOdometry.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+module.exports = {
+  0x0903: MsgOdometry,
+  MsgOdometry: MsgOdometry,
+}
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -13543,7 +13733,7 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -13569,15 +13759,15 @@ var substr = 'ab'.substr(-1) === 'b'
 
 module.exports = Stream;
 
-var EE = __webpack_require__(13).EventEmitter;
-var inherits = __webpack_require__(8);
+var EE = __webpack_require__(12).EventEmitter;
+var inherits = __webpack_require__(6);
 
 inherits(Stream, EE);
 Stream.Readable = __webpack_require__(15);
-Stream.Writable = __webpack_require__(55);
-Stream.Duplex = __webpack_require__(50);
-Stream.Transform = __webpack_require__(54);
-Stream.PassThrough = __webpack_require__(53);
+Stream.Writable = __webpack_require__(56);
+Stream.Duplex = __webpack_require__(51);
+Stream.Transform = __webpack_require__(55);
+Stream.PassThrough = __webpack_require__(54);
 
 // Backwards-compat with node 0.4.x
 Stream.Stream = Stream;
@@ -13676,7 +13866,7 @@ Stream.prototype.pipe = function(dest, options) {
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -13704,7 +13894,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer, module, global) {/**
@@ -13718,9 +13908,9 @@ module.exports = function(module) {
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-var Parser = __webpack_require__(12).Parser;
-var path = __webpack_require__(40);
-var streams = __webpack_require__(41);
+var Parser = __webpack_require__(11).Parser;
+var path = __webpack_require__(41);
+var streams = __webpack_require__(42);
 var SBP = __webpack_require__(2);
 
 var SBP_PREAMBLE = 0x55;
@@ -13797,24 +13987,26 @@ BufferCorruptError.prototype = Object.create(Error.prototype);
 BufferCorruptError.prototype.constructor = BufferCorruptError;
 
 var sbpImports = {
-  acquisition: __webpack_require__(23),
-  bootload: __webpack_require__(24),
-  ext_events: __webpack_require__(25),
-  file_io: __webpack_require__(26),
-  flash: __webpack_require__(27),
+  acquisition: __webpack_require__(22),
+  bootload: __webpack_require__(23),
+  ext_events: __webpack_require__(24),
+  file_io: __webpack_require__(25),
+  flash: __webpack_require__(26),
   gnss: __webpack_require__(0),
-  imu: __webpack_require__(28),
-  logging: __webpack_require__(29),
-  mag: __webpack_require__(30),
-  navigation: __webpack_require__(31),
-  ndb: __webpack_require__(32),
-  observation: __webpack_require__(33),
+  imu: __webpack_require__(27),
+  logging: __webpack_require__(28),
+  mag: __webpack_require__(29),
+  navigation: __webpack_require__(30),
+  ndb: __webpack_require__(31),
+  observation: __webpack_require__(32),
   piksi: __webpack_require__(34),
   settings: __webpack_require__(35),
   signal: __webpack_require__(36),
   system: __webpack_require__(37),
   tracking: __webpack_require__(38),
-  user: __webpack_require__(39)
+  user: __webpack_require__(39),
+  vehicle: __webpack_require__(40),
+  orientation: __webpack_require__(33)
 };
 
 var sbpIdTable = Object.keys(sbpImports).reduce(function (prev, key) {
@@ -14039,10 +14231,10 @@ function exposeGlobally (x) {
 
 exposeGlobally(module.exports);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer, __webpack_require__(42)(module), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer, __webpack_require__(43)(module), __webpack_require__(8)))
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14537,10 +14729,10 @@ var objectKeys = Object.keys || function (obj) {
   return keys;
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14579,22 +14771,22 @@ function placeHoldersCount (b64) {
 
 function byteLength (b64) {
   // base64 is 4/3 + up to two characters of the original data
-  return (b64.length * 3 / 4) - placeHoldersCount(b64)
+  return b64.length * 3 / 4 - placeHoldersCount(b64)
 }
 
 function toByteArray (b64) {
-  var i, l, tmp, placeHolders, arr
+  var i, j, l, tmp, placeHolders, arr
   var len = b64.length
   placeHolders = placeHoldersCount(b64)
 
-  arr = new Arr((len * 3 / 4) - placeHolders)
+  arr = new Arr(len * 3 / 4 - placeHolders)
 
   // if there are placeholders, only get up to the last complete 4 chars
   l = placeHolders > 0 ? len - 4 : len
 
   var L = 0
 
-  for (i = 0; i < l; i += 4) {
+  for (i = 0, j = 0; i < l; i += 4, j += 3) {
     tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)]
     arr[L++] = (tmp >> 16) & 0xFF
     arr[L++] = (tmp >> 8) & 0xFF
@@ -14661,7 +14853,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports) {
 
 //========================================================================================
@@ -14766,7 +14958,7 @@ exports.Context = Context;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -15224,7 +15416,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -15879,7 +16071,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -15969,38 +16161,17 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(7);
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 // a passthrough stream.
 // basically just the most minimal sort of Transform stream.
 // Every written chunk gets output as-is.
@@ -16013,7 +16184,7 @@ var Transform = __webpack_require__(20);
 
 /*<replacement>*/
 var util = __webpack_require__(10);
-util.inherits = __webpack_require__(8);
+util.inherits = __webpack_require__(6);
 /*</replacement>*/
 
 util.inherits(PassThrough, Transform);
@@ -16029,7 +16200,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 };
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16037,100 +16208,90 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 
 /*<replacement>*/
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 var Buffer = __webpack_require__(16).Buffer;
 /*</replacement>*/
 
-function copyBuffer(src, target, offset) {
-  src.copy(target, offset);
+module.exports = BufferList;
+
+function BufferList() {
+  this.head = null;
+  this.tail = null;
+  this.length = 0;
 }
 
-module.exports = function () {
-  function BufferList() {
-    _classCallCheck(this, BufferList);
+BufferList.prototype.push = function (v) {
+  var entry = { data: v, next: null };
+  if (this.length > 0) this.tail.next = entry;else this.head = entry;
+  this.tail = entry;
+  ++this.length;
+};
 
-    this.head = null;
-    this.tail = null;
-    this.length = 0;
+BufferList.prototype.unshift = function (v) {
+  var entry = { data: v, next: this.head };
+  if (this.length === 0) this.tail = entry;
+  this.head = entry;
+  ++this.length;
+};
+
+BufferList.prototype.shift = function () {
+  if (this.length === 0) return;
+  var ret = this.head.data;
+  if (this.length === 1) this.head = this.tail = null;else this.head = this.head.next;
+  --this.length;
+  return ret;
+};
+
+BufferList.prototype.clear = function () {
+  this.head = this.tail = null;
+  this.length = 0;
+};
+
+BufferList.prototype.join = function (s) {
+  if (this.length === 0) return '';
+  var p = this.head;
+  var ret = '' + p.data;
+  while (p = p.next) {
+    ret += s + p.data;
+  }return ret;
+};
+
+BufferList.prototype.concat = function (n) {
+  if (this.length === 0) return Buffer.alloc(0);
+  if (this.length === 1) return this.head.data;
+  var ret = Buffer.allocUnsafe(n >>> 0);
+  var p = this.head;
+  var i = 0;
+  while (p) {
+    p.data.copy(ret, i);
+    i += p.data.length;
+    p = p.next;
   }
-
-  BufferList.prototype.push = function push(v) {
-    var entry = { data: v, next: null };
-    if (this.length > 0) this.tail.next = entry;else this.head = entry;
-    this.tail = entry;
-    ++this.length;
-  };
-
-  BufferList.prototype.unshift = function unshift(v) {
-    var entry = { data: v, next: this.head };
-    if (this.length === 0) this.tail = entry;
-    this.head = entry;
-    ++this.length;
-  };
-
-  BufferList.prototype.shift = function shift() {
-    if (this.length === 0) return;
-    var ret = this.head.data;
-    if (this.length === 1) this.head = this.tail = null;else this.head = this.head.next;
-    --this.length;
-    return ret;
-  };
-
-  BufferList.prototype.clear = function clear() {
-    this.head = this.tail = null;
-    this.length = 0;
-  };
-
-  BufferList.prototype.join = function join(s) {
-    if (this.length === 0) return '';
-    var p = this.head;
-    var ret = '' + p.data;
-    while (p = p.next) {
-      ret += s + p.data;
-    }return ret;
-  };
-
-  BufferList.prototype.concat = function concat(n) {
-    if (this.length === 0) return Buffer.alloc(0);
-    if (this.length === 1) return this.head.data;
-    var ret = Buffer.allocUnsafe(n >>> 0);
-    var p = this.head;
-    var i = 0;
-    while (p) {
-      copyBuffer(p.data, ret, i);
-      i += p.data.length;
-      p = p.next;
-    }
-    return ret;
-  };
-
-  return BufferList;
-}();
+  return ret;
+};
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(15).PassThrough
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(15).Transform
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(14);
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -16320,10 +16481,10 @@ module.exports = __webpack_require__(14);
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(9)))
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -16376,13 +16537,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(56);
+__webpack_require__(57);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -16453,36 +16614,7 @@ function config (name) {
   return String(val).toLowerCase() === 'true';
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports) {
-
-if (typeof Object.create === 'function') {
-  // implementation from standard node.js 'util' module
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    ctor.prototype = Object.create(superCtor.prototype, {
-      constructor: {
-        value: ctor,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-  };
-} else {
-  // old school shim for old browsers
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    var TempCtor = function () {}
-    TempCtor.prototype = superCtor.prototype
-    ctor.prototype = new TempCtor()
-    ctor.prototype.constructor = ctor
-  }
-}
-
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
 /* 60 */
@@ -17068,7 +17200,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = __webpack_require__(59);
+exports.inherits = __webpack_require__(6);
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -17086,7 +17218,7 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(9)))
 
 /***/ }),
 /* 62 */

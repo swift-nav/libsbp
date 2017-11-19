@@ -1,0 +1,127 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgVelECEFDepA vv2.0.
+generated_on: 2016-11-03 19:19:13.985342
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 18
+      tow: 513526000
+      x: -30
+      y: -4
+      z: 16
+    module: sbp.navigation
+    name: MsgVelECEFDepA
+  msg_type: '0x204'
+  raw_json: '{"n_sats": 18, "sender": 16991, "msg_type": 516, "tow": 513526000, "crc":
+    6733, "length": 20, "flags": 0, "y": -4, "x": -30, "z": 16, "preamble": 85, "payload":
+    "8MibHuL////8////EAAAAAAAEgA=", "accuracy": 0}'
+  raw_packet: VQQCX0IU8MibHuL////8////EAAAAAAAEgBNGg==
+  sbp:
+    crc: '0x1a4d'
+    length: 20
+    msg_type: '0x204'
+    payload: 8MibHuL////8////EAAAAAAAEgA=
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 18
+      tow: 513526500
+      x: 7
+      y: -31
+      z: -1
+    module: sbp.navigation
+    name: MsgVelECEFDepA
+  msg_type: '0x204'
+  raw_json: '{"n_sats": 18, "sender": 16991, "msg_type": 516, "tow": 513526500, "crc":
+    39560, "length": 20, "flags": 0, "y": -31, "x": 7, "z": -1, "preamble": 85, "payload":
+    "5MqbHgcAAADh/////////wAAEgA=", "accuracy": 0}'
+  raw_packet: VQQCX0IU5MqbHgcAAADh/////////wAAEgCImg==
+  sbp:
+    crc: '0x9a88'
+    length: 20
+    msg_type: '0x204'
+    payload: 5MqbHgcAAADh/////////wAAEgA=
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 18
+      tow: 513527000
+      x: -15
+      y: -6
+      z: 20
+    module: sbp.navigation
+    name: MsgVelECEFDepA
+  msg_type: '0x204'
+  raw_json: '{"n_sats": 18, "sender": 16991, "msg_type": 516, "tow": 513527000, "crc":
+    63065, "length": 20, "flags": 0, "y": -6, "x": -15, "z": 20, "preamble": 85, "payload":
+    "2MybHvH////6////FAAAAAAAEgA=", "accuracy": 0}'
+  raw_packet: VQQCX0IU2MybHvH////6////FAAAAAAAEgBZ9g==
+  sbp:
+    crc: '0xf659'
+    length: 20
+    msg_type: '0x204'
+    payload: 2MybHvH////6////FAAAAAAAEgA=
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 18
+      tow: 513527500
+      x: -12
+      y: -15
+      z: 4
+    module: sbp.navigation
+    name: MsgVelECEFDepA
+  msg_type: '0x204'
+  raw_json: '{"n_sats": 18, "sender": 16991, "msg_type": 516, "tow": 513527500, "crc":
+    60588, "length": 20, "flags": 0, "y": -15, "x": -12, "z": 4, "preamble": 85, "payload":
+    "zM6bHvT////x////BAAAAAAAEgA=", "accuracy": 0}'
+  raw_packet: VQQCX0IUzM6bHvT////x////BAAAAAAAEgCs7A==
+  sbp:
+    crc: '0xecac'
+    length: 20
+    msg_type: '0x204'
+    payload: zM6bHvT////x////BAAAAAAAEgA=
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 18
+      tow: 513528000
+      x: -25
+      y: -11
+      z: -1
+    module: sbp.navigation
+    name: MsgVelECEFDepA
+  msg_type: '0x204'
+  raw_json: '{"n_sats": 18, "sender": 16991, "msg_type": 516, "tow": 513528000, "crc":
+    13674, "length": 20, "flags": 0, "y": -11, "x": -25, "z": -1, "preamble": 85,
+    "payload": "wNCbHuf////1/////////wAAEgA=", "accuracy": 0}'
+  raw_packet: VQQCX0IUwNCbHuf////1/////////wAAEgBqNQ==
+  sbp:
+    crc: '0x356a'
+    length: 20
+    msg_type: '0x204'
+    payload: wNCbHuf////1/////////wAAEgA=
+    preamble: '0x55'
+    sender: '0x425f'
+version: v2.0
+...

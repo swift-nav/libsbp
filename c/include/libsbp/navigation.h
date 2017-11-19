@@ -148,6 +148,34 @@ typedef struct __attribute__((packed)) {
 } msg_pos_llh_t;
 
 
+/** Geodetic Position
+ *
+ * This position solution message reports the absolute geodetic
+ * coordinates and the status (single point vs pseudo-absolute RTK)
+ * of the position solution as well as the upper triangle of the 3x3
+ * covariance matrix.  The position information and Fix Mode flags should
+ * follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+ * in the local-level North, East, Down frame, the covariance terms follow
+ * with that convention. Thus, covariances are reported against the "downward"
+ * measurement and care should be taken with the sign convention.
+ */
+#define SBP_MSG_POS_LLH_COV            0x0211
+typedef struct __attribute__((packed)) {
+  u32 tow;        /**< GPS Time of Week [ms] */
+  double lat;        /**< Latitude [deg] */
+  double lon;        /**< Longitude [deg] */
+  double height;     /**< Height above WGS84 ellipsoid [m] */
+  float cov_n_n;    /**< Estimated variance of northing [m^2] */
+  float cov_n_e;    /**< Covariance of northing and easting [m^2] */
+  float cov_n_d;    /**< Covariance of northing and downward measurement [m^2] */
+  float cov_e_e;    /**< Estimated variance of easting [m^2] */
+  float cov_e_d;    /**< Covariance of easting and downward measurement [m^2] */
+  float cov_d_d;    /**< Estimated variance of downward measurement [m^2] */
+  u8 n_sats;     /**< Number of satellites used in solution. */
+  u8 flags;      /**< Status flags */
+} msg_pos_llh_cov_t;
+
+
 /** Baseline Position in ECEF
  *
  * This message reports the baseline solution in Earth Centered
@@ -231,20 +259,57 @@ typedef struct __attribute__((packed)) {
 } msg_vel_ned_t;
 
 
-/** Heading relative to True North
+/** Velocity in NED
  *
- * This message reports the baseline heading pointing from the base station
- * to the rover relative to True North. The full GPS time is given by the
- * preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
- * that time-matched RTK mode is used when the base station is moving.
+ * This message reports the velocity in local North East Down (NED)
+ * coordinates. The NED coordinate system is defined as the local WGS84
+ * tangent plane centered at the current position. The full GPS time is
+ * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+ * portion of the 3x3 covariance matrix.
  */
-#define SBP_MSG_BASELINE_HEADING       0x020F
+#define SBP_MSG_VEL_NED_COV            0x0212
 typedef struct __attribute__((packed)) {
   u32 tow;        /**< GPS Time of Week [ms] */
-  u32 heading;    /**< Heading [mdeg] */
+  s32 n;          /**< Velocity North coordinate [mm/s] */
+  s32 e;          /**< Velocity East coordinate [mm/s] */
+  s32 d;          /**< Velocity Down coordinate [mm/s] */
+  float cov_n_n;    /**< Estimated variance of northward measurement [m^2] */
+  float cov_n_e;    /**< Covariance of northward and eastward measurement [m^2] */
+  float cov_n_d;    /**< Covariance of northward and downward measurement [m^2] */
+  float cov_e_e;    /**< Estimated variance of eastward measurement [m^2] */
+  float cov_e_d;    /**< Covariance of eastward and downward measurement [m^2] */
+  float cov_d_d;    /**< Estimated variance of downward measurement [m^2] */
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
-} msg_baseline_heading_t;
+} msg_vel_ned_cov_t;
+
+
+/** Velocity in Body Frame Coordinates
+ *
+ * This message reports the velocity in the vehicle body frame. By convention,
+ * the x-axis should point out the nose of the vehicle and represent the forward
+ * direction, while as the y-axis should point out the right hand side of the vehicle.
+ * Since this is a right handed system, z should point out the bottom of the vehicle.  
+ * The full GPS time is given by the preceding MSG_GPS_TIME with the 
+ * matching time-of-week (tow).  This message is similar to the MSG_VEL_NED, 
+ * but it includes the upper triangular portion of the 3x3 covariance matrix.
+ */
+#define SBP_MSG_VEL_BODY               0x0213
+typedef struct __attribute__((packed)) {
+  u32 tow;        /**< GPS Time of Week [ms] */
+  s32 x;          /**< Velocity in x direction [mm/s] */
+  s32 y;          /**< Velocity in y direction [mm/s] */
+  s32 z;          /**< Velocity in z direction [mm/s] */
+  float cov_x_x;    /**< Estimated variance of x [m^2] */
+  float cov_x_y;    /**< Covariance of x and y [m^2] */
+  float cov_x_z;    /**< Covariance of x and z [m^2] */
+  float cov_y_y;    /**< Estimated variance of y [m^2] */
+  float cov_y_z;    /**< Covariance of y and z [m^2] */
+  float cov_z_z;    /**< Estimated variance of z [m^2] */
+  u8 n_sats;     /**< Number of satellites used in solution */
+  u8 flags;      /**< Status flags */
+} msg_vel_body_t;
 
 
 /** Age of corrections

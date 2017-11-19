@@ -1,0 +1,97 @@
+---
+description: Unit tests for swiftnav.sbp.logging MsgLog vNone.
+generated_on: 2016-11-03 20:14:43.772766
+package: sbp.logging
+tests:
+
+- msg:
+    fields:
+      level: 6
+      text: GPS L1CA 32 ephemeris saved
+    module: sbp.logging
+    name: MsgLog
+  msg_type: '0x401'
+  raw_json: '{"sender": 16991, "msg_type": 1025, "level": 6, "text": "GPS L1CA 32
+    ephemeris saved", "crc": 45386, "length": 28, "preamble": 85, "payload": "BkdQUyBMMUNBIDMyIGVwaGVtZXJpcyBzYXZlZA=="}'
+  raw_packet: VQEEX0IcBkdQUyBMMUNBIDMyIGVwaGVtZXJpcyBzYXZlZEqx
+  sbp:
+    crc: '0xb14a'
+    length: 28
+    msg_type: '0x401'
+    payload: BkdQUyBMMUNBIDMyIGVwaGVtZXJpcyBzYXZlZA==
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      level: 6
+      text: GPS L1CA 10 ephemeris saved
+    module: sbp.logging
+    name: MsgLog
+  msg_type: '0x401'
+  raw_json: '{"sender": 16991, "msg_type": 1025, "level": 6, "text": "GPS L1CA 10
+    ephemeris saved", "crc": 24781, "length": 28, "preamble": 85, "payload": "BkdQUyBMMUNBIDEwIGVwaGVtZXJpcyBzYXZlZA=="}'
+  raw_packet: VQEEX0IcBkdQUyBMMUNBIDEwIGVwaGVtZXJpcyBzYXZlZM1g
+  sbp:
+    crc: '0x60cd'
+    length: 28
+    msg_type: '0x401'
+    payload: BkdQUyBMMUNBIDEwIGVwaGVtZXJpcyBzYXZlZA==
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      level: 6
+      text: GPS L1CA 14 ephemeris saved
+    module: sbp.logging
+    name: MsgLog
+  msg_type: '0x401'
+  raw_json: '{"sender": 16991, "msg_type": 1025, "level": 6, "text": "GPS L1CA 14
+    ephemeris saved", "crc": 9029, "length": 28, "preamble": 85, "payload": "BkdQUyBMMUNBIDE0IGVwaGVtZXJpcyBzYXZlZA=="}'
+  raw_packet: VQEEX0IcBkdQUyBMMUNBIDE0IGVwaGVtZXJpcyBzYXZlZEUj
+  sbp:
+    crc: '0x2345'
+    length: 28
+    msg_type: '0x401'
+    payload: BkdQUyBMMUNBIDE0IGVwaGVtZXJpcyBzYXZlZA==
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      level: 6
+      text: GPS L1CA 27 ephemeris saved
+    module: sbp.logging
+    name: MsgLog
+  msg_type: '0x401'
+  raw_json: '{"sender": 16991, "msg_type": 1025, "level": 6, "text": "GPS L1CA 27
+    ephemeris saved", "crc": 4625, "length": 28, "preamble": 85, "payload": "BkdQUyBMMUNBIDI3IGVwaGVtZXJpcyBzYXZlZA=="}'
+  raw_packet: VQEEX0IcBkdQUyBMMUNBIDI3IGVwaGVtZXJpcyBzYXZlZBES
+  sbp:
+    crc: '0x1211'
+    length: 28
+    msg_type: '0x401'
+    payload: BkdQUyBMMUNBIDI3IGVwaGVtZXJpcyBzYXZlZA==
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      level: 6
+      text: GPS L1CA 8 ephemeris saved
+    module: sbp.logging
+    name: MsgLog
+  msg_type: '0x401'
+  raw_json: '{"sender": 16991, "msg_type": 1025, "level": 6, "text": "GPS L1CA 8 ephemeris
+    saved", "crc": 1325, "length": 27, "preamble": 85, "payload": "BkdQUyBMMUNBIDggZXBoZW1lcmlzIHNhdmVk"}'
+  raw_packet: VQEEX0IbBkdQUyBMMUNBIDggZXBoZW1lcmlzIHNhdmVkLQU=
+  sbp:
+    crc: '0x52d'
+    length: 27
+    msg_type: '0x401'
+    payload: BkdQUyBMMUNBIDggZXBoZW1lcmlzIHNhdmVk
+    preamble: '0x55'
+    sender: '0x425f'
+version: null
+...

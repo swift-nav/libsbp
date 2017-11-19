@@ -1,0 +1,121 @@
+/*
+ * Copyright (C) 2015 Swift Navigation Inc.
+ * Contact: Gareth McMullin <gareth@swiftnav.com>
+ * Contact: Bhaskar Mookerji <mookerji@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+package com.swiftnav.sbp.orientation;
+
+import java.math.BigInteger;
+
+import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
+
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_ORIENT_QUAT (0x0220).
+ *
+ * You can have MSG_ORIENT_QUAT inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
+ *
+ * This message reports the quaternion vector describing the vehcile body frame's orientation
+ * with respect to a local-level NED frame.   */
+
+public class MsgOrientQuat extends SBPMessage {
+    public static final int TYPE = 0x0220;
+
+    
+    /** GPS Time of Week */
+    public long tow;
+    
+    /** Real component */
+    public int w;
+    
+    /** 1st imaginary component */
+    public int x;
+    
+    /** 2nd imaginary component */
+    public int y;
+    
+    /** 3rd imaginary component */
+    public int z;
+    
+    /** Estimated standard deviation of w */
+    public float acc_w;
+    
+    /** Estimated standard deviation of x */
+    public float acc_x;
+    
+    /** Estimated standard deviation of y */
+    public float acc_y;
+    
+    /** Estimated standard deviation of z */
+    public float acc_z;
+    
+    /** Status flags */
+    public int flags;
+    
+
+    public MsgOrientQuat (int sender) { super(sender, TYPE); }
+    public MsgOrientQuat () { super(TYPE); }
+    public MsgOrientQuat (SBPMessage msg) throws SBPBinaryException {
+        super(msg);
+        assert msg.type != TYPE;
+    }
+
+    @Override
+    protected void parse(Parser parser) throws SBPBinaryException {
+        /* Parse fields from binary */
+        tow = parser.getU32();
+        w = parser.getS32();
+        x = parser.getS32();
+        y = parser.getS32();
+        z = parser.getS32();
+        acc_w = parser.getFloat();
+        acc_x = parser.getFloat();
+        acc_y = parser.getFloat();
+        acc_z = parser.getFloat();
+        flags = parser.getU8();
+    }
+
+    @Override
+    protected void build(Builder builder) {
+        builder.putU32(tow);
+        builder.putS32(w);
+        builder.putS32(x);
+        builder.putS32(y);
+        builder.putS32(z);
+        builder.putFloat(acc_w);
+        builder.putFloat(acc_x);
+        builder.putFloat(acc_y);
+        builder.putFloat(acc_z);
+        builder.putU8(flags);
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject obj = super.toJSON();
+        obj.put("tow", tow);
+        obj.put("w", w);
+        obj.put("x", x);
+        obj.put("y", y);
+        obj.put("z", z);
+        obj.put("acc_w", acc_w);
+        obj.put("acc_x", acc_x);
+        obj.put("acc_y", acc_y);
+        obj.put("acc_z", acc_z);
+        obj.put("flags", flags);
+        return obj;
+    }
+}

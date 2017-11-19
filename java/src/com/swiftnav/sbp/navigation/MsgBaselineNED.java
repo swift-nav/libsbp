@@ -52,10 +52,10 @@ public class MsgBaselineNED extends SBPMessage {
     /** Baseline Down coordinate */
     public int d;
     
-    /** Horizontal position accuracy estimate */
+    /** Horizontal position estimated standard deviation */
     public int h_accuracy;
     
-    /** Vertical position accuracy estimate */
+    /** Vertical position estimated standard deviation */
     public int v_accuracy;
     
     /** Number of satellites used in solution */

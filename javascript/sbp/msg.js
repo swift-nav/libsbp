@@ -105,7 +105,9 @@ var sbpImports = {
   signal: require('./signal.js'),
   system: require('./system.js'),
   tracking: require('./tracking.js'),
-  user: require('./user.js')
+  user: require('./user.js'),
+  vehicle: require('./vehicle.js'),
+  orientation: require('./orientation.js')
 };
 
 var sbpIdTable = Object.keys(sbpImports).reduce(function (prev, key) {

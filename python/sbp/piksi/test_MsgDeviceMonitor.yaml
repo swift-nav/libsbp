@@ -1,0 +1,117 @@
+---
+description: Unit tests for swiftnav.sbp.piksi MsgDeviceMonitor vNone.
+generated_on: 2016-11-03 20:14:43.762218
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      cpu_temperature: 6165
+      cpu_vaux: 1789
+      cpu_vint: 987
+      dev_vin: -9999
+      fe_temperature: 4776
+    module: sbp.piksi
+    name: MsgDeviceMonitor
+  msg_type: '0xb5'
+  raw_json: '{"cpu_vint": 987, "sender": 16991, "msg_type": 181, "cpu_vaux": 1789,
+    "fe_temperature": 4776, "dev_vin": -9999, "crc": 59855, "length": 10, "cpu_temperature":
+    6165, "preamble": 85, "payload": "8djbA/0GFRioEg=="}'
+  raw_packet: VbUAX0IK8djbA/0GFRioEs/p
+  sbp:
+    crc: '0xe9cf'
+    length: 10
+    msg_type: '0xb5'
+    payload: 8djbA/0GFRioEg==
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      cpu_temperature: 6168
+      cpu_vaux: 1790
+      cpu_vint: 987
+      dev_vin: -9999
+      fe_temperature: 4776
+    module: sbp.piksi
+    name: MsgDeviceMonitor
+  msg_type: '0xb5'
+  raw_json: '{"cpu_vint": 987, "sender": 16991, "msg_type": 181, "cpu_vaux": 1790,
+    "fe_temperature": 4776, "dev_vin": -9999, "crc": 7849, "length": 10, "cpu_temperature":
+    6168, "preamble": 85, "payload": "8djbA/4GGBioEg=="}'
+  raw_packet: VbUAX0IK8djbA/4GGBioEqke
+  sbp:
+    crc: '0x1ea9'
+    length: 10
+    msg_type: '0xb5'
+    payload: 8djbA/4GGBioEg==
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      cpu_temperature: 6166
+      cpu_vaux: 1789
+      cpu_vint: 987
+      dev_vin: -9999
+      fe_temperature: 4776
+    module: sbp.piksi
+    name: MsgDeviceMonitor
+  msg_type: '0xb5'
+  raw_json: '{"cpu_vint": 987, "sender": 16991, "msg_type": 181, "cpu_vaux": 1789,
+    "fe_temperature": 4776, "dev_vin": -9999, "crc": 29203, "length": 10, "cpu_temperature":
+    6166, "preamble": 85, "payload": "8djbA/0GFhioEg=="}'
+  raw_packet: VbUAX0IK8djbA/0GFhioEhNy
+  sbp:
+    crc: '0x7213'
+    length: 10
+    msg_type: '0xb5'
+    payload: 8djbA/0GFhioEg==
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      cpu_temperature: 6150
+      cpu_vaux: 1788
+      cpu_vint: 986
+      dev_vin: -9999
+      fe_temperature: 4776
+    module: sbp.piksi
+    name: MsgDeviceMonitor
+  msg_type: '0xb5'
+  raw_json: '{"cpu_vint": 986, "sender": 16991, "msg_type": 181, "cpu_vaux": 1788,
+    "fe_temperature": 4776, "dev_vin": -9999, "crc": 27591, "length": 10, "cpu_temperature":
+    6150, "preamble": 85, "payload": "8djaA/wGBhioEg=="}'
+  raw_packet: VbUAX0IK8djaA/wGBhioEsdr
+  sbp:
+    crc: '0x6bc7'
+    length: 10
+    msg_type: '0xb5'
+    payload: 8djaA/wGBhioEg==
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      cpu_temperature: 6123
+      cpu_vaux: 1789
+      cpu_vint: 988
+      dev_vin: -9999
+      fe_temperature: 4776
+    module: sbp.piksi
+    name: MsgDeviceMonitor
+  msg_type: '0xb5'
+  raw_json: '{"cpu_vint": 988, "sender": 16991, "msg_type": 181, "cpu_vaux": 1789,
+    "fe_temperature": 4776, "dev_vin": -9999, "crc": 16369, "length": 10, "cpu_temperature":
+    6123, "preamble": 85, "payload": "8djcA/0G6xeoEg=="}'
+  raw_packet: VbUAX0IK8djcA/0G6xeoEvE/
+  sbp:
+    crc: '0x3ff1'
+    length: 10
+    msg_type: '0xb5'
+    payload: 8djcA/0G6xeoEg==
+    preamble: '0x55'
+    sender: '0x425f'
+version: null
+...

@@ -1,0 +1,225 @@
+/**
+ * Copyright (C) 2015 Swift Navigation Inc.
+ * Contact: Joshua Gross <josh@swift-nav.com>
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**********************
+ * Automatically generated from piksi/yaml/swiftnav/sbp/orientation.yaml with generate.py.
+ * Don't edit this by hand!
+ **********************
+ * Package description:
+ *
+ * Orientation Messages
+***********************/
+
+var SBP = require('./sbp');
+var Parser = require('./parser');
+var Int64 = require('node-int64');
+var UInt64 = require('cuint').UINT64;
+
+/**
+ * SBP class for message MSG_BASELINE_HEADING (0x020F).
+ *
+ * This message reports the baseline heading pointing from the base station to the
+ * rover relative to True North. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow). It is intended that time-
+ * matched RTK mode is used when the base station is moving.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field heading number (unsigned 32-bit int, 4 bytes) Heading
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgBaselineHeading = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_BASELINE_HEADING";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgBaselineHeading.prototype = Object.create(SBP.prototype);
+MsgBaselineHeading.prototype.messageType = "MSG_BASELINE_HEADING";
+MsgBaselineHeading.prototype.msg_type = 0x020F;
+MsgBaselineHeading.prototype.constructor = MsgBaselineHeading;
+MsgBaselineHeading.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .uint32('heading')
+  .uint8('n_sats')
+  .uint8('flags');
+MsgBaselineHeading.prototype.fieldSpec = [];
+MsgBaselineHeading.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgBaselineHeading.prototype.fieldSpec.push(['heading', 'writeUInt32LE', 4]);
+MsgBaselineHeading.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgBaselineHeading.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_ORIENT_QUAT (0x0220).
+ *
+ * This message reports the quaternion vector describing the vehcile body frame's
+ * orientation with respect to a local-level NED frame.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field w number (signed 32-bit int, 4 bytes) Real component
+ * @field x number (signed 32-bit int, 4 bytes) 1st imaginary component
+ * @field y number (signed 32-bit int, 4 bytes) 2nd imaginary component
+ * @field z number (signed 32-bit int, 4 bytes) 3rd imaginary component
+ * @field acc_w number (float, 4 bytes) Estimated standard deviation of w
+ * @field acc_x number (float, 4 bytes) Estimated standard deviation of x
+ * @field acc_y number (float, 4 bytes) Estimated standard deviation of y
+ * @field acc_z number (float, 4 bytes) Estimated standard deviation of z
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgOrientQuat = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ORIENT_QUAT";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgOrientQuat.prototype = Object.create(SBP.prototype);
+MsgOrientQuat.prototype.messageType = "MSG_ORIENT_QUAT";
+MsgOrientQuat.prototype.msg_type = 0x0220;
+MsgOrientQuat.prototype.constructor = MsgOrientQuat;
+MsgOrientQuat.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .int32('w')
+  .int32('x')
+  .int32('y')
+  .int32('z')
+  .floatle('acc_w')
+  .floatle('acc_x')
+  .floatle('acc_y')
+  .floatle('acc_z')
+  .uint8('flags');
+MsgOrientQuat.prototype.fieldSpec = [];
+MsgOrientQuat.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['w', 'writeInt32LE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['x', 'writeInt32LE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['y', 'writeInt32LE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['z', 'writeInt32LE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['acc_w', 'writeFloatLE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['acc_x', 'writeFloatLE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['acc_y', 'writeFloatLE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['acc_z', 'writeFloatLE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_ORIENT_EULER (0x0221).
+ *
+ * This message reports the yaw, pitch, and roll angles of the vehicle body frame.
+ * The rotations should applied intrinsically in the order yaw, pitch, and roll  in
+ * order to rotate the from a frame aligned with the local-level NED frame  to the
+ * vehicle body frame.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field roll number (signed 16-bit int, 2 bytes) rotation about the forward axis of the vehicle
+ * @field pitch number (signed 16-bit int, 2 bytes) rotation about the rightward axis of the vehicle
+ * @field yaw number (signed 16-bit int, 2 bytes) rotation about the downward axis of the vehicle
+ * @field var_roll number (float, 4 bytes) Estimated standard deviation of roll
+ * @field var_pitch number (float, 4 bytes) Estimated standard deviation of pitch
+ * @field var_yaw number (float, 4 bytes) Estimated standard deviation of yaw
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgOrientEuler = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ORIENT_EULER";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgOrientEuler.prototype = Object.create(SBP.prototype);
+MsgOrientEuler.prototype.messageType = "MSG_ORIENT_EULER";
+MsgOrientEuler.prototype.msg_type = 0x0221;
+MsgOrientEuler.prototype.constructor = MsgOrientEuler;
+MsgOrientEuler.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .int16('roll')
+  .int16('pitch')
+  .int16('yaw')
+  .floatle('var_roll')
+  .floatle('var_pitch')
+  .floatle('var_yaw')
+  .uint8('flags');
+MsgOrientEuler.prototype.fieldSpec = [];
+MsgOrientEuler.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgOrientEuler.prototype.fieldSpec.push(['roll', 'writeInt16LE', 2]);
+MsgOrientEuler.prototype.fieldSpec.push(['pitch', 'writeInt16LE', 2]);
+MsgOrientEuler.prototype.fieldSpec.push(['yaw', 'writeInt16LE', 2]);
+MsgOrientEuler.prototype.fieldSpec.push(['var_roll', 'writeFloatLE', 4]);
+MsgOrientEuler.prototype.fieldSpec.push(['var_pitch', 'writeFloatLE', 4]);
+MsgOrientEuler.prototype.fieldSpec.push(['var_yaw', 'writeFloatLE', 4]);
+MsgOrientEuler.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_ANGULAR_RATE (0x0222).
+ *
+ * This message reports the orientation rates in the vehicle body frame.  The
+ * values represent the measurements a strapped down gyroscope would  make and are
+ * not equivalent to the time derivative of the Euler angles. The orientation and
+ * origin of the user frame is specified via device settings. By convention, the
+ * vehicle x-axis is expected to be aligned with the forward direction, while the
+ * vehicle y-axis is expected to be aligned with the right direction, and the
+ * vehicle z-axis should be aligned with the down direction.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field x number (signed 16-bit int, 2 bytes) angular rate about x axis
+ * @field y number (signed 16-bit int, 2 bytes) angular rate about y axis
+ * @field z number (signed 16-bit int, 2 bytes) angular rate about z axis
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgAngularRate = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ANGULAR_RATE";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgAngularRate.prototype = Object.create(SBP.prototype);
+MsgAngularRate.prototype.messageType = "MSG_ANGULAR_RATE";
+MsgAngularRate.prototype.msg_type = 0x0222;
+MsgAngularRate.prototype.constructor = MsgAngularRate;
+MsgAngularRate.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .int16('x')
+  .int16('y')
+  .int16('z')
+  .uint8('flags');
+MsgAngularRate.prototype.fieldSpec = [];
+MsgAngularRate.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgAngularRate.prototype.fieldSpec.push(['x', 'writeInt16LE', 2]);
+MsgAngularRate.prototype.fieldSpec.push(['y', 'writeInt16LE', 2]);
+MsgAngularRate.prototype.fieldSpec.push(['z', 'writeInt16LE', 2]);
+MsgAngularRate.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+module.exports = {
+  0x020F: MsgBaselineHeading,
+  MsgBaselineHeading: MsgBaselineHeading,
+  0x0220: MsgOrientQuat,
+  MsgOrientQuat: MsgOrientQuat,
+  0x0221: MsgOrientEuler,
+  MsgOrientEuler: MsgOrientEuler,
+  0x0222: MsgAngularRate,
+  MsgAngularRate: MsgAngularRate,
+}

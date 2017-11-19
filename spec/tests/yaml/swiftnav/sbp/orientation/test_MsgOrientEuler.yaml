@@ -1,0 +1,17 @@
+description: Unit tests for swiftnav.sbp.orientation MsgOrientEuler v2.3.
+generated_on: 2017-11-18 21:26:14.481958
+package: sbp.orientation
+tests:
+- msg:
+    fields: {flags: 4, pitch: 2, roll: 2, tow: 3, var_pitch: 8, var_roll: 7, var_yaw: 2,
+      yaw: 6}
+    module: sbp.orientation
+    name: MsgOrientEuler
+  msg_type: '0x221'
+  raw_json: '{"var_pitch": 8, "sender": 66, "msg_type": 545, "roll": 2, "yaw": 6,
+    "tow": 3, "var_roll": 7, "crc": 24550, "length": 23, "flags": 4, "pitch": 2, "var_yaw":
+    2, "preamble": 85, "payload": "AwAAAAIAAgAGAAAA4EAAAABBAAAAQAQ="}'
+  raw_packet: VSECQgAXAwAAAAIAAgAGAAAA4EAAAABBAAAAQATmXw==
+  sbp: {crc: '0x5fe6', length: 23, msg_type: '0x221', payload: AwAAAAIAAgAGAAAA4EAAAABBAAAAQAQ=,
+    preamble: '0x55', sender: '0x42'}
+version: '2.3'

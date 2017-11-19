@@ -31,6 +31,9 @@ from . import user as user
 from . import imu as imu
 from . import mag as mag
 from . import ndb as ndb
+from . import vehicle as vehicle
+from . import orientation as orientation
+
 import warnings
 
 _SBP_TABLE = dict(acq.msg_classes.items()
@@ -48,7 +51,10 @@ _SBP_TABLE = dict(acq.msg_classes.items()
                   + imu.msg_classes.items()
                   + mag.msg_classes.items()
                   + ext_events.msg_classes.items()
-                  + ndb.msg_classes.items())
+                  + ndb.msg_classes.items()
+                  + vehicle.msg_classes.items()
+                  + orientation.msg_classes.items()
+                  )
 
 class InvalidSBPMessageType(NotImplementedError):
   """

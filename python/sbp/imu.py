@@ -35,7 +35,8 @@ class MsgImuRaw(SBP):
 
   
   Raw data from the Inertial Measurement Unit, containing accelerometer and
-gyroscope readings.
+gyroscope readings. The sense of the measurements are to be aligned with 
+the indications on the device itself.
 
 
   Parameters
@@ -50,17 +51,17 @@ time is unknown or invalid.
     Milliseconds since start of GPS week, fractional part
 
   acc_x : int
-    Acceleration in the body frame X axis
+    Acceleration in the IMU frame X axis
   acc_y : int
-    Acceleration in the body frame Y axis
+    Acceleration in the IMU frame Y axis
   acc_z : int
-    Acceleration in the body frame Z axis
+    Acceleration in the IMU frame Z axis
   gyr_x : int
-    Angular rate around the body frame X axis
+    Angular rate around IMU frame X axis
   gyr_y : int
-    Angular rate around the body frame Y axis
+    Angular rate around IMU frame Y axis
   gyr_z : int
-    Angular rate around the body frame Z axis
+    Angular rate around IMU frame Z axis
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 

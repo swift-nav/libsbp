@@ -28,6 +28,9 @@ from sbp import imu as imu
 from sbp import ext_events as ext_events
 from sbp import ndb as ndb
 from sbp import mag as mag
+from sbp import vehicle as vehicle
+from sbp import orientation as orientation 
+
 import pytest
 import sbp.acquisition as acq
 import sbp.logging as log
@@ -38,7 +41,7 @@ def test_table_count():
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 128
+  number_of_messages = 137
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_table_unqiue_count():
@@ -60,7 +63,10 @@ def test_table_unqiue_count():
                         + len(imu.msg_classes)
                         + len(ext_events.msg_classes)
                         + len(ndb.msg_classes)
-                        + len(mag.msg_classes))
+                        + len(mag.msg_classes)
+                        + len(vehicle.msg_classes)
+                        + len(orientation.msg_classes)
+                         )
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_available_messages():
