@@ -80,6 +80,38 @@ MsgSettingsWrite.prototype.fieldSpec = [];
 MsgSettingsWrite.prototype.fieldSpec.push(['setting', 'string', null]);
 
 /**
+ * SBP class for message MSG_SETTINGS_WRITE_RESP (0x00AF).
+ *
+ * Return the status of a write request with the new value of the setting.  If the
+ * requested value is rejected, the current value will be returned.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field status number (unsigned 8-bit int, 1 byte) Write status
+ * @field setting string A NULL-terminated and delimited string with contents [SECTION_SETTING, SETTING,
+ *   VALUE].
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSettingsWriteResp = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SETTINGS_WRITE_RESP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSettingsWriteResp.prototype = Object.create(SBP.prototype);
+MsgSettingsWriteResp.prototype.messageType = "MSG_SETTINGS_WRITE_RESP";
+MsgSettingsWriteResp.prototype.msg_type = 0x00AF;
+MsgSettingsWriteResp.prototype.constructor = MsgSettingsWriteResp;
+MsgSettingsWriteResp.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('status')
+  .string('setting', { greedy: true });
+MsgSettingsWriteResp.prototype.fieldSpec = [];
+MsgSettingsWriteResp.prototype.fieldSpec.push(['status', 'writeUInt8', 1]);
+MsgSettingsWriteResp.prototype.fieldSpec.push(['setting', 'string', null]);
+
+/**
  * SBP class for message MSG_SETTINGS_READ_REQ (0x00A4).
  *
  * The setting message reads the device configuration.
@@ -258,6 +290,8 @@ module.exports = {
   MsgSettingsSave: MsgSettingsSave,
   0x00A0: MsgSettingsWrite,
   MsgSettingsWrite: MsgSettingsWrite,
+  0x00AF: MsgSettingsWriteResp,
+  MsgSettingsWriteResp: MsgSettingsWriteResp,
   0x00A4: MsgSettingsReadReq,
   MsgSettingsReadReq: MsgSettingsReadReq,
   0x00A5: MsgSettingsReadResp,

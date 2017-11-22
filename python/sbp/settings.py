@@ -162,6 +162,96 @@ process to this message when it is received from sender ID
     d.update(j)
     return d
     
+SBP_MSG_SETTINGS_WRITE_RESP = 0x00AF
+class MsgSettingsWriteResp(SBP):
+  """SBP class for message MSG_SETTINGS_WRITE_RESP (0x00AF).
+
+  You can have MSG_SETTINGS_WRITE_RESP inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Return the status of a write request with the new value of the
+setting.  If the requested value is rejected, the current value
+will be returned.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  status : int
+    Write status
+  setting : string
+    A NULL-terminated and delimited string with contents
+[SECTION_SETTING, SETTING, VALUE].
+
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'status' / construct.Int8ul,
+                   'setting' / construct.GreedyString(encoding='utf8'),)
+  __slots__ = [
+               'status',
+               'setting',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSettingsWriteResp,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSettingsWriteResp, self).__init__()
+      self.msg_type = SBP_MSG_SETTINGS_WRITE_RESP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.status = kwargs.pop('status')
+      self.setting = kwargs.pop('setting')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSettingsWriteResp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSettingsWriteResp(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSettingsWriteResp._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSettingsWriteResp._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSettingsWriteResp, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_SETTINGS_READ_REQ = 0x00A4
 class MsgSettingsReadReq(SBP):
   """SBP class for message MSG_SETTINGS_READ_REQ (0x00A4).
@@ -641,6 +731,7 @@ for this setting to set the initial value.
 msg_classes = {
   0x00A1: MsgSettingsSave,
   0x00A0: MsgSettingsWrite,
+  0x00AF: MsgSettingsWriteResp,
   0x00A4: MsgSettingsReadReq,
   0x00A5: MsgSettingsReadResp,
   0x00A2: MsgSettingsReadByIndexReq,

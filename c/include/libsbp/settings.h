@@ -54,6 +54,21 @@ process to this message when it is received from sender ID
 } msg_settings_write_t;
 
 
+/** Acknowledgement with status of MSG_SETTINGS_WRITE
+ *
+ * Return the status of a write request with the new value of the
+ * setting.  If the requested value is rejected, the current value
+ * will be returned.
+ */
+#define SBP_MSG_SETTINGS_WRITE_RESP         0x00AF
+typedef struct __attribute__((packed)) {
+  u8 status;     /**< Write status */
+  char setting[0]; /**< A NULL-terminated and delimited string with contents
+[SECTION_SETTING, SETTING, VALUE].
+ */
+} msg_settings_write_resp_t;
+
+
 /** Read device configuration settings (host => device)
  *
 * The setting message reads the device configuration.
