@@ -21,6 +21,13 @@ description: |
   phase ambiguity. The pseudo-absolute position solution uses a
   user-provided, well-surveyed base station position (if available)
   and the RTK solution in tandem.
+  
+  When the inertial navigation mode indicates that the IMU is used,
+  all messages are reported in the vehicle body frame as defined by
+  device settings.  By default, the vehicle body frame is configured to be
+  coincident with the antenna phase center.  When there is no inertial 
+  navigation, the solution will be reported at the phase center of the antenna.
+
 stable: True
 public: True
 include:
@@ -223,12 +230,10 @@ definitions:
               - 5-7:
                   desc: Reserved
               - 3-4:
-                  desc: INS status
+                  desc: Inertial Navigation Mode
                   values:
-                      - 0: Not present
-                      - 1: Error (see INS status msg)
-                      - 2: Warning (see INS status msg)
-                      - 3: Valid
+                      - 0: None
+                      - 1: INS used
               - 0-2:
                   desc: Fix mode
                   values:
@@ -237,6 +242,7 @@ definitions:
                       - 2: Differential GNSS (DGNSS)
                       - 3: Float RTK
                       - 4: Fixed RTK
+                      - 5: Dead Reckoning
 
  - MSG_POS_ECEF_COV:
     id: 0x0214
@@ -302,12 +308,10 @@ definitions:
               - 5-7:
                   desc: Reserved
               - 3-4:
-                  desc: INS status
+                  desc: Inertial Navigation Mode
                   values:
-                      - 0: Not present
-                      - 1: Error (see INS status msg)
-                      - 2: Warning (see INS status msg)
-                      - 3: Valid
+                      - 0: None
+                      - 1: INS used
               - 0-2:
                   desc: Fix mode
                   values:
@@ -316,6 +320,7 @@ definitions:
                       - 2: Differential GNSS (DGNSS)
                       - 3: Float RTK
                       - 4: Fixed RTK
+                      - 5: Dead Reckoning
 
  - MSG_POS_LLH:
     id: 0x020A
@@ -364,12 +369,10 @@ definitions:
               - 5-7:
                   desc: Reserved
               - 3-4:
-                  desc: INS status
+                  desc: Inertial Navigation Mode
                   values:
-                      - 0: Not present
-                      - 1: Error (see INS status msg)
-                      - 2: Warning (see INS status msg)
-                      - 3: Valid
+                      - 0: None
+                      - 1: INS used
               - 0-2:
                   desc: Fix mode
                   values:
@@ -378,6 +381,7 @@ definitions:
                       - 2: Differential GNSS (DGNSS)
                       - 3: Float RTK
                       - 4: Fixed RTK
+                      - 5: Dead Reckoning
 
 
  - MSG_POS_LLH_COV:
@@ -443,12 +447,10 @@ definitions:
               - 5-7:
                   desc: Reserved
               - 3-4:
-                  desc: INS status
+                  desc: Inertial Navigation Mode
                   values:
-                      - 0: Not present
-                      - 1: Error (see INS status msg)
-                      - 2: Warning (see INS status msg)
-                      - 3: Valid
+                      - 0: None
+                      - 1: INS used
               - 0-2:
                   desc: Fix mode
                   values:
@@ -457,6 +459,7 @@ definitions:
                       - 2: Differential GNSS (DGNSS)
                       - 3: Float RTK
                       - 4: Fixed RTK
+                      - 5: Dead Reckoning
 
  - MSG_BASELINE_ECEF:
     id: 0x020B
@@ -495,12 +498,7 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 7:
-                    desc: RAIM repair flag
-                    values:
-                        - 0: No repair
-                        - 1: Solution came from RAIM repair
-                - 3-6:
+                - 3-7:
                     desc: Reserved
                 - 0-2:
                     desc: Fix mode
@@ -553,12 +551,7 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 7:
-                    desc: RAIM repair flag
-                    values:
-                        - 0: No repair
-                        - 1: Solution came from RAIM repair
-                - 3-6:
+                - 3-7:
                     desc: Reserved
                 - 0-2:
                     desc: Fix mode
@@ -608,18 +601,17 @@ definitions:
                 - 5-7:
                     desc: Reserved
                 - 3-4:
-                    desc: INS status
+                    desc: INS Navigation Mode
                     values:
-                        - 0: Not present
-                        - 1: Error (see INS status msg)
-                        - 2: Warning (see INS status msg)
-                        - 3: Valid
+                        - 0: None
+                        - 1: INS used
                 - 0-2:
                     desc: Velocity mode
                     values:
                         - 0: Invalid
                         - 1: Measured Doppler derived
                         - 2: Computed Doppler derived
+                        - 3: Dead Reckoning
 
  - MSG_VEL_ECEF_COV:
     id: 0x0215
@@ -679,18 +671,17 @@ definitions:
                 - 5-7:
                     desc: Reserved
                 - 3-4:
-                    desc: INS status
+                    desc: INS Navigation Mode
                     values:
-                        - 0: Not present
-                        - 1: Error (see INS status msg)
-                        - 2: Warning (see INS status msg)
-                        - 3: Valid
+                        - 0: None
+                        - 1: INS used
                 - 0-2:
                     desc: Velocity mode
                     values:
                         - 0: Invalid
                         - 1: Measured Doppler derived
                         - 2: Computed Doppler derived
+                        - 3: Dead Reckoning
 
  - MSG_VEL_NED:
     id: 0x020E
@@ -737,18 +728,17 @@ definitions:
                 - 5-7:
                     desc: Reserved
                 - 3-4:
-                    desc: INS status
+                    desc: INS Navigation Mode
                     values:
-                        - 0: Not present
-                        - 1: Error (see INS status msg)
-                        - 2: Warning (see INS status msg)
-                        - 3: Valid
+                        - 0: None
+                        - 1: INS used
                 - 0-2:
-                    desc: GPS Velocity mode
+                    desc: Velocity mode
                     values:
                         - 0: Invalid
                         - 1: Measured Doppler derived
                         - 2: Computed Doppler derived
+                        - 3: Dead Reckoning
 
  - MSG_VEL_NED_COV:
     id: 0x0212
@@ -811,28 +801,27 @@ definitions:
                 - 5-7:
                     desc: Reserved
                 - 3-4:
-                    desc: INS status
+                    desc: INS Navigation Mode
                     values:
-                        - 0: Not present
-                        - 1: Error (see INS status msg)
-                        - 2: Warning (see INS status msg)
-                        - 3: Valid
+                        - 0: None
+                        - 1: INS used
                 - 0-2:
-                    desc: GPS velocity mode
+                    desc: Velocity mode
                     values:
                         - 0: Invalid
                         - 1: Measured Doppler derived
                         - 2: Computed Doppler derived
+                        - 3: Dead Reckoning
 
- - MSG_VEL_USER_FRAME:
+ - MSG_VEL_BODY:
     id: 0x0213
     short_desc: Velocity in User Frame
     desc: |
-      This message reports the velocity in the user frame. By convention,
+      This message reports the velocity in the Vehicle Body Frame. By convention,
       the x-axis should point out the nose of the vehicle and represent the forward
       direction, while as the y-axis should point out the right hand side of the vehicle.
       Since this is a right handed system, z should point out the bottom of the vehicle.
-      The orientation and origin of the user frame are specified via the device settings.
+      The orientation and origin of the Vehicle Body Frame are specified via the device settings.
       The full GPS time is given by the preceding MSG_GPS_TIME with the
       matching time-of-week (tow).
     fields:
@@ -886,18 +875,17 @@ definitions:
                 - 5-7:
                     desc: Reserved
                 - 3-4:
-                    desc: INS status
+                    desc: INS Navigation Mode
                     values:
-                        - 0: Not present
-                        - 1: Error (see INS status msg)
-                        - 2: Warning (see INS status msg)
-                        - 3: Valid
+                        - 0: None
+                        - 1: INS used
                 - 0-2:
                     desc: Velocity mode
                     values:
                         - 0: Invalid
                         - 1: Measured Doppler derived
                         - 2: Computed Doppler derived
+                        - 3: Dead Reckoning
 
  - MSG_BASELINE_HEADING:
     id: 0x020F
