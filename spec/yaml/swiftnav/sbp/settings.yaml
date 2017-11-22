@@ -43,6 +43,30 @@ definitions:
             process to this message when it is received from sender ID
             0x42.
 
+ - MSG_SETTINGS_WRITE_RESP:
+    id: 0x00AF
+    short_desc: Acknowledgement with status of MSG_SETTINGS_WRITE
+    desc: |
+      Return the status of a write request with the new value of the
+      setting.  If the requested value is rejected, the current value
+      will be returned.
+    fields:
+      - status:
+          type: u8
+          desc: Write status
+          fields:
+            - 0-1:
+                desc: Write status
+                values:
+                    - 0: Accepted; value updated
+                    - 1: Value rejected; unparsable or out-of-range
+                    - 2: Setting rejected; the requested setting does not exist
+      - setting:
+          type: string
+          desc: |
+            A NULL-terminated and delimited string with contents
+            [SECTION_SETTING, SETTING, VALUE].
+
  - MSG_SETTINGS_READ_REQ:
     id: 0x00A4
     short_desc: Read device configuration settings (host => device)
