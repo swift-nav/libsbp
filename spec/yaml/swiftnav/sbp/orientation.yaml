@@ -38,12 +38,7 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 7:
-                    desc: RAIM repair flag
-                    values:
-                      - 0: No repair
-                      - 1: Solution came from RAIM repair
-                - 3-6:
+                - 3-7:
                     desc: Reserved
                 - 0-2:
                     desc: Fix mode
@@ -58,7 +53,7 @@ definitions:
     id: 0x0220
     short_desc: Quaternion 4 component vector 
     desc: |
-      This message reports the quaternion vector describing the vehicle orientation
+      This message reports the quaternion vector describing the vehcile body frame's orientation
       with respect to a local-level NED frame.  
     fields:
           - tow:
@@ -101,15 +96,15 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 2-7:
+                - 3-7:
                     desc: Reserved
-                - 0-1:
-                    desc: INS status
+                - 0-2:
+                    desc: INS Navigation mode
                     values:
-                        - 0: Not present
-                        - 1: Error (see INS status msg)
-                        - 2: Warning (see INS status msg)
-                        - 3: Valid
+                        - 0: None
+                        - 1: INS only (Dead reckoning)
+                        - 2: INS with GNSS
+                        - 2: INS with GNSS Attitude
 
  - MSG_ORIENT_EULER:
     id: 0x0221
@@ -117,7 +112,7 @@ definitions:
     desc: |
       This message reports the yaw, pitch, and roll angles of the vehicle body frame.
       The rotations should applied intrinsically in the order yaw, pitch, and roll 
-      in order to rotate the from a frame aligned with hte local-level NED frame 
+      in order to rotate the from a frame aligned with the local-level NED frame 
       to the vehicle body frame.
     fields:
           - tow:
@@ -126,46 +121,46 @@ definitions:
               desc: GPS Time of Week
           - roll:
               type: s16
-              units: milliradians 
+              units: centidegrees
               desc: rotation about the forward axis of the vehicle
           - pitch:
               type: s16
-              units: milliradians
+              units: centidegrees
               desc: rotation about the rightward axis of the vehicle
           - yaw:
               type: s16
-              units: milliradians
+              units: centidegrees
               desc: rotation about the downward axis of the vehicle
           - var_roll:
               type: float
-              units: radians
+              units: degrees
               desc: Estimated standard deviation of roll
           - var_pitch:
               type: float
-              units: radians
+              units: degrees
               desc: Estimated standard deviation of pitch 
           - var_yaw:
               type: float
-              units: radians
+              units: degrees
               desc: Estimated standard deviation of yaw
           - flags:
               type: u8
               desc: Status flags
               fields:
-                - 2-7:
+                - 3-7:
                     desc: Reserved
-                - 0-1:
-                    desc: INS status
+                - 0-2:
+                    desc: INS Navigation mode
                     values:
-                        - 0: Not present
-                        - 1: Error (see INS status msg)
-                        - 2: Warning (see INS status msg)
-                        - 3: Valid
+                        - 0: None
+                        - 1: INS only (Dead reckoning)
+                        - 2: INS with valid GNSS
+                        - 3: INS with GNSS Attitude
  - MSG_ANGULAR_RATE:
     id: 0x0222
-    short_desc: User Frame instantaneous angular rates
+    short_desc: Vehicle Body Frame instantaneous angular rates
     desc: |
-      This message reports the orientation rates in the user body frame. 
+      This message reports the orientation rates in the vehicle body frame. 
       The values represent the measurements a strapped down gyroscope would 
       make and are not equivalent to the time derivative of the Euler angles.
       The orientation and origin of the user frame is specified via device settings.
@@ -179,15 +174,15 @@ definitions:
               desc: GPS Time of Week
           - x:
               type: s16
-              units: milliradians/s
+              units: decidegrees/s 
               desc: angular rate about x axis 
           - y:
               type: s16
-              units: milliradians/s
+              units: decidegrees/s 
               desc: angular rate about y axis 
           - z:
               type: s16
-              units: milliradians/s
+              units: decidegrees/s 
               desc: angular rate about z axis 
           - flags:
               type: u8
@@ -195,10 +190,10 @@ definitions:
               fields:
                 - 2-7:
                     desc: Reserved
-                - 0-1:
-                    desc: INS status
+                - 0-2:
+                    desc: INS Navigation mode
                     values:
-                        - 0: Not present
-                        - 1: Error (see INS status msg)
-                        - 2: Warning (see INS status msg)
-                        - 3: Valid
+                        - 0: None
+                        - 1: INS only (Dead reckoning)
+                        - 2: INS with valid GNSS
+                        - 3: INS with GNSS Attitude
