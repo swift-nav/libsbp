@@ -1,5 +1,5 @@
 name:                  sbp
-version:               2.3.0
+version:               2.3.1
 synopsis:              SwiftNav's SBP Library
 homepage:              https://github.com/swift-nav/libsbp
 license:               LGPL-3
@@ -61,7 +61,6 @@ library
                      , monad-loops
                      , template-haskell
                      , text
-                     , unordered-containers
 
 executable sbp2json
   hs-source-dirs:      main
@@ -112,15 +111,10 @@ test-suite test
   hs-source-dirs:      test
   main-is:             Test.hs
   other-modules:       Test.SwiftNav.CRC16
-  build-depends:       aeson
-                     , base
-                     , base64-bytestring
+  build-depends:       base
                      , basic-prelude
-                     , bytestring
-                     , QuickCheck
                      , sbp
                      , tasty
                      , tasty-hunit
-                     , tasty-quickcheck
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall
   default-language:    Haskell2010

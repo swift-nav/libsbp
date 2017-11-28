@@ -11198,6 +11198,47 @@ MsgAlmanacGlo.prototype.fieldSpec.push(['t_dot', 'writeDoubleLE', 8]);
 MsgAlmanacGlo.prototype.fieldSpec.push(['epsilon', 'writeDoubleLE', 8]);
 MsgAlmanacGlo.prototype.fieldSpec.push(['omega', 'writeDoubleLE', 8]);
 
+/**
+ * SBP class for message MSG_GLO_BIASES (0x0075).
+ *
+ * The GLONASS L1/L2 Code-Phase biases allows to perform  GPS+GLONASS integer
+ * ambiguity resolution for baselines with mixed receiver types (e.g. receiver of
+ * different manufacturers)
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field mask number (unsigned 8-bit int, 1 byte) GLONASS FDMA signals mask
+ * @field l1ca_bias number (signed 16-bit int, 2 bytes) GLONASS L1 C/A Code-Phase Bias
+ * @field l1p_bias number (signed 16-bit int, 2 bytes) GLONASS L1 P Code-Phase Bias
+ * @field l2ca_bias number (signed 16-bit int, 2 bytes) GLONASS L2 C/A Code-Phase Bias
+ * @field l2p_bias number (signed 16-bit int, 2 bytes) GLONASS L2 P Code-Phase Bias
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgGloBiases = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_GLO_BIASES";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgGloBiases.prototype = Object.create(SBP.prototype);
+MsgGloBiases.prototype.messageType = "MSG_GLO_BIASES";
+MsgGloBiases.prototype.msg_type = 0x0075;
+MsgGloBiases.prototype.constructor = MsgGloBiases;
+MsgGloBiases.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('mask')
+  .int16('l1ca_bias')
+  .int16('l1p_bias')
+  .int16('l2ca_bias')
+  .int16('l2p_bias');
+MsgGloBiases.prototype.fieldSpec = [];
+MsgGloBiases.prototype.fieldSpec.push(['mask', 'writeUInt8', 1]);
+MsgGloBiases.prototype.fieldSpec.push(['l1ca_bias', 'writeInt16LE', 2]);
+MsgGloBiases.prototype.fieldSpec.push(['l1p_bias', 'writeInt16LE', 2]);
+MsgGloBiases.prototype.fieldSpec.push(['l2ca_bias', 'writeInt16LE', 2]);
+MsgGloBiases.prototype.fieldSpec.push(['l2p_bias', 'writeInt16LE', 2]);
+
 module.exports = {
   ObservationHeader: ObservationHeader,
   Doppler: Doppler,
@@ -11265,6 +11306,8 @@ module.exports = {
   MsgAlmanacGloDep: MsgAlmanacGloDep,
   0x0073: MsgAlmanacGlo,
   MsgAlmanacGlo: MsgAlmanacGlo,
+  0x0075: MsgGloBiases,
+  MsgGloBiases: MsgGloBiases,
 }
 
 /***/ }),
