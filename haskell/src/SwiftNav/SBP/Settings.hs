@@ -84,6 +84,35 @@ $(makeSBP 'msgSettingsWrite ''MsgSettingsWrite)
 $(makeJSON "_msgSettingsWrite_" ''MsgSettingsWrite)
 $(makeLenses ''MsgSettingsWrite)
 
+msgSettingsWriteResp :: Word16
+msgSettingsWriteResp = 0x00AF
+
+-- | SBP class for message MSG_SETTINGS_WRITE_RESP (0x00AF).
+--
+-- Return the status of a write request with the new value of the setting.  If
+-- the requested value is rejected, the current value will be returned.
+data MsgSettingsWriteResp = MsgSettingsWriteResp
+  { _msgSettingsWriteResp_status :: !Word8
+    -- ^ Write status
+  , _msgSettingsWriteResp_setting :: !Text
+    -- ^ A NULL-terminated and delimited string with contents [SECTION_SETTING,
+    -- SETTING, VALUE].
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSettingsWriteResp where
+  get = do
+    _msgSettingsWriteResp_status <- getWord8
+    _msgSettingsWriteResp_setting <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    pure MsgSettingsWriteResp {..}
+
+  put MsgSettingsWriteResp {..} = do
+    putWord8 _msgSettingsWriteResp_status
+    putByteString $ encodeUtf8 _msgSettingsWriteResp_setting
+
+$(makeSBP 'msgSettingsWriteResp ''MsgSettingsWriteResp)
+$(makeJSON "_msgSettingsWriteResp_" ''MsgSettingsWriteResp)
+$(makeLenses ''MsgSettingsWriteResp)
+
 msgSettingsReadReq :: Word16
 msgSettingsReadReq = 0x00A4
 
