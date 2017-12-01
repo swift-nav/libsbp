@@ -13,8 +13,6 @@ reading SBP messages from a serial port, decoding BASELINE_NED messages and
 printing them out.
 """
 
-# from sbp.client.drivers.pyserial_driver import PySerialDriver
-
 from collections import defaultdict
 from sbp.client.drivers.network_drivers import TCPDriver
 from sbp.client import Handler, Framer
