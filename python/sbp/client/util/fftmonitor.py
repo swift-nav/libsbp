@@ -103,6 +103,9 @@ class FFTMonitor(object):
 
         if len(self.incomplete_ffts[channel][timestamp]['frequencies']) == 512:
             current_fft = self.incomplete_ffts[channel].pop(timestamp)
+            # Clear out any partial messages
+            self.incomplete_ffts[channel] = defaultdict(self.mkvalue)
+
             assert(len(current_fft['frequencies']) ==
                    len(current_fft['amplitudes']))
             self.ffts[channel].append(current_fft)
