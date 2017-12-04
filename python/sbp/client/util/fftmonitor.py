@@ -168,6 +168,12 @@ def main():
         type=int,
         default=1,
         help="specify the channel to monitor.")
+    parser.add_argument(
+        "-o",
+        "--output",
+        type=str,
+        default="fftmonitor",
+        help="specify the output filename.")
     args = parser.parse_args()
 
     monitor = FFTMonitor()
@@ -187,7 +193,7 @@ def main():
             ffts = monitor.get_ffts(ch)
             #monitor.disable_channel(ch)
 
-            with open('fft_channel_%d.pickle' % ch, 'wb') as handle:
+            with open('%s.pickle' % args.output, 'wb') as handle:
                 pickle.dump(ffts, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
