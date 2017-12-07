@@ -1338,7 +1338,7 @@ code will be returned with MSG_COMMAND_RESP.
   """
   _parser = construct.Struct(
                    'sequence' / construct.Int32ul,
-                   'command' / construct.GreedyString(encoding='utf8'),)
+                   'command' / construct.GreedyBytes,)
   __slots__ = [
                'sequence',
                'command',
@@ -1514,7 +1514,7 @@ the correct command.
   """
   _parser = construct.Struct(
                    'sequence' / construct.Int32ul,
-                   'line' / construct.GreedyString(encoding='utf8'),)
+                   'line' / construct.GreedyBytes,)
   __slots__ = [
                'sequence',
                'line',

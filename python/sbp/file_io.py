@@ -72,7 +72,7 @@ to this message when it is received from sender ID 0x42.
                    'sequence' / construct.Int32ul,
                    'offset' / construct.Int32ul,
                    'chunk_size' / construct.Int8ul,
-                   'filename' / construct.GreedyString(encoding='utf8'),)
+                   'filename' / construct.GreedyBytes,)
   __slots__ = [
                'sequence',
                'offset',
@@ -265,7 +265,7 @@ from sender ID 0x42.
   _parser = construct.Struct(
                    'sequence' / construct.Int32ul,
                    'offset' / construct.Int32ul,
-                   'dirname' / construct.GreedyString(encoding='utf8'),)
+                   'dirname' / construct.GreedyBytes,)
   __slots__ = [
                'sequence',
                'offset',
@@ -444,7 +444,7 @@ process this message when it is received from sender ID 0x42.
 
   """
   _parser = construct.Struct(
-                   'filename' / construct.GreedyString(encoding='utf8'),)
+                   'filename' / construct.GreedyBytes,)
   __slots__ = [
                'filename',
               ]
@@ -540,7 +540,7 @@ only  process this message when it is received from sender ID
   _parser = construct.Struct(
                    'sequence' / construct.Int32ul,
                    'offset' / construct.Int32ul,
-                   'filename' / construct.GreedyString(encoding='utf8'),
+                   'filename' / construct.GreedyBytes,
                    construct.GreedyRange('data' / construct.Int8ul),)
   __slots__ = [
                'sequence',
