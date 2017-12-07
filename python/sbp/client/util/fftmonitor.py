@@ -11,6 +11,7 @@
 the :mod:`sbp.client.util.fftmonitor` module contains functionality to log
 and assemble spectrum analyzer messages into FFT information
 """
+from __future__ import print_function
 
 from collections import defaultdict
 from sbp.client.drivers.network_drivers import TCPDriver
@@ -188,7 +189,7 @@ def main():
             monitor.enable_channel(ch)
             while monitor.num_ffts(ch) < samples:
                 time.sleep(1)
-            print "Captured %d ffts from channel %d" % (samples, ch)
+            print("Captured %d ffts from channel %d" % (samples, ch))
             ffts = monitor.get_ffts(ch)
             #monitor.disable_channel(ch)
 

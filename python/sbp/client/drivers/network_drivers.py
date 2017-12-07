@@ -10,6 +10,7 @@
 """TCP and HTTP networking client components.
 
 """
+from __future__ import print_function
 
 from .base_driver import BaseDriver
 from concurrent.futures import ThreadPoolExecutor
@@ -41,7 +42,7 @@ class TCPDriver(BaseDriver):
 
     def __init__(self, host, port, timeout=5):
         self._address = (host, port)
-        print(host, port)
+        print((host, port))
         self._create_connection = partial(socket.create_connection,
                                           (host, port),
                                           timeout=timeout
@@ -74,7 +75,7 @@ class TCPDriver(BaseDriver):
             return data
         except socket.timeout:
             self._connect()
-        except socket.error, msg:
+        except socket.error as msg:
             raise IOError
 
     def flush(self):
@@ -94,7 +95,7 @@ class TCPDriver(BaseDriver):
             self.handle.sendall(s)
         except socket.timeout:
             self._connect()
-        except socket.error, msg:
+        except socket.error as msg:
             raise IOError
         finally:
             self._write_lock.release()

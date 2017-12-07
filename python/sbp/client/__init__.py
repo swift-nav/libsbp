@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 # Copyright (C) 2015 Swift Navigation Inc.
 # Contact: Mark Fine <mark@swiftnav.com>
 #
@@ -8,6 +9,6 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-from handler import Handler
-from framer import Framer
-from forwarder import Forwarder
+from .handler import Handler
+from .framer import Framer
+from .forwarder import Forwarder
