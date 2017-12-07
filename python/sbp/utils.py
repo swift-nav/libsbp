@@ -13,9 +13,13 @@
 
 """
 
+from __future__ import absolute_import
+
 EXCLUDE = ['sender', 'msg_type', 'crc', 'length', 'preamble', 'payload']
 
 from construct import Container
+
+from ._compat import string_types
 
 
 def exclude_fields(obj, exclude=EXCLUDE):
@@ -35,8 +39,11 @@ def walk_json_dict(coll):
   coll : dict
 
   """
+  if isinstance(coll, string_types):
+    return coll
   if isinstance(coll, dict):
     return dict((k, walk_json_dict(v)) for (k, v) in coll.items())
+  # strings in python 2 don't have iter. This function used to rely on that
   elif hasattr(coll, '__iter__'):
     return [walk_json_dict(seq) for seq in coll]
   else:
