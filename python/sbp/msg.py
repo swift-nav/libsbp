@@ -8,6 +8,7 @@
 # THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+from __future__ import absolute_import
 
 import base64
 import copy
@@ -15,6 +16,8 @@ import json
 import struct
 
 import construct
+
+from ._compat import base64_encode
 
 SBP_PREAMBLE = 0x55
 
@@ -187,5 +190,5 @@ class SBP(object):
             'msg_type': self.msg_type,
             'sender': self.sender,
             'length': self.length,
-            'payload': base64.standard_b64encode(self.payload),
+            'payload': base64_encode(self.payload),
             'crc': self.crc}
