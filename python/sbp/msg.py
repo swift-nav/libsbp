@@ -59,8 +59,8 @@ def crc16(s, crc=0):
   """CRC16 implementation acording to CCITT standards.
 
   """
-  for ch in s:
-    crc = ((crc<<8)&0xFFFF) ^ crc16_tab[ ((crc>>8)&0xFF) ^ (ord(ch)&0xFF) ]
+  for ch in bytearray(s):
+    crc = ((crc<<8)&0xFFFF) ^ crc16_tab[ ((crc>>8)&0xFF) ^ (ch&0xFF) ]
     crc &= 0xFFFF
   return crc
 
