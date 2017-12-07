@@ -44,8 +44,6 @@ install:
   - pip install --upgrade --user Sphinx
   - npm install -g mocha
   - npm install
-  - stack update
-  - (cd haskell && stack setup)
 
 script:
   - export JAVA_HOME=/usr/lib/jvm/java-8-oracle
