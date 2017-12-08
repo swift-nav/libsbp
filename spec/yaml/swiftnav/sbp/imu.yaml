@@ -10,7 +10,7 @@
 
 package: swiftnav.sbp.imu
 description: Inertial Measurement Unit (IMU) messages.
-stable: False
+stable: True
 public: True
 include:
   - types.yaml
