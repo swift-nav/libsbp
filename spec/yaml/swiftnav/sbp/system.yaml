@@ -105,7 +105,12 @@ definitions:
                   values:
                       - 0: No external antenna detected
                       - 1: External antenna is present
-              - 24-30:
+              - 30:
+                  desc: External antenna short
+                  values:
+                      - 0: External antenna is shorted
+                      - 1: External antenna not shorted
+              - 24-29:
                   desc: Reserved
               - 16-23:
                   desc: SBP major protocol version number
