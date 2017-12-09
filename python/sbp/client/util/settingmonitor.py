@@ -55,10 +55,17 @@ class SettingMonitor(object):
             time.sleep(0.1)
         return ok
 
-    def clear(self):
-        """Clear all settings"""
-        self.settings[:] = []
+    def clear(self, section=None, setting=None, value=None):
+        """Clear settings"""
+        match = map(lambda (x,y,z): all((section is None or x == section,
+                                         setting is None or y == setting,
+                                         value is None or z == value)),
+                    self.settings)
 
+        keep = filter(lambda (setting,remove): not remove,
+                      zip(self.settings,match))
+
+        self.settings[:] = map(lambda x: x[0], keep)
 
 
 if __name__ == "__main__":
