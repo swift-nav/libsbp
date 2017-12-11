@@ -102,10 +102,8 @@ definitions:
                 - 0-2:
                     desc: INS Navigation mode
                     values:
-                        - 0: None
-                        - 1: INS only (Dead reckoning)
-                        - 2: INS with GNSS
-                        - 2: INS with GNSS Attitude
+                        - 0: Invalid
+                        - 1: Valid
 
  - MSG_ORIENT_EULER:
     id: 0x0221
@@ -153,10 +151,8 @@ definitions:
                 - 0-2:
                     desc: INS Navigation mode
                     values:
-                        - 0: None
-                        - 1: INS only (Dead reckoning)
-                        - 2: INS with valid GNSS
-                        - 3: INS with GNSS Attitude
+                        - 0: Invalid
+                        - 1: Valid
  - MSG_ANGULAR_RATE:
     id: 0x0222
     short_desc: Vehicle Body Frame instantaneous angular rates
@@ -194,7 +190,5 @@ definitions:
                 - 0-2:
                     desc: INS Navigation mode
                     values:
-                        - 0: None
-                        - 1: INS only (Dead reckoning)
-                        - 2: INS with valid GNSS
-                        - 3: INS with GNSS Attitude
+                        - 0: Invalid
+                        - 1: Valid
