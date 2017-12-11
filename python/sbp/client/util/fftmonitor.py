@@ -8,9 +8,8 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 """
-the :mod:`sbp.client.examples.simple` module contains a basic example of
-reading SBP messages from a serial port, decoding BASELINE_NED messages and
-printing them out.
+the :mod:`sbp.client.util.fftmonitor` module contains functionality to log
+and assemble spectrum analyzer messages into FFT information
 """
 
 from collections import defaultdict
