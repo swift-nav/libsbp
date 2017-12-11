@@ -128,3 +128,33 @@ definitions:
                   values:
                       - 0: System Healthy
                       - 1: An error has occurred
+
+ - MSG_INS_STATUS:
+    id: 0xFF03
+    short_desc: Inertial Navigation System status message
+    desc: |
+        The INS status message describes the state of the operation
+        and initialization of the inertial navigation system. 
+    fields:
+        - flags:
+            type: u32
+            desc: Status flags
+            fields:
+              - 8-31:
+                  desc: Reserved
+              - 6-7:
+                  desc:  INS Error
+                  values:
+                      - 0: No error
+                      - 1: General error
+              - 3-5:
+                  desc: Initialization Routine Indicator
+                  values:
+                      - 0: None
+                      - 1: Automatic calibration routine in progress
+              - 0-2:
+                  desc: INS status
+                  values:
+                      - 0: INS ready
+                      - 1: INS calibration routine in progress
+                      - 2: INS error 
