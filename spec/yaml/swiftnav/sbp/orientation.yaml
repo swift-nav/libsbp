@@ -53,8 +53,9 @@ definitions:
     id: 0x0220
     short_desc: Quaternion 4 component vector 
     desc: |
-      This message reports the quaternion vector describing the vehcile body frame's orientation
-      with respect to a local-level NED frame.  
+      This message reports the quaternion vector describing the vehicle body frame's orientation
+      with respect to a local-level NED frame. The components of the vector should sum to a unit
+      vector assuming that the LSB of each component as a value of 2^-31. 
     fields:
           - tow:
               type: u32
@@ -62,19 +63,19 @@ definitions:
               desc: GPS Time of Week
           - w:
               type: s32
-              units: N/A
+              units: 2^-31
               desc: Real component
           - x:
               type: s32
-              units: N/A
+              units: 2^-31
               desc: 1st imaginary component
           - y:
               type: s32
-              units: N/A
+              units: 2^-31
               desc: 2nd imaginary component
           - z:
               type: s32
-              units: N/A
+              units: 2^-31
               desc: 3rd imaginary component
           - acc_w:
               type: float
@@ -120,16 +121,16 @@ definitions:
               units: ms
               desc: GPS Time of Week
           - roll:
-              type: s16
-              units: centidegrees
+              type: s32
+              units: microdegrees
               desc: rotation about the forward axis of the vehicle
           - pitch:
-              type: s16
-              units: centidegrees
+              type: s32
+              units: microdegrees
               desc: rotation about the rightward axis of the vehicle
           - yaw:
-              type: s16
-              units: centidegrees
+              type: s32
+              units: microdegrees
               desc: rotation about the downward axis of the vehicle
           - var_roll:
               type: float
@@ -173,16 +174,16 @@ definitions:
               units: ms
               desc: GPS Time of Week
           - x:
-              type: s16
-              units: decidegrees/s 
+              type: s32
+              units: microdegrees/s 
               desc: angular rate about x axis 
           - y:
-              type: s16
-              units: decidegrees/s 
+              type: s32
+              units: microdegrees/s 
               desc: angular rate about y axis 
           - z:
-              type: s16
-              units: decidegrees/s 
+              type: s32
+              units: microdegrees/s 
               desc: angular rate about z axis 
           - flags:
               type: u8
