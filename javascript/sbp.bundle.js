@@ -12841,6 +12841,34 @@ MsgHeartbeat.prototype.parser = new Parser()
 MsgHeartbeat.prototype.fieldSpec = [];
 MsgHeartbeat.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
+/**
+ * SBP class for message MSG_INS_STATUS (0xFF03).
+ *
+ * The INS status message describes the state of the operation and initialization
+ * of the inertial navigation system.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field flags number (unsigned 32-bit int, 4 bytes) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgInsStatus = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_INS_STATUS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgInsStatus.prototype = Object.create(SBP.prototype);
+MsgInsStatus.prototype.messageType = "MSG_INS_STATUS";
+MsgInsStatus.prototype.msg_type = 0xFF03;
+MsgInsStatus.prototype.constructor = MsgInsStatus;
+MsgInsStatus.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('flags');
+MsgInsStatus.prototype.fieldSpec = [];
+MsgInsStatus.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
+
 module.exports = {
   0xFF00: MsgStartup,
   MsgStartup: MsgStartup,
@@ -12848,6 +12876,8 @@ module.exports = {
   MsgDgnssStatus: MsgDgnssStatus,
   0xFFFF: MsgHeartbeat,
   MsgHeartbeat: MsgHeartbeat,
+  0xFF03: MsgInsStatus,
+  MsgInsStatus: MsgInsStatus,
 }
 
 /***/ }),

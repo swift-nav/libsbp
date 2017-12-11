@@ -122,6 +122,7 @@ data SBPMsg =
    | SBPMsgImuAux MsgImuAux Msg
    | SBPMsgImuRaw MsgImuRaw Msg
    | SBPMsgInitBase MsgInitBase Msg
+   | SBPMsgInsStatus MsgInsStatus Msg
    | SBPMsgIono MsgIono Msg
    | SBPMsgLog MsgLog Msg
    | SBPMsgM25FlashWriteStatus MsgM25FlashWriteStatus Msg
@@ -272,6 +273,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgImuAux = SBPMsgImuAux (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgImuRaw = SBPMsgImuRaw (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgInitBase = SBPMsgInitBase (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgInsStatus = SBPMsgInsStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgIono = SBPMsgIono (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLog = SBPMsgLog (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -414,6 +416,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgImuAux _ m) = put m
       encoder (SBPMsgImuRaw _ m) = put m
       encoder (SBPMsgInitBase _ m) = put m
+      encoder (SBPMsgInsStatus _ m) = put m
       encoder (SBPMsgIono _ m) = put m
       encoder (SBPMsgLog _ m) = put m
       encoder (SBPMsgM25FlashWriteStatus _ m) = put m
@@ -560,6 +563,7 @@ instance FromJSON SBPMsg where
         | msgType == msgImuAux = SBPMsgImuAux <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgImuRaw = SBPMsgImuRaw <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgInitBase = SBPMsgInitBase <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgInsStatus = SBPMsgInsStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgIono = SBPMsgIono <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLog = SBPMsgLog <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -707,6 +711,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgImuAux n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgImuRaw n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgInitBase n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgInsStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgIono n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLog n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgM25FlashWriteStatus n m) = toJSON n <<>> toJSON m
@@ -848,6 +853,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgImuAux n m) = SBPMsgImuAux n <$> f m
   msg f (SBPMsgImuRaw n m) = SBPMsgImuRaw n <$> f m
   msg f (SBPMsgInitBase n m) = SBPMsgInitBase n <$> f m
+  msg f (SBPMsgInsStatus n m) = SBPMsgInsStatus n <$> f m
   msg f (SBPMsgIono n m) = SBPMsgIono n <$> f m
   msg f (SBPMsgLog n m) = SBPMsgLog n <$> f m
   msg f (SBPMsgM25FlashWriteStatus n m) = SBPMsgM25FlashWriteStatus n <$> f m

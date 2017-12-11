@@ -133,3 +133,27 @@ instance Binary MsgHeartbeat where
 $(makeSBP 'msgHeartbeat ''MsgHeartbeat)
 $(makeJSON "_msgHeartbeat_" ''MsgHeartbeat)
 $(makeLenses ''MsgHeartbeat)
+
+msgInsStatus :: Word16
+msgInsStatus = 0xFF03
+
+-- | SBP class for message MSG_INS_STATUS (0xFF03).
+--
+-- The INS status message describes the state of the operation and
+-- initialization of the inertial navigation system.
+data MsgInsStatus = MsgInsStatus
+  { _msgInsStatus_flags :: !Word32
+    -- ^ Status flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgInsStatus where
+  get = do
+    _msgInsStatus_flags <- getWord32le
+    pure MsgInsStatus {..}
+
+  put MsgInsStatus {..} = do
+    putWord32le _msgInsStatus_flags
+
+$(makeSBP 'msgInsStatus ''MsgInsStatus)
+$(makeJSON "_msgInsStatus_" ''MsgInsStatus)
+$(makeLenses ''MsgInsStatus)
