@@ -133,8 +133,9 @@ class MsgOrientQuat(SBP):
   of its fields.
 
   
-  This message reports the quaternion vector describing the vehcile body frame's orientation
-with respect to a local-level NED frame.  
+  This message reports the quaternion vector describing the vehicle body frame's orientation
+with respect to a local-level NED frame. The components of the vector should sum to a unit
+vector assuming that the LSB of each component as a value of 2^-31. 
 
 
   Parameters
@@ -292,9 +293,9 @@ to the vehicle body frame.
   """
   _parser = construct.Struct(
                    'tow' / construct.Int32ul,
-                   'roll' / construct.Int16sl,
-                   'pitch' / construct.Int16sl,
-                   'yaw' / construct.Int16sl,
+                   'roll' / construct.Int32sl,
+                   'pitch' / construct.Int32sl,
+                   'yaw' / construct.Int32sl,
                    'var_roll' / construct.Float32l,
                    'var_pitch' / construct.Float32l,
                    'var_yaw' / construct.Float32l,
@@ -408,9 +409,9 @@ direction, and the vehicle z-axis should be aligned with the down direction.
   """
   _parser = construct.Struct(
                    'tow' / construct.Int32ul,
-                   'x' / construct.Int16sl,
-                   'y' / construct.Int16sl,
-                   'z' / construct.Int16sl,
+                   'x' / construct.Int32sl,
+                   'y' / construct.Int32sl,
+                   'z' / construct.Int32sl,
                    'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',

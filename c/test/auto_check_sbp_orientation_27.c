@@ -99,7 +99,7 @@ START_TEST( test_auto_check_sbp_orientation_27 )
 
     sbp_register_callback(&sbp_state, 0x222, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,34,2,66,0,11,8,0,0,0,0,0,1,0,1,0,3,98,135, };
+    u8 test_data[] = {85,34,2,66,0,17,2,0,0,0,2,0,0,0,5,0,0,0,2,0,0,0,0,88,70, };
 
     dummy_reset();
     sbp_send_message(&sbp_state, 0x222, 66, sizeof(test_data), test_data, &dummy_write);
@@ -125,11 +125,11 @@ START_TEST( test_auto_check_sbp_orientation_27 )
     msg_angular_rate_t* msg = ( msg_angular_rate_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->flags == 3, "incorrect value for flags, expected 3, is %d", msg->flags);
-    fail_unless(msg->tow == 8, "incorrect value for tow, expected 8, is %d", msg->tow);
-    fail_unless(msg->x == 0, "incorrect value for x, expected 0, is %d", msg->x);
-    fail_unless(msg->y == 1, "incorrect value for y, expected 1, is %d", msg->y);
-    fail_unless(msg->z == 1, "incorrect value for z, expected 1, is %d", msg->z);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 2, "incorrect value for tow, expected 2, is %d", msg->tow);
+    fail_unless(msg->x == 2, "incorrect value for x, expected 2, is %d", msg->x);
+    fail_unless(msg->y == 5, "incorrect value for y, expected 5, is %d", msg->y);
+    fail_unless(msg->z == 2, "incorrect value for z, expected 2, is %d", msg->z);
   }
 }
 END_TEST

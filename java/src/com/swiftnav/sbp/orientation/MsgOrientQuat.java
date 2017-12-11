@@ -29,8 +29,9 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message reports the quaternion vector describing the vehcile body frame's orientation
- * with respect to a local-level NED frame.   */
+ * This message reports the quaternion vector describing the vehicle body frame's orientation
+ * with respect to a local-level NED frame. The components of the vector should sum to a unit
+ * vector assuming that the LSB of each component as a value of 2^-31.  */
 
 public class MsgOrientQuat extends SBPMessage {
     public static final int TYPE = 0x0220;

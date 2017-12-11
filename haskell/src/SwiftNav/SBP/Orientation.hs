@@ -77,8 +77,10 @@ msgOrientQuat = 0x0220
 
 -- | SBP class for message MSG_ORIENT_QUAT (0x0220).
 --
--- This message reports the quaternion vector describing the vehcile body
--- frame's orientation with respect to a local-level NED frame.
+-- This message reports the quaternion vector describing the vehicle body
+-- frame's orientation with respect to a local-level NED frame. The components
+-- of the vector should sum to a unit vector assuming that the LSB of each
+-- component as a value of 2^-31.
 data MsgOrientQuat = MsgOrientQuat
   { _msgOrientQuat_tow :: !Word32
     -- ^ GPS Time of Week
@@ -144,11 +146,11 @@ msgOrientEuler = 0x0221
 data MsgOrientEuler = MsgOrientEuler
   { _msgOrientEuler_tow     :: !Word32
     -- ^ GPS Time of Week
-  , _msgOrientEuler_roll    :: !Int16
+  , _msgOrientEuler_roll    :: !Int32
     -- ^ rotation about the forward axis of the vehicle
-  , _msgOrientEuler_pitch   :: !Int16
+  , _msgOrientEuler_pitch   :: !Int32
     -- ^ rotation about the rightward axis of the vehicle
-  , _msgOrientEuler_yaw     :: !Int16
+  , _msgOrientEuler_yaw     :: !Int32
     -- ^ rotation about the downward axis of the vehicle
   , _msgOrientEuler_var_roll :: !Float
     -- ^ Estimated standard deviation of roll
@@ -163,9 +165,9 @@ data MsgOrientEuler = MsgOrientEuler
 instance Binary MsgOrientEuler where
   get = do
     _msgOrientEuler_tow <- getWord32le
-    _msgOrientEuler_roll <- fromIntegral <$> getWord16le
-    _msgOrientEuler_pitch <- fromIntegral <$> getWord16le
-    _msgOrientEuler_yaw <- fromIntegral <$> getWord16le
+    _msgOrientEuler_roll <- fromIntegral <$> getWord32le
+    _msgOrientEuler_pitch <- fromIntegral <$> getWord32le
+    _msgOrientEuler_yaw <- fromIntegral <$> getWord32le
     _msgOrientEuler_var_roll <- getFloat32le
     _msgOrientEuler_var_pitch <- getFloat32le
     _msgOrientEuler_var_yaw <- getFloat32le
@@ -174,9 +176,9 @@ instance Binary MsgOrientEuler where
 
   put MsgOrientEuler {..} = do
     putWord32le _msgOrientEuler_tow
-    putWord16le $ fromIntegral _msgOrientEuler_roll
-    putWord16le $ fromIntegral _msgOrientEuler_pitch
-    putWord16le $ fromIntegral _msgOrientEuler_yaw
+    putWord32le $ fromIntegral _msgOrientEuler_roll
+    putWord32le $ fromIntegral _msgOrientEuler_pitch
+    putWord32le $ fromIntegral _msgOrientEuler_yaw
     putFloat32le _msgOrientEuler_var_roll
     putFloat32le _msgOrientEuler_var_pitch
     putFloat32le _msgOrientEuler_var_yaw
@@ -201,11 +203,11 @@ msgAngularRate = 0x0222
 data MsgAngularRate = MsgAngularRate
   { _msgAngularRate_tow :: !Word32
     -- ^ GPS Time of Week
-  , _msgAngularRate_x   :: !Int16
+  , _msgAngularRate_x   :: !Int32
     -- ^ angular rate about x axis
-  , _msgAngularRate_y   :: !Int16
+  , _msgAngularRate_y   :: !Int32
     -- ^ angular rate about y axis
-  , _msgAngularRate_z   :: !Int16
+  , _msgAngularRate_z   :: !Int32
     -- ^ angular rate about z axis
   , _msgAngularRate_flags :: !Word8
     -- ^ Status flags
@@ -214,17 +216,17 @@ data MsgAngularRate = MsgAngularRate
 instance Binary MsgAngularRate where
   get = do
     _msgAngularRate_tow <- getWord32le
-    _msgAngularRate_x <- fromIntegral <$> getWord16le
-    _msgAngularRate_y <- fromIntegral <$> getWord16le
-    _msgAngularRate_z <- fromIntegral <$> getWord16le
+    _msgAngularRate_x <- fromIntegral <$> getWord32le
+    _msgAngularRate_y <- fromIntegral <$> getWord32le
+    _msgAngularRate_z <- fromIntegral <$> getWord32le
     _msgAngularRate_flags <- getWord8
     pure MsgAngularRate {..}
 
   put MsgAngularRate {..} = do
     putWord32le _msgAngularRate_tow
-    putWord16le $ fromIntegral _msgAngularRate_x
-    putWord16le $ fromIntegral _msgAngularRate_y
-    putWord16le $ fromIntegral _msgAngularRate_z
+    putWord32le $ fromIntegral _msgAngularRate_x
+    putWord32le $ fromIntegral _msgAngularRate_y
+    putWord32le $ fromIntegral _msgAngularRate_z
     putWord8 _msgAngularRate_flags
 
 $(makeSBP 'msgAngularRate ''MsgAngularRate)

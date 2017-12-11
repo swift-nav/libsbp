@@ -99,7 +99,7 @@ START_TEST( test_auto_check_sbp_orientation_29 )
 
     sbp_register_callback(&sbp_state, 0x220, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,32,2,66,0,37,4,0,0,0,2,0,0,0,2,0,0,0,5,0,0,0,1,0,0,0,0,0,0,64,0,0,0,64,0,0,0,65,0,0,64,64,7,187,86, };
+    u8 test_data[] = {85,32,2,66,0,37,0,0,0,0,3,0,0,0,7,0,0,0,8,0,0,0,4,0,0,0,0,0,64,64,0,0,128,64,0,0,0,65,0,0,64,64,1,186,6, };
 
     dummy_reset();
     sbp_send_message(&sbp_state, 0x220, 66, sizeof(test_data), test_data, &dummy_write);
@@ -125,16 +125,16 @@ START_TEST( test_auto_check_sbp_orientation_29 )
     msg_orient_quat_t* msg = ( msg_orient_quat_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->acc_w == 2, "incorrect value for acc_w, expected 2, is %d", msg->acc_w);
-    fail_unless(msg->acc_x == 2, "incorrect value for acc_x, expected 2, is %d", msg->acc_x);
+    fail_unless(msg->acc_w == 3, "incorrect value for acc_w, expected 3, is %d", msg->acc_w);
+    fail_unless(msg->acc_x == 4, "incorrect value for acc_x, expected 4, is %d", msg->acc_x);
     fail_unless(msg->acc_y == 8, "incorrect value for acc_y, expected 8, is %d", msg->acc_y);
     fail_unless(msg->acc_z == 3, "incorrect value for acc_z, expected 3, is %d", msg->acc_z);
-    fail_unless(msg->flags == 7, "incorrect value for flags, expected 7, is %d", msg->flags);
-    fail_unless(msg->tow == 4, "incorrect value for tow, expected 4, is %d", msg->tow);
-    fail_unless(msg->w == 2, "incorrect value for w, expected 2, is %d", msg->w);
-    fail_unless(msg->x == 2, "incorrect value for x, expected 2, is %d", msg->x);
-    fail_unless(msg->y == 5, "incorrect value for y, expected 5, is %d", msg->y);
-    fail_unless(msg->z == 1, "incorrect value for z, expected 1, is %d", msg->z);
+    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->tow == 0, "incorrect value for tow, expected 0, is %d", msg->tow);
+    fail_unless(msg->w == 3, "incorrect value for w, expected 3, is %d", msg->w);
+    fail_unless(msg->x == 7, "incorrect value for x, expected 7, is %d", msg->x);
+    fail_unless(msg->y == 8, "incorrect value for y, expected 8, is %d", msg->y);
+    fail_unless(msg->z == 4, "incorrect value for z, expected 4, is %d", msg->z);
   }
 }
 END_TEST

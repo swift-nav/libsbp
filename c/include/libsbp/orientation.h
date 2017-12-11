@@ -44,16 +44,17 @@ typedef struct __attribute__((packed)) {
 
 /** Quaternion 4 component vector
  *
- * This message reports the quaternion vector describing the vehcile body frame's orientation
- * with respect to a local-level NED frame.  
+ * This message reports the quaternion vector describing the vehicle body frame's orientation
+ * with respect to a local-level NED frame. The components of the vector should sum to a unit
+ * vector assuming that the LSB of each component as a value of 2^-31. 
  */
 #define SBP_MSG_ORIENT_QUAT      0x0220
 typedef struct __attribute__((packed)) {
   u32 tow;      /**< GPS Time of Week [ms] */
-  s32 w;        /**< Real component [N/A] */
-  s32 x;        /**< 1st imaginary component [N/A] */
-  s32 y;        /**< 2nd imaginary component [N/A] */
-  s32 z;        /**< 3rd imaginary component [N/A] */
+  s32 w;        /**< Real component [2^-31] */
+  s32 x;        /**< 1st imaginary component [2^-31] */
+  s32 y;        /**< 2nd imaginary component [2^-31] */
+  s32 z;        /**< 3rd imaginary component [2^-31] */
   float acc_w;    /**< Estimated standard deviation of w [N/A] */
   float acc_x;    /**< Estimated standard deviation of x [N/A] */
   float acc_y;    /**< Estimated standard deviation of y [N/A] */
@@ -72,9 +73,9 @@ typedef struct __attribute__((packed)) {
 #define SBP_MSG_ORIENT_EULER     0x0221
 typedef struct __attribute__((packed)) {
   u32 tow;          /**< GPS Time of Week [ms] */
-  s16 roll;         /**< rotation about the forward axis of the vehicle [centidegrees] */
-  s16 pitch;        /**< rotation about the rightward axis of the vehicle [centidegrees] */
-  s16 yaw;          /**< rotation about the downward axis of the vehicle [centidegrees] */
+  s32 roll;         /**< rotation about the forward axis of the vehicle [microdegrees] */
+  s32 pitch;        /**< rotation about the rightward axis of the vehicle [microdegrees] */
+  s32 yaw;          /**< rotation about the downward axis of the vehicle [microdegrees] */
   float var_roll;     /**< Estimated standard deviation of roll [degrees] */
   float var_pitch;    /**< Estimated standard deviation of pitch [degrees] */
   float var_yaw;      /**< Estimated standard deviation of yaw [degrees] */
@@ -95,9 +96,9 @@ typedef struct __attribute__((packed)) {
 #define SBP_MSG_ANGULAR_RATE     0x0222
 typedef struct __attribute__((packed)) {
   u32 tow;      /**< GPS Time of Week [ms] */
-  s16 x;        /**< angular rate about x axis [decidegrees/s] */
-  s16 y;        /**< angular rate about y axis [decidegrees/s] */
-  s16 z;        /**< angular rate about z axis [decidegrees/s] */
+  s32 x;        /**< angular rate about x axis [microdegrees/s] */
+  s32 y;        /**< angular rate about y axis [microdegrees/s] */
+  s32 z;        /**< angular rate about z axis [microdegrees/s] */
   u8 flags;    /**< Status flags */
 } msg_angular_rate_t;
 

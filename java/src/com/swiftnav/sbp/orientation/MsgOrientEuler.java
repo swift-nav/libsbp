@@ -74,9 +74,9 @@ public class MsgOrientEuler extends SBPMessage {
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         tow = parser.getU32();
-        roll = parser.getS16();
-        pitch = parser.getS16();
-        yaw = parser.getS16();
+        roll = parser.getS32();
+        pitch = parser.getS32();
+        yaw = parser.getS32();
         var_roll = parser.getFloat();
         var_pitch = parser.getFloat();
         var_yaw = parser.getFloat();
@@ -86,9 +86,9 @@ public class MsgOrientEuler extends SBPMessage {
     @Override
     protected void build(Builder builder) {
         builder.putU32(tow);
-        builder.putS16(roll);
-        builder.putS16(pitch);
-        builder.putS16(yaw);
+        builder.putS32(roll);
+        builder.putS32(pitch);
+        builder.putS32(yaw);
         builder.putFloat(var_roll);
         builder.putFloat(var_pitch);
         builder.putFloat(var_yaw);

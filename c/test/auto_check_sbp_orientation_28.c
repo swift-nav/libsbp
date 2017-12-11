@@ -99,7 +99,7 @@ START_TEST( test_auto_check_sbp_orientation_28 )
 
     sbp_register_callback(&sbp_state, 0x221, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,33,2,66,0,23,4,0,0,0,6,0,6,0,4,0,0,0,64,64,0,0,160,64,0,0,128,64,6,223,138, };
+    u8 test_data[] = {85,33,2,66,0,29,1,0,0,0,1,0,0,0,2,0,0,0,8,0,0,0,0,0,224,64,0,0,64,64,0,0,224,64,3,44,226, };
 
     dummy_reset();
     sbp_send_message(&sbp_state, 0x221, 66, sizeof(test_data), test_data, &dummy_write);
@@ -125,14 +125,14 @@ START_TEST( test_auto_check_sbp_orientation_28 )
     msg_orient_euler_t* msg = ( msg_orient_euler_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->flags == 6, "incorrect value for flags, expected 6, is %d", msg->flags);
-    fail_unless(msg->pitch == 6, "incorrect value for pitch, expected 6, is %d", msg->pitch);
-    fail_unless(msg->roll == 6, "incorrect value for roll, expected 6, is %d", msg->roll);
-    fail_unless(msg->tow == 4, "incorrect value for tow, expected 4, is %d", msg->tow);
-    fail_unless(msg->var_pitch == 5, "incorrect value for var_pitch, expected 5, is %d", msg->var_pitch);
-    fail_unless(msg->var_roll == 3, "incorrect value for var_roll, expected 3, is %d", msg->var_roll);
-    fail_unless(msg->var_yaw == 4, "incorrect value for var_yaw, expected 4, is %d", msg->var_yaw);
-    fail_unless(msg->yaw == 4, "incorrect value for yaw, expected 4, is %d", msg->yaw);
+    fail_unless(msg->flags == 3, "incorrect value for flags, expected 3, is %d", msg->flags);
+    fail_unless(msg->pitch == 2, "incorrect value for pitch, expected 2, is %d", msg->pitch);
+    fail_unless(msg->roll == 1, "incorrect value for roll, expected 1, is %d", msg->roll);
+    fail_unless(msg->tow == 1, "incorrect value for tow, expected 1, is %d", msg->tow);
+    fail_unless(msg->var_pitch == 3, "incorrect value for var_pitch, expected 3, is %d", msg->var_pitch);
+    fail_unless(msg->var_roll == 7, "incorrect value for var_roll, expected 7, is %d", msg->var_roll);
+    fail_unless(msg->var_yaw == 7, "incorrect value for var_yaw, expected 7, is %d", msg->var_yaw);
+    fail_unless(msg->yaw == 8, "incorrect value for yaw, expected 8, is %d", msg->yaw);
   }
 }
 END_TEST

@@ -65,8 +65,10 @@ MsgBaselineHeading.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_ORIENT_QUAT (0x0220).
  *
- * This message reports the quaternion vector describing the vehcile body frame's
- * orientation with respect to a local-level NED frame.
+ * This message reports the quaternion vector describing the vehicle body frame's
+ * orientation with respect to a local-level NED frame. The components of the
+ * vector should sum to a unit vector assuming that the LSB of each component as a
+ * value of 2^-31.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -127,9 +129,9 @@ MsgOrientQuat.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
- * @field roll number (signed 16-bit int, 2 bytes) rotation about the forward axis of the vehicle
- * @field pitch number (signed 16-bit int, 2 bytes) rotation about the rightward axis of the vehicle
- * @field yaw number (signed 16-bit int, 2 bytes) rotation about the downward axis of the vehicle
+ * @field roll number (signed 32-bit int, 4 bytes) rotation about the forward axis of the vehicle
+ * @field pitch number (signed 32-bit int, 4 bytes) rotation about the rightward axis of the vehicle
+ * @field yaw number (signed 32-bit int, 4 bytes) rotation about the downward axis of the vehicle
  * @field var_roll number (float, 4 bytes) Estimated standard deviation of roll
  * @field var_pitch number (float, 4 bytes) Estimated standard deviation of pitch
  * @field var_yaw number (float, 4 bytes) Estimated standard deviation of yaw
@@ -151,18 +153,18 @@ MsgOrientEuler.prototype.constructor = MsgOrientEuler;
 MsgOrientEuler.prototype.parser = new Parser()
   .endianess('little')
   .uint32('tow')
-  .int16('roll')
-  .int16('pitch')
-  .int16('yaw')
+  .int32('roll')
+  .int32('pitch')
+  .int32('yaw')
   .floatle('var_roll')
   .floatle('var_pitch')
   .floatle('var_yaw')
   .uint8('flags');
 MsgOrientEuler.prototype.fieldSpec = [];
 MsgOrientEuler.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
-MsgOrientEuler.prototype.fieldSpec.push(['roll', 'writeInt16LE', 2]);
-MsgOrientEuler.prototype.fieldSpec.push(['pitch', 'writeInt16LE', 2]);
-MsgOrientEuler.prototype.fieldSpec.push(['yaw', 'writeInt16LE', 2]);
+MsgOrientEuler.prototype.fieldSpec.push(['roll', 'writeInt32LE', 4]);
+MsgOrientEuler.prototype.fieldSpec.push(['pitch', 'writeInt32LE', 4]);
+MsgOrientEuler.prototype.fieldSpec.push(['yaw', 'writeInt32LE', 4]);
 MsgOrientEuler.prototype.fieldSpec.push(['var_roll', 'writeFloatLE', 4]);
 MsgOrientEuler.prototype.fieldSpec.push(['var_pitch', 'writeFloatLE', 4]);
 MsgOrientEuler.prototype.fieldSpec.push(['var_yaw', 'writeFloatLE', 4]);
@@ -181,9 +183,9 @@ MsgOrientEuler.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
- * @field x number (signed 16-bit int, 2 bytes) angular rate about x axis
- * @field y number (signed 16-bit int, 2 bytes) angular rate about y axis
- * @field z number (signed 16-bit int, 2 bytes) angular rate about z axis
+ * @field x number (signed 32-bit int, 4 bytes) angular rate about x axis
+ * @field y number (signed 32-bit int, 4 bytes) angular rate about y axis
+ * @field z number (signed 32-bit int, 4 bytes) angular rate about z axis
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -202,15 +204,15 @@ MsgAngularRate.prototype.constructor = MsgAngularRate;
 MsgAngularRate.prototype.parser = new Parser()
   .endianess('little')
   .uint32('tow')
-  .int16('x')
-  .int16('y')
-  .int16('z')
+  .int32('x')
+  .int32('y')
+  .int32('z')
   .uint8('flags');
 MsgAngularRate.prototype.fieldSpec = [];
 MsgAngularRate.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
-MsgAngularRate.prototype.fieldSpec.push(['x', 'writeInt16LE', 2]);
-MsgAngularRate.prototype.fieldSpec.push(['y', 'writeInt16LE', 2]);
-MsgAngularRate.prototype.fieldSpec.push(['z', 'writeInt16LE', 2]);
+MsgAngularRate.prototype.fieldSpec.push(['x', 'writeInt32LE', 4]);
+MsgAngularRate.prototype.fieldSpec.push(['y', 'writeInt32LE', 4]);
+MsgAngularRate.prototype.fieldSpec.push(['z', 'writeInt32LE', 4]);
 MsgAngularRate.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 module.exports = {

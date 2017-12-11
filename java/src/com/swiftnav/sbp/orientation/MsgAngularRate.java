@@ -68,18 +68,18 @@ public class MsgAngularRate extends SBPMessage {
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         tow = parser.getU32();
-        x = parser.getS16();
-        y = parser.getS16();
-        z = parser.getS16();
+        x = parser.getS32();
+        y = parser.getS32();
+        z = parser.getS32();
         flags = parser.getU8();
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU32(tow);
-        builder.putS16(x);
-        builder.putS16(y);
-        builder.putS16(z);
+        builder.putS32(x);
+        builder.putS32(y);
+        builder.putS32(z);
         builder.putU8(flags);
     }
 
