@@ -307,9 +307,92 @@ the remaining error flags should be inspected.
     d.update(j)
     return d
     
+SBP_MSG_INS_STATUS = 0xFF03
+class MsgInsStatus(SBP):
+  """SBP class for message MSG_INS_STATUS (0xFF03).
+
+  You can have MSG_INS_STATUS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The INS status message describes the state of the operation
+and initialization of the inertial navigation system. 
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'flags' / construct.Int32ul,)
+  __slots__ = [
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgInsStatus,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgInsStatus, self).__init__()
+      self.msg_type = SBP_MSG_INS_STATUS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgInsStatus.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgInsStatus(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgInsStatus._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgInsStatus._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgInsStatus, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0xFF00: MsgStartup,
   0xFF02: MsgDgnssStatus,
   0xFFFF: MsgHeartbeat,
+  0xFF03: MsgInsStatus,
 }

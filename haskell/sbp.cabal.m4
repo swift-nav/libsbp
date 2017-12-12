@@ -40,11 +40,13 @@ library
                      , SwiftNav.SBP.Navigation
                      , SwiftNav.SBP.Ndb
                      , SwiftNav.SBP.Observation
+                     , SwiftNav.SBP.Orientation
                      , SwiftNav.SBP.Piksi
                      , SwiftNav.SBP.Settings
                      , SwiftNav.SBP.System
                      , SwiftNav.SBP.Tracking
                      , SwiftNav.SBP.User
+                     , SwiftNav.SBP.Vehicle
   default-language:    Haskell2010
   hs-source-dirs:      src
   ghc-options:         -Wall

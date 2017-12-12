@@ -41,7 +41,8 @@ msgImuRaw = 0x0900
 -- | SBP class for message MSG_IMU_RAW (0x0900).
 --
 -- Raw data from the Inertial Measurement Unit, containing accelerometer and
--- gyroscope readings.
+-- gyroscope readings. The sense of the measurements are to be aligned with
+-- the indications on the device itself.
 data MsgImuRaw = MsgImuRaw
   { _msgImuRaw_tow :: !Word32
     -- ^ Milliseconds since start of GPS week. If the high bit is set, the time
@@ -49,17 +50,17 @@ data MsgImuRaw = MsgImuRaw
   , _msgImuRaw_tow_f :: !Word8
     -- ^ Milliseconds since start of GPS week, fractional part
   , _msgImuRaw_acc_x :: !Int16
-    -- ^ Acceleration in the body frame X axis
+    -- ^ Acceleration in the IMU frame X axis
   , _msgImuRaw_acc_y :: !Int16
-    -- ^ Acceleration in the body frame Y axis
+    -- ^ Acceleration in the IMU frame Y axis
   , _msgImuRaw_acc_z :: !Int16
-    -- ^ Acceleration in the body frame Z axis
+    -- ^ Acceleration in the IMU frame Z axis
   , _msgImuRaw_gyr_x :: !Int16
-    -- ^ Angular rate around the body frame X axis
+    -- ^ Angular rate around IMU frame X axis
   , _msgImuRaw_gyr_y :: !Int16
-    -- ^ Angular rate around the body frame Y axis
+    -- ^ Angular rate around IMU frame Y axis
   , _msgImuRaw_gyr_z :: !Int16
-    -- ^ Angular rate around the body frame Z axis
+    -- ^ Angular rate around IMU frame Z axis
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgImuRaw where

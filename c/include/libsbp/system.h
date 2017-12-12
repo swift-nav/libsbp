@@ -75,6 +75,17 @@ typedef struct __attribute__((packed)) {
 } msg_heartbeat_t;
 
 
+/** Inertial Navigation System status message
+ *
+ * The INS status message describes the state of the operation
+ * and initialization of the inertial navigation system. 
+ */
+#define SBP_MSG_INS_STATUS   0xFF03
+typedef struct __attribute__((packed)) {
+  u32 flags;    /**< Status flags */
+} msg_ins_status_t;
+
+
 /** \} */
 
 #endif /* LIBSBP_SYSTEM_MESSAGES_H */

@@ -88,13 +88,14 @@ definitions:
           type: u8
           desc: Filter flags
           fields:
-            - 1-7:
+            - 2-7:
                 desc: Reserved
-            - 0:
+            - 0-1:
                 desc: Filter or process to reset
                 values:
                   - 0: DGNSS filter
                   - 1: IAR process
+                  - 2: Inertial filter 
 
  - MSG_INIT_BASE:
     id: 0x0023

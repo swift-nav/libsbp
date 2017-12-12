@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgHeartbeat.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgDgnssStatus.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -97,12 +97,12 @@ START_TEST( test_auto_check_sbp_system_28 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xffff, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_callback(&sbp_state, 0xff02, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,255,255,246,215,4,0,50,0,0,249,216, };
+    u8 test_data[] = {85,2,255,66,0,11,0,50,0,12,83,107,121,108,97,114,107,202,1, };
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xffff, 55286, sizeof(test_data), test_data, &dummy_write);
+    sbp_send_message(&sbp_state, 0xff02, 66, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
       fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -111,7 +111,7 @@ START_TEST( test_auto_check_sbp_system_28 )
 
     fail_unless(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 55286,
+    fail_unless(last_sender_id == 66,
         "sender_id decoded incorrectly");
     fail_unless(last_len == sizeof(test_data),
         "len decoded incorrectly");
@@ -122,10 +122,13 @@ START_TEST( test_auto_check_sbp_system_28 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_heartbeat_t* msg = ( msg_heartbeat_t *)((void *)last_msg + 6);
+    msg_dgnss_status_t* msg = ( msg_dgnss_status_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->flags == 12800, "incorrect value for flags, expected 12800, is %d", msg->flags);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->latency == 50, "incorrect value for latency, expected 50, is %d", msg->latency);
+    fail_unless(msg->num_signals == 12, "incorrect value for num_signals, expected 12, is %d", msg->num_signals);
+    fail_unless(strstr(msg->source, ((char []){(char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107,0})) != NULL, "incorrect value for msg->source, expected string '%s', is '%s'", ((char []){(char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107,0}), msg->source);
   }
 }
 END_TEST

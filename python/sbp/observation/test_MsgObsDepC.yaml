@@ -1,0 +1,384 @@
+---
+description: Unit tests for swiftnav.sbp.observation MsgObsDepC vv2.0.
+generated_on: 2016-11-03 19:19:13.782376
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      header:
+        n_obs: 64
+        t:
+          tow: 513526000
+          wn: 1920
+      obs:
+      - L:
+          f: 205
+          i: 131407559
+        P: 1250301494
+        cn0: 162
+        lock: 34432
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+      - L:
+          f: 251
+          i: 117706410
+        P: 1119939327
+        cn0: 197
+        lock: 19641
+        sid:
+          code: 0
+          reserved: 0
+          sat: 7
+      - L:
+          f: 78
+          i: 109742238
+        P: 1044162708
+        cn0: 211
+        lock: 47262
+        sid:
+          code: 0
+          reserved: 0
+          sat: 9
+      - L:
+          f: 51
+          i: 123756943
+        P: 1177508219
+        cn0: 178
+        lock: 10458
+        sid:
+          code: 0
+          reserved: 0
+          sat: 10
+      - L:
+          f: 235
+          i: 111951367
+        P: 1065181971
+        cn0: 206
+        lock: 42376
+        sid:
+          code: 0
+          reserved: 0
+          sat: 13
+    module: sbp.observation
+    name: MsgObsDepC
+  msg_type: '0x49'
+  raw_json: '{"sender": 16991, "msg_type": 73, "header": {"n_obs": 64, "t": {"wn":
+    1920, "tow": 513526000}}, "obs": [{"lock": 34432, "sid": {"code": 0, "reserved":
+    0, "sat": 0}, "L": {"i": 131407559, "f": 205}, "cn0": 162, "P": 1250301494}, {"lock":
+    19641, "sid": {"code": 0, "reserved": 0, "sat": 7}, "L": {"i": 117706410, "f":
+    251}, "cn0": 197, "P": 1119939327}, {"lock": 47262, "sid": {"code": 0, "reserved":
+    0, "sat": 9}, "L": {"i": 109742238, "f": 78}, "cn0": 211, "P": 1044162708}, {"lock":
+    10458, "sid": {"code": 0, "reserved": 0, "sat": 10}, "L": {"i": 123756943, "f":
+    51}, "cn0": 178, "P": 1177508219}, {"lock": 42376, "sid": {"code": 0, "reserved":
+    0, "sat": 13}, "L": {"i": 111951367, "f": 235}, "cn0": 206, "P": 1065181971}],
+    "crc": 32999, "length": 87, "preamble": 85, "payload": "8MibHoAHQDYWhkrHHtUHzaKAhgAAAAD/6sBCqg4EB/vFuUwHAAAAlKg8Pp6IigZO0564CQAAAHtZL0aPYWAHM7LaKAoAAAATY30/Bz6sBuvOiKUNAAAA"}'
+  raw_packet: VUkAX0JX8MibHoAHQDYWhkrHHtUHzaKAhgAAAAD/6sBCqg4EB/vFuUwHAAAAlKg8Pp6IigZO0564CQAAAHtZL0aPYWAHM7LaKAoAAAATY30/Bz6sBuvOiKUNAAAA54A=
+  sbp:
+    crc: '0x80e7'
+    length: 87
+    msg_type: '0x49'
+    payload: 8MibHoAHQDYWhkrHHtUHzaKAhgAAAAD/6sBCqg4EB/vFuUwHAAAAlKg8Pp6IigZO0564CQAAAHtZL0aPYWAHM7LaKAoAAAATY30/Bz6sBuvOiKUNAAAA
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      header:
+        n_obs: 65
+        t:
+          tow: 513526000
+          wn: 1920
+      obs:
+      - L:
+          f: 192
+          i: 118677762
+        P: 1129181249
+        cn0: 183
+        lock: 14006
+        sid:
+          code: 0
+          reserved: 0
+          sat: 17
+      - L:
+          f: 255
+          i: 125301687
+        P: 1192205882
+        cn0: 164
+        lock: 31068
+        sid:
+          code: 0
+          reserved: 0
+          sat: 20
+      - L:
+          f: 203
+          i: 126916168
+        P: 1207567129
+        cn0: 178
+        lock: 55001
+        sid:
+          code: 0
+          reserved: 0
+          sat: 23
+      - L:
+          f: 247
+          i: 116583370
+        P: 1109253832
+        cn0: 204
+        lock: 51283
+        sid:
+          code: 0
+          reserved: 0
+          sat: 26
+      - L:
+          f: 91
+          i: 130508183
+        P: 1241744168
+        cn0: 171
+        lock: 41288
+        sid:
+          code: 0
+          reserved: 0
+          sat: 30
+    module: sbp.observation
+    name: MsgObsDepC
+  msg_type: '0x49'
+  raw_json: '{"sender": 16991, "msg_type": 73, "header": {"n_obs": 65, "t": {"wn":
+    1920, "tow": 513526000}}, "obs": [{"lock": 14006, "sid": {"code": 0, "reserved":
+    0, "sat": 17}, "L": {"i": 118677762, "f": 192}, "cn0": 183, "P": 1129181249},
+    {"lock": 31068, "sid": {"code": 0, "reserved": 0, "sat": 20}, "L": {"i": 125301687,
+    "f": 255}, "cn0": 164, "P": 1192205882}, {"lock": 55001, "sid": {"code": 0, "reserved":
+    0, "sat": 23}, "L": {"i": 126916168, "f": 203}, "cn0": 178, "P": 1207567129},
+    {"lock": 51283, "sid": {"code": 0, "reserved": 0, "sat": 26}, "L": {"i": 116583370,
+    "f": 247}, "cn0": 204, "P": 1109253832}, {"lock": 41288, "sid": {"code": 0, "reserved":
+    0, "sat": 30}, "L": {"i": 130508183, "f": 91}, "cn0": 171, "P": 1241744168}],
+    "crc": 55076, "length": 87, "preamble": 85, "payload": "8MibHoAHQUHwTUMC4RIHwLe2NhEAAAA6ng9Ht/N3B/+kXHkUAAAAGQP6R0iWkAfLstnWFwAAAMjeHULK6/IG98xTyBoAAAAogwNKl2XHB1urSKEeAAAA"}'
+  raw_packet: VUkAX0JX8MibHoAHQUHwTUMC4RIHwLe2NhEAAAA6ng9Ht/N3B/+kXHkUAAAAGQP6R0iWkAfLstnWFwAAAMjeHULK6/IG98xTyBoAAAAogwNKl2XHB1urSKEeAAAAJNc=
+  sbp:
+    crc: '0xd724'
+    length: 87
+    msg_type: '0x49'
+    payload: 8MibHoAHQUHwTUMC4RIHwLe2NhEAAAA6ng9Ht/N3B/+kXHkUAAAAGQP6R0iWkAfLstnWFwAAAMjeHULK6/IG98xTyBoAAAAogwNKl2XHB1urSKEeAAAA
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      header:
+        n_obs: 66
+        t:
+          tow: 513526000
+          wn: 1920
+      obs:
+      - L:
+          f: 59
+          i: 106644708
+        P: 1014690658
+        cn0: 228
+        lock: 18737
+        sid:
+          code: 0
+          reserved: 0
+          sat: 31
+      - L:
+          f: 19
+          i: 102395526
+        P: 1250301660
+        cn0: 157
+        lock: 56519
+        sid:
+          code: 1
+          reserved: 0
+          sat: 0
+      - L:
+          f: 109
+          i: 91719300
+        P: 1119939480
+        cn0: 189
+        lock: 27878
+        sid:
+          code: 1
+          reserved: 0
+          sat: 7
+      - L:
+          f: 32
+          i: 85513438
+        P: 1044162763
+        cn0: 198
+        lock: 13055
+        sid:
+          code: 1
+          reserved: 0
+          sat: 9
+      - L:
+          f: 45
+          i: 98895734
+        P: 1207567297
+        cn0: 167
+        lock: 37585
+        sid:
+          code: 1
+          reserved: 0
+          sat: 23
+    module: sbp.observation
+    name: MsgObsDepC
+  msg_type: '0x49'
+  raw_json: '{"sender": 16991, "msg_type": 73, "header": {"n_obs": 66, "t": {"wn":
+    1920, "tow": 513526000}}, "obs": [{"lock": 18737, "sid": {"code": 0, "reserved":
+    0, "sat": 31}, "L": {"i": 106644708, "f": 59}, "cn0": 228, "P": 1014690658}, {"lock":
+    56519, "sid": {"code": 1, "reserved": 0, "sat": 0}, "L": {"i": 102395526, "f":
+    19}, "cn0": 157, "P": 1250301660}, {"lock": 27878, "sid": {"code": 1, "reserved":
+    0, "sat": 7}, "L": {"i": 91719300, "f": 109}, "cn0": 189, "P": 1119939480}, {"lock":
+    13055, "sid": {"code": 1, "reserved": 0, "sat": 9}, "L": {"i": 85513438, "f":
+    32}, "cn0": 198, "P": 1044162763}, {"lock": 37585, "sid": {"code": 1, "reserved":
+    0, "sat": 23}, "L": {"i": 98895734, "f": 45}, "cn0": 167, "P": 1207567297}], "crc":
+    4574, "length": 87, "preamble": 85, "payload": "8MibHoAHQmLzejzkRFsGO+QxSR8AAADcFoZKhm4aBhOdx9wAAAEAmOvAQoSGdwVtveZsBwABAMuoPD7e1BgFIMb/MgkAAQDBA/pHdgflBS2n0ZIXAAEA"}'
+  raw_packet: VUkAX0JX8MibHoAHQmLzejzkRFsGO+QxSR8AAADcFoZKhm4aBhOdx9wAAAEAmOvAQoSGdwVtveZsBwABAMuoPD7e1BgFIMb/MgkAAQDBA/pHdgflBS2n0ZIXAAEA3hE=
+  sbp:
+    crc: '0x11de'
+    length: 87
+    msg_type: '0x49'
+    payload: 8MibHoAHQmLzejzkRFsGO+QxSR8AAADcFoZKhm4aBhOdx9wAAAEAmOvAQoSGdwVtveZsBwABAMuoPD7e1BgFIMb/MgkAAQDBA/pHdgflBS2n0ZIXAAEA
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      header:
+        n_obs: 67
+        t:
+          tow: 513526000
+          wn: 1920
+      obs:
+      - L:
+          f: 17
+          i: 90844195
+        P: 1109253996
+        cn0: 187
+        lock: 41314
+        sid:
+          code: 1
+          reserved: 0
+          sat: 26
+      - L:
+          f: 159
+          i: 101694681
+        P: 1241744215
+        cn0: 149
+        lock: 12888
+        sid:
+          code: 1
+          reserved: 0
+          sat: 30
+      - L:
+          f: 176
+          i: 83099779
+        P: 1014690787
+        cn0: 205
+        lock: 64812
+        sid:
+          code: 1
+          reserved: 0
+          sat: 31
+    module: sbp.observation
+    name: MsgObsDepC
+  msg_type: '0x49'
+  raw_json: '{"sender": 16991, "msg_type": 73, "header": {"n_obs": 67, "t": {"wn":
+    1920, "tow": 513526000}}, "obs": [{"lock": 41314, "sid": {"code": 1, "reserved":
+    0, "sat": 26}, "L": {"i": 90844195, "f": 17}, "cn0": 187, "P": 1109253996}, {"lock":
+    12888, "sid": {"code": 1, "reserved": 0, "sat": 30}, "L": {"i": 101694681, "f":
+    159}, "cn0": 149, "P": 1241744215}, {"lock": 64812, "sid": {"code": 1, "reserved":
+    0, "sat": 31}, "L": {"i": 83099779, "f": 176}, "cn0": 205, "P": 1014690787}],
+    "crc": 8872, "length": 55, "preamble": 85, "payload": "8MibHoAHQ2zfHUIjLGoFEbtioRoAAQBXgwNK2bwPBp+VWDIeAAEA4/N6PIMA9ASwzSz9HwABAA=="}'
+  raw_packet: VUkAX0I38MibHoAHQ2zfHUIjLGoFEbtioRoAAQBXgwNK2bwPBp+VWDIeAAEA4/N6PIMA9ASwzSz9HwABAKgi
+  sbp:
+    crc: '0x22a8'
+    length: 55
+    msg_type: '0x49'
+    payload: 8MibHoAHQ2zfHUIjLGoFEbtioRoAAQBXgwNK2bwPBp+VWDIeAAEA4/N6PIMA9ASwzSz9HwABAA==
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      header:
+        n_obs: 64
+        t:
+          tow: 513526500
+          wn: 1920
+      obs:
+      - L:
+          f: 214
+          i: 131405824
+        P: 1250284983
+        cn0: 165
+        lock: 34432
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+      - L:
+          f: 51
+          i: 117706394
+        P: 1119939167
+        cn0: 198
+        lock: 19641
+        sid:
+          code: 0
+          reserved: 0
+          sat: 7
+      - L:
+          f: 116
+          i: 109742696
+        P: 1044167066
+        cn0: 209
+        lock: 47262
+        sid:
+          code: 0
+          reserved: 0
+          sat: 9
+      - L:
+          f: 148
+          i: 123755297
+        P: 1177492566
+        cn0: 180
+        lock: 10458
+        sid:
+          code: 0
+          reserved: 0
+          sat: 10
+      - L:
+          f: 45
+          i: 111950297
+        P: 1065171789
+        cn0: 206
+        lock: 42376
+        sid:
+          code: 0
+          reserved: 0
+          sat: 13
+    module: sbp.observation
+    name: MsgObsDepC
+  msg_type: '0x49'
+  raw_json: '{"sender": 16991, "msg_type": 73, "header": {"n_obs": 64, "t": {"wn":
+    1920, "tow": 513526500}}, "obs": [{"lock": 34432, "sid": {"code": 0, "reserved":
+    0, "sat": 0}, "L": {"i": 131405824, "f": 214}, "cn0": 165, "P": 1250284983}, {"lock":
+    19641, "sid": {"code": 0, "reserved": 0, "sat": 7}, "L": {"i": 117706394, "f":
+    51}, "cn0": 198, "P": 1119939167}, {"lock": 47262, "sid": {"code": 0, "reserved":
+    0, "sat": 9}, "L": {"i": 109742696, "f": 116}, "cn0": 209, "P": 1044167066}, {"lock":
+    10458, "sid": {"code": 0, "reserved": 0, "sat": 10}, "L": {"i": 123755297, "f":
+    148}, "cn0": 180, "P": 1177492566}, {"lock": 42376, "sid": {"code": 0, "reserved":
+    0, "sat": 13}, "L": {"i": 111950297, "f": 45}, "cn0": 206, "P": 1065171789}],
+    "crc": 65331, "length": 87, "preamble": 85, "payload": "5MqbHoAHQLfVhUoAGNUH1qWAhgAAAABf6sBCmg4EBzPGuUwHAAAAmrk8PmiKigZ00Z64CQAAAFYcL0YhW2AHlLTaKAoAAABNO30/2TmsBi3OiKUNAAAA"}'
+  raw_packet: VUkAX0JX5MqbHoAHQLfVhUoAGNUH1qWAhgAAAABf6sBCmg4EBzPGuUwHAAAAmrk8PmiKigZ00Z64CQAAAFYcL0YhW2AHlLTaKAoAAABNO30/2TmsBi3OiKUNAAAAM/8=
+  sbp:
+    crc: '0xff33'
+    length: 87
+    msg_type: '0x49'
+    payload: 5MqbHoAHQLfVhUoAGNUH1qWAhgAAAABf6sBCmg4EBzPGuUwHAAAAmrk8PmiKigZ00Z64CQAAAFYcL0YhW2AHlLTaKAoAAABNO30/2TmsBi3OiKUNAAAA
+    preamble: '0x55'
+    sender: '0x425f'
+version: v2.0
+...

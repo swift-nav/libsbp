@@ -1,0 +1,18 @@
+description: Unit tests for swiftnav.sbp.navigation MsgVelBody v2.3.
+generated_on: 2017-11-18 22:05:54.479105
+package: sbp.navigation
+tests:
+- msg:
+    fields: {cov_x_x: 0, cov_x_y: 5, cov_x_z: 7, cov_y_y: 7, cov_y_z: 3, cov_z_z: 2,
+      flags: 8, n_sats: 3, tow: 1, x: 4, y: 2, z: 1}
+    module: sbp.navigation
+    name: MsgVelBody
+  msg_type: '0x213'
+  raw_json: '{"cov_y_z": 3, "cov_y_y": 7, "n_sats": 3, "sender": 66, "msg_type": 531,
+    "cov_x_z": 7, "cov_x_y": 5, "cov_x_x": 0, "tow": 1, "crc": 36984, "length": 42,
+    "flags": 8, "y": 2, "x": 4, "z": 1, "preamble": 85, "payload": "AQAAAAQAAAACAAAAAQAAAAAAAAAAAKBAAADgQAAA4EAAAEBAAAAAQAMI",
+    "cov_z_z": 2}'
+  raw_packet: VRMCQgAqAQAAAAQAAAACAAAAAQAAAAAAAAAAAKBAAADgQAAA4EAAAEBAAAAAQAMIeJA=
+  sbp: {crc: '0x9078', length: 42, msg_type: '0x213', payload: AQAAAAQAAAACAAAAAQAAAAAAAAAAAKBAAADgQAAA4EAAAEBAAAAAQAMI,
+    preamble: '0x55', sender: '0x42'}
+version: '2.3'

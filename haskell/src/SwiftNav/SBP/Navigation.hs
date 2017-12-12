@@ -19,7 +19,12 @@
 -- differential GPS solution, which can use either a fixed/integer or floating
 -- carrier phase ambiguity. The pseudo-absolute position solution uses a user-
 -- provided, well-surveyed base station position (if available) and the RTK
--- solution in tandem.
+-- solution in tandem.  When the inertial navigation mode indicates that the
+-- IMU is used, all messages are reported in the vehicle body frame as defined
+-- by device settings.  By default, the vehicle body frame is configured to be
+-- coincident with the antenna phase center.  When there is no inertial
+-- navigation, the solution will be reported at the phase center of the
+-- antenna.
 
 module SwiftNav.SBP.Navigation
   ( module SwiftNav.SBP.Navigation
@@ -216,7 +221,7 @@ data MsgPosEcef = MsgPosEcef
   , _msgPosEcef_z      :: !Double
     -- ^ ECEF Z coordinate
   , _msgPosEcef_accuracy :: !Word16
-    -- ^ Position accuracy estimate.
+    -- ^ Position estimated standard deviation
   , _msgPosEcef_n_sats :: !Word8
     -- ^ Number of satellites used in solution
   , _msgPosEcef_flags  :: !Word8
@@ -247,6 +252,80 @@ $(makeSBP 'msgPosEcef ''MsgPosEcef)
 $(makeJSON "_msgPosEcef_" ''MsgPosEcef)
 $(makeLenses ''MsgPosEcef)
 
+msgPosEcefCov :: Word16
+msgPosEcefCov = 0x0214
+
+-- | SBP class for message MSG_POS_ECEF_COV (0x0214).
+--
+-- The position solution message reports absolute Earth Centered Earth Fixed
+-- (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
+-- the position solution. The message also reports the upper triangular portion
+-- of the 3x3 covariance matrix. If the receiver knows the surveyed position of
+-- the base station and has an RTK solution, this reports a pseudo-absolute
+-- position solution using the base station position and the rover's RTK
+-- baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
+-- with the matching time-of-week (tow).
+data MsgPosEcefCov = MsgPosEcefCov
+  { _msgPosEcefCov_tow   :: !Word32
+    -- ^ GPS Time of Week
+  , _msgPosEcefCov_x     :: !Double
+    -- ^ ECEF X coordinate
+  , _msgPosEcefCov_y     :: !Double
+    -- ^ ECEF Y coordinate
+  , _msgPosEcefCov_z     :: !Double
+    -- ^ ECEF Z coordinate
+  , _msgPosEcefCov_cov_x_x :: !Float
+    -- ^ Estimated variance of x
+  , _msgPosEcefCov_cov_x_y :: !Float
+    -- ^ Estimated covariance of x and y
+  , _msgPosEcefCov_cov_x_z :: !Float
+    -- ^ Estimated covariance of x and z
+  , _msgPosEcefCov_cov_y_y :: !Float
+    -- ^ Estimated variance of y
+  , _msgPosEcefCov_cov_y_z :: !Float
+    -- ^ Estimated covariance of y and z
+  , _msgPosEcefCov_cov_z_z :: !Float
+    -- ^ Estimated variance of z
+  , _msgPosEcefCov_n_sats :: !Word8
+    -- ^ Number of satellites used in solution
+  , _msgPosEcefCov_flags :: !Word8
+    -- ^ Status flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgPosEcefCov where
+  get = do
+    _msgPosEcefCov_tow <- getWord32le
+    _msgPosEcefCov_x <- getFloat64le
+    _msgPosEcefCov_y <- getFloat64le
+    _msgPosEcefCov_z <- getFloat64le
+    _msgPosEcefCov_cov_x_x <- getFloat32le
+    _msgPosEcefCov_cov_x_y <- getFloat32le
+    _msgPosEcefCov_cov_x_z <- getFloat32le
+    _msgPosEcefCov_cov_y_y <- getFloat32le
+    _msgPosEcefCov_cov_y_z <- getFloat32le
+    _msgPosEcefCov_cov_z_z <- getFloat32le
+    _msgPosEcefCov_n_sats <- getWord8
+    _msgPosEcefCov_flags <- getWord8
+    pure MsgPosEcefCov {..}
+
+  put MsgPosEcefCov {..} = do
+    putWord32le _msgPosEcefCov_tow
+    putFloat64le _msgPosEcefCov_x
+    putFloat64le _msgPosEcefCov_y
+    putFloat64le _msgPosEcefCov_z
+    putFloat32le _msgPosEcefCov_cov_x_x
+    putFloat32le _msgPosEcefCov_cov_x_y
+    putFloat32le _msgPosEcefCov_cov_x_z
+    putFloat32le _msgPosEcefCov_cov_y_y
+    putFloat32le _msgPosEcefCov_cov_y_z
+    putFloat32le _msgPosEcefCov_cov_z_z
+    putWord8 _msgPosEcefCov_n_sats
+    putWord8 _msgPosEcefCov_flags
+
+$(makeSBP 'msgPosEcefCov ''MsgPosEcefCov)
+$(makeJSON "_msgPosEcefCov_" ''MsgPosEcefCov)
+$(makeLenses ''MsgPosEcefCov)
+
 msgPosLlh :: Word16
 msgPosLlh = 0x020A
 
@@ -269,9 +348,9 @@ data MsgPosLlh = MsgPosLlh
   , _msgPosLlh_height   :: !Double
     -- ^ Height above WGS84 ellipsoid
   , _msgPosLlh_h_accuracy :: !Word16
-    -- ^ Horizontal position accuracy estimate.
+    -- ^ Horizontal position estimated standard deviation
   , _msgPosLlh_v_accuracy :: !Word16
-    -- ^ Vertical position accuracy estimate.
+    -- ^ Vertical position estimated standard deviation
   , _msgPosLlh_n_sats   :: !Word8
     -- ^ Number of satellites used in solution.
   , _msgPosLlh_flags    :: !Word8
@@ -304,6 +383,80 @@ $(makeSBP 'msgPosLlh ''MsgPosLlh)
 $(makeJSON "_msgPosLlh_" ''MsgPosLlh)
 $(makeLenses ''MsgPosLlh)
 
+msgPosLlhCov :: Word16
+msgPosLlhCov = 0x0211
+
+-- | SBP class for message MSG_POS_LLH_COV (0x0211).
+--
+-- This position solution message reports the absolute geodetic coordinates and
+-- the status (single point vs pseudo-absolute RTK) of the position solution as
+-- well as the upper triangle of the 3x3 covariance matrix.  The position
+-- information and Fix Mode flags should follow the MSG_POS_LLH message.  Since
+-- the covariance matrix is computed in the local-level North, East, Down
+-- frame, the covariance terms follow with that convention. Thus, covariances
+-- are reported against the "downward" measurement and care should be taken
+-- with the sign convention.
+data MsgPosLlhCov = MsgPosLlhCov
+  { _msgPosLlhCov_tow   :: !Word32
+    -- ^ GPS Time of Week
+  , _msgPosLlhCov_lat   :: !Double
+    -- ^ Latitude
+  , _msgPosLlhCov_lon   :: !Double
+    -- ^ Longitude
+  , _msgPosLlhCov_height :: !Double
+    -- ^ Height above WGS84 ellipsoid
+  , _msgPosLlhCov_cov_n_n :: !Float
+    -- ^ Estimated variance of northing
+  , _msgPosLlhCov_cov_n_e :: !Float
+    -- ^ Covariance of northing and easting
+  , _msgPosLlhCov_cov_n_d :: !Float
+    -- ^ Covariance of northing and downward measurement
+  , _msgPosLlhCov_cov_e_e :: !Float
+    -- ^ Estimated variance of easting
+  , _msgPosLlhCov_cov_e_d :: !Float
+    -- ^ Covariance of easting and downward measurement
+  , _msgPosLlhCov_cov_d_d :: !Float
+    -- ^ Estimated variance of downward measurement
+  , _msgPosLlhCov_n_sats :: !Word8
+    -- ^ Number of satellites used in solution.
+  , _msgPosLlhCov_flags :: !Word8
+    -- ^ Status flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgPosLlhCov where
+  get = do
+    _msgPosLlhCov_tow <- getWord32le
+    _msgPosLlhCov_lat <- getFloat64le
+    _msgPosLlhCov_lon <- getFloat64le
+    _msgPosLlhCov_height <- getFloat64le
+    _msgPosLlhCov_cov_n_n <- getFloat32le
+    _msgPosLlhCov_cov_n_e <- getFloat32le
+    _msgPosLlhCov_cov_n_d <- getFloat32le
+    _msgPosLlhCov_cov_e_e <- getFloat32le
+    _msgPosLlhCov_cov_e_d <- getFloat32le
+    _msgPosLlhCov_cov_d_d <- getFloat32le
+    _msgPosLlhCov_n_sats <- getWord8
+    _msgPosLlhCov_flags <- getWord8
+    pure MsgPosLlhCov {..}
+
+  put MsgPosLlhCov {..} = do
+    putWord32le _msgPosLlhCov_tow
+    putFloat64le _msgPosLlhCov_lat
+    putFloat64le _msgPosLlhCov_lon
+    putFloat64le _msgPosLlhCov_height
+    putFloat32le _msgPosLlhCov_cov_n_n
+    putFloat32le _msgPosLlhCov_cov_n_e
+    putFloat32le _msgPosLlhCov_cov_n_d
+    putFloat32le _msgPosLlhCov_cov_e_e
+    putFloat32le _msgPosLlhCov_cov_e_d
+    putFloat32le _msgPosLlhCov_cov_d_d
+    putWord8 _msgPosLlhCov_n_sats
+    putWord8 _msgPosLlhCov_flags
+
+$(makeSBP 'msgPosLlhCov ''MsgPosLlhCov)
+$(makeJSON "_msgPosLlhCov_" ''MsgPosLlhCov)
+$(makeLenses ''MsgPosLlhCov)
+
 msgBaselineEcef :: Word16
 msgBaselineEcef = 0x020B
 
@@ -323,7 +476,7 @@ data MsgBaselineEcef = MsgBaselineEcef
   , _msgBaselineEcef_z      :: !Int32
     -- ^ Baseline ECEF Z coordinate
   , _msgBaselineEcef_accuracy :: !Word16
-    -- ^ Position accuracy estimate
+    -- ^ Position estimated standard deviation
   , _msgBaselineEcef_n_sats :: !Word8
     -- ^ Number of satellites used in solution
   , _msgBaselineEcef_flags  :: !Word8
@@ -375,9 +528,9 @@ data MsgBaselineNed = MsgBaselineNed
   , _msgBaselineNed_d        :: !Int32
     -- ^ Baseline Down coordinate
   , _msgBaselineNed_h_accuracy :: !Word16
-    -- ^ Horizontal position accuracy estimate
+    -- ^ Horizontal position estimated standard deviation
   , _msgBaselineNed_v_accuracy :: !Word16
-    -- ^ Vertical position accuracy estimate
+    -- ^ Vertical position estimated standard deviation
   , _msgBaselineNed_n_sats   :: !Word8
     -- ^ Number of satellites used in solution
   , _msgBaselineNed_flags    :: !Word8
@@ -428,7 +581,7 @@ data MsgVelEcef = MsgVelEcef
   , _msgVelEcef_z      :: !Int32
     -- ^ Velocity ECEF Z coordinate
   , _msgVelEcef_accuracy :: !Word16
-    -- ^ Velocity accuracy estimate
+    -- ^ Velocity estimated standard deviation
   , _msgVelEcef_n_sats :: !Word8
     -- ^ Number of satellites used in solution
   , _msgVelEcef_flags  :: !Word8
@@ -459,6 +612,75 @@ $(makeSBP 'msgVelEcef ''MsgVelEcef)
 $(makeJSON "_msgVelEcef_" ''MsgVelEcef)
 $(makeLenses ''MsgVelEcef)
 
+msgVelEcefCov :: Word16
+msgVelEcefCov = 0x0215
+
+-- | SBP class for message MSG_VEL_ECEF_COV (0x0215).
+--
+-- This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+-- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
+-- the matching time-of-week (tow).
+data MsgVelEcefCov = MsgVelEcefCov
+  { _msgVelEcefCov_tow   :: !Word32
+    -- ^ GPS Time of Week
+  , _msgVelEcefCov_x     :: !Int32
+    -- ^ Velocity ECEF X coordinate
+  , _msgVelEcefCov_y     :: !Int32
+    -- ^ Velocity ECEF Y coordinate
+  , _msgVelEcefCov_z     :: !Int32
+    -- ^ Velocity ECEF Z coordinate
+  , _msgVelEcefCov_cov_x_x :: !Float
+    -- ^ Estimated variance of x
+  , _msgVelEcefCov_cov_x_y :: !Float
+    -- ^ Estimated covariance of x and y
+  , _msgVelEcefCov_cov_x_z :: !Float
+    -- ^ Estimated covariance of x and z
+  , _msgVelEcefCov_cov_y_y :: !Float
+    -- ^ Estimated variance of y
+  , _msgVelEcefCov_cov_y_z :: !Float
+    -- ^ Estimated covariance of y and z
+  , _msgVelEcefCov_cov_z_z :: !Float
+    -- ^ Estimated variance of z
+  , _msgVelEcefCov_n_sats :: !Word8
+    -- ^ Number of satellites used in solution
+  , _msgVelEcefCov_flags :: !Word8
+    -- ^ Status flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgVelEcefCov where
+  get = do
+    _msgVelEcefCov_tow <- getWord32le
+    _msgVelEcefCov_x <- fromIntegral <$> getWord32le
+    _msgVelEcefCov_y <- fromIntegral <$> getWord32le
+    _msgVelEcefCov_z <- fromIntegral <$> getWord32le
+    _msgVelEcefCov_cov_x_x <- getFloat32le
+    _msgVelEcefCov_cov_x_y <- getFloat32le
+    _msgVelEcefCov_cov_x_z <- getFloat32le
+    _msgVelEcefCov_cov_y_y <- getFloat32le
+    _msgVelEcefCov_cov_y_z <- getFloat32le
+    _msgVelEcefCov_cov_z_z <- getFloat32le
+    _msgVelEcefCov_n_sats <- getWord8
+    _msgVelEcefCov_flags <- getWord8
+    pure MsgVelEcefCov {..}
+
+  put MsgVelEcefCov {..} = do
+    putWord32le _msgVelEcefCov_tow
+    putWord32le $ fromIntegral _msgVelEcefCov_x
+    putWord32le $ fromIntegral _msgVelEcefCov_y
+    putWord32le $ fromIntegral _msgVelEcefCov_z
+    putFloat32le _msgVelEcefCov_cov_x_x
+    putFloat32le _msgVelEcefCov_cov_x_y
+    putFloat32le _msgVelEcefCov_cov_x_z
+    putFloat32le _msgVelEcefCov_cov_y_y
+    putFloat32le _msgVelEcefCov_cov_y_z
+    putFloat32le _msgVelEcefCov_cov_z_z
+    putWord8 _msgVelEcefCov_n_sats
+    putWord8 _msgVelEcefCov_flags
+
+$(makeSBP 'msgVelEcefCov ''MsgVelEcefCov)
+$(makeJSON "_msgVelEcefCov_" ''MsgVelEcefCov)
+$(makeLenses ''MsgVelEcefCov)
+
 msgVelNed :: Word16
 msgVelNed = 0x020E
 
@@ -478,9 +700,9 @@ data MsgVelNed = MsgVelNed
   , _msgVelNed_d        :: !Int32
     -- ^ Velocity Down coordinate
   , _msgVelNed_h_accuracy :: !Word16
-    -- ^ Horizontal velocity accuracy estimate
+    -- ^ Horizontal velocity estimated standard deviation
   , _msgVelNed_v_accuracy :: !Word16
-    -- ^ Vertical velocity accuracy estimate
+    -- ^ Vertical velocity estimated standard deviation
   , _msgVelNed_n_sats   :: !Word8
     -- ^ Number of satellites used in solution
   , _msgVelNed_flags    :: !Word8
@@ -513,43 +735,150 @@ $(makeSBP 'msgVelNed ''MsgVelNed)
 $(makeJSON "_msgVelNed_" ''MsgVelNed)
 $(makeLenses ''MsgVelNed)
 
-msgBaselineHeading :: Word16
-msgBaselineHeading = 0x020F
+msgVelNedCov :: Word16
+msgVelNedCov = 0x0212
 
--- | SBP class for message MSG_BASELINE_HEADING (0x020F).
+-- | SBP class for message MSG_VEL_NED_COV (0x0212).
 --
--- This message reports the baseline heading pointing from the base station to
--- the rover relative to True North. The full GPS time is given by the
--- preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
--- that time-matched RTK mode is used when the base station is moving.
-data MsgBaselineHeading = MsgBaselineHeading
-  { _msgBaselineHeading_tow   :: !Word32
+-- This message reports the velocity in local North East Down (NED)
+-- coordinates. The NED coordinate system is defined as the local WGS84 tangent
+-- plane centered at the current position. The full GPS time is given by the
+-- preceding MSG_GPS_TIME with the matching time-of-week (tow). This message is
+-- similar to the MSG_VEL_NED, but it includes the upper triangular portion of
+-- the 3x3 covariance matrix.
+data MsgVelNedCov = MsgVelNedCov
+  { _msgVelNedCov_tow   :: !Word32
     -- ^ GPS Time of Week
-  , _msgBaselineHeading_heading :: !Word32
-    -- ^ Heading
-  , _msgBaselineHeading_n_sats :: !Word8
+  , _msgVelNedCov_n     :: !Int32
+    -- ^ Velocity North coordinate
+  , _msgVelNedCov_e     :: !Int32
+    -- ^ Velocity East coordinate
+  , _msgVelNedCov_d     :: !Int32
+    -- ^ Velocity Down coordinate
+  , _msgVelNedCov_cov_n_n :: !Float
+    -- ^ Estimated variance of northward measurement
+  , _msgVelNedCov_cov_n_e :: !Float
+    -- ^ Covariance of northward and eastward measurement
+  , _msgVelNedCov_cov_n_d :: !Float
+    -- ^ Covariance of northward and downward measurement
+  , _msgVelNedCov_cov_e_e :: !Float
+    -- ^ Estimated variance of eastward measurement
+  , _msgVelNedCov_cov_e_d :: !Float
+    -- ^ Covariance of eastward and downward measurement
+  , _msgVelNedCov_cov_d_d :: !Float
+    -- ^ Estimated variance of downward measurement
+  , _msgVelNedCov_n_sats :: !Word8
     -- ^ Number of satellites used in solution
-  , _msgBaselineHeading_flags :: !Word8
+  , _msgVelNedCov_flags :: !Word8
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgBaselineHeading where
+instance Binary MsgVelNedCov where
   get = do
-    _msgBaselineHeading_tow <- getWord32le
-    _msgBaselineHeading_heading <- getWord32le
-    _msgBaselineHeading_n_sats <- getWord8
-    _msgBaselineHeading_flags <- getWord8
-    pure MsgBaselineHeading {..}
+    _msgVelNedCov_tow <- getWord32le
+    _msgVelNedCov_n <- fromIntegral <$> getWord32le
+    _msgVelNedCov_e <- fromIntegral <$> getWord32le
+    _msgVelNedCov_d <- fromIntegral <$> getWord32le
+    _msgVelNedCov_cov_n_n <- getFloat32le
+    _msgVelNedCov_cov_n_e <- getFloat32le
+    _msgVelNedCov_cov_n_d <- getFloat32le
+    _msgVelNedCov_cov_e_e <- getFloat32le
+    _msgVelNedCov_cov_e_d <- getFloat32le
+    _msgVelNedCov_cov_d_d <- getFloat32le
+    _msgVelNedCov_n_sats <- getWord8
+    _msgVelNedCov_flags <- getWord8
+    pure MsgVelNedCov {..}
 
-  put MsgBaselineHeading {..} = do
-    putWord32le _msgBaselineHeading_tow
-    putWord32le _msgBaselineHeading_heading
-    putWord8 _msgBaselineHeading_n_sats
-    putWord8 _msgBaselineHeading_flags
+  put MsgVelNedCov {..} = do
+    putWord32le _msgVelNedCov_tow
+    putWord32le $ fromIntegral _msgVelNedCov_n
+    putWord32le $ fromIntegral _msgVelNedCov_e
+    putWord32le $ fromIntegral _msgVelNedCov_d
+    putFloat32le _msgVelNedCov_cov_n_n
+    putFloat32le _msgVelNedCov_cov_n_e
+    putFloat32le _msgVelNedCov_cov_n_d
+    putFloat32le _msgVelNedCov_cov_e_e
+    putFloat32le _msgVelNedCov_cov_e_d
+    putFloat32le _msgVelNedCov_cov_d_d
+    putWord8 _msgVelNedCov_n_sats
+    putWord8 _msgVelNedCov_flags
 
-$(makeSBP 'msgBaselineHeading ''MsgBaselineHeading)
-$(makeJSON "_msgBaselineHeading_" ''MsgBaselineHeading)
-$(makeLenses ''MsgBaselineHeading)
+$(makeSBP 'msgVelNedCov ''MsgVelNedCov)
+$(makeJSON "_msgVelNedCov_" ''MsgVelNedCov)
+$(makeLenses ''MsgVelNedCov)
+
+msgVelBody :: Word16
+msgVelBody = 0x0213
+
+-- | SBP class for message MSG_VEL_BODY (0x0213).
+--
+-- This message reports the velocity in the Vehicle Body Frame. By convention,
+-- the x-axis should point out the nose of the vehicle and represent the
+-- forward direction, while as the y-axis should point out the right hand side
+-- of the vehicle. Since this is a right handed system, z should point out the
+-- bottom of the vehicle. The orientation and origin of the Vehicle Body Frame
+-- are specified via the device settings. The full GPS time is given by the
+-- preceding MSG_GPS_TIME with the matching time-of-week (tow).
+data MsgVelBody = MsgVelBody
+  { _msgVelBody_tow   :: !Word32
+    -- ^ GPS Time of Week
+  , _msgVelBody_x     :: !Int32
+    -- ^ Velocity in x direction
+  , _msgVelBody_y     :: !Int32
+    -- ^ Velocity in y direction
+  , _msgVelBody_z     :: !Int32
+    -- ^ Velocity in z direction
+  , _msgVelBody_cov_x_x :: !Float
+    -- ^ Estimated variance of x
+  , _msgVelBody_cov_x_y :: !Float
+    -- ^ Covariance of x and y
+  , _msgVelBody_cov_x_z :: !Float
+    -- ^ Covariance of x and z
+  , _msgVelBody_cov_y_y :: !Float
+    -- ^ Estimated variance of y
+  , _msgVelBody_cov_y_z :: !Float
+    -- ^ Covariance of y and z
+  , _msgVelBody_cov_z_z :: !Float
+    -- ^ Estimated variance of z
+  , _msgVelBody_n_sats :: !Word8
+    -- ^ Number of satellites used in solution
+  , _msgVelBody_flags :: !Word8
+    -- ^ Status flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgVelBody where
+  get = do
+    _msgVelBody_tow <- getWord32le
+    _msgVelBody_x <- fromIntegral <$> getWord32le
+    _msgVelBody_y <- fromIntegral <$> getWord32le
+    _msgVelBody_z <- fromIntegral <$> getWord32le
+    _msgVelBody_cov_x_x <- getFloat32le
+    _msgVelBody_cov_x_y <- getFloat32le
+    _msgVelBody_cov_x_z <- getFloat32le
+    _msgVelBody_cov_y_y <- getFloat32le
+    _msgVelBody_cov_y_z <- getFloat32le
+    _msgVelBody_cov_z_z <- getFloat32le
+    _msgVelBody_n_sats <- getWord8
+    _msgVelBody_flags <- getWord8
+    pure MsgVelBody {..}
+
+  put MsgVelBody {..} = do
+    putWord32le _msgVelBody_tow
+    putWord32le $ fromIntegral _msgVelBody_x
+    putWord32le $ fromIntegral _msgVelBody_y
+    putWord32le $ fromIntegral _msgVelBody_z
+    putFloat32le _msgVelBody_cov_x_x
+    putFloat32le _msgVelBody_cov_x_y
+    putFloat32le _msgVelBody_cov_x_z
+    putFloat32le _msgVelBody_cov_y_y
+    putFloat32le _msgVelBody_cov_y_z
+    putFloat32le _msgVelBody_cov_z_z
+    putWord8 _msgVelBody_n_sats
+    putWord8 _msgVelBody_flags
+
+$(makeSBP 'msgVelBody ''MsgVelBody)
+$(makeJSON "_msgVelBody_" ''MsgVelBody)
+$(makeLenses ''MsgVelBody)
 
 msgAgeCorrections :: Word16
 msgAgeCorrections = 0x0210

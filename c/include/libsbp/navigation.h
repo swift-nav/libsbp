@@ -28,6 +28,12 @@
  * phase ambiguity. The pseudo-absolute position solution uses a
  * user-provided, well-surveyed base station position (if available)
  * and the RTK solution in tandem.
+ * 
+ * When the inertial navigation mode indicates that the IMU is used,
+ * all messages are reported in the vehicle body frame as defined by
+ * device settings.  By default, the vehicle body frame is configured to be
+ * coincident with the antenna phase center.  When there is no inertial 
+ * navigation, the solution will be reported at the phase center of the antenna.
  * \{ */
 
 #ifndef LIBSBP_NAVIGATION_MESSAGES_H
@@ -118,10 +124,39 @@ typedef struct __attribute__((packed)) {
   double x;           /**< ECEF X coordinate [m] */
   double y;           /**< ECEF Y coordinate [m] */
   double z;           /**< ECEF Z coordinate [m] */
-  u16 accuracy;    /**< Position accuracy estimate. [mm] */
+  u16 accuracy;    /**< Position estimated standard deviation [mm] */
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_pos_ecef_t;
+
+
+/** Single-point position in ECEF
+ *
+ * The position solution message reports absolute Earth Centered
+ * Earth Fixed (ECEF) coordinates and the status (single point vs
+ * pseudo-absolute RTK) of the position solution. The message also
+ * reports the upper triangular portion of the 3x3 covariance matrix.
+ * If the receiver knows the surveyed position of the base station and has
+ * an RTK solution, this reports a pseudo-absolute position
+ * solution using the base station position and the rover's RTK
+ * baseline vector. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+#define SBP_MSG_POS_ECEF_COV           0x0214
+typedef struct __attribute__((packed)) {
+  u32 tow;        /**< GPS Time of Week [ms] */
+  double x;          /**< ECEF X coordinate [m] */
+  double y;          /**< ECEF Y coordinate [m] */
+  double z;          /**< ECEF Z coordinate [m] */
+  float cov_x_x;    /**< Estimated variance of x [m^2] */
+  float cov_x_y;    /**< Estimated covariance of x and y [m^2] */
+  float cov_x_z;    /**< Estimated covariance of x and z [m^2] */
+  float cov_y_y;    /**< Estimated variance of y [m^2] */
+  float cov_y_z;    /**< Estimated covariance of y and z [m^2] */
+  float cov_z_z;    /**< Estimated variance of z [m^2] */
+  u8 n_sats;     /**< Number of satellites used in solution */
+  u8 flags;      /**< Status flags */
+} msg_pos_ecef_cov_t;
 
 
 /** Geodetic Position
@@ -141,11 +176,39 @@ typedef struct __attribute__((packed)) {
   double lat;           /**< Latitude [deg] */
   double lon;           /**< Longitude [deg] */
   double height;        /**< Height above WGS84 ellipsoid [m] */
-  u16 h_accuracy;    /**< Horizontal position accuracy estimate. [mm] */
-  u16 v_accuracy;    /**< Vertical position accuracy estimate. [mm] */
+  u16 h_accuracy;    /**< Horizontal position estimated standard deviation [mm] */
+  u16 v_accuracy;    /**< Vertical position estimated standard deviation [mm] */
   u8 n_sats;        /**< Number of satellites used in solution. */
   u8 flags;         /**< Status flags */
 } msg_pos_llh_t;
+
+
+/** Geodetic Position
+ *
+ * This position solution message reports the absolute geodetic
+ * coordinates and the status (single point vs pseudo-absolute RTK)
+ * of the position solution as well as the upper triangle of the 3x3
+ * covariance matrix.  The position information and Fix Mode flags should
+ * follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+ * in the local-level North, East, Down frame, the covariance terms follow
+ * with that convention. Thus, covariances are reported against the "downward"
+ * measurement and care should be taken with the sign convention.
+ */
+#define SBP_MSG_POS_LLH_COV            0x0211
+typedef struct __attribute__((packed)) {
+  u32 tow;        /**< GPS Time of Week [ms] */
+  double lat;        /**< Latitude [deg] */
+  double lon;        /**< Longitude [deg] */
+  double height;     /**< Height above WGS84 ellipsoid [m] */
+  float cov_n_n;    /**< Estimated variance of northing [m^2] */
+  float cov_n_e;    /**< Covariance of northing and easting [m^2] */
+  float cov_n_d;    /**< Covariance of northing and downward measurement [m^2] */
+  float cov_e_e;    /**< Estimated variance of easting [m^2] */
+  float cov_e_d;    /**< Covariance of easting and downward measurement [m^2] */
+  float cov_d_d;    /**< Estimated variance of downward measurement [m^2] */
+  u8 n_sats;     /**< Number of satellites used in solution. */
+  u8 flags;      /**< Status flags */
+} msg_pos_llh_cov_t;
 
 
 /** Baseline Position in ECEF
@@ -162,7 +225,7 @@ typedef struct __attribute__((packed)) {
   s32 x;           /**< Baseline ECEF X coordinate [mm] */
   s32 y;           /**< Baseline ECEF Y coordinate [mm] */
   s32 z;           /**< Baseline ECEF Z coordinate [mm] */
-  u16 accuracy;    /**< Position accuracy estimate [mm] */
+  u16 accuracy;    /**< Position estimated standard deviation [mm] */
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_baseline_ecef_t;
@@ -183,8 +246,8 @@ typedef struct __attribute__((packed)) {
   s32 n;             /**< Baseline North coordinate [mm] */
   s32 e;             /**< Baseline East coordinate [mm] */
   s32 d;             /**< Baseline Down coordinate [mm] */
-  u16 h_accuracy;    /**< Horizontal position accuracy estimate [mm] */
-  u16 v_accuracy;    /**< Vertical position accuracy estimate [mm] */
+  u16 h_accuracy;    /**< Horizontal position estimated standard deviation [mm] */
+  u16 v_accuracy;    /**< Vertical position estimated standard deviation [mm] */
   u8 n_sats;        /**< Number of satellites used in solution */
   u8 flags;         /**< Status flags */
 } msg_baseline_ned_t;
@@ -202,11 +265,34 @@ typedef struct __attribute__((packed)) {
   s32 x;           /**< Velocity ECEF X coordinate [mm/s] */
   s32 y;           /**< Velocity ECEF Y coordinate [mm/s] */
   s32 z;           /**< Velocity ECEF Z coordinate [mm/s] */
-  u16 accuracy;    /**< Velocity accuracy estimate
+  u16 accuracy;    /**< Velocity estimated standard deviation
  [mm/s] */
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_vel_ecef_t;
+
+
+/** Velocity in ECEF
+ *
+ * This message reports the velocity in Earth Centered Earth Fixed
+ * (ECEF) coordinates. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+#define SBP_MSG_VEL_ECEF_COV           0x0215
+typedef struct __attribute__((packed)) {
+  u32 tow;        /**< GPS Time of Week [ms] */
+  s32 x;          /**< Velocity ECEF X coordinate [mm/s] */
+  s32 y;          /**< Velocity ECEF Y coordinate [mm/s] */
+  s32 z;          /**< Velocity ECEF Z coordinate [mm/s] */
+  float cov_x_x;    /**< Estimated variance of x [m^2/s^2] */
+  float cov_x_y;    /**< Estimated covariance of x and y [m^2/s^2] */
+  float cov_x_z;    /**< Estimated covariance of x and z [m^2/s^2] */
+  float cov_y_y;    /**< Estimated variance of y [m^2/s^2] */
+  float cov_y_z;    /**< Estimated covariance of y and z [m^2/s^2] */
+  float cov_z_z;    /**< Estimated variance of z [m^2/s^2] */
+  u8 n_sats;     /**< Number of satellites used in solution */
+  u8 flags;      /**< Status flags */
+} msg_vel_ecef_cov_t;
 
 
 /** Velocity in NED
@@ -222,29 +308,66 @@ typedef struct __attribute__((packed)) {
   s32 n;             /**< Velocity North coordinate [mm/s] */
   s32 e;             /**< Velocity East coordinate [mm/s] */
   s32 d;             /**< Velocity Down coordinate [mm/s] */
-  u16 h_accuracy;    /**< Horizontal velocity accuracy estimate
+  u16 h_accuracy;    /**< Horizontal velocity estimated standard deviation
  [mm/s] */
-  u16 v_accuracy;    /**< Vertical velocity accuracy estimate
+  u16 v_accuracy;    /**< Vertical velocity estimated standard deviation
  [mm/s] */
   u8 n_sats;        /**< Number of satellites used in solution */
   u8 flags;         /**< Status flags */
 } msg_vel_ned_t;
 
 
-/** Heading relative to True North
+/** Velocity in NED
  *
- * This message reports the baseline heading pointing from the base station
- * to the rover relative to True North. The full GPS time is given by the
- * preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
- * that time-matched RTK mode is used when the base station is moving.
+ * This message reports the velocity in local North East Down (NED)
+ * coordinates. The NED coordinate system is defined as the local WGS84
+ * tangent plane centered at the current position. The full GPS time is
+ * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+ * portion of the 3x3 covariance matrix.
  */
-#define SBP_MSG_BASELINE_HEADING       0x020F
+#define SBP_MSG_VEL_NED_COV            0x0212
 typedef struct __attribute__((packed)) {
   u32 tow;        /**< GPS Time of Week [ms] */
-  u32 heading;    /**< Heading [mdeg] */
+  s32 n;          /**< Velocity North coordinate [mm/s] */
+  s32 e;          /**< Velocity East coordinate [mm/s] */
+  s32 d;          /**< Velocity Down coordinate [mm/s] */
+  float cov_n_n;    /**< Estimated variance of northward measurement [m^2] */
+  float cov_n_e;    /**< Covariance of northward and eastward measurement [m^2] */
+  float cov_n_d;    /**< Covariance of northward and downward measurement [m^2] */
+  float cov_e_e;    /**< Estimated variance of eastward measurement [m^2] */
+  float cov_e_d;    /**< Covariance of eastward and downward measurement [m^2] */
+  float cov_d_d;    /**< Estimated variance of downward measurement [m^2] */
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
-} msg_baseline_heading_t;
+} msg_vel_ned_cov_t;
+
+
+/** Velocity in User Frame
+ *
+ * This message reports the velocity in the Vehicle Body Frame. By convention,
+ * the x-axis should point out the nose of the vehicle and represent the forward
+ * direction, while as the y-axis should point out the right hand side of the vehicle.
+ * Since this is a right handed system, z should point out the bottom of the vehicle.
+ * The orientation and origin of the Vehicle Body Frame are specified via the device settings.
+ * The full GPS time is given by the preceding MSG_GPS_TIME with the
+ * matching time-of-week (tow).
+ */
+#define SBP_MSG_VEL_BODY               0x0213
+typedef struct __attribute__((packed)) {
+  u32 tow;        /**< GPS Time of Week [ms] */
+  s32 x;          /**< Velocity in x direction [mm/s] */
+  s32 y;          /**< Velocity in y direction [mm/s] */
+  s32 z;          /**< Velocity in z direction [mm/s] */
+  float cov_x_x;    /**< Estimated variance of x [m^2] */
+  float cov_x_y;    /**< Covariance of x and y [m^2] */
+  float cov_x_z;    /**< Covariance of x and z [m^2] */
+  float cov_y_y;    /**< Estimated variance of y [m^2] */
+  float cov_y_z;    /**< Covariance of y and z [m^2] */
+  float cov_z_z;    /**< Estimated variance of z [m^2] */
+  u8 n_sats;     /**< Number of satellites used in solution */
+  u8 flags;      /**< Status flags */
+} msg_vel_body_t;
 
 
 /** Age of corrections

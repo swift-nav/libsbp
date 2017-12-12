@@ -26,8 +26,10 @@ import SwiftNav.SBP.Mag as Exports
 import SwiftNav.SBP.Navigation as Exports
 import SwiftNav.SBP.Ndb as Exports
 import SwiftNav.SBP.Observation as Exports
+import SwiftNav.SBP.Orientation as Exports
 import SwiftNav.SBP.Piksi as Exports
 import SwiftNav.SBP.Settings as Exports
 import SwiftNav.SBP.System as Exports
 import SwiftNav.SBP.Tracking as Exports
 import SwiftNav.SBP.User as Exports
+import SwiftNav.SBP.Vehicle as Exports

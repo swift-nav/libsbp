@@ -1,0 +1,24 @@
+---
+description: Unit tests for swiftnav.sbp.file_io MsgFileioWriteResp vNone.
+generated_on: 2016-11-03 20:14:43.595376
+package: sbp.file_io
+tests:
+
+- msg:
+    fields:
+      sequence: 202
+    module: sbp.file_io
+    name: MsgFileioWriteResp
+  msg_type: '0xab'
+  raw_json: '{"sender": 66, "msg_type": 171, "sequence": 202, "crc": 62451, "length":
+    4, "preamble": 85, "payload": "ygAAAA=="}'
+  raw_packet: VasAQgAEygAAAPPz
+  sbp:
+    crc: '0xf3f3'
+    length: 4
+    msg_type: '0xab'
+    payload: ygAAAA==
+    preamble: '0x55'
+    sender: '0x42'
+version: null
+...

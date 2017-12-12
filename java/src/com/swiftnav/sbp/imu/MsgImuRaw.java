@@ -30,7 +30,8 @@ import org.json.JSONArray;
  * fields.
  *
  * Raw data from the Inertial Measurement Unit, containing accelerometer and
- * gyroscope readings. */
+ * gyroscope readings. The sense of the measurements are to be aligned with 
+ * the indications on the device itself. */
 
 public class MsgImuRaw extends SBPMessage {
     public static final int TYPE = 0x0900;
@@ -45,22 +46,22 @@ time is unknown or invalid.
  */
     public int tow_f;
     
-    /** Acceleration in the body frame X axis */
+    /** Acceleration in the IMU frame X axis */
     public int acc_x;
     
-    /** Acceleration in the body frame Y axis */
+    /** Acceleration in the IMU frame Y axis */
     public int acc_y;
     
-    /** Acceleration in the body frame Z axis */
+    /** Acceleration in the IMU frame Z axis */
     public int acc_z;
     
-    /** Angular rate around the body frame X axis */
+    /** Angular rate around IMU frame X axis */
     public int gyr_x;
     
-    /** Angular rate around the body frame Y axis */
+    /** Angular rate around IMU frame Y axis */
     public int gyr_y;
     
-    /** Angular rate around the body frame Z axis */
+    /** Angular rate around IMU frame Z axis */
     public int gyr_z;
     
 

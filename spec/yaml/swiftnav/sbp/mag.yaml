@@ -10,7 +10,7 @@
 
 package: swiftnav.sbp.mag
 description: Magnetometer (mag) messages.
-stable: False
+stable: True
 public: True
 include:
   - types.yaml

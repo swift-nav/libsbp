@@ -1,0 +1,24 @@
+---
+description: Unit tests for swiftnav.sbp.system MsgHeartbeat vNone.
+generated_on: 2016-11-03 20:14:43.794112
+package: sbp.system
+tests:
+
+- msg:
+    fields:
+      flags: 2147549696
+    module: sbp.system
+    name: MsgHeartbeat
+  msg_type: '0xffff'
+  raw_json: '{"sender": 16991, "msg_type": 65535, "crc": 56451, "length": 4, "flags":
+    2147549696, "preamble": 85, "payload": "AAIBgA=="}'
+  raw_packet: Vf//X0IEAAIBgIPc
+  sbp:
+    crc: '0xdc83'
+    length: 4
+    msg_type: '0xffff'
+    payload: AAIBgA==
+    preamble: '0x55'
+    sender: '0x425f'
+version: null
+...

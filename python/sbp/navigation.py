@@ -23,6 +23,12 @@ phase ambiguity. The pseudo-absolute position solution uses a
 user-provided, well-surveyed base station position (if available)
 and the RTK solution in tandem.
 
+When the inertial navigation mode indicates that the IMU is used,
+all messages are reported in the vehicle body frame as defined by
+device settings.  By default, the vehicle body frame is configured to be
+coincident with the antenna phase center.  When there is no inertial 
+navigation, the solution will be reported at the phase center of the antenna.
+
 """
 
 import json
@@ -414,7 +420,7 @@ MSG_GPS_TIME with the matching time-of-week (tow).
   z : double
     ECEF Z coordinate
   accuracy : int
-    Position accuracy estimate.
+    Position estimated standard deviation
   n_sats : int
     Number of satellites used in solution
   flags : int
@@ -500,6 +506,150 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     d.update(j)
     return d
     
+SBP_MSG_POS_ECEF_COV = 0x0214
+class MsgPosECEFCov(SBP):
+  """SBP class for message MSG_POS_ECEF_COV (0x0214).
+
+  You can have MSG_POS_ECEF_COV inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The position solution message reports absolute Earth Centered
+Earth Fixed (ECEF) coordinates and the status (single point vs
+pseudo-absolute RTK) of the position solution. The message also
+reports the upper triangular portion of the 3x3 covariance matrix.
+If the receiver knows the surveyed position of the base station and has
+an RTK solution, this reports a pseudo-absolute position
+solution using the base station position and the rover's RTK
+baseline vector. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  x : double
+    ECEF X coordinate
+  y : double
+    ECEF Y coordinate
+  z : double
+    ECEF Z coordinate
+  cov_x_x : float
+    Estimated variance of x
+  cov_x_y : float
+    Estimated covariance of x and y
+  cov_x_z : float
+    Estimated covariance of x and z
+  cov_y_y : float
+    Estimated variance of y
+  cov_y_z : float
+    Estimated covariance of y and z
+  cov_z_z : float
+    Estimated variance of z
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Float64l,
+                   'y' / construct.Float64l,
+                   'z' / construct.Float64l,
+                   'cov_x_x' / construct.Float32l,
+                   'cov_x_y' / construct.Float32l,
+                   'cov_x_z' / construct.Float32l,
+                   'cov_y_y' / construct.Float32l,
+                   'cov_y_z' / construct.Float32l,
+                   'cov_z_z' / construct.Float32l,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'x',
+               'y',
+               'z',
+               'cov_x_x',
+               'cov_x_y',
+               'cov_x_z',
+               'cov_y_y',
+               'cov_y_z',
+               'cov_z_z',
+               'n_sats',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgPosECEFCov,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgPosECEFCov, self).__init__()
+      self.msg_type = SBP_MSG_POS_ECEF_COV
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+      self.cov_x_x = kwargs.pop('cov_x_x')
+      self.cov_x_y = kwargs.pop('cov_x_y')
+      self.cov_x_z = kwargs.pop('cov_x_z')
+      self.cov_y_y = kwargs.pop('cov_y_y')
+      self.cov_y_z = kwargs.pop('cov_y_z')
+      self.cov_z_z = kwargs.pop('cov_z_z')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgPosECEFCov.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgPosECEFCov(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgPosECEFCov._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgPosECEFCov._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgPosECEFCov, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_POS_LLH = 0x020A
 class MsgPosLLH(SBP):
   """SBP class for message MSG_POS_LLH (0x020A).
@@ -532,9 +682,9 @@ matching time-of-week (tow).
   height : double
     Height above WGS84 ellipsoid
   h_accuracy : int
-    Horizontal position accuracy estimate.
+    Horizontal position estimated standard deviation
   v_accuracy : int
-    Vertical position accuracy estimate.
+    Vertical position estimated standard deviation
   n_sats : int
     Number of satellites used in solution.
   flags : int
@@ -623,6 +773,149 @@ matching time-of-week (tow).
     d.update(j)
     return d
     
+SBP_MSG_POS_LLH_COV = 0x0211
+class MsgPosLLHCov(SBP):
+  """SBP class for message MSG_POS_LLH_COV (0x0211).
+
+  You can have MSG_POS_LLH_COV inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This position solution message reports the absolute geodetic
+coordinates and the status (single point vs pseudo-absolute RTK)
+of the position solution as well as the upper triangle of the 3x3
+covariance matrix.  The position information and Fix Mode flags should
+follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+in the local-level North, East, Down frame, the covariance terms follow
+with that convention. Thus, covariances are reported against the "downward"
+measurement and care should be taken with the sign convention.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  lat : double
+    Latitude
+  lon : double
+    Longitude
+  height : double
+    Height above WGS84 ellipsoid
+  cov_n_n : float
+    Estimated variance of northing
+  cov_n_e : float
+    Covariance of northing and easting
+  cov_n_d : float
+    Covariance of northing and downward measurement
+  cov_e_e : float
+    Estimated variance of easting
+  cov_e_d : float
+    Covariance of easting and downward measurement
+  cov_d_d : float
+    Estimated variance of downward measurement
+  n_sats : int
+    Number of satellites used in solution.
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'lat' / construct.Float64l,
+                   'lon' / construct.Float64l,
+                   'height' / construct.Float64l,
+                   'cov_n_n' / construct.Float32l,
+                   'cov_n_e' / construct.Float32l,
+                   'cov_n_d' / construct.Float32l,
+                   'cov_e_e' / construct.Float32l,
+                   'cov_e_d' / construct.Float32l,
+                   'cov_d_d' / construct.Float32l,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'lat',
+               'lon',
+               'height',
+               'cov_n_n',
+               'cov_n_e',
+               'cov_n_d',
+               'cov_e_e',
+               'cov_e_d',
+               'cov_d_d',
+               'n_sats',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgPosLLHCov,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgPosLLHCov, self).__init__()
+      self.msg_type = SBP_MSG_POS_LLH_COV
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.lat = kwargs.pop('lat')
+      self.lon = kwargs.pop('lon')
+      self.height = kwargs.pop('height')
+      self.cov_n_n = kwargs.pop('cov_n_n')
+      self.cov_n_e = kwargs.pop('cov_n_e')
+      self.cov_n_d = kwargs.pop('cov_n_d')
+      self.cov_e_e = kwargs.pop('cov_e_e')
+      self.cov_e_d = kwargs.pop('cov_e_d')
+      self.cov_d_d = kwargs.pop('cov_d_d')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgPosLLHCov.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgPosLLHCov(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgPosLLHCov._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgPosLLHCov._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgPosLLHCov, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_BASELINE_ECEF = 0x020B
 class MsgBaselineECEF(SBP):
   """SBP class for message MSG_BASELINE_ECEF (0x020B).
@@ -652,7 +945,7 @@ matching time-of-week (tow).
   z : int
     Baseline ECEF Z coordinate
   accuracy : int
-    Position accuracy estimate
+    Position estimated standard deviation
   n_sats : int
     Number of satellites used in solution
   flags : int
@@ -768,9 +1061,9 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
   d : int
     Baseline Down coordinate
   h_accuracy : int
-    Horizontal position accuracy estimate
+    Horizontal position estimated standard deviation
   v_accuracy : int
-    Vertical position accuracy estimate
+    Vertical position estimated standard deviation
   n_sats : int
     Number of satellites used in solution
   flags : int
@@ -886,7 +1179,7 @@ MSG_GPS_TIME with the matching time-of-week (tow).
   z : int
     Velocity ECEF Z coordinate
   accuracy : int
-    Velocity accuracy estimate
+    Velocity estimated standard deviation
 
   n_sats : int
     Number of satellites used in solution
@@ -973,6 +1266,144 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     d.update(j)
     return d
     
+SBP_MSG_VEL_ECEF_COV = 0x0215
+class MsgVelECEFCov(SBP):
+  """SBP class for message MSG_VEL_ECEF_COV (0x0215).
+
+  You can have MSG_VEL_ECEF_COV inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the velocity in Earth Centered Earth Fixed
+(ECEF) coordinates. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  x : int
+    Velocity ECEF X coordinate
+  y : int
+    Velocity ECEF Y coordinate
+  z : int
+    Velocity ECEF Z coordinate
+  cov_x_x : float
+    Estimated variance of x
+  cov_x_y : float
+    Estimated covariance of x and y
+  cov_x_z : float
+    Estimated covariance of x and z
+  cov_y_y : float
+    Estimated variance of y
+  cov_y_z : float
+    Estimated covariance of y and z
+  cov_z_z : float
+    Estimated variance of z
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Int32sl,
+                   'y' / construct.Int32sl,
+                   'z' / construct.Int32sl,
+                   'cov_x_x' / construct.Float32l,
+                   'cov_x_y' / construct.Float32l,
+                   'cov_x_z' / construct.Float32l,
+                   'cov_y_y' / construct.Float32l,
+                   'cov_y_z' / construct.Float32l,
+                   'cov_z_z' / construct.Float32l,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'x',
+               'y',
+               'z',
+               'cov_x_x',
+               'cov_x_y',
+               'cov_x_z',
+               'cov_y_y',
+               'cov_y_z',
+               'cov_z_z',
+               'n_sats',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgVelECEFCov,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgVelECEFCov, self).__init__()
+      self.msg_type = SBP_MSG_VEL_ECEF_COV
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+      self.cov_x_x = kwargs.pop('cov_x_x')
+      self.cov_x_y = kwargs.pop('cov_x_y')
+      self.cov_x_z = kwargs.pop('cov_x_z')
+      self.cov_y_y = kwargs.pop('cov_y_y')
+      self.cov_y_z = kwargs.pop('cov_y_z')
+      self.cov_z_z = kwargs.pop('cov_z_z')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgVelECEFCov.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgVelECEFCov(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgVelECEFCov._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgVelECEFCov._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgVelECEFCov, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_VEL_NED = 0x020E
 class MsgVelNED(SBP):
   """SBP class for message MSG_VEL_NED (0x020E).
@@ -1001,10 +1432,10 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
   d : int
     Velocity Down coordinate
   h_accuracy : int
-    Horizontal velocity accuracy estimate
+    Horizontal velocity estimated standard deviation
 
   v_accuracy : int
-    Vertical velocity accuracy estimate
+    Vertical velocity estimated standard deviation
 
   n_sats : int
     Number of satellites used in solution
@@ -1094,19 +1525,21 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     d.update(j)
     return d
     
-SBP_MSG_BASELINE_HEADING = 0x020F
-class MsgBaselineHeading(SBP):
-  """SBP class for message MSG_BASELINE_HEADING (0x020F).
+SBP_MSG_VEL_NED_COV = 0x0212
+class MsgVelNEDCov(SBP):
+  """SBP class for message MSG_VEL_NED_COV (0x0212).
 
-  You can have MSG_BASELINE_HEADING inherit its fields directly
+  You can have MSG_VEL_NED_COV inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  This message reports the baseline heading pointing from the base station
-to the rover relative to True North. The full GPS time is given by the
-preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
-that time-matched RTK mode is used when the base station is moving.
+  This message reports the velocity in local North East Down (NED)
+coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+portion of the 3x3 covariance matrix.
 
 
   Parameters
@@ -1115,8 +1548,24 @@ that time-matched RTK mode is used when the base station is moving.
     SBP parent object to inherit from.
   tow : int
     GPS Time of Week
-  heading : int
-    Heading
+  n : int
+    Velocity North coordinate
+  e : int
+    Velocity East coordinate
+  d : int
+    Velocity Down coordinate
+  cov_n_n : float
+    Estimated variance of northward measurement
+  cov_n_e : float
+    Covariance of northward and eastward measurement
+  cov_n_d : float
+    Covariance of northward and downward measurement
+  cov_e_e : float
+    Estimated variance of eastward measurement
+  cov_e_d : float
+    Covariance of eastward and downward measurement
+  cov_d_d : float
+    Estimated variance of downward measurement
   n_sats : int
     Number of satellites used in solution
   flags : int
@@ -1127,28 +1576,52 @@ that time-matched RTK mode is used when the base station is moving.
   """
   _parser = construct.Struct(
                    'tow' / construct.Int32ul,
-                   'heading' / construct.Int32ul,
+                   'n' / construct.Int32sl,
+                   'e' / construct.Int32sl,
+                   'd' / construct.Int32sl,
+                   'cov_n_n' / construct.Float32l,
+                   'cov_n_e' / construct.Float32l,
+                   'cov_n_d' / construct.Float32l,
+                   'cov_e_e' / construct.Float32l,
+                   'cov_e_d' / construct.Float32l,
+                   'cov_d_d' / construct.Float32l,
                    'n_sats' / construct.Int8ul,
                    'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
-               'heading',
+               'n',
+               'e',
+               'd',
+               'cov_n_n',
+               'cov_n_e',
+               'cov_n_d',
+               'cov_e_e',
+               'cov_e_d',
+               'cov_d_d',
                'n_sats',
                'flags',
               ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgBaselineHeading,
+      super( MsgVelNEDCov,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgBaselineHeading, self).__init__()
-      self.msg_type = SBP_MSG_BASELINE_HEADING
+      super( MsgVelNEDCov, self).__init__()
+      self.msg_type = SBP_MSG_VEL_NED_COV
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.tow = kwargs.pop('tow')
-      self.heading = kwargs.pop('heading')
+      self.n = kwargs.pop('n')
+      self.e = kwargs.pop('e')
+      self.d = kwargs.pop('d')
+      self.cov_n_n = kwargs.pop('cov_n_n')
+      self.cov_n_e = kwargs.pop('cov_n_e')
+      self.cov_n_d = kwargs.pop('cov_n_d')
+      self.cov_e_e = kwargs.pop('cov_e_e')
+      self.cov_e_d = kwargs.pop('cov_e_d')
+      self.cov_d_d = kwargs.pop('cov_d_d')
       self.n_sats = kwargs.pop('n_sats')
       self.flags = kwargs.pop('flags')
 
@@ -1161,12 +1634,12 @@ that time-matched RTK mode is used when the base station is moving.
 
     """
     d = json.loads(s)
-    return MsgBaselineHeading.from_json_dict(d)
+    return MsgVelNEDCov.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgBaselineHeading(sbp, **d)
+    return MsgVelNEDCov(sbp, **d)
 
  
   def from_binary(self, d):
@@ -1174,7 +1647,7 @@ that time-matched RTK mode is used when the base station is moving.
     the message.
 
     """
-    p = MsgBaselineHeading._parser.parse(d)
+    p = MsgVelNEDCov._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -1183,12 +1656,154 @@ that time-matched RTK mode is used when the base station is moving.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgBaselineHeading._parser.build(c)
+    self.payload = MsgVelNEDCov._parser.build(c)
     return self.pack()
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgBaselineHeading, self).to_json_dict()
+    d = super( MsgVelNEDCov, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_VEL_BODY = 0x0213
+class MsgVelBody(SBP):
+  """SBP class for message MSG_VEL_BODY (0x0213).
+
+  You can have MSG_VEL_BODY inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the velocity in the Vehicle Body Frame. By convention,
+the x-axis should point out the nose of the vehicle and represent the forward
+direction, while as the y-axis should point out the right hand side of the vehicle.
+Since this is a right handed system, z should point out the bottom of the vehicle.
+The orientation and origin of the Vehicle Body Frame are specified via the device settings.
+The full GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow).
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  x : int
+    Velocity in x direction
+  y : int
+    Velocity in y direction
+  z : int
+    Velocity in z direction
+  cov_x_x : float
+    Estimated variance of x
+  cov_x_y : float
+    Covariance of x and y
+  cov_x_z : float
+    Covariance of x and z
+  cov_y_y : float
+    Estimated variance of y
+  cov_y_z : float
+    Covariance of y and z
+  cov_z_z : float
+    Estimated variance of z
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Int32sl,
+                   'y' / construct.Int32sl,
+                   'z' / construct.Int32sl,
+                   'cov_x_x' / construct.Float32l,
+                   'cov_x_y' / construct.Float32l,
+                   'cov_x_z' / construct.Float32l,
+                   'cov_y_y' / construct.Float32l,
+                   'cov_y_z' / construct.Float32l,
+                   'cov_z_z' / construct.Float32l,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'x',
+               'y',
+               'z',
+               'cov_x_x',
+               'cov_x_y',
+               'cov_x_z',
+               'cov_y_y',
+               'cov_y_z',
+               'cov_z_z',
+               'n_sats',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgVelBody,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgVelBody, self).__init__()
+      self.msg_type = SBP_MSG_VEL_BODY
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+      self.cov_x_x = kwargs.pop('cov_x_x')
+      self.cov_x_y = kwargs.pop('cov_x_y')
+      self.cov_x_z = kwargs.pop('cov_x_z')
+      self.cov_y_y = kwargs.pop('cov_y_y')
+      self.cov_y_z = kwargs.pop('cov_y_z')
+      self.cov_z_z = kwargs.pop('cov_z_z')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgVelBody.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgVelBody(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgVelBody._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgVelBody._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgVelBody, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -2328,12 +2943,16 @@ msg_classes = {
   0x0103: MsgUtcTime,
   0x0208: MsgDops,
   0x0209: MsgPosECEF,
+  0x0214: MsgPosECEFCov,
   0x020A: MsgPosLLH,
+  0x0211: MsgPosLLHCov,
   0x020B: MsgBaselineECEF,
   0x020C: MsgBaselineNED,
   0x020D: MsgVelECEF,
+  0x0215: MsgVelECEFCov,
   0x020E: MsgVelNED,
-  0x020F: MsgBaselineHeading,
+  0x0212: MsgVelNEDCov,
+  0x0213: MsgVelBody,
   0x0210: MsgAgeCorrections,
   0x0100: MsgGPSTimeDepA,
   0x0206: MsgDopsDepA,

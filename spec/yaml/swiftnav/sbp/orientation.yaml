@@ -1,0 +1,194 @@
+# Copyright (C) 2016 Swift Navigation Inc.
+# Contact: Dennis Zollo <dzollo@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.orientation
+description: Orientation Messages
+stable: False
+public: True
+definitions:
+
+ - MSG_BASELINE_HEADING:
+    id: 0x020F
+    short_desc: Heading relative to True North
+    desc: |
+      This message reports the baseline heading pointing from the base station
+      to the rover relative to True North. The full GPS time is given by the
+      preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
+      that time-matched RTK mode is used when the base station is moving.
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - heading:
+              type: u32
+              units: mdeg
+              desc: Heading
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: Fix mode
+                    values:
+                        - 0: Invalid
+                        - 1: Reserved
+                        - 2: Differential GNSS (DGNSS)
+                        - 3: Float RTK
+                        - 4: Fixed RTK
+
+ - MSG_ORIENT_QUAT:
+    id: 0x0220
+    short_desc: Quaternion 4 component vector 
+    desc: |
+      This message reports the quaternion vector describing the vehicle body frame's orientation
+      with respect to a local-level NED frame. The components of the vector should sum to a unit
+      vector assuming that the LSB of each component as a value of 2^-31. 
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - w:
+              type: s32
+              units: 2^-31
+              desc: Real component
+          - x:
+              type: s32
+              units: 2^-31
+              desc: 1st imaginary component
+          - y:
+              type: s32
+              units: 2^-31
+              desc: 2nd imaginary component
+          - z:
+              type: s32
+              units: 2^-31
+              desc: 3rd imaginary component
+          - acc_w:
+              type: float
+              units: N/A
+              desc: Estimated standard deviation of w
+          - acc_x:
+              type: float
+              units: N/A
+              desc: Estimated standard deviation of x
+          - acc_y:
+              type: float
+              units: N/A
+              desc: Estimated standard deviation of y
+          - acc_z:
+              type: float
+              units: N/A
+              desc: Estimated standard deviation of z
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: INS Navigation mode
+                    values:
+                        - 0: Invalid
+                        - 1: Valid
+
+ - MSG_ORIENT_EULER:
+    id: 0x0221
+    short_desc:  Euler angles
+    desc: |
+      This message reports the yaw, pitch, and roll angles of the vehicle body frame.
+      The rotations should applied intrinsically in the order yaw, pitch, and roll 
+      in order to rotate the from a frame aligned with the local-level NED frame 
+      to the vehicle body frame.
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - roll:
+              type: s32
+              units: microdegrees
+              desc: rotation about the forward axis of the vehicle
+          - pitch:
+              type: s32
+              units: microdegrees
+              desc: rotation about the rightward axis of the vehicle
+          - yaw:
+              type: s32
+              units: microdegrees
+              desc: rotation about the downward axis of the vehicle
+          - var_roll:
+              type: float
+              units: degrees
+              desc: Estimated standard deviation of roll
+          - var_pitch:
+              type: float
+              units: degrees
+              desc: Estimated standard deviation of pitch 
+          - var_yaw:
+              type: float
+              units: degrees
+              desc: Estimated standard deviation of yaw
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: INS Navigation mode
+                    values:
+                        - 0: Invalid
+                        - 1: Valid
+ - MSG_ANGULAR_RATE:
+    id: 0x0222
+    short_desc: Vehicle Body Frame instantaneous angular rates
+    desc: |
+      This message reports the orientation rates in the vehicle body frame. 
+      The values represent the measurements a strapped down gyroscope would 
+      make and are not equivalent to the time derivative of the Euler angles.
+      The orientation and origin of the user frame is specified via device settings.
+      By convention, the vehicle x-axis is expected to be aligned with the forward
+      direction, while the vehicle y-axis is expected to be aligned with the right
+      direction, and the vehicle z-axis should be aligned with the down direction.
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - x:
+              type: s32
+              units: microdegrees/s 
+              desc: angular rate about x axis 
+          - y:
+              type: s32
+              units: microdegrees/s 
+              desc: angular rate about y axis 
+          - z:
+              type: s32
+              units: microdegrees/s 
+              desc: angular rate about z axis 
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 2-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: INS Navigation mode
+                    values:
+                        - 0: Invalid
+                        - 1: Valid

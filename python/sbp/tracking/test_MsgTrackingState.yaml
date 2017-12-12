@@ -1,0 +1,931 @@
+---
+description: Unit tests for swiftnav.sbp.tracking MsgTrackingState vNone.
+generated_on: 2016-11-03 20:14:43.610912
+package: sbp.tracking
+tests:
+
+- msg:
+    fields:
+      states:
+      - cn0: 49.54315185546875
+        sid:
+          code: 1
+          reserved: 0
+          sat: 9
+        state: 1
+      - cn0: 47.327022552490234
+        sid:
+          code: 1
+          reserved: 0
+          sat: 7
+        state: 1
+      - cn0: 56.91872024536133
+        sid:
+          code: 0
+          reserved: 0
+          sat: 31
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 52.86698913574219
+        sid:
+          code: 0
+          reserved: 0
+          sat: 9
+        state: 1
+      - cn0: 45.6907958984375
+        sid:
+          code: 0
+          reserved: 0
+          sat: 17
+        state: 1
+      - cn0: 44.533077239990234
+        sid:
+          code: 0
+          reserved: 0
+          sat: 10
+        state: 1
+      - cn0: 42.78389358520508
+        sid:
+          code: 0
+          reserved: 0
+          sat: 30
+        state: 1
+      - cn0: 51.57950973510742
+        sid:
+          code: 0
+          reserved: 0
+          sat: 13
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 51.27499008178711
+        sid:
+          code: 1
+          reserved: 0
+          sat: 31
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 51.10893630981445
+        sid:
+          code: 0
+          reserved: 0
+          sat: 26
+        state: 1
+      - cn0: 46.997432708740234
+        sid:
+          code: 1
+          reserved: 0
+          sat: 26
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 37.329185485839844
+        sid:
+          code: 1
+          reserved: 0
+          sat: 30
+        state: 1
+      - cn0: 41.049156188964844
+        sid:
+          code: 0
+          reserved: 0
+          sat: 20
+        state: 1
+      - cn0: 40.36860275268555
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 1
+      - cn0: 39.31903839111328
+        sid:
+          code: 1
+          reserved: 0
+          sat: 0
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 41.73469924926758
+        sid:
+          code: 1
+          reserved: 0
+          sat: 23
+        state: 1
+      - cn0: 49.22296905517578
+        sid:
+          code: 0
+          reserved: 0
+          sat: 7
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 44.61531066894531
+        sid:
+          code: 0
+          reserved: 0
+          sat: 23
+        state: 1
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x13'
+  raw_json: '{"sender": 16991, "msg_type": 19, "states": [{"state": 1, "cn0": 49.54315185546875,
+    "sid": {"code": 1, "reserved": 0, "sat": 9}}, {"state": 1, "cn0": 47.327022552490234,
+    "sid": {"code": 1, "reserved": 0, "sat": 7}}, {"state": 1, "cn0": 56.91872024536133,
+    "sid": {"code": 0, "reserved": 0, "sat": 31}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 52.86698913574219,
+    "sid": {"code": 0, "reserved": 0, "sat": 9}}, {"state": 1, "cn0": 45.6907958984375,
+    "sid": {"code": 0, "reserved": 0, "sat": 17}}, {"state": 1, "cn0": 44.533077239990234,
+    "sid": {"code": 0, "reserved": 0, "sat": 10}}, {"state": 1, "cn0": 42.78389358520508,
+    "sid": {"code": 0, "reserved": 0, "sat": 30}}, {"state": 1, "cn0": 51.57950973510742,
+    "sid": {"code": 0, "reserved": 0, "sat": 13}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 51.27499008178711,
+    "sid": {"code": 1, "reserved": 0, "sat": 31}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 51.10893630981445,
+    "sid": {"code": 0, "reserved": 0, "sat": 26}}, {"state": 1, "cn0": 46.997432708740234,
+    "sid": {"code": 1, "reserved": 0, "sat": 26}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 37.329185485839844,
+    "sid": {"code": 1, "reserved": 0, "sat": 30}}, {"state": 1, "cn0": 41.049156188964844,
+    "sid": {"code": 0, "reserved": 0, "sat": 20}}, {"state": 1, "cn0": 40.36860275268555,
+    "sid": {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 39.31903839111328,
+    "sid": {"code": 1, "reserved": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 41.73469924926758,
+    "sid": {"code": 1, "reserved": 0, "sat": 23}}, {"state": 1, "cn0": 49.22296905517578,
+    "sid": {"code": 0, "reserved": 0, "sat": 7}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 44.61531066894531,
+    "sid": {"code": 0, "reserved": 0, "sat": 23}}], "crc": 12821, "length": 216, "preamble":
+    85, "payload": "AQkAAQAwLEZCAQcAAQDfTj1CAR8AAADFrGNCAAAAAAAAAIC/AQkAAADMd1NCAREAAABgwzZCAQoAAADfITJCAR4AAAC1IitCAQ0AAABrUU5CAAAAAAAAAIC/AR8AAQCXGU1CAAAAAAAAAIC/ARoAAACNb0xCARoAAQBf/TtCAAAAAAAAAIC/AR4AAQAWURVCARQAAABWMiRCAQAAAABzeSFCAQAAAQCyRh1CAAAAAAAAAIC/ARcAAQBV8CZCAQcAAABS5ERCAAAAAAAAAIC/ARcAAAAUdjJC"}'
+  raw_packet: VRMAX0LYAQkAAQAwLEZCAQcAAQDfTj1CAR8AAADFrGNCAAAAAAAAAIC/AQkAAADMd1NCAREAAABgwzZCAQoAAADfITJCAR4AAAC1IitCAQ0AAABrUU5CAAAAAAAAAIC/AR8AAQCXGU1CAAAAAAAAAIC/ARoAAACNb0xCARoAAQBf/TtCAAAAAAAAAIC/AR4AAQAWURVCARQAAABWMiRCAQAAAABzeSFCAQAAAQCyRh1CAAAAAAAAAIC/ARcAAQBV8CZCAQcAAABS5ERCAAAAAAAAAIC/ARcAAAAUdjJCFTI=
+  sbp:
+    crc: '0x3215'
+    length: 216
+    msg_type: '0x13'
+    payload: AQkAAQAwLEZCAQcAAQDfTj1CAR8AAADFrGNCAAAAAAAAAIC/AQkAAADMd1NCAREAAABgwzZCAQoAAADfITJCAR4AAAC1IitCAQ0AAABrUU5CAAAAAAAAAIC/AR8AAQCXGU1CAAAAAAAAAIC/ARoAAACNb0xCARoAAQBf/TtCAAAAAAAAAIC/AR4AAQAWURVCARQAAABWMiRCAQAAAABzeSFCAQAAAQCyRh1CAAAAAAAAAIC/ARcAAQBV8CZCAQcAAABS5ERCAAAAAAAAAIC/ARcAAAAUdjJC
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      states:
+      - cn0: 49.262271881103516
+        sid:
+          code: 1
+          reserved: 0
+          sat: 9
+        state: 1
+      - cn0: 47.46902847290039
+        sid:
+          code: 1
+          reserved: 0
+          sat: 7
+        state: 1
+      - cn0: 57.16228103637695
+        sid:
+          code: 0
+          reserved: 0
+          sat: 31
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 52.2833251953125
+        sid:
+          code: 0
+          reserved: 0
+          sat: 9
+        state: 1
+      - cn0: 45.32611083984375
+        sid:
+          code: 0
+          reserved: 0
+          sat: 17
+        state: 1
+      - cn0: 44.96616744995117
+        sid:
+          code: 0
+          reserved: 0
+          sat: 10
+        state: 1
+      - cn0: 42.829288482666016
+        sid:
+          code: 0
+          reserved: 0
+          sat: 30
+        state: 1
+      - cn0: 51.505130767822266
+        sid:
+          code: 0
+          reserved: 0
+          sat: 13
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 51.33720016479492
+        sid:
+          code: 1
+          reserved: 0
+          sat: 31
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 51.0865592956543
+        sid:
+          code: 0
+          reserved: 0
+          sat: 26
+        state: 1
+      - cn0: 46.66917037963867
+        sid:
+          code: 1
+          reserved: 0
+          sat: 26
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 37.34303665161133
+        sid:
+          code: 1
+          reserved: 0
+          sat: 30
+        state: 1
+      - cn0: 40.638633728027344
+        sid:
+          code: 0
+          reserved: 0
+          sat: 20
+        state: 1
+      - cn0: 41.232521057128906
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 1
+      - cn0: 39.40034866333008
+        sid:
+          code: 1
+          reserved: 0
+          sat: 0
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 41.8463134765625
+        sid:
+          code: 1
+          reserved: 0
+          sat: 23
+        state: 1
+      - cn0: 49.34420394897461
+        sid:
+          code: 0
+          reserved: 0
+          sat: 7
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 44.5898551940918
+        sid:
+          code: 0
+          reserved: 0
+          sat: 23
+        state: 1
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x13'
+  raw_json: '{"sender": 16991, "msg_type": 19, "states": [{"state": 1, "cn0": 49.262271881103516,
+    "sid": {"code": 1, "reserved": 0, "sat": 9}}, {"state": 1, "cn0": 47.46902847290039,
+    "sid": {"code": 1, "reserved": 0, "sat": 7}}, {"state": 1, "cn0": 57.16228103637695,
+    "sid": {"code": 0, "reserved": 0, "sat": 31}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 52.2833251953125, "sid":
+    {"code": 0, "reserved": 0, "sat": 9}}, {"state": 1, "cn0": 45.32611083984375,
+    "sid": {"code": 0, "reserved": 0, "sat": 17}}, {"state": 1, "cn0": 44.96616744995117,
+    "sid": {"code": 0, "reserved": 0, "sat": 10}}, {"state": 1, "cn0": 42.829288482666016,
+    "sid": {"code": 0, "reserved": 0, "sat": 30}}, {"state": 1, "cn0": 51.505130767822266,
+    "sid": {"code": 0, "reserved": 0, "sat": 13}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 51.33720016479492,
+    "sid": {"code": 1, "reserved": 0, "sat": 31}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 51.0865592956543, "sid":
+    {"code": 0, "reserved": 0, "sat": 26}}, {"state": 1, "cn0": 46.66917037963867,
+    "sid": {"code": 1, "reserved": 0, "sat": 26}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 37.34303665161133,
+    "sid": {"code": 1, "reserved": 0, "sat": 30}}, {"state": 1, "cn0": 40.638633728027344,
+    "sid": {"code": 0, "reserved": 0, "sat": 20}}, {"state": 1, "cn0": 41.232521057128906,
+    "sid": {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 39.40034866333008,
+    "sid": {"code": 1, "reserved": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 41.8463134765625, "sid":
+    {"code": 1, "reserved": 0, "sat": 23}}, {"state": 1, "cn0": 49.34420394897461,
+    "sid": {"code": 0, "reserved": 0, "sat": 7}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 44.5898551940918, "sid":
+    {"code": 0, "reserved": 0, "sat": 23}}], "crc": 6658, "length": 216, "preamble":
+    85, "payload": "AQkAAQCRDEVCAQcAAQBJ4D1CAR8AAAAtpmRCAAAAAAAAAIC/AQkAAAAgIlFCAREAAADwTTVCAQoAAABb3TNCAR4AAAAxUStCAQ0AAABBBU5CAAAAAAAAAIC/AR8AAQBLWU1CAAAAAAAAAIC/ARoAAACjWExCARoAAQA7rTpCAAAAAAAAAIC/AR4AAQBFXxVCARQAAAD2jSJCAQAAAAAa7iRCAQAAAQD1mR1CAAAAAAAAAIC/ARcAAQCgYidCAQcAAAB3YEVCAAAAAAAAAIC/ARcAAAADXDJC"}'
+  raw_packet: VRMAX0LYAQkAAQCRDEVCAQcAAQBJ4D1CAR8AAAAtpmRCAAAAAAAAAIC/AQkAAAAgIlFCAREAAADwTTVCAQoAAABb3TNCAR4AAAAxUStCAQ0AAABBBU5CAAAAAAAAAIC/AR8AAQBLWU1CAAAAAAAAAIC/ARoAAACjWExCARoAAQA7rTpCAAAAAAAAAIC/AR4AAQBFXxVCARQAAAD2jSJCAQAAAAAa7iRCAQAAAQD1mR1CAAAAAAAAAIC/ARcAAQCgYidCAQcAAAB3YEVCAAAAAAAAAIC/ARcAAAADXDJCAho=
+  sbp:
+    crc: '0x1a02'
+    length: 216
+    msg_type: '0x13'
+    payload: AQkAAQCRDEVCAQcAAQBJ4D1CAR8AAAAtpmRCAAAAAAAAAIC/AQkAAAAgIlFCAREAAADwTTVCAQoAAABb3TNCAR4AAAAxUStCAQ0AAABBBU5CAAAAAAAAAIC/AR8AAQBLWU1CAAAAAAAAAIC/ARoAAACjWExCARoAAQA7rTpCAAAAAAAAAIC/AR4AAQBFXxVCARQAAAD2jSJCAQAAAAAa7iRCAQAAAQD1mR1CAAAAAAAAAIC/ARcAAQCgYidCAQcAAAB3YEVCAAAAAAAAAIC/ARcAAAADXDJC
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      states:
+      - cn0: 49.29391098022461
+        sid:
+          code: 1
+          reserved: 0
+          sat: 9
+        state: 1
+      - cn0: 47.56162643432617
+        sid:
+          code: 1
+          reserved: 0
+          sat: 7
+        state: 1
+      - cn0: 57.28339767456055
+        sid:
+          code: 0
+          reserved: 0
+          sat: 31
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 52.41807174682617
+        sid:
+          code: 0
+          reserved: 0
+          sat: 9
+        state: 1
+      - cn0: 45.319461822509766
+        sid:
+          code: 0
+          reserved: 0
+          sat: 17
+        state: 1
+      - cn0: 45.508819580078125
+        sid:
+          code: 0
+          reserved: 0
+          sat: 10
+        state: 1
+      - cn0: 42.84297180175781
+        sid:
+          code: 0
+          reserved: 0
+          sat: 30
+        state: 1
+      - cn0: 51.73382568359375
+        sid:
+          code: 0
+          reserved: 0
+          sat: 13
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 51.46142578125
+        sid:
+          code: 1
+          reserved: 0
+          sat: 31
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 51.251853942871094
+        sid:
+          code: 0
+          reserved: 0
+          sat: 26
+        state: 1
+      - cn0: 46.51433181762695
+        sid:
+          code: 1
+          reserved: 0
+          sat: 26
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 37.24850082397461
+        sid:
+          code: 1
+          reserved: 0
+          sat: 30
+        state: 1
+      - cn0: 40.774375915527344
+        sid:
+          code: 0
+          reserved: 0
+          sat: 20
+        state: 1
+      - cn0: 41.6051025390625
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 1
+      - cn0: 39.69451904296875
+        sid:
+          code: 1
+          reserved: 0
+          sat: 0
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 41.943538665771484
+        sid:
+          code: 1
+          reserved: 0
+          sat: 23
+        state: 1
+      - cn0: 49.63697052001953
+        sid:
+          code: 0
+          reserved: 0
+          sat: 7
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 44.74523162841797
+        sid:
+          code: 0
+          reserved: 0
+          sat: 23
+        state: 1
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x13'
+  raw_json: '{"sender": 16991, "msg_type": 19, "states": [{"state": 1, "cn0": 49.29391098022461,
+    "sid": {"code": 1, "reserved": 0, "sat": 9}}, {"state": 1, "cn0": 47.56162643432617,
+    "sid": {"code": 1, "reserved": 0, "sat": 7}}, {"state": 1, "cn0": 57.28339767456055,
+    "sid": {"code": 0, "reserved": 0, "sat": 31}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 52.41807174682617,
+    "sid": {"code": 0, "reserved": 0, "sat": 9}}, {"state": 1, "cn0": 45.319461822509766,
+    "sid": {"code": 0, "reserved": 0, "sat": 17}}, {"state": 1, "cn0": 45.508819580078125,
+    "sid": {"code": 0, "reserved": 0, "sat": 10}}, {"state": 1, "cn0": 42.84297180175781,
+    "sid": {"code": 0, "reserved": 0, "sat": 30}}, {"state": 1, "cn0": 51.73382568359375,
+    "sid": {"code": 0, "reserved": 0, "sat": 13}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 51.46142578125, "sid":
+    {"code": 1, "reserved": 0, "sat": 31}}, {"state": 0, "cn0": -1.0, "sid": {"code":
+    0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 51.251853942871094, "sid": {"code":
+    0, "reserved": 0, "sat": 26}}, {"state": 1, "cn0": 46.51433181762695, "sid": {"code":
+    1, "reserved": 0, "sat": 26}}, {"state": 0, "cn0": -1.0, "sid": {"code": 0, "reserved":
+    0, "sat": 0}}, {"state": 1, "cn0": 37.24850082397461, "sid": {"code": 1, "reserved":
+    0, "sat": 30}}, {"state": 1, "cn0": 40.774375915527344, "sid": {"code": 0, "reserved":
+    0, "sat": 20}}, {"state": 1, "cn0": 41.6051025390625, "sid": {"code": 0, "reserved":
+    0, "sat": 0}}, {"state": 1, "cn0": 39.69451904296875, "sid": {"code": 1, "reserved":
+    0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid": {"code": 0, "reserved": 0, "sat":
+    0}}, {"state": 1, "cn0": 41.943538665771484, "sid": {"code": 1, "reserved": 0,
+    "sat": 23}}, {"state": 1, "cn0": 49.63697052001953, "sid": {"code": 0, "reserved":
+    0, "sat": 7}}, {"state": 0, "cn0": -1.0, "sid": {"code": 0, "reserved": 0, "sat":
+    0}}, {"state": 1, "cn0": 44.74523162841797, "sid": {"code": 0, "reserved": 0,
+    "sat": 23}}], "crc": 9604, "length": 216, "preamble": 85, "payload": "AQkAAQD3LEVCAQcAAQAbPz5CAR8AAAAzImVCAAAAAAAAAIC/AQkAAAAbrFFCAREAAAAhRzVCAQoAAAAICTZCAR4AAAA0XytCAQ0AAABw705CAAAAAAAAAIC/AR8AAQCA2E1CAAAAAAAAAIC/ARoAAADmAU1CARoAAQCtDjpCAAAAAAAAAIC/AR4AAQB3/hRCARQAAAD2GCNCAQAAAACgayZCAQAAAQAwxx5CAAAAAAAAAIC/ARcAAQAvxidCAQcAAABCjEZCAAAAAAAAAIC/ARcAAAAe+zJC"}'
+  raw_packet: VRMAX0LYAQkAAQD3LEVCAQcAAQAbPz5CAR8AAAAzImVCAAAAAAAAAIC/AQkAAAAbrFFCAREAAAAhRzVCAQoAAAAICTZCAR4AAAA0XytCAQ0AAABw705CAAAAAAAAAIC/AR8AAQCA2E1CAAAAAAAAAIC/ARoAAADmAU1CARoAAQCtDjpCAAAAAAAAAIC/AR4AAQB3/hRCARQAAAD2GCNCAQAAAACgayZCAQAAAQAwxx5CAAAAAAAAAIC/ARcAAQAvxidCAQcAAABCjEZCAAAAAAAAAIC/ARcAAAAe+zJChCU=
+  sbp:
+    crc: '0x2584'
+    length: 216
+    msg_type: '0x13'
+    payload: AQkAAQD3LEVCAQcAAQAbPz5CAR8AAAAzImVCAAAAAAAAAIC/AQkAAAAbrFFCAREAAAAhRzVCAQoAAAAICTZCAR4AAAA0XytCAQ0AAABw705CAAAAAAAAAIC/AR8AAQCA2E1CAAAAAAAAAIC/ARoAAADmAU1CARoAAQCtDjpCAAAAAAAAAIC/AR4AAQB3/hRCARQAAAD2GCNCAQAAAACgayZCAQAAAQAwxx5CAAAAAAAAAIC/ARcAAQAvxidCAQcAAABCjEZCAAAAAAAAAIC/ARcAAAAe+zJC
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      states:
+      - cn0: 49.66417694091797
+        sid:
+          code: 1
+          reserved: 0
+          sat: 9
+        state: 1
+      - cn0: 47.42771911621094
+        sid:
+          code: 1
+          reserved: 0
+          sat: 7
+        state: 1
+      - cn0: 57.30500793457031
+        sid:
+          code: 0
+          reserved: 0
+          sat: 31
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 52.44278335571289
+        sid:
+          code: 0
+          reserved: 0
+          sat: 9
+        state: 1
+      - cn0: 45.77159118652344
+        sid:
+          code: 0
+          reserved: 0
+          sat: 17
+        state: 1
+      - cn0: 45.81017303466797
+        sid:
+          code: 0
+          reserved: 0
+          sat: 10
+        state: 1
+      - cn0: 43.16791534423828
+        sid:
+          code: 0
+          reserved: 0
+          sat: 30
+        state: 1
+      - cn0: 52.04911422729492
+        sid:
+          code: 0
+          reserved: 0
+          sat: 13
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 51.6664924621582
+        sid:
+          code: 1
+          reserved: 0
+          sat: 31
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 51.3594856262207
+        sid:
+          code: 0
+          reserved: 0
+          sat: 26
+        state: 1
+      - cn0: 46.651519775390625
+        sid:
+          code: 1
+          reserved: 0
+          sat: 26
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 37.448997497558594
+        sid:
+          code: 1
+          reserved: 0
+          sat: 30
+        state: 1
+      - cn0: 40.560516357421875
+        sid:
+          code: 0
+          reserved: 0
+          sat: 20
+        state: 1
+      - cn0: 41.941959381103516
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 1
+      - cn0: 39.50176239013672
+        sid:
+          code: 1
+          reserved: 0
+          sat: 0
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 41.863956451416016
+        sid:
+          code: 1
+          reserved: 0
+          sat: 23
+        state: 1
+      - cn0: 49.751121520996094
+        sid:
+          code: 0
+          reserved: 0
+          sat: 7
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 44.91069412231445
+        sid:
+          code: 0
+          reserved: 0
+          sat: 23
+        state: 1
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x13'
+  raw_json: '{"sender": 16991, "msg_type": 19, "states": [{"state": 1, "cn0": 49.66417694091797,
+    "sid": {"code": 1, "reserved": 0, "sat": 9}}, {"state": 1, "cn0": 47.42771911621094,
+    "sid": {"code": 1, "reserved": 0, "sat": 7}}, {"state": 1, "cn0": 57.30500793457031,
+    "sid": {"code": 0, "reserved": 0, "sat": 31}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 52.44278335571289,
+    "sid": {"code": 0, "reserved": 0, "sat": 9}}, {"state": 1, "cn0": 45.77159118652344,
+    "sid": {"code": 0, "reserved": 0, "sat": 17}}, {"state": 1, "cn0": 45.81017303466797,
+    "sid": {"code": 0, "reserved": 0, "sat": 10}}, {"state": 1, "cn0": 43.16791534423828,
+    "sid": {"code": 0, "reserved": 0, "sat": 30}}, {"state": 1, "cn0": 52.04911422729492,
+    "sid": {"code": 0, "reserved": 0, "sat": 13}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 51.6664924621582, "sid":
+    {"code": 1, "reserved": 0, "sat": 31}}, {"state": 0, "cn0": -1.0, "sid": {"code":
+    0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 51.3594856262207, "sid": {"code":
+    0, "reserved": 0, "sat": 26}}, {"state": 1, "cn0": 46.651519775390625, "sid":
+    {"code": 1, "reserved": 0, "sat": 26}}, {"state": 0, "cn0": -1.0, "sid": {"code":
+    0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 37.448997497558594, "sid": {"code":
+    1, "reserved": 0, "sat": 30}}, {"state": 1, "cn0": 40.560516357421875, "sid":
+    {"code": 0, "reserved": 0, "sat": 20}}, {"state": 1, "cn0": 41.941959381103516,
+    "sid": {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 39.50176239013672,
+    "sid": {"code": 1, "reserved": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 41.863956451416016,
+    "sid": {"code": 1, "reserved": 0, "sat": 23}}, {"state": 1, "cn0": 49.751121520996094,
+    "sid": {"code": 0, "reserved": 0, "sat": 7}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 44.91069412231445,
+    "sid": {"code": 0, "reserved": 0, "sat": 23}}], "crc": 30446, "length": 216, "preamble":
+    85, "payload": "AQkAAQAeqEZCAQcAAQD8tT1CAR8AAABUOGVCAAAAAAAAAIC/AQkAAABpxVFCAREAAAAcFjdCAQoAAACePTdCAR4AAADyqyxCAQ0AAABLMlBCAAAAAAAAAIC/AR8AAQB9qk5CAAAAAAAAAIC/ARoAAAAdcE1CARoAAQAomzpCAAAAAAAAAIC/AR4AAQDGyxVCARQAAAD4PSJCAQAAAACRxCdCAQAAAQDOAR5CAAAAAAAAAIC/ARcAAQCxdCdCAQcAAAAmAUdCAAAAAAAAAIC/ARcAAACNpDNC"}'
+  raw_packet: VRMAX0LYAQkAAQAeqEZCAQcAAQD8tT1CAR8AAABUOGVCAAAAAAAAAIC/AQkAAABpxVFCAREAAAAcFjdCAQoAAACePTdCAR4AAADyqyxCAQ0AAABLMlBCAAAAAAAAAIC/AR8AAQB9qk5CAAAAAAAAAIC/ARoAAAAdcE1CARoAAQAomzpCAAAAAAAAAIC/AR4AAQDGyxVCARQAAAD4PSJCAQAAAACRxCdCAQAAAQDOAR5CAAAAAAAAAIC/ARcAAQCxdCdCAQcAAAAmAUdCAAAAAAAAAIC/ARcAAACNpDNC7nY=
+  sbp:
+    crc: '0x76ee'
+    length: 216
+    msg_type: '0x13'
+    payload: AQkAAQAeqEZCAQcAAQD8tT1CAR8AAABUOGVCAAAAAAAAAIC/AQkAAABpxVFCAREAAAAcFjdCAQoAAACePTdCAR4AAADyqyxCAQ0AAABLMlBCAAAAAAAAAIC/AR8AAQB9qk5CAAAAAAAAAIC/ARoAAAAdcE1CARoAAQAomzpCAAAAAAAAAIC/AR4AAQDGyxVCARQAAAD4PSJCAQAAAACRxCdCAQAAAQDOAR5CAAAAAAAAAIC/ARcAAQCxdCdCAQcAAAAmAUdCAAAAAAAAAIC/ARcAAACNpDNC
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      states:
+      - cn0: 49.553016662597656
+        sid:
+          code: 1
+          reserved: 0
+          sat: 9
+        state: 1
+      - cn0: 47.37104034423828
+        sid:
+          code: 1
+          reserved: 0
+          sat: 7
+        state: 1
+      - cn0: 57.39765167236328
+        sid:
+          code: 0
+          reserved: 0
+          sat: 31
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 52.60362243652344
+        sid:
+          code: 0
+          reserved: 0
+          sat: 9
+        state: 1
+      - cn0: 46.19953918457031
+        sid:
+          code: 0
+          reserved: 0
+          sat: 17
+        state: 1
+      - cn0: 46.13067626953125
+        sid:
+          code: 0
+          reserved: 0
+          sat: 10
+        state: 1
+      - cn0: 42.91154861450195
+        sid:
+          code: 0
+          reserved: 0
+          sat: 30
+        state: 1
+      - cn0: 52.177459716796875
+        sid:
+          code: 0
+          reserved: 0
+          sat: 13
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 51.58171844482422
+        sid:
+          code: 1
+          reserved: 0
+          sat: 31
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 51.51825714111328
+        sid:
+          code: 0
+          reserved: 0
+          sat: 26
+        state: 1
+      - cn0: 47.121219635009766
+        sid:
+          code: 1
+          reserved: 0
+          sat: 26
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 37.64378356933594
+        sid:
+          code: 1
+          reserved: 0
+          sat: 30
+        state: 1
+      - cn0: 40.28261947631836
+        sid:
+          code: 0
+          reserved: 0
+          sat: 20
+        state: 1
+      - cn0: 42.5734977722168
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 1
+      - cn0: 39.247276306152344
+        sid:
+          code: 1
+          reserved: 0
+          sat: 0
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 41.75844955444336
+        sid:
+          code: 1
+          reserved: 0
+          sat: 23
+        state: 1
+      - cn0: 49.52857208251953
+        sid:
+          code: 0
+          reserved: 0
+          sat: 7
+        state: 1
+      - cn0: -1.0
+        sid:
+          code: 0
+          reserved: 0
+          sat: 0
+        state: 0
+      - cn0: 44.63985061645508
+        sid:
+          code: 0
+          reserved: 0
+          sat: 23
+        state: 1
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x13'
+  raw_json: '{"sender": 16991, "msg_type": 19, "states": [{"state": 1, "cn0": 49.553016662597656,
+    "sid": {"code": 1, "reserved": 0, "sat": 9}}, {"state": 1, "cn0": 47.37104034423828,
+    "sid": {"code": 1, "reserved": 0, "sat": 7}}, {"state": 1, "cn0": 57.39765167236328,
+    "sid": {"code": 0, "reserved": 0, "sat": 31}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 52.60362243652344,
+    "sid": {"code": 0, "reserved": 0, "sat": 9}}, {"state": 1, "cn0": 46.19953918457031,
+    "sid": {"code": 0, "reserved": 0, "sat": 17}}, {"state": 1, "cn0": 46.13067626953125,
+    "sid": {"code": 0, "reserved": 0, "sat": 10}}, {"state": 1, "cn0": 42.91154861450195,
+    "sid": {"code": 0, "reserved": 0, "sat": 30}}, {"state": 1, "cn0": 52.177459716796875,
+    "sid": {"code": 0, "reserved": 0, "sat": 13}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 51.58171844482422,
+    "sid": {"code": 1, "reserved": 0, "sat": 31}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 51.51825714111328,
+    "sid": {"code": 0, "reserved": 0, "sat": 26}}, {"state": 1, "cn0": 47.121219635009766,
+    "sid": {"code": 1, "reserved": 0, "sat": 26}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 37.64378356933594,
+    "sid": {"code": 1, "reserved": 0, "sat": 30}}, {"state": 1, "cn0": 40.28261947631836,
+    "sid": {"code": 0, "reserved": 0, "sat": 20}}, {"state": 1, "cn0": 42.5734977722168,
+    "sid": {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 39.247276306152344,
+    "sid": {"code": 1, "reserved": 0, "sat": 0}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 41.75844955444336,
+    "sid": {"code": 1, "reserved": 0, "sat": 23}}, {"state": 1, "cn0": 49.52857208251953,
+    "sid": {"code": 0, "reserved": 0, "sat": 7}}, {"state": 0, "cn0": -1.0, "sid":
+    {"code": 0, "reserved": 0, "sat": 0}}, {"state": 1, "cn0": 44.63985061645508,
+    "sid": {"code": 0, "reserved": 0, "sat": 23}}], "crc": 6511, "length": 216, "preamble":
+    85, "payload": "AQkAAQBKNkZCAQcAAQDyez1CAR8AAAAyl2VCAAAAAAAAAIC/AQkAAAAcalJCAREAAABUzDhCAQoAAADQhThCAR4AAABtpStCAQ0AAAC4tVBCAAAAAAAAAIC/AR8AAQCuU05CAAAAAAAAAIC/ARoAAACyEk5CARoAAQAhfDxCAAAAAAAAAIC/AR4AAQA8kxZCARQAAABnISFCAQAAAABDSypCAQAAAQA2/RxCAAAAAAAAAIC/ARcAAQCnCCdCAQcAAABCHUZCAAAAAAAAAIC/ARcAAAA1jzJC"}'
+  raw_packet: VRMAX0LYAQkAAQBKNkZCAQcAAQDyez1CAR8AAAAyl2VCAAAAAAAAAIC/AQkAAAAcalJCAREAAABUzDhCAQoAAADQhThCAR4AAABtpStCAQ0AAAC4tVBCAAAAAAAAAIC/AR8AAQCuU05CAAAAAAAAAIC/ARoAAACyEk5CARoAAQAhfDxCAAAAAAAAAIC/AR4AAQA8kxZCARQAAABnISFCAQAAAABDSypCAQAAAQA2/RxCAAAAAAAAAIC/ARcAAQCnCCdCAQcAAABCHUZCAAAAAAAAAIC/ARcAAAA1jzJCbxk=
+  sbp:
+    crc: '0x196f'
+    length: 216
+    msg_type: '0x13'
+    payload: AQkAAQBKNkZCAQcAAQDyez1CAR8AAAAyl2VCAAAAAAAAAIC/AQkAAAAcalJCAREAAABUzDhCAQoAAADQhThCAR4AAABtpStCAQ0AAAC4tVBCAAAAAAAAAIC/AR8AAQCuU05CAAAAAAAAAIC/ARoAAACyEk5CARoAAQAhfDxCAAAAAAAAAIC/AR4AAQA8kxZCARQAAABnISFCAQAAAABDSypCAQAAAQA2/RxCAAAAAAAAAIC/ARcAAQCnCCdCAQcAAABCHUZCAAAAAAAAAIC/ARcAAAA1jzJC
+    preamble: '0x55'
+    sender: '0x425f'
+version: null
+...

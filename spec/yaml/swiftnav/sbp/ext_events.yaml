@@ -12,7 +12,7 @@ package: swiftnav.sbp.ext_events
 description: |
   Messages reporting accurately-timestamped external events,
   e.g. camera shutter time.
-stable: False
+stable: True
 public: True
 include:
   - types.yaml

@@ -54,7 +54,7 @@ public class MsgPosECEF extends SBPMessage {
     /** ECEF Z coordinate */
     public double z;
     
-    /** Position accuracy estimate. */
+    /** Position estimated standard deviation */
     public int accuracy;
     
     /** Number of satellites used in solution */

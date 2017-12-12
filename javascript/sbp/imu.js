@@ -27,18 +27,19 @@ var UInt64 = require('cuint').UINT64;
  * SBP class for message MSG_IMU_RAW (0x0900).
  *
  * Raw data from the Inertial Measurement Unit, containing accelerometer and
- * gyroscope readings.
+ * gyroscope readings. The sense of the measurements are to be aligned with  the
+ * indications on the device itself.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) Milliseconds since start of GPS week. If the high bit is set, the time is
  *   unknown or invalid.
  * @field tow_f number (unsigned 8-bit int, 1 byte) Milliseconds since start of GPS week, fractional part
- * @field acc_x number (signed 16-bit int, 2 bytes) Acceleration in the body frame X axis
- * @field acc_y number (signed 16-bit int, 2 bytes) Acceleration in the body frame Y axis
- * @field acc_z number (signed 16-bit int, 2 bytes) Acceleration in the body frame Z axis
- * @field gyr_x number (signed 16-bit int, 2 bytes) Angular rate around the body frame X axis
- * @field gyr_y number (signed 16-bit int, 2 bytes) Angular rate around the body frame Y axis
- * @field gyr_z number (signed 16-bit int, 2 bytes) Angular rate around the body frame Z axis
+ * @field acc_x number (signed 16-bit int, 2 bytes) Acceleration in the IMU frame X axis
+ * @field acc_y number (signed 16-bit int, 2 bytes) Acceleration in the IMU frame Y axis
+ * @field acc_z number (signed 16-bit int, 2 bytes) Acceleration in the IMU frame Z axis
+ * @field gyr_x number (signed 16-bit int, 2 bytes) Angular rate around IMU frame X axis
+ * @field gyr_y number (signed 16-bit int, 2 bytes) Angular rate around IMU frame Y axis
+ * @field gyr_z number (signed 16-bit int, 2 bytes) Angular rate around IMU frame Z axis
  *
  * @param sbp An SBP object with a payload to be decoded.
  */

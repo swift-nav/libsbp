@@ -1,0 +1,132 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgPosECEFDepA vv2.0.
+generated_on: 2016-11-03 19:19:13.936725
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 18
+      tow: 513526000
+      x: -2706101.4954948854
+      y: -4261222.566642836
+      z: 3885589.5160474903
+    module: sbp.navigation
+    name: MsgPosECEFDepA
+  msg_type: '0x200'
+  raw_json: '{"n_sats": 18, "sender": 16991, "msg_type": 512, "tow": 513526000, "crc":
+    23172, "length": 32, "flags": 0, "y": -4261222.566642836, "x": -2706101.4954948854,
+    "z": 3885589.5160474903, "preamble": 85, "payload": "8MibHlxgbL9apUTBUOBDpFlBUMEb2A3CCqVNQQAAEgA=",
+    "accuracy": 0}'
+  raw_packet: VQACX0Ig8MibHlxgbL9apUTBUOBDpFlBUMEb2A3CCqVNQQAAEgCEWg==
+  sbp:
+    crc: '0x5a84'
+    length: 32
+    msg_type: '0x200'
+    payload: 8MibHlxgbL9apUTBUOBDpFlBUMEb2A3CCqVNQQAAEgA=
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 18
+      tow: 513526500
+      x: -2706101.500938124
+      y: -4261222.688048133
+      z: 3885589.5602566204
+    module: sbp.navigation
+    name: MsgPosECEFDepA
+  msg_type: '0x200'
+  raw_json: '{"n_sats": 18, "sender": 16991, "msg_type": 512, "tow": 513526500, "crc":
+    24640, "length": 32, "flags": 0, "y": -4261222.688048133, "x": -2706101.500938124,
+    "z": 3885589.5602566204, "preamble": 85, "payload": "5MqbHo69HsBapUTBCfsIrFlBUMErfbbHCqVNQQAAEgA=",
+    "accuracy": 0}'
+  raw_packet: VQACX0Ig5MqbHo69HsBapUTBCfsIrFlBUMErfbbHCqVNQQAAEgBAYA==
+  sbp:
+    crc: '0x6040'
+    length: 32
+    msg_type: '0x200'
+    payload: 5MqbHo69HsBapUTBCfsIrFlBUMErfbbHCqVNQQAAEgA=
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 18
+      tow: 513527000
+      x: -2706101.423749659
+      y: -4261222.553450845
+      z: 3885589.321397116
+    module: sbp.navigation
+    name: MsgPosECEFDepA
+  msg_type: '0x200'
+  raw_json: '{"n_sats": 18, "sender": 16991, "msg_type": 512, "tow": 513527000, "crc":
+    7969, "length": 32, "flags": 0, "y": -4261222.553450845, "x": -2706101.423749659,
+    "z": 3885589.321397116, "preamble": 85, "payload": "2MybHshtPbZapUTBGL1ro1lBUMFriiOpCqVNQQAAEgA=",
+    "accuracy": 0}'
+  raw_packet: VQACX0Ig2MybHshtPbZapUTBGL1ro1lBUMFriiOpCqVNQQAAEgAhHw==
+  sbp:
+    crc: '0x1f21'
+    length: 32
+    msg_type: '0x200'
+    payload: 2MybHshtPbZapUTBGL1ro1lBUMFriiOpCqVNQQAAEgA=
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 18
+      tow: 513527500
+      x: -2706101.351526618
+      y: -4261222.428965853
+      z: 3885588.888847002
+    module: sbp.navigation
+    name: MsgPosECEFDepA
+  msg_type: '0x200'
+  raw_json: '{"n_sats": 18, "sender": 16991, "msg_type": 512, "tow": 513527500, "crc":
+    3745, "length": 32, "flags": 0, "y": -4261222.428965853, "x": -2706101.351526618,
+    "z": 3885588.888847002, "preamble": 85, "payload": "zM6bHgDT/qxapUTBMS10m1lBUMESvcVxCqVNQQAAEgA=",
+    "accuracy": 0}'
+  raw_packet: VQACX0IgzM6bHgDT/qxapUTBMS10m1lBUMESvcVxCqVNQQAAEgChDg==
+  sbp:
+    crc: '0xea1'
+    length: 32
+    msg_type: '0x200'
+    payload: zM6bHgDT/qxapUTBMS10m1lBUMESvcVxCqVNQQAAEgA=
+    preamble: '0x55'
+    sender: '0x425f'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 18
+      tow: 513528000
+      x: -2706101.3337029815
+      y: -4261222.604932645
+      z: 3885588.7711526817
+    module: sbp.navigation
+    name: MsgPosECEFDepA
+  msg_type: '0x200'
+  raw_json: '{"n_sats": 18, "sender": 16991, "msg_type": 512, "tow": 513528000, "crc":
+    22961, "length": 32, "flags": 0, "y": -4261222.604932645, "x": -2706101.3337029815,
+    "z": 3885588.7711526817, "preamble": 85, "payload": "wNCbHoDHtqpapUTBaje3pllBUMGOIbViCqVNQQAAEgA=",
+    "accuracy": 0}'
+  raw_packet: VQACX0IgwNCbHoDHtqpapUTBaje3pllBUMGOIbViCqVNQQAAEgCxWQ==
+  sbp:
+    crc: '0x59b1'
+    length: 32
+    msg_type: '0x200'
+    payload: wNCbHoDHtqpapUTBaje3pllBUMGOIbViCqVNQQAAEgA=
+    preamble: '0x55'
+    sender: '0x425f'
+version: v2.0
+...

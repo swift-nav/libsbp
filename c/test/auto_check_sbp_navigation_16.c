@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelECEF.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgPosLLHCov.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -97,12 +97,12 @@ START_TEST( test_auto_check_sbp_navigation_16 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x20d, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_callback(&sbp_state, 0x211, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,13,2,211,136,20,40,244,122,19,248,255,255,255,251,255,255,255,10,0,0,0,0,0,14,0,181,99, };
+    u8 test_data[] = {85,17,2,66,0,54,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,28,64,0,0,0,0,0,0,0,0,0,0,224,64,0,0,160,64,0,0,0,65,0,0,192,64,0,0,128,63,0,0,0,64,5,5,151,98, };
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x20d, 35027, sizeof(test_data), test_data, &dummy_write);
+    sbp_send_message(&sbp_state, 0x211, 66, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
       fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -111,7 +111,7 @@ START_TEST( test_auto_check_sbp_navigation_16 )
 
     fail_unless(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 35027,
+    fail_unless(last_sender_id == 66,
         "sender_id decoded incorrectly");
     fail_unless(last_len == sizeof(test_data),
         "len decoded incorrectly");
@@ -122,204 +122,21 @@ START_TEST( test_auto_check_sbp_navigation_16 )
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
+    msg_pos_llh_cov_t* msg = ( msg_pos_llh_cov_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->n_sats == 14, "incorrect value for n_sats, expected 14, is %d", msg->n_sats);
-    fail_unless(msg->tow == 326825000, "incorrect value for tow, expected 326825000, is %d", msg->tow);
-    fail_unless(msg->x == -8, "incorrect value for x, expected -8, is %d", msg->x);
-    fail_unless(msg->y == -5, "incorrect value for y, expected -5, is %d", msg->y);
-    fail_unless(msg->z == 10, "incorrect value for z, expected 10, is %d", msg->z);
-  }
-  // Test successful parsing of a message
-  {
-    // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
-    //  allocated multiple times across different tests.
-    sbp_state_init(&sbp_state);
-
-    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
-
-    logging_reset();
-
-    sbp_register_callback(&sbp_state, 0x20d, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-
-    u8 test_data[] = {85,13,2,211,136,20,28,246,122,19,244,255,255,255,238,255,255,255,11,0,0,0,0,0,15,0,215,120, };
-
-    dummy_reset();
-    sbp_send_message(&sbp_state, 0x20d, 35027, sizeof(test_data), test_data, &dummy_write);
-
-    while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
-    }
-
-    fail_unless(n_callbacks_logged == 1,
-        "one callback should have been logged");
-    fail_unless(last_sender_id == 35027,
-        "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
-        "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
-          == 0,
-        "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "context pointer incorrectly passed");
-
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
-    // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
-    fail_unless(msg->tow == 326825500, "incorrect value for tow, expected 326825500, is %d", msg->tow);
-    fail_unless(msg->x == -12, "incorrect value for x, expected -12, is %d", msg->x);
-    fail_unless(msg->y == -18, "incorrect value for y, expected -18, is %d", msg->y);
-    fail_unless(msg->z == 11, "incorrect value for z, expected 11, is %d", msg->z);
-  }
-  // Test successful parsing of a message
-  {
-    // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
-    //  allocated multiple times across different tests.
-    sbp_state_init(&sbp_state);
-
-    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
-
-    logging_reset();
-
-    sbp_register_callback(&sbp_state, 0x20d, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-
-    u8 test_data[] = {85,13,2,211,136,20,16,248,122,19,248,255,255,255,250,255,255,255,7,0,0,0,0,0,15,0,248,221, };
-
-    dummy_reset();
-    sbp_send_message(&sbp_state, 0x20d, 35027, sizeof(test_data), test_data, &dummy_write);
-
-    while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
-    }
-
-    fail_unless(n_callbacks_logged == 1,
-        "one callback should have been logged");
-    fail_unless(last_sender_id == 35027,
-        "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
-        "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
-          == 0,
-        "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "context pointer incorrectly passed");
-
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
-    // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
-    fail_unless(msg->tow == 326826000, "incorrect value for tow, expected 326826000, is %d", msg->tow);
-    fail_unless(msg->x == -8, "incorrect value for x, expected -8, is %d", msg->x);
-    fail_unless(msg->y == -6, "incorrect value for y, expected -6, is %d", msg->y);
-    fail_unless(msg->z == 7, "incorrect value for z, expected 7, is %d", msg->z);
-  }
-  // Test successful parsing of a message
-  {
-    // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
-    //  allocated multiple times across different tests.
-    sbp_state_init(&sbp_state);
-
-    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
-
-    logging_reset();
-
-    sbp_register_callback(&sbp_state, 0x20d, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-
-    u8 test_data[] = {85,13,2,211,136,20,4,250,122,19,249,255,255,255,239,255,255,255,16,0,0,0,0,0,15,0,1,167, };
-
-    dummy_reset();
-    sbp_send_message(&sbp_state, 0x20d, 35027, sizeof(test_data), test_data, &dummy_write);
-
-    while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
-    }
-
-    fail_unless(n_callbacks_logged == 1,
-        "one callback should have been logged");
-    fail_unless(last_sender_id == 35027,
-        "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
-        "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
-          == 0,
-        "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "context pointer incorrectly passed");
-
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
-    // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
-    fail_unless(msg->tow == 326826500, "incorrect value for tow, expected 326826500, is %d", msg->tow);
-    fail_unless(msg->x == -7, "incorrect value for x, expected -7, is %d", msg->x);
-    fail_unless(msg->y == -17, "incorrect value for y, expected -17, is %d", msg->y);
-    fail_unless(msg->z == 16, "incorrect value for z, expected 16, is %d", msg->z);
-  }
-  // Test successful parsing of a message
-  {
-    // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
-    //  allocated multiple times across different tests.
-    sbp_state_init(&sbp_state);
-
-    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
-
-    logging_reset();
-
-    sbp_register_callback(&sbp_state, 0x20d, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-
-    u8 test_data[] = {85,13,2,211,136,20,248,251,122,19,247,255,255,255,243,255,255,255,14,0,0,0,0,0,15,0,191,43, };
-
-    dummy_reset();
-    sbp_send_message(&sbp_state, 0x20d, 35027, sizeof(test_data), test_data, &dummy_write);
-
-    while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
-    }
-
-    fail_unless(n_callbacks_logged == 1,
-        "one callback should have been logged");
-    fail_unless(last_sender_id == 35027,
-        "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
-        "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
-          == 0,
-        "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "context pointer incorrectly passed");
-
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_vel_ecef_t* msg = ( msg_vel_ecef_t *)((void *)last_msg + 6);
-    // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
-    fail_unless(msg->tow == 326827000, "incorrect value for tow, expected 326827000, is %d", msg->tow);
-    fail_unless(msg->x == -9, "incorrect value for x, expected -9, is %d", msg->x);
-    fail_unless(msg->y == -13, "incorrect value for y, expected -13, is %d", msg->y);
-    fail_unless(msg->z == 14, "incorrect value for z, expected 14, is %d", msg->z);
+    fail_unless(msg->cov_d_d == 2, "incorrect value for cov_d_d, expected 2, is %d", msg->cov_d_d);
+    fail_unless(msg->cov_e_d == 1, "incorrect value for cov_e_d, expected 1, is %d", msg->cov_e_d);
+    fail_unless(msg->cov_e_e == 6, "incorrect value for cov_e_e, expected 6, is %d", msg->cov_e_e);
+    fail_unless(msg->cov_n_d == 8, "incorrect value for cov_n_d, expected 8, is %d", msg->cov_n_d);
+    fail_unless(msg->cov_n_e == 5, "incorrect value for cov_n_e, expected 5, is %d", msg->cov_n_e);
+    fail_unless(msg->cov_n_n == 7, "incorrect value for cov_n_n, expected 7, is %d", msg->cov_n_n);
+    fail_unless(msg->flags == 5, "incorrect value for flags, expected 5, is %d", msg->flags);
+    fail_unless(msg->height == 0, "incorrect value for height, expected 0, is %d", msg->height);
+    fail_unless(msg->lat == 0, "incorrect value for lat, expected 0, is %d", msg->lat);
+    fail_unless(msg->lon == 7, "incorrect value for lon, expected 7, is %d", msg->lon);
+    fail_unless(msg->n_sats == 5, "incorrect value for n_sats, expected 5, is %d", msg->n_sats);
+    fail_unless(msg->tow == 7, "incorrect value for tow, expected 7, is %d", msg->tow);
   }
 }
 END_TEST

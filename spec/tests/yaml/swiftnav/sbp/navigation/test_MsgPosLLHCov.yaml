@@ -1,0 +1,18 @@
+description: Unit tests for swiftnav.sbp.navigation MsgPosLLHCov v2.3.
+generated_on: 2017-11-18 22:05:54.483784
+package: sbp.navigation
+tests:
+- msg:
+    fields: {cov_d_d: 2, cov_e_d: 1, cov_e_e: 6, cov_n_d: 8, cov_n_e: 5, cov_n_n: 7,
+      flags: 5, height: 0, lat: 0, lon: 7, n_sats: 5, tow: 7}
+    module: sbp.navigation
+    name: MsgPosLLHCov
+  msg_type: '0x211'
+  raw_json: '{"cov_e_d": 1, "cov_e_e": 6, "n_sats": 5, "sender": 66, "msg_type": 529,
+    "cov_n_n": 7, "lon": 7, "cov_n_e": 5, "tow": 7, "height": 0, "crc": 25239, "length":
+    54, "cov_n_d": 8, "lat": 0, "flags": 5, "cov_d_d": 2, "preamble": 85, "payload":
+    "BwAAAAAAAAAAAAAAAAAAAAAAHEAAAAAAAAAAAAAA4EAAAKBAAAAAQQAAwEAAAIA/AAAAQAUF"}'
+  raw_packet: VRECQgA2BwAAAAAAAAAAAAAAAAAAAAAAHEAAAAAAAAAAAAAA4EAAAKBAAAAAQQAAwEAAAIA/AAAAQAUFl2I=
+  sbp: {crc: '0x6297', length: 54, msg_type: '0x211', payload: BwAAAAAAAAAAAAAAAAAAAAAAHEAAAAAAAAAAAAAA4EAAAKBAAAAAQQAAwEAAAIA/AAAAQAUF,
+    preamble: '0x55', sender: '0x42'}
+version: '2.3'

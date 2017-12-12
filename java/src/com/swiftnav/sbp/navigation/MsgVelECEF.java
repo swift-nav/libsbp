@@ -49,7 +49,7 @@ public class MsgVelECEF extends SBPMessage {
     /** Velocity ECEF Z coordinate */
     public int z;
     
-    /** Velocity accuracy estimate
+    /** Velocity estimated standard deviation
  */
     public int accuracy;
     

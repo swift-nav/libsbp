@@ -1,0 +1,15 @@
+description: Unit tests for swiftnav.sbp.vehicle MsgOdometry v2.3.
+generated_on: 2017-11-18 22:05:54.480931
+package: sbp.vehicle
+tests:
+- msg:
+    fields: {flags: 1, tow: 8, velocity: 7}
+    module: sbp.vehicle
+    name: MsgOdometry
+  msg_type: '0x903'
+  raw_json: '{"sender": 66, "msg_type": 2307, "tow": 8, "crc": 25396, "length": 9,
+    "flags": 1, "velocity": 7, "preamble": 85, "payload": "CAAAAAcAAAAB"}'
+  raw_packet: VQMJQgAJCAAAAAcAAAABNGM=
+  sbp: {crc: '0x6334', length: 9, msg_type: '0x903', payload: CAAAAAcAAAAB, preamble: '0x55',
+    sender: '0x42'}
+version: '2.3'
