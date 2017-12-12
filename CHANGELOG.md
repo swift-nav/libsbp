@@ -1,7 +1,53 @@
 # Change Log
 
-## [v2.2.15](https://github.com/swift-nav/libsbp/tree/v2.2.15)
+## [v2.3.3](https://github.com/swift-nav/libsbp/tree/v2.3.3)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.2...v2.3.3)
+
+**Merged pull requests:**
+
+- Bb/monitor updates [\#529](https://github.com/swift-nav/libsbp/pull/529)
+- adding fftmonitor [\#528](https://github.com/swift-nav/libsbp/pull/528)
+- adding tcp client example [\#526](https://github.com/swift-nav/libsbp/pull/526)
+
+## [v2.3.2](https://github.com/swift-nav/libsbp/tree/v2.3.2) (2017-11-29)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.1...v2.3.2)
+
+**Merged pull requests:**
+
+-  Add MSG\_SETTINGS\_WRITE\_RESP [\#525](https://github.com/swift-nav/libsbp/pull/525)
+
+## [v2.3.1](https://github.com/swift-nav/libsbp/tree/v2.3.1) (2017-11-25)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.0...v2.3.1)
+
+**Merged pull requests:**
+
+- Adding GLONASS code-phase bias message [\#524](https://github.com/swift-nav/libsbp/pull/524)
+
+## [v2.3.0](https://github.com/swift-nav/libsbp/tree/v2.3.0) (2017-11-08)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.17...v2.3.0)
+
+**Merged pull requests:**
+
+- Move off GnssSignal [\#522](https://github.com/swift-nav/libsbp/pull/522)
+- Rename the js library to sbp. [\#519](https://github.com/swift-nav/libsbp/pull/519)
+
+## [v2.2.17](https://github.com/swift-nav/libsbp/tree/v2.2.17) (2017-11-08)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.16...v2.2.17)
+
+**Closed issues:**
+
+- JS code does not generate imports [\#513](https://github.com/swift-nav/libsbp/issues/513)
+
+**Merged pull requests:**
+
+- Get rid of GnssSignal16 [\#523](https://github.com/swift-nav/libsbp/pull/523)
+- Added Magnetometer [\#520](https://github.com/swift-nav/libsbp/pull/520)
+
+## [v2.2.16](https://github.com/swift-nav/libsbp/tree/v2.2.16) (2017-11-04)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.15...v2.2.16)
+
+## [v2.2.15](https://github.com/swift-nav/libsbp/tree/v2.2.15) (2017-10-25)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.14...v2.2.15)
 
 **Closed issues:**
@@ -10,6 +56,7 @@
 
 **Merged pull requests:**
 
+- V2.2.15 tag for pm firmware release [\#518](https://github.com/swift-nav/libsbp/pull/518)
 - Remove `deps` target; fix help/hint text [\#515](https://github.com/swift-nav/libsbp/pull/515)
 - Change default baud rate, make example more verbose [\#514](https://github.com/swift-nav/libsbp/pull/514)
 - Added ndb and signal messages to msg.js [\#512](https://github.com/swift-nav/libsbp/pull/512)
