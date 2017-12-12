@@ -1,6 +1,6 @@
 # Change Log
 
-## [Unreleased](https://github.com/swift-nav/libsbp/tree/v2.3.3)
+## [v2.3.3](https://github.com/swift-nav/libsbp/tree/v2.3.3)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.2...v2.3.3)
 
