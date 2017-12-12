@@ -1,11 +1,20 @@
 # Change Log
 
-## [v2.3.3](https://github.com/swift-nav/libsbp/tree/v2.3.3)
+## [v2.3.4](https://github.com/swift-nav/libsbp/tree/v2.3.4)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.3...v2.3.4)
+
+**Merged pull requests:**
+
+- add util subpackage to setup.py [\#531](https://github.com/swift-nav/libsbp/pull/531)
+- inertial\_updates: new messages & navigation changes [\#454](https://github.com/swift-nav/libsbp/pull/454)
+
+## [v2.3.3](https://github.com/swift-nav/libsbp/tree/v2.3.3) (2017-12-12)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.2...v2.3.3)
 
 **Merged pull requests:**
 
+- version 2.3.3 [\#530](https://github.com/swift-nav/libsbp/pull/530)
 - Bb/monitor updates [\#529](https://github.com/swift-nav/libsbp/pull/529)
 - adding fftmonitor [\#528](https://github.com/swift-nav/libsbp/pull/528)
 - adding tcp client example [\#526](https://github.com/swift-nav/libsbp/pull/526)
