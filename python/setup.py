@@ -20,6 +20,7 @@ PACKAGES = [
   'sbp.client',
   'sbp.client.drivers',
   'sbp.client.loggers',
+  'sbp.client.util',
 ]
 
 PLATFORMS = [
