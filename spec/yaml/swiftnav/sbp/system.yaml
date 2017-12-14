@@ -108,8 +108,8 @@ definitions:
               - 30:
                   desc: External antenna short
                   values:
-                      - 0: External antenna is shorted
-                      - 1: External antenna not shorted
+                      - 0: External antenna not shorted
+                      - 1: External antenna is shorted
               - 24-29:
                   desc: Reserved
               - 16-23:
