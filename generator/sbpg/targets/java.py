@@ -164,7 +164,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
   yaml_filepath = "/".join(package_spec.filepath) + ".yaml"
   includes = [".".join(i.split(".")[:-1]) for i in package_spec.includes]
   includes = [i for i in includes if i != "types"]
-  for msg in package_spec.definitions:
+  for msg in sorted(package_spec.definitions):
     msg_name = classnameify(msg.identifier) if msg.sbp_id else msg.identifier
     l = "/".join(package_spec.filepath)
     destination_filename = "%s/com/%s/%s.java" % (output_dir, l , msg_name)
@@ -188,5 +188,5 @@ def render_table(output_dir, packages, jenv=JENV):
   destination_filename = output_dir + "/com/swiftnav/sbp/client/MessageTable.java"
   with open(destination_filename, 'w+') as f:
       print destination_filename
-      f.write(jenv.get_template(TEMPLATE_TABLE_NAME).render(packages=packages))
+      f.write(jenv.get_template(TEMPLATE_TABLE_NAME).render(packages=sorted(packages)))
 
