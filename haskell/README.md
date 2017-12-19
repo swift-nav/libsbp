@@ -10,10 +10,10 @@ Haskell client for Swift Binary Protocol (SBP).
 
 Available on [Hackage as `sbp`](http://hackage.haskell.org/package/sbp).
 
-The library supports building against Stackage LTS-6. To
+The library supports building against Stackage LTS-10. To
 install from Hackage using `stack`:
 
-    $ stack install --resolver lts-6.35 sbp # (LTS-6)
+    $ stack install --resolver lts-10.0 sbp # (LTS-10)
 
 Note that we explicitly specify the resolvers to use, as installing `libsbp` may
 fail to build with more recent resolvers.
@@ -41,9 +41,9 @@ To deploy to Hackage:
 ## Publishing
 
 To publish to [Hackage](http://hackage.haskell.org/package/sbp), use the
-`publish-lower` recipe in the `Shakefile.hs` with LTS-6 `stack.yaml`:
+`publish-lower` recipe in the `Shakefile.hs` with LTS-10 `stack.yaml`:
 
-    $ STACK_YAML=stack-lts-6.yaml ./Shakefile.hs publish-lower
+    $ STACK_YAML=stack-lts-10.yaml ./Shakefile.hs publish-lower
 
 ## References
 
