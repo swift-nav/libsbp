@@ -125,18 +125,18 @@ START_TEST( test_auto_check_sbp_navigation_18 )
     msg_vel_body_t* msg = ( msg_vel_body_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
+    fail_unless(msg->cov_x_y == 5, "incorrect value for cov_x_y, expected 5, is %d", msg->cov_x_y);
+    fail_unless(msg->cov_x_x == 0, "incorrect value for cov_x_x, expected 0, is %d", msg->cov_x_x);
+    fail_unless(msg->cov_x_z == 7, "incorrect value for cov_x_z, expected 7, is %d", msg->cov_x_z);
+    fail_unless(msg->cov_z_z == 2, "incorrect value for cov_z_z, expected 2, is %d", msg->cov_z_z);
+    fail_unless(msg->tow == 1, "incorrect value for tow, expected 1, is %d", msg->tow);
+    fail_unless(msg->z == 1, "incorrect value for z, expected 1, is %d", msg->z);
+    fail_unless(msg->y == 2, "incorrect value for y, expected 2, is %d", msg->y);
+    fail_unless(msg->x == 4, "incorrect value for x, expected 4, is %d", msg->x);
     fail_unless(msg->n_sats == 3, "incorrect value for n_sats, expected 3, is %d", msg->n_sats);
     fail_unless(msg->cov_y_y == 7, "incorrect value for cov_y_y, expected 7, is %d", msg->cov_y_y);
     fail_unless(msg->cov_y_z == 3, "incorrect value for cov_y_z, expected 3, is %d", msg->cov_y_z);
-    fail_unless(msg->cov_z_z == 2, "incorrect value for cov_z_z, expected 2, is %d", msg->cov_z_z);
-    fail_unless(msg->z == 1, "incorrect value for z, expected 1, is %d", msg->z);
-    fail_unless(msg->x == 4, "incorrect value for x, expected 4, is %d", msg->x);
-    fail_unless(msg->y == 2, "incorrect value for y, expected 2, is %d", msg->y);
     fail_unless(msg->flags == 8, "incorrect value for flags, expected 8, is %d", msg->flags);
-    fail_unless(msg->tow == 1, "incorrect value for tow, expected 1, is %d", msg->tow);
-    fail_unless(msg->cov_x_x == 0, "incorrect value for cov_x_x, expected 0, is %d", msg->cov_x_x);
-    fail_unless(msg->cov_x_y == 5, "incorrect value for cov_x_y, expected 5, is %d", msg->cov_x_y);
-    fail_unless(msg->cov_x_z == 7, "incorrect value for cov_x_z, expected 7, is %d", msg->cov_x_z);
     // print to string
     char test_str[1024];
     msg_vel_body_t_to_json_str( last_sender_id, 0x213, last_len, ( msg_vel_body_t* ) msg, 1024, test_str);
