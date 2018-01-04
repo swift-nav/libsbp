@@ -125,16 +125,16 @@ START_TEST( test_auto_check_sbp_orientation_29 )
     msg_orient_quat_t* msg = ( msg_orient_quat_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->tow == 0, "incorrect value for tow, expected 0, is %d", msg->tow);
-    fail_unless(msg->acc_z == 3, "incorrect value for acc_z, expected 3, is %d", msg->acc_z);
-    fail_unless(msg->acc_y == 8, "incorrect value for acc_y, expected 8, is %d", msg->acc_y);
-    fail_unless(msg->acc_x == 4, "incorrect value for acc_x, expected 4, is %d", msg->acc_x);
-    fail_unless(msg->acc_w == 3, "incorrect value for acc_w, expected 3, is %d", msg->acc_w);
     fail_unless(msg->w == 3, "incorrect value for w, expected 3, is %d", msg->w);
+    fail_unless(msg->tow == 0, "incorrect value for tow, expected 0, is %d", msg->tow);
     fail_unless(msg->z == 4, "incorrect value for z, expected 4, is %d", msg->z);
-    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
     fail_unless(msg->x == 7, "incorrect value for x, expected 7, is %d", msg->x);
+    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->acc_x == 4, "incorrect value for acc_x, expected 4, is %d", msg->acc_x);
+    fail_unless(msg->acc_y == 8, "incorrect value for acc_y, expected 8, is %d", msg->acc_y);
+    fail_unless(msg->acc_z == 3, "incorrect value for acc_z, expected 3, is %d", msg->acc_z);
     fail_unless(msg->y == 8, "incorrect value for y, expected 8, is %d", msg->y);
+    fail_unless(msg->acc_w == 3, "incorrect value for acc_w, expected 3, is %d", msg->acc_w);
     // print to string
     char test_str[1024];
     msg_orient_quat_t_to_json_str( last_sender_id, 0x220, last_len, ( msg_orient_quat_t* ) msg, 1024, test_str);

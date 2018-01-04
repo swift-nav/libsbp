@@ -117,10 +117,10 @@ int (((m.identifier|convert)))_to_json_str( (((in_ptr_type))) * in, uint64_t max
   for (int i=0; i < (((field.options.get('size').value))); i++) {
 
   ((*- elif field == m.fields[-1] -*))  ((= variablelength array only at end =))
-  uint8_t * msg_end = (uint8_t *)in + msg_len;
-  uint8_t * msg_start_array = (uint8_t *)&(in->(((field.identifier))));
-  uint8_t msg_array_size = msg_end - msg_start_array;
+  uint8_t msg_array_offset = (uint8_t *)&(in->(((field.identifier)))) - (uint8_t *)in;
+  uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( (((field|mk_id))) );
+  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
   ((*- endif -*))  ((= variable vs fixed =))
     if (i != 0){
@@ -129,7 +129,7 @@ int (((m.identifier|convert)))_to_json_str( (((in_ptr_type))) * in, uint64_t max
   ((*- if (field|mk_id|is_simple) -*))
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "(((field|get_format_str)))", in->(((field.identifier)))[i]);
   ((*- else -*))
-    json_bufp += (((field|mk_id)))_to_json_str(&(in->(((field.identifier)))[i]), json_end - json_bufp, json_bufp);
+    json_bufp += (((field|mk_id)))_to_json_str(&(in->(((field.identifier))))[i], json_end - json_bufp, json_bufp);
   ((*- endif -*))
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "]");

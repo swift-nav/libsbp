@@ -125,13 +125,13 @@ START_TEST( test_auto_check_sbp_navigation_8 )
     msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->tow == 100, "incorrect value for tow, expected 100, is %d", msg->tow);
-    fail_unless(msg->pdop == 6, "incorrect value for pdop, expected 6, is %d", msg->pdop);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->gdop == 2, "incorrect value for gdop, expected 2, is %d", msg->gdop);
-    fail_unless(msg->tdop == 5, "incorrect value for tdop, expected 5, is %d", msg->tdop);
-    fail_unless(msg->vdop == 5, "incorrect value for vdop, expected 5, is %d", msg->vdop);
     fail_unless(msg->hdop == 5, "incorrect value for hdop, expected 5, is %d", msg->hdop);
+    fail_unless(msg->vdop == 5, "incorrect value for vdop, expected 5, is %d", msg->vdop);
+    fail_unless(msg->tow == 100, "incorrect value for tow, expected 100, is %d", msg->tow);
+    fail_unless(msg->tdop == 5, "incorrect value for tdop, expected 5, is %d", msg->tdop);
+    fail_unless(msg->pdop == 6, "incorrect value for pdop, expected 6, is %d", msg->pdop);
+    fail_unless(msg->gdop == 2, "incorrect value for gdop, expected 2, is %d", msg->gdop);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
     // print to string
     char test_str[1024];
     msg_dops_t_to_json_str( last_sender_id, 0x208, last_len, ( msg_dops_t* ) msg, 1024, test_str);

@@ -127,12 +127,12 @@ START_TEST( test_auto_check_sbp_navigation_17 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless((msg->lat*100 - 37.4290689091*100) < 0.05, "incorrect value for lat, expected 37.4290689091, is %f", msg->lat);
     fail_unless(msg->tow == 2567700, "incorrect value for tow, expected 2567700, is %d", msg->tow);
-    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->height*100 - 69.8043767518*100) < 0.05, "incorrect value for height, expected 69.8043767518, is %f", msg->height);
     fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
     fail_unless((msg->lon*100 - -122.173386622*100) < 0.05, "incorrect value for lon, expected -122.173386622, is %f", msg->lon);
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
-    fail_unless((msg->height*100 - 69.8043767518*100) < 0.05, "incorrect value for height, expected 69.8043767518, is %f", msg->height);
     // print to string
     char test_str[1024];
     msg_pos_llh_dep_a_t_to_json_str( last_sender_id, 0x201, last_len, ( msg_pos_llh_dep_a_t* ) msg, 1024, test_str);
@@ -179,12 +179,12 @@ START_TEST( test_auto_check_sbp_navigation_17 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless((msg->lat*100 - 37.4290643089*100) < 0.05, "incorrect value for lat, expected 37.4290643089, is %f", msg->lat);
     fail_unless(msg->tow == 2567700, "incorrect value for tow, expected 2567700, is %d", msg->tow);
-    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->height*100 - 69.6881406772*100) < 0.05, "incorrect value for height, expected 69.6881406772, is %f", msg->height);
     fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
     fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
     fail_unless((msg->lon*100 - -122.173408261*100) < 0.05, "incorrect value for lon, expected -122.173408261, is %f", msg->lon);
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
-    fail_unless((msg->height*100 - 69.6881406772*100) < 0.05, "incorrect value for height, expected 69.6881406772, is %f", msg->height);
     // print to string
     char test_str[1024];
     msg_pos_llh_dep_a_t_to_json_str( last_sender_id, 0x201, last_len, ( msg_pos_llh_dep_a_t* ) msg, 1024, test_str);
@@ -231,12 +231,12 @@ START_TEST( test_auto_check_sbp_navigation_17 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless((msg->lat*100 - 37.4290544776*100) < 0.05, "incorrect value for lat, expected 37.4290544776, is %f", msg->lat);
     fail_unless(msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", msg->tow);
-    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->height*100 - 69.4960885482*100) < 0.05, "incorrect value for height, expected 69.4960885482, is %f", msg->height);
     fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
     fail_unless((msg->lon*100 - -122.173420075*100) < 0.05, "incorrect value for lon, expected -122.173420075, is %f", msg->lon);
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
-    fail_unless((msg->height*100 - 69.4960885482*100) < 0.05, "incorrect value for height, expected 69.4960885482, is %f", msg->height);
     // print to string
     char test_str[1024];
     msg_pos_llh_dep_a_t_to_json_str( last_sender_id, 0x201, last_len, ( msg_pos_llh_dep_a_t* ) msg, 1024, test_str);
@@ -283,12 +283,12 @@ START_TEST( test_auto_check_sbp_navigation_17 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless((msg->lat*100 - 37.4290633739*100) < 0.05, "incorrect value for lat, expected 37.4290633739, is %f", msg->lat);
     fail_unless(msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", msg->tow);
-    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->height*100 - 69.6878045882*100) < 0.05, "incorrect value for height, expected 69.6878045882, is %f", msg->height);
     fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
     fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
     fail_unless((msg->lon*100 - -122.173403896*100) < 0.05, "incorrect value for lon, expected -122.173403896, is %f", msg->lon);
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
-    fail_unless((msg->height*100 - 69.6878045882*100) < 0.05, "incorrect value for height, expected 69.6878045882, is %f", msg->height);
     // print to string
     char test_str[1024];
     msg_pos_llh_dep_a_t_to_json_str( last_sender_id, 0x201, last_len, ( msg_pos_llh_dep_a_t* ) msg, 1024, test_str);
@@ -335,12 +335,12 @@ START_TEST( test_auto_check_sbp_navigation_17 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless((msg->lat*100 - 37.4290765936*100) < 0.05, "incorrect value for lat, expected 37.4290765936, is %f", msg->lat);
     fail_unless(msg->tow == 2567900, "incorrect value for tow, expected 2567900, is %d", msg->tow);
-    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    fail_unless((msg->height*100 - 70.5249547318*100) < 0.05, "incorrect value for height, expected 70.5249547318, is %f", msg->height);
     fail_unless(msg->h_accuracy == 0, "incorrect value for h_accuracy, expected 0, is %d", msg->h_accuracy);
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
     fail_unless((msg->lon*100 - -122.173404926*100) < 0.05, "incorrect value for lon, expected -122.173404926, is %f", msg->lon);
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
-    fail_unless((msg->height*100 - 70.5249547318*100) < 0.05, "incorrect value for height, expected 70.5249547318, is %f", msg->height);
     // print to string
     char test_str[1024];
     msg_pos_llh_dep_a_t_to_json_str( last_sender_id, 0x201, last_len, ( msg_pos_llh_dep_a_t* ) msg, 1024, test_str);
