@@ -29,6 +29,7 @@ set(libsbp_HEADERS
 set(libsbp_SRCS
   edc.c
   sbp.c
+  sbp2json.c
 )
 
 add_library(sbp ${libsbp_SRCS})
