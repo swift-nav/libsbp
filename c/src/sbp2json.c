@@ -230,7 +230,6 @@ int msg_acq_sv_profile_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, m
   uint8_t msg_array_offset = (uint8_t *)&(in->acq_sv_profile) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( acq_sv_profile_t );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -259,7 +258,6 @@ int msg_acq_sv_profile_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_le
   uint8_t msg_array_offset = (uint8_t *)&(in->acq_sv_profile) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( acq_sv_profile_dep_t );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -415,7 +413,6 @@ int msg_bootloader_handshake_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u
   uint8_t msg_array_offset = (uint8_t *)&(in->handshake) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( u8 );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -532,7 +529,6 @@ int msg_fileio_read_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len,
   uint8_t msg_array_offset = (uint8_t *)&(in->contents) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( u8 );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -597,7 +593,6 @@ int msg_fileio_read_dir_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_
   uint8_t msg_array_offset = (uint8_t *)&(in->contents) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( u8 );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -671,7 +666,6 @@ int msg_fileio_write_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len,
   uint8_t msg_array_offset = (uint8_t *)&(in->data) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( u8 );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -742,7 +736,6 @@ int msg_flash_program_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, ms
   uint8_t msg_array_offset = (uint8_t *)&(in->data) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( u8 );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -1649,7 +1642,6 @@ int msg_obs_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_obs_t * 
   uint8_t msg_array_offset = (uint8_t *)&(in->obs) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( packed_obs_content_t );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -2435,7 +2427,6 @@ int msg_obs_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ob
   uint8_t msg_array_offset = (uint8_t *)&(in->obs) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( packed_obs_content_dep_a_t );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -2466,7 +2457,6 @@ int msg_obs_dep_b_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ob
   uint8_t msg_array_offset = (uint8_t *)&(in->obs) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( packed_obs_content_dep_b_t );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -2497,7 +2487,6 @@ int msg_obs_dep_c_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ob
   uint8_t msg_array_offset = (uint8_t *)&(in->obs) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( packed_obs_content_dep_c_t );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -3447,7 +3436,6 @@ int msg_specan_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_s
   uint8_t msg_array_offset = (uint8_t *)&(in->amplitude_value) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( u8 );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -3488,7 +3476,6 @@ int msg_specan_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_speca
   uint8_t msg_array_offset = (uint8_t *)&(in->amplitude_value) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( u8 );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -4014,7 +4001,6 @@ int msg_tracking_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, m
   uint8_t msg_array_offset = (uint8_t *)&(in->states) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( tracking_channel_state_t );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -4117,7 +4103,6 @@ int msg_tracking_state_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_
   uint8_t msg_array_offset = (uint8_t *)&(in->states) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( tracking_channel_state_dep_a_t );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -4164,7 +4149,6 @@ int msg_tracking_state_dep_b_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_
   uint8_t msg_array_offset = (uint8_t *)&(in->states) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( tracking_channel_state_dep_b_t );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
@@ -4208,7 +4192,6 @@ int msg_user_data_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_us
   uint8_t msg_array_offset = (uint8_t *)&(in->contents) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( u8 );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
     if (i != 0){
       json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");

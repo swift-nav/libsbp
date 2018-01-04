@@ -120,7 +120,6 @@ int (((m.identifier|convert)))_to_json_str( (((in_ptr_type))) * in, uint64_t max
   uint8_t msg_array_offset = (uint8_t *)&(in->(((field.identifier)))) - (uint8_t *)in;
   uint8_t msg_array_size = msg_len - msg_array_offset;
   uint8_t msg_array_count = msg_array_size / sizeof( (((field|mk_id))) );
-  printf("msg_array_count: %d\n", msg_array_count);
   for (int i=0; i < msg_array_count; i++) {
   ((*- endif -*))  ((= variable vs fixed =))
     if (i != 0){
