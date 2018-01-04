@@ -34,7 +34,7 @@ typedef struct __attribute__((packed)) {
   u8 sat;     /**< Constellation-specific satellite identifier */
   u8 code;    /**< Signal constellation, band and code */
 } sbp_gnss_signal_t;
-
+int sbp_gnss_signal_t_to_json_str( sbp_gnss_signal_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -49,7 +49,7 @@ Note: unlike GnssSignal, GPS satellites are encoded as
   u8 code;        /**< Signal constellation, band and code */
   u8 reserved;    /**< Reserved */
 } gnss_signal_dep_t;
-
+int gnss_signal_dep_t_to_json_str( gnss_signal_dep_t * in, uint64_t max_len, char* out_str);
 
 /** Millisecond-accurate GPS time
  *
@@ -61,7 +61,7 @@ typedef struct __attribute__((packed)) {
   u32 tow;    /**< Milliseconds since start of GPS week [ms] */
   u16 wn;     /**< GPS week number [week] */
 } gps_time_dep_t;
-
+int gps_time_dep_t_to_json_str( gps_time_dep_t * in, uint64_t max_len, char* out_str);
 
 /** Whole second accurate GPS time
  *
@@ -73,7 +73,7 @@ typedef struct __attribute__((packed)) {
   u32 tow;    /**< Seconds since start of GPS week [s] */
   u16 wn;     /**< GPS week number [week] */
 } gps_time_sec_t;
-
+int gps_time_sec_t_to_json_str( gps_time_sec_t * in, uint64_t max_len, char* out_str);
 
 /** Nanosecond-accurate receiver clock time
  *
@@ -89,7 +89,7 @@ from -500000 to 500000)
  [ns] */
   u16 wn;             /**< GPS week number [week] */
 } sbp_gps_time_t;
-
+int sbp_gps_time_t_to_json_str( sbp_gps_time_t * in, uint64_t max_len, char* out_str);
 
 /** GNSS carrier phase measurement.
  *
@@ -102,7 +102,7 @@ typedef struct __attribute__((packed)) {
   s32 i;    /**< Carrier phase whole cycles [cycles] */
   u8 f;    /**< Carrier phase fractional part [cycles / 256] */
 } carrier_phase_t;
-
+int carrier_phase_t_to_json_str( carrier_phase_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

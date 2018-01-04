@@ -44,7 +44,7 @@ for the exact source of this timestamp.
  [mm/s] */
   u8 flags;       /**< Status flags */
 } msg_odometry_t;
-
+int msg_odometry_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_odometry_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

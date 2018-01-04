@@ -125,31 +125,35 @@ START_TEST( test_auto_check_sbp_tracking_49 )
     msg_tracking_state_detailed_dep_t* msg = ( msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->L.f == 169, "incorrect value for L.f, expected 169, is %d", msg->L.f);
-    fail_unless(msg->L.i == 1319, "incorrect value for L.i, expected 1319, is %d", msg->L.i);
-    fail_unless(msg->P == 0, "incorrect value for P, expected 0, is %d", msg->P);
-    fail_unless(msg->P_std == 0, "incorrect value for P_std, expected 0, is %d", msg->P_std);
-    fail_unless(msg->acceleration == 108, "incorrect value for acceleration, expected 108, is %d", msg->acceleration);
     fail_unless(msg->clock_drift == 0, "incorrect value for clock_drift, expected 0, is %d", msg->clock_drift);
+    fail_unless(msg->acceleration == 108, "incorrect value for acceleration, expected 108, is %d", msg->acceleration);
+    fail_unless(msg->doppler_std == 39, "incorrect value for doppler_std, expected 39, is %d", msg->doppler_std);
+    fail_unless(msg->recv_time == 7909447587, "incorrect value for recv_time, expected 7909447587, is %d", msg->recv_time);
+    fail_unless(msg->doppler == 15701, "incorrect value for doppler, expected 15701, is %d", msg->doppler);
+    fail_unless(msg->P_std == 0, "incorrect value for P_std, expected 0, is %d", msg->P_std);
+    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
+    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
     fail_unless(msg->clock_offset == 0, "incorrect value for clock_offset, expected 0, is %d", msg->clock_offset);
+    fail_unless(msg->uptime == 1, "incorrect value for uptime, expected 1, is %d", msg->uptime);
+    fail_unless(msg->P == 0, "incorrect value for P, expected 0, is %d", msg->P);
+    fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
+    fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
+    fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
     fail_unless(msg->cn0 == 177, "incorrect value for cn0, expected 177, is %d", msg->cn0);
     fail_unless(msg->corr_spacing == 40, "incorrect value for corr_spacing, expected 40, is %d", msg->corr_spacing);
-    fail_unless(msg->doppler == 15701, "incorrect value for doppler, expected 15701, is %d", msg->doppler);
-    fail_unless(msg->doppler_std == 39, "incorrect value for doppler_std, expected 39, is %d", msg->doppler_std);
-    fail_unless(msg->lock == 14032, "incorrect value for lock, expected 14032, is %d", msg->lock);
-    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
     fail_unless(msg->nav_flags == 0, "incorrect value for nav_flags, expected 0, is %d", msg->nav_flags);
-    fail_unless(msg->pset_flags == 0, "incorrect value for pset_flags, expected 0, is %d", msg->pset_flags);
-    fail_unless(msg->recv_time == 7909447587, "incorrect value for recv_time, expected 7909447587, is %d", msg->recv_time);
-    fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
-    fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
-    fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
-    fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
-    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
-    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
+    fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
+    fail_unless(msg->pset_flags == 0, "incorrect value for pset_flags, expected 0, is %d", msg->pset_flags);
     fail_unless(msg->track_flags == 11, "incorrect value for track_flags, expected 11, is %d", msg->track_flags);
-    fail_unless(msg->uptime == 1, "incorrect value for uptime, expected 1, is %d", msg->uptime);
+    fail_unless(msg->lock == 14032, "incorrect value for lock, expected 14032, is %d", msg->lock);
+    fail_unless(msg->L.i == 1319, "incorrect value for L.i, expected 1319, is %d", msg->L.i);
+    fail_unless(msg->L.f == 169, "incorrect value for L.f, expected 169, is %d", msg->L.f);
+    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
+    // print to string
+    char test_str[1024];
+    msg_tracking_state_detailed_dep_t_to_json_str( last_sender_id, 0x11, last_len, ( msg_tracking_state_detailed_dep_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -190,31 +194,35 @@ START_TEST( test_auto_check_sbp_tracking_49 )
     msg_tracking_state_detailed_dep_t* msg = ( msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->L.f == 14, "incorrect value for L.f, expected 14, is %d", msg->L.f);
-    fail_unless(msg->L.i == 1810, "incorrect value for L.i, expected 1810, is %d", msg->L.i);
-    fail_unless(msg->P == 0, "incorrect value for P, expected 0, is %d", msg->P);
-    fail_unless(msg->P_std == 0, "incorrect value for P_std, expected 0, is %d", msg->P_std);
-    fail_unless(msg->acceleration == -32, "incorrect value for acceleration, expected -32, is %d", msg->acceleration);
     fail_unless(msg->clock_drift == 0, "incorrect value for clock_drift, expected 0, is %d", msg->clock_drift);
+    fail_unless(msg->acceleration == -32, "incorrect value for acceleration, expected -32, is %d", msg->acceleration);
+    fail_unless(msg->doppler_std == 30, "incorrect value for doppler_std, expected 30, is %d", msg->doppler_std);
+    fail_unless(msg->recv_time == 8409447265, "incorrect value for recv_time, expected 8409447265, is %d", msg->recv_time);
+    fail_unless(msg->doppler == 15667, "incorrect value for doppler, expected 15667, is %d", msg->doppler);
+    fail_unless(msg->P_std == 0, "incorrect value for P_std, expected 0, is %d", msg->P_std);
+    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
+    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
     fail_unless(msg->clock_offset == 0, "incorrect value for clock_offset, expected 0, is %d", msg->clock_offset);
+    fail_unless(msg->uptime == 1, "incorrect value for uptime, expected 1, is %d", msg->uptime);
+    fail_unless(msg->P == 0, "incorrect value for P, expected 0, is %d", msg->P);
+    fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
+    fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
+    fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
     fail_unless(msg->cn0 == 175, "incorrect value for cn0, expected 175, is %d", msg->cn0);
     fail_unless(msg->corr_spacing == 40, "incorrect value for corr_spacing, expected 40, is %d", msg->corr_spacing);
-    fail_unless(msg->doppler == 15667, "incorrect value for doppler, expected 15667, is %d", msg->doppler);
-    fail_unless(msg->doppler_std == 30, "incorrect value for doppler_std, expected 30, is %d", msg->doppler_std);
-    fail_unless(msg->lock == 14032, "incorrect value for lock, expected 14032, is %d", msg->lock);
-    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
     fail_unless(msg->nav_flags == 0, "incorrect value for nav_flags, expected 0, is %d", msg->nav_flags);
-    fail_unless(msg->pset_flags == 0, "incorrect value for pset_flags, expected 0, is %d", msg->pset_flags);
-    fail_unless(msg->recv_time == 8409447265, "incorrect value for recv_time, expected 8409447265, is %d", msg->recv_time);
-    fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
-    fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
-    fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
-    fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
-    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
-    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
+    fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
+    fail_unless(msg->pset_flags == 0, "incorrect value for pset_flags, expected 0, is %d", msg->pset_flags);
     fail_unless(msg->track_flags == 11, "incorrect value for track_flags, expected 11, is %d", msg->track_flags);
-    fail_unless(msg->uptime == 1, "incorrect value for uptime, expected 1, is %d", msg->uptime);
+    fail_unless(msg->lock == 14032, "incorrect value for lock, expected 14032, is %d", msg->lock);
+    fail_unless(msg->L.i == 1810, "incorrect value for L.i, expected 1810, is %d", msg->L.i);
+    fail_unless(msg->L.f == 14, "incorrect value for L.f, expected 14, is %d", msg->L.f);
+    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
+    // print to string
+    char test_str[1024];
+    msg_tracking_state_detailed_dep_t_to_json_str( last_sender_id, 0x11, last_len, ( msg_tracking_state_detailed_dep_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -255,31 +263,35 @@ START_TEST( test_auto_check_sbp_tracking_49 )
     msg_tracking_state_detailed_dep_t* msg = ( msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->L.f == 8, "incorrect value for L.f, expected 8, is %d", msg->L.f);
-    fail_unless(msg->L.i == 2298, "incorrect value for L.i, expected 2298, is %d", msg->L.i);
-    fail_unless(msg->P == 0, "incorrect value for P, expected 0, is %d", msg->P);
-    fail_unless(msg->P_std == 0, "incorrect value for P_std, expected 0, is %d", msg->P_std);
-    fail_unless(msg->acceleration == 27, "incorrect value for acceleration, expected 27, is %d", msg->acceleration);
     fail_unless(msg->clock_drift == 0, "incorrect value for clock_drift, expected 0, is %d", msg->clock_drift);
+    fail_unless(msg->acceleration == 27, "incorrect value for acceleration, expected 27, is %d", msg->acceleration);
+    fail_unless(msg->doppler_std == 22, "incorrect value for doppler_std, expected 22, is %d", msg->doppler_std);
+    fail_unless(msg->recv_time == 8907446923, "incorrect value for recv_time, expected 8907446923, is %d", msg->recv_time);
+    fail_unless(msg->doppler == 15683, "incorrect value for doppler, expected 15683, is %d", msg->doppler);
+    fail_unless(msg->P_std == 0, "incorrect value for P_std, expected 0, is %d", msg->P_std);
+    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
+    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
     fail_unless(msg->clock_offset == 0, "incorrect value for clock_offset, expected 0, is %d", msg->clock_offset);
+    fail_unless(msg->uptime == 2, "incorrect value for uptime, expected 2, is %d", msg->uptime);
+    fail_unless(msg->P == 0, "incorrect value for P, expected 0, is %d", msg->P);
+    fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
+    fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
+    fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
     fail_unless(msg->cn0 == 179, "incorrect value for cn0, expected 179, is %d", msg->cn0);
     fail_unless(msg->corr_spacing == 40, "incorrect value for corr_spacing, expected 40, is %d", msg->corr_spacing);
-    fail_unless(msg->doppler == 15683, "incorrect value for doppler, expected 15683, is %d", msg->doppler);
-    fail_unless(msg->doppler_std == 22, "incorrect value for doppler_std, expected 22, is %d", msg->doppler_std);
-    fail_unless(msg->lock == 14032, "incorrect value for lock, expected 14032, is %d", msg->lock);
-    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
     fail_unless(msg->nav_flags == 0, "incorrect value for nav_flags, expected 0, is %d", msg->nav_flags);
-    fail_unless(msg->pset_flags == 2, "incorrect value for pset_flags, expected 2, is %d", msg->pset_flags);
-    fail_unless(msg->recv_time == 8907446923, "incorrect value for recv_time, expected 8907446923, is %d", msg->recv_time);
-    fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
-    fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
-    fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
-    fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
-    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
-    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
+    fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
+    fail_unless(msg->pset_flags == 2, "incorrect value for pset_flags, expected 2, is %d", msg->pset_flags);
     fail_unless(msg->track_flags == 11, "incorrect value for track_flags, expected 11, is %d", msg->track_flags);
-    fail_unless(msg->uptime == 2, "incorrect value for uptime, expected 2, is %d", msg->uptime);
+    fail_unless(msg->lock == 14032, "incorrect value for lock, expected 14032, is %d", msg->lock);
+    fail_unless(msg->L.i == 2298, "incorrect value for L.i, expected 2298, is %d", msg->L.i);
+    fail_unless(msg->L.f == 8, "incorrect value for L.f, expected 8, is %d", msg->L.f);
+    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
+    // print to string
+    char test_str[1024];
+    msg_tracking_state_detailed_dep_t_to_json_str( last_sender_id, 0x11, last_len, ( msg_tracking_state_detailed_dep_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -320,31 +332,35 @@ START_TEST( test_auto_check_sbp_tracking_49 )
     msg_tracking_state_detailed_dep_t* msg = ( msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->L.f == 125, "incorrect value for L.f, expected 125, is %d", msg->L.f);
-    fail_unless(msg->L.i == 2786, "incorrect value for L.i, expected 2786, is %d", msg->L.i);
-    fail_unless(msg->P == 0, "incorrect value for P, expected 0, is %d", msg->P);
-    fail_unless(msg->P_std == 0, "incorrect value for P_std, expected 0, is %d", msg->P_std);
-    fail_unless(msg->acceleration == -36, "incorrect value for acceleration, expected -36, is %d", msg->acceleration);
     fail_unless(msg->clock_drift == 0, "incorrect value for clock_drift, expected 0, is %d", msg->clock_drift);
+    fail_unless(msg->acceleration == -36, "incorrect value for acceleration, expected -36, is %d", msg->acceleration);
+    fail_unless(msg->doppler_std == 10, "incorrect value for doppler_std, expected 10, is %d", msg->doppler_std);
+    fail_unless(msg->recv_time == 9406446591, "incorrect value for recv_time, expected 9406446591, is %d", msg->recv_time);
+    fail_unless(msg->doppler == 15645, "incorrect value for doppler, expected 15645, is %d", msg->doppler);
+    fail_unless(msg->P_std == 0, "incorrect value for P_std, expected 0, is %d", msg->P_std);
+    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
+    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
     fail_unless(msg->clock_offset == 0, "incorrect value for clock_offset, expected 0, is %d", msg->clock_offset);
+    fail_unless(msg->uptime == 2, "incorrect value for uptime, expected 2, is %d", msg->uptime);
+    fail_unless(msg->P == 0, "incorrect value for P, expected 0, is %d", msg->P);
+    fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
+    fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
+    fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
     fail_unless(msg->cn0 == 181, "incorrect value for cn0, expected 181, is %d", msg->cn0);
     fail_unless(msg->corr_spacing == 40, "incorrect value for corr_spacing, expected 40, is %d", msg->corr_spacing);
-    fail_unless(msg->doppler == 15645, "incorrect value for doppler, expected 15645, is %d", msg->doppler);
-    fail_unless(msg->doppler_std == 10, "incorrect value for doppler_std, expected 10, is %d", msg->doppler_std);
-    fail_unless(msg->lock == 14032, "incorrect value for lock, expected 14032, is %d", msg->lock);
-    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
     fail_unless(msg->nav_flags == 0, "incorrect value for nav_flags, expected 0, is %d", msg->nav_flags);
-    fail_unless(msg->pset_flags == 3, "incorrect value for pset_flags, expected 3, is %d", msg->pset_flags);
-    fail_unless(msg->recv_time == 9406446591, "incorrect value for recv_time, expected 9406446591, is %d", msg->recv_time);
-    fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
-    fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
-    fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
-    fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
-    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
-    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
+    fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
+    fail_unless(msg->pset_flags == 3, "incorrect value for pset_flags, expected 3, is %d", msg->pset_flags);
     fail_unless(msg->track_flags == 11, "incorrect value for track_flags, expected 11, is %d", msg->track_flags);
-    fail_unless(msg->uptime == 2, "incorrect value for uptime, expected 2, is %d", msg->uptime);
+    fail_unless(msg->lock == 14032, "incorrect value for lock, expected 14032, is %d", msg->lock);
+    fail_unless(msg->L.i == 2786, "incorrect value for L.i, expected 2786, is %d", msg->L.i);
+    fail_unless(msg->L.f == 125, "incorrect value for L.f, expected 125, is %d", msg->L.f);
+    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
+    // print to string
+    char test_str[1024];
+    msg_tracking_state_detailed_dep_t_to_json_str( last_sender_id, 0x11, last_len, ( msg_tracking_state_detailed_dep_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -385,31 +401,35 @@ START_TEST( test_auto_check_sbp_tracking_49 )
     msg_tracking_state_detailed_dep_t* msg = ( msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->L.f == 64, "incorrect value for L.f, expected 64, is %d", msg->L.f);
-    fail_unless(msg->L.i == 3275, "incorrect value for L.i, expected 3275, is %d", msg->L.i);
-    fail_unless(msg->P == 0, "incorrect value for P, expected 0, is %d", msg->P);
-    fail_unless(msg->P_std == 0, "incorrect value for P_std, expected 0, is %d", msg->P_std);
-    fail_unless(msg->acceleration == 2, "incorrect value for acceleration, expected 2, is %d", msg->acceleration);
     fail_unless(msg->clock_drift == 0, "incorrect value for clock_drift, expected 0, is %d", msg->clock_drift);
+    fail_unless(msg->acceleration == 2, "incorrect value for acceleration, expected 2, is %d", msg->acceleration);
+    fail_unless(msg->doppler_std == 4, "incorrect value for doppler_std, expected 4, is %d", msg->doppler_std);
+    fail_unless(msg->recv_time == 9906446269, "incorrect value for recv_time, expected 9906446269, is %d", msg->recv_time);
+    fail_unless(msg->doppler == 15640, "incorrect value for doppler, expected 15640, is %d", msg->doppler);
+    fail_unless(msg->P_std == 0, "incorrect value for P_std, expected 0, is %d", msg->P_std);
+    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
+    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
     fail_unless(msg->clock_offset == 0, "incorrect value for clock_offset, expected 0, is %d", msg->clock_offset);
+    fail_unless(msg->uptime == 3, "incorrect value for uptime, expected 3, is %d", msg->uptime);
+    fail_unless(msg->P == 0, "incorrect value for P, expected 0, is %d", msg->P);
+    fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
+    fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
+    fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
     fail_unless(msg->cn0 == 184, "incorrect value for cn0, expected 184, is %d", msg->cn0);
     fail_unless(msg->corr_spacing == 40, "incorrect value for corr_spacing, expected 40, is %d", msg->corr_spacing);
-    fail_unless(msg->doppler == 15640, "incorrect value for doppler, expected 15640, is %d", msg->doppler);
-    fail_unless(msg->doppler_std == 4, "incorrect value for doppler_std, expected 4, is %d", msg->doppler_std);
-    fail_unless(msg->lock == 14032, "incorrect value for lock, expected 14032, is %d", msg->lock);
-    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
     fail_unless(msg->nav_flags == 0, "incorrect value for nav_flags, expected 0, is %d", msg->nav_flags);
-    fail_unless(msg->pset_flags == 3, "incorrect value for pset_flags, expected 3, is %d", msg->pset_flags);
-    fail_unless(msg->recv_time == 9906446269, "incorrect value for recv_time, expected 9906446269, is %d", msg->recv_time);
-    fail_unless(msg->sid.code == 0, "incorrect value for sid.code, expected 0, is %d", msg->sid.code);
-    fail_unless(msg->sid.reserved == 0, "incorrect value for sid.reserved, expected 0, is %d", msg->sid.reserved);
-    fail_unless(msg->sid.sat == 15, "incorrect value for sid.sat, expected 15, is %d", msg->sid.sat);
-    fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
-    fail_unless(msg->tot.tow == 0, "incorrect value for tot.tow, expected 0, is %d", msg->tot.tow);
-    fail_unless(msg->tot.wn == 0, "incorrect value for tot.wn, expected 0, is %d", msg->tot.wn);
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
+    fail_unless(msg->sync_flags == 1, "incorrect value for sync_flags, expected 1, is %d", msg->sync_flags);
+    fail_unless(msg->pset_flags == 3, "incorrect value for pset_flags, expected 3, is %d", msg->pset_flags);
     fail_unless(msg->track_flags == 11, "incorrect value for track_flags, expected 11, is %d", msg->track_flags);
-    fail_unless(msg->uptime == 3, "incorrect value for uptime, expected 3, is %d", msg->uptime);
+    fail_unless(msg->lock == 14032, "incorrect value for lock, expected 14032, is %d", msg->lock);
+    fail_unless(msg->L.i == 3275, "incorrect value for L.i, expected 3275, is %d", msg->L.i);
+    fail_unless(msg->L.f == 64, "incorrect value for L.f, expected 64, is %d", msg->L.f);
+    fail_unless(msg->misc_flags == 9, "incorrect value for misc_flags, expected 9, is %d", msg->misc_flags);
+    // print to string
+    char test_str[1024];
+    msg_tracking_state_detailed_dep_t_to_json_str( last_sender_id, 0x11, last_len, ( msg_tracking_state_detailed_dep_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

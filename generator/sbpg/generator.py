@@ -130,6 +130,7 @@ def main():
           java.render_source(output_dir, parsed)
       if args.c:
         c.render_version(output_dir, args.release[0])
+        c.render_c2json(output_dir, all_specs)
       elif args.haskell:
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
         hs.render_cabal(output_dir, parsed, args.release[0])

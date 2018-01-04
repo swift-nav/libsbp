@@ -37,7 +37,7 @@ typedef struct __attribute__((packed)) {
   u8 level;    /**< Logging level */
   char text[0];  /**< Human-readable string */
 } msg_log_t;
-
+int msg_log_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_log_t * in, uint64_t max_len, char* out_str);
 
 /** Wrapper for FWD a separate stream of information over SBP
  *
@@ -55,7 +55,7 @@ typedef struct __attribute__((packed)) {
   u8 protocol;       /**< protocol identifier */
   char fwd_payload[0]; /**< variable length wrapped binary message */
 } msg_fwd_t;
-
+int msg_fwd_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_fwd_t * in, uint64_t max_len, char* out_str);
 
 /** Tweet
  *
@@ -65,7 +65,7 @@ typedef struct __attribute__((packed)) {
 typedef struct __attribute__((packed)) {
   char tweet[140]; /**< Human-readable string */
 } msg_tweet_t;
-
+int msg_tweet_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_tweet_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -75,7 +75,7 @@ typedef struct __attribute__((packed)) {
 typedef struct __attribute__((packed)) {
   char text[0]; /**< Human-readable string */
 } msg_print_dep_t;
-
+int msg_print_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_print_dep_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

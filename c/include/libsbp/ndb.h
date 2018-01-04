@@ -54,7 +54,7 @@ number, valid only if data_source is NDB_DS_SBP. Reserved in case
 of other data_source.
  */
 } msg_ndb_event_t;
-
+int msg_ndb_event_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ndb_event_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

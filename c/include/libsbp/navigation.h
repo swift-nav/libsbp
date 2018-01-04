@@ -67,7 +67,7 @@ from -500000 to 500000)
  [ns] */
   u8 flags;          /**< Status flags (reserved) */
 } msg_gps_time_t;
-
+int msg_gps_time_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_gps_time_t * in, uint64_t max_len, char* out_str);
 
 /** UTC Time
  *
@@ -86,7 +86,7 @@ typedef struct __attribute__((packed)) {
   u8 seconds;    /**< seconds of minute (range 0-60) rounded down [seconds] */
   u32 ns;         /**< nanoseconds of second (range 0-999999999) [nanoseconds] */
 } msg_utc_time_t;
-
+int msg_utc_time_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_utc_time_t * in, uint64_t max_len, char* out_str);
 
 /** Dilution of Precision
  *
@@ -105,7 +105,7 @@ typedef struct __attribute__((packed)) {
   u16 vdop;     /**< Vertical Dilution of Precision [0.01] */
   u8 flags;    /**< Indicates the position solution with which the DOPS message corresponds */
 } msg_dops_t;
-
+int msg_dops_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_dops_t * in, uint64_t max_len, char* out_str);
 
 /** Single-point position in ECEF
  *
@@ -128,7 +128,7 @@ typedef struct __attribute__((packed)) {
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_pos_ecef_t;
-
+int msg_pos_ecef_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_pos_ecef_t * in, uint64_t max_len, char* out_str);
 
 /** Single-point position in ECEF
  *
@@ -157,7 +157,7 @@ typedef struct __attribute__((packed)) {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_pos_ecef_cov_t;
-
+int msg_pos_ecef_cov_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_pos_ecef_cov_t * in, uint64_t max_len, char* out_str);
 
 /** Geodetic Position
  *
@@ -181,7 +181,7 @@ typedef struct __attribute__((packed)) {
   u8 n_sats;        /**< Number of satellites used in solution. */
   u8 flags;         /**< Status flags */
 } msg_pos_llh_t;
-
+int msg_pos_llh_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_pos_llh_t * in, uint64_t max_len, char* out_str);
 
 /** Geodetic Position
  *
@@ -209,7 +209,7 @@ typedef struct __attribute__((packed)) {
   u8 n_sats;     /**< Number of satellites used in solution. */
   u8 flags;      /**< Status flags */
 } msg_pos_llh_cov_t;
-
+int msg_pos_llh_cov_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_pos_llh_cov_t * in, uint64_t max_len, char* out_str);
 
 /** Baseline Position in ECEF
  *
@@ -229,7 +229,7 @@ typedef struct __attribute__((packed)) {
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_baseline_ecef_t;
-
+int msg_baseline_ecef_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_baseline_ecef_t * in, uint64_t max_len, char* out_str);
 
 /** Baseline in NED
  *
@@ -251,7 +251,7 @@ typedef struct __attribute__((packed)) {
   u8 n_sats;        /**< Number of satellites used in solution */
   u8 flags;         /**< Status flags */
 } msg_baseline_ned_t;
-
+int msg_baseline_ned_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_baseline_ned_t * in, uint64_t max_len, char* out_str);
 
 /** Velocity in ECEF
  *
@@ -270,7 +270,7 @@ typedef struct __attribute__((packed)) {
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_vel_ecef_t;
-
+int msg_vel_ecef_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_vel_ecef_t * in, uint64_t max_len, char* out_str);
 
 /** Velocity in ECEF
  *
@@ -293,7 +293,7 @@ typedef struct __attribute__((packed)) {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_vel_ecef_cov_t;
-
+int msg_vel_ecef_cov_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_vel_ecef_cov_t * in, uint64_t max_len, char* out_str);
 
 /** Velocity in NED
  *
@@ -315,7 +315,7 @@ typedef struct __attribute__((packed)) {
   u8 n_sats;        /**< Number of satellites used in solution */
   u8 flags;         /**< Status flags */
 } msg_vel_ned_t;
-
+int msg_vel_ned_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_vel_ned_t * in, uint64_t max_len, char* out_str);
 
 /** Velocity in NED
  *
@@ -341,7 +341,7 @@ typedef struct __attribute__((packed)) {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_vel_ned_cov_t;
-
+int msg_vel_ned_cov_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_vel_ned_cov_t * in, uint64_t max_len, char* out_str);
 
 /** Velocity in User Frame
  *
@@ -368,7 +368,7 @@ typedef struct __attribute__((packed)) {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_vel_body_t;
-
+int msg_vel_body_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_vel_body_t * in, uint64_t max_len, char* out_str);
 
 /** Age of corrections
  *
@@ -380,7 +380,7 @@ typedef struct __attribute__((packed)) {
   u32 tow;    /**< GPS Time of Week [ms] */
   u16 age;    /**< Age of the corrections (0xFFFF indicates invalid) [deciseconds] */
 } msg_age_corrections_t;
-
+int msg_age_corrections_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_age_corrections_t * in, uint64_t max_len, char* out_str);
 
 /** GPS Time (v1.0)
  *
@@ -407,7 +407,7 @@ from -500000 to 500000)
  [ns] */
   u8 flags;          /**< Status flags (reserved) */
 } msg_gps_time_dep_a_t;
-
+int msg_gps_time_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_gps_time_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Dilution of Precision
  *
@@ -424,7 +424,7 @@ typedef struct __attribute__((packed)) {
   u16 hdop;    /**< Horizontal Dilution of Precision [0.01] */
   u16 vdop;    /**< Vertical Dilution of Precision [0.01] */
 } msg_dops_dep_a_t;
-
+int msg_dops_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_dops_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Single-point position in ECEF
  *
@@ -449,7 +449,7 @@ to 0.
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_pos_ecef_dep_a_t;
-
+int msg_pos_ecef_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_pos_ecef_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Geodetic Position
  *
@@ -477,7 +477,7 @@ implemented). Defaults to 0.
   u8 n_sats;        /**< Number of satellites used in solution. */
   u8 flags;         /**< Status flags */
 } msg_pos_llh_dep_a_t;
-
+int msg_pos_llh_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_pos_llh_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Baseline Position in ECEF
  *
@@ -498,7 +498,7 @@ typedef struct __attribute__((packed)) {
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_baseline_ecef_dep_a_t;
-
+int msg_baseline_ecef_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_baseline_ecef_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Baseline in NED
  *
@@ -524,7 +524,7 @@ implemented). Defaults to 0.
   u8 n_sats;        /**< Number of satellites used in solution */
   u8 flags;         /**< Status flags */
 } msg_baseline_ned_dep_a_t;
-
+int msg_baseline_ned_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_baseline_ned_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Velocity in ECEF
  *
@@ -544,7 +544,7 @@ to 0.
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags (reserved) */
 } msg_vel_ecef_dep_a_t;
-
+int msg_vel_ecef_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_vel_ecef_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Velocity in NED
  *
@@ -568,7 +568,7 @@ implemented). Defaults to 0.
   u8 n_sats;        /**< Number of satellites used in solution */
   u8 flags;         /**< Status flags (reserved) */
 } msg_vel_ned_dep_a_t;
-
+int msg_vel_ned_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_vel_ned_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Heading relative to True North
  *
@@ -583,7 +583,7 @@ typedef struct __attribute__((packed)) {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_baseline_heading_dep_a_t;
-
+int msg_baseline_heading_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_baseline_heading_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

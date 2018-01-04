@@ -42,7 +42,7 @@ from -500000 to 500000)
   u8 flags;          /**< Flags */
   u8 pin;            /**< Pin number.  0..9 = DEBUG0..9. */
 } msg_ext_event_t;
-
+int msg_ext_event_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ext_event_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

@@ -126,6 +126,10 @@ START_TEST( test_auto_check_sbp_system_36 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->flags == 12800, "incorrect value for flags, expected 12800, is %d", msg->flags);
+    // print to string
+    char test_str[1024];
+    msg_heartbeat_t_to_json_str( last_sender_id, 0xffff, last_len, ( msg_heartbeat_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

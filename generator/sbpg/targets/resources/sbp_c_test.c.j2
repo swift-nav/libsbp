@@ -93,7 +93,7 @@ START_TEST( test_(((s.suite_name))) )
     ((*- elif value is arrayType *))
     ((*- for ff in value *))((( compare_value( (((prefix))) + '[' + (((loop.index0|toStr))) + ']', (((ff))) ) )))((*- endfor *))
     ((*- elif value is dictType *))
-    ((*- for k in (((value|sorted))) *))((( compare_value( (((prefix))) + '.' + (((k))), (((value[k]))) ) )))((*- endfor *))
+    ((*- for k in value *))((( compare_value( (((prefix))) + '.' + (((k))), (((value[k]))) ) )))((*- endfor *))
     ((*- elif value is floatType *))
     fail_unless((msg->(((prefix)))*100 - (((value)))*100) < 0.05, "incorrect value for (((prefix))), expected (((value))), is %f", msg->(((prefix))));
     ((*- else *))
@@ -142,7 +142,11 @@ START_TEST( test_(((s.suite_name))) )
     (((t.msg_type_name|convert)))* msg = ( (((t.msg_type_name|convert))) *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
+    ((*- for f in t.fields *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
+    // print to string
+    char test_str[1024];
+    (((t.msg_type_name|convert)))_to_json_str( last_sender_id, (((t.msg_type))), last_len, ( (((t.msg_type_name|convert)))* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
     ((*- endif *))
   }
   ((*- endfor *))
