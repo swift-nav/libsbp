@@ -407,6 +407,10 @@ s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
   s8 ret = SBP_OK_CALLBACK_UNDEFINED;
   sbp_msg_callbacks_node_t *node;
   for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
+    if (node->msg_type == 0) {
+      (*node->cb)(sender_id, msg_len, payload, node->context);
+      ret = SBP_OK_CALLBACK_EXECUTED;
+    }
     if (node->msg_type == msg_type) {
       (*node->cb)(sender_id, msg_len, payload, node->context);
       ret = SBP_OK_CALLBACK_EXECUTED;

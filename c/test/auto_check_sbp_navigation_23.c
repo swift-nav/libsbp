@@ -125,17 +125,17 @@ START_TEST( test_auto_check_sbp_navigation_23 )
     msg_vel_ned_cov_t* msg = ( msg_vel_ned_cov_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->cov_d_d == 1, "incorrect value for cov_d_d, expected 1, is %d", msg->cov_d_d);
-    fail_unless(msg->n == 1, "incorrect value for n, expected 1, is %d", msg->n);
-    fail_unless(msg->cov_e_d == 1, "incorrect value for cov_e_d, expected 1, is %d", msg->cov_e_d);
-    fail_unless(msg->cov_e_e == 1, "incorrect value for cov_e_e, expected 1, is %d", msg->cov_e_e);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->e == 1, "incorrect value for e, expected 1, is %d", msg->e);
+    fail_unless(msg->cov_n_e == 1, "incorrect value for cov_n_e, expected 1, is %d", msg->cov_n_e);
     fail_unless(msg->tow == 100, "incorrect value for tow, expected 100, is %d", msg->tow);
     fail_unless(msg->n_sats == 10, "incorrect value for n_sats, expected 10, is %d", msg->n_sats);
-    fail_unless(msg->cov_n_n == 1, "incorrect value for cov_n_n, expected 1, is %d", msg->cov_n_n);
-    fail_unless(msg->cov_n_e == 1, "incorrect value for cov_n_e, expected 1, is %d", msg->cov_n_e);
     fail_unless(msg->cov_n_d == 1, "incorrect value for cov_n_d, expected 1, is %d", msg->cov_n_d);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->cov_n_n == 1, "incorrect value for cov_n_n, expected 1, is %d", msg->cov_n_n);
+    fail_unless(msg->e == 1, "incorrect value for e, expected 1, is %d", msg->e);
+    fail_unless(msg->cov_e_d == 1, "incorrect value for cov_e_d, expected 1, is %d", msg->cov_e_d);
+    fail_unless(msg->cov_e_e == 1, "incorrect value for cov_e_e, expected 1, is %d", msg->cov_e_e);
+    fail_unless(msg->cov_d_d == 1, "incorrect value for cov_d_d, expected 1, is %d", msg->cov_d_d);
+    fail_unless(msg->n == 1, "incorrect value for n, expected 1, is %d", msg->n);
     // print to string
     char test_str[1024];
     msg_vel_ned_cov_t_to_json_str( last_sender_id, 0x212, last_len, ( msg_vel_ned_cov_t* ) msg, 1024, test_str);
