@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <libsbp/sbp.h>
 #include "libsbp/edc.h"
 #include "libsbp/sbp.h"
+#include "libsbp/sbp2json.h"
 
 #define SBP_PREAMBLE 0x55
 

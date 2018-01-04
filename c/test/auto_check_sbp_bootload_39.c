@@ -125,8 +125,8 @@ START_TEST( test_auto_check_sbp_bootload_39 )
     msg_bootloader_handshake_resp_t* msg = ( msg_bootloader_handshake_resp_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(strstr(msg->version, ((char []){(char)118,(char)49,(char)46,(char)50,(char)10,0})) != NULL, "incorrect value for msg->version, expected string '%s', is '%s'", ((char []){(char)118,(char)49,(char)46,(char)50,(char)10,0}), msg->version);
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(strstr(msg->version, ((char []){(char)118,(char)49,(char)46,(char)50,(char)10,0})) != NULL, "incorrect value for msg->version, expected string '%s', is '%s'", ((char []){(char)118,(char)49,(char)46,(char)50,(char)10,0}), msg->version);
     // print to string
     char test_str[1024];
     msg_bootloader_handshake_resp_t_to_json_str( last_sender_id, 0xb4, last_len, ( msg_bootloader_handshake_resp_t* ) msg, 1024, test_str);

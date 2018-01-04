@@ -130,10 +130,10 @@ START_TEST( test_auto_check_sbp_orientation_29 )
     fail_unless(msg->x == 7, "incorrect value for x, expected 7, is %d", msg->x);
     fail_unless(msg->y == 8, "incorrect value for y, expected 8, is %d", msg->y);
     fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->acc_w == 3, "incorrect value for acc_w, expected 3, is %d", msg->acc_w);
     fail_unless(msg->acc_x == 4, "incorrect value for acc_x, expected 4, is %d", msg->acc_x);
     fail_unless(msg->acc_y == 8, "incorrect value for acc_y, expected 8, is %d", msg->acc_y);
     fail_unless(msg->acc_z == 3, "incorrect value for acc_z, expected 3, is %d", msg->acc_z);
-    fail_unless(msg->acc_w == 3, "incorrect value for acc_w, expected 3, is %d", msg->acc_w);
     fail_unless(msg->tow == 0, "incorrect value for tow, expected 0, is %d", msg->tow);
     // print to string
     char test_str[1024];

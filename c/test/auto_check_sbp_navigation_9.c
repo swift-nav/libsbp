@@ -126,10 +126,10 @@ START_TEST( test_auto_check_sbp_navigation_9 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->hdop == 160, "incorrect value for hdop, expected 160, is %d", msg->hdop);
-    fail_unless(msg->pdop == 190, "incorrect value for pdop, expected 190, is %d", msg->pdop);
     fail_unless(msg->vdop == 150, "incorrect value for vdop, expected 150, is %d", msg->vdop);
     fail_unless(msg->tdop == 170, "incorrect value for tdop, expected 170, is %d", msg->tdop);
     fail_unless(msg->gdop == 180, "incorrect value for gdop, expected 180, is %d", msg->gdop);
+    fail_unless(msg->pdop == 190, "incorrect value for pdop, expected 190, is %d", msg->pdop);
     fail_unless(msg->tow == 2568200, "incorrect value for tow, expected 2568200, is %d", msg->tow);
     // print to string
     char test_str[1024];
@@ -176,10 +176,10 @@ START_TEST( test_auto_check_sbp_navigation_9 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->hdop == 160, "incorrect value for hdop, expected 160, is %d", msg->hdop);
-    fail_unless(msg->pdop == 190, "incorrect value for pdop, expected 190, is %d", msg->pdop);
     fail_unless(msg->vdop == 150, "incorrect value for vdop, expected 150, is %d", msg->vdop);
     fail_unless(msg->tdop == 170, "incorrect value for tdop, expected 170, is %d", msg->tdop);
     fail_unless(msg->gdop == 180, "incorrect value for gdop, expected 180, is %d", msg->gdop);
+    fail_unless(msg->pdop == 190, "incorrect value for pdop, expected 190, is %d", msg->pdop);
     fail_unless(msg->tow == 2569200, "incorrect value for tow, expected 2569200, is %d", msg->tow);
     // print to string
     char test_str[1024];
@@ -226,10 +226,10 @@ START_TEST( test_auto_check_sbp_navigation_9 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->hdop == 160, "incorrect value for hdop, expected 160, is %d", msg->hdop);
-    fail_unless(msg->pdop == 190, "incorrect value for pdop, expected 190, is %d", msg->pdop);
     fail_unless(msg->vdop == 150, "incorrect value for vdop, expected 150, is %d", msg->vdop);
     fail_unless(msg->tdop == 170, "incorrect value for tdop, expected 170, is %d", msg->tdop);
     fail_unless(msg->gdop == 180, "incorrect value for gdop, expected 180, is %d", msg->gdop);
+    fail_unless(msg->pdop == 190, "incorrect value for pdop, expected 190, is %d", msg->pdop);
     fail_unless(msg->tow == 2570200, "incorrect value for tow, expected 2570200, is %d", msg->tow);
     // print to string
     char test_str[1024];
