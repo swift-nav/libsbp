@@ -42,6 +42,7 @@ library
                      , SwiftNav.SBP.Observation
                      , SwiftNav.SBP.Orientation
                      , SwiftNav.SBP.Piksi
+                     , SwiftNav.SBP.Sbas
                      , SwiftNav.SBP.Settings
                      , SwiftNav.SBP.System
                      , SwiftNav.SBP.Tracking

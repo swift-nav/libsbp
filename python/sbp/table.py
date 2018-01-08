@@ -33,6 +33,7 @@ from . import mag as mag
 from . import ndb as ndb
 from . import vehicle as vehicle
 from . import orientation as orientation
+from . import sbas as sbas
 
 import warnings
 
@@ -54,6 +55,7 @@ _SBP_TABLE = dict(acq.msg_classes.items()
                   + ndb.msg_classes.items()
                   + vehicle.msg_classes.items()
                   + orientation.msg_classes.items()
+                  + sbas.msg_classes.items()
                   )
 
 class InvalidSBPMessageType(NotImplementedError):
