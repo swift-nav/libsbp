@@ -214,7 +214,9 @@ class MsgTrackingStateDetailedDepA(SBP):
   of its fields.
 
   
-  Deprecated
+  The tracking message returns a set tracking channel parameters for a
+single tracking channel useful for debugging issues.
+
 
   Parameters
   ----------

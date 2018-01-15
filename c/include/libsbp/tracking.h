@@ -29,7 +29,8 @@
 
 /** Detailed signal tracking channel states. DEPRECATED.
  *
-* Deprecated
+ * The tracking message returns a set tracking channel parameters for a
+ * single tracking channel useful for debugging issues.
  */
 #define SBP_MSG_TRACKING_STATE_DETAILED_DEP_A 0x0021
 typedef struct __attribute__((packed)) {

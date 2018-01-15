@@ -41,7 +41,8 @@ msgTrackingStateDetailedDepA = 0x0021
 
 -- | SBP class for message MSG_TRACKING_STATE_DETAILED_DEP_A (0x0021).
 --
--- Deprecated
+-- The tracking message returns a set tracking channel parameters for a single
+-- tracking channel useful for debugging issues.
 data MsgTrackingStateDetailedDepA = MsgTrackingStateDetailedDepA
   { _msgTrackingStateDetailedDepA_recv_time  :: !Word64
     -- ^ Receiver clock time.
