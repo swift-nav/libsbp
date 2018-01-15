@@ -30,7 +30,7 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
-* Depecated */
+* Deprecated */
 
 public class MsgTrackingStateDetailedDepA extends SBPMessage {
     public static final int TYPE = 0x0021;

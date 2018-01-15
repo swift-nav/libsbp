@@ -41,7 +41,7 @@ msgTrackingStateDetailedDepA = 0x0021
 
 -- | SBP class for message MSG_TRACKING_STATE_DETAILED_DEP_A (0x0021).
 --
--- Depecated
+-- Deprecated
 data MsgTrackingStateDetailedDepA = MsgTrackingStateDetailedDepA
   { _msgTrackingStateDetailedDepA_recv_time  :: !Word64
     -- ^ Receiver clock time.

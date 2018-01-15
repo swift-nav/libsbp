@@ -20,9 +20,9 @@ definitions:
 
  - MSG_TRACKING_STATE_DETAILED_DEP_A:
     id: 0x0021
-    short_desc: Deprecated
+    short_desc: Detailed signal tracking channel states. DEPRECATED.
     public: False
-    desc: Depecated
+    desc: Deprecated
     fields:
         - recv_time:
             type: u64

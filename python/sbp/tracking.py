@@ -214,7 +214,7 @@ class MsgTrackingStateDetailedDepA(SBP):
   of its fields.
 
   
-  Depecated
+  Deprecated
 
   Parameters
   ----------

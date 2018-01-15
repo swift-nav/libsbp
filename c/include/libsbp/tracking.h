@@ -27,9 +27,9 @@
 #include "gnss.h"
 
 
-/** Deprecated
+/** Detailed signal tracking channel states. DEPRECATED.
  *
-* Depecated
+* Deprecated
  */
 #define SBP_MSG_TRACKING_STATE_DETAILED_DEP_A 0x0021
 typedef struct __attribute__((packed)) {
