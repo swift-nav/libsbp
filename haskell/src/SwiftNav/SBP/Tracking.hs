@@ -36,115 +36,114 @@ import SwiftNav.SBP.Gnss
 {-# ANN module ("HLint: ignore Use newtype instead of data"::String) #-}
 
 
-msgTrackingStateDetailed :: Word16
-msgTrackingStateDetailed = 0x0021
+msgTrackingStateDetailedDepA :: Word16
+msgTrackingStateDetailedDepA = 0x0021
 
--- | SBP class for message MSG_TRACKING_STATE_DETAILED (0x0021).
+-- | SBP class for message MSG_TRACKING_STATE_DETAILED_DEP_A (0x0021).
 --
--- The tracking message returns a set tracking channel parameters for a single
--- tracking channel useful for debugging issues.
-data MsgTrackingStateDetailed = MsgTrackingStateDetailed
-  { _msgTrackingStateDetailed_recv_time  :: !Word64
+-- Depecated
+data MsgTrackingStateDetailedDepA = MsgTrackingStateDetailedDepA
+  { _msgTrackingStateDetailedDepA_recv_time  :: !Word64
     -- ^ Receiver clock time.
-  , _msgTrackingStateDetailed_tot        :: !GpsTime
+  , _msgTrackingStateDetailedDepA_tot        :: !GpsTime
     -- ^ Time of transmission of signal from satellite. TOW only valid when TOW
     -- status is decoded or propagated. WN only valid when week number valid
     -- flag is set.
-  , _msgTrackingStateDetailed_P          :: !Word32
+  , _msgTrackingStateDetailedDepA_P          :: !Word32
     -- ^ Pseudorange observation. Valid only when pseudorange valid flag is set.
-  , _msgTrackingStateDetailed_P_std      :: !Word16
+  , _msgTrackingStateDetailedDepA_P_std      :: !Word16
     -- ^ Pseudorange observation standard deviation. Valid only when pseudorange
     -- valid flag is set.
-  , _msgTrackingStateDetailed_L          :: !CarrierPhase
+  , _msgTrackingStateDetailedDepA_L          :: !CarrierPhase
     -- ^ Carrier phase observation with typical sign convention. Valid only when
     -- PLL pessimistic lock is achieved.
-  , _msgTrackingStateDetailed_cn0        :: !Word8
+  , _msgTrackingStateDetailedDepA_cn0        :: !Word8
     -- ^ Carrier-to-Noise density
-  , _msgTrackingStateDetailed_lock       :: !Word16
+  , _msgTrackingStateDetailedDepA_lock       :: !Word16
     -- ^ Lock time. It is encoded according to DF402 from the RTCM 10403.2
     -- Amendment 2 specification. Valid values range from 0 to 15.
-  , _msgTrackingStateDetailed_sid        :: !GnssSignal
+  , _msgTrackingStateDetailedDepA_sid        :: !GnssSignal
     -- ^ GNSS signal identifier.
-  , _msgTrackingStateDetailed_doppler    :: !Int32
+  , _msgTrackingStateDetailedDepA_doppler    :: !Int32
     -- ^ Carrier Doppler frequency.
-  , _msgTrackingStateDetailed_doppler_std :: !Word16
+  , _msgTrackingStateDetailedDepA_doppler_std :: !Word16
     -- ^ Carrier Doppler frequency standard deviation.
-  , _msgTrackingStateDetailed_uptime     :: !Word32
+  , _msgTrackingStateDetailedDepA_uptime     :: !Word32
     -- ^ Number of seconds of continuous tracking. Specifies how much time signal
     -- is in continuous track.
-  , _msgTrackingStateDetailed_clock_offset :: !Int16
+  , _msgTrackingStateDetailedDepA_clock_offset :: !Int16
     -- ^ TCXO clock offset. Valid only when valid clock valid flag is set.
-  , _msgTrackingStateDetailed_clock_drift :: !Int16
+  , _msgTrackingStateDetailedDepA_clock_drift :: !Int16
     -- ^ TCXO clock drift. Valid only when valid clock valid flag is set.
-  , _msgTrackingStateDetailed_corr_spacing :: !Word16
+  , _msgTrackingStateDetailedDepA_corr_spacing :: !Word16
     -- ^ Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
-  , _msgTrackingStateDetailed_acceleration :: !Int8
+  , _msgTrackingStateDetailedDepA_acceleration :: !Int8
     -- ^ Acceleration. Valid only when acceleration valid flag is set.
-  , _msgTrackingStateDetailed_sync_flags :: !Word8
+  , _msgTrackingStateDetailedDepA_sync_flags :: !Word8
     -- ^ Synchronization status flags.
-  , _msgTrackingStateDetailed_tow_flags  :: !Word8
+  , _msgTrackingStateDetailedDepA_tow_flags  :: !Word8
     -- ^ TOW status flags.
-  , _msgTrackingStateDetailed_track_flags :: !Word8
+  , _msgTrackingStateDetailedDepA_track_flags :: !Word8
     -- ^ Tracking loop status flags.
-  , _msgTrackingStateDetailed_nav_flags  :: !Word8
+  , _msgTrackingStateDetailedDepA_nav_flags  :: !Word8
     -- ^ Navigation data status flags.
-  , _msgTrackingStateDetailed_pset_flags :: !Word8
+  , _msgTrackingStateDetailedDepA_pset_flags :: !Word8
     -- ^ Parameters sets flags.
-  , _msgTrackingStateDetailed_misc_flags :: !Word8
+  , _msgTrackingStateDetailedDepA_misc_flags :: !Word8
     -- ^ Miscellaneous flags.
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgTrackingStateDetailed where
+instance Binary MsgTrackingStateDetailedDepA where
   get = do
-    _msgTrackingStateDetailed_recv_time <- getWord64le
-    _msgTrackingStateDetailed_tot <- get
-    _msgTrackingStateDetailed_P <- getWord32le
-    _msgTrackingStateDetailed_P_std <- getWord16le
-    _msgTrackingStateDetailed_L <- get
-    _msgTrackingStateDetailed_cn0 <- getWord8
-    _msgTrackingStateDetailed_lock <- getWord16le
-    _msgTrackingStateDetailed_sid <- get
-    _msgTrackingStateDetailed_doppler <- fromIntegral <$> getWord32le
-    _msgTrackingStateDetailed_doppler_std <- getWord16le
-    _msgTrackingStateDetailed_uptime <- getWord32le
-    _msgTrackingStateDetailed_clock_offset <- fromIntegral <$> getWord16le
-    _msgTrackingStateDetailed_clock_drift <- fromIntegral <$> getWord16le
-    _msgTrackingStateDetailed_corr_spacing <- getWord16le
-    _msgTrackingStateDetailed_acceleration <- fromIntegral <$> getWord8
-    _msgTrackingStateDetailed_sync_flags <- getWord8
-    _msgTrackingStateDetailed_tow_flags <- getWord8
-    _msgTrackingStateDetailed_track_flags <- getWord8
-    _msgTrackingStateDetailed_nav_flags <- getWord8
-    _msgTrackingStateDetailed_pset_flags <- getWord8
-    _msgTrackingStateDetailed_misc_flags <- getWord8
-    pure MsgTrackingStateDetailed {..}
+    _msgTrackingStateDetailedDepA_recv_time <- getWord64le
+    _msgTrackingStateDetailedDepA_tot <- get
+    _msgTrackingStateDetailedDepA_P <- getWord32le
+    _msgTrackingStateDetailedDepA_P_std <- getWord16le
+    _msgTrackingStateDetailedDepA_L <- get
+    _msgTrackingStateDetailedDepA_cn0 <- getWord8
+    _msgTrackingStateDetailedDepA_lock <- getWord16le
+    _msgTrackingStateDetailedDepA_sid <- get
+    _msgTrackingStateDetailedDepA_doppler <- fromIntegral <$> getWord32le
+    _msgTrackingStateDetailedDepA_doppler_std <- getWord16le
+    _msgTrackingStateDetailedDepA_uptime <- getWord32le
+    _msgTrackingStateDetailedDepA_clock_offset <- fromIntegral <$> getWord16le
+    _msgTrackingStateDetailedDepA_clock_drift <- fromIntegral <$> getWord16le
+    _msgTrackingStateDetailedDepA_corr_spacing <- getWord16le
+    _msgTrackingStateDetailedDepA_acceleration <- fromIntegral <$> getWord8
+    _msgTrackingStateDetailedDepA_sync_flags <- getWord8
+    _msgTrackingStateDetailedDepA_tow_flags <- getWord8
+    _msgTrackingStateDetailedDepA_track_flags <- getWord8
+    _msgTrackingStateDetailedDepA_nav_flags <- getWord8
+    _msgTrackingStateDetailedDepA_pset_flags <- getWord8
+    _msgTrackingStateDetailedDepA_misc_flags <- getWord8
+    pure MsgTrackingStateDetailedDepA {..}
 
-  put MsgTrackingStateDetailed {..} = do
-    putWord64le _msgTrackingStateDetailed_recv_time
-    put _msgTrackingStateDetailed_tot
-    putWord32le _msgTrackingStateDetailed_P
-    putWord16le _msgTrackingStateDetailed_P_std
-    put _msgTrackingStateDetailed_L
-    putWord8 _msgTrackingStateDetailed_cn0
-    putWord16le _msgTrackingStateDetailed_lock
-    put _msgTrackingStateDetailed_sid
-    putWord32le $ fromIntegral _msgTrackingStateDetailed_doppler
-    putWord16le _msgTrackingStateDetailed_doppler_std
-    putWord32le _msgTrackingStateDetailed_uptime
-    putWord16le $ fromIntegral _msgTrackingStateDetailed_clock_offset
-    putWord16le $ fromIntegral _msgTrackingStateDetailed_clock_drift
-    putWord16le _msgTrackingStateDetailed_corr_spacing
-    putWord8 $ fromIntegral _msgTrackingStateDetailed_acceleration
-    putWord8 _msgTrackingStateDetailed_sync_flags
-    putWord8 _msgTrackingStateDetailed_tow_flags
-    putWord8 _msgTrackingStateDetailed_track_flags
-    putWord8 _msgTrackingStateDetailed_nav_flags
-    putWord8 _msgTrackingStateDetailed_pset_flags
-    putWord8 _msgTrackingStateDetailed_misc_flags
+  put MsgTrackingStateDetailedDepA {..} = do
+    putWord64le _msgTrackingStateDetailedDepA_recv_time
+    put _msgTrackingStateDetailedDepA_tot
+    putWord32le _msgTrackingStateDetailedDepA_P
+    putWord16le _msgTrackingStateDetailedDepA_P_std
+    put _msgTrackingStateDetailedDepA_L
+    putWord8 _msgTrackingStateDetailedDepA_cn0
+    putWord16le _msgTrackingStateDetailedDepA_lock
+    put _msgTrackingStateDetailedDepA_sid
+    putWord32le $ fromIntegral _msgTrackingStateDetailedDepA_doppler
+    putWord16le _msgTrackingStateDetailedDepA_doppler_std
+    putWord32le _msgTrackingStateDetailedDepA_uptime
+    putWord16le $ fromIntegral _msgTrackingStateDetailedDepA_clock_offset
+    putWord16le $ fromIntegral _msgTrackingStateDetailedDepA_clock_drift
+    putWord16le _msgTrackingStateDetailedDepA_corr_spacing
+    putWord8 $ fromIntegral _msgTrackingStateDetailedDepA_acceleration
+    putWord8 _msgTrackingStateDetailedDepA_sync_flags
+    putWord8 _msgTrackingStateDetailedDepA_tow_flags
+    putWord8 _msgTrackingStateDetailedDepA_track_flags
+    putWord8 _msgTrackingStateDetailedDepA_nav_flags
+    putWord8 _msgTrackingStateDetailedDepA_pset_flags
+    putWord8 _msgTrackingStateDetailedDepA_misc_flags
 
-$(makeSBP 'msgTrackingStateDetailed ''MsgTrackingStateDetailed)
-$(makeJSON "_msgTrackingStateDetailed_" ''MsgTrackingStateDetailed)
-$(makeLenses ''MsgTrackingStateDetailed)
+$(makeSBP 'msgTrackingStateDetailedDepA ''MsgTrackingStateDetailedDepA)
+$(makeJSON "_msgTrackingStateDetailedDepA_" ''MsgTrackingStateDetailedDepA)
+$(makeLenses ''MsgTrackingStateDetailedDepA)
 
 msgTrackingStateDetailedDep :: Word16
 msgTrackingStateDetailedDep = 0x0011

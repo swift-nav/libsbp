@@ -18,13 +18,11 @@ include:
   - gnss.yaml
 definitions:
 
- - MSG_TRACKING_STATE_DETAILED:
+ - MSG_TRACKING_STATE_DETAILED_DEP_A:
     id: 0x0021
-    short_desc: Detailed signal tracking channel states
+    short_desc: Deprecated
     public: False
-    desc: |
-      The tracking message returns a set tracking channel parameters for a
-      single tracking channel useful for debugging issues.
+    desc: Depecated
     fields:
         - recv_time:
             type: u64
