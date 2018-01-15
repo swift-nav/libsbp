@@ -205,11 +205,11 @@ class TrackingChannelStateDepB(object):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return TrackingChannelStateDepB.build(d)
     
-SBP_MSG_TRACKING_STATE_DETAILED = 0x0021
-class MsgTrackingStateDetailed(SBP):
-  """SBP class for message MSG_TRACKING_STATE_DETAILED (0x0021).
+SBP_MSG_TRACKING_STATE_DETAILED_DEP_A = 0x0021
+class MsgTrackingStateDetailedDepA(SBP):
+  """SBP class for message MSG_TRACKING_STATE_DETAILED_DEP_A (0x0021).
 
-  You can have MSG_TRACKING_STATE_DETAILED inherit its fields directly
+  You can have MSG_TRACKING_STATE_DETAILED_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -331,13 +331,13 @@ signal is in continuous track.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgTrackingStateDetailed,
+      super( MsgTrackingStateDetailedDepA,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgTrackingStateDetailed, self).__init__()
-      self.msg_type = SBP_MSG_TRACKING_STATE_DETAILED
+      super( MsgTrackingStateDetailedDepA, self).__init__()
+      self.msg_type = SBP_MSG_TRACKING_STATE_DETAILED_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.recv_time = kwargs.pop('recv_time')
       self.tot = kwargs.pop('tot')
@@ -370,12 +370,12 @@ signal is in continuous track.
 
     """
     d = json.loads(s)
-    return MsgTrackingStateDetailed.from_json_dict(d)
+    return MsgTrackingStateDetailedDepA.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgTrackingStateDetailed(sbp, **d)
+    return MsgTrackingStateDetailedDepA(sbp, **d)
 
  
   def from_binary(self, d):
@@ -383,7 +383,7 @@ signal is in continuous track.
     the message.
 
     """
-    p = MsgTrackingStateDetailed._parser.parse(d)
+    p = MsgTrackingStateDetailedDepA._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -392,12 +392,12 @@ signal is in continuous track.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgTrackingStateDetailed._parser.build(c)
+    self.payload = MsgTrackingStateDetailedDepA._parser.build(c)
     return self.pack()
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgTrackingStateDetailed, self).to_json_dict()
+    d = super( MsgTrackingStateDetailedDepA, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -1024,7 +1024,7 @@ class MsgTrackingStateDepB(SBP):
     
 
 msg_classes = {
-  0x0021: MsgTrackingStateDetailed,
+  0x0021: MsgTrackingStateDetailedDepA,
   0x0011: MsgTrackingStateDetailedDep,
   0x0041: MsgTrackingState,
   0x002C: MsgTrackingIq,
