@@ -31,7 +31,7 @@ var GPSTimeSec = require("./gnss").GPSTimeSec;
 var GPSTimeDep = require("./gnss").GPSTimeDep;
 
 /**
- * SBP class for message MSG_TRACKING_STATE_DETAILED (0x0021).
+ * SBP class for message MSG_TRACKING_STATE_DETAILED_DEP_A (0x0021).
  *
  * The tracking message returns a set tracking channel parameters for a single
  * tracking channel useful for debugging issues.
@@ -66,18 +66,18 @@ var GPSTimeDep = require("./gnss").GPSTimeDep;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingStateDetailed = function (sbp, fields) {
+var MsgTrackingStateDetailedDepA = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_TRACKING_STATE_DETAILED";
+  this.messageType = "MSG_TRACKING_STATE_DETAILED_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgTrackingStateDetailed.prototype = Object.create(SBP.prototype);
-MsgTrackingStateDetailed.prototype.messageType = "MSG_TRACKING_STATE_DETAILED";
-MsgTrackingStateDetailed.prototype.msg_type = 0x0021;
-MsgTrackingStateDetailed.prototype.constructor = MsgTrackingStateDetailed;
-MsgTrackingStateDetailed.prototype.parser = new Parser()
+MsgTrackingStateDetailedDepA.prototype = Object.create(SBP.prototype);
+MsgTrackingStateDetailedDepA.prototype.messageType = "MSG_TRACKING_STATE_DETAILED_DEP_A";
+MsgTrackingStateDetailedDepA.prototype.msg_type = 0x0021;
+MsgTrackingStateDetailedDepA.prototype.constructor = MsgTrackingStateDetailedDepA;
+MsgTrackingStateDetailedDepA.prototype.parser = new Parser()
   .endianess('little')
   .uint64('recv_time')
   .nest('tot', { type: GPSTime.prototype.parser })
@@ -100,28 +100,28 @@ MsgTrackingStateDetailed.prototype.parser = new Parser()
   .uint8('nav_flags')
   .uint8('pset_flags')
   .uint8('misc_flags');
-MsgTrackingStateDetailed.prototype.fieldSpec = [];
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['recv_time', 'writeUInt64LE', 8]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['tot', GPSTime.prototype.fieldSpec]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['P', 'writeUInt32LE', 4]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['P_std', 'writeUInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['L', CarrierPhase.prototype.fieldSpec]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['lock', 'writeUInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['doppler', 'writeInt32LE', 4]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['doppler_std', 'writeUInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['uptime', 'writeUInt32LE', 4]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['clock_offset', 'writeInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['clock_drift', 'writeInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['corr_spacing', 'writeUInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['acceleration', 'writeInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['sync_flags', 'writeUInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['tow_flags', 'writeUInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['track_flags', 'writeUInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['nav_flags', 'writeUInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['pset_flags', 'writeUInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['misc_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec = [];
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['recv_time', 'writeUInt64LE', 8]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['tot', GPSTime.prototype.fieldSpec]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['P', 'writeUInt32LE', 4]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['P_std', 'writeUInt16LE', 2]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['L', CarrierPhase.prototype.fieldSpec]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['lock', 'writeUInt16LE', 2]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['doppler', 'writeInt32LE', 4]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['doppler_std', 'writeUInt16LE', 2]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['uptime', 'writeUInt32LE', 4]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['clock_offset', 'writeInt16LE', 2]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['clock_drift', 'writeInt16LE', 2]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['corr_spacing', 'writeUInt16LE', 2]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['acceleration', 'writeInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['sync_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['tow_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['track_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['nav_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['pset_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['misc_flags', 'writeUInt8', 1]);
 
 /**
  * SBP class for message MSG_TRACKING_STATE_DETAILED_DEP (0x0011).
@@ -492,8 +492,8 @@ MsgTrackingStateDepB.prototype.fieldSpec = [];
 MsgTrackingStateDepB.prototype.fieldSpec.push(['states', 'array', TrackingChannelStateDepB.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 module.exports = {
-  0x0021: MsgTrackingStateDetailed,
-  MsgTrackingStateDetailed: MsgTrackingStateDetailed,
+  0x0021: MsgTrackingStateDetailedDepA,
+  MsgTrackingStateDetailedDepA: MsgTrackingStateDetailedDepA,
   0x0011: MsgTrackingStateDetailedDep,
   MsgTrackingStateDetailedDep: MsgTrackingStateDetailedDep,
   TrackingChannelState: TrackingChannelState,
