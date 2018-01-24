@@ -4,8 +4,8 @@ synopsis:              SwiftNav's SBP Library
 homepage:              https://github.com/swift-nav/libsbp
 license:               LGPL-3
 author:                Swift Navigation Inc.
-maintainer:            Mark Fine <dev@swiftnav.com>
-copyright:             Copyright (C) 2015 Swift Navigation, Inc.
+maintainer:            Swift Navigation <dev@swiftnav.com>
+copyright:             Copyright (C) 2015-2018 Swift Navigation, Inc.
 category:              Network
 build-type:            Simple
 cabal-version:         >= 1.22
@@ -44,6 +44,7 @@ library
                      , SwiftNav.SBP.Piksi
                      , SwiftNav.SBP.Sbas
                      , SwiftNav.SBP.Settings
+                     , SwiftNav.SBP.Ssr
                      , SwiftNav.SBP.System
                      , SwiftNav.SBP.Tracking
                      , SwiftNav.SBP.User

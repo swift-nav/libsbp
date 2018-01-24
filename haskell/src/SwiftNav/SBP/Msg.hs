@@ -6,9 +6,9 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Msg
--- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
 -- License:     LGPL-3
--- Maintainer:  Mark Fine <dev@swiftnav.com>
+-- Maintainer:  Swift Navigation <dev@swiftnav.com>
 -- Stability:   experimental
 -- Portability: portable
 --
@@ -40,6 +40,7 @@ import SwiftNav.SBP.Orientation
 import SwiftNav.SBP.Piksi
 import SwiftNav.SBP.Sbas
 import SwiftNav.SBP.Settings
+import SwiftNav.SBP.Ssr
 import SwiftNav.SBP.System
 import SwiftNav.SBP.Tracking
 import SwiftNav.SBP.User
@@ -165,6 +166,9 @@ data SBPMsg =
    | SBPMsgSettingsWriteResp MsgSettingsWriteResp Msg
    | SBPMsgSpecan MsgSpecan Msg
    | SBPMsgSpecanDep MsgSpecanDep Msg
+   | SBPMsgSsrCodeBiases MsgSsrCodeBiases Msg
+   | SBPMsgSsrOrbitClock MsgSsrOrbitClock Msg
+   | SBPMsgSsrPhaseBiases MsgSsrPhaseBiases Msg
    | SBPMsgStartup MsgStartup Msg
    | SBPMsgStmFlashLockSector MsgStmFlashLockSector Msg
    | SBPMsgStmFlashUnlockSector MsgStmFlashUnlockSector Msg
@@ -317,6 +321,9 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSettingsWriteResp = SBPMsgSettingsWriteResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSpecan = SBPMsgSpecan (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSpecanDep = SBPMsgSpecanDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrCodeBiases = SBPMsgSsrCodeBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrOrbitClock = SBPMsgSsrOrbitClock (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStmFlashLockSector = SBPMsgStmFlashLockSector (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -461,6 +468,9 @@ instance Binary SBPMsg where
       encoder (SBPMsgSettingsWriteResp _ m) = put m
       encoder (SBPMsgSpecan _ m) = put m
       encoder (SBPMsgSpecanDep _ m) = put m
+      encoder (SBPMsgSsrCodeBiases _ m) = put m
+      encoder (SBPMsgSsrOrbitClock _ m) = put m
+      encoder (SBPMsgSsrPhaseBiases _ m) = put m
       encoder (SBPMsgStartup _ m) = put m
       encoder (SBPMsgStmFlashLockSector _ m) = put m
       encoder (SBPMsgStmFlashUnlockSector _ m) = put m
@@ -609,6 +619,9 @@ instance FromJSON SBPMsg where
         | msgType == msgSettingsWriteResp = SBPMsgSettingsWriteResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSpecan = SBPMsgSpecan <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSpecanDep = SBPMsgSpecanDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrCodeBiases = SBPMsgSsrCodeBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrOrbitClock = SBPMsgSsrOrbitClock <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStartup = SBPMsgStartup <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStmFlashLockSector = SBPMsgStmFlashLockSector <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -758,6 +771,9 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSettingsWriteResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSpecan n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSpecanDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrCodeBiases n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrOrbitClock n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrPhaseBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStartup n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStmFlashLockSector n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStmFlashUnlockSector n m) = toJSON n <<>> toJSON m
@@ -901,6 +917,9 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSettingsWriteResp n m) = SBPMsgSettingsWriteResp n <$> f m
   msg f (SBPMsgSpecan n m) = SBPMsgSpecan n <$> f m
   msg f (SBPMsgSpecanDep n m) = SBPMsgSpecanDep n <$> f m
+  msg f (SBPMsgSsrCodeBiases n m) = SBPMsgSsrCodeBiases n <$> f m
+  msg f (SBPMsgSsrOrbitClock n m) = SBPMsgSsrOrbitClock n <$> f m
+  msg f (SBPMsgSsrPhaseBiases n m) = SBPMsgSsrPhaseBiases n <$> f m
   msg f (SBPMsgStartup n m) = SBPMsgStartup n <$> f m
   msg f (SBPMsgStmFlashLockSector n m) = SBPMsgStmFlashLockSector n <$> f m
   msg f (SBPMsgStmFlashUnlockSector n m) = SBPMsgStmFlashUnlockSector n <$> f m
