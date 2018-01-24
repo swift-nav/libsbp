@@ -71,8 +71,8 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -6401,8 +6401,8 @@ function simpleEnd(buf) {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -6778,8 +6778,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -6992,8 +6992,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -7067,8 +7067,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -7368,8 +7368,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -7736,8 +7736,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -7858,8 +7858,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -8022,8 +8022,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -8096,8 +8096,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -9415,8 +9415,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -9510,8 +9510,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -11667,8 +11667,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -11899,8 +11899,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -12802,8 +12802,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -13177,8 +13177,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -13350,8 +13350,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -13868,8 +13868,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -13930,8 +13930,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *

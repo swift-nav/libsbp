@@ -1,8 +1,8 @@
 -- |
 -- Module:      SwiftNav.SBP
--- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
 -- License:     LGPL-3
--- Maintainer:  Mark Fine <dev@swiftnav.com>
+-- Maintainer:  Swift Navigation <dev@swiftnav.com>
 -- Stability:   experimental
 -- Portability: portable
 --
@@ -30,6 +30,7 @@ import SwiftNav.SBP.Orientation as Exports
 import SwiftNav.SBP.Piksi as Exports
 import SwiftNav.SBP.Sbas as Exports
 import SwiftNav.SBP.Settings as Exports
+import SwiftNav.SBP.Ssr as Exports
 import SwiftNav.SBP.System as Exports
 import SwiftNav.SBP.Tracking as Exports
 import SwiftNav.SBP.User as Exports
