@@ -165,9 +165,12 @@ definitions:
                 IOD of the SSR correction. A change of Issue Of Data
                 SSR is used to indicate a change in the SSR 
                 generating configuration
+        - n_biases:
+            type: u8
+            desc: |
+                Number of biases for the given sid.
         - biases:
             type: array
-            size: 8
             fill: CodeBiasesContent
             map_by: code
             desc: Code biases for the different satellite signals
@@ -216,9 +219,12 @@ definitions:
             type: s8
             units: 1 / 8192 semi-circle / s
             desc: Satellite yaw angle rate
+        - n_biases:
+            type: u8
+            desc: |
+                Number of biases for the given sid.
         - biases:
             type: array
-            size: 8
             fill: PhaseBiasesContent
             map_by: code
             desc: |

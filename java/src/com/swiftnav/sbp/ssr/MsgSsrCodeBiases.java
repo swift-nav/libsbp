@@ -53,6 +53,10 @@ generating configuration
  */
     public int iod_ssr;
     
+    /** Number of biases for the given sid.
+ */
+    public int n_biases;
+    
     /** Code biases for the different satellite signals */
     public CodeBiasesContent[] biases;
     
@@ -71,7 +75,8 @@ generating configuration
         sid = new GnssSignal().parse(parser);
         update_interval = parser.getU8();
         iod_ssr = parser.getU8();
-        biases = parser.getArray(CodeBiasesContent.class, 8);
+        n_biases = parser.getU8();
+        biases = parser.getArray(CodeBiasesContent.class);
     }
 
     @Override
@@ -80,7 +85,8 @@ generating configuration
         sid.build(builder);
         builder.putU8(update_interval);
         builder.putU8(iod_ssr);
-        builder.putArray(biases, 8);
+        builder.putU8(n_biases);
+        builder.putArray(biases);
     }
 
     @Override
@@ -90,6 +96,7 @@ generating configuration
         obj.put("sid", sid.toJSON());
         obj.put("update_interval", update_interval);
         obj.put("iod_ssr", iod_ssr);
+        obj.put("n_biases", n_biases);
         obj.put("biases", SBPStruct.toJSONArray(biases));
         return obj;
     }

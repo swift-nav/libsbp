@@ -99,7 +99,9 @@ typedef struct __attribute__((packed)) {
 SSR is used to indicate a change in the SSR 
 generating configuration
  */
-  code_biases_content_t biases[8];          /**< Code biases for the different satellite signals */
+  u8 n_biases;           /**< Number of biases for the given sid.
+ */
+  code_biases_content_t biases[0];          /**< Code biases for the different satellite signals */
 } msg_ssr_code_biases_t;
 
 
@@ -127,7 +129,9 @@ generating configuration
  */
   u16 yaw;                /**< Satellite yaw angle [1 / 256 semi-circle] */
   s8 yaw_rate;           /**< Satellite yaw angle rate [1 / 8192 semi-circle / s] */
-  phase_biases_content_t biases[8];          /**< Phase biases corrections for a
+  u8 n_biases;           /**< Number of biases for the given sid.
+ */
+  phase_biases_content_t biases[0];          /**< Phase biases corrections for a
 satellite being tracked.
  */
 } msg_ssr_phase_biases_t;

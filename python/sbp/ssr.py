@@ -309,6 +309,9 @@ an equivalent to the 1059 and 1065 RTCM message types
 SSR is used to indicate a change in the SSR 
 generating configuration
 
+  n_biases : int
+    Number of biases for the given sid.
+
   biases : array
     Code biases for the different satellite signals
   sender : int
@@ -320,12 +323,14 @@ generating configuration
                    'sid' / construct.Struct(GnssSignal._parser),
                    'update_interval' / construct.Int8ul,
                    'iod_ssr' / construct.Int8ul,
-                   'biases' / construct.Array(8, construct.Byte),)
+                   'n_biases' / construct.Int8ul,
+                   construct.GreedyRange('biases' / construct.Struct(CodeBiasesContent._parser)),)
   __slots__ = [
                'time',
                'sid',
                'update_interval',
                'iod_ssr',
+               'n_biases',
                'biases',
               ]
 
@@ -343,6 +348,7 @@ generating configuration
       self.sid = kwargs.pop('sid')
       self.update_interval = kwargs.pop('update_interval')
       self.iod_ssr = kwargs.pop('iod_ssr')
+      self.n_biases = kwargs.pop('n_biases')
       self.biases = kwargs.pop('biases')
 
   def __repr__(self):
@@ -428,6 +434,9 @@ generating configuration
     Satellite yaw angle
   yaw_rate : int
     Satellite yaw angle rate
+  n_biases : int
+    Number of biases for the given sid.
+
   biases : array
     Phase biases corrections for a
 satellite being tracked.
@@ -445,7 +454,8 @@ satellite being tracked.
                    'mw_consistency' / construct.Int8ul,
                    'yaw' / construct.Int16ul,
                    'yaw_rate' / construct.Int8sl,
-                   'biases' / construct.Array(8, construct.Byte),)
+                   'n_biases' / construct.Int8ul,
+                   construct.GreedyRange('biases' / construct.Struct(PhaseBiasesContent._parser)),)
   __slots__ = [
                'time',
                'sid',
@@ -455,6 +465,7 @@ satellite being tracked.
                'mw_consistency',
                'yaw',
                'yaw_rate',
+               'n_biases',
                'biases',
               ]
 
@@ -476,6 +487,7 @@ satellite being tracked.
       self.mw_consistency = kwargs.pop('mw_consistency')
       self.yaw = kwargs.pop('yaw')
       self.yaw_rate = kwargs.pop('yaw_rate')
+      self.n_biases = kwargs.pop('n_biases')
       self.biases = kwargs.pop('biases')
 
   def __repr__(self):
