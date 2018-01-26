@@ -227,7 +227,7 @@ MsgSsrCodeBiases.prototype.fieldSpec.push(['biases', 'array', CodeBiasesContent.
  * @field dispersive_bias number (unsigned 8-bit int, 1 byte) Indicator for the dispersive phase biases property.
  * @field mw_consistency number (unsigned 8-bit int, 1 byte) Consistency indicator for Melbourne-Wubbena linear combinations
  * @field yaw number (unsigned 16-bit int, 2 bytes) Satellite yaw angle
- * @field yaw_rate number (signed 16-bit int, 2 bytes) Satellite yaw angle rate
+ * @field yaw_rate number (signed 8-bit int, 1 byte) Satellite yaw angle rate
  * @field biases array Phase biases corrections for a satellite being tracked.
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -252,7 +252,7 @@ MsgSsrPhaseBiases.prototype.parser = new Parser()
   .uint8('dispersive_bias')
   .uint8('mw_consistency')
   .uint16('yaw')
-  .int16('yaw_rate')
+  .int8('yaw_rate')
   .array('biases', { length: 8, type: PhaseBiasesContent.prototype.parser });
 MsgSsrPhaseBiases.prototype.fieldSpec = [];
 MsgSsrPhaseBiases.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
@@ -262,7 +262,7 @@ MsgSsrPhaseBiases.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
 MsgSsrPhaseBiases.prototype.fieldSpec.push(['dispersive_bias', 'writeUInt8', 1]);
 MsgSsrPhaseBiases.prototype.fieldSpec.push(['mw_consistency', 'writeUInt8', 1]);
 MsgSsrPhaseBiases.prototype.fieldSpec.push(['yaw', 'writeUInt16LE', 2]);
-MsgSsrPhaseBiases.prototype.fieldSpec.push(['yaw_rate', 'writeInt16LE', 2]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['yaw_rate', 'writeInt8', 1]);
 MsgSsrPhaseBiases.prototype.fieldSpec.push(['biases', 'array', PhaseBiasesContent.prototype.fieldSpec, function () { return this.fields.array.length; }, 8]);
 
 module.exports = {

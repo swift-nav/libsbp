@@ -243,7 +243,7 @@ data MsgSsrPhaseBiases = MsgSsrPhaseBiases
     -- ^ Consistency indicator for Melbourne-Wubbena linear combinations
   , _msgSsrPhaseBiases_yaw           :: !Word16
     -- ^ Satellite yaw angle
-  , _msgSsrPhaseBiases_yaw_rate      :: !Int16
+  , _msgSsrPhaseBiases_yaw_rate      :: !Int8
     -- ^ Satellite yaw angle rate
   , _msgSsrPhaseBiases_biases        :: ![PhaseBiasesContent]
     -- ^ Phase biases corrections for a satellite being tracked.
@@ -258,7 +258,7 @@ instance Binary MsgSsrPhaseBiases where
     _msgSsrPhaseBiases_dispersive_bias <- getWord8
     _msgSsrPhaseBiases_mw_consistency <- getWord8
     _msgSsrPhaseBiases_yaw <- getWord16le
-    _msgSsrPhaseBiases_yaw_rate <- fromIntegral <$> getWord16le
+    _msgSsrPhaseBiases_yaw_rate <- fromIntegral <$> getWord8
     _msgSsrPhaseBiases_biases <- replicateM 8 get
     pure MsgSsrPhaseBiases {..}
 
@@ -270,7 +270,7 @@ instance Binary MsgSsrPhaseBiases where
     putWord8 _msgSsrPhaseBiases_dispersive_bias
     putWord8 _msgSsrPhaseBiases_mw_consistency
     putWord16le _msgSsrPhaseBiases_yaw
-    putWord16le $ fromIntegral _msgSsrPhaseBiases_yaw_rate
+    putWord8 $ fromIntegral _msgSsrPhaseBiases_yaw_rate
     mapM_ put _msgSsrPhaseBiases_biases
 
 $(makeSBP 'msgSsrPhaseBiases ''MsgSsrPhaseBiases)

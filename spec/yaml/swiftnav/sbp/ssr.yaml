@@ -213,7 +213,7 @@ definitions:
             units: 1 / 256 semi-circle
             desc: Satellite yaw angle
         - yaw_rate:
-            type: s16
+            type: s8
             units: 1 / 8192 semi-circle / s
             desc: Satellite yaw angle rate
         - biases:

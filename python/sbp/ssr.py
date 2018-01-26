@@ -444,7 +444,7 @@ satellite being tracked.
                    'dispersive_bias' / construct.Int8ul,
                    'mw_consistency' / construct.Int8ul,
                    'yaw' / construct.Int16ul,
-                   'yaw_rate' / construct.Int16sl,
+                   'yaw_rate' / construct.Int8sl,
                    'biases' / construct.Array(8, construct.Byte),)
   __slots__ = [
                'time',
