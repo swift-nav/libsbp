@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 45);
+/******/ 	return __webpack_require__(__webpack_require__.s = 46);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -296,8 +296,8 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.UINT32 = __webpack_require__(49)
-exports.UINT64 = __webpack_require__(50)
+exports.UINT32 = __webpack_require__(50)
+exports.UINT64 = __webpack_require__(51)
 
 /***/ }),
 /* 2 */
@@ -314,7 +314,7 @@ exports.UINT64 = __webpack_require__(50)
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-var assert = __webpack_require__(46);
+var assert = __webpack_require__(47);
 var Int64 = __webpack_require__(3);
 var UInt64 = __webpack_require__(1).UINT64;
 
@@ -853,8 +853,8 @@ module.exports = g;
 
 
 
-var base64 = __webpack_require__(47)
-var ieee754 = __webpack_require__(51)
+var base64 = __webpack_require__(48)
+var ieee754 = __webpack_require__(52)
 var isArray = __webpack_require__(17)
 
 exports.Buffer = Buffer
@@ -3157,7 +3157,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 // Globals
 //========================================================================================
 
-var Context = __webpack_require__(48).Context;
+var Context = __webpack_require__(49).Context;
 
 var PRIMITIVE_TYPES = {
     'UInt8'    : 1,
@@ -4113,7 +4113,7 @@ util.inherits = __webpack_require__(8);
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(60)
+  deprecate: __webpack_require__(61)
 };
 /*</replacement>*/
 
@@ -4705,7 +4705,7 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(59).setImmediate, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(60).setImmediate, __webpack_require__(5)))
 
 /***/ }),
 /* 15 */
@@ -4717,7 +4717,7 @@ exports.Readable = exports;
 exports.Writable = __webpack_require__(14);
 exports.Duplex = __webpack_require__(7);
 exports.Transform = __webpack_require__(20);
-exports.PassThrough = __webpack_require__(53);
+exports.PassThrough = __webpack_require__(54);
 
 
 /***/ }),
@@ -5102,7 +5102,7 @@ util.inherits = __webpack_require__(8);
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(64);
+var debugUtil = __webpack_require__(65);
 var debug = void 0;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -5111,7 +5111,7 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(54);
+var BufferList = __webpack_require__(55);
 var destroyImpl = __webpack_require__(21);
 var StringDecoder;
 
@@ -13137,6 +13137,288 @@ module.exports = {
  */
 
 /**********************
+ * Automatically generated from piksi/yaml/swiftnav/sbp/ssr.yaml with generate.py.
+ * Don't edit this by hand!
+ **********************
+ * Package description:
+ *
+ * Precise State Space Representation (SSR) corrections format
+***********************/
+
+var SBP = __webpack_require__(2);
+var Parser = __webpack_require__(4);
+var Int64 = __webpack_require__(3);
+var UInt64 = __webpack_require__(1).UINT64;
+var GnssSignal = __webpack_require__(0).GnssSignal;
+var GnssSignalDep = __webpack_require__(0).GnssSignalDep;
+var GPSTime = __webpack_require__(0).GPSTime;
+var CarrierPhase = __webpack_require__(0).CarrierPhase;
+var GPSTime = __webpack_require__(0).GPSTime;
+var GPSTimeSec = __webpack_require__(0).GPSTimeSec;
+var GPSTimeDep = __webpack_require__(0).GPSTimeDep;
+
+/**
+ * SBP class for message fragment CodeBiasesContent
+ *
+ * Code biases are to be added to pseudorange. The corrections are conform with
+ * typical RTCMv3 MT1059 and 1065.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
+ * @field value number (signed 16-bit int, 2 bytes) Code bias value
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var CodeBiasesContent = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "CodeBiasesContent";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+CodeBiasesContent.prototype = Object.create(SBP.prototype);
+CodeBiasesContent.prototype.messageType = "CodeBiasesContent";
+CodeBiasesContent.prototype.constructor = CodeBiasesContent;
+CodeBiasesContent.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('code')
+  .int16('value');
+CodeBiasesContent.prototype.fieldSpec = [];
+CodeBiasesContent.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
+CodeBiasesContent.prototype.fieldSpec.push(['value', 'writeInt16LE', 2]);
+
+/**
+ * SBP class for message fragment PhaseBiasesContent
+ *
+ * Phase biases are to be added to carrier phase measurements. The corrections are
+ * conform with typical RTCMv3 MT1059 and 1065.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
+ * @field integer_indicator number (unsigned 8-bit int, 1 byte) Indicator for integer property
+ * @field widelane_integer_indicator number (unsigned 8-bit int, 1 byte) Indicator for two groups of Wide-Lane(s) integer property
+ * @field discontinuity_counter number (unsigned 8-bit int, 1 byte) Signal phase discontinuity counter.  Increased for every discontinuity in phase.
+ * @field bias number (signed 32-bit int, 4 bytes) Phase bias for specified signal
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var PhaseBiasesContent = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "PhaseBiasesContent";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+PhaseBiasesContent.prototype = Object.create(SBP.prototype);
+PhaseBiasesContent.prototype.messageType = "PhaseBiasesContent";
+PhaseBiasesContent.prototype.constructor = PhaseBiasesContent;
+PhaseBiasesContent.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('code')
+  .uint8('integer_indicator')
+  .uint8('widelane_integer_indicator')
+  .uint8('discontinuity_counter')
+  .int32('bias');
+PhaseBiasesContent.prototype.fieldSpec = [];
+PhaseBiasesContent.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
+PhaseBiasesContent.prototype.fieldSpec.push(['integer_indicator', 'writeUInt8', 1]);
+PhaseBiasesContent.prototype.fieldSpec.push(['widelane_integer_indicator', 'writeUInt8', 1]);
+PhaseBiasesContent.prototype.fieldSpec.push(['discontinuity_counter', 'writeUInt8', 1]);
+PhaseBiasesContent.prototype.fieldSpec.push(['bias', 'writeInt32LE', 4]);
+
+/**
+ * SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DC).
+ *
+ * The precise orbit and clock correction message is  to be applied as a delta
+ * correction to broadcast  ephemeris and is typically an equivalent to the 1060
+ * and 1066 RTCM message types
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time GPSTimeSec GNSS reference time of the correction
+ * @field sid GnssSignal GNSS signal identifier (16 bit)
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections
+ * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
+ *   change in the SSR  generating configuration
+ * @field iod number (unsigned 8-bit int, 1 byte) Issue of broadcast ephemeris data
+ * @field radial number (signed 32-bit int, 4 bytes) Orbit radial delta correction
+ * @field along number (signed 32-bit int, 4 bytes) Orbit along delta correction
+ * @field cross number (signed 32-bit int, 4 bytes) Orbit along delta correction
+ * @field dot_radial number (signed 32-bit int, 4 bytes) Velocity of orbit radial delta correction
+ * @field dot_along number (signed 32-bit int, 4 bytes) Velocity of orbit along delta correction
+ * @field dot_cross number (signed 32-bit int, 4 bytes) Velocity of orbit cross delta correction
+ * @field c0 number (signed 32-bit int, 4 bytes) C0 polynomial coefficient for correction of broadcast satellite clock
+ * @field c1 number (signed 32-bit int, 4 bytes) C1 polynomial coefficient for correction of broadcast satellite clock
+ * @field c2 number (signed 32-bit int, 4 bytes) C2 polynomial coefficient for correction of broadcast satellite clock
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrOrbitClock = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_ORBIT_CLOCK";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrOrbitClock.prototype = Object.create(SBP.prototype);
+MsgSsrOrbitClock.prototype.messageType = "MSG_SSR_ORBIT_CLOCK";
+MsgSsrOrbitClock.prototype.msg_type = 0x05DC;
+MsgSsrOrbitClock.prototype.constructor = MsgSsrOrbitClock;
+MsgSsrOrbitClock.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('time', { type: GPSTimeSec.prototype.parser })
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .uint8('update_interval')
+  .uint8('iod_ssr')
+  .uint8('iod')
+  .int32('radial')
+  .int32('along')
+  .int32('cross')
+  .int32('dot_radial')
+  .int32('dot_along')
+  .int32('dot_cross')
+  .int32('c0')
+  .int32('c1')
+  .int32('c2');
+MsgSsrOrbitClock.prototype.fieldSpec = [];
+MsgSsrOrbitClock.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['iod', 'writeUInt8', 1]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['radial', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['along', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['cross', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['dot_radial', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['dot_along', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['dot_cross', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['c0', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['c1', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['c2', 'writeInt32LE', 4]);
+
+/**
+ * SBP class for message MSG_SSR_CODE_BIASES (0x05E1).
+ *
+ * The precise code biases message is to be added to the pseudorange of the
+ * corresponding signal to get corrected pseudorange. It is typically  an
+ * equivalent to the 1059 and 1065 RTCM message types
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time GPSTimeSec GNSS reference time of the correction
+ * @field sid GnssSignal GNSS signal identifier (16 bit)
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections
+ * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
+ *   change in the SSR  generating configuration
+ * @field biases array Code biases for the different satellite signals
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrCodeBiases = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_CODE_BIASES";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrCodeBiases.prototype = Object.create(SBP.prototype);
+MsgSsrCodeBiases.prototype.messageType = "MSG_SSR_CODE_BIASES";
+MsgSsrCodeBiases.prototype.msg_type = 0x05E1;
+MsgSsrCodeBiases.prototype.constructor = MsgSsrCodeBiases;
+MsgSsrCodeBiases.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('time', { type: GPSTimeSec.prototype.parser })
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .uint8('update_interval')
+  .uint8('iod_ssr')
+  .array('biases', { length: 8, type: CodeBiasesContent.prototype.parser });
+MsgSsrCodeBiases.prototype.fieldSpec = [];
+MsgSsrCodeBiases.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrCodeBiases.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgSsrCodeBiases.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
+MsgSsrCodeBiases.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
+MsgSsrCodeBiases.prototype.fieldSpec.push(['biases', 'array', CodeBiasesContent.prototype.fieldSpec, function () { return this.fields.array.length; }, 8]);
+
+/**
+ * SBP class for message MSG_SSR_PHASE_BIASES (0x05E6).
+ *
+ * The precise phase biases message contains the biases to be added to the carrier
+ * phase of the corresponding signal to get corrected carrier phase measurement, as
+ * well as the satellite yaw angle to be applied to compute  the phase wind-up
+ * correction.  It is typically an equivalent to the 1265 RTCM message types
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time GPSTimeSec GNSS reference time of the correction
+ * @field sid GnssSignal GNSS signal identifier (16 bit)
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections
+ * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
+ *   change in the SSR  generating configuration
+ * @field dispersive_bias number (unsigned 8-bit int, 1 byte) Indicator for the dispersive phase biases property.
+ * @field mw_consistency number (unsigned 8-bit int, 1 byte) Consistency indicator for Melbourne-Wubbena linear combinations
+ * @field yaw number (unsigned 16-bit int, 2 bytes) Satellite yaw angle
+ * @field yaw_rate number (signed 16-bit int, 2 bytes) Satellite yaw angle rate
+ * @field biases array Phase biases corrections for a satellite being tracked.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrPhaseBiases = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_PHASE_BIASES";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrPhaseBiases.prototype = Object.create(SBP.prototype);
+MsgSsrPhaseBiases.prototype.messageType = "MSG_SSR_PHASE_BIASES";
+MsgSsrPhaseBiases.prototype.msg_type = 0x05E6;
+MsgSsrPhaseBiases.prototype.constructor = MsgSsrPhaseBiases;
+MsgSsrPhaseBiases.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('time', { type: GPSTimeSec.prototype.parser })
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .uint8('update_interval')
+  .uint8('iod_ssr')
+  .uint8('dispersive_bias')
+  .uint8('mw_consistency')
+  .uint16('yaw')
+  .int16('yaw_rate')
+  .array('biases', { length: 8, type: PhaseBiasesContent.prototype.parser });
+MsgSsrPhaseBiases.prototype.fieldSpec = [];
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['dispersive_bias', 'writeUInt8', 1]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['mw_consistency', 'writeUInt8', 1]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['yaw', 'writeUInt16LE', 2]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['yaw_rate', 'writeInt16LE', 2]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['biases', 'array', PhaseBiasesContent.prototype.fieldSpec, function () { return this.fields.array.length; }, 8]);
+
+module.exports = {
+  CodeBiasesContent: CodeBiasesContent,
+  PhaseBiasesContent: PhaseBiasesContent,
+  0x05DC: MsgSsrOrbitClock,
+  MsgSsrOrbitClock: MsgSsrOrbitClock,
+  0x05E1: MsgSsrCodeBiases,
+  MsgSsrCodeBiases: MsgSsrCodeBiases,
+  0x05E6: MsgSsrPhaseBiases,
+  MsgSsrPhaseBiases: MsgSsrPhaseBiases,
+}
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**********************
  * Automatically generated from piksi/yaml/swiftnav/sbp/system.yaml with generate.py.
  * Don't edit this by hand!
  **********************
@@ -13295,7 +13577,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -13813,7 +14095,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -13875,7 +14157,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -13948,7 +14230,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -14179,7 +14461,7 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -14210,10 +14492,10 @@ var inherits = __webpack_require__(8);
 
 inherits(Stream, EE);
 Stream.Readable = __webpack_require__(15);
-Stream.Writable = __webpack_require__(57);
-Stream.Duplex = __webpack_require__(52);
-Stream.Transform = __webpack_require__(56);
-Stream.PassThrough = __webpack_require__(55);
+Stream.Writable = __webpack_require__(58);
+Stream.Duplex = __webpack_require__(53);
+Stream.Transform = __webpack_require__(57);
+Stream.PassThrough = __webpack_require__(56);
 
 // Backwards-compat with node 0.4.x
 Stream.Stream = Stream;
@@ -14312,7 +14594,7 @@ Stream.prototype.pipe = function(dest, options) {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -14340,7 +14622,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer, module, global) {/**
@@ -14355,8 +14637,8 @@ module.exports = function(module) {
  */
 
 var Parser = __webpack_require__(12).Parser;
-var path = __webpack_require__(42);
-var streams = __webpack_require__(43);
+var path = __webpack_require__(43);
+var streams = __webpack_require__(44);
 var SBP = __webpack_require__(2);
 
 var SBP_PREAMBLE = 0x55;
@@ -14448,10 +14730,11 @@ var sbpImports = {
   piksi: __webpack_require__(35),
   settings: __webpack_require__(36),
   signal: __webpack_require__(37),
-  system: __webpack_require__(38),
-  tracking: __webpack_require__(39),
-  user: __webpack_require__(40),
-  vehicle: __webpack_require__(41),
+  ssr: __webpack_require__(38),
+  system: __webpack_require__(39),
+  tracking: __webpack_require__(40),
+  user: __webpack_require__(41),
+  vehicle: __webpack_require__(42),
   orientation: __webpack_require__(34)
 };
 
@@ -14677,10 +14960,10 @@ function exposeGlobally (x) {
 
 exposeGlobally(module.exports);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer, __webpack_require__(44)(module), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer, __webpack_require__(45)(module), __webpack_require__(5)))
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14752,7 +15035,7 @@ function isBuffer(b) {
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var util = __webpack_require__(63);
+var util = __webpack_require__(64);
 var hasOwn = Object.prototype.hasOwnProperty;
 var pSlice = Array.prototype.slice;
 var functionsHaveNames = (function () {
@@ -15178,7 +15461,7 @@ var objectKeys = Object.keys || function (obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15299,7 +15582,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports) {
 
 //========================================================================================
@@ -15404,7 +15687,7 @@ exports.Context = Context;
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -15862,7 +16145,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -16517,7 +16800,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -16607,14 +16890,14 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(7);
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16667,7 +16950,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 };
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16747,28 +17030,28 @@ module.exports = function () {
 }();
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(15).PassThrough
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(15).Transform
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(14);
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -16961,7 +17244,7 @@ module.exports = __webpack_require__(14);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -17014,13 +17297,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(58);
+__webpack_require__(59);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -17094,7 +17377,7 @@ function config (name) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports) {
 
 if (typeof Object.create === 'function') {
@@ -17123,7 +17406,7 @@ if (typeof Object.create === 'function') {
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports) {
 
 module.exports = function isBuffer(arg) {
@@ -17134,7 +17417,7 @@ module.exports = function isBuffer(arg) {
 }
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -17662,7 +17945,7 @@ function isPrimitive(arg) {
 }
 exports.isPrimitive = isPrimitive;
 
-exports.isBuffer = __webpack_require__(62);
+exports.isBuffer = __webpack_require__(63);
 
 function objectToString(o) {
   return Object.prototype.toString.call(o);
@@ -17706,7 +17989,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = __webpack_require__(61);
+exports.inherits = __webpack_require__(62);
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -17727,7 +18010,7 @@ function hasOwnProperty(obj, prop) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
