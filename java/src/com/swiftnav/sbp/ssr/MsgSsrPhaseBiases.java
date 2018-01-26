@@ -92,8 +92,8 @@ satellite being tracked.
         dispersive_bias = parser.getU8();
         mw_consistency = parser.getU8();
         yaw = parser.getU16();
-        yaw_rate = parser.getS16();
-        biases = parser.getArray(PhaseBiasesContent.class, 8);
+        yaw_rate = parser.getS8();
+        biases = parser.getArray(PhaseBiasesContent.class);
     }
 
     @Override
@@ -105,8 +105,8 @@ satellite being tracked.
         builder.putU8(dispersive_bias);
         builder.putU8(mw_consistency);
         builder.putU16(yaw);
-        builder.putS16(yaw_rate);
-        builder.putArray(biases, 8);
+        builder.putS8(yaw_rate);
+        builder.putArray(biases);
     }
 
     @Override

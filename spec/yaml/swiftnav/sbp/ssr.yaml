@@ -25,16 +25,6 @@ definitions:
      - code:
             type: u8
             desc: Signal constellation, band and code
-            fields:
-              - 0-7:
-                  values:
-                      - 0: GPS L1CA
-                      - 1: GPS L2CM
-                      - 2: SBAS L1CA
-                      - 3: GLO L1CA
-                      - 4: GLO L2CA
-                      - 5: GPS L1P
-                      - 6: GPS L2P
      - value:
             type: s16
             units: 0.01 m
@@ -48,16 +38,6 @@ definitions:
      - code:
             type: u8
             desc: Signal constellation, band and code
-            fields:
-              - 0-7:
-                  values:
-                      - 0: GPS L1CA
-                      - 1: GPS L2CM
-                      - 2: SBAS L1CA
-                      - 3: GLO L1CA
-                      - 4: GLO L2CA
-                      - 5: GPS L1P
-                      - 6: GPS L2P
      - integer_indicator:
             type: u8
             desc: Indicator for integer property
@@ -167,7 +147,6 @@ definitions:
                 generating configuration
         - biases:
             type: array
-            size: 8
             fill: CodeBiasesContent
             map_by: code
             desc: Code biases for the different satellite signals
@@ -213,12 +192,11 @@ definitions:
             units: 1 / 256 semi-circle
             desc: Satellite yaw angle
         - yaw_rate:
-            type: s16
+            type: s8
             units: 1 / 8192 semi-circle / s
             desc: Satellite yaw angle rate
         - biases:
             type: array
-            size: 8
             fill: PhaseBiasesContent
             map_by: code
             desc: |

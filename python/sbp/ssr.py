@@ -320,7 +320,7 @@ generating configuration
                    'sid' / construct.Struct(GnssSignal._parser),
                    'update_interval' / construct.Int8ul,
                    'iod_ssr' / construct.Int8ul,
-                   'biases' / construct.Array(8, construct.Byte),)
+                   construct.GreedyRange('biases' / construct.Struct(CodeBiasesContent._parser)),)
   __slots__ = [
                'time',
                'sid',
@@ -444,8 +444,8 @@ satellite being tracked.
                    'dispersive_bias' / construct.Int8ul,
                    'mw_consistency' / construct.Int8ul,
                    'yaw' / construct.Int16ul,
-                   'yaw_rate' / construct.Int16sl,
-                   'biases' / construct.Array(8, construct.Byte),)
+                   'yaw_rate' / construct.Int8sl,
+                   construct.GreedyRange('biases' / construct.Struct(PhaseBiasesContent._parser)),)
   __slots__ = [
                'time',
                'sid',

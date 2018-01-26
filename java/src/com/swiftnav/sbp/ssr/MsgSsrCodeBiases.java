@@ -71,7 +71,7 @@ generating configuration
         sid = new GnssSignal().parse(parser);
         update_interval = parser.getU8();
         iod_ssr = parser.getU8();
-        biases = parser.getArray(CodeBiasesContent.class, 8);
+        biases = parser.getArray(CodeBiasesContent.class);
     }
 
     @Override
@@ -80,7 +80,7 @@ generating configuration
         sid.build(builder);
         builder.putU8(update_interval);
         builder.putU8(iod_ssr);
-        builder.putArray(biases, 8);
+        builder.putArray(biases);
     }
 
     @Override
