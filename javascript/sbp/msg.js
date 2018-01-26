@@ -103,6 +103,7 @@ var sbpImports = {
   piksi: require('./piksi.js'),
   settings: require('./settings.js'),
   signal: require('./signal.js'),
+  ssr: require('./ssr.js'),
   system: require('./system.js'),
   tracking: require('./tracking.js'),
   user: require('./user.js'),
