@@ -193,8 +193,6 @@ data MsgSsrCodeBiases = MsgSsrCodeBiases
   , _msgSsrCodeBiases_iod_ssr       :: !Word8
     -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
     -- indicate a change in the SSR  generating configuration
-  , _msgSsrCodeBiases_n_biases      :: !Word8
-    -- ^ Number of biases for the given sid.
   , _msgSsrCodeBiases_biases        :: ![CodeBiasesContent]
     -- ^ Code biases for the different satellite signals
   } deriving ( Show, Read, Eq )
@@ -205,7 +203,6 @@ instance Binary MsgSsrCodeBiases where
     _msgSsrCodeBiases_sid <- get
     _msgSsrCodeBiases_update_interval <- getWord8
     _msgSsrCodeBiases_iod_ssr <- getWord8
-    _msgSsrCodeBiases_n_biases <- getWord8
     _msgSsrCodeBiases_biases <- whileM (not <$> isEmpty) get
     pure MsgSsrCodeBiases {..}
 
@@ -214,7 +211,6 @@ instance Binary MsgSsrCodeBiases where
     put _msgSsrCodeBiases_sid
     putWord8 _msgSsrCodeBiases_update_interval
     putWord8 _msgSsrCodeBiases_iod_ssr
-    putWord8 _msgSsrCodeBiases_n_biases
     mapM_ put _msgSsrCodeBiases_biases
 
 $(makeSBP 'msgSsrCodeBiases ''MsgSsrCodeBiases)
@@ -249,8 +245,6 @@ data MsgSsrPhaseBiases = MsgSsrPhaseBiases
     -- ^ Satellite yaw angle
   , _msgSsrPhaseBiases_yaw_rate      :: !Int8
     -- ^ Satellite yaw angle rate
-  , _msgSsrPhaseBiases_n_biases      :: !Word8
-    -- ^ Number of biases for the given sid.
   , _msgSsrPhaseBiases_biases        :: ![PhaseBiasesContent]
     -- ^ Phase biases corrections for a satellite being tracked.
   } deriving ( Show, Read, Eq )
@@ -265,7 +259,6 @@ instance Binary MsgSsrPhaseBiases where
     _msgSsrPhaseBiases_mw_consistency <- getWord8
     _msgSsrPhaseBiases_yaw <- getWord16le
     _msgSsrPhaseBiases_yaw_rate <- fromIntegral <$> getWord8
-    _msgSsrPhaseBiases_n_biases <- getWord8
     _msgSsrPhaseBiases_biases <- whileM (not <$> isEmpty) get
     pure MsgSsrPhaseBiases {..}
 
@@ -278,7 +271,6 @@ instance Binary MsgSsrPhaseBiases where
     putWord8 _msgSsrPhaseBiases_mw_consistency
     putWord16le _msgSsrPhaseBiases_yaw
     putWord8 $ fromIntegral _msgSsrPhaseBiases_yaw_rate
-    putWord8 _msgSsrPhaseBiases_n_biases
     mapM_ put _msgSsrPhaseBiases_biases
 
 $(makeSBP 'msgSsrPhaseBiases ''MsgSsrPhaseBiases)

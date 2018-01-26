@@ -69,10 +69,6 @@ generating configuration
     /** Satellite yaw angle rate */
     public int yaw_rate;
     
-    /** Number of biases for the given sid.
- */
-    public int n_biases;
-    
     /** Phase biases corrections for a
 satellite being tracked.
  */
@@ -97,7 +93,6 @@ satellite being tracked.
         mw_consistency = parser.getU8();
         yaw = parser.getU16();
         yaw_rate = parser.getS8();
-        n_biases = parser.getU8();
         biases = parser.getArray(PhaseBiasesContent.class);
     }
 
@@ -111,7 +106,6 @@ satellite being tracked.
         builder.putU8(mw_consistency);
         builder.putU16(yaw);
         builder.putS8(yaw_rate);
-        builder.putU8(n_biases);
         builder.putArray(biases);
     }
 
@@ -126,7 +120,6 @@ satellite being tracked.
         obj.put("mw_consistency", mw_consistency);
         obj.put("yaw", yaw);
         obj.put("yaw_rate", yaw_rate);
-        obj.put("n_biases", n_biases);
         obj.put("biases", SBPStruct.toJSONArray(biases));
         return obj;
     }
