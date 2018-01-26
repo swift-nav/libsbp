@@ -25,16 +25,6 @@ definitions:
      - code:
             type: u8
             desc: Signal constellation, band and code
-            fields:
-              - 0-7:
-                  values:
-                      - 0: GPS L1CA
-                      - 1: GPS L2CM
-                      - 2: SBAS L1CA
-                      - 3: GLO L1CA
-                      - 4: GLO L2CA
-                      - 5: GPS L1P
-                      - 6: GPS L2P
      - value:
             type: s16
             units: 0.01 m
@@ -48,16 +38,6 @@ definitions:
      - code:
             type: u8
             desc: Signal constellation, band and code
-            fields:
-              - 0-7:
-                  values:
-                      - 0: GPS L1CA
-                      - 1: GPS L2CM
-                      - 2: SBAS L1CA
-                      - 3: GLO L1CA
-                      - 4: GLO L2CA
-                      - 5: GPS L1P
-                      - 6: GPS L2P
      - integer_indicator:
             type: u8
             desc: Indicator for integer property
