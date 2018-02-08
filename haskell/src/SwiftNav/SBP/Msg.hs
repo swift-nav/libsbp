@@ -6,9 +6,9 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Msg
--- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
 -- License:     LGPL-3
--- Maintainer:  Mark Fine <dev@swiftnav.com>
+-- Maintainer:  Swift Navigation <dev@swiftnav.com>
 -- Stability:   experimental
 -- Portability: portable
 --
@@ -38,7 +38,9 @@ import SwiftNav.SBP.Ndb
 import SwiftNav.SBP.Observation
 import SwiftNav.SBP.Orientation
 import SwiftNav.SBP.Piksi
+import SwiftNav.SBP.Sbas
 import SwiftNav.SBP.Settings
+import SwiftNav.SBP.Ssr
 import SwiftNav.SBP.System
 import SwiftNav.SBP.Tracking
 import SwiftNav.SBP.User
@@ -151,6 +153,7 @@ data SBPMsg =
    | SBPMsgReset MsgReset Msg
    | SBPMsgResetDep MsgResetDep Msg
    | SBPMsgResetFilters MsgResetFilters Msg
+   | SBPMsgSbasRaw MsgSbasRaw Msg
    | SBPMsgSetTime MsgSetTime Msg
    | SBPMsgSettingsReadByIndexDone MsgSettingsReadByIndexDone Msg
    | SBPMsgSettingsReadByIndexReq MsgSettingsReadByIndexReq Msg
@@ -163,6 +166,9 @@ data SBPMsg =
    | SBPMsgSettingsWriteResp MsgSettingsWriteResp Msg
    | SBPMsgSpecan MsgSpecan Msg
    | SBPMsgSpecanDep MsgSpecanDep Msg
+   | SBPMsgSsrCodeBiases MsgSsrCodeBiases Msg
+   | SBPMsgSsrOrbitClock MsgSsrOrbitClock Msg
+   | SBPMsgSsrPhaseBiases MsgSsrPhaseBiases Msg
    | SBPMsgStartup MsgStartup Msg
    | SBPMsgStmFlashLockSector MsgStmFlashLockSector Msg
    | SBPMsgStmFlashUnlockSector MsgStmFlashUnlockSector Msg
@@ -175,8 +181,8 @@ data SBPMsg =
    | SBPMsgTrackingState MsgTrackingState Msg
    | SBPMsgTrackingStateDepA MsgTrackingStateDepA Msg
    | SBPMsgTrackingStateDepB MsgTrackingStateDepB Msg
-   | SBPMsgTrackingStateDetailed MsgTrackingStateDetailed Msg
    | SBPMsgTrackingStateDetailedDep MsgTrackingStateDetailedDep Msg
+   | SBPMsgTrackingStateDetailedDepA MsgTrackingStateDetailedDepA Msg
    | SBPMsgTweet MsgTweet Msg
    | SBPMsgUartState MsgUartState Msg
    | SBPMsgUartStateDepa MsgUartStateDepa Msg
@@ -302,6 +308,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgReset = SBPMsgReset (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgResetDep = SBPMsgResetDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgResetFilters = SBPMsgResetFilters (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSbasRaw = SBPMsgSbasRaw (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSetTime = SBPMsgSetTime (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -314,6 +321,9 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSettingsWriteResp = SBPMsgSettingsWriteResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSpecan = SBPMsgSpecan (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSpecanDep = SBPMsgSpecanDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrCodeBiases = SBPMsgSsrCodeBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrOrbitClock = SBPMsgSsrOrbitClock (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStmFlashLockSector = SBPMsgStmFlashLockSector (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -326,8 +336,8 @@ instance Binary SBPMsg where
           | _msgSBPType == msgTrackingState = SBPMsgTrackingState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingStateDepA = SBPMsgTrackingStateDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingStateDepB = SBPMsgTrackingStateDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgTrackingStateDetailed = SBPMsgTrackingStateDetailed (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingStateDetailedDep = SBPMsgTrackingStateDetailedDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgTrackingStateDetailedDepA = SBPMsgTrackingStateDetailedDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTweet = SBPMsgTweet (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUartStateDepa = SBPMsgUartStateDepa (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -445,6 +455,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgReset _ m) = put m
       encoder (SBPMsgResetDep _ m) = put m
       encoder (SBPMsgResetFilters _ m) = put m
+      encoder (SBPMsgSbasRaw _ m) = put m
       encoder (SBPMsgSetTime _ m) = put m
       encoder (SBPMsgSettingsReadByIndexDone _ m) = put m
       encoder (SBPMsgSettingsReadByIndexReq _ m) = put m
@@ -457,6 +468,9 @@ instance Binary SBPMsg where
       encoder (SBPMsgSettingsWriteResp _ m) = put m
       encoder (SBPMsgSpecan _ m) = put m
       encoder (SBPMsgSpecanDep _ m) = put m
+      encoder (SBPMsgSsrCodeBiases _ m) = put m
+      encoder (SBPMsgSsrOrbitClock _ m) = put m
+      encoder (SBPMsgSsrPhaseBiases _ m) = put m
       encoder (SBPMsgStartup _ m) = put m
       encoder (SBPMsgStmFlashLockSector _ m) = put m
       encoder (SBPMsgStmFlashUnlockSector _ m) = put m
@@ -469,8 +483,8 @@ instance Binary SBPMsg where
       encoder (SBPMsgTrackingState _ m) = put m
       encoder (SBPMsgTrackingStateDepA _ m) = put m
       encoder (SBPMsgTrackingStateDepB _ m) = put m
-      encoder (SBPMsgTrackingStateDetailed _ m) = put m
       encoder (SBPMsgTrackingStateDetailedDep _ m) = put m
+      encoder (SBPMsgTrackingStateDetailedDepA _ m) = put m
       encoder (SBPMsgTweet _ m) = put m
       encoder (SBPMsgUartState _ m) = put m
       encoder (SBPMsgUartStateDepa _ m) = put m
@@ -592,6 +606,7 @@ instance FromJSON SBPMsg where
         | msgType == msgReset = SBPMsgReset <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgResetDep = SBPMsgResetDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgResetFilters = SBPMsgResetFilters <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSbasRaw = SBPMsgSbasRaw <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSetTime = SBPMsgSetTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -604,6 +619,9 @@ instance FromJSON SBPMsg where
         | msgType == msgSettingsWriteResp = SBPMsgSettingsWriteResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSpecan = SBPMsgSpecan <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSpecanDep = SBPMsgSpecanDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrCodeBiases = SBPMsgSsrCodeBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrOrbitClock = SBPMsgSsrOrbitClock <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStartup = SBPMsgStartup <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStmFlashLockSector = SBPMsgStmFlashLockSector <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -616,8 +634,8 @@ instance FromJSON SBPMsg where
         | msgType == msgTrackingState = SBPMsgTrackingState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingStateDepA = SBPMsgTrackingStateDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingStateDepB = SBPMsgTrackingStateDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgTrackingStateDetailed = SBPMsgTrackingStateDetailed <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingStateDetailedDep = SBPMsgTrackingStateDetailedDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgTrackingStateDetailedDepA = SBPMsgTrackingStateDetailedDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTweet = SBPMsgTweet <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUartState = SBPMsgUartState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUartStateDepa = SBPMsgUartStateDepa <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -740,6 +758,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgReset n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgResetDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgResetFilters n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSbasRaw n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSetTime n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSettingsReadByIndexDone n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSettingsReadByIndexReq n m) = toJSON n <<>> toJSON m
@@ -752,6 +771,9 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSettingsWriteResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSpecan n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSpecanDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrCodeBiases n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrOrbitClock n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrPhaseBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStartup n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStmFlashLockSector n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStmFlashUnlockSector n m) = toJSON n <<>> toJSON m
@@ -764,8 +786,8 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgTrackingState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingStateDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingStateDepB n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgTrackingStateDetailed n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingStateDetailedDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgTrackingStateDetailedDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTweet n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUartState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUartStateDepa n m) = toJSON n <<>> toJSON m
@@ -882,6 +904,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgReset n m) = SBPMsgReset n <$> f m
   msg f (SBPMsgResetDep n m) = SBPMsgResetDep n <$> f m
   msg f (SBPMsgResetFilters n m) = SBPMsgResetFilters n <$> f m
+  msg f (SBPMsgSbasRaw n m) = SBPMsgSbasRaw n <$> f m
   msg f (SBPMsgSetTime n m) = SBPMsgSetTime n <$> f m
   msg f (SBPMsgSettingsReadByIndexDone n m) = SBPMsgSettingsReadByIndexDone n <$> f m
   msg f (SBPMsgSettingsReadByIndexReq n m) = SBPMsgSettingsReadByIndexReq n <$> f m
@@ -894,6 +917,9 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSettingsWriteResp n m) = SBPMsgSettingsWriteResp n <$> f m
   msg f (SBPMsgSpecan n m) = SBPMsgSpecan n <$> f m
   msg f (SBPMsgSpecanDep n m) = SBPMsgSpecanDep n <$> f m
+  msg f (SBPMsgSsrCodeBiases n m) = SBPMsgSsrCodeBiases n <$> f m
+  msg f (SBPMsgSsrOrbitClock n m) = SBPMsgSsrOrbitClock n <$> f m
+  msg f (SBPMsgSsrPhaseBiases n m) = SBPMsgSsrPhaseBiases n <$> f m
   msg f (SBPMsgStartup n m) = SBPMsgStartup n <$> f m
   msg f (SBPMsgStmFlashLockSector n m) = SBPMsgStmFlashLockSector n <$> f m
   msg f (SBPMsgStmFlashUnlockSector n m) = SBPMsgStmFlashUnlockSector n <$> f m
@@ -906,8 +932,8 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgTrackingState n m) = SBPMsgTrackingState n <$> f m
   msg f (SBPMsgTrackingStateDepA n m) = SBPMsgTrackingStateDepA n <$> f m
   msg f (SBPMsgTrackingStateDepB n m) = SBPMsgTrackingStateDepB n <$> f m
-  msg f (SBPMsgTrackingStateDetailed n m) = SBPMsgTrackingStateDetailed n <$> f m
   msg f (SBPMsgTrackingStateDetailedDep n m) = SBPMsgTrackingStateDetailedDep n <$> f m
+  msg f (SBPMsgTrackingStateDetailedDepA n m) = SBPMsgTrackingStateDetailedDepA n <$> f m
   msg f (SBPMsgTweet n m) = SBPMsgTweet n <$> f m
   msg f (SBPMsgUartState n m) = SBPMsgUartState n <$> f m
   msg f (SBPMsgUartStateDepa n m) = SBPMsgUartStateDepa n <$> f m

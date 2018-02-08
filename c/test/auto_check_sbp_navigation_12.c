@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swiftnav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  *
  * This source is subject to the license found in the file 'LICENSE' which must
  * be be distributed together with this source. All other rights reserved.
@@ -125,13 +125,13 @@ START_TEST( test_auto_check_sbp_navigation_12 )
     msg_pos_ecef_t* msg = ( msg_pos_ecef_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->flags == 2, "incorrect value for flags, expected 2, is %d", msg->flags);
-    fail_unless((msg->z*100 - 3839646.70954*100) < 0.05, "incorrect value for z, expected 3839646.70954, is %f", msg->z);
-    fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
-    fail_unless(msg->tow == 326826000, "incorrect value for tow, expected 326826000, is %d", msg->tow);
-    fail_unless((msg->y*100 - -4316646.75182*100) < 0.05, "incorrect value for y, expected -4316646.75182, is %f", msg->y);
-    fail_unless((msg->x*100 - -2684269.03266*100) < 0.05, "incorrect value for x, expected -2684269.03266, is %f", msg->x);
     fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
+    fail_unless((msg->y*100 - -4316646.75182*100) < 0.05, "incorrect value for y, expected -4316646.75182, is %f", msg->y);
+    fail_unless(msg->tow == 326826000, "incorrect value for tow, expected 326826000, is %d", msg->tow);
+    fail_unless((msg->z*100 - 3839646.70954*100) < 0.05, "incorrect value for z, expected 3839646.70954, is %f", msg->z);
+    fail_unless(msg->flags == 2, "incorrect value for flags, expected 2, is %d", msg->flags);
+    fail_unless((msg->x*100 - -2684269.03266*100) < 0.05, "incorrect value for x, expected -2684269.03266, is %f", msg->x);
     // print to string
     char test_str[1024];
     msg_pos_ecef_t_to_json_str( last_sender_id, 0x209, last_len, ( msg_pos_ecef_t* ) msg, 1024, test_str);
@@ -176,13 +176,13 @@ START_TEST( test_auto_check_sbp_navigation_12 )
     msg_pos_ecef_t* msg = ( msg_pos_ecef_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->flags == 2, "incorrect value for flags, expected 2, is %d", msg->flags);
-    fail_unless((msg->z*100 - 3839646.46391*100) < 0.05, "incorrect value for z, expected 3839646.46391, is %f", msg->z);
-    fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
-    fail_unless(msg->tow == 326827000, "incorrect value for tow, expected 326827000, is %d", msg->tow);
-    fail_unless((msg->y*100 - -4316646.76226*100) < 0.05, "incorrect value for y, expected -4316646.76226, is %f", msg->y);
-    fail_unless((msg->x*100 - -2684269.06425*100) < 0.05, "incorrect value for x, expected -2684269.06425, is %f", msg->x);
     fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
+    fail_unless((msg->y*100 - -4316646.76226*100) < 0.05, "incorrect value for y, expected -4316646.76226, is %f", msg->y);
+    fail_unless(msg->tow == 326827000, "incorrect value for tow, expected 326827000, is %d", msg->tow);
+    fail_unless((msg->z*100 - 3839646.46391*100) < 0.05, "incorrect value for z, expected 3839646.46391, is %f", msg->z);
+    fail_unless(msg->flags == 2, "incorrect value for flags, expected 2, is %d", msg->flags);
+    fail_unless((msg->x*100 - -2684269.06425*100) < 0.05, "incorrect value for x, expected -2684269.06425, is %f", msg->x);
     // print to string
     char test_str[1024];
     msg_pos_ecef_t_to_json_str( last_sender_id, 0x209, last_len, ( msg_pos_ecef_t* ) msg, 1024, test_str);
@@ -227,13 +227,13 @@ START_TEST( test_auto_check_sbp_navigation_12 )
     msg_pos_ecef_t* msg = ( msg_pos_ecef_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->flags == 2, "incorrect value for flags, expected 2, is %d", msg->flags);
-    fail_unless((msg->z*100 - 3839646.12491*100) < 0.05, "incorrect value for z, expected 3839646.12491, is %f", msg->z);
-    fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
-    fail_unless(msg->tow == 326828000, "incorrect value for tow, expected 326828000, is %d", msg->tow);
-    fail_unless((msg->y*100 - -4316647.11827*100) < 0.05, "incorrect value for y, expected -4316647.11827, is %f", msg->y);
-    fail_unless((msg->x*100 - -2684269.42928*100) < 0.05, "incorrect value for x, expected -2684269.42928, is %f", msg->x);
     fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
+    fail_unless((msg->y*100 - -4316647.11827*100) < 0.05, "incorrect value for y, expected -4316647.11827, is %f", msg->y);
+    fail_unless(msg->tow == 326828000, "incorrect value for tow, expected 326828000, is %d", msg->tow);
+    fail_unless((msg->z*100 - 3839646.12491*100) < 0.05, "incorrect value for z, expected 3839646.12491, is %f", msg->z);
+    fail_unless(msg->flags == 2, "incorrect value for flags, expected 2, is %d", msg->flags);
+    fail_unless((msg->x*100 - -2684269.42928*100) < 0.05, "incorrect value for x, expected -2684269.42928, is %f", msg->x);
     // print to string
     char test_str[1024];
     msg_pos_ecef_t_to_json_str( last_sender_id, 0x209, last_len, ( msg_pos_ecef_t* ) msg, 1024, test_str);
@@ -278,13 +278,13 @@ START_TEST( test_auto_check_sbp_navigation_12 )
     msg_pos_ecef_t* msg = ( msg_pos_ecef_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->flags == 2, "incorrect value for flags, expected 2, is %d", msg->flags);
-    fail_unless((msg->z*100 - 3839645.9018*100) < 0.05, "incorrect value for z, expected 3839645.9018, is %f", msg->z);
-    fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
-    fail_unless(msg->tow == 326829000, "incorrect value for tow, expected 326829000, is %d", msg->tow);
-    fail_unless((msg->y*100 - -4316647.36238*100) < 0.05, "incorrect value for y, expected -4316647.36238, is %f", msg->y);
-    fail_unless((msg->x*100 - -2684269.68374*100) < 0.05, "incorrect value for x, expected -2684269.68374, is %f", msg->x);
     fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
+    fail_unless((msg->y*100 - -4316647.36238*100) < 0.05, "incorrect value for y, expected -4316647.36238, is %f", msg->y);
+    fail_unless(msg->tow == 326829000, "incorrect value for tow, expected 326829000, is %d", msg->tow);
+    fail_unless((msg->z*100 - 3839645.9018*100) < 0.05, "incorrect value for z, expected 3839645.9018, is %f", msg->z);
+    fail_unless(msg->flags == 2, "incorrect value for flags, expected 2, is %d", msg->flags);
+    fail_unless((msg->x*100 - -2684269.68374*100) < 0.05, "incorrect value for x, expected -2684269.68374, is %f", msg->x);
     // print to string
     char test_str[1024];
     msg_pos_ecef_t_to_json_str( last_sender_id, 0x209, last_len, ( msg_pos_ecef_t* ) msg, 1024, test_str);

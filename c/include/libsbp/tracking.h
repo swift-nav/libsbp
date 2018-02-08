@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Fergus Noble <fergus@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  *
  * This source is subject to the license found in the file 'LICENSE' which must
  * be be distributed together with this source. All other rights reserved.
@@ -27,12 +27,12 @@
 #include "gnss.h"
 
 
-/** Detailed signal tracking channel states
+/** Detailed signal tracking channel states. DEPRECATED.
  *
  * The tracking message returns a set tracking channel parameters for a
  * single tracking channel useful for debugging issues.
  */
-#define SBP_MSG_TRACKING_STATE_DETAILED     0x0021
+#define SBP_MSG_TRACKING_STATE_DETAILED_DEP_A 0x0021
 typedef struct __attribute__((packed)) {
   u64 recv_time;       /**< Receiver clock time. [ns] */
   sbp_gps_time_t tot;             /**< Time of transmission of signal from satellite. TOW only valid when
@@ -70,14 +70,14 @@ signal is in continuous track.
   u8 nav_flags;       /**< Navigation data status flags. */
   u8 pset_flags;      /**< Parameters sets flags. */
   u8 misc_flags;      /**< Miscellaneous flags. */
-} msg_tracking_state_detailed_t;
-int msg_tracking_state_detailed_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_tracking_state_detailed_t * in, uint64_t max_len, char* out_str);
+} msg_tracking_state_detailed_dep_a_t;
+int msg_tracking_state_detailed_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_tracking_state_detailed_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
 * Deprecated.
  */
-#define SBP_MSG_TRACKING_STATE_DETAILED_DEP 0x0011
+#define SBP_MSG_TRACKING_STATE_DETAILED_DEP   0x0011
 typedef struct __attribute__((packed)) {
   u64 recv_time;       /**< Receiver clock time. [ns] */
   gps_time_dep_t tot;             /**< Time of transmission of signal from satellite. TOW only valid when
@@ -136,7 +136,7 @@ int tracking_channel_state_t_to_json_str( tracking_channel_state_t * in, uint64_
  * channel states. It reports status and carrier-to-noise density
  * measurements for all tracked satellites.
  */
-#define SBP_MSG_TRACKING_STATE              0x0041
+#define SBP_MSG_TRACKING_STATE                0x0041
 typedef struct __attribute__((packed)) {
   tracking_channel_state_t states[0]; /**< Signal tracking channel state */
 } msg_tracking_state_t;
@@ -157,7 +157,7 @@ int tracking_channel_correlation_t_to_json_str( tracking_channel_correlation_t *
  * When enabled, a tracking channel can output the correlations at each
  * update interval.
  */
-#define SBP_MSG_TRACKING_IQ                 0x002C
+#define SBP_MSG_TRACKING_IQ                   0x002C
 typedef struct __attribute__((packed)) {
   u8 channel;    /**< Tracking channel of origin */
   sbp_gnss_signal_t sid;        /**< GNSS signal identifier */
@@ -169,7 +169,7 @@ int msg_tracking_iq_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_
  *
 * Deprecated.
  */
-#define SBP_MSG_TRACKING_IQ_DEP             0x001C
+#define SBP_MSG_TRACKING_IQ_DEP               0x001C
 typedef struct __attribute__((packed)) {
   u8 channel;    /**< Tracking channel of origin */
   gnss_signal_dep_t sid;        /**< GNSS signal identifier */
@@ -192,7 +192,7 @@ int tracking_channel_state_dep_a_t_to_json_str( tracking_channel_state_dep_a_t *
  *
 * Deprecated.
  */
-#define SBP_MSG_TRACKING_STATE_DEP_A        0x0016
+#define SBP_MSG_TRACKING_STATE_DEP_A          0x0016
 typedef struct __attribute__((packed)) {
   tracking_channel_state_dep_a_t states[0]; /**< Satellite tracking channel state */
 } msg_tracking_state_dep_a_t;
@@ -213,7 +213,7 @@ int tracking_channel_state_dep_b_t_to_json_str( tracking_channel_state_dep_b_t *
  *
 * Deprecated.
  */
-#define SBP_MSG_TRACKING_STATE_DEP_B        0x0013
+#define SBP_MSG_TRACKING_STATE_DEP_B          0x0013
 typedef struct __attribute__((packed)) {
   tracking_channel_state_dep_b_t states[0]; /**< Signal tracking channel state */
 } msg_tracking_state_dep_b_t;

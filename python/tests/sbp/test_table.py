@@ -30,6 +30,7 @@ from sbp import ndb as ndb
 from sbp import mag as mag
 from sbp import vehicle as vehicle
 from sbp import orientation as orientation 
+from sbp import sbas as sbas
 
 import pytest
 import sbp.acquisition as acq
@@ -41,7 +42,7 @@ def test_table_count():
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 138
+  number_of_messages = 139
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_table_unqiue_count():
@@ -66,6 +67,7 @@ def test_table_unqiue_count():
                         + len(mag.msg_classes)
                         + len(vehicle.msg_classes)
                         + len(orientation.msg_classes)
+                        + len(sbas.msg_classes)
                          )
   assert len(_SBP_TABLE) == number_of_messages
 

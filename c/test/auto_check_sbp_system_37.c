@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swiftnav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  *
  * This source is subject to the license found in the file 'LICENSE' which must
  * be be distributed together with this source. All other rights reserved.
@@ -125,9 +125,9 @@ START_TEST( test_auto_check_sbp_system_37 )
     msg_startup_t* msg = ( msg_startup_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
+    fail_unless(msg->startup_type == 0, "incorrect value for startup_type, expected 0, is %d", msg->startup_type);
     fail_unless(msg->reserved == 0, "incorrect value for reserved, expected 0, is %d", msg->reserved);
     fail_unless(msg->cause == 0, "incorrect value for cause, expected 0, is %d", msg->cause);
-    fail_unless(msg->startup_type == 0, "incorrect value for startup_type, expected 0, is %d", msg->startup_type);
     // print to string
     char test_str[1024];
     msg_startup_t_to_json_str( last_sender_id, 0xff00, last_len, ( msg_startup_t* ) msg, 1024, test_str);

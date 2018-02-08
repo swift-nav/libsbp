@@ -1,0 +1,204 @@
+# Copyright (C) 2018 Swift Navigation Inc.
+# Contact: Swift Navigation <dev@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.ssr
+description: Precise State Space Representation (SSR) corrections format
+stable: False
+public: True
+include:
+  - types.yaml
+  - gnss.yaml
+definitions:
+ - CodeBiasesContent:
+     short_desc: SSR code biases corrections for a particular satellite.
+     desc: |
+      Code biases are to be added to pseudorange.
+      The corrections are conform with typical RTCMv3 MT1059 and 1065.
+     fields:
+     - code:
+            type: u8
+            desc: Signal constellation, band and code
+     - value:
+            type: s16
+            units: 0.01 m
+            desc: Code bias value
+ - PhaseBiasesContent:
+     short_desc: SSR phase biases corrections for a particular satellite.
+     desc: |
+      Phase biases are to be added to carrier phase measurements.
+      The corrections are conform with typical RTCMv3 MT1059 and 1065.
+     fields:
+     - code:
+            type: u8
+            desc: Signal constellation, band and code
+     - integer_indicator:
+            type: u8
+            desc: Indicator for integer property
+     - widelane_integer_indicator:
+            type: u8
+            desc: Indicator for two groups of Wide-Lane(s) integer property
+     - discontinuity_counter:
+            type: u8
+            desc: |
+              Signal phase discontinuity counter. 
+              Increased for every discontinuity in phase.
+     - bias:
+            type: s32
+            units: 0.1 mm
+            desc: Phase bias for specified signal
+
+ - MSG_SSR_ORBIT_CLOCK:
+    id: 0x005DC
+    short_desc: Precise orbit and clock correction
+    desc: |
+      The precise orbit and clock correction message is 
+      to be applied as a delta correction to broadcast 
+      ephemeris and is typically an equivalent to the 1060
+      and 1066 RTCM message types
+    fields:
+        - time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the correction
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier (16 bit)
+        - update_interval:
+            type: u8
+            units: s
+            desc: Update interval between consecutive corrections
+        - iod_ssr:
+            type: u8
+            desc: |
+                IOD of the SSR correction. A change of Issue Of Data
+                SSR is used to indicate a change in the SSR 
+                generating configuration
+        - iod:
+            type: u8
+            desc: Issue of broadcast ephemeris data
+        - radial:
+            type: s32
+            units: 0.1 mm
+            desc: Orbit radial delta correction
+        - along:
+            type: s32
+            units: 0.4 mm
+            desc: Orbit along delta correction
+        - cross:
+            type: s32
+            units: 0.4 mm
+            desc: Orbit along delta correction
+        - dot_radial:
+            type: s32
+            units: 0.001 mm/s
+            desc: Velocity of orbit radial delta correction
+        - dot_along:
+            type: s32
+            units: 0.004 mm/s
+            desc: Velocity of orbit along delta correction
+        - dot_cross:
+            type: s32
+            units: 0.004 mm/s
+            desc: Velocity of orbit cross delta correction
+        - c0:
+            type: s32
+            units: 0.1 mm
+            desc: C0 polynomial coefficient for correction of broadcast satellite clock
+        - c1:
+            type: s32
+            units: 0.001 mm/s
+            desc: C1 polynomial coefficient for correction of broadcast satellite clock
+        - c2:
+            type: s32
+            units: 0.00002 mm/s^-2
+            desc: C2 polynomial coefficient for correction of broadcast satellite clock
+        
+              
+ - MSG_SSR_CODE_BIASES:
+    id: 0x005E1
+    short_desc: Precise code biases correction
+    desc: |
+      The precise code biases message is to be added
+      to the pseudorange of the corresponding signal
+      to get corrected pseudorange. It is typically 
+      an equivalent to the 1059 and 1065 RTCM message types
+    fields:
+        - time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the correction
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier (16 bit)
+        - update_interval:
+            type: u8
+            units: s
+            desc: Update interval between consecutive corrections
+        - iod_ssr:
+            type: u8
+            desc: |
+                IOD of the SSR correction. A change of Issue Of Data
+                SSR is used to indicate a change in the SSR 
+                generating configuration
+        - biases:
+            type: array
+            fill: CodeBiasesContent
+            map_by: code
+            desc: Code biases for the different satellite signals
+        
+
+ - MSG_SSR_PHASE_BIASES:
+    id: 0x005E6
+    short_desc: Precise phase biases correction
+    desc: |
+      The precise phase biases message contains the biases
+      to be added to the carrier phase of the corresponding
+      signal to get corrected carrier phase measurement, as 
+      well as the satellite yaw angle to be applied to compute 
+      the phase wind-up correction. 
+      It is typically an equivalent to the 1265 RTCM message types
+    fields:
+        - time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the correction
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier (16 bit)
+        - update_interval:
+            type: u8
+            units: s
+            desc: Update interval between consecutive corrections
+        - iod_ssr:
+            type: u8
+            desc: |
+                IOD of the SSR correction. A change of Issue Of Data
+                SSR is used to indicate a change in the SSR 
+                generating configuration
+        - dispersive_bias:
+            type: u8
+            desc: |
+                Indicator for the dispersive phase biases property.
+        - mw_consistency:
+            type: u8
+            desc: |
+                Consistency indicator for Melbourne-Wubbena linear combinations
+        - yaw:
+            type: u16
+            units: 1 / 256 semi-circle
+            desc: Satellite yaw angle
+        - yaw_rate:
+            type: s8
+            units: 1 / 8192 semi-circle / s
+            desc: Satellite yaw angle rate
+        - biases:
+            type: array
+            fill: PhaseBiasesContent
+            map_by: code
+            desc: |
+              Phase biases corrections for a
+              satellite being tracked.

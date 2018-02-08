@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swiftnav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  *
  * This source is subject to the license found in the file 'LICENSE' which must
  * be be distributed together with this source. All other rights reserved.
@@ -125,9 +125,9 @@ START_TEST( test_auto_check_sbp_vehicle_50 )
     msg_odometry_t* msg = ( msg_odometry_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->tow == 8, "incorrect value for tow, expected 8, is %d", msg->tow);
-    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
     fail_unless(msg->velocity == 7, "incorrect value for velocity, expected 7, is %d", msg->velocity);
+    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->tow == 8, "incorrect value for tow, expected 8, is %d", msg->tow);
     // print to string
     char test_str[1024];
     msg_odometry_t_to_json_str( last_sender_id, 0x903, last_len, ( msg_odometry_t* ) msg, 1024, test_str);

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 44);
+/******/ 	return __webpack_require__(__webpack_require__.s = 46);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,8 +71,8 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -296,8 +296,8 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.UINT32 = __webpack_require__(48)
-exports.UINT64 = __webpack_require__(49)
+exports.UINT32 = __webpack_require__(50)
+exports.UINT64 = __webpack_require__(51)
 
 /***/ }),
 /* 2 */
@@ -314,7 +314,7 @@ exports.UINT64 = __webpack_require__(49)
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-var assert = __webpack_require__(45);
+var assert = __webpack_require__(47);
 var Int64 = __webpack_require__(3);
 var UInt64 = __webpack_require__(1).UINT64;
 
@@ -480,7 +480,7 @@ SBP.prototype.toBase64 = function toBase64 () {
 
 module.exports = SBP;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer))
 
 /***/ }),
 /* 3 */
@@ -755,7 +755,7 @@ Int64.prototype = {
   }
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer))
 
 /***/ }),
 /* 4 */
@@ -772,7 +772,7 @@ Int64.prototype = {
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-var Parser = __webpack_require__(11).Parser;
+var Parser = __webpack_require__(12).Parser;
 
 /**
  * Add `uint64` to Parser prototype.
@@ -809,10 +809,37 @@ Parser.prototype.compile = function() {
 
 module.exports = Parser;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer))
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -826,8 +853,8 @@ module.exports = Parser;
 
 
 
-var base64 = __webpack_require__(46)
-var ieee754 = __webpack_require__(50)
+var base64 = __webpack_require__(48)
+var ieee754 = __webpack_require__(52)
 var isArray = __webpack_require__(17)
 
 exports.Buffer = Buffer
@@ -2606,42 +2633,34 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-if (typeof Object.create === 'function') {
-  // implementation from standard node.js 'util' module
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    ctor.prototype = Object.create(superCtor.prototype, {
-      constructor: {
-        value: ctor,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-  };
-} else {
-  // old school shim for old browsers
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    var TempCtor = function () {}
-    TempCtor.prototype = superCtor.prototype
-    ctor.prototype = new TempCtor()
-    ctor.prototype.constructor = ctor
-  }
-}
-
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 // a duplex stream is just a stream that is both readable and writable.
 // Since JS doesn't have multiple prototypal inheritance, this class
 // prototypally inherits from Readable, and then parasitically from
@@ -2651,6 +2670,10 @@ if (typeof Object.create === 'function') {
 
 /*<replacement>*/
 
+var processNextTick = __webpack_require__(11);
+/*</replacement>*/
+
+/*<replacement>*/
 var objectKeys = Object.keys || function (obj) {
   var keys = [];
   for (var key in obj) {
@@ -2662,12 +2685,8 @@ var objectKeys = Object.keys || function (obj) {
 module.exports = Duplex;
 
 /*<replacement>*/
-var processNextTick = __webpack_require__(13);
-/*</replacement>*/
-
-/*<replacement>*/
 var util = __webpack_require__(10);
-util.inherits = __webpack_require__(6);
+util.inherits = __webpack_require__(8);
 /*</replacement>*/
 
 var Readable = __webpack_require__(19);
@@ -2712,6 +2731,34 @@ function onEndNT(self) {
   self.end();
 }
 
+Object.defineProperty(Duplex.prototype, 'destroyed', {
+  get: function () {
+    if (this._readableState === undefined || this._writableState === undefined) {
+      return false;
+    }
+    return this._readableState.destroyed && this._writableState.destroyed;
+  },
+  set: function (value) {
+    // we ignore the value if the stream
+    // has not been initialized yet
+    if (this._readableState === undefined || this._writableState === undefined) {
+      return;
+    }
+
+    // backward compatibility, the user is explicitly
+    // managing destroyed
+    this._readableState.destroyed = value;
+    this._writableState.destroyed = value;
+  }
+});
+
+Duplex.prototype._destroy = function (err, cb) {
+  this.push(null);
+  this.end();
+
+  processNextTick(cb, err);
+};
+
 function forEach(xs, f) {
   for (var i = 0, l = xs.length; i < l; i++) {
     f(xs[i], i);
@@ -2722,27 +2769,29 @@ function forEach(xs, f) {
 /* 8 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
 }
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
 
 
 /***/ }),
@@ -3047,17 +3096,68 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer))
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+if (!process.version ||
+    process.version.indexOf('v0.') === 0 ||
+    process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
+  module.exports = nextTick;
+} else {
+  module.exports = process.nextTick;
+}
+
+function nextTick(fn, arg1, arg2, arg3) {
+  if (typeof fn !== 'function') {
+    throw new TypeError('"callback" argument must be a function');
+  }
+  var len = arguments.length;
+  var args, i;
+  switch (len) {
+  case 0:
+  case 1:
+    return process.nextTick(fn);
+  case 2:
+    return process.nextTick(function afterTickOne() {
+      fn.call(null, arg1);
+    });
+  case 3:
+    return process.nextTick(function afterTickTwo() {
+      fn.call(null, arg1, arg2);
+    });
+  case 4:
+    return process.nextTick(function afterTickThree() {
+      fn.call(null, arg1, arg2, arg3);
+    });
+  default:
+    args = new Array(len - 1);
+    i = 0;
+    while (i < args.length) {
+      args[i++] = arguments[i];
+    }
+    return process.nextTick(function afterTick() {
+      fn.apply(null, args);
+    });
+  }
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //========================================================================================
 // Globals
 //========================================================================================
 
-var Context = __webpack_require__(47).Context;
+var Context = __webpack_require__(49).Context;
 
 var PRIMITIVE_TYPES = {
     'UInt8'    : 1,
@@ -3629,7 +3729,7 @@ exports.Parser = Parser;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -3937,72 +4037,64 @@ function isUndefined(arg) {
 
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-if (!process.version ||
-    process.version.indexOf('v0.') === 0 ||
-    process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
-  module.exports = nextTick;
-} else {
-  module.exports = process.nextTick;
-}
-
-function nextTick(fn, arg1, arg2, arg3) {
-  if (typeof fn !== 'function') {
-    throw new TypeError('"callback" argument must be a function');
-  }
-  var len = arguments.length;
-  var args, i;
-  switch (len) {
-  case 0:
-  case 1:
-    return process.nextTick(fn);
-  case 2:
-    return process.nextTick(function afterTickOne() {
-      fn.call(null, arg1);
-    });
-  case 3:
-    return process.nextTick(function afterTickTwo() {
-      fn.call(null, arg1, arg2);
-    });
-  case 4:
-    return process.nextTick(function afterTickThree() {
-      fn.call(null, arg1, arg2, arg3);
-    });
-  default:
-    args = new Array(len - 1);
-    i = 0;
-    while (i < args.length) {
-      args[i++] = arguments[i];
-    }
-    return process.nextTick(function afterTick() {
-      fn.apply(null, args);
-    });
-  }
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
-
-/***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process, setImmediate) {// A bit simpler than readable streams.
+/* WEBPACK VAR INJECTION */(function(process, setImmediate, global) {// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// A bit simpler than readable streams.
 // Implement an async ._write(chunk, encoding, cb), and it'll handle all
 // the drain event emission and buffering.
 
 
 
+/*<replacement>*/
+
+var processNextTick = __webpack_require__(11);
+/*</replacement>*/
+
 module.exports = Writable;
 
-/*<replacement>*/
-var processNextTick = __webpack_require__(13);
-/*</replacement>*/
+/* <replacement> */
+function WriteReq(chunk, encoding, cb) {
+  this.chunk = chunk;
+  this.encoding = encoding;
+  this.callback = cb;
+  this.next = null;
+}
+
+// It seems a linked list but it is not
+// there will be only 2 of these for each stream
+function CorkedRequest(state) {
+  var _this = this;
+
+  this.next = null;
+  this.entry = null;
+  this.finish = function () {
+    onCorkedFinish(_this, state);
+  };
+}
+/* </replacement> */
 
 /*<replacement>*/
 var asyncWrite = !process.browser && ['v0.10', 'v0.9.'].indexOf(process.version.slice(0, 5)) > -1 ? setImmediate : processNextTick;
@@ -4016,33 +4108,35 @@ Writable.WritableState = WritableState;
 
 /*<replacement>*/
 var util = __webpack_require__(10);
-util.inherits = __webpack_require__(6);
+util.inherits = __webpack_require__(8);
 /*</replacement>*/
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(59)
+  deprecate: __webpack_require__(61)
 };
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(21);
+var Stream = __webpack_require__(22);
 /*</replacement>*/
 
 /*<replacement>*/
 var Buffer = __webpack_require__(16).Buffer;
+var OurUint8Array = global.Uint8Array || function () {};
+function _uint8ArrayToBuffer(chunk) {
+  return Buffer.from(chunk);
+}
+function _isUint8Array(obj) {
+  return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
+}
 /*</replacement>*/
+
+var destroyImpl = __webpack_require__(21);
 
 util.inherits(Writable, Stream);
 
 function nop() {}
-
-function WriteReq(chunk, encoding, cb) {
-  this.chunk = chunk;
-  this.encoding = encoding;
-  this.callback = cb;
-  this.next = null;
-}
 
 function WritableState(options, stream) {
   Duplex = Duplex || __webpack_require__(7);
@@ -4063,7 +4157,10 @@ function WritableState(options, stream) {
   this.highWaterMark = hwm || hwm === 0 ? hwm : defaultHwm;
 
   // cast to ints.
-  this.highWaterMark = ~~this.highWaterMark;
+  this.highWaterMark = Math.floor(this.highWaterMark);
+
+  // if _final has been called
+  this.finalCalled = false;
 
   // drain event flag.
   this.needDrain = false;
@@ -4073,6 +4170,9 @@ function WritableState(options, stream) {
   this.ended = false;
   // when 'finish' is emitted
   this.finished = false;
+
+  // has it been destroyed
+  this.destroyed = false;
 
   // should we decode strings into buffers before passing to _write?
   // this is here so that some node-core streams can optimize string
@@ -4155,7 +4255,7 @@ WritableState.prototype.getBuffer = function getBuffer() {
     Object.defineProperty(WritableState.prototype, 'buffer', {
       get: internalUtil.deprecate(function () {
         return this.getBuffer();
-      }, '_writableState.buffer is deprecated. Use _writableState.getBuffer ' + 'instead.')
+      }, '_writableState.buffer is deprecated. Use _writableState.getBuffer ' + 'instead.', 'DEP0003')
     });
   } catch (_) {}
 })();
@@ -4201,6 +4301,10 @@ function Writable(options) {
     if (typeof options.write === 'function') this._write = options.write;
 
     if (typeof options.writev === 'function') this._writev = options.writev;
+
+    if (typeof options.destroy === 'function') this._destroy = options.destroy;
+
+    if (typeof options.final === 'function') this._final = options.final;
   }
 
   Stream.call(this);
@@ -4241,7 +4345,11 @@ function validChunk(stream, state, chunk, cb) {
 Writable.prototype.write = function (chunk, encoding, cb) {
   var state = this._writableState;
   var ret = false;
-  var isBuf = Buffer.isBuffer(chunk);
+  var isBuf = _isUint8Array(chunk) && !state.objectMode;
+
+  if (isBuf && !Buffer.isBuffer(chunk)) {
+    chunk = _uint8ArrayToBuffer(chunk);
+  }
 
   if (typeof encoding === 'function') {
     cb = encoding;
@@ -4296,8 +4404,12 @@ function decodeChunk(state, chunk, encoding) {
 // If we return false, then we need a drain event, so set that flag.
 function writeOrBuffer(stream, state, isBuf, chunk, encoding, cb) {
   if (!isBuf) {
-    chunk = decodeChunk(state, chunk, encoding);
-    if (Buffer.isBuffer(chunk)) encoding = 'buffer';
+    var newChunk = decodeChunk(state, chunk, encoding);
+    if (chunk !== newChunk) {
+      isBuf = true;
+      encoding = 'buffer';
+      chunk = newChunk;
+    }
   }
   var len = state.objectMode ? 1 : chunk.length;
 
@@ -4309,7 +4421,13 @@ function writeOrBuffer(stream, state, isBuf, chunk, encoding, cb) {
 
   if (state.writing || state.corked) {
     var last = state.lastBufferedRequest;
-    state.lastBufferedRequest = new WriteReq(chunk, encoding, cb);
+    state.lastBufferedRequest = {
+      chunk: chunk,
+      encoding: encoding,
+      isBuf: isBuf,
+      callback: cb,
+      next: null
+    };
     if (last) {
       last.next = state.lastBufferedRequest;
     } else {
@@ -4334,10 +4452,26 @@ function doWrite(stream, state, writev, len, chunk, encoding, cb) {
 
 function onwriteError(stream, state, sync, er, cb) {
   --state.pendingcb;
-  if (sync) processNextTick(cb, er);else cb(er);
 
-  stream._writableState.errorEmitted = true;
-  stream.emit('error', er);
+  if (sync) {
+    // defer the callback if we are being called synchronously
+    // to avoid piling up things on the stack
+    processNextTick(cb, er);
+    // this can emit finish, and it will always happen
+    // after error
+    processNextTick(finishMaybe, stream, state);
+    stream._writableState.errorEmitted = true;
+    stream.emit('error', er);
+  } else {
+    // the caller expect this to happen before if
+    // it is async
+    cb(er);
+    stream._writableState.errorEmitted = true;
+    stream.emit('error', er);
+    // this can emit finish, but finish must
+    // always follow error
+    finishMaybe(stream, state);
+  }
 }
 
 function onwriteStateUpdate(state) {
@@ -4402,11 +4536,14 @@ function clearBuffer(stream, state) {
     holder.entry = entry;
 
     var count = 0;
+    var allBuffers = true;
     while (entry) {
       buffer[count] = entry;
+      if (!entry.isBuf) allBuffers = false;
       entry = entry.next;
       count += 1;
     }
+    buffer.allBuffers = allBuffers;
 
     doWrite(stream, state, true, state.length, buffer, '', holder.finish);
 
@@ -4480,23 +4617,37 @@ Writable.prototype.end = function (chunk, encoding, cb) {
 function needFinish(state) {
   return state.ending && state.length === 0 && state.bufferedRequest === null && !state.finished && !state.writing;
 }
-
-function prefinish(stream, state) {
-  if (!state.prefinished) {
+function callFinal(stream, state) {
+  stream._final(function (err) {
+    state.pendingcb--;
+    if (err) {
+      stream.emit('error', err);
+    }
     state.prefinished = true;
     stream.emit('prefinish');
+    finishMaybe(stream, state);
+  });
+}
+function prefinish(stream, state) {
+  if (!state.prefinished && !state.finalCalled) {
+    if (typeof stream._final === 'function') {
+      state.pendingcb++;
+      state.finalCalled = true;
+      processNextTick(callFinal, stream, state);
+    } else {
+      state.prefinished = true;
+      stream.emit('prefinish');
+    }
   }
 }
 
 function finishMaybe(stream, state) {
   var need = needFinish(state);
   if (need) {
+    prefinish(stream, state);
     if (state.pendingcb === 0) {
-      prefinish(stream, state);
       state.finished = true;
       stream.emit('finish');
-    } else {
-      prefinish(stream, state);
     }
   }
   return need;
@@ -4512,30 +4663,49 @@ function endWritable(stream, state, cb) {
   stream.writable = false;
 }
 
-// It seems a linked list but it is not
-// there will be only 2 of these for each stream
-function CorkedRequest(state) {
-  var _this = this;
-
-  this.next = null;
-  this.entry = null;
-  this.finish = function (err) {
-    var entry = _this.entry;
-    _this.entry = null;
-    while (entry) {
-      var cb = entry.callback;
-      state.pendingcb--;
-      cb(err);
-      entry = entry.next;
-    }
-    if (state.corkedRequestsFree) {
-      state.corkedRequestsFree.next = _this;
-    } else {
-      state.corkedRequestsFree = _this;
-    }
-  };
+function onCorkedFinish(corkReq, state, err) {
+  var entry = corkReq.entry;
+  corkReq.entry = null;
+  while (entry) {
+    var cb = entry.callback;
+    state.pendingcb--;
+    cb(err);
+    entry = entry.next;
+  }
+  if (state.corkedRequestsFree) {
+    state.corkedRequestsFree.next = corkReq;
+  } else {
+    state.corkedRequestsFree = corkReq;
+  }
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(58).setImmediate))
+
+Object.defineProperty(Writable.prototype, 'destroyed', {
+  get: function () {
+    if (this._writableState === undefined) {
+      return false;
+    }
+    return this._writableState.destroyed;
+  },
+  set: function (value) {
+    // we ignore the value if the stream
+    // has not been initialized yet
+    if (!this._writableState) {
+      return;
+    }
+
+    // backward compatibility, the user is explicitly
+    // managing destroyed
+    this._writableState.destroyed = value;
+  }
+});
+
+Writable.prototype.destroy = destroyImpl.destroy;
+Writable.prototype._undestroy = destroyImpl.undestroy;
+Writable.prototype._destroy = function (err, cb) {
+  this.end();
+  cb(err);
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(60).setImmediate, __webpack_require__(5)))
 
 /***/ }),
 /* 15 */
@@ -4547,14 +4717,75 @@ exports.Readable = exports;
 exports.Writable = __webpack_require__(14);
 exports.Duplex = __webpack_require__(7);
 exports.Transform = __webpack_require__(20);
-exports.PassThrough = __webpack_require__(52);
+exports.PassThrough = __webpack_require__(54);
 
 
 /***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(5)
+/* eslint-disable node/no-deprecated-api */
+var buffer = __webpack_require__(6)
+var Buffer = buffer.Buffer
+
+// alternative to using Object.keys for old browsers
+function copyProps (src, dst) {
+  for (var key in src) {
+    dst[key] = src[key]
+  }
+}
+if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
+  module.exports = buffer
+} else {
+  // Copy properties from require('buffer')
+  copyProps(buffer, exports)
+  exports.Buffer = SafeBuffer
+}
+
+function SafeBuffer (arg, encodingOrOffset, length) {
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+// Copy static methods from Buffer
+copyProps(Buffer, SafeBuffer)
+
+SafeBuffer.from = function (arg, encodingOrOffset, length) {
+  if (typeof arg === 'number') {
+    throw new TypeError('Argument must not be a number')
+  }
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+SafeBuffer.alloc = function (size, fill, encoding) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  var buf = Buffer(size)
+  if (fill !== undefined) {
+    if (typeof encoding === 'string') {
+      buf.fill(fill, encoding)
+    } else {
+      buf.fill(fill)
+    }
+  } else {
+    buf.fill(0)
+  }
+  return buf
+}
+
+SafeBuffer.allocUnsafe = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return Buffer(size)
+}
+
+SafeBuffer.allocUnsafeSlow = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return buffer.SlowBuffer(size)
+}
 
 
 /***/ }),
@@ -4593,7 +4824,7 @@ module.exports = Array.isArray || function (arr) {
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var Buffer = __webpack_require__(5).Buffer;
+var Buffer = __webpack_require__(6).Buffer;
 
 var isBufferEncoding = Buffer.isEncoding
   || function(encoding) {
@@ -4800,13 +5031,35 @@ function base64DetectIncompleteChar(buffer) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
+/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-module.exports = Readable;
+
 
 /*<replacement>*/
-var processNextTick = __webpack_require__(13);
+
+var processNextTick = __webpack_require__(11);
 /*</replacement>*/
+
+module.exports = Readable;
 
 /*<replacement>*/
 var isArray = __webpack_require__(17);
@@ -4819,7 +5072,7 @@ var Duplex;
 Readable.ReadableState = ReadableState;
 
 /*<replacement>*/
-var EE = __webpack_require__(12).EventEmitter;
+var EE = __webpack_require__(13).EventEmitter;
 
 var EElistenerCount = function (emitter, type) {
   return emitter.listeners(type).length;
@@ -4827,20 +5080,29 @@ var EElistenerCount = function (emitter, type) {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(21);
+var Stream = __webpack_require__(22);
 /*</replacement>*/
 
+// TODO(bmeurer): Change this back to const once hole checks are
+// properly optimized away early in Ignition+TurboFan.
 /*<replacement>*/
 var Buffer = __webpack_require__(16).Buffer;
+var OurUint8Array = global.Uint8Array || function () {};
+function _uint8ArrayToBuffer(chunk) {
+  return Buffer.from(chunk);
+}
+function _isUint8Array(obj) {
+  return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
+}
 /*</replacement>*/
 
 /*<replacement>*/
 var util = __webpack_require__(10);
-util.inherits = __webpack_require__(6);
+util.inherits = __webpack_require__(8);
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(62);
+var debugUtil = __webpack_require__(65);
 var debug = void 0;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -4849,7 +5111,8 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(53);
+var BufferList = __webpack_require__(55);
+var destroyImpl = __webpack_require__(21);
 var StringDecoder;
 
 util.inherits(Readable, Stream);
@@ -4888,7 +5151,7 @@ function ReadableState(options, stream) {
   this.highWaterMark = hwm || hwm === 0 ? hwm : defaultHwm;
 
   // cast to ints.
-  this.highWaterMark = ~~this.highWaterMark;
+  this.highWaterMark = Math.floor(this.highWaterMark);
 
   // A linked list is used to store data chunks instead of an array because the
   // linked list can remove elements from the beginning faster than
@@ -4902,10 +5165,10 @@ function ReadableState(options, stream) {
   this.endEmitted = false;
   this.reading = false;
 
-  // a flag to be able to tell if the onwrite cb is called immediately,
-  // or on a later tick.  We set this to true at first, because any
-  // actions that shouldn't happen until "later" should generally also
-  // not happen before the first write call.
+  // a flag to be able to tell if the event 'readable'/'data' is emitted
+  // immediately, or on a later tick.  We set this to true at first, because
+  // any actions that shouldn't happen until "later" should generally also
+  // not happen before the first read call.
   this.sync = true;
 
   // whenever we return null, then we set a flag to say
@@ -4915,14 +5178,13 @@ function ReadableState(options, stream) {
   this.readableListening = false;
   this.resumeScheduled = false;
 
+  // has it been destroyed
+  this.destroyed = false;
+
   // Crypto is kind of old and crusty.  Historically, its default string
   // encoding is 'binary' so we have to make this configurable.
   // Everything else in the universe uses 'utf8', though.
   this.defaultEncoding = options.defaultEncoding || 'utf8';
-
-  // when piping, we only care about 'readable' events that happen
-  // after read()ing all the bytes and not getting any pushback.
-  this.ranOut = false;
 
   // the number of writers that are awaiting a drain event in .pipe()s
   this.awaitDrain = 0;
@@ -4949,10 +5211,41 @@ function Readable(options) {
   // legacy
   this.readable = true;
 
-  if (options && typeof options.read === 'function') this._read = options.read;
+  if (options) {
+    if (typeof options.read === 'function') this._read = options.read;
+
+    if (typeof options.destroy === 'function') this._destroy = options.destroy;
+  }
 
   Stream.call(this);
 }
+
+Object.defineProperty(Readable.prototype, 'destroyed', {
+  get: function () {
+    if (this._readableState === undefined) {
+      return false;
+    }
+    return this._readableState.destroyed;
+  },
+  set: function (value) {
+    // we ignore the value if the stream
+    // has not been initialized yet
+    if (!this._readableState) {
+      return;
+    }
+
+    // backward compatibility, the user is explicitly
+    // managing destroyed
+    this._readableState.destroyed = value;
+  }
+});
+
+Readable.prototype.destroy = destroyImpl.destroy;
+Readable.prototype._undestroy = destroyImpl.undestroy;
+Readable.prototype._destroy = function (err, cb) {
+  this.push(null);
+  cb(err);
+};
 
 // Manually shove something into the read() buffer.
 // This returns true if the highWaterMark has not been hit yet,
@@ -4960,74 +5253,85 @@ function Readable(options) {
 // write() some more.
 Readable.prototype.push = function (chunk, encoding) {
   var state = this._readableState;
+  var skipChunkCheck;
 
-  if (!state.objectMode && typeof chunk === 'string') {
-    encoding = encoding || state.defaultEncoding;
-    if (encoding !== state.encoding) {
-      chunk = Buffer.from(chunk, encoding);
-      encoding = '';
+  if (!state.objectMode) {
+    if (typeof chunk === 'string') {
+      encoding = encoding || state.defaultEncoding;
+      if (encoding !== state.encoding) {
+        chunk = Buffer.from(chunk, encoding);
+        encoding = '';
+      }
+      skipChunkCheck = true;
     }
+  } else {
+    skipChunkCheck = true;
   }
 
-  return readableAddChunk(this, state, chunk, encoding, false);
+  return readableAddChunk(this, chunk, encoding, false, skipChunkCheck);
 };
 
 // Unshift should *always* be something directly out of read()
 Readable.prototype.unshift = function (chunk) {
-  var state = this._readableState;
-  return readableAddChunk(this, state, chunk, '', true);
+  return readableAddChunk(this, chunk, null, true, false);
 };
 
-Readable.prototype.isPaused = function () {
-  return this._readableState.flowing === false;
-};
-
-function readableAddChunk(stream, state, chunk, encoding, addToFront) {
-  var er = chunkInvalid(state, chunk);
-  if (er) {
-    stream.emit('error', er);
-  } else if (chunk === null) {
+function readableAddChunk(stream, chunk, encoding, addToFront, skipChunkCheck) {
+  var state = stream._readableState;
+  if (chunk === null) {
     state.reading = false;
     onEofChunk(stream, state);
-  } else if (state.objectMode || chunk && chunk.length > 0) {
-    if (state.ended && !addToFront) {
-      var e = new Error('stream.push() after EOF');
-      stream.emit('error', e);
-    } else if (state.endEmitted && addToFront) {
-      var _e = new Error('stream.unshift() after end event');
-      stream.emit('error', _e);
-    } else {
-      var skipAdd;
-      if (state.decoder && !addToFront && !encoding) {
-        chunk = state.decoder.write(chunk);
-        skipAdd = !state.objectMode && chunk.length === 0;
+  } else {
+    var er;
+    if (!skipChunkCheck) er = chunkInvalid(state, chunk);
+    if (er) {
+      stream.emit('error', er);
+    } else if (state.objectMode || chunk && chunk.length > 0) {
+      if (typeof chunk !== 'string' && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer.prototype) {
+        chunk = _uint8ArrayToBuffer(chunk);
       }
 
-      if (!addToFront) state.reading = false;
-
-      // Don't add to the buffer if we've decoded to an empty string chunk and
-      // we're not in object mode
-      if (!skipAdd) {
-        // if we want the data now, just emit it.
-        if (state.flowing && state.length === 0 && !state.sync) {
-          stream.emit('data', chunk);
-          stream.read(0);
+      if (addToFront) {
+        if (state.endEmitted) stream.emit('error', new Error('stream.unshift() after end event'));else addChunk(stream, state, chunk, true);
+      } else if (state.ended) {
+        stream.emit('error', new Error('stream.push() after EOF'));
+      } else {
+        state.reading = false;
+        if (state.decoder && !encoding) {
+          chunk = state.decoder.write(chunk);
+          if (state.objectMode || chunk.length !== 0) addChunk(stream, state, chunk, false);else maybeReadMore(stream, state);
         } else {
-          // update the buffer info.
-          state.length += state.objectMode ? 1 : chunk.length;
-          if (addToFront) state.buffer.unshift(chunk);else state.buffer.push(chunk);
-
-          if (state.needReadable) emitReadable(stream);
+          addChunk(stream, state, chunk, false);
         }
       }
-
-      maybeReadMore(stream, state);
+    } else if (!addToFront) {
+      state.reading = false;
     }
-  } else if (!addToFront) {
-    state.reading = false;
   }
 
   return needMoreData(state);
+}
+
+function addChunk(stream, state, chunk, addToFront) {
+  if (state.flowing && state.length === 0 && !state.sync) {
+    stream.emit('data', chunk);
+    stream.read(0);
+  } else {
+    // update the buffer info.
+    state.length += state.objectMode ? 1 : chunk.length;
+    if (addToFront) state.buffer.unshift(chunk);else state.buffer.push(chunk);
+
+    if (state.needReadable) emitReadable(stream);
+  }
+  maybeReadMore(stream, state);
+}
+
+function chunkInvalid(state, chunk) {
+  var er;
+  if (!_isUint8Array(chunk) && typeof chunk !== 'string' && chunk !== undefined && !state.objectMode) {
+    er = new TypeError('Invalid non-string/buffer chunk');
+  }
+  return er;
 }
 
 // if it's past the high water mark, we can push in some more.
@@ -5040,6 +5344,10 @@ function readableAddChunk(stream, state, chunk, encoding, addToFront) {
 function needMoreData(state) {
   return !state.ended && (state.needReadable || state.length < state.highWaterMark || state.length === 0);
 }
+
+Readable.prototype.isPaused = function () {
+  return this._readableState.flowing === false;
+};
 
 // backwards compatibility.
 Readable.prototype.setEncoding = function (enc) {
@@ -5189,14 +5497,6 @@ Readable.prototype.read = function (n) {
   return ret;
 };
 
-function chunkInvalid(state, chunk) {
-  var er = null;
-  if (!Buffer.isBuffer(chunk) && typeof chunk !== 'string' && chunk !== null && chunk !== undefined && !state.objectMode) {
-    er = new TypeError('Invalid non-string/buffer chunk');
-  }
-  return er;
-}
-
 function onEofChunk(stream, state) {
   if (state.ended) return;
   if (state.decoder) {
@@ -5288,10 +5588,13 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
   if (state.endEmitted) processNextTick(endFn);else src.once('end', endFn);
 
   dest.on('unpipe', onunpipe);
-  function onunpipe(readable) {
+  function onunpipe(readable, unpipeInfo) {
     debug('onunpipe');
     if (readable === src) {
-      cleanup();
+      if (unpipeInfo && unpipeInfo.hasUnpiped === false) {
+        unpipeInfo.hasUnpiped = true;
+        cleanup();
+      }
     }
   }
 
@@ -5410,6 +5713,7 @@ function pipeOnDrain(src) {
 
 Readable.prototype.unpipe = function (dest) {
   var state = this._readableState;
+  var unpipeInfo = { hasUnpiped: false };
 
   // if we're not piping anywhere, then do nothing.
   if (state.pipesCount === 0) return this;
@@ -5425,7 +5729,7 @@ Readable.prototype.unpipe = function (dest) {
     state.pipes = null;
     state.pipesCount = 0;
     state.flowing = false;
-    if (dest) dest.emit('unpipe', this);
+    if (dest) dest.emit('unpipe', this, unpipeInfo);
     return this;
   }
 
@@ -5440,7 +5744,7 @@ Readable.prototype.unpipe = function (dest) {
     state.flowing = false;
 
     for (var i = 0; i < len; i++) {
-      dests[i].emit('unpipe', this);
+      dests[i].emit('unpipe', this, unpipeInfo);
     }return this;
   }
 
@@ -5452,7 +5756,7 @@ Readable.prototype.unpipe = function (dest) {
   state.pipesCount -= 1;
   if (state.pipesCount === 1) state.pipes = state.pipes[0];
 
-  dest.emit('unpipe', this);
+  dest.emit('unpipe', this, unpipeInfo);
 
   return this;
 };
@@ -5473,7 +5777,7 @@ Readable.prototype.on = function (ev, fn) {
       if (!state.reading) {
         processNextTick(nReadingNextTick, this);
       } else if (state.length) {
-        emitReadable(this, state);
+        emitReadable(this);
       }
     }
   }
@@ -5734,13 +6038,34 @@ function indexOf(xs, x) {
   }
   return -1;
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -5791,7 +6116,7 @@ var Duplex = __webpack_require__(7);
 
 /*<replacement>*/
 var util = __webpack_require__(10);
-util.inherits = __webpack_require__(6);
+util.inherits = __webpack_require__(8);
 /*</replacement>*/
 
 util.inherits(Transform, Duplex);
@@ -5814,7 +6139,9 @@ function afterTransform(stream, er, data) {
 
   var cb = ts.writecb;
 
-  if (!cb) return stream.emit('error', new Error('no writecb in Transform class'));
+  if (!cb) {
+    return stream.emit('error', new Error('write callback called multiple times'));
+  }
 
   ts.writechunk = null;
   ts.writecb = null;
@@ -5907,6 +6234,15 @@ Transform.prototype._read = function (n) {
   }
 };
 
+Transform.prototype._destroy = function (err, cb) {
+  var _this = this;
+
+  Duplex.prototype._destroy.call(this, err, function (err2) {
+    cb(err2);
+    _this.emit('close');
+  });
+};
+
 function done(stream, er, data) {
   if (er) return stream.emit('error', er);
 
@@ -5928,16 +6264,94 @@ function done(stream, er, data) {
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(12).EventEmitter;
+"use strict";
 
+
+/*<replacement>*/
+
+var processNextTick = __webpack_require__(11);
+/*</replacement>*/
+
+// undocumented cb() API, needed for core, not for public API
+function destroy(err, cb) {
+  var _this = this;
+
+  var readableDestroyed = this._readableState && this._readableState.destroyed;
+  var writableDestroyed = this._writableState && this._writableState.destroyed;
+
+  if (readableDestroyed || writableDestroyed) {
+    if (cb) {
+      cb(err);
+    } else if (err && (!this._writableState || !this._writableState.errorEmitted)) {
+      processNextTick(emitErrorNT, this, err);
+    }
+    return;
+  }
+
+  // we set destroyed to true before firing error callbacks in order
+  // to make it re-entrance safe in case destroy() is called within callbacks
+
+  if (this._readableState) {
+    this._readableState.destroyed = true;
+  }
+
+  // if this is a duplex stream mark the writable part as destroyed as well
+  if (this._writableState) {
+    this._writableState.destroyed = true;
+  }
+
+  this._destroy(err || null, function (err) {
+    if (!cb && err) {
+      processNextTick(emitErrorNT, _this, err);
+      if (_this._writableState) {
+        _this._writableState.errorEmitted = true;
+      }
+    } else if (cb) {
+      cb(err);
+    }
+  });
+}
+
+function undestroy() {
+  if (this._readableState) {
+    this._readableState.destroyed = false;
+    this._readableState.reading = false;
+    this._readableState.ended = false;
+    this._readableState.endEmitted = false;
+  }
+
+  if (this._writableState) {
+    this._writableState.destroyed = false;
+    this._writableState.ended = false;
+    this._writableState.ending = false;
+    this._writableState.finished = false;
+    this._writableState.errorEmitted = false;
+  }
+}
+
+function emitErrorNT(self, err) {
+  self.emit('error', err);
+}
+
+module.exports = {
+  destroy: destroy,
+  undestroy: undestroy
+};
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(13).EventEmitter;
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -6309,12 +6723,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -6523,12 +6937,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -6598,12 +7012,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -6899,12 +7313,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -7267,12 +7681,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -7389,12 +7803,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -7553,12 +7967,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -7627,12 +8041,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -8946,12 +9360,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -9041,12 +9455,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -11198,12 +11612,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -11430,12 +11844,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -12333,12 +12747,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -12645,7 +13059,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -12669,7 +13083,7 @@ module.exports = {
 ***********************/
 
 var SBP = __webpack_require__(2);
-var Parser = __webpack_require__(11).Parser;
+var Parser = __webpack_require__(12).Parser;
 
 /**
  * SBP class for message fragment SBPSignal
@@ -12708,12 +13122,294 @@ module.exports = {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**********************
+ * Automatically generated from piksi/yaml/swiftnav/sbp/ssr.yaml with generate.py.
+ * Don't edit this by hand!
+ **********************
+ * Package description:
+ *
+ * Precise State Space Representation (SSR) corrections format
+***********************/
+
+var SBP = __webpack_require__(2);
+var Parser = __webpack_require__(4);
+var Int64 = __webpack_require__(3);
+var UInt64 = __webpack_require__(1).UINT64;
+var GnssSignal = __webpack_require__(0).GnssSignal;
+var GnssSignalDep = __webpack_require__(0).GnssSignalDep;
+var GPSTime = __webpack_require__(0).GPSTime;
+var CarrierPhase = __webpack_require__(0).CarrierPhase;
+var GPSTime = __webpack_require__(0).GPSTime;
+var GPSTimeSec = __webpack_require__(0).GPSTimeSec;
+var GPSTimeDep = __webpack_require__(0).GPSTimeDep;
+
+/**
+ * SBP class for message fragment CodeBiasesContent
+ *
+ * Code biases are to be added to pseudorange. The corrections are conform with
+ * typical RTCMv3 MT1059 and 1065.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
+ * @field value number (signed 16-bit int, 2 bytes) Code bias value
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var CodeBiasesContent = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "CodeBiasesContent";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+CodeBiasesContent.prototype = Object.create(SBP.prototype);
+CodeBiasesContent.prototype.messageType = "CodeBiasesContent";
+CodeBiasesContent.prototype.constructor = CodeBiasesContent;
+CodeBiasesContent.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('code')
+  .int16('value');
+CodeBiasesContent.prototype.fieldSpec = [];
+CodeBiasesContent.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
+CodeBiasesContent.prototype.fieldSpec.push(['value', 'writeInt16LE', 2]);
+
+/**
+ * SBP class for message fragment PhaseBiasesContent
+ *
+ * Phase biases are to be added to carrier phase measurements. The corrections are
+ * conform with typical RTCMv3 MT1059 and 1065.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
+ * @field integer_indicator number (unsigned 8-bit int, 1 byte) Indicator for integer property
+ * @field widelane_integer_indicator number (unsigned 8-bit int, 1 byte) Indicator for two groups of Wide-Lane(s) integer property
+ * @field discontinuity_counter number (unsigned 8-bit int, 1 byte) Signal phase discontinuity counter.  Increased for every discontinuity in phase.
+ * @field bias number (signed 32-bit int, 4 bytes) Phase bias for specified signal
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var PhaseBiasesContent = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "PhaseBiasesContent";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+PhaseBiasesContent.prototype = Object.create(SBP.prototype);
+PhaseBiasesContent.prototype.messageType = "PhaseBiasesContent";
+PhaseBiasesContent.prototype.constructor = PhaseBiasesContent;
+PhaseBiasesContent.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('code')
+  .uint8('integer_indicator')
+  .uint8('widelane_integer_indicator')
+  .uint8('discontinuity_counter')
+  .int32('bias');
+PhaseBiasesContent.prototype.fieldSpec = [];
+PhaseBiasesContent.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
+PhaseBiasesContent.prototype.fieldSpec.push(['integer_indicator', 'writeUInt8', 1]);
+PhaseBiasesContent.prototype.fieldSpec.push(['widelane_integer_indicator', 'writeUInt8', 1]);
+PhaseBiasesContent.prototype.fieldSpec.push(['discontinuity_counter', 'writeUInt8', 1]);
+PhaseBiasesContent.prototype.fieldSpec.push(['bias', 'writeInt32LE', 4]);
+
+/**
+ * SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DC).
+ *
+ * The precise orbit and clock correction message is  to be applied as a delta
+ * correction to broadcast  ephemeris and is typically an equivalent to the 1060
+ * and 1066 RTCM message types
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time GPSTimeSec GNSS reference time of the correction
+ * @field sid GnssSignal GNSS signal identifier (16 bit)
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections
+ * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
+ *   change in the SSR  generating configuration
+ * @field iod number (unsigned 8-bit int, 1 byte) Issue of broadcast ephemeris data
+ * @field radial number (signed 32-bit int, 4 bytes) Orbit radial delta correction
+ * @field along number (signed 32-bit int, 4 bytes) Orbit along delta correction
+ * @field cross number (signed 32-bit int, 4 bytes) Orbit along delta correction
+ * @field dot_radial number (signed 32-bit int, 4 bytes) Velocity of orbit radial delta correction
+ * @field dot_along number (signed 32-bit int, 4 bytes) Velocity of orbit along delta correction
+ * @field dot_cross number (signed 32-bit int, 4 bytes) Velocity of orbit cross delta correction
+ * @field c0 number (signed 32-bit int, 4 bytes) C0 polynomial coefficient for correction of broadcast satellite clock
+ * @field c1 number (signed 32-bit int, 4 bytes) C1 polynomial coefficient for correction of broadcast satellite clock
+ * @field c2 number (signed 32-bit int, 4 bytes) C2 polynomial coefficient for correction of broadcast satellite clock
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrOrbitClock = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_ORBIT_CLOCK";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrOrbitClock.prototype = Object.create(SBP.prototype);
+MsgSsrOrbitClock.prototype.messageType = "MSG_SSR_ORBIT_CLOCK";
+MsgSsrOrbitClock.prototype.msg_type = 0x05DC;
+MsgSsrOrbitClock.prototype.constructor = MsgSsrOrbitClock;
+MsgSsrOrbitClock.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('time', { type: GPSTimeSec.prototype.parser })
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .uint8('update_interval')
+  .uint8('iod_ssr')
+  .uint8('iod')
+  .int32('radial')
+  .int32('along')
+  .int32('cross')
+  .int32('dot_radial')
+  .int32('dot_along')
+  .int32('dot_cross')
+  .int32('c0')
+  .int32('c1')
+  .int32('c2');
+MsgSsrOrbitClock.prototype.fieldSpec = [];
+MsgSsrOrbitClock.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['iod', 'writeUInt8', 1]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['radial', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['along', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['cross', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['dot_radial', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['dot_along', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['dot_cross', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['c0', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['c1', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['c2', 'writeInt32LE', 4]);
+
+/**
+ * SBP class for message MSG_SSR_CODE_BIASES (0x05E1).
+ *
+ * The precise code biases message is to be added to the pseudorange of the
+ * corresponding signal to get corrected pseudorange. It is typically  an
+ * equivalent to the 1059 and 1065 RTCM message types
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time GPSTimeSec GNSS reference time of the correction
+ * @field sid GnssSignal GNSS signal identifier (16 bit)
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections
+ * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
+ *   change in the SSR  generating configuration
+ * @field biases array Code biases for the different satellite signals
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrCodeBiases = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_CODE_BIASES";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrCodeBiases.prototype = Object.create(SBP.prototype);
+MsgSsrCodeBiases.prototype.messageType = "MSG_SSR_CODE_BIASES";
+MsgSsrCodeBiases.prototype.msg_type = 0x05E1;
+MsgSsrCodeBiases.prototype.constructor = MsgSsrCodeBiases;
+MsgSsrCodeBiases.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('time', { type: GPSTimeSec.prototype.parser })
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .uint8('update_interval')
+  .uint8('iod_ssr')
+  .array('biases', { type: CodeBiasesContent.prototype.parser, readUntil: 'eof' });
+MsgSsrCodeBiases.prototype.fieldSpec = [];
+MsgSsrCodeBiases.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrCodeBiases.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgSsrCodeBiases.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
+MsgSsrCodeBiases.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
+MsgSsrCodeBiases.prototype.fieldSpec.push(['biases', 'array', CodeBiasesContent.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+/**
+ * SBP class for message MSG_SSR_PHASE_BIASES (0x05E6).
+ *
+ * The precise phase biases message contains the biases to be added to the carrier
+ * phase of the corresponding signal to get corrected carrier phase measurement, as
+ * well as the satellite yaw angle to be applied to compute  the phase wind-up
+ * correction.  It is typically an equivalent to the 1265 RTCM message types
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time GPSTimeSec GNSS reference time of the correction
+ * @field sid GnssSignal GNSS signal identifier (16 bit)
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections
+ * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
+ *   change in the SSR  generating configuration
+ * @field dispersive_bias number (unsigned 8-bit int, 1 byte) Indicator for the dispersive phase biases property.
+ * @field mw_consistency number (unsigned 8-bit int, 1 byte) Consistency indicator for Melbourne-Wubbena linear combinations
+ * @field yaw number (unsigned 16-bit int, 2 bytes) Satellite yaw angle
+ * @field yaw_rate number (signed 8-bit int, 1 byte) Satellite yaw angle rate
+ * @field biases array Phase biases corrections for a satellite being tracked.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrPhaseBiases = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_PHASE_BIASES";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrPhaseBiases.prototype = Object.create(SBP.prototype);
+MsgSsrPhaseBiases.prototype.messageType = "MSG_SSR_PHASE_BIASES";
+MsgSsrPhaseBiases.prototype.msg_type = 0x05E6;
+MsgSsrPhaseBiases.prototype.constructor = MsgSsrPhaseBiases;
+MsgSsrPhaseBiases.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('time', { type: GPSTimeSec.prototype.parser })
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .uint8('update_interval')
+  .uint8('iod_ssr')
+  .uint8('dispersive_bias')
+  .uint8('mw_consistency')
+  .uint16('yaw')
+  .int8('yaw_rate')
+  .array('biases', { type: PhaseBiasesContent.prototype.parser, readUntil: 'eof' });
+MsgSsrPhaseBiases.prototype.fieldSpec = [];
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['dispersive_bias', 'writeUInt8', 1]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['mw_consistency', 'writeUInt8', 1]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['yaw', 'writeUInt16LE', 2]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['yaw_rate', 'writeInt8', 1]);
+MsgSsrPhaseBiases.prototype.fieldSpec.push(['biases', 'array', PhaseBiasesContent.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+module.exports = {
+  CodeBiasesContent: CodeBiasesContent,
+  PhaseBiasesContent: PhaseBiasesContent,
+  0x05DC: MsgSsrOrbitClock,
+  MsgSsrOrbitClock: MsgSsrOrbitClock,
+  0x05E1: MsgSsrCodeBiases,
+  MsgSsrCodeBiases: MsgSsrCodeBiases,
+  0x05E6: MsgSsrPhaseBiases,
+  MsgSsrPhaseBiases: MsgSsrPhaseBiases,
+}
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -12881,12 +13577,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -12917,7 +13613,7 @@ var GPSTimeSec = __webpack_require__(0).GPSTimeSec;
 var GPSTimeDep = __webpack_require__(0).GPSTimeDep;
 
 /**
- * SBP class for message MSG_TRACKING_STATE_DETAILED (0x0021).
+ * SBP class for message MSG_TRACKING_STATE_DETAILED_DEP_A (0x0021).
  *
  * The tracking message returns a set tracking channel parameters for a single
  * tracking channel useful for debugging issues.
@@ -12952,18 +13648,18 @@ var GPSTimeDep = __webpack_require__(0).GPSTimeDep;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingStateDetailed = function (sbp, fields) {
+var MsgTrackingStateDetailedDepA = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_TRACKING_STATE_DETAILED";
+  this.messageType = "MSG_TRACKING_STATE_DETAILED_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgTrackingStateDetailed.prototype = Object.create(SBP.prototype);
-MsgTrackingStateDetailed.prototype.messageType = "MSG_TRACKING_STATE_DETAILED";
-MsgTrackingStateDetailed.prototype.msg_type = 0x0021;
-MsgTrackingStateDetailed.prototype.constructor = MsgTrackingStateDetailed;
-MsgTrackingStateDetailed.prototype.parser = new Parser()
+MsgTrackingStateDetailedDepA.prototype = Object.create(SBP.prototype);
+MsgTrackingStateDetailedDepA.prototype.messageType = "MSG_TRACKING_STATE_DETAILED_DEP_A";
+MsgTrackingStateDetailedDepA.prototype.msg_type = 0x0021;
+MsgTrackingStateDetailedDepA.prototype.constructor = MsgTrackingStateDetailedDepA;
+MsgTrackingStateDetailedDepA.prototype.parser = new Parser()
   .endianess('little')
   .uint64('recv_time')
   .nest('tot', { type: GPSTime.prototype.parser })
@@ -12986,28 +13682,28 @@ MsgTrackingStateDetailed.prototype.parser = new Parser()
   .uint8('nav_flags')
   .uint8('pset_flags')
   .uint8('misc_flags');
-MsgTrackingStateDetailed.prototype.fieldSpec = [];
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['recv_time', 'writeUInt64LE', 8]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['tot', GPSTime.prototype.fieldSpec]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['P', 'writeUInt32LE', 4]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['P_std', 'writeUInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['L', CarrierPhase.prototype.fieldSpec]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['lock', 'writeUInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['doppler', 'writeInt32LE', 4]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['doppler_std', 'writeUInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['uptime', 'writeUInt32LE', 4]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['clock_offset', 'writeInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['clock_drift', 'writeInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['corr_spacing', 'writeUInt16LE', 2]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['acceleration', 'writeInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['sync_flags', 'writeUInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['tow_flags', 'writeUInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['track_flags', 'writeUInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['nav_flags', 'writeUInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['pset_flags', 'writeUInt8', 1]);
-MsgTrackingStateDetailed.prototype.fieldSpec.push(['misc_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec = [];
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['recv_time', 'writeUInt64LE', 8]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['tot', GPSTime.prototype.fieldSpec]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['P', 'writeUInt32LE', 4]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['P_std', 'writeUInt16LE', 2]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['L', CarrierPhase.prototype.fieldSpec]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['lock', 'writeUInt16LE', 2]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['doppler', 'writeInt32LE', 4]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['doppler_std', 'writeUInt16LE', 2]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['uptime', 'writeUInt32LE', 4]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['clock_offset', 'writeInt16LE', 2]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['clock_drift', 'writeInt16LE', 2]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['corr_spacing', 'writeUInt16LE', 2]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['acceleration', 'writeInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['sync_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['tow_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['track_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['nav_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['pset_flags', 'writeUInt8', 1]);
+MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['misc_flags', 'writeUInt8', 1]);
 
 /**
  * SBP class for message MSG_TRACKING_STATE_DETAILED_DEP (0x0011).
@@ -13378,8 +14074,8 @@ MsgTrackingStateDepB.prototype.fieldSpec = [];
 MsgTrackingStateDepB.prototype.fieldSpec.push(['states', 'array', TrackingChannelStateDepB.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 module.exports = {
-  0x0021: MsgTrackingStateDetailed,
-  MsgTrackingStateDetailed: MsgTrackingStateDetailed,
+  0x0021: MsgTrackingStateDetailedDepA,
+  MsgTrackingStateDetailedDepA: MsgTrackingStateDetailedDepA,
   0x0011: MsgTrackingStateDetailedDep,
   MsgTrackingStateDetailedDep: MsgTrackingStateDetailedDep,
   TrackingChannelState: TrackingChannelState,
@@ -13399,12 +14095,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -13461,12 +14157,12 @@ module.exports = {
 }
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *
@@ -13534,7 +14230,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -13765,7 +14461,7 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -13791,15 +14487,15 @@ var substr = 'ab'.substr(-1) === 'b'
 
 module.exports = Stream;
 
-var EE = __webpack_require__(12).EventEmitter;
-var inherits = __webpack_require__(6);
+var EE = __webpack_require__(13).EventEmitter;
+var inherits = __webpack_require__(8);
 
 inherits(Stream, EE);
 Stream.Readable = __webpack_require__(15);
-Stream.Writable = __webpack_require__(56);
-Stream.Duplex = __webpack_require__(51);
-Stream.Transform = __webpack_require__(55);
-Stream.PassThrough = __webpack_require__(54);
+Stream.Writable = __webpack_require__(58);
+Stream.Duplex = __webpack_require__(53);
+Stream.Transform = __webpack_require__(57);
+Stream.PassThrough = __webpack_require__(56);
 
 // Backwards-compat with node 0.4.x
 Stream.Stream = Stream;
@@ -13898,7 +14594,7 @@ Stream.prototype.pipe = function(dest, options) {
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -13926,7 +14622,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer, module, global) {/**
@@ -13940,9 +14636,9 @@ module.exports = function(module) {
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-var Parser = __webpack_require__(11).Parser;
-var path = __webpack_require__(41);
-var streams = __webpack_require__(42);
+var Parser = __webpack_require__(12).Parser;
+var path = __webpack_require__(43);
+var streams = __webpack_require__(44);
 var SBP = __webpack_require__(2);
 
 var SBP_PREAMBLE = 0x55;
@@ -14019,26 +14715,27 @@ BufferCorruptError.prototype = Object.create(Error.prototype);
 BufferCorruptError.prototype.constructor = BufferCorruptError;
 
 var sbpImports = {
-  acquisition: __webpack_require__(22),
-  bootload: __webpack_require__(23),
-  ext_events: __webpack_require__(24),
-  file_io: __webpack_require__(25),
-  flash: __webpack_require__(26),
+  acquisition: __webpack_require__(23),
+  bootload: __webpack_require__(24),
+  ext_events: __webpack_require__(25),
+  file_io: __webpack_require__(26),
+  flash: __webpack_require__(27),
   gnss: __webpack_require__(0),
-  imu: __webpack_require__(27),
-  logging: __webpack_require__(28),
-  mag: __webpack_require__(29),
-  navigation: __webpack_require__(30),
-  ndb: __webpack_require__(31),
-  observation: __webpack_require__(32),
-  piksi: __webpack_require__(34),
-  settings: __webpack_require__(35),
-  signal: __webpack_require__(36),
-  system: __webpack_require__(37),
-  tracking: __webpack_require__(38),
-  user: __webpack_require__(39),
-  vehicle: __webpack_require__(40),
-  orientation: __webpack_require__(33)
+  imu: __webpack_require__(28),
+  logging: __webpack_require__(29),
+  mag: __webpack_require__(30),
+  navigation: __webpack_require__(31),
+  ndb: __webpack_require__(32),
+  observation: __webpack_require__(33),
+  piksi: __webpack_require__(35),
+  settings: __webpack_require__(36),
+  signal: __webpack_require__(37),
+  ssr: __webpack_require__(38),
+  system: __webpack_require__(39),
+  tracking: __webpack_require__(40),
+  user: __webpack_require__(41),
+  vehicle: __webpack_require__(42),
+  orientation: __webpack_require__(34)
 };
 
 var sbpIdTable = Object.keys(sbpImports).reduce(function (prev, key) {
@@ -14263,10 +14960,10 @@ function exposeGlobally (x) {
 
 exposeGlobally(module.exports);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer, __webpack_require__(43)(module), __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer, __webpack_require__(45)(module), __webpack_require__(5)))
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14338,7 +15035,7 @@ function isBuffer(b) {
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var util = __webpack_require__(61);
+var util = __webpack_require__(64);
 var hasOwn = Object.prototype.hasOwnProperty;
 var pSlice = Array.prototype.slice;
 var functionsHaveNames = (function () {
@@ -14761,10 +15458,10 @@ var objectKeys = Object.keys || function (obj) {
   return keys;
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14803,22 +15500,22 @@ function placeHoldersCount (b64) {
 
 function byteLength (b64) {
   // base64 is 4/3 + up to two characters of the original data
-  return b64.length * 3 / 4 - placeHoldersCount(b64)
+  return (b64.length * 3 / 4) - placeHoldersCount(b64)
 }
 
 function toByteArray (b64) {
-  var i, j, l, tmp, placeHolders, arr
+  var i, l, tmp, placeHolders, arr
   var len = b64.length
   placeHolders = placeHoldersCount(b64)
 
-  arr = new Arr(len * 3 / 4 - placeHolders)
+  arr = new Arr((len * 3 / 4) - placeHolders)
 
   // if there are placeholders, only get up to the last complete 4 chars
   l = placeHolders > 0 ? len - 4 : len
 
   var L = 0
 
-  for (i = 0, j = 0; i < l; i += 4, j += 3) {
+  for (i = 0; i < l; i += 4) {
     tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)]
     arr[L++] = (tmp >> 16) & 0xFF
     arr[L++] = (tmp >> 8) & 0xFF
@@ -14885,7 +15582,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports) {
 
 //========================================================================================
@@ -14990,7 +15687,7 @@ exports.Context = Context;
 
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -15448,7 +16145,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -16103,7 +16800,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -16193,17 +16890,38 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(7);
 
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 // a passthrough stream.
 // basically just the most minimal sort of Transform stream.
 // Every written chunk gets output as-is.
@@ -16216,7 +16934,7 @@ var Transform = __webpack_require__(20);
 
 /*<replacement>*/
 var util = __webpack_require__(10);
-util.inherits = __webpack_require__(6);
+util.inherits = __webpack_require__(8);
 /*</replacement>*/
 
 util.inherits(PassThrough, Transform);
@@ -16232,7 +16950,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 };
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16240,90 +16958,100 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 
 /*<replacement>*/
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var Buffer = __webpack_require__(16).Buffer;
 /*</replacement>*/
 
-module.exports = BufferList;
-
-function BufferList() {
-  this.head = null;
-  this.tail = null;
-  this.length = 0;
+function copyBuffer(src, target, offset) {
+  src.copy(target, offset);
 }
 
-BufferList.prototype.push = function (v) {
-  var entry = { data: v, next: null };
-  if (this.length > 0) this.tail.next = entry;else this.head = entry;
-  this.tail = entry;
-  ++this.length;
-};
+module.exports = function () {
+  function BufferList() {
+    _classCallCheck(this, BufferList);
 
-BufferList.prototype.unshift = function (v) {
-  var entry = { data: v, next: this.head };
-  if (this.length === 0) this.tail = entry;
-  this.head = entry;
-  ++this.length;
-};
-
-BufferList.prototype.shift = function () {
-  if (this.length === 0) return;
-  var ret = this.head.data;
-  if (this.length === 1) this.head = this.tail = null;else this.head = this.head.next;
-  --this.length;
-  return ret;
-};
-
-BufferList.prototype.clear = function () {
-  this.head = this.tail = null;
-  this.length = 0;
-};
-
-BufferList.prototype.join = function (s) {
-  if (this.length === 0) return '';
-  var p = this.head;
-  var ret = '' + p.data;
-  while (p = p.next) {
-    ret += s + p.data;
-  }return ret;
-};
-
-BufferList.prototype.concat = function (n) {
-  if (this.length === 0) return Buffer.alloc(0);
-  if (this.length === 1) return this.head.data;
-  var ret = Buffer.allocUnsafe(n >>> 0);
-  var p = this.head;
-  var i = 0;
-  while (p) {
-    p.data.copy(ret, i);
-    i += p.data.length;
-    p = p.next;
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
   }
-  return ret;
-};
+
+  BufferList.prototype.push = function push(v) {
+    var entry = { data: v, next: null };
+    if (this.length > 0) this.tail.next = entry;else this.head = entry;
+    this.tail = entry;
+    ++this.length;
+  };
+
+  BufferList.prototype.unshift = function unshift(v) {
+    var entry = { data: v, next: this.head };
+    if (this.length === 0) this.tail = entry;
+    this.head = entry;
+    ++this.length;
+  };
+
+  BufferList.prototype.shift = function shift() {
+    if (this.length === 0) return;
+    var ret = this.head.data;
+    if (this.length === 1) this.head = this.tail = null;else this.head = this.head.next;
+    --this.length;
+    return ret;
+  };
+
+  BufferList.prototype.clear = function clear() {
+    this.head = this.tail = null;
+    this.length = 0;
+  };
+
+  BufferList.prototype.join = function join(s) {
+    if (this.length === 0) return '';
+    var p = this.head;
+    var ret = '' + p.data;
+    while (p = p.next) {
+      ret += s + p.data;
+    }return ret;
+  };
+
+  BufferList.prototype.concat = function concat(n) {
+    if (this.length === 0) return Buffer.alloc(0);
+    if (this.length === 1) return this.head.data;
+    var ret = Buffer.allocUnsafe(n >>> 0);
+    var p = this.head;
+    var i = 0;
+    while (p) {
+      copyBuffer(p.data, ret, i);
+      i += p.data.length;
+      p = p.next;
+    }
+    return ret;
+  };
+
+  return BufferList;
+}();
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(15).PassThrough
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(15).Transform
 
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(14);
 
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -16513,10 +17241,10 @@ module.exports = __webpack_require__(14);
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -16569,13 +17297,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(57);
+__webpack_require__(59);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -16646,10 +17374,39 @@ function config (name) {
   return String(val).toLowerCase() === 'true';
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 60 */
+/* 62 */
+/***/ (function(module, exports) {
+
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
+
+/***/ }),
+/* 63 */
 /***/ (function(module, exports) {
 
 module.exports = function isBuffer(arg) {
@@ -16660,7 +17417,7 @@ module.exports = function isBuffer(arg) {
 }
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -17188,7 +17945,7 @@ function isPrimitive(arg) {
 }
 exports.isPrimitive = isPrimitive;
 
-exports.isBuffer = __webpack_require__(60);
+exports.isBuffer = __webpack_require__(63);
 
 function objectToString(o) {
   return Object.prototype.toString.call(o);
@@ -17232,7 +17989,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = __webpack_require__(6);
+exports.inherits = __webpack_require__(62);
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -17250,10 +18007,10 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, exports) {
 
 /* (ignored) */

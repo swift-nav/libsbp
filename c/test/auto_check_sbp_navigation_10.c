@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swiftnav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  *
  * This source is subject to the license found in the file 'LICENSE' which must
  * be be distributed together with this source. All other rights reserved.
@@ -125,10 +125,10 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
-    fail_unless(msg->tow == 326825000, "incorrect value for tow, expected 326825000, is %d", msg->tow);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
     fail_unless(msg->ns_residual == 166900, "incorrect value for ns_residual, expected 166900, is %d", msg->ns_residual);
+    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 326825000, "incorrect value for tow, expected 326825000, is %d", msg->tow);
     // print to string
     char test_str[1024];
     msg_gps_time_t_to_json_str( last_sender_id, 0x102, last_len, ( msg_gps_time_t* ) msg, 1024, test_str);
@@ -173,10 +173,10 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
-    fail_unless(msg->tow == 326825500, "incorrect value for tow, expected 326825500, is %d", msg->tow);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
     fail_unless(msg->ns_residual == 256638, "incorrect value for ns_residual, expected 256638, is %d", msg->ns_residual);
+    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 326825500, "incorrect value for tow, expected 326825500, is %d", msg->tow);
     // print to string
     char test_str[1024];
     msg_gps_time_t_to_json_str( last_sender_id, 0x102, last_len, ( msg_gps_time_t* ) msg, 1024, test_str);
@@ -221,10 +221,10 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
-    fail_unless(msg->tow == 326826000, "incorrect value for tow, expected 326826000, is %d", msg->tow);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
     fail_unless(msg->ns_residual == 265345, "incorrect value for ns_residual, expected 265345, is %d", msg->ns_residual);
+    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 326826000, "incorrect value for tow, expected 326826000, is %d", msg->tow);
     // print to string
     char test_str[1024];
     msg_gps_time_t_to_json_str( last_sender_id, 0x102, last_len, ( msg_gps_time_t* ) msg, 1024, test_str);
@@ -269,10 +269,10 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
-    fail_unless(msg->tow == 326826500, "incorrect value for tow, expected 326826500, is %d", msg->tow);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
     fail_unless(msg->ns_residual == 314505, "incorrect value for ns_residual, expected 314505, is %d", msg->ns_residual);
+    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 326826500, "incorrect value for tow, expected 326826500, is %d", msg->tow);
     // print to string
     char test_str[1024];
     msg_gps_time_t_to_json_str( last_sender_id, 0x102, last_len, ( msg_gps_time_t* ) msg, 1024, test_str);
@@ -317,10 +317,10 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     msg_gps_time_t* msg = ( msg_gps_time_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
-    fail_unless(msg->tow == 326827000, "incorrect value for tow, expected 326827000, is %d", msg->tow);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
     fail_unless(msg->ns_residual == 362933, "incorrect value for ns_residual, expected 362933, is %d", msg->ns_residual);
+    fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
+    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    fail_unless(msg->tow == 326827000, "incorrect value for tow, expected 326827000, is %d", msg->tow);
     // print to string
     char test_str[1024];
     msg_gps_time_t_to_json_str( last_sender_id, 0x102, last_len, ( msg_gps_time_t* ) msg, 1024, test_str);
