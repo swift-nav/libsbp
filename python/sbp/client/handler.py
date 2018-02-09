@@ -113,8 +113,10 @@ class Handler(object):
         try:
             for mt in iter(msg_type):
                 self._callbacks[mt].add(callback)
+                self._source._whitelist.add(mt)
         except TypeError:
             self._callbacks[msg_type].add(callback)
+            self._source._whitelist.add(msg_type)
 
     def remove_callback(self, callback, msg_type=None):
         """

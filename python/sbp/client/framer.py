@@ -39,6 +39,7 @@ class Framer(object):
         self._broken = False
         self._dispatch = dispatcher
         self._session = str(uuid.uuid4())
+        self._whitelist = set()
 
     def __iter__(self):
         self._broken = False
@@ -112,15 +113,22 @@ class Framer(object):
         hdr = self._readall(5)
         msg_crc = crc16(hdr)
         msg_type, sender, msg_len = struct.unpack("<HHB", hdr)
+
+
         # data
         data = self._readall(msg_len)
         msg_crc = crc16(data, msg_crc)
         # crc
         crc = self._readall(2)
         crc, = struct.unpack("<H", crc)
+
+        if self._whitelist and msg_type not in self._whitelist:
+            return None
+
         if crc != msg_crc:
             print "crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc)
             return None
+
         msg = SBP(msg_type, sender, msg_len, data, crc)
         try:
             msg = self._dispatch(msg)
