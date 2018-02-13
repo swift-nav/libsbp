@@ -19,6 +19,8 @@ import base64
 import json
 from ruamel.yaml import YAML
 
+from sbp._compat import string_types, to_bytes
+
 yaml = YAML(typ='safe')
 
 def _assert_sbp(sbp, test_case):
@@ -37,7 +39,7 @@ def _assert_sbp(sbp, test_case):
   assert sbp.msg_type == int(test_case['msg_type'], 0), "Invalid msg_type."
   assert sbp.sender == int(test_case['sender'], 0), "Invalid sender."
   assert sbp.length == test_case['length'], "Invalid length."
-  assert base64.standard_b64encode(sbp.payload) == test_case['payload'], \
+  assert base64.standard_b64encode(sbp.payload) == test_case['payload'].encode(), \
     "Invalid payload."
 
 def field_eq(p, e):
@@ -58,11 +60,14 @@ def field_eq(p, e):
 
   """
   if isinstance(e, dict):
-    return all(field_eq(p[i], j) for (i, j) in e.iteritems())
+    return all(field_eq(p[i], j) for (i, j) in e.items())
   elif isinstance(e, list):
     return all(field_eq(p[i], j) for (i, j) in enumerate(e))
   else:
-    return p == e
+    if isinstance(e, string_types):
+      return p == to_bytes(e)
+    else:
+      return p == e
 
 def _assert_msg(msg, test_case):
   """
@@ -79,7 +84,7 @@ def _assert_msg(msg, test_case):
   """
   assert msg.__class__.__name__ == test_case['name']
   if test_case['fields']:
-    for field_name, field_value in test_case['fields'].iteritems():
+    for field_name, field_value in test_case['fields'].items():
       assert field_eq(getattr(msg, field_name), field_value), \
         "Unequal field values: got %s, but expected %s!" \
         % (getattr(msg, field_name), field_value)
@@ -155,6 +160,6 @@ def assert_package(test_filename, pkg_name):
       sbp = SBP.unpack(base64.standard_b64decode(test_case['raw_packet']))
       _assert_sbp(sbp, test_case['sbp'])
       _assert_msg(dispatch(sbp), test_case['msg'])
-      _assert_msg_roundtrip(dispatch(sbp), test_case['raw_packet'])
+      _assert_msg_roundtrip(dispatch(sbp), test_case['raw_packet'].encode())
       _assert_msg_roundtrip_json(dispatch(sbp), test_case['raw_json'])
       _assert_materialization(test_case['msg'], sbp, test_case['raw_json'])

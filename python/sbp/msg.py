@@ -164,7 +164,7 @@ class SBP(object):
 
     """
     d = self.to_json_dict()
-    return json.dumps(d)
+    return json.dumps(d, default=lambda x: x.decode())
 
   @staticmethod
   def from_json(s):

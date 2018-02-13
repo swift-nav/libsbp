@@ -19,6 +19,8 @@ EXCLUDE = ['sender', 'msg_type', 'crc', 'length', 'preamble', 'payload']
 
 from construct import Container
 
+from ._compat import to_str, string_types
+
 def exclude_fields(obj, exclude=EXCLUDE):
   """
   Return dict of object without parent attrs.
@@ -36,8 +38,10 @@ def walk_json_dict(coll):
   coll : dict
 
   """
-  if isinstance(coll, (str, bytes)):
+  if isinstance(coll, string_types):
     return coll
+  elif isinstance(coll, bytes):
+    return to_str(coll)
   if isinstance(coll, dict):
     return dict((k, walk_json_dict(v)) for (k, v) in coll.items())
   # strings in python 2 don't have iter. This function used to rely on that
