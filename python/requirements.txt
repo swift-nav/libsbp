@@ -1,4 +1,4 @@
-construct==2.8.12
+construct==2.9.30
 futures>=2.2.0
 httpretty
 pyftdi==0.13.4
