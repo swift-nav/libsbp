@@ -54,7 +54,7 @@ ERROR, WARNING, DEBUG, INFO logging levels.
   """
   _parser = construct.Struct(
                    'level' / construct.Int8ul,
-                   'text' / construct.GreedyBytes,)
+                   'text' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'level',
                'text',
@@ -149,7 +149,7 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
   _parser = construct.Struct(
                    'source' / construct.Int8ul,
                    'protocol' / construct.Int8ul,
-                   'fwd_payload' / construct.GreedyBytes,)
+                   'fwd_payload' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'source',
                'protocol',
@@ -233,7 +233,7 @@ class MsgTweet(SBP):
 
   """
   _parser = construct.Struct(
-                   'tweet'/ construct.String(140, paddir='left'),)
+                   'tweet'/ construct.String(140, encoding='utf8'),)
   __slots__ = [
                'tweet',
               ]
@@ -313,7 +313,7 @@ class MsgPrintDep(SBP):
 
   """
   _parser = construct.Struct(
-                   'text' / construct.GreedyBytes,)
+                   'text' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'text',
               ]

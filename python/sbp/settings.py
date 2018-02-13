@@ -104,7 +104,7 @@ process to this message when it is received from sender ID
 
   """
   _parser = construct.Struct(
-                   'setting' / construct.GreedyBytes,)
+                   'setting' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'setting',
               ]
@@ -192,7 +192,7 @@ will be returned.
   """
   _parser = construct.Struct(
                    'status' / construct.Int8ul,
-                   'setting' / construct.GreedyBytes,)
+                   'setting' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'status',
                'setting',
@@ -277,7 +277,7 @@ this message when it is received from sender ID 0x42.
 
   """
   _parser = construct.Struct(
-                   'setting' / construct.GreedyBytes,)
+                   'setting' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'setting',
               ]
@@ -359,7 +359,7 @@ class MsgSettingsReadResp(SBP):
 
   """
   _parser = construct.Struct(
-                   'setting' / construct.GreedyBytes,)
+                   'setting' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'setting',
               ]
@@ -537,7 +537,7 @@ NULL-terminated and delimited string with contents
   """
   _parser = construct.Struct(
                    'index' / construct.Int16ul,
-                   'setting' / construct.GreedyBytes,)
+                   'setting' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'index',
                'setting',
@@ -669,7 +669,7 @@ for this setting to set the initial value.
 
   """
   _parser = construct.Struct(
-                   'setting' / construct.GreedyBytes,)
+                   'setting' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'setting',
               ]

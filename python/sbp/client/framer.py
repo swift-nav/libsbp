@@ -62,7 +62,7 @@ class Framer(object):
         """
         return datetime.datetime.utcnow().isoformat()
 
-    def next(self):
+    def __next__(self):
         msg = None
         while msg is None:
             try:
@@ -82,7 +82,7 @@ class Framer(object):
         size : int
           Number of bytes to read.
         """
-        data = ""
+        data =bytearray() 
         while len(data) < size:
             d = self._read(size - len(data))
             if self._broken:
@@ -93,7 +93,7 @@ class Framer(object):
                 # the UI thread to lock up without yielding.
                 time.sleep(0)
                 continue
-            data += d
+            data.extend(d)
         return data
 
     def _receive(self):

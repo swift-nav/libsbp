@@ -683,7 +683,7 @@ thread. The reported percentage values must be normalized.
 
   """
   _parser = construct.Struct(
-                   'name'/ construct.String(20, paddir='left'),
+                   'name'/ construct.String(20, encoding='utf8'),
                    'cpu' / construct.Int16ul,
                    'stack_free' / construct.Int32ul,)
   __slots__ = [
@@ -1338,7 +1338,7 @@ code will be returned with MSG_COMMAND_RESP.
   """
   _parser = construct.Struct(
                    'sequence' / construct.Int32ul,
-                   'command' / construct.GreedyBytes,)
+                   'command' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'sequence',
                'command',
@@ -1514,7 +1514,7 @@ the correct command.
   """
   _parser = construct.Struct(
                    'sequence' / construct.Int32ul,
-                   'line' / construct.GreedyBytes,)
+                   'line' / construct.GreedyString(encoding='utf8'),)
   __slots__ = [
                'sequence',
                'line',
@@ -1665,7 +1665,7 @@ in c.
                    'ipv6_mask_size' / construct.Int8ul,
                    'rx_bytes' / construct.Int32ul,
                    'tx_bytes' / construct.Int32ul,
-                   'interface_name'/ construct.String(16, paddir='left'),
+                   'interface_name'/ construct.String(16, encoding='utf8'),
                    'flags' / construct.Int32ul,)
   __slots__ = [
                'ipv4_address',
