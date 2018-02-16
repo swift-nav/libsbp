@@ -14,7 +14,7 @@ Generator for c target.
 """
 
 from sbpg.targets.templating import *
-from sbpg.utils import comment_links
+from sbpg.utils import markdown_links
 
 MESSAGES_TEMPLATE_NAME = "sbp_messages_template.h"
 VERSION_TEMPLATE_NAME = "sbp_version_template.h"
@@ -23,7 +23,7 @@ def commentify(value):
   """
   Builds a comment.
   """
-  value = comment_links(value)
+  value = markdown_links(value)
   if value is None:
     return
   if len(value.split('\n')) == 1:
