@@ -10,7 +10,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 import pprint
-
+import re
 def fmt_repr(obj):
   """
   Return pretty printed string representation of an object.
@@ -52,3 +52,7 @@ def rejig_bitfields(bfs):
             'len': bf_len,
         }))
     return new_bfs, n_with_values
+
+def comment_links(input_string):
+   pattern = re.compile(r'@@(\S+)\[(.+)\]')
+   return pattern.sub( r'{\1}', input_string) 

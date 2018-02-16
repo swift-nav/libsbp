@@ -17,6 +17,7 @@ files.
 """
 
 from sbpg.targets.templating import JENV
+from sbpg.utils import comment_links
 import copy
 import textwrap
 
@@ -176,6 +177,7 @@ JENV.filters['arrayFillSize'] = array_fill_size
 JENV.filters['arrayLength'] = array_length
 JENV.filters['construct_js'] = construct_format
 JENV.filters['jsdoc'] = jsdoc_format
+JENV.filters['comment_links'] = comment_links
 JENV.filters['starWordWrap'] = star_wordwrap
 JENV.filters['starWordWrapIndent'] = star_wordwrap_indent
 
