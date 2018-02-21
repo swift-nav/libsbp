@@ -107,7 +107,7 @@ protocol version number.
   """
   _parser = construct.Struct(
                    'flags' / construct.Int32ul,
-                   'version' / construct.GreedyString(encoding='utf8'),)
+                   'version' / construct.GreedyBytes,)
   __slots__ = [
                'flags',
                'version',
