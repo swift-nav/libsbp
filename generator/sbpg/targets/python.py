@@ -61,7 +61,7 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
     return "'{identifier}' / {type_id}".format(type_id=type_map.get(f.type_id),
                                              identifier=f.identifier)
   elif f.type_id == 'string' and f.options.get('size', None):
-    return "'{id}'/ construct.String({size}, paddir='left')".format(id=f.identifier,
+    return "'{id}'/ construct.String({size})".format(id=f.identifier,
                                                    size=f.options['size'].value)
   elif f.type_id == 'string':
     return "'{id}' / construct.GreedyString(encoding='utf8')".format(id=f.identifier)
