@@ -29,7 +29,7 @@ from sbp import ext_events as ext_events
 from sbp import ndb as ndb
 from sbp import mag as mag
 from sbp import vehicle as vehicle
-from sbp import orientation as orientation 
+from sbp import orientation as orientation
 from sbp import sbas as sbas
 
 import pytest
@@ -42,7 +42,7 @@ def test_table_count():
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 139
+  number_of_messages = 140
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_table_unqiue_count():

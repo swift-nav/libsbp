@@ -207,6 +207,67 @@ communication latency in the system.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return Latency.build(d)
     
+class NetworkUsage(object):
+  """NetworkUsage.
+  
+  The bandwidth usage for each interface can be reported
+within this struct and utilize multiple fields to fully
+specify the type of traffic that is being tracked. As
+either the interval of collection or the collection time
+may vary, both a timestamp and period field is provided,
+though may not necessarily be populated with a value. 
+
+  
+  Parameters
+  ----------
+  duration : int
+    Duration over which the measurement was collected
+  total_bytes : int
+    Number of bytes handled in total within period
+  rx_bytes : int
+    Number of bytes transmitted within period
+  tx_bytes : int
+    Number of bytes received within period
+  interface_name : string
+    Interface Name
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'duration' / construct.Int64ul,
+                     'total_bytes' / construct.Int64ul,
+                     'rx_bytes' / construct.Int32ul,
+                     'tx_bytes' / construct.Int32ul,
+                     'interface_name'/ construct.Bytes(16),))
+  __slots__ = [
+               'duration',
+               'total_bytes',
+               'rx_bytes',
+               'tx_bytes',
+               'interface_name',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.duration = kwargs.pop('duration')
+      self.total_bytes = kwargs.pop('total_bytes')
+      self.rx_bytes = kwargs.pop('rx_bytes')
+      self.tx_bytes = kwargs.pop('tx_bytes')
+      self.interface_name = kwargs.pop('interface_name')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = NetworkUsage._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return NetworkUsage.build(d)
+    
 SBP_MSG_ALMANAC = 0x0069
 class MsgAlmanac(SBP):
   """SBP class for message MSG_ALMANAC (0x0069).
@@ -1738,6 +1799,87 @@ in c.
     d.update(j)
     return d
     
+SBP_MSG_NETWORK_BANDWIDTH_USAGE = 0x00BD
+class MsgNetworkBandwidthUsage(SBP):
+  """SBP class for message MSG_NETWORK_BANDWIDTH_USAGE (0x00BD).
+
+  You can have MSG_NETWORK_BANDWIDTH_USAGE inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The bandwidth usage, a list of usage by interface. 
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  interfaces : array
+    Usage measurement array
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   construct.GreedyRange('interfaces' / construct.Struct(NetworkUsage._parser)),)
+  __slots__ = [
+               'interfaces',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgNetworkBandwidthUsage,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgNetworkBandwidthUsage, self).__init__()
+      self.msg_type = SBP_MSG_NETWORK_BANDWIDTH_USAGE
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.interfaces = kwargs.pop('interfaces')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgNetworkBandwidthUsage.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgNetworkBandwidthUsage(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgNetworkBandwidthUsage._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgNetworkBandwidthUsage._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgNetworkBandwidthUsage, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_SPECAN_DEP = 0x0050
 class MsgSpecanDep(SBP):
   """SBP class for message MSG_SPECAN_DEP (0x0050).
@@ -1991,6 +2133,7 @@ msg_classes = {
   0x00BC: MsgCommandOutput,
   0x00BA: MsgNetworkStateReq,
   0x00BB: MsgNetworkStateResp,
+  0x00BD: MsgNetworkBandwidthUsage,
   0x0050: MsgSpecanDep,
   0x0051: MsgSpecan,
 }
