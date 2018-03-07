@@ -47,7 +47,7 @@ definitions:
           desc: Human-readable string
 
  - MSG_FWD:
-    id : 0x0402
+    id: 0x0402
     short_desc: Wrapper for FWD a separate stream of information over SBP
     desc: |
           This message provides the ability to forward messages over SBP.  This may take the form
