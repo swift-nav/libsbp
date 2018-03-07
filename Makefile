@@ -15,7 +15,7 @@ SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
 SBP_MINOR_VERSION := $(word 2, $(subst ., , $(SBP_VERSION)))
 SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
 
-.PHONY: help docs pdf html test release dist silly all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-generator deps-haskell gen-haskell test-haskell verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell
+.PHONY: help docs pdf html test release dist silly all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-generator deps-haskell gen-haskell test-haskell verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell mapping
 
 # Functions
 define announce-begin
