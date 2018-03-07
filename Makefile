@@ -247,3 +247,9 @@ release:
 				   -o DRAFT_CHANGELOG.md \
 				   swift-nav/libsbp
 	$(call announce-end,"Added CHANGELOG details to DRAFT_CHANGELOG.md!")
+
+mapping:
+	@egrep -h '^( - MSG|    id:)' spec/yaml/swiftnav/sbp/*.yaml |\
+    sed 'N;s/\n//' |\
+    awk '{printf("%s  %5d  %s\n", $$4, $$4, $$2)}' |\
+    sort
