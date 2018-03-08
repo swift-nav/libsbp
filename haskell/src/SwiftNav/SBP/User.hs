@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
-{-# LANGUAGE NoImplicitPrelude           #-}
-{-# LANGUAGE TemplateHaskell             #-}
-{-# LANGUAGE RecordWildCards             #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE RecordWildCards   #-}
+{-# LANGUAGE TemplateHaskell   #-}
 
 -- |
 -- Module:      SwiftNav.SBP.User
@@ -24,7 +24,7 @@ import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
-import Data.ByteString.Lazy    hiding (ByteString)
+import Data.ByteString.Lazy hiding (ByteString)
 import Data.Int
 import Data.Word
 import SwiftNav.SBP.TH
