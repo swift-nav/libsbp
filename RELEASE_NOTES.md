@@ -6,6 +6,16 @@ For a detailed index of changes, please see the
 
 Contents
 --------
+ * [v2.3.10](#v2.3.10)
+ * [v2.3.9](#v2.3.9)
+ * [v2.3.8](#v2.3.8)
+ * [v2.3.7](#v2.3.7)
+ * [v2.3.6](#v2.3.6)
+ * [v2.3.5](#v2.3.5)
+ * [v2.3.4](#v2.3.4)
+ * [v2.3.3](#v2.3.3)
+ * [v2.3.2](#v2.3.2)
+ * [v2.3.1](#v2.3.1)
  * [v2.2.15](#v2.2.15)
  * [v2.2.14](#v2.2.14)
  * [v2.2.13](#v2.2.13)
@@ -30,6 +40,50 @@ Contents
  * [v1.0.1](#v1.0.1)
  * [v0.39](#v0.39)
  * [v0.33](#v0.33)
+
+v2.3.10 <a name="v2.3.10">
+--------------------------
+* Improve documentation of Settings IO in source code, pdf, and autogen'ed docs
+
+v2.3.9 <a name="v2.3.9">
+--------------------------
+* Add NetworkUsage message for monitoring data links
+
+v2.3.8 <a name="v2.3.8">
+--------------------------
+* Python client: Add json bin logger (allow higher perf json logging) 
+
+v2.3.7 <a name="v2.3.7">
+--------------------------
+* Python client improvements and add a file driver
+* Update python client construct version for performance
+
+v2.3.6 <a name="v2.3.6">
+--------------------------
+* Change scaling on SSR yaw rate message
+
+v2.3.5 <a name="v2.3.5">
+--------------------------
+* Add MSG\_SBAS\_RAW and precise orbit and clock messages
+* Deprecate MSG\_TRACKING\_STATE\_DETAILED
+* Implement antenna short flags in heartbeat messages
+
+v2.3.4 <a name="v2.3.4">
+--------------------------
+* Add attitude and inertial messages to SBP
+
+v2.3.3 <a name="v2.3.3">
+--------------------------
+* Add fftmonitor code to python client as an API for spectrum analyzer messages
+* Add a tcp client example to python client
+
+v2.3.2 <a name="v2.3.2">
+--------------------------
+* Added MSG\_SETTINGS\_WRITE\_RESP as programmatic way to determine status of setting write
+
+v2.3.1 <a name="v2.3.1">
+--------------------------
+* Added Glonass code-phase bias message
 
 v2.2.15 <a name="v2.2.15">
 --------------------------
