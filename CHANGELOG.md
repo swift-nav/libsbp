@@ -1,7 +1,60 @@
 # Change Log
 
-## [v2.3.4](https://github.com/swift-nav/libsbp/tree/v2.3.4)
+## [v2.3.10](https://github.com/swift-nav/libsbp/tree/v2.3.10) (2018-03-09)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.9...2.3.10)
+
+**Merged pull requests:**
+
+- Settings doc clarity \(WIP\) [\#544](https://github.com/swift-nav/libsbp/pull/544)
+
+## [v2.3.9](https://github.com/swift-nav/libsbp/tree/v2.3.9) (2018-03-06)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.8...v2.3.9)
+
+**Merged pull requests:**
+
+- \[WIP\] Add NetworkUsage struct and MSG\_NETWORK\_BANDWIDTH\_USAGE [\#547](https://github.com/swift-nav/libsbp/pull/547)
+
+## [v2.3.8](https://github.com/swift-nav/libsbp/tree/v2.3.8) (2018-02-26)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.7...v2.3.8)
+
+**Merged pull requests:**
+
+- py: add json bin logger [\#548](https://github.com/swift-nav/libsbp/pull/548)
+
+## [v2.3.7](https://github.com/swift-nav/libsbp/tree/v2.3.7) (2018-02-22)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.6...v2.3.7)
+
+**Merged pull requests:**
+
+- upgrade to construct v2.9.33 [\#546](https://github.com/swift-nav/libsbp/pull/546)
+- Add file driver that exits when file is complete [\#545](https://github.com/swift-nav/libsbp/pull/545)
+- Update sbp doc [\#542](https://github.com/swift-nav/libsbp/pull/542)
+
+## [v2.3.6](https://github.com/swift-nav/libsbp/tree/v2.3.6) (2018-01-26)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.5...v2.3.6)
+
+**Merged pull requests:**
+
+- s16 to s8 change for yaw rate [\#541](https://github.com/swift-nav/libsbp/pull/541)
+
+## [v2.3.5](https://github.com/swift-nav/libsbp/tree/v2.3.5) (2018-01-26)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.4...v2.3.5)
+
+**Closed issues:**
+
+- \#462 broke pyserial driver on windows [\#467](https://github.com/swift-nav/libsbp/issues/467)
+- crc mismatch Host Side Unhandled byte [\#428](https://github.com/swift-nav/libsbp/issues/428)
+
+**Merged pull requests:**
+
+- Update templates around Copyright and POC [\#539](https://github.com/swift-nav/libsbp/pull/539)
+- Remove SBP\_MSG\_TRACKING\_STATE\_DETAILED message [\#538](https://github.com/swift-nav/libsbp/pull/538)
+- Add MSG\_SBAS\_RAW [\#537](https://github.com/swift-nav/libsbp/pull/537)
+- Precise orbit and clock message [\#536](https://github.com/swift-nav/libsbp/pull/536)
+- Add a flag that is high when antenna is shorted, according to MAX4829 IC [\#533](https://github.com/swift-nav/libsbp/pull/533)
+
+## [v2.3.4](https://github.com/swift-nav/libsbp/tree/v2.3.4) (2017-12-12)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.3...v2.3.4)
 
 **Merged pull requests:**
