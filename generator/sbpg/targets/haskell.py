@@ -16,6 +16,7 @@ Generator for Haskell target.
 import string
 import copy
 from sbpg.targets.templating import *
+from sbpg.utils import comment_links
 
 MESSAGES_TEMPLATE_NAME = "SbpMessagesTemplate.hs"
 CABAL_TEMPLATE_NAME = "sbp-template.cabal"
@@ -143,6 +144,9 @@ def to_put(f, type_map=PUT_CONSTRUCT_CODE):
     return "mapM_ %s" % to_put(f_, type_map)
   return type_map.get(name, "put")
 
+def comment_links_hsk(s):
+  return '\<' + comment_links(s) + '\>'
+
 def max_fid_len(m):
   """
   Max field id length.
@@ -156,6 +160,7 @@ JENV.filters['to_get'] = to_get
 JENV.filters['to_put'] = to_put
 JENV.filters['max_fid_len'] = max_fid_len
 JENV.filters['camel_case'] = camel_case
+JENV.filters['comment_links'] = comment_links_hsk
 
 def render_source(output_dir, package_spec):
   """

@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- (((description | replace("\n", " ") | wordwrap(width=76, wrapstring="\n-- "))))
+-- (((description | comment_links | replace("\n", " ") | wordwrap(width=76, wrapstring="\n-- " ))))
 
 module (((module_name)))
   ( module (((module_name)))

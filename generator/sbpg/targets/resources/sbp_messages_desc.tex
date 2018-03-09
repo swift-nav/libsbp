@@ -4,9 +4,9 @@
 \section{Stable Message Definitions}
 ((*- for m in msgs *))
 ((*- if m.pkg *))
-\subsection{(((m.pkg|packagenameify|header_write)))}
+\subsection{(((m.pkg|packagenameify|header_write|no_us)))}
 \begin{large}
-(((m.pkg_desc | escape_tex | no_us)))
+(((m.pkg_desc | escape_tex )))
 \end{large}
 ((* endif *))
 \subsubsection{(((m.name|escape_tex))) --- ((('0x%04X'|format(m.sbp_id)))) --- (((m.sbp_id)))}
@@ -94,7 +94,7 @@
 (((m.pkg_desc)))
 \end{large}
 ((* endif *))
-\subsubsection*{(((m.name|escape_tex))) --- ((('0x%04X'|format(m.sbp_id)))) --- (((m.sbp_id)))}
+\subsubsection*{(((m.name|escape_tex|no_us))) --- ((('0x%04X'|format(m.sbp_id)))) --- (((m.sbp_id)))}
 \label{sec:(((m.name)))}
 \begin{minipage}{\textwidth}
 \begin{large}

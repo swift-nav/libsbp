@@ -30,7 +30,11 @@ import org.json.JSONArray;
  *
  * Return the status of a write request with the new value of the
  * setting.  If the requested value is rejected, the current value
- * will be returned. */
+ * will be returned. The string field is a NULL-terminated and NULL-delimited
+ * string with contents "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0'
+ * escape sequence denotes the NULL character and where quotation marks
+ * are omitted. An example string that could be sent from device is
+ * "solution\0soln_freq\010\0". */
 
 public class MsgSettingsWriteResp extends SBPMessage {
     public static final int TYPE = 0x00AF;
@@ -40,7 +44,7 @@ public class MsgSettingsWriteResp extends SBPMessage {
     public int status;
     
     /** A NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE].
+"SECTION_SETTING\0SETTING\0VALUE\0" 
  */
     public String setting;
     

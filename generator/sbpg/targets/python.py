@@ -17,6 +17,7 @@ files.
 """
 
 from sbpg.targets.templating import JENV, ACRONYMS
+from sbpg.utils import comment_links
 import copy
 
 TEMPLATE_NAME = "sbp_construct_template.py.j2"
@@ -97,6 +98,7 @@ def classnameify(s):
 JENV.filters['construct_py'] = construct_format
 JENV.filters['classnameify'] = classnameify
 JENV.filters['pydoc'] = pydoc_format
+JENV.filters['comment_links'] = comment_links
 
 
 def render_source(output_dir, package_spec, jenv=JENV):

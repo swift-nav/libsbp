@@ -20,7 +20,7 @@ target directory.
 import os
 import os.path
 from sbpg.targets.templating import JENV, ACRONYMS
-
+from sbpg.utils import comment_links
 
 TEMPLATE_NAME = "sbp_java.java.j2"
 TEMPLATE_TABLE_NAME = "MessageTable.java.j2"
@@ -61,6 +61,7 @@ def commentify(value):
   """
   Builds a comment.
   """
+  value = comment_links(value)
   if value is None:
     return
   if len(value.split('\n')) == 1:

@@ -37,7 +37,7 @@ public class MsgSettingsRegister extends SBPMessage {
 
     
     /** A NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE].
+"SECTION_SETTING\0SETTING\0VALUE".
  */
     public String setting;
     

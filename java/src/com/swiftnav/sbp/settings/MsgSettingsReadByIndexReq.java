@@ -29,10 +29,8 @@ import org.json.JSONArray;
  * fields.
  *
  * The settings message for iterating through the settings
- * values. It will read the setting at an index, returning a
- * NULL-terminated and delimited string with contents
- * [SECTION_SETTING, SETTING, VALUE]. A device will only respond to
- * this message when it is received from sender ID 0x42. */
+ * values. A device will respond to this message with a 
+ * "MSG_SETTINGS_READ_BY_INDEX_RESP". */
 
 public class MsgSettingsReadByIndexReq extends SBPMessage {
     public static final int TYPE = 0x00A2;

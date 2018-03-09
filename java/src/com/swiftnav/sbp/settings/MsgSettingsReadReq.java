@@ -28,15 +28,21 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
-* The setting message reads the device configuration. */
+ * The setting message that reads the device configuration. The string
+ * field is a NULL-terminated and NULL-delimited string with contents
+ * "SECTION_SETTING\0SETTING\0" where the '\0' escape sequence denotes the
+ * NULL character and where quotation marks are omitted. An example
+ * string that could be sent to a device is "solution\0soln_freq\0". A
+ * device will only respond to this message when it is received from
+ * sender ID 0x42. A device should respond with a MSG_SETTINGS_READ_RESP
+ * message (msg_id 0x00A5). */
 
 public class MsgSettingsReadReq extends SBPMessage {
     public static final int TYPE = 0x00A4;
 
     
-    /** A NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING]. A device will only respond to
-this message when it is received from sender ID 0x42.
+    /** A NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0"
  */
     public String setting;
     

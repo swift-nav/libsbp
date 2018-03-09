@@ -11,13 +11,32 @@
 
 
 """
-Messages for reading and writing the device's device settings.
 
-Note that some of these messages share the same message type ID for both the
-host request and the device response. See the accompanying document for
-descriptions of settings configurations and examples:
+Messages for reading, writing, and discovering device settings. Settings
+with a "string" field have multiple values in this field delimited with a
+null character (the c style null terminator).  For instance, when querying
+the 'firmware_version' setting in the 'system_info' section, the following
+array of characters needs to be sent for the string field in
+MSG_SETTINGS_READ: "system_info\0firmware_version\0", where the delimiting 
+null characters are specified with the escape sequence '\0' and all
+quotation marks should be omitted. 
 
-https://github.com/swift-nav/piksi\_firmware/blob/master/docs/settings.pdf
+
+In the message descriptions below, the generic strings SECTION_SETTING and
+SETTING are used to refer to the two strings that comprise the identifier
+of an individual setting.In firmware_version example above, SECTION_SETTING
+is the 'system_info', and the SETTING portion is 'firmware_version'. 
+
+See the "Software Settings Manual" on support.swiftnav.com for detailed
+documentation about all settings and sections available for each Swift
+firmware version. Settings manuals are available for each firmware version
+at the following link: https://support.swiftnav.com/customer/en/portal/articles/2628580-piksi-multi-specifications#settings.
+The latest settings document is also available at the following link: 
+http://swiftnav.com/latest/piksi-multi-settings .
+See lastly https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.py , 
+the open source python command line utility for reading, writing, and
+saving settings in the piksi_tools repository on github as a helpful
+reference and example.
 
 """
 
@@ -87,17 +106,22 @@ class MsgSettingsWrite(SBP):
   of its fields.
 
   
-  The setting message writes the device configuration.
+  The setting message writes the device configuration for a particular
+setting via A NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes 
+the NULL character and where quotation marks are omitted. A device will
+only process to this message when it is received from sender ID 0x42.
+An example string that could be sent to a device is
+"solution\0soln_freq\010\0".
+
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
   setting : string
-    A NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE]. A device will only
-process to this message when it is received from sender ID
-0x42.
+    A NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0"
 
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -173,7 +197,11 @@ class MsgSettingsWriteResp(SBP):
   
   Return the status of a write request with the new value of the
 setting.  If the requested value is rejected, the current value
-will be returned.
+will be returned. The string field is a NULL-terminated and NULL-delimited
+string with contents "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0'
+escape sequence denotes the NULL character and where quotation marks
+are omitted. An example string that could be sent from device is
+"solution\0soln_freq\010\0".
 
 
   Parameters
@@ -184,7 +212,7 @@ will be returned.
     Write status
   setting : string
     A NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE].
+"SECTION_SETTING\0SETTING\0VALUE\0" 
 
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -261,16 +289,23 @@ class MsgSettingsReadReq(SBP):
   of its fields.
 
   
-  The setting message reads the device configuration.
+  The setting message that reads the device configuration. The string
+field is a NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0" where the '\0' escape sequence denotes the
+NULL character and where quotation marks are omitted. An example
+string that could be sent to a device is "solution\0soln_freq\0". A
+device will only respond to this message when it is received from
+sender ID 0x42. A device should respond with a MSG_SETTINGS_READ_RESP
+message (msg_id 0x00A5).
+
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
   setting : string
-    A NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING]. A device will only respond to
-this message when it is received from sender ID 0x42.
+    A NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0"
 
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -344,15 +379,23 @@ class MsgSettingsReadResp(SBP):
   of its fields.
 
   
-  The setting message reads the device configuration.
+  The setting message wich which the device responds after a
+MSG_SETTING_READ_REQ is sent to device. The string field is a
+NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence
+denotes the NULL character and where quotation marks are omitted. An
+example string that could be sent from device is
+"solution\0soln_freq\010\0".
+
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
   setting : string
-    A NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE].
+    A NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0"
+ 
 
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -427,10 +470,8 @@ class MsgSettingsReadByIndexReq(SBP):
 
   
   The settings message for iterating through the settings
-values. It will read the setting at an index, returning a
-NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE]. A device will only respond to
-this message when it is received from sender ID 0x42.
+values. A device will respond to this message with a 
+"MSG_SETTINGS_READ_BY_INDEX_RESP".
 
 
   Parameters
@@ -513,10 +554,16 @@ class MsgSettingsReadByIndexResp(SBP):
   of its fields.
 
   
-  The settings message for iterating through the settings
-values. It will read the setting at an index, returning a
-NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE].
+  The settings message that reports the value of a setting at an index.
+
+In the string field, it reports NULL-terminated and delimited string
+with contents "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0". where
+the '\0' escape sequence denotes the NULL character and where quotation
+marks are omitted. The FORMAT_TYPE field is optional and denotes
+possible string values of the setting as a hint to the user. If
+included, the format type portion of the string has the format
+"enum:value1,value2,value3". An example string that could be sent from
+the device is "simulator\0enabled\0True\0enum:True,False\0"
 
 
   Parameters
@@ -529,7 +576,7 @@ NULL-terminated and delimited string with contents
 
   setting : string
     A NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE].
+"SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
 
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -662,7 +709,7 @@ for this setting to set the initial value.
     SBP parent object to inherit from.
   setting : string
     A NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE].
+"SECTION_SETTING\0SETTING\0VALUE".
 
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
