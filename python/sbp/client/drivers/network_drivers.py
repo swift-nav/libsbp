@@ -18,6 +18,7 @@ from requests.packages.urllib3.util import Retry
 from requests_futures.sessions import FuturesSession
 import requests
 from functools import partial
+import errno
 import socket
 import threading
 import time
@@ -74,7 +75,11 @@ class TCPDriver(BaseDriver):
             return data
         except socket.timeout:
             self._connect()
-        except socket.error, msg:
+        except socket.error as e:
+            # this is fine
+            if e[0] == errno.EINTR:
+                return
+            # we really shouldn't be doing this
             raise IOError
 
     def flush(self):
