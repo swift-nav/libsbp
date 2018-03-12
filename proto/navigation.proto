@@ -1,3 +1,75 @@
 syntax = "proto3";
 
 package swiftnav.sbp.navigation;
+
+message MsgGpsTime {
+}
+
+message MsgUtcTime {
+}
+
+message MsgDops {
+}
+
+message MsgPosEcef {
+}
+
+message MsgPosEcefCov {
+}
+
+message MsgPosLlh {
+}
+
+message MsgPosLlhCov {
+}
+
+message MsgBaselineEcef {
+}
+
+message MsgBaselineNed {
+}
+
+message MsgVelEcef {
+}
+
+message MsgVelEcefCov {
+}
+
+message MsgVelNed {
+}
+
+message MsgVelNedCov {
+}
+
+message MsgVelBody {
+}
+
+message MsgAgeCorrections {
+}
+
+message MsgGpsTimeDepA {
+}
+
+message MsgDopsDepA {
+}
+
+message MsgPosEcefDepA {
+}
+
+message MsgPosLlhDepA {
+}
+
+message MsgBaselineEcefDepA {
+}
+
+message MsgBaselineNedDepA {
+}
+
+message MsgVelEcefDepA {
+}
+
+message MsgVelNedDepA {
+}
+
+message MsgBaselineHeadingDepA {
+}

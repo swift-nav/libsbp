@@ -1,3 +1,15 @@
 syntax = "proto3";
 
 package swiftnav.sbp.system;
+
+message MsgStartup {
+}
+
+message MsgDgnssStatus {
+}
+
+message MsgHeartbeat {
+}
+
+message MsgInsStatus {
+}

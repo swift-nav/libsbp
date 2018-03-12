@@ -1,3 +1,27 @@
 syntax = "proto3";
 
 package swiftnav.sbp.acquisition;
+
+message MsgAcqResult {
+}
+
+message MsgAcqResultDepC {
+}
+
+message MsgAcqResultDepB {
+}
+
+message MsgAcqResultDepA {
+}
+
+message AcqSvProfile {
+}
+
+message AcqSvProfileDep {
+}
+
+message MsgAcqSvProfile {
+}
+
+message MsgAcqSvProfileDep {
+}

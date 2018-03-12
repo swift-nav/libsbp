@@ -20,6 +20,14 @@ from sbpg.targets.templating import *
 
 MESSAGES_TEMPLATE_NAME = "message_template.proto.j2"
 
+def camel_case(s):
+  """
+  Convert snake_case to camel_case.
+  """
+  return ''.join([i.capitalize() for i in s.split('_')]) if '_' in s else s
+
+JENV.filters['camel_case'] = camel_case
+
 def render_source(output_dir, package_spec):
     """
     Render and output to a directory given a package specification.
@@ -29,5 +37,6 @@ def render_source(output_dir, package_spec):
     pb_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
     with open(destination_filename, 'w') as f:
         f.write(pb_template.render(
-            package=package_spec.identifier
+            package=package_spec.identifier,
+            messages=package_spec.definitions
         ))

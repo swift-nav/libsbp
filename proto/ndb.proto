@@ -1,3 +1,6 @@
 syntax = "proto3";
 
 package swiftnav.sbp.ndb;
+
+message MsgNdbEvent {
+}

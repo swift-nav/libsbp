@@ -1,3 +1,84 @@
 syntax = "proto3";
 
 package swiftnav.sbp.piksi;
+
+message MsgAlmanac {
+}
+
+message MsgSetTime {
+}
+
+message MsgReset {
+}
+
+message MsgResetDep {
+}
+
+message MsgCwResults {
+}
+
+message MsgCwStart {
+}
+
+message MsgResetFilters {
+}
+
+message MsgInitBase {
+}
+
+message MsgThreadState {
+}
+
+message UARTChannel {
+}
+
+message Period {
+}
+
+message Latency {
+}
+
+message MsgUartState {
+}
+
+message MsgUartStateDepa {
+}
+
+message MsgIarState {
+}
+
+message MsgMaskSatellite {
+}
+
+message MsgMaskSatelliteDep {
+}
+
+message MsgDeviceMonitor {
+}
+
+message MsgCommandReq {
+}
+
+message MsgCommandResp {
+}
+
+message MsgCommandOutput {
+}
+
+message MsgNetworkStateReq {
+}
+
+message MsgNetworkStateResp {
+}
+
+message NetworkUsage {
+}
+
+message MsgNetworkBandwidthUsage {
+}
+
+message MsgSpecanDep {
+}
+
+message MsgSpecan {
+}

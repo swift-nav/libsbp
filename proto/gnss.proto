@@ -1,3 +1,21 @@
 syntax = "proto3";
 
 package swiftnav.sbp.gnss;
+
+message GnssSignal {
+}
+
+message GnssSignalDep {
+}
+
+message GPSTimeDep {
+}
+
+message GPSTimeSec {
+}
+
+message GPSTime {
+}
+
+message CarrierPhase {
+}

@@ -1,3 +1,15 @@
 syntax = "proto3";
 
 package swiftnav.sbp.orientation;
+
+message MsgBaselineHeading {
+}
+
+message MsgOrientQuat {
+}
+
+message MsgOrientEuler {
+}
+
+message MsgAngularRate {
+}

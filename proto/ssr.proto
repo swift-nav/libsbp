@@ -1,3 +1,18 @@
 syntax = "proto3";
 
 package swiftnav.sbp.ssr;
+
+message CodeBiasesContent {
+}
+
+message PhaseBiasesContent {
+}
+
+message MsgSsrOrbitClock {
+}
+
+message MsgSsrCodeBiases {
+}
+
+message MsgSsrPhaseBiases {
+}

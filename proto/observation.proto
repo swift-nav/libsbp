@@ -1,3 +1,123 @@
 syntax = "proto3";
 
 package swiftnav.sbp.observation;
+
+message ObservationHeader {
+}
+
+message Doppler {
+}
+
+message PackedObsContent {
+}
+
+message MsgObs {
+}
+
+message MsgBasePosLlh {
+}
+
+message MsgBasePosEcef {
+}
+
+message EphemerisCommonContent {
+}
+
+message EphemerisCommonContentDepA {
+}
+
+message MsgEphemerisGpsDepE {
+}
+
+message MsgEphemerisGps {
+}
+
+message MsgEphemerisSbasDepA {
+}
+
+message MsgEphemerisGloDepA {
+}
+
+message MsgEphemerisSbas {
+}
+
+message MsgEphemerisGloDepB {
+}
+
+message MsgEphemerisGloDepC {
+}
+
+message MsgEphemerisGlo {
+}
+
+message MsgEphemerisDepD {
+}
+
+message MsgEphemerisDepA {
+}
+
+message MsgEphemerisDepB {
+}
+
+message MsgEphemerisDepC {
+}
+
+message ObservationHeaderDep {
+}
+
+message CarrierPhaseDepA {
+}
+
+message PackedObsContentDepA {
+}
+
+message PackedObsContentDepB {
+}
+
+message PackedObsContentDepC {
+}
+
+message MsgObsDepA {
+}
+
+message MsgObsDepB {
+}
+
+message MsgObsDepC {
+}
+
+message MsgIono {
+}
+
+message MsgSvConfigurationGps {
+}
+
+message MsgGroupDelayDepA {
+}
+
+message MsgGroupDelayDepB {
+}
+
+message MsgGroupDelay {
+}
+
+message AlmanacCommonContent {
+}
+
+message AlmanacCommonContentDep {
+}
+
+message MsgAlmanacGpsDep {
+}
+
+message MsgAlmanacGps {
+}
+
+message MsgAlmanacGloDep {
+}
+
+message MsgAlmanacGlo {
+}
+
+message MsgGloBiases {
+}

@@ -1,3 +1,9 @@
 syntax = "proto3";
 
 package swiftnav.sbp.imu;
+
+message MsgImuRaw {
+}
+
+message MsgImuAux {
+}

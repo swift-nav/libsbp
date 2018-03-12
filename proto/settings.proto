@@ -1,3 +1,30 @@
 syntax = "proto3";
 
 package swiftnav.sbp.settings;
+
+message MsgSettingsSave {
+}
+
+message MsgSettingsWrite {
+}
+
+message MsgSettingsWriteResp {
+}
+
+message MsgSettingsReadReq {
+}
+
+message MsgSettingsReadResp {
+}
+
+message MsgSettingsReadByIndexReq {
+}
+
+message MsgSettingsReadByIndexResp {
+}
+
+message MsgSettingsReadByIndexDone {
+}
+
+message MsgSettingsRegister {
+}

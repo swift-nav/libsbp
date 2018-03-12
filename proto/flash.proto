@@ -1,3 +1,33 @@
 syntax = "proto3";
 
 package swiftnav.sbp.flash;
+
+message MsgFlashProgram {
+}
+
+message MsgFlashDone {
+}
+
+message MsgFlashReadReq {
+}
+
+message MsgFlashReadResp {
+}
+
+message MsgFlashErase {
+}
+
+message MsgStmFlashLockSector {
+}
+
+message MsgStmFlashUnlockSector {
+}
+
+message MsgStmUniqueIdReq {
+}
+
+message MsgStmUniqueIdResp {
+}
+
+message MsgM25FlashWriteStatus {
+}

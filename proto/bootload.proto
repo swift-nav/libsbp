@@ -1,3 +1,21 @@
 syntax = "proto3";
 
 package swiftnav.sbp.bootload;
+
+message MsgBootloaderHandshakeReq {
+}
+
+message MsgBootloaderHandshakeResp {
+}
+
+message MsgBootloaderJumpToApp {
+}
+
+message MsgNapDeviceDnaReq {
+}
+
+message MsgNapDeviceDnaResp {
+}
+
+message MsgBootloaderHandshakeDepA {
+}
