@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package swiftnav.sbp.flash;
 
+
 message MsgFlashProgram {
     uint32 target = 1;
     repeated uint32 addr_start = 2;

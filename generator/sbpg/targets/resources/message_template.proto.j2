@@ -1,6 +1,9 @@
 syntax = "proto3";
 
 package (((package)));
+((* for include in includes *))
+import "(((include))).proto";
+((*- endfor *))
 ((* for message in messages *))
 message (((message.identifier | to_identifier))) {
 ((*- for field in message.fields *))

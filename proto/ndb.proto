@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package swiftnav.sbp.ndb;
 
+import "gnss.proto";
+
 message MsgNdbEvent {
     uint64 recv_time = 1;
     uint32 event = 2;

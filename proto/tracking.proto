@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package swiftnav.sbp.tracking;
 
+import "gnss.proto";
+
 message MsgTrackingStateDetailedDepA {
     uint64 recv_time = 1;
     GpsTime tot = 2;

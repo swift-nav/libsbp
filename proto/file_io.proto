@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package swiftnav.sbp.file_io;
 
+
 message MsgFileioReadReq {
     uint32 sequence = 1;
     uint32 offset = 2;

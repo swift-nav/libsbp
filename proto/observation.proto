@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package swiftnav.sbp.observation;
 
+import "gnss.proto";
+
 message ObservationHeader {
     GpsTime t = 1;
     uint32 n_obs = 2;

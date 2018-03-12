@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package swiftnav.sbp.orientation;
 
+
 message MsgBaselineHeading {
     uint32 tow = 1;
     uint32 heading = 2;

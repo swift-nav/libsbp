@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package swiftnav.sbp.bootload;
 
+
 message MsgBootloaderHandshakeReq {
 }
 

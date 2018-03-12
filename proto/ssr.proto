@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package swiftnav.sbp.ssr;
 
+import "gnss.proto";
+
 message CodeBiasesContent {
     uint32 code = 1;
     sint32 value = 2;

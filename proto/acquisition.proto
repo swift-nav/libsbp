@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package swiftnav.sbp.acquisition;
 
+import "gnss.proto";
+
 message MsgAcqResult {
     Float cn0 = 1;
     Float cp = 2;

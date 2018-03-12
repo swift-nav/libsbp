@@ -66,8 +66,13 @@ def render_source(output_dir, package_spec):
     path, name = package_spec.filepath
     destination_filename = '%s/%s.proto' % (output_dir, name)
     pb_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
+    includes = [include[:-5] if include.endswith('.yaml') else include for include in package_spec.includes]
+    if 'types' in includes:
+        includes.remove('types')
+    print includes
     with open(destination_filename, 'w') as f:
         f.write(pb_template.render(
             package=package_spec.identifier,
-            messages=package_spec.definitions
+            messages=package_spec.definitions,
+            includes=includes
         ))

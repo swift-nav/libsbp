@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package swiftnav.sbp.sbas;
 
+import "gnss.proto";
+
 message MsgSbasRaw {
     GnssSignal sid = 1;
     uint32 tow = 2;
