@@ -30,8 +30,8 @@ TYPE_MAP = {
   's16': 'sint32',
   's32': 'sint32',
   's64': 'sint64',
-  'float': 'Float',
-  'double': 'Double',
+  'float': 'float',
+  'double': 'double',
   'string': 'string',
 }
 
