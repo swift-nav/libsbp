@@ -17,7 +17,3 @@ message MsgFwd {
 message MsgTweet {
     string tweet = 1;
 }
-
-message MsgPrintDep {
-    string text = 1;
-}

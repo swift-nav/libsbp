@@ -4,10 +4,17 @@ package (((package)));
 ((* for include in includes *))
 import "(((include))).proto";
 ((*- endfor *))
-((* for message in messages *))
+((*- for message in messages *))
+((*- if not 'DEP' in message.identifier *))
+((*- if not 'Dep' in message.identifier *))
+
 message (((message.identifier | to_identifier))) {
 ((*- for field in message.fields *))
+((*- if not 'reserved' in field.identifier *))
     (((field | to_type))) (((field.identifier))) = (((loop.index)));
+((*- endif *))
 ((*- endfor *))
 }
-((* endfor *))
+((*- endif *))
+((*- endif *))
+((*- endfor *))

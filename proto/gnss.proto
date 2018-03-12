@@ -8,17 +8,6 @@ message GnssSignal {
     uint32 code = 2;
 }
 
-message GnssSignalDep {
-    uint32 sat = 1;
-    uint32 code = 2;
-    uint32 reserved = 3;
-}
-
-message GpsTimeDep {
-    uint32 tow = 1;
-    uint32 wn = 2;
-}
-
 message GpsTimeSec {
     uint32 tow = 1;
     uint32 wn = 2;

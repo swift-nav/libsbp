@@ -14,9 +14,6 @@ message MsgReset {
     uint32 flags = 1;
 }
 
-message MsgResetDep {
-}
-
 message MsgCwResults {
 }
 
@@ -67,13 +64,6 @@ message MsgUartState {
     Period obs_period = 5;
 }
 
-message MsgUartStateDepa {
-    UARTChannel uart_a = 1;
-    UARTChannel uart_b = 2;
-    UARTChannel uart_ftdi = 3;
-    Latency latency = 4;
-}
-
 message MsgIarState {
     uint32 num_hyps = 1;
 }
@@ -81,11 +71,6 @@ message MsgIarState {
 message MsgMaskSatellite {
     uint32 mask = 1;
     GnssSignal sid = 2;
-}
-
-message MsgMaskSatelliteDep {
-    uint32 mask = 1;
-    GnssSignalDep sid = 2;
 }
 
 message MsgDeviceMonitor {
@@ -135,16 +120,6 @@ message NetworkUsage {
 
 message MsgNetworkBandwidthUsage {
     repeated NetworkUsage interfaces = 1;
-}
-
-message MsgSpecanDep {
-    uint32 channel_tag = 1;
-    GpsTimeDep t = 2;
-    Float freq_ref = 3;
-    Float freq_step = 4;
-    Float amplitude_ref = 5;
-    Float amplitude_unit = 6;
-    repeated uint32 amplitude_value = 7;
 }
 
 message MsgSpecan {

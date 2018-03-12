@@ -69,7 +69,6 @@ def render_source(output_dir, package_spec):
     includes = [include[:-5] if include.endswith('.yaml') else include for include in package_spec.includes]
     if 'types' in includes:
         includes.remove('types')
-    print includes
     with open(destination_filename, 'w') as f:
         f.write(pb_template.render(
             package=package_spec.identifier,

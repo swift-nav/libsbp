@@ -50,41 +50,6 @@ message EphemerisCommonContent {
     uint32 health_bits = 6;
 }
 
-message EphemerisCommonContentDepA {
-    GnssSignalDep sid = 1;
-    GpsTimeDep toe = 2;
-    Double ura = 3;
-    uint32 fit_interval = 4;
-    uint32 valid = 5;
-    uint32 health_bits = 6;
-}
-
-message MsgEphemerisGpsDepE {
-    EphemerisCommonContentDepA common = 1;
-    Double tgd = 2;
-    Double c_rs = 3;
-    Double c_rc = 4;
-    Double c_uc = 5;
-    Double c_us = 6;
-    Double c_ic = 7;
-    Double c_is = 8;
-    Double dn = 9;
-    Double m0 = 10;
-    Double ecc = 11;
-    Double sqrta = 12;
-    Double omega0 = 13;
-    Double omegadot = 14;
-    Double w = 15;
-    Double inc = 16;
-    Double inc_dot = 17;
-    Double af0 = 18;
-    Double af1 = 19;
-    Double af2 = 20;
-    GpsTimeDep toc = 21;
-    uint32 iode = 22;
-    uint32 iodc = 23;
-}
-
 message MsgEphemerisGps {
     EphemerisCommonContent common = 1;
     Double tgd = 2;
@@ -111,24 +76,6 @@ message MsgEphemerisGps {
     uint32 iodc = 23;
 }
 
-message MsgEphemerisSbasDepA {
-    EphemerisCommonContentDepA common = 1;
-    repeated Double pos = 2;
-    repeated Double vel = 3;
-    repeated Double acc = 4;
-    Double a_gf0 = 5;
-    Double a_gf1 = 6;
-}
-
-message MsgEphemerisGloDepA {
-    EphemerisCommonContentDepA common = 1;
-    Double gamma = 2;
-    Double tau = 3;
-    repeated Double pos = 4;
-    repeated Double vel = 5;
-    repeated Double acc = 6;
-}
-
 message MsgEphemerisSbas {
     EphemerisCommonContent common = 1;
     repeated Double pos = 2;
@@ -136,26 +83,6 @@ message MsgEphemerisSbas {
     repeated Double acc = 4;
     Double a_gf0 = 5;
     Double a_gf1 = 6;
-}
-
-message MsgEphemerisGloDepB {
-    EphemerisCommonContent common = 1;
-    Double gamma = 2;
-    Double tau = 3;
-    repeated Double pos = 4;
-    repeated Double vel = 5;
-    repeated Double acc = 6;
-}
-
-message MsgEphemerisGloDepC {
-    EphemerisCommonContent common = 1;
-    Double gamma = 2;
-    Double tau = 3;
-    Double d_tau = 4;
-    repeated Double pos = 5;
-    repeated Double vel = 6;
-    repeated Double acc = 7;
-    uint32 fcn = 8;
 }
 
 message MsgEphemerisGlo {
@@ -168,178 +95,6 @@ message MsgEphemerisGlo {
     repeated Double acc = 7;
     uint32 fcn = 8;
     uint32 iod = 9;
-}
-
-message MsgEphemerisDepD {
-    Double tgd = 1;
-    Double c_rs = 2;
-    Double c_rc = 3;
-    Double c_uc = 4;
-    Double c_us = 5;
-    Double c_ic = 6;
-    Double c_is = 7;
-    Double dn = 8;
-    Double m0 = 9;
-    Double ecc = 10;
-    Double sqrta = 11;
-    Double omega0 = 12;
-    Double omegadot = 13;
-    Double w = 14;
-    Double inc = 15;
-    Double inc_dot = 16;
-    Double af0 = 17;
-    Double af1 = 18;
-    Double af2 = 19;
-    Double toe_tow = 20;
-    uint32 toe_wn = 21;
-    Double toc_tow = 22;
-    uint32 toc_wn = 23;
-    uint32 valid = 24;
-    uint32 healthy = 25;
-    GnssSignalDep sid = 26;
-    uint32 iode = 27;
-    uint32 iodc = 28;
-    uint32 reserved = 29;
-}
-
-message MsgEphemerisDepA {
-    Double tgd = 1;
-    Double c_rs = 2;
-    Double c_rc = 3;
-    Double c_uc = 4;
-    Double c_us = 5;
-    Double c_ic = 6;
-    Double c_is = 7;
-    Double dn = 8;
-    Double m0 = 9;
-    Double ecc = 10;
-    Double sqrta = 11;
-    Double omega0 = 12;
-    Double omegadot = 13;
-    Double w = 14;
-    Double inc = 15;
-    Double inc_dot = 16;
-    Double af0 = 17;
-    Double af1 = 18;
-    Double af2 = 19;
-    Double toe_tow = 20;
-    uint32 toe_wn = 21;
-    Double toc_tow = 22;
-    uint32 toc_wn = 23;
-    uint32 valid = 24;
-    uint32 healthy = 25;
-    uint32 prn = 26;
-}
-
-message MsgEphemerisDepB {
-    Double tgd = 1;
-    Double c_rs = 2;
-    Double c_rc = 3;
-    Double c_uc = 4;
-    Double c_us = 5;
-    Double c_ic = 6;
-    Double c_is = 7;
-    Double dn = 8;
-    Double m0 = 9;
-    Double ecc = 10;
-    Double sqrta = 11;
-    Double omega0 = 12;
-    Double omegadot = 13;
-    Double w = 14;
-    Double inc = 15;
-    Double inc_dot = 16;
-    Double af0 = 17;
-    Double af1 = 18;
-    Double af2 = 19;
-    Double toe_tow = 20;
-    uint32 toe_wn = 21;
-    Double toc_tow = 22;
-    uint32 toc_wn = 23;
-    uint32 valid = 24;
-    uint32 healthy = 25;
-    uint32 prn = 26;
-    uint32 iode = 27;
-}
-
-message MsgEphemerisDepC {
-    Double tgd = 1;
-    Double c_rs = 2;
-    Double c_rc = 3;
-    Double c_uc = 4;
-    Double c_us = 5;
-    Double c_ic = 6;
-    Double c_is = 7;
-    Double dn = 8;
-    Double m0 = 9;
-    Double ecc = 10;
-    Double sqrta = 11;
-    Double omega0 = 12;
-    Double omegadot = 13;
-    Double w = 14;
-    Double inc = 15;
-    Double inc_dot = 16;
-    Double af0 = 17;
-    Double af1 = 18;
-    Double af2 = 19;
-    Double toe_tow = 20;
-    uint32 toe_wn = 21;
-    Double toc_tow = 22;
-    uint32 toc_wn = 23;
-    uint32 valid = 24;
-    uint32 healthy = 25;
-    GnssSignalDep sid = 26;
-    uint32 iode = 27;
-    uint32 iodc = 28;
-    uint32 reserved = 29;
-}
-
-message ObservationHeaderDep {
-    GpsTimeDep t = 1;
-    uint32 n_obs = 2;
-}
-
-message CarrierPhaseDepA {
-    sint32 i = 1;
-    uint32 f = 2;
-}
-
-message PackedObsContentDepA {
-    uint32 P = 1;
-    CarrierPhaseDepA L = 2;
-    uint32 cn0 = 3;
-    uint32 lock = 4;
-    uint32 prn = 5;
-}
-
-message PackedObsContentDepB {
-    uint32 P = 1;
-    CarrierPhaseDepA L = 2;
-    uint32 cn0 = 3;
-    uint32 lock = 4;
-    GnssSignalDep sid = 5;
-}
-
-message PackedObsContentDepC {
-    uint32 P = 1;
-    CarrierPhase L = 2;
-    uint32 cn0 = 3;
-    uint32 lock = 4;
-    GnssSignalDep sid = 5;
-}
-
-message MsgObsDepA {
-    ObservationHeaderDep header = 1;
-    repeated PackedObsContentDepA obs = 2;
-}
-
-message MsgObsDepB {
-    ObservationHeaderDep header = 1;
-    repeated PackedObsContentDepB obs = 2;
-}
-
-message MsgObsDepC {
-    ObservationHeaderDep header = 1;
-    repeated PackedObsContentDepC obs = 2;
 }
 
 message MsgIono {
@@ -357,24 +112,6 @@ message MsgIono {
 message MsgSvConfigurationGps {
     GpsTimeSec t_nmct = 1;
     uint32 l2c_mask = 2;
-}
-
-message MsgGroupDelayDepA {
-    GpsTimeDep t_op = 1;
-    uint32 prn = 2;
-    uint32 valid = 3;
-    sint32 tgd = 4;
-    sint32 isc_l1ca = 5;
-    sint32 isc_l2c = 6;
-}
-
-message MsgGroupDelayDepB {
-    GpsTimeSec t_op = 1;
-    GnssSignalDep sid = 2;
-    uint32 valid = 3;
-    sint32 tgd = 4;
-    sint32 isc_l1ca = 5;
-    sint32 isc_l2c = 6;
 }
 
 message MsgGroupDelay {
@@ -395,28 +132,6 @@ message AlmanacCommonContent {
     uint32 health_bits = 6;
 }
 
-message AlmanacCommonContentDep {
-    GnssSignalDep sid = 1;
-    GpsTimeSec toa = 2;
-    Double ura = 3;
-    uint32 fit_interval = 4;
-    uint32 valid = 5;
-    uint32 health_bits = 6;
-}
-
-message MsgAlmanacGpsDep {
-    AlmanacCommonContentDep common = 1;
-    Double m0 = 2;
-    Double ecc = 3;
-    Double sqrta = 4;
-    Double omega0 = 5;
-    Double omegadot = 6;
-    Double w = 7;
-    Double inc = 8;
-    Double af0 = 9;
-    Double af1 = 10;
-}
-
 message MsgAlmanacGps {
     AlmanacCommonContent common = 1;
     Double m0 = 2;
@@ -428,17 +143,6 @@ message MsgAlmanacGps {
     Double inc = 8;
     Double af0 = 9;
     Double af1 = 10;
-}
-
-message MsgAlmanacGloDep {
-    AlmanacCommonContentDep common = 1;
-    Double lambda_na = 2;
-    Double t_lambda_na = 3;
-    Double i = 4;
-    Double t = 5;
-    Double t_dot = 6;
-    Double epsilon = 7;
-    Double omega = 8;
 }
 
 message MsgAlmanacGlo {

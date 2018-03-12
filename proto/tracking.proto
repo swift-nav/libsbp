@@ -4,54 +4,6 @@ package swiftnav.sbp.tracking;
 
 import "gnss.proto";
 
-message MsgTrackingStateDetailedDepA {
-    uint64 recv_time = 1;
-    GpsTime tot = 2;
-    uint32 P = 3;
-    uint32 P_std = 4;
-    CarrierPhase L = 5;
-    uint32 cn0 = 6;
-    uint32 lock = 7;
-    GnssSignal sid = 8;
-    sint32 doppler = 9;
-    uint32 doppler_std = 10;
-    uint32 uptime = 11;
-    sint32 clock_offset = 12;
-    sint32 clock_drift = 13;
-    uint32 corr_spacing = 14;
-    sint32 acceleration = 15;
-    uint32 sync_flags = 16;
-    uint32 tow_flags = 17;
-    uint32 track_flags = 18;
-    uint32 nav_flags = 19;
-    uint32 pset_flags = 20;
-    uint32 misc_flags = 21;
-}
-
-message MsgTrackingStateDetailedDep {
-    uint64 recv_time = 1;
-    GpsTimeDep tot = 2;
-    uint32 P = 3;
-    uint32 P_std = 4;
-    CarrierPhase L = 5;
-    uint32 cn0 = 6;
-    uint32 lock = 7;
-    GnssSignalDep sid = 8;
-    sint32 doppler = 9;
-    uint32 doppler_std = 10;
-    uint32 uptime = 11;
-    sint32 clock_offset = 12;
-    sint32 clock_drift = 13;
-    uint32 corr_spacing = 14;
-    sint32 acceleration = 15;
-    uint32 sync_flags = 16;
-    uint32 tow_flags = 17;
-    uint32 track_flags = 18;
-    uint32 nav_flags = 19;
-    uint32 pset_flags = 20;
-    uint32 misc_flags = 21;
-}
-
 message TrackingChannelState {
     GnssSignal sid = 1;
     uint32 fcn = 2;
@@ -71,30 +23,4 @@ message MsgTrackingIq {
     uint32 channel = 1;
     GnssSignal sid = 2;
     repeated TrackingChannelCorrelation corrs = 3;
-}
-
-message MsgTrackingIqDep {
-    uint32 channel = 1;
-    GnssSignalDep sid = 2;
-    repeated TrackingChannelCorrelation corrs = 3;
-}
-
-message TrackingChannelStateDepA {
-    uint32 state = 1;
-    uint32 prn = 2;
-    Float cn0 = 3;
-}
-
-message MsgTrackingStateDepA {
-    repeated TrackingChannelStateDepA states = 1;
-}
-
-message TrackingChannelStateDepB {
-    uint32 state = 1;
-    GnssSignalDep sid = 2;
-    Float cn0 = 3;
-}
-
-message MsgTrackingStateDepB {
-    repeated TrackingChannelStateDepB states = 1;
 }
