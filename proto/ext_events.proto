@@ -3,4 +3,9 @@ syntax = "proto3";
 package swiftnav.sbp.ext_events;
 
 message MsgExtEvent {
+    uint32 wn = 1;
+    uint32 tow = 2;
+    sint32 ns_residual = 3;
+    uint32 flags = 4;
+    uint32 pin = 5;
 }

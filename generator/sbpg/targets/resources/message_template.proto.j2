@@ -2,6 +2,9 @@ syntax = "proto3";
 
 package (((package)));
 ((* for message in messages *))
-message (((message.identifier | camel_case))) {
+message (((message.identifier | to_identifier))) {
+((*- for field in message.fields *))
+    (((field | to_type))) (((field.identifier))) = (((loop.index)));
+((*- endfor *))
 }
 ((* endfor *))

@@ -6,25 +6,34 @@ message MsgSettingsSave {
 }
 
 message MsgSettingsWrite {
+    string setting = 1;
 }
 
 message MsgSettingsWriteResp {
+    uint32 status = 1;
+    string setting = 2;
 }
 
 message MsgSettingsReadReq {
+    string setting = 1;
 }
 
 message MsgSettingsReadResp {
+    string setting = 1;
 }
 
 message MsgSettingsReadByIndexReq {
+    uint32 index = 1;
 }
 
 message MsgSettingsReadByIndexResp {
+    uint32 index = 1;
+    string setting = 2;
 }
 
 message MsgSettingsReadByIndexDone {
 }
 
 message MsgSettingsRegister {
+    string setting = 1;
 }

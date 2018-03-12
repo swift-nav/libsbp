@@ -3,19 +3,33 @@ syntax = "proto3";
 package swiftnav.sbp.gnss;
 
 message GnssSignal {
+    uint32 sat = 1;
+    uint32 code = 2;
 }
 
 message GnssSignalDep {
+    uint32 sat = 1;
+    uint32 code = 2;
+    uint32 reserved = 3;
 }
 
 message GPSTimeDep {
+    uint32 tow = 1;
+    uint32 wn = 2;
 }
 
 message GPSTimeSec {
+    uint32 tow = 1;
+    uint32 wn = 2;
 }
 
 message GPSTime {
+    uint32 tow = 1;
+    sint32 ns_residual = 2;
+    uint32 wn = 3;
 }
 
 message CarrierPhase {
+    sint32 i = 1;
+    uint32 f = 2;
 }

@@ -3,4 +3,5 @@ syntax = "proto3";
 package swiftnav.sbp.user;
 
 message MsgUserData {
+    repeated uint32 contents = 1;
 }

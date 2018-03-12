@@ -3,25 +3,67 @@ syntax = "proto3";
 package swiftnav.sbp.acquisition;
 
 message MsgAcqResult {
+    Float cn0 = 1;
+    Float cp = 2;
+    Float cf = 3;
+    GnssSignal sid = 4;
 }
 
 message MsgAcqResultDepC {
+    Float cn0 = 1;
+    Float cp = 2;
+    Float cf = 3;
+    GnssSignalDep sid = 4;
 }
 
 message MsgAcqResultDepB {
+    Float snr = 1;
+    Float cp = 2;
+    Float cf = 3;
+    GnssSignalDep sid = 4;
 }
 
 message MsgAcqResultDepA {
+    Float snr = 1;
+    Float cp = 2;
+    Float cf = 3;
+    uint32 prn = 4;
 }
 
 message AcqSvProfile {
+    uint32 job_type = 1;
+    uint32 status = 2;
+    uint32 cn0 = 3;
+    uint32 int_time = 4;
+    GnssSignal sid = 5;
+    uint32 bin_width = 6;
+    uint32 timestamp = 7;
+    uint32 time_spent = 8;
+    sint32 cf_min = 9;
+    sint32 cf_max = 10;
+    sint32 cf = 11;
+    uint32 cp = 12;
 }
 
 message AcqSvProfileDep {
+    uint32 job_type = 1;
+    uint32 status = 2;
+    uint32 cn0 = 3;
+    uint32 int_time = 4;
+    GnssSignalDep sid = 5;
+    uint32 bin_width = 6;
+    uint32 timestamp = 7;
+    uint32 time_spent = 8;
+    sint32 cf_min = 9;
+    sint32 cf_max = 10;
+    sint32 cf = 11;
+    uint32 cp = 12;
 }
 
 message MsgAcqSvProfile {
+    repeated AcqSvProfile acq_sv_profile = 1;
 }
 
 message MsgAcqSvProfileDep {
+    repeated AcqSvProfileDep acq_sv_profile = 1;
 }

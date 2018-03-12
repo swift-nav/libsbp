@@ -9,6 +9,7 @@ message MsgSetTime {
 }
 
 message MsgReset {
+    uint32 flags = 1;
 }
 
 message MsgResetDep {
@@ -21,64 +22,135 @@ message MsgCwStart {
 }
 
 message MsgResetFilters {
+    uint32 filter = 1;
 }
 
 message MsgInitBase {
 }
 
 message MsgThreadState {
+    string name = 1;
+    uint32 cpu = 2;
+    uint32 stack_free = 3;
 }
 
 message UARTChannel {
+    Float tx_throughput = 1;
+    Float rx_throughput = 2;
+    uint32 crc_error_count = 3;
+    uint32 io_error_count = 4;
+    uint32 tx_buffer_level = 5;
+    uint32 rx_buffer_level = 6;
 }
 
 message Period {
+    sint32 avg = 1;
+    sint32 pmin = 2;
+    sint32 pmax = 3;
+    sint32 current = 4;
 }
 
 message Latency {
+    sint32 avg = 1;
+    sint32 lmin = 2;
+    sint32 lmax = 3;
+    sint32 current = 4;
 }
 
 message MsgUartState {
+    UARTChannel uart_a = 1;
+    UARTChannel uart_b = 2;
+    UARTChannel uart_ftdi = 3;
+    Latency latency = 4;
+    Period obs_period = 5;
 }
 
 message MsgUartStateDepa {
+    UARTChannel uart_a = 1;
+    UARTChannel uart_b = 2;
+    UARTChannel uart_ftdi = 3;
+    Latency latency = 4;
 }
 
 message MsgIarState {
+    uint32 num_hyps = 1;
 }
 
 message MsgMaskSatellite {
+    uint32 mask = 1;
+    GnssSignal sid = 2;
 }
 
 message MsgMaskSatelliteDep {
+    uint32 mask = 1;
+    GnssSignalDep sid = 2;
 }
 
 message MsgDeviceMonitor {
+    sint32 dev_vin = 1;
+    sint32 cpu_vint = 2;
+    sint32 cpu_vaux = 3;
+    sint32 cpu_temperature = 4;
+    sint32 fe_temperature = 5;
 }
 
 message MsgCommandReq {
+    uint32 sequence = 1;
+    string command = 2;
 }
 
 message MsgCommandResp {
+    uint32 sequence = 1;
+    sint32 code = 2;
 }
 
 message MsgCommandOutput {
+    uint32 sequence = 1;
+    string line = 2;
 }
 
 message MsgNetworkStateReq {
 }
 
 message MsgNetworkStateResp {
+    repeated uint32 ipv4_address = 1;
+    uint32 ipv4_mask_size = 2;
+    repeated uint32 ipv6_address = 3;
+    uint32 ipv6_mask_size = 4;
+    uint32 rx_bytes = 5;
+    uint32 tx_bytes = 6;
+    string interface_name = 7;
+    uint32 flags = 8;
 }
 
 message NetworkUsage {
+    uint64 duration = 1;
+    uint64 total_bytes = 2;
+    uint32 rx_bytes = 3;
+    uint32 tx_bytes = 4;
+    string interface_name = 5;
 }
 
 message MsgNetworkBandwidthUsage {
+    repeated NetworkUsage interfaces = 1;
 }
 
 message MsgSpecanDep {
+    uint32 channel_tag = 1;
+    GpsTimeDep t = 2;
+    Float freq_ref = 3;
+    Float freq_step = 4;
+    Float amplitude_ref = 5;
+    Float amplitude_unit = 6;
+    repeated uint32 amplitude_value = 7;
 }
 
 message MsgSpecan {
+    uint32 channel_tag = 1;
+    GpsTime t = 2;
+    Float freq_ref = 3;
+    Float freq_step = 4;
+    Float amplitude_ref = 5;
+    Float amplitude_unit = 6;
+    repeated uint32 amplitude_value = 7;
 }

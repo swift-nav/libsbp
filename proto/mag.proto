@@ -3,4 +3,9 @@ syntax = "proto3";
 package swiftnav.sbp.mag;
 
 message MsgMagRaw {
+    uint32 tow = 1;
+    uint32 tow_f = 2;
+    sint32 mag_x = 3;
+    sint32 mag_y = 4;
+    sint32 mag_z = 5;
 }

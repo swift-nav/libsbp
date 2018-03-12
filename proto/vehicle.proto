@@ -3,4 +3,7 @@ syntax = "proto3";
 package swiftnav.sbp.vehicle;
 
 message MsgOdometry {
+    uint32 tow = 1;
+    sint32 velocity = 2;
+    uint32 flags = 3;
 }

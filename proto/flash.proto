@@ -3,31 +3,48 @@ syntax = "proto3";
 package swiftnav.sbp.flash;
 
 message MsgFlashProgram {
+    uint32 target = 1;
+    repeated uint32 addr_start = 2;
+    uint32 addr_len = 3;
+    repeated uint32 data = 4;
 }
 
 message MsgFlashDone {
+    uint32 response = 1;
 }
 
 message MsgFlashReadReq {
+    uint32 target = 1;
+    repeated uint32 addr_start = 2;
+    uint32 addr_len = 3;
 }
 
 message MsgFlashReadResp {
+    uint32 target = 1;
+    repeated uint32 addr_start = 2;
+    uint32 addr_len = 3;
 }
 
 message MsgFlashErase {
+    uint32 target = 1;
+    uint32 sector_num = 2;
 }
 
 message MsgStmFlashLockSector {
+    uint32 sector = 1;
 }
 
 message MsgStmFlashUnlockSector {
+    uint32 sector = 1;
 }
 
 message MsgStmUniqueIdReq {
 }
 
 message MsgStmUniqueIdResp {
+    repeated uint32 stm_id = 1;
 }
 
 message MsgM25FlashWriteStatus {
+    repeated uint32 status = 1;
 }

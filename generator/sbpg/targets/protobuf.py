@@ -16,24 +16,53 @@ files.
 
 """
 
+import copy
 from sbpg.targets.templating import *
 
-MESSAGES_TEMPLATE_NAME = "message_template.proto.j2"
+MESSAGES_TEMPLATE_NAME = 'message_template.proto.j2'
 
-def camel_case(s):
+TYPE_MAP = {
+  'u8': 'uint32',
+  'u16': 'uint32',
+  'u32': 'uint32',
+  'u64': 'uint64',
+  's8': 'sint32',
+  's16': 'sint32',
+  's32': 'sint32',
+  's64': 'sint64',
+  'float': 'Float',
+  'double': 'Double',
+  'string': 'string',
+}
+
+def to_identifier(s):
   """
   Convert snake_case to camel_case.
   """
   return ''.join([i.capitalize() for i in s.split('_')]) if '_' in s else s
 
-JENV.filters['camel_case'] = camel_case
+def to_type(f, type_map=TYPE_MAP):
+    name = f.type_id
+    if name.startswith('GPS'):
+        name = 'Gps' + name[3:]
+    if type_map.get(name, None):
+        return type_map.get(name, None)
+    elif name == 'array':
+        fill = f.options['fill'].value
+        f_ = copy.copy(f)
+        f_.type_id = fill
+        return "repeated %s" % to_type(f_)
+    return name
+
+JENV.filters['to_identifier'] = to_identifier
+JENV.filters['to_type'] = to_type
 
 def render_source(output_dir, package_spec):
     """
     Render and output to a directory given a package specification.
     """
     path, name = package_spec.filepath
-    destination_filename = "%s/%s.proto" % (output_dir, name)
+    destination_filename = '%s/%s.proto' % (output_dir, name)
     pb_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
     with open(destination_filename, 'w') as f:
         f.write(pb_template.render(

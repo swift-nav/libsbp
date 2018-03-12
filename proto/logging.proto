@@ -3,13 +3,20 @@ syntax = "proto3";
 package swiftnav.sbp.logging;
 
 message MsgLog {
+    uint32 level = 1;
+    string text = 2;
 }
 
 message MsgFwd {
+    uint32 source = 1;
+    uint32 protocol = 2;
+    string fwd_payload = 3;
 }
 
 message MsgTweet {
+    string tweet = 1;
 }
 
 message MsgPrintDep {
+    string text = 1;
 }

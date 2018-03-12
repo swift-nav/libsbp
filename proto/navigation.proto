@@ -3,73 +3,259 @@ syntax = "proto3";
 package swiftnav.sbp.navigation;
 
 message MsgGpsTime {
+    uint32 wn = 1;
+    uint32 tow = 2;
+    sint32 ns_residual = 3;
+    uint32 flags = 4;
 }
 
 message MsgUtcTime {
+    uint32 flags = 1;
+    uint32 tow = 2;
+    uint32 year = 3;
+    uint32 month = 4;
+    uint32 day = 5;
+    uint32 hours = 6;
+    uint32 minutes = 7;
+    uint32 seconds = 8;
+    uint32 ns = 9;
 }
 
 message MsgDops {
+    uint32 tow = 1;
+    uint32 gdop = 2;
+    uint32 pdop = 3;
+    uint32 tdop = 4;
+    uint32 hdop = 5;
+    uint32 vdop = 6;
+    uint32 flags = 7;
 }
 
 message MsgPosEcef {
+    uint32 tow = 1;
+    Double x = 2;
+    Double y = 3;
+    Double z = 4;
+    uint32 accuracy = 5;
+    uint32 n_sats = 6;
+    uint32 flags = 7;
 }
 
 message MsgPosEcefCov {
+    uint32 tow = 1;
+    Double x = 2;
+    Double y = 3;
+    Double z = 4;
+    Float cov_x_x = 5;
+    Float cov_x_y = 6;
+    Float cov_x_z = 7;
+    Float cov_y_y = 8;
+    Float cov_y_z = 9;
+    Float cov_z_z = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
 }
 
 message MsgPosLlh {
+    uint32 tow = 1;
+    Double lat = 2;
+    Double lon = 3;
+    Double height = 4;
+    uint32 h_accuracy = 5;
+    uint32 v_accuracy = 6;
+    uint32 n_sats = 7;
+    uint32 flags = 8;
 }
 
 message MsgPosLlhCov {
+    uint32 tow = 1;
+    Double lat = 2;
+    Double lon = 3;
+    Double height = 4;
+    Float cov_n_n = 5;
+    Float cov_n_e = 6;
+    Float cov_n_d = 7;
+    Float cov_e_e = 8;
+    Float cov_e_d = 9;
+    Float cov_d_d = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
 }
 
 message MsgBaselineEcef {
+    uint32 tow = 1;
+    sint32 x = 2;
+    sint32 y = 3;
+    sint32 z = 4;
+    uint32 accuracy = 5;
+    uint32 n_sats = 6;
+    uint32 flags = 7;
 }
 
 message MsgBaselineNed {
+    uint32 tow = 1;
+    sint32 n = 2;
+    sint32 e = 3;
+    sint32 d = 4;
+    uint32 h_accuracy = 5;
+    uint32 v_accuracy = 6;
+    uint32 n_sats = 7;
+    uint32 flags = 8;
 }
 
 message MsgVelEcef {
+    uint32 tow = 1;
+    sint32 x = 2;
+    sint32 y = 3;
+    sint32 z = 4;
+    uint32 accuracy = 5;
+    uint32 n_sats = 6;
+    uint32 flags = 7;
 }
 
 message MsgVelEcefCov {
+    uint32 tow = 1;
+    sint32 x = 2;
+    sint32 y = 3;
+    sint32 z = 4;
+    Float cov_x_x = 5;
+    Float cov_x_y = 6;
+    Float cov_x_z = 7;
+    Float cov_y_y = 8;
+    Float cov_y_z = 9;
+    Float cov_z_z = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
 }
 
 message MsgVelNed {
+    uint32 tow = 1;
+    sint32 n = 2;
+    sint32 e = 3;
+    sint32 d = 4;
+    uint32 h_accuracy = 5;
+    uint32 v_accuracy = 6;
+    uint32 n_sats = 7;
+    uint32 flags = 8;
 }
 
 message MsgVelNedCov {
+    uint32 tow = 1;
+    sint32 n = 2;
+    sint32 e = 3;
+    sint32 d = 4;
+    Float cov_n_n = 5;
+    Float cov_n_e = 6;
+    Float cov_n_d = 7;
+    Float cov_e_e = 8;
+    Float cov_e_d = 9;
+    Float cov_d_d = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
 }
 
 message MsgVelBody {
+    uint32 tow = 1;
+    sint32 x = 2;
+    sint32 y = 3;
+    sint32 z = 4;
+    Float cov_x_x = 5;
+    Float cov_x_y = 6;
+    Float cov_x_z = 7;
+    Float cov_y_y = 8;
+    Float cov_y_z = 9;
+    Float cov_z_z = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
 }
 
 message MsgAgeCorrections {
+    uint32 tow = 1;
+    uint32 age = 2;
 }
 
 message MsgGpsTimeDepA {
+    uint32 wn = 1;
+    uint32 tow = 2;
+    sint32 ns_residual = 3;
+    uint32 flags = 4;
 }
 
 message MsgDopsDepA {
+    uint32 tow = 1;
+    uint32 gdop = 2;
+    uint32 pdop = 3;
+    uint32 tdop = 4;
+    uint32 hdop = 5;
+    uint32 vdop = 6;
 }
 
 message MsgPosEcefDepA {
+    uint32 tow = 1;
+    Double x = 2;
+    Double y = 3;
+    Double z = 4;
+    uint32 accuracy = 5;
+    uint32 n_sats = 6;
+    uint32 flags = 7;
 }
 
 message MsgPosLlhDepA {
+    uint32 tow = 1;
+    Double lat = 2;
+    Double lon = 3;
+    Double height = 4;
+    uint32 h_accuracy = 5;
+    uint32 v_accuracy = 6;
+    uint32 n_sats = 7;
+    uint32 flags = 8;
 }
 
 message MsgBaselineEcefDepA {
+    uint32 tow = 1;
+    sint32 x = 2;
+    sint32 y = 3;
+    sint32 z = 4;
+    uint32 accuracy = 5;
+    uint32 n_sats = 6;
+    uint32 flags = 7;
 }
 
 message MsgBaselineNedDepA {
+    uint32 tow = 1;
+    sint32 n = 2;
+    sint32 e = 3;
+    sint32 d = 4;
+    uint32 h_accuracy = 5;
+    uint32 v_accuracy = 6;
+    uint32 n_sats = 7;
+    uint32 flags = 8;
 }
 
 message MsgVelEcefDepA {
+    uint32 tow = 1;
+    sint32 x = 2;
+    sint32 y = 3;
+    sint32 z = 4;
+    uint32 accuracy = 5;
+    uint32 n_sats = 6;
+    uint32 flags = 7;
 }
 
 message MsgVelNedDepA {
+    uint32 tow = 1;
+    sint32 n = 2;
+    sint32 e = 3;
+    sint32 d = 4;
+    uint32 h_accuracy = 5;
+    uint32 v_accuracy = 6;
+    uint32 n_sats = 7;
+    uint32 flags = 8;
 }
 
 message MsgBaselineHeadingDepA {
+    uint32 tow = 1;
+    uint32 heading = 2;
+    uint32 n_sats = 3;
+    uint32 flags = 4;
 }

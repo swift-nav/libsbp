@@ -3,16 +3,51 @@ syntax = "proto3";
 package swiftnav.sbp.ssr;
 
 message CodeBiasesContent {
+    uint32 code = 1;
+    sint32 value = 2;
 }
 
 message PhaseBiasesContent {
+    uint32 code = 1;
+    uint32 integer_indicator = 2;
+    uint32 widelane_integer_indicator = 3;
+    uint32 discontinuity_counter = 4;
+    sint32 bias = 5;
 }
 
 message MsgSsrOrbitClock {
+    GpsTimeSec time = 1;
+    GnssSignal sid = 2;
+    uint32 update_interval = 3;
+    uint32 iod_ssr = 4;
+    uint32 iod = 5;
+    sint32 radial = 6;
+    sint32 along = 7;
+    sint32 cross = 8;
+    sint32 dot_radial = 9;
+    sint32 dot_along = 10;
+    sint32 dot_cross = 11;
+    sint32 c0 = 12;
+    sint32 c1 = 13;
+    sint32 c2 = 14;
 }
 
 message MsgSsrCodeBiases {
+    GpsTimeSec time = 1;
+    GnssSignal sid = 2;
+    uint32 update_interval = 3;
+    uint32 iod_ssr = 4;
+    repeated CodeBiasesContent biases = 5;
 }
 
 message MsgSsrPhaseBiases {
+    GpsTimeSec time = 1;
+    GnssSignal sid = 2;
+    uint32 update_interval = 3;
+    uint32 iod_ssr = 4;
+    uint32 dispersive_bias = 5;
+    uint32 mw_consistency = 6;
+    uint32 yaw = 7;
+    sint32 yaw_rate = 8;
+    repeated PhaseBiasesContent biases = 9;
 }

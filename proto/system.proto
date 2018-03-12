@@ -3,13 +3,22 @@ syntax = "proto3";
 package swiftnav.sbp.system;
 
 message MsgStartup {
+    uint32 cause = 1;
+    uint32 startup_type = 2;
+    uint32 reserved = 3;
 }
 
 message MsgDgnssStatus {
+    uint32 flags = 1;
+    uint32 latency = 2;
+    uint32 num_signals = 3;
+    string source = 4;
 }
 
 message MsgHeartbeat {
+    uint32 flags = 1;
 }
 
 message MsgInsStatus {
+    uint32 flags = 1;
 }

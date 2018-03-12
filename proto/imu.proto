@@ -3,7 +3,18 @@ syntax = "proto3";
 package swiftnav.sbp.imu;
 
 message MsgImuRaw {
+    uint32 tow = 1;
+    uint32 tow_f = 2;
+    sint32 acc_x = 3;
+    sint32 acc_y = 4;
+    sint32 acc_z = 5;
+    sint32 gyr_x = 6;
+    sint32 gyr_y = 7;
+    sint32 gyr_z = 8;
 }
 
 message MsgImuAux {
+    uint32 imu_type = 1;
+    sint32 temp = 2;
+    uint32 imu_conf = 3;
 }

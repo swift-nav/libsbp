@@ -6,16 +6,21 @@ message MsgBootloaderHandshakeReq {
 }
 
 message MsgBootloaderHandshakeResp {
+    uint32 flags = 1;
+    string version = 2;
 }
 
 message MsgBootloaderJumpToApp {
+    uint32 jump = 1;
 }
 
 message MsgNapDeviceDnaReq {
 }
 
 message MsgNapDeviceDnaResp {
+    repeated uint32 dna = 1;
 }
 
 message MsgBootloaderHandshakeDepA {
+    repeated uint32 handshake = 1;
 }

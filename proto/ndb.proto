@@ -3,4 +3,12 @@ syntax = "proto3";
 package swiftnav.sbp.ndb;
 
 message MsgNdbEvent {
+    uint64 recv_time = 1;
+    uint32 event = 2;
+    uint32 object_type = 3;
+    uint32 result = 4;
+    uint32 data_source = 5;
+    GnssSignal object_sid = 6;
+    GnssSignal src_sid = 7;
+    uint32 original_sender = 8;
 }
