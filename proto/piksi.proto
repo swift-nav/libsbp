@@ -1,38 +1,109 @@
+/*
+ * Copyright (C) 2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 syntax = "proto3";
+
+/** Piksi
+ *
+  * System health, configuration, and diagnostic messages specific to
+ * the Piksi L1 receiver, including a variety of legacy messages that
+ * may no longer be used.
+ */
 
 package swiftnav.sbp.piksi;
 
 import "gnss.proto";
 
+/** Legacy message to load satellite almanac (host => Piksi)
+ *
+ * This is a legacy message for sending and loading a satellite
+ * alamanac onto the Piksi's flash memory from the host.
+ */
 message MsgAlmanac {
 }
 
+/** Send GPS time from host (host => Piksi)
+ *
+ * This message sets up timing functionality using a coarse GPS
+ * time estimate sent by the host.
+ */
 message MsgSetTime {
 }
 
+/** Reset the device (host => Piksi)
+ *
+ * This message from the host resets the Piksi back into the
+ * bootloader.
+ */
 message MsgReset {
     uint32 flags = 1;
 }
 
+/** Legacy message for CW interference channel (Piksi => host)
+ *
+ * This is an unused legacy message for result reporting from the
+ * CW interference channel on the SwiftNAP. This message will be
+ * removed in a future release.
+ */
 message MsgCwResults {
 }
 
+/** Legacy message for CW interference channel (host => Piksi)
+ *
+ * This is an unused legacy message from the host for starting
+ * the CW interference channel on the SwiftNAP. This message will
+ * be removed in a future release.
+ */
 message MsgCwStart {
 }
 
+/** Reset IAR filters (host => Piksi)
+ *
+ * This message resets either the DGNSS Kalman filters or Integer
+ * Ambiguity Resolution (IAR) process.
+ */
 message MsgResetFilters {
     uint32 filter = 1;
 }
 
+/** Initialize IAR from known baseline (host => device)
+ *
+ * This message initializes the integer ambiguity resolution (IAR)
+ * process on the Piksi to use an assumed baseline position between
+ * the base station and rover receivers. Warns via MSG_PRINT if
+ * there aren't a shared minimum number (4) of satellite
+ * observations between the two.
+ */
 message MsgInitBase {
 }
 
+/** State of an RTOS thread
+ *
+ * The thread usage message from the device reports real-time
+ * operating system (RTOS) thread usage statistics for the named
+ * thread. The reported percentage values must be normalized.
+ */
 message MsgThreadState {
     string name = 1;
     uint32 cpu = 2;
     uint32 stack_free = 3;
 }
 
+/** State of the UART channel
+ *
+ * Throughput, utilization, and error counts on the RX/TX buffers
+ * of this UART channel. The reported percentage values must
+ * be normalized.
+ */
 message UARTChannel {
     float tx_throughput = 1;
     float rx_throughput = 2;
@@ -42,6 +113,15 @@ message UARTChannel {
     uint32 rx_buffer_level = 6;
 }
 
+/** base station observation message receipt period
+ *
+ * Statistics on the period of observations received from the base
+ * station. As complete observation sets are received, their time
+ * of reception is compared with the prior set''s time of reception.
+ * This measurement provides a proxy for link quality as incomplete
+ * or missing sets will increase the period.  Long periods
+ * can cause momentary RTK solution outages.
+ */
 message Period {
     sint32 avg = 1;
     sint32 pmin = 2;
@@ -49,6 +129,14 @@ message Period {
     sint32 current = 4;
 }
 
+/** Receiver-to-base station latency
+ *
+ * Statistics on the latency of observations received from the base
+ * station. As observation packets are received their GPS time is
+ * compared to the current GPS time calculated locally by the
+ * receiver to give a precise measurement of the end-to-end
+ * communication latency in the system.
+ */
 message Latency {
     sint32 avg = 1;
     sint32 lmin = 2;
@@ -56,6 +144,18 @@ message Latency {
     sint32 current = 4;
 }
 
+/** State of the UART channels
+ *
+ * The UART message reports data latency and throughput of the UART
+ * channels providing SBP I/O. On the default Piksi configuration,
+ * UARTs A and B are used for telemetry radios, but can also be
+ * host access ports for embedded hosts, or other interfaces in
+ * future. The reported percentage values must be normalized.
+ * Observations latency and period can be used to assess the
+ * health of the differential corrections link. Latency provides
+ * the timeliness of received base observations while the
+ * period indicates their likelihood of transmission.
+ */
 message MsgUartState {
     UARTChannel uart_a = 1;
     UARTChannel uart_b = 2;
@@ -64,15 +164,33 @@ message MsgUartState {
     Period obs_period = 5;
 }
 
+/** State of the Integer Ambiguity Resolution (IAR) process
+ *
+ * This message reports the state of the Integer Ambiguity
+ * Resolution (IAR) process, which resolves unknown integer
+ * ambiguities from double-differenced carrier-phase measurements
+ * from satellite observations.
+ */
 message MsgIarState {
     uint32 num_hyps = 1;
 }
 
+/** Mask a satellite from use in Piksi subsystems
+ *
+ * This message allows setting a mask to prevent a particular satellite
+ * from being used in various Piksi subsystems.
+ */
 message MsgMaskSatellite {
     uint32 mask = 1;
     gnss.GnssSignal sid = 2;
 }
 
+/** Device temperature and voltage levels
+ *
+ * This message contains temperature and voltage level measurements from the
+ * processor's monitoring system and the RF frontend die temperature if
+ * available.
+ */
 message MsgDeviceMonitor {
     sint32 dev_vin = 1;
     sint32 cpu_vint = 2;
@@ -81,24 +199,53 @@ message MsgDeviceMonitor {
     sint32 fe_temperature = 5;
 }
 
+/** Execute a command (host => device)
+ *
+ * Request the recipient to execute an command.
+ * Output will be sent in MSG_LOG messages, and the exit
+ * code will be returned with MSG_COMMAND_RESP.
+ */
 message MsgCommandReq {
     uint32 sequence = 1;
     string command = 2;
 }
 
+/** Exit code from executed command (device => host)
+ *
+ * The response to MSG_COMMAND_REQ with the return code of
+ * the command.  A return code of zero indicates success.
+ */
 message MsgCommandResp {
     uint32 sequence = 1;
     sint32 code = 2;
 }
 
+/** Command output
+ *
+ * Returns the standard output and standard error of the
+ * command requested by MSG_COMMAND_REQ.
+ * The sequence number can be used to filter for filtering
+ * the correct command.
+ */
 message MsgCommandOutput {
     uint32 sequence = 1;
     string line = 2;
 }
 
+/** Request state of Piksi network interfaces
+ *
+ * Request state of Piksi network interfaces.
+ * Output will be sent in MSG_NETWORK_STATE_RESP messages
+ */
 message MsgNetworkStateReq {
 }
 
+/** State of network interface
+ *
+ * The state of a network interface on the Piksi.
+ * Data is made to reflect output of ifaddrs struct returned by getifaddrs
+ * in c.
+ */
 message MsgNetworkStateResp {
     repeated uint32 ipv4_address = 1;
     uint32 ipv4_mask_size = 2;
@@ -110,6 +257,15 @@ message MsgNetworkStateResp {
     uint32 flags = 8;
 }
 
+/** Bandwidth usage measurement for a single interface.
+ *
+ * The bandwidth usage for each interface can be reported
+ * within this struct and utilize multiple fields to fully
+ * specify the type of traffic that is being tracked. As
+ * either the interval of collection or the collection time
+ * may vary, both a timestamp and period field is provided,
+ * though may not necessarily be populated with a value. 
+ */
 message NetworkUsage {
     uint64 duration = 1;
     uint64 total_bytes = 2;
@@ -118,10 +274,18 @@ message NetworkUsage {
     string interface_name = 5;
 }
 
+/** Bandwidth usage reporting message
+ *
+ * The bandwidth usage, a list of usage by interface. 
+ */
 message MsgNetworkBandwidthUsage {
     repeated NetworkUsage interfaces = 1;
 }
 
+/** Spectrum analyzer
+ *
+ * Spectrum analyzer packet.
+ */
 message MsgSpecan {
     uint32 channel_tag = 1;
     gnss.GpsTime t = 2;

@@ -1,19 +1,56 @@
+/*
+ * Copyright (C) 2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 syntax = "proto3";
+
+/** Logging
+ *
+  * Logging and debugging messages from the device.
+ */
 
 package swiftnav.sbp.logging;
 
 
+/** Plaintext logging messages with levels
+ *
+ * This message contains a human-readable payload string from the
+ * device containing errors, warnings and informational messages at
+ * ERROR, WARNING, DEBUG, INFO logging levels.
+ */
 message MsgLog {
     uint32 level = 1;
     string text = 2;
 }
 
+/** Wrapper for FWD a separate stream of information over SBP
+ *
+ * This message provides the ability to forward messages over SBP.  This may take the form
+ * of wrapping up SBP messages received by Piksi for logging purposes or wrapping 
+ * another protocol with SBP.
+ * 
+ * The source identifier indicates from what interface a forwarded stream derived.
+ * The protocol identifier identifies what the expected protocol the forwarded msg contains.
+ * Protocol 0 represents SBP and the remaining values are implementation defined.
+ */
 message MsgFwd {
     uint32 source = 1;
     uint32 protocol = 2;
     string fwd_payload = 3;
 }
 
+/** Tweet
+ *
+* All the news fit to tweet.
+ */
 message MsgTweet {
     string tweet = 1;
 }

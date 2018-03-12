@@ -1,19 +1,53 @@
+/*
+ * Copyright (C) 2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 syntax = "proto3";
+
+/** Observation
+ *
+ * Satellite observation messages from the device.
+ */
 
 package swiftnav.sbp.observation;
 
 import "gnss.proto";
 
+/** Header for observation message.
+ *
+* Header of a GNSS observation message.
+ */
 message ObservationHeader {
     gnss.GpsTime t = 1;
     uint32 n_obs = 2;
 }
 
+/** GNSS doppler measurement.
+ *
+ * Doppler measurement in Hz represented as a 24-bit
+ * fixed point number with Q16.8 layout, i.e. 16-bits of whole
+ * doppler and 8-bits of fractional doppler. This doppler is defined
+ * as positive for approaching satellites.
+ */
 message Doppler {
     sint32 i = 1;
     uint32 f = 2;
 }
 
+/** GNSS observations for a particular satellite signal.
+ *
+ * Pseudorange and carrier phase observation for a satellite being
+ * tracked. The observations are interoperable with 3rd party
+ * receivers and conform with typical RTCMv3 GNSS observations.
+ */
 message PackedObsContent {
     uint32 P = 1;
     gnss.CarrierPhase L = 2;
@@ -24,23 +58,54 @@ message PackedObsContent {
     gnss.GnssSignal sid = 7;
 }
 
+/** GPS satellite observations
+ *
+ * The GPS observations message reports all the raw pseudorange and
+ * carrier phase observations for the satellites being tracked by
+ * the device. Carrier phase observation here is represented as a
+ * 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
+ * whole cycles and 8-bits of fractional cycles). The observations
+ * are be interoperable with 3rd party receivers and conform
+ * with typical RTCMv3 GNSS observations.
+ */
 message MsgObs {
     ObservationHeader header = 1;
     repeated PackedObsContent obs = 2;
 }
 
+/** Base station position
+ *
+ * The base station position message is the position reported by
+ * the base station itself. It is used for pseudo-absolute RTK
+ * positioning, and is required to be a high-accuracy surveyed
+ * location of the base station. Any error here will result in an
+ * error in the pseudo-absolute position output.
+ */
 message MsgBasePosLlh {
     double lat = 1;
     double lon = 2;
     double height = 3;
 }
 
+/** Base station position in ECEF
+ *
+ * The base station position message is the position reported by
+ * the base station itself in absolute Earth Centered Earth Fixed
+ * coordinates. It is used for pseudo-absolute RTK positioning, and
+ * is required to be a high-accuracy surveyed location of the base
+ * station. Any error here will result in an error in the
+ * pseudo-absolute position output.
+ */
 message MsgBasePosEcef {
     double x = 1;
     double y = 2;
     double z = 3;
 }
 
+/** Common fields for every ephemeris message.
+ *
+None
+ */
 message EphemerisCommonContent {
     gnss.GnssSignal sid = 1;
     gnss.GpsTimeSec toe = 2;
@@ -50,6 +115,14 @@ message EphemerisCommonContent {
     uint32 health_bits = 6;
 }
 
+/** Satellite broadcast ephemeris for GPS
+ *
+ * The ephemeris message returns a set of satellite orbit
+ * parameters that is used to calculate GPS satellite position,
+ * velocity, and clock offset. Please see the Navstar GPS
+ * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+ * 20-III) for more details.
+ */
 message MsgEphemerisGps {
     EphemerisCommonContent common = 1;
     double tgd = 2;
@@ -76,6 +149,10 @@ message MsgEphemerisGps {
     uint32 iodc = 23;
 }
 
+/** Satellite broadcast ephemeris for SBAS
+ *
+None
+ */
 message MsgEphemerisSbas {
     EphemerisCommonContent common = 1;
     repeated double pos = 2;
@@ -85,6 +162,14 @@ message MsgEphemerisSbas {
     double a_gf1 = 6;
 }
 
+/** Satellite broadcast ephemeris for GLO
+ *
+ * The ephemeris message returns a set of satellite orbit
+ * parameters that is used to calculate GLO satellite position,
+ * velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
+ * Characteristics of words of immediate information (ephemeris parameters)"
+ * for more details.
+ */
 message MsgEphemerisGlo {
     EphemerisCommonContent common = 1;
     double gamma = 2;
@@ -97,6 +182,12 @@ message MsgEphemerisGlo {
     uint32 iod = 9;
 }
 
+/** Iono corrections
+ *
+ * The ionospheric parameters which allow the "L1 only" or "L2 only" user to
+ * utilize the ionospheric model for computation of the ionospheric delay.
+ * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
+ */
 message MsgIono {
     gnss.GpsTimeSec t_nmct = 1;
     double a0 = 2;
@@ -109,11 +200,19 @@ message MsgIono {
     double b3 = 9;
 }
 
+/** L2C capability mask
+ *
+ * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+ */
 message MsgSvConfigurationGps {
     gnss.GpsTimeSec t_nmct = 1;
     uint32 l2c_mask = 2;
 }
 
+/** Group Delay
+ *
+* Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ */
 message MsgGroupDelay {
     gnss.GpsTimeSec t_op = 1;
     gnss.GnssSignal sid = 2;
@@ -123,6 +222,10 @@ message MsgGroupDelay {
     sint32 isc_l2c = 6;
 }
 
+/** Common fields for every almanac message.
+ *
+None
+ */
 message AlmanacCommonContent {
     gnss.GnssSignal sid = 1;
     gnss.GpsTimeSec toa = 2;
@@ -132,6 +235,13 @@ message AlmanacCommonContent {
     uint32 health_bits = 6;
 }
 
+/** Satellite broadcast ephemeris for GPS
+ *
+ * The almanac message returns a set of satellite orbit parameters. Almanac
+ * data is not very precise and is considered valid for up to several months.
+ * Please see the Navstar GPS Space Segment/Navigation user interfaces
+ * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+ */
 message MsgAlmanacGps {
     AlmanacCommonContent common = 1;
     double m0 = 2;
@@ -145,6 +255,13 @@ message MsgAlmanacGps {
     double af1 = 10;
 }
 
+/** Satellite broadcast ephemeris for GLO
+ *
+ * The almanac message returns a set of satellite orbit parameters. Almanac
+ * data is not very precise and is considered valid for up to several months.
+ * Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
+ * almanac" for details.
+ */
 message MsgAlmanacGlo {
     AlmanacCommonContent common = 1;
     double lambda_na = 2;
@@ -156,6 +273,13 @@ message MsgAlmanacGlo {
     double omega = 8;
 }
 
+/** GLONASS L1/L2 Code-Phase biases
+ *
+ * The GLONASS L1/L2 Code-Phase biases allows to perform 
+ * GPS+GLONASS integer ambiguity resolution for baselines
+ * with mixed receiver types (e.g. receiver of different
+ * manufacturers)
+ */
 message MsgGloBiases {
     uint32 mask = 1;
     sint32 l1ca_bias = 2;

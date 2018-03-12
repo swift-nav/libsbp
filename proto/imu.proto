@@ -1,8 +1,31 @@
+/*
+ * Copyright (C) 2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 syntax = "proto3";
+
+/** Imu
+ *
+ * Inertial Measurement Unit (IMU) messages.
+ */
 
 package swiftnav.sbp.imu;
 
 
+/** Raw IMU data
+ *
+ * Raw data from the Inertial Measurement Unit, containing accelerometer and
+ * gyroscope readings. The sense of the measurements are to be aligned with 
+ * the indications on the device itself.
+ */
 message MsgImuRaw {
     uint32 tow = 1;
     uint32 tow_f = 2;
@@ -14,6 +37,12 @@ message MsgImuRaw {
     sint32 gyr_z = 8;
 }
 
+/** Auxiliary IMU data
+ *
+ * Auxiliary data specific to a particular IMU. The `imu_type` field will
+ * always be consistent but the rest of the payload is device specific and
+ * depends on the value of `imu_type`.
+ */
 message MsgImuAux {
     uint32 imu_type = 1;
     sint32 temp = 2;

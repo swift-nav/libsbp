@@ -1,13 +1,43 @@
+/*
+ * Copyright (C) 2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
 syntax = "proto3";
+
+/** System
+ *
+ * Standardized system messages from Swift Navigation devices.
+ */
 
 package swiftnav.sbp.system;
 
 
+/** System start-up message
+ *
+ * The system start-up message is sent once on system
+ * start-up. It notifies the host or other attached devices that
+ * the system has started and is now ready to respond to commands
+ * or configuration requests.
+ */
 message MsgStartup {
     uint32 cause = 1;
     uint32 startup_type = 2;
 }
 
+/** Status of received corrections
+ *
+ * This message provides information about the receipt of Differential
+ * corrections.  It is expected to be sent with each receipt of a complete
+ * corrections packet.
+ */
 message MsgDgnssStatus {
     uint32 flags = 1;
     uint32 latency = 2;
@@ -15,10 +45,28 @@ message MsgDgnssStatus {
     string source = 4;
 }
 
+/** System heartbeat message
+ *
+ * The heartbeat message is sent periodically to inform the host
+ * or other attached devices that the system is running. It is
+ * used to monitor system malfunctions. It also contains status
+ * flags that indicate to the host the status of the system and
+ * whether it is operating correctly. Currently, the expected
+ * heartbeat interval is 1 sec.
+ * 
+ * The system error flag is used to indicate that an error has
+ * occurred in the system. To determine the source of the error,
+ * the remaining error flags should be inspected.
+ */
 message MsgHeartbeat {
     uint32 flags = 1;
 }
 
+/** Inertial Navigation System status message
+ *
+ * The INS status message describes the state of the operation
+ * and initialization of the inertial navigation system. 
+ */
 message MsgInsStatus {
     uint32 flags = 1;
 }
