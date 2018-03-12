@@ -13,17 +13,17 @@ message GnssSignalDep {
     uint32 reserved = 3;
 }
 
-message GPSTimeDep {
+message GpsTimeDep {
     uint32 tow = 1;
     uint32 wn = 2;
 }
 
-message GPSTimeSec {
+message GpsTimeSec {
     uint32 tow = 1;
     uint32 wn = 2;
 }
 
-message GPSTime {
+message GpsTime {
     uint32 tow = 1;
     sint32 ns_residual = 2;
     uint32 wn = 3;

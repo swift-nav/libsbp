@@ -39,6 +39,8 @@ def to_identifier(s):
   """
   Convert snake_case to camel_case.
   """
+  if s.startswith('GPS'):
+      s = 'Gps' + s[3:]
   return ''.join([i.capitalize() for i in s.split('_')]) if '_' in s else s
 
 def to_type(f, type_map=TYPE_MAP):
