@@ -34,8 +34,8 @@ message MsgThreadState {
 }
 
 message UARTChannel {
-    Float tx_throughput = 1;
-    Float rx_throughput = 2;
+    float tx_throughput = 1;
+    float rx_throughput = 2;
     uint32 crc_error_count = 3;
     uint32 io_error_count = 4;
     uint32 tx_buffer_level = 5;
@@ -125,9 +125,9 @@ message MsgNetworkBandwidthUsage {
 message MsgSpecan {
     uint32 channel_tag = 1;
     GpsTime t = 2;
-    Float freq_ref = 3;
-    Float freq_step = 4;
-    Float amplitude_ref = 5;
-    Float amplitude_unit = 6;
+    float freq_ref = 3;
+    float freq_step = 4;
+    float amplitude_ref = 5;
+    float amplitude_unit = 6;
     repeated uint32 amplitude_value = 7;
 }

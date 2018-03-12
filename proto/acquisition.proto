@@ -5,9 +5,9 @@ package swiftnav.sbp.acquisition;
 import "gnss.proto";
 
 message MsgAcqResult {
-    Float cn0 = 1;
-    Float cp = 2;
-    Float cf = 3;
+    float cn0 = 1;
+    float cp = 2;
+    float cf = 3;
     GnssSignal sid = 4;
 }
 

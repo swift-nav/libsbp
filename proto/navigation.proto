@@ -34,9 +34,9 @@ message MsgDops {
 
 message MsgPosEcef {
     uint32 tow = 1;
-    Double x = 2;
-    Double y = 3;
-    Double z = 4;
+    double x = 2;
+    double y = 3;
+    double z = 4;
     uint32 accuracy = 5;
     uint32 n_sats = 6;
     uint32 flags = 7;
@@ -44,24 +44,24 @@ message MsgPosEcef {
 
 message MsgPosEcefCov {
     uint32 tow = 1;
-    Double x = 2;
-    Double y = 3;
-    Double z = 4;
-    Float cov_x_x = 5;
-    Float cov_x_y = 6;
-    Float cov_x_z = 7;
-    Float cov_y_y = 8;
-    Float cov_y_z = 9;
-    Float cov_z_z = 10;
+    double x = 2;
+    double y = 3;
+    double z = 4;
+    float cov_x_x = 5;
+    float cov_x_y = 6;
+    float cov_x_z = 7;
+    float cov_y_y = 8;
+    float cov_y_z = 9;
+    float cov_z_z = 10;
     uint32 n_sats = 11;
     uint32 flags = 12;
 }
 
 message MsgPosLlh {
     uint32 tow = 1;
-    Double lat = 2;
-    Double lon = 3;
-    Double height = 4;
+    double lat = 2;
+    double lon = 3;
+    double height = 4;
     uint32 h_accuracy = 5;
     uint32 v_accuracy = 6;
     uint32 n_sats = 7;
@@ -70,15 +70,15 @@ message MsgPosLlh {
 
 message MsgPosLlhCov {
     uint32 tow = 1;
-    Double lat = 2;
-    Double lon = 3;
-    Double height = 4;
-    Float cov_n_n = 5;
-    Float cov_n_e = 6;
-    Float cov_n_d = 7;
-    Float cov_e_e = 8;
-    Float cov_e_d = 9;
-    Float cov_d_d = 10;
+    double lat = 2;
+    double lon = 3;
+    double height = 4;
+    float cov_n_n = 5;
+    float cov_n_e = 6;
+    float cov_n_d = 7;
+    float cov_e_e = 8;
+    float cov_e_d = 9;
+    float cov_d_d = 10;
     uint32 n_sats = 11;
     uint32 flags = 12;
 }
@@ -119,12 +119,12 @@ message MsgVelEcefCov {
     sint32 x = 2;
     sint32 y = 3;
     sint32 z = 4;
-    Float cov_x_x = 5;
-    Float cov_x_y = 6;
-    Float cov_x_z = 7;
-    Float cov_y_y = 8;
-    Float cov_y_z = 9;
-    Float cov_z_z = 10;
+    float cov_x_x = 5;
+    float cov_x_y = 6;
+    float cov_x_z = 7;
+    float cov_y_y = 8;
+    float cov_y_z = 9;
+    float cov_z_z = 10;
     uint32 n_sats = 11;
     uint32 flags = 12;
 }
@@ -145,12 +145,12 @@ message MsgVelNedCov {
     sint32 n = 2;
     sint32 e = 3;
     sint32 d = 4;
-    Float cov_n_n = 5;
-    Float cov_n_e = 6;
-    Float cov_n_d = 7;
-    Float cov_e_e = 8;
-    Float cov_e_d = 9;
-    Float cov_d_d = 10;
+    float cov_n_n = 5;
+    float cov_n_e = 6;
+    float cov_n_d = 7;
+    float cov_e_e = 8;
+    float cov_e_d = 9;
+    float cov_d_d = 10;
     uint32 n_sats = 11;
     uint32 flags = 12;
 }
@@ -160,12 +160,12 @@ message MsgVelBody {
     sint32 x = 2;
     sint32 y = 3;
     sint32 z = 4;
-    Float cov_x_x = 5;
-    Float cov_x_y = 6;
-    Float cov_x_z = 7;
-    Float cov_y_y = 8;
-    Float cov_y_z = 9;
-    Float cov_z_z = 10;
+    float cov_x_x = 5;
+    float cov_x_y = 6;
+    float cov_x_z = 7;
+    float cov_y_y = 8;
+    float cov_y_z = 9;
+    float cov_z_z = 10;
     uint32 n_sats = 11;
     uint32 flags = 12;
 }
