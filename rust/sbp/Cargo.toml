@@ -1,0 +1,6 @@
+[package]
+name = "sbp"
+version = "0.1.0"
+authors = ["Gareth McMullin <gareth@blacksphere.co.nz>"]
+
+[dependencies]
