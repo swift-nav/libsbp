@@ -16,6 +16,18 @@ files.
 
 """
 
+from sbpg.targets.templating import *
+
+MESSAGES_TEMPLATE_NAME = "message_template.proto.j2"
 
 def render_source(output_dir, package_spec):
-    pass
+    """
+    Render and output to a directory given a package specification.
+    """
+    path, name = package_spec.filepath
+    destination_filename = "%s/%s.proto" % (output_dir, name)
+    pb_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
+    with open(destination_filename, 'w') as f:
+        f.write(pb_template.render(
+            package=package_spec.identifier
+        ))
