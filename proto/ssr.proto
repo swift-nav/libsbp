@@ -18,8 +18,8 @@ message PhaseBiasesContent {
 }
 
 message MsgSsrOrbitClock {
-    GpsTimeSec time = 1;
-    GnssSignal sid = 2;
+    gnss.GpsTimeSec time = 1;
+    gnss.GnssSignal sid = 2;
     uint32 update_interval = 3;
     uint32 iod_ssr = 4;
     uint32 iod = 5;
@@ -35,16 +35,16 @@ message MsgSsrOrbitClock {
 }
 
 message MsgSsrCodeBiases {
-    GpsTimeSec time = 1;
-    GnssSignal sid = 2;
+    gnss.GpsTimeSec time = 1;
+    gnss.GnssSignal sid = 2;
     uint32 update_interval = 3;
     uint32 iod_ssr = 4;
     repeated CodeBiasesContent biases = 5;
 }
 
 message MsgSsrPhaseBiases {
-    GpsTimeSec time = 1;
-    GnssSignal sid = 2;
+    gnss.GpsTimeSec time = 1;
+    gnss.GnssSignal sid = 2;
     uint32 update_interval = 3;
     uint32 iod_ssr = 4;
     uint32 dispersive_bias = 5;

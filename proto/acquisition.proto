@@ -8,7 +8,7 @@ message MsgAcqResult {
     float cn0 = 1;
     float cp = 2;
     float cf = 3;
-    GnssSignal sid = 4;
+    gnss.GnssSignal sid = 4;
 }
 
 message AcqSvProfile {
@@ -16,7 +16,7 @@ message AcqSvProfile {
     uint32 status = 2;
     uint32 cn0 = 3;
     uint32 int_time = 4;
-    GnssSignal sid = 5;
+    gnss.GnssSignal sid = 5;
     uint32 bin_width = 6;
     uint32 timestamp = 7;
     uint32 time_spent = 8;

@@ -5,7 +5,7 @@ package swiftnav.sbp.observation;
 import "gnss.proto";
 
 message ObservationHeader {
-    GpsTime t = 1;
+    gnss.GpsTime t = 1;
     uint32 n_obs = 2;
 }
 
@@ -16,12 +16,12 @@ message Doppler {
 
 message PackedObsContent {
     uint32 P = 1;
-    CarrierPhase L = 2;
+    gnss.CarrierPhase L = 2;
     Doppler D = 3;
     uint32 cn0 = 4;
     uint32 lock = 5;
     uint32 flags = 6;
-    GnssSignal sid = 7;
+    gnss.GnssSignal sid = 7;
 }
 
 message MsgObs {
@@ -42,8 +42,8 @@ message MsgBasePosEcef {
 }
 
 message EphemerisCommonContent {
-    GnssSignal sid = 1;
-    GpsTimeSec toe = 2;
+    gnss.GnssSignal sid = 1;
+    gnss.GpsTimeSec toe = 2;
     double ura = 3;
     uint32 fit_interval = 4;
     uint32 valid = 5;
@@ -71,7 +71,7 @@ message MsgEphemerisGps {
     double af0 = 18;
     double af1 = 19;
     double af2 = 20;
-    GpsTimeSec toc = 21;
+    gnss.GpsTimeSec toc = 21;
     uint32 iode = 22;
     uint32 iodc = 23;
 }
@@ -98,7 +98,7 @@ message MsgEphemerisGlo {
 }
 
 message MsgIono {
-    GpsTimeSec t_nmct = 1;
+    gnss.GpsTimeSec t_nmct = 1;
     double a0 = 2;
     double a1 = 3;
     double a2 = 4;
@@ -110,13 +110,13 @@ message MsgIono {
 }
 
 message MsgSvConfigurationGps {
-    GpsTimeSec t_nmct = 1;
+    gnss.GpsTimeSec t_nmct = 1;
     uint32 l2c_mask = 2;
 }
 
 message MsgGroupDelay {
-    GpsTimeSec t_op = 1;
-    GnssSignal sid = 2;
+    gnss.GpsTimeSec t_op = 1;
+    gnss.GnssSignal sid = 2;
     uint32 valid = 3;
     sint32 tgd = 4;
     sint32 isc_l1ca = 5;
@@ -124,8 +124,8 @@ message MsgGroupDelay {
 }
 
 message AlmanacCommonContent {
-    GnssSignal sid = 1;
-    GpsTimeSec toa = 2;
+    gnss.GnssSignal sid = 1;
+    gnss.GpsTimeSec toa = 2;
     double ura = 3;
     uint32 fit_interval = 4;
     uint32 valid = 5;

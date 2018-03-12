@@ -54,6 +54,8 @@ def to_type(f, type_map=TYPE_MAP):
         f_ = copy.copy(f)
         f_.type_id = fill
         return "repeated %s" % to_type(f_)
+    elif name in [ 'GnssSignal', 'GpsTimeSec', 'GpsTime', 'CarrierPhase' ]:
+        name = 'gnss.' + name
     return name
 
 JENV.filters['to_identifier'] = to_identifier

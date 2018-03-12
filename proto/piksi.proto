@@ -70,7 +70,7 @@ message MsgIarState {
 
 message MsgMaskSatellite {
     uint32 mask = 1;
-    GnssSignal sid = 2;
+    gnss.GnssSignal sid = 2;
 }
 
 message MsgDeviceMonitor {
@@ -124,7 +124,7 @@ message MsgNetworkBandwidthUsage {
 
 message MsgSpecan {
     uint32 channel_tag = 1;
-    GpsTime t = 2;
+    gnss.GpsTime t = 2;
     float freq_ref = 3;
     float freq_step = 4;
     float amplitude_ref = 5;

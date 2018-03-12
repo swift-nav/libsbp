@@ -5,7 +5,7 @@ package swiftnav.sbp.tracking;
 import "gnss.proto";
 
 message TrackingChannelState {
-    GnssSignal sid = 1;
+    gnss.GnssSignal sid = 1;
     uint32 fcn = 2;
     uint32 cn0 = 3;
 }
@@ -21,6 +21,6 @@ message TrackingChannelCorrelation {
 
 message MsgTrackingIq {
     uint32 channel = 1;
-    GnssSignal sid = 2;
+    gnss.GnssSignal sid = 2;
     repeated TrackingChannelCorrelation corrs = 3;
 }

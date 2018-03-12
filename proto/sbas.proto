@@ -5,7 +5,7 @@ package swiftnav.sbp.sbas;
 import "gnss.proto";
 
 message MsgSbasRaw {
-    GnssSignal sid = 1;
+    gnss.GnssSignal sid = 1;
     uint32 tow = 2;
     uint32 message_type = 3;
     repeated uint32 data = 4;
