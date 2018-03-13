@@ -1755,12 +1755,12 @@ definitions:
           type: double
           units: rad
           desc: Argument of perigee at instant of t_lambda
-          
+
  - MSG_GLO_BIASES:
     id: 0x0075
     short_desc: GLONASS L1/L2 Code-Phase biases
     desc: |
-      The GLONASS L1/L2 Code-Phase biases allows to perform 
+      The GLONASS L1/L2 Code-Phase biases allows to perform
       GPS+GLONASS integer ambiguity resolution for baselines
       with mixed receiver types (e.g. receiver of different
       manufacturers)
@@ -1784,4 +1784,59 @@ definitions:
         - l2p_bias:
             type: s16
             units: m * 0.02
-            desc: GLONASS L2 P Code-Phase Bias            
+            desc: GLONASS L2 P Code-Phase Bias
+
+
+ - NetworkResidualContent:
+     short_desc: GNSS Network Resdiuals for a particular satellite signal.
+     desc: |
+       Dispersive and non-dispersive component of the network residual for
+       a specific satellite
+
+     fields:
+         - sid:
+             type: GnssSignal
+             desc: GNSS signal identifier (16 bit)
+         - s_oc:
+             type: u8
+             units: 0.5 mm
+             desc: Constant term of standard deviation for non-dispersive residual
+         - s_od:
+             type: u16
+             units: 0.01 PPM
+             desc: Distant dependent term of standard deviation for non-dispersive
+              residual
+         - s_oh:
+             type: u8
+             units: 0.1 PPM
+             desc: Height dependent term of standard deviation for non-dispersive
+              residual term
+         - s_ic:
+             type: u16
+             units: 0.5 mm
+             desc: Constant term of standard deviation for dispersive residual
+         - s_id:
+             type: u16
+             units: 0.01 PPM
+             desc: Distant dependent term of standard deviation for dispersive
+              residual
+
+ - MSG_NETWORK_RESIDUAL:
+    id: 0x0076
+    short_desc: Network Residual Message
+    desc: |
+      The network residual message gives the dispersive and non-dispersive
+      residuals for the calculated network correction
+    fields:
+        - header:
+            type: ObservationHeader
+            desc: Header of a Satellite message
+        - n_refs:
+            type: u8
+            desc: Number of reference station to construct residual message
+        - obs:
+            type: array
+            fill: NetworkResidualContent
+            map_by: sid
+            desc: |
+              Satellite Network Residual information
