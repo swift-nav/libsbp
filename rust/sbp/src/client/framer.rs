@@ -3,16 +3,11 @@ extern crate crc16;
 
 use self::byteorder::{LittleEndian,ReadBytesExt};
 use std::io::{Read, Error, ErrorKind};
+use ::messages::SBP;
 
 const SBP_PREAMBLE: u8 = 0x55;
 
-pub struct SBPMessage {
-    pub sender: u16,
-    pub msg_id: u16,
-    pub payload: Vec<u8>,
-}
-
-pub fn receive(a: &mut Read) -> Result<SBPMessage, Error> {
+pub fn receive(a: &mut Read) -> Result<SBP, Error> {
     let mut preamble = [0];
     a.read_exact(&mut preamble)?;
     if preamble[0] != SBP_PREAMBLE {
@@ -26,7 +21,6 @@ pub fn receive(a: &mut Read) -> Result<SBPMessage, Error> {
     let msg_id = header.read_u16::<LittleEndian>().unwrap();
     let sender = header.read_u16::<LittleEndian>().unwrap();
     let len = header.read_u8().unwrap() as usize;
-    println!("msg_id = {}, sender = {}, len = {}", msg_id, sender, len);
 
     let mut payload = [0; 256];
     let mut payload = &mut payload[..len];
@@ -38,6 +32,5 @@ pub fn receive(a: &mut Read) -> Result<SBPMessage, Error> {
         return Err(Error::new(ErrorKind::Other, "CRC error"))
     }
 
-    let payload = payload.to_vec();
-    Ok(SBPMessage{msg_id, sender, payload})
+    Ok(SBP::parse(msg_id, &mut &payload[..]))
 }

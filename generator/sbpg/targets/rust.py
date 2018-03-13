@@ -17,11 +17,15 @@ from sbpg.targets.templating import *
 from sbpg.utils import markdown_links
 
 MESSAGES_TEMPLATE_NAME = "sbp_messages_template.rs"
+MESSAGES_MOD_TEMPLATE_NAME = "sbp_messages_mod.rs"
 
+import re
 def camel_case(s):
   """
   Makes a classname.
   """
+  if '_' not in s: return s
+  s = re.sub('([a-z])([A-Z])', r'\1_\2', s)
   return ''.join(w if w in ACRONYMS else w.title() for w in s.split('_'))
 
 def commentify(value):
@@ -36,7 +40,11 @@ def commentify(value):
   else:
     return '\n'.join(['// ' + l for l in value.split('\n')[:-1]])
 
-TYPE_MAP = {'s8': 'i8',
+TYPE_MAP = {'u8': 'u8',
+            'u16': 'u16',
+            'u32': 'u32',
+            'u64': 'u64',
+            's8': 'i8',
             's16': 'i16',
             's32': 'i32',
             's64': 'i64',
@@ -53,9 +61,48 @@ def type_map(field):
   else:
     return field.type_id
 
+def mod_name(x):
+    return x.split('.', 2)[2]
+
+def parse_type(field):
+  """
+  Function to pull a type from the binary payload.
+  """
+  if field.type_id == 'string':
+    if field.options.has_key('size'):
+      return "::read_string_limit(buf, %s)" % field.options['size'].value
+    else:
+      return "::read_string(buf)"
+  elif field.type_id == 'u8':
+    return 'buf.read_u8().unwrap()'
+  elif field.type_id == 's8':
+    return 'buf.read_i8().unwrap()'
+  elif field.type_id in TYPE_MAP.keys():
+    # Primitive java types have extractor methods in SBPMessage.Parser
+    return 'buf.read_%s::<LittleEndian>().unwrap()' % TYPE_MAP[field.type_id]
+  if field.type_id == 'array':
+    # Call function to build array
+    t = field.options['fill'].value
+    return 'Vec::new()'
+    if t in TYPE_MAP.keys():
+      if field.options.has_key('size'):
+        return '0' #"parser.getArrayof%s(%d)" % (t.capitalize(), field.options['size'].value)
+      else:
+        return '0' #"parser.getArrayof%s()" % t.capitalize()
+    else:
+      if field.options.has_key('size'):
+        return '0' #"parser.getArray(%s.class, %d)" % (t, field.options['size'].value)
+      else:
+        return '0' #"parser.getArray(%s.class)" % t
+  else:
+    # This is an inner class, call default constructor
+    return "%s::parse(buf)" % field.type_id
+
 JENV.filters['camel_case'] = camel_case
 JENV.filters['commentify'] = commentify
 JENV.filters['type_map'] = type_map
+JENV.filters['mod_name'] = mod_name
+JENV.filters['parse_type'] = parse_type
 
 def render_source(output_dir, package_spec):
   """
@@ -64,7 +111,7 @@ def render_source(output_dir, package_spec):
   path, name = package_spec.filepath
   destination_filename = "%s/sbp/src/messages/%s.rs" % (output_dir, name)
   py_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
-  includes = [x.rsplit('.')[0] for x in package_spec.includes]
+  includes = [x.rsplit('.', 1)[0] for x in package_spec.includes]
   if 'types' in includes:
     del includes[includes.index('types')]
   with open(destination_filename, 'w') as f:
@@ -74,3 +121,22 @@ def render_source(output_dir, package_spec):
                                description=package_spec.description,
                                timestamp=package_spec.creation_timestamp,
                                includes=includes))
+
+def render_mod(output_dir, package_specs):
+  msgs = []
+  mods = []
+  for package_spec in package_specs:
+    if not package_spec.render_source:
+      continue
+    name = package_spec.identifier.split('.', 2)[2]
+    if name != 'types':
+      mods.append(name)
+    for m in package_spec.definitions:
+      if m.static and m.sbp_id:
+        msgs.append(m)
+  destination_filename = "%s/sbp/src/messages/mod.rs" % output_dir
+  py_template = JENV.get_template(MESSAGES_MOD_TEMPLATE_NAME)
+  with open(destination_filename, 'w') as f:
+    f.write(py_template.render(packages=package_specs,
+                               mods=mods,
+                               msgs=sorted(msgs)))

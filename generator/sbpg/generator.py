@@ -143,6 +143,9 @@ def main():
       elif args.java:
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
         java.render_table(output_dir, parsed)
+      elif args.rust:
+        parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
+        rs.render_mod(output_dir, parsed)
       elif args.test_c:
         test_c.render_check_suites(output_dir, all_specs)
         test_c.render_check_main(output_dir, all_specs)

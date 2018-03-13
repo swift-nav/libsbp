@@ -18,10 +18,7 @@ fn main() {
         .expect("open failed");
     loop {
         match sbp::client::framer::receive(&mut port) {
-            Ok(x) => {
-                println!("id = {}, sender = {}", x.msg_id, x.sender);
-                println!("{:?}\n", x.payload);
-            },
+            Ok(x) => println!("{:?}", x),
             Err(e) => {
                 println!("{:?}", e);
             }
