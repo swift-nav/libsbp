@@ -1,8 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RecordWildCards   #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE NoImplicitPrelude           #-}
+{-# LANGUAGE TemplateHaskell             #-}
+{-# LANGUAGE RecordWildCards             #-}
+{-# LANGUAGE OverloadedStrings           #-}
 
 -- |
 -- Module:      SwiftNav.SBP.Msg
@@ -43,9 +43,9 @@ import SwiftNav.SBP.Settings
 import SwiftNav.SBP.Ssr
 import SwiftNav.SBP.System
 import SwiftNav.SBP.Tracking
-import SwiftNav.SBP.Types
 import SwiftNav.SBP.User
 import SwiftNav.SBP.Vehicle
+import SwiftNav.SBP.Types
 
 
 -- | An SBP message ADT composed of all defined SBP messages.
@@ -135,6 +135,7 @@ data SBPMsg =
    | SBPMsgNapDeviceDnaResp MsgNapDeviceDnaResp Msg
    | SBPMsgNdbEvent MsgNdbEvent Msg
    | SBPMsgNetworkBandwidthUsage MsgNetworkBandwidthUsage Msg
+   | SBPMsgNetworkResidual MsgNetworkResidual Msg
    | SBPMsgNetworkStateReq MsgNetworkStateReq Msg
    | SBPMsgNetworkStateResp MsgNetworkStateResp Msg
    | SBPMsgObs MsgObs Msg
@@ -291,6 +292,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgNdbEvent = SBPMsgNdbEvent (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgNetworkBandwidthUsage = SBPMsgNetworkBandwidthUsage (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgNetworkResidual = SBPMsgNetworkResidual (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgNetworkStateReq = SBPMsgNetworkStateReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgNetworkStateResp = SBPMsgNetworkStateResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgObs = SBPMsgObs (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -439,6 +441,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgNapDeviceDnaResp _ m) = put m
       encoder (SBPMsgNdbEvent _ m) = put m
       encoder (SBPMsgNetworkBandwidthUsage _ m) = put m
+      encoder (SBPMsgNetworkResidual _ m) = put m
       encoder (SBPMsgNetworkStateReq _ m) = put m
       encoder (SBPMsgNetworkStateResp _ m) = put m
       encoder (SBPMsgObs _ m) = put m
@@ -591,6 +594,7 @@ instance FromJSON SBPMsg where
         | msgType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgNdbEvent = SBPMsgNdbEvent <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgNetworkBandwidthUsage = SBPMsgNetworkBandwidthUsage <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgNetworkResidual = SBPMsgNetworkResidual <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgNetworkStateReq = SBPMsgNetworkStateReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgNetworkStateResp = SBPMsgNetworkStateResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgObs = SBPMsgObs <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -744,6 +748,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgNapDeviceDnaResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgNdbEvent n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgNetworkBandwidthUsage n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgNetworkResidual n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgNetworkStateReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgNetworkStateResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgObs n m) = toJSON n <<>> toJSON m
@@ -891,6 +896,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgNapDeviceDnaResp n m) = SBPMsgNapDeviceDnaResp n <$> f m
   msg f (SBPMsgNdbEvent n m) = SBPMsgNdbEvent n <$> f m
   msg f (SBPMsgNetworkBandwidthUsage n m) = SBPMsgNetworkBandwidthUsage n <$> f m
+  msg f (SBPMsgNetworkResidual n m) = SBPMsgNetworkResidual n <$> f m
   msg f (SBPMsgNetworkStateReq n m) = SBPMsgNetworkStateReq n <$> f m
   msg f (SBPMsgNetworkStateResp n m) = SBPMsgNetworkStateResp n <$> f m
   msg f (SBPMsgObs n m) = SBPMsgObs n <$> f m

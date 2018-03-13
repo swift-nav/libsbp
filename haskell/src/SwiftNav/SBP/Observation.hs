@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE RecordWildCards   #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE NoImplicitPrelude           #-}
+{-# LANGUAGE TemplateHaskell             #-}
+{-# LANGUAGE RecordWildCards             #-}
 
 -- |
 -- Module:      SwiftNav.SBP.Observation
@@ -24,12 +24,12 @@ import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
-import Data.ByteString.Lazy hiding (ByteString)
+import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Gnss
 import SwiftNav.SBP.TH
 import SwiftNav.SBP.Types
+import SwiftNav.SBP.Gnss
 
 {-# ANN module ("HLint: ignore Use camelCase"::String) #-}
 {-# ANN module ("HLint: ignore Redundant do"::String) #-}
@@ -2155,7 +2155,7 @@ msgGloBiases = 0x0075
 
 -- | SBP class for message MSG_GLO_BIASES (0x0075).
 --
--- The GLONASS L1/L2 Code-Phase biases allows to perform  GPS+GLONASS integer
+-- The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer
 -- ambiguity resolution for baselines with mixed receiver types (e.g. receiver
 -- of different manufacturers)
 data MsgGloBiases = MsgGloBiases
@@ -2190,3 +2190,76 @@ instance Binary MsgGloBiases where
 $(makeSBP 'msgGloBiases ''MsgGloBiases)
 $(makeJSON "_msgGloBiases_" ''MsgGloBiases)
 $(makeLenses ''MsgGloBiases)
+
+-- | NetworkResidualContent.
+--
+-- Dispersive and non-dispersive component of the network residual for a
+-- specific satellite
+data NetworkResidualContent = NetworkResidualContent
+  { _networkResidualContent_sid :: !GnssSignal
+    -- ^ GNSS signal identifier (16 bit)
+  , _networkResidualContent_s_oc :: !Word8
+    -- ^ Constant term of standard deviation for non-dispersive residual
+  , _networkResidualContent_s_od :: !Word16
+    -- ^ Distant dependent term of standard deviation for non-dispersive residual
+  , _networkResidualContent_s_oh :: !Word8
+    -- ^ Height dependent term of standard deviation for non-dispersive residual
+    -- term
+  , _networkResidualContent_s_ic :: !Word16
+    -- ^ Constant term of standard deviation for dispersive residual
+  , _networkResidualContent_s_id :: !Word16
+    -- ^ Distant dependent term of standard deviation for dispersive residual
+  } deriving ( Show, Read, Eq )
+
+instance Binary NetworkResidualContent where
+  get = do
+    _networkResidualContent_sid <- get
+    _networkResidualContent_s_oc <- getWord8
+    _networkResidualContent_s_od <- getWord16le
+    _networkResidualContent_s_oh <- getWord8
+    _networkResidualContent_s_ic <- getWord16le
+    _networkResidualContent_s_id <- getWord16le
+    pure NetworkResidualContent {..}
+
+  put NetworkResidualContent {..} = do
+    put _networkResidualContent_sid
+    putWord8 _networkResidualContent_s_oc
+    putWord16le _networkResidualContent_s_od
+    putWord8 _networkResidualContent_s_oh
+    putWord16le _networkResidualContent_s_ic
+    putWord16le _networkResidualContent_s_id
+
+$(makeJSON "_networkResidualContent_" ''NetworkResidualContent)
+$(makeLenses ''NetworkResidualContent)
+
+msgNetworkResidual :: Word16
+msgNetworkResidual = 0x0076
+
+-- | SBP class for message MSG_NETWORK_RESIDUAL (0x0076).
+--
+-- The network residual message gives the dispersive and non-dispersive
+-- residuals for the calculated network correction
+data MsgNetworkResidual = MsgNetworkResidual
+  { _msgNetworkResidual_header :: !ObservationHeader
+    -- ^ Header of a Satellite message
+  , _msgNetworkResidual_n_refs :: !Word8
+    -- ^ Number of reference station to construct residual message
+  , _msgNetworkResidual_obs  :: ![NetworkResidualContent]
+    -- ^ Satellite Network Residual information
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgNetworkResidual where
+  get = do
+    _msgNetworkResidual_header <- get
+    _msgNetworkResidual_n_refs <- getWord8
+    _msgNetworkResidual_obs <- whileM (not <$> isEmpty) get
+    pure MsgNetworkResidual {..}
+
+  put MsgNetworkResidual {..} = do
+    put _msgNetworkResidual_header
+    putWord8 _msgNetworkResidual_n_refs
+    mapM_ put _msgNetworkResidual_obs
+
+$(makeSBP 'msgNetworkResidual ''MsgNetworkResidual)
+$(makeJSON "_msgNetworkResidual_" ''MsgNetworkResidual)
+$(makeLenses ''MsgNetworkResidual)
