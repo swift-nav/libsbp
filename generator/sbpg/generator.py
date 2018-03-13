@@ -25,6 +25,7 @@ import sbpg.targets.latex as tex
 import sbpg.targets.haskell as hs
 import sbpg.targets.python as py
 import sbpg.targets.javascript as js
+import sbpg.targets.rust as rs
 
 def get_args():
   parser = argparse.ArgumentParser(description='Swift Navigation SBP generator.')
@@ -56,6 +57,9 @@ def get_args():
   parser.add_argument('--java',
                       action="store_true",
                       help='Target language: Java!')
+  parser.add_argument('--rust',
+                      action="store_true",
+                      help='Target language: Rust.')
   parser.add_argument('--latex',
                       action="store_true",
                       help='Target language: LaTeX.')
@@ -76,7 +80,7 @@ def main():
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
-    assert args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.java, \
+    assert args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.java or args.rust, \
       "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
@@ -128,6 +132,8 @@ def main():
           hs.render_source(output_dir, parsed)
         elif args.java:
           java.render_source(output_dir, parsed)
+        elif args.rust:
+          rs.render_source(output_dir, parsed)
       if args.c:
         c.render_version(output_dir, args.release[0])
       elif args.haskell:

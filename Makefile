@@ -15,7 +15,14 @@ SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
 SBP_MINOR_VERSION := $(word 2, $(subst ., , $(SBP_VERSION)))
 SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
 
-.PHONY: help docs pdf html test release dist silly all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-generator deps-haskell gen-haskell test-haskell verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell mapping
+.PHONY: help docs pdf html test release dist silly all docs pdf html
+.PHONY: c deps-c gen-c test-c python deps-python gen-python test-python
+.PHONY: javascript deps-javascript gen-javascript test-javascript
+.PHONY: java deps-java gen-java test-java
+.PHONY: haskell deps-generator deps-haskell gen-haskell test-haskell
+.PHONY: rust deps-rust gen-rust test-rust
+.PHONY: verify-prereq-generator verify-prereq-c verify-prereq-javascript
+.PHONY: verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-rust mapping
 
 # Functions
 define announce-begin
@@ -48,11 +55,12 @@ help:
 	@echo "  python    to make Python bindings"
 	@echo "  haskell   to make Haskell bindings"
 	@echo "  java      to make Java bindings"
+	@echo "  rust      to make Rust bindings"
 	@echo "  release   to handle some release tasks"
 	@echo "  test      to run all tests"
 	@echo
 
-all: deps-generator c python javascript java docs haskell
+all: deps-generator c python javascript java docs haskell rust
 docs: verify-prereq-docs deps-generator pdf html
 
 c:          deps-c          gen-c          test-c
@@ -60,6 +68,7 @@ python:     deps-python     gen-python     test-python
 javascript: deps-javascript gen-javascript test-javascript
 java:       deps-java       gen-java       test-java
 haskell:    deps-haskell    gen-haskell    test-haskell
+rust:       deps-rust       gen-rust       test-rust
 
 # Prerequisite verification
 verify-prereq-generator:
@@ -87,6 +96,8 @@ verify-prereq-java: ;
 
 verify-prereq-haskell: ;
 
+verify-prereq-rust: ;
+
 verify-prereq-docs:
 	@command -v pdflatex  1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pdflatex\` but it's not installed. Aborting.\n\nHave you installed pdflatex? See the generator readme (Installing instructions) at \`generator/README.md\` for setup instructions.\n"; exit 1; }
 
@@ -105,6 +116,8 @@ deps-javascript: verify-prereq-javascript
 deps-java: verify-prereq-java
 
 deps-haskell: verify-prereq-haskell
+
+deps-rust: verify-prereq-rust
 
 # Generators
 
@@ -165,9 +178,18 @@ gen-haskell:
 					--haskell
 	$(call announce-begin,"Finished generating Haskell bindings")
 
+gen-rust:
+	$(call announce-begin,"Generating Rust bindings")
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
+					-o $(SWIFTNAV_ROOT)/rust/ \
+					-r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+					--rust
+	$(call announce-begin,"Finished generating Rust bindings")
+
 # Testers
 
-test: test-all-begin test-c test-java test-python test-haskell test-javascript test-all-end
+test: test-all-begin test-c test-java test-python test-haskell test-javascript test-rust test-all-end
 
 test-all-begin:
 	$(call announce-begin,"Running all tests")
@@ -203,6 +225,11 @@ test-haskell:
 	$(call announce-begin,"Running Haskell tests")
 	cd $(SWIFTNAV_ROOT)/haskell/ && stack build --test --allow-different-user
 	$(call announce-end,"Finished running Haskell tests")
+
+test-rust:
+	$(call announce-begin,"Running Rust tests")
+	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo test
+	$(call announce-end,"Finished running Rust tests")
 
 dist:
 	$(call announce-begin,"Deploying packages")
