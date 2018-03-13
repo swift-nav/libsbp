@@ -21,11 +21,11 @@ description: |
   phase ambiguity. The pseudo-absolute position solution uses a
   user-provided, well-surveyed base station position (if available)
   and the RTK solution in tandem.
-  
+
   When the inertial navigation mode indicates that the IMU is used,
   all messages are reported in the vehicle body frame as defined by
   device settings.  By default, the vehicle body frame is configured to be
-  coincident with the antenna phase center.  When there is no inertial 
+  coincident with the antenna phase center.  When there is no inertial
   navigation, the solution will be reported at the phase center of the antenna.
 
 stable: True
@@ -137,7 +137,7 @@ definitions:
                   (range 0-999999999)
 
  - MSG_DOPS:
-    id: 0x0208
+    id: 0x0216
     short_desc: Dilution of Precision
     desc: |
       This dilution of precision (DOP) message describes the effect of
@@ -185,10 +185,10 @@ definitions:
                       - 2: Differential GNSS (DGNSS)
                       - 3: Float RTK
                       - 4: Fixed RTK
-
+                      - 5: SBAS Position
 
  - MSG_POS_ECEF:
-    id: 0x0209
+    id: 0x0217
     short_desc: Single-point position in ECEF
     desc: |
       The position solution message reports absolute Earth Centered
@@ -243,9 +243,10 @@ definitions:
                       - 3: Float RTK
                       - 4: Fixed RTK
                       - 5: Dead Reckoning
+                      - 6: SBAS Position
 
  - MSG_POS_ECEF_COV:
-    id: 0x0214
+    id: 0x0218
     short_desc: Single-point position in ECEF
     desc: |
       The position solution message reports absolute Earth Centered
@@ -321,9 +322,10 @@ definitions:
                       - 3: Float RTK
                       - 4: Fixed RTK
                       - 5: Dead Reckoning
+                      - 6: SBAS Position
 
  - MSG_POS_LLH:
-    id: 0x020A
+    id: 0x0219
     short_desc: Geodetic Position
     desc: |
       This position solution message reports the absolute geodetic
@@ -382,10 +384,11 @@ definitions:
                       - 3: Float RTK
                       - 4: Fixed RTK
                       - 5: Dead Reckoning
+                      - 6: SBAS Position
 
 
  - MSG_POS_LLH_COV:
-    id: 0x0211
+    id: 0x021A
     short_desc: Geodetic Position
     desc: |
       This position solution message reports the absolute geodetic
@@ -460,6 +463,7 @@ definitions:
                       - 3: Float RTK
                       - 4: Fixed RTK
                       - 5: Dead Reckoning
+                      - 6: SBAS Position
 
  - MSG_BASELINE_ECEF:
     id: 0x020B
@@ -1038,6 +1042,56 @@ definitions:
                       - 1: Fixed RTK
                       - 2: Float RTK
 
+ - MSG_DOPS_DEP_B:
+    id: 0x0208
+    short_desc: Dilution of Precision
+    desc: |
+      This dilution of precision (DOP) message describes the effect of
+      navigation satellite geometry on positional measurement
+      precision.  The flags field indicated whether the DOP reported
+      corresponds to differential or SPP solution.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - gdop:
+            type: u16
+            units: 0.01
+            desc: Geometric Dilution of Precision
+        - pdop:
+            type: u16
+            units: 0.01
+            desc: Position Dilution of Precision
+        - tdop:
+            type: u16
+            units: 0.01
+            desc: Time Dilution of Precision
+        - hdop:
+            type: u16
+            units: 0.01
+            desc: Horizontal Dilution of Precision
+        - vdop:
+            type: u16
+            units: 0.01
+            desc: Vertical Dilution of Precision
+        - flags:
+            type: u8
+            desc: Indicates the position solution with which the DOPS message corresponds
+            fields:
+              - 7:
+                  desc: RAIM repair flag
+              - 3-6:
+                  desc: Reserved
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+
  - MSG_POS_LLH_DEP_A:
     id: 0x0201
     public: false
@@ -1357,3 +1411,277 @@ definitions:
                     values:
                         - 0: Float RTK
                         - 1: Fixed RTK
+
+ - MSG_POS_ECEF_DEP_B:
+    id: 0x0209
+    short_desc: Single-point position in ECEF
+    desc: |
+      The position solution message reports absolute Earth Centered
+      Earth Fixed (ECEF) coordinates and the status (single point vs
+      pseudo-absolute RTK) of the position solution. If the rover
+      receiver knows the surveyed position of the base station and has
+      an RTK solution, this reports a pseudo-absolute position
+      solution using the base station position and the rover's RTK
+      baseline vector. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - x:
+            type: double
+            units: m
+            desc: ECEF X coordinate
+        - y:
+            type: double
+            units: m
+            desc: ECEF Y coordinate
+        - z:
+            type: double
+            units: m
+            desc: ECEF Z coordinate
+        - accuracy:
+            type: u16
+            units: mm
+            desc: Position estimated standard deviation
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 5-7:
+                  desc: Reserved
+              - 3-4:
+                  desc: Inertial Navigation Mode
+                  values:
+                      - 0: None
+                      - 1: INS used
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
+
+ - MSG_POS_ECEF_COV_DEP_A:
+    id: 0x0214
+    short_desc: Single-point position in ECEF
+    desc: |
+      The position solution message reports absolute Earth Centered
+      Earth Fixed (ECEF) coordinates and the status (single point vs
+      pseudo-absolute RTK) of the position solution. The message also
+      reports the upper triangular portion of the 3x3 covariance matrix.
+      If the receiver knows the surveyed position of the base station and has
+      an RTK solution, this reports a pseudo-absolute position
+      solution using the base station position and the rover's RTK
+      baseline vector. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - x:
+            type: double
+            units: m
+            desc: ECEF X coordinate
+        - y:
+            type: double
+            units: m
+            desc: ECEF Y coordinate
+        - z:
+            type: double
+            units: m
+            desc: ECEF Z coordinate
+        - cov_x_x:
+            type: float
+            units: m^2
+            desc: Estimated variance of x
+        - cov_x_y:
+            type: float
+            units: m^2
+            desc: Estimated covariance of x and y
+        - cov_x_z:
+            type: float
+            units: m^2
+            desc: Estimated covariance of x and z
+        - cov_y_y:
+            type: float
+            units: m^2
+            desc: Estimated variance of y
+        - cov_y_z:
+            type: float
+            units: m^2
+            desc: Estimated covariance of y and z
+        - cov_z_z:
+            type: float
+            units: m^2
+            desc: Estimated variance of z
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 5-7:
+                  desc: Reserved
+              - 3-4:
+                  desc: Inertial Navigation Mode
+                  values:
+                      - 0: None
+                      - 1: INS used
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
+
+ - MSG_POS_LLH_DEP_B:
+    id: 0x020A
+    short_desc: Geodetic Position
+    desc: |
+      This position solution message reports the absolute geodetic
+      coordinates and the status (single point vs pseudo-absolute RTK)
+      of the position solution. If the rover receiver knows the
+      surveyed position of the base station and has an RTK solution,
+      this reports a pseudo-absolute position solution using the base
+      station position and the rover's RTK baseline vector. The full
+      GPS time is given by the preceding MSG_GPS_TIME with the
+      matching time-of-week (tow).
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: double
+            units: m
+            desc: Height above WGS84 ellipsoid
+        - h_accuracy:
+            type: u16
+            units: mm
+            desc: Horizontal position estimated standard deviation
+        - v_accuracy:
+            type: u16
+            units: mm
+            desc: Vertical position estimated standard deviation
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution.
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 5-7:
+                  desc: Reserved
+              - 3-4:
+                  desc: Inertial Navigation Mode
+                  values:
+                      - 0: None
+                      - 1: INS used
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
+
+
+ - MSG_POS_LLH_COV_DEP_A:
+    id: 0x0211
+    short_desc: Geodetic Position
+    desc: |
+      This position solution message reports the absolute geodetic
+      coordinates and the status (single point vs pseudo-absolute RTK)
+      of the position solution as well as the upper triangle of the 3x3
+      covariance matrix.  The position information and Fix Mode flags should
+      follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+      in the local-level North, East, Down frame, the covariance terms follow
+      with that convention. Thus, covariances are reported against the "downward"
+      measurement and care should be taken with the sign convention.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: double
+            units: m
+            desc: Height above WGS84 ellipsoid
+        - cov_n_n:
+            type: float
+            units: m^2
+            desc: Estimated variance of northing
+        - cov_n_e:
+            type: float
+            units: m^2
+            desc: Covariance of northing and easting
+        - cov_n_d:
+            type: float
+            units: m^2
+            desc: Covariance of northing and downward measurement
+        - cov_e_e:
+            type: float
+            units: m^2
+            desc: Estimated variance of easting
+        - cov_e_d:
+            type: float
+            units: m^2
+            desc: Covariance of easting and downward measurement
+        - cov_d_d:
+            type: float
+            units: m^2
+            desc: Estimated variance of downward measurement
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution.
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 5-7:
+                  desc: Reserved
+              - 3-4:
+                  desc: Inertial Navigation Mode
+                  values:
+                      - 0: None
+                      - 1: INS used
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
