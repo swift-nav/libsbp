@@ -842,7 +842,7 @@ coordinate system
 
 /** GLONASS L1/L2 Code-Phase biases
  *
- * The GLONASS L1/L2 Code-Phase biases allows to perform 
+ * The GLONASS L1/L2 Code-Phase biases allows to perform
  * GPS+GLONASS integer ambiguity resolution for baselines
  * with mixed receiver types (e.g. receiver of different
  * manufacturers)
@@ -855,6 +855,35 @@ typedef struct __attribute__((packed)) {
   s16 l2ca_bias;    /**< GLONASS L2 C/A Code-Phase Bias [m * 0.02] */
   s16 l2p_bias;     /**< GLONASS L2 P Code-Phase Bias [m * 0.02] */
 } msg_glo_biases_t;
+
+
+/** GNSS Network Resdiuals for a particular satellite signal.
+ *
+ * Dispersive and non-dispersive component of the network residual for
+ * a specific satellite
+ */
+typedef struct __attribute__((packed)) {
+  sbp_gnss_signal_t sid;     /**< GNSS signal identifier (16 bit) */
+  u8 s_oc;    /**< Constant term of standard deviation for non-dispersive residual [0.5 mm] */
+  u16 s_od;    /**< Distant dependent term of standard deviation for non-dispersive residual [0.01 PPM] */
+  u8 s_oh;    /**< Height dependent term of standard deviation for non-dispersive residual term [0.1 PPM] */
+  u16 s_ic;    /**< Constant term of standard deviation for dispersive residual [0.5 mm] */
+  u16 s_id;    /**< Distant dependent term of standard deviation for dispersive residual [0.01 PPM] */
+} network_residual_content_t;
+
+
+/** Network Residual Message
+ *
+ * The network residual message gives the dispersive and non-dispersive
+ * residuals for the calculated network correction
+ */
+#define SBP_MSG_NETWORK_RESIDUAL     0x0076
+typedef struct __attribute__((packed)) {
+  observation_header_t header;    /**< Header of a Satellite message */
+  u8 n_refs;    /**< Number of reference station to construct residual message */
+  network_residual_content_t obs[0];    /**< Satellite Network Residual information
+ */
+} msg_network_residual_t;
 
 
 /** \} */
