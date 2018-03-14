@@ -4,7 +4,7 @@ extern crate sbp;
 use serialport::prelude::*;
 use std::time::Duration;
 use sbp::messages::SBP;
-use sbp::client::framer::{receive, Error};
+use sbp::Error;
 
 fn main() {
     let s = SerialPortSettings {
@@ -18,8 +18,9 @@ fn main() {
 
     let mut port = serialport::open_with_settings("/dev/ttyUSB0", &s)
         .expect("open failed");
+
     loop {
-        match receive(&mut port) {
+        match sbp::client::framer::receive(&mut port) {
             Ok(SBP::MsgLog(x)) =>
                 println!("{}", x.text),
             Ok(SBP::MsgPosLLH(x)) =>
@@ -28,6 +29,7 @@ fn main() {
 
             Err(Error::InvalidPreamble) => (),
             Err(Error::CRCMismatch) => (),
+            Err(Error::ParseError) => (),
             Err(Error::IoError(ref x)) if x.kind() == std::io::ErrorKind::TimedOut => (),
 
             Err(e) => {

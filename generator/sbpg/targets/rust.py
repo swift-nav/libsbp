@@ -74,12 +74,12 @@ def parse_type(field):
     else:
       return "::read_string(_buf)"
   elif field.type_id == 'u8':
-    return '_buf.read_u8().unwrap()'
+    return '_buf.read_u8()'
   elif field.type_id == 's8':
-    return '_buf.read_i8().unwrap()'
+    return '_buf.read_i8()'
   elif field.type_id in TYPE_MAP.keys():
     # Primitive java types have extractor methods in SBPMessage.Parser
-    return '_buf.read_%s::<LittleEndian>().unwrap()' % TYPE_MAP[field.type_id]
+    return '_buf.read_%s::<LittleEndian>()' % TYPE_MAP[field.type_id]
   if field.type_id == 'array':
     # Call function to build array
     t = field.options['fill'].value

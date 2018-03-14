@@ -29,12 +29,16 @@ pub enum SBP {
 }
 
 impl SBP {
-    pub fn parse(id: u16, payload: &mut &[u8]) -> SBP {
-        match id {
+    pub fn parse(id: u16, payload: &mut &[u8]) -> Result<SBP, ::Error> {
+        let x: Result<SBP, ::Error> = match id {
             ((*- for m in msgs *))
-            (((m.sbp_id))) => SBP::(((m.identifier|camel_case)))( (((m.identifier|camel_case)))::parse(payload) ),
+            (((m.sbp_id))) => Ok(SBP::(((m.identifier|camel_case)))( (((m.identifier|camel_case)))::parse(payload)? )),
             ((*- endfor *))
-            _ => SBP::Unknown {id}
+            _ => Ok(SBP::Unknown {id})
+        };
+        match x {
+            Ok(x) => Ok(x),
+            Err(_) => Err(::Error::ParseError),
         }
     }
 }
