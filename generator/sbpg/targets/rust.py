@@ -70,33 +70,32 @@ def parse_type(field):
   """
   if field.type_id == 'string':
     if field.options.has_key('size'):
-      return "::read_string_limit(buf, %s)" % field.options['size'].value
+      return "::read_string_limit(_buf, %s)" % field.options['size'].value
     else:
-      return "::read_string(buf)"
+      return "::read_string(_buf)"
   elif field.type_id == 'u8':
-    return 'buf.read_u8().unwrap()'
+    return '_buf.read_u8().unwrap()'
   elif field.type_id == 's8':
-    return 'buf.read_i8().unwrap()'
+    return '_buf.read_i8().unwrap()'
   elif field.type_id in TYPE_MAP.keys():
     # Primitive java types have extractor methods in SBPMessage.Parser
-    return 'buf.read_%s::<LittleEndian>().unwrap()' % TYPE_MAP[field.type_id]
+    return '_buf.read_%s::<LittleEndian>().unwrap()' % TYPE_MAP[field.type_id]
   if field.type_id == 'array':
     # Call function to build array
     t = field.options['fill'].value
-    return 'Vec::new()'
     if t in TYPE_MAP.keys():
       if field.options.has_key('size'):
-        return '0' #"parser.getArrayof%s(%d)" % (t.capitalize(), field.options['size'].value)
+        return '::read_%s_array_limit(_buf, %d)' % (t, field.options['size'].value)
       else:
-        return '0' #"parser.getArrayof%s()" % t.capitalize()
+        return '::read_%s_array(_buf)' % t
     else:
       if field.options.has_key('size'):
-        return '0' #"parser.getArray(%s.class, %d)" % (t, field.options['size'].value)
+        return '%s::parse_array_limit(_buf, %d)' % (t, field.options['size'].value)
       else:
-        return '0' #"parser.getArray(%s.class)" % t
+        return '%s::parse_array(_buf)' % t
   else:
     # This is an inner class, call default constructor
-    return "%s::parse(buf)" % field.type_id
+    return "%s::parse(_buf)" % field.type_id
 
 JENV.filters['camel_case'] = camel_case
 JENV.filters['commentify'] = commentify

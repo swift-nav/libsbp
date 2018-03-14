@@ -12,8 +12,6 @@
 pub mod (((m)));
 ((*- endfor *))
 
-use std::io::Read;
-
 ((*- for p in packages *))
 ((*- for m in p.definitions *))
 ((*- if m.sbp_id *))

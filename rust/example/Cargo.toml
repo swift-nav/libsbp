@@ -5,8 +5,6 @@ authors = ["Gareth McMullin <gareth@swiftnav.com>"]
 
 [dependencies]
 serialport = "2.1.0"
-byteorder = "1.2.1"
-crc16 = "*"
 
 [dependencies.sbp]
 path = "../sbp"
