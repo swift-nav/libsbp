@@ -185,7 +185,8 @@ definitions:
                       - 2: Differential GNSS (DGNSS)
                       - 3: Float RTK
                       - 4: Fixed RTK
-                      - 5: SBAS Position
+                      - 5: Reserved
+                      - 6: SBAS Position
 
  - MSG_POS_ECEF:
     id: 0x0209
