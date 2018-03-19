@@ -513,6 +513,8 @@ definitions:
                         - 2: Differential GNSS (DGNSS)
                         - 3: Float RTK
                         - 4: Fixed RTK
+                        - 5: Reserved
+                        - 6: Reserved
 
  - MSG_BASELINE_NED:
     id: 0x020C
@@ -566,6 +568,8 @@ definitions:
                         - 2: Differential GNSS (DGNSS)
                         - 3: Float RTK
                         - 4: Fixed RTK
+                        - 5: Reserved
+                        - 6: Reserved
 
  - MSG_VEL_ECEF:
     id: 0x020D
