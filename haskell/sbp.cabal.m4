@@ -25,9 +25,6 @@ source-repository head
 library
   exposed-modules:     SwiftNav.CRC16
                      , SwiftNav.SBP
-  other-modules:       SwiftNav.SBP.Msg
-                     , SwiftNav.SBP.TH
-                     , SwiftNav.SBP.Types
                      , SwiftNav.SBP.Acquisition
                      , SwiftNav.SBP.Bootload
                      , SwiftNav.SBP.ExtEvents
@@ -49,6 +46,9 @@ library
                      , SwiftNav.SBP.Tracking
                      , SwiftNav.SBP.User
                      , SwiftNav.SBP.Vehicle
+                     , SwiftNav.SBP.Types
+  other-modules:       SwiftNav.SBP.Msg
+                     , SwiftNav.SBP.TH
   default-language:    Haskell2010
   hs-source-dirs:      src
   ghc-options:         -Wall
