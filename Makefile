@@ -15,7 +15,7 @@ SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
 SBP_MINOR_VERSION := $(word 2, $(subst ., , $(SBP_VERSION)))
 SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
 
-.PHONY: help docs pdf html test release dist silly all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-generator deps-haskell gen-haskell test-haskell verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell mapping
+.PHONY: help docs pdf html test release dist silly all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-haskell gen-haskell test-haskell haskell deps-protobuf gen-protobuf test-protobuf verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-protobuf mapping
 
 # Functions
 define announce-begin
@@ -48,46 +48,50 @@ help:
 	@echo "  python    to make Python bindings"
 	@echo "  haskell   to make Haskell bindings"
 	@echo "  java      to make Java bindings"
+	@echo "  protobuf  to make Protocol Buffer bindings"
 	@echo "  release   to handle some release tasks"
 	@echo "  test      to run all tests"
 	@echo
 
-all: deps-generator c python javascript java docs haskell
-docs: verify-prereq-docs deps-generator pdf html
+all: c python javascript java docs haskell protobuf
+docs: verify-prereq-docs pdf html
 
 c:          deps-c          gen-c          test-c
 python:     deps-python     gen-python     test-python
 javascript: deps-javascript gen-javascript test-javascript
 java:       deps-java       gen-java       test-java
 haskell:    deps-haskell    gen-haskell    test-haskell
+protobuf:   deps-protobuf   gen-protobuf   test-protobuf
 
 # Prerequisite verification
 verify-prereq-generator:
 	@command -v python 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`python\` but it's not installed. Aborting.\n\nHave you installed Python?\n"; exit 1; }
 	@command -v pip    1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pip\` but it's not installed.  Aborting.\n\nHave you installed pip?\n"; exit 1; }
 
-verify-prereq-c:
+verify-prereq-c: verify-prereq-generator
 	@command -v checkmk      1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`checkmk\` but it's not installed. Aborting.\n\nHave you installed checkmk? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v cmake        1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`cmake\` but it's not installed. Aborting.\n\nHave you installed cmake? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v pkg-config   1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pkg-config\` but it's not installed. Aborting.\n\nHave you installed pkg-config? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v doxygen      1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`doxygen\` but it's not installed. Aborting.\n\nHave you installed doxygen? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 
-verify-prereq-python:
+verify-prereq-python: verify-prereq-generator
 	@command -v python 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`python\` but it's not installed. Aborting.\n\nHave you installed Python? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
 	@command -v pip 1>/dev/null 2>/dev/null    || { echo >&2 -e "I require \`pip\` but it's not installed. Aborting.\n\nHave you installed pip? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
 	@command -v tox 1>/dev/null 2>/dev/null    || { echo >&2 -e "I require \`tox\` but it's not installed. Aborting.\n\nHave you installed tox? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
 	@command -v pandoc 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pandoc\` but it's not installed. Aborting.\n\nHave you installed pandoc? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
 
-verify-prereq-javascript:
+verify-prereq-javascript: verify-prereq-generator
 	@command -v node   1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`node\` but it's not installed. Aborting.\n\nHave you installed Node.js? See the JavaScript readme at \`javascript/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v npm    1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`npm\` but it's not installed. Aborting.\n\nHave you installed NPM? See the JavaScript readme at \`javascript/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v mocha  1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`mocha\` but it's not installed. Aborting.\n\nHave you installed mocha? See the JavaScript readme at \`javascript/README.md\` for setup instructions.\n"; exit 1; }
 
-verify-prereq-java: ;
+verify-prereq-java: verify-prereq-generator
 
-verify-prereq-haskell: ;
+verify-prereq-haskell: verify-prereq-generator
 
-verify-prereq-docs:
+verify-prereq-protobuf: verify-prereq-protobuf
+
+verify-prereq-docs: verify-prereq-generator
 	@command -v pdflatex  1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pdflatex\` but it's not installed. Aborting.\n\nHave you installed pdflatex? See the generator readme (Installing instructions) at \`generator/README.md\` for setup instructions.\n"; exit 1; }
 
 # Dependencies
@@ -105,6 +109,8 @@ deps-javascript: verify-prereq-javascript
 deps-java: verify-prereq-java
 
 deps-haskell: verify-prereq-haskell
+
+deps-protobuf: verify-prereq-protobuf
 
 # Generators
 
@@ -165,6 +171,16 @@ gen-haskell:
 					--haskell
 	$(call announce-begin,"Finished generating Haskell bindings")
 
+gen-protobuf:
+	$(call announce-begin,"Generating Protocol Buffers bindings")
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
+					-o $(SWIFTNAV_ROOT)/proto/ \
+					-r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+					--protobuf
+	$(call announce-begin,"Finished generating Protocol Buffers bindings")
+
+
 # Testers
 
 test: test-all-begin test-c test-java test-python test-haskell test-javascript test-all-end
@@ -203,6 +219,10 @@ test-haskell:
 	$(call announce-begin,"Running Haskell tests")
 	cd $(SWIFTNAV_ROOT)/haskell/ && stack build --test --allow-different-user
 	$(call announce-end,"Finished running Haskell tests")
+
+test-protobuf:
+	$(call announce-begin,"Running Protocol Buffer tests")
+	$(call announce-end,"Finished running Protocol Buffer tests")
 
 dist:
 	$(call announce-begin,"Deploying packages")

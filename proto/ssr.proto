@@ -1,0 +1,105 @@
+/*
+ * Copyright (C) 2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+syntax = "proto3";
+
+/** Ssr
+ *
+ * Precise State Space Representation (SSR) corrections format
+ */
+
+package swiftnav.sbp.ssr;
+
+import "gnss.proto";
+
+/** SSR code biases corrections for a particular satellite.
+ *
+ * Code biases are to be added to pseudorange.
+ * The corrections are conform with typical RTCMv3 MT1059 and 1065.
+ */
+message CodeBiasesContent {
+    uint32 code = 1;
+    sint32 value = 2;
+}
+
+/** SSR phase biases corrections for a particular satellite.
+ *
+ * Phase biases are to be added to carrier phase measurements.
+ * The corrections are conform with typical RTCMv3 MT1059 and 1065.
+ */
+message PhaseBiasesContent {
+    uint32 code = 1;
+    uint32 integer_indicator = 2;
+    uint32 widelane_integer_indicator = 3;
+    uint32 discontinuity_counter = 4;
+    sint32 bias = 5;
+}
+
+/** Precise orbit and clock correction
+ *
+ * The precise orbit and clock correction message is 
+ * to be applied as a delta correction to broadcast 
+ * ephemeris and is typically an equivalent to the 1060
+ * and 1066 RTCM message types
+ */
+message MsgSsrOrbitClock {
+    gnss.GpsTimeSec time = 1;
+    gnss.GnssSignal sid = 2;
+    uint32 update_interval = 3;
+    uint32 iod_ssr = 4;
+    uint32 iod = 5;
+    sint32 radial = 6;
+    sint32 along = 7;
+    sint32 cross = 8;
+    sint32 dot_radial = 9;
+    sint32 dot_along = 10;
+    sint32 dot_cross = 11;
+    sint32 c0 = 12;
+    sint32 c1 = 13;
+    sint32 c2 = 14;
+}
+
+/** Precise code biases correction
+ *
+ * The precise code biases message is to be added
+ * to the pseudorange of the corresponding signal
+ * to get corrected pseudorange. It is typically 
+ * an equivalent to the 1059 and 1065 RTCM message types
+ */
+message MsgSsrCodeBiases {
+    gnss.GpsTimeSec time = 1;
+    gnss.GnssSignal sid = 2;
+    uint32 update_interval = 3;
+    uint32 iod_ssr = 4;
+    repeated CodeBiasesContent biases = 5;
+}
+
+/** Precise phase biases correction
+ *
+ * The precise phase biases message contains the biases
+ * to be added to the carrier phase of the corresponding
+ * signal to get corrected carrier phase measurement, as 
+ * well as the satellite yaw angle to be applied to compute 
+ * the phase wind-up correction. 
+ * It is typically an equivalent to the 1265 RTCM message types
+ */
+message MsgSsrPhaseBiases {
+    gnss.GpsTimeSec time = 1;
+    gnss.GnssSignal sid = 2;
+    uint32 update_interval = 3;
+    uint32 iod_ssr = 4;
+    uint32 dispersive_bias = 5;
+    uint32 mw_consistency = 6;
+    uint32 yaw = 7;
+    sint32 yaw_rate = 8;
+    repeated PhaseBiasesContent biases = 9;
+}

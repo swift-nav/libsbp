@@ -1,0 +1,38 @@
+/*
+ * Copyright (C) 2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+syntax = "proto3";
+
+/** Ndb
+ *
+  * Messages for logging NDB events.
+ */
+
+package swiftnav.sbp.ndb;
+
+import "gnss.proto";
+
+/** Navigation DataBase Event
+ *
+ * This message is sent out when an object is stored into NDB. If needed
+ * message could also be sent out when fetching an object from NDB.
+ */
+message MsgNdbEvent {
+    uint64 recv_time = 1;
+    uint32 event = 2;
+    uint32 object_type = 3;
+    uint32 result = 4;
+    uint32 data_source = 5;
+    gnss.GnssSignal object_sid = 6;
+    gnss.GnssSignal src_sid = 7;
+    uint32 original_sender = 8;
+}
