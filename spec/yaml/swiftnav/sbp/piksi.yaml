@@ -523,6 +523,38 @@ definitions:
             fill: NetworkUsage
             desc: Usage measurement array
 
+ - MSG_CELL_MODEM_STATUS:
+    id: 0x00BE
+    short_desc: Cell modem information update message
+    desc: |
+      If a cell modem is present on a piksi device, this message
+      will be send periodically to update the host on the status
+      of the modem and its various parameters.
+      AT+CPIN? AT+CCID AT+CSQ AT+CREG? AT+CGREG? AT+COPS?
+    fields:
+      - signal_strength:
+          type: s8
+          units: dBm
+          desc: Received cell signal strength in dBm, zero translates to unknown
+      - signal_error_rate:
+          type: float
+          desc: BER as reported by the modem, zero translates to unknown
+      - sim_id:
+          type: string
+          size: 24
+          desc: The unique ID of sim card installed (ICCID or other similiar)
+      - network_operator:
+          type: string
+          size: 28
+          desc: Currently reported network operator
+      - sim_status:
+          type: string
+          desc: Current status of sim whether inserted, ready, etc.
+      - unspecified:
+          type: array
+          fill: u8
+          desc: Unspecified data TBD for this schema
+
  - MSG_SPECAN_DEP:
     id: 0x0050
     short_desc: Deprecated
