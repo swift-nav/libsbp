@@ -46,13 +46,13 @@ msgOdometry = 0x0903
 -- user-defined sources of this message  which are labeled arbitrarily  source
 -- 0 through 3.
 data MsgOdometry = MsgOdometry
-  { _msgOdometry_tow    :: !uint32
+  { _msgOdometry_tow    :: !Word32
     -- ^ Time field representing either milliseconds in the GPS Week or local CPU
     -- time from the producing system in milliseconds.  See the tow_source flag
     -- for the exact source of this timestamp.
-  , _msgOdometry_velocity :: !sint32
+  , _msgOdometry_velocity :: !Int32
     -- ^ The signed forward component of vehicle velocity.
-  , _msgOdometry_flags  :: !uint32
+  , _msgOdometry_flags  :: !Word8
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 

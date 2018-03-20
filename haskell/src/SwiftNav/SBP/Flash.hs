@@ -49,13 +49,13 @@ msgFlashProgram = 0x00E6
 -- if the maximum write size is exceeded. Note that the sector-containing
 -- addresses must be erased before addresses can be programmed.
 data MsgFlashProgram = MsgFlashProgram
-  { _msgFlashProgram_target   :: !uint32
+  { _msgFlashProgram_target   :: !Word8
     -- ^ Target flags
-  , _msgFlashProgram_addr_start :: !repeated uint32
+  , _msgFlashProgram_addr_start :: ![Word8]
     -- ^ Starting address offset to program
-  , _msgFlashProgram_addr_len :: !uint32
+  , _msgFlashProgram_addr_len :: !Word8
     -- ^ Length of set of addresses to program, counting up from starting address
-  , _msgFlashProgram_data     :: !repeated uint32
+  , _msgFlashProgram_data     :: ![Word8]
     -- ^ Data to program addresses with, with length N=addr_len
   } deriving ( Show, Read, Eq )
 
@@ -87,7 +87,7 @@ msgFlashDone = 0x00E0
 -- MSG_FLASH_READ_REQ, or MSG_FLASH_PROGRAM, may return this message on
 -- failure.
 data MsgFlashDone = MsgFlashDone
-  { _msgFlashDone_response :: !uint32
+  { _msgFlashDone_response :: !Word8
     -- ^ Response flags
   } deriving ( Show, Read, Eq )
 
@@ -115,11 +115,11 @@ msgFlashReadReq = 0x00E7
 -- exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the allowed
 -- range.
 data MsgFlashReadReq = MsgFlashReadReq
-  { _msgFlashReadReq_target   :: !uint32
+  { _msgFlashReadReq_target   :: !Word8
     -- ^ Target flags
-  , _msgFlashReadReq_addr_start :: !repeated uint32
+  , _msgFlashReadReq_addr_start :: ![Word8]
     -- ^ Starting address offset to read from
-  , _msgFlashReadReq_addr_len :: !uint32
+  , _msgFlashReadReq_addr_len :: !Word8
     -- ^ Length of set of addresses to read, counting up from starting address
   } deriving ( Show, Read, Eq )
 
@@ -151,11 +151,11 @@ msgFlashReadResp = 0x00E1
 -- exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the allowed
 -- range.
 data MsgFlashReadResp = MsgFlashReadResp
-  { _msgFlashReadResp_target   :: !uint32
+  { _msgFlashReadResp_target   :: !Word8
     -- ^ Target flags
-  , _msgFlashReadResp_addr_start :: !repeated uint32
+  , _msgFlashReadResp_addr_start :: ![Word8]
     -- ^ Starting address offset to read from
-  , _msgFlashReadResp_addr_len :: !uint32
+  , _msgFlashReadResp_addr_len :: !Word8
     -- ^ Length of set of addresses to read, counting up from starting address
   } deriving ( Show, Read, Eq )
 
@@ -185,9 +185,9 @@ msgFlashErase = 0x00E2
 -- message containing the return code - FLASH_OK (0) on success or
 -- FLASH_INVALID_FLASH (1) if the flash specified is invalid.
 data MsgFlashErase = MsgFlashErase
-  { _msgFlashErase_target   :: !uint32
+  { _msgFlashErase_target   :: !Word8
     -- ^ Target flags
-  , _msgFlashErase_sector_num :: !uint32
+  , _msgFlashErase_sector_num :: !Word32
     -- ^ Flash sector number to erase (0-11 for the STM, 0-15 for the M25)
   } deriving ( Show, Read, Eq )
 
@@ -213,7 +213,7 @@ msgStmFlashLockSector = 0x00E3
 -- The flash lock message locks a sector of the STM flash memory. The device
 -- replies with a MSG_FLASH_DONE message.
 data MsgStmFlashLockSector = MsgStmFlashLockSector
-  { _msgStmFlashLockSector_sector :: !uint32
+  { _msgStmFlashLockSector_sector :: !Word32
     -- ^ Flash sector number to lock
   } deriving ( Show, Read, Eq )
 
@@ -237,7 +237,7 @@ msgStmFlashUnlockSector = 0x00E4
 -- The flash unlock message unlocks a sector of the STM flash memory. The
 -- device replies with a MSG_FLASH_DONE message.
 data MsgStmFlashUnlockSector = MsgStmFlashUnlockSector
-  { _msgStmFlashUnlockSector_sector :: !uint32
+  { _msgStmFlashUnlockSector_sector :: !Word32
     -- ^ Flash sector number to unlock
   } deriving ( Show, Read, Eq )
 
@@ -283,7 +283,7 @@ msgStmUniqueIdResp = 0x00E5
 -- ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
 -- MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload..
 data MsgStmUniqueIdResp = MsgStmUniqueIdResp
-  { _msgStmUniqueIdResp_stm_id :: !repeated uint32
+  { _msgStmUniqueIdResp_stm_id :: ![Word8]
     -- ^ Device unique ID
   } deriving ( Show, Read, Eq )
 
@@ -307,7 +307,7 @@ msgM25FlashWriteStatus = 0x00F3
 -- The flash status message writes to the 8-bit M25 flash status register. The
 -- device replies with a MSG_FLASH_DONE message.
 data MsgM25FlashWriteStatus = MsgM25FlashWriteStatus
-  { _msgM25FlashWriteStatus_status :: !repeated uint32
+  { _msgM25FlashWriteStatus_status :: ![Word8]
     -- ^ Byte to write to the M25 flash status register
   } deriving ( Show, Read, Eq )
 

@@ -73,10 +73,10 @@ def to_type(f, type_map=TYPE_MAP):
 def to_title(s):
     return s.title()
 
-JENV.filters['to_identifier'] = to_identifier
-JENV.filters['to_type'] = to_type
-JENV.filters['to_comment'] = to_comment
-JENV.filters['to_title'] = to_title
+JENV.filters['pb_to_identifier'] = to_identifier
+JENV.filters['pb_to_type'] = to_type
+JENV.filters['pb_to_comment'] = to_comment
+JENV.filters['pb_to_title'] = to_title
 
 def render_source(output_dir, package_spec):
     """

@@ -12,9 +12,9 @@
 
 syntax = "proto3";
 
-/** (((name|to_title)))
+/** (((name|pb_to_title)))
  *
- (((description|to_comment)))
+ (((description|pb_to_comment)))
  */
 
 package (((package)));
@@ -27,12 +27,12 @@ import "(((include))).proto";
 
 /** (((message.short_desc)))
  *
-(((message.desc|to_comment)))
+(((message.desc|pb_to_comment)))
  */
-message (((message.identifier|to_identifier))) {
+message (((message.identifier|pb_to_identifier))) {
 ((*- for field in message.fields *))
 ((*- if not 'reserved' in field.identifier *))
-    (((field|to_type))) (((field.identifier))) = (((loop.index)));
+    (((field|pb_to_type))) (((field.identifier))) = (((loop.index)));
 ((*- endif *))
 ((*- endfor *))
 }

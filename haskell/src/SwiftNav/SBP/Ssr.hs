@@ -41,9 +41,9 @@ import SwiftNav.SBP.Gnss
 -- Code biases are to be added to pseudorange. The corrections are conform with
 -- typical RTCMv3 MT1059 and 1065.
 data CodeBiasesContent = CodeBiasesContent
-  { _codeBiasesContent_code :: !uint32
+  { _codeBiasesContent_code :: !Word8
     -- ^ Signal constellation, band and code
-  , _codeBiasesContent_value :: !sint32
+  , _codeBiasesContent_value :: !Int16
     -- ^ Code bias value
   } deriving ( Show, Read, Eq )
 
@@ -65,16 +65,16 @@ $(makeLenses ''CodeBiasesContent)
 -- Phase biases are to be added to carrier phase measurements. The corrections
 -- are conform with typical RTCMv3 MT1059 and 1065.
 data PhaseBiasesContent = PhaseBiasesContent
-  { _phaseBiasesContent_code                     :: !uint32
+  { _phaseBiasesContent_code                     :: !Word8
     -- ^ Signal constellation, band and code
-  , _phaseBiasesContent_integer_indicator        :: !uint32
+  , _phaseBiasesContent_integer_indicator        :: !Word8
     -- ^ Indicator for integer property
-  , _phaseBiasesContent_widelane_integer_indicator :: !uint32
+  , _phaseBiasesContent_widelane_integer_indicator :: !Word8
     -- ^ Indicator for two groups of Wide-Lane(s) integer property
-  , _phaseBiasesContent_discontinuity_counter    :: !uint32
+  , _phaseBiasesContent_discontinuity_counter    :: !Word8
     -- ^ Signal phase discontinuity counter.  Increased for every discontinuity
     -- in phase.
-  , _phaseBiasesContent_bias                     :: !sint32
+  , _phaseBiasesContent_bias                     :: !Int32
     -- ^ Phase bias for specified signal
   } deriving ( Show, Read, Eq )
 
@@ -106,34 +106,34 @@ msgSsrOrbitClock = 0x05DC
 -- correction to broadcast  ephemeris and is typically an equivalent to the
 -- 1060 and 1066 RTCM message types
 data MsgSsrOrbitClock = MsgSsrOrbitClock
-  { _msgSsrOrbitClock_time          :: !gnss.GpsTimeSec
+  { _msgSsrOrbitClock_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
-  , _msgSsrOrbitClock_sid           :: !gnss.GnssSignal
+  , _msgSsrOrbitClock_sid           :: !GnssSignal
     -- ^ GNSS signal identifier (16 bit)
-  , _msgSsrOrbitClock_update_interval :: !uint32
+  , _msgSsrOrbitClock_update_interval :: !Word8
     -- ^ Update interval between consecutive corrections
-  , _msgSsrOrbitClock_iod_ssr       :: !uint32
+  , _msgSsrOrbitClock_iod_ssr       :: !Word8
     -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
     -- indicate a change in the SSR  generating configuration
-  , _msgSsrOrbitClock_iod           :: !uint32
+  , _msgSsrOrbitClock_iod           :: !Word8
     -- ^ Issue of broadcast ephemeris data
-  , _msgSsrOrbitClock_radial        :: !sint32
+  , _msgSsrOrbitClock_radial        :: !Int32
     -- ^ Orbit radial delta correction
-  , _msgSsrOrbitClock_along         :: !sint32
+  , _msgSsrOrbitClock_along         :: !Int32
     -- ^ Orbit along delta correction
-  , _msgSsrOrbitClock_cross         :: !sint32
+  , _msgSsrOrbitClock_cross         :: !Int32
     -- ^ Orbit along delta correction
-  , _msgSsrOrbitClock_dot_radial    :: !sint32
+  , _msgSsrOrbitClock_dot_radial    :: !Int32
     -- ^ Velocity of orbit radial delta correction
-  , _msgSsrOrbitClock_dot_along     :: !sint32
+  , _msgSsrOrbitClock_dot_along     :: !Int32
     -- ^ Velocity of orbit along delta correction
-  , _msgSsrOrbitClock_dot_cross     :: !sint32
+  , _msgSsrOrbitClock_dot_cross     :: !Int32
     -- ^ Velocity of orbit cross delta correction
-  , _msgSsrOrbitClock_c0            :: !sint32
+  , _msgSsrOrbitClock_c0            :: !Int32
     -- ^ C0 polynomial coefficient for correction of broadcast satellite clock
-  , _msgSsrOrbitClock_c1            :: !sint32
+  , _msgSsrOrbitClock_c1            :: !Int32
     -- ^ C1 polynomial coefficient for correction of broadcast satellite clock
-  , _msgSsrOrbitClock_c2            :: !sint32
+  , _msgSsrOrbitClock_c2            :: !Int32
     -- ^ C2 polynomial coefficient for correction of broadcast satellite clock
   } deriving ( Show, Read, Eq )
 
@@ -184,16 +184,16 @@ msgSsrCodeBiases = 0x05E1
 -- corresponding signal to get corrected pseudorange. It is typically  an
 -- equivalent to the 1059 and 1065 RTCM message types
 data MsgSsrCodeBiases = MsgSsrCodeBiases
-  { _msgSsrCodeBiases_time          :: !gnss.GpsTimeSec
+  { _msgSsrCodeBiases_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
-  , _msgSsrCodeBiases_sid           :: !gnss.GnssSignal
+  , _msgSsrCodeBiases_sid           :: !GnssSignal
     -- ^ GNSS signal identifier (16 bit)
-  , _msgSsrCodeBiases_update_interval :: !uint32
+  , _msgSsrCodeBiases_update_interval :: !Word8
     -- ^ Update interval between consecutive corrections
-  , _msgSsrCodeBiases_iod_ssr       :: !uint32
+  , _msgSsrCodeBiases_iod_ssr       :: !Word8
     -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
     -- indicate a change in the SSR  generating configuration
-  , _msgSsrCodeBiases_biases        :: !repeated CodeBiasesContent
+  , _msgSsrCodeBiases_biases        :: ![CodeBiasesContent]
     -- ^ Code biases for the different satellite signals
   } deriving ( Show, Read, Eq )
 
@@ -228,24 +228,24 @@ msgSsrPhaseBiases = 0x05E6
 -- the phase wind-up correction.  It is typically an equivalent to the 1265
 -- RTCM message types
 data MsgSsrPhaseBiases = MsgSsrPhaseBiases
-  { _msgSsrPhaseBiases_time          :: !gnss.GpsTimeSec
+  { _msgSsrPhaseBiases_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
-  , _msgSsrPhaseBiases_sid           :: !gnss.GnssSignal
+  , _msgSsrPhaseBiases_sid           :: !GnssSignal
     -- ^ GNSS signal identifier (16 bit)
-  , _msgSsrPhaseBiases_update_interval :: !uint32
+  , _msgSsrPhaseBiases_update_interval :: !Word8
     -- ^ Update interval between consecutive corrections
-  , _msgSsrPhaseBiases_iod_ssr       :: !uint32
+  , _msgSsrPhaseBiases_iod_ssr       :: !Word8
     -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
     -- indicate a change in the SSR  generating configuration
-  , _msgSsrPhaseBiases_dispersive_bias :: !uint32
+  , _msgSsrPhaseBiases_dispersive_bias :: !Word8
     -- ^ Indicator for the dispersive phase biases property.
-  , _msgSsrPhaseBiases_mw_consistency :: !uint32
+  , _msgSsrPhaseBiases_mw_consistency :: !Word8
     -- ^ Consistency indicator for Melbourne-Wubbena linear combinations
-  , _msgSsrPhaseBiases_yaw           :: !uint32
+  , _msgSsrPhaseBiases_yaw           :: !Word16
     -- ^ Satellite yaw angle
-  , _msgSsrPhaseBiases_yaw_rate      :: !sint32
+  , _msgSsrPhaseBiases_yaw_rate      :: !Int8
     -- ^ Satellite yaw angle rate
-  , _msgSsrPhaseBiases_biases        :: !repeated PhaseBiasesContent
+  , _msgSsrPhaseBiases_biases        :: ![PhaseBiasesContent]
     -- ^ Phase biases corrections for a satellite being tracked.
   } deriving ( Show, Read, Eq )
 

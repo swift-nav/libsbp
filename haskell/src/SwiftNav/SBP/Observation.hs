@@ -40,9 +40,9 @@ import SwiftNav.SBP.Gnss
 --
 -- Header of a GNSS observation message.
 data ObservationHeader = ObservationHeader
-  { _observationHeader_t   :: !gnss.GpsTime
+  { _observationHeader_t   :: !GpsTime
     -- ^ GNSS time of this observation
-  , _observationHeader_n_obs :: !uint32
+  , _observationHeader_n_obs :: !Word8
     -- ^ Total number of observations. First nibble is the size of the sequence
     -- (n), second nibble is the zero-indexed counter (ith packet of n)
   } deriving ( Show, Read, Eq )
@@ -66,9 +66,9 @@ $(makeLenses ''ObservationHeader)
 -- Q16.8 layout, i.e. 16-bits of whole doppler and 8-bits of fractional
 -- doppler. This doppler is defined as positive for approaching satellites.
 data Doppler = Doppler
-  { _doppler_i :: !sint32
+  { _doppler_i :: !Int16
     -- ^ Doppler whole Hz
-  , _doppler_f :: !uint32
+  , _doppler_f :: !Word8
     -- ^ Doppler fractional part
   } deriving ( Show, Read, Eq )
 
@@ -91,26 +91,26 @@ $(makeLenses ''Doppler)
 -- observations are interoperable with 3rd party receivers and conform with
 -- typical RTCMv3 GNSS observations.
 data PackedObsContent = PackedObsContent
-  { _packedObsContent_P   :: !uint32
+  { _packedObsContent_P   :: !Word32
     -- ^ Pseudorange observation
-  , _packedObsContent_L   :: !gnss.CarrierPhase
+  , _packedObsContent_L   :: !CarrierPhase
     -- ^ Carrier phase observation with typical sign convention.
   , _packedObsContent_D   :: !Doppler
     -- ^ Doppler observation with typical sign convention.
-  , _packedObsContent_cn0 :: !uint32
+  , _packedObsContent_cn0 :: !Word8
     -- ^ Carrier-to-Noise density.  Zero implies invalid cn0.
-  , _packedObsContent_lock :: !uint32
+  , _packedObsContent_lock :: !Word8
     -- ^ Lock timer. This value gives an indication of the time for which a
     -- signal has maintained continuous phase lock. Whenever a signal has lost
     -- and regained lock, this value is reset to zero. It is encoded according
     -- to DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values
     -- range from 0 to 15 and the most significant nibble is reserved for
     -- future use.
-  , _packedObsContent_flags :: !uint32
+  , _packedObsContent_flags :: !Word8
     -- ^ Measurement status flags. A bit field of flags providing the status of
     -- this observation.  If this field is 0 it means only the Cn0 estimate for
     -- the signal is valid.
-  , _packedObsContent_sid :: !gnss.GnssSignal
+  , _packedObsContent_sid :: !GnssSignal
     -- ^ GNSS signal identifier (16 bit)
   } deriving ( Show, Read, Eq )
 
@@ -151,7 +151,7 @@ msgObs = 0x004A
 data MsgObs = MsgObs
   { _msgObs_header :: !ObservationHeader
     -- ^ Header of a GPS observation message
-  , _msgObs_obs  :: !repeated PackedObsContent
+  , _msgObs_obs  :: ![PackedObsContent]
     -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
   } deriving ( Show, Read, Eq )
 
@@ -179,11 +179,11 @@ msgBasePosLlh = 0x0044
 -- required to be a high-accuracy surveyed location of the base station. Any
 -- error here will result in an error in the pseudo-absolute position output.
 data MsgBasePosLlh = MsgBasePosLlh
-  { _msgBasePosLlh_lat  :: !double
+  { _msgBasePosLlh_lat  :: !Double
     -- ^ Latitude
-  , _msgBasePosLlh_lon  :: !double
+  , _msgBasePosLlh_lon  :: !Double
     -- ^ Longitude
-  , _msgBasePosLlh_height :: !double
+  , _msgBasePosLlh_height :: !Double
     -- ^ Height
   } deriving ( Show, Read, Eq )
 
@@ -214,11 +214,11 @@ msgBasePosEcef = 0x0048
 -- accuracy surveyed location of the base station. Any error here will result
 -- in an error in the pseudo-absolute position output.
 data MsgBasePosEcef = MsgBasePosEcef
-  { _msgBasePosEcef_x :: !double
+  { _msgBasePosEcef_x :: !Double
     -- ^ ECEF X coodinate
-  , _msgBasePosEcef_y :: !double
+  , _msgBasePosEcef_y :: !Double
     -- ^ ECEF Y coordinate
-  , _msgBasePosEcef_z :: !double
+  , _msgBasePosEcef_z :: !Double
     -- ^ ECEF Z coordinate
   } deriving ( Show, Read, Eq )
 
@@ -239,17 +239,17 @@ $(makeJSON "_msgBasePosEcef_" ''MsgBasePosEcef)
 $(makeLenses ''MsgBasePosEcef)
 
 data EphemerisCommonContent = EphemerisCommonContent
-  { _ephemerisCommonContent_sid        :: !gnss.GnssSignal
+  { _ephemerisCommonContent_sid        :: !GnssSignal
     -- ^ GNSS signal identifier (16 bit)
-  , _ephemerisCommonContent_toe        :: !gnss.GpsTimeSec
+  , _ephemerisCommonContent_toe        :: !GpsTimeSec
     -- ^ Time of Ephemerides
-  , _ephemerisCommonContent_ura        :: !double
+  , _ephemerisCommonContent_ura        :: !Double
     -- ^ User Range Accuracy
-  , _ephemerisCommonContent_fit_interval :: !uint32
+  , _ephemerisCommonContent_fit_interval :: !Word32
     -- ^ Curve fit interval
-  , _ephemerisCommonContent_valid      :: !uint32
+  , _ephemerisCommonContent_valid      :: !Word8
     -- ^ Status of ephemeris, 1 = valid, 0 = invalid
-  , _ephemerisCommonContent_health_bits :: !uint32
+  , _ephemerisCommonContent_health_bits :: !Word8
     -- ^ Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
     -- = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
   } deriving ( Show, Read, Eq )
@@ -280,13 +280,13 @@ data EphemerisCommonContentDepA = EphemerisCommonContentDepA
     -- ^ GNSS signal identifier
   , _ephemerisCommonContentDepA_toe        :: !GpsTimeDep
     -- ^ Time of Ephemerides
-  , _ephemerisCommonContentDepA_ura        :: !double
+  , _ephemerisCommonContentDepA_ura        :: !Double
     -- ^ User Range Accuracy
-  , _ephemerisCommonContentDepA_fit_interval :: !uint32
+  , _ephemerisCommonContentDepA_fit_interval :: !Word32
     -- ^ Curve fit interval
-  , _ephemerisCommonContentDepA_valid      :: !uint32
+  , _ephemerisCommonContentDepA_valid      :: !Word8
     -- ^ Status of ephemeris, 1 = valid, 0 = invalid
-  , _ephemerisCommonContentDepA_health_bits :: !uint32
+  , _ephemerisCommonContentDepA_health_bits :: !Word8
     -- ^ Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
     -- = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
   } deriving ( Show, Read, Eq )
@@ -324,53 +324,53 @@ msgEphemerisGpsDepE = 0x0081
 data MsgEphemerisGpsDepE = MsgEphemerisGpsDepE
   { _msgEphemerisGpsDepE_common :: !EphemerisCommonContentDepA
     -- ^ Values common for all ephemeris types
-  , _msgEphemerisGpsDepE_tgd    :: !double
+  , _msgEphemerisGpsDepE_tgd    :: !Double
     -- ^ Group delay differential between L1 and L2
-  , _msgEphemerisGpsDepE_c_rs   :: !double
+  , _msgEphemerisGpsDepE_c_rs   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the orbit radius
-  , _msgEphemerisGpsDepE_c_rc   :: !double
+  , _msgEphemerisGpsDepE_c_rc   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
-  , _msgEphemerisGpsDepE_c_uc   :: !double
+  , _msgEphemerisGpsDepE_c_uc   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the argument of
     -- latitude
-  , _msgEphemerisGpsDepE_c_us   :: !double
+  , _msgEphemerisGpsDepE_c_us   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the argument of
     -- latitude
-  , _msgEphemerisGpsDepE_c_ic   :: !double
+  , _msgEphemerisGpsDepE_c_ic   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisGpsDepE_c_is   :: !double
+  , _msgEphemerisGpsDepE_c_is   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisGpsDepE_dn     :: !double
+  , _msgEphemerisGpsDepE_dn     :: !Double
     -- ^ Mean motion difference
-  , _msgEphemerisGpsDepE_m0     :: !double
+  , _msgEphemerisGpsDepE_m0     :: !Double
     -- ^ Mean anomaly at reference time
-  , _msgEphemerisGpsDepE_ecc    :: !double
+  , _msgEphemerisGpsDepE_ecc    :: !Double
     -- ^ Eccentricity of satellite orbit
-  , _msgEphemerisGpsDepE_sqrta  :: !double
+  , _msgEphemerisGpsDepE_sqrta  :: !Double
     -- ^ Square root of the semi-major axis of orbit
-  , _msgEphemerisGpsDepE_omega0 :: !double
+  , _msgEphemerisGpsDepE_omega0 :: !Double
     -- ^ Longitude of ascending node of orbit plane at weekly epoch
-  , _msgEphemerisGpsDepE_omegadot :: !double
+  , _msgEphemerisGpsDepE_omegadot :: !Double
     -- ^ Rate of right ascension
-  , _msgEphemerisGpsDepE_w      :: !double
+  , _msgEphemerisGpsDepE_w      :: !Double
     -- ^ Argument of perigee
-  , _msgEphemerisGpsDepE_inc    :: !double
+  , _msgEphemerisGpsDepE_inc    :: !Double
     -- ^ Inclination
-  , _msgEphemerisGpsDepE_inc_dot :: !double
+  , _msgEphemerisGpsDepE_inc_dot :: !Double
     -- ^ Inclination first derivative
-  , _msgEphemerisGpsDepE_af0    :: !double
+  , _msgEphemerisGpsDepE_af0    :: !Double
     -- ^ Polynomial clock correction coefficient (clock bias)
-  , _msgEphemerisGpsDepE_af1    :: !double
+  , _msgEphemerisGpsDepE_af1    :: !Double
     -- ^ Polynomial clock correction coefficient (clock drift)
-  , _msgEphemerisGpsDepE_af2    :: !double
+  , _msgEphemerisGpsDepE_af2    :: !Double
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
   , _msgEphemerisGpsDepE_toc    :: !GpsTimeDep
     -- ^ Clock reference
-  , _msgEphemerisGpsDepE_iode   :: !uint32
+  , _msgEphemerisGpsDepE_iode   :: !Word8
     -- ^ Issue of ephemeris data
-  , _msgEphemerisGpsDepE_iodc   :: !uint32
+  , _msgEphemerisGpsDepE_iodc   :: !Word16
     -- ^ Issue of clock data
   } deriving ( Show, Read, Eq )
 
@@ -442,53 +442,53 @@ msgEphemerisGps = 0x0086
 data MsgEphemerisGps = MsgEphemerisGps
   { _msgEphemerisGps_common :: !EphemerisCommonContent
     -- ^ Values common for all ephemeris types
-  , _msgEphemerisGps_tgd    :: !double
+  , _msgEphemerisGps_tgd    :: !Double
     -- ^ Group delay differential between L1 and L2
-  , _msgEphemerisGps_c_rs   :: !double
+  , _msgEphemerisGps_c_rs   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the orbit radius
-  , _msgEphemerisGps_c_rc   :: !double
+  , _msgEphemerisGps_c_rc   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
-  , _msgEphemerisGps_c_uc   :: !double
+  , _msgEphemerisGps_c_uc   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the argument of
     -- latitude
-  , _msgEphemerisGps_c_us   :: !double
+  , _msgEphemerisGps_c_us   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the argument of
     -- latitude
-  , _msgEphemerisGps_c_ic   :: !double
+  , _msgEphemerisGps_c_ic   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisGps_c_is   :: !double
+  , _msgEphemerisGps_c_is   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisGps_dn     :: !double
+  , _msgEphemerisGps_dn     :: !Double
     -- ^ Mean motion difference
-  , _msgEphemerisGps_m0     :: !double
+  , _msgEphemerisGps_m0     :: !Double
     -- ^ Mean anomaly at reference time
-  , _msgEphemerisGps_ecc    :: !double
+  , _msgEphemerisGps_ecc    :: !Double
     -- ^ Eccentricity of satellite orbit
-  , _msgEphemerisGps_sqrta  :: !double
+  , _msgEphemerisGps_sqrta  :: !Double
     -- ^ Square root of the semi-major axis of orbit
-  , _msgEphemerisGps_omega0 :: !double
+  , _msgEphemerisGps_omega0 :: !Double
     -- ^ Longitude of ascending node of orbit plane at weekly epoch
-  , _msgEphemerisGps_omegadot :: !double
+  , _msgEphemerisGps_omegadot :: !Double
     -- ^ Rate of right ascension
-  , _msgEphemerisGps_w      :: !double
+  , _msgEphemerisGps_w      :: !Double
     -- ^ Argument of perigee
-  , _msgEphemerisGps_inc    :: !double
+  , _msgEphemerisGps_inc    :: !Double
     -- ^ Inclination
-  , _msgEphemerisGps_inc_dot :: !double
+  , _msgEphemerisGps_inc_dot :: !Double
     -- ^ Inclination first derivative
-  , _msgEphemerisGps_af0    :: !double
+  , _msgEphemerisGps_af0    :: !Double
     -- ^ Polynomial clock correction coefficient (clock bias)
-  , _msgEphemerisGps_af1    :: !double
+  , _msgEphemerisGps_af1    :: !Double
     -- ^ Polynomial clock correction coefficient (clock drift)
-  , _msgEphemerisGps_af2    :: !double
+  , _msgEphemerisGps_af2    :: !Double
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
-  , _msgEphemerisGps_toc    :: !gnss.GpsTimeSec
+  , _msgEphemerisGps_toc    :: !GpsTimeSec
     -- ^ Clock reference
-  , _msgEphemerisGps_iode   :: !uint32
+  , _msgEphemerisGps_iode   :: !Word8
     -- ^ Issue of ephemeris data
-  , _msgEphemerisGps_iodc   :: !uint32
+  , _msgEphemerisGps_iodc   :: !Word16
     -- ^ Issue of clock data
   } deriving ( Show, Read, Eq )
 
@@ -554,15 +554,15 @@ msgEphemerisSbasDepA = 0x0082
 data MsgEphemerisSbasDepA = MsgEphemerisSbasDepA
   { _msgEphemerisSbasDepA_common :: !EphemerisCommonContentDepA
     -- ^ Values common for all ephemeris types
-  , _msgEphemerisSbasDepA_pos  :: !repeated double
+  , _msgEphemerisSbasDepA_pos  :: ![Double]
     -- ^ Position of the GEO at time toe
-  , _msgEphemerisSbasDepA_vel  :: !repeated double
+  , _msgEphemerisSbasDepA_vel  :: ![Double]
     -- ^ Velocity of the GEO at time toe
-  , _msgEphemerisSbasDepA_acc  :: !repeated double
+  , _msgEphemerisSbasDepA_acc  :: ![Double]
     -- ^ Acceleration of the GEO at time toe
-  , _msgEphemerisSbasDepA_a_gf0 :: !double
+  , _msgEphemerisSbasDepA_a_gf0 :: !Double
     -- ^ Time offset of the GEO clock w.r.t. SBAS Network Time
-  , _msgEphemerisSbasDepA_a_gf1 :: !double
+  , _msgEphemerisSbasDepA_a_gf1 :: !Double
     -- ^ Drift of the GEO clock w.r.t. SBAS Network Time
   } deriving ( Show, Read, Eq )
 
@@ -600,15 +600,15 @@ msgEphemerisGloDepA = 0x0083
 data MsgEphemerisGloDepA = MsgEphemerisGloDepA
   { _msgEphemerisGloDepA_common :: !EphemerisCommonContentDepA
     -- ^ Values common for all ephemeris types
-  , _msgEphemerisGloDepA_gamma :: !double
+  , _msgEphemerisGloDepA_gamma :: !Double
     -- ^ Relative deviation of predicted carrier frequency from nominal
-  , _msgEphemerisGloDepA_tau  :: !double
+  , _msgEphemerisGloDepA_tau  :: !Double
     -- ^ Correction to the SV time
-  , _msgEphemerisGloDepA_pos  :: !repeated double
+  , _msgEphemerisGloDepA_pos  :: ![Double]
     -- ^ Position of the SV at tb in PZ-90.02 coordinates system
-  , _msgEphemerisGloDepA_vel  :: !repeated double
+  , _msgEphemerisGloDepA_vel  :: ![Double]
     -- ^ Velocity vector of the SV at tb in PZ-90.02 coordinates system
-  , _msgEphemerisGloDepA_acc  :: !repeated double
+  , _msgEphemerisGloDepA_acc  :: ![Double]
     -- ^ Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
   } deriving ( Show, Read, Eq )
 
@@ -640,15 +640,15 @@ msgEphemerisSbas = 0x0084
 data MsgEphemerisSbas = MsgEphemerisSbas
   { _msgEphemerisSbas_common :: !EphemerisCommonContent
     -- ^ Values common for all ephemeris types
-  , _msgEphemerisSbas_pos  :: !repeated double
+  , _msgEphemerisSbas_pos  :: ![Double]
     -- ^ Position of the GEO at time toe
-  , _msgEphemerisSbas_vel  :: !repeated double
+  , _msgEphemerisSbas_vel  :: ![Double]
     -- ^ Velocity of the GEO at time toe
-  , _msgEphemerisSbas_acc  :: !repeated double
+  , _msgEphemerisSbas_acc  :: ![Double]
     -- ^ Acceleration of the GEO at time toe
-  , _msgEphemerisSbas_a_gf0 :: !double
+  , _msgEphemerisSbas_a_gf0 :: !Double
     -- ^ Time offset of the GEO clock w.r.t. SBAS Network Time
-  , _msgEphemerisSbas_a_gf1 :: !double
+  , _msgEphemerisSbas_a_gf1 :: !Double
     -- ^ Drift of the GEO clock w.r.t. SBAS Network Time
   } deriving ( Show, Read, Eq )
 
@@ -686,15 +686,15 @@ msgEphemerisGloDepB = 0x0085
 data MsgEphemerisGloDepB = MsgEphemerisGloDepB
   { _msgEphemerisGloDepB_common :: !EphemerisCommonContent
     -- ^ Values common for all ephemeris types
-  , _msgEphemerisGloDepB_gamma :: !double
+  , _msgEphemerisGloDepB_gamma :: !Double
     -- ^ Relative deviation of predicted carrier frequency from nominal
-  , _msgEphemerisGloDepB_tau  :: !double
+  , _msgEphemerisGloDepB_tau  :: !Double
     -- ^ Correction to the SV time
-  , _msgEphemerisGloDepB_pos  :: !repeated double
+  , _msgEphemerisGloDepB_pos  :: ![Double]
     -- ^ Position of the SV at tb in PZ-90.02 coordinates system
-  , _msgEphemerisGloDepB_vel  :: !repeated double
+  , _msgEphemerisGloDepB_vel  :: ![Double]
     -- ^ Velocity vector of the SV at tb in PZ-90.02 coordinates system
-  , _msgEphemerisGloDepB_acc  :: !repeated double
+  , _msgEphemerisGloDepB_acc  :: ![Double]
     -- ^ Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
   } deriving ( Show, Read, Eq )
 
@@ -732,19 +732,19 @@ msgEphemerisGloDepC = 0x0087
 data MsgEphemerisGloDepC = MsgEphemerisGloDepC
   { _msgEphemerisGloDepC_common :: !EphemerisCommonContent
     -- ^ Values common for all ephemeris types
-  , _msgEphemerisGloDepC_gamma :: !double
+  , _msgEphemerisGloDepC_gamma :: !Double
     -- ^ Relative deviation of predicted carrier frequency from nominal
-  , _msgEphemerisGloDepC_tau  :: !double
+  , _msgEphemerisGloDepC_tau  :: !Double
     -- ^ Correction to the SV time
-  , _msgEphemerisGloDepC_d_tau :: !double
+  , _msgEphemerisGloDepC_d_tau :: !Double
     -- ^ Equipment delay between L1 and L2
-  , _msgEphemerisGloDepC_pos  :: !repeated double
+  , _msgEphemerisGloDepC_pos  :: ![Double]
     -- ^ Position of the SV at tb in PZ-90.02 coordinates system
-  , _msgEphemerisGloDepC_vel  :: !repeated double
+  , _msgEphemerisGloDepC_vel  :: ![Double]
     -- ^ Velocity vector of the SV at tb in PZ-90.02 coordinates system
-  , _msgEphemerisGloDepC_acc  :: !repeated double
+  , _msgEphemerisGloDepC_acc  :: ![Double]
     -- ^ Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-  , _msgEphemerisGloDepC_fcn  :: !uint32
+  , _msgEphemerisGloDepC_fcn  :: !Word8
     -- ^ Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
   } deriving ( Show, Read, Eq )
 
@@ -786,21 +786,21 @@ msgEphemerisGlo = 0x0088
 data MsgEphemerisGlo = MsgEphemerisGlo
   { _msgEphemerisGlo_common :: !EphemerisCommonContent
     -- ^ Values common for all ephemeris types
-  , _msgEphemerisGlo_gamma :: !double
+  , _msgEphemerisGlo_gamma :: !Double
     -- ^ Relative deviation of predicted carrier frequency from nominal
-  , _msgEphemerisGlo_tau  :: !double
+  , _msgEphemerisGlo_tau  :: !Double
     -- ^ Correction to the SV time
-  , _msgEphemerisGlo_d_tau :: !double
+  , _msgEphemerisGlo_d_tau :: !Double
     -- ^ Equipment delay between L1 and L2
-  , _msgEphemerisGlo_pos  :: !repeated double
+  , _msgEphemerisGlo_pos  :: ![Double]
     -- ^ Position of the SV at tb in PZ-90.02 coordinates system
-  , _msgEphemerisGlo_vel  :: !repeated double
+  , _msgEphemerisGlo_vel  :: ![Double]
     -- ^ Velocity vector of the SV at tb in PZ-90.02 coordinates system
-  , _msgEphemerisGlo_acc  :: !repeated double
+  , _msgEphemerisGlo_acc  :: ![Double]
     -- ^ Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-  , _msgEphemerisGlo_fcn  :: !uint32
+  , _msgEphemerisGlo_fcn  :: !Word8
     -- ^ Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
-  , _msgEphemerisGlo_iod  :: !uint32
+  , _msgEphemerisGlo_iod  :: !Word8
     -- ^ Issue of ephemeris data
   } deriving ( Show, Read, Eq )
 
@@ -842,67 +842,67 @@ msgEphemerisDepD = 0x0080
 -- see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
 -- Table 20-III) for more details.
 data MsgEphemerisDepD = MsgEphemerisDepD
-  { _msgEphemerisDepD_tgd    :: !double
+  { _msgEphemerisDepD_tgd    :: !Double
     -- ^ Group delay differential between L1 and L2
-  , _msgEphemerisDepD_c_rs   :: !double
+  , _msgEphemerisDepD_c_rs   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the orbit radius
-  , _msgEphemerisDepD_c_rc   :: !double
+  , _msgEphemerisDepD_c_rc   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
-  , _msgEphemerisDepD_c_uc   :: !double
+  , _msgEphemerisDepD_c_uc   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the argument of
     -- latitude
-  , _msgEphemerisDepD_c_us   :: !double
+  , _msgEphemerisDepD_c_us   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the argument of
     -- latitude
-  , _msgEphemerisDepD_c_ic   :: !double
+  , _msgEphemerisDepD_c_ic   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisDepD_c_is   :: !double
+  , _msgEphemerisDepD_c_is   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisDepD_dn     :: !double
+  , _msgEphemerisDepD_dn     :: !Double
     -- ^ Mean motion difference
-  , _msgEphemerisDepD_m0     :: !double
+  , _msgEphemerisDepD_m0     :: !Double
     -- ^ Mean anomaly at reference time
-  , _msgEphemerisDepD_ecc    :: !double
+  , _msgEphemerisDepD_ecc    :: !Double
     -- ^ Eccentricity of satellite orbit
-  , _msgEphemerisDepD_sqrta  :: !double
+  , _msgEphemerisDepD_sqrta  :: !Double
     -- ^ Square root of the semi-major axis of orbit
-  , _msgEphemerisDepD_omega0 :: !double
+  , _msgEphemerisDepD_omega0 :: !Double
     -- ^ Longitude of ascending node of orbit plane at weekly epoch
-  , _msgEphemerisDepD_omegadot :: !double
+  , _msgEphemerisDepD_omegadot :: !Double
     -- ^ Rate of right ascension
-  , _msgEphemerisDepD_w      :: !double
+  , _msgEphemerisDepD_w      :: !Double
     -- ^ Argument of perigee
-  , _msgEphemerisDepD_inc    :: !double
+  , _msgEphemerisDepD_inc    :: !Double
     -- ^ Inclination
-  , _msgEphemerisDepD_inc_dot :: !double
+  , _msgEphemerisDepD_inc_dot :: !Double
     -- ^ Inclination first derivative
-  , _msgEphemerisDepD_af0    :: !double
+  , _msgEphemerisDepD_af0    :: !Double
     -- ^ Polynomial clock correction coefficient (clock bias)
-  , _msgEphemerisDepD_af1    :: !double
+  , _msgEphemerisDepD_af1    :: !Double
     -- ^ Polynomial clock correction coefficient (clock drift)
-  , _msgEphemerisDepD_af2    :: !double
+  , _msgEphemerisDepD_af2    :: !Double
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
-  , _msgEphemerisDepD_toe_tow :: !double
+  , _msgEphemerisDepD_toe_tow :: !Double
     -- ^ Time of week
-  , _msgEphemerisDepD_toe_wn :: !uint32
+  , _msgEphemerisDepD_toe_wn :: !Word16
     -- ^ Week number
-  , _msgEphemerisDepD_toc_tow :: !double
+  , _msgEphemerisDepD_toc_tow :: !Double
     -- ^ Clock reference time of week
-  , _msgEphemerisDepD_toc_wn :: !uint32
+  , _msgEphemerisDepD_toc_wn :: !Word16
     -- ^ Clock reference week number
-  , _msgEphemerisDepD_valid  :: !uint32
+  , _msgEphemerisDepD_valid  :: !Word8
     -- ^ Is valid?
-  , _msgEphemerisDepD_healthy :: !uint32
+  , _msgEphemerisDepD_healthy :: !Word8
     -- ^ Satellite is healthy?
   , _msgEphemerisDepD_sid    :: !GnssSignalDep
     -- ^ GNSS signal identifier
-  , _msgEphemerisDepD_iode   :: !uint32
+  , _msgEphemerisDepD_iode   :: !Word8
     -- ^ Issue of ephemeris data
-  , _msgEphemerisDepD_iodc   :: !uint32
+  , _msgEphemerisDepD_iodc   :: !Word16
     -- ^ Issue of clock data
-  , _msgEphemerisDepD_reserved :: !uint32
+  , _msgEphemerisDepD_reserved :: !Word32
     -- ^ Reserved field
   } deriving ( Show, Read, Eq )
 
@@ -981,61 +981,61 @@ msgEphemerisDepA = 0x001A
 --
 -- Deprecated.
 data MsgEphemerisDepA = MsgEphemerisDepA
-  { _msgEphemerisDepA_tgd    :: !double
+  { _msgEphemerisDepA_tgd    :: !Double
     -- ^ Group delay differential between L1 and L2
-  , _msgEphemerisDepA_c_rs   :: !double
+  , _msgEphemerisDepA_c_rs   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the orbit radius
-  , _msgEphemerisDepA_c_rc   :: !double
+  , _msgEphemerisDepA_c_rc   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
-  , _msgEphemerisDepA_c_uc   :: !double
+  , _msgEphemerisDepA_c_uc   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the argument of
     -- latitude
-  , _msgEphemerisDepA_c_us   :: !double
+  , _msgEphemerisDepA_c_us   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the argument of
     -- latitude
-  , _msgEphemerisDepA_c_ic   :: !double
+  , _msgEphemerisDepA_c_ic   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisDepA_c_is   :: !double
+  , _msgEphemerisDepA_c_is   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisDepA_dn     :: !double
+  , _msgEphemerisDepA_dn     :: !Double
     -- ^ Mean motion difference
-  , _msgEphemerisDepA_m0     :: !double
+  , _msgEphemerisDepA_m0     :: !Double
     -- ^ Mean anomaly at reference time
-  , _msgEphemerisDepA_ecc    :: !double
+  , _msgEphemerisDepA_ecc    :: !Double
     -- ^ Eccentricity of satellite orbit
-  , _msgEphemerisDepA_sqrta  :: !double
+  , _msgEphemerisDepA_sqrta  :: !Double
     -- ^ Square root of the semi-major axis of orbit
-  , _msgEphemerisDepA_omega0 :: !double
+  , _msgEphemerisDepA_omega0 :: !Double
     -- ^ Longitude of ascending node of orbit plane at weekly epoch
-  , _msgEphemerisDepA_omegadot :: !double
+  , _msgEphemerisDepA_omegadot :: !Double
     -- ^ Rate of right ascension
-  , _msgEphemerisDepA_w      :: !double
+  , _msgEphemerisDepA_w      :: !Double
     -- ^ Argument of perigee
-  , _msgEphemerisDepA_inc    :: !double
+  , _msgEphemerisDepA_inc    :: !Double
     -- ^ Inclination
-  , _msgEphemerisDepA_inc_dot :: !double
+  , _msgEphemerisDepA_inc_dot :: !Double
     -- ^ Inclination first derivative
-  , _msgEphemerisDepA_af0    :: !double
+  , _msgEphemerisDepA_af0    :: !Double
     -- ^ Polynomial clock correction coefficient (clock bias)
-  , _msgEphemerisDepA_af1    :: !double
+  , _msgEphemerisDepA_af1    :: !Double
     -- ^ Polynomial clock correction coefficient (clock drift)
-  , _msgEphemerisDepA_af2    :: !double
+  , _msgEphemerisDepA_af2    :: !Double
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
-  , _msgEphemerisDepA_toe_tow :: !double
+  , _msgEphemerisDepA_toe_tow :: !Double
     -- ^ Time of week
-  , _msgEphemerisDepA_toe_wn :: !uint32
+  , _msgEphemerisDepA_toe_wn :: !Word16
     -- ^ Week number
-  , _msgEphemerisDepA_toc_tow :: !double
+  , _msgEphemerisDepA_toc_tow :: !Double
     -- ^ Clock reference time of week
-  , _msgEphemerisDepA_toc_wn :: !uint32
+  , _msgEphemerisDepA_toc_wn :: !Word16
     -- ^ Clock reference week number
-  , _msgEphemerisDepA_valid  :: !uint32
+  , _msgEphemerisDepA_valid  :: !Word8
     -- ^ Is valid?
-  , _msgEphemerisDepA_healthy :: !uint32
+  , _msgEphemerisDepA_healthy :: !Word8
     -- ^ Satellite is healthy?
-  , _msgEphemerisDepA_prn    :: !uint32
+  , _msgEphemerisDepA_prn    :: !Word8
     -- ^ PRN being tracked
   } deriving ( Show, Read, Eq )
 
@@ -1108,63 +1108,63 @@ msgEphemerisDepB = 0x0046
 --
 -- Deprecated.
 data MsgEphemerisDepB = MsgEphemerisDepB
-  { _msgEphemerisDepB_tgd    :: !double
+  { _msgEphemerisDepB_tgd    :: !Double
     -- ^ Group delay differential between L1 and L2
-  , _msgEphemerisDepB_c_rs   :: !double
+  , _msgEphemerisDepB_c_rs   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the orbit radius
-  , _msgEphemerisDepB_c_rc   :: !double
+  , _msgEphemerisDepB_c_rc   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
-  , _msgEphemerisDepB_c_uc   :: !double
+  , _msgEphemerisDepB_c_uc   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the argument of
     -- latitude
-  , _msgEphemerisDepB_c_us   :: !double
+  , _msgEphemerisDepB_c_us   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the argument of
     -- latitude
-  , _msgEphemerisDepB_c_ic   :: !double
+  , _msgEphemerisDepB_c_ic   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisDepB_c_is   :: !double
+  , _msgEphemerisDepB_c_is   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisDepB_dn     :: !double
+  , _msgEphemerisDepB_dn     :: !Double
     -- ^ Mean motion difference
-  , _msgEphemerisDepB_m0     :: !double
+  , _msgEphemerisDepB_m0     :: !Double
     -- ^ Mean anomaly at reference time
-  , _msgEphemerisDepB_ecc    :: !double
+  , _msgEphemerisDepB_ecc    :: !Double
     -- ^ Eccentricity of satellite orbit
-  , _msgEphemerisDepB_sqrta  :: !double
+  , _msgEphemerisDepB_sqrta  :: !Double
     -- ^ Square root of the semi-major axis of orbit
-  , _msgEphemerisDepB_omega0 :: !double
+  , _msgEphemerisDepB_omega0 :: !Double
     -- ^ Longitude of ascending node of orbit plane at weekly epoch
-  , _msgEphemerisDepB_omegadot :: !double
+  , _msgEphemerisDepB_omegadot :: !Double
     -- ^ Rate of right ascension
-  , _msgEphemerisDepB_w      :: !double
+  , _msgEphemerisDepB_w      :: !Double
     -- ^ Argument of perigee
-  , _msgEphemerisDepB_inc    :: !double
+  , _msgEphemerisDepB_inc    :: !Double
     -- ^ Inclination
-  , _msgEphemerisDepB_inc_dot :: !double
+  , _msgEphemerisDepB_inc_dot :: !Double
     -- ^ Inclination first derivative
-  , _msgEphemerisDepB_af0    :: !double
+  , _msgEphemerisDepB_af0    :: !Double
     -- ^ Polynomial clock correction coefficient (clock bias)
-  , _msgEphemerisDepB_af1    :: !double
+  , _msgEphemerisDepB_af1    :: !Double
     -- ^ Polynomial clock correction coefficient (clock drift)
-  , _msgEphemerisDepB_af2    :: !double
+  , _msgEphemerisDepB_af2    :: !Double
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
-  , _msgEphemerisDepB_toe_tow :: !double
+  , _msgEphemerisDepB_toe_tow :: !Double
     -- ^ Time of week
-  , _msgEphemerisDepB_toe_wn :: !uint32
+  , _msgEphemerisDepB_toe_wn :: !Word16
     -- ^ Week number
-  , _msgEphemerisDepB_toc_tow :: !double
+  , _msgEphemerisDepB_toc_tow :: !Double
     -- ^ Clock reference time of week
-  , _msgEphemerisDepB_toc_wn :: !uint32
+  , _msgEphemerisDepB_toc_wn :: !Word16
     -- ^ Clock reference week number
-  , _msgEphemerisDepB_valid  :: !uint32
+  , _msgEphemerisDepB_valid  :: !Word8
     -- ^ Is valid?
-  , _msgEphemerisDepB_healthy :: !uint32
+  , _msgEphemerisDepB_healthy :: !Word8
     -- ^ Satellite is healthy?
-  , _msgEphemerisDepB_prn    :: !uint32
+  , _msgEphemerisDepB_prn    :: !Word8
     -- ^ PRN being tracked
-  , _msgEphemerisDepB_iode   :: !uint32
+  , _msgEphemerisDepB_iode   :: !Word8
     -- ^ Issue of ephemeris data
   } deriving ( Show, Read, Eq )
 
@@ -1242,67 +1242,67 @@ msgEphemerisDepC = 0x0047
 -- see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
 -- Table 20-III) for more details.
 data MsgEphemerisDepC = MsgEphemerisDepC
-  { _msgEphemerisDepC_tgd    :: !double
+  { _msgEphemerisDepC_tgd    :: !Double
     -- ^ Group delay differential between L1 and L2
-  , _msgEphemerisDepC_c_rs   :: !double
+  , _msgEphemerisDepC_c_rs   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the orbit radius
-  , _msgEphemerisDepC_c_rc   :: !double
+  , _msgEphemerisDepC_c_rc   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
-  , _msgEphemerisDepC_c_uc   :: !double
+  , _msgEphemerisDepC_c_uc   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the argument of
     -- latitude
-  , _msgEphemerisDepC_c_us   :: !double
+  , _msgEphemerisDepC_c_us   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the argument of
     -- latitude
-  , _msgEphemerisDepC_c_ic   :: !double
+  , _msgEphemerisDepC_c_ic   :: !Double
     -- ^ Amplitude of the cosine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisDepC_c_is   :: !double
+  , _msgEphemerisDepC_c_is   :: !Double
     -- ^ Amplitude of the sine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisDepC_dn     :: !double
+  , _msgEphemerisDepC_dn     :: !Double
     -- ^ Mean motion difference
-  , _msgEphemerisDepC_m0     :: !double
+  , _msgEphemerisDepC_m0     :: !Double
     -- ^ Mean anomaly at reference time
-  , _msgEphemerisDepC_ecc    :: !double
+  , _msgEphemerisDepC_ecc    :: !Double
     -- ^ Eccentricity of satellite orbit
-  , _msgEphemerisDepC_sqrta  :: !double
+  , _msgEphemerisDepC_sqrta  :: !Double
     -- ^ Square root of the semi-major axis of orbit
-  , _msgEphemerisDepC_omega0 :: !double
+  , _msgEphemerisDepC_omega0 :: !Double
     -- ^ Longitude of ascending node of orbit plane at weekly epoch
-  , _msgEphemerisDepC_omegadot :: !double
+  , _msgEphemerisDepC_omegadot :: !Double
     -- ^ Rate of right ascension
-  , _msgEphemerisDepC_w      :: !double
+  , _msgEphemerisDepC_w      :: !Double
     -- ^ Argument of perigee
-  , _msgEphemerisDepC_inc    :: !double
+  , _msgEphemerisDepC_inc    :: !Double
     -- ^ Inclination
-  , _msgEphemerisDepC_inc_dot :: !double
+  , _msgEphemerisDepC_inc_dot :: !Double
     -- ^ Inclination first derivative
-  , _msgEphemerisDepC_af0    :: !double
+  , _msgEphemerisDepC_af0    :: !Double
     -- ^ Polynomial clock correction coefficient (clock bias)
-  , _msgEphemerisDepC_af1    :: !double
+  , _msgEphemerisDepC_af1    :: !Double
     -- ^ Polynomial clock correction coefficient (clock drift)
-  , _msgEphemerisDepC_af2    :: !double
+  , _msgEphemerisDepC_af2    :: !Double
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
-  , _msgEphemerisDepC_toe_tow :: !double
+  , _msgEphemerisDepC_toe_tow :: !Double
     -- ^ Time of week
-  , _msgEphemerisDepC_toe_wn :: !uint32
+  , _msgEphemerisDepC_toe_wn :: !Word16
     -- ^ Week number
-  , _msgEphemerisDepC_toc_tow :: !double
+  , _msgEphemerisDepC_toc_tow :: !Double
     -- ^ Clock reference time of week
-  , _msgEphemerisDepC_toc_wn :: !uint32
+  , _msgEphemerisDepC_toc_wn :: !Word16
     -- ^ Clock reference week number
-  , _msgEphemerisDepC_valid  :: !uint32
+  , _msgEphemerisDepC_valid  :: !Word8
     -- ^ Is valid?
-  , _msgEphemerisDepC_healthy :: !uint32
+  , _msgEphemerisDepC_healthy :: !Word8
     -- ^ Satellite is healthy?
   , _msgEphemerisDepC_sid    :: !GnssSignalDep
     -- ^ GNSS signal identifier
-  , _msgEphemerisDepC_iode   :: !uint32
+  , _msgEphemerisDepC_iode   :: !Word8
     -- ^ Issue of ephemeris data
-  , _msgEphemerisDepC_iodc   :: !uint32
+  , _msgEphemerisDepC_iodc   :: !Word16
     -- ^ Issue of clock data
-  , _msgEphemerisDepC_reserved :: !uint32
+  , _msgEphemerisDepC_reserved :: !Word32
     -- ^ Reserved field
   } deriving ( Show, Read, Eq )
 
@@ -1380,7 +1380,7 @@ $(makeLenses ''MsgEphemerisDepC)
 data ObservationHeaderDep = ObservationHeaderDep
   { _observationHeaderDep_t   :: !GpsTimeDep
     -- ^ GPS time of this observation
-  , _observationHeaderDep_n_obs :: !uint32
+  , _observationHeaderDep_n_obs :: !Word8
     -- ^ Total number of observations. First nibble is the size of the sequence
     -- (n), second nibble is the zero-indexed counter (ith packet of n)
   } deriving ( Show, Read, Eq )
@@ -1405,9 +1405,9 @@ $(makeLenses ''ObservationHeaderDep)
 -- fractional cycles. This has the opposite sign convention than a typical GPS
 -- receiver and the phase has the opposite sign as the pseudorange.
 data CarrierPhaseDepA = CarrierPhaseDepA
-  { _carrierPhaseDepA_i :: !sint32
+  { _carrierPhaseDepA_i :: !Int32
     -- ^ Carrier phase whole cycles
-  , _carrierPhaseDepA_f :: !uint32
+  , _carrierPhaseDepA_f :: !Word8
     -- ^ Carrier phase fractional part
   } deriving ( Show, Read, Eq )
 
@@ -1428,17 +1428,17 @@ $(makeLenses ''CarrierPhaseDepA)
 --
 -- Deprecated.
 data PackedObsContentDepA = PackedObsContentDepA
-  { _packedObsContentDepA_P  :: !uint32
+  { _packedObsContentDepA_P  :: !Word32
     -- ^ Pseudorange observation
   , _packedObsContentDepA_L  :: !CarrierPhaseDepA
     -- ^ Carrier phase observation with opposite sign from typical convention
-  , _packedObsContentDepA_cn0 :: !uint32
+  , _packedObsContentDepA_cn0 :: !Word8
     -- ^ Carrier-to-Noise density
-  , _packedObsContentDepA_lock :: !uint32
+  , _packedObsContentDepA_lock :: !Word16
     -- ^ Lock indicator. This value changes whenever a satellite signal has lost
     -- and regained lock, indicating that the carrier phase ambiguity may have
     -- changed.
-  , _packedObsContentDepA_prn :: !uint32
+  , _packedObsContentDepA_prn :: !Word8
     -- ^ PRN-1 identifier of the satellite signal
   } deriving ( Show, Read, Eq )
 
@@ -1466,13 +1466,13 @@ $(makeLenses ''PackedObsContentDepA)
 -- Pseudorange and carrier phase observation for a satellite being tracked.
 -- Pseudoranges are referenced to a nominal pseudorange.
 data PackedObsContentDepB = PackedObsContentDepB
-  { _packedObsContentDepB_P  :: !uint32
+  { _packedObsContentDepB_P  :: !Word32
     -- ^ Pseudorange observation
   , _packedObsContentDepB_L  :: !CarrierPhaseDepA
     -- ^ Carrier phase observation with opposite sign from typical convention.
-  , _packedObsContentDepB_cn0 :: !uint32
+  , _packedObsContentDepB_cn0 :: !Word8
     -- ^ Carrier-to-Noise density
-  , _packedObsContentDepB_lock :: !uint32
+  , _packedObsContentDepB_lock :: !Word16
     -- ^ Lock indicator. This value changes whenever a satellite signal has lost
     -- and regained lock, indicating that the carrier phase ambiguity may have
     -- changed.
@@ -1505,13 +1505,13 @@ $(makeLenses ''PackedObsContentDepB)
 -- observations are be interoperable with 3rd party receivers and conform with
 -- typical RTCMv3 GNSS observations.
 data PackedObsContentDepC = PackedObsContentDepC
-  { _packedObsContentDepC_P  :: !uint32
+  { _packedObsContentDepC_P  :: !Word32
     -- ^ Pseudorange observation
-  , _packedObsContentDepC_L  :: !gnss.CarrierPhase
+  , _packedObsContentDepC_L  :: !CarrierPhase
     -- ^ Carrier phase observation with typical sign convention.
-  , _packedObsContentDepC_cn0 :: !uint32
+  , _packedObsContentDepC_cn0 :: !Word8
     -- ^ Carrier-to-Noise density
-  , _packedObsContentDepC_lock :: !uint32
+  , _packedObsContentDepC_lock :: !Word16
     -- ^ Lock indicator. This value changes whenever a satellite signal has lost
     -- and regained lock, indicating that the carrier phase ambiguity may have
     -- changed.
@@ -1547,7 +1547,7 @@ msgObsDepA = 0x0045
 data MsgObsDepA = MsgObsDepA
   { _msgObsDepA_header :: !ObservationHeaderDep
     -- ^ Header of a GPS observation message
-  , _msgObsDepA_obs  :: !repeated PackedObsContentDepA
+  , _msgObsDepA_obs  :: ![PackedObsContentDepA]
     -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
   } deriving ( Show, Read, Eq )
 
@@ -1577,7 +1577,7 @@ msgObsDepB = 0x0043
 data MsgObsDepB = MsgObsDepB
   { _msgObsDepB_header :: !ObservationHeaderDep
     -- ^ Header of a GPS observation message
-  , _msgObsDepB_obs  :: !repeated PackedObsContentDepB
+  , _msgObsDepB_obs  :: ![PackedObsContentDepB]
     -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
   } deriving ( Show, Read, Eq )
 
@@ -1609,7 +1609,7 @@ msgObsDepC = 0x0049
 data MsgObsDepC = MsgObsDepC
   { _msgObsDepC_header :: !ObservationHeaderDep
     -- ^ Header of a GPS observation message
-  , _msgObsDepC_obs  :: !repeated PackedObsContentDepC
+  , _msgObsDepC_obs  :: ![PackedObsContentDepC]
     -- ^ Pseudorange and carrier phase observation for a satellite being tracked.
   } deriving ( Show, Read, Eq )
 
@@ -1636,16 +1636,16 @@ msgIono = 0x0090
 -- utilize the ionospheric model for computation of the ionospheric delay.
 -- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 data MsgIono = MsgIono
-  { _msgIono_t_nmct :: !gnss.GpsTimeSec
+  { _msgIono_t_nmct :: !GpsTimeSec
     -- ^ Navigation Message Correction Table Valitidy Time
-  , _msgIono_a0   :: !double
-  , _msgIono_a1   :: !double
-  , _msgIono_a2   :: !double
-  , _msgIono_a3   :: !double
-  , _msgIono_b0   :: !double
-  , _msgIono_b1   :: !double
-  , _msgIono_b2   :: !double
-  , _msgIono_b3   :: !double
+  , _msgIono_a0   :: !Double
+  , _msgIono_a1   :: !Double
+  , _msgIono_a2   :: !Double
+  , _msgIono_a3   :: !Double
+  , _msgIono_b0   :: !Double
+  , _msgIono_b1   :: !Double
+  , _msgIono_b2   :: !Double
+  , _msgIono_b3   :: !Double
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgIono where
@@ -1683,9 +1683,9 @@ msgSvConfigurationGps = 0x0091
 --
 -- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
 data MsgSvConfigurationGps = MsgSvConfigurationGps
-  { _msgSvConfigurationGps_t_nmct :: !gnss.GpsTimeSec
+  { _msgSvConfigurationGps_t_nmct :: !GpsTimeSec
     -- ^ Navigation Message Correction Table Valitidy Time
-  , _msgSvConfigurationGps_l2c_mask :: !uint32
+  , _msgSvConfigurationGps_l2c_mask :: !Word32
     -- ^ L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
   } deriving ( Show, Read, Eq )
 
@@ -1712,14 +1712,14 @@ msgGroupDelayDepA = 0x0092
 data MsgGroupDelayDepA = MsgGroupDelayDepA
   { _msgGroupDelayDepA_t_op   :: !GpsTimeDep
     -- ^ Data Predict Time of Week
-  , _msgGroupDelayDepA_prn    :: !uint32
+  , _msgGroupDelayDepA_prn    :: !Word8
     -- ^ Satellite number
-  , _msgGroupDelayDepA_valid  :: !uint32
+  , _msgGroupDelayDepA_valid  :: !Word8
     -- ^ bit-field indicating validity of the values, LSB indicating tgd validity
     -- etc. 1 = value is valid, 0 = value is not valid.
-  , _msgGroupDelayDepA_tgd    :: !sint32
-  , _msgGroupDelayDepA_isc_l1ca :: !sint32
-  , _msgGroupDelayDepA_isc_l2c :: !sint32
+  , _msgGroupDelayDepA_tgd    :: !Int16
+  , _msgGroupDelayDepA_isc_l1ca :: !Int16
+  , _msgGroupDelayDepA_isc_l2c :: !Int16
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgGroupDelayDepA where
@@ -1751,16 +1751,16 @@ msgGroupDelayDepB = 0x0093
 --
 -- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 data MsgGroupDelayDepB = MsgGroupDelayDepB
-  { _msgGroupDelayDepB_t_op   :: !gnss.GpsTimeSec
+  { _msgGroupDelayDepB_t_op   :: !GpsTimeSec
     -- ^ Data Predict Time of Week
   , _msgGroupDelayDepB_sid    :: !GnssSignalDep
     -- ^ GNSS signal identifier
-  , _msgGroupDelayDepB_valid  :: !uint32
+  , _msgGroupDelayDepB_valid  :: !Word8
     -- ^ bit-field indicating validity of the values, LSB indicating tgd validity
     -- etc. 1 = value is valid, 0 = value is not valid.
-  , _msgGroupDelayDepB_tgd    :: !sint32
-  , _msgGroupDelayDepB_isc_l1ca :: !sint32
-  , _msgGroupDelayDepB_isc_l2c :: !sint32
+  , _msgGroupDelayDepB_tgd    :: !Int16
+  , _msgGroupDelayDepB_isc_l1ca :: !Int16
+  , _msgGroupDelayDepB_isc_l2c :: !Int16
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgGroupDelayDepB where
@@ -1792,16 +1792,16 @@ msgGroupDelay = 0x0094
 --
 -- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 data MsgGroupDelay = MsgGroupDelay
-  { _msgGroupDelay_t_op   :: !gnss.GpsTimeSec
+  { _msgGroupDelay_t_op   :: !GpsTimeSec
     -- ^ Data Predict Time of Week
-  , _msgGroupDelay_sid    :: !gnss.GnssSignal
+  , _msgGroupDelay_sid    :: !GnssSignal
     -- ^ GNSS signal identifier
-  , _msgGroupDelay_valid  :: !uint32
+  , _msgGroupDelay_valid  :: !Word8
     -- ^ bit-field indicating validity of the values, LSB indicating tgd validity
     -- etc. 1 = value is valid, 0 = value is not valid.
-  , _msgGroupDelay_tgd    :: !sint32
-  , _msgGroupDelay_isc_l1ca :: !sint32
-  , _msgGroupDelay_isc_l2c :: !sint32
+  , _msgGroupDelay_tgd    :: !Int16
+  , _msgGroupDelay_isc_l1ca :: !Int16
+  , _msgGroupDelay_isc_l2c :: !Int16
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgGroupDelay where
@@ -1827,17 +1827,17 @@ $(makeJSON "_msgGroupDelay_" ''MsgGroupDelay)
 $(makeLenses ''MsgGroupDelay)
 
 data AlmanacCommonContent = AlmanacCommonContent
-  { _almanacCommonContent_sid        :: !gnss.GnssSignal
+  { _almanacCommonContent_sid        :: !GnssSignal
     -- ^ GNSS signal identifier
-  , _almanacCommonContent_toa        :: !gnss.GpsTimeSec
+  , _almanacCommonContent_toa        :: !GpsTimeSec
     -- ^ Reference time of almanac
-  , _almanacCommonContent_ura        :: !double
+  , _almanacCommonContent_ura        :: !Double
     -- ^ User Range Accuracy
-  , _almanacCommonContent_fit_interval :: !uint32
+  , _almanacCommonContent_fit_interval :: !Word32
     -- ^ Curve fit interval
-  , _almanacCommonContent_valid      :: !uint32
+  , _almanacCommonContent_valid      :: !Word8
     -- ^ Status of almanac, 1 = valid, 0 = invalid
-  , _almanacCommonContent_health_bits :: !uint32
+  , _almanacCommonContent_health_bits :: !Word8
     -- ^ Satellite health status for GPS:   - bits 5-7: NAV data health status.
     -- See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
     -- 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
@@ -1874,15 +1874,15 @@ $(makeLenses ''AlmanacCommonContent)
 data AlmanacCommonContentDep = AlmanacCommonContentDep
   { _almanacCommonContentDep_sid        :: !GnssSignalDep
     -- ^ GNSS signal identifier
-  , _almanacCommonContentDep_toa        :: !gnss.GpsTimeSec
+  , _almanacCommonContentDep_toa        :: !GpsTimeSec
     -- ^ Reference time of almanac
-  , _almanacCommonContentDep_ura        :: !double
+  , _almanacCommonContentDep_ura        :: !Double
     -- ^ User Range Accuracy
-  , _almanacCommonContentDep_fit_interval :: !uint32
+  , _almanacCommonContentDep_fit_interval :: !Word32
     -- ^ Curve fit interval
-  , _almanacCommonContentDep_valid      :: !uint32
+  , _almanacCommonContentDep_valid      :: !Word8
     -- ^ Status of almanac, 1 = valid, 0 = invalid
-  , _almanacCommonContentDep_health_bits :: !uint32
+  , _almanacCommonContentDep_health_bits :: !Word8
     -- ^ Satellite health status for GPS:   - bits 5-7: NAV data health status.
     -- See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
     -- 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
@@ -1928,23 +1928,23 @@ msgAlmanacGpsDep = 0x0070
 data MsgAlmanacGpsDep = MsgAlmanacGpsDep
   { _msgAlmanacGpsDep_common :: !AlmanacCommonContentDep
     -- ^ Values common for all almanac types
-  , _msgAlmanacGpsDep_m0     :: !double
+  , _msgAlmanacGpsDep_m0     :: !Double
     -- ^ Mean anomaly at reference time
-  , _msgAlmanacGpsDep_ecc    :: !double
+  , _msgAlmanacGpsDep_ecc    :: !Double
     -- ^ Eccentricity of satellite orbit
-  , _msgAlmanacGpsDep_sqrta  :: !double
+  , _msgAlmanacGpsDep_sqrta  :: !Double
     -- ^ Square root of the semi-major axis of orbit
-  , _msgAlmanacGpsDep_omega0 :: !double
+  , _msgAlmanacGpsDep_omega0 :: !Double
     -- ^ Longitude of ascending node of orbit plane at weekly epoch
-  , _msgAlmanacGpsDep_omegadot :: !double
+  , _msgAlmanacGpsDep_omegadot :: !Double
     -- ^ Rate of right ascension
-  , _msgAlmanacGpsDep_w      :: !double
+  , _msgAlmanacGpsDep_w      :: !Double
     -- ^ Argument of perigee
-  , _msgAlmanacGpsDep_inc    :: !double
+  , _msgAlmanacGpsDep_inc    :: !Double
     -- ^ Inclination
-  , _msgAlmanacGpsDep_af0    :: !double
+  , _msgAlmanacGpsDep_af0    :: !Double
     -- ^ Polynomial clock correction coefficient (clock bias)
-  , _msgAlmanacGpsDep_af1    :: !double
+  , _msgAlmanacGpsDep_af1    :: !Double
     -- ^ Polynomial clock correction coefficient (clock drift)
   } deriving ( Show, Read, Eq )
 
@@ -1990,23 +1990,23 @@ msgAlmanacGps = 0x0072
 data MsgAlmanacGps = MsgAlmanacGps
   { _msgAlmanacGps_common :: !AlmanacCommonContent
     -- ^ Values common for all almanac types
-  , _msgAlmanacGps_m0     :: !double
+  , _msgAlmanacGps_m0     :: !Double
     -- ^ Mean anomaly at reference time
-  , _msgAlmanacGps_ecc    :: !double
+  , _msgAlmanacGps_ecc    :: !Double
     -- ^ Eccentricity of satellite orbit
-  , _msgAlmanacGps_sqrta  :: !double
+  , _msgAlmanacGps_sqrta  :: !Double
     -- ^ Square root of the semi-major axis of orbit
-  , _msgAlmanacGps_omega0 :: !double
+  , _msgAlmanacGps_omega0 :: !Double
     -- ^ Longitude of ascending node of orbit plane at weekly epoch
-  , _msgAlmanacGps_omegadot :: !double
+  , _msgAlmanacGps_omegadot :: !Double
     -- ^ Rate of right ascension
-  , _msgAlmanacGps_w      :: !double
+  , _msgAlmanacGps_w      :: !Double
     -- ^ Argument of perigee
-  , _msgAlmanacGps_inc    :: !double
+  , _msgAlmanacGps_inc    :: !Double
     -- ^ Inclination
-  , _msgAlmanacGps_af0    :: !double
+  , _msgAlmanacGps_af0    :: !Double
     -- ^ Polynomial clock correction coefficient (clock bias)
-  , _msgAlmanacGps_af1    :: !double
+  , _msgAlmanacGps_af1    :: !Double
     -- ^ Polynomial clock correction coefficient (clock drift)
   } deriving ( Show, Read, Eq )
 
@@ -2052,20 +2052,20 @@ msgAlmanacGloDep = 0x0071
 data MsgAlmanacGloDep = MsgAlmanacGloDep
   { _msgAlmanacGloDep_common    :: !AlmanacCommonContentDep
     -- ^ Values common for all almanac types
-  , _msgAlmanacGloDep_lambda_na :: !double
+  , _msgAlmanacGloDep_lambda_na :: !Double
     -- ^ Longitude of the first ascending node of the orbit in PZ-90.02
     -- coordinate system
-  , _msgAlmanacGloDep_t_lambda_na :: !double
+  , _msgAlmanacGloDep_t_lambda_na :: !Double
     -- ^ Time of the first ascending node passage
-  , _msgAlmanacGloDep_i         :: !double
+  , _msgAlmanacGloDep_i         :: !Double
     -- ^ Value of inclination at instant of t_lambda
-  , _msgAlmanacGloDep_t         :: !double
+  , _msgAlmanacGloDep_t         :: !Double
     -- ^ Value of Draconian period at instant of t_lambda
-  , _msgAlmanacGloDep_t_dot     :: !double
+  , _msgAlmanacGloDep_t_dot     :: !Double
     -- ^ Rate of change of the Draconian period
-  , _msgAlmanacGloDep_epsilon   :: !double
+  , _msgAlmanacGloDep_epsilon   :: !Double
     -- ^ Eccentricity at instant of t_lambda
-  , _msgAlmanacGloDep_omega     :: !double
+  , _msgAlmanacGloDep_omega     :: !Double
     -- ^ Argument of perigee at instant of t_lambda
   } deriving ( Show, Read, Eq )
 
@@ -2107,20 +2107,20 @@ msgAlmanacGlo = 0x0073
 data MsgAlmanacGlo = MsgAlmanacGlo
   { _msgAlmanacGlo_common    :: !AlmanacCommonContent
     -- ^ Values common for all almanac types
-  , _msgAlmanacGlo_lambda_na :: !double
+  , _msgAlmanacGlo_lambda_na :: !Double
     -- ^ Longitude of the first ascending node of the orbit in PZ-90.02
     -- coordinate system
-  , _msgAlmanacGlo_t_lambda_na :: !double
+  , _msgAlmanacGlo_t_lambda_na :: !Double
     -- ^ Time of the first ascending node passage
-  , _msgAlmanacGlo_i         :: !double
+  , _msgAlmanacGlo_i         :: !Double
     -- ^ Value of inclination at instant of t_lambda
-  , _msgAlmanacGlo_t         :: !double
+  , _msgAlmanacGlo_t         :: !Double
     -- ^ Value of Draconian period at instant of t_lambda
-  , _msgAlmanacGlo_t_dot     :: !double
+  , _msgAlmanacGlo_t_dot     :: !Double
     -- ^ Rate of change of the Draconian period
-  , _msgAlmanacGlo_epsilon   :: !double
+  , _msgAlmanacGlo_epsilon   :: !Double
     -- ^ Eccentricity at instant of t_lambda
-  , _msgAlmanacGlo_omega     :: !double
+  , _msgAlmanacGlo_omega     :: !Double
     -- ^ Argument of perigee at instant of t_lambda
   } deriving ( Show, Read, Eq )
 
@@ -2159,15 +2159,15 @@ msgGloBiases = 0x0075
 -- ambiguity resolution for baselines with mixed receiver types (e.g. receiver
 -- of different manufacturers)
 data MsgGloBiases = MsgGloBiases
-  { _msgGloBiases_mask    :: !uint32
+  { _msgGloBiases_mask    :: !Word8
     -- ^ GLONASS FDMA signals mask
-  , _msgGloBiases_l1ca_bias :: !sint32
+  , _msgGloBiases_l1ca_bias :: !Int16
     -- ^ GLONASS L1 C/A Code-Phase Bias
-  , _msgGloBiases_l1p_bias :: !sint32
+  , _msgGloBiases_l1p_bias :: !Int16
     -- ^ GLONASS L1 P Code-Phase Bias
-  , _msgGloBiases_l2ca_bias :: !sint32
+  , _msgGloBiases_l2ca_bias :: !Int16
     -- ^ GLONASS L2 C/A Code-Phase Bias
-  , _msgGloBiases_l2p_bias :: !sint32
+  , _msgGloBiases_l2p_bias :: !Int16
     -- ^ GLONASS L2 P Code-Phase Bias
   } deriving ( Show, Read, Eq )
 

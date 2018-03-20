@@ -88,7 +88,7 @@ msgSettingsWrite = 0x00A0
 -- process to this message when it is received from sender ID 0x42. An example
 -- string that could be sent to a device is "solution\0soln_freq\010\0".
 data MsgSettingsWrite = MsgSettingsWrite
-  { _msgSettingsWrite_setting :: !string
+  { _msgSettingsWrite_setting :: !Text
     -- ^ A NULL-terminated and NULL-delimited string with contents
     -- "SECTION_SETTING\0SETTING\0VALUE\0"
   } deriving ( Show, Read, Eq )
@@ -117,9 +117,9 @@ msgSettingsWriteResp = 0x00AF
 -- the NULL character and where quotation marks are omitted. An example string
 -- that could be sent from device is "solution\0soln_freq\010\0".
 data MsgSettingsWriteResp = MsgSettingsWriteResp
-  { _msgSettingsWriteResp_status :: !uint32
+  { _msgSettingsWriteResp_status :: !Word8
     -- ^ Write status
-  , _msgSettingsWriteResp_setting :: !string
+  , _msgSettingsWriteResp_setting :: !Text
     -- ^ A NULL-terminated and delimited string with contents
     -- "SECTION_SETTING\0SETTING\0VALUE\0"
   } deriving ( Show, Read, Eq )
@@ -151,7 +151,7 @@ msgSettingsReadReq = 0x00A4
 -- respond to this message when it is received from sender ID 0x42. A device
 -- should respond with a MSG_SETTINGS_READ_RESP message (msg_id 0x00A5).
 data MsgSettingsReadReq = MsgSettingsReadReq
-  { _msgSettingsReadReq_setting :: !string
+  { _msgSettingsReadReq_setting :: !Text
     -- ^ A NULL-terminated and NULL-delimited string with contents
     -- "SECTION_SETTING\0SETTING\0"
   } deriving ( Show, Read, Eq )
@@ -180,7 +180,7 @@ msgSettingsReadResp = 0x00A5
 -- the NULL character and where quotation marks are omitted. An example string
 -- that could be sent from device is "solution\0soln_freq\010\0".
 data MsgSettingsReadResp = MsgSettingsReadResp
-  { _msgSettingsReadResp_setting :: !string
+  { _msgSettingsReadResp_setting :: !Text
     -- ^ A NULL-terminated and NULL-delimited string with contents
     -- "SECTION_SETTING\0SETTING\0VALUE\0"
   } deriving ( Show, Read, Eq )
@@ -205,7 +205,7 @@ msgSettingsReadByIndexReq = 0x00A2
 -- The settings message for iterating through the settings values. A device
 -- will respond to this message with a  "MSG_SETTINGS_READ_BY_INDEX_RESP".
 data MsgSettingsReadByIndexReq = MsgSettingsReadByIndexReq
-  { _msgSettingsReadByIndexReq_index :: !uint32
+  { _msgSettingsReadByIndexReq_index :: !Word16
     -- ^ An index into the device settings, with values ranging from 0 to
     -- length(settings)
   } deriving ( Show, Read, Eq )
@@ -237,10 +237,10 @@ msgSettingsReadByIndexResp = 0x00A7
 -- string that could be sent from the device is
 -- "simulator\0enabled\0True\0enum:True,False\0"
 data MsgSettingsReadByIndexResp = MsgSettingsReadByIndexResp
-  { _msgSettingsReadByIndexResp_index :: !uint32
+  { _msgSettingsReadByIndexResp_index :: !Word16
     -- ^ An index into the device settings, with values ranging from 0 to
     -- length(settings)
-  , _msgSettingsReadByIndexResp_setting :: !string
+  , _msgSettingsReadByIndexResp_setting :: !Text
     -- ^ A NULL-terminated and delimited string with contents
     -- "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
   } deriving ( Show, Read, Eq )
@@ -287,7 +287,7 @@ msgSettingsRegister = 0x00AE
 -- settings daemon.  The host should reply with MSG_SETTINGS_WRITE for this
 -- setting to set the initial value.
 data MsgSettingsRegister = MsgSettingsRegister
-  { _msgSettingsRegister_setting :: !string
+  { _msgSettingsRegister_setting :: !Text
     -- ^ A NULL-terminated and delimited string with contents
     -- "SECTION_SETTING\0SETTING\0VALUE".
   } deriving ( Show, Read, Eq )

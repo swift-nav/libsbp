@@ -43,13 +43,13 @@ msgSbasRaw = 0x7777
 -- This message is sent once per second per SBAS satellite. ME checks the
 -- parity of the data block and sends only blocks that pass the check.
 data MsgSbasRaw = MsgSbasRaw
-  { _msgSbasRaw_sid        :: !gnss.GnssSignal
+  { _msgSbasRaw_sid        :: !GnssSignal
     -- ^ GNSS signal identifier.
-  , _msgSbasRaw_tow        :: !uint32
+  , _msgSbasRaw_tow        :: !Word32
     -- ^ GPS time-of-week at the start of the data block.
-  , _msgSbasRaw_message_type :: !uint32
+  , _msgSbasRaw_message_type :: !Word8
     -- ^ SBAS message type (0-63)
-  , _msgSbasRaw_data       :: !repeated uint32
+  , _msgSbasRaw_data       :: ![Word8]
     -- ^ Raw SBAS data field of 212 bits (last byte padded with zeros).
   } deriving ( Show, Read, Eq )
 

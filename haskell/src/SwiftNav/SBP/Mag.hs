@@ -42,16 +42,16 @@ msgMagRaw = 0x0902
 --
 -- Raw data from the magnetometer.
 data MsgMagRaw = MsgMagRaw
-  { _msgMagRaw_tow :: !uint32
+  { _msgMagRaw_tow :: !Word32
     -- ^ Milliseconds since start of GPS week. If the high bit is set, the time
     -- is unknown or invalid.
-  , _msgMagRaw_tow_f :: !uint32
+  , _msgMagRaw_tow_f :: !Word8
     -- ^ Milliseconds since start of GPS week, fractional part
-  , _msgMagRaw_mag_x :: !sint32
+  , _msgMagRaw_mag_x :: !Int16
     -- ^ Magnetic field in the body frame X axis
-  , _msgMagRaw_mag_y :: !sint32
+  , _msgMagRaw_mag_y :: !Int16
     -- ^ Magnetic field in the body frame Y axis
-  , _msgMagRaw_mag_z :: !sint32
+  , _msgMagRaw_mag_z :: !Int16
     -- ^ Magnetic field in the body frame Z axis
   } deriving ( Show, Read, Eq )
 
