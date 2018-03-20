@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE RecordWildCards   #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE NoImplicitPrelude           #-}
+{-# LANGUAGE TemplateHaskell             #-}
+{-# LANGUAGE RecordWildCards             #-}
 
 -- |
 -- Module:      SwiftNav.SBP.Sbas
@@ -24,11 +24,11 @@ import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
-import Data.ByteString.Lazy hiding (ByteString)
+import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
-import SwiftNav.SBP.Gnss
 import SwiftNav.SBP.TH
+import SwiftNav.SBP.Gnss
 
 {-# ANN module ("HLint: ignore Use camelCase"::String) #-}
 {-# ANN module ("HLint: ignore Redundant do"::String) #-}

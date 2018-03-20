@@ -32,7 +32,7 @@
  * When the inertial navigation mode indicates that the IMU is used,
  * all messages are reported in the vehicle body frame as defined by
  * device settings.  By default, the vehicle body frame is configured to be
- * coincident with the antenna phase center.  When there is no inertial 
+ * coincident with the antenna phase center.  When there is no inertial
  * navigation, the solution will be reported at the phase center of the antenna.
  * \{ */
 
