@@ -44,16 +44,16 @@ msgExtEvent = 0x0101
 -- Reports detection of an external event, the GPS time it occurred, which pin
 -- it was and whether it was rising or falling.
 data MsgExtEvent = MsgExtEvent
-  { _msgExtEvent_wn        :: !Word16
+  { _msgExtEvent_wn        :: !uint32
     -- ^ GPS week number
-  , _msgExtEvent_tow       :: !Word32
+  , _msgExtEvent_tow       :: !uint32
     -- ^ GPS time of week rounded to the nearest millisecond
-  , _msgExtEvent_ns_residual :: !Int32
+  , _msgExtEvent_ns_residual :: !sint32
     -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     -- 500000)
-  , _msgExtEvent_flags     :: !Word8
+  , _msgExtEvent_flags     :: !uint32
     -- ^ Flags
-  , _msgExtEvent_pin       :: !Word8
+  , _msgExtEvent_pin       :: !uint32
     -- ^ Pin number.  0..9 = DEBUG0..9.
   } deriving ( Show, Read, Eq )
 

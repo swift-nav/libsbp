@@ -63,14 +63,14 @@ msgGpsTime = 0x0102
 -- other navigation messages referenced to the same time (but lacking the ns
 -- field) and indicates a more precise time of these messages.
 data MsgGpsTime = MsgGpsTime
-  { _msgGpsTime_wn        :: !Word16
+  { _msgGpsTime_wn        :: !uint32
     -- ^ GPS week number
-  , _msgGpsTime_tow       :: !Word32
+  , _msgGpsTime_tow       :: !uint32
     -- ^ GPS time of week rounded to the nearest millisecond
-  , _msgGpsTime_ns_residual :: !Int32
+  , _msgGpsTime_ns_residual :: !sint32
     -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     -- 500000)
-  , _msgGpsTime_flags     :: !Word8
+  , _msgGpsTime_flags     :: !uint32
     -- ^ Status flags (reserved)
   } deriving ( Show, Read, Eq )
 
@@ -101,23 +101,23 @@ msgUtcTime = 0x0103
 -- which indicate the source of the UTC offset value and source of the time
 -- fix.
 data MsgUtcTime = MsgUtcTime
-  { _msgUtcTime_flags :: !Word8
+  { _msgUtcTime_flags :: !uint32
     -- ^ Indicates source and time validity
-  , _msgUtcTime_tow   :: !Word32
+  , _msgUtcTime_tow   :: !uint32
     -- ^ GPS time of week rounded to the nearest millisecond
-  , _msgUtcTime_year  :: !Word16
+  , _msgUtcTime_year  :: !uint32
     -- ^ Year
-  , _msgUtcTime_month :: !Word8
+  , _msgUtcTime_month :: !uint32
     -- ^ Month (range 1 .. 12)
-  , _msgUtcTime_day   :: !Word8
+  , _msgUtcTime_day   :: !uint32
     -- ^ days in the month (range 1-31)
-  , _msgUtcTime_hours :: !Word8
+  , _msgUtcTime_hours :: !uint32
     -- ^ hours of day (range 0-23)
-  , _msgUtcTime_minutes :: !Word8
+  , _msgUtcTime_minutes :: !uint32
     -- ^ minutes of hour (range 0-59)
-  , _msgUtcTime_seconds :: !Word8
+  , _msgUtcTime_seconds :: !uint32
     -- ^ seconds of minute (range 0-60) rounded down
-  , _msgUtcTime_ns    :: !Word32
+  , _msgUtcTime_ns    :: !uint32
     -- ^ nanoseconds of second (range 0-999999999)
   } deriving ( Show, Read, Eq )
 
@@ -159,19 +159,19 @@ msgDops = 0x0208
 -- indicated whether the DOP reported corresponds to differential or SPP
 -- solution.
 data MsgDops = MsgDops
-  { _msgDops_tow :: !Word32
+  { _msgDops_tow :: !uint32
     -- ^ GPS Time of Week
-  , _msgDops_gdop :: !Word16
+  , _msgDops_gdop :: !uint32
     -- ^ Geometric Dilution of Precision
-  , _msgDops_pdop :: !Word16
+  , _msgDops_pdop :: !uint32
     -- ^ Position Dilution of Precision
-  , _msgDops_tdop :: !Word16
+  , _msgDops_tdop :: !uint32
     -- ^ Time Dilution of Precision
-  , _msgDops_hdop :: !Word16
+  , _msgDops_hdop :: !uint32
     -- ^ Horizontal Dilution of Precision
-  , _msgDops_vdop :: !Word16
+  , _msgDops_vdop :: !uint32
     -- ^ Vertical Dilution of Precision
-  , _msgDops_flags :: !Word8
+  , _msgDops_flags :: !uint32
     -- ^ Indicates the position solution with which the DOPS message corresponds
   } deriving ( Show, Read, Eq )
 
@@ -212,19 +212,19 @@ msgPosEcef = 0x0209
 -- baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
 -- with the matching time-of-week (tow).
 data MsgPosEcef = MsgPosEcef
-  { _msgPosEcef_tow    :: !Word32
+  { _msgPosEcef_tow    :: !uint32
     -- ^ GPS Time of Week
-  , _msgPosEcef_x      :: !Double
+  , _msgPosEcef_x      :: !double
     -- ^ ECEF X coordinate
-  , _msgPosEcef_y      :: !Double
+  , _msgPosEcef_y      :: !double
     -- ^ ECEF Y coordinate
-  , _msgPosEcef_z      :: !Double
+  , _msgPosEcef_z      :: !double
     -- ^ ECEF Z coordinate
-  , _msgPosEcef_accuracy :: !Word16
+  , _msgPosEcef_accuracy :: !uint32
     -- ^ Position estimated standard deviation
-  , _msgPosEcef_n_sats :: !Word8
+  , _msgPosEcef_n_sats :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgPosEcef_flags  :: !Word8
+  , _msgPosEcef_flags  :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -266,29 +266,29 @@ msgPosEcefCov = 0x0214
 -- baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
 -- with the matching time-of-week (tow).
 data MsgPosEcefCov = MsgPosEcefCov
-  { _msgPosEcefCov_tow   :: !Word32
+  { _msgPosEcefCov_tow   :: !uint32
     -- ^ GPS Time of Week
-  , _msgPosEcefCov_x     :: !Double
+  , _msgPosEcefCov_x     :: !double
     -- ^ ECEF X coordinate
-  , _msgPosEcefCov_y     :: !Double
+  , _msgPosEcefCov_y     :: !double
     -- ^ ECEF Y coordinate
-  , _msgPosEcefCov_z     :: !Double
+  , _msgPosEcefCov_z     :: !double
     -- ^ ECEF Z coordinate
-  , _msgPosEcefCov_cov_x_x :: !Float
+  , _msgPosEcefCov_cov_x_x :: !float
     -- ^ Estimated variance of x
-  , _msgPosEcefCov_cov_x_y :: !Float
+  , _msgPosEcefCov_cov_x_y :: !float
     -- ^ Estimated covariance of x and y
-  , _msgPosEcefCov_cov_x_z :: !Float
+  , _msgPosEcefCov_cov_x_z :: !float
     -- ^ Estimated covariance of x and z
-  , _msgPosEcefCov_cov_y_y :: !Float
+  , _msgPosEcefCov_cov_y_y :: !float
     -- ^ Estimated variance of y
-  , _msgPosEcefCov_cov_y_z :: !Float
+  , _msgPosEcefCov_cov_y_z :: !float
     -- ^ Estimated covariance of y and z
-  , _msgPosEcefCov_cov_z_z :: !Float
+  , _msgPosEcefCov_cov_z_z :: !float
     -- ^ Estimated variance of z
-  , _msgPosEcefCov_n_sats :: !Word8
+  , _msgPosEcefCov_n_sats :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgPosEcefCov_flags :: !Word8
+  , _msgPosEcefCov_flags :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -339,21 +339,21 @@ msgPosLlh = 0x020A
 -- time is given by the preceding MSG_GPS_TIME with the matching time-of-week
 -- (tow).
 data MsgPosLlh = MsgPosLlh
-  { _msgPosLlh_tow      :: !Word32
+  { _msgPosLlh_tow      :: !uint32
     -- ^ GPS Time of Week
-  , _msgPosLlh_lat      :: !Double
+  , _msgPosLlh_lat      :: !double
     -- ^ Latitude
-  , _msgPosLlh_lon      :: !Double
+  , _msgPosLlh_lon      :: !double
     -- ^ Longitude
-  , _msgPosLlh_height   :: !Double
+  , _msgPosLlh_height   :: !double
     -- ^ Height above WGS84 ellipsoid
-  , _msgPosLlh_h_accuracy :: !Word16
+  , _msgPosLlh_h_accuracy :: !uint32
     -- ^ Horizontal position estimated standard deviation
-  , _msgPosLlh_v_accuracy :: !Word16
+  , _msgPosLlh_v_accuracy :: !uint32
     -- ^ Vertical position estimated standard deviation
-  , _msgPosLlh_n_sats   :: !Word8
+  , _msgPosLlh_n_sats   :: !uint32
     -- ^ Number of satellites used in solution.
-  , _msgPosLlh_flags    :: !Word8
+  , _msgPosLlh_flags    :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -397,29 +397,29 @@ msgPosLlhCov = 0x0211
 -- are reported against the "downward" measurement and care should be taken
 -- with the sign convention.
 data MsgPosLlhCov = MsgPosLlhCov
-  { _msgPosLlhCov_tow   :: !Word32
+  { _msgPosLlhCov_tow   :: !uint32
     -- ^ GPS Time of Week
-  , _msgPosLlhCov_lat   :: !Double
+  , _msgPosLlhCov_lat   :: !double
     -- ^ Latitude
-  , _msgPosLlhCov_lon   :: !Double
+  , _msgPosLlhCov_lon   :: !double
     -- ^ Longitude
-  , _msgPosLlhCov_height :: !Double
+  , _msgPosLlhCov_height :: !double
     -- ^ Height above WGS84 ellipsoid
-  , _msgPosLlhCov_cov_n_n :: !Float
+  , _msgPosLlhCov_cov_n_n :: !float
     -- ^ Estimated variance of northing
-  , _msgPosLlhCov_cov_n_e :: !Float
+  , _msgPosLlhCov_cov_n_e :: !float
     -- ^ Covariance of northing and easting
-  , _msgPosLlhCov_cov_n_d :: !Float
+  , _msgPosLlhCov_cov_n_d :: !float
     -- ^ Covariance of northing and downward measurement
-  , _msgPosLlhCov_cov_e_e :: !Float
+  , _msgPosLlhCov_cov_e_e :: !float
     -- ^ Estimated variance of easting
-  , _msgPosLlhCov_cov_e_d :: !Float
+  , _msgPosLlhCov_cov_e_d :: !float
     -- ^ Covariance of easting and downward measurement
-  , _msgPosLlhCov_cov_d_d :: !Float
+  , _msgPosLlhCov_cov_d_d :: !float
     -- ^ Estimated variance of downward measurement
-  , _msgPosLlhCov_n_sats :: !Word8
+  , _msgPosLlhCov_n_sats :: !uint32
     -- ^ Number of satellites used in solution.
-  , _msgPosLlhCov_flags :: !Word8
+  , _msgPosLlhCov_flags :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -467,19 +467,19 @@ msgBaselineEcef = 0x020B
 -- base station to the rover receiver. The full GPS time is given by the
 -- preceding MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgBaselineEcef = MsgBaselineEcef
-  { _msgBaselineEcef_tow    :: !Word32
+  { _msgBaselineEcef_tow    :: !uint32
     -- ^ GPS Time of Week
-  , _msgBaselineEcef_x      :: !Int32
+  , _msgBaselineEcef_x      :: !sint32
     -- ^ Baseline ECEF X coordinate
-  , _msgBaselineEcef_y      :: !Int32
+  , _msgBaselineEcef_y      :: !sint32
     -- ^ Baseline ECEF Y coordinate
-  , _msgBaselineEcef_z      :: !Int32
+  , _msgBaselineEcef_z      :: !sint32
     -- ^ Baseline ECEF Z coordinate
-  , _msgBaselineEcef_accuracy :: !Word16
+  , _msgBaselineEcef_accuracy :: !uint32
     -- ^ Position estimated standard deviation
-  , _msgBaselineEcef_n_sats :: !Word8
+  , _msgBaselineEcef_n_sats :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgBaselineEcef_flags  :: !Word8
+  , _msgBaselineEcef_flags  :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -519,21 +519,21 @@ msgBaselineNed = 0x020C
 -- GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
 -- week (tow).
 data MsgBaselineNed = MsgBaselineNed
-  { _msgBaselineNed_tow      :: !Word32
+  { _msgBaselineNed_tow      :: !uint32
     -- ^ GPS Time of Week
-  , _msgBaselineNed_n        :: !Int32
+  , _msgBaselineNed_n        :: !sint32
     -- ^ Baseline North coordinate
-  , _msgBaselineNed_e        :: !Int32
+  , _msgBaselineNed_e        :: !sint32
     -- ^ Baseline East coordinate
-  , _msgBaselineNed_d        :: !Int32
+  , _msgBaselineNed_d        :: !sint32
     -- ^ Baseline Down coordinate
-  , _msgBaselineNed_h_accuracy :: !Word16
+  , _msgBaselineNed_h_accuracy :: !uint32
     -- ^ Horizontal position estimated standard deviation
-  , _msgBaselineNed_v_accuracy :: !Word16
+  , _msgBaselineNed_v_accuracy :: !uint32
     -- ^ Vertical position estimated standard deviation
-  , _msgBaselineNed_n_sats   :: !Word8
+  , _msgBaselineNed_n_sats   :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgBaselineNed_flags    :: !Word8
+  , _msgBaselineNed_flags    :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -572,19 +572,19 @@ msgVelEcef = 0x020D
 -- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 -- the matching time-of-week (tow).
 data MsgVelEcef = MsgVelEcef
-  { _msgVelEcef_tow    :: !Word32
+  { _msgVelEcef_tow    :: !uint32
     -- ^ GPS Time of Week
-  , _msgVelEcef_x      :: !Int32
+  , _msgVelEcef_x      :: !sint32
     -- ^ Velocity ECEF X coordinate
-  , _msgVelEcef_y      :: !Int32
+  , _msgVelEcef_y      :: !sint32
     -- ^ Velocity ECEF Y coordinate
-  , _msgVelEcef_z      :: !Int32
+  , _msgVelEcef_z      :: !sint32
     -- ^ Velocity ECEF Z coordinate
-  , _msgVelEcef_accuracy :: !Word16
+  , _msgVelEcef_accuracy :: !uint32
     -- ^ Velocity estimated standard deviation
-  , _msgVelEcef_n_sats :: !Word8
+  , _msgVelEcef_n_sats :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgVelEcef_flags  :: !Word8
+  , _msgVelEcef_flags  :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -621,29 +621,29 @@ msgVelEcefCov = 0x0215
 -- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 -- the matching time-of-week (tow).
 data MsgVelEcefCov = MsgVelEcefCov
-  { _msgVelEcefCov_tow   :: !Word32
+  { _msgVelEcefCov_tow   :: !uint32
     -- ^ GPS Time of Week
-  , _msgVelEcefCov_x     :: !Int32
+  , _msgVelEcefCov_x     :: !sint32
     -- ^ Velocity ECEF X coordinate
-  , _msgVelEcefCov_y     :: !Int32
+  , _msgVelEcefCov_y     :: !sint32
     -- ^ Velocity ECEF Y coordinate
-  , _msgVelEcefCov_z     :: !Int32
+  , _msgVelEcefCov_z     :: !sint32
     -- ^ Velocity ECEF Z coordinate
-  , _msgVelEcefCov_cov_x_x :: !Float
+  , _msgVelEcefCov_cov_x_x :: !float
     -- ^ Estimated variance of x
-  , _msgVelEcefCov_cov_x_y :: !Float
+  , _msgVelEcefCov_cov_x_y :: !float
     -- ^ Estimated covariance of x and y
-  , _msgVelEcefCov_cov_x_z :: !Float
+  , _msgVelEcefCov_cov_x_z :: !float
     -- ^ Estimated covariance of x and z
-  , _msgVelEcefCov_cov_y_y :: !Float
+  , _msgVelEcefCov_cov_y_y :: !float
     -- ^ Estimated variance of y
-  , _msgVelEcefCov_cov_y_z :: !Float
+  , _msgVelEcefCov_cov_y_z :: !float
     -- ^ Estimated covariance of y and z
-  , _msgVelEcefCov_cov_z_z :: !Float
+  , _msgVelEcefCov_cov_z_z :: !float
     -- ^ Estimated variance of z
-  , _msgVelEcefCov_n_sats :: !Word8
+  , _msgVelEcefCov_n_sats :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgVelEcefCov_flags :: !Word8
+  , _msgVelEcefCov_flags :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -691,21 +691,21 @@ msgVelNed = 0x020E
 -- plane centered at the current position. The full GPS time is given by the
 -- preceding MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgVelNed = MsgVelNed
-  { _msgVelNed_tow      :: !Word32
+  { _msgVelNed_tow      :: !uint32
     -- ^ GPS Time of Week
-  , _msgVelNed_n        :: !Int32
+  , _msgVelNed_n        :: !sint32
     -- ^ Velocity North coordinate
-  , _msgVelNed_e        :: !Int32
+  , _msgVelNed_e        :: !sint32
     -- ^ Velocity East coordinate
-  , _msgVelNed_d        :: !Int32
+  , _msgVelNed_d        :: !sint32
     -- ^ Velocity Down coordinate
-  , _msgVelNed_h_accuracy :: !Word16
+  , _msgVelNed_h_accuracy :: !uint32
     -- ^ Horizontal velocity estimated standard deviation
-  , _msgVelNed_v_accuracy :: !Word16
+  , _msgVelNed_v_accuracy :: !uint32
     -- ^ Vertical velocity estimated standard deviation
-  , _msgVelNed_n_sats   :: !Word8
+  , _msgVelNed_n_sats   :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgVelNed_flags    :: !Word8
+  , _msgVelNed_flags    :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -747,29 +747,29 @@ msgVelNedCov = 0x0212
 -- similar to the MSG_VEL_NED, but it includes the upper triangular portion of
 -- the 3x3 covariance matrix.
 data MsgVelNedCov = MsgVelNedCov
-  { _msgVelNedCov_tow   :: !Word32
+  { _msgVelNedCov_tow   :: !uint32
     -- ^ GPS Time of Week
-  , _msgVelNedCov_n     :: !Int32
+  , _msgVelNedCov_n     :: !sint32
     -- ^ Velocity North coordinate
-  , _msgVelNedCov_e     :: !Int32
+  , _msgVelNedCov_e     :: !sint32
     -- ^ Velocity East coordinate
-  , _msgVelNedCov_d     :: !Int32
+  , _msgVelNedCov_d     :: !sint32
     -- ^ Velocity Down coordinate
-  , _msgVelNedCov_cov_n_n :: !Float
+  , _msgVelNedCov_cov_n_n :: !float
     -- ^ Estimated variance of northward measurement
-  , _msgVelNedCov_cov_n_e :: !Float
+  , _msgVelNedCov_cov_n_e :: !float
     -- ^ Covariance of northward and eastward measurement
-  , _msgVelNedCov_cov_n_d :: !Float
+  , _msgVelNedCov_cov_n_d :: !float
     -- ^ Covariance of northward and downward measurement
-  , _msgVelNedCov_cov_e_e :: !Float
+  , _msgVelNedCov_cov_e_e :: !float
     -- ^ Estimated variance of eastward measurement
-  , _msgVelNedCov_cov_e_d :: !Float
+  , _msgVelNedCov_cov_e_d :: !float
     -- ^ Covariance of eastward and downward measurement
-  , _msgVelNedCov_cov_d_d :: !Float
+  , _msgVelNedCov_cov_d_d :: !float
     -- ^ Estimated variance of downward measurement
-  , _msgVelNedCov_n_sats :: !Word8
+  , _msgVelNedCov_n_sats :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgVelNedCov_flags :: !Word8
+  , _msgVelNedCov_flags :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -820,29 +820,29 @@ msgVelBody = 0x0213
 -- are specified via the device settings. The full GPS time is given by the
 -- preceding MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgVelBody = MsgVelBody
-  { _msgVelBody_tow   :: !Word32
+  { _msgVelBody_tow   :: !uint32
     -- ^ GPS Time of Week
-  , _msgVelBody_x     :: !Int32
+  , _msgVelBody_x     :: !sint32
     -- ^ Velocity in x direction
-  , _msgVelBody_y     :: !Int32
+  , _msgVelBody_y     :: !sint32
     -- ^ Velocity in y direction
-  , _msgVelBody_z     :: !Int32
+  , _msgVelBody_z     :: !sint32
     -- ^ Velocity in z direction
-  , _msgVelBody_cov_x_x :: !Float
+  , _msgVelBody_cov_x_x :: !float
     -- ^ Estimated variance of x
-  , _msgVelBody_cov_x_y :: !Float
+  , _msgVelBody_cov_x_y :: !float
     -- ^ Covariance of x and y
-  , _msgVelBody_cov_x_z :: !Float
+  , _msgVelBody_cov_x_z :: !float
     -- ^ Covariance of x and z
-  , _msgVelBody_cov_y_y :: !Float
+  , _msgVelBody_cov_y_y :: !float
     -- ^ Estimated variance of y
-  , _msgVelBody_cov_y_z :: !Float
+  , _msgVelBody_cov_y_z :: !float
     -- ^ Covariance of y and z
-  , _msgVelBody_cov_z_z :: !Float
+  , _msgVelBody_cov_z_z :: !float
     -- ^ Estimated variance of z
-  , _msgVelBody_n_sats :: !Word8
+  , _msgVelBody_n_sats :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgVelBody_flags :: !Word8
+  , _msgVelBody_flags :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -888,9 +888,9 @@ msgAgeCorrections = 0x0210
 -- This message reports the Age of the corrections used for the current
 -- Differential solution
 data MsgAgeCorrections = MsgAgeCorrections
-  { _msgAgeCorrections_tow :: !Word32
+  { _msgAgeCorrections_tow :: !uint32
     -- ^ GPS Time of Week
-  , _msgAgeCorrections_age :: !Word16
+  , _msgAgeCorrections_age :: !uint32
     -- ^ Age of the corrections (0xFFFF indicates invalid)
   } deriving ( Show, Read, Eq )
 
@@ -923,14 +923,14 @@ msgGpsTimeDepA = 0x0100
 -- other navigation messages referenced to the same time (but lacking the ns
 -- field) and indicates a more precise time of these messages.
 data MsgGpsTimeDepA = MsgGpsTimeDepA
-  { _msgGpsTimeDepA_wn        :: !Word16
+  { _msgGpsTimeDepA_wn        :: !uint32
     -- ^ GPS week number
-  , _msgGpsTimeDepA_tow       :: !Word32
+  , _msgGpsTimeDepA_tow       :: !uint32
     -- ^ GPS time of week rounded to the nearest millisecond
-  , _msgGpsTimeDepA_ns_residual :: !Int32
+  , _msgGpsTimeDepA_ns_residual :: !sint32
     -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     -- 500000)
-  , _msgGpsTimeDepA_flags     :: !Word8
+  , _msgGpsTimeDepA_flags     :: !uint32
     -- ^ Status flags (reserved)
   } deriving ( Show, Read, Eq )
 
@@ -960,17 +960,17 @@ msgDopsDepA = 0x0206
 -- This dilution of precision (DOP) message describes the effect of navigation
 -- satellite geometry on positional measurement precision.
 data MsgDopsDepA = MsgDopsDepA
-  { _msgDopsDepA_tow :: !Word32
+  { _msgDopsDepA_tow :: !uint32
     -- ^ GPS Time of Week
-  , _msgDopsDepA_gdop :: !Word16
+  , _msgDopsDepA_gdop :: !uint32
     -- ^ Geometric Dilution of Precision
-  , _msgDopsDepA_pdop :: !Word16
+  , _msgDopsDepA_pdop :: !uint32
     -- ^ Position Dilution of Precision
-  , _msgDopsDepA_tdop :: !Word16
+  , _msgDopsDepA_tdop :: !uint32
     -- ^ Time Dilution of Precision
-  , _msgDopsDepA_hdop :: !Word16
+  , _msgDopsDepA_hdop :: !uint32
     -- ^ Horizontal Dilution of Precision
-  , _msgDopsDepA_vdop :: !Word16
+  , _msgDopsDepA_vdop :: !uint32
     -- ^ Vertical Dilution of Precision
   } deriving ( Show, Read, Eq )
 
@@ -1009,19 +1009,19 @@ msgPosEcefDepA = 0x0200
 -- baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
 -- with the matching time-of-week (tow).
 data MsgPosEcefDepA = MsgPosEcefDepA
-  { _msgPosEcefDepA_tow    :: !Word32
+  { _msgPosEcefDepA_tow    :: !uint32
     -- ^ GPS Time of Week
-  , _msgPosEcefDepA_x      :: !Double
+  , _msgPosEcefDepA_x      :: !double
     -- ^ ECEF X coordinate
-  , _msgPosEcefDepA_y      :: !Double
+  , _msgPosEcefDepA_y      :: !double
     -- ^ ECEF Y coordinate
-  , _msgPosEcefDepA_z      :: !Double
+  , _msgPosEcefDepA_z      :: !double
     -- ^ ECEF Z coordinate
-  , _msgPosEcefDepA_accuracy :: !Word16
+  , _msgPosEcefDepA_accuracy :: !uint32
     -- ^ Position accuracy estimate (not implemented). Defaults to 0.
-  , _msgPosEcefDepA_n_sats :: !Word8
+  , _msgPosEcefDepA_n_sats :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgPosEcefDepA_flags  :: !Word8
+  , _msgPosEcefDepA_flags  :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -1062,21 +1062,21 @@ msgPosLlhDepA = 0x0201
 -- time is given by the preceding MSG_GPS_TIME with the matching time-of-week
 -- (tow).
 data MsgPosLlhDepA = MsgPosLlhDepA
-  { _msgPosLlhDepA_tow      :: !Word32
+  { _msgPosLlhDepA_tow      :: !uint32
     -- ^ GPS Time of Week
-  , _msgPosLlhDepA_lat      :: !Double
+  , _msgPosLlhDepA_lat      :: !double
     -- ^ Latitude
-  , _msgPosLlhDepA_lon      :: !Double
+  , _msgPosLlhDepA_lon      :: !double
     -- ^ Longitude
-  , _msgPosLlhDepA_height   :: !Double
+  , _msgPosLlhDepA_height   :: !double
     -- ^ Height
-  , _msgPosLlhDepA_h_accuracy :: !Word16
+  , _msgPosLlhDepA_h_accuracy :: !uint32
     -- ^ Horizontal position accuracy estimate (not implemented). Defaults to 0.
-  , _msgPosLlhDepA_v_accuracy :: !Word16
+  , _msgPosLlhDepA_v_accuracy :: !uint32
     -- ^ Vertical position accuracy estimate (not implemented). Defaults to 0.
-  , _msgPosLlhDepA_n_sats   :: !Word8
+  , _msgPosLlhDepA_n_sats   :: !uint32
     -- ^ Number of satellites used in solution.
-  , _msgPosLlhDepA_flags    :: !Word8
+  , _msgPosLlhDepA_flags    :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -1116,19 +1116,19 @@ msgBaselineEcefDepA = 0x0202
 -- base station to the rover receiver. The full GPS time is given by the
 -- preceding MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgBaselineEcefDepA = MsgBaselineEcefDepA
-  { _msgBaselineEcefDepA_tow    :: !Word32
+  { _msgBaselineEcefDepA_tow    :: !uint32
     -- ^ GPS Time of Week
-  , _msgBaselineEcefDepA_x      :: !Int32
+  , _msgBaselineEcefDepA_x      :: !sint32
     -- ^ Baseline ECEF X coordinate
-  , _msgBaselineEcefDepA_y      :: !Int32
+  , _msgBaselineEcefDepA_y      :: !sint32
     -- ^ Baseline ECEF Y coordinate
-  , _msgBaselineEcefDepA_z      :: !Int32
+  , _msgBaselineEcefDepA_z      :: !sint32
     -- ^ Baseline ECEF Z coordinate
-  , _msgBaselineEcefDepA_accuracy :: !Word16
+  , _msgBaselineEcefDepA_accuracy :: !uint32
     -- ^ Position accuracy estimate
-  , _msgBaselineEcefDepA_n_sats :: !Word8
+  , _msgBaselineEcefDepA_n_sats :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgBaselineEcefDepA_flags  :: !Word8
+  , _msgBaselineEcefDepA_flags  :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -1168,21 +1168,21 @@ msgBaselineNedDepA = 0x0203
 -- GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
 -- week (tow).
 data MsgBaselineNedDepA = MsgBaselineNedDepA
-  { _msgBaselineNedDepA_tow      :: !Word32
+  { _msgBaselineNedDepA_tow      :: !uint32
     -- ^ GPS Time of Week
-  , _msgBaselineNedDepA_n        :: !Int32
+  , _msgBaselineNedDepA_n        :: !sint32
     -- ^ Baseline North coordinate
-  , _msgBaselineNedDepA_e        :: !Int32
+  , _msgBaselineNedDepA_e        :: !sint32
     -- ^ Baseline East coordinate
-  , _msgBaselineNedDepA_d        :: !Int32
+  , _msgBaselineNedDepA_d        :: !sint32
     -- ^ Baseline Down coordinate
-  , _msgBaselineNedDepA_h_accuracy :: !Word16
+  , _msgBaselineNedDepA_h_accuracy :: !uint32
     -- ^ Horizontal position accuracy estimate (not implemented). Defaults to 0.
-  , _msgBaselineNedDepA_v_accuracy :: !Word16
+  , _msgBaselineNedDepA_v_accuracy :: !uint32
     -- ^ Vertical position accuracy estimate (not implemented). Defaults to 0.
-  , _msgBaselineNedDepA_n_sats   :: !Word8
+  , _msgBaselineNedDepA_n_sats   :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgBaselineNedDepA_flags    :: !Word8
+  , _msgBaselineNedDepA_flags    :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -1221,19 +1221,19 @@ msgVelEcefDepA = 0x0204
 -- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 -- the matching time-of-week (tow).
 data MsgVelEcefDepA = MsgVelEcefDepA
-  { _msgVelEcefDepA_tow    :: !Word32
+  { _msgVelEcefDepA_tow    :: !uint32
     -- ^ GPS Time of Week
-  , _msgVelEcefDepA_x      :: !Int32
+  , _msgVelEcefDepA_x      :: !sint32
     -- ^ Velocity ECEF X coordinate
-  , _msgVelEcefDepA_y      :: !Int32
+  , _msgVelEcefDepA_y      :: !sint32
     -- ^ Velocity ECEF Y coordinate
-  , _msgVelEcefDepA_z      :: !Int32
+  , _msgVelEcefDepA_z      :: !sint32
     -- ^ Velocity ECEF Z coordinate
-  , _msgVelEcefDepA_accuracy :: !Word16
+  , _msgVelEcefDepA_accuracy :: !uint32
     -- ^ Velocity accuracy estimate (not implemented). Defaults to 0.
-  , _msgVelEcefDepA_n_sats :: !Word8
+  , _msgVelEcefDepA_n_sats :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgVelEcefDepA_flags  :: !Word8
+  , _msgVelEcefDepA_flags  :: !uint32
     -- ^ Status flags (reserved)
   } deriving ( Show, Read, Eq )
 
@@ -1271,21 +1271,21 @@ msgVelNedDepA = 0x0205
 -- plane centered at the current position. The full GPS time is given by the
 -- preceding MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgVelNedDepA = MsgVelNedDepA
-  { _msgVelNedDepA_tow      :: !Word32
+  { _msgVelNedDepA_tow      :: !uint32
     -- ^ GPS Time of Week
-  , _msgVelNedDepA_n        :: !Int32
+  , _msgVelNedDepA_n        :: !sint32
     -- ^ Velocity North coordinate
-  , _msgVelNedDepA_e        :: !Int32
+  , _msgVelNedDepA_e        :: !sint32
     -- ^ Velocity East coordinate
-  , _msgVelNedDepA_d        :: !Int32
+  , _msgVelNedDepA_d        :: !sint32
     -- ^ Velocity Down coordinate
-  , _msgVelNedDepA_h_accuracy :: !Word16
+  , _msgVelNedDepA_h_accuracy :: !uint32
     -- ^ Horizontal velocity accuracy estimate (not implemented). Defaults to 0.
-  , _msgVelNedDepA_v_accuracy :: !Word16
+  , _msgVelNedDepA_v_accuracy :: !uint32
     -- ^ Vertical velocity accuracy estimate (not implemented). Defaults to 0.
-  , _msgVelNedDepA_n_sats   :: !Word8
+  , _msgVelNedDepA_n_sats   :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgVelNedDepA_flags    :: !Word8
+  , _msgVelNedDepA_flags    :: !uint32
     -- ^ Status flags (reserved)
   } deriving ( Show, Read, Eq )
 
@@ -1324,13 +1324,13 @@ msgBaselineHeadingDepA = 0x0207
 -- the rover relative to True North. The full GPS time is given by the
 -- preceding MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgBaselineHeadingDepA = MsgBaselineHeadingDepA
-  { _msgBaselineHeadingDepA_tow   :: !Word32
+  { _msgBaselineHeadingDepA_tow   :: !uint32
     -- ^ GPS Time of Week
-  , _msgBaselineHeadingDepA_heading :: !Word32
+  , _msgBaselineHeadingDepA_heading :: !uint32
     -- ^ Heading
-  , _msgBaselineHeadingDepA_n_sats :: !Word8
+  , _msgBaselineHeadingDepA_n_sats :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgBaselineHeadingDepA_flags :: !Word8
+  , _msgBaselineHeadingDepA_flags :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 

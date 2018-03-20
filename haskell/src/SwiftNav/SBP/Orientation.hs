@@ -44,13 +44,13 @@ msgBaselineHeading = 0x020F
 -- preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
 -- that time-matched RTK mode is used when the base station is moving.
 data MsgBaselineHeading = MsgBaselineHeading
-  { _msgBaselineHeading_tow   :: !Word32
+  { _msgBaselineHeading_tow   :: !uint32
     -- ^ GPS Time of Week
-  , _msgBaselineHeading_heading :: !Word32
+  , _msgBaselineHeading_heading :: !uint32
     -- ^ Heading
-  , _msgBaselineHeading_n_sats :: !Word8
+  , _msgBaselineHeading_n_sats :: !uint32
     -- ^ Number of satellites used in solution
-  , _msgBaselineHeading_flags :: !Word8
+  , _msgBaselineHeading_flags :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -82,25 +82,25 @@ msgOrientQuat = 0x0220
 -- of the vector should sum to a unit vector assuming that the LSB of each
 -- component as a value of 2^-31.
 data MsgOrientQuat = MsgOrientQuat
-  { _msgOrientQuat_tow :: !Word32
+  { _msgOrientQuat_tow :: !uint32
     -- ^ GPS Time of Week
-  , _msgOrientQuat_w   :: !Int32
+  , _msgOrientQuat_w   :: !sint32
     -- ^ Real component
-  , _msgOrientQuat_x   :: !Int32
+  , _msgOrientQuat_x   :: !sint32
     -- ^ 1st imaginary component
-  , _msgOrientQuat_y   :: !Int32
+  , _msgOrientQuat_y   :: !sint32
     -- ^ 2nd imaginary component
-  , _msgOrientQuat_z   :: !Int32
+  , _msgOrientQuat_z   :: !sint32
     -- ^ 3rd imaginary component
-  , _msgOrientQuat_acc_w :: !Float
+  , _msgOrientQuat_acc_w :: !float
     -- ^ Estimated standard deviation of w
-  , _msgOrientQuat_acc_x :: !Float
+  , _msgOrientQuat_acc_x :: !float
     -- ^ Estimated standard deviation of x
-  , _msgOrientQuat_acc_y :: !Float
+  , _msgOrientQuat_acc_y :: !float
     -- ^ Estimated standard deviation of y
-  , _msgOrientQuat_acc_z :: !Float
+  , _msgOrientQuat_acc_z :: !float
     -- ^ Estimated standard deviation of z
-  , _msgOrientQuat_flags :: !Word8
+  , _msgOrientQuat_flags :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -144,21 +144,21 @@ msgOrientEuler = 0x0221
 -- and roll  in order to rotate the from a frame aligned with the local-level
 -- NED frame  to the vehicle body frame.
 data MsgOrientEuler = MsgOrientEuler
-  { _msgOrientEuler_tow     :: !Word32
+  { _msgOrientEuler_tow     :: !uint32
     -- ^ GPS Time of Week
-  , _msgOrientEuler_roll    :: !Int32
+  , _msgOrientEuler_roll    :: !sint32
     -- ^ rotation about the forward axis of the vehicle
-  , _msgOrientEuler_pitch   :: !Int32
+  , _msgOrientEuler_pitch   :: !sint32
     -- ^ rotation about the rightward axis of the vehicle
-  , _msgOrientEuler_yaw     :: !Int32
+  , _msgOrientEuler_yaw     :: !sint32
     -- ^ rotation about the downward axis of the vehicle
-  , _msgOrientEuler_var_roll :: !Float
+  , _msgOrientEuler_var_roll :: !float
     -- ^ Estimated standard deviation of roll
-  , _msgOrientEuler_var_pitch :: !Float
+  , _msgOrientEuler_var_pitch :: !float
     -- ^ Estimated standard deviation of pitch
-  , _msgOrientEuler_var_yaw :: !Float
+  , _msgOrientEuler_var_yaw :: !float
     -- ^ Estimated standard deviation of yaw
-  , _msgOrientEuler_flags   :: !Word8
+  , _msgOrientEuler_flags   :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -201,15 +201,15 @@ msgAngularRate = 0x0222
 -- direction, while the vehicle y-axis is expected to be aligned with the right
 -- direction, and the vehicle z-axis should be aligned with the down direction.
 data MsgAngularRate = MsgAngularRate
-  { _msgAngularRate_tow :: !Word32
+  { _msgAngularRate_tow :: !uint32
     -- ^ GPS Time of Week
-  , _msgAngularRate_x   :: !Int32
+  , _msgAngularRate_x   :: !sint32
     -- ^ angular rate about x axis
-  , _msgAngularRate_y   :: !Int32
+  , _msgAngularRate_y   :: !sint32
     -- ^ angular rate about y axis
-  , _msgAngularRate_z   :: !Int32
+  , _msgAngularRate_z   :: !sint32
     -- ^ angular rate about z axis
-  , _msgAngularRate_flags :: !Word8
+  , _msgAngularRate_flags :: !uint32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 

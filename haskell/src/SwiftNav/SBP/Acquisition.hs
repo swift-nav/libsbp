@@ -46,13 +46,13 @@ msgAcqResult = 0x002F
 -- contains the parameters of the point in the acquisition search space with
 -- the best carrier-to-noise (CN/0) ratio.
 data MsgAcqResult = MsgAcqResult
-  { _msgAcqResult_cn0 :: !Float
+  { _msgAcqResult_cn0 :: !float
     -- ^ CN/0 of best point
-  , _msgAcqResult_cp :: !Float
+  , _msgAcqResult_cp :: !float
     -- ^ Code phase of best point
-  , _msgAcqResult_cf :: !Float
+  , _msgAcqResult_cf :: !float
     -- ^ Carrier frequency of best point
-  , _msgAcqResult_sid :: !GnssSignal
+  , _msgAcqResult_sid :: !gnss.GnssSignal
     -- ^ GNSS signal for which acquisition was attempted
   } deriving ( Show, Read, Eq )
 
@@ -81,11 +81,11 @@ msgAcqResultDepC = 0x001F
 --
 -- Deprecated.
 data MsgAcqResultDepC = MsgAcqResultDepC
-  { _msgAcqResultDepC_cn0 :: !Float
+  { _msgAcqResultDepC_cn0 :: !float
     -- ^ CN/0 of best point
-  , _msgAcqResultDepC_cp :: !Float
+  , _msgAcqResultDepC_cp :: !float
     -- ^ Code phase of best point
-  , _msgAcqResultDepC_cf :: !Float
+  , _msgAcqResultDepC_cf :: !float
     -- ^ Carrier frequency of best point
   , _msgAcqResultDepC_sid :: !GnssSignalDep
     -- ^ GNSS signal for which acquisition was attempted
@@ -116,12 +116,12 @@ msgAcqResultDepB = 0x0014
 --
 -- Deprecated.
 data MsgAcqResultDepB = MsgAcqResultDepB
-  { _msgAcqResultDepB_snr :: !Float
+  { _msgAcqResultDepB_snr :: !float
     -- ^ SNR of best point. Currently in arbitrary SNR points, but will be in
     -- units of dB Hz in a later revision of this message.
-  , _msgAcqResultDepB_cp :: !Float
+  , _msgAcqResultDepB_cp :: !float
     -- ^ Code phase of best point
-  , _msgAcqResultDepB_cf :: !Float
+  , _msgAcqResultDepB_cf :: !float
     -- ^ Carrier frequency of best point
   , _msgAcqResultDepB_sid :: !GnssSignalDep
     -- ^ GNSS signal for which acquisition was attempted
@@ -152,14 +152,14 @@ msgAcqResultDepA = 0x0015
 --
 -- Deprecated.
 data MsgAcqResultDepA = MsgAcqResultDepA
-  { _msgAcqResultDepA_snr :: !Float
+  { _msgAcqResultDepA_snr :: !float
     -- ^ SNR of best point. Currently dimensonless, but will have units of dB Hz
     -- in the revision of this message.
-  , _msgAcqResultDepA_cp :: !Float
+  , _msgAcqResultDepA_cp :: !float
     -- ^ Code phase of best point
-  , _msgAcqResultDepA_cf :: !Float
+  , _msgAcqResultDepA_cf :: !float
     -- ^ Carrier frequency of best point
-  , _msgAcqResultDepA_prn :: !Word8
+  , _msgAcqResultDepA_prn :: !uint32
     -- ^ PRN-1 identifier of the satellite signal for which acquisition was
     -- attempted
   } deriving ( Show, Read, Eq )
@@ -188,29 +188,29 @@ $(makeLenses ''MsgAcqResultDepA)
 -- profile during acquisition time. The message is used to debug and measure
 -- the performance.
 data AcqSvProfile = AcqSvProfile
-  { _acqSvProfile_job_type :: !Word8
+  { _acqSvProfile_job_type :: !uint32
     -- ^ SV search job type (deep, fallback, etc)
-  , _acqSvProfile_status   :: !Word8
+  , _acqSvProfile_status   :: !uint32
     -- ^ Acquisition status 1 is Success, 0 is Failure
-  , _acqSvProfile_cn0      :: !Word16
+  , _acqSvProfile_cn0      :: !uint32
     -- ^ CN0 value. Only valid if status is '1'
-  , _acqSvProfile_int_time :: !Word8
+  , _acqSvProfile_int_time :: !uint32
     -- ^ Acquisition integration time
-  , _acqSvProfile_sid      :: !GnssSignal
+  , _acqSvProfile_sid      :: !gnss.GnssSignal
     -- ^ GNSS signal for which acquisition was attempted
-  , _acqSvProfile_bin_width :: !Word16
+  , _acqSvProfile_bin_width :: !uint32
     -- ^ Acq frequency bin width
-  , _acqSvProfile_timestamp :: !Word32
+  , _acqSvProfile_timestamp :: !uint32
     -- ^ Timestamp of the job complete event
-  , _acqSvProfile_time_spent :: !Word32
+  , _acqSvProfile_time_spent :: !uint32
     -- ^ Time spent to search for sid.code
-  , _acqSvProfile_cf_min   :: !Int32
+  , _acqSvProfile_cf_min   :: !sint32
     -- ^ Doppler range lowest frequency
-  , _acqSvProfile_cf_max   :: !Int32
+  , _acqSvProfile_cf_max   :: !sint32
     -- ^ Doppler range highest frequency
-  , _acqSvProfile_cf       :: !Int32
+  , _acqSvProfile_cf       :: !sint32
     -- ^ Doppler value of detected peak. Only valid if status is '1'
-  , _acqSvProfile_cp       :: !Word32
+  , _acqSvProfile_cp       :: !uint32
     -- ^ Codephase of detected peak. Only valid if status is '1'
   } deriving ( Show, Read, Eq )
 
@@ -251,29 +251,29 @@ $(makeLenses ''AcqSvProfile)
 --
 -- Deprecated.
 data AcqSvProfileDep = AcqSvProfileDep
-  { _acqSvProfileDep_job_type :: !Word8
+  { _acqSvProfileDep_job_type :: !uint32
     -- ^ SV search job type (deep, fallback, etc)
-  , _acqSvProfileDep_status   :: !Word8
+  , _acqSvProfileDep_status   :: !uint32
     -- ^ Acquisition status 1 is Success, 0 is Failure
-  , _acqSvProfileDep_cn0      :: !Word16
+  , _acqSvProfileDep_cn0      :: !uint32
     -- ^ CN0 value. Only valid if status is '1'
-  , _acqSvProfileDep_int_time :: !Word8
+  , _acqSvProfileDep_int_time :: !uint32
     -- ^ Acquisition integration time
   , _acqSvProfileDep_sid      :: !GnssSignalDep
     -- ^ GNSS signal for which acquisition was attempted
-  , _acqSvProfileDep_bin_width :: !Word16
+  , _acqSvProfileDep_bin_width :: !uint32
     -- ^ Acq frequency bin width
-  , _acqSvProfileDep_timestamp :: !Word32
+  , _acqSvProfileDep_timestamp :: !uint32
     -- ^ Timestamp of the job complete event
-  , _acqSvProfileDep_time_spent :: !Word32
+  , _acqSvProfileDep_time_spent :: !uint32
     -- ^ Time spent to search for sid.code
-  , _acqSvProfileDep_cf_min   :: !Int32
+  , _acqSvProfileDep_cf_min   :: !sint32
     -- ^ Doppler range lowest frequency
-  , _acqSvProfileDep_cf_max   :: !Int32
+  , _acqSvProfileDep_cf_max   :: !sint32
     -- ^ Doppler range highest frequency
-  , _acqSvProfileDep_cf       :: !Int32
+  , _acqSvProfileDep_cf       :: !sint32
     -- ^ Doppler value of detected peak. Only valid if status is '1'
-  , _acqSvProfileDep_cp       :: !Word32
+  , _acqSvProfileDep_cp       :: !uint32
     -- ^ Codephase of detected peak. Only valid if status is '1'
   } deriving ( Show, Read, Eq )
 
@@ -318,7 +318,7 @@ msgAcqSvProfile = 0x002E
 -- The message describes all SV profiles during acquisition time. The message
 -- is used to debug and measure the performance.
 data MsgAcqSvProfile = MsgAcqSvProfile
-  { _msgAcqSvProfile_acq_sv_profile :: ![AcqSvProfile]
+  { _msgAcqSvProfile_acq_sv_profile :: !repeated AcqSvProfile
     -- ^ SV profiles during acquisition time
   } deriving ( Show, Read, Eq )
 
@@ -341,7 +341,7 @@ msgAcqSvProfileDep = 0x001E
 --
 -- Deprecated.
 data MsgAcqSvProfileDep = MsgAcqSvProfileDep
-  { _msgAcqSvProfileDep_acq_sv_profile :: ![AcqSvProfileDep]
+  { _msgAcqSvProfileDep_acq_sv_profile :: !repeated AcqSvProfileDep
     -- ^ SV profiles during acquisition time
   } deriving ( Show, Read, Eq )
 

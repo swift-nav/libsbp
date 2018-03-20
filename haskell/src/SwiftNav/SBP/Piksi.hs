@@ -85,7 +85,7 @@ msgReset = 0x00B6
 --
 -- This message from the host resets the Piksi back into the bootloader.
 data MsgReset = MsgReset
-  { _msgReset_flags :: !Word32
+  { _msgReset_flags :: !uint32
     -- ^ Reset flags
   } deriving ( Show, Read, Eq )
 
@@ -170,7 +170,7 @@ msgResetFilters = 0x0022
 -- This message resets either the DGNSS Kalman filters or Integer Ambiguity
 -- Resolution (IAR) process.
 data MsgResetFilters = MsgResetFilters
-  { _msgResetFilters_filter :: !Word8
+  { _msgResetFilters_filter :: !uint32
     -- ^ Filter flags
   } deriving ( Show, Read, Eq )
 
@@ -217,12 +217,12 @@ msgThreadState = 0x0017
 -- (RTOS) thread usage statistics for the named thread. The reported percentage
 -- values must be normalized.
 data MsgThreadState = MsgThreadState
-  { _msgThreadState_name     :: !Text
+  { _msgThreadState_name     :: !string
     -- ^ Thread name (NULL terminated)
-  , _msgThreadState_cpu      :: !Word16
+  , _msgThreadState_cpu      :: !uint32
     -- ^ Percentage cpu use for this thread. Values range from 0 - 1000 and needs
     -- to be renormalized to 100
-  , _msgThreadState_stack_free :: !Word32
+  , _msgThreadState_stack_free :: !uint32
     -- ^ Free stack space for this thread
   } deriving ( Show, Read, Eq )
 
@@ -247,17 +247,17 @@ $(makeLenses ''MsgThreadState)
 -- Throughput, utilization, and error counts on the RX/TX buffers of this UART
 -- channel. The reported percentage values must be normalized.
 data UARTChannel = UARTChannel
-  { _uARTChannel_tx_throughput :: !Float
+  { _uARTChannel_tx_throughput :: !float
     -- ^ UART transmit throughput
-  , _uARTChannel_rx_throughput :: !Float
+  , _uARTChannel_rx_throughput :: !float
     -- ^ UART receive throughput
-  , _uARTChannel_crc_error_count :: !Word16
+  , _uARTChannel_crc_error_count :: !uint32
     -- ^ UART CRC error count
-  , _uARTChannel_io_error_count :: !Word16
+  , _uARTChannel_io_error_count :: !uint32
     -- ^ UART IO error count
-  , _uARTChannel_tx_buffer_level :: !Word8
+  , _uARTChannel_tx_buffer_level :: !uint32
     -- ^ UART transmit buffer percentage utilization (ranges from 0 to 255)
-  , _uARTChannel_rx_buffer_level :: !Word8
+  , _uARTChannel_rx_buffer_level :: !uint32
     -- ^ UART receive buffer percentage utilization (ranges from 0 to 255)
   } deriving ( Show, Read, Eq )
 
@@ -290,13 +290,13 @@ $(makeLenses ''UARTChannel)
 -- for link quality as incomplete or missing sets will increase the period.
 -- Long periods can cause momentary RTK solution outages.
 data Period = Period
-  { _period_avg   :: !Int32
+  { _period_avg   :: !sint32
     -- ^ Average period
-  , _period_pmin  :: !Int32
+  , _period_pmin  :: !sint32
     -- ^ Minimum period
-  , _period_pmax  :: !Int32
+  , _period_pmax  :: !sint32
     -- ^ Maximum period
-  , _period_current :: !Int32
+  , _period_current :: !sint32
     -- ^ Smoothed estimate of the current period
   } deriving ( Show, Read, Eq )
 
@@ -324,13 +324,13 @@ $(makeLenses ''Period)
 -- GPS time calculated locally by the receiver to give a precise measurement of
 -- the end-to-end communication latency in the system.
 data Latency = Latency
-  { _latency_avg   :: !Int32
+  { _latency_avg   :: !sint32
     -- ^ Average latency
-  , _latency_lmin  :: !Int32
+  , _latency_lmin  :: !sint32
     -- ^ Minimum latency
-  , _latency_lmax  :: !Int32
+  , _latency_lmax  :: !sint32
     -- ^ Maximum latency
-  , _latency_current :: !Int32
+  , _latency_current :: !sint32
     -- ^ Smoothed estimate of the current latency
   } deriving ( Show, Read, Eq )
 
@@ -441,7 +441,7 @@ msgIarState = 0x0019
 -- process, which resolves unknown integer ambiguities from double-differenced
 -- carrier-phase measurements from satellite observations.
 data MsgIarState = MsgIarState
-  { _msgIarState_num_hyps :: !Word32
+  { _msgIarState_num_hyps :: !uint32
     -- ^ Number of integer ambiguity hypotheses remaining
   } deriving ( Show, Read, Eq )
 
@@ -465,9 +465,9 @@ msgMaskSatellite = 0x002B
 -- This message allows setting a mask to prevent a particular satellite from
 -- being used in various Piksi subsystems.
 data MsgMaskSatellite = MsgMaskSatellite
-  { _msgMaskSatellite_mask :: !Word8
+  { _msgMaskSatellite_mask :: !uint32
     -- ^ Mask of systems that should ignore this satellite.
-  , _msgMaskSatellite_sid :: !GnssSignal
+  , _msgMaskSatellite_sid :: !gnss.GnssSignal
     -- ^ GNSS signal for which the mask is applied
   } deriving ( Show, Read, Eq )
 
@@ -492,7 +492,7 @@ msgMaskSatelliteDep = 0x001B
 --
 -- Deprecated.
 data MsgMaskSatelliteDep = MsgMaskSatelliteDep
-  { _msgMaskSatelliteDep_mask :: !Word8
+  { _msgMaskSatelliteDep_mask :: !uint32
     -- ^ Mask of systems that should ignore this satellite.
   , _msgMaskSatelliteDep_sid :: !GnssSignalDep
     -- ^ GNSS signal for which the mask is applied
@@ -521,15 +521,15 @@ msgDeviceMonitor = 0x00B5
 -- processor's monitoring system and the RF frontend die temperature if
 -- available.
 data MsgDeviceMonitor = MsgDeviceMonitor
-  { _msgDeviceMonitor_dev_vin       :: !Int16
+  { _msgDeviceMonitor_dev_vin       :: !sint32
     -- ^ Device V_in
-  , _msgDeviceMonitor_cpu_vint      :: !Int16
+  , _msgDeviceMonitor_cpu_vint      :: !sint32
     -- ^ Processor V_int
-  , _msgDeviceMonitor_cpu_vaux      :: !Int16
+  , _msgDeviceMonitor_cpu_vaux      :: !sint32
     -- ^ Processor V_aux
-  , _msgDeviceMonitor_cpu_temperature :: !Int16
+  , _msgDeviceMonitor_cpu_temperature :: !sint32
     -- ^ Processor temperature
-  , _msgDeviceMonitor_fe_temperature :: !Int16
+  , _msgDeviceMonitor_fe_temperature :: !sint32
     -- ^ Frontend temperature (if available)
   } deriving ( Show, Read, Eq )
 
@@ -561,9 +561,9 @@ msgCommandReq = 0x00B8
 -- Request the recipient to execute an command. Output will be sent in MSG_LOG
 -- messages, and the exit code will be returned with MSG_COMMAND_RESP.
 data MsgCommandReq = MsgCommandReq
-  { _msgCommandReq_sequence :: !Word32
+  { _msgCommandReq_sequence :: !uint32
     -- ^ Sequence number
-  , _msgCommandReq_command :: !Text
+  , _msgCommandReq_command :: !string
     -- ^ Command line to execute
   } deriving ( Show, Read, Eq )
 
@@ -589,9 +589,9 @@ msgCommandResp = 0x00B9
 -- The response to MSG_COMMAND_REQ with the return code of the command.  A
 -- return code of zero indicates success.
 data MsgCommandResp = MsgCommandResp
-  { _msgCommandResp_sequence :: !Word32
+  { _msgCommandResp_sequence :: !uint32
     -- ^ Sequence number
-  , _msgCommandResp_code   :: !Int32
+  , _msgCommandResp_code   :: !sint32
     -- ^ Exit code
   } deriving ( Show, Read, Eq )
 
@@ -618,9 +618,9 @@ msgCommandOutput = 0x00BC
 -- MSG_COMMAND_REQ. The sequence number can be used to filter for filtering the
 -- correct command.
 data MsgCommandOutput = MsgCommandOutput
-  { _msgCommandOutput_sequence :: !Word32
+  { _msgCommandOutput_sequence :: !uint32
     -- ^ Sequence number
-  , _msgCommandOutput_line   :: !Text
+  , _msgCommandOutput_line   :: !string
     -- ^ Line of standard output or standard error
   } deriving ( Show, Read, Eq )
 
@@ -666,21 +666,21 @@ msgNetworkStateResp = 0x00BB
 -- The state of a network interface on the Piksi. Data is made to reflect
 -- output of ifaddrs struct returned by getifaddrs in c.
 data MsgNetworkStateResp = MsgNetworkStateResp
-  { _msgNetworkStateResp_ipv4_address :: ![Word8]
+  { _msgNetworkStateResp_ipv4_address :: !repeated uint32
     -- ^ IPv4 address (all zero when unavailable)
-  , _msgNetworkStateResp_ipv4_mask_size :: !Word8
+  , _msgNetworkStateResp_ipv4_mask_size :: !uint32
     -- ^ IPv4 netmask CIDR notation
-  , _msgNetworkStateResp_ipv6_address :: ![Word8]
+  , _msgNetworkStateResp_ipv6_address :: !repeated uint32
     -- ^ IPv6 address (all zero when unavailable)
-  , _msgNetworkStateResp_ipv6_mask_size :: !Word8
+  , _msgNetworkStateResp_ipv6_mask_size :: !uint32
     -- ^ IPv6 netmask CIDR notation
-  , _msgNetworkStateResp_rx_bytes     :: !Word32
+  , _msgNetworkStateResp_rx_bytes     :: !uint32
     -- ^ Number of Rx bytes
-  , _msgNetworkStateResp_tx_bytes     :: !Word32
+  , _msgNetworkStateResp_tx_bytes     :: !uint32
     -- ^ Number of Tx bytes
-  , _msgNetworkStateResp_interface_name :: !Text
+  , _msgNetworkStateResp_interface_name :: !string
     -- ^ Interface Name
-  , _msgNetworkStateResp_flags        :: !Word32
+  , _msgNetworkStateResp_flags        :: !uint32
     -- ^ Interface flags from SIOCGIFFLAGS
   } deriving ( Show, Read, Eq )
 
@@ -718,15 +718,15 @@ $(makeLenses ''MsgNetworkStateResp)
 -- may vary, both a timestamp and period field is provided, though may not
 -- necessarily be populated with a value.
 data NetworkUsage = NetworkUsage
-  { _networkUsage_duration     :: !Word64
+  { _networkUsage_duration     :: !uint64
     -- ^ Duration over which the measurement was collected
-  , _networkUsage_total_bytes  :: !Word64
+  , _networkUsage_total_bytes  :: !uint64
     -- ^ Number of bytes handled in total within period
-  , _networkUsage_rx_bytes     :: !Word32
+  , _networkUsage_rx_bytes     :: !uint32
     -- ^ Number of bytes transmitted within period
-  , _networkUsage_tx_bytes     :: !Word32
+  , _networkUsage_tx_bytes     :: !uint32
     -- ^ Number of bytes received within period
-  , _networkUsage_interface_name :: !Text
+  , _networkUsage_interface_name :: !string
     -- ^ Interface Name
   } deriving ( Show, Read, Eq )
 
@@ -756,7 +756,7 @@ msgNetworkBandwidthUsage = 0x00BD
 --
 -- The bandwidth usage, a list of usage by interface.
 data MsgNetworkBandwidthUsage = MsgNetworkBandwidthUsage
-  { _msgNetworkBandwidthUsage_interfaces :: ![NetworkUsage]
+  { _msgNetworkBandwidthUsage_interfaces :: !repeated NetworkUsage
     -- ^ Usage measurement array
   } deriving ( Show, Read, Eq )
 
@@ -779,19 +779,19 @@ msgSpecanDep = 0x0050
 --
 -- Deprecated.
 data MsgSpecanDep = MsgSpecanDep
-  { _msgSpecanDep_channel_tag   :: !Word16
+  { _msgSpecanDep_channel_tag   :: !uint32
     -- ^ Channel ID
   , _msgSpecanDep_t             :: !GpsTimeDep
     -- ^ Receiver time of this observation
-  , _msgSpecanDep_freq_ref      :: !Float
+  , _msgSpecanDep_freq_ref      :: !float
     -- ^ Reference frequency of this packet
-  , _msgSpecanDep_freq_step     :: !Float
+  , _msgSpecanDep_freq_step     :: !float
     -- ^ Frequency step of points in this packet
-  , _msgSpecanDep_amplitude_ref :: !Float
+  , _msgSpecanDep_amplitude_ref :: !float
     -- ^ Reference amplitude of this packet
-  , _msgSpecanDep_amplitude_unit :: !Float
+  , _msgSpecanDep_amplitude_unit :: !float
     -- ^ Amplitude unit value of points in this packet
-  , _msgSpecanDep_amplitude_value :: ![Word8]
+  , _msgSpecanDep_amplitude_value :: !repeated uint32
     -- ^ Amplitude values (in the above units) of points in this packet
   } deriving ( Show, Read, Eq )
 
@@ -826,19 +826,19 @@ msgSpecan = 0x0051
 --
 -- Spectrum analyzer packet.
 data MsgSpecan = MsgSpecan
-  { _msgSpecan_channel_tag   :: !Word16
+  { _msgSpecan_channel_tag   :: !uint32
     -- ^ Channel ID
-  , _msgSpecan_t             :: !GpsTime
+  , _msgSpecan_t             :: !gnss.GpsTime
     -- ^ Receiver time of this observation
-  , _msgSpecan_freq_ref      :: !Float
+  , _msgSpecan_freq_ref      :: !float
     -- ^ Reference frequency of this packet
-  , _msgSpecan_freq_step     :: !Float
+  , _msgSpecan_freq_step     :: !float
     -- ^ Frequency step of points in this packet
-  , _msgSpecan_amplitude_ref :: !Float
+  , _msgSpecan_amplitude_ref :: !float
     -- ^ Reference amplitude of this packet
-  , _msgSpecan_amplitude_unit :: !Float
+  , _msgSpecan_amplitude_unit :: !float
     -- ^ Amplitude unit value of points in this packet
-  , _msgSpecan_amplitude_value :: ![Word8]
+  , _msgSpecan_amplitude_value :: !repeated uint32
     -- ^ Amplitude values (in the above units) of points in this packet
   } deriving ( Show, Read, Eq )
 

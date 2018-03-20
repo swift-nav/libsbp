@@ -44,22 +44,22 @@ msgImuRaw = 0x0900
 -- gyroscope readings. The sense of the measurements are to be aligned with
 -- the indications on the device itself.
 data MsgImuRaw = MsgImuRaw
-  { _msgImuRaw_tow :: !Word32
+  { _msgImuRaw_tow :: !uint32
     -- ^ Milliseconds since start of GPS week. If the high bit is set, the time
     -- is unknown or invalid.
-  , _msgImuRaw_tow_f :: !Word8
+  , _msgImuRaw_tow_f :: !uint32
     -- ^ Milliseconds since start of GPS week, fractional part
-  , _msgImuRaw_acc_x :: !Int16
+  , _msgImuRaw_acc_x :: !sint32
     -- ^ Acceleration in the IMU frame X axis
-  , _msgImuRaw_acc_y :: !Int16
+  , _msgImuRaw_acc_y :: !sint32
     -- ^ Acceleration in the IMU frame Y axis
-  , _msgImuRaw_acc_z :: !Int16
+  , _msgImuRaw_acc_z :: !sint32
     -- ^ Acceleration in the IMU frame Z axis
-  , _msgImuRaw_gyr_x :: !Int16
+  , _msgImuRaw_gyr_x :: !sint32
     -- ^ Angular rate around IMU frame X axis
-  , _msgImuRaw_gyr_y :: !Int16
+  , _msgImuRaw_gyr_y :: !sint32
     -- ^ Angular rate around IMU frame Y axis
-  , _msgImuRaw_gyr_z :: !Int16
+  , _msgImuRaw_gyr_z :: !sint32
     -- ^ Angular rate around IMU frame Z axis
   } deriving ( Show, Read, Eq )
 
@@ -98,11 +98,11 @@ msgImuAux = 0x0901
 -- always be consistent but the rest of the payload is device specific and
 -- depends on the value of `imu_type`.
 data MsgImuAux = MsgImuAux
-  { _msgImuAux_imu_type :: !Word8
+  { _msgImuAux_imu_type :: !uint32
     -- ^ IMU type
-  , _msgImuAux_temp   :: !Int16
+  , _msgImuAux_temp   :: !sint32
     -- ^ Raw IMU temperature
-  , _msgImuAux_imu_conf :: !Word8
+  , _msgImuAux_imu_conf :: !uint32
     -- ^ IMU configuration
   } deriving ( Show, Read, Eq )
 

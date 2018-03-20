@@ -53,13 +53,13 @@ msgFileioReadReq = 0x00A8
 -- fileio read message". A device will only respond to this message when it is
 -- received from sender ID 0x42.
 data MsgFileioReadReq = MsgFileioReadReq
-  { _msgFileioReadReq_sequence :: !Word32
+  { _msgFileioReadReq_sequence :: !uint32
     -- ^ Read sequence number
-  , _msgFileioReadReq_offset   :: !Word32
+  , _msgFileioReadReq_offset   :: !uint32
     -- ^ File offset
-  , _msgFileioReadReq_chunk_size :: !Word8
+  , _msgFileioReadReq_chunk_size :: !uint32
     -- ^ Chunk size to read
-  , _msgFileioReadReq_filename :: !Text
+  , _msgFileioReadReq_filename :: !string
     -- ^ Name of the file to read from
   } deriving ( Show, Read, Eq )
 
@@ -91,9 +91,9 @@ msgFileioReadResp = 0x00A3
 -- length field indicates how many bytes were succesfully read. The sequence
 -- number in the response is preserved from the request.
 data MsgFileioReadResp = MsgFileioReadResp
-  { _msgFileioReadResp_sequence :: !Word32
+  { _msgFileioReadResp_sequence :: !uint32
     -- ^ Read sequence number
-  , _msgFileioReadResp_contents :: ![Word8]
+  , _msgFileioReadResp_contents :: !repeated uint32
     -- ^ Contents of read file
   } deriving ( Show, Read, Eq )
 
@@ -125,11 +125,11 @@ msgFileioReadDirReq = 0x00A9
 -- MSG_PRINT message will print "Invalid fileio read message". A device will
 -- only respond to this message when it is received from sender ID 0x42.
 data MsgFileioReadDirReq = MsgFileioReadDirReq
-  { _msgFileioReadDirReq_sequence :: !Word32
+  { _msgFileioReadDirReq_sequence :: !uint32
     -- ^ Read sequence number
-  , _msgFileioReadDirReq_offset :: !Word32
+  , _msgFileioReadDirReq_offset :: !uint32
     -- ^ The offset to skip the first n elements of the file list
-  , _msgFileioReadDirReq_dirname :: !Text
+  , _msgFileioReadDirReq_dirname :: !string
     -- ^ Name of the directory to list
   } deriving ( Show, Read, Eq )
 
@@ -160,9 +160,9 @@ msgFileioReadDirResp = 0x00AA
 -- of the list is identified by an entry containing just the character 0xFF.
 -- The sequence number in the response is preserved from the request.
 data MsgFileioReadDirResp = MsgFileioReadDirResp
-  { _msgFileioReadDirResp_sequence :: !Word32
+  { _msgFileioReadDirResp_sequence :: !uint32
     -- ^ Read sequence number
-  , _msgFileioReadDirResp_contents :: ![Word8]
+  , _msgFileioReadDirResp_contents :: !repeated uint32
     -- ^ Contents of read directory
   } deriving ( Show, Read, Eq )
 
@@ -190,7 +190,7 @@ msgFileioRemove = 0x00AC
 -- message". A device will only process this message when it is received from
 -- sender ID 0x42.
 data MsgFileioRemove = MsgFileioRemove
-  { _msgFileioRemove_filename :: !Text
+  { _msgFileioRemove_filename :: !string
     -- ^ Name of the file to delete
   } deriving ( Show, Read, Eq )
 
@@ -219,13 +219,13 @@ msgFileioWriteReq = 0x00AD
 -- message". A device will only  process this message when it is received from
 -- sender ID 0x42.
 data MsgFileioWriteReq = MsgFileioWriteReq
-  { _msgFileioWriteReq_sequence :: !Word32
+  { _msgFileioWriteReq_sequence :: !uint32
     -- ^ Write sequence number
-  , _msgFileioWriteReq_offset :: !Word32
+  , _msgFileioWriteReq_offset :: !uint32
     -- ^ Offset into the file at which to start writing in bytes
-  , _msgFileioWriteReq_filename :: !Text
+  , _msgFileioWriteReq_filename :: !string
     -- ^ Name of the file to write to
-  , _msgFileioWriteReq_data   :: ![Word8]
+  , _msgFileioWriteReq_data   :: !repeated uint32
     -- ^ Variable-length array of data to write
   } deriving ( Show, Read, Eq )
 
@@ -257,7 +257,7 @@ msgFileioWriteResp = 0x00AB
 -- MSG_FILEIO_WRITE_REQ message to check integrity of the write. The sequence
 -- number in the response is preserved from the request.
 data MsgFileioWriteResp = MsgFileioWriteResp
-  { _msgFileioWriteResp_sequence :: !Word32
+  { _msgFileioWriteResp_sequence :: !uint32
     -- ^ Write sequence number
   } deriving ( Show, Read, Eq )
 
