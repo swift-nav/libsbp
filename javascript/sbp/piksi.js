@@ -827,6 +827,41 @@ MsgNetworkBandwidthUsage.prototype.fieldSpec = [];
 MsgNetworkBandwidthUsage.prototype.fieldSpec.push(['interfaces', 'array', NetworkUsage.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
+ * SBP class for message MSG_CELL_MODEM_STATUS (0x00BE).
+ *
+ * If a cell modem is present on a piksi device, this message will be send
+ * periodically to update the host on the status of the modem and its various
+ * parameters.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field signal_strength number (signed 8-bit int, 1 byte) Received cell signal strength in dBm, zero translates to unknown
+ * @field signal_error_rate number (float, 4 bytes) BER as reported by the modem, zero translates to unknown
+ * @field reserved array Unspecified data TBD for this schema
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgCellModemStatus = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_CELL_MODEM_STATUS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgCellModemStatus.prototype = Object.create(SBP.prototype);
+MsgCellModemStatus.prototype.messageType = "MSG_CELL_MODEM_STATUS";
+MsgCellModemStatus.prototype.msg_type = 0x00BE;
+MsgCellModemStatus.prototype.constructor = MsgCellModemStatus;
+MsgCellModemStatus.prototype.parser = new Parser()
+  .endianess('little')
+  .int8('signal_strength')
+  .floatle('signal_error_rate')
+  .array('reserved', { type: 'uint8', readUntil: 'eof' });
+MsgCellModemStatus.prototype.fieldSpec = [];
+MsgCellModemStatus.prototype.fieldSpec.push(['signal_strength', 'writeInt8', 1]);
+MsgCellModemStatus.prototype.fieldSpec.push(['signal_error_rate', 'writeFloatLE', 4]);
+MsgCellModemStatus.prototype.fieldSpec.push(['reserved', 'array', 'writeUInt8', function () { return 1; }, null]);
+
+/**
  * SBP class for message MSG_SPECAN_DEP (0x0050).
  *
  * Deprecated.
@@ -963,6 +998,8 @@ module.exports = {
   NetworkUsage: NetworkUsage,
   0x00BD: MsgNetworkBandwidthUsage,
   MsgNetworkBandwidthUsage: MsgNetworkBandwidthUsage,
+  0x00BE: MsgCellModemStatus,
+  MsgCellModemStatus: MsgCellModemStatus,
   0x0050: MsgSpecanDep,
   MsgSpecanDep: MsgSpecanDep,
   0x0051: MsgSpecan,
