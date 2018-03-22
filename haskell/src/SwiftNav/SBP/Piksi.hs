@@ -772,6 +772,39 @@ $(makeSBP 'msgNetworkBandwidthUsage ''MsgNetworkBandwidthUsage)
 $(makeJSON "_msgNetworkBandwidthUsage_" ''MsgNetworkBandwidthUsage)
 $(makeLenses ''MsgNetworkBandwidthUsage)
 
+msgCellModemStatus :: Word16
+msgCellModemStatus = 0x00BE
+
+-- | SBP class for message MSG_CELL_MODEM_STATUS (0x00BE).
+--
+-- If a cell modem is present on a piksi device, this message will be send
+-- periodically to update the host on the status of the modem and its various
+-- parameters.
+data MsgCellModemStatus = MsgCellModemStatus
+  { _msgCellModemStatus_signal_strength :: !Int8
+    -- ^ Received cell signal strength in dBm, zero translates to unknown
+  , _msgCellModemStatus_signal_error_rate :: !Float
+    -- ^ BER as reported by the modem, zero translates to unknown
+  , _msgCellModemStatus_reserved        :: ![Word8]
+    -- ^ Unspecified data TBD for this schema
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgCellModemStatus where
+  get = do
+    _msgCellModemStatus_signal_strength <- fromIntegral <$> getWord8
+    _msgCellModemStatus_signal_error_rate <- getFloat32le
+    _msgCellModemStatus_reserved <- whileM (not <$> isEmpty) getWord8
+    pure MsgCellModemStatus {..}
+
+  put MsgCellModemStatus {..} = do
+    putWord8 $ fromIntegral _msgCellModemStatus_signal_strength
+    putFloat32le _msgCellModemStatus_signal_error_rate
+    mapM_ putWord8 _msgCellModemStatus_reserved
+
+$(makeSBP 'msgCellModemStatus ''MsgCellModemStatus)
+$(makeJSON "_msgCellModemStatus_" ''MsgCellModemStatus)
+$(makeLenses ''MsgCellModemStatus)
+
 msgSpecanDep :: Word16
 msgSpecanDep = 0x0050
 

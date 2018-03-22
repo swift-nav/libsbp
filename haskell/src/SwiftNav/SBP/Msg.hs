@@ -78,6 +78,7 @@ data SBPMsg =
    | SBPMsgBootloaderHandshakeReq MsgBootloaderHandshakeReq Msg
    | SBPMsgBootloaderHandshakeResp MsgBootloaderHandshakeResp Msg
    | SBPMsgBootloaderJumpToApp MsgBootloaderJumpToApp Msg
+   | SBPMsgCellModemStatus MsgCellModemStatus Msg
    | SBPMsgCommandOutput MsgCommandOutput Msg
    | SBPMsgCommandReq MsgCommandReq Msg
    | SBPMsgCommandResp MsgCommandResp Msg
@@ -234,6 +235,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgCellModemStatus = SBPMsgCellModemStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandOutput = SBPMsgCommandOutput (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandReq = SBPMsgCommandReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandResp = SBPMsgCommandResp (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -382,6 +384,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgBootloaderHandshakeReq _ m) = put m
       encoder (SBPMsgBootloaderHandshakeResp _ m) = put m
       encoder (SBPMsgBootloaderJumpToApp _ m) = put m
+      encoder (SBPMsgCellModemStatus _ m) = put m
       encoder (SBPMsgCommandOutput _ m) = put m
       encoder (SBPMsgCommandReq _ m) = put m
       encoder (SBPMsgCommandResp _ m) = put m
@@ -534,6 +537,7 @@ instance FromJSON SBPMsg where
         | msgType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgCellModemStatus = SBPMsgCellModemStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandOutput = SBPMsgCommandOutput <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandReq = SBPMsgCommandReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandResp = SBPMsgCommandResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -687,6 +691,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgBootloaderHandshakeReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgBootloaderHandshakeResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgBootloaderJumpToApp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgCellModemStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandOutput n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandResp n m) = toJSON n <<>> toJSON m
@@ -834,6 +839,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgBootloaderHandshakeReq n m) = SBPMsgBootloaderHandshakeReq n <$> f m
   msg f (SBPMsgBootloaderHandshakeResp n m) = SBPMsgBootloaderHandshakeResp n <$> f m
   msg f (SBPMsgBootloaderJumpToApp n m) = SBPMsgBootloaderJumpToApp n <$> f m
+  msg f (SBPMsgCellModemStatus n m) = SBPMsgCellModemStatus n <$> f m
   msg f (SBPMsgCommandOutput n m) = SBPMsgCommandOutput n <$> f m
   msg f (SBPMsgCommandReq n m) = SBPMsgCommandReq n <$> f m
   msg f (SBPMsgCommandResp n m) = SBPMsgCommandResp n <$> f m
