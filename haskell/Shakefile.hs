@@ -16,12 +16,12 @@ import Development.Shakers
 main :: IO ()
 main = shakeMain $ do
   let pats =
-        [ "stack*.yaml"
+        [ "stack.yaml"
         , "Shakefile.hs"
         , "main//*.hs"
         , "src//*.hs"
         ]
-      pats' = delete "stack*.yaml" pats
+      pats' = delete "stack.yaml" pats
 
   -- | Haskell rules.
   --
@@ -35,11 +35,6 @@ main = shakeMain $ do
   --
   stackRules "." pats
 
-  -- | sanity
-  --
-  fake "." pats "sanity" $ const $
-    need [ "tests-error", "lint" ]
-
   -- | Default things to run.
   --
-  want [ "sanity", "format" ]
+  want [ "tests-error", "lint" ]
