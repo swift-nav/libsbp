@@ -152,13 +152,13 @@ vector assuming that the LSB of each component as a value of 2^-31.
     2nd imaginary component
   z : int
     3rd imaginary component
-  acc_w : float
+  w_accuracy : float
     Estimated standard deviation of w
-  acc_x : float
+  x_accuracy : float
     Estimated standard deviation of x
-  acc_y : float
+  y_accuracy : float
     Estimated standard deviation of y
-  acc_z : float
+  z_accuracy : float
     Estimated standard deviation of z
   flags : int
     Status flags
@@ -172,10 +172,10 @@ vector assuming that the LSB of each component as a value of 2^-31.
                    'x' / construct.Int32sl,
                    'y' / construct.Int32sl,
                    'z' / construct.Int32sl,
-                   'acc_w' / construct.Float32l,
-                   'acc_x' / construct.Float32l,
-                   'acc_y' / construct.Float32l,
-                   'acc_z' / construct.Float32l,
+                   'w_accuracy' / construct.Float32l,
+                   'x_accuracy' / construct.Float32l,
+                   'y_accuracy' / construct.Float32l,
+                   'z_accuracy' / construct.Float32l,
                    'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
@@ -183,10 +183,10 @@ vector assuming that the LSB of each component as a value of 2^-31.
                'x',
                'y',
                'z',
-               'acc_w',
-               'acc_x',
-               'acc_y',
-               'acc_z',
+               'w_accuracy',
+               'x_accuracy',
+               'y_accuracy',
+               'z_accuracy',
                'flags',
               ]
 
@@ -205,10 +205,10 @@ vector assuming that the LSB of each component as a value of 2^-31.
       self.x = kwargs.pop('x')
       self.y = kwargs.pop('y')
       self.z = kwargs.pop('z')
-      self.acc_w = kwargs.pop('acc_w')
-      self.acc_x = kwargs.pop('acc_x')
-      self.acc_y = kwargs.pop('acc_y')
-      self.acc_z = kwargs.pop('acc_z')
+      self.w_accuracy = kwargs.pop('w_accuracy')
+      self.x_accuracy = kwargs.pop('x_accuracy')
+      self.y_accuracy = kwargs.pop('y_accuracy')
+      self.z_accuracy = kwargs.pop('z_accuracy')
       self.flags = kwargs.pop('flags')
 
   def __repr__(self):
@@ -279,11 +279,11 @@ to the vehicle body frame.
     rotation about the rightward axis of the vehicle
   yaw : int
     rotation about the downward axis of the vehicle
-  var_roll : float
+  roll_accuracy : float
     Estimated standard deviation of roll
-  var_pitch : float
+  pitch_accuracy : float
     Estimated standard deviation of pitch
-  var_yaw : float
+  yaw_accuracy : float
     Estimated standard deviation of yaw
   flags : int
     Status flags
@@ -296,18 +296,18 @@ to the vehicle body frame.
                    'roll' / construct.Int32sl,
                    'pitch' / construct.Int32sl,
                    'yaw' / construct.Int32sl,
-                   'var_roll' / construct.Float32l,
-                   'var_pitch' / construct.Float32l,
-                   'var_yaw' / construct.Float32l,
+                   'roll_accuracy' / construct.Float32l,
+                   'pitch_accuracy' / construct.Float32l,
+                   'yaw_accuracy' / construct.Float32l,
                    'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'roll',
                'pitch',
                'yaw',
-               'var_roll',
-               'var_pitch',
-               'var_yaw',
+               'roll_accuracy',
+               'pitch_accuracy',
+               'yaw_accuracy',
                'flags',
               ]
 
@@ -325,9 +325,9 @@ to the vehicle body frame.
       self.roll = kwargs.pop('roll')
       self.pitch = kwargs.pop('pitch')
       self.yaw = kwargs.pop('yaw')
-      self.var_roll = kwargs.pop('var_roll')
-      self.var_pitch = kwargs.pop('var_pitch')
-      self.var_yaw = kwargs.pop('var_yaw')
+      self.roll_accuracy = kwargs.pop('roll_accuracy')
+      self.pitch_accuracy = kwargs.pop('pitch_accuracy')
+      self.yaw_accuracy = kwargs.pop('yaw_accuracy')
       self.flags = kwargs.pop('flags')
 
   def __repr__(self):

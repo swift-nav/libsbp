@@ -77,19 +77,19 @@ definitions:
               type: s32
               units: 2^-31
               desc: 3rd imaginary component
-          - acc_w:
+          - w_accuracy:
               type: float
               units: N/A
               desc: Estimated standard deviation of w
-          - acc_x:
+          - x_accuracy:
               type: float
               units: N/A
               desc: Estimated standard deviation of x
-          - acc_y:
+          - y_accuracy:
               type: float
               units: N/A
               desc: Estimated standard deviation of y
-          - acc_z:
+          - z_accuracy:
               type: float
               units: N/A
               desc: Estimated standard deviation of z
@@ -130,15 +130,15 @@ definitions:
               type: s32
               units: microdegrees
               desc: rotation about the downward axis of the vehicle
-          - var_roll:
+          - roll_accuracy:
               type: float
               units: degrees
               desc: Estimated standard deviation of roll
-          - var_pitch:
+          - pitch_accuracy:
               type: float
               units: degrees
               desc: Estimated standard deviation of pitch 
-          - var_yaw:
+          - yaw_accuracy:
               type: float
               units: degrees
               desc: Estimated standard deviation of yaw

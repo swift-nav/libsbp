@@ -76,10 +76,10 @@ MsgBaselineHeading.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field x number (signed 32-bit int, 4 bytes) 1st imaginary component
  * @field y number (signed 32-bit int, 4 bytes) 2nd imaginary component
  * @field z number (signed 32-bit int, 4 bytes) 3rd imaginary component
- * @field acc_w number (float, 4 bytes) Estimated standard deviation of w
- * @field acc_x number (float, 4 bytes) Estimated standard deviation of x
- * @field acc_y number (float, 4 bytes) Estimated standard deviation of y
- * @field acc_z number (float, 4 bytes) Estimated standard deviation of z
+ * @field w_accuracy number (float, 4 bytes) Estimated standard deviation of w
+ * @field x_accuracy number (float, 4 bytes) Estimated standard deviation of x
+ * @field y_accuracy number (float, 4 bytes) Estimated standard deviation of y
+ * @field z_accuracy number (float, 4 bytes) Estimated standard deviation of z
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -102,10 +102,10 @@ MsgOrientQuat.prototype.parser = new Parser()
   .int32('x')
   .int32('y')
   .int32('z')
-  .floatle('acc_w')
-  .floatle('acc_x')
-  .floatle('acc_y')
-  .floatle('acc_z')
+  .floatle('w_accuracy')
+  .floatle('x_accuracy')
+  .floatle('y_accuracy')
+  .floatle('z_accuracy')
   .uint8('flags');
 MsgOrientQuat.prototype.fieldSpec = [];
 MsgOrientQuat.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
@@ -113,10 +113,10 @@ MsgOrientQuat.prototype.fieldSpec.push(['w', 'writeInt32LE', 4]);
 MsgOrientQuat.prototype.fieldSpec.push(['x', 'writeInt32LE', 4]);
 MsgOrientQuat.prototype.fieldSpec.push(['y', 'writeInt32LE', 4]);
 MsgOrientQuat.prototype.fieldSpec.push(['z', 'writeInt32LE', 4]);
-MsgOrientQuat.prototype.fieldSpec.push(['acc_w', 'writeFloatLE', 4]);
-MsgOrientQuat.prototype.fieldSpec.push(['acc_x', 'writeFloatLE', 4]);
-MsgOrientQuat.prototype.fieldSpec.push(['acc_y', 'writeFloatLE', 4]);
-MsgOrientQuat.prototype.fieldSpec.push(['acc_z', 'writeFloatLE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['w_accuracy', 'writeFloatLE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['x_accuracy', 'writeFloatLE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['y_accuracy', 'writeFloatLE', 4]);
+MsgOrientQuat.prototype.fieldSpec.push(['z_accuracy', 'writeFloatLE', 4]);
 MsgOrientQuat.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
@@ -132,9 +132,9 @@ MsgOrientQuat.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field roll number (signed 32-bit int, 4 bytes) rotation about the forward axis of the vehicle
  * @field pitch number (signed 32-bit int, 4 bytes) rotation about the rightward axis of the vehicle
  * @field yaw number (signed 32-bit int, 4 bytes) rotation about the downward axis of the vehicle
- * @field var_roll number (float, 4 bytes) Estimated standard deviation of roll
- * @field var_pitch number (float, 4 bytes) Estimated standard deviation of pitch
- * @field var_yaw number (float, 4 bytes) Estimated standard deviation of yaw
+ * @field roll_accuracy number (float, 4 bytes) Estimated standard deviation of roll
+ * @field pitch_accuracy number (float, 4 bytes) Estimated standard deviation of pitch
+ * @field yaw_accuracy number (float, 4 bytes) Estimated standard deviation of yaw
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -156,18 +156,18 @@ MsgOrientEuler.prototype.parser = new Parser()
   .int32('roll')
   .int32('pitch')
   .int32('yaw')
-  .floatle('var_roll')
-  .floatle('var_pitch')
-  .floatle('var_yaw')
+  .floatle('roll_accuracy')
+  .floatle('pitch_accuracy')
+  .floatle('yaw_accuracy')
   .uint8('flags');
 MsgOrientEuler.prototype.fieldSpec = [];
 MsgOrientEuler.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
 MsgOrientEuler.prototype.fieldSpec.push(['roll', 'writeInt32LE', 4]);
 MsgOrientEuler.prototype.fieldSpec.push(['pitch', 'writeInt32LE', 4]);
 MsgOrientEuler.prototype.fieldSpec.push(['yaw', 'writeInt32LE', 4]);
-MsgOrientEuler.prototype.fieldSpec.push(['var_roll', 'writeFloatLE', 4]);
-MsgOrientEuler.prototype.fieldSpec.push(['var_pitch', 'writeFloatLE', 4]);
-MsgOrientEuler.prototype.fieldSpec.push(['var_yaw', 'writeFloatLE', 4]);
+MsgOrientEuler.prototype.fieldSpec.push(['roll_accuracy', 'writeFloatLE', 4]);
+MsgOrientEuler.prototype.fieldSpec.push(['pitch_accuracy', 'writeFloatLE', 4]);
+MsgOrientEuler.prototype.fieldSpec.push(['yaw_accuracy', 'writeFloatLE', 4]);
 MsgOrientEuler.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
