@@ -1,5 +1,6 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell   #-}
 
 -- |
 -- Module:      JSON2JSON
@@ -12,31 +13,27 @@
 -- JSON to JSON tool - reads SBP JSON from stdin and sends SBP JSON to
 -- stdout.
 
-import BasicPrelude                      hiding (lines, map, mapMaybe)
+import BasicPrelude                 hiding (lines, map, mapMaybe)
 import Control.Monad.Trans.Resource
 import Data.Aeson
+import Data.Aeson.TH
+import Data.ByteString.Lazy         hiding (ByteString, drop, map)
 import Data.Conduit
-import Data.Conduit.Binary
-import Data.Conduit.List
-import Data.ByteString.Lazy              hiding (ByteString, map)
+import Data.Conduit.Binary          hiding (drop)
+import Data.Conduit.List            hiding (drop)
 import Data.Time
 import SwiftNav.SBP
 import System.IO
 
-data SBPMsgData = SBPMsgData
-  { sbpMsgData :: SBPMsg
-  , sbpMsgTime :: UTCTime
-  } deriving ( Show, Read, Eq )
+data Data = Data
+  { _data :: SBPMsg
+  , _time :: UTCTime
+  } deriving Show
 
-instance FromJSON SBPMsgData where
-  parseJSON (Object v) = SBPMsgData <$> v .: "data" <*> v .: "time"
-  parseJSON _ = mzero
-
-instance ToJSON SBPMsgData where
-  toJSON d = object [ "data" .= sbpMsgData d, "time" .= sbpMsgTime d ]
+deriveJSON defaultOptions { fieldLabelModifier = drop 1 } ''Data
 
 -- | Encode a SBPMsg to a line of JSON.
-encodeLine :: SBPMsgData -> ByteString
+encodeLine :: Data -> ByteString
 encodeLine v = toStrict $ encode v <> "\n"
 
 main :: IO ()
