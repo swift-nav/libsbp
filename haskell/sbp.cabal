@@ -65,6 +65,7 @@ library
                      , monad-loops
                      , template-haskell
                      , text
+                     , time
 
 executable sbp2json
   hs-source-dirs:      main
@@ -93,6 +94,21 @@ executable json2sbp
                      , conduit-extra
                      , resourcet
                      , sbp
+  default-language:    Haskell2010
+
+executable json2json
+  hs-source-dirs:      main
+  main-is:             JSON2JSON.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall
+  build-depends:       aeson
+                     , base
+                     , basic-prelude
+                     , bytestring
+                     , conduit
+                     , conduit-extra
+                     , resourcet
+                     , sbp
+                     , time
   default-language:    Haskell2010
 
 executable sbp2yaml
