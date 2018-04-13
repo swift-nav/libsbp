@@ -142,6 +142,29 @@ typedef struct __attribute__((packed)) {
 } msg_tracking_state_t;
 
 
+/** Measurement Engine signal tracking channel state
+ *
+ * Measurement Engine tracking channel state for a specific satellite signal 
+ * and measured signal power.
+ */
+typedef struct __attribute__((packed)) {
+  me_gnss_signal_t sid;    /**< Measurement Engine GNSS signal being tracked */
+  u8 cn0;    /**< Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
+} me_tracking_channel_state_t;
+
+
+/** Measurement Engine signal tracking channel states
+ *
+ * The tracking message returns a variable-length array of tracking
+ * channel states. It reports status and carrier-to-noise density
+ * measurements for all tracked satellites.
+ */
+#define SBP_MSG_TRACKING_STATE_ME             0x0061
+typedef struct __attribute__((packed)) {
+  me_tracking_channel_state_t states[0]; /**< ME signal tracking channel state */
+} msg_tracking_state_me_t;
+
+
 /** Complex correlation structure
  *
  * Structure containing in-phase and quadrature correlation components.

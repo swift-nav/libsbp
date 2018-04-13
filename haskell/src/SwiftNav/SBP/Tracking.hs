@@ -308,6 +308,55 @@ $(makeSBP 'msgTrackingState ''MsgTrackingState)
 $(makeJSON "_msgTrackingState_" ''MsgTrackingState)
 $(makeLenses ''MsgTrackingState)
 
+-- | MeTrackingChannelState.
+--
+-- Measurement Engine tracking channel state for a specific satellite signal
+-- and measured signal power.
+data MeTrackingChannelState = MeTrackingChannelState
+  { _meTrackingChannelState_sid :: !MeGnssSignal
+    -- ^ Measurement Engine GNSS signal being tracked
+  , _meTrackingChannelState_cn0 :: !Word8
+    -- ^ Carrier-to-Noise density.  Zero implies invalid cn0.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MeTrackingChannelState where
+  get = do
+    _meTrackingChannelState_sid <- get
+    _meTrackingChannelState_cn0 <- getWord8
+    pure MeTrackingChannelState {..}
+
+  put MeTrackingChannelState {..} = do
+    put _meTrackingChannelState_sid
+    putWord8 _meTrackingChannelState_cn0
+
+$(makeJSON "_meTrackingChannelState_" ''MeTrackingChannelState)
+$(makeLenses ''MeTrackingChannelState)
+
+msgTrackingStateMe :: Word16
+msgTrackingStateMe = 0x0061
+
+-- | SBP class for message MSG_TRACKING_STATE_ME (0x0061).
+--
+-- The tracking message returns a variable-length array of tracking channel
+-- states. It reports status and carrier-to-noise density measurements for all
+-- tracked satellites.
+data MsgTrackingStateMe = MsgTrackingStateMe
+  { _msgTrackingStateMe_states :: ![MeTrackingChannelState]
+    -- ^ ME signal tracking channel state
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgTrackingStateMe where
+  get = do
+    _msgTrackingStateMe_states <- whileM (not <$> isEmpty) get
+    pure MsgTrackingStateMe {..}
+
+  put MsgTrackingStateMe {..} = do
+    mapM_ put _msgTrackingStateMe_states
+
+$(makeSBP 'msgTrackingStateMe ''MsgTrackingStateMe)
+$(makeJSON "_msgTrackingStateMe_" ''MsgTrackingStateMe)
+$(makeLenses ''MsgTrackingStateMe)
+
 -- | TrackingChannelCorrelation.
 --
 -- Structure containing in-phase and quadrature correlation components.

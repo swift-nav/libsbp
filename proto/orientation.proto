@@ -46,10 +46,10 @@ message MsgOrientQuat {
     sint32 x = 3;
     sint32 y = 4;
     sint32 z = 5;
-    float acc_w = 6;
-    float acc_x = 7;
-    float acc_y = 8;
-    float acc_z = 9;
+    float w_accuracy = 6;
+    float x_accuracy = 7;
+    float y_accuracy = 8;
+    float z_accuracy = 9;
     uint32 flags = 10;
 }
 
@@ -65,9 +65,9 @@ message MsgOrientEuler {
     sint32 roll = 2;
     sint32 pitch = 3;
     sint32 yaw = 4;
-    float var_roll = 5;
-    float var_pitch = 6;
-    float var_yaw = 7;
+    float roll_accuracy = 5;
+    float pitch_accuracy = 6;
+    float yaw_accuracy = 7;
     uint32 flags = 8;
 }
 

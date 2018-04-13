@@ -42,6 +42,26 @@ message MsgTrackingState {
     repeated TrackingChannelState states = 1;
 }
 
+/** Measurement Engine signal tracking channel state
+ *
+ * Measurement Engine tracking channel state for a specific satellite signal 
+ * and measured signal power.
+ */
+message MeTrackingChannelState {
+    MeGnssSignal sid = 1;
+    uint32 cn0 = 2;
+}
+
+/** Measurement Engine signal tracking channel states
+ *
+ * The tracking message returns a variable-length array of tracking
+ * channel states. It reports status and carrier-to-noise density
+ * measurements for all tracked satellites.
+ */
+message MsgTrackingStateMe {
+    repeated MeTrackingChannelState states = 1;
+}
+
 /** Complex correlation structure
  *
  * Structure containing in-phase and quadrature correlation components.

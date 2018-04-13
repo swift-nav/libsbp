@@ -74,6 +74,48 @@ measured signal power.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return TrackingChannelState.build(d)
     
+class MeTrackingChannelState(object):
+  """MeTrackingChannelState.
+  
+  Measurement Engine tracking channel state for a specific satellite signal 
+and measured signal power.
+
+  
+  Parameters
+  ----------
+  sid : MeGnssSignal
+    Measurement Engine GNSS signal being tracked
+  cn0 : int
+    Carrier-to-Noise density.  Zero implies invalid cn0.
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'sid' / construct.Struct(MeGnssSignal._parser),
+                     'cn0' / construct.Int8ul,))
+  __slots__ = [
+               'sid',
+               'cn0',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sid = kwargs.pop('sid')
+      self.cn0 = kwargs.pop('cn0')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = MeTrackingChannelState._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return MeTrackingChannelState.build(d)
+    
 class TrackingChannelCorrelation(object):
   """TrackingChannelCorrelation.
   
@@ -680,6 +722,89 @@ measurements for all tracked satellites.
     d.update(j)
     return d
     
+SBP_MSG_TRACKING_STATE_ME = 0x0061
+class MsgTrackingStateMe(SBP):
+  """SBP class for message MSG_TRACKING_STATE_ME (0x0061).
+
+  You can have MSG_TRACKING_STATE_ME inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The tracking message returns a variable-length array of tracking
+channel states. It reports status and carrier-to-noise density
+measurements for all tracked satellites.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  states : array
+    ME signal tracking channel state
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   construct.GreedyRange('states' / construct.Struct(MeTrackingChannelState._parser)),)
+  __slots__ = [
+               'states',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgTrackingStateMe,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgTrackingStateMe, self).__init__()
+      self.msg_type = SBP_MSG_TRACKING_STATE_ME
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.states = kwargs.pop('states')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgTrackingStateMe.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgTrackingStateMe(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgTrackingStateMe._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgTrackingStateMe._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgTrackingStateMe, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_TRACKING_IQ = 0x002C
 class MsgTrackingIq(SBP):
   """SBP class for message MSG_TRACKING_IQ (0x002C).
@@ -1027,6 +1152,7 @@ msg_classes = {
   0x0021: MsgTrackingStateDetailedDepA,
   0x0011: MsgTrackingStateDetailedDep,
   0x0041: MsgTrackingState,
+  0x0061: MsgTrackingStateMe,
   0x002C: MsgTrackingIq,
   0x001C: MsgTrackingIqDep,
   0x0016: MsgTrackingStateDepA,

@@ -26,6 +26,16 @@
 #include "common.h"
 
 
+/** Represents the Measurement Engine information about the signal
+ *
+ * Signal identifier containing constellation, band, and satellite identifier
+ */
+typedef struct __attribute__((packed)) {
+  u8 sat;     /**< Constellation-specific satellite (frequency for Glonass) identifier */
+  u8 code;    /**< Signal constellation, band and code */
+} me_gnss_signal_t;
+
+
 /** Represents all the relevant information about the signal
  *
  * Signal identifier containing constellation, band, and satellite identifier

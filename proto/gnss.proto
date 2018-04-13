@@ -20,6 +20,15 @@ syntax = "proto3";
 package swiftnav.sbp.gnss;
 
 
+/** Represents the Measurement Engine information about the signal
+ *
+ * Signal identifier containing constellation, band, and satellite identifier
+ */
+message MeGnssSignal {
+    uint32 sat = 1;
+    uint32 code = 2;
+}
+
 /** Represents all the relevant information about the signal
  *
  * Signal identifier containing constellation, band, and satellite identifier

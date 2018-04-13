@@ -35,6 +35,29 @@ import SwiftNav.SBP.Types
 {-# ANN module ("HLint: ignore Use newtype instead of data"::String) #-}
 
 
+-- | MeGnssSignal.
+--
+-- Signal identifier containing constellation, band, and satellite identifier
+data MeGnssSignal = MeGnssSignal
+  { _meGnssSignal_sat :: !Word8
+    -- ^ Constellation-specific satellite (frequency for Glonass) identifier
+  , _meGnssSignal_code :: !Word8
+    -- ^ Signal constellation, band and code
+  } deriving ( Show, Read, Eq )
+
+instance Binary MeGnssSignal where
+  get = do
+    _meGnssSignal_sat <- getWord8
+    _meGnssSignal_code <- getWord8
+    pure MeGnssSignal {..}
+
+  put MeGnssSignal {..} = do
+    putWord8 _meGnssSignal_sat
+    putWord8 _meGnssSignal_code
+
+$(makeJSON "_meGnssSignal_" ''MeGnssSignal)
+$(makeLenses ''MeGnssSignal)
+
 -- | GnssSignal.
 --
 -- Signal identifier containing constellation, band, and satellite identifier

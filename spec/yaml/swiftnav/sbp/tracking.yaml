@@ -500,6 +500,33 @@ definitions:
           fill: TrackingChannelState
           desc: Signal tracking channel state
 
+ - MeTrackingChannelState:
+    short_desc: Measurement Engine signal tracking channel state
+    desc: |
+      Measurement Engine tracking channel state for a specific satellite signal 
+      and measured signal power.
+    fields:
+        - sid:
+            type: MeGnssSignal
+            desc: Measurement Engine GNSS signal being tracked
+        - cn0:
+            type: u8
+            units: dB Hz / 4
+            desc: Carrier-to-Noise density.  Zero implies invalid cn0.
+
+ - MSG_TRACKING_STATE_ME:
+    id: 0x0061
+    short_desc: Measurement Engine signal tracking channel states
+    desc: |
+      The tracking message returns a variable-length array of tracking
+      channel states. It reports status and carrier-to-noise density
+      measurements for all tracked satellites.
+    fields:
+      - states:
+          type: array
+          fill: MeTrackingChannelState
+          desc: ME signal tracking channel state
+            
  - TrackingChannelCorrelation:
     short_desc: Complex correlation structure
     desc: |

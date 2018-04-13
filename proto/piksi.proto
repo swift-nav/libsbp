@@ -282,6 +282,17 @@ message MsgNetworkBandwidthUsage {
     repeated NetworkUsage interfaces = 1;
 }
 
+/** Cell modem information update message
+ *
+ * If a cell modem is present on a piksi device, this message
+ * will be send periodically to update the host on the status
+ * of the modem and its various parameters.
+ */
+message MsgCellModemStatus {
+    sint32 signal_strength = 1;
+    float signal_error_rate = 2;
+}
+
 /** Spectrum analyzer
  *
  * Spectrum analyzer packet.

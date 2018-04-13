@@ -23,6 +23,7 @@ var SBP = require('./sbp');
 var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
+var MeGnssSignal = require("./gnss").MeGnssSignal;
 var GnssSignal = require("./gnss").GnssSignal;
 var GnssSignalDep = require("./gnss").GnssSignalDep;
 var GPSTime = require("./gnss").GPSTime;

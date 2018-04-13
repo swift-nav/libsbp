@@ -25,6 +25,47 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 # Please do not hand edit!
 
 
+class MeGnssSignal(object):
+  """MeGnssSignal.
+  
+  Signal identifier containing constellation, band, and satellite identifier
+
+  
+  Parameters
+  ----------
+  sat : int
+    Constellation-specific satellite (frequency for Glonass) identifier
+  code : int
+    Signal constellation, band and code
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'sat' / construct.Int8ul,
+                     'code' / construct.Int8ul,))
+  __slots__ = [
+               'sat',
+               'code',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sat = kwargs.pop('sat')
+      self.code = kwargs.pop('code')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = MeGnssSignal._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return MeGnssSignal.build(d)
+    
 class GnssSignal(object):
   """GnssSignal.
   
