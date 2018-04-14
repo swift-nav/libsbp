@@ -24,41 +24,13 @@ var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
 
 /**
- * SBP class for message fragment MeGnssSignal
- *
- * Signal identifier containing constellation, band, and satellite identifier
- *
- * Fields in the SBP payload (`sbp.payload`):
- * @field sat number (unsigned 8-bit int, 1 byte) Constellation-specific satellite (frequency for Glonass) identifier
- * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-var MeGnssSignal = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "MeGnssSignal";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-MeGnssSignal.prototype = Object.create(SBP.prototype);
-MeGnssSignal.prototype.messageType = "MeGnssSignal";
-MeGnssSignal.prototype.constructor = MeGnssSignal;
-MeGnssSignal.prototype.parser = new Parser()
-  .endianess('little')
-  .uint8('sat')
-  .uint8('code');
-MeGnssSignal.prototype.fieldSpec = [];
-MeGnssSignal.prototype.fieldSpec.push(['sat', 'writeUInt8', 1]);
-MeGnssSignal.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
-
-/**
  * SBP class for message fragment GnssSignal
  *
  * Signal identifier containing constellation, band, and satellite identifier
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field sat number (unsigned 8-bit int, 1 byte) Constellation-specific satellite identifier
+ * @field sat number (unsigned 8-bit int, 1 byte) Constellation-specific satellite identifier (for Glonass it can be  sometimes
+ *   populated with FCN rather than SLOT)
  * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -241,7 +213,6 @@ CarrierPhase.prototype.fieldSpec.push(['i', 'writeInt32LE', 4]);
 CarrierPhase.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
 
 module.exports = {
-  MeGnssSignal: MeGnssSignal,
   GnssSignal: GnssSignal,
   GnssSignalDep: GnssSignalDep,
   GPSTimeDep: GPSTimeDep,

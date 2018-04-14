@@ -74,8 +74,8 @@ measured signal power.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return TrackingChannelState.build(d)
     
-class MeTrackingChannelState(object):
-  """MeTrackingChannelState.
+class MeasurementState(object):
+  """MeasurementState.
   
   Measurement Engine tracking channel state for a specific satellite signal 
 and measured signal power.
@@ -83,17 +83,17 @@ and measured signal power.
   
   Parameters
   ----------
-  sid : MeGnssSignal
-    Measurement Engine GNSS signal being tracked
+  mesid : GnssSignal
+    Measurement Engine GNSS signal being tracked (carries Glonass FCN instead of SLOT)
   cn0 : int
     Carrier-to-Noise density.  Zero implies invalid cn0.
 
   """
   _parser = construct.Embedded(construct.Struct(
-                     'sid' / construct.Struct(MeGnssSignal._parser),
+                     'mesid' / construct.Struct(GnssSignal._parser),
                      'cn0' / construct.Int8ul,))
   __slots__ = [
-               'sid',
+               'mesid',
                'cn0',
               ]
 
@@ -101,20 +101,20 @@ and measured signal power.
     if payload:
       self.from_binary(payload)
     else:
-      self.sid = kwargs.pop('sid')
+      self.mesid = kwargs.pop('mesid')
       self.cn0 = kwargs.pop('cn0')
 
   def __repr__(self):
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = MeTrackingChannelState._parser.parse(d)
+    p = MeasurementState._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return MeTrackingChannelState.build(d)
+    return MeasurementState.build(d)
     
 class TrackingChannelCorrelation(object):
   """TrackingChannelCorrelation.
@@ -722,11 +722,11 @@ measurements for all tracked satellites.
     d.update(j)
     return d
     
-SBP_MSG_TRACKING_STATE_ME = 0x0061
-class MsgTrackingStateMe(SBP):
-  """SBP class for message MSG_TRACKING_STATE_ME (0x0061).
+SBP_MSG_MEASUREMENT_STATE = 0x0061
+class MsgMeasurementState(SBP):
+  """SBP class for message MSG_MEASUREMENT_STATE (0x0061).
 
-  You can have MSG_TRACKING_STATE_ME inherit its fields directly
+  You can have MSG_MEASUREMENT_STATE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -747,20 +747,20 @@ measurements for all tracked satellites.
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('states' / construct.Struct(MeTrackingChannelState._parser)),)
+                   construct.GreedyRange('states' / construct.Struct(MeasurementState._parser)),)
   __slots__ = [
                'states',
               ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgTrackingStateMe,
+      super( MsgMeasurementState,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgTrackingStateMe, self).__init__()
-      self.msg_type = SBP_MSG_TRACKING_STATE_ME
+      super( MsgMeasurementState, self).__init__()
+      self.msg_type = SBP_MSG_MEASUREMENT_STATE
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.states = kwargs.pop('states')
 
@@ -773,12 +773,12 @@ measurements for all tracked satellites.
 
     """
     d = json.loads(s)
-    return MsgTrackingStateMe.from_json_dict(d)
+    return MsgMeasurementState.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgTrackingStateMe(sbp, **d)
+    return MsgMeasurementState(sbp, **d)
 
  
   def from_binary(self, d):
@@ -786,7 +786,7 @@ measurements for all tracked satellites.
     the message.
 
     """
-    p = MsgTrackingStateMe._parser.parse(d)
+    p = MsgMeasurementState._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -795,12 +795,12 @@ measurements for all tracked satellites.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgTrackingStateMe._parser.build(c)
+    self.payload = MsgMeasurementState._parser.build(c)
     return self.pack()
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgTrackingStateMe, self).to_json_dict()
+    d = super( MsgMeasurementState, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -1152,7 +1152,7 @@ msg_classes = {
   0x0021: MsgTrackingStateDetailedDepA,
   0x0011: MsgTrackingStateDetailedDep,
   0x0041: MsgTrackingState,
-  0x0061: MsgTrackingStateMe,
+  0x0061: MsgMeasurementState,
   0x002C: MsgTrackingIq,
   0x001C: MsgTrackingIqDep,
   0x0016: MsgTrackingStateDepA,

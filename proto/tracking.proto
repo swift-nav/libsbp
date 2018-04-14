@@ -47,8 +47,8 @@ message MsgTrackingState {
  * Measurement Engine tracking channel state for a specific satellite signal 
  * and measured signal power.
  */
-message MeTrackingChannelState {
-    MeGnssSignal sid = 1;
+message MeasurementState {
+    gnss.GnssSignal mesid = 1;
     uint32 cn0 = 2;
 }
 
@@ -58,8 +58,8 @@ message MeTrackingChannelState {
  * channel states. It reports status and carrier-to-noise density
  * measurements for all tracked satellites.
  */
-message MsgTrackingStateMe {
-    repeated MeTrackingChannelState states = 1;
+message MsgMeasurementState {
+    repeated MeasurementState states = 1;
 }
 
 /** Complex correlation structure

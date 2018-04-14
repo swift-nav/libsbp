@@ -148,9 +148,9 @@ typedef struct __attribute__((packed)) {
  * and measured signal power.
  */
 typedef struct __attribute__((packed)) {
-  me_gnss_signal_t sid;    /**< Measurement Engine GNSS signal being tracked */
-  u8 cn0;    /**< Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
-} me_tracking_channel_state_t;
+  sbp_gnss_signal_t mesid;    /**< Measurement Engine GNSS signal being tracked (carries Glonass FCN instead of SLOT) */
+  u8 cn0;      /**< Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
+} measurement_state_t;
 
 
 /** Measurement Engine signal tracking channel states
@@ -159,10 +159,10 @@ typedef struct __attribute__((packed)) {
  * channel states. It reports status and carrier-to-noise density
  * measurements for all tracked satellites.
  */
-#define SBP_MSG_TRACKING_STATE_ME             0x0061
+#define SBP_MSG_MEASUREMENT_STATE             0x0061
 typedef struct __attribute__((packed)) {
-  me_tracking_channel_state_t states[0]; /**< ME signal tracking channel state */
-} msg_tracking_state_me_t;
+  measurement_state_t states[0]; /**< ME signal tracking channel state */
+} msg_measurement_state_t;
 
 
 /** Complex correlation structure

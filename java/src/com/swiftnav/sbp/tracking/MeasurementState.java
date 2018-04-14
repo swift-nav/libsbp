@@ -23,21 +23,21 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class MeTrackingChannelState extends SBPStruct {
+public class MeasurementState extends SBPStruct {
     
-    /** Measurement Engine GNSS signal being tracked */
-    public MeGnssSignal sid;
+    /** Measurement Engine GNSS signal being tracked (carries Glonass FCN instead of SLOT) */
+    public GnssSignal mesid;
     
     /** Carrier-to-Noise density.  Zero implies invalid cn0. */
     public int cn0;
     
 
-    public MeTrackingChannelState () {}
+    public MeasurementState () {}
 
     @Override
-    public MeTrackingChannelState parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public MeasurementState parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        sid = new MeGnssSignal().parse(parser);
+        mesid = new GnssSignal().parse(parser);
         cn0 = parser.getU8();
         return this;
     }
@@ -45,14 +45,14 @@ public class MeTrackingChannelState extends SBPStruct {
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        sid.build(builder);
+        mesid.build(builder);
         builder.putU8(cn0);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("sid", sid.toJSON());
+        obj.put("mesid", mesid.toJSON());
         obj.put("cn0", cn0);
         return obj;
     }

@@ -308,54 +308,55 @@ $(makeSBP 'msgTrackingState ''MsgTrackingState)
 $(makeJSON "_msgTrackingState_" ''MsgTrackingState)
 $(makeLenses ''MsgTrackingState)
 
--- | MeTrackingChannelState.
+-- | MeasurementState.
 --
 -- Measurement Engine tracking channel state for a specific satellite signal
 -- and measured signal power.
-data MeTrackingChannelState = MeTrackingChannelState
-  { _meTrackingChannelState_sid :: !MeGnssSignal
-    -- ^ Measurement Engine GNSS signal being tracked
-  , _meTrackingChannelState_cn0 :: !Word8
+data MeasurementState = MeasurementState
+  { _measurementState_mesid :: !GnssSignal
+    -- ^ Measurement Engine GNSS signal being tracked (carries Glonass FCN
+    -- instead of SLOT)
+  , _measurementState_cn0 :: !Word8
     -- ^ Carrier-to-Noise density.  Zero implies invalid cn0.
   } deriving ( Show, Read, Eq )
 
-instance Binary MeTrackingChannelState where
+instance Binary MeasurementState where
   get = do
-    _meTrackingChannelState_sid <- get
-    _meTrackingChannelState_cn0 <- getWord8
-    pure MeTrackingChannelState {..}
+    _measurementState_mesid <- get
+    _measurementState_cn0 <- getWord8
+    pure MeasurementState {..}
 
-  put MeTrackingChannelState {..} = do
-    put _meTrackingChannelState_sid
-    putWord8 _meTrackingChannelState_cn0
+  put MeasurementState {..} = do
+    put _measurementState_mesid
+    putWord8 _measurementState_cn0
 
-$(makeJSON "_meTrackingChannelState_" ''MeTrackingChannelState)
-$(makeLenses ''MeTrackingChannelState)
+$(makeJSON "_measurementState_" ''MeasurementState)
+$(makeLenses ''MeasurementState)
 
-msgTrackingStateMe :: Word16
-msgTrackingStateMe = 0x0061
+msgMeasurementState :: Word16
+msgMeasurementState = 0x0061
 
--- | SBP class for message MSG_TRACKING_STATE_ME (0x0061).
+-- | SBP class for message MSG_MEASUREMENT_STATE (0x0061).
 --
 -- The tracking message returns a variable-length array of tracking channel
 -- states. It reports status and carrier-to-noise density measurements for all
 -- tracked satellites.
-data MsgTrackingStateMe = MsgTrackingStateMe
-  { _msgTrackingStateMe_states :: ![MeTrackingChannelState]
+data MsgMeasurementState = MsgMeasurementState
+  { _msgMeasurementState_states :: ![MeasurementState]
     -- ^ ME signal tracking channel state
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgTrackingStateMe where
+instance Binary MsgMeasurementState where
   get = do
-    _msgTrackingStateMe_states <- whileM (not <$> isEmpty) get
-    pure MsgTrackingStateMe {..}
+    _msgMeasurementState_states <- whileM (not <$> isEmpty) get
+    pure MsgMeasurementState {..}
 
-  put MsgTrackingStateMe {..} = do
-    mapM_ put _msgTrackingStateMe_states
+  put MsgMeasurementState {..} = do
+    mapM_ put _msgMeasurementState_states
 
-$(makeSBP 'msgTrackingStateMe ''MsgTrackingStateMe)
-$(makeJSON "_msgTrackingStateMe_" ''MsgTrackingStateMe)
-$(makeLenses ''MsgTrackingStateMe)
+$(makeSBP 'msgMeasurementState ''MsgMeasurementState)
+$(makeJSON "_msgMeasurementState_" ''MsgMeasurementState)
+$(makeLenses ''MsgMeasurementState)
 
 -- | TrackingChannelCorrelation.
 --
