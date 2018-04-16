@@ -65,7 +65,6 @@ library
                      , monad-loops
                      , template-haskell
                      , text
-                     , time
 
 executable sbp2json
   hs-source-dirs:      main
