@@ -78,13 +78,16 @@ class MeasurementState(object):
   """MeasurementState.
   
   Measurement Engine tracking channel state for a specific satellite signal 
-and measured signal power.
+and measured signal power. 
+The mesid field for Glonass can either 
+carry the FCN as 100 + FCN where FCN is in [-7, +6] or 
+the Slot ID (from 1 to 28)
 
   
   Parameters
   ----------
   mesid : GnssSignal
-    Measurement Engine GNSS signal being tracked (carries Glonass FCN instead of SLOT)
+    Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT)
   cn0 : int
     Carrier-to-Noise density.  Zero implies invalid cn0.
 

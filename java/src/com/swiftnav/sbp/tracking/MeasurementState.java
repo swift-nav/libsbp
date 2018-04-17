@@ -25,7 +25,7 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class MeasurementState extends SBPStruct {
     
-    /** Measurement Engine GNSS signal being tracked (carries Glonass FCN instead of SLOT) */
+    /** Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT) */
     public GnssSignal mesid;
     
     /** Carrier-to-Noise density.  Zero implies invalid cn0. */

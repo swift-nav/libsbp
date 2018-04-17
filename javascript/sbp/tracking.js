@@ -281,10 +281,11 @@ MsgTrackingState.prototype.fieldSpec.push(['states', 'array', TrackingChannelSta
  * SBP class for message fragment MeasurementState
  *
  * Measurement Engine tracking channel state for a specific satellite signal  and
- * measured signal power.
+ * measured signal power.  The mesid field for Glonass can either  carry the FCN as
+ * 100 + FCN where FCN is in [-7, +6] or  the Slot ID (from 1 to 28)
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field mesid GnssSignal Measurement Engine GNSS signal being tracked (carries Glonass FCN instead of
+ * @field mesid GnssSignal Measurement Engine GNSS signal being tracked (carries either Glonass FCN or
  *   SLOT)
  * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density.  Zero implies invalid cn0.
  *

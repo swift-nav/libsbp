@@ -34,8 +34,9 @@ class GnssSignal(object):
   Parameters
   ----------
   sat : int
-    Constellation-specific satellite identifier (for Glonass it can be 
-sometimes populated with FCN rather than SLOT)
+    Constellation-specific satellite identifier. This field for Glonass can  
+either be (100+FCN) where FCN is in [-7,+6] or 
+the Slot ID in [1,28]
 
   code : int
     Signal constellation, band and code

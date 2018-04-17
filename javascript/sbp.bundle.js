@@ -101,8 +101,8 @@ var UInt64 = __webpack_require__(1).UINT64;
  * Signal identifier containing constellation, band, and satellite identifier
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field sat number (unsigned 8-bit int, 1 byte) Constellation-specific satellite identifier (for Glonass it can be  sometimes
- *   populated with FCN rather than SLOT)
+ * @field sat number (unsigned 8-bit int, 1 byte) Constellation-specific satellite identifier. This field for Glonass can   either
+ *   be (100+FCN) where FCN is in [-7,+6] or  the Slot ID in [1,28]
  * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -14130,10 +14130,11 @@ MsgTrackingState.prototype.fieldSpec.push(['states', 'array', TrackingChannelSta
  * SBP class for message fragment MeasurementState
  *
  * Measurement Engine tracking channel state for a specific satellite signal  and
- * measured signal power.
+ * measured signal power.  The mesid field for Glonass can either  carry the FCN as
+ * 100 + FCN where FCN is in [-7, +6] or  the Slot ID (from 1 to 28)
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field mesid GnssSignal Measurement Engine GNSS signal being tracked (carries Glonass FCN instead of
+ * @field mesid GnssSignal Measurement Engine GNSS signal being tracked (carries either Glonass FCN or
  *   SLOT)
  * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density.  Zero implies invalid cn0.
  *

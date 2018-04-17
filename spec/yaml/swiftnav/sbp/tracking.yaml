@@ -504,11 +504,14 @@ definitions:
     short_desc: Measurement Engine signal tracking channel state
     desc: |
       Measurement Engine tracking channel state for a specific satellite signal 
-      and measured signal power.
+      and measured signal power. 
+      The mesid field for Glonass can either 
+      carry the FCN as 100 + FCN where FCN is in [-7, +6] or 
+      the Slot ID (from 1 to 28)
     fields:
         - mesid:
             type: GnssSignal
-            desc: Measurement Engine GNSS signal being tracked (carries Glonass FCN instead of SLOT)
+            desc: Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT)
         - cn0:
             type: u8
             units: dB Hz / 4

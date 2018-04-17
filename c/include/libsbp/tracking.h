@@ -145,10 +145,13 @@ typedef struct __attribute__((packed)) {
 /** Measurement Engine signal tracking channel state
  *
  * Measurement Engine tracking channel state for a specific satellite signal 
- * and measured signal power.
+ * and measured signal power. 
+ * The mesid field for Glonass can either 
+ * carry the FCN as 100 + FCN where FCN is in [-7, +6] or 
+ * the Slot ID (from 1 to 28)
  */
 typedef struct __attribute__((packed)) {
-  sbp_gnss_signal_t mesid;    /**< Measurement Engine GNSS signal being tracked (carries Glonass FCN instead of SLOT) */
+  sbp_gnss_signal_t mesid;    /**< Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT) */
   u8 cn0;      /**< Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
 } measurement_state_t;
 
