@@ -308,6 +308,57 @@ $(makeSBP 'msgTrackingState ''MsgTrackingState)
 $(makeJSON "_msgTrackingState_" ''MsgTrackingState)
 $(makeLenses ''MsgTrackingState)
 
+-- | MeasurementState.
+--
+-- Measurement Engine tracking channel state for a specific satellite signal
+-- and measured signal power.  The mesid field for Glonass can either  carry
+-- the FCN as 100 + FCN where FCN is in [-7, +6] or  the Slot ID (from 1 to 28)
+data MeasurementState = MeasurementState
+  { _measurementState_mesid :: !GnssSignal
+    -- ^ Measurement Engine GNSS signal being tracked (carries either Glonass FCN
+    -- or SLOT)
+  , _measurementState_cn0 :: !Word8
+    -- ^ Carrier-to-Noise density.  Zero implies invalid cn0.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MeasurementState where
+  get = do
+    _measurementState_mesid <- get
+    _measurementState_cn0 <- getWord8
+    pure MeasurementState {..}
+
+  put MeasurementState {..} = do
+    put _measurementState_mesid
+    putWord8 _measurementState_cn0
+
+$(makeJSON "_measurementState_" ''MeasurementState)
+$(makeLenses ''MeasurementState)
+
+msgMeasurementState :: Word16
+msgMeasurementState = 0x0061
+
+-- | SBP class for message MSG_MEASUREMENT_STATE (0x0061).
+--
+-- The tracking message returns a variable-length array of tracking channel
+-- states. It reports status and carrier-to-noise density measurements for all
+-- tracked satellites.
+data MsgMeasurementState = MsgMeasurementState
+  { _msgMeasurementState_states :: ![MeasurementState]
+    -- ^ ME signal tracking channel state
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgMeasurementState where
+  get = do
+    _msgMeasurementState_states <- whileM (not <$> isEmpty) get
+    pure MsgMeasurementState {..}
+
+  put MsgMeasurementState {..} = do
+    mapM_ put _msgMeasurementState_states
+
+$(makeSBP 'msgMeasurementState ''MsgMeasurementState)
+$(makeJSON "_msgMeasurementState_" ''MsgMeasurementState)
+$(makeLenses ''MsgMeasurementState)
+
 -- | TrackingChannelCorrelation.
 --
 -- Structure containing in-phase and quadrature correlation components.

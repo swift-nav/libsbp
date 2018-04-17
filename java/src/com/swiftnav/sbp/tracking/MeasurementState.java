@@ -10,52 +10,50 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-package com.swiftnav.sbp.gnss;
+package com.swiftnav.sbp.tracking;
 
 import java.math.BigInteger;
 
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.gnss.*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class GnssSignal extends SBPStruct {
+public class MeasurementState extends SBPStruct {
     
-    /** Constellation-specific satellite identifier. This field for Glonass can  
-either be (100+FCN) where FCN is in [-7,+6] or 
-the Slot ID in [1,28]
- */
-    public int sat;
+    /** Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT) */
+    public GnssSignal mesid;
     
-    /** Signal constellation, band and code */
-    public int code;
+    /** Carrier-to-Noise density.  Zero implies invalid cn0. */
+    public int cn0;
     
 
-    public GnssSignal () {}
+    public MeasurementState () {}
 
     @Override
-    public GnssSignal parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public MeasurementState parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        sat = parser.getU8();
-        code = parser.getU8();
+        mesid = new GnssSignal().parse(parser);
+        cn0 = parser.getU8();
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        builder.putU8(sat);
-        builder.putU8(code);
+        mesid.build(builder);
+        builder.putU8(cn0);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("sat", sat);
-        obj.put("code", code);
+        obj.put("mesid", mesid.toJSON());
+        obj.put("cn0", cn0);
         return obj;
     }
 }

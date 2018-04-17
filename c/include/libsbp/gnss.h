@@ -31,7 +31,10 @@
  * Signal identifier containing constellation, band, and satellite identifier
  */
 typedef struct __attribute__((packed)) {
-  u8 sat;     /**< Constellation-specific satellite identifier */
+  u8 sat;     /**< Constellation-specific satellite identifier. This field for Glonass can  
+either be (100+FCN) where FCN is in [-7,+6] or 
+the Slot ID in [1,28]
+ */
   u8 code;    /**< Signal constellation, band and code */
 } sbp_gnss_signal_t;
 
