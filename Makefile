@@ -119,7 +119,7 @@ gen-c:
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/c/include/libsbp \
-                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
+                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
 	               --c
 
 	$(call announce-begin,"Generating C tests")
