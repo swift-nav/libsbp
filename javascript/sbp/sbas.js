@@ -39,7 +39,7 @@ var GPSTimeDep = require("./gnss").GPSTimeDep;
  * Fields in the SBP payload (`sbp.payload`):
  * @field sid GnssSignal GNSS signal identifier.
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS time-of-week at the start of the data block.
- * @field message_type number (unsigned 8-bit int, 1 byte) SBAS message type (0-63)
+ * @field message_type number (unsigned 8-bit int, 1 byte) SBAS message type (0-63).
  * @field data array Raw SBAS data field of 212 bits (last byte padded with zeros).
  *
  * @param sbp An SBP object with a payload to be decoded.

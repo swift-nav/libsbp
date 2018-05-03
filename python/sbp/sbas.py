@@ -48,7 +48,7 @@ parity of the data block and sends only blocks that pass the check.
   tow : int
     GPS time-of-week at the start of the data block.
   message_type : int
-    SBAS message type (0-63)
+    SBAS message type (0-63).
   data : array
     Raw SBAS data field of 212 bits (last byte padded with zeros).
   sender : int

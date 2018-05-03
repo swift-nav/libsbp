@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-package com.swiftnav.sbp.sbas;
+package com.swiftnav.sbp.raw;
 
 import java.math.BigInteger;
 
@@ -23,35 +23,35 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_SBAS_RAW (0x7777).
+/** SBP class for message MSG_GPS_L1CA_RAW (0x7778).
  *
- * You can have MSG_SBAS_RAW inherent its fields directly from
+ * You can have MSG_GPS_L1CA_RAW inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message is sent once per second per SBAS satellite. ME checks the
+ * This message is sent once per 6 seconds per GPS satellite. ME checks the
  * parity of the data block and sends only blocks that pass the check. */
 
-public class MsgSbasRaw extends SBPMessage {
-    public static final int TYPE = 0x7777;
+public class MsgGPSL1CaRaw extends SBPMessage {
+    public static final int TYPE = 0x7778;
 
     
     /** GNSS signal identifier. */
     public GnssSignal sid;
     
-    /** GPS time-of-week at the start of the data block. */
+    /** GPS time-of-week at the start of the subframe. */
     public long tow;
     
-    /** SBAS message type (0-63). */
-    public int message_type;
+    /** Subframe ID (1-5). */
+    public int subframe_id;
     
-    /** Raw SBAS data field of 212 bits (last byte padded with zeros). */
+    /** Raw subframe data field of 300 bits (last byte padded with zeros). */
     public int[] data;
     
 
-    public MsgSbasRaw (int sender) { super(sender, TYPE); }
-    public MsgSbasRaw () { super(TYPE); }
-    public MsgSbasRaw (SBPMessage msg) throws SBPBinaryException {
+    public MsgGPSL1CaRaw (int sender) { super(sender, TYPE); }
+    public MsgGPSL1CaRaw () { super(TYPE); }
+    public MsgGPSL1CaRaw (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -61,16 +61,16 @@ public class MsgSbasRaw extends SBPMessage {
         /* Parse fields from binary */
         sid = new GnssSignal().parse(parser);
         tow = parser.getU32();
-        message_type = parser.getU8();
-        data = parser.getArrayofU8(27);
+        subframe_id = parser.getU8();
+        data = parser.getArrayofU8(38);
     }
 
     @Override
     protected void build(Builder builder) {
         sid.build(builder);
         builder.putU32(tow);
-        builder.putU8(message_type);
-        builder.putArrayofU8(data, 27);
+        builder.putU8(subframe_id);
+        builder.putArrayofU8(data, 38);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class MsgSbasRaw extends SBPMessage {
         JSONObject obj = super.toJSON();
         obj.put("sid", sid.toJSON());
         obj.put("tow", tow);
-        obj.put("message_type", message_type);
+        obj.put("subframe_id", subframe_id);
         obj.put("data", new JSONArray(data));
         return obj;
     }

@@ -36,7 +36,7 @@
 typedef struct __attribute__((packed)) {
   sbp_gnss_signal_t sid;             /**< GNSS signal identifier. */
   u32 tow;             /**< GPS time-of-week at the start of the data block. [ms] */
-  u8 message_type;    /**< SBAS message type (0-63) */
+  u8 message_type;    /**< SBAS message type (0-63). */
   u8 data[27];        /**< Raw SBAS data field of 212 bits (last byte padded with zeros). */
 } msg_sbas_raw_t;
 

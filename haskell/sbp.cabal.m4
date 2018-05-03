@@ -39,6 +39,7 @@ library
                      , SwiftNav.SBP.Observation
                      , SwiftNav.SBP.Orientation
                      , SwiftNav.SBP.Piksi
+                     , SwiftNav.SBP.Raw
                      , SwiftNav.SBP.Sbas
                      , SwiftNav.SBP.Settings
                      , SwiftNav.SBP.Ssr

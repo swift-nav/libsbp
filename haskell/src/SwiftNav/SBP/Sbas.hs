@@ -48,7 +48,7 @@ data MsgSbasRaw = MsgSbasRaw
   , _msgSbasRaw_tow        :: !Word32
     -- ^ GPS time-of-week at the start of the data block.
   , _msgSbasRaw_message_type :: !Word8
-    -- ^ SBAS message type (0-63)
+    -- ^ SBAS message type (0-63).
   , _msgSbasRaw_data       :: ![Word8]
     -- ^ Raw SBAS data field of 212 bits (last byte padded with zeros).
   } deriving ( Show, Read, Eq )
