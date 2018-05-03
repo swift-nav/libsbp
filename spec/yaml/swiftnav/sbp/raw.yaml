@@ -1,0 +1,63 @@
+# Copyright (C) 2018 Swift Navigation Inc.
+# Contact: Swift Navigation <dev@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.raw
+description: Raw GNSS navigation data
+stable: False
+public: True
+include:
+  - gnss.yaml
+definitions:
+
+ - MSG_GPS_L1CA_RAW:
+    id: 0x7778
+    short_desc: Raw GPS L1CA LNAV data
+    desc: |
+      This message is sent once per 6 seconds per GPS satellite. ME checks the
+      parity of the data block and sends only blocks that pass the check.
+    fields:
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier.
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS time-of-week at the start of the subframe.
+        - subframe_id:
+           type: u8
+           desc: Subframe ID (1-5).
+        - data:
+            type: array
+            size: 38
+            fill: u8
+            desc: Raw subframe data field of 300 bits (last byte padded with zeros).
+
+ - MSG_GLO_L1OF_RAW:
+    id: 0x7779
+    short_desc: Raw GLONASS L1OF navigation data
+    desc: |
+      This message is sent once per 2 seconds per GLONASS satellite. ME checks the
+      parity of the data block and sends only blocks that pass the check.
+    fields:
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier.
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS time-of-week at the start of the subframe.
+        - string_number:
+           type: u8
+           desc: String number (1-15).
+        - data:
+            type: array
+            size: 11
+            fill: u8
+            desc: Raw string data field of 85 bits (last byte padded with zeros).

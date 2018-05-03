@@ -32,7 +32,7 @@ definitions:
             desc: GPS time-of-week at the start of the data block.
         - message_type:
            type: u8
-           desc: SBAS message type (0-63)
+           desc: SBAS message type (0-63).
         - data:
             type: array
             size: 27
