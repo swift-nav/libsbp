@@ -24,6 +24,8 @@
 #define SBP_MAJOR_VERSION (((major)))
 /** Protocol minor version. */
 #define SBP_MINOR_VERSION (((minor)))
+/** Protocol patch version. */
+#define SBP_PATCH_VERSION (((patch)))
 
 /** \} */
 
