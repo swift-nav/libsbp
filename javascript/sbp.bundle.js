@@ -10115,8 +10115,8 @@ MsgEphemerisGps.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field common EphemerisCommonContent Values common for all ephemeris types
- * @field bgd_e1e5a number (float, 4 bytes) Group delay differential between L1 and L2
- * @field bgd_e1e5b number (float, 4 bytes) Group delay differential between L1 and L2
+ * @field bgd_e1e5a number (float, 4 bytes) E1-E5a Broadcast Group Delay
+ * @field bgd_e1e5b number (float, 4 bytes) E1-E5b Broadcast Group Delay
  * @field c_rs number (float, 4 bytes) Amplitude of the sine harmonic correction term to the orbit radius
  * @field c_rc number (float, 4 bytes) Amplitude of the cosine harmonic correction term to the orbit radius
  * @field c_uc number (float, 4 bytes) Amplitude of the cosine harmonic correction term to the argument of latitude

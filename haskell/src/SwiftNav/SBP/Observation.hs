@@ -561,9 +561,9 @@ data MsgEphemerisGal = MsgEphemerisGal
   { _msgEphemerisGal_common  :: !EphemerisCommonContent
     -- ^ Values common for all ephemeris types
   , _msgEphemerisGal_bgd_e1e5a :: !Float
-    -- ^ Group delay differential between L1 and L2
+    -- ^ E1-E5a Broadcast Group Delay
   , _msgEphemerisGal_bgd_e1e5b :: !Float
-    -- ^ Group delay differential between L1 and L2
+    -- ^ E1-E5b Broadcast Group Delay
   , _msgEphemerisGal_c_rs    :: !Float
     -- ^ Amplitude of the sine harmonic correction term to the orbit radius
   , _msgEphemerisGal_c_rc    :: !Float

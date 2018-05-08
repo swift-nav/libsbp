@@ -1427,9 +1427,9 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
   common : EphemerisCommonContent
     Values common for all ephemeris types
   bgd_e1e5a : float
-    Group delay differential between L1 and L2
+    E1-E5a Broadcast Group Delay
   bgd_e1e5b : float
-    Group delay differential between L1 and L2
+    E1-E5b Broadcast Group Delay
   c_rs : float
     Amplitude of the sine harmonic correction term to the orbit radius
   c_rc : float

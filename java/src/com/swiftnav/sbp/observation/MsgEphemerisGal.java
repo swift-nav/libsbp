@@ -41,10 +41,10 @@ public class MsgEphemerisGal extends SBPMessage {
     /** Values common for all ephemeris types */
     public EphemerisCommonContent common;
     
-    /** Group delay differential between L1 and L2 */
+    /** E1-E5a Broadcast Group Delay */
     public float bgd_e1e5a;
     
-    /** Group delay differential between L1 and L2 */
+    /** E1-E5b Broadcast Group Delay */
     public float bgd_e1e5b;
     
     /** Amplitude of the sine harmonic correction term to the orbit radius */
