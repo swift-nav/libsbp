@@ -209,8 +209,7 @@ class EphemerisCommonContent(object):
   health_bits : int
     Satellite health status.
 GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-SBAS: 0 = valid, non-zero = invalid
-GLO: 0 = valid, non-zero = invalid
+Others: 0 = valid, non-zero = invalid
 
 
   """
@@ -1402,6 +1401,205 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgEphemerisGPS, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_EPHEMERIS_GAL = 0x0095
+class MsgEphemerisGal(SBP):
+  """SBP class for message MSG_EPHEMERIS_GAL (0x0095).
+
+  You can have MSG_EPHEMERIS_GAL inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The ephemeris message returns a set of satellite orbit
+parameters that is used to calculate Galileo satellite position,
+velocity, and clock offset. Please see the Signal In Space ICD
+OS SIS ICD, Issue 1.3, December 2016 for more details.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  common : EphemerisCommonContent
+    Values common for all ephemeris types
+  bgd_e1e5a : float
+    Group delay differential between L1 and L2
+  bgd_e1e5b : float
+    Group delay differential between L1 and L2
+  c_rs : float
+    Amplitude of the sine harmonic correction term to the orbit radius
+  c_rc : float
+    Amplitude of the cosine harmonic correction term to the orbit radius
+  c_uc : float
+    Amplitude of the cosine harmonic correction term to the argument of latitude
+  c_us : float
+    Amplitude of the sine harmonic correction term to the argument of latitude
+  c_ic : float
+    Amplitude of the cosine harmonic correction term to the angle of inclination
+  c_is : float
+    Amplitude of the sine harmonic correction term to the angle of inclination
+  dn : float
+    Mean motion difference
+  m0 : double
+    Mean anomaly at reference time
+  ecc : double
+    Eccentricity of satellite orbit
+  sqrta : double
+    Square root of the semi-major axis of orbit
+  omega0 : double
+    Longitude of ascending node of orbit plane at weekly epoch
+  omegadot : double
+    Rate of right ascension
+  w : double
+    Argument of perigee
+  inc : double
+    Inclination
+  inc_dot : float
+    Inclination first derivative
+  af0 : double
+    Polynomial clock correction coefficient (clock bias)
+  af1 : double
+    Polynomial clock correction coefficient (clock drift)
+  af2 : float
+    Polynomial clock correction coefficient (rate of clock drift)
+  toc : GPSTimeSec
+    Clock reference
+  iode : int
+    Issue of ephemeris data
+  iodc : int
+    Issue of clock data
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'bgd_e1e5a' / construct.Float32l,
+                   'bgd_e1e5b' / construct.Float32l,
+                   'c_rs' / construct.Float32l,
+                   'c_rc' / construct.Float32l,
+                   'c_uc' / construct.Float32l,
+                   'c_us' / construct.Float32l,
+                   'c_ic' / construct.Float32l,
+                   'c_is' / construct.Float32l,
+                   'dn' / construct.Float32l,
+                   'm0' / construct.Float64l,
+                   'ecc' / construct.Float64l,
+                   'sqrta' / construct.Float64l,
+                   'omega0' / construct.Float64l,
+                   'omegadot' / construct.Float64l,
+                   'w' / construct.Float64l,
+                   'inc' / construct.Float64l,
+                   'inc_dot' / construct.Float32l,
+                   'af0' / construct.Float64l,
+                   'af1' / construct.Float64l,
+                   'af2' / construct.Float32l,
+                   'toc' / construct.Struct(GPSTimeSec._parser),
+                   'iode' / construct.Int16ul,
+                   'iodc' / construct.Int16ul,)
+  __slots__ = [
+               'common',
+               'bgd_e1e5a',
+               'bgd_e1e5b',
+               'c_rs',
+               'c_rc',
+               'c_uc',
+               'c_us',
+               'c_ic',
+               'c_is',
+               'dn',
+               'm0',
+               'ecc',
+               'sqrta',
+               'omega0',
+               'omegadot',
+               'w',
+               'inc',
+               'inc_dot',
+               'af0',
+               'af1',
+               'af2',
+               'toc',
+               'iode',
+               'iodc',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgEphemerisGal,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgEphemerisGal, self).__init__()
+      self.msg_type = SBP_MSG_EPHEMERIS_GAL
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.common = kwargs.pop('common')
+      self.bgd_e1e5a = kwargs.pop('bgd_e1e5a')
+      self.bgd_e1e5b = kwargs.pop('bgd_e1e5b')
+      self.c_rs = kwargs.pop('c_rs')
+      self.c_rc = kwargs.pop('c_rc')
+      self.c_uc = kwargs.pop('c_uc')
+      self.c_us = kwargs.pop('c_us')
+      self.c_ic = kwargs.pop('c_ic')
+      self.c_is = kwargs.pop('c_is')
+      self.dn = kwargs.pop('dn')
+      self.m0 = kwargs.pop('m0')
+      self.ecc = kwargs.pop('ecc')
+      self.sqrta = kwargs.pop('sqrta')
+      self.omega0 = kwargs.pop('omega0')
+      self.omegadot = kwargs.pop('omegadot')
+      self.w = kwargs.pop('w')
+      self.inc = kwargs.pop('inc')
+      self.inc_dot = kwargs.pop('inc_dot')
+      self.af0 = kwargs.pop('af0')
+      self.af1 = kwargs.pop('af1')
+      self.af2 = kwargs.pop('af2')
+      self.toc = kwargs.pop('toc')
+      self.iode = kwargs.pop('iode')
+      self.iodc = kwargs.pop('iodc')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgEphemerisGal.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgEphemerisGal(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgEphemerisGal._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgEphemerisGal._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgEphemerisGal, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -4345,6 +4543,7 @@ msg_classes = {
   0x0048: MsgBasePosECEF,
   0x0081: MsgEphemerisGPSDepE,
   0x0086: MsgEphemerisGPS,
+  0x0095: MsgEphemerisGal,
   0x0082: MsgEphemerisSbasDepA,
   0x0083: MsgEphemerisGloDepA,
   0x0084: MsgEphemerisSbas,

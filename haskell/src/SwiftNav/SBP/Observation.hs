@@ -250,8 +250,8 @@ data EphemerisCommonContent = EphemerisCommonContent
   , _ephemerisCommonContent_valid      :: !Word8
     -- ^ Status of ephemeris, 1 = valid, 0 = invalid
   , _ephemerisCommonContent_health_bits :: !Word8
-    -- ^ Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
-    -- = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
+    -- ^ Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 Others:
+    -- 0 = valid, non-zero = invalid
   } deriving ( Show, Read, Eq )
 
 instance Binary EphemerisCommonContent where
@@ -547,6 +547,128 @@ instance Binary MsgEphemerisGps where
 $(makeSBP 'msgEphemerisGps ''MsgEphemerisGps)
 $(makeJSON "_msgEphemerisGps_" ''MsgEphemerisGps)
 $(makeLenses ''MsgEphemerisGps)
+
+msgEphemerisGal :: Word16
+msgEphemerisGal = 0x0095
+
+-- | SBP class for message MSG_EPHEMERIS_GAL (0x0095).
+--
+-- The ephemeris message returns a set of satellite orbit parameters that is
+-- used to calculate Galileo satellite position, velocity, and clock offset.
+-- Please see the Signal In Space ICD OS SIS ICD, Issue 1.3, December 2016 for
+-- more details.
+data MsgEphemerisGal = MsgEphemerisGal
+  { _msgEphemerisGal_common  :: !EphemerisCommonContent
+    -- ^ Values common for all ephemeris types
+  , _msgEphemerisGal_bgd_e1e5a :: !Float
+    -- ^ Group delay differential between L1 and L2
+  , _msgEphemerisGal_bgd_e1e5b :: !Float
+    -- ^ Group delay differential between L1 and L2
+  , _msgEphemerisGal_c_rs    :: !Float
+    -- ^ Amplitude of the sine harmonic correction term to the orbit radius
+  , _msgEphemerisGal_c_rc    :: !Float
+    -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
+  , _msgEphemerisGal_c_uc    :: !Float
+    -- ^ Amplitude of the cosine harmonic correction term to the argument of
+    -- latitude
+  , _msgEphemerisGal_c_us    :: !Float
+    -- ^ Amplitude of the sine harmonic correction term to the argument of
+    -- latitude
+  , _msgEphemerisGal_c_ic    :: !Float
+    -- ^ Amplitude of the cosine harmonic correction term to the angle of
+    -- inclination
+  , _msgEphemerisGal_c_is    :: !Float
+    -- ^ Amplitude of the sine harmonic correction term to the angle of
+    -- inclination
+  , _msgEphemerisGal_dn      :: !Float
+    -- ^ Mean motion difference
+  , _msgEphemerisGal_m0      :: !Double
+    -- ^ Mean anomaly at reference time
+  , _msgEphemerisGal_ecc     :: !Double
+    -- ^ Eccentricity of satellite orbit
+  , _msgEphemerisGal_sqrta   :: !Double
+    -- ^ Square root of the semi-major axis of orbit
+  , _msgEphemerisGal_omega0  :: !Double
+    -- ^ Longitude of ascending node of orbit plane at weekly epoch
+  , _msgEphemerisGal_omegadot :: !Double
+    -- ^ Rate of right ascension
+  , _msgEphemerisGal_w       :: !Double
+    -- ^ Argument of perigee
+  , _msgEphemerisGal_inc     :: !Double
+    -- ^ Inclination
+  , _msgEphemerisGal_inc_dot :: !Float
+    -- ^ Inclination first derivative
+  , _msgEphemerisGal_af0     :: !Double
+    -- ^ Polynomial clock correction coefficient (clock bias)
+  , _msgEphemerisGal_af1     :: !Double
+    -- ^ Polynomial clock correction coefficient (clock drift)
+  , _msgEphemerisGal_af2     :: !Float
+    -- ^ Polynomial clock correction coefficient (rate of clock drift)
+  , _msgEphemerisGal_toc     :: !GpsTimeSec
+    -- ^ Clock reference
+  , _msgEphemerisGal_iode    :: !Word16
+    -- ^ Issue of ephemeris data
+  , _msgEphemerisGal_iodc    :: !Word16
+    -- ^ Issue of clock data
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgEphemerisGal where
+  get = do
+    _msgEphemerisGal_common <- get
+    _msgEphemerisGal_bgd_e1e5a <- getFloat32le
+    _msgEphemerisGal_bgd_e1e5b <- getFloat32le
+    _msgEphemerisGal_c_rs <- getFloat32le
+    _msgEphemerisGal_c_rc <- getFloat32le
+    _msgEphemerisGal_c_uc <- getFloat32le
+    _msgEphemerisGal_c_us <- getFloat32le
+    _msgEphemerisGal_c_ic <- getFloat32le
+    _msgEphemerisGal_c_is <- getFloat32le
+    _msgEphemerisGal_dn <- getFloat32le
+    _msgEphemerisGal_m0 <- getFloat64le
+    _msgEphemerisGal_ecc <- getFloat64le
+    _msgEphemerisGal_sqrta <- getFloat64le
+    _msgEphemerisGal_omega0 <- getFloat64le
+    _msgEphemerisGal_omegadot <- getFloat64le
+    _msgEphemerisGal_w <- getFloat64le
+    _msgEphemerisGal_inc <- getFloat64le
+    _msgEphemerisGal_inc_dot <- getFloat32le
+    _msgEphemerisGal_af0 <- getFloat64le
+    _msgEphemerisGal_af1 <- getFloat64le
+    _msgEphemerisGal_af2 <- getFloat32le
+    _msgEphemerisGal_toc <- get
+    _msgEphemerisGal_iode <- getWord16le
+    _msgEphemerisGal_iodc <- getWord16le
+    pure MsgEphemerisGal {..}
+
+  put MsgEphemerisGal {..} = do
+    put _msgEphemerisGal_common
+    putFloat32le _msgEphemerisGal_bgd_e1e5a
+    putFloat32le _msgEphemerisGal_bgd_e1e5b
+    putFloat32le _msgEphemerisGal_c_rs
+    putFloat32le _msgEphemerisGal_c_rc
+    putFloat32le _msgEphemerisGal_c_uc
+    putFloat32le _msgEphemerisGal_c_us
+    putFloat32le _msgEphemerisGal_c_ic
+    putFloat32le _msgEphemerisGal_c_is
+    putFloat32le _msgEphemerisGal_dn
+    putFloat64le _msgEphemerisGal_m0
+    putFloat64le _msgEphemerisGal_ecc
+    putFloat64le _msgEphemerisGal_sqrta
+    putFloat64le _msgEphemerisGal_omega0
+    putFloat64le _msgEphemerisGal_omegadot
+    putFloat64le _msgEphemerisGal_w
+    putFloat64le _msgEphemerisGal_inc
+    putFloat32le _msgEphemerisGal_inc_dot
+    putFloat64le _msgEphemerisGal_af0
+    putFloat64le _msgEphemerisGal_af1
+    putFloat32le _msgEphemerisGal_af2
+    put _msgEphemerisGal_toc
+    putWord16le _msgEphemerisGal_iode
+    putWord16le _msgEphemerisGal_iodc
+
+$(makeSBP 'msgEphemerisGal ''MsgEphemerisGal)
+$(makeJSON "_msgEphemerisGal_" ''MsgEphemerisGal)
+$(makeLenses ''MsgEphemerisGal)
 
 msgEphemerisSbasDepA :: Word16
 msgEphemerisSbasDepA = 0x0082

@@ -15,18 +15,14 @@ import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPMessage.Builder;
 import com.swiftnav.sbp.SBPMessage.Parser;
-import com.swiftnav.sbp.flash.MsgFlashProgram;
-import com.swiftnav.sbp.flash.MsgFlashDone;
-import com.swiftnav.sbp.flash.MsgFlashReadReq;
-import com.swiftnav.sbp.flash.MsgFlashReadResp;
-import com.swiftnav.sbp.flash.MsgFlashErase;
-import com.swiftnav.sbp.flash.MsgStmFlashLockSector;
-import com.swiftnav.sbp.flash.MsgStmFlashUnlockSector;
-import com.swiftnav.sbp.flash.MsgStmUniqueIdReq;
-import com.swiftnav.sbp.flash.MsgStmUniqueIdResp;
-import com.swiftnav.sbp.flash.MsgM25FlashWriteStatus;
-import com.swiftnav.sbp.user.MsgUserData;
-import com.swiftnav.sbp.ndb.MsgNdbEvent;
+import com.swiftnav.sbp.sbas.MsgSbasRaw;
+import com.swiftnav.sbp.system.MsgStartup;
+import com.swiftnav.sbp.system.MsgDgnssStatus;
+import com.swiftnav.sbp.system.MsgHeartbeat;
+import com.swiftnav.sbp.system.MsgInsStatus;
+import com.swiftnav.sbp.ssr.MsgSsrOrbitClock;
+import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
+import com.swiftnav.sbp.ssr.MsgSsrPhaseBiases;
 import com.swiftnav.sbp.bootload.MsgBootloaderHandshakeReq;
 import com.swiftnav.sbp.bootload.MsgBootloaderHandshakeResp;
 import com.swiftnav.sbp.bootload.MsgBootloaderJumpToApp;
@@ -38,6 +34,7 @@ import com.swiftnav.sbp.observation.MsgBasePosLLH;
 import com.swiftnav.sbp.observation.MsgBasePosECEF;
 import com.swiftnav.sbp.observation.MsgEphemerisGPSDepE;
 import com.swiftnav.sbp.observation.MsgEphemerisGPS;
+import com.swiftnav.sbp.observation.MsgEphemerisGal;
 import com.swiftnav.sbp.observation.MsgEphemerisSbasDepA;
 import com.swiftnav.sbp.observation.MsgEphemerisGloDepA;
 import com.swiftnav.sbp.observation.MsgEphemerisSbas;
@@ -61,21 +58,31 @@ import com.swiftnav.sbp.observation.MsgAlmanacGPS;
 import com.swiftnav.sbp.observation.MsgAlmanacGloDep;
 import com.swiftnav.sbp.observation.MsgAlmanacGlo;
 import com.swiftnav.sbp.observation.MsgGloBiases;
-import com.swiftnav.sbp.file_io.MsgFileioReadReq;
-import com.swiftnav.sbp.file_io.MsgFileioReadResp;
-import com.swiftnav.sbp.file_io.MsgFileioReadDirReq;
-import com.swiftnav.sbp.file_io.MsgFileioReadDirResp;
-import com.swiftnav.sbp.file_io.MsgFileioRemove;
-import com.swiftnav.sbp.file_io.MsgFileioWriteReq;
-import com.swiftnav.sbp.file_io.MsgFileioWriteResp;
-import com.swiftnav.sbp.ext_events.MsgExtEvent;
-import com.swiftnav.sbp.logging.MsgLog;
-import com.swiftnav.sbp.logging.MsgFwd;
-import com.swiftnav.sbp.logging.MsgTweet;
-import com.swiftnav.sbp.logging.MsgPrintDep;
-import com.swiftnav.sbp.vehicle.MsgOdometry;
 import com.swiftnav.sbp.mag.MsgMagRaw;
-import com.swiftnav.sbp.sbas.MsgSbasRaw;
+import com.swiftnav.sbp.navigation.MsgGPSTime;
+import com.swiftnav.sbp.navigation.MsgUtcTime;
+import com.swiftnav.sbp.navigation.MsgDops;
+import com.swiftnav.sbp.navigation.MsgPosECEF;
+import com.swiftnav.sbp.navigation.MsgPosECEFCov;
+import com.swiftnav.sbp.navigation.MsgPosLLH;
+import com.swiftnav.sbp.navigation.MsgPosLLHCov;
+import com.swiftnav.sbp.navigation.MsgBaselineECEF;
+import com.swiftnav.sbp.navigation.MsgBaselineNED;
+import com.swiftnav.sbp.navigation.MsgVelECEF;
+import com.swiftnav.sbp.navigation.MsgVelECEFCov;
+import com.swiftnav.sbp.navigation.MsgVelNED;
+import com.swiftnav.sbp.navigation.MsgVelNEDCov;
+import com.swiftnav.sbp.navigation.MsgVelBody;
+import com.swiftnav.sbp.navigation.MsgAgeCorrections;
+import com.swiftnav.sbp.navigation.MsgGPSTimeDepA;
+import com.swiftnav.sbp.navigation.MsgDopsDepA;
+import com.swiftnav.sbp.navigation.MsgPosECEFDepA;
+import com.swiftnav.sbp.navigation.MsgPosLLHDepA;
+import com.swiftnav.sbp.navigation.MsgBaselineECEFDepA;
+import com.swiftnav.sbp.navigation.MsgBaselineNEDDepA;
+import com.swiftnav.sbp.navigation.MsgVelECEFDepA;
+import com.swiftnav.sbp.navigation.MsgVelNEDDepA;
+import com.swiftnav.sbp.navigation.MsgBaselineHeadingDepA;
 import com.swiftnav.sbp.settings.MsgSettingsSave;
 import com.swiftnav.sbp.settings.MsgSettingsWrite;
 import com.swiftnav.sbp.settings.MsgSettingsWriteResp;
@@ -85,20 +92,11 @@ import com.swiftnav.sbp.settings.MsgSettingsReadByIndexReq;
 import com.swiftnav.sbp.settings.MsgSettingsReadByIndexResp;
 import com.swiftnav.sbp.settings.MsgSettingsReadByIndexDone;
 import com.swiftnav.sbp.settings.MsgSettingsRegister;
-import com.swiftnav.sbp.acquisition.MsgAcqResult;
-import com.swiftnav.sbp.acquisition.MsgAcqResultDepC;
-import com.swiftnav.sbp.acquisition.MsgAcqResultDepB;
-import com.swiftnav.sbp.acquisition.MsgAcqResultDepA;
-import com.swiftnav.sbp.acquisition.MsgAcqSvProfile;
-import com.swiftnav.sbp.acquisition.MsgAcqSvProfileDep;
-import com.swiftnav.sbp.system.MsgStartup;
-import com.swiftnav.sbp.system.MsgDgnssStatus;
-import com.swiftnav.sbp.system.MsgHeartbeat;
-import com.swiftnav.sbp.system.MsgInsStatus;
-import com.swiftnav.sbp.orientation.MsgBaselineHeading;
-import com.swiftnav.sbp.orientation.MsgOrientQuat;
-import com.swiftnav.sbp.orientation.MsgOrientEuler;
-import com.swiftnav.sbp.orientation.MsgAngularRate;
+import com.swiftnav.sbp.logging.MsgLog;
+import com.swiftnav.sbp.logging.MsgFwd;
+import com.swiftnav.sbp.logging.MsgTweet;
+import com.swiftnav.sbp.logging.MsgPrintDep;
+import com.swiftnav.sbp.user.MsgUserData;
 import com.swiftnav.sbp.piksi.MsgAlmanac;
 import com.swiftnav.sbp.piksi.MsgSetTime;
 import com.swiftnav.sbp.piksi.MsgReset;
@@ -131,63 +129,58 @@ import com.swiftnav.sbp.tracking.MsgTrackingIq;
 import com.swiftnav.sbp.tracking.MsgTrackingIqDep;
 import com.swiftnav.sbp.tracking.MsgTrackingStateDepA;
 import com.swiftnav.sbp.tracking.MsgTrackingStateDepB;
+import com.swiftnav.sbp.orientation.MsgBaselineHeading;
+import com.swiftnav.sbp.orientation.MsgOrientQuat;
+import com.swiftnav.sbp.orientation.MsgOrientEuler;
+import com.swiftnav.sbp.orientation.MsgAngularRate;
+import com.swiftnav.sbp.flash.MsgFlashProgram;
+import com.swiftnav.sbp.flash.MsgFlashDone;
+import com.swiftnav.sbp.flash.MsgFlashReadReq;
+import com.swiftnav.sbp.flash.MsgFlashReadResp;
+import com.swiftnav.sbp.flash.MsgFlashErase;
+import com.swiftnav.sbp.flash.MsgStmFlashLockSector;
+import com.swiftnav.sbp.flash.MsgStmFlashUnlockSector;
+import com.swiftnav.sbp.flash.MsgStmUniqueIdReq;
+import com.swiftnav.sbp.flash.MsgStmUniqueIdResp;
+import com.swiftnav.sbp.flash.MsgM25FlashWriteStatus;
 import com.swiftnav.sbp.imu.MsgImuRaw;
 import com.swiftnav.sbp.imu.MsgImuAux;
-import com.swiftnav.sbp.ssr.MsgSsrOrbitClock;
-import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
-import com.swiftnav.sbp.ssr.MsgSsrPhaseBiases;
-import com.swiftnav.sbp.navigation.MsgGPSTime;
-import com.swiftnav.sbp.navigation.MsgUtcTime;
-import com.swiftnav.sbp.navigation.MsgDops;
-import com.swiftnav.sbp.navigation.MsgPosECEF;
-import com.swiftnav.sbp.navigation.MsgPosECEFCov;
-import com.swiftnav.sbp.navigation.MsgPosLLH;
-import com.swiftnav.sbp.navigation.MsgPosLLHCov;
-import com.swiftnav.sbp.navigation.MsgBaselineECEF;
-import com.swiftnav.sbp.navigation.MsgBaselineNED;
-import com.swiftnav.sbp.navigation.MsgVelECEF;
-import com.swiftnav.sbp.navigation.MsgVelECEFCov;
-import com.swiftnav.sbp.navigation.MsgVelNED;
-import com.swiftnav.sbp.navigation.MsgVelNEDCov;
-import com.swiftnav.sbp.navigation.MsgVelBody;
-import com.swiftnav.sbp.navigation.MsgAgeCorrections;
-import com.swiftnav.sbp.navigation.MsgGPSTimeDepA;
-import com.swiftnav.sbp.navigation.MsgDopsDepA;
-import com.swiftnav.sbp.navigation.MsgPosECEFDepA;
-import com.swiftnav.sbp.navigation.MsgPosLLHDepA;
-import com.swiftnav.sbp.navigation.MsgBaselineECEFDepA;
-import com.swiftnav.sbp.navigation.MsgBaselineNEDDepA;
-import com.swiftnav.sbp.navigation.MsgVelECEFDepA;
-import com.swiftnav.sbp.navigation.MsgVelNEDDepA;
-import com.swiftnav.sbp.navigation.MsgBaselineHeadingDepA;
+import com.swiftnav.sbp.ext_events.MsgExtEvent;
+import com.swiftnav.sbp.file_io.MsgFileioReadReq;
+import com.swiftnav.sbp.file_io.MsgFileioReadResp;
+import com.swiftnav.sbp.file_io.MsgFileioReadDirReq;
+import com.swiftnav.sbp.file_io.MsgFileioReadDirResp;
+import com.swiftnav.sbp.file_io.MsgFileioRemove;
+import com.swiftnav.sbp.file_io.MsgFileioWriteReq;
+import com.swiftnav.sbp.file_io.MsgFileioWriteResp;
+import com.swiftnav.sbp.ndb.MsgNdbEvent;
+import com.swiftnav.sbp.vehicle.MsgOdometry;
+import com.swiftnav.sbp.acquisition.MsgAcqResult;
+import com.swiftnav.sbp.acquisition.MsgAcqResultDepC;
+import com.swiftnav.sbp.acquisition.MsgAcqResultDepB;
+import com.swiftnav.sbp.acquisition.MsgAcqResultDepA;
+import com.swiftnav.sbp.acquisition.MsgAcqSvProfile;
+import com.swiftnav.sbp.acquisition.MsgAcqSvProfileDep;
 
 final class MessageTable {
     static SBPMessage dispatch(SBPMessage msg) throws SBPBinaryException {
         switch (msg.type) {
-            case MsgFlashProgram.TYPE:
-                return new MsgFlashProgram(msg);
-            case MsgFlashDone.TYPE:
-                return new MsgFlashDone(msg);
-            case MsgFlashReadReq.TYPE:
-                return new MsgFlashReadReq(msg);
-            case MsgFlashReadResp.TYPE:
-                return new MsgFlashReadResp(msg);
-            case MsgFlashErase.TYPE:
-                return new MsgFlashErase(msg);
-            case MsgStmFlashLockSector.TYPE:
-                return new MsgStmFlashLockSector(msg);
-            case MsgStmFlashUnlockSector.TYPE:
-                return new MsgStmFlashUnlockSector(msg);
-            case MsgStmUniqueIdReq.TYPE:
-                return new MsgStmUniqueIdReq(msg);
-            case MsgStmUniqueIdResp.TYPE:
-                return new MsgStmUniqueIdResp(msg);
-            case MsgM25FlashWriteStatus.TYPE:
-                return new MsgM25FlashWriteStatus(msg);
-            case MsgUserData.TYPE:
-                return new MsgUserData(msg);
-            case MsgNdbEvent.TYPE:
-                return new MsgNdbEvent(msg);
+            case MsgSbasRaw.TYPE:
+                return new MsgSbasRaw(msg);
+            case MsgStartup.TYPE:
+                return new MsgStartup(msg);
+            case MsgDgnssStatus.TYPE:
+                return new MsgDgnssStatus(msg);
+            case MsgHeartbeat.TYPE:
+                return new MsgHeartbeat(msg);
+            case MsgInsStatus.TYPE:
+                return new MsgInsStatus(msg);
+            case MsgSsrOrbitClock.TYPE:
+                return new MsgSsrOrbitClock(msg);
+            case MsgSsrCodeBiases.TYPE:
+                return new MsgSsrCodeBiases(msg);
+            case MsgSsrPhaseBiases.TYPE:
+                return new MsgSsrPhaseBiases(msg);
             case MsgBootloaderHandshakeReq.TYPE:
                 return new MsgBootloaderHandshakeReq(msg);
             case MsgBootloaderHandshakeResp.TYPE:
@@ -210,6 +203,8 @@ final class MessageTable {
                 return new MsgEphemerisGPSDepE(msg);
             case MsgEphemerisGPS.TYPE:
                 return new MsgEphemerisGPS(msg);
+            case MsgEphemerisGal.TYPE:
+                return new MsgEphemerisGal(msg);
             case MsgEphemerisSbasDepA.TYPE:
                 return new MsgEphemerisSbasDepA(msg);
             case MsgEphemerisGloDepA.TYPE:
@@ -256,36 +251,56 @@ final class MessageTable {
                 return new MsgAlmanacGlo(msg);
             case MsgGloBiases.TYPE:
                 return new MsgGloBiases(msg);
-            case MsgFileioReadReq.TYPE:
-                return new MsgFileioReadReq(msg);
-            case MsgFileioReadResp.TYPE:
-                return new MsgFileioReadResp(msg);
-            case MsgFileioReadDirReq.TYPE:
-                return new MsgFileioReadDirReq(msg);
-            case MsgFileioReadDirResp.TYPE:
-                return new MsgFileioReadDirResp(msg);
-            case MsgFileioRemove.TYPE:
-                return new MsgFileioRemove(msg);
-            case MsgFileioWriteReq.TYPE:
-                return new MsgFileioWriteReq(msg);
-            case MsgFileioWriteResp.TYPE:
-                return new MsgFileioWriteResp(msg);
-            case MsgExtEvent.TYPE:
-                return new MsgExtEvent(msg);
-            case MsgLog.TYPE:
-                return new MsgLog(msg);
-            case MsgFwd.TYPE:
-                return new MsgFwd(msg);
-            case MsgTweet.TYPE:
-                return new MsgTweet(msg);
-            case MsgPrintDep.TYPE:
-                return new MsgPrintDep(msg);
-            case MsgOdometry.TYPE:
-                return new MsgOdometry(msg);
             case MsgMagRaw.TYPE:
                 return new MsgMagRaw(msg);
-            case MsgSbasRaw.TYPE:
-                return new MsgSbasRaw(msg);
+            case MsgGPSTime.TYPE:
+                return new MsgGPSTime(msg);
+            case MsgUtcTime.TYPE:
+                return new MsgUtcTime(msg);
+            case MsgDops.TYPE:
+                return new MsgDops(msg);
+            case MsgPosECEF.TYPE:
+                return new MsgPosECEF(msg);
+            case MsgPosECEFCov.TYPE:
+                return new MsgPosECEFCov(msg);
+            case MsgPosLLH.TYPE:
+                return new MsgPosLLH(msg);
+            case MsgPosLLHCov.TYPE:
+                return new MsgPosLLHCov(msg);
+            case MsgBaselineECEF.TYPE:
+                return new MsgBaselineECEF(msg);
+            case MsgBaselineNED.TYPE:
+                return new MsgBaselineNED(msg);
+            case MsgVelECEF.TYPE:
+                return new MsgVelECEF(msg);
+            case MsgVelECEFCov.TYPE:
+                return new MsgVelECEFCov(msg);
+            case MsgVelNED.TYPE:
+                return new MsgVelNED(msg);
+            case MsgVelNEDCov.TYPE:
+                return new MsgVelNEDCov(msg);
+            case MsgVelBody.TYPE:
+                return new MsgVelBody(msg);
+            case MsgAgeCorrections.TYPE:
+                return new MsgAgeCorrections(msg);
+            case MsgGPSTimeDepA.TYPE:
+                return new MsgGPSTimeDepA(msg);
+            case MsgDopsDepA.TYPE:
+                return new MsgDopsDepA(msg);
+            case MsgPosECEFDepA.TYPE:
+                return new MsgPosECEFDepA(msg);
+            case MsgPosLLHDepA.TYPE:
+                return new MsgPosLLHDepA(msg);
+            case MsgBaselineECEFDepA.TYPE:
+                return new MsgBaselineECEFDepA(msg);
+            case MsgBaselineNEDDepA.TYPE:
+                return new MsgBaselineNEDDepA(msg);
+            case MsgVelECEFDepA.TYPE:
+                return new MsgVelECEFDepA(msg);
+            case MsgVelNEDDepA.TYPE:
+                return new MsgVelNEDDepA(msg);
+            case MsgBaselineHeadingDepA.TYPE:
+                return new MsgBaselineHeadingDepA(msg);
             case MsgSettingsSave.TYPE:
                 return new MsgSettingsSave(msg);
             case MsgSettingsWrite.TYPE:
@@ -304,34 +319,16 @@ final class MessageTable {
                 return new MsgSettingsReadByIndexDone(msg);
             case MsgSettingsRegister.TYPE:
                 return new MsgSettingsRegister(msg);
-            case MsgAcqResult.TYPE:
-                return new MsgAcqResult(msg);
-            case MsgAcqResultDepC.TYPE:
-                return new MsgAcqResultDepC(msg);
-            case MsgAcqResultDepB.TYPE:
-                return new MsgAcqResultDepB(msg);
-            case MsgAcqResultDepA.TYPE:
-                return new MsgAcqResultDepA(msg);
-            case MsgAcqSvProfile.TYPE:
-                return new MsgAcqSvProfile(msg);
-            case MsgAcqSvProfileDep.TYPE:
-                return new MsgAcqSvProfileDep(msg);
-            case MsgStartup.TYPE:
-                return new MsgStartup(msg);
-            case MsgDgnssStatus.TYPE:
-                return new MsgDgnssStatus(msg);
-            case MsgHeartbeat.TYPE:
-                return new MsgHeartbeat(msg);
-            case MsgInsStatus.TYPE:
-                return new MsgInsStatus(msg);
-            case MsgBaselineHeading.TYPE:
-                return new MsgBaselineHeading(msg);
-            case MsgOrientQuat.TYPE:
-                return new MsgOrientQuat(msg);
-            case MsgOrientEuler.TYPE:
-                return new MsgOrientEuler(msg);
-            case MsgAngularRate.TYPE:
-                return new MsgAngularRate(msg);
+            case MsgLog.TYPE:
+                return new MsgLog(msg);
+            case MsgFwd.TYPE:
+                return new MsgFwd(msg);
+            case MsgTweet.TYPE:
+                return new MsgTweet(msg);
+            case MsgPrintDep.TYPE:
+                return new MsgPrintDep(msg);
+            case MsgUserData.TYPE:
+                return new MsgUserData(msg);
             case MsgAlmanac.TYPE:
                 return new MsgAlmanac(msg);
             case MsgSetTime.TYPE:
@@ -396,64 +393,70 @@ final class MessageTable {
                 return new MsgTrackingStateDepA(msg);
             case MsgTrackingStateDepB.TYPE:
                 return new MsgTrackingStateDepB(msg);
+            case MsgBaselineHeading.TYPE:
+                return new MsgBaselineHeading(msg);
+            case MsgOrientQuat.TYPE:
+                return new MsgOrientQuat(msg);
+            case MsgOrientEuler.TYPE:
+                return new MsgOrientEuler(msg);
+            case MsgAngularRate.TYPE:
+                return new MsgAngularRate(msg);
+            case MsgFlashProgram.TYPE:
+                return new MsgFlashProgram(msg);
+            case MsgFlashDone.TYPE:
+                return new MsgFlashDone(msg);
+            case MsgFlashReadReq.TYPE:
+                return new MsgFlashReadReq(msg);
+            case MsgFlashReadResp.TYPE:
+                return new MsgFlashReadResp(msg);
+            case MsgFlashErase.TYPE:
+                return new MsgFlashErase(msg);
+            case MsgStmFlashLockSector.TYPE:
+                return new MsgStmFlashLockSector(msg);
+            case MsgStmFlashUnlockSector.TYPE:
+                return new MsgStmFlashUnlockSector(msg);
+            case MsgStmUniqueIdReq.TYPE:
+                return new MsgStmUniqueIdReq(msg);
+            case MsgStmUniqueIdResp.TYPE:
+                return new MsgStmUniqueIdResp(msg);
+            case MsgM25FlashWriteStatus.TYPE:
+                return new MsgM25FlashWriteStatus(msg);
             case MsgImuRaw.TYPE:
                 return new MsgImuRaw(msg);
             case MsgImuAux.TYPE:
                 return new MsgImuAux(msg);
-            case MsgSsrOrbitClock.TYPE:
-                return new MsgSsrOrbitClock(msg);
-            case MsgSsrCodeBiases.TYPE:
-                return new MsgSsrCodeBiases(msg);
-            case MsgSsrPhaseBiases.TYPE:
-                return new MsgSsrPhaseBiases(msg);
-            case MsgGPSTime.TYPE:
-                return new MsgGPSTime(msg);
-            case MsgUtcTime.TYPE:
-                return new MsgUtcTime(msg);
-            case MsgDops.TYPE:
-                return new MsgDops(msg);
-            case MsgPosECEF.TYPE:
-                return new MsgPosECEF(msg);
-            case MsgPosECEFCov.TYPE:
-                return new MsgPosECEFCov(msg);
-            case MsgPosLLH.TYPE:
-                return new MsgPosLLH(msg);
-            case MsgPosLLHCov.TYPE:
-                return new MsgPosLLHCov(msg);
-            case MsgBaselineECEF.TYPE:
-                return new MsgBaselineECEF(msg);
-            case MsgBaselineNED.TYPE:
-                return new MsgBaselineNED(msg);
-            case MsgVelECEF.TYPE:
-                return new MsgVelECEF(msg);
-            case MsgVelECEFCov.TYPE:
-                return new MsgVelECEFCov(msg);
-            case MsgVelNED.TYPE:
-                return new MsgVelNED(msg);
-            case MsgVelNEDCov.TYPE:
-                return new MsgVelNEDCov(msg);
-            case MsgVelBody.TYPE:
-                return new MsgVelBody(msg);
-            case MsgAgeCorrections.TYPE:
-                return new MsgAgeCorrections(msg);
-            case MsgGPSTimeDepA.TYPE:
-                return new MsgGPSTimeDepA(msg);
-            case MsgDopsDepA.TYPE:
-                return new MsgDopsDepA(msg);
-            case MsgPosECEFDepA.TYPE:
-                return new MsgPosECEFDepA(msg);
-            case MsgPosLLHDepA.TYPE:
-                return new MsgPosLLHDepA(msg);
-            case MsgBaselineECEFDepA.TYPE:
-                return new MsgBaselineECEFDepA(msg);
-            case MsgBaselineNEDDepA.TYPE:
-                return new MsgBaselineNEDDepA(msg);
-            case MsgVelECEFDepA.TYPE:
-                return new MsgVelECEFDepA(msg);
-            case MsgVelNEDDepA.TYPE:
-                return new MsgVelNEDDepA(msg);
-            case MsgBaselineHeadingDepA.TYPE:
-                return new MsgBaselineHeadingDepA(msg);
+            case MsgExtEvent.TYPE:
+                return new MsgExtEvent(msg);
+            case MsgFileioReadReq.TYPE:
+                return new MsgFileioReadReq(msg);
+            case MsgFileioReadResp.TYPE:
+                return new MsgFileioReadResp(msg);
+            case MsgFileioReadDirReq.TYPE:
+                return new MsgFileioReadDirReq(msg);
+            case MsgFileioReadDirResp.TYPE:
+                return new MsgFileioReadDirResp(msg);
+            case MsgFileioRemove.TYPE:
+                return new MsgFileioRemove(msg);
+            case MsgFileioWriteReq.TYPE:
+                return new MsgFileioWriteReq(msg);
+            case MsgFileioWriteResp.TYPE:
+                return new MsgFileioWriteResp(msg);
+            case MsgNdbEvent.TYPE:
+                return new MsgNdbEvent(msg);
+            case MsgOdometry.TYPE:
+                return new MsgOdometry(msg);
+            case MsgAcqResult.TYPE:
+                return new MsgAcqResult(msg);
+            case MsgAcqResultDepC.TYPE:
+                return new MsgAcqResultDepC(msg);
+            case MsgAcqResultDepB.TYPE:
+                return new MsgAcqResultDepB(msg);
+            case MsgAcqResultDepA.TYPE:
+                return new MsgAcqResultDepA(msg);
+            case MsgAcqSvProfile.TYPE:
+                return new MsgAcqSvProfile(msg);
+            case MsgAcqSvProfileDep.TYPE:
+                return new MsgAcqSvProfileDep(msg);
         }
         return msg;
     }

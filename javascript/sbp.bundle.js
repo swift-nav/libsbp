@@ -9842,8 +9842,8 @@ MsgBasePosEcef.prototype.fieldSpec.push(['z', 'writeDoubleLE', 8]);
  * @field ura number (float, 8 bytes) User Range Accuracy
  * @field fit_interval number (unsigned 32-bit int, 4 bytes) Curve fit interval
  * @field valid number (unsigned 8-bit int, 1 byte) Status of ephemeris, 1 = valid, 0 = invalid
- * @field health_bits number (unsigned 8-bit int, 1 byte) Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0 = valid,
- *   non-zero = invalid GLO: 0 = valid, non-zero = invalid
+ * @field health_bits number (unsigned 8-bit int, 1 byte) Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 Others: 0 =
+ *   valid, non-zero = invalid
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -10105,6 +10105,104 @@ MsgEphemerisGps.prototype.fieldSpec.push(['af2', 'writeDoubleLE', 8]);
 MsgEphemerisGps.prototype.fieldSpec.push(['toc', GPSTimeSec.prototype.fieldSpec]);
 MsgEphemerisGps.prototype.fieldSpec.push(['iode', 'writeUInt8', 1]);
 MsgEphemerisGps.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
+
+/**
+ * SBP class for message MSG_EPHEMERIS_GAL (0x0095).
+ *
+ * The ephemeris message returns a set of satellite orbit parameters that is used
+ * to calculate Galileo satellite position, velocity, and clock offset. Please see
+ * the Signal In Space ICD OS SIS ICD, Issue 1.3, December 2016 for more details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field common EphemerisCommonContent Values common for all ephemeris types
+ * @field bgd_e1e5a number (float, 4 bytes) Group delay differential between L1 and L2
+ * @field bgd_e1e5b number (float, 4 bytes) Group delay differential between L1 and L2
+ * @field c_rs number (float, 4 bytes) Amplitude of the sine harmonic correction term to the orbit radius
+ * @field c_rc number (float, 4 bytes) Amplitude of the cosine harmonic correction term to the orbit radius
+ * @field c_uc number (float, 4 bytes) Amplitude of the cosine harmonic correction term to the argument of latitude
+ * @field c_us number (float, 4 bytes) Amplitude of the sine harmonic correction term to the argument of latitude
+ * @field c_ic number (float, 4 bytes) Amplitude of the cosine harmonic correction term to the angle of inclination
+ * @field c_is number (float, 4 bytes) Amplitude of the sine harmonic correction term to the angle of inclination
+ * @field dn number (float, 4 bytes) Mean motion difference
+ * @field m0 number (float, 8 bytes) Mean anomaly at reference time
+ * @field ecc number (float, 8 bytes) Eccentricity of satellite orbit
+ * @field sqrta number (float, 8 bytes) Square root of the semi-major axis of orbit
+ * @field omega0 number (float, 8 bytes) Longitude of ascending node of orbit plane at weekly epoch
+ * @field omegadot number (float, 8 bytes) Rate of right ascension
+ * @field w number (float, 8 bytes) Argument of perigee
+ * @field inc number (float, 8 bytes) Inclination
+ * @field inc_dot number (float, 4 bytes) Inclination first derivative
+ * @field af0 number (float, 8 bytes) Polynomial clock correction coefficient (clock bias)
+ * @field af1 number (float, 8 bytes) Polynomial clock correction coefficient (clock drift)
+ * @field af2 number (float, 4 bytes) Polynomial clock correction coefficient (rate of clock drift)
+ * @field toc GPSTimeSec Clock reference
+ * @field iode number (unsigned 16-bit int, 2 bytes) Issue of ephemeris data
+ * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgEphemerisGal = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_EPHEMERIS_GAL";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgEphemerisGal.prototype = Object.create(SBP.prototype);
+MsgEphemerisGal.prototype.messageType = "MSG_EPHEMERIS_GAL";
+MsgEphemerisGal.prototype.msg_type = 0x0095;
+MsgEphemerisGal.prototype.constructor = MsgEphemerisGal;
+MsgEphemerisGal.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('common', { type: EphemerisCommonContent.prototype.parser })
+  .floatle('bgd_e1e5a')
+  .floatle('bgd_e1e5b')
+  .floatle('c_rs')
+  .floatle('c_rc')
+  .floatle('c_uc')
+  .floatle('c_us')
+  .floatle('c_ic')
+  .floatle('c_is')
+  .floatle('dn')
+  .doublele('m0')
+  .doublele('ecc')
+  .doublele('sqrta')
+  .doublele('omega0')
+  .doublele('omegadot')
+  .doublele('w')
+  .doublele('inc')
+  .floatle('inc_dot')
+  .doublele('af0')
+  .doublele('af1')
+  .floatle('af2')
+  .nest('toc', { type: GPSTimeSec.prototype.parser })
+  .uint16('iode')
+  .uint16('iodc');
+MsgEphemerisGal.prototype.fieldSpec = [];
+MsgEphemerisGal.prototype.fieldSpec.push(['common', EphemerisCommonContent.prototype.fieldSpec]);
+MsgEphemerisGal.prototype.fieldSpec.push(['bgd_e1e5a', 'writeFloatLE', 4]);
+MsgEphemerisGal.prototype.fieldSpec.push(['bgd_e1e5b', 'writeFloatLE', 4]);
+MsgEphemerisGal.prototype.fieldSpec.push(['c_rs', 'writeFloatLE', 4]);
+MsgEphemerisGal.prototype.fieldSpec.push(['c_rc', 'writeFloatLE', 4]);
+MsgEphemerisGal.prototype.fieldSpec.push(['c_uc', 'writeFloatLE', 4]);
+MsgEphemerisGal.prototype.fieldSpec.push(['c_us', 'writeFloatLE', 4]);
+MsgEphemerisGal.prototype.fieldSpec.push(['c_ic', 'writeFloatLE', 4]);
+MsgEphemerisGal.prototype.fieldSpec.push(['c_is', 'writeFloatLE', 4]);
+MsgEphemerisGal.prototype.fieldSpec.push(['dn', 'writeFloatLE', 4]);
+MsgEphemerisGal.prototype.fieldSpec.push(['m0', 'writeDoubleLE', 8]);
+MsgEphemerisGal.prototype.fieldSpec.push(['ecc', 'writeDoubleLE', 8]);
+MsgEphemerisGal.prototype.fieldSpec.push(['sqrta', 'writeDoubleLE', 8]);
+MsgEphemerisGal.prototype.fieldSpec.push(['omega0', 'writeDoubleLE', 8]);
+MsgEphemerisGal.prototype.fieldSpec.push(['omegadot', 'writeDoubleLE', 8]);
+MsgEphemerisGal.prototype.fieldSpec.push(['w', 'writeDoubleLE', 8]);
+MsgEphemerisGal.prototype.fieldSpec.push(['inc', 'writeDoubleLE', 8]);
+MsgEphemerisGal.prototype.fieldSpec.push(['inc_dot', 'writeFloatLE', 4]);
+MsgEphemerisGal.prototype.fieldSpec.push(['af0', 'writeDoubleLE', 8]);
+MsgEphemerisGal.prototype.fieldSpec.push(['af1', 'writeDoubleLE', 8]);
+MsgEphemerisGal.prototype.fieldSpec.push(['af2', 'writeFloatLE', 4]);
+MsgEphemerisGal.prototype.fieldSpec.push(['toc', GPSTimeSec.prototype.fieldSpec]);
+MsgEphemerisGal.prototype.fieldSpec.push(['iode', 'writeUInt16LE', 2]);
+MsgEphemerisGal.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
 
 /**
  * SBP class for message MSG_EPHEMERIS_SBAS_DEP_A (0x0082).
@@ -11677,6 +11775,8 @@ module.exports = {
   MsgEphemerisGpsDepE: MsgEphemerisGpsDepE,
   0x0086: MsgEphemerisGps,
   MsgEphemerisGps: MsgEphemerisGps,
+  0x0095: MsgEphemerisGal,
+  MsgEphemerisGal: MsgEphemerisGal,
   0x0082: MsgEphemerisSbasDepA,
   MsgEphemerisSbasDepA: MsgEphemerisSbasDepA,
   0x0083: MsgEphemerisGloDepA,

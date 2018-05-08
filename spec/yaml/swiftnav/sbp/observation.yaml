@@ -214,8 +214,7 @@ definitions:
             desc: |
               Satellite health status.
               GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-              SBAS: 0 = valid, non-zero = invalid
-              GLO: 0 = valid, non-zero = invalid
+              Others: 0 = valid, non-zero = invalid
 
  - EphemerisCommonContentDepA:
     short_desc: Common fields for every ephemeris message.
@@ -440,6 +439,107 @@ definitions:
           desc: Clock reference
       - iode:
           type: u8
+          desc: Issue of ephemeris data
+      - iodc:
+          type: u16
+          desc: Issue of clock data
+
+ - MSG_EPHEMERIS_GAL:
+    id: 0x0095
+    short_desc: Satellite broadcast ephemeris for Galileo
+    desc: |
+      The ephemeris message returns a set of satellite orbit
+      parameters that is used to calculate Galileo satellite position,
+      velocity, and clock offset. Please see the Signal In Space ICD
+      OS SIS ICD, Issue 1.3, December 2016 for more details.
+    fields:
+      - common:
+          type: EphemerisCommonContent
+          desc: Values common for all ephemeris types
+      - bgd_e1e5a:
+          type: float
+          units: s
+          desc: E1-E5a Broadcast Group Delay 
+      - bgd_e1e5b:
+          type: float
+          units: s
+          desc: E1-E5b Broadcast Group Delay 
+      - c_rs:
+          type: float
+          units: m
+          desc: Amplitude of the sine harmonic correction term to the orbit radius
+      - c_rc:
+          type: float
+          units: m
+          desc: Amplitude of the cosine harmonic correction term to the orbit radius
+      - c_uc:
+          type: float
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the argument of latitude
+      - c_us:
+          type: float
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the argument of latitude
+      - c_ic:
+          type: float
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the angle of inclination
+      - c_is:
+          type: float
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the angle of inclination
+      - dn:
+          type: float
+          units: rad/s
+          desc: Mean motion difference
+      - m0:
+          type: double
+          units: rad
+          desc: Mean anomaly at reference time
+      - ecc:
+          type: double
+          desc: Eccentricity of satellite orbit
+      - sqrta:
+          type: double
+          units: m^(1/2)
+          desc: Square root of the semi-major axis of orbit
+      - omega0:
+          type: double
+          units: rad
+          desc: Longitude of ascending node of orbit plane at weekly epoch
+      - omegadot:
+          type: double
+          units: rad/s
+          desc: Rate of right ascension
+      - w:
+          type: double
+          units: rad
+          desc: Argument of perigee
+      - inc:
+          type: double
+          units: rad
+          desc: Inclination
+      - inc_dot:
+          type: float
+          units: rad/s
+          desc: Inclination first derivative
+      - af0:
+          type: double
+          units: s
+          desc: Polynomial clock correction coefficient (clock bias)
+      - af1:
+          type: double
+          units: s/s
+          desc: Polynomial clock correction coefficient (clock drift)
+      - af2:
+          type: float
+          units: s/s^2
+          desc: Polynomial clock correction coefficient (rate of clock drift)
+      - toc:
+          type: GPSTimeSec
+          desc: Clock reference
+      - iode:
+          type: u16
           desc: Issue of ephemeris data
       - iodc:
           type: u16
