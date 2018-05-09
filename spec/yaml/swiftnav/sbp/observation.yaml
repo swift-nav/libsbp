@@ -347,15 +347,14 @@ definitions:
           type: u16
           desc: Issue of clock data
 
- - MSG_EPHEMERIS_GPS:
+ - MSG_EPHEMERIS_GPS_DEP_F:
     id: 0x0086
-    short_desc: Satellite broadcast ephemeris for GPS
+    short_desc: Deprecated
+    replaced_by:
+      - MSG_EPHEMERIS_GPS
     desc: |
-      The ephemeris message returns a set of satellite orbit
-      parameters that is used to calculate GPS satellite position,
-      velocity, and clock offset. Please see the Navstar GPS
-      Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-      20-III) for more details.
+      This observation message has been deprecated in favor of
+      ephemeris message using floats for size reduction.
     fields:
       - common:
           type: EphemerisCommonContent
@@ -433,6 +432,104 @@ definitions:
           desc: Polynomial clock correction coefficient (clock drift)
       - af2:
           type: double
+          units: s/s^2
+          desc: Polynomial clock correction coefficient (rate of clock drift)
+      - toc:
+          type: GPSTimeSec
+          desc: Clock reference
+      - iode:
+          type: u8
+          desc: Issue of ephemeris data
+      - iodc:
+          type: u16
+          desc: Issue of clock data
+
+ - MSG_EPHEMERIS_GPS:
+    id: 0x008A
+    short_desc: Satellite broadcast ephemeris for GPS
+    desc: |
+      The ephemeris message returns a set of satellite orbit
+      parameters that is used to calculate GPS satellite position,
+      velocity, and clock offset. Please see the Navstar GPS
+      Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+      20-III) for more details.
+    fields:
+      - common:
+          type: EphemerisCommonContent
+          desc: Values common for all ephemeris types
+      - tgd:
+          type: float
+          units: s
+          desc: Group delay differential between L1 and L2
+      - c_rs:
+          type: float
+          units: m
+          desc: Amplitude of the sine harmonic correction term to the orbit radius
+      - c_rc:
+          type: float
+          units: m
+          desc: Amplitude of the cosine harmonic correction term to the orbit radius
+      - c_uc:
+          type: float
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the argument of latitude
+      - c_us:
+          type: float
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the argument of latitude
+      - c_ic:
+          type: float
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the angle of inclination
+      - c_is:
+          type: float
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the angle of inclination
+      - dn:
+          type: float
+          units: rad/s
+          desc: Mean motion difference
+      - m0:
+          type: double
+          units: rad
+          desc: Mean anomaly at reference time
+      - ecc:
+          type: double
+          desc: Eccentricity of satellite orbit
+      - sqrta:
+          type: double
+          units: m^(1/2)
+          desc: Square root of the semi-major axis of orbit
+      - omega0:
+          type: double
+          units: rad
+          desc: Longitude of ascending node of orbit plane at weekly epoch
+      - omegadot:
+          type: double
+          units: rad/s
+          desc: Rate of right ascension
+      - w:
+          type: double
+          units: rad
+          desc: Argument of perigee
+      - inc:
+          type: double
+          units: rad
+          desc: Inclination
+      - inc_dot:
+          type: float
+          units: rad/s
+          desc: Inclination first derivative
+      - af0:
+          type: float
+          units: s
+          desc: Polynomial clock correction coefficient (clock bias)
+      - af1:
+          type: float
+          units: s/s
+          desc: Polynomial clock correction coefficient (clock drift)
+      - af2:
+          type: float
           units: s/s^2
           desc: Polynomial clock correction coefficient (rate of clock drift)
       - toc:
