@@ -757,15 +757,14 @@ definitions:
           type: u8
           desc: Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
 
- - MSG_EPHEMERIS_GLO:
+ - MSG_EPHEMERIS_GLO_DEP_D:
     id: 0x0088
-    short_desc: Satellite broadcast ephemeris for GLO
+    short_desc: Deprecated
+    replaced_by:
+      - MSG_EPHEMERIS_GLO
     desc: |
-      The ephemeris message returns a set of satellite orbit
-      parameters that is used to calculate GLO satellite position,
-      velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-      Characteristics of words of immediate information (ephemeris parameters)"
-      for more details.
+      This observation message has been deprecated in favor of
+      ephemeris message using floats for size reduction.
     fields:
       - common:
           type: EphemerisCommonContent
@@ -799,6 +798,58 @@ definitions:
           type: array
           size: 3
           fill: double
+          map_by: sid
+          desc: Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+          units: m/s^2
+      - fcn:
+          type: u8
+          desc: Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+      - iod:
+          type: u8
+          desc: Issue of ephemeris data
+
+ - MSG_EPHEMERIS_GLO:
+    id: 0x008B
+    short_desc: Satellite broadcast ephemeris for GLO
+    desc: |
+      The ephemeris message returns a set of satellite orbit
+      parameters that is used to calculate GLO satellite position,
+      velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
+      Characteristics of words of immediate information (ephemeris parameters)"
+      for more details.
+    fields:
+      - common:
+          type: EphemerisCommonContent
+          desc: Values common for all ephemeris types
+      - gamma:
+          type: float
+          desc: Relative deviation of predicted carrier frequency from nominal
+      - tau:
+          type: float
+          desc: Correction to the SV time
+          units: s
+      - d_tau:
+          type: float
+          desc: Equipment delay between L1 and L2
+          units: s
+      - pos:
+          type: array
+          size: 3
+          fill: double
+          map_by: sid
+          desc: Position of the SV at tb in PZ-90.02 coordinates system
+          units: m
+      - vel:
+          type: array
+          size: 3
+          fill: double
+          map_by: sid
+          desc: Velocity vector of the SV at tb in PZ-90.02 coordinates system
+          units: m/s
+      - acc:
+          type: array
+          size: 3
+          fill: float
           map_by: sid
           desc: Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
           units: m/s^2
