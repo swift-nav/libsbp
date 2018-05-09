@@ -199,6 +199,36 @@ definitions:
             type: GPSTimeSec
             desc: Time of Ephemerides
         - ura:
+            type: float
+            units: m
+            desc: User Range Accuracy
+        - fit_interval:
+            type: u32
+            units: s
+            desc: Curve fit interval
+        - valid:
+            type: u8
+            desc: Status of ephemeris, 1 = valid, 0 = invalid
+        - health_bits:
+            type: u8
+            desc: |
+              Satellite health status.
+              GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+              SBAS: 0 = valid, non-zero = invalid
+              GLO: 0 = valid, non-zero = invalid
+
+ - EphemerisCommonContentDepB:
+    short_desc: Common fields for every ephemeris message.
+    replaced_by:
+      - EphemerisCommonContent
+    fields:
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier (16 bit)
+        - toe:
+            type: GPSTimeSec
+            desc: Time of Ephemerides
+        - ura:
             type: double
             units: m
             desc: User Range Accuracy
@@ -220,7 +250,7 @@ definitions:
  - EphemerisCommonContentDepA:
     short_desc: Common fields for every ephemeris message.
     replaced_by:
-      - EphemerisCommonContent
+      - EphemerisCommonContentDepB
     fields:
         - sid:
             type: GnssSignalDep
@@ -357,7 +387,7 @@ definitions:
       ephemeris message using floats for size reduction.
     fields:
       - common:
-          type: EphemerisCommonContent
+          type: EphemerisCommonContentDepB
           desc: Values common for all ephemeris types
       - tgd:
           type: double
@@ -635,7 +665,7 @@ definitions:
       ephemeris message using floats for size reduction.
     fields:
       - common:
-          type: EphemerisCommonContent
+          type: EphemerisCommonContentDepB
           desc: Values common for all ephemeris types
       - pos:
           type: array
@@ -717,7 +747,7 @@ definitions:
       for more details.
     fields:
       - common:
-          type: EphemerisCommonContent
+          type: EphemerisCommonContentDepB
           desc: Values common for all ephemeris types
       - gamma:
           type: double
@@ -761,7 +791,7 @@ definitions:
       for more details.
     fields:
       - common:
-          type: EphemerisCommonContent
+          type: EphemerisCommonContentDepB
           desc: Values common for all ephemeris types
       - gamma:
           type: double
@@ -809,7 +839,7 @@ definitions:
       ephemeris message using floats for size reduction.
     fields:
       - common:
-          type: EphemerisCommonContent
+          type: EphemerisCommonContentDepB
           desc: Values common for all ephemeris types
       - gamma:
           type: double
