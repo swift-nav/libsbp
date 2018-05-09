@@ -625,9 +625,14 @@ definitions:
           desc: Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
           units: m/s^2
 
- - MSG_EPHEMERIS_SBAS:
+ - MSG_EPHEMERIS_SBAS_DEP_B:
     id: 0x0084
-    short_desc: Satellite broadcast ephemeris for SBAS
+    short_desc: Deprecated
+    replaced_by:
+      - MSG_EPHEMERIS_SBAS
+    desc: |
+      This observation message has been deprecated in favor of
+      ephemeris message using floats for size reduction.
     fields:
       - common:
           type: EphemerisCommonContent
@@ -659,6 +664,43 @@ definitions:
           units: s
       - a_gf1:
           type: double
+          desc: Drift of the GEO clock w.r.t. SBAS Network Time
+          units: s/s
+
+ - MSG_EPHEMERIS_SBAS:
+    id: 0x008C
+    short_desc: Satellite broadcast ephemeris for SBAS
+    fields:
+      - common:
+          type: EphemerisCommonContent
+          desc: Values common for all ephemeris types
+      - pos:
+          type: array
+          size: 3
+          fill: double
+          map_by: sid
+          desc: Position of the GEO at time toe
+          units: m
+      - vel:
+          type: array
+          size: 3
+          fill: float
+          map_by: sid
+          desc: Velocity of the GEO at time toe
+          units: m/s
+      - acc:
+          type: array
+          size: 3
+          fill: float
+          map_by: sid
+          desc: Acceleration of the GEO at time toe
+          units: m/s^2
+      - a_gf0:
+          type: float
+          desc: Time offset of the GEO clock w.r.t. SBAS Network Time
+          units: s
+      - a_gf1:
+          type: float
           desc: Drift of the GEO clock w.r.t. SBAS Network Time
           units: s/s
 
