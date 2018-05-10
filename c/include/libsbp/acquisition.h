@@ -26,6 +26,10 @@
 #include "common.h"
 #include "gnss.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** Satellite acquisition result
  *
@@ -36,7 +40,11 @@
  * ratio.
  */
 #define SBP_MSG_ACQ_RESULT         0x002F
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   float cn0;    /**< CN/0 of best point [dB Hz] */
   float cp;     /**< Code phase of best point [chips] */
   float cf;     /**< Carrier frequency of best point [hz] */
@@ -49,7 +57,11 @@ typedef struct __attribute__((packed)) {
 * Deprecated.
  */
 #define SBP_MSG_ACQ_RESULT_DEP_C   0x001F
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   float cn0;    /**< CN/0 of best point [dB Hz] */
   float cp;     /**< Code phase of best point [chips] */
   float cf;     /**< Carrier frequency of best point [hz] */
@@ -62,7 +74,11 @@ typedef struct __attribute__((packed)) {
 * Deprecated.
  */
 #define SBP_MSG_ACQ_RESULT_DEP_B   0x0014
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   float snr;    /**< SNR of best point. Currently in arbitrary SNR points, but will
 be in units of dB Hz in a later revision of this message.
  */
@@ -77,7 +93,11 @@ be in units of dB Hz in a later revision of this message.
 * Deprecated.
  */
 #define SBP_MSG_ACQ_RESULT_DEP_A   0x0015
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   float snr;    /**< SNR of best point. Currently dimensonless, but will have
 units of dB Hz in the revision of this message.
  */
@@ -95,7 +115,11 @@ acquisition was attempted
  * The message describes SV profile during acquisition time.
  * The message is used to debug and measure the performance.
  */
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 job_type;      /**< SV search job type (deep, fallback, etc) */
   u8 status;        /**< Acquisition status 1 is Success, 0 is Failure */
   u16 cn0;           /**< CN0 value. Only valid if status is '1' [dB-Hz*10] */
@@ -115,7 +139,11 @@ typedef struct __attribute__((packed)) {
  *
 * Deprecated.
  */
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 job_type;      /**< SV search job type (deep, fallback, etc) */
   u8 status;        /**< Acquisition status 1 is Success, 0 is Failure */
   u16 cn0;           /**< CN0 value. Only valid if status is '1' [dB-Hz*10] */
@@ -137,7 +165,11 @@ typedef struct __attribute__((packed)) {
  * The message is used to debug and measure the performance.
  */
 #define SBP_MSG_ACQ_SV_PROFILE     0x002E
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   acq_sv_profile_t acq_sv_profile[0]; /**< SV profiles during acquisition time */
 } msg_acq_sv_profile_t;
 
@@ -147,11 +179,19 @@ typedef struct __attribute__((packed)) {
 * Deprecated.
  */
 #define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   acq_sv_profile_dep_t acq_sv_profile[0]; /**< SV profiles during acquisition time */
 } msg_acq_sv_profile_dep_t;
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_ACQUISITION_MESSAGES_H */

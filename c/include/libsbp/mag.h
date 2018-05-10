@@ -25,13 +25,21 @@
 
 #include "common.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** Raw magnetometer data
  *
  * Raw data from the magnetometer.
  */
 #define SBP_MSG_MAG_RAW 0x0902
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;      /**< Milliseconds since start of GPS week. If the high bit is set, the
 time is unknown or invalid.
  [ms] */
@@ -44,5 +52,9 @@ time is unknown or invalid.
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_MAG_MESSAGES_H */

@@ -25,6 +25,10 @@
 
 #include "common.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** Raw IMU data
  *
@@ -33,7 +37,11 @@
  * the indications on the device itself.
  */
 #define SBP_MSG_IMU_RAW 0x0900
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;      /**< Milliseconds since start of GPS week. If the high bit is set, the
 time is unknown or invalid.
  [ms] */
@@ -55,7 +63,11 @@ time is unknown or invalid.
  * depends on the value of `imu_type`.
  */
 #define SBP_MSG_IMU_AUX 0x0901
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 imu_type;    /**< IMU type */
   s16 temp;        /**< Raw IMU temperature */
   u8 imu_conf;    /**< IMU configuration */
@@ -63,5 +75,9 @@ typedef struct __attribute__((packed)) {
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_IMU_MESSAGES_H */

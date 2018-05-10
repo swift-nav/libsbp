@@ -25,6 +25,10 @@
 
 #include "common.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** Plaintext logging messages with levels
  *
@@ -33,7 +37,11 @@
  * ERROR, WARNING, DEBUG, INFO logging levels.
  */
 #define SBP_MSG_LOG       0x0401
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 level;    /**< Logging level */
   char text[0];  /**< Human-readable string */
 } msg_log_t;
@@ -50,7 +58,11 @@ typedef struct __attribute__((packed)) {
  * Protocol 0 represents SBP and the remaining values are implementation defined.
  */
 #define SBP_MSG_FWD       0x0402
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 source;         /**< source identifier */
   u8 protocol;       /**< protocol identifier */
   char fwd_payload[0]; /**< variable length wrapped binary message */
@@ -62,7 +74,11 @@ typedef struct __attribute__((packed)) {
 * All the news fit to tweet.
  */
 #define SBP_MSG_TWEET     0x0012
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   char tweet[140]; /**< Human-readable string */
 } msg_tweet_t;
 
@@ -72,11 +88,19 @@ typedef struct __attribute__((packed)) {
 * Deprecated.
  */
 #define SBP_MSG_PRINT_DEP 0x0010
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   char text[0]; /**< Human-readable string */
 } msg_print_dep_t;
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_LOGGING_MESSAGES_H */

@@ -29,6 +29,10 @@
 
 #include "common.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** Bootloading handshake request (host => device)
  *
@@ -48,7 +52,11 @@
  * protocol version number.
  */
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_RESP  0x00B4
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 flags;      /**< Bootloader flags */
   char version[0]; /**< Bootloader version number */
 } msg_bootloader_handshake_resp_t;
@@ -59,7 +67,11 @@ typedef struct __attribute__((packed)) {
  * The host initiates the bootloader to jump to the application.
  */
 #define SBP_MSG_BOOTLOADER_JUMP_TO_APP     0x00B1
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 jump;    /**< Ignored by the device */
 } msg_bootloader_jump_to_app_t;
 
@@ -86,7 +98,11 @@ typedef struct __attribute__((packed)) {
  * and not related to the Piksi's serial number.
  */
 #define SBP_MSG_NAP_DEVICE_DNA_RESP        0x00DD
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 dna[8]; /**< 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
 on the right.
  */
@@ -98,11 +114,19 @@ on the right.
 * Deprecated.
  */
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A 0x00B0
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 handshake[0]; /**< Version number string (not NULL terminated) */
 } msg_bootloader_handshake_dep_a_t;
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_BOOTLOAD_MESSAGES_H */

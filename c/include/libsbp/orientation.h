@@ -25,6 +25,10 @@
 
 #include "common.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** Heading relative to True North
  *
@@ -34,7 +38,11 @@
  * that time-matched RTK mode is used when the base station is moving.
  */
 #define SBP_MSG_BASELINE_HEADING 0x020F
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;        /**< GPS Time of Week [ms] */
   u32 heading;    /**< Heading [mdeg] */
   u8 n_sats;     /**< Number of satellites used in solution */
@@ -49,7 +57,11 @@ typedef struct __attribute__((packed)) {
  * vector assuming that the LSB of each component as a value of 2^-31. 
  */
 #define SBP_MSG_ORIENT_QUAT      0x0220
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 w;             /**< Real component [2^-31] */
   s32 x;             /**< 1st imaginary component [2^-31] */
@@ -71,7 +83,11 @@ typedef struct __attribute__((packed)) {
  * to the vehicle body frame.
  */
 #define SBP_MSG_ORIENT_EULER     0x0221
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;               /**< GPS Time of Week [ms] */
   s32 roll;              /**< rotation about the forward axis of the vehicle [microdegrees] */
   s32 pitch;             /**< rotation about the rightward axis of the vehicle [microdegrees] */
@@ -94,7 +110,11 @@ typedef struct __attribute__((packed)) {
  * direction, and the vehicle z-axis should be aligned with the down direction.
  */
 #define SBP_MSG_ANGULAR_RATE     0x0222
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;      /**< GPS Time of Week [ms] */
   s32 x;        /**< angular rate about x axis [microdegrees/s] */
   s32 y;        /**< angular rate about y axis [microdegrees/s] */
@@ -104,5 +124,9 @@ typedef struct __attribute__((packed)) {
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_ORIENTATION_MESSAGES_H */

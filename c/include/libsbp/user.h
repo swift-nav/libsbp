@@ -25,6 +25,10 @@
 
 #include "common.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** User data
  *
@@ -32,11 +36,19 @@
  * maximum length of 255 bytes per message.
  */
 #define SBP_MSG_USER_DATA 0x0800
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 contents[0]; /**< User data payload */
 } msg_user_data_t;
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_USER_MESSAGES_H */

@@ -26,6 +26,10 @@
 #include "common.h"
 #include "gnss.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** Raw SBAS data
  *
@@ -33,7 +37,11 @@
  * parity of the data block and sends only blocks that pass the check.
  */
 #define SBP_MSG_SBAS_RAW 0x7777
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   sbp_gnss_signal_t sid;             /**< GNSS signal identifier. */
   u32 tow;             /**< GPS time-of-week at the start of the data block. [ms] */
   u8 message_type;    /**< SBAS message type (0-63) */
@@ -42,5 +50,9 @@ typedef struct __attribute__((packed)) {
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_SBAS_MESSAGES_H */

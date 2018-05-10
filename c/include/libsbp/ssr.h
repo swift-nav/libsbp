@@ -26,13 +26,21 @@
 #include "common.h"
 #include "gnss.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** SSR code biases corrections for a particular satellite.
  *
  * Code biases are to be added to pseudorange.
  * The corrections are conform with typical RTCMv3 MT1059 and 1065.
  */
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 code;     /**< Signal constellation, band and code */
   s16 value;    /**< Code bias value [0.01 m] */
 } code_biases_content_t;
@@ -43,7 +51,11 @@ typedef struct __attribute__((packed)) {
  * Phase biases are to be added to carrier phase measurements.
  * The corrections are conform with typical RTCMv3 MT1059 and 1065.
  */
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 code;                          /**< Signal constellation, band and code */
   u8 integer_indicator;             /**< Indicator for integer property */
   u8 widelane_integer_indicator;    /**< Indicator for two groups of Wide-Lane(s) integer property */
@@ -62,7 +74,11 @@ Increased for every discontinuity in phase.
  * and 1066 RTCM message types
  */
 #define SBP_MSG_SSR_ORBIT_CLOCK  0x05DC
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
   u8 update_interval;    /**< Update interval between consecutive corrections [s] */
@@ -91,7 +107,11 @@ generating configuration
  * an equivalent to the 1059 and 1065 RTCM message types
  */
 #define SBP_MSG_SSR_CODE_BIASES  0x05E1
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
   u8 update_interval;    /**< Update interval between consecutive corrections [s] */
@@ -113,7 +133,11 @@ generating configuration
  * It is typically an equivalent to the 1265 RTCM message types
  */
 #define SBP_MSG_SSR_PHASE_BIASES 0x05E6
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
   u8 update_interval;    /**< Update interval between consecutive corrections [s] */
@@ -134,5 +158,9 @@ satellite being tracked.
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_SSR_MESSAGES_H */

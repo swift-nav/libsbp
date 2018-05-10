@@ -26,6 +26,10 @@
 
 #include "common.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** Reports timestamped external pin event
  *
@@ -33,7 +37,11 @@
  * which pin it was and whether it was rising or falling.
  */
 #define SBP_MSG_EXT_EVENT 0x0101
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u16 wn;             /**< GPS week number [weeks] */
   u32 tow;            /**< GPS time of week rounded to the nearest millisecond [ms] */
   s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOW (ranges
@@ -45,5 +53,9 @@ from -500000 to 500000)
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_EXT_EVENTS_MESSAGES_H */

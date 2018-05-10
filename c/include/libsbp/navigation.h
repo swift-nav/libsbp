@@ -41,6 +41,10 @@
 
 #include "common.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** GPS Time
  *
@@ -59,7 +63,11 @@
  * these messages.
  */
 #define SBP_MSG_GPS_TIME               0x0102
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u16 wn;             /**< GPS week number [weeks] */
   u32 tow;            /**< GPS time of week rounded to the nearest millisecond [ms] */
   s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOW (ranges
@@ -75,7 +83,11 @@ from -500000 to 500000)
  * which indicate the source of the UTC offset value and source of the time fix.
  */
 #define SBP_MSG_UTC_TIME               0x0103
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 flags;      /**< Indicates source and time validity */
   u32 tow;        /**< GPS time of week rounded to the nearest millisecond [ms] */
   u16 year;       /**< Year [year] */
@@ -96,7 +108,11 @@ typedef struct __attribute__((packed)) {
  * corresponds to differential or SPP solution.
  */
 #define SBP_MSG_DOPS                   0x0208
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;      /**< GPS Time of Week [ms] */
   u16 gdop;     /**< Geometric Dilution of Precision [0.01] */
   u16 pdop;     /**< Position Dilution of Precision [0.01] */
@@ -119,7 +135,11 @@ typedef struct __attribute__((packed)) {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF               0x0209
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;         /**< GPS Time of Week [ms] */
   double x;           /**< ECEF X coordinate [m] */
   double y;           /**< ECEF Y coordinate [m] */
@@ -143,7 +163,11 @@ typedef struct __attribute__((packed)) {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF_COV           0x0214
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;        /**< GPS Time of Week [ms] */
   double x;          /**< ECEF X coordinate [m] */
   double y;          /**< ECEF Y coordinate [m] */
@@ -171,7 +195,11 @@ typedef struct __attribute__((packed)) {
  * matching time-of-week (tow).
  */
 #define SBP_MSG_POS_LLH                0x020A
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;           /**< GPS Time of Week [ms] */
   double lat;           /**< Latitude [deg] */
   double lon;           /**< Longitude [deg] */
@@ -195,7 +223,11 @@ typedef struct __attribute__((packed)) {
  * measurement and care should be taken with the sign convention.
  */
 #define SBP_MSG_POS_LLH_COV            0x0211
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;        /**< GPS Time of Week [ms] */
   double lat;        /**< Latitude [deg] */
   double lon;        /**< Longitude [deg] */
@@ -220,7 +252,11 @@ typedef struct __attribute__((packed)) {
  * matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_ECEF          0x020B
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;         /**< GPS Time of Week [ms] */
   s32 x;           /**< Baseline ECEF X coordinate [mm] */
   s32 y;           /**< Baseline ECEF Y coordinate [mm] */
@@ -241,7 +277,11 @@ typedef struct __attribute__((packed)) {
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_NED           0x020C
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 n;             /**< Baseline North coordinate [mm] */
   s32 e;             /**< Baseline East coordinate [mm] */
@@ -260,7 +300,11 @@ typedef struct __attribute__((packed)) {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_ECEF               0x020D
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;         /**< GPS Time of Week [ms] */
   s32 x;           /**< Velocity ECEF X coordinate [mm/s] */
   s32 y;           /**< Velocity ECEF Y coordinate [mm/s] */
@@ -279,7 +323,11 @@ typedef struct __attribute__((packed)) {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_ECEF_COV           0x0215
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 x;          /**< Velocity ECEF X coordinate [mm/s] */
   s32 y;          /**< Velocity ECEF Y coordinate [mm/s] */
@@ -303,7 +351,11 @@ typedef struct __attribute__((packed)) {
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_NED                0x020E
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 n;             /**< Velocity North coordinate [mm/s] */
   s32 e;             /**< Velocity East coordinate [mm/s] */
@@ -327,7 +379,11 @@ typedef struct __attribute__((packed)) {
  * portion of the 3x3 covariance matrix.
  */
 #define SBP_MSG_VEL_NED_COV            0x0212
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 n;          /**< Velocity North coordinate [mm/s] */
   s32 e;          /**< Velocity East coordinate [mm/s] */
@@ -354,7 +410,11 @@ typedef struct __attribute__((packed)) {
  * matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_BODY               0x0213
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 x;          /**< Velocity in x direction [mm/s] */
   s32 y;          /**< Velocity in y direction [mm/s] */
@@ -376,7 +436,11 @@ typedef struct __attribute__((packed)) {
  * Differential solution
  */
 #define SBP_MSG_AGE_CORRECTIONS        0x0210
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;    /**< GPS Time of Week [ms] */
   u16 age;    /**< Age of the corrections (0xFFFF indicates invalid) [deciseconds] */
 } msg_age_corrections_t;
@@ -399,7 +463,11 @@ typedef struct __attribute__((packed)) {
  * these messages.
  */
 #define SBP_MSG_GPS_TIME_DEP_A         0x0100
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u16 wn;             /**< GPS week number [weeks] */
   u32 tow;            /**< GPS time of week rounded to the nearest millisecond [ms] */
   s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOW (ranges
@@ -416,7 +484,11 @@ from -500000 to 500000)
  * precision.
  */
 #define SBP_MSG_DOPS_DEP_A             0x0206
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;     /**< GPS Time of Week [ms] */
   u16 gdop;    /**< Geometric Dilution of Precision [0.01] */
   u16 pdop;    /**< Position Dilution of Precision [0.01] */
@@ -438,7 +510,11 @@ typedef struct __attribute__((packed)) {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF_DEP_A         0x0200
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;         /**< GPS Time of Week [ms] */
   double x;           /**< ECEF X coordinate [m] */
   double y;           /**< ECEF Y coordinate [m] */
@@ -463,7 +539,11 @@ to 0.
  * matching time-of-week (tow).
  */
 #define SBP_MSG_POS_LLH_DEP_A          0x0201
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;           /**< GPS Time of Week [ms] */
   double lat;           /**< Latitude [deg] */
   double lon;           /**< Longitude [deg] */
@@ -488,7 +568,11 @@ implemented). Defaults to 0.
  * matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_ECEF_DEP_A    0x0202
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;         /**< GPS Time of Week [ms] */
   s32 x;           /**< Baseline ECEF X coordinate [mm] */
   s32 y;           /**< Baseline ECEF Y coordinate [mm] */
@@ -510,7 +594,11 @@ typedef struct __attribute__((packed)) {
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_NED_DEP_A     0x0203
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 n;             /**< Baseline North coordinate [mm] */
   s32 e;             /**< Baseline East coordinate [mm] */
@@ -533,7 +621,11 @@ implemented). Defaults to 0.
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_ECEF_DEP_A         0x0204
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;         /**< GPS Time of Week [ms] */
   s32 x;           /**< Velocity ECEF X coordinate [mm/s] */
   s32 y;           /**< Velocity ECEF Y coordinate [mm/s] */
@@ -554,7 +646,11 @@ to 0.
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_NED_DEP_A          0x0205
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 n;             /**< Velocity North coordinate [mm/s] */
   s32 e;             /**< Velocity East coordinate [mm/s] */
@@ -577,7 +673,11 @@ implemented). Defaults to 0.
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_HEADING_DEP_A 0x0207
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;        /**< GPS Time of Week [ms] */
   u32 heading;    /**< Heading [mdeg] */
   u8 n_sats;     /**< Number of satellites used in solution */
@@ -586,5 +686,9 @@ typedef struct __attribute__((packed)) {
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_NAVIGATION_MESSAGES_H */

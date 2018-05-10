@@ -50,6 +50,10 @@
 
 #include "common.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** Save settings to flash (host => device)
  *
@@ -70,7 +74,11 @@
  * "solution\0soln_freq\010\0".
  */
 #define SBP_MSG_SETTINGS_WRITE              0x00A0
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0"
  */
@@ -88,7 +96,11 @@ typedef struct __attribute__((packed)) {
  * "solution\0soln_freq\010\0".
  */
 #define SBP_MSG_SETTINGS_WRITE_RESP         0x00AF
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 status;     /**< Write status */
   char setting[0]; /**< A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0" 
@@ -108,7 +120,11 @@ typedef struct __attribute__((packed)) {
  * message (msg_id 0x00A5).
  */
 #define SBP_MSG_SETTINGS_READ_REQ           0x00A4
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0"
  */
@@ -126,7 +142,11 @@ typedef struct __attribute__((packed)) {
  * "solution\0soln_freq\010\0".
  */
 #define SBP_MSG_SETTINGS_READ_RESP          0x00A5
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0"
  
@@ -141,7 +161,11 @@ typedef struct __attribute__((packed)) {
  * "MSG_SETTINGS_READ_BY_INDEX_RESP".
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ  0x00A2
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u16 index;    /**< An index into the device settings, with values ranging from
 0 to length(settings)
  */
@@ -162,7 +186,11 @@ typedef struct __attribute__((packed)) {
  * the device is "simulator\0enabled\0True\0enum:True,False\0"
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP 0x00A7
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u16 index;      /**< An index into the device settings, with values ranging from
 0 to length(settings)
  */
@@ -186,7 +214,11 @@ typedef struct __attribute__((packed)) {
  * for this setting to set the initial value.
  */
 #define SBP_MSG_SETTINGS_REGISTER           0x00AE
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   char setting[0]; /**< A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE".
  */
@@ -194,5 +226,9 @@ typedef struct __attribute__((packed)) {
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_SETTINGS_MESSAGES_H */

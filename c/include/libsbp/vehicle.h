@@ -25,6 +25,10 @@
 
 #include "common.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** Vehicle forward (x-axis) velocity
  *
@@ -35,7 +39,11 @@
  * source 0 through 3.
  */
 #define SBP_MSG_ODOMETRY 0x0903
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 tow;         /**< Time field representing either milliseconds in the GPS Week or local CPU
 time from the producing system in milliseconds.  See the tow_source flag
 for the exact source of this timestamp.
@@ -47,5 +55,9 @@ for the exact source of this timestamp.
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_VEHICLE_MESSAGES_H */

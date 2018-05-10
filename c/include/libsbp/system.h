@@ -25,6 +25,10 @@
 
 #include "common.h"
 
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack(1)
+#endif
+
 
 /** System start-up message
  *
@@ -34,7 +38,11 @@
  * or configuration requests.
  */
 #define SBP_MSG_STARTUP      0xFF00
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 cause;           /**< Cause of startup */
   u8 startup_type;    /**< Startup type */
   u16 reserved;        /**< Reserved */
@@ -48,7 +56,11 @@ typedef struct __attribute__((packed)) {
  * corrections packet.
  */
 #define SBP_MSG_DGNSS_STATUS 0xFF02
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u8 flags;          /**< Status flags */
   u16 latency;        /**< Latency of observation receipt [deci-seconds] */
   u8 num_signals;    /**< Number of signals from base station */
@@ -70,7 +82,11 @@ typedef struct __attribute__((packed)) {
  * the remaining error flags should be inspected.
  */
 #define SBP_MSG_HEARTBEAT    0xFFFF
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 flags;    /**< Status flags */
 } msg_heartbeat_t;
 
@@ -81,11 +97,19 @@ typedef struct __attribute__((packed)) {
  * and initialization of the inertial navigation system. 
  */
 #define SBP_MSG_INS_STATUS   0xFF03
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
+typedef struct {
+#else
 typedef struct __attribute__((packed)) {
+#endif
   u32 flags;    /**< Status flags */
 } msg_ins_status_t;
 
 
 /** \} */
+
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
+#pragma pack()
+#endif
 
 #endif /* LIBSBP_SYSTEM_MESSAGES_H */
