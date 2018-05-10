@@ -28,7 +28,7 @@
 #include "(((i)))"
 ((*- endfor *))
 
-#ifdef _MSC_VER
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
 #pragma pack(1)
 #endif
 
@@ -43,7 +43,7 @@
 #define SBP_(((m.identifier.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
 ((*- endif *))
 ((*- if m.fields *))
-#ifdef _MSC_VER
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACKED
 typedef struct {
 #else
 typedef struct __attribute__((packed)) {
@@ -61,7 +61,7 @@ typedef struct __attribute__((packed)) {
 ((* endfor *))
 /** \} */
 
-#ifdef _MSC_VER
+#if defined _MSC_VER || defined TOOLCHAIN_PRAGMA_PACK
 #pragma pack()
 #endif
 
