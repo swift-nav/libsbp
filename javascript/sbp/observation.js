@@ -258,7 +258,7 @@ MsgBasePosEcef.prototype.fieldSpec.push(['z', 'writeDoubleLE', 8]);
  * Fields in the SBP payload (`sbp.payload`):
  * @field sid GnssSignal GNSS signal identifier (16 bit)
  * @field toe GPSTimeSec Time of Ephemerides
- * @field ura number (float, 8 bytes) User Range Accuracy
+ * @field ura number (float, 4 bytes) User Range Accuracy
  * @field fit_interval number (unsigned 32-bit int, 4 bytes) Curve fit interval
  * @field valid number (unsigned 8-bit int, 1 byte) Status of ephemeris, 1 = valid, 0 = invalid
  * @field health_bits number (unsigned 8-bit int, 1 byte) Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0 = valid,
@@ -280,17 +280,58 @@ EphemerisCommonContent.prototype.parser = new Parser()
   .endianess('little')
   .nest('sid', { type: GnssSignal.prototype.parser })
   .nest('toe', { type: GPSTimeSec.prototype.parser })
-  .doublele('ura')
+  .floatle('ura')
   .uint32('fit_interval')
   .uint8('valid')
   .uint8('health_bits');
 EphemerisCommonContent.prototype.fieldSpec = [];
 EphemerisCommonContent.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 EphemerisCommonContent.prototype.fieldSpec.push(['toe', GPSTimeSec.prototype.fieldSpec]);
-EphemerisCommonContent.prototype.fieldSpec.push(['ura', 'writeDoubleLE', 8]);
+EphemerisCommonContent.prototype.fieldSpec.push(['ura', 'writeFloatLE', 4]);
 EphemerisCommonContent.prototype.fieldSpec.push(['fit_interval', 'writeUInt32LE', 4]);
 EphemerisCommonContent.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
 EphemerisCommonContent.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message fragment EphemerisCommonContentDepB
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sid GnssSignal GNSS signal identifier (16 bit)
+ * @field toe GPSTimeSec Time of Ephemerides
+ * @field ura number (float, 8 bytes) User Range Accuracy
+ * @field fit_interval number (unsigned 32-bit int, 4 bytes) Curve fit interval
+ * @field valid number (unsigned 8-bit int, 1 byte) Status of ephemeris, 1 = valid, 0 = invalid
+ * @field health_bits number (unsigned 8-bit int, 1 byte) Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0 = valid,
+ *   non-zero = invalid GLO: 0 = valid, non-zero = invalid
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var EphemerisCommonContentDepB = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "EphemerisCommonContentDepB";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+EphemerisCommonContentDepB.prototype = Object.create(SBP.prototype);
+EphemerisCommonContentDepB.prototype.messageType = "EphemerisCommonContentDepB";
+EphemerisCommonContentDepB.prototype.constructor = EphemerisCommonContentDepB;
+EphemerisCommonContentDepB.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .nest('toe', { type: GPSTimeSec.prototype.parser })
+  .doublele('ura')
+  .uint32('fit_interval')
+  .uint8('valid')
+  .uint8('health_bits');
+EphemerisCommonContentDepB.prototype.fieldSpec = [];
+EphemerisCommonContentDepB.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+EphemerisCommonContentDepB.prototype.fieldSpec.push(['toe', GPSTimeSec.prototype.fieldSpec]);
+EphemerisCommonContentDepB.prototype.fieldSpec.push(['ura', 'writeDoubleLE', 8]);
+EphemerisCommonContentDepB.prototype.fieldSpec.push(['fit_interval', 'writeUInt32LE', 4]);
+EphemerisCommonContentDepB.prototype.fieldSpec.push(['valid', 'writeUInt8', 1]);
+EphemerisCommonContentDepB.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1]);
 
 /**
  * SBP class for message fragment EphemerisCommonContentDepA
@@ -430,15 +471,13 @@ MsgEphemerisGpsDepE.prototype.fieldSpec.push(['iode', 'writeUInt8', 1]);
 MsgEphemerisGpsDepE.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
 
 /**
- * SBP class for message MSG_EPHEMERIS_GPS (0x0086).
+ * SBP class for message MSG_EPHEMERIS_GPS_DEP_F (0x0086).
  *
- * The ephemeris message returns a set of satellite orbit parameters that is used
- * to calculate GPS satellite position, velocity, and clock offset. Please see the
- * Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200, Table 20-III)
- * for more details.
+ * This observation message has been deprecated in favor of ephemeris message using
+ * floats for size reduction.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field common EphemerisCommonContent Values common for all ephemeris types
+ * @field common EphemerisCommonContentDepB Values common for all ephemeris types
  * @field tgd number (float, 8 bytes) Group delay differential between L1 and L2
  * @field c_rs number (float, 8 bytes) Amplitude of the sine harmonic correction term to the orbit radius
  * @field c_rc number (float, 8 bytes) Amplitude of the cosine harmonic correction term to the orbit radius
@@ -464,20 +503,20 @@ MsgEphemerisGpsDepE.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisGps = function (sbp, fields) {
+var MsgEphemerisGpsDepF = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_EPHEMERIS_GPS";
+  this.messageType = "MSG_EPHEMERIS_GPS_DEP_F";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgEphemerisGps.prototype = Object.create(SBP.prototype);
-MsgEphemerisGps.prototype.messageType = "MSG_EPHEMERIS_GPS";
-MsgEphemerisGps.prototype.msg_type = 0x0086;
-MsgEphemerisGps.prototype.constructor = MsgEphemerisGps;
-MsgEphemerisGps.prototype.parser = new Parser()
+MsgEphemerisGpsDepF.prototype = Object.create(SBP.prototype);
+MsgEphemerisGpsDepF.prototype.messageType = "MSG_EPHEMERIS_GPS_DEP_F";
+MsgEphemerisGpsDepF.prototype.msg_type = 0x0086;
+MsgEphemerisGpsDepF.prototype.constructor = MsgEphemerisGpsDepF;
+MsgEphemerisGpsDepF.prototype.parser = new Parser()
   .endianess('little')
-  .nest('common', { type: EphemerisCommonContent.prototype.parser })
+  .nest('common', { type: EphemerisCommonContentDepB.prototype.parser })
   .doublele('tgd')
   .doublele('c_rs')
   .doublele('c_rc')
@@ -500,16 +539,112 @@ MsgEphemerisGps.prototype.parser = new Parser()
   .nest('toc', { type: GPSTimeSec.prototype.parser })
   .uint8('iode')
   .uint16('iodc');
+MsgEphemerisGpsDepF.prototype.fieldSpec = [];
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['common', EphemerisCommonContentDepB.prototype.fieldSpec]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['tgd', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['c_rs', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['c_rc', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['c_uc', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['c_us', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['c_ic', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['c_is', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['dn', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['m0', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['ecc', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['sqrta', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['omega0', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['omegadot', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['w', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['inc', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['inc_dot', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['af0', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['af1', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['af2', 'writeDoubleLE', 8]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['toc', GPSTimeSec.prototype.fieldSpec]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['iode', 'writeUInt8', 1]);
+MsgEphemerisGpsDepF.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
+
+/**
+ * SBP class for message MSG_EPHEMERIS_GPS (0x008A).
+ *
+ * The ephemeris message returns a set of satellite orbit parameters that is used
+ * to calculate GPS satellite position, velocity, and clock offset. Please see the
+ * Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200, Table 20-III)
+ * for more details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field common EphemerisCommonContent Values common for all ephemeris types
+ * @field tgd number (float, 4 bytes) Group delay differential between L1 and L2
+ * @field c_rs number (float, 4 bytes) Amplitude of the sine harmonic correction term to the orbit radius
+ * @field c_rc number (float, 4 bytes) Amplitude of the cosine harmonic correction term to the orbit radius
+ * @field c_uc number (float, 4 bytes) Amplitude of the cosine harmonic correction term to the argument of latitude
+ * @field c_us number (float, 4 bytes) Amplitude of the sine harmonic correction term to the argument of latitude
+ * @field c_ic number (float, 4 bytes) Amplitude of the cosine harmonic correction term to the angle of inclination
+ * @field c_is number (float, 4 bytes) Amplitude of the sine harmonic correction term to the angle of inclination
+ * @field dn number (float, 4 bytes) Mean motion difference
+ * @field m0 number (float, 8 bytes) Mean anomaly at reference time
+ * @field ecc number (float, 8 bytes) Eccentricity of satellite orbit
+ * @field sqrta number (float, 8 bytes) Square root of the semi-major axis of orbit
+ * @field omega0 number (float, 8 bytes) Longitude of ascending node of orbit plane at weekly epoch
+ * @field omegadot number (float, 8 bytes) Rate of right ascension
+ * @field w number (float, 8 bytes) Argument of perigee
+ * @field inc number (float, 8 bytes) Inclination
+ * @field inc_dot number (float, 4 bytes) Inclination first derivative
+ * @field af0 number (float, 4 bytes) Polynomial clock correction coefficient (clock bias)
+ * @field af1 number (float, 4 bytes) Polynomial clock correction coefficient (clock drift)
+ * @field af2 number (float, 4 bytes) Polynomial clock correction coefficient (rate of clock drift)
+ * @field toc GPSTimeSec Clock reference
+ * @field iode number (unsigned 8-bit int, 1 byte) Issue of ephemeris data
+ * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgEphemerisGps = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_EPHEMERIS_GPS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgEphemerisGps.prototype = Object.create(SBP.prototype);
+MsgEphemerisGps.prototype.messageType = "MSG_EPHEMERIS_GPS";
+MsgEphemerisGps.prototype.msg_type = 0x008A;
+MsgEphemerisGps.prototype.constructor = MsgEphemerisGps;
+MsgEphemerisGps.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('common', { type: EphemerisCommonContent.prototype.parser })
+  .floatle('tgd')
+  .floatle('c_rs')
+  .floatle('c_rc')
+  .floatle('c_uc')
+  .floatle('c_us')
+  .floatle('c_ic')
+  .floatle('c_is')
+  .floatle('dn')
+  .doublele('m0')
+  .doublele('ecc')
+  .doublele('sqrta')
+  .doublele('omega0')
+  .doublele('omegadot')
+  .doublele('w')
+  .doublele('inc')
+  .floatle('inc_dot')
+  .floatle('af0')
+  .floatle('af1')
+  .floatle('af2')
+  .nest('toc', { type: GPSTimeSec.prototype.parser })
+  .uint8('iode')
+  .uint16('iodc');
 MsgEphemerisGps.prototype.fieldSpec = [];
 MsgEphemerisGps.prototype.fieldSpec.push(['common', EphemerisCommonContent.prototype.fieldSpec]);
-MsgEphemerisGps.prototype.fieldSpec.push(['tgd', 'writeDoubleLE', 8]);
-MsgEphemerisGps.prototype.fieldSpec.push(['c_rs', 'writeDoubleLE', 8]);
-MsgEphemerisGps.prototype.fieldSpec.push(['c_rc', 'writeDoubleLE', 8]);
-MsgEphemerisGps.prototype.fieldSpec.push(['c_uc', 'writeDoubleLE', 8]);
-MsgEphemerisGps.prototype.fieldSpec.push(['c_us', 'writeDoubleLE', 8]);
-MsgEphemerisGps.prototype.fieldSpec.push(['c_ic', 'writeDoubleLE', 8]);
-MsgEphemerisGps.prototype.fieldSpec.push(['c_is', 'writeDoubleLE', 8]);
-MsgEphemerisGps.prototype.fieldSpec.push(['dn', 'writeDoubleLE', 8]);
+MsgEphemerisGps.prototype.fieldSpec.push(['tgd', 'writeFloatLE', 4]);
+MsgEphemerisGps.prototype.fieldSpec.push(['c_rs', 'writeFloatLE', 4]);
+MsgEphemerisGps.prototype.fieldSpec.push(['c_rc', 'writeFloatLE', 4]);
+MsgEphemerisGps.prototype.fieldSpec.push(['c_uc', 'writeFloatLE', 4]);
+MsgEphemerisGps.prototype.fieldSpec.push(['c_us', 'writeFloatLE', 4]);
+MsgEphemerisGps.prototype.fieldSpec.push(['c_ic', 'writeFloatLE', 4]);
+MsgEphemerisGps.prototype.fieldSpec.push(['c_is', 'writeFloatLE', 4]);
+MsgEphemerisGps.prototype.fieldSpec.push(['dn', 'writeFloatLE', 4]);
 MsgEphemerisGps.prototype.fieldSpec.push(['m0', 'writeDoubleLE', 8]);
 MsgEphemerisGps.prototype.fieldSpec.push(['ecc', 'writeDoubleLE', 8]);
 MsgEphemerisGps.prototype.fieldSpec.push(['sqrta', 'writeDoubleLE', 8]);
@@ -517,10 +652,10 @@ MsgEphemerisGps.prototype.fieldSpec.push(['omega0', 'writeDoubleLE', 8]);
 MsgEphemerisGps.prototype.fieldSpec.push(['omegadot', 'writeDoubleLE', 8]);
 MsgEphemerisGps.prototype.fieldSpec.push(['w', 'writeDoubleLE', 8]);
 MsgEphemerisGps.prototype.fieldSpec.push(['inc', 'writeDoubleLE', 8]);
-MsgEphemerisGps.prototype.fieldSpec.push(['inc_dot', 'writeDoubleLE', 8]);
-MsgEphemerisGps.prototype.fieldSpec.push(['af0', 'writeDoubleLE', 8]);
-MsgEphemerisGps.prototype.fieldSpec.push(['af1', 'writeDoubleLE', 8]);
-MsgEphemerisGps.prototype.fieldSpec.push(['af2', 'writeDoubleLE', 8]);
+MsgEphemerisGps.prototype.fieldSpec.push(['inc_dot', 'writeFloatLE', 4]);
+MsgEphemerisGps.prototype.fieldSpec.push(['af0', 'writeFloatLE', 4]);
+MsgEphemerisGps.prototype.fieldSpec.push(['af1', 'writeFloatLE', 4]);
+MsgEphemerisGps.prototype.fieldSpec.push(['af2', 'writeFloatLE', 4]);
 MsgEphemerisGps.prototype.fieldSpec.push(['toc', GPSTimeSec.prototype.fieldSpec]);
 MsgEphemerisGps.prototype.fieldSpec.push(['iode', 'writeUInt8', 1]);
 MsgEphemerisGps.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
@@ -612,7 +747,50 @@ MsgEphemerisGloDepA.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', f
 MsgEphemerisGloDepA.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
 
 /**
- * SBP class for message MSG_EPHEMERIS_SBAS (0x0084).
+ * SBP class for message MSG_EPHEMERIS_SBAS_DEP_B (0x0084).
+ *
+ * This observation message has been deprecated in favor of ephemeris message using
+ * floats for size reduction.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field common EphemerisCommonContentDepB Values common for all ephemeris types
+ * @field pos array Position of the GEO at time toe
+ * @field vel array Velocity of the GEO at time toe
+ * @field acc array Acceleration of the GEO at time toe
+ * @field a_gf0 number (float, 8 bytes) Time offset of the GEO clock w.r.t. SBAS Network Time
+ * @field a_gf1 number (float, 8 bytes) Drift of the GEO clock w.r.t. SBAS Network Time
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgEphemerisSbasDepB = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_EPHEMERIS_SBAS_DEP_B";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgEphemerisSbasDepB.prototype = Object.create(SBP.prototype);
+MsgEphemerisSbasDepB.prototype.messageType = "MSG_EPHEMERIS_SBAS_DEP_B";
+MsgEphemerisSbasDepB.prototype.msg_type = 0x0084;
+MsgEphemerisSbasDepB.prototype.constructor = MsgEphemerisSbasDepB;
+MsgEphemerisSbasDepB.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('common', { type: EphemerisCommonContentDepB.prototype.parser })
+  .array('pos', { length: 3, type: 'doublele' })
+  .array('vel', { length: 3, type: 'doublele' })
+  .array('acc', { length: 3, type: 'doublele' })
+  .doublele('a_gf0')
+  .doublele('a_gf1');
+MsgEphemerisSbasDepB.prototype.fieldSpec = [];
+MsgEphemerisSbasDepB.prototype.fieldSpec.push(['common', EphemerisCommonContentDepB.prototype.fieldSpec]);
+MsgEphemerisSbasDepB.prototype.fieldSpec.push(['pos', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisSbasDepB.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisSbasDepB.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisSbasDepB.prototype.fieldSpec.push(['a_gf0', 'writeDoubleLE', 8]);
+MsgEphemerisSbasDepB.prototype.fieldSpec.push(['a_gf1', 'writeDoubleLE', 8]);
+
+/**
+ * SBP class for message MSG_EPHEMERIS_SBAS (0x008C).
  *
  
  * Fields in the SBP payload (`sbp.payload`):
@@ -620,8 +798,8 @@ MsgEphemerisGloDepA.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', f
  * @field pos array Position of the GEO at time toe
  * @field vel array Velocity of the GEO at time toe
  * @field acc array Acceleration of the GEO at time toe
- * @field a_gf0 number (float, 8 bytes) Time offset of the GEO clock w.r.t. SBAS Network Time
- * @field a_gf1 number (float, 8 bytes) Drift of the GEO clock w.r.t. SBAS Network Time
+ * @field a_gf0 number (float, 4 bytes) Time offset of the GEO clock w.r.t. SBAS Network Time
+ * @field a_gf1 number (float, 4 bytes) Drift of the GEO clock w.r.t. SBAS Network Time
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -634,23 +812,23 @@ var MsgEphemerisSbas = function (sbp, fields) {
 };
 MsgEphemerisSbas.prototype = Object.create(SBP.prototype);
 MsgEphemerisSbas.prototype.messageType = "MSG_EPHEMERIS_SBAS";
-MsgEphemerisSbas.prototype.msg_type = 0x0084;
+MsgEphemerisSbas.prototype.msg_type = 0x008C;
 MsgEphemerisSbas.prototype.constructor = MsgEphemerisSbas;
 MsgEphemerisSbas.prototype.parser = new Parser()
   .endianess('little')
   .nest('common', { type: EphemerisCommonContent.prototype.parser })
   .array('pos', { length: 3, type: 'doublele' })
-  .array('vel', { length: 3, type: 'doublele' })
-  .array('acc', { length: 3, type: 'doublele' })
-  .doublele('a_gf0')
-  .doublele('a_gf1');
+  .array('vel', { length: 3, type: 'floatle' })
+  .array('acc', { length: 3, type: 'floatle' })
+  .floatle('a_gf0')
+  .floatle('a_gf1');
 MsgEphemerisSbas.prototype.fieldSpec = [];
 MsgEphemerisSbas.prototype.fieldSpec.push(['common', EphemerisCommonContent.prototype.fieldSpec]);
 MsgEphemerisSbas.prototype.fieldSpec.push(['pos', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
-MsgEphemerisSbas.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
-MsgEphemerisSbas.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
-MsgEphemerisSbas.prototype.fieldSpec.push(['a_gf0', 'writeDoubleLE', 8]);
-MsgEphemerisSbas.prototype.fieldSpec.push(['a_gf1', 'writeDoubleLE', 8]);
+MsgEphemerisSbas.prototype.fieldSpec.push(['vel', 'array', 'writeFloatLE', function () { return 4; }, 3]);
+MsgEphemerisSbas.prototype.fieldSpec.push(['acc', 'array', 'writeFloatLE', function () { return 4; }, 3]);
+MsgEphemerisSbas.prototype.fieldSpec.push(['a_gf0', 'writeFloatLE', 4]);
+MsgEphemerisSbas.prototype.fieldSpec.push(['a_gf1', 'writeFloatLE', 4]);
 
 /**
  * SBP class for message MSG_EPHEMERIS_GLO_DEP_B (0x0085).
@@ -661,7 +839,7 @@ MsgEphemerisSbas.prototype.fieldSpec.push(['a_gf1', 'writeDoubleLE', 8]);
  * (ephemeris parameters)" for more details.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field common EphemerisCommonContent Values common for all ephemeris types
+ * @field common EphemerisCommonContentDepB Values common for all ephemeris types
  * @field gamma number (float, 8 bytes) Relative deviation of predicted carrier frequency from nominal
  * @field tau number (float, 8 bytes) Correction to the SV time
  * @field pos array Position of the SV at tb in PZ-90.02 coordinates system
@@ -683,14 +861,14 @@ MsgEphemerisGloDepB.prototype.msg_type = 0x0085;
 MsgEphemerisGloDepB.prototype.constructor = MsgEphemerisGloDepB;
 MsgEphemerisGloDepB.prototype.parser = new Parser()
   .endianess('little')
-  .nest('common', { type: EphemerisCommonContent.prototype.parser })
+  .nest('common', { type: EphemerisCommonContentDepB.prototype.parser })
   .doublele('gamma')
   .doublele('tau')
   .array('pos', { length: 3, type: 'doublele' })
   .array('vel', { length: 3, type: 'doublele' })
   .array('acc', { length: 3, type: 'doublele' });
 MsgEphemerisGloDepB.prototype.fieldSpec = [];
-MsgEphemerisGloDepB.prototype.fieldSpec.push(['common', EphemerisCommonContent.prototype.fieldSpec]);
+MsgEphemerisGloDepB.prototype.fieldSpec.push(['common', EphemerisCommonContentDepB.prototype.fieldSpec]);
 MsgEphemerisGloDepB.prototype.fieldSpec.push(['gamma', 'writeDoubleLE', 8]);
 MsgEphemerisGloDepB.prototype.fieldSpec.push(['tau', 'writeDoubleLE', 8]);
 MsgEphemerisGloDepB.prototype.fieldSpec.push(['pos', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
@@ -706,7 +884,7 @@ MsgEphemerisGloDepB.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', f
  * (ephemeris parameters)" for more details.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field common EphemerisCommonContent Values common for all ephemeris types
+ * @field common EphemerisCommonContentDepB Values common for all ephemeris types
  * @field gamma number (float, 8 bytes) Relative deviation of predicted carrier frequency from nominal
  * @field tau number (float, 8 bytes) Correction to the SV time
  * @field d_tau number (float, 8 bytes) Equipment delay between L1 and L2
@@ -730,7 +908,7 @@ MsgEphemerisGloDepC.prototype.msg_type = 0x0087;
 MsgEphemerisGloDepC.prototype.constructor = MsgEphemerisGloDepC;
 MsgEphemerisGloDepC.prototype.parser = new Parser()
   .endianess('little')
-  .nest('common', { type: EphemerisCommonContent.prototype.parser })
+  .nest('common', { type: EphemerisCommonContentDepB.prototype.parser })
   .doublele('gamma')
   .doublele('tau')
   .doublele('d_tau')
@@ -739,7 +917,7 @@ MsgEphemerisGloDepC.prototype.parser = new Parser()
   .array('acc', { length: 3, type: 'doublele' })
   .uint8('fcn');
 MsgEphemerisGloDepC.prototype.fieldSpec = [];
-MsgEphemerisGloDepC.prototype.fieldSpec.push(['common', EphemerisCommonContent.prototype.fieldSpec]);
+MsgEphemerisGloDepC.prototype.fieldSpec.push(['common', EphemerisCommonContentDepB.prototype.fieldSpec]);
 MsgEphemerisGloDepC.prototype.fieldSpec.push(['gamma', 'writeDoubleLE', 8]);
 MsgEphemerisGloDepC.prototype.fieldSpec.push(['tau', 'writeDoubleLE', 8]);
 MsgEphemerisGloDepC.prototype.fieldSpec.push(['d_tau', 'writeDoubleLE', 8]);
@@ -749,7 +927,59 @@ MsgEphemerisGloDepC.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', f
 MsgEphemerisGloDepC.prototype.fieldSpec.push(['fcn', 'writeUInt8', 1]);
 
 /**
- * SBP class for message MSG_EPHEMERIS_GLO (0x0088).
+ * SBP class for message MSG_EPHEMERIS_GLO_DEP_D (0x0088).
+ *
+ * This observation message has been deprecated in favor of ephemeris message using
+ * floats for size reduction.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field common EphemerisCommonContentDepB Values common for all ephemeris types
+ * @field gamma number (float, 8 bytes) Relative deviation of predicted carrier frequency from nominal
+ * @field tau number (float, 8 bytes) Correction to the SV time
+ * @field d_tau number (float, 8 bytes) Equipment delay between L1 and L2
+ * @field pos array Position of the SV at tb in PZ-90.02 coordinates system
+ * @field vel array Velocity vector of the SV at tb in PZ-90.02 coordinates system
+ * @field acc array Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+ * @field fcn number (unsigned 8-bit int, 1 byte) Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+ * @field iod number (unsigned 8-bit int, 1 byte) Issue of ephemeris data
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgEphemerisGloDepD = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_EPHEMERIS_GLO_DEP_D";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgEphemerisGloDepD.prototype = Object.create(SBP.prototype);
+MsgEphemerisGloDepD.prototype.messageType = "MSG_EPHEMERIS_GLO_DEP_D";
+MsgEphemerisGloDepD.prototype.msg_type = 0x0088;
+MsgEphemerisGloDepD.prototype.constructor = MsgEphemerisGloDepD;
+MsgEphemerisGloDepD.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('common', { type: EphemerisCommonContentDepB.prototype.parser })
+  .doublele('gamma')
+  .doublele('tau')
+  .doublele('d_tau')
+  .array('pos', { length: 3, type: 'doublele' })
+  .array('vel', { length: 3, type: 'doublele' })
+  .array('acc', { length: 3, type: 'doublele' })
+  .uint8('fcn')
+  .uint8('iod');
+MsgEphemerisGloDepD.prototype.fieldSpec = [];
+MsgEphemerisGloDepD.prototype.fieldSpec.push(['common', EphemerisCommonContentDepB.prototype.fieldSpec]);
+MsgEphemerisGloDepD.prototype.fieldSpec.push(['gamma', 'writeDoubleLE', 8]);
+MsgEphemerisGloDepD.prototype.fieldSpec.push(['tau', 'writeDoubleLE', 8]);
+MsgEphemerisGloDepD.prototype.fieldSpec.push(['d_tau', 'writeDoubleLE', 8]);
+MsgEphemerisGloDepD.prototype.fieldSpec.push(['pos', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisGloDepD.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisGloDepD.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisGloDepD.prototype.fieldSpec.push(['fcn', 'writeUInt8', 1]);
+MsgEphemerisGloDepD.prototype.fieldSpec.push(['iod', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_EPHEMERIS_GLO (0x008B).
  *
  * The ephemeris message returns a set of satellite orbit parameters that is used
  * to calculate GLO satellite position, velocity, and clock offset. Please see the
@@ -758,9 +988,9 @@ MsgEphemerisGloDepC.prototype.fieldSpec.push(['fcn', 'writeUInt8', 1]);
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field common EphemerisCommonContent Values common for all ephemeris types
- * @field gamma number (float, 8 bytes) Relative deviation of predicted carrier frequency from nominal
- * @field tau number (float, 8 bytes) Correction to the SV time
- * @field d_tau number (float, 8 bytes) Equipment delay between L1 and L2
+ * @field gamma number (float, 4 bytes) Relative deviation of predicted carrier frequency from nominal
+ * @field tau number (float, 4 bytes) Correction to the SV time
+ * @field d_tau number (float, 4 bytes) Equipment delay between L1 and L2
  * @field pos array Position of the SV at tb in PZ-90.02 coordinates system
  * @field vel array Velocity vector of the SV at tb in PZ-90.02 coordinates system
  * @field acc array Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
@@ -778,27 +1008,27 @@ var MsgEphemerisGlo = function (sbp, fields) {
 };
 MsgEphemerisGlo.prototype = Object.create(SBP.prototype);
 MsgEphemerisGlo.prototype.messageType = "MSG_EPHEMERIS_GLO";
-MsgEphemerisGlo.prototype.msg_type = 0x0088;
+MsgEphemerisGlo.prototype.msg_type = 0x008B;
 MsgEphemerisGlo.prototype.constructor = MsgEphemerisGlo;
 MsgEphemerisGlo.prototype.parser = new Parser()
   .endianess('little')
   .nest('common', { type: EphemerisCommonContent.prototype.parser })
-  .doublele('gamma')
-  .doublele('tau')
-  .doublele('d_tau')
+  .floatle('gamma')
+  .floatle('tau')
+  .floatle('d_tau')
   .array('pos', { length: 3, type: 'doublele' })
   .array('vel', { length: 3, type: 'doublele' })
-  .array('acc', { length: 3, type: 'doublele' })
+  .array('acc', { length: 3, type: 'floatle' })
   .uint8('fcn')
   .uint8('iod');
 MsgEphemerisGlo.prototype.fieldSpec = [];
 MsgEphemerisGlo.prototype.fieldSpec.push(['common', EphemerisCommonContent.prototype.fieldSpec]);
-MsgEphemerisGlo.prototype.fieldSpec.push(['gamma', 'writeDoubleLE', 8]);
-MsgEphemerisGlo.prototype.fieldSpec.push(['tau', 'writeDoubleLE', 8]);
-MsgEphemerisGlo.prototype.fieldSpec.push(['d_tau', 'writeDoubleLE', 8]);
+MsgEphemerisGlo.prototype.fieldSpec.push(['gamma', 'writeFloatLE', 4]);
+MsgEphemerisGlo.prototype.fieldSpec.push(['tau', 'writeFloatLE', 4]);
+MsgEphemerisGlo.prototype.fieldSpec.push(['d_tau', 'writeFloatLE', 4]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['pos', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['vel', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
-MsgEphemerisGlo.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', function () { return 8; }, 3]);
+MsgEphemerisGlo.prototype.fieldSpec.push(['acc', 'array', 'writeFloatLE', function () { return 4; }, 3]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['fcn', 'writeUInt8', 1]);
 MsgEphemerisGlo.prototype.fieldSpec.push(['iod', 'writeUInt8', 1]);
 
@@ -2091,22 +2321,29 @@ module.exports = {
   0x0048: MsgBasePosEcef,
   MsgBasePosEcef: MsgBasePosEcef,
   EphemerisCommonContent: EphemerisCommonContent,
+  EphemerisCommonContentDepB: EphemerisCommonContentDepB,
   EphemerisCommonContentDepA: EphemerisCommonContentDepA,
   0x0081: MsgEphemerisGpsDepE,
   MsgEphemerisGpsDepE: MsgEphemerisGpsDepE,
-  0x0086: MsgEphemerisGps,
+  0x0086: MsgEphemerisGpsDepF,
+  MsgEphemerisGpsDepF: MsgEphemerisGpsDepF,
+  0x008A: MsgEphemerisGps,
   MsgEphemerisGps: MsgEphemerisGps,
   0x0082: MsgEphemerisSbasDepA,
   MsgEphemerisSbasDepA: MsgEphemerisSbasDepA,
   0x0083: MsgEphemerisGloDepA,
   MsgEphemerisGloDepA: MsgEphemerisGloDepA,
-  0x0084: MsgEphemerisSbas,
+  0x0084: MsgEphemerisSbasDepB,
+  MsgEphemerisSbasDepB: MsgEphemerisSbasDepB,
+  0x008C: MsgEphemerisSbas,
   MsgEphemerisSbas: MsgEphemerisSbas,
   0x0085: MsgEphemerisGloDepB,
   MsgEphemerisGloDepB: MsgEphemerisGloDepB,
   0x0087: MsgEphemerisGloDepC,
   MsgEphemerisGloDepC: MsgEphemerisGloDepC,
-  0x0088: MsgEphemerisGlo,
+  0x0088: MsgEphemerisGloDepD,
+  MsgEphemerisGloDepD: MsgEphemerisGloDepD,
+  0x008B: MsgEphemerisGlo,
   MsgEphemerisGlo: MsgEphemerisGlo,
   0x0080: MsgEphemerisDepD,
   MsgEphemerisDepD: MsgEphemerisDepD,

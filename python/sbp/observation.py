@@ -200,6 +200,69 @@ class EphemerisCommonContent(object):
     GNSS signal identifier (16 bit)
   toe : GPSTimeSec
     Time of Ephemerides
+  ura : float
+    User Range Accuracy
+  fit_interval : int
+    Curve fit interval
+  valid : int
+    Status of ephemeris, 1 = valid, 0 = invalid
+  health_bits : int
+    Satellite health status.
+GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+SBAS: 0 = valid, non-zero = invalid
+GLO: 0 = valid, non-zero = invalid
+
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'sid' / construct.Struct(GnssSignal._parser),
+                     'toe' / construct.Struct(GPSTimeSec._parser),
+                     'ura' / construct.Float32l,
+                     'fit_interval' / construct.Int32ul,
+                     'valid' / construct.Int8ul,
+                     'health_bits' / construct.Int8ul,))
+  __slots__ = [
+               'sid',
+               'toe',
+               'ura',
+               'fit_interval',
+               'valid',
+               'health_bits',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sid = kwargs.pop('sid')
+      self.toe = kwargs.pop('toe')
+      self.ura = kwargs.pop('ura')
+      self.fit_interval = kwargs.pop('fit_interval')
+      self.valid = kwargs.pop('valid')
+      self.health_bits = kwargs.pop('health_bits')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = EphemerisCommonContent._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return EphemerisCommonContent.build(d)
+    
+class EphemerisCommonContentDepB(object):
+  """EphemerisCommonContentDepB.
+  
+  
+  Parameters
+  ----------
+  sid : GnssSignal
+    GNSS signal identifier (16 bit)
+  toe : GPSTimeSec
+    Time of Ephemerides
   ura : double
     User Range Accuracy
   fit_interval : int
@@ -245,13 +308,13 @@ GLO: 0 = valid, non-zero = invalid
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = EphemerisCommonContent._parser.parse(d)
+    p = EphemerisCommonContentDepB._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return EphemerisCommonContent.build(d)
+    return EphemerisCommonContentDepB.build(d)
     
 class EphemerisCommonContentDepA(object):
   """EphemerisCommonContentDepA.
@@ -1211,27 +1274,24 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     d.update(j)
     return d
     
-SBP_MSG_EPHEMERIS_GPS = 0x0086
-class MsgEphemerisGPS(SBP):
-  """SBP class for message MSG_EPHEMERIS_GPS (0x0086).
+SBP_MSG_EPHEMERIS_GPS_DEP_F = 0x0086
+class MsgEphemerisGPSDepF(SBP):
+  """SBP class for message MSG_EPHEMERIS_GPS_DEP_F (0x0086).
 
-  You can have MSG_EPHEMERIS_GPS inherit its fields directly
+  You can have MSG_EPHEMERIS_GPS_DEP_F inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate GPS satellite position,
-velocity, and clock offset. Please see the Navstar GPS
-Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-20-III) for more details.
+  This observation message has been deprecated in favor of
+ephemeris message using floats for size reduction.
 
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  common : EphemerisCommonContent
+  common : EphemerisCommonContentDepB
     Values common for all ephemeris types
   tgd : double
     Group delay differential between L1 and L2
@@ -1282,7 +1342,7 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'common' / construct.Struct(EphemerisCommonContentDepB._parser),
                    'tgd' / construct.Float64l,
                    'c_rs' / construct.Float64l,
                    'c_rc' / construct.Float64l,
@@ -1302,6 +1362,201 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
                    'af0' / construct.Float64l,
                    'af1' / construct.Float64l,
                    'af2' / construct.Float64l,
+                   'toc' / construct.Struct(GPSTimeSec._parser),
+                   'iode' / construct.Int8ul,
+                   'iodc' / construct.Int16ul,)
+  __slots__ = [
+               'common',
+               'tgd',
+               'c_rs',
+               'c_rc',
+               'c_uc',
+               'c_us',
+               'c_ic',
+               'c_is',
+               'dn',
+               'm0',
+               'ecc',
+               'sqrta',
+               'omega0',
+               'omegadot',
+               'w',
+               'inc',
+               'inc_dot',
+               'af0',
+               'af1',
+               'af2',
+               'toc',
+               'iode',
+               'iodc',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgEphemerisGPSDepF,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgEphemerisGPSDepF, self).__init__()
+      self.msg_type = SBP_MSG_EPHEMERIS_GPS_DEP_F
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.common = kwargs.pop('common')
+      self.tgd = kwargs.pop('tgd')
+      self.c_rs = kwargs.pop('c_rs')
+      self.c_rc = kwargs.pop('c_rc')
+      self.c_uc = kwargs.pop('c_uc')
+      self.c_us = kwargs.pop('c_us')
+      self.c_ic = kwargs.pop('c_ic')
+      self.c_is = kwargs.pop('c_is')
+      self.dn = kwargs.pop('dn')
+      self.m0 = kwargs.pop('m0')
+      self.ecc = kwargs.pop('ecc')
+      self.sqrta = kwargs.pop('sqrta')
+      self.omega0 = kwargs.pop('omega0')
+      self.omegadot = kwargs.pop('omegadot')
+      self.w = kwargs.pop('w')
+      self.inc = kwargs.pop('inc')
+      self.inc_dot = kwargs.pop('inc_dot')
+      self.af0 = kwargs.pop('af0')
+      self.af1 = kwargs.pop('af1')
+      self.af2 = kwargs.pop('af2')
+      self.toc = kwargs.pop('toc')
+      self.iode = kwargs.pop('iode')
+      self.iodc = kwargs.pop('iodc')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgEphemerisGPSDepF.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgEphemerisGPSDepF(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgEphemerisGPSDepF._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgEphemerisGPSDepF._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgEphemerisGPSDepF, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_EPHEMERIS_GPS = 0x008A
+class MsgEphemerisGPS(SBP):
+  """SBP class for message MSG_EPHEMERIS_GPS (0x008A).
+
+  You can have MSG_EPHEMERIS_GPS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The ephemeris message returns a set of satellite orbit
+parameters that is used to calculate GPS satellite position,
+velocity, and clock offset. Please see the Navstar GPS
+Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+20-III) for more details.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  common : EphemerisCommonContent
+    Values common for all ephemeris types
+  tgd : float
+    Group delay differential between L1 and L2
+  c_rs : float
+    Amplitude of the sine harmonic correction term to the orbit radius
+  c_rc : float
+    Amplitude of the cosine harmonic correction term to the orbit radius
+  c_uc : float
+    Amplitude of the cosine harmonic correction term to the argument of latitude
+  c_us : float
+    Amplitude of the sine harmonic correction term to the argument of latitude
+  c_ic : float
+    Amplitude of the cosine harmonic correction term to the angle of inclination
+  c_is : float
+    Amplitude of the sine harmonic correction term to the angle of inclination
+  dn : float
+    Mean motion difference
+  m0 : double
+    Mean anomaly at reference time
+  ecc : double
+    Eccentricity of satellite orbit
+  sqrta : double
+    Square root of the semi-major axis of orbit
+  omega0 : double
+    Longitude of ascending node of orbit plane at weekly epoch
+  omegadot : double
+    Rate of right ascension
+  w : double
+    Argument of perigee
+  inc : double
+    Inclination
+  inc_dot : float
+    Inclination first derivative
+  af0 : float
+    Polynomial clock correction coefficient (clock bias)
+  af1 : float
+    Polynomial clock correction coefficient (clock drift)
+  af2 : float
+    Polynomial clock correction coefficient (rate of clock drift)
+  toc : GPSTimeSec
+    Clock reference
+  iode : int
+    Issue of ephemeris data
+  iodc : int
+    Issue of clock data
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'tgd' / construct.Float32l,
+                   'c_rs' / construct.Float32l,
+                   'c_rc' / construct.Float32l,
+                   'c_uc' / construct.Float32l,
+                   'c_us' / construct.Float32l,
+                   'c_ic' / construct.Float32l,
+                   'c_is' / construct.Float32l,
+                   'dn' / construct.Float32l,
+                   'm0' / construct.Float64l,
+                   'ecc' / construct.Float64l,
+                   'sqrta' / construct.Float64l,
+                   'omega0' / construct.Float64l,
+                   'omegadot' / construct.Float64l,
+                   'w' / construct.Float64l,
+                   'inc' / construct.Float64l,
+                   'inc_dot' / construct.Float32l,
+                   'af0' / construct.Float32l,
+                   'af1' / construct.Float32l,
+                   'af2' / construct.Float32l,
                    'toc' / construct.Struct(GPSTimeSec._parser),
                    'iode' / construct.Int8ul,
                    'iodc' / construct.Int16ul,)
@@ -1620,9 +1875,116 @@ for more details.
     d.update(j)
     return d
     
-SBP_MSG_EPHEMERIS_SBAS = 0x0084
+SBP_MSG_EPHEMERIS_SBAS_DEP_B = 0x0084
+class MsgEphemerisSbasDepB(SBP):
+  """SBP class for message MSG_EPHEMERIS_SBAS_DEP_B (0x0084).
+
+  You can have MSG_EPHEMERIS_SBAS_DEP_B inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This observation message has been deprecated in favor of
+ephemeris message using floats for size reduction.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  common : EphemerisCommonContentDepB
+    Values common for all ephemeris types
+  pos : array
+    Position of the GEO at time toe
+  vel : array
+    Velocity of the GEO at time toe
+  acc : array
+    Acceleration of the GEO at time toe
+  a_gf0 : double
+    Time offset of the GEO clock w.r.t. SBAS Network Time
+  a_gf1 : double
+    Drift of the GEO clock w.r.t. SBAS Network Time
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'common' / construct.Struct(EphemerisCommonContentDepB._parser),
+                   'pos' / construct.Array(3, construct.Float64l),
+                   'vel' / construct.Array(3, construct.Float64l),
+                   'acc' / construct.Array(3, construct.Float64l),
+                   'a_gf0' / construct.Float64l,
+                   'a_gf1' / construct.Float64l,)
+  __slots__ = [
+               'common',
+               'pos',
+               'vel',
+               'acc',
+               'a_gf0',
+               'a_gf1',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgEphemerisSbasDepB,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgEphemerisSbasDepB, self).__init__()
+      self.msg_type = SBP_MSG_EPHEMERIS_SBAS_DEP_B
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.common = kwargs.pop('common')
+      self.pos = kwargs.pop('pos')
+      self.vel = kwargs.pop('vel')
+      self.acc = kwargs.pop('acc')
+      self.a_gf0 = kwargs.pop('a_gf0')
+      self.a_gf1 = kwargs.pop('a_gf1')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgEphemerisSbasDepB.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgEphemerisSbasDepB(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgEphemerisSbasDepB._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgEphemerisSbasDepB._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgEphemerisSbasDepB, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_EPHEMERIS_SBAS = 0x008C
 class MsgEphemerisSbas(SBP):
-  """SBP class for message MSG_EPHEMERIS_SBAS (0x0084).
+  """SBP class for message MSG_EPHEMERIS_SBAS (0x008C).
 
   You can have MSG_EPHEMERIS_SBAS inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -1642,9 +2004,9 @@ class MsgEphemerisSbas(SBP):
     Velocity of the GEO at time toe
   acc : array
     Acceleration of the GEO at time toe
-  a_gf0 : double
+  a_gf0 : float
     Time offset of the GEO clock w.r.t. SBAS Network Time
-  a_gf1 : double
+  a_gf1 : float
     Drift of the GEO clock w.r.t. SBAS Network Time
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -1653,10 +2015,10 @@ class MsgEphemerisSbas(SBP):
   _parser = construct.Struct(
                    'common' / construct.Struct(EphemerisCommonContent._parser),
                    'pos' / construct.Array(3, construct.Float64l),
-                   'vel' / construct.Array(3, construct.Float64l),
-                   'acc' / construct.Array(3, construct.Float64l),
-                   'a_gf0' / construct.Float64l,
-                   'a_gf1' / construct.Float64l,)
+                   'vel' / construct.Array(3, construct.Float32l),
+                   'acc' / construct.Array(3, construct.Float32l),
+                   'a_gf0' / construct.Float32l,
+                   'a_gf1' / construct.Float32l,)
   __slots__ = [
                'common',
                'pos',
@@ -1744,7 +2106,7 @@ for more details.
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  common : EphemerisCommonContent
+  common : EphemerisCommonContentDepB
     Values common for all ephemeris types
   gamma : double
     Relative deviation of predicted carrier frequency from nominal
@@ -1761,7 +2123,7 @@ for more details.
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'common' / construct.Struct(EphemerisCommonContentDepB._parser),
                    'gamma' / construct.Float64l,
                    'tau' / construct.Float64l,
                    'pos' / construct.Array(3, construct.Float64l),
@@ -1854,7 +2216,7 @@ for more details.
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  common : EphemerisCommonContent
+  common : EphemerisCommonContentDepB
     Values common for all ephemeris types
   gamma : double
     Relative deviation of predicted carrier frequency from nominal
@@ -1875,7 +2237,7 @@ for more details.
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'common' / construct.Struct(EphemerisCommonContentDepB._parser),
                    'gamma' / construct.Float64l,
                    'tau' / construct.Float64l,
                    'd_tau' / construct.Float64l,
@@ -1954,27 +2316,24 @@ for more details.
     d.update(j)
     return d
     
-SBP_MSG_EPHEMERIS_GLO = 0x0088
-class MsgEphemerisGlo(SBP):
-  """SBP class for message MSG_EPHEMERIS_GLO (0x0088).
+SBP_MSG_EPHEMERIS_GLO_DEP_D = 0x0088
+class MsgEphemerisGloDepD(SBP):
+  """SBP class for message MSG_EPHEMERIS_GLO_DEP_D (0x0088).
 
-  You can have MSG_EPHEMERIS_GLO inherit its fields directly
+  You can have MSG_EPHEMERIS_GLO_DEP_D inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate GLO satellite position,
-velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-Characteristics of words of immediate information (ephemeris parameters)"
-for more details.
+  This observation message has been deprecated in favor of
+ephemeris message using floats for size reduction.
 
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  common : EphemerisCommonContent
+  common : EphemerisCommonContentDepB
     Values common for all ephemeris types
   gamma : double
     Relative deviation of predicted carrier frequency from nominal
@@ -1997,13 +2356,138 @@ for more details.
 
   """
   _parser = construct.Struct(
-                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'common' / construct.Struct(EphemerisCommonContentDepB._parser),
                    'gamma' / construct.Float64l,
                    'tau' / construct.Float64l,
                    'd_tau' / construct.Float64l,
                    'pos' / construct.Array(3, construct.Float64l),
                    'vel' / construct.Array(3, construct.Float64l),
                    'acc' / construct.Array(3, construct.Float64l),
+                   'fcn' / construct.Int8ul,
+                   'iod' / construct.Int8ul,)
+  __slots__ = [
+               'common',
+               'gamma',
+               'tau',
+               'd_tau',
+               'pos',
+               'vel',
+               'acc',
+               'fcn',
+               'iod',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgEphemerisGloDepD,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgEphemerisGloDepD, self).__init__()
+      self.msg_type = SBP_MSG_EPHEMERIS_GLO_DEP_D
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.common = kwargs.pop('common')
+      self.gamma = kwargs.pop('gamma')
+      self.tau = kwargs.pop('tau')
+      self.d_tau = kwargs.pop('d_tau')
+      self.pos = kwargs.pop('pos')
+      self.vel = kwargs.pop('vel')
+      self.acc = kwargs.pop('acc')
+      self.fcn = kwargs.pop('fcn')
+      self.iod = kwargs.pop('iod')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgEphemerisGloDepD.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgEphemerisGloDepD(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgEphemerisGloDepD._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgEphemerisGloDepD._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgEphemerisGloDepD, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_EPHEMERIS_GLO = 0x008B
+class MsgEphemerisGlo(SBP):
+  """SBP class for message MSG_EPHEMERIS_GLO (0x008B).
+
+  You can have MSG_EPHEMERIS_GLO inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The ephemeris message returns a set of satellite orbit
+parameters that is used to calculate GLO satellite position,
+velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
+Characteristics of words of immediate information (ephemeris parameters)"
+for more details.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  common : EphemerisCommonContent
+    Values common for all ephemeris types
+  gamma : float
+    Relative deviation of predicted carrier frequency from nominal
+  tau : float
+    Correction to the SV time
+  d_tau : float
+    Equipment delay between L1 and L2
+  pos : array
+    Position of the SV at tb in PZ-90.02 coordinates system
+  vel : array
+    Velocity vector of the SV at tb in PZ-90.02 coordinates system
+  acc : array
+    Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+  fcn : int
+    Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+  iod : int
+    Issue of ephemeris data
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'gamma' / construct.Float32l,
+                   'tau' / construct.Float32l,
+                   'd_tau' / construct.Float32l,
+                   'pos' / construct.Array(3, construct.Float64l),
+                   'vel' / construct.Array(3, construct.Float64l),
+                   'acc' / construct.Array(3, construct.Float32l),
                    'fcn' / construct.Int8ul,
                    'iod' / construct.Int8ul,)
   __slots__ = [
@@ -4344,13 +4828,16 @@ msg_classes = {
   0x0044: MsgBasePosLLH,
   0x0048: MsgBasePosECEF,
   0x0081: MsgEphemerisGPSDepE,
-  0x0086: MsgEphemerisGPS,
+  0x0086: MsgEphemerisGPSDepF,
+  0x008A: MsgEphemerisGPS,
   0x0082: MsgEphemerisSbasDepA,
   0x0083: MsgEphemerisGloDepA,
-  0x0084: MsgEphemerisSbas,
+  0x0084: MsgEphemerisSbasDepB,
+  0x008C: MsgEphemerisSbas,
   0x0085: MsgEphemerisGloDepB,
   0x0087: MsgEphemerisGloDepC,
-  0x0088: MsgEphemerisGlo,
+  0x0088: MsgEphemerisGloDepD,
+  0x008B: MsgEphemerisGlo,
   0x0080: MsgEphemerisDepD,
   0x001A: MsgEphemerisDepA,
   0x0046: MsgEphemerisDepB,

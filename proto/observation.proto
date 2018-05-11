@@ -109,7 +109,7 @@ None
 message EphemerisCommonContent {
     gnss.GnssSignal sid = 1;
     gnss.GpsTimeSec toe = 2;
-    double ura = 3;
+    float ura = 3;
     uint32 fit_interval = 4;
     uint32 valid = 5;
     uint32 health_bits = 6;
@@ -125,14 +125,14 @@ message EphemerisCommonContent {
  */
 message MsgEphemerisGps {
     EphemerisCommonContent common = 1;
-    double tgd = 2;
-    double c_rs = 3;
-    double c_rc = 4;
-    double c_uc = 5;
-    double c_us = 6;
-    double c_ic = 7;
-    double c_is = 8;
-    double dn = 9;
+    float tgd = 2;
+    float c_rs = 3;
+    float c_rc = 4;
+    float c_uc = 5;
+    float c_us = 6;
+    float c_ic = 7;
+    float c_is = 8;
+    float dn = 9;
     double m0 = 10;
     double ecc = 11;
     double sqrta = 12;
@@ -140,10 +140,10 @@ message MsgEphemerisGps {
     double omegadot = 14;
     double w = 15;
     double inc = 16;
-    double inc_dot = 17;
-    double af0 = 18;
-    double af1 = 19;
-    double af2 = 20;
+    float inc_dot = 17;
+    float af0 = 18;
+    float af1 = 19;
+    float af2 = 20;
     gnss.GpsTimeSec toc = 21;
     uint32 iode = 22;
     uint32 iodc = 23;
@@ -156,10 +156,10 @@ None
 message MsgEphemerisSbas {
     EphemerisCommonContent common = 1;
     repeated double pos = 2;
-    repeated double vel = 3;
-    repeated double acc = 4;
-    double a_gf0 = 5;
-    double a_gf1 = 6;
+    repeated float vel = 3;
+    repeated float acc = 4;
+    float a_gf0 = 5;
+    float a_gf1 = 6;
 }
 
 /** Satellite broadcast ephemeris for GLO
@@ -172,12 +172,12 @@ message MsgEphemerisSbas {
  */
 message MsgEphemerisGlo {
     EphemerisCommonContent common = 1;
-    double gamma = 2;
-    double tau = 3;
-    double d_tau = 4;
+    float gamma = 2;
+    float tau = 3;
+    float d_tau = 4;
     repeated double pos = 5;
     repeated double vel = 6;
-    repeated double acc = 7;
+    repeated float acc = 7;
     uint32 fcn = 8;
     uint32 iod = 9;
 }
