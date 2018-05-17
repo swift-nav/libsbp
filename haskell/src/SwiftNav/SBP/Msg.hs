@@ -88,18 +88,23 @@ data SBPMsg =
    | SBPMsgDgnssStatus MsgDgnssStatus Msg
    | SBPMsgDops MsgDops Msg
    | SBPMsgDopsDepA MsgDopsDepA Msg
+   | SBPMsgEphemerisBds MsgEphemerisBds Msg
    | SBPMsgEphemerisDepA MsgEphemerisDepA Msg
    | SBPMsgEphemerisDepB MsgEphemerisDepB Msg
    | SBPMsgEphemerisDepC MsgEphemerisDepC Msg
    | SBPMsgEphemerisDepD MsgEphemerisDepD Msg
+   | SBPMsgEphemerisGal MsgEphemerisGal Msg
    | SBPMsgEphemerisGlo MsgEphemerisGlo Msg
    | SBPMsgEphemerisGloDepA MsgEphemerisGloDepA Msg
    | SBPMsgEphemerisGloDepB MsgEphemerisGloDepB Msg
    | SBPMsgEphemerisGloDepC MsgEphemerisGloDepC Msg
+   | SBPMsgEphemerisGloDepD MsgEphemerisGloDepD Msg
    | SBPMsgEphemerisGps MsgEphemerisGps Msg
    | SBPMsgEphemerisGpsDepE MsgEphemerisGpsDepE Msg
+   | SBPMsgEphemerisGpsDepF MsgEphemerisGpsDepF Msg
    | SBPMsgEphemerisSbas MsgEphemerisSbas Msg
    | SBPMsgEphemerisSbasDepA MsgEphemerisSbasDepA Msg
+   | SBPMsgEphemerisSbasDepB MsgEphemerisSbasDepB Msg
    | SBPMsgExtEvent MsgExtEvent Msg
    | SBPMsgFileioReadDirReq MsgFileioReadDirReq Msg
    | SBPMsgFileioReadDirResp MsgFileioReadDirResp Msg
@@ -246,18 +251,23 @@ instance Binary SBPMsg where
           | _msgSBPType == msgDgnssStatus = SBPMsgDgnssStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgDops = SBPMsgDops (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgDopsDepA = SBPMsgDopsDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisBds = SBPMsgEphemerisBds (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepC = SBPMsgEphemerisDepC (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepD = SBPMsgEphemerisDepD (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisGal = SBPMsgEphemerisGal (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGlo = SBPMsgEphemerisGlo (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGloDepA = SBPMsgEphemerisGloDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGloDepB = SBPMsgEphemerisGloDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGloDepC = SBPMsgEphemerisGloDepC (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisGloDepD = SBPMsgEphemerisGloDepD (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGps = SBPMsgEphemerisGps (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGpsDepE = SBPMsgEphemerisGpsDepE (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisGpsDepF = SBPMsgEphemerisGpsDepF (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisSbas = SBPMsgEphemerisSbas (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisSbasDepB = SBPMsgEphemerisSbasDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgExtEvent = SBPMsgExtEvent (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFileioReadDirReq = SBPMsgFileioReadDirReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFileioReadDirResp = SBPMsgFileioReadDirResp (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -396,18 +406,23 @@ instance Binary SBPMsg where
       encoder (SBPMsgDgnssStatus _ m) = put m
       encoder (SBPMsgDops _ m) = put m
       encoder (SBPMsgDopsDepA _ m) = put m
+      encoder (SBPMsgEphemerisBds _ m) = put m
       encoder (SBPMsgEphemerisDepA _ m) = put m
       encoder (SBPMsgEphemerisDepB _ m) = put m
       encoder (SBPMsgEphemerisDepC _ m) = put m
       encoder (SBPMsgEphemerisDepD _ m) = put m
+      encoder (SBPMsgEphemerisGal _ m) = put m
       encoder (SBPMsgEphemerisGlo _ m) = put m
       encoder (SBPMsgEphemerisGloDepA _ m) = put m
       encoder (SBPMsgEphemerisGloDepB _ m) = put m
       encoder (SBPMsgEphemerisGloDepC _ m) = put m
+      encoder (SBPMsgEphemerisGloDepD _ m) = put m
       encoder (SBPMsgEphemerisGps _ m) = put m
       encoder (SBPMsgEphemerisGpsDepE _ m) = put m
+      encoder (SBPMsgEphemerisGpsDepF _ m) = put m
       encoder (SBPMsgEphemerisSbas _ m) = put m
       encoder (SBPMsgEphemerisSbasDepA _ m) = put m
+      encoder (SBPMsgEphemerisSbasDepB _ m) = put m
       encoder (SBPMsgExtEvent _ m) = put m
       encoder (SBPMsgFileioReadDirReq _ m) = put m
       encoder (SBPMsgFileioReadDirResp _ m) = put m
@@ -550,18 +565,23 @@ instance FromJSON SBPMsg where
         | msgType == msgDgnssStatus = SBPMsgDgnssStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgDops = SBPMsgDops <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgDopsDepA = SBPMsgDopsDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisBds = SBPMsgEphemerisBds <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepC = SBPMsgEphemerisDepC <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepD = SBPMsgEphemerisDepD <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisGal = SBPMsgEphemerisGal <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGlo = SBPMsgEphemerisGlo <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGloDepA = SBPMsgEphemerisGloDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGloDepB = SBPMsgEphemerisGloDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGloDepC = SBPMsgEphemerisGloDepC <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisGloDepD = SBPMsgEphemerisGloDepD <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGps = SBPMsgEphemerisGps <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGpsDepE = SBPMsgEphemerisGpsDepE <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisGpsDepF = SBPMsgEphemerisGpsDepF <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisSbas = SBPMsgEphemerisSbas <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisSbasDepB = SBPMsgEphemerisSbasDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgExtEvent = SBPMsgExtEvent <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFileioReadDirReq = SBPMsgFileioReadDirReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFileioReadDirResp = SBPMsgFileioReadDirResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -705,18 +725,23 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgDgnssStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgDops n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgDopsDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisBds n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepC n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepD n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisGal n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGlo n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGloDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGloDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGloDepC n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisGloDepD n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGps n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGpsDepE n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisGpsDepF n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisSbas n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisSbasDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisSbasDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgExtEvent n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFileioReadDirReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFileioReadDirResp n m) = toJSON n <<>> toJSON m
@@ -854,18 +879,23 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgDgnssStatus n m) = SBPMsgDgnssStatus n <$> f m
   msg f (SBPMsgDops n m) = SBPMsgDops n <$> f m
   msg f (SBPMsgDopsDepA n m) = SBPMsgDopsDepA n <$> f m
+  msg f (SBPMsgEphemerisBds n m) = SBPMsgEphemerisBds n <$> f m
   msg f (SBPMsgEphemerisDepA n m) = SBPMsgEphemerisDepA n <$> f m
   msg f (SBPMsgEphemerisDepB n m) = SBPMsgEphemerisDepB n <$> f m
   msg f (SBPMsgEphemerisDepC n m) = SBPMsgEphemerisDepC n <$> f m
   msg f (SBPMsgEphemerisDepD n m) = SBPMsgEphemerisDepD n <$> f m
+  msg f (SBPMsgEphemerisGal n m) = SBPMsgEphemerisGal n <$> f m
   msg f (SBPMsgEphemerisGlo n m) = SBPMsgEphemerisGlo n <$> f m
   msg f (SBPMsgEphemerisGloDepA n m) = SBPMsgEphemerisGloDepA n <$> f m
   msg f (SBPMsgEphemerisGloDepB n m) = SBPMsgEphemerisGloDepB n <$> f m
   msg f (SBPMsgEphemerisGloDepC n m) = SBPMsgEphemerisGloDepC n <$> f m
+  msg f (SBPMsgEphemerisGloDepD n m) = SBPMsgEphemerisGloDepD n <$> f m
   msg f (SBPMsgEphemerisGps n m) = SBPMsgEphemerisGps n <$> f m
   msg f (SBPMsgEphemerisGpsDepE n m) = SBPMsgEphemerisGpsDepE n <$> f m
+  msg f (SBPMsgEphemerisGpsDepF n m) = SBPMsgEphemerisGpsDepF n <$> f m
   msg f (SBPMsgEphemerisSbas n m) = SBPMsgEphemerisSbas n <$> f m
   msg f (SBPMsgEphemerisSbasDepA n m) = SBPMsgEphemerisSbasDepA n <$> f m
+  msg f (SBPMsgEphemerisSbasDepB n m) = SBPMsgEphemerisSbasDepB n <$> f m
   msg f (SBPMsgExtEvent n m) = SBPMsgExtEvent n <$> f m
   msg f (SBPMsgFileioReadDirReq n m) = SBPMsgFileioReadDirReq n <$> f m
   msg f (SBPMsgFileioReadDirResp n m) = SBPMsgFileioReadDirResp n <$> f m

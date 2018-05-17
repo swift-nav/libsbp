@@ -23,27 +23,29 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_EPHEMERIS_GPS (0x008A).
+/** SBP class for message MSG_EPHEMERIS_BDS (0x0089).
  *
- * You can have MSG_EPHEMERIS_GPS inherent its fields directly from
+ * You can have MSG_EPHEMERIS_BDS inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
  * The ephemeris message returns a set of satellite orbit
- * parameters that is used to calculate GPS satellite position,
- * velocity, and clock offset. Please see the Navstar GPS
- * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
- * 20-III) for more details. */
+ * parameters that is used to calculate BDS satellite position,
+ * velocity, and clock offset. Please see the BeiDou Navigation
+ * Satellite System SIS-ICD Version 2.1, Table 5-9 for more details. */
 
-public class MsgEphemerisGPS extends SBPMessage {
-    public static final int TYPE = 0x008A;
+public class MsgEphemerisBds extends SBPMessage {
+    public static final int TYPE = 0x0089;
 
     
     /** Values common for all ephemeris types */
     public EphemerisCommonContent common;
     
-    /** Group delay differential between L1 and L2 */
-    public float tgd;
+    /** Group delay differential for B1 */
+    public float tgd1;
+    
+    /** Group delay differential for B2 */
+    public float tgd2;
     
     /** Amplitude of the sine harmonic correction term to the orbit radius */
     public float c_rs;
@@ -91,7 +93,7 @@ public class MsgEphemerisGPS extends SBPMessage {
     public float inc_dot;
     
     /** Polynomial clock correction coefficient (clock bias) */
-    public float af0;
+    public double af0;
     
     /** Polynomial clock correction coefficient (clock drift) */
     public float af1;
@@ -109,9 +111,9 @@ public class MsgEphemerisGPS extends SBPMessage {
     public int iodc;
     
 
-    public MsgEphemerisGPS (int sender) { super(sender, TYPE); }
-    public MsgEphemerisGPS () { super(TYPE); }
-    public MsgEphemerisGPS (SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisBds (int sender) { super(sender, TYPE); }
+    public MsgEphemerisBds () { super(TYPE); }
+    public MsgEphemerisBds (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -120,7 +122,8 @@ public class MsgEphemerisGPS extends SBPMessage {
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         common = new EphemerisCommonContent().parse(parser);
-        tgd = parser.getFloat();
+        tgd1 = parser.getFloat();
+        tgd2 = parser.getFloat();
         c_rs = parser.getFloat();
         c_rc = parser.getFloat();
         c_uc = parser.getFloat();
@@ -136,7 +139,7 @@ public class MsgEphemerisGPS extends SBPMessage {
         w = parser.getDouble();
         inc = parser.getDouble();
         inc_dot = parser.getFloat();
-        af0 = parser.getFloat();
+        af0 = parser.getDouble();
         af1 = parser.getFloat();
         af2 = parser.getFloat();
         toc = new GPSTimeSec().parse(parser);
@@ -147,7 +150,8 @@ public class MsgEphemerisGPS extends SBPMessage {
     @Override
     protected void build(Builder builder) {
         common.build(builder);
-        builder.putFloat(tgd);
+        builder.putFloat(tgd1);
+        builder.putFloat(tgd2);
         builder.putFloat(c_rs);
         builder.putFloat(c_rc);
         builder.putFloat(c_uc);
@@ -163,7 +167,7 @@ public class MsgEphemerisGPS extends SBPMessage {
         builder.putDouble(w);
         builder.putDouble(inc);
         builder.putFloat(inc_dot);
-        builder.putFloat(af0);
+        builder.putDouble(af0);
         builder.putFloat(af1);
         builder.putFloat(af2);
         toc.build(builder);
@@ -175,7 +179,8 @@ public class MsgEphemerisGPS extends SBPMessage {
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("common", common.toJSON());
-        obj.put("tgd", tgd);
+        obj.put("tgd1", tgd1);
+        obj.put("tgd2", tgd2);
         obj.put("c_rs", c_rs);
         obj.put("c_rc", c_rc);
         obj.put("c_uc", c_uc);

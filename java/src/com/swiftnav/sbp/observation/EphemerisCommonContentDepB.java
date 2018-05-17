@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class EphemerisCommonContent extends SBPStruct {
+public class EphemerisCommonContentDepB extends SBPStruct {
     
     /** GNSS signal identifier (16 bit) */
     public GnssSignal sid;
@@ -32,7 +32,7 @@ public class EphemerisCommonContent extends SBPStruct {
     public GPSTimeSec toe;
     
     /** User Range Accuracy */
-    public float ura;
+    public double ura;
     
     /** Curve fit interval */
     public long fit_interval;
@@ -48,14 +48,14 @@ GLO: 0 = valid, non-zero = invalid
     public int health_bits;
     
 
-    public EphemerisCommonContent () {}
+    public EphemerisCommonContentDepB () {}
 
     @Override
-    public EphemerisCommonContent parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public EphemerisCommonContentDepB parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         sid = new GnssSignal().parse(parser);
         toe = new GPSTimeSec().parse(parser);
-        ura = parser.getFloat();
+        ura = parser.getDouble();
         fit_interval = parser.getU32();
         valid = parser.getU8();
         health_bits = parser.getU8();
@@ -67,7 +67,7 @@ GLO: 0 = valid, non-zero = invalid
         /* Build fields into binary */
         sid.build(builder);
         toe.build(builder);
-        builder.putFloat(ura);
+        builder.putDouble(ura);
         builder.putU32(fit_interval);
         builder.putU8(valid);
         builder.putU8(health_bits);

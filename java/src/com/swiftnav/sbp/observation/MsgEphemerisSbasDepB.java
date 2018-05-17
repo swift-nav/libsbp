@@ -23,33 +23,41 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
+/** SBP class for message MSG_EPHEMERIS_SBAS_DEP_B (0x0084).
+ *
+ * You can have MSG_EPHEMERIS_SBAS_DEP_B inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
+ *
+ * This observation message has been deprecated in favor of
+ * ephemeris message using floats for size reduction. */
 
-public class MsgEphemerisSbas extends SBPMessage {
-    public static final int TYPE = 0x008C;
+public class MsgEphemerisSbasDepB extends SBPMessage {
+    public static final int TYPE = 0x0084;
 
     
     /** Values common for all ephemeris types */
-    public EphemerisCommonContent common;
+    public EphemerisCommonContentDepB common;
     
     /** Position of the GEO at time toe */
     public double[] pos;
     
     /** Velocity of the GEO at time toe */
-    public float[] vel;
+    public double[] vel;
     
     /** Acceleration of the GEO at time toe */
-    public float[] acc;
+    public double[] acc;
     
     /** Time offset of the GEO clock w.r.t. SBAS Network Time */
-    public float a_gf0;
+    public double a_gf0;
     
     /** Drift of the GEO clock w.r.t. SBAS Network Time */
-    public float a_gf1;
+    public double a_gf1;
     
 
-    public MsgEphemerisSbas (int sender) { super(sender, TYPE); }
-    public MsgEphemerisSbas () { super(TYPE); }
-    public MsgEphemerisSbas (SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisSbasDepB (int sender) { super(sender, TYPE); }
+    public MsgEphemerisSbasDepB () { super(TYPE); }
+    public MsgEphemerisSbasDepB (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -57,22 +65,22 @@ public class MsgEphemerisSbas extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        common = new EphemerisCommonContent().parse(parser);
+        common = new EphemerisCommonContentDepB().parse(parser);
         pos = parser.getArrayofDouble(3);
-        vel = parser.getArrayofFloat(3);
-        acc = parser.getArrayofFloat(3);
-        a_gf0 = parser.getFloat();
-        a_gf1 = parser.getFloat();
+        vel = parser.getArrayofDouble(3);
+        acc = parser.getArrayofDouble(3);
+        a_gf0 = parser.getDouble();
+        a_gf1 = parser.getDouble();
     }
 
     @Override
     protected void build(Builder builder) {
         common.build(builder);
         builder.putArrayofDouble(pos, 3);
-        builder.putArrayofFloat(vel, 3);
-        builder.putArrayofFloat(acc, 3);
-        builder.putFloat(a_gf0);
-        builder.putFloat(a_gf1);
+        builder.putArrayofDouble(vel, 3);
+        builder.putArrayofDouble(acc, 3);
+        builder.putDouble(a_gf0);
+        builder.putDouble(a_gf1);
     }
 
     @Override

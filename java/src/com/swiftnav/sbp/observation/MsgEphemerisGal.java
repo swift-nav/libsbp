@@ -23,27 +23,29 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_EPHEMERIS_GPS (0x008A).
+/** SBP class for message MSG_EPHEMERIS_GAL (0x0095).
  *
- * You can have MSG_EPHEMERIS_GPS inherent its fields directly from
+ * You can have MSG_EPHEMERIS_GAL inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
  * The ephemeris message returns a set of satellite orbit
- * parameters that is used to calculate GPS satellite position,
- * velocity, and clock offset. Please see the Navstar GPS
- * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
- * 20-III) for more details. */
+ * parameters that is used to calculate Galileo satellite position,
+ * velocity, and clock offset. Please see the Signal In Space ICD
+ * OS SIS ICD, Issue 1.3, December 2016 for more details. */
 
-public class MsgEphemerisGPS extends SBPMessage {
-    public static final int TYPE = 0x008A;
+public class MsgEphemerisGal extends SBPMessage {
+    public static final int TYPE = 0x0095;
 
     
     /** Values common for all ephemeris types */
     public EphemerisCommonContent common;
     
-    /** Group delay differential between L1 and L2 */
-    public float tgd;
+    /** E1-E5a Broadcast Group Delay */
+    public float bgd_e1e5a;
+    
+    /** E1-E5b Broadcast Group Delay */
+    public float bgd_e1e5b;
     
     /** Amplitude of the sine harmonic correction term to the orbit radius */
     public float c_rs;
@@ -91,10 +93,10 @@ public class MsgEphemerisGPS extends SBPMessage {
     public float inc_dot;
     
     /** Polynomial clock correction coefficient (clock bias) */
-    public float af0;
+    public double af0;
     
     /** Polynomial clock correction coefficient (clock drift) */
-    public float af1;
+    public double af1;
     
     /** Polynomial clock correction coefficient (rate of clock drift) */
     public float af2;
@@ -109,9 +111,9 @@ public class MsgEphemerisGPS extends SBPMessage {
     public int iodc;
     
 
-    public MsgEphemerisGPS (int sender) { super(sender, TYPE); }
-    public MsgEphemerisGPS () { super(TYPE); }
-    public MsgEphemerisGPS (SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisGal (int sender) { super(sender, TYPE); }
+    public MsgEphemerisGal () { super(TYPE); }
+    public MsgEphemerisGal (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -120,7 +122,8 @@ public class MsgEphemerisGPS extends SBPMessage {
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         common = new EphemerisCommonContent().parse(parser);
-        tgd = parser.getFloat();
+        bgd_e1e5a = parser.getFloat();
+        bgd_e1e5b = parser.getFloat();
         c_rs = parser.getFloat();
         c_rc = parser.getFloat();
         c_uc = parser.getFloat();
@@ -136,18 +139,19 @@ public class MsgEphemerisGPS extends SBPMessage {
         w = parser.getDouble();
         inc = parser.getDouble();
         inc_dot = parser.getFloat();
-        af0 = parser.getFloat();
-        af1 = parser.getFloat();
+        af0 = parser.getDouble();
+        af1 = parser.getDouble();
         af2 = parser.getFloat();
         toc = new GPSTimeSec().parse(parser);
-        iode = parser.getU8();
+        iode = parser.getU16();
         iodc = parser.getU16();
     }
 
     @Override
     protected void build(Builder builder) {
         common.build(builder);
-        builder.putFloat(tgd);
+        builder.putFloat(bgd_e1e5a);
+        builder.putFloat(bgd_e1e5b);
         builder.putFloat(c_rs);
         builder.putFloat(c_rc);
         builder.putFloat(c_uc);
@@ -163,11 +167,11 @@ public class MsgEphemerisGPS extends SBPMessage {
         builder.putDouble(w);
         builder.putDouble(inc);
         builder.putFloat(inc_dot);
-        builder.putFloat(af0);
-        builder.putFloat(af1);
+        builder.putDouble(af0);
+        builder.putDouble(af1);
         builder.putFloat(af2);
         toc.build(builder);
-        builder.putU8(iode);
+        builder.putU16(iode);
         builder.putU16(iodc);
     }
 
@@ -175,7 +179,8 @@ public class MsgEphemerisGPS extends SBPMessage {
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("common", common.toJSON());
-        obj.put("tgd", tgd);
+        obj.put("bgd_e1e5a", bgd_e1e5a);
+        obj.put("bgd_e1e5b", bgd_e1e5b);
         obj.put("c_rs", c_rs);
         obj.put("c_rc", c_rc);
         obj.put("c_uc", c_uc);
