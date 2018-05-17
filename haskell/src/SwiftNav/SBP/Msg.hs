@@ -88,10 +88,12 @@ data SBPMsg =
    | SBPMsgDgnssStatus MsgDgnssStatus Msg
    | SBPMsgDops MsgDops Msg
    | SBPMsgDopsDepA MsgDopsDepA Msg
+   | SBPMsgEphemerisBds MsgEphemerisBds Msg
    | SBPMsgEphemerisDepA MsgEphemerisDepA Msg
    | SBPMsgEphemerisDepB MsgEphemerisDepB Msg
    | SBPMsgEphemerisDepC MsgEphemerisDepC Msg
    | SBPMsgEphemerisDepD MsgEphemerisDepD Msg
+   | SBPMsgEphemerisGal MsgEphemerisGal Msg
    | SBPMsgEphemerisGlo MsgEphemerisGlo Msg
    | SBPMsgEphemerisGloDepA MsgEphemerisGloDepA Msg
    | SBPMsgEphemerisGloDepB MsgEphemerisGloDepB Msg
@@ -249,10 +251,12 @@ instance Binary SBPMsg where
           | _msgSBPType == msgDgnssStatus = SBPMsgDgnssStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgDops = SBPMsgDops (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgDopsDepA = SBPMsgDopsDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisBds = SBPMsgEphemerisBds (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepC = SBPMsgEphemerisDepC (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepD = SBPMsgEphemerisDepD (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisGal = SBPMsgEphemerisGal (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGlo = SBPMsgEphemerisGlo (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGloDepA = SBPMsgEphemerisGloDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGloDepB = SBPMsgEphemerisGloDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -402,10 +406,12 @@ instance Binary SBPMsg where
       encoder (SBPMsgDgnssStatus _ m) = put m
       encoder (SBPMsgDops _ m) = put m
       encoder (SBPMsgDopsDepA _ m) = put m
+      encoder (SBPMsgEphemerisBds _ m) = put m
       encoder (SBPMsgEphemerisDepA _ m) = put m
       encoder (SBPMsgEphemerisDepB _ m) = put m
       encoder (SBPMsgEphemerisDepC _ m) = put m
       encoder (SBPMsgEphemerisDepD _ m) = put m
+      encoder (SBPMsgEphemerisGal _ m) = put m
       encoder (SBPMsgEphemerisGlo _ m) = put m
       encoder (SBPMsgEphemerisGloDepA _ m) = put m
       encoder (SBPMsgEphemerisGloDepB _ m) = put m
@@ -559,10 +565,12 @@ instance FromJSON SBPMsg where
         | msgType == msgDgnssStatus = SBPMsgDgnssStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgDops = SBPMsgDops <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgDopsDepA = SBPMsgDopsDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisBds = SBPMsgEphemerisBds <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepC = SBPMsgEphemerisDepC <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepD = SBPMsgEphemerisDepD <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisGal = SBPMsgEphemerisGal <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGlo = SBPMsgEphemerisGlo <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGloDepA = SBPMsgEphemerisGloDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGloDepB = SBPMsgEphemerisGloDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -717,10 +725,12 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgDgnssStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgDops n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgDopsDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisBds n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepC n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepD n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisGal n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGlo n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGloDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGloDepB n m) = toJSON n <<>> toJSON m
@@ -869,10 +879,12 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgDgnssStatus n m) = SBPMsgDgnssStatus n <$> f m
   msg f (SBPMsgDops n m) = SBPMsgDops n <$> f m
   msg f (SBPMsgDopsDepA n m) = SBPMsgDopsDepA n <$> f m
+  msg f (SBPMsgEphemerisBds n m) = SBPMsgEphemerisBds n <$> f m
   msg f (SBPMsgEphemerisDepA n m) = SBPMsgEphemerisDepA n <$> f m
   msg f (SBPMsgEphemerisDepB n m) = SBPMsgEphemerisDepB n <$> f m
   msg f (SBPMsgEphemerisDepC n m) = SBPMsgEphemerisDepC n <$> f m
   msg f (SBPMsgEphemerisDepD n m) = SBPMsgEphemerisDepD n <$> f m
+  msg f (SBPMsgEphemerisGal n m) = SBPMsgEphemerisGal n <$> f m
   msg f (SBPMsgEphemerisGlo n m) = SBPMsgEphemerisGlo n <$> f m
   msg f (SBPMsgEphemerisGloDepA n m) = SBPMsgEphemerisGloDepA n <$> f m
   msg f (SBPMsgEphemerisGloDepB n m) = SBPMsgEphemerisGloDepB n <$> f m
