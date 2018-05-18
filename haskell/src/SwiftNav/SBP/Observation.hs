@@ -600,7 +600,7 @@ data MsgEphemerisGal = MsgEphemerisGal
     -- ^ Inclination first derivative
   , _msgEphemerisGal_af0     :: !Double
     -- ^ Polynomial clock correction coefficient (clock bias)
-  , _msgEphemerisGal_af1     :: !Double
+  , _msgEphemerisGal_af1     :: !Float
     -- ^ Polynomial clock correction coefficient (clock drift)
   , _msgEphemerisGal_af2     :: !Float
     -- ^ Polynomial clock correction coefficient (rate of clock drift)
@@ -633,7 +633,7 @@ instance Binary MsgEphemerisGal where
     _msgEphemerisGal_inc <- getFloat64le
     _msgEphemerisGal_inc_dot <- getFloat32le
     _msgEphemerisGal_af0 <- getFloat64le
-    _msgEphemerisGal_af1 <- getFloat64le
+    _msgEphemerisGal_af1 <- getFloat32le
     _msgEphemerisGal_af2 <- getFloat32le
     _msgEphemerisGal_toc <- get
     _msgEphemerisGal_iode <- getWord16le
@@ -660,7 +660,7 @@ instance Binary MsgEphemerisGal where
     putFloat64le _msgEphemerisGal_inc
     putFloat32le _msgEphemerisGal_inc_dot
     putFloat64le _msgEphemerisGal_af0
-    putFloat64le _msgEphemerisGal_af1
+    putFloat32le _msgEphemerisGal_af1
     putFloat32le _msgEphemerisGal_af2
     put _msgEphemerisGal_toc
     putWord16le _msgEphemerisGal_iode

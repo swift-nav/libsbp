@@ -96,7 +96,7 @@ public class MsgEphemerisGal extends SBPMessage {
     public double af0;
     
     /** Polynomial clock correction coefficient (clock drift) */
-    public double af1;
+    public float af1;
     
     /** Polynomial clock correction coefficient (rate of clock drift) */
     public float af2;
@@ -140,7 +140,7 @@ public class MsgEphemerisGal extends SBPMessage {
         inc = parser.getDouble();
         inc_dot = parser.getFloat();
         af0 = parser.getDouble();
-        af1 = parser.getDouble();
+        af1 = parser.getFloat();
         af2 = parser.getFloat();
         toc = new GPSTimeSec().parse(parser);
         iode = parser.getU16();
@@ -168,7 +168,7 @@ public class MsgEphemerisGal extends SBPMessage {
         builder.putDouble(inc);
         builder.putFloat(inc_dot);
         builder.putDouble(af0);
-        builder.putDouble(af1);
+        builder.putFloat(af1);
         builder.putFloat(af2);
         toc.build(builder);
         builder.putU16(iode);

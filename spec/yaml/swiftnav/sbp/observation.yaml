@@ -528,7 +528,7 @@ definitions:
           units: s
           desc: Polynomial clock correction coefficient (clock bias)
       - af1:
-          type: double
+          type: float
           units: s/s
           desc: Polynomial clock correction coefficient (clock drift)
       - af2:

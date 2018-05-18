@@ -552,7 +552,7 @@ MsgEphemerisGps.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  * @field inc number (float, 8 bytes) Inclination
  * @field inc_dot number (float, 4 bytes) Inclination first derivative
  * @field af0 number (float, 8 bytes) Polynomial clock correction coefficient (clock bias)
- * @field af1 number (float, 8 bytes) Polynomial clock correction coefficient (clock drift)
+ * @field af1 number (float, 4 bytes) Polynomial clock correction coefficient (clock drift)
  * @field af2 number (float, 4 bytes) Polynomial clock correction coefficient (rate of clock drift)
  * @field toc GPSTimeSec Clock reference
  * @field iode number (unsigned 16-bit int, 2 bytes) Issue of ephemeris data
@@ -592,7 +592,7 @@ MsgEphemerisGal.prototype.parser = new Parser()
   .doublele('inc')
   .floatle('inc_dot')
   .doublele('af0')
-  .doublele('af1')
+  .floatle('af1')
   .floatle('af2')
   .nest('toc', { type: GPSTimeSec.prototype.parser })
   .uint16('iode')
@@ -617,7 +617,7 @@ MsgEphemerisGal.prototype.fieldSpec.push(['w', 'writeDoubleLE', 8]);
 MsgEphemerisGal.prototype.fieldSpec.push(['inc', 'writeDoubleLE', 8]);
 MsgEphemerisGal.prototype.fieldSpec.push(['inc_dot', 'writeFloatLE', 4]);
 MsgEphemerisGal.prototype.fieldSpec.push(['af0', 'writeDoubleLE', 8]);
-MsgEphemerisGal.prototype.fieldSpec.push(['af1', 'writeDoubleLE', 8]);
+MsgEphemerisGal.prototype.fieldSpec.push(['af1', 'writeFloatLE', 4]);
 MsgEphemerisGal.prototype.fieldSpec.push(['af2', 'writeFloatLE', 4]);
 MsgEphemerisGal.prototype.fieldSpec.push(['toc', GPSTimeSec.prototype.fieldSpec]);
 MsgEphemerisGal.prototype.fieldSpec.push(['iode', 'writeUInt16LE', 2]);

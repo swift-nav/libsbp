@@ -176,7 +176,7 @@ message MsgEphemerisGal {
     double inc = 17;
     float inc_dot = 18;
     double af0 = 19;
-    double af1 = 20;
+    float af1 = 20;
     float af2 = 21;
     gnss.GpsTimeSec toc = 22;
     uint32 iode = 23;

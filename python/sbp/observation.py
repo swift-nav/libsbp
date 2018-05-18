@@ -1462,7 +1462,7 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
     Inclination first derivative
   af0 : double
     Polynomial clock correction coefficient (clock bias)
-  af1 : double
+  af1 : float
     Polynomial clock correction coefficient (clock drift)
   af2 : float
     Polynomial clock correction coefficient (rate of clock drift)
@@ -1496,7 +1496,7 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
                    'inc' / construct.Float64l,
                    'inc_dot' / construct.Float32l,
                    'af0' / construct.Float64l,
-                   'af1' / construct.Float64l,
+                   'af1' / construct.Float32l,
                    'af2' / construct.Float32l,
                    'toc' / construct.Struct(GPSTimeSec._parser),
                    'iode' / construct.Int16ul,

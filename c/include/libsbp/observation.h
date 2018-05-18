@@ -258,7 +258,7 @@ typedef struct __attribute__((packed)) {
   double inc;          /**< Inclination [rad] */
   float inc_dot;      /**< Inclination first derivative [rad/s] */
   double af0;          /**< Polynomial clock correction coefficient (clock bias) [s] */
-  double af1;          /**< Polynomial clock correction coefficient (clock drift) [s/s] */
+  float af1;          /**< Polynomial clock correction coefficient (clock drift) [s/s] */
   float af2;          /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
   gps_time_sec_t toc;          /**< Clock reference */
   u16 iode;         /**< Issue of ephemeris data */
