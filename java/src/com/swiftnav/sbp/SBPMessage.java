@@ -156,6 +156,19 @@ public class SBPMessage {
             return ret;
         }
 
+        public float[] getArrayofFloat() {
+            return getArrayofFloat(buf.remaining());
+        }
+        public float[] getArrayofFloat(int n) {
+            float [] ret = new float[n];
+            for (int i = 0; i < n; i++)
+                ret[i] = getFloat();
+            return ret;
+        }
+
+        public double[] getArrayofDouble() {
+            return getArrayofDouble(buf.remaining());
+        }
         public double[] getArrayofDouble(int n) {
             double [] ret = new double[n];
             for (int i = 0; i < n; i++)
