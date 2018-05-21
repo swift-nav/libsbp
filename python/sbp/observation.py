@@ -1405,6 +1405,205 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     d.update(j)
     return d
     
+SBP_MSG_EPHEMERIS_BDS = 0x0089
+class MsgEphemerisBds(SBP):
+  """SBP class for message MSG_EPHEMERIS_BDS (0x0089).
+
+  You can have MSG_EPHEMERIS_BDS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The ephemeris message returns a set of satellite orbit
+parameters that is used to calculate BDS satellite position,
+velocity, and clock offset. Please see the BeiDou Navigation
+Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  common : EphemerisCommonContent
+    Values common for all ephemeris types
+  tgd1 : float
+    Group delay differential for B1
+  tgd2 : float
+    Group delay differential for B2
+  c_rs : float
+    Amplitude of the sine harmonic correction term to the orbit radius
+  c_rc : float
+    Amplitude of the cosine harmonic correction term to the orbit radius
+  c_uc : float
+    Amplitude of the cosine harmonic correction term to the argument of latitude
+  c_us : float
+    Amplitude of the sine harmonic correction term to the argument of latitude
+  c_ic : float
+    Amplitude of the cosine harmonic correction term to the angle of inclination
+  c_is : float
+    Amplitude of the sine harmonic correction term to the angle of inclination
+  dn : float
+    Mean motion difference
+  m0 : double
+    Mean anomaly at reference time
+  ecc : double
+    Eccentricity of satellite orbit
+  sqrta : double
+    Square root of the semi-major axis of orbit
+  omega0 : double
+    Longitude of ascending node of orbit plane at weekly epoch
+  omegadot : double
+    Rate of right ascension
+  w : double
+    Argument of perigee
+  inc : double
+    Inclination
+  inc_dot : float
+    Inclination first derivative
+  af0 : double
+    Polynomial clock correction coefficient (clock bias)
+  af1 : float
+    Polynomial clock correction coefficient (clock drift)
+  af2 : float
+    Polynomial clock correction coefficient (rate of clock drift)
+  toc : GPSTimeSec
+    Clock reference
+  iode : int
+    Issue of ephemeris data
+  iodc : int
+    Issue of clock data
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'common' / construct.Struct(EphemerisCommonContent._parser),
+                   'tgd1' / construct.Float32l,
+                   'tgd2' / construct.Float32l,
+                   'c_rs' / construct.Float32l,
+                   'c_rc' / construct.Float32l,
+                   'c_uc' / construct.Float32l,
+                   'c_us' / construct.Float32l,
+                   'c_ic' / construct.Float32l,
+                   'c_is' / construct.Float32l,
+                   'dn' / construct.Float32l,
+                   'm0' / construct.Float64l,
+                   'ecc' / construct.Float64l,
+                   'sqrta' / construct.Float64l,
+                   'omega0' / construct.Float64l,
+                   'omegadot' / construct.Float64l,
+                   'w' / construct.Float64l,
+                   'inc' / construct.Float64l,
+                   'inc_dot' / construct.Float32l,
+                   'af0' / construct.Float64l,
+                   'af1' / construct.Float32l,
+                   'af2' / construct.Float32l,
+                   'toc' / construct.Struct(GPSTimeSec._parser),
+                   'iode' / construct.Int8ul,
+                   'iodc' / construct.Int16ul,)
+  __slots__ = [
+               'common',
+               'tgd1',
+               'tgd2',
+               'c_rs',
+               'c_rc',
+               'c_uc',
+               'c_us',
+               'c_ic',
+               'c_is',
+               'dn',
+               'm0',
+               'ecc',
+               'sqrta',
+               'omega0',
+               'omegadot',
+               'w',
+               'inc',
+               'inc_dot',
+               'af0',
+               'af1',
+               'af2',
+               'toc',
+               'iode',
+               'iodc',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgEphemerisBds,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgEphemerisBds, self).__init__()
+      self.msg_type = SBP_MSG_EPHEMERIS_BDS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.common = kwargs.pop('common')
+      self.tgd1 = kwargs.pop('tgd1')
+      self.tgd2 = kwargs.pop('tgd2')
+      self.c_rs = kwargs.pop('c_rs')
+      self.c_rc = kwargs.pop('c_rc')
+      self.c_uc = kwargs.pop('c_uc')
+      self.c_us = kwargs.pop('c_us')
+      self.c_ic = kwargs.pop('c_ic')
+      self.c_is = kwargs.pop('c_is')
+      self.dn = kwargs.pop('dn')
+      self.m0 = kwargs.pop('m0')
+      self.ecc = kwargs.pop('ecc')
+      self.sqrta = kwargs.pop('sqrta')
+      self.omega0 = kwargs.pop('omega0')
+      self.omegadot = kwargs.pop('omegadot')
+      self.w = kwargs.pop('w')
+      self.inc = kwargs.pop('inc')
+      self.inc_dot = kwargs.pop('inc_dot')
+      self.af0 = kwargs.pop('af0')
+      self.af1 = kwargs.pop('af1')
+      self.af2 = kwargs.pop('af2')
+      self.toc = kwargs.pop('toc')
+      self.iode = kwargs.pop('iode')
+      self.iodc = kwargs.pop('iodc')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgEphemerisBds.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgEphemerisBds(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgEphemerisBds._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgEphemerisBds._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgEphemerisBds, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_EPHEMERIS_GAL = 0x0095
 class MsgEphemerisGal(SBP):
   """SBP class for message MSG_EPHEMERIS_GAL (0x0095).
@@ -4543,6 +4742,7 @@ msg_classes = {
   0x0048: MsgBasePosECEF,
   0x0081: MsgEphemerisGPSDepE,
   0x0086: MsgEphemerisGPS,
+  0x0089: MsgEphemerisBds,
   0x0095: MsgEphemerisGal,
   0x0082: MsgEphemerisSbasDepA,
   0x0083: MsgEphemerisGloDepA,
