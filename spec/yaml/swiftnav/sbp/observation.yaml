@@ -53,7 +53,11 @@ definitions:
     desc: |
       Pseudorange and carrier phase observation for a satellite being
       tracked. The observations are interoperable with 3rd party
-      receivers and conform with typical RTCMv3 GNSS observations.
+      receivers and conform with typical RTCM 3.1 GNSS observations.
+
+      All carrier phase observations are unaligned and output the raw phase
+      from the tracking loops. This conforms with RTCM 3.1 but does not conform
+      with the mandatory reference signal alignment in RTCM 3.3 MSM or RINEX 3.0x.
 
     fields:
         - P:
@@ -560,11 +564,11 @@ definitions:
       - bgd_e1e5a:
           type: float
           units: s
-          desc: E1-E5a Broadcast Group Delay 
+          desc: E1-E5a Broadcast Group Delay
       - bgd_e1e5b:
           type: float
           units: s
-          desc: E1-E5b Broadcast Group Delay 
+          desc: E1-E5b Broadcast Group Delay
       - c_rs:
           type: float
           units: m
@@ -1956,12 +1960,12 @@ definitions:
           type: double
           units: rad
           desc: Argument of perigee at instant of t_lambda
-          
+
  - MSG_GLO_BIASES:
     id: 0x0075
     short_desc: GLONASS L1/L2 Code-Phase biases
     desc: |
-      The GLONASS L1/L2 Code-Phase biases allows to perform 
+      The GLONASS L1/L2 Code-Phase biases allows to perform
       GPS+GLONASS integer ambiguity resolution for baselines
       with mixed receiver types (e.g. receiver of different
       manufacturers)
@@ -1985,4 +1989,4 @@ definitions:
         - l2p_bias:
             type: s16
             units: m * 0.02
-            desc: GLONASS L2 P Code-Phase Bias            
+            desc: GLONASS L2 P Code-Phase Bias
