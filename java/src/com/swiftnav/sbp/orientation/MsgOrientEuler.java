@@ -50,13 +50,13 @@ public class MsgOrientEuler extends SBPMessage {
     public int yaw;
     
     /** Estimated standard deviation of roll */
-    public float var_roll;
+    public float roll_accuracy;
     
     /** Estimated standard deviation of pitch */
-    public float var_pitch;
+    public float pitch_accuracy;
     
     /** Estimated standard deviation of yaw */
-    public float var_yaw;
+    public float yaw_accuracy;
     
     /** Status flags */
     public int flags;
@@ -76,9 +76,9 @@ public class MsgOrientEuler extends SBPMessage {
         roll = parser.getS32();
         pitch = parser.getS32();
         yaw = parser.getS32();
-        var_roll = parser.getFloat();
-        var_pitch = parser.getFloat();
-        var_yaw = parser.getFloat();
+        roll_accuracy = parser.getFloat();
+        pitch_accuracy = parser.getFloat();
+        yaw_accuracy = parser.getFloat();
         flags = parser.getU8();
     }
 
@@ -88,9 +88,9 @@ public class MsgOrientEuler extends SBPMessage {
         builder.putS32(roll);
         builder.putS32(pitch);
         builder.putS32(yaw);
-        builder.putFloat(var_roll);
-        builder.putFloat(var_pitch);
-        builder.putFloat(var_yaw);
+        builder.putFloat(roll_accuracy);
+        builder.putFloat(pitch_accuracy);
+        builder.putFloat(yaw_accuracy);
         builder.putU8(flags);
     }
 
@@ -101,9 +101,9 @@ public class MsgOrientEuler extends SBPMessage {
         obj.put("roll", roll);
         obj.put("pitch", pitch);
         obj.put("yaw", yaw);
-        obj.put("var_roll", var_roll);
-        obj.put("var_pitch", var_pitch);
-        obj.put("var_yaw", var_yaw);
+        obj.put("roll_accuracy", roll_accuracy);
+        obj.put("pitch_accuracy", pitch_accuracy);
+        obj.put("yaw_accuracy", yaw_accuracy);
         obj.put("flags", flags);
         return obj;
     }

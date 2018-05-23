@@ -153,13 +153,12 @@ def max_fid_len(m):
   """
   return len(to_global(m.identifier)) + m.max_fid_len
 
-JENV.filters['to_global'] = to_global
-JENV.filters['to_data'] = to_data
-JENV.filters['to_type'] = to_type
-JENV.filters['to_get'] = to_get
-JENV.filters['to_put'] = to_put
-JENV.filters['max_fid_len'] = max_fid_len
-JENV.filters['camel_case'] = camel_case
+JENV.filters['hs_to_global'] = to_global
+JENV.filters['hs_to_data'] = to_data
+JENV.filters['hs_to_type'] = to_type
+JENV.filters['hs_to_get'] = to_get
+JENV.filters['hs_to_put'] = to_put
+JENV.filters['hs_max_fid_len'] = max_fid_len
 JENV.filters['comment_links'] = comment_links_hsk
 
 def render_source(output_dir, package_spec):

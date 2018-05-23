@@ -278,6 +278,67 @@ MsgTrackingState.prototype.fieldSpec = [];
 MsgTrackingState.prototype.fieldSpec.push(['states', 'array', TrackingChannelState.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
+ * SBP class for message fragment MeasurementState
+ *
+ * Measurement Engine tracking channel state for a specific satellite signal  and
+ * measured signal power.  The mesid field for Glonass can either  carry the FCN as
+ * 100 + FCN where FCN is in [-7, +6] or  the Slot ID (from 1 to 28)
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field mesid GnssSignal Measurement Engine GNSS signal being tracked (carries either Glonass FCN or
+ *   SLOT)
+ * @field cn0 number (unsigned 8-bit int, 1 byte) Carrier-to-Noise density.  Zero implies invalid cn0.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MeasurementState = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MeasurementState";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MeasurementState.prototype = Object.create(SBP.prototype);
+MeasurementState.prototype.messageType = "MeasurementState";
+MeasurementState.prototype.constructor = MeasurementState;
+MeasurementState.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('mesid', { type: GnssSignal.prototype.parser })
+  .uint8('cn0');
+MeasurementState.prototype.fieldSpec = [];
+MeasurementState.prototype.fieldSpec.push(['mesid', GnssSignal.prototype.fieldSpec]);
+MeasurementState.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_MEASUREMENT_STATE (0x0061).
+ *
+ * The tracking message returns a variable-length array of tracking channel states.
+ * It reports status and carrier-to-noise density measurements for all tracked
+ * satellites.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field states array ME signal tracking channel state
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgMeasurementState = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_MEASUREMENT_STATE";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgMeasurementState.prototype = Object.create(SBP.prototype);
+MsgMeasurementState.prototype.messageType = "MSG_MEASUREMENT_STATE";
+MsgMeasurementState.prototype.msg_type = 0x0061;
+MsgMeasurementState.prototype.constructor = MsgMeasurementState;
+MsgMeasurementState.prototype.parser = new Parser()
+  .endianess('little')
+  .array('states', { type: MeasurementState.prototype.parser, readUntil: 'eof' });
+MsgMeasurementState.prototype.fieldSpec = [];
+MsgMeasurementState.prototype.fieldSpec.push(['states', 'array', MeasurementState.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+/**
  * SBP class for message fragment TrackingChannelCorrelation
  *
  * Structure containing in-phase and quadrature correlation components.
@@ -499,6 +560,9 @@ module.exports = {
   TrackingChannelState: TrackingChannelState,
   0x0041: MsgTrackingState,
   MsgTrackingState: MsgTrackingState,
+  MeasurementState: MeasurementState,
+  0x0061: MsgMeasurementState,
+  MsgMeasurementState: MsgMeasurementState,
   TrackingChannelCorrelation: TrackingChannelCorrelation,
   0x002C: MsgTrackingIq,
   MsgTrackingIq: MsgTrackingIq,

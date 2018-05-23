@@ -1,8 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RecordWildCards   #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE NoImplicitPrelude           #-}
+{-# LANGUAGE TemplateHaskell             #-}
+{-# LANGUAGE RecordWildCards             #-}
+{-# LANGUAGE OverloadedStrings           #-}
 
 -- |
 -- Module:      SwiftNav.SBP.Msg
@@ -43,9 +43,9 @@ import SwiftNav.SBP.Settings
 import SwiftNav.SBP.Ssr
 import SwiftNav.SBP.System
 import SwiftNav.SBP.Tracking
-import SwiftNav.SBP.Types
 import SwiftNav.SBP.User
 import SwiftNav.SBP.Vehicle
+import SwiftNav.SBP.Types
 
 
 -- | An SBP message ADT composed of all defined SBP messages.
@@ -78,6 +78,7 @@ data SBPMsg =
    | SBPMsgBootloaderHandshakeReq MsgBootloaderHandshakeReq Msg
    | SBPMsgBootloaderHandshakeResp MsgBootloaderHandshakeResp Msg
    | SBPMsgBootloaderJumpToApp MsgBootloaderJumpToApp Msg
+   | SBPMsgCellModemStatus MsgCellModemStatus Msg
    | SBPMsgCommandOutput MsgCommandOutput Msg
    | SBPMsgCommandReq MsgCommandReq Msg
    | SBPMsgCommandResp MsgCommandResp Msg
@@ -87,10 +88,12 @@ data SBPMsg =
    | SBPMsgDgnssStatus MsgDgnssStatus Msg
    | SBPMsgDops MsgDops Msg
    | SBPMsgDopsDepA MsgDopsDepA Msg
+   | SBPMsgEphemerisBds MsgEphemerisBds Msg
    | SBPMsgEphemerisDepA MsgEphemerisDepA Msg
    | SBPMsgEphemerisDepB MsgEphemerisDepB Msg
    | SBPMsgEphemerisDepC MsgEphemerisDepC Msg
    | SBPMsgEphemerisDepD MsgEphemerisDepD Msg
+   | SBPMsgEphemerisGal MsgEphemerisGal Msg
    | SBPMsgEphemerisGlo MsgEphemerisGlo Msg
    | SBPMsgEphemerisGloDepA MsgEphemerisGloDepA Msg
    | SBPMsgEphemerisGloDepB MsgEphemerisGloDepB Msg
@@ -131,6 +134,7 @@ data SBPMsg =
    | SBPMsgMagRaw MsgMagRaw Msg
    | SBPMsgMaskSatellite MsgMaskSatellite Msg
    | SBPMsgMaskSatelliteDep MsgMaskSatelliteDep Msg
+   | SBPMsgMeasurementState MsgMeasurementState Msg
    | SBPMsgNapDeviceDnaReq MsgNapDeviceDnaReq Msg
    | SBPMsgNapDeviceDnaResp MsgNapDeviceDnaResp Msg
    | SBPMsgNdbEvent MsgNdbEvent Msg
@@ -234,6 +238,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgCellModemStatus = SBPMsgCellModemStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandOutput = SBPMsgCommandOutput (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandReq = SBPMsgCommandReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandResp = SBPMsgCommandResp (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -243,10 +248,12 @@ instance Binary SBPMsg where
           | _msgSBPType == msgDgnssStatus = SBPMsgDgnssStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgDops = SBPMsgDops (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgDopsDepA = SBPMsgDopsDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisBds = SBPMsgEphemerisBds (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepC = SBPMsgEphemerisDepC (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepD = SBPMsgEphemerisDepD (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisGal = SBPMsgEphemerisGal (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGlo = SBPMsgEphemerisGlo (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGloDepA = SBPMsgEphemerisGloDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGloDepB = SBPMsgEphemerisGloDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -287,6 +294,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgMagRaw = SBPMsgMagRaw (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgMaskSatellite = SBPMsgMaskSatellite (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgMaskSatelliteDep = SBPMsgMaskSatelliteDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgMeasurementState = SBPMsgMeasurementState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgNdbEvent = SBPMsgNdbEvent (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -382,6 +390,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgBootloaderHandshakeReq _ m) = put m
       encoder (SBPMsgBootloaderHandshakeResp _ m) = put m
       encoder (SBPMsgBootloaderJumpToApp _ m) = put m
+      encoder (SBPMsgCellModemStatus _ m) = put m
       encoder (SBPMsgCommandOutput _ m) = put m
       encoder (SBPMsgCommandReq _ m) = put m
       encoder (SBPMsgCommandResp _ m) = put m
@@ -391,10 +400,12 @@ instance Binary SBPMsg where
       encoder (SBPMsgDgnssStatus _ m) = put m
       encoder (SBPMsgDops _ m) = put m
       encoder (SBPMsgDopsDepA _ m) = put m
+      encoder (SBPMsgEphemerisBds _ m) = put m
       encoder (SBPMsgEphemerisDepA _ m) = put m
       encoder (SBPMsgEphemerisDepB _ m) = put m
       encoder (SBPMsgEphemerisDepC _ m) = put m
       encoder (SBPMsgEphemerisDepD _ m) = put m
+      encoder (SBPMsgEphemerisGal _ m) = put m
       encoder (SBPMsgEphemerisGlo _ m) = put m
       encoder (SBPMsgEphemerisGloDepA _ m) = put m
       encoder (SBPMsgEphemerisGloDepB _ m) = put m
@@ -435,6 +446,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgMagRaw _ m) = put m
       encoder (SBPMsgMaskSatellite _ m) = put m
       encoder (SBPMsgMaskSatelliteDep _ m) = put m
+      encoder (SBPMsgMeasurementState _ m) = put m
       encoder (SBPMsgNapDeviceDnaReq _ m) = put m
       encoder (SBPMsgNapDeviceDnaResp _ m) = put m
       encoder (SBPMsgNdbEvent _ m) = put m
@@ -534,6 +546,7 @@ instance FromJSON SBPMsg where
         | msgType == msgBootloaderHandshakeReq = SBPMsgBootloaderHandshakeReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgCellModemStatus = SBPMsgCellModemStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandOutput = SBPMsgCommandOutput <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandReq = SBPMsgCommandReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandResp = SBPMsgCommandResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -543,10 +556,12 @@ instance FromJSON SBPMsg where
         | msgType == msgDgnssStatus = SBPMsgDgnssStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgDops = SBPMsgDops <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgDopsDepA = SBPMsgDopsDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisBds = SBPMsgEphemerisBds <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepC = SBPMsgEphemerisDepC <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepD = SBPMsgEphemerisDepD <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisGal = SBPMsgEphemerisGal <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGlo = SBPMsgEphemerisGlo <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGloDepA = SBPMsgEphemerisGloDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGloDepB = SBPMsgEphemerisGloDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -587,6 +602,7 @@ instance FromJSON SBPMsg where
         | msgType == msgMagRaw = SBPMsgMagRaw <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgMaskSatellite = SBPMsgMaskSatellite <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgMaskSatelliteDep = SBPMsgMaskSatelliteDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgMeasurementState = SBPMsgMeasurementState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgNdbEvent = SBPMsgNdbEvent <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -687,6 +703,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgBootloaderHandshakeReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgBootloaderHandshakeResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgBootloaderJumpToApp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgCellModemStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandOutput n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandResp n m) = toJSON n <<>> toJSON m
@@ -696,10 +713,12 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgDgnssStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgDops n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgDopsDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisBds n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepC n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepD n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisGal n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGlo n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGloDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGloDepB n m) = toJSON n <<>> toJSON m
@@ -740,6 +759,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgMagRaw n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgMaskSatellite n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgMaskSatelliteDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgMeasurementState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgNapDeviceDnaReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgNapDeviceDnaResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgNdbEvent n m) = toJSON n <<>> toJSON m
@@ -834,6 +854,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgBootloaderHandshakeReq n m) = SBPMsgBootloaderHandshakeReq n <$> f m
   msg f (SBPMsgBootloaderHandshakeResp n m) = SBPMsgBootloaderHandshakeResp n <$> f m
   msg f (SBPMsgBootloaderJumpToApp n m) = SBPMsgBootloaderJumpToApp n <$> f m
+  msg f (SBPMsgCellModemStatus n m) = SBPMsgCellModemStatus n <$> f m
   msg f (SBPMsgCommandOutput n m) = SBPMsgCommandOutput n <$> f m
   msg f (SBPMsgCommandReq n m) = SBPMsgCommandReq n <$> f m
   msg f (SBPMsgCommandResp n m) = SBPMsgCommandResp n <$> f m
@@ -843,10 +864,12 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgDgnssStatus n m) = SBPMsgDgnssStatus n <$> f m
   msg f (SBPMsgDops n m) = SBPMsgDops n <$> f m
   msg f (SBPMsgDopsDepA n m) = SBPMsgDopsDepA n <$> f m
+  msg f (SBPMsgEphemerisBds n m) = SBPMsgEphemerisBds n <$> f m
   msg f (SBPMsgEphemerisDepA n m) = SBPMsgEphemerisDepA n <$> f m
   msg f (SBPMsgEphemerisDepB n m) = SBPMsgEphemerisDepB n <$> f m
   msg f (SBPMsgEphemerisDepC n m) = SBPMsgEphemerisDepC n <$> f m
   msg f (SBPMsgEphemerisDepD n m) = SBPMsgEphemerisDepD n <$> f m
+  msg f (SBPMsgEphemerisGal n m) = SBPMsgEphemerisGal n <$> f m
   msg f (SBPMsgEphemerisGlo n m) = SBPMsgEphemerisGlo n <$> f m
   msg f (SBPMsgEphemerisGloDepA n m) = SBPMsgEphemerisGloDepA n <$> f m
   msg f (SBPMsgEphemerisGloDepB n m) = SBPMsgEphemerisGloDepB n <$> f m
@@ -887,6 +910,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgMagRaw n m) = SBPMsgMagRaw n <$> f m
   msg f (SBPMsgMaskSatellite n m) = SBPMsgMaskSatellite n <$> f m
   msg f (SBPMsgMaskSatelliteDep n m) = SBPMsgMaskSatelliteDep n <$> f m
+  msg f (SBPMsgMeasurementState n m) = SBPMsgMeasurementState n <$> f m
   msg f (SBPMsgNapDeviceDnaReq n m) = SBPMsgNapDeviceDnaReq n <$> f m
   msg f (SBPMsgNapDeviceDnaResp n m) = SBPMsgNapDeviceDnaResp n <$> f m
   msg f (SBPMsgNdbEvent n m) = SBPMsgNdbEvent n <$> f m

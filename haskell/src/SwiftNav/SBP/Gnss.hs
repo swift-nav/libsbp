@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE RecordWildCards   #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE NoImplicitPrelude           #-}
+{-# LANGUAGE TemplateHaskell             #-}
+{-# LANGUAGE RecordWildCards             #-}
 
 -- |
 -- Module:      SwiftNav.SBP.Gnss
@@ -24,7 +24,7 @@ import Data.Binary
 import Data.Binary.Get
 import Data.Binary.IEEE754
 import Data.Binary.Put
-import Data.ByteString.Lazy hiding (ByteString)
+import Data.ByteString.Lazy    hiding (ByteString)
 import Data.Int
 import Data.Word
 import SwiftNav.SBP.TH
@@ -40,7 +40,8 @@ import SwiftNav.SBP.Types
 -- Signal identifier containing constellation, band, and satellite identifier
 data GnssSignal = GnssSignal
   { _gnssSignal_sat :: !Word8
-    -- ^ Constellation-specific satellite identifier
+    -- ^ Constellation-specific satellite identifier. This field for Glonass can
+    -- either be (100+FCN) where FCN is in [-7,+6] or  the Slot ID in [1,28]
   , _gnssSignal_code :: !Word8
     -- ^ Signal constellation, band and code
   } deriving ( Show, Read, Eq )

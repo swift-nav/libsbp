@@ -1,0 +1,86 @@
+/*
+ * Copyright (C) 2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+syntax = "proto3";
+
+/** Tracking
+ *
+  * Satellite code and carrier-phase tracking messages from the device.
+ */
+
+package swiftnav.sbp.tracking;
+
+import "gnss.proto";
+
+/** Signal tracking channel state
+ *
+ * Tracking channel state for a specific satellite signal and
+ * measured signal power.
+ */
+message TrackingChannelState {
+    gnss.GnssSignal sid = 1;
+    uint32 fcn = 2;
+    uint32 cn0 = 3;
+}
+
+/** Signal tracking channel states
+ *
+ * The tracking message returns a variable-length array of tracking
+ * channel states. It reports status and carrier-to-noise density
+ * measurements for all tracked satellites.
+ */
+message MsgTrackingState {
+    repeated TrackingChannelState states = 1;
+}
+
+/** Measurement Engine signal tracking channel state
+ *
+ * Measurement Engine tracking channel state for a specific satellite signal 
+ * and measured signal power. 
+ * The mesid field for Glonass can either 
+ * carry the FCN as 100 + FCN where FCN is in [-7, +6] or 
+ * the Slot ID (from 1 to 28)
+ */
+message MeasurementState {
+    gnss.GnssSignal mesid = 1;
+    uint32 cn0 = 2;
+}
+
+/** Measurement Engine signal tracking channel states
+ *
+ * The tracking message returns a variable-length array of tracking
+ * channel states. It reports status and carrier-to-noise density
+ * measurements for all tracked satellites.
+ */
+message MsgMeasurementState {
+    repeated MeasurementState states = 1;
+}
+
+/** Complex correlation structure
+ *
+ * Structure containing in-phase and quadrature correlation components.
+ */
+message TrackingChannelCorrelation {
+    sint32 I = 1;
+    sint32 Q = 2;
+}
+
+/** Tracking channel correlations
+ *
+ * When enabled, a tracking channel can output the correlations at each
+ * update interval.
+ */
+message MsgTrackingIq {
+    uint32 channel = 1;
+    gnss.GnssSignal sid = 2;
+    repeated TrackingChannelCorrelation corrs = 3;
+}

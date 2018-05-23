@@ -1,5 +1,5 @@
 name:                  sbp
-version:               2.3.10
+version:               2.3.16
 synopsis:              SwiftNav's SBP Library
 homepage:              https://github.com/swift-nav/libsbp
 license:               LGPL-3
@@ -25,9 +25,6 @@ source-repository head
 library
   exposed-modules:     SwiftNav.CRC16
                      , SwiftNav.SBP
-  other-modules:       SwiftNav.SBP.Msg
-                     , SwiftNav.SBP.TH
-                     , SwiftNav.SBP.Types
                      , SwiftNav.SBP.Acquisition
                      , SwiftNav.SBP.Bootload
                      , SwiftNav.SBP.ExtEvents
@@ -49,6 +46,9 @@ library
                      , SwiftNav.SBP.Tracking
                      , SwiftNav.SBP.User
                      , SwiftNav.SBP.Vehicle
+                     , SwiftNav.SBP.Types
+  other-modules:       SwiftNav.SBP.Msg
+                     , SwiftNav.SBP.TH
   default-language:    Haskell2010
   hs-source-dirs:      src
   ghc-options:         -Wall
@@ -93,6 +93,21 @@ executable json2sbp
                      , conduit-extra
                      , resourcet
                      , sbp
+  default-language:    Haskell2010
+
+executable json2json
+  hs-source-dirs:      main
+  main-is:             JSON2JSON.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall
+  build-depends:       aeson
+                     , base
+                     , basic-prelude
+                     , bytestring
+                     , conduit
+                     , conduit-extra
+                     , resourcet
+                     , sbp
+                     , time
   default-language:    Haskell2010
 
 executable sbp2yaml

@@ -1,0 +1,342 @@
+/*
+ * Copyright (C) 2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+syntax = "proto3";
+
+/** Navigation
+ *
+  * Geodetic navigation messages reporting GPS time, position, velocity,
+ * and baseline position solutions. For position solutions, these
+ * messages define several different position solutions: single-point
+ * (SPP), RTK, and pseudo-absolute position solutions.
+ * 
+ * The SPP is the standalone, absolute GPS position solution using only
+ * a single receiver. The RTK solution is the differential GPS
+ * solution, which can use either a fixed/integer or floating carrier
+ * phase ambiguity. The pseudo-absolute position solution uses a
+ * user-provided, well-surveyed base station position (if available)
+ * and the RTK solution in tandem.
+ * 
+ * When the inertial navigation mode indicates that the IMU is used,
+ * all messages are reported in the vehicle body frame as defined by
+ * device settings.  By default, the vehicle body frame is configured to be
+ * coincident with the antenna phase center.  When there is no inertial
+ * navigation, the solution will be reported at the phase center of the antenna.
+ */
+
+package swiftnav.sbp.navigation;
+
+
+/** GPS Time
+ *
+ * This message reports the GPS time, representing the time since
+ * the GPS epoch began on midnight January 6, 1980 UTC. GPS time
+ * counts the weeks and seconds of the week. The weeks begin at the
+ * Saturday/Sunday transition. GPS week 0 began at the beginning of
+ * the GPS time scale.
+ * 
+ * Within each week number, the GPS time of the week is between
+ * between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
+ * does not accumulate leap seconds, and as of now, has a small
+ * offset from UTC. In a message stream, this message precedes a
+ * set of other navigation messages referenced to the same time
+ * (but lacking the ns field) and indicates a more precise time of
+ * these messages.
+ */
+message MsgGpsTime {
+    uint32 wn = 1;
+    uint32 tow = 2;
+    sint32 ns_residual = 3;
+    uint32 flags = 4;
+}
+
+/** UTC Time
+ *
+ * This message reports the Universal Coordinated Time (UTC).  Note the flags
+ * which indicate the source of the UTC offset value and source of the time fix.
+ */
+message MsgUtcTime {
+    uint32 flags = 1;
+    uint32 tow = 2;
+    uint32 year = 3;
+    uint32 month = 4;
+    uint32 day = 5;
+    uint32 hours = 6;
+    uint32 minutes = 7;
+    uint32 seconds = 8;
+    uint32 ns = 9;
+}
+
+/** Dilution of Precision
+ *
+ * This dilution of precision (DOP) message describes the effect of
+ * navigation satellite geometry on positional measurement
+ * precision.  The flags field indicated whether the DOP reported
+ * corresponds to differential or SPP solution.
+ */
+message MsgDops {
+    uint32 tow = 1;
+    uint32 gdop = 2;
+    uint32 pdop = 3;
+    uint32 tdop = 4;
+    uint32 hdop = 5;
+    uint32 vdop = 6;
+    uint32 flags = 7;
+}
+
+/** Single-point position in ECEF
+ *
+ * The position solution message reports absolute Earth Centered
+ * Earth Fixed (ECEF) coordinates and the status (single point vs
+ * pseudo-absolute RTK) of the position solution. If the rover
+ * receiver knows the surveyed position of the base station and has
+ * an RTK solution, this reports a pseudo-absolute position
+ * solution using the base station position and the rover's RTK
+ * baseline vector. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+message MsgPosEcef {
+    uint32 tow = 1;
+    double x = 2;
+    double y = 3;
+    double z = 4;
+    uint32 accuracy = 5;
+    uint32 n_sats = 6;
+    uint32 flags = 7;
+}
+
+/** Single-point position in ECEF
+ *
+ * The position solution message reports absolute Earth Centered
+ * Earth Fixed (ECEF) coordinates and the status (single point vs
+ * pseudo-absolute RTK) of the position solution. The message also
+ * reports the upper triangular portion of the 3x3 covariance matrix.
+ * If the receiver knows the surveyed position of the base station and has
+ * an RTK solution, this reports a pseudo-absolute position
+ * solution using the base station position and the rover's RTK
+ * baseline vector. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+message MsgPosEcefCov {
+    uint32 tow = 1;
+    double x = 2;
+    double y = 3;
+    double z = 4;
+    float cov_x_x = 5;
+    float cov_x_y = 6;
+    float cov_x_z = 7;
+    float cov_y_y = 8;
+    float cov_y_z = 9;
+    float cov_z_z = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
+}
+
+/** Geodetic Position
+ *
+ * This position solution message reports the absolute geodetic
+ * coordinates and the status (single point vs pseudo-absolute RTK)
+ * of the position solution. If the rover receiver knows the
+ * surveyed position of the base station and has an RTK solution,
+ * this reports a pseudo-absolute position solution using the base
+ * station position and the rover's RTK baseline vector. The full
+ * GPS time is given by the preceding MSG_GPS_TIME with the
+ * matching time-of-week (tow).
+ */
+message MsgPosLlh {
+    uint32 tow = 1;
+    double lat = 2;
+    double lon = 3;
+    double height = 4;
+    uint32 h_accuracy = 5;
+    uint32 v_accuracy = 6;
+    uint32 n_sats = 7;
+    uint32 flags = 8;
+}
+
+/** Geodetic Position
+ *
+ * This position solution message reports the absolute geodetic
+ * coordinates and the status (single point vs pseudo-absolute RTK)
+ * of the position solution as well as the upper triangle of the 3x3
+ * covariance matrix.  The position information and Fix Mode flags should
+ * follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+ * in the local-level North, East, Down frame, the covariance terms follow
+ * with that convention. Thus, covariances are reported against the "downward"
+ * measurement and care should be taken with the sign convention.
+ */
+message MsgPosLlhCov {
+    uint32 tow = 1;
+    double lat = 2;
+    double lon = 3;
+    double height = 4;
+    float cov_n_n = 5;
+    float cov_n_e = 6;
+    float cov_n_d = 7;
+    float cov_e_e = 8;
+    float cov_e_d = 9;
+    float cov_d_d = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
+}
+
+/** Baseline Position in ECEF
+ *
+ * This message reports the baseline solution in Earth Centered
+ * Earth Fixed (ECEF) coordinates. This baseline is the relative
+ * vector distance from the base station to the rover receiver. The
+ * full GPS time is given by the preceding MSG_GPS_TIME with the
+ * matching time-of-week (tow).
+ */
+message MsgBaselineEcef {
+    uint32 tow = 1;
+    sint32 x = 2;
+    sint32 y = 3;
+    sint32 z = 4;
+    uint32 accuracy = 5;
+    uint32 n_sats = 6;
+    uint32 flags = 7;
+}
+
+/** Baseline in NED
+ *
+ * This message reports the baseline solution in North East Down
+ * (NED) coordinates. This baseline is the relative vector distance
+ * from the base station to the rover receiver, and NED coordinate
+ * system is defined at the local WGS84 tangent plane centered at the
+ * base station position.  The full GPS time is given by the
+ * preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+message MsgBaselineNed {
+    uint32 tow = 1;
+    sint32 n = 2;
+    sint32 e = 3;
+    sint32 d = 4;
+    uint32 h_accuracy = 5;
+    uint32 v_accuracy = 6;
+    uint32 n_sats = 7;
+    uint32 flags = 8;
+}
+
+/** Velocity in ECEF
+ *
+ * This message reports the velocity in Earth Centered Earth Fixed
+ * (ECEF) coordinates. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+message MsgVelEcef {
+    uint32 tow = 1;
+    sint32 x = 2;
+    sint32 y = 3;
+    sint32 z = 4;
+    uint32 accuracy = 5;
+    uint32 n_sats = 6;
+    uint32 flags = 7;
+}
+
+/** Velocity in ECEF
+ *
+ * This message reports the velocity in Earth Centered Earth Fixed
+ * (ECEF) coordinates. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+message MsgVelEcefCov {
+    uint32 tow = 1;
+    sint32 x = 2;
+    sint32 y = 3;
+    sint32 z = 4;
+    float cov_x_x = 5;
+    float cov_x_y = 6;
+    float cov_x_z = 7;
+    float cov_y_y = 8;
+    float cov_y_z = 9;
+    float cov_z_z = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
+}
+
+/** Velocity in NED
+ *
+ * This message reports the velocity in local North East Down (NED)
+ * coordinates. The NED coordinate system is defined as the local WGS84
+ * tangent plane centered at the current position. The full GPS time is
+ * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+message MsgVelNed {
+    uint32 tow = 1;
+    sint32 n = 2;
+    sint32 e = 3;
+    sint32 d = 4;
+    uint32 h_accuracy = 5;
+    uint32 v_accuracy = 6;
+    uint32 n_sats = 7;
+    uint32 flags = 8;
+}
+
+/** Velocity in NED
+ *
+ * This message reports the velocity in local North East Down (NED)
+ * coordinates. The NED coordinate system is defined as the local WGS84
+ * tangent plane centered at the current position. The full GPS time is
+ * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+ * portion of the 3x3 covariance matrix.
+ */
+message MsgVelNedCov {
+    uint32 tow = 1;
+    sint32 n = 2;
+    sint32 e = 3;
+    sint32 d = 4;
+    float cov_n_n = 5;
+    float cov_n_e = 6;
+    float cov_n_d = 7;
+    float cov_e_e = 8;
+    float cov_e_d = 9;
+    float cov_d_d = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
+}
+
+/** Velocity in User Frame
+ *
+ * This message reports the velocity in the Vehicle Body Frame. By convention,
+ * the x-axis should point out the nose of the vehicle and represent the forward
+ * direction, while as the y-axis should point out the right hand side of the vehicle.
+ * Since this is a right handed system, z should point out the bottom of the vehicle.
+ * The orientation and origin of the Vehicle Body Frame are specified via the device settings.
+ * The full GPS time is given by the preceding MSG_GPS_TIME with the
+ * matching time-of-week (tow).
+ */
+message MsgVelBody {
+    uint32 tow = 1;
+    sint32 x = 2;
+    sint32 y = 3;
+    sint32 z = 4;
+    float cov_x_x = 5;
+    float cov_x_y = 6;
+    float cov_x_z = 7;
+    float cov_y_y = 8;
+    float cov_y_z = 9;
+    float cov_z_z = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
+}
+
+/** Age of corrections
+ *
+ * This message reports the Age of the corrections used for the current
+ * Differential solution
+ */
+message MsgAgeCorrections {
+    uint32 tow = 1;
+    uint32 age = 2;
+}

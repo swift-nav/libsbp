@@ -127,12 +127,12 @@ START_TEST( test_auto_check_sbp_orientation_28 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->flags == 3, "incorrect value for flags, expected 3, is %d", msg->flags);
     fail_unless(msg->pitch == 2, "incorrect value for pitch, expected 2, is %d", msg->pitch);
+    fail_unless(msg->pitch_accuracy == 3, "incorrect value for pitch_accuracy, expected 3, is %d", msg->pitch_accuracy);
     fail_unless(msg->roll == 1, "incorrect value for roll, expected 1, is %d", msg->roll);
+    fail_unless(msg->roll_accuracy == 7, "incorrect value for roll_accuracy, expected 7, is %d", msg->roll_accuracy);
     fail_unless(msg->tow == 1, "incorrect value for tow, expected 1, is %d", msg->tow);
-    fail_unless(msg->var_pitch == 3, "incorrect value for var_pitch, expected 3, is %d", msg->var_pitch);
-    fail_unless(msg->var_roll == 7, "incorrect value for var_roll, expected 7, is %d", msg->var_roll);
-    fail_unless(msg->var_yaw == 7, "incorrect value for var_yaw, expected 7, is %d", msg->var_yaw);
     fail_unless(msg->yaw == 8, "incorrect value for yaw, expected 8, is %d", msg->yaw);
+    fail_unless(msg->yaw_accuracy == 7, "incorrect value for yaw_accuracy, expected 7, is %d", msg->yaw_accuracy);
   }
 }
 END_TEST

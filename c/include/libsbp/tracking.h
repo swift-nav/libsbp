@@ -142,6 +142,32 @@ typedef struct __attribute__((packed)) {
 } msg_tracking_state_t;
 
 
+/** Measurement Engine signal tracking channel state
+ *
+ * Measurement Engine tracking channel state for a specific satellite signal 
+ * and measured signal power. 
+ * The mesid field for Glonass can either 
+ * carry the FCN as 100 + FCN where FCN is in [-7, +6] or 
+ * the Slot ID (from 1 to 28)
+ */
+typedef struct __attribute__((packed)) {
+  sbp_gnss_signal_t mesid;    /**< Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT) */
+  u8 cn0;      /**< Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
+} measurement_state_t;
+
+
+/** Measurement Engine signal tracking channel states
+ *
+ * The tracking message returns a variable-length array of tracking
+ * channel states. It reports status and carrier-to-noise density
+ * measurements for all tracked satellites.
+ */
+#define SBP_MSG_MEASUREMENT_STATE             0x0061
+typedef struct __attribute__((packed)) {
+  measurement_state_t states[0]; /**< ME signal tracking channel state */
+} msg_measurement_state_t;
+
+
 /** Complex correlation structure
  *
  * Structure containing in-phase and quadrature correlation components.

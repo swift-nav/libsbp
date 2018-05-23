@@ -354,6 +354,20 @@ typedef struct __attribute__((packed)) {
 } msg_network_bandwidth_usage_t;
 
 
+/** Cell modem information update message
+ *
+ * If a cell modem is present on a piksi device, this message
+ * will be send periodically to update the host on the status
+ * of the modem and its various parameters.
+ */
+#define SBP_MSG_CELL_MODEM_STATUS       0x00BE
+typedef struct __attribute__((packed)) {
+  s8 signal_strength;      /**< Received cell signal strength in dBm, zero translates to unknown [dBm] */
+  float signal_error_rate;    /**< BER as reported by the modem, zero translates to unknown */
+  u8 reserved[0];          /**< Unspecified data TBD for this schema */
+} msg_cell_modem_status_t;
+
+
 /** Deprecated
  *
 * Deprecated.
