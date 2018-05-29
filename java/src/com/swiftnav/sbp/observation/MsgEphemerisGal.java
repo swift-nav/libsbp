@@ -66,7 +66,7 @@ public class MsgEphemerisGal extends SBPMessage {
     public float c_is;
     
     /** Mean motion difference */
-    public float dn;
+    public double dn;
     
     /** Mean anomaly at reference time */
     public double m0;
@@ -90,7 +90,7 @@ public class MsgEphemerisGal extends SBPMessage {
     public double inc;
     
     /** Inclination first derivative */
-    public float inc_dot;
+    public double inc_dot;
     
     /** Polynomial clock correction coefficient (clock bias) */
     public double af0;
@@ -130,7 +130,7 @@ public class MsgEphemerisGal extends SBPMessage {
         c_us = parser.getFloat();
         c_ic = parser.getFloat();
         c_is = parser.getFloat();
-        dn = parser.getFloat();
+        dn = parser.getDouble();
         m0 = parser.getDouble();
         ecc = parser.getDouble();
         sqrta = parser.getDouble();
@@ -138,7 +138,7 @@ public class MsgEphemerisGal extends SBPMessage {
         omegadot = parser.getDouble();
         w = parser.getDouble();
         inc = parser.getDouble();
-        inc_dot = parser.getFloat();
+        inc_dot = parser.getDouble();
         af0 = parser.getDouble();
         af1 = parser.getFloat();
         af2 = parser.getFloat();
@@ -158,7 +158,7 @@ public class MsgEphemerisGal extends SBPMessage {
         builder.putFloat(c_us);
         builder.putFloat(c_ic);
         builder.putFloat(c_is);
-        builder.putFloat(dn);
+        builder.putDouble(dn);
         builder.putDouble(m0);
         builder.putDouble(ecc);
         builder.putDouble(sqrta);
@@ -166,7 +166,7 @@ public class MsgEphemerisGal extends SBPMessage {
         builder.putDouble(omegadot);
         builder.putDouble(w);
         builder.putDouble(inc);
-        builder.putFloat(inc_dot);
+        builder.putDouble(inc_dot);
         builder.putDouble(af0);
         builder.putFloat(af1);
         builder.putFloat(af2);

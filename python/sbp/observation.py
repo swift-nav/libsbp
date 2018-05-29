@@ -1442,7 +1442,7 @@ Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
     Amplitude of the cosine harmonic correction term to the angle of inclination
   c_is : float
     Amplitude of the sine harmonic correction term to the angle of inclination
-  dn : float
+  dn : double
     Mean motion difference
   m0 : double
     Mean anomaly at reference time
@@ -1458,7 +1458,7 @@ Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
     Argument of perigee
   inc : double
     Inclination
-  inc_dot : float
+  inc_dot : double
     Inclination first derivative
   af0 : double
     Polynomial clock correction coefficient (clock bias)
@@ -1486,7 +1486,7 @@ Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
                    'c_us' / construct.Float32l,
                    'c_ic' / construct.Float32l,
                    'c_is' / construct.Float32l,
-                   'dn' / construct.Float32l,
+                   'dn' / construct.Float64l,
                    'm0' / construct.Float64l,
                    'ecc' / construct.Float64l,
                    'sqrta' / construct.Float64l,
@@ -1494,7 +1494,7 @@ Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
                    'omegadot' / construct.Float64l,
                    'w' / construct.Float64l,
                    'inc' / construct.Float64l,
-                   'inc_dot' / construct.Float32l,
+                   'inc_dot' / construct.Float64l,
                    'af0' / construct.Float64l,
                    'af1' / construct.Float32l,
                    'af2' / construct.Float32l,
@@ -1641,7 +1641,7 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
     Amplitude of the cosine harmonic correction term to the angle of inclination
   c_is : float
     Amplitude of the sine harmonic correction term to the angle of inclination
-  dn : float
+  dn : double
     Mean motion difference
   m0 : double
     Mean anomaly at reference time
@@ -1657,7 +1657,7 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
     Argument of perigee
   inc : double
     Inclination
-  inc_dot : float
+  inc_dot : double
     Inclination first derivative
   af0 : double
     Polynomial clock correction coefficient (clock bias)
@@ -1685,7 +1685,7 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
                    'c_us' / construct.Float32l,
                    'c_ic' / construct.Float32l,
                    'c_is' / construct.Float32l,
-                   'dn' / construct.Float32l,
+                   'dn' / construct.Float64l,
                    'm0' / construct.Float64l,
                    'ecc' / construct.Float64l,
                    'sqrta' / construct.Float64l,
@@ -1693,7 +1693,7 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
                    'omegadot' / construct.Float64l,
                    'w' / construct.Float64l,
                    'inc' / construct.Float64l,
-                   'inc_dot' / construct.Float32l,
+                   'inc_dot' / construct.Float64l,
                    'af0' / construct.Float64l,
                    'af1' / construct.Float32l,
                    'af2' / construct.Float32l,

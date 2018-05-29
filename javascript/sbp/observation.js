@@ -543,7 +543,7 @@ MsgEphemerisGps.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  * @field c_us number (float, 4 bytes) Amplitude of the sine harmonic correction term to the argument of latitude
  * @field c_ic number (float, 4 bytes) Amplitude of the cosine harmonic correction term to the angle of inclination
  * @field c_is number (float, 4 bytes) Amplitude of the sine harmonic correction term to the angle of inclination
- * @field dn number (float, 4 bytes) Mean motion difference
+ * @field dn number (float, 8 bytes) Mean motion difference
  * @field m0 number (float, 8 bytes) Mean anomaly at reference time
  * @field ecc number (float, 8 bytes) Eccentricity of satellite orbit
  * @field sqrta number (float, 8 bytes) Square root of the semi-major axis of orbit
@@ -551,7 +551,7 @@ MsgEphemerisGps.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  * @field omegadot number (float, 8 bytes) Rate of right ascension
  * @field w number (float, 8 bytes) Argument of perigee
  * @field inc number (float, 8 bytes) Inclination
- * @field inc_dot number (float, 4 bytes) Inclination first derivative
+ * @field inc_dot number (float, 8 bytes) Inclination first derivative
  * @field af0 number (float, 8 bytes) Polynomial clock correction coefficient (clock bias)
  * @field af1 number (float, 4 bytes) Polynomial clock correction coefficient (clock drift)
  * @field af2 number (float, 4 bytes) Polynomial clock correction coefficient (rate of clock drift)
@@ -583,7 +583,7 @@ MsgEphemerisBds.prototype.parser = new Parser()
   .floatle('c_us')
   .floatle('c_ic')
   .floatle('c_is')
-  .floatle('dn')
+  .doublele('dn')
   .doublele('m0')
   .doublele('ecc')
   .doublele('sqrta')
@@ -591,7 +591,7 @@ MsgEphemerisBds.prototype.parser = new Parser()
   .doublele('omegadot')
   .doublele('w')
   .doublele('inc')
-  .floatle('inc_dot')
+  .doublele('inc_dot')
   .doublele('af0')
   .floatle('af1')
   .floatle('af2')
@@ -608,7 +608,7 @@ MsgEphemerisBds.prototype.fieldSpec.push(['c_uc', 'writeFloatLE', 4]);
 MsgEphemerisBds.prototype.fieldSpec.push(['c_us', 'writeFloatLE', 4]);
 MsgEphemerisBds.prototype.fieldSpec.push(['c_ic', 'writeFloatLE', 4]);
 MsgEphemerisBds.prototype.fieldSpec.push(['c_is', 'writeFloatLE', 4]);
-MsgEphemerisBds.prototype.fieldSpec.push(['dn', 'writeFloatLE', 4]);
+MsgEphemerisBds.prototype.fieldSpec.push(['dn', 'writeDoubleLE', 8]);
 MsgEphemerisBds.prototype.fieldSpec.push(['m0', 'writeDoubleLE', 8]);
 MsgEphemerisBds.prototype.fieldSpec.push(['ecc', 'writeDoubleLE', 8]);
 MsgEphemerisBds.prototype.fieldSpec.push(['sqrta', 'writeDoubleLE', 8]);
@@ -616,7 +616,7 @@ MsgEphemerisBds.prototype.fieldSpec.push(['omega0', 'writeDoubleLE', 8]);
 MsgEphemerisBds.prototype.fieldSpec.push(['omegadot', 'writeDoubleLE', 8]);
 MsgEphemerisBds.prototype.fieldSpec.push(['w', 'writeDoubleLE', 8]);
 MsgEphemerisBds.prototype.fieldSpec.push(['inc', 'writeDoubleLE', 8]);
-MsgEphemerisBds.prototype.fieldSpec.push(['inc_dot', 'writeFloatLE', 4]);
+MsgEphemerisBds.prototype.fieldSpec.push(['inc_dot', 'writeDoubleLE', 8]);
 MsgEphemerisBds.prototype.fieldSpec.push(['af0', 'writeDoubleLE', 8]);
 MsgEphemerisBds.prototype.fieldSpec.push(['af1', 'writeFloatLE', 4]);
 MsgEphemerisBds.prototype.fieldSpec.push(['af2', 'writeFloatLE', 4]);
@@ -641,7 +641,7 @@ MsgEphemerisBds.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  * @field c_us number (float, 4 bytes) Amplitude of the sine harmonic correction term to the argument of latitude
  * @field c_ic number (float, 4 bytes) Amplitude of the cosine harmonic correction term to the angle of inclination
  * @field c_is number (float, 4 bytes) Amplitude of the sine harmonic correction term to the angle of inclination
- * @field dn number (float, 4 bytes) Mean motion difference
+ * @field dn number (float, 8 bytes) Mean motion difference
  * @field m0 number (float, 8 bytes) Mean anomaly at reference time
  * @field ecc number (float, 8 bytes) Eccentricity of satellite orbit
  * @field sqrta number (float, 8 bytes) Square root of the semi-major axis of orbit
@@ -649,7 +649,7 @@ MsgEphemerisBds.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  * @field omegadot number (float, 8 bytes) Rate of right ascension
  * @field w number (float, 8 bytes) Argument of perigee
  * @field inc number (float, 8 bytes) Inclination
- * @field inc_dot number (float, 4 bytes) Inclination first derivative
+ * @field inc_dot number (float, 8 bytes) Inclination first derivative
  * @field af0 number (float, 8 bytes) Polynomial clock correction coefficient (clock bias)
  * @field af1 number (float, 4 bytes) Polynomial clock correction coefficient (clock drift)
  * @field af2 number (float, 4 bytes) Polynomial clock correction coefficient (rate of clock drift)
@@ -681,7 +681,7 @@ MsgEphemerisGal.prototype.parser = new Parser()
   .floatle('c_us')
   .floatle('c_ic')
   .floatle('c_is')
-  .floatle('dn')
+  .doublele('dn')
   .doublele('m0')
   .doublele('ecc')
   .doublele('sqrta')
@@ -689,7 +689,7 @@ MsgEphemerisGal.prototype.parser = new Parser()
   .doublele('omegadot')
   .doublele('w')
   .doublele('inc')
-  .floatle('inc_dot')
+  .doublele('inc_dot')
   .doublele('af0')
   .floatle('af1')
   .floatle('af2')
@@ -706,7 +706,7 @@ MsgEphemerisGal.prototype.fieldSpec.push(['c_uc', 'writeFloatLE', 4]);
 MsgEphemerisGal.prototype.fieldSpec.push(['c_us', 'writeFloatLE', 4]);
 MsgEphemerisGal.prototype.fieldSpec.push(['c_ic', 'writeFloatLE', 4]);
 MsgEphemerisGal.prototype.fieldSpec.push(['c_is', 'writeFloatLE', 4]);
-MsgEphemerisGal.prototype.fieldSpec.push(['dn', 'writeFloatLE', 4]);
+MsgEphemerisGal.prototype.fieldSpec.push(['dn', 'writeDoubleLE', 8]);
 MsgEphemerisGal.prototype.fieldSpec.push(['m0', 'writeDoubleLE', 8]);
 MsgEphemerisGal.prototype.fieldSpec.push(['ecc', 'writeDoubleLE', 8]);
 MsgEphemerisGal.prototype.fieldSpec.push(['sqrta', 'writeDoubleLE', 8]);
@@ -714,7 +714,7 @@ MsgEphemerisGal.prototype.fieldSpec.push(['omega0', 'writeDoubleLE', 8]);
 MsgEphemerisGal.prototype.fieldSpec.push(['omegadot', 'writeDoubleLE', 8]);
 MsgEphemerisGal.prototype.fieldSpec.push(['w', 'writeDoubleLE', 8]);
 MsgEphemerisGal.prototype.fieldSpec.push(['inc', 'writeDoubleLE', 8]);
-MsgEphemerisGal.prototype.fieldSpec.push(['inc_dot', 'writeFloatLE', 4]);
+MsgEphemerisGal.prototype.fieldSpec.push(['inc_dot', 'writeDoubleLE', 8]);
 MsgEphemerisGal.prototype.fieldSpec.push(['af0', 'writeDoubleLE', 8]);
 MsgEphemerisGal.prototype.fieldSpec.push(['af1', 'writeFloatLE', 4]);
 MsgEphemerisGal.prototype.fieldSpec.push(['af2', 'writeFloatLE', 4]);
