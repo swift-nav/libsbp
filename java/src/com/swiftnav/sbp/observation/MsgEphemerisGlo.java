@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_EPHEMERIS_GLO (0x0088).
+/** SBP class for message MSG_EPHEMERIS_GLO (0x008B).
  *
  * You can have MSG_EPHEMERIS_GLO inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -36,20 +36,20 @@ import org.json.JSONArray;
  * for more details. */
 
 public class MsgEphemerisGlo extends SBPMessage {
-    public static final int TYPE = 0x0088;
+    public static final int TYPE = 0x008B;
 
     
     /** Values common for all ephemeris types */
     public EphemerisCommonContent common;
     
     /** Relative deviation of predicted carrier frequency from nominal */
-    public double gamma;
+    public float gamma;
     
     /** Correction to the SV time */
-    public double tau;
+    public float tau;
     
     /** Equipment delay between L1 and L2 */
-    public double d_tau;
+    public float d_tau;
     
     /** Position of the SV at tb in PZ-90.02 coordinates system */
     public double[] pos;
@@ -58,7 +58,7 @@ public class MsgEphemerisGlo extends SBPMessage {
     public double[] vel;
     
     /** Acceleration vector of the SV at tb in PZ-90.02 coordinates sys */
-    public double[] acc;
+    public float[] acc;
     
     /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
     public int fcn;
@@ -78,12 +78,12 @@ public class MsgEphemerisGlo extends SBPMessage {
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         common = new EphemerisCommonContent().parse(parser);
-        gamma = parser.getDouble();
-        tau = parser.getDouble();
-        d_tau = parser.getDouble();
+        gamma = parser.getFloat();
+        tau = parser.getFloat();
+        d_tau = parser.getFloat();
         pos = parser.getArrayofDouble(3);
         vel = parser.getArrayofDouble(3);
-        acc = parser.getArrayofDouble(3);
+        acc = parser.getArrayofFloat(3);
         fcn = parser.getU8();
         iod = parser.getU8();
     }
@@ -91,12 +91,12 @@ public class MsgEphemerisGlo extends SBPMessage {
     @Override
     protected void build(Builder builder) {
         common.build(builder);
-        builder.putDouble(gamma);
-        builder.putDouble(tau);
-        builder.putDouble(d_tau);
+        builder.putFloat(gamma);
+        builder.putFloat(tau);
+        builder.putFloat(d_tau);
         builder.putArrayofDouble(pos, 3);
         builder.putArrayofDouble(vel, 3);
-        builder.putArrayofDouble(acc, 3);
+        builder.putArrayofFloat(acc, 3);
         builder.putU8(fcn);
         builder.putU8(iod);
     }
