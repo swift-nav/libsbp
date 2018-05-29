@@ -520,7 +520,7 @@ definitions:
           units: rad
           desc: Inclination
       - inc_dot:
-          type: float
+          type: double
           units: rad/s
           desc: Inclination first derivative
       - af0:
@@ -621,7 +621,7 @@ definitions:
           units: rad
           desc: Inclination
       - inc_dot:
-          type: float
+          type: double
           units: rad/s
           desc: Inclination first derivative
       - af0:
