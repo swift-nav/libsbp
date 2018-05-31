@@ -248,7 +248,7 @@ typedef struct __attribute__((packed)) {
   float c_us;        /**< Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
   float c_ic;        /**< Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
   float c_is;        /**< Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
-  float dn;          /**< Mean motion difference [rad/s] */
+  double dn;          /**< Mean motion difference [rad/s] */
   double m0;          /**< Mean anomaly at reference time [rad] */
   double ecc;         /**< Eccentricity of satellite orbit */
   double sqrta;       /**< Square root of the semi-major axis of orbit [m^(1/2)] */
@@ -256,7 +256,7 @@ typedef struct __attribute__((packed)) {
   double omegadot;    /**< Rate of right ascension [rad/s] */
   double w;           /**< Argument of perigee [rad] */
   double inc;         /**< Inclination [rad] */
-  float inc_dot;     /**< Inclination first derivative [rad/s] */
+  double inc_dot;     /**< Inclination first derivative [rad/s] */
   double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
   float af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
   float af2;         /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
@@ -284,7 +284,7 @@ typedef struct __attribute__((packed)) {
   float c_us;         /**< Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
   float c_ic;         /**< Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
   float c_is;         /**< Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
-  float dn;           /**< Mean motion difference [rad/s] */
+  double dn;           /**< Mean motion difference [rad/s] */
   double m0;           /**< Mean anomaly at reference time [rad] */
   double ecc;          /**< Eccentricity of satellite orbit */
   double sqrta;        /**< Square root of the semi-major axis of orbit [m^(1/2)] */
@@ -292,7 +292,7 @@ typedef struct __attribute__((packed)) {
   double omegadot;     /**< Rate of right ascension [rad/s] */
   double w;            /**< Argument of perigee [rad] */
   double inc;          /**< Inclination [rad] */
-  float inc_dot;      /**< Inclination first derivative [rad/s] */
+  double inc_dot;      /**< Inclination first derivative [rad/s] */
   double af0;          /**< Polynomial clock correction coefficient (clock bias) [s] */
   float af1;          /**< Polynomial clock correction coefficient (clock drift) [s/s] */
   float af2;          /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */

@@ -580,7 +580,7 @@ data MsgEphemerisBds = MsgEphemerisBds
   , _msgEphemerisBds_c_is   :: !Float
     -- ^ Amplitude of the sine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisBds_dn     :: !Float
+  , _msgEphemerisBds_dn     :: !Double
     -- ^ Mean motion difference
   , _msgEphemerisBds_m0     :: !Double
     -- ^ Mean anomaly at reference time
@@ -596,7 +596,7 @@ data MsgEphemerisBds = MsgEphemerisBds
     -- ^ Argument of perigee
   , _msgEphemerisBds_inc    :: !Double
     -- ^ Inclination
-  , _msgEphemerisBds_inc_dot :: !Float
+  , _msgEphemerisBds_inc_dot :: !Double
     -- ^ Inclination first derivative
   , _msgEphemerisBds_af0    :: !Double
     -- ^ Polynomial clock correction coefficient (clock bias)
@@ -623,7 +623,7 @@ instance Binary MsgEphemerisBds where
     _msgEphemerisBds_c_us <- getFloat32le
     _msgEphemerisBds_c_ic <- getFloat32le
     _msgEphemerisBds_c_is <- getFloat32le
-    _msgEphemerisBds_dn <- getFloat32le
+    _msgEphemerisBds_dn <- getFloat64le
     _msgEphemerisBds_m0 <- getFloat64le
     _msgEphemerisBds_ecc <- getFloat64le
     _msgEphemerisBds_sqrta <- getFloat64le
@@ -631,7 +631,7 @@ instance Binary MsgEphemerisBds where
     _msgEphemerisBds_omegadot <- getFloat64le
     _msgEphemerisBds_w <- getFloat64le
     _msgEphemerisBds_inc <- getFloat64le
-    _msgEphemerisBds_inc_dot <- getFloat32le
+    _msgEphemerisBds_inc_dot <- getFloat64le
     _msgEphemerisBds_af0 <- getFloat64le
     _msgEphemerisBds_af1 <- getFloat32le
     _msgEphemerisBds_af2 <- getFloat32le
@@ -650,7 +650,7 @@ instance Binary MsgEphemerisBds where
     putFloat32le _msgEphemerisBds_c_us
     putFloat32le _msgEphemerisBds_c_ic
     putFloat32le _msgEphemerisBds_c_is
-    putFloat32le _msgEphemerisBds_dn
+    putFloat64le _msgEphemerisBds_dn
     putFloat64le _msgEphemerisBds_m0
     putFloat64le _msgEphemerisBds_ecc
     putFloat64le _msgEphemerisBds_sqrta
@@ -658,7 +658,7 @@ instance Binary MsgEphemerisBds where
     putFloat64le _msgEphemerisBds_omegadot
     putFloat64le _msgEphemerisBds_w
     putFloat64le _msgEphemerisBds_inc
-    putFloat32le _msgEphemerisBds_inc_dot
+    putFloat64le _msgEphemerisBds_inc_dot
     putFloat64le _msgEphemerisBds_af0
     putFloat32le _msgEphemerisBds_af1
     putFloat32le _msgEphemerisBds_af2
@@ -702,7 +702,7 @@ data MsgEphemerisGal = MsgEphemerisGal
   , _msgEphemerisGal_c_is    :: !Float
     -- ^ Amplitude of the sine harmonic correction term to the angle of
     -- inclination
-  , _msgEphemerisGal_dn      :: !Float
+  , _msgEphemerisGal_dn      :: !Double
     -- ^ Mean motion difference
   , _msgEphemerisGal_m0      :: !Double
     -- ^ Mean anomaly at reference time
@@ -718,7 +718,7 @@ data MsgEphemerisGal = MsgEphemerisGal
     -- ^ Argument of perigee
   , _msgEphemerisGal_inc     :: !Double
     -- ^ Inclination
-  , _msgEphemerisGal_inc_dot :: !Float
+  , _msgEphemerisGal_inc_dot :: !Double
     -- ^ Inclination first derivative
   , _msgEphemerisGal_af0     :: !Double
     -- ^ Polynomial clock correction coefficient (clock bias)
@@ -745,7 +745,7 @@ instance Binary MsgEphemerisGal where
     _msgEphemerisGal_c_us <- getFloat32le
     _msgEphemerisGal_c_ic <- getFloat32le
     _msgEphemerisGal_c_is <- getFloat32le
-    _msgEphemerisGal_dn <- getFloat32le
+    _msgEphemerisGal_dn <- getFloat64le
     _msgEphemerisGal_m0 <- getFloat64le
     _msgEphemerisGal_ecc <- getFloat64le
     _msgEphemerisGal_sqrta <- getFloat64le
@@ -753,7 +753,7 @@ instance Binary MsgEphemerisGal where
     _msgEphemerisGal_omegadot <- getFloat64le
     _msgEphemerisGal_w <- getFloat64le
     _msgEphemerisGal_inc <- getFloat64le
-    _msgEphemerisGal_inc_dot <- getFloat32le
+    _msgEphemerisGal_inc_dot <- getFloat64le
     _msgEphemerisGal_af0 <- getFloat64le
     _msgEphemerisGal_af1 <- getFloat32le
     _msgEphemerisGal_af2 <- getFloat32le
@@ -772,7 +772,7 @@ instance Binary MsgEphemerisGal where
     putFloat32le _msgEphemerisGal_c_us
     putFloat32le _msgEphemerisGal_c_ic
     putFloat32le _msgEphemerisGal_c_is
-    putFloat32le _msgEphemerisGal_dn
+    putFloat64le _msgEphemerisGal_dn
     putFloat64le _msgEphemerisGal_m0
     putFloat64le _msgEphemerisGal_ecc
     putFloat64le _msgEphemerisGal_sqrta
@@ -780,7 +780,7 @@ instance Binary MsgEphemerisGal where
     putFloat64le _msgEphemerisGal_omegadot
     putFloat64le _msgEphemerisGal_w
     putFloat64le _msgEphemerisGal_inc
-    putFloat32le _msgEphemerisGal_inc_dot
+    putFloat64le _msgEphemerisGal_inc_dot
     putFloat64le _msgEphemerisGal_af0
     putFloat32le _msgEphemerisGal_af1
     putFloat32le _msgEphemerisGal_af2

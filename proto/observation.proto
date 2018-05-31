@@ -166,7 +166,7 @@ message MsgEphemerisBds {
     float c_us = 7;
     float c_ic = 8;
     float c_is = 9;
-    float dn = 10;
+    double dn = 10;
     double m0 = 11;
     double ecc = 12;
     double sqrta = 13;
@@ -174,7 +174,7 @@ message MsgEphemerisBds {
     double omegadot = 15;
     double w = 16;
     double inc = 17;
-    float inc_dot = 18;
+    double inc_dot = 18;
     double af0 = 19;
     float af1 = 20;
     float af2 = 21;
@@ -200,7 +200,7 @@ message MsgEphemerisGal {
     float c_us = 7;
     float c_ic = 8;
     float c_is = 9;
-    float dn = 10;
+    double dn = 10;
     double m0 = 11;
     double ecc = 12;
     double sqrta = 13;
@@ -208,7 +208,7 @@ message MsgEphemerisGal {
     double omegadot = 15;
     double w = 16;
     double inc = 17;
-    float inc_dot = 18;
+    double inc_dot = 18;
     double af0 = 19;
     float af1 = 20;
     float af2 = 21;
