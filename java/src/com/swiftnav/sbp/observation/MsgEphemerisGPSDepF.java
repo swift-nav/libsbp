@@ -23,47 +23,42 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_EPHEMERIS_GAL (0x0095).
+/** SBP class for message MSG_EPHEMERIS_GPS_DEP_F (0x0086).
  *
- * You can have MSG_EPHEMERIS_GAL inherent its fields directly from
+ * You can have MSG_EPHEMERIS_GPS_DEP_F inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The ephemeris message returns a set of satellite orbit
- * parameters that is used to calculate Galileo satellite position,
- * velocity, and clock offset. Please see the Signal In Space ICD
- * OS SIS ICD, Issue 1.3, December 2016 for more details. */
+ * This observation message has been deprecated in favor of
+ * ephemeris message using floats for size reduction. */
 
-public class MsgEphemerisGal extends SBPMessage {
-    public static final int TYPE = 0x0095;
+public class MsgEphemerisGPSDepF extends SBPMessage {
+    public static final int TYPE = 0x0086;
 
     
     /** Values common for all ephemeris types */
-    public EphemerisCommonContent common;
+    public EphemerisCommonContentDepB common;
     
-    /** E1-E5a Broadcast Group Delay */
-    public float bgd_e1e5a;
-    
-    /** E1-E5b Broadcast Group Delay */
-    public float bgd_e1e5b;
+    /** Group delay differential between L1 and L2 */
+    public double tgd;
     
     /** Amplitude of the sine harmonic correction term to the orbit radius */
-    public float c_rs;
+    public double c_rs;
     
     /** Amplitude of the cosine harmonic correction term to the orbit radius */
-    public float c_rc;
+    public double c_rc;
     
     /** Amplitude of the cosine harmonic correction term to the argument of latitude */
-    public float c_uc;
+    public double c_uc;
     
     /** Amplitude of the sine harmonic correction term to the argument of latitude */
-    public float c_us;
+    public double c_us;
     
     /** Amplitude of the cosine harmonic correction term to the angle of inclination */
-    public float c_ic;
+    public double c_ic;
     
     /** Amplitude of the sine harmonic correction term to the angle of inclination */
-    public float c_is;
+    public double c_is;
     
     /** Mean motion difference */
     public double dn;
@@ -99,7 +94,7 @@ public class MsgEphemerisGal extends SBPMessage {
     public double af1;
     
     /** Polynomial clock correction coefficient (rate of clock drift) */
-    public float af2;
+    public double af2;
     
     /** Clock reference */
     public GPSTimeSec toc;
@@ -111,9 +106,9 @@ public class MsgEphemerisGal extends SBPMessage {
     public int iodc;
     
 
-    public MsgEphemerisGal (int sender) { super(sender, TYPE); }
-    public MsgEphemerisGal () { super(TYPE); }
-    public MsgEphemerisGal (SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisGPSDepF (int sender) { super(sender, TYPE); }
+    public MsgEphemerisGPSDepF () { super(TYPE); }
+    public MsgEphemerisGPSDepF (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -121,15 +116,14 @@ public class MsgEphemerisGal extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        common = new EphemerisCommonContent().parse(parser);
-        bgd_e1e5a = parser.getFloat();
-        bgd_e1e5b = parser.getFloat();
-        c_rs = parser.getFloat();
-        c_rc = parser.getFloat();
-        c_uc = parser.getFloat();
-        c_us = parser.getFloat();
-        c_ic = parser.getFloat();
-        c_is = parser.getFloat();
+        common = new EphemerisCommonContentDepB().parse(parser);
+        tgd = parser.getDouble();
+        c_rs = parser.getDouble();
+        c_rc = parser.getDouble();
+        c_uc = parser.getDouble();
+        c_us = parser.getDouble();
+        c_ic = parser.getDouble();
+        c_is = parser.getDouble();
         dn = parser.getDouble();
         m0 = parser.getDouble();
         ecc = parser.getDouble();
@@ -141,23 +135,22 @@ public class MsgEphemerisGal extends SBPMessage {
         inc_dot = parser.getDouble();
         af0 = parser.getDouble();
         af1 = parser.getDouble();
-        af2 = parser.getFloat();
+        af2 = parser.getDouble();
         toc = new GPSTimeSec().parse(parser);
-        iode = parser.getU16();
+        iode = parser.getU8();
         iodc = parser.getU16();
     }
 
     @Override
     protected void build(Builder builder) {
         common.build(builder);
-        builder.putFloat(bgd_e1e5a);
-        builder.putFloat(bgd_e1e5b);
-        builder.putFloat(c_rs);
-        builder.putFloat(c_rc);
-        builder.putFloat(c_uc);
-        builder.putFloat(c_us);
-        builder.putFloat(c_ic);
-        builder.putFloat(c_is);
+        builder.putDouble(tgd);
+        builder.putDouble(c_rs);
+        builder.putDouble(c_rc);
+        builder.putDouble(c_uc);
+        builder.putDouble(c_us);
+        builder.putDouble(c_ic);
+        builder.putDouble(c_is);
         builder.putDouble(dn);
         builder.putDouble(m0);
         builder.putDouble(ecc);
@@ -169,9 +162,9 @@ public class MsgEphemerisGal extends SBPMessage {
         builder.putDouble(inc_dot);
         builder.putDouble(af0);
         builder.putDouble(af1);
-        builder.putFloat(af2);
+        builder.putDouble(af2);
         toc.build(builder);
-        builder.putU16(iode);
+        builder.putU8(iode);
         builder.putU16(iodc);
     }
 
@@ -179,8 +172,7 @@ public class MsgEphemerisGal extends SBPMessage {
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("common", common.toJSON());
-        obj.put("bgd_e1e5a", bgd_e1e5a);
-        obj.put("bgd_e1e5b", bgd_e1e5b);
+        obj.put("tgd", tgd);
         obj.put("c_rs", c_rs);
         obj.put("c_rc", c_rc);
         obj.put("c_uc", c_uc);
