@@ -278,6 +278,15 @@ public class SBPMessage {
             putArrayofDouble(data);
         }
 
+        public void putArrayofFloat(float[] data) {
+            for (float x: data)
+                putFloat(x);
+        }
+        public void putArrayofFloat(float[] data, int n) {
+            assert(n == data.length);
+            putArrayofFloat(data);
+        }
+
         public <T extends SBPStruct> void putArray(T[] structs) {
             for (SBPStruct s : structs) {
                 s.build(this);
