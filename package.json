@@ -8,7 +8,7 @@
   ],
   "main": "javascript/sbp/index.js",
   "scripts": {
-    "test": "node --version; cd javascript && mocha -R spec tests",
+    "test": "node --version; cd javascript && mocha --exit -R spec tests",
     "webpack": "webpack --config ./javascript/webpack.config.js"
   },
   "author": "dev@swift-nav.com",
@@ -22,7 +22,7 @@
   "devDependencies": {
     "benchmark": "^2.1.4",
     "lodash": "^4.17.10",
-    "mocha": "^2.4.5",
+    "mocha": "^5.2.0",
     "request": "^2.85.0",
     "serialport": "^6.2.0",
     "webpack": "^4.8.1",
