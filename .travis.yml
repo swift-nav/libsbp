@@ -12,6 +12,7 @@ addons:
     - libgmp-dev
     - oracle-java8-installer
     - oracle-java8-set-default
+    - python2.7
 
 env:
   - JAVA_HOME=/usr/lib/jvm/java-8-oracle
