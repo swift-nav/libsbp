@@ -25,7 +25,7 @@ cache:
 
 before_install:
   - sudo apt-get update
-  - sudo apt-get install python2.7
+  - sudo apt-get install -y python2.7
   - mkdir -p $HOME/texlive && curl -L https://github.com/urdh/texlive-blob/releases/download/20160619/texlive.tar.xz | tar -JxC $HOME/texlive
   - export PATH="$PATH:$HOME/texlive/bin/x86_64-linux"
   # Install stack
