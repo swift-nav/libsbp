@@ -389,6 +389,44 @@ s8 sbp_process(sbp_state_t *s, u32 (*read)(u8 *buff, u32 n, void *context))
   return SBP_OK;
 }
 
+#include <stddef.h>
+
+struct msg_hnd_stat {
+    u16 msg_type;
+    u16 max_ms;
+};
+
+#define MSG_STAT_SIZE 64
+static struct msg_hnd_stat msg_stat[MSG_STAT_SIZE] = {0};
+
+static void stat_update(u16 msg_type, u64 delay_ms) {
+  delay_ms = (delay_ms > UINT16_MAX) ? UINT16_MAX : delay_ms;
+
+  for (size_t i = 0; i < MSG_STAT_SIZE; i++) {
+    struct msg_hnd_stat *m = &msg_stat[i];
+    if ((m->msg_type != 0) && (m->msg_type != msg_type)) {
+      continue;
+    }
+    m->msg_type = msg_type;
+    m->max_ms = (m->max_ms > (u16)delay_ms) ? m->max_ms : (u16)delay_ms;
+    return;
+  }
+}
+
+void stat_print(u16 msg_type, u16 max_ms);
+
+void stat_dump(void) {
+  for (size_t i = 0; i < MSG_STAT_SIZE; i++) {
+    struct msg_hnd_stat *m = &msg_stat[i];
+    if (0 == m->msg_type) {
+      return;
+    }
+    stat_print(m->msg_type, m->max_ms);
+  }
+}
+
+extern u64 timing_getms(void);
+
 /** Directly process a SBP message.
  * If a SBP message has already been decoded (for example, from a binary
  * stream or from a JSON log file) use this function to directly process it.
@@ -408,7 +446,11 @@ s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
   sbp_msg_callbacks_node_t *node;
   for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
     if (node->msg_type == msg_type) {
+
+      u64 before_ms = timing_getms();
       (*node->cb)(sender_id, msg_len, payload, node->context);
+      stat_update(msg_type, timing_getms() - before_ms);
+
       ret = SBP_OK_CALLBACK_EXECUTED;
     }
   }
