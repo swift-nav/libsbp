@@ -44,6 +44,9 @@ class BaseDriver(object):
         """
         return self.handle.read(size)
 
+    def buffer_writes(self, size):
+        pass
+
     def write(self, s):
         """
         Write wrapper.

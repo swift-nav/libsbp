@@ -85,7 +85,7 @@ def test_http_test_pass():
     with pytest.raises(ValueError):
       driver.read(size=255)
   with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as http:
-    with Handler(Framer(http.read, http.write, False)) as link:
+    with Handler(Framer(http, False)) as link:
       def tester(sbp_msg, **metadata):
         assert sbp_msg.payload == msg.payload
       link.add_callback(SBP_MSG_PRINT_DEP, tester)

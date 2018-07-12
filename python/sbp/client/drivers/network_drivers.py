@@ -18,11 +18,12 @@ from requests.packages.urllib3.util import Retry
 from requests_futures.sessions import FuturesSession
 import requests
 from functools import partial
-import errno
 import socket
 import threading
 import time
 import warnings
+
+from cStringIO import StringIO
 
 
 class TCPDriver(BaseDriver):
@@ -50,6 +51,17 @@ class TCPDriver(BaseDriver):
         self._connect()
         super(TCPDriver, self).__init__(self.handle)
         self._write_lock = threading.Lock()
+        self._buffer_size = 0
+        self._buffer = None
+
+    def buffer_writes(self, size):
+        self._buffer_size = size
+        if size != 0:
+            self._buffer = StringIO()
+            #print("Buffering writes of into %d sized packets" % (size,))
+        else:
+            self._buffer = None
+            #print("Not buffering writes...")
 
     def _connect(self):
         while True:
@@ -75,15 +87,46 @@ class TCPDriver(BaseDriver):
             return data
         except socket.timeout:
             self._connect()
-        except socket.error as e:
-            # this is fine
-            if e[0] == errno.EINTR:
-                return
-            # we really shouldn't be doing this
+        except socket.error, msg:
             raise IOError
 
     def flush(self):
-        pass
+        if self._buffer is not None:
+            self._write((self._buffer.getvalue(), None))
+
+    def _write(self, s):
+        s = (s[0] if s[1] is None else s[1])
+        if s is None:
+            return
+        try:
+            self._write_lock.acquire()
+#            print("Writing buffer of size %d, %r" % (len(s), s))
+            self.handle.sendall(s)
+        except socket.timeout:
+            self._connect()
+        except socket.error, msg:
+            raise IOError
+        finally:
+            self._write_lock.release()
+
+    def _prepare_buffer(self, s):
+        if self._buffer is None:
+            return (s, None)
+        if self._buffer.tell() + len(s) <= self._buffer_size:
+            self._buffer.write(s)
+            #print("Caching packet of length %d, cached fill: %d..." % (len(s), self._buffer.tell()))
+            return (None, None)
+        #print("Flushing cache with fill of %d bytes, pending buf of %d bytes..." % (self._buffer.tell(), len(s)))
+        return (s, self._buffer.getvalue())
+
+    def _cleanup_buffer(self, write_buffer):
+        leftover, _ = write_buffer
+        if self._buffer is None:
+            return
+        if leftover is not None:
+            self._buffer.seek(0)
+            self._buffer.truncate()
+            self._buffer.write(leftover)
 
     def write(self, s):
         """
@@ -94,16 +137,9 @@ class TCPDriver(BaseDriver):
         s : bytes
           Bytes to write
         """
-        try:
-            self._write_lock.acquire()
-            self.handle.sendall(s)
-        except socket.timeout:
-            self._connect()
-        except socket.error, msg:
-            raise IOError
-        finally:
-            self._write_lock.release()
-
+        write_buffer = self._prepare_buffer(s)
+        self._write(write_buffer)
+        self._cleanup_buffer(write_buffer)
 
 class HTTPException(Exception):
     pass

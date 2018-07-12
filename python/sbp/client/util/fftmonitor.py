@@ -180,7 +180,7 @@ def main():
     samples = args.num_ffts
 
     with TCPDriver(args.host, args.port) as driver:
-        with Handler(Framer(driver.read, driver.write, verbose=True)) as link:
+        with Handler(Framer(driver, verbose=True)) as link:
             driver.flush()
             link.add_callback(monitor.capture_fft, SBP_MSG_SPECAN_DEP)
 

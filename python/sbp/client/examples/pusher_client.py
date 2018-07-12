@@ -66,7 +66,7 @@ def main():
         app_id=app, key=key, secret=secret, ssl=True, port=443)
     push_client = pusherclient.Pusher(key, secret=secret)
     with PySerialDriver(port, baud) as driver:
-        with Handler(Framer(driver.read, driver.write)) as handler:
+        with Handler(Framer(driver)) as handler:
 
             def push_it(sbp_msg):
                 push.trigger(tx_channel, tx_event, sbp_msg.to_json_dict())

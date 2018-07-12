@@ -32,9 +32,8 @@ class Framer(object):
       Stream of bytes to write to.
     """
 
-    def __init__(self, read, write, verbose=False, dispatcher=dispatch):
-        self._read = read
-        self._write = write
+    def __init__(self, driver, verbose=False, dispatcher=dispatch):
+        self._driver = driver
         self._verbose = verbose
         self._broken = False
         self._dispatch = dispatcher
@@ -43,6 +42,10 @@ class Framer(object):
     def __iter__(self):
         self._broken = False
         return self
+
+    @property
+    def driver(self):
+        return self._driver
 
     def breakiter(self):
         """
@@ -59,7 +62,7 @@ class Framer(object):
         -------
         str : ISO 8601 format timestamp
         """
-        return datetime.datetime.utcnow().isoformat() + 'Z'
+        return datetime.datetime.utcnow().isoformat()
 
     def next(self):
         msg = None
@@ -83,7 +86,7 @@ class Framer(object):
         """
         data = ""
         while len(data) < size:
-            d = self._read(size - len(data))
+            d = self._driver.read(size - len(data))
             if self._broken:
                 raise StopIteration
             if not d:
@@ -101,7 +104,7 @@ class Framer(object):
         """
         # preamble - not readall(1) to allow breaking before messages,
         # empty input
-        preamble = self._read(1)
+        preamble = self._driver.read(1)
         if not preamble:
             return None
         elif ord(preamble) != SBP_PREAMBLE:
@@ -139,4 +142,4 @@ class Framer(object):
         metadata : dict
           {'time': 'ISO 8601 str'} (ignored for now)
         """
-        self._write(msg.to_binary())
+        self._driver.write(msg.to_binary())

@@ -36,7 +36,7 @@ def main():
 
     # Open a connection to Piksi using TCP
     with TCPDriver(args.host, args.port) as driver:
-        with Handler(Framer(driver.read, None, verbose=True)) as source:
+        with Handler(Framer(driver, verbose=True)) as source:
             try:
                 for msg, metadata in source.filter(SBP_MSG_BASELINE_NED):
                     # Print out the N, E, D coordinates of the baseline

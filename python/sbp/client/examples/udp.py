@@ -68,7 +68,7 @@ def main():
     udp_port = args.udp_port[0]
 
     with PySerialDriver(args.serial_port[0], args.baud[0]) as driver:
-        with Handler(Framer(driver.read, driver.write)) as handler:
+        with Handler(Framer(driver)) as handler:
             with UdpLogger(address, udp_port) as udp:
                 handler.add_callback(udp)
 

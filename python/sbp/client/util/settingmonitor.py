@@ -95,7 +95,7 @@ if __name__ == "__main__":
         monitor = SettingMonitor()
 
         with TCPDriver(args.host, args.port) as driver:
-            with Handler(Framer(driver.read, driver.write, verbose=True)) as link:
+            with Handler(Framer(driver, verbose=True)) as link:
                 driver.flush()
                 time.sleep(2)
 

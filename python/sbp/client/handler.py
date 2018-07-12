@@ -42,6 +42,10 @@ class Handler(object):
         self._dead = False
         self._write_lock = threading.Lock()
 
+    @property
+    def source(self):
+        return self._source
+
     def _recv_thread(self):
         """
         Internal thread to iterate over source messages and dispatch callbacks.
