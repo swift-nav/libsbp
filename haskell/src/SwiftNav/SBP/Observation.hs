@@ -2173,32 +2173,130 @@ $(makeSBP 'msgIono ''MsgIono)
 $(makeJSON "_msgIono_" ''MsgIono)
 $(makeLenses ''MsgIono)
 
-msgSvConfigurationGps :: Word16
-msgSvConfigurationGps = 0x0091
+msgSvConfigurationGpsDep :: Word16
+msgSvConfigurationGpsDep = 0x0091
 
--- | SBP class for message MSG_SV_CONFIGURATION_GPS (0x0091).
+-- | SBP class for message MSG_SV_CONFIGURATION_GPS_DEP (0x0091).
 --
 -- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
-data MsgSvConfigurationGps = MsgSvConfigurationGps
-  { _msgSvConfigurationGps_t_nmct :: !GpsTimeSec
+data MsgSvConfigurationGpsDep = MsgSvConfigurationGpsDep
+  { _msgSvConfigurationGpsDep_t_nmct :: !GpsTimeSec
     -- ^ Navigation Message Correction Table Valitidy Time
-  , _msgSvConfigurationGps_l2c_mask :: !Word32
+  , _msgSvConfigurationGpsDep_l2c_mask :: !Word32
     -- ^ L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgSvConfigurationGps where
+instance Binary MsgSvConfigurationGpsDep where
   get = do
-    _msgSvConfigurationGps_t_nmct <- get
-    _msgSvConfigurationGps_l2c_mask <- getWord32le
-    pure MsgSvConfigurationGps {..}
+    _msgSvConfigurationGpsDep_t_nmct <- get
+    _msgSvConfigurationGpsDep_l2c_mask <- getWord32le
+    pure MsgSvConfigurationGpsDep {..}
 
-  put MsgSvConfigurationGps {..} = do
-    put _msgSvConfigurationGps_t_nmct
-    putWord32le _msgSvConfigurationGps_l2c_mask
+  put MsgSvConfigurationGpsDep {..} = do
+    put _msgSvConfigurationGpsDep_t_nmct
+    putWord32le _msgSvConfigurationGpsDep_l2c_mask
 
-$(makeSBP 'msgSvConfigurationGps ''MsgSvConfigurationGps)
-$(makeJSON "_msgSvConfigurationGps_" ''MsgSvConfigurationGps)
-$(makeLenses ''MsgSvConfigurationGps)
+$(makeSBP 'msgSvConfigurationGpsDep ''MsgSvConfigurationGpsDep)
+$(makeJSON "_msgSvConfigurationGpsDep_" ''MsgSvConfigurationGpsDep)
+$(makeLenses ''MsgSvConfigurationGpsDep)
+
+data GnssCapb = GnssCapb
+  { _gnssCapb_gps_active :: !Word64
+    -- ^ GPS SV active mask
+  , _gnssCapb_gps_l2c   :: !Word64
+    -- ^ GPS L2C active mask
+  , _gnssCapb_gps_l5    :: !Word64
+    -- ^ GPS L5 active mask
+  , _gnssCapb_glo_active :: !Word32
+    -- ^ GLO active mask
+  , _gnssCapb_glo_l2of  :: !Word32
+    -- ^ GLO L2OF active mask
+  , _gnssCapb_glo_l3    :: !Word32
+    -- ^ GLO L3 active mask
+  , _gnssCapb_sbas_active :: !Word64
+    -- ^ SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+    -- https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+  , _gnssCapb_sbas_l5   :: !Word64
+    -- ^ SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+    -- https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+  , _gnssCapb_bds_active :: !Word64
+    -- ^ BDS active mask
+  , _gnssCapb_bds_d2nav :: !Word64
+    -- ^ BDS D2NAV active mask
+  , _gnssCapb_bds_b2    :: !Word64
+    -- ^ BDS B2 active mask
+  , _gnssCapb_qzss_active :: !Word32
+    -- ^ QZSS active mask
+  , _gnssCapb_gal_active :: !Word64
+    -- ^ GAL active mask
+  , _gnssCapb_gal_e5    :: !Word64
+    -- ^ GAL E5 active mask
+  , _gnssCapb_gal_e6    :: !Word64
+    -- ^ GAL E6 active mask
+  } deriving ( Show, Read, Eq )
+
+instance Binary GnssCapb where
+  get = do
+    _gnssCapb_gps_active <- getWord64le
+    _gnssCapb_gps_l2c <- getWord64le
+    _gnssCapb_gps_l5 <- getWord64le
+    _gnssCapb_glo_active <- getWord32le
+    _gnssCapb_glo_l2of <- getWord32le
+    _gnssCapb_glo_l3 <- getWord32le
+    _gnssCapb_sbas_active <- getWord64le
+    _gnssCapb_sbas_l5 <- getWord64le
+    _gnssCapb_bds_active <- getWord64le
+    _gnssCapb_bds_d2nav <- getWord64le
+    _gnssCapb_bds_b2 <- getWord64le
+    _gnssCapb_qzss_active <- getWord32le
+    _gnssCapb_gal_active <- getWord64le
+    _gnssCapb_gal_e5 <- getWord64le
+    _gnssCapb_gal_e6 <- getWord64le
+    pure GnssCapb {..}
+
+  put GnssCapb {..} = do
+    putWord64le _gnssCapb_gps_active
+    putWord64le _gnssCapb_gps_l2c
+    putWord64le _gnssCapb_gps_l5
+    putWord32le _gnssCapb_glo_active
+    putWord32le _gnssCapb_glo_l2of
+    putWord32le _gnssCapb_glo_l3
+    putWord64le _gnssCapb_sbas_active
+    putWord64le _gnssCapb_sbas_l5
+    putWord64le _gnssCapb_bds_active
+    putWord64le _gnssCapb_bds_d2nav
+    putWord64le _gnssCapb_bds_b2
+    putWord32le _gnssCapb_qzss_active
+    putWord64le _gnssCapb_gal_active
+    putWord64le _gnssCapb_gal_e5
+    putWord64le _gnssCapb_gal_e6
+
+$(makeJSON "_gnssCapb_" ''GnssCapb)
+$(makeLenses ''GnssCapb)
+
+msgGnssCapb :: Word16
+msgGnssCapb = 0x0096
+
+data MsgGnssCapb = MsgGnssCapb
+  { _msgGnssCapb_t_nmct :: !GpsTimeSec
+    -- ^ Navigation Message Correction Table Validity Time
+  , _msgGnssCapb_gc   :: !GnssCapb
+    -- ^ GNSS capabilities masks
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgGnssCapb where
+  get = do
+    _msgGnssCapb_t_nmct <- get
+    _msgGnssCapb_gc <- get
+    pure MsgGnssCapb {..}
+
+  put MsgGnssCapb {..} = do
+    put _msgGnssCapb_t_nmct
+    put _msgGnssCapb_gc
+
+$(makeSBP 'msgGnssCapb ''MsgGnssCapb)
+$(makeJSON "_msgGnssCapb_" ''MsgGnssCapb)
+$(makeLenses ''MsgGnssCapb)
 
 msgGroupDelayDepA :: Word16
 msgGroupDelayDepA = 0x0092

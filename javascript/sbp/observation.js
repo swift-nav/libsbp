@@ -1998,7 +1998,7 @@ MsgIono.prototype.fieldSpec.push(['b2', 'writeDoubleLE', 8]);
 MsgIono.prototype.fieldSpec.push(['b3', 'writeDoubleLE', 8]);
 
 /**
- * SBP class for message MSG_SV_CONFIGURATION_GPS (0x0091).
+ * SBP class for message MSG_SV_CONFIGURATION_GPS_DEP (0x0091).
  *
  * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
  *
@@ -2008,24 +2008,122 @@ MsgIono.prototype.fieldSpec.push(['b3', 'writeDoubleLE', 8]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSvConfigurationGps = function (sbp, fields) {
+var MsgSvConfigurationGpsDep = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_SV_CONFIGURATION_GPS";
+  this.messageType = "MSG_SV_CONFIGURATION_GPS_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgSvConfigurationGps.prototype = Object.create(SBP.prototype);
-MsgSvConfigurationGps.prototype.messageType = "MSG_SV_CONFIGURATION_GPS";
-MsgSvConfigurationGps.prototype.msg_type = 0x0091;
-MsgSvConfigurationGps.prototype.constructor = MsgSvConfigurationGps;
-MsgSvConfigurationGps.prototype.parser = new Parser()
+MsgSvConfigurationGpsDep.prototype = Object.create(SBP.prototype);
+MsgSvConfigurationGpsDep.prototype.messageType = "MSG_SV_CONFIGURATION_GPS_DEP";
+MsgSvConfigurationGpsDep.prototype.msg_type = 0x0091;
+MsgSvConfigurationGpsDep.prototype.constructor = MsgSvConfigurationGpsDep;
+MsgSvConfigurationGpsDep.prototype.parser = new Parser()
   .endianess('little')
   .nest('t_nmct', { type: GPSTimeSec.prototype.parser })
   .uint32('l2c_mask');
-MsgSvConfigurationGps.prototype.fieldSpec = [];
-MsgSvConfigurationGps.prototype.fieldSpec.push(['t_nmct', GPSTimeSec.prototype.fieldSpec]);
-MsgSvConfigurationGps.prototype.fieldSpec.push(['l2c_mask', 'writeUInt32LE', 4]);
+MsgSvConfigurationGpsDep.prototype.fieldSpec = [];
+MsgSvConfigurationGpsDep.prototype.fieldSpec.push(['t_nmct', GPSTimeSec.prototype.fieldSpec]);
+MsgSvConfigurationGpsDep.prototype.fieldSpec.push(['l2c_mask', 'writeUInt32LE', 4]);
+
+/**
+ * SBP class for message fragment GnssCapb
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field gps_active number (unsigned 64-bit int, 8 bytes) GPS SV active mask
+ * @field gps_l2c number (unsigned 64-bit int, 8 bytes) GPS L2C active mask
+ * @field gps_l5 number (unsigned 64-bit int, 8 bytes) GPS L5 active mask
+ * @field glo_active number (unsigned 32-bit int, 4 bytes) GLO active mask
+ * @field glo_l2of number (unsigned 32-bit int, 4 bytes) GLO L2OF active mask
+ * @field glo_l3 number (unsigned 32-bit int, 4 bytes) GLO L3 active mask
+ * @field sbas_active number (unsigned 64-bit int, 8 bytes) SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+ *   https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+ * @field sbas_l5 number (unsigned 64-bit int, 8 bytes) SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+ *   https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+ * @field bds_active number (unsigned 64-bit int, 8 bytes) BDS active mask
+ * @field bds_d2nav number (unsigned 64-bit int, 8 bytes) BDS D2NAV active mask
+ * @field bds_b2 number (unsigned 64-bit int, 8 bytes) BDS B2 active mask
+ * @field qzss_active number (unsigned 32-bit int, 4 bytes) QZSS active mask
+ * @field gal_active number (unsigned 64-bit int, 8 bytes) GAL active mask
+ * @field gal_e5 number (unsigned 64-bit int, 8 bytes) GAL E5 active mask
+ * @field gal_e6 number (unsigned 64-bit int, 8 bytes) GAL E6 active mask
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var GnssCapb = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "GnssCapb";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+GnssCapb.prototype = Object.create(SBP.prototype);
+GnssCapb.prototype.messageType = "GnssCapb";
+GnssCapb.prototype.constructor = GnssCapb;
+GnssCapb.prototype.parser = new Parser()
+  .endianess('little')
+  .uint64('gps_active')
+  .uint64('gps_l2c')
+  .uint64('gps_l5')
+  .uint32('glo_active')
+  .uint32('glo_l2of')
+  .uint32('glo_l3')
+  .uint64('sbas_active')
+  .uint64('sbas_l5')
+  .uint64('bds_active')
+  .uint64('bds_d2nav')
+  .uint64('bds_b2')
+  .uint32('qzss_active')
+  .uint64('gal_active')
+  .uint64('gal_e5')
+  .uint64('gal_e6');
+GnssCapb.prototype.fieldSpec = [];
+GnssCapb.prototype.fieldSpec.push(['gps_active', 'writeUInt64LE', 8]);
+GnssCapb.prototype.fieldSpec.push(['gps_l2c', 'writeUInt64LE', 8]);
+GnssCapb.prototype.fieldSpec.push(['gps_l5', 'writeUInt64LE', 8]);
+GnssCapb.prototype.fieldSpec.push(['glo_active', 'writeUInt32LE', 4]);
+GnssCapb.prototype.fieldSpec.push(['glo_l2of', 'writeUInt32LE', 4]);
+GnssCapb.prototype.fieldSpec.push(['glo_l3', 'writeUInt32LE', 4]);
+GnssCapb.prototype.fieldSpec.push(['sbas_active', 'writeUInt64LE', 8]);
+GnssCapb.prototype.fieldSpec.push(['sbas_l5', 'writeUInt64LE', 8]);
+GnssCapb.prototype.fieldSpec.push(['bds_active', 'writeUInt64LE', 8]);
+GnssCapb.prototype.fieldSpec.push(['bds_d2nav', 'writeUInt64LE', 8]);
+GnssCapb.prototype.fieldSpec.push(['bds_b2', 'writeUInt64LE', 8]);
+GnssCapb.prototype.fieldSpec.push(['qzss_active', 'writeUInt32LE', 4]);
+GnssCapb.prototype.fieldSpec.push(['gal_active', 'writeUInt64LE', 8]);
+GnssCapb.prototype.fieldSpec.push(['gal_e5', 'writeUInt64LE', 8]);
+GnssCapb.prototype.fieldSpec.push(['gal_e6', 'writeUInt64LE', 8]);
+
+/**
+ * SBP class for message MSG_GNSS_CAPB (0x0096).
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field t_nmct GPSTimeSec Navigation Message Correction Table Validity Time
+ * @field gc GnssCapb GNSS capabilities masks
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgGnssCapb = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_GNSS_CAPB";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgGnssCapb.prototype = Object.create(SBP.prototype);
+MsgGnssCapb.prototype.messageType = "MSG_GNSS_CAPB";
+MsgGnssCapb.prototype.msg_type = 0x0096;
+MsgGnssCapb.prototype.constructor = MsgGnssCapb;
+MsgGnssCapb.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('t_nmct', { type: GPSTimeSec.prototype.parser })
+  .nest('gc', { type: GnssCapb.prototype.parser });
+MsgGnssCapb.prototype.fieldSpec = [];
+MsgGnssCapb.prototype.fieldSpec.push(['t_nmct', GPSTimeSec.prototype.fieldSpec]);
+MsgGnssCapb.prototype.fieldSpec.push(['gc', GnssCapb.prototype.fieldSpec]);
 
 /**
  * SBP class for message MSG_GROUP_DELAY_DEP_A (0x0092).
@@ -2567,8 +2665,11 @@ module.exports = {
   MsgObsDepC: MsgObsDepC,
   0x0090: MsgIono,
   MsgIono: MsgIono,
-  0x0091: MsgSvConfigurationGps,
-  MsgSvConfigurationGps: MsgSvConfigurationGps,
+  0x0091: MsgSvConfigurationGpsDep,
+  MsgSvConfigurationGpsDep: MsgSvConfigurationGpsDep,
+  GnssCapb: GnssCapb,
+  0x0096: MsgGnssCapb,
+  MsgGnssCapb: MsgGnssCapb,
   0x0092: MsgGroupDelayDepA,
   MsgGroupDelayDepA: MsgGroupDelayDepA,
   0x0093: MsgGroupDelayDepB,

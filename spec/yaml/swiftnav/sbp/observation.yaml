@@ -1815,7 +1815,7 @@ definitions:
           type: double
           units: s/(semi-circle)^3
 
- - MSG_SV_CONFIGURATION_GPS:
+ - MSG_SV_CONFIGURATION_GPS_DEP:
     id: 0x0091
     short_desc: L2C capability mask
     desc: |
@@ -1827,6 +1827,70 @@ definitions:
       - l2c_mask:
           type: u32
           desc: L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
+
+ - GnssCapb:
+    short_desc: GNSS capabilities masks
+    fields:
+      - gps_active:
+          type: u64
+          desc: GPS SV active mask
+      - gps_l2c:
+          type: u64
+          desc: GPS L2C active mask
+      - gps_l5:
+          type: u64
+          desc: GPS L5 active mask
+      - glo_active:
+          type: u32
+          desc: GLO active mask
+      - glo_l2of:
+          type: u32
+          desc: GLO L2OF active mask
+      - glo_l3:
+          type: u32
+          desc: GLO L3 active mask
+      - sbas_active:
+          type: u64
+          desc: |
+           SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+           https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+      - sbas_l5:
+          type: u64
+          desc: |
+           SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+           https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+      - bds_active:
+          type: u64
+          desc: BDS active mask
+      - bds_d2nav:
+          type: u64
+          desc: BDS D2NAV active mask
+      - bds_b2:
+          type: u64
+          desc: BDS B2 active mask
+      - qzss_active:
+          type: u32
+          desc: QZSS active mask
+      - gal_active:
+          type: u64
+          desc: GAL active mask
+      - gal_e5:
+          type: u64
+          desc: GAL E5 active mask
+      - gal_e6:
+          type: u64
+          desc: GAL E6 active mask
+
+ - MSG_GNSS_CAPB:
+    id: 0x0096
+    short_desc: GNSS capabilities
+    fields:
+      - t_nmct:
+          type: GPSTimeSec
+          desc: Navigation Message Correction Table Validity Time
+      - gc:
+          type: GnssCapb
+          desc: GNSS capabilities masks
 
  - MSG_GROUP_DELAY_DEP_A:
     id: 0x0092

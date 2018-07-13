@@ -268,13 +268,35 @@ message MsgIono {
     double b3 = 9;
 }
 
-/** L2C capability mask
+/** GNSS capabilities masks
  *
- * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+None
  */
-message MsgSvConfigurationGps {
+message GnssCapb {
+    uint64 gps_active = 1;
+    uint64 gps_l2c = 2;
+    uint64 gps_l5 = 3;
+    uint32 glo_active = 4;
+    uint32 glo_l2of = 5;
+    uint32 glo_l3 = 6;
+    uint64 sbas_active = 7;
+    uint64 sbas_l5 = 8;
+    uint64 bds_active = 9;
+    uint64 bds_d2nav = 10;
+    uint64 bds_b2 = 11;
+    uint32 qzss_active = 12;
+    uint64 gal_active = 13;
+    uint64 gal_e5 = 14;
+    uint64 gal_e6 = 15;
+}
+
+/** GNSS capabilities
+ *
+None
+ */
+message MsgGnssCapb {
     gnss.GpsTimeSec t_nmct = 1;
-    uint32 l2c_mask = 2;
+    GnssCapb gc = 2;
 }
 
 /** Group Delay
