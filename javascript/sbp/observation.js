@@ -2045,10 +2045,10 @@ MsgSvConfigurationGpsDep.prototype.fieldSpec.push(['l2c_mask', 'writeUInt32LE', 
  * @field bds_active number (unsigned 64-bit int, 8 bytes) BDS active mask
  * @field bds_d2nav number (unsigned 64-bit int, 8 bytes) BDS D2NAV active mask
  * @field bds_b2 number (unsigned 64-bit int, 8 bytes) BDS B2 active mask
+ * @field bds_b2a number (unsigned 64-bit int, 8 bytes) BDS B2A active mask
  * @field qzss_active number (unsigned 32-bit int, 4 bytes) QZSS active mask
  * @field gal_active number (unsigned 64-bit int, 8 bytes) GAL active mask
  * @field gal_e5 number (unsigned 64-bit int, 8 bytes) GAL E5 active mask
- * @field gal_e6 number (unsigned 64-bit int, 8 bytes) GAL E6 active mask
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -2075,10 +2075,10 @@ GnssCapb.prototype.parser = new Parser()
   .uint64('bds_active')
   .uint64('bds_d2nav')
   .uint64('bds_b2')
+  .uint64('bds_b2a')
   .uint32('qzss_active')
   .uint64('gal_active')
-  .uint64('gal_e5')
-  .uint64('gal_e6');
+  .uint64('gal_e5');
 GnssCapb.prototype.fieldSpec = [];
 GnssCapb.prototype.fieldSpec.push(['gps_active', 'writeUInt64LE', 8]);
 GnssCapb.prototype.fieldSpec.push(['gps_l2c', 'writeUInt64LE', 8]);
@@ -2091,10 +2091,10 @@ GnssCapb.prototype.fieldSpec.push(['sbas_l5', 'writeUInt64LE', 8]);
 GnssCapb.prototype.fieldSpec.push(['bds_active', 'writeUInt64LE', 8]);
 GnssCapb.prototype.fieldSpec.push(['bds_d2nav', 'writeUInt64LE', 8]);
 GnssCapb.prototype.fieldSpec.push(['bds_b2', 'writeUInt64LE', 8]);
+GnssCapb.prototype.fieldSpec.push(['bds_b2a', 'writeUInt64LE', 8]);
 GnssCapb.prototype.fieldSpec.push(['qzss_active', 'writeUInt32LE', 4]);
 GnssCapb.prototype.fieldSpec.push(['gal_active', 'writeUInt64LE', 8]);
 GnssCapb.prototype.fieldSpec.push(['gal_e5', 'writeUInt64LE', 8]);
-GnssCapb.prototype.fieldSpec.push(['gal_e6', 'writeUInt64LE', 8]);
 
 /**
  * SBP class for message MSG_GNSS_CAPB (0x0096).

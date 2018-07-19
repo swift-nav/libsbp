@@ -1868,6 +1868,9 @@ definitions:
       - bds_b2:
           type: u64
           desc: BDS B2 active mask
+      - bds_b2a:
+          type: u64
+          desc: BDS B2A active mask
       - qzss_active:
           type: u32
           desc: QZSS active mask
@@ -1877,9 +1880,6 @@ definitions:
       - gal_e5:
           type: u64
           desc: GAL E5 active mask
-      - gal_e6:
-          type: u64
-          desc: GAL E6 active mask
 
  - MSG_GNSS_CAPB:
     id: 0x0096

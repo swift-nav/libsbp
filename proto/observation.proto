@@ -284,10 +284,10 @@ message GnssCapb {
     uint64 bds_active = 9;
     uint64 bds_d2nav = 10;
     uint64 bds_b2 = 11;
-    uint32 qzss_active = 12;
-    uint64 gal_active = 13;
-    uint64 gal_e5 = 14;
-    uint64 gal_e6 = 15;
+    uint64 bds_b2a = 12;
+    uint32 qzss_active = 13;
+    uint64 gal_active = 14;
+    uint64 gal_e5 = 15;
 }
 
 /** GNSS capabilities

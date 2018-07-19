@@ -817,10 +817,10 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
   u64 bds_active;     /**< BDS active mask */
   u64 bds_d2nav;      /**< BDS D2NAV active mask */
   u64 bds_b2;         /**< BDS B2 active mask */
+  u64 bds_b2a;        /**< BDS B2A active mask */
   u32 qzss_active;    /**< QZSS active mask */
   u64 gal_active;     /**< GAL active mask */
   u64 gal_e5;         /**< GAL E5 active mask */
-  u64 gal_e6;         /**< GAL E6 active mask */
 } gnss_capb_t;
 
 

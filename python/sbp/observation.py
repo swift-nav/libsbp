@@ -677,14 +677,14 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
     BDS D2NAV active mask
   bds_b2 : int
     BDS B2 active mask
+  bds_b2a : int
+    BDS B2A active mask
   qzss_active : int
     QZSS active mask
   gal_active : int
     GAL active mask
   gal_e5 : int
     GAL E5 active mask
-  gal_e6 : int
-    GAL E6 active mask
 
   """
   _parser = construct.Embedded(construct.Struct(
@@ -699,10 +699,10 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
                      'bds_active' / construct.Int64ul,
                      'bds_d2nav' / construct.Int64ul,
                      'bds_b2' / construct.Int64ul,
+                     'bds_b2a' / construct.Int64ul,
                      'qzss_active' / construct.Int32ul,
                      'gal_active' / construct.Int64ul,
-                     'gal_e5' / construct.Int64ul,
-                     'gal_e6' / construct.Int64ul,))
+                     'gal_e5' / construct.Int64ul,))
   __slots__ = [
                'gps_active',
                'gps_l2c',
@@ -715,10 +715,10 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
                'bds_active',
                'bds_d2nav',
                'bds_b2',
+               'bds_b2a',
                'qzss_active',
                'gal_active',
                'gal_e5',
-               'gal_e6',
               ]
 
   def __init__(self, payload=None, **kwargs):
@@ -736,10 +736,10 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
       self.bds_active = kwargs.pop('bds_active')
       self.bds_d2nav = kwargs.pop('bds_d2nav')
       self.bds_b2 = kwargs.pop('bds_b2')
+      self.bds_b2a = kwargs.pop('bds_b2a')
       self.qzss_active = kwargs.pop('qzss_active')
       self.gal_active = kwargs.pop('gal_active')
       self.gal_e5 = kwargs.pop('gal_e5')
-      self.gal_e6 = kwargs.pop('gal_e6')
 
   def __repr__(self):
     return fmt_repr(self)

@@ -62,6 +62,9 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
     /** BDS B2 active mask */
     public BigInteger bds_b2;
     
+    /** BDS B2A active mask */
+    public BigInteger bds_b2a;
+    
     /** QZSS active mask */
     public long qzss_active;
     
@@ -70,9 +73,6 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
     
     /** GAL E5 active mask */
     public BigInteger gal_e5;
-    
-    /** GAL E6 active mask */
-    public BigInteger gal_e6;
     
 
     public GnssCapb () {}
@@ -91,10 +91,10 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
         bds_active = parser.getU64();
         bds_d2nav = parser.getU64();
         bds_b2 = parser.getU64();
+        bds_b2a = parser.getU64();
         qzss_active = parser.getU32();
         gal_active = parser.getU64();
         gal_e5 = parser.getU64();
-        gal_e6 = parser.getU64();
         return this;
     }
 
@@ -112,10 +112,10 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
         builder.putU64(bds_active);
         builder.putU64(bds_d2nav);
         builder.putU64(bds_b2);
+        builder.putU64(bds_b2a);
         builder.putU32(qzss_active);
         builder.putU64(gal_active);
         builder.putU64(gal_e5);
-        builder.putU64(gal_e6);
     }
 
     @Override
@@ -132,10 +132,10 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
         obj.put("bds_active", bds_active);
         obj.put("bds_d2nav", bds_d2nav);
         obj.put("bds_b2", bds_b2);
+        obj.put("bds_b2a", bds_b2a);
         obj.put("qzss_active", qzss_active);
         obj.put("gal_active", gal_active);
         obj.put("gal_e5", gal_e5);
-        obj.put("gal_e6", gal_e6);
         return obj;
     }
 }

@@ -2225,14 +2225,14 @@ data GnssCapb = GnssCapb
     -- ^ BDS D2NAV active mask
   , _gnssCapb_bds_b2    :: !Word64
     -- ^ BDS B2 active mask
+  , _gnssCapb_bds_b2a   :: !Word64
+    -- ^ BDS B2A active mask
   , _gnssCapb_qzss_active :: !Word32
     -- ^ QZSS active mask
   , _gnssCapb_gal_active :: !Word64
     -- ^ GAL active mask
   , _gnssCapb_gal_e5    :: !Word64
     -- ^ GAL E5 active mask
-  , _gnssCapb_gal_e6    :: !Word64
-    -- ^ GAL E6 active mask
   } deriving ( Show, Read, Eq )
 
 instance Binary GnssCapb where
@@ -2248,10 +2248,10 @@ instance Binary GnssCapb where
     _gnssCapb_bds_active <- getWord64le
     _gnssCapb_bds_d2nav <- getWord64le
     _gnssCapb_bds_b2 <- getWord64le
+    _gnssCapb_bds_b2a <- getWord64le
     _gnssCapb_qzss_active <- getWord32le
     _gnssCapb_gal_active <- getWord64le
     _gnssCapb_gal_e5 <- getWord64le
-    _gnssCapb_gal_e6 <- getWord64le
     pure GnssCapb {..}
 
   put GnssCapb {..} = do
@@ -2266,10 +2266,10 @@ instance Binary GnssCapb where
     putWord64le _gnssCapb_bds_active
     putWord64le _gnssCapb_bds_d2nav
     putWord64le _gnssCapb_bds_b2
+    putWord64le _gnssCapb_bds_b2a
     putWord32le _gnssCapb_qzss_active
     putWord64le _gnssCapb_gal_active
     putWord64le _gnssCapb_gal_e5
-    putWord64le _gnssCapb_gal_e6
 
 $(makeJSON "_gnssCapb_" ''GnssCapb)
 $(makeLenses ''GnssCapb)
