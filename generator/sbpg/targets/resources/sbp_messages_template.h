@@ -29,9 +29,7 @@
 #include "(((i)))"
 ((*- endfor *))
 
-#ifdef TOOLCHAIN_PRAGMA_PACK
-#pragma pack(1)
-#endif
+SBP_PACK_START
 
 ((* for m in msgs *))
 ((*- if m.desc *))
@@ -44,7 +42,7 @@
 #define SBP_(((m.identifier.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
 ((*- endif *))
 ((*- if m.fields *))
-typedef struct TOOLCHAIN_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED {
   ((*- for f in m.fields *))
   ((*- if f.desc *))
   (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4)))) /**< (((f.desc))) ((* if f.units *))[(((f.units)))] ((* endif *))*/
@@ -57,7 +55,7 @@ typedef struct TOOLCHAIN_ATTR_PACKED {
 
 ((* endfor *))
 /** \} */
-#ifdef TOOLCHAIN_PRAGMA_PACK
-#pragma pack()
-#endif
+
+SBP_PACK_END
+
 #endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */
