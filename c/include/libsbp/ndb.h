@@ -26,6 +26,8 @@
 #include "common.h"
 #include "gnss.h"
 
+SBP_PACK_START
+
 
 /** Navigation DataBase Event
  *
@@ -33,7 +35,7 @@
  * message could also be sent out when fetching an object from NDB.
  */
 #define SBP_MSG_NDB_EVENT 0x0400
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u64 recv_time;          /**< HW time in milliseconds. [ms] */
   u8 event;              /**< Event type. */
   u8 object_type;        /**< Event object type. */
@@ -57,5 +59,7 @@ of other data_source.
 
 
 /** \} */
+
+SBP_PACK_END
 
 #endif /* LIBSBP_NDB_MESSAGES_H */

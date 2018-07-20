@@ -26,6 +26,8 @@
 
 #include "common.h"
 
+SBP_PACK_START
+
 
 /** Reports timestamped external pin event
  *
@@ -33,7 +35,7 @@
  * which pin it was and whether it was rising or falling.
  */
 #define SBP_MSG_EXT_EVENT 0x0101
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u16 wn;             /**< GPS week number [weeks] */
   u32 tow;            /**< GPS time of week rounded to the nearest millisecond [ms] */
   s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOW (ranges
@@ -45,5 +47,7 @@ from -500000 to 500000)
 
 
 /** \} */
+
+SBP_PACK_END
 
 #endif /* LIBSBP_EXT_EVENTS_MESSAGES_H */
