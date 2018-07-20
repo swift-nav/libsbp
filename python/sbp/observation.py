@@ -645,6 +645,114 @@ carrier phase ambiguity may have changed.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return PackedObsContentDepC.build(d)
     
+class GnssCapb(object):
+  """GnssCapb.
+  
+  
+  Parameters
+  ----------
+  gps_active : int
+    GPS SV active mask
+  gps_l2c : int
+    GPS L2C active mask
+  gps_l5 : int
+    GPS L5 active mask
+  glo_active : int
+    GLO active mask
+  glo_l2of : int
+    GLO L2OF active mask
+  glo_l3 : int
+    GLO L3 active mask
+  sbas_active : int
+    SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+
+  sbas_l5 : int
+    SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+
+  bds_active : int
+    BDS active mask
+  bds_d2nav : int
+    BDS D2NAV active mask
+  bds_b2 : int
+    BDS B2 active mask
+  bds_b2a : int
+    BDS B2A active mask
+  qzss_active : int
+    QZSS active mask
+  gal_active : int
+    GAL active mask
+  gal_e5 : int
+    GAL E5 active mask
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'gps_active' / construct.Int64ul,
+                     'gps_l2c' / construct.Int64ul,
+                     'gps_l5' / construct.Int64ul,
+                     'glo_active' / construct.Int32ul,
+                     'glo_l2of' / construct.Int32ul,
+                     'glo_l3' / construct.Int32ul,
+                     'sbas_active' / construct.Int64ul,
+                     'sbas_l5' / construct.Int64ul,
+                     'bds_active' / construct.Int64ul,
+                     'bds_d2nav' / construct.Int64ul,
+                     'bds_b2' / construct.Int64ul,
+                     'bds_b2a' / construct.Int64ul,
+                     'qzss_active' / construct.Int32ul,
+                     'gal_active' / construct.Int64ul,
+                     'gal_e5' / construct.Int64ul,))
+  __slots__ = [
+               'gps_active',
+               'gps_l2c',
+               'gps_l5',
+               'glo_active',
+               'glo_l2of',
+               'glo_l3',
+               'sbas_active',
+               'sbas_l5',
+               'bds_active',
+               'bds_d2nav',
+               'bds_b2',
+               'bds_b2a',
+               'qzss_active',
+               'gal_active',
+               'gal_e5',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.gps_active = kwargs.pop('gps_active')
+      self.gps_l2c = kwargs.pop('gps_l2c')
+      self.gps_l5 = kwargs.pop('gps_l5')
+      self.glo_active = kwargs.pop('glo_active')
+      self.glo_l2of = kwargs.pop('glo_l2of')
+      self.glo_l3 = kwargs.pop('glo_l3')
+      self.sbas_active = kwargs.pop('sbas_active')
+      self.sbas_l5 = kwargs.pop('sbas_l5')
+      self.bds_active = kwargs.pop('bds_active')
+      self.bds_d2nav = kwargs.pop('bds_d2nav')
+      self.bds_b2 = kwargs.pop('bds_b2')
+      self.bds_b2a = kwargs.pop('bds_b2a')
+      self.qzss_active = kwargs.pop('qzss_active')
+      self.gal_active = kwargs.pop('gal_active')
+      self.gal_e5 = kwargs.pop('gal_e5')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = GnssCapb._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GnssCapb.build(d)
+    
 class AlmanacCommonContent(object):
   """AlmanacCommonContent.
   
@@ -4214,11 +4322,11 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
     d.update(j)
     return d
     
-SBP_MSG_SV_CONFIGURATION_GPS = 0x0091
-class MsgSvConfigurationGPS(SBP):
-  """SBP class for message MSG_SV_CONFIGURATION_GPS (0x0091).
+SBP_MSG_SV_CONFIGURATION_GPS_DEP = 0x0091
+class MsgSvConfigurationGPSDep(SBP):
+  """SBP class for message MSG_SV_CONFIGURATION_GPS_DEP (0x0091).
 
-  You can have MSG_SV_CONFIGURATION_GPS inherit its fields directly
+  You can have MSG_SV_CONFIGURATION_GPS_DEP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -4248,13 +4356,13 @@ class MsgSvConfigurationGPS(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgSvConfigurationGPS,
+      super( MsgSvConfigurationGPSDep,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgSvConfigurationGPS, self).__init__()
-      self.msg_type = SBP_MSG_SV_CONFIGURATION_GPS
+      super( MsgSvConfigurationGPSDep, self).__init__()
+      self.msg_type = SBP_MSG_SV_CONFIGURATION_GPS_DEP
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.t_nmct = kwargs.pop('t_nmct')
       self.l2c_mask = kwargs.pop('l2c_mask')
@@ -4268,12 +4376,12 @@ class MsgSvConfigurationGPS(SBP):
 
     """
     d = json.loads(s)
-    return MsgSvConfigurationGPS.from_json_dict(d)
+    return MsgSvConfigurationGPSDep.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgSvConfigurationGPS(sbp, **d)
+    return MsgSvConfigurationGPSDep(sbp, **d)
 
  
   def from_binary(self, d):
@@ -4281,7 +4389,7 @@ class MsgSvConfigurationGPS(SBP):
     the message.
 
     """
-    p = MsgSvConfigurationGPS._parser.parse(d)
+    p = MsgSvConfigurationGPSDep._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -4290,12 +4398,96 @@ class MsgSvConfigurationGPS(SBP):
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgSvConfigurationGPS._parser.build(c)
+    self.payload = MsgSvConfigurationGPSDep._parser.build(c)
     return self.pack()
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgSvConfigurationGPS, self).to_json_dict()
+    d = super( MsgSvConfigurationGPSDep, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_GNSS_CAPB = 0x0096
+class MsgGnssCapb(SBP):
+  """SBP class for message MSG_GNSS_CAPB (0x0096).
+
+  You can have MSG_GNSS_CAPB inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  t_nmct : GPSTimeSec
+    Navigation Message Correction Table Validity Time
+  gc : GnssCapb
+    GNSS capabilities masks
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   't_nmct' / construct.Struct(GPSTimeSec._parser),
+                   'gc' / construct.Struct(GnssCapb._parser),)
+  __slots__ = [
+               't_nmct',
+               'gc',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgGnssCapb,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgGnssCapb, self).__init__()
+      self.msg_type = SBP_MSG_GNSS_CAPB
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.t_nmct = kwargs.pop('t_nmct')
+      self.gc = kwargs.pop('gc')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgGnssCapb.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgGnssCapb(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgGnssCapb._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgGnssCapb._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgGnssCapb, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -5245,7 +5437,8 @@ msg_classes = {
   0x0043: MsgObsDepB,
   0x0049: MsgObsDepC,
   0x0090: MsgIono,
-  0x0091: MsgSvConfigurationGPS,
+  0x0091: MsgSvConfigurationGPSDep,
+  0x0096: MsgGnssCapb,
   0x0092: MsgGroupDelayDepA,
   0x0093: MsgGroupDelayDepB,
   0x0094: MsgGroupDelay,
