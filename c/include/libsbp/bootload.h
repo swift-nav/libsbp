@@ -29,6 +29,8 @@
 
 #include "common.h"
 
+SBP_PACK_START
+
 
 /** Bootloading handshake request (host => device)
  *
@@ -48,7 +50,7 @@
  * protocol version number.
  */
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_RESP  0x00B4
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 flags;      /**< Bootloader flags */
   char version[0]; /**< Bootloader version number */
 } msg_bootloader_handshake_resp_t;
@@ -59,7 +61,7 @@ typedef struct __attribute__((packed)) {
  * The host initiates the bootloader to jump to the application.
  */
 #define SBP_MSG_BOOTLOADER_JUMP_TO_APP     0x00B1
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u8 jump;    /**< Ignored by the device */
 } msg_bootloader_jump_to_app_t;
 
@@ -86,7 +88,7 @@ typedef struct __attribute__((packed)) {
  * and not related to the Piksi's serial number.
  */
 #define SBP_MSG_NAP_DEVICE_DNA_RESP        0x00DD
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u8 dna[8]; /**< 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
 on the right.
  */
@@ -98,11 +100,13 @@ on the right.
 * Deprecated.
  */
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A 0x00B0
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u8 handshake[0]; /**< Version number string (not NULL terminated) */
 } msg_bootloader_handshake_dep_a_t;
 
 
 /** \} */
+
+SBP_PACK_END
 
 #endif /* LIBSBP_BOOTLOAD_MESSAGES_H */

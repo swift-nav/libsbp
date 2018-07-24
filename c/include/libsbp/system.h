@@ -25,6 +25,8 @@
 
 #include "common.h"
 
+SBP_PACK_START
+
 
 /** System start-up message
  *
@@ -34,7 +36,7 @@
  * or configuration requests.
  */
 #define SBP_MSG_STARTUP      0xFF00
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u8 cause;           /**< Cause of startup */
   u8 startup_type;    /**< Startup type */
   u16 reserved;        /**< Reserved */
@@ -48,7 +50,7 @@ typedef struct __attribute__((packed)) {
  * corrections packet.
  */
 #define SBP_MSG_DGNSS_STATUS 0xFF02
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u8 flags;          /**< Status flags */
   u16 latency;        /**< Latency of observation receipt [deci-seconds] */
   u8 num_signals;    /**< Number of signals from base station */
@@ -70,7 +72,7 @@ typedef struct __attribute__((packed)) {
  * the remaining error flags should be inspected.
  */
 #define SBP_MSG_HEARTBEAT    0xFFFF
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 flags;    /**< Status flags */
 } msg_heartbeat_t;
 
@@ -81,11 +83,13 @@ typedef struct __attribute__((packed)) {
  * and initialization of the inertial navigation system. 
  */
 #define SBP_MSG_INS_STATUS   0xFF03
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 flags;    /**< Status flags */
 } msg_ins_status_t;
 
 
 /** \} */
+
+SBP_PACK_END
 
 #endif /* LIBSBP_SYSTEM_MESSAGES_H */

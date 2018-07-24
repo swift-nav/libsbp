@@ -25,6 +25,8 @@
 
 #include "common.h"
 
+SBP_PACK_START
+
 
 /** Vehicle forward (x-axis) velocity
  *
@@ -35,7 +37,7 @@
  * source 0 through 3.
  */
 #define SBP_MSG_ODOMETRY 0x0903
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< Time field representing either milliseconds in the GPS Week or local CPU
 time from the producing system in milliseconds.  See the tow_source flag
 for the exact source of this timestamp.
@@ -47,5 +49,7 @@ for the exact source of this timestamp.
 
 
 /** \} */
+
+SBP_PACK_END
 
 #endif /* LIBSBP_VEHICLE_MESSAGES_H */
