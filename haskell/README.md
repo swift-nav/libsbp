@@ -13,7 +13,7 @@ Available on [Hackage as `sbp`](http://hackage.haskell.org/package/sbp).
 The library supports building against Stackage LTS-10. To
 install from Hackage using `stack`:
 
-    $ stack install --resolver lts-10.10 sbp-2.3.16 # (LTS-10)
+    $ stack install --resolver lts-10.10 sbp # (LTS-10)
 
 Note that we explicitly specify the resolvers to use, as installing `libsbp` may
 fail to build with more recent resolvers.
