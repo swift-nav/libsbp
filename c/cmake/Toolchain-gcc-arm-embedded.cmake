@@ -64,6 +64,13 @@ elseif (CMAKE_SYSTEM_PROCESSOR STREQUAL "cortex-m3")
     "-msoft-float"
   )
 
+elseif (CMAKE_SYSTEM_PROCESSOR STREQUAL "cortex-a7")
+
+  set(CMAKE_C_FLAGS
+    "${CMAKE_C_FLAGS}"
+    "-mcpu=cortex-a7 -mfloat-abi=hard -mfpu=neon-vfpv4"
+  )
+
 elseif (CMAKE_SYSTEM_PROCESSOR STREQUAL "cortex-a9")
 
   set(CMAKE_C_FLAGS
