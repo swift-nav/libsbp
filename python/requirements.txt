@@ -7,3 +7,4 @@ pylibftdi
 pyserial
 requests>=2.8.1
 requests-futures>=0.9.5
+future
