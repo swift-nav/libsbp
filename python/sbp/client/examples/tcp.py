@@ -12,6 +12,7 @@ the :mod:`sbp.client.examples.simple` module contains a basic example of
 reading SBP messages from a serial port, decoding BASELINE_NED messages and
 printing them out.
 """
+from __future__ import print_function
 
 import argparse
 from sbp.client.drivers.network_drivers import TCPDriver
@@ -40,8 +41,8 @@ def main():
             try:
                 for msg, metadata in source.filter(SBP_MSG_BASELINE_NED):
                     # Print out the N, E, D coordinates of the baseline
-                    print "%.4f,%.4f,%.4f" % (msg.n * 1e-3, msg.e * 1e-3,
-                                              msg.d * 1e-3)
+                    print("%.4f,%.4f,%.4f" % (msg.n * 1e-3, msg.e * 1e-3,
+                                              msg.d * 1e-3))
             except KeyboardInterrupt:
                 pass
 
