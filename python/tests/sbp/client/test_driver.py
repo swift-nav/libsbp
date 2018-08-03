@@ -16,17 +16,17 @@ from sbp.client.drivers.pyserial_driver import PySerialDriver
 from sbp.client import Handler, Framer
 from sbp.logging import MsgPrintDep, MsgLog, SBP_MSG_PRINT_DEP
 import pytest
-import SocketServer
+import socketserver
 import threading
 import time
 
 def tcp_handler(data):
-  class MockRequestHandler(SocketServer.BaseRequestHandler):
+  class MockRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
       self.request.sendall(data)
   return MockRequestHandler
 
-class MockServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+class MockServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
   pass
 
 def tcp_server(handler):
