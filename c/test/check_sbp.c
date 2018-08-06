@@ -29,7 +29,7 @@ void dummy_reset()
   memset(dummy_buff, 0, sizeof(dummy_buff));
 }
 
-u32 dummy_write(u8 *buff, u32 n, void* context)
+s32 dummy_write(u8 *buff, u32 n, void* context)
 {
  last_io_context = context;
  u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
@@ -38,7 +38,7 @@ u32 dummy_write(u8 *buff, u32 n, void* context)
  return real_n;
 }
 
-u32 dummy_read(u8 *buff, u32 n, void* context)
+s32 dummy_read(u8 *buff, u32 n, void* context)
 {
  last_io_context = context;
  u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
@@ -47,7 +47,7 @@ u32 dummy_read(u8 *buff, u32 n, void* context)
  return real_n;
 }
 
-u32 dummy_read_single_byte(u8 *buff, u32 n, void* context)
+s32 dummy_read_single_byte(u8 *buff, u32 n, void* context)
 {
   (void)n;
   last_io_context = context;
@@ -56,7 +56,7 @@ u32 dummy_read_single_byte(u8 *buff, u32 n, void* context)
   return 1;
 }
 
-u32 dummy_write_single_byte(u8 *buff, u32 n, void* context)
+s32 dummy_write_single_byte(u8 *buff, u32 n, void* context)
 {
   (void)n;
   last_io_context = context;
