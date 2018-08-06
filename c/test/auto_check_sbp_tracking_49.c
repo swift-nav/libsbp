@@ -38,7 +38,7 @@ static void dummy_reset()
   memset(dummy_buff, 0, sizeof(dummy_buff));
 }
 
-static u32 dummy_write(u8 *buff, u32 n, void* context)
+static s32 dummy_write(u8 *buff, u32 n, void* context)
 {
  last_io_context = context;
  u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
@@ -47,7 +47,7 @@ static u32 dummy_write(u8 *buff, u32 n, void* context)
  return real_n;
 }
 
-static u32 dummy_read(u8 *buff, u32 n, void* context)
+static s32 dummy_read(u8 *buff, u32 n, void* context)
 {
  last_io_context = context;
  u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
