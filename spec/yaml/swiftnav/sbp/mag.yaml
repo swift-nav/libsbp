@@ -35,10 +35,13 @@ definitions:
               Milliseconds since start of GPS week, fractional part
         - mag_x:
             type: s16
+            units: microteslas
             desc: Magnetic field in the body frame X axis
         - mag_y:
             type: s16
+            units: microteslas
             desc: Magnetic field in the body frame Y axis
         - mag_z:
             type: s16
+            units: microteslas
             desc: Magnetic field in the body frame Z axis
