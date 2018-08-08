@@ -1,11 +1,83 @@
 # Change Log
 
-## [v2.3.10](https://github.com/swift-nav/libsbp/tree/v2.3.10) (2018-03-09)
+## [v2.4.0](https://github.com/swift-nav/libsbp/tree/v2.4.0)
 
-[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.9...2.3.10)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.17...v2.4.0)
 
 **Merged pull requests:**
 
+- Turn off extra warnings [\#586](https://github.com/swift-nav/libsbp/pull/586)
+- Put memory packing outside the COMMON\_INT\_TYPES macro [\#583](https://github.com/swift-nav/libsbp/pull/583)
+- CortexA7 rule [\#582](https://github.com/swift-nav/libsbp/pull/582)
+- Update Readme.md [\#580](https://github.com/swift-nav/libsbp/pull/580)
+- SBP\_MSG\_GNSS\_CAPB added, SBP\_MSG\_SV\_CONFIGURATION\_GPS removed. [\#579](https://github.com/swift-nav/libsbp/pull/579)
+- python: pin httpretty to fix tests on travis [\#578](https://github.com/swift-nav/libsbp/pull/578)
+- Update mocha away from a security vulnerability in growl [\#575](https://github.com/swift-nav/libsbp/pull/575)
+- Windows c again [\#568](https://github.com/swift-nav/libsbp/pull/568)
+
+## [v2.3.17](https://github.com/swift-nav/libsbp/tree/v2.3.17) (2018-06-02)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.16...v2.3.17)
+
+**Closed issues:**
+
+- Please publish latest javascript libsbp to NPM [\#562](https://github.com/swift-nav/libsbp/issues/562)
+
+**Merged pull requests:**
+
+- BDS and GAL ephemeris size fix [\#572](https://github.com/swift-nav/libsbp/pull/572)
+- Fix node [\#566](https://github.com/swift-nav/libsbp/pull/566)
+- New SBP ephemeris messages with floats [\#564](https://github.com/swift-nav/libsbp/pull/564)
+- SBP Galileo ephemeris [\#563](https://github.com/swift-nav/libsbp/pull/563)
+- Add Beidou ephemeris message [\#561](https://github.com/swift-nav/libsbp/pull/561)
+- Add patch version for c source [\#560](https://github.com/swift-nav/libsbp/pull/560)
+
+## [v2.3.16](https://github.com/swift-nav/libsbp/tree/v2.3.16) (2018-04-17)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.15...v2.3.16)
+
+**Merged pull requests:**
+
+- Added Measurement Engine basic tracking state message [\#559](https://github.com/swift-nav/libsbp/pull/559)
+- Add Z to end of timestamp [\#558](https://github.com/swift-nav/libsbp/pull/558)
+
+## [v2.3.15](https://github.com/swift-nav/libsbp/tree/v2.3.15) (2018-04-11)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.14...v2.3.15)
+
+**Merged pull requests:**
+
+- json2json [\#557](https://github.com/swift-nav/libsbp/pull/557)
+- Libsbp crl [\#540](https://github.com/swift-nav/libsbp/pull/540)
+
+## [v2.3.14](https://github.com/swift-nav/libsbp/tree/v2.3.14) (2018-03-22)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.13...v2.3.14)
+
+**Merged pull requests:**
+
+- Cell Modem Status Message [\#556](https://github.com/swift-nav/libsbp/pull/556)
+
+## [v2.3.13](https://github.com/swift-nav/libsbp/tree/v2.3.13) (2018-03-20)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.12...v2.3.13)
+
+## [v2.3.12](https://github.com/swift-nav/libsbp/tree/v2.3.12) (2018-03-20)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.11...v2.3.12)
+
+**Merged pull requests:**
+
+- Add SBAS position quality [\#553](https://github.com/swift-nav/libsbp/pull/553)
+- Protocol buffers for SBP [\#551](https://github.com/swift-nav/libsbp/pull/551)
+
+## [v2.3.11](https://github.com/swift-nav/libsbp/tree/v2.3.11) (2018-03-09)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.10...v2.3.11)
+
+**Merged pull requests:**
+
+- TCPDriver ignore interrupted system call exeption [\#550](https://github.com/swift-nav/libsbp/pull/550)
+
+## [v2.3.10](https://github.com/swift-nav/libsbp/tree/v2.3.10) (2018-03-09)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.9...v2.3.10)
+
+**Merged pull requests:**
+
+- Push v2.3.10 release updates [\#549](https://github.com/swift-nav/libsbp/pull/549)
 - Settings doc clarity \(WIP\) [\#544](https://github.com/swift-nav/libsbp/pull/544)
 
 ## [v2.3.9](https://github.com/swift-nav/libsbp/tree/v2.3.9) (2018-03-06)
