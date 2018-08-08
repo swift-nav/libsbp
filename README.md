@@ -64,6 +64,8 @@ Please see
 for a full description of the packet structure and the message
 types. Developer documentatation for the language-specific sbp
 libraries is [here](http://swift-nav.github.io/libsbp/).
+Please refer to [the changelog](https://github.com/swift-nav/libsbp/blob/master/CHANGELOG.md)
+for more information about the evolution of the library and its messages.
 
 ## LICENSE
 
