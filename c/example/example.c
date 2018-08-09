@@ -7,10 +7,13 @@
 
 #include <libsbp/sbp.h>
 #include <libsbp/system.h>
+#include <libsbp/navigation.h>
 
 char *serial_port_name = NULL;
 struct sp_port *piksi_port = NULL;
 static sbp_msg_callbacks_node_t heartbeat_callback_node;
+static sbp_msg_callbacks_node_t gps_time_node;
+static sbp_msg_callbacks_node_t pos_llh_node;
 
 void usage(char *prog_name) {
   fprintf(stderr, "usage: %s [-p serial port]\n", prog_name);
@@ -64,6 +67,22 @@ void heartbeat_callback(u16 sender_id, u8 len, u8 msg[], void *context)
 {
   (void)sender_id, (void)len, (void)msg, (void)context;
   fprintf(stdout, "%s\n", __FUNCTION__);
+}
+
+void gps_time_callback(u16 sender_id, u8 len, u8 msg[], void *context)
+{
+  (void)sender_id, (void)len, (void)context;
+  msg_gps_time_t *p_gps_time;
+  p_gps_time = (msg_gps_time_t *)msg;
+  fprintf(stdout, "%s %d\n",__FUNCTION__, p_gps_time->tow);
+}
+
+void sbp_pos_llh_callback(u16 sender_id, u8 len, u8 msg[], void *context)
+{
+  (void)sender_id, (void)len, (void)context;
+  msg_pos_llh_t *p_pos_llh = (msg_pos_llh_t *)msg;
+  fprintf(stdout, "%s %lf, %lf, %lf\n", __FUNCTION__, p_pos_llh->lat,
+          p_pos_llh->lon, p_pos_llh->height);
 }
 
 u32 piksi_port_read(u8 *buff, u32 n, void *context)
@@ -130,6 +149,13 @@ int main(int argc, char **argv)
 
   sbp_register_callback(&s, SBP_MSG_HEARTBEAT, &heartbeat_callback, NULL,
                         &heartbeat_callback_node);
+
+  sbp_register_callback(&s, SBP_MSG_GPS_TIME, &gps_time_callback, NULL,
+                        &gps_time_node);
+
+  sbp_register_callback(&s, SBP_MSG_POS_LLH, &sbp_pos_llh_callback, NULL,
+                        &pos_llh_node);
+
 
   while(1) {
     sbp_process(&s, &piksi_port_read);
