@@ -14,7 +14,7 @@ Single dispatch of available SBP messages, keyed by msg_type.
 
 """
 
-from construct.core import FieldError
+from construct.core import FormatFieldError
 from . import acquisition as acq
 from . import bootload as boot
 from . import file_io as file_io
@@ -88,7 +88,7 @@ def dispatch(msg, table=_SBP_TABLE):
            % (msg.msg_type, msg)
     warnings.warn(warn, RuntimeWarning)
     return msg
-  except FieldError:
+  except FormatFieldError:
     warnings.warn("SBP payload deserialization error! 0x%x" % msg.msg_type,
                   RuntimeWarning)
     return msg

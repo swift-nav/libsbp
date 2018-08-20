@@ -50,16 +50,16 @@ int msg_baseline_heading_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len,
  */
 #define SBP_MSG_ORIENT_QUAT      0x0220
 typedef struct __attribute__((packed)) {
-  u32 tow;      /**< GPS Time of Week [ms] */
-  s32 w;        /**< Real component [2^-31] */
-  s32 x;        /**< 1st imaginary component [2^-31] */
-  s32 y;        /**< 2nd imaginary component [2^-31] */
-  s32 z;        /**< 3rd imaginary component [2^-31] */
-  float acc_w;    /**< Estimated standard deviation of w [N/A] */
-  float acc_x;    /**< Estimated standard deviation of x [N/A] */
-  float acc_y;    /**< Estimated standard deviation of y [N/A] */
-  float acc_z;    /**< Estimated standard deviation of z [N/A] */
-  u8 flags;    /**< Status flags */
+  u32 tow;           /**< GPS Time of Week [ms] */
+  s32 w;             /**< Real component [2^-31] */
+  s32 x;             /**< 1st imaginary component [2^-31] */
+  s32 y;             /**< 2nd imaginary component [2^-31] */
+  s32 z;             /**< 3rd imaginary component [2^-31] */
+  float w_accuracy;    /**< Estimated standard deviation of w [N/A] */
+  float x_accuracy;    /**< Estimated standard deviation of x [N/A] */
+  float y_accuracy;    /**< Estimated standard deviation of y [N/A] */
+  float z_accuracy;    /**< Estimated standard deviation of z [N/A] */
+  u8 flags;         /**< Status flags */
 } msg_orient_quat_t;
 int msg_orient_quat_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_orient_quat_t * in, uint64_t max_len, char* out_str);
 
@@ -72,14 +72,14 @@ int msg_orient_quat_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_
  */
 #define SBP_MSG_ORIENT_EULER     0x0221
 typedef struct __attribute__((packed)) {
-  u32 tow;          /**< GPS Time of Week [ms] */
-  s32 roll;         /**< rotation about the forward axis of the vehicle [microdegrees] */
-  s32 pitch;        /**< rotation about the rightward axis of the vehicle [microdegrees] */
-  s32 yaw;          /**< rotation about the downward axis of the vehicle [microdegrees] */
-  float var_roll;     /**< Estimated standard deviation of roll [degrees] */
-  float var_pitch;    /**< Estimated standard deviation of pitch [degrees] */
-  float var_yaw;      /**< Estimated standard deviation of yaw [degrees] */
-  u8 flags;        /**< Status flags */
+  u32 tow;               /**< GPS Time of Week [ms] */
+  s32 roll;              /**< rotation about the forward axis of the vehicle [microdegrees] */
+  s32 pitch;             /**< rotation about the rightward axis of the vehicle [microdegrees] */
+  s32 yaw;               /**< rotation about the downward axis of the vehicle [microdegrees] */
+  float roll_accuracy;     /**< Estimated standard deviation of roll [degrees] */
+  float pitch_accuracy;    /**< Estimated standard deviation of pitch [degrees] */
+  float yaw_accuracy;      /**< Estimated standard deviation of yaw [degrees] */
+  u8 flags;             /**< Status flags */
 } msg_orient_euler_t;
 int msg_orient_euler_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_orient_euler_t * in, uint64_t max_len, char* out_str);
 

@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- (((description | replace("\n", " ") | wordwrap(width=76, wrapstring="\n-- "))))
+-- (((description | comment_links | replace("\n", " ") | wordwrap(width=76, wrapstring="\n-- " ))))
 
 module (((module_name)))
   ( module (((module_name)))
@@ -39,8 +39,8 @@ import (((m)))
 ((* for m in msgs *))
 ((*- if m.static *))
 ((*- if m.sbp_id *))
-(((m.identifier|to_global))) :: Word16
-(((m.identifier|to_global))) = ((('0x%04X'|format(m.sbp_id))))
+(((m.identifier|hs_to_global))) :: Word16
+(((m.identifier|hs_to_global))) = ((('0x%04X'|format(m.sbp_id))))
 ((* endif *))
 ((*- if m.desc *))
 ((*- if not m.sbp_id *))
@@ -51,18 +51,18 @@ import (((m)))
 --
 -- (((m.desc | replace("\n", " ") | wordwrap(width=76, wrapstring="\n-- "))))
 ((*- endif *))
-data (((m.identifier|to_data))) = (((m.identifier|to_data)))
+data (((m.identifier|hs_to_data))) = (((m.identifier|hs_to_data)))
 ((*- if not m.fields *))
   deriving ( Show, Read, Eq )
 ((*- endif *))
 ((*- for f in m.fields *))
 ((*- if loop.first *))
-  { (((("_"+(m.identifier|to_global)+"_"+(f.identifier)).ljust(m|max_fid_len)))) :: !(((f|to_type)))
+  { (((("_"+(m.identifier|hs_to_global)+"_"+(f.identifier)).ljust(m|hs_max_fid_len)))) :: !(((f|hs_to_type)))
     ((*- if f.desc *))
     -- ^ (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n    -- "))))
     ((*- endif *))
 ((*- else *))
-  , (((("_"+(m.identifier|to_global)+"_"+(f.identifier)).ljust(m|max_fid_len)))) :: !(((f|to_type)))
+  , (((("_"+(m.identifier|hs_to_global)+"_"+(f.identifier)).ljust(m|hs_max_fid_len)))) :: !(((f|hs_to_type)))
     ((*- if f.desc *))
     -- ^ (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n    -- "))))
     ((*- endif *))
@@ -72,31 +72,31 @@ data (((m.identifier|to_data))) = (((m.identifier|to_data)))
 ((*- endif *))
 ((*- endfor *))
 
-instance Binary (((m.identifier|to_data))) where
+instance Binary (((m.identifier|hs_to_data))) where
 ((*- if not m.fields *))
   get =
-    pure (((m.identifier|to_data)))
+    pure (((m.identifier|hs_to_data)))
 
-  put (((m.identifier|to_data))) =
+  put (((m.identifier|hs_to_data))) =
     pure ()
 ((*- else *))
   get = do
 ((*- for f in m.fields *))
-    ((("_"+(m.identifier|to_global)+"_"+(f.identifier)))) <- (((f|to_get)))
+    ((("_"+(m.identifier|hs_to_global)+"_"+(f.identifier)))) <- (((f|hs_to_get)))
 ((*- endfor *))
-    pure (((m.identifier|to_data))) {..}
+    pure (((m.identifier|hs_to_data))) {..}
 
-  put (((m.identifier|to_data))) {..} = do
+  put (((m.identifier|hs_to_data))) {..} = do
 ((*- for f in m.fields *))
-    (((f|to_put))) ((("_"+(m.identifier|to_global)+"_"+(f.identifier))))
+    (((f|hs_to_put))) ((("_"+(m.identifier|hs_to_global)+"_"+(f.identifier))))
 ((*- endfor *))
 ((* endif *))
 
 ((*- if m.sbp_id *))
-$(makeSBP '(((m.identifier|to_global))) ''(((m.identifier|to_data))))
+$(makeSBP '(((m.identifier|hs_to_global))) ''(((m.identifier|hs_to_data))))
 ((*- endif *))
-$(makeJSON "_(((m.identifier|to_global)))_" ''(((m.identifier|to_data))))
-$(makeLenses ''(((m.identifier|to_data))))
+$(makeJSON "_(((m.identifier|hs_to_global)))_" ''(((m.identifier|hs_to_data))))
+$(makeLenses ''(((m.identifier|hs_to_data))))
 
 ((*- endif *))
 ((* endfor *))

@@ -24,7 +24,10 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class GnssSignal extends SBPStruct {
     
-    /** Constellation-specific satellite identifier */
+    /** Constellation-specific satellite identifier. This field for Glonass can  
+either be (100+FCN) where FCN is in [-7,+6] or 
+the Slot ID in [1,28]
+ */
     public int sat;
     
     /** Signal constellation, band and code */

@@ -17,6 +17,7 @@ files.
 """
 
 from sbpg.targets.templating import JENV, ACRONYMS
+from sbpg.utils import comment_links
 import copy
 
 TEMPLATE_NAME = "sbp_construct_template.py.j2"
@@ -61,10 +62,10 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
     return "'{identifier}' / {type_id}".format(type_id=type_map.get(f.type_id),
                                              identifier=f.identifier)
   elif f.type_id == 'string' and f.options.get('size', None):
-    return "'{id}'/ construct.String({size}, paddir='left')".format(id=f.identifier,
+    return "'{id}'/ construct.Bytes({size})".format(id=f.identifier,
                                                    size=f.options['size'].value)
   elif f.type_id == 'string':
-    return "'{id}' / construct.GreedyString(encoding='utf8')".format(id=f.identifier)
+    return "'{id}' / construct.GreedyBytes".format(id=f.identifier)
   elif f.type_id == 'array' and f.options.get('size', None):
     fill = f.options['fill'].value
     f_ = copy.copy(f)
@@ -97,6 +98,7 @@ def classnameify(s):
 JENV.filters['construct_py'] = construct_format
 JENV.filters['classnameify'] = classnameify
 JENV.filters['pydoc'] = pydoc_format
+JENV.filters['comment_links'] = comment_links
 
 
 def render_source(output_dir, package_spec, jenv=JENV):

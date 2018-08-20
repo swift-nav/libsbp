@@ -34,7 +34,7 @@
  * This is a legacy message for sending and loading a satellite
  * alamanac onto the Piksi's flash memory from the host.
  */
-#define SBP_MSG_ALMANAC            0x0069
+#define SBP_MSG_ALMANAC                 0x0069
 int msg_almanac_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** Send GPS time from host (host => Piksi)
@@ -42,7 +42,7 @@ int msg_almanac_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * i
  * This message sets up timing functionality using a coarse GPS
  * time estimate sent by the host.
  */
-#define SBP_MSG_SET_TIME           0x0068
+#define SBP_MSG_SET_TIME                0x0068
 int msg_set_time_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** Reset the device (host => Piksi)
@@ -50,7 +50,7 @@ int msg_set_time_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * 
  * This message from the host resets the Piksi back into the
  * bootloader.
  */
-#define SBP_MSG_RESET              0x00B6
+#define SBP_MSG_RESET                   0x00B6
 typedef struct __attribute__((packed)) {
   u32 flags;    /**< Reset flags */
 } msg_reset_t;
@@ -61,7 +61,7 @@ int msg_reset_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_reset_
  * This message from the host resets the Piksi back into the
  * bootloader.
  */
-#define SBP_MSG_RESET_DEP          0x00B2
+#define SBP_MSG_RESET_DEP               0x00B2
 int msg_reset_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** Legacy message for CW interference channel (Piksi => host)
@@ -70,7 +70,7 @@ int msg_reset_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void *
  * CW interference channel on the SwiftNAP. This message will be
  * removed in a future release.
  */
-#define SBP_MSG_CW_RESULTS         0x00C0
+#define SBP_MSG_CW_RESULTS              0x00C0
 int msg_cw_results_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** Legacy message for CW interference channel (host => Piksi)
@@ -79,7 +79,7 @@ int msg_cw_results_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void 
  * the CW interference channel on the SwiftNAP. This message will
  * be removed in a future release.
  */
-#define SBP_MSG_CW_START           0x00C1
+#define SBP_MSG_CW_START                0x00C1
 int msg_cw_start_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** Reset IAR filters (host => Piksi)
@@ -87,7 +87,7 @@ int msg_cw_start_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * 
  * This message resets either the DGNSS Kalman filters or Integer
  * Ambiguity Resolution (IAR) process.
  */
-#define SBP_MSG_RESET_FILTERS      0x0022
+#define SBP_MSG_RESET_FILTERS           0x0022
 typedef struct __attribute__((packed)) {
   u8 filter;    /**< Filter flags */
 } msg_reset_filters_t;
@@ -101,7 +101,7 @@ int msg_reset_filters_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, ms
  * there aren't a shared minimum number (4) of satellite
  * observations between the two.
  */
-#define SBP_MSG_INIT_BASE          0x0023
+#define SBP_MSG_INIT_BASE               0x0023
 int msg_init_base_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** State of an RTOS thread
@@ -110,7 +110,7 @@ int msg_init_base_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void *
  * operating system (RTOS) thread usage statistics for the named
  * thread. The reported percentage values must be normalized.
  */
-#define SBP_MSG_THREAD_STATE       0x0017
+#define SBP_MSG_THREAD_STATE            0x0017
 typedef struct __attribute__((packed)) {
   char name[20];      /**< Thread name (NULL terminated) */
   u16 cpu;           /**< Percentage cpu use for this thread. Values range from 0
@@ -185,7 +185,7 @@ int latency_t_to_json_str( latency_t * in, uint64_t max_len, char* out_str);
  * the timeliness of received base observations while the
  * period indicates their likelihood of transmission.
  */
-#define SBP_MSG_UART_STATE         0x001D
+#define SBP_MSG_UART_STATE              0x001D
 typedef struct __attribute__((packed)) {
   uart_channel_t uart_a;        /**< State of UART A */
   uart_channel_t uart_b;        /**< State of UART B */
@@ -199,7 +199,7 @@ int msg_uart_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_u
  *
 * Deprecated
  */
-#define SBP_MSG_UART_STATE_DEPA    0x0018
+#define SBP_MSG_UART_STATE_DEPA         0x0018
 typedef struct __attribute__((packed)) {
   uart_channel_t uart_a;       /**< State of UART A */
   uart_channel_t uart_b;       /**< State of UART B */
@@ -215,7 +215,7 @@ int msg_uart_state_depa_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, 
  * ambiguities from double-differenced carrier-phase measurements
  * from satellite observations.
  */
-#define SBP_MSG_IAR_STATE          0x0019
+#define SBP_MSG_IAR_STATE               0x0019
 typedef struct __attribute__((packed)) {
   u32 num_hyps;    /**< Number of integer ambiguity hypotheses remaining */
 } msg_iar_state_t;
@@ -226,7 +226,7 @@ int msg_iar_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ia
  * This message allows setting a mask to prevent a particular satellite
  * from being used in various Piksi subsystems.
  */
-#define SBP_MSG_MASK_SATELLITE     0x002B
+#define SBP_MSG_MASK_SATELLITE          0x002B
 typedef struct __attribute__((packed)) {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   sbp_gnss_signal_t sid;     /**< GNSS signal for which the mask is applied */
@@ -237,7 +237,7 @@ int msg_mask_satellite_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, m
  *
 * Deprecated.
  */
-#define SBP_MSG_MASK_SATELLITE_DEP 0x001B
+#define SBP_MSG_MASK_SATELLITE_DEP      0x001B
 typedef struct __attribute__((packed)) {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   gnss_signal_dep_t sid;     /**< GNSS signal for which the mask is applied */
@@ -250,7 +250,7 @@ int msg_mask_satellite_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_le
  * processor's monitoring system and the RF frontend die temperature if
  * available.
  */
-#define SBP_MSG_DEVICE_MONITOR     0x00B5
+#define SBP_MSG_DEVICE_MONITOR          0x00B5
 typedef struct __attribute__((packed)) {
   s16 dev_vin;            /**< Device V_in [V / 1000] */
   s16 cpu_vint;           /**< Processor V_int [V / 1000] */
@@ -266,7 +266,7 @@ int msg_device_monitor_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, m
  * Output will be sent in MSG_LOG messages, and the exit
  * code will be returned with MSG_COMMAND_RESP.
  */
-#define SBP_MSG_COMMAND_REQ        0x00B8
+#define SBP_MSG_COMMAND_REQ             0x00B8
 typedef struct __attribute__((packed)) {
   u32 sequence;    /**< Sequence number */
   char command[0];  /**< Command line to execute */
@@ -278,7 +278,7 @@ int msg_command_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_
  * The response to MSG_COMMAND_REQ with the return code of
  * the command.  A return code of zero indicates success.
  */
-#define SBP_MSG_COMMAND_RESP       0x00B9
+#define SBP_MSG_COMMAND_RESP            0x00B9
 typedef struct __attribute__((packed)) {
   u32 sequence;    /**< Sequence number */
   s32 code;        /**< Exit code */
@@ -292,7 +292,7 @@ int msg_command_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg
  * The sequence number can be used to filter for filtering
  * the correct command.
  */
-#define SBP_MSG_COMMAND_OUTPUT     0x00BC
+#define SBP_MSG_COMMAND_OUTPUT          0x00BC
 typedef struct __attribute__((packed)) {
   u32 sequence;    /**< Sequence number */
   char line[0];     /**< Line of standard output or standard error */
@@ -304,7 +304,7 @@ int msg_command_output_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, m
  * Request state of Piksi network interfaces.
  * Output will be sent in MSG_NETWORK_STATE_RESP messages
  */
-#define SBP_MSG_NETWORK_STATE_REQ  0x00BA
+#define SBP_MSG_NETWORK_STATE_REQ       0x00BA
 int msg_network_state_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** State of network interface
@@ -313,7 +313,7 @@ int msg_network_state_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len
  * Data is made to reflect output of ifaddrs struct returned by getifaddrs
  * in c.
  */
-#define SBP_MSG_NETWORK_STATE_RESP 0x00BB
+#define SBP_MSG_NETWORK_STATE_RESP      0x00BB
 typedef struct __attribute__((packed)) {
   u8 ipv4_address[4];   /**< IPv4 address (all zero when unavailable) */
   u8 ipv4_mask_size;    /**< IPv4 netmask CIDR notation */
@@ -326,11 +326,53 @@ typedef struct __attribute__((packed)) {
 } msg_network_state_resp_t;
 int msg_network_state_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_network_state_resp_t * in, uint64_t max_len, char* out_str);
 
+/** Bandwidth usage measurement for a single interface.
+ *
+ * The bandwidth usage for each interface can be reported
+ * within this struct and utilize multiple fields to fully
+ * specify the type of traffic that is being tracked. As
+ * either the interval of collection or the collection time
+ * may vary, both a timestamp and period field is provided,
+ * though may not necessarily be populated with a value. 
+ */
+typedef struct __attribute__((packed)) {
+  u64 duration;          /**< Duration over which the measurement was collected [ms] */
+  u64 total_bytes;       /**< Number of bytes handled in total within period */
+  u32 rx_bytes;          /**< Number of bytes transmitted within period */
+  u32 tx_bytes;          /**< Number of bytes received within period */
+  char interface_name[16]; /**< Interface Name */
+} network_usage_t;
+int network_usage_t_to_json_str( network_usage_t * in, uint64_t max_len, char* out_str);
+
+/** Bandwidth usage reporting message
+ *
+ * The bandwidth usage, a list of usage by interface. 
+ */
+#define SBP_MSG_NETWORK_BANDWIDTH_USAGE 0x00BD
+typedef struct __attribute__((packed)) {
+  network_usage_t interfaces[0]; /**< Usage measurement array */
+} msg_network_bandwidth_usage_t;
+int msg_network_bandwidth_usage_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_network_bandwidth_usage_t * in, uint64_t max_len, char* out_str);
+
+/** Cell modem information update message
+ *
+ * If a cell modem is present on a piksi device, this message
+ * will be send periodically to update the host on the status
+ * of the modem and its various parameters.
+ */
+#define SBP_MSG_CELL_MODEM_STATUS       0x00BE
+typedef struct __attribute__((packed)) {
+  s8 signal_strength;      /**< Received cell signal strength in dBm, zero translates to unknown [dBm] */
+  float signal_error_rate;    /**< BER as reported by the modem, zero translates to unknown */
+  u8 reserved[0];          /**< Unspecified data TBD for this schema */
+} msg_cell_modem_status_t;
+int msg_cell_modem_status_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_cell_modem_status_t * in, uint64_t max_len, char* out_str);
+
 /** Deprecated
  *
 * Deprecated.
  */
-#define SBP_MSG_SPECAN_DEP         0x0050
+#define SBP_MSG_SPECAN_DEP              0x0050
 typedef struct __attribute__((packed)) {
   u16 channel_tag;        /**< Channel ID */
   gps_time_dep_t t;                  /**< Receiver time of this observation */
@@ -351,7 +393,7 @@ int msg_specan_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_s
  *
  * Spectrum analyzer packet.
  */
-#define SBP_MSG_SPECAN             0x0051
+#define SBP_MSG_SPECAN                  0x0051
 typedef struct __attribute__((packed)) {
   u16 channel_tag;        /**< Channel ID */
   sbp_gps_time_t t;                  /**< Receiver time of this observation */

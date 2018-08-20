@@ -82,25 +82,25 @@ msgOrientQuat = 0x0220
 -- of the vector should sum to a unit vector assuming that the LSB of each
 -- component as a value of 2^-31.
 data MsgOrientQuat = MsgOrientQuat
-  { _msgOrientQuat_tow :: !Word32
+  { _msgOrientQuat_tow      :: !Word32
     -- ^ GPS Time of Week
-  , _msgOrientQuat_w   :: !Int32
+  , _msgOrientQuat_w        :: !Int32
     -- ^ Real component
-  , _msgOrientQuat_x   :: !Int32
+  , _msgOrientQuat_x        :: !Int32
     -- ^ 1st imaginary component
-  , _msgOrientQuat_y   :: !Int32
+  , _msgOrientQuat_y        :: !Int32
     -- ^ 2nd imaginary component
-  , _msgOrientQuat_z   :: !Int32
+  , _msgOrientQuat_z        :: !Int32
     -- ^ 3rd imaginary component
-  , _msgOrientQuat_acc_w :: !Float
+  , _msgOrientQuat_w_accuracy :: !Float
     -- ^ Estimated standard deviation of w
-  , _msgOrientQuat_acc_x :: !Float
+  , _msgOrientQuat_x_accuracy :: !Float
     -- ^ Estimated standard deviation of x
-  , _msgOrientQuat_acc_y :: !Float
+  , _msgOrientQuat_y_accuracy :: !Float
     -- ^ Estimated standard deviation of y
-  , _msgOrientQuat_acc_z :: !Float
+  , _msgOrientQuat_z_accuracy :: !Float
     -- ^ Estimated standard deviation of z
-  , _msgOrientQuat_flags :: !Word8
+  , _msgOrientQuat_flags    :: !Word8
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -111,10 +111,10 @@ instance Binary MsgOrientQuat where
     _msgOrientQuat_x <- fromIntegral <$> getWord32le
     _msgOrientQuat_y <- fromIntegral <$> getWord32le
     _msgOrientQuat_z <- fromIntegral <$> getWord32le
-    _msgOrientQuat_acc_w <- getFloat32le
-    _msgOrientQuat_acc_x <- getFloat32le
-    _msgOrientQuat_acc_y <- getFloat32le
-    _msgOrientQuat_acc_z <- getFloat32le
+    _msgOrientQuat_w_accuracy <- getFloat32le
+    _msgOrientQuat_x_accuracy <- getFloat32le
+    _msgOrientQuat_y_accuracy <- getFloat32le
+    _msgOrientQuat_z_accuracy <- getFloat32le
     _msgOrientQuat_flags <- getWord8
     pure MsgOrientQuat {..}
 
@@ -124,10 +124,10 @@ instance Binary MsgOrientQuat where
     putWord32le $ fromIntegral _msgOrientQuat_x
     putWord32le $ fromIntegral _msgOrientQuat_y
     putWord32le $ fromIntegral _msgOrientQuat_z
-    putFloat32le _msgOrientQuat_acc_w
-    putFloat32le _msgOrientQuat_acc_x
-    putFloat32le _msgOrientQuat_acc_y
-    putFloat32le _msgOrientQuat_acc_z
+    putFloat32le _msgOrientQuat_w_accuracy
+    putFloat32le _msgOrientQuat_x_accuracy
+    putFloat32le _msgOrientQuat_y_accuracy
+    putFloat32le _msgOrientQuat_z_accuracy
     putWord8 _msgOrientQuat_flags
 
 $(makeSBP 'msgOrientQuat ''MsgOrientQuat)
@@ -144,21 +144,21 @@ msgOrientEuler = 0x0221
 -- and roll  in order to rotate the from a frame aligned with the local-level
 -- NED frame  to the vehicle body frame.
 data MsgOrientEuler = MsgOrientEuler
-  { _msgOrientEuler_tow     :: !Word32
+  { _msgOrientEuler_tow          :: !Word32
     -- ^ GPS Time of Week
-  , _msgOrientEuler_roll    :: !Int32
+  , _msgOrientEuler_roll         :: !Int32
     -- ^ rotation about the forward axis of the vehicle
-  , _msgOrientEuler_pitch   :: !Int32
+  , _msgOrientEuler_pitch        :: !Int32
     -- ^ rotation about the rightward axis of the vehicle
-  , _msgOrientEuler_yaw     :: !Int32
+  , _msgOrientEuler_yaw          :: !Int32
     -- ^ rotation about the downward axis of the vehicle
-  , _msgOrientEuler_var_roll :: !Float
+  , _msgOrientEuler_roll_accuracy :: !Float
     -- ^ Estimated standard deviation of roll
-  , _msgOrientEuler_var_pitch :: !Float
+  , _msgOrientEuler_pitch_accuracy :: !Float
     -- ^ Estimated standard deviation of pitch
-  , _msgOrientEuler_var_yaw :: !Float
+  , _msgOrientEuler_yaw_accuracy :: !Float
     -- ^ Estimated standard deviation of yaw
-  , _msgOrientEuler_flags   :: !Word8
+  , _msgOrientEuler_flags        :: !Word8
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -168,9 +168,9 @@ instance Binary MsgOrientEuler where
     _msgOrientEuler_roll <- fromIntegral <$> getWord32le
     _msgOrientEuler_pitch <- fromIntegral <$> getWord32le
     _msgOrientEuler_yaw <- fromIntegral <$> getWord32le
-    _msgOrientEuler_var_roll <- getFloat32le
-    _msgOrientEuler_var_pitch <- getFloat32le
-    _msgOrientEuler_var_yaw <- getFloat32le
+    _msgOrientEuler_roll_accuracy <- getFloat32le
+    _msgOrientEuler_pitch_accuracy <- getFloat32le
+    _msgOrientEuler_yaw_accuracy <- getFloat32le
     _msgOrientEuler_flags <- getWord8
     pure MsgOrientEuler {..}
 
@@ -179,9 +179,9 @@ instance Binary MsgOrientEuler where
     putWord32le $ fromIntegral _msgOrientEuler_roll
     putWord32le $ fromIntegral _msgOrientEuler_pitch
     putWord32le $ fromIntegral _msgOrientEuler_yaw
-    putFloat32le _msgOrientEuler_var_roll
-    putFloat32le _msgOrientEuler_var_pitch
-    putFloat32le _msgOrientEuler_var_yaw
+    putFloat32le _msgOrientEuler_roll_accuracy
+    putFloat32le _msgOrientEuler_pitch_accuracy
+    putFloat32le _msgOrientEuler_yaw_accuracy
     putWord8 _msgOrientEuler_flags
 
 $(makeSBP 'msgOrientEuler ''MsgOrientEuler)

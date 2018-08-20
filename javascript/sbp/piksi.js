@@ -758,6 +758,110 @@ MsgNetworkStateResp.prototype.fieldSpec.push(['interface_name', 'string', 16]);
 MsgNetworkStateResp.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
 /**
+ * SBP class for message fragment NetworkUsage
+ *
+ * The bandwidth usage for each interface can be reported within this struct and
+ * utilize multiple fields to fully specify the type of traffic that is being
+ * tracked. As either the interval of collection or the collection time may vary,
+ * both a timestamp and period field is provided, though may not necessarily be
+ * populated with a value.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field duration number (unsigned 64-bit int, 8 bytes) Duration over which the measurement was collected
+ * @field total_bytes number (unsigned 64-bit int, 8 bytes) Number of bytes handled in total within period
+ * @field rx_bytes number (unsigned 32-bit int, 4 bytes) Number of bytes transmitted within period
+ * @field tx_bytes number (unsigned 32-bit int, 4 bytes) Number of bytes received within period
+ * @field interface_name string Interface Name
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var NetworkUsage = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "NetworkUsage";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+NetworkUsage.prototype = Object.create(SBP.prototype);
+NetworkUsage.prototype.messageType = "NetworkUsage";
+NetworkUsage.prototype.constructor = NetworkUsage;
+NetworkUsage.prototype.parser = new Parser()
+  .endianess('little')
+  .uint64('duration')
+  .uint64('total_bytes')
+  .uint32('rx_bytes')
+  .uint32('tx_bytes')
+  .string('interface_name', { length: 16 });
+NetworkUsage.prototype.fieldSpec = [];
+NetworkUsage.prototype.fieldSpec.push(['duration', 'writeUInt64LE', 8]);
+NetworkUsage.prototype.fieldSpec.push(['total_bytes', 'writeUInt64LE', 8]);
+NetworkUsage.prototype.fieldSpec.push(['rx_bytes', 'writeUInt32LE', 4]);
+NetworkUsage.prototype.fieldSpec.push(['tx_bytes', 'writeUInt32LE', 4]);
+NetworkUsage.prototype.fieldSpec.push(['interface_name', 'string', 16]);
+
+/**
+ * SBP class for message MSG_NETWORK_BANDWIDTH_USAGE (0x00BD).
+ *
+ * The bandwidth usage, a list of usage by interface.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field interfaces array Usage measurement array
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgNetworkBandwidthUsage = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_NETWORK_BANDWIDTH_USAGE";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgNetworkBandwidthUsage.prototype = Object.create(SBP.prototype);
+MsgNetworkBandwidthUsage.prototype.messageType = "MSG_NETWORK_BANDWIDTH_USAGE";
+MsgNetworkBandwidthUsage.prototype.msg_type = 0x00BD;
+MsgNetworkBandwidthUsage.prototype.constructor = MsgNetworkBandwidthUsage;
+MsgNetworkBandwidthUsage.prototype.parser = new Parser()
+  .endianess('little')
+  .array('interfaces', { type: NetworkUsage.prototype.parser, readUntil: 'eof' });
+MsgNetworkBandwidthUsage.prototype.fieldSpec = [];
+MsgNetworkBandwidthUsage.prototype.fieldSpec.push(['interfaces', 'array', NetworkUsage.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+/**
+ * SBP class for message MSG_CELL_MODEM_STATUS (0x00BE).
+ *
+ * If a cell modem is present on a piksi device, this message will be send
+ * periodically to update the host on the status of the modem and its various
+ * parameters.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field signal_strength number (signed 8-bit int, 1 byte) Received cell signal strength in dBm, zero translates to unknown
+ * @field signal_error_rate number (float, 4 bytes) BER as reported by the modem, zero translates to unknown
+ * @field reserved array Unspecified data TBD for this schema
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgCellModemStatus = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_CELL_MODEM_STATUS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgCellModemStatus.prototype = Object.create(SBP.prototype);
+MsgCellModemStatus.prototype.messageType = "MSG_CELL_MODEM_STATUS";
+MsgCellModemStatus.prototype.msg_type = 0x00BE;
+MsgCellModemStatus.prototype.constructor = MsgCellModemStatus;
+MsgCellModemStatus.prototype.parser = new Parser()
+  .endianess('little')
+  .int8('signal_strength')
+  .floatle('signal_error_rate')
+  .array('reserved', { type: 'uint8', readUntil: 'eof' });
+MsgCellModemStatus.prototype.fieldSpec = [];
+MsgCellModemStatus.prototype.fieldSpec.push(['signal_strength', 'writeInt8', 1]);
+MsgCellModemStatus.prototype.fieldSpec.push(['signal_error_rate', 'writeFloatLE', 4]);
+MsgCellModemStatus.prototype.fieldSpec.push(['reserved', 'array', 'writeUInt8', function () { return 1; }, null]);
+
+/**
  * SBP class for message MSG_SPECAN_DEP (0x0050).
  *
  * Deprecated.
@@ -891,6 +995,11 @@ module.exports = {
   MsgNetworkStateReq: MsgNetworkStateReq,
   0x00BB: MsgNetworkStateResp,
   MsgNetworkStateResp: MsgNetworkStateResp,
+  NetworkUsage: NetworkUsage,
+  0x00BD: MsgNetworkBandwidthUsage,
+  MsgNetworkBandwidthUsage: MsgNetworkBandwidthUsage,
+  0x00BE: MsgCellModemStatus,
+  MsgCellModemStatus: MsgCellModemStatus,
   0x0050: MsgSpecanDep,
   MsgSpecanDep: MsgSpecanDep,
   0x0051: MsgSpecan,

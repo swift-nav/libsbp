@@ -134,7 +134,7 @@ int msg_base_pos_ecef_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, ms
 typedef struct __attribute__((packed)) {
   sbp_gnss_signal_t sid;             /**< GNSS signal identifier (16 bit) */
   gps_time_sec_t toe;             /**< Time of Ephemerides */
-  double ura;             /**< User Range Accuracy [m] */
+  float ura;             /**< User Range Accuracy [m] */
   u32 fit_interval;    /**< Curve fit interval [s] */
   u8 valid;           /**< Status of ephemeris, 1 = valid, 0 = invalid */
   u8 health_bits;     /**< Satellite health status.
@@ -144,6 +144,19 @@ GLO: 0 = valid, non-zero = invalid
  */
 } ephemeris_common_content_t;
 int ephemeris_common_content_t_to_json_str( ephemeris_common_content_t * in, uint64_t max_len, char* out_str);
+
+typedef struct __attribute__((packed)) {
+  sbp_gnss_signal_t sid;             /**< GNSS signal identifier (16 bit) */
+  gps_time_sec_t toe;             /**< Time of Ephemerides */
+  double ura;             /**< User Range Accuracy [m] */
+  u32 fit_interval;    /**< Curve fit interval [s] */
+  u8 valid;           /**< Status of ephemeris, 1 = valid, 0 = invalid */
+  u8 health_bits;     /**< Satellite health status.
+GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+Others: 0 = valid, non-zero = invalid
+ */
+} ephemeris_common_content_dep_b_t;
+int ephemeris_common_content_dep_b_t_to_json_str( ephemeris_common_content_dep_b_t * in, uint64_t max_len, char* out_str);
 
 typedef struct __attribute__((packed)) {
   gnss_signal_dep_t sid;             /**< GNSS signal identifier */
@@ -195,17 +208,14 @@ typedef struct __attribute__((packed)) {
 } msg_ephemeris_gps_dep_e_t;
 int msg_ephemeris_gps_dep_e_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_gps_dep_e_t * in, uint64_t max_len, char* out_str);
 
-/** Satellite broadcast ephemeris for GPS
+/** Deprecated
  *
- * The ephemeris message returns a set of satellite orbit
- * parameters that is used to calculate GPS satellite position,
- * velocity, and clock offset. Please see the Navstar GPS
- * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
- * 20-III) for more details.
+ * This observation message has been deprecated in favor of
+ * ephemeris message using floats for size reduction.
  */
-#define SBP_MSG_EPHEMERIS_GPS        0x0086
+#define SBP_MSG_EPHEMERIS_GPS_DEP_F  0x0086
 typedef struct __attribute__((packed)) {
-  ephemeris_common_content_t common;      /**< Values common for all ephemeris types */
+  ephemeris_common_content_dep_b_t common;      /**< Values common for all ephemeris types */
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
   double c_rc;        /**< Amplitude of the cosine harmonic correction term to the orbit radius [m] */
@@ -228,8 +238,116 @@ typedef struct __attribute__((packed)) {
   gps_time_sec_t toc;         /**< Clock reference */
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
+} msg_ephemeris_gps_dep_f_t;
+int msg_ephemeris_gps_dep_f_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_gps_dep_f_t * in, uint64_t max_len, char* out_str);
+
+/** Satellite broadcast ephemeris for GPS
+ *
+ * The ephemeris message returns a set of satellite orbit
+ * parameters that is used to calculate GPS satellite position,
+ * velocity, and clock offset. Please see the Navstar GPS
+ * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+ * 20-III) for more details.
+ */
+#define SBP_MSG_EPHEMERIS_GPS        0x008A
+typedef struct __attribute__((packed)) {
+  ephemeris_common_content_t common;      /**< Values common for all ephemeris types */
+  float tgd;         /**< Group delay differential between L1 and L2 [s] */
+  float c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
+  float c_rc;        /**< Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+  float c_uc;        /**< Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+  float c_us;        /**< Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+  float c_ic;        /**< Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+  float c_is;        /**< Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+  double dn;          /**< Mean motion difference [rad/s] */
+  double m0;          /**< Mean anomaly at reference time [rad] */
+  double ecc;         /**< Eccentricity of satellite orbit */
+  double sqrta;       /**< Square root of the semi-major axis of orbit [m^(1/2)] */
+  double omega0;      /**< Longitude of ascending node of orbit plane at weekly epoch [rad] */
+  double omegadot;    /**< Rate of right ascension [rad/s] */
+  double w;           /**< Argument of perigee [rad] */
+  double inc;         /**< Inclination [rad] */
+  double inc_dot;     /**< Inclination first derivative [rad/s] */
+  float af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
+  float af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
+  float af2;         /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+  gps_time_sec_t toc;         /**< Clock reference */
+  u8 iode;        /**< Issue of ephemeris data */
+  u16 iodc;        /**< Issue of clock data */
 } msg_ephemeris_gps_t;
 int msg_ephemeris_gps_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_gps_t * in, uint64_t max_len, char* out_str);
+
+/** Satellite broadcast ephemeris for BDS
+ *
+ * The ephemeris message returns a set of satellite orbit
+ * parameters that is used to calculate BDS satellite position,
+ * velocity, and clock offset. Please see the BeiDou Navigation
+ * Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
+ */
+#define SBP_MSG_EPHEMERIS_BDS        0x0089
+typedef struct __attribute__((packed)) {
+  ephemeris_common_content_t common;      /**< Values common for all ephemeris types */
+  float tgd1;        /**< Group delay differential for B1 [s] */
+  float tgd2;        /**< Group delay differential for B2 [s] */
+  float c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
+  float c_rc;        /**< Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+  float c_uc;        /**< Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+  float c_us;        /**< Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+  float c_ic;        /**< Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+  float c_is;        /**< Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+  double dn;          /**< Mean motion difference [rad/s] */
+  double m0;          /**< Mean anomaly at reference time [rad] */
+  double ecc;         /**< Eccentricity of satellite orbit */
+  double sqrta;       /**< Square root of the semi-major axis of orbit [m^(1/2)] */
+  double omega0;      /**< Longitude of ascending node of orbit plane at weekly epoch [rad] */
+  double omegadot;    /**< Rate of right ascension [rad/s] */
+  double w;           /**< Argument of perigee [rad] */
+  double inc;         /**< Inclination [rad] */
+  double inc_dot;     /**< Inclination first derivative [rad/s] */
+  double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
+  float af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
+  float af2;         /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+  gps_time_sec_t toc;         /**< Clock reference */
+  u8 iode;        /**< Issue of ephemeris data */
+  u16 iodc;        /**< Issue of clock data */
+} msg_ephemeris_bds_t;
+int msg_ephemeris_bds_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_bds_t * in, uint64_t max_len, char* out_str);
+
+/** Satellite broadcast ephemeris for Galileo
+ *
+ * The ephemeris message returns a set of satellite orbit
+ * parameters that is used to calculate Galileo satellite position,
+ * velocity, and clock offset. Please see the Signal In Space ICD
+ * OS SIS ICD, Issue 1.3, December 2016 for more details.
+ */
+#define SBP_MSG_EPHEMERIS_GAL        0x0095
+typedef struct __attribute__((packed)) {
+  ephemeris_common_content_t common;       /**< Values common for all ephemeris types */
+  float bgd_e1e5a;    /**< E1-E5a Broadcast Group Delay [s] */
+  float bgd_e1e5b;    /**< E1-E5b Broadcast Group Delay [s] */
+  float c_rs;         /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
+  float c_rc;         /**< Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+  float c_uc;         /**< Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+  float c_us;         /**< Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+  float c_ic;         /**< Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+  float c_is;         /**< Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+  double dn;           /**< Mean motion difference [rad/s] */
+  double m0;           /**< Mean anomaly at reference time [rad] */
+  double ecc;          /**< Eccentricity of satellite orbit */
+  double sqrta;        /**< Square root of the semi-major axis of orbit [m^(1/2)] */
+  double omega0;       /**< Longitude of ascending node of orbit plane at weekly epoch [rad] */
+  double omegadot;     /**< Rate of right ascension [rad/s] */
+  double w;            /**< Argument of perigee [rad] */
+  double inc;          /**< Inclination [rad] */
+  double inc_dot;      /**< Inclination first derivative [rad/s] */
+  double af0;          /**< Polynomial clock correction coefficient (clock bias) [s] */
+  double af1;          /**< Polynomial clock correction coefficient (clock drift) [s/s] */
+  float af2;          /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+  gps_time_sec_t toc;          /**< Clock reference */
+  u16 iode;         /**< Issue of ephemeris data */
+  u16 iodc;         /**< Issue of clock data */
+} msg_ephemeris_gal_t;
+int msg_ephemeris_gal_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_gal_t * in, uint64_t max_len, char* out_str);
 
 #define SBP_MSG_EPHEMERIS_SBAS_DEP_A 0x0082
 typedef struct __attribute__((packed)) {
@@ -261,14 +379,30 @@ typedef struct __attribute__((packed)) {
 } msg_ephemeris_glo_dep_a_t;
 int msg_ephemeris_glo_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_glo_dep_a_t * in, uint64_t max_len, char* out_str);
 
-#define SBP_MSG_EPHEMERIS_SBAS       0x0084
+/** Deprecated
+ *
+ * This observation message has been deprecated in favor of
+ * ephemeris message using floats for size reduction.
+ */
+#define SBP_MSG_EPHEMERIS_SBAS_DEP_B 0x0084
 typedef struct __attribute__((packed)) {
-  ephemeris_common_content_t common;    /**< Values common for all ephemeris types */
+  ephemeris_common_content_dep_b_t common;    /**< Values common for all ephemeris types */
   double pos[3];    /**< Position of the GEO at time toe [m] */
   double vel[3];    /**< Velocity of the GEO at time toe [m/s] */
   double acc[3];    /**< Acceleration of the GEO at time toe [m/s^2] */
   double a_gf0;     /**< Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
   double a_gf1;     /**< Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
+} msg_ephemeris_sbas_dep_b_t;
+int msg_ephemeris_sbas_dep_b_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_sbas_dep_b_t * in, uint64_t max_len, char* out_str);
+
+#define SBP_MSG_EPHEMERIS_SBAS       0x008C
+typedef struct __attribute__((packed)) {
+  ephemeris_common_content_t common;    /**< Values common for all ephemeris types */
+  double pos[3];    /**< Position of the GEO at time toe [m] */
+  float vel[3];    /**< Velocity of the GEO at time toe [m/s] */
+  float acc[3];    /**< Acceleration of the GEO at time toe [m/s^2] */
+  float a_gf0;     /**< Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
+  float a_gf1;     /**< Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
 } msg_ephemeris_sbas_t;
 int msg_ephemeris_sbas_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_sbas_t * in, uint64_t max_len, char* out_str);
 
@@ -282,7 +416,7 @@ int msg_ephemeris_sbas_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, m
  */
 #define SBP_MSG_EPHEMERIS_GLO_DEP_B  0x0085
 typedef struct __attribute__((packed)) {
-  ephemeris_common_content_t common;    /**< Values common for all ephemeris types */
+  ephemeris_common_content_dep_b_t common;    /**< Values common for all ephemeris types */
   double gamma;     /**< Relative deviation of predicted carrier frequency from nominal */
   double tau;       /**< Correction to the SV time [s] */
   double pos[3];    /**< Position of the SV at tb in PZ-90.02 coordinates system [m] */
@@ -301,7 +435,7 @@ int msg_ephemeris_glo_dep_b_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_l
  */
 #define SBP_MSG_EPHEMERIS_GLO_DEP_C  0x0087
 typedef struct __attribute__((packed)) {
-  ephemeris_common_content_t common;    /**< Values common for all ephemeris types */
+  ephemeris_common_content_dep_b_t common;    /**< Values common for all ephemeris types */
   double gamma;     /**< Relative deviation of predicted carrier frequency from nominal */
   double tau;       /**< Correction to the SV time [s] */
   double d_tau;     /**< Equipment delay between L1 and L2 [s] */
@@ -312,6 +446,25 @@ typedef struct __attribute__((packed)) {
 } msg_ephemeris_glo_dep_c_t;
 int msg_ephemeris_glo_dep_c_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_glo_dep_c_t * in, uint64_t max_len, char* out_str);
 
+/** Deprecated
+ *
+ * This observation message has been deprecated in favor of
+ * ephemeris message using floats for size reduction.
+ */
+#define SBP_MSG_EPHEMERIS_GLO_DEP_D  0x0088
+typedef struct __attribute__((packed)) {
+  ephemeris_common_content_dep_b_t common;    /**< Values common for all ephemeris types */
+  double gamma;     /**< Relative deviation of predicted carrier frequency from nominal */
+  double tau;       /**< Correction to the SV time [s] */
+  double d_tau;     /**< Equipment delay between L1 and L2 [s] */
+  double pos[3];    /**< Position of the SV at tb in PZ-90.02 coordinates system [m] */
+  double vel[3];    /**< Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
+  double acc[3];    /**< Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
+  u8 fcn;       /**< Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
+  u8 iod;       /**< Issue of ephemeris data */
+} msg_ephemeris_glo_dep_d_t;
+int msg_ephemeris_glo_dep_d_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_glo_dep_d_t * in, uint64_t max_len, char* out_str);
+
 /** Satellite broadcast ephemeris for GLO
  *
  * The ephemeris message returns a set of satellite orbit
@@ -320,15 +473,15 @@ int msg_ephemeris_glo_dep_c_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_l
  * Characteristics of words of immediate information (ephemeris parameters)"
  * for more details.
  */
-#define SBP_MSG_EPHEMERIS_GLO        0x0088
+#define SBP_MSG_EPHEMERIS_GLO        0x008B
 typedef struct __attribute__((packed)) {
   ephemeris_common_content_t common;    /**< Values common for all ephemeris types */
-  double gamma;     /**< Relative deviation of predicted carrier frequency from nominal */
-  double tau;       /**< Correction to the SV time [s] */
-  double d_tau;     /**< Equipment delay between L1 and L2 [s] */
+  float gamma;     /**< Relative deviation of predicted carrier frequency from nominal */
+  float tau;       /**< Correction to the SV time [s] */
+  float d_tau;     /**< Equipment delay between L1 and L2 [s] */
   double pos[3];    /**< Position of the SV at tb in PZ-90.02 coordinates system [m] */
   double vel[3];    /**< Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
-  double acc[3];    /**< Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
+  float acc[3];    /**< Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
   u8 fcn;       /**< Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
   u8 iod;       /**< Issue of ephemeris data */
 } msg_ephemeris_glo_t;

@@ -710,6 +710,101 @@ $(makeSBP 'msgNetworkStateResp ''MsgNetworkStateResp)
 $(makeJSON "_msgNetworkStateResp_" ''MsgNetworkStateResp)
 $(makeLenses ''MsgNetworkStateResp)
 
+-- | NetworkUsage.
+--
+-- The bandwidth usage for each interface can be reported within this struct
+-- and utilize multiple fields to fully specify the type of traffic that is
+-- being tracked. As either the interval of collection or the collection time
+-- may vary, both a timestamp and period field is provided, though may not
+-- necessarily be populated with a value.
+data NetworkUsage = NetworkUsage
+  { _networkUsage_duration     :: !Word64
+    -- ^ Duration over which the measurement was collected
+  , _networkUsage_total_bytes  :: !Word64
+    -- ^ Number of bytes handled in total within period
+  , _networkUsage_rx_bytes     :: !Word32
+    -- ^ Number of bytes transmitted within period
+  , _networkUsage_tx_bytes     :: !Word32
+    -- ^ Number of bytes received within period
+  , _networkUsage_interface_name :: !Text
+    -- ^ Interface Name
+  } deriving ( Show, Read, Eq )
+
+instance Binary NetworkUsage where
+  get = do
+    _networkUsage_duration <- getWord64le
+    _networkUsage_total_bytes <- getWord64le
+    _networkUsage_rx_bytes <- getWord32le
+    _networkUsage_tx_bytes <- getWord32le
+    _networkUsage_interface_name <- decodeUtf8 <$> getByteString 16
+    pure NetworkUsage {..}
+
+  put NetworkUsage {..} = do
+    putWord64le _networkUsage_duration
+    putWord64le _networkUsage_total_bytes
+    putWord32le _networkUsage_rx_bytes
+    putWord32le _networkUsage_tx_bytes
+    putByteString $ encodeUtf8 _networkUsage_interface_name
+
+$(makeJSON "_networkUsage_" ''NetworkUsage)
+$(makeLenses ''NetworkUsage)
+
+msgNetworkBandwidthUsage :: Word16
+msgNetworkBandwidthUsage = 0x00BD
+
+-- | SBP class for message MSG_NETWORK_BANDWIDTH_USAGE (0x00BD).
+--
+-- The bandwidth usage, a list of usage by interface.
+data MsgNetworkBandwidthUsage = MsgNetworkBandwidthUsage
+  { _msgNetworkBandwidthUsage_interfaces :: ![NetworkUsage]
+    -- ^ Usage measurement array
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgNetworkBandwidthUsage where
+  get = do
+    _msgNetworkBandwidthUsage_interfaces <- whileM (not <$> isEmpty) get
+    pure MsgNetworkBandwidthUsage {..}
+
+  put MsgNetworkBandwidthUsage {..} = do
+    mapM_ put _msgNetworkBandwidthUsage_interfaces
+
+$(makeSBP 'msgNetworkBandwidthUsage ''MsgNetworkBandwidthUsage)
+$(makeJSON "_msgNetworkBandwidthUsage_" ''MsgNetworkBandwidthUsage)
+$(makeLenses ''MsgNetworkBandwidthUsage)
+
+msgCellModemStatus :: Word16
+msgCellModemStatus = 0x00BE
+
+-- | SBP class for message MSG_CELL_MODEM_STATUS (0x00BE).
+--
+-- If a cell modem is present on a piksi device, this message will be send
+-- periodically to update the host on the status of the modem and its various
+-- parameters.
+data MsgCellModemStatus = MsgCellModemStatus
+  { _msgCellModemStatus_signal_strength :: !Int8
+    -- ^ Received cell signal strength in dBm, zero translates to unknown
+  , _msgCellModemStatus_signal_error_rate :: !Float
+    -- ^ BER as reported by the modem, zero translates to unknown
+  , _msgCellModemStatus_reserved        :: ![Word8]
+    -- ^ Unspecified data TBD for this schema
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgCellModemStatus where
+  get = do
+    _msgCellModemStatus_signal_strength <- fromIntegral <$> getWord8
+    _msgCellModemStatus_signal_error_rate <- getFloat32le
+    _msgCellModemStatus_reserved <- whileM (not <$> isEmpty) getWord8
+    pure MsgCellModemStatus {..}
+
+  put MsgCellModemStatus {..} = do
+    putWord8 $ fromIntegral _msgCellModemStatus_signal_strength
+    putFloat32le _msgCellModemStatus_signal_error_rate
+    mapM_ putWord8 _msgCellModemStatus_reserved
+
+$(makeSBP 'msgCellModemStatus ''MsgCellModemStatus)
+$(makeJSON "_msgCellModemStatus_" ''MsgCellModemStatus)
+$(makeLenses ''MsgCellModemStatus)
+
 msgSpecanDep :: Word16
 msgSpecanDep = 0x0050
 

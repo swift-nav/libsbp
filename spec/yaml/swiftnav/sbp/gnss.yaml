@@ -16,7 +16,7 @@ include:
   - types.yaml
 
 definitions:
-
+                      
  - GnssSignal:
     short_desc: Represents all the relevant information about the signal
     desc: |
@@ -24,7 +24,10 @@ definitions:
     fields:
         - sat:
             type: u8
-            desc: Constellation-specific satellite identifier
+            desc: |
+                Constellation-specific satellite identifier. This field for Glonass can  
+                either be (100+FCN) where FCN is in [-7,+6] or 
+                the Slot ID in [1,28]
         - code:
             type: u8
             desc: Signal constellation, band and code

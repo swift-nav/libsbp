@@ -1,0 +1,67 @@
+/*
+ * Copyright (C) 2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+syntax = "proto3";
+
+/** Acquisition
+ *
+ * Satellite acquisition messages from the device.
+ */
+
+package swiftnav.sbp.acquisition;
+
+import "gnss.proto";
+
+/** Satellite acquisition result
+ *
+ * This message describes the results from an attempted GPS signal
+ * acquisition search for a satellite PRN over a code phase/carrier
+ * frequency range. It contains the parameters of the point in the
+ * acquisition search space with the best carrier-to-noise (CN/0)
+ * ratio.
+ */
+message MsgAcqResult {
+    float cn0 = 1;
+    float cp = 2;
+    float cf = 3;
+    gnss.GnssSignal sid = 4;
+}
+
+/** Acq perfomance measurement and debug
+ *
+ * Profile for a specific SV for debugging purposes
+ * The message describes SV profile during acquisition time.
+ * The message is used to debug and measure the performance.
+ */
+message AcqSvProfile {
+    uint32 job_type = 1;
+    uint32 status = 2;
+    uint32 cn0 = 3;
+    uint32 int_time = 4;
+    gnss.GnssSignal sid = 5;
+    uint32 bin_width = 6;
+    uint32 timestamp = 7;
+    uint32 time_spent = 8;
+    sint32 cf_min = 9;
+    sint32 cf_max = 10;
+    sint32 cf = 11;
+    uint32 cp = 12;
+}
+
+/** Acquisition perfomance measurement and debug
+ *
+ * The message describes all SV profiles during acquisition time.
+ * The message is used to debug and measure the performance.
+ */
+message MsgAcqSvProfile {
+    repeated AcqSvProfile acq_sv_profile = 1;
+}

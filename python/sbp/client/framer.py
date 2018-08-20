@@ -59,7 +59,7 @@ class Framer(object):
         -------
         str : ISO 8601 format timestamp
         """
-        return datetime.datetime.utcnow().isoformat()
+        return datetime.datetime.utcnow().isoformat() + 'Z'
 
     def next(self):
         msg = None

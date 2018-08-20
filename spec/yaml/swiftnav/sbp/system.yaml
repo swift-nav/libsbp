@@ -147,19 +147,21 @@ definitions:
             fields:
               - 8-31:
                   desc: Reserved
-              - 6-7:
-                  desc:  INS Error
+              - 5-7:
+                  desc:  IMU Status
                   values:
-                      - 0: No error
-                      - 1: General error
-              - 3-5:
+                      - 0: IMU Ready
+                      - 1: No raw IMU data
+                      - 2: No raw IMU timestamp
+                      - 3: Unrecommended raw IMU rate
+              - 3-4:
                   desc: Initialization Routine Indicator
                   values:
                       - 0: None
-                      - 1: Automatic calibration routine in progress
+                      - 1: Initial startup
               - 0-2:
-                  desc: INS status
+                  desc: INS Status
                   values:
                       - 0: INS ready
-                      - 1: INS calibration routine in progress
+                      - 1: INS initializing
                       - 2: INS error 

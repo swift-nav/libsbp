@@ -32,7 +32,7 @@ public class EphemerisCommonContent extends SBPStruct {
     public GPSTimeSec toe;
     
     /** User Range Accuracy */
-    public double ura;
+    public float ura;
     
     /** Curve fit interval */
     public long fit_interval;
@@ -55,7 +55,7 @@ GLO: 0 = valid, non-zero = invalid
         /* Parse fields from binary */
         sid = new GnssSignal().parse(parser);
         toe = new GPSTimeSec().parse(parser);
-        ura = parser.getDouble();
+        ura = parser.getFloat();
         fit_interval = parser.getU32();
         valid = parser.getU8();
         health_bits = parser.getU8();
@@ -67,7 +67,7 @@ GLO: 0 = valid, non-zero = invalid
         /* Build fields into binary */
         sid.build(builder);
         toe.build(builder);
-        builder.putDouble(ura);
+        builder.putFloat(ura);
         builder.putU32(fit_interval);
         builder.putU8(valid);
         builder.putU8(health_bits);

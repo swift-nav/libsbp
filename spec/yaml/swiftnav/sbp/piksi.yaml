@@ -484,6 +484,65 @@ definitions:
             - 0:
                 desc: IFF_UP - interface is up
 
+ - NetworkUsage:
+    short_desc: Bandwidth usage measurement for a single interface.
+    desc: |
+      The bandwidth usage for each interface can be reported
+      within this struct and utilize multiple fields to fully
+      specify the type of traffic that is being tracked. As
+      either the interval of collection or the collection time
+      may vary, both a timestamp and period field is provided,
+      though may not necessarily be populated with a value. 
+    fields:
+      - duration:
+          type: u64
+          units: ms
+          desc: Duration over which the measurement was collected
+      - total_bytes:
+          type: u64
+          desc: Number of bytes handled in total within period
+      - rx_bytes:
+          type: u32
+          desc: Number of bytes transmitted within period
+      - tx_bytes:
+          type: u32
+          desc: Number of bytes received within period
+      - interface_name:
+          type: string
+          size: 16
+          desc: Interface Name
+
+ - MSG_NETWORK_BANDWIDTH_USAGE:
+    id: 0x00BD
+    short_desc: Bandwidth usage reporting message
+    desc: |
+      The bandwidth usage, a list of usage by interface. 
+    fields:
+        - interfaces:
+            type: array
+            fill: NetworkUsage
+            desc: Usage measurement array
+
+ - MSG_CELL_MODEM_STATUS:
+    id: 0x00BE
+    short_desc: Cell modem information update message
+    desc: |
+      If a cell modem is present on a piksi device, this message
+      will be send periodically to update the host on the status
+      of the modem and its various parameters.
+    fields:
+      - signal_strength:
+          type: s8
+          units: dBm
+          desc: Received cell signal strength in dBm, zero translates to unknown
+      - signal_error_rate:
+          type: float
+          desc: BER as reported by the modem, zero translates to unknown
+      - reserved:
+          type: array
+          fill: u8
+          desc: Unspecified data TBD for this schema
+
  - MSG_SPECAN_DEP:
     id: 0x0050
     short_desc: Deprecated

@@ -52,16 +52,16 @@ public class MsgOrientQuat extends SBPMessage {
     public int z;
     
     /** Estimated standard deviation of w */
-    public float acc_w;
+    public float w_accuracy;
     
     /** Estimated standard deviation of x */
-    public float acc_x;
+    public float x_accuracy;
     
     /** Estimated standard deviation of y */
-    public float acc_y;
+    public float y_accuracy;
     
     /** Estimated standard deviation of z */
-    public float acc_z;
+    public float z_accuracy;
     
     /** Status flags */
     public int flags;
@@ -82,10 +82,10 @@ public class MsgOrientQuat extends SBPMessage {
         x = parser.getS32();
         y = parser.getS32();
         z = parser.getS32();
-        acc_w = parser.getFloat();
-        acc_x = parser.getFloat();
-        acc_y = parser.getFloat();
-        acc_z = parser.getFloat();
+        w_accuracy = parser.getFloat();
+        x_accuracy = parser.getFloat();
+        y_accuracy = parser.getFloat();
+        z_accuracy = parser.getFloat();
         flags = parser.getU8();
     }
 
@@ -96,10 +96,10 @@ public class MsgOrientQuat extends SBPMessage {
         builder.putS32(x);
         builder.putS32(y);
         builder.putS32(z);
-        builder.putFloat(acc_w);
-        builder.putFloat(acc_x);
-        builder.putFloat(acc_y);
-        builder.putFloat(acc_z);
+        builder.putFloat(w_accuracy);
+        builder.putFloat(x_accuracy);
+        builder.putFloat(y_accuracy);
+        builder.putFloat(z_accuracy);
         builder.putU8(flags);
     }
 
@@ -111,10 +111,10 @@ public class MsgOrientQuat extends SBPMessage {
         obj.put("x", x);
         obj.put("y", y);
         obj.put("z", z);
-        obj.put("acc_w", acc_w);
-        obj.put("acc_x", acc_x);
-        obj.put("acc_y", acc_y);
-        obj.put("acc_z", acc_z);
+        obj.put("w_accuracy", w_accuracy);
+        obj.put("x_accuracy", x_accuracy);
+        obj.put("y_accuracy", y_accuracy);
+        obj.put("z_accuracy", z_accuracy);
         obj.put("flags", flags);
         return obj;
     }

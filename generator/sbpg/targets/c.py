@@ -13,8 +13,9 @@
 Generator for c target.
 """
 
-from sbpg.targets.templating import *
 import os
+from sbpg.targets.templating import *
+from sbpg.utils import markdown_links
 
 SBP2JSON_TEMPLATE = "sbp2json_template.c"
 MESSAGES_TEMPLATE_NAME = "sbp_messages_template.h"
@@ -24,6 +25,7 @@ def commentify(value):
   """
   Builds a comment.
   """
+  value = markdown_links(value)
   if value is None:
     return
   if len(value.split('\n')) == 1:
@@ -201,7 +203,7 @@ def render_c2json(output_dir, all_package_specs):
 
 def render_version(output_dir, release):
   destination_filename = "%s/version.h" % output_dir
-  major, minor = release.split('.')[:2]
+  major, minor, patch = release.split('.')[:3]
   py_template = JENV.get_template(VERSION_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
-    f.write(py_template.render(major=major, minor=minor))
+    f.write(py_template.render(major=major, minor=minor, patch=patch))

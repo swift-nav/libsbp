@@ -153,7 +153,7 @@ corrections packet.
                    'flags' / construct.Int8ul,
                    'latency' / construct.Int16ul,
                    'num_signals' / construct.Int8ul,
-                   'source' / construct.GreedyString(encoding='utf8'),)
+                   'source' / construct.GreedyBytes,)
   __slots__ = [
                'flags',
                'latency',

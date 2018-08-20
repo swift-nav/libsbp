@@ -40,7 +40,7 @@ public class MsgEphemerisGloDepB extends SBPMessage {
 
     
     /** Values common for all ephemeris types */
-    public EphemerisCommonContent common;
+    public EphemerisCommonContentDepB common;
     
     /** Relative deviation of predicted carrier frequency from nominal */
     public double gamma;
@@ -68,7 +68,7 @@ public class MsgEphemerisGloDepB extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        common = new EphemerisCommonContent().parse(parser);
+        common = new EphemerisCommonContentDepB().parse(parser);
         gamma = parser.getDouble();
         tau = parser.getDouble();
         pos = parser.getArrayofDouble(3);

@@ -11,6 +11,7 @@
 from ...msg import SBP
 from ...table import dispatch
 from .base_logger import BaseLogger, LogIterator
+import base64
 import json
 import warnings
 
@@ -30,6 +31,44 @@ class JSONLogger(BaseLogger):
     def dump(self, msg, **metadata):
         try:
             data = self.dispatch(msg).to_json_dict()
+            return json.dumps(self.fmt_msg(data, **metadata), allow_nan=False)
+        except (ValueError, UnicodeDecodeError):
+            try:
+                warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
+                       % (msg.msg_type, msg)
+                warnings.warn(warn, RuntimeWarning)
+                return json.dumps(self.fmt_msg(msg.to_json_dict(), **metadata))
+            except (ValueError, UnicodeDecodeError):
+                return None
+
+    def __call__(self, msg, **metadata):
+        output = self.dump(msg, **metadata)
+        if output:
+            self.handle.write(output + "\n")
+
+
+class JSONBinLogger(BaseLogger):
+    """
+    JSONBinLogger
+
+    The :class:`JSONLogger` logs JSON records without expanding the fields.
+    """
+
+    def fmt_msg(self, data, **metadata):
+        metadata.update(self.tags)
+        metadata['data'] = data
+        return metadata
+
+    def dump(self, msg, **metadata):
+        try:
+            data = {
+                'preamble': msg.preamble,
+                'msg_type': msg.msg_type,
+                'sender': msg.sender,
+                'length': msg.length,
+                'payload': base64.standard_b64encode(msg.payload),
+                'crc': msg.crc
+            }
             return json.dumps(self.fmt_msg(data, **metadata), allow_nan=False)
         except (ValueError, UnicodeDecodeError):
             try:

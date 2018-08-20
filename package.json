@@ -1,6 +1,6 @@
 {
   "name": "sbp",
-  "version": "2.3.6",
+  "version": "2.3.17",
   "description": "libsbp bindings for JavaScript. More information here: http://swift-nav.github.io/libsbp/",
   "files": [
     "javascript/*",
@@ -16,15 +16,16 @@
   "dependencies": {
     "binary-parser": "git://github.com/JoshuaGross/binary-parser.git#jgross-greedy-string",
     "cuint": "^0.2.2",
-    "js-yaml": "^3.4.3",
+    "js-yaml": "^3.11.0",
     "node-int64": "^0.4.0"
   },
   "devDependencies": {
-    "benchmark": "^2.1.1",
-    "lodash": "^4.16.4",
+    "benchmark": "^2.1.4",
+    "lodash": "^4.17.10",
     "mocha": "^2.4.5",
-    "request": "^2.74.0",
-    "serialport": "^4.0.1",
-    "webpack": "^2.6.1"
+    "request": "^2.85.0",
+    "serialport": "^6.2.0",
+    "webpack": "^4.8.1",
+    "webpack-cli": "^2.1.3"
   }
 }

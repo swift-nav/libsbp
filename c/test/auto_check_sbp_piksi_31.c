@@ -126,8 +126,8 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(strstr(msg->name, ((char []){(char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
-    fail_unless(msg->cpu == 0, "incorrect value for cpu, expected 0, is %d", msg->cpu);
     fail_unless(msg->stack_free == 2460, "incorrect value for stack_free, expected 2460, is %d", msg->stack_free);
+    fail_unless(msg->cpu == 0, "incorrect value for cpu, expected 0, is %d", msg->cpu);
     // print to string
     char test_str[1024];
     msg_thread_state_t_to_json_str( last_sender_id, 0x17, last_len, ( msg_thread_state_t* ) msg, 1024, test_str);
@@ -173,8 +173,8 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(strstr(msg->name, ((char []){(char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
-    fail_unless(msg->cpu == 595, "incorrect value for cpu, expected 595, is %d", msg->cpu);
     fail_unless(msg->stack_free == 36, "incorrect value for stack_free, expected 36, is %d", msg->stack_free);
+    fail_unless(msg->cpu == 595, "incorrect value for cpu, expected 595, is %d", msg->cpu);
     // print to string
     char test_str[1024];
     msg_thread_state_t_to_json_str( last_sender_id, 0x17, last_len, ( msg_thread_state_t* ) msg, 1024, test_str);
@@ -220,8 +220,8 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(strstr(msg->name, ((char []){(char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
-    fail_unless(msg->cpu == 14, "incorrect value for cpu, expected 14, is %d", msg->cpu);
     fail_unless(msg->stack_free == 1140, "incorrect value for stack_free, expected 1140, is %d", msg->stack_free);
+    fail_unless(msg->cpu == 14, "incorrect value for cpu, expected 14, is %d", msg->cpu);
     // print to string
     char test_str[1024];
     msg_thread_state_t_to_json_str( last_sender_id, 0x17, last_len, ( msg_thread_state_t* ) msg, 1024, test_str);
@@ -267,8 +267,8 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(strstr(msg->name, ((char []){(char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
-    fail_unless(msg->cpu == 1, "incorrect value for cpu, expected 1, is %d", msg->cpu);
     fail_unless(msg->stack_free == 5060, "incorrect value for stack_free, expected 5060, is %d", msg->stack_free);
+    fail_unless(msg->cpu == 1, "incorrect value for cpu, expected 1, is %d", msg->cpu);
     // print to string
     char test_str[1024];
     msg_thread_state_t_to_json_str( last_sender_id, 0x17, last_len, ( msg_thread_state_t* ) msg, 1024, test_str);
@@ -314,8 +314,8 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(strstr(msg->name, ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
-    fail_unless(msg->cpu == 7, "incorrect value for cpu, expected 7, is %d", msg->cpu);
     fail_unless(msg->stack_free == 2324, "incorrect value for stack_free, expected 2324, is %d", msg->stack_free);
+    fail_unless(msg->cpu == 7, "incorrect value for cpu, expected 7, is %d", msg->cpu);
     // print to string
     char test_str[1024];
     msg_thread_state_t_to_json_str( last_sender_id, 0x17, last_len, ( msg_thread_state_t* ) msg, 1024, test_str);

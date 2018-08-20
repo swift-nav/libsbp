@@ -57,7 +57,7 @@ instance Binary SBPMsg where
         decoder m@Msg {..}
           | checkCrc m /= _msgSBPCrc = SBPMsgBadCrc m
           ((*- for m in msgs *))
-          | _msgSBPType == (((m | to_global))) = SBP(((m))) (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == (((m | hs_to_global))) = SBP(((m))) (decode (fromStrict (unBytes _msgSBPPayload))) m
           ((*- endfor *))
           | otherwise = SBPMsgUnknown m
 
@@ -77,7 +77,7 @@ instance FromJSON SBPMsg where
     decoder msgType payload where
       decoder msgType payload
 ((*- for m in msgs *))
-        | msgType == (((m | to_global))) = SBP(((m))) <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == (((m | hs_to_global))) = SBP(((m))) <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
 ((*- endfor *))
         | otherwise = SBPMsgUnknown <$> parseJSON obj
   parseJSON _ = mzero

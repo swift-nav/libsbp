@@ -156,6 +156,19 @@ public class SBPMessage {
             return ret;
         }
 
+        public float[] getArrayofFloat() {
+            return getArrayofFloat(buf.remaining());
+        }
+        public float[] getArrayofFloat(int n) {
+            float [] ret = new float[n];
+            for (int i = 0; i < n; i++)
+                ret[i] = getFloat();
+            return ret;
+        }
+
+        public double[] getArrayofDouble() {
+            return getArrayofDouble(buf.remaining());
+        }
         public double[] getArrayofDouble(int n) {
             double [] ret = new double[n];
             for (int i = 0; i < n; i++)
@@ -263,6 +276,15 @@ public class SBPMessage {
         public void putArrayofDouble(double[] data, int n) {
             assert(n == data.length);
             putArrayofDouble(data);
+        }
+
+        public void putArrayofFloat(float[] data) {
+            for (float x: data)
+                putFloat(x);
+        }
+        public void putArrayofFloat(float[] data, int n) {
+            assert(n == data.length);
+            putArrayofFloat(data);
         }
 
         public <T extends SBPStruct> void putArray(T[] structs) {
