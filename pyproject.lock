@@ -1,0 +1,150 @@
+[[package]]
+category = "main"
+description = "Python package for providing Mozilla's CA Bundle."
+name = "certifi"
+optional = false
+platform = "*"
+python-versions = "*"
+version = "2018.8.13"
+
+[[package]]
+category = "main"
+description = "Universal encoding detector for Python 2 and 3"
+name = "chardet"
+optional = false
+platform = "*"
+python-versions = "*"
+version = "3.0.4"
+
+[[package]]
+category = "main"
+description = "A powerful declarative symmetric parser/builder for binary data"
+name = "construct"
+optional = false
+platform = "POSIX"
+python-versions = "*"
+version = "2.9.45"
+
+[[package]]
+category = "main"
+description = "Clean single-source support for Python 3 and 2"
+name = "future"
+optional = false
+platform = "UNKNOWN"
+python-versions = "*"
+version = "0.16.0"
+
+[[package]]
+category = "main"
+description = "HTTP client mock for Python"
+name = "httpretty"
+optional = false
+platform = "*"
+python-versions = "*"
+version = "0.9.4"
+
+[package.dependencies]
+six = "*"
+
+[[package]]
+category = "main"
+description = "Internationalized Domain Names in Applications (IDNA)"
+name = "idna"
+optional = false
+platform = "*"
+python-versions = "*"
+version = "2.7"
+
+[[package]]
+category = "main"
+description = "FTDI device driver (pure Python)"
+name = "pyftdi"
+optional = false
+platform = "*"
+python-versions = "*"
+version = "0.13.4"
+
+[package.dependencies]
+pyserial = ">=2.6"
+pyusb = ">=1.0.0b1"
+six = "*"
+
+[[package]]
+category = "main"
+description = "Pythonic interface to FTDI devices using libftdi"
+name = "pylibftdi"
+optional = false
+platform = "*"
+python-versions = "*"
+version = "0.17.0"
+
+[[package]]
+category = "main"
+description = "Python Serial Port Extension"
+name = "pyserial"
+optional = false
+platform = "any"
+python-versions = "*"
+version = "3.4"
+
+[[package]]
+category = "main"
+description = "Python USB access module"
+name = "pyusb"
+optional = false
+platform = "*"
+python-versions = "*"
+version = "1.0.2"
+
+[[package]]
+category = "main"
+description = "Python HTTP for Humans."
+name = "requests"
+optional = false
+platform = "*"
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "2.19.1"
+
+[package.dependencies]
+certifi = ">=2017.4.17"
+chardet = ">=3.0.2,<3.1.0"
+idna = ">=2.5,<2.8"
+urllib3 = ">=1.21.1,<1.24"
+
+[[package]]
+category = "main"
+description = "Python 2 and 3 compatibility utilities"
+name = "six"
+optional = false
+platform = "*"
+python-versions = "*"
+version = "1.11.0"
+
+[[package]]
+category = "main"
+description = "HTTP library with thread-safe connection pooling, file post, and more."
+name = "urllib3"
+optional = false
+platform = "*"
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, <4"
+version = "1.23"
+
+[metadata]
+content-hash = "e2e18784bea09fc827f993d60f5ebe02eaac81dfdbd5c19caddce800bd032188"
+platform = "*"
+python-versions = "*"
+
+[metadata.hashes]
+certifi = ["4c1d68a1408dd090d2f3a869aa94c3947cc1d967821d1ed303208c9f41f0f2f4", "b6e8b28b2b7e771a41ecdd12d4d43262ecab52adebbafa42c77d6b57fb6ad3a4"]
+chardet = ["84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae", "fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"]
+construct = ["2271a0efd0798679dea825ff47e22a4c550456a5db0ba8baa82f7eae0af0118c"]
+future = ["e39ced1ab767b5936646cedba8bcce582398233d6a627067d4c6a454c90cfedb"]
+httpretty = ["69259e22addf5ab5f25bd00c6568e16fc2e54efdd4da69eb0950718dba3b2dab"]
+idna = ["156a6814fb5ac1fc6850fb002e0852d56c0c8d2531923a51032d1b70760e186e", "684a38a6f903c1d71d6d5fac066b58d7768af4de2b832e426ec79c30daa94a16"]
+pyftdi = ["8703304a6f6cd7d0a713ba3e2d38a73cc924340221d808df6fa05ebf025ee9a1"]
+pylibftdi = ["3228da779a4d7dc2de395d502a2be20381da74fabd9a9435efc55e42c5ad6e4d", "dc615a5338c866cc1a316cabef2ea5862b75c81de9410b85a85f38a033214c8c"]
+pyserial = ["6e2d401fdee0eab996cf734e67773a0143b932772ca8b42451440cfed942c627", "e0770fadba80c31013896c7e6ef703f72e7834965954a78e71a3049488d4d7d8"]
+pyusb = ["4e9b72cc4a4205ca64fbf1f3fff39a335512166c151ad103e55c8223ac147362"]
+requests = ["63b52e3c866428a224f97cab011de738c36aec0185aa91cfacd418b5d58911d1", "ec22d826a36ed72a7358ff3fe56cbd4ba69dd7a6718ffd450ff0e9df7a47ce6a"]
+six = ["70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9", "832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"]
+urllib3 = ["a68ac5e15e76e7e5dd2b8f94007233e01effe3e50e8daddf69acfd81cb686baf", "b5725a0bd4ba422ab0e66e89e030c806576753ea3ee08554382c14e685d117b5"]

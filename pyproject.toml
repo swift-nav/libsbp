@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "sbp"
+version = "0.1.0"
+description = ""
+authors = ["Keerthan Jaic <jckeerthan@gmail.com>"]
+packages = [
+    { include = "sbp", from = "python" },
+]
+
+[tool.poetry.dependencies]
+python = "*"
+construct = "^2.9"
+httpretty = "0.9.4"
+pyftdi = "=0.13.4"
+pylibftdi = "^0.17.0"
+pyserial = "^3.4"
+requests = "^2.19"
+future = "^0.16.0"
+
+[tool.poetry.dev-dependencies]
