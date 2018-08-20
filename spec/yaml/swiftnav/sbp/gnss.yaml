@@ -41,8 +41,7 @@ definitions:
                       - 4: GLO L2CA
                       - 5: GPS L1P
                       - 6: GPS L2P
-                      - 7: GPS L2CL
-                      - 12: BDS2 B11 
+                      - 12: BDS2 B1 
                       - 13: BDS2 B2 
                       - 14: GAL E1B
                       - 20: GAL E7I
