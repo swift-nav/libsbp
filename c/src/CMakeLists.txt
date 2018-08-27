@@ -11,14 +11,12 @@ set(libsbp_SRCS
   sbp.c
 )
 
-add_library(sbp STATIC ${libsbp_SRCS})
-install(TARGETS sbp DESTINATION lib${LIB_SUFFIX})
-
 if(BUILD_SHARED_LIBS)
   add_library(sbp SHARED ${libsbp_SRCS})
   install(TARGETS sbp DESTINATION lib${LIB_SUFFIX})
 else(BUILD_SHARED_LIBS)
-  message(STATUS "Not building shared libraries")
+  add_library(sbp STATIC ${libsbp_SRCS})
+  install(TARGETS sbp DESTINATION lib${LIB_SUFFIX})
 endif(BUILD_SHARED_LIBS)
 
 install(FILES ${libsbp_HEADERS} DESTINATION include/libsbp)
