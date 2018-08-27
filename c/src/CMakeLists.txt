@@ -11,8 +11,8 @@ set(libsbp_SRCS
   sbp.c
 )
 
-add_library(sbp-static STATIC ${libsbp_SRCS})
-install(TARGETS sbp-static DESTINATION lib${LIB_SUFFIX})
+add_library(sbp STATIC ${libsbp_SRCS})
+install(TARGETS sbp DESTINATION lib${LIB_SUFFIX})
 
 if(BUILD_SHARED_LIBS)
   add_library(sbp SHARED ${libsbp_SRCS})
