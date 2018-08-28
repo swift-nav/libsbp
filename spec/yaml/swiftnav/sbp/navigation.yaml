@@ -78,6 +78,7 @@ definitions:
                       values:
                           - 0: None (invalid)
                           - 1: GNSS Solution
+                          - 2: Propagated
 
  - MSG_UTC_TIME:
     id: 0x0103
@@ -103,6 +104,7 @@ definitions:
                     values:
                           - 0: None (invalid)
                           - 1: GNSS Solution
+                          - 2: Propagated
         - tow:
             type: u32
             units: ms
