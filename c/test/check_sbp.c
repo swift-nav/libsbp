@@ -338,12 +338,12 @@ START_TEST(test_sbp_send_message)
 
   u8 smsg[] = { 0x22, 0x33 };
 
-  fail_unless(sbp_send_message(&s, 0x2233, 0x4455, 0, smsg, 0) == SBP_NULL_ERROR,
+  fail_unless(sbp_send_message(&s, 0x2233, 0x4455, 0, smsg, 0) == SBP_NULL_WRPT_ERROR,
       "sbp_send_message should return an error if write is NULL");
 
   dummy_reset();
   fail_unless(sbp_send_message(&s, 0x2233, 0x4455, 1, 0, &dummy_write)
-        == SBP_NULL_ERROR,
+        == SBP_NULL_RDPT_ERROR,
       "sbp_send_message should return an error if payload is NULL and len != 0");
 
   dummy_reset();
