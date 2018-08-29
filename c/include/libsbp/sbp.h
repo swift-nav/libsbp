@@ -41,6 +41,23 @@ extern "C" {
 /** Return value indicating an error occured in the read() operation. */
 #define SBP_READ_ERROR     -6
 
+/** Return value indicating an error occured because the read pointer was NULL. */
+#define SBP_NULL_RDPT_ERROR    ( -5)
+/** Return value indicating an error occured because the write pointer was NULL. */
+#define SBP_NULL_WRPT_ERROR    ( -6)
+/** Return value indicating an error occured whilst sending an SBP preamble. */
+#define SBP_SEND_PREAM_ERROR   ( -7)
+/** Return value indicating an error occured whilst sending an SBP type. */
+#define SBP_SEND_TYPE_ERROR    ( -8)
+/** Return value indicating an error occured whilst sending an SBP sender. */
+#define SBP_SEND_SENDER_ERROR  ( -9)
+/** Return value indicating an error occured whilst sending an SBP length. */
+#define SBP_SEND_LEN_ERROR     (-10)
+/** Return value indicating an error occured whilst sending an SBP payload. */
+#define SBP_SEND_PAYLOAD_ERROR (-11)
+/** Return value indicating an error occured whilst sending an SBP payload. */
+#define SBP_SEND_CRC_ERROR     (-12)
+
 /** Default sender ID. Intended for messages sent from the host to the device. */
 #define SBP_SENDER_ID 0x42
 
