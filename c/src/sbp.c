@@ -305,14 +305,22 @@ void sbp_state_set_io_context(sbp_state_t *s, void *context)
  *         callback, and `SBP_CRC_ERROR` (-2) if a CRC error
  *         has occurred. Thus can check for >0 to ensure good processing.
  */
-s8 sbp_process(sbp_state_t *s, u32 (*read)(u8 *buff, u32 n, void *context))
+s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
 {
+  /* Sanity checks */
+  if ((0 == s) || (0 == read)) {
+    return SBP_NULL_ERROR;
+  }
+
   u8 temp;
   u16 crc;
+  s32 rd = 0;
 
   switch (s->state) {
   case WAITING:
-    if ((*read)(&temp, 1, s->io_context) == 1)
+    rd = (*read)(&temp, 1, s->io_context);
+    if (0 > rd) return SBP_READ_ERROR;
+    if (1 == rd)
       if (temp == SBP_PREAMBLE) {
         s->n_read = 0;
         s->state = GET_TYPE;
@@ -320,8 +328,9 @@ s8 sbp_process(sbp_state_t *s, u32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case GET_TYPE:
-    s->n_read += (*read)((u8*)&(s->msg_type) + s->n_read,
-                         2-s->n_read, s->io_context);
+    rd = (*read)((u8*)&(s->msg_type) + s->n_read, 2-s->n_read, s->io_context);
+    if (0 > rd) return SBP_READ_ERROR;
+    s->n_read += rd;
     if (s->n_read >= 2) {
       /* Swap bytes to little endian. */
       s->n_read = 0;
@@ -330,8 +339,9 @@ s8 sbp_process(sbp_state_t *s, u32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case GET_SENDER:
-    s->n_read += (*read)((u8*)&(s->sender_id) + s->n_read,
-                         2-s->n_read, s->io_context);
+    rd = (*read)((u8*)&(s->sender_id) + s->n_read, 2-s->n_read, s->io_context);
+    if (0 > rd) return SBP_READ_ERROR;
+    s->n_read += rd;
     if (s->n_read >= 2) {
       /* Swap bytes to little endian. */
       s->state = GET_LEN;
@@ -339,7 +349,9 @@ s8 sbp_process(sbp_state_t *s, u32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case GET_LEN:
-    if ((*read)(&(s->msg_len), 1, s->io_context) == 1) {
+    rd = (*read)(&(s->msg_len), 1, s->io_context);
+    if (0 > rd) return SBP_READ_ERROR;
+    if (1 == rd) {
       s->n_read = 0;
       s->state = GET_MSG;
     }
@@ -347,11 +359,9 @@ s8 sbp_process(sbp_state_t *s, u32 (*read)(u8 *buff, u32 n, void *context))
 
   case GET_MSG:
     /* Not received whole message yet, try and read some more. */
-    s->n_read += (*read)(
-      &(s->msg_buff[s->n_read]),
-      s->msg_len - s->n_read,
-      s->io_context
-    );
+    rd = (*read)(&(s->msg_buff[s->n_read]), s->msg_len - s->n_read, s->io_context);
+    if (0 > rd) return SBP_READ_ERROR;
+    s->n_read += rd;
     if (s->msg_len - s->n_read <= 0) {
       s->n_read = 0;
       s->state = GET_CRC;
@@ -359,8 +369,9 @@ s8 sbp_process(sbp_state_t *s, u32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case GET_CRC:
-    s->n_read += (*read)((u8*)&(s->crc) + s->n_read,
-                         2-s->n_read, s->io_context);
+    rd = (*read)((u8*)&(s->crc) + s->n_read, 2-s->n_read, s->io_context);
+    if (0 > rd) return SBP_READ_ERROR;
+    s->n_read += rd;
     if (s->n_read >= 2) {
       s->state = WAITING;
 
@@ -446,34 +457,40 @@ s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
  *         not be sent or was only partially sent.
  */
 s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
-                    u32 (*write)(u8 *buff, u32 n, void *context))
+                    s32 (*write)(u8 *buff, u32 n, void *context))
 {
   /* Check our payload data pointer isn't NULL unless len = 0. */
   if (len != 0 && payload == 0)
     return SBP_NULL_ERROR;
 
   /* Check our write function pointer isn't NULL. */
-  if (write == 0)
+  if ((0 == s) || (0 == write))
     return SBP_NULL_ERROR;
 
   u16 crc;
+  s32 wr = 0;
 
   u8 preamble = SBP_PREAMBLE;
-  if ((*write)(&preamble, 1, s->io_context) != 1)
-    return SBP_SEND_ERROR;
+  wr = (*write)(&preamble, 1, s->io_context);
+  if (0 > wr) return SBP_WRITE_ERROR;
+  if (wr != 1) return SBP_SEND_ERROR;
 
-  if ((*write)((u8*)&msg_type, 2, s->io_context) != 2)
-    return SBP_SEND_ERROR;
+  wr = (*write)((u8*)&msg_type, 2, s->io_context);
+  if (0 > wr) return SBP_WRITE_ERROR;
+  if (wr != 2) return SBP_SEND_ERROR;
 
-  if ((*write)((u8*)&sender_id, 2, s->io_context) != 2)
-    return SBP_SEND_ERROR;
+  wr = (*write)((u8*)&sender_id, 2, s->io_context);
+  if (0 > wr) return SBP_WRITE_ERROR;
+  if (wr != 2) return SBP_SEND_ERROR;
 
-  if ((*write)(&len, 1, s->io_context) != 1)
-    return SBP_SEND_ERROR;
+  wr = (*write)(&len, 1, s->io_context);
+  if (0 > wr) return SBP_WRITE_ERROR;
+  if (wr != 1) return SBP_SEND_ERROR;
 
   if (len > 0) {
-    if ((*write)(payload, len, s->io_context) != len)
-      return SBP_SEND_ERROR;
+    wr = (*write)(payload, len, s->io_context);
+    if (0 > wr) return SBP_WRITE_ERROR;
+    if (wr != len) return SBP_SEND_ERROR;
   }
 
   crc = crc16_ccitt((u8*)&(msg_type), 2, 0);
@@ -481,8 +498,9 @@ s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
   crc = crc16_ccitt(&(len), 1, crc);
   crc = crc16_ccitt(payload, len, crc);
 
-  if ((*write)((u8*)&crc, 2, s->io_context) != 2)
-    return SBP_SEND_ERROR;
+  wr = (*write)((u8*)&crc, 2, s->io_context);
+  if (0 > wr) return SBP_WRITE_ERROR;
+  if (wr != 2) return SBP_SEND_ERROR;
 
   return SBP_OK;
 }
