@@ -24,7 +24,7 @@
 -- by device settings.  By default, the vehicle body frame is configured to be
 -- coincident with the antenna phase center.  When there is no inertial
 -- navigation, the solution will be reported at the phase center of the
--- antenna.
+-- antenna. There is no inertial navigation capability on Piksi Multi or Duro.
 
 module SwiftNav.SBP.Navigation
   ( module SwiftNav.SBP.Navigation
@@ -818,7 +818,9 @@ msgVelBody = 0x0213
 -- of the vehicle. Since this is a right handed system, z should point out the
 -- bottom of the vehicle. The orientation and origin of the Vehicle Body Frame
 -- are specified via the device settings. The full GPS time is given by the
--- preceding MSG_GPS_TIME with the matching time-of-week (tow).
+-- preceding MSG_GPS_TIME with the matching time-of-week (tow). This message is
+-- only produced by inertial versions of Swift products and is not available
+-- from Piksi Multi or Duro.
 data MsgVelBody = MsgVelBody
   { _msgVelBody_tow   :: !Word32
     -- ^ GPS Time of Week
