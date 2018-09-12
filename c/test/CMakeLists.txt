@@ -1,5 +1,5 @@
 if (CMAKE_CROSSCOMPILING)
-  message(STATUS "Skipping unit tests, cross compiling")
+  message(STATUS "LIBSBP: Skipping unit tests, cross compiling")
 else (CMAKE_CROSSCOMPILING)
 
   find_package(Check)
