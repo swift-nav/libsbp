@@ -52,6 +52,15 @@ matrix:
         docker run --rm --name sbp2json sbp2json >sbp_linux_tools.tar
         gzip sbp_linux_tools.tar
 
+deploy:
+  provider: releases
+  api_key:
+    secure: "EbM5FzcjE5waVpl0fl3J/rorE3UbhbX+gyhbjIv35GqHU5Ifwo5oMo2xno8G8y83PTzVFvpF9n/AWxRtKUEB2j5gtK1uljBheeBHmXIs6G7LdBZPq2bexPRpO2N7GgS1huWd8Z8YSwsoxC5/OR/hwIU1KgEY/ol2q15XiZLsl4c="
+  file: haskell/sbp_linux_tools.tar.gz
+  skip_cleanup: true
+  on:
+    tags: true
+
 install:
   # - tlmgr update --self
   # - tlmgr install standalone #standalone.sty
