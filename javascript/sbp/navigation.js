@@ -27,7 +27,8 @@
  * are reported in the vehicle body frame as defined by device settings.  By
  * default, the vehicle body frame is configured to be coincident with the antenna
  * phase center.  When there is no inertial navigation, the solution will be
- * reported at the phase center of the antenna.
+ * reported at the phase center of the antenna. There is no inertial navigation
+ * capability on Piksi Multi or Duro.
 ***********************/
 
 var SBP = require('./sbp');
@@ -469,7 +470,12 @@ MsgBaselineEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * This baseline is the relative vector distance from the base station to the rover
  * receiver, and NED coordinate system is defined at the local WGS84 tangent plane
  * centered at the base station position.  The full GPS time is given by the
- * preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * preceding MSG_GPS_TIME with the matching time-of-week (tow).  The NED coordinate
+ * system rotation is extremely sensitive to the received base station coordinates.
+ * A 1 meter change in the reference coordinate will change the vector components
+ * by 1 centimeter. For applications requiring precise and stable baselines the
+ * MSG_BASELINE_ECEF message should be used.  Note: Prior to firmware release v2.1
+ * the NED coordinate system was centered at the rover position.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -748,7 +754,9 @@ MsgVelNedCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * vehicle. Since this is a right handed system, z should point out the bottom of
  * the vehicle. The orientation and origin of the Vehicle Body Frame are specified
  * via the device settings. The full GPS time is given by the preceding
- * MSG_GPS_TIME with the matching time-of-week (tow).
+ * MSG_GPS_TIME with the matching time-of-week (tow). This message is only produced
+ * by inertial versions of Swift products and is not available from Piksi Multi or
+ * Duro.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
