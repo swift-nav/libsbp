@@ -317,7 +317,7 @@ class MsgInsStatus(SBP):
 
   
   The INS status message describes the state of the operation
-and initialization of the inertial navigation system.
+and initialization of the inertial navigation system. 
 
 
   Parameters

@@ -65,7 +65,7 @@ message MsgHeartbeat {
 /** Inertial Navigation System status message
  *
  * The INS status message describes the state of the operation
- * and initialization of the inertial navigation system.
+ * and initialization of the inertial navigation system. 
  */
 message MsgInsStatus {
     uint32 flags = 1;

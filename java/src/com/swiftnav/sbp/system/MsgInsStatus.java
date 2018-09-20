@@ -29,7 +29,7 @@ import org.json.JSONArray;
  * fields.
  *
  * The INS status message describes the state of the operation
- * and initialization of the inertial navigation system. */
+ * and initialization of the inertial navigation system.  */
 
 public class MsgInsStatus extends SBPMessage {
     public static final int TYPE = 0xFF03;

@@ -80,7 +80,7 @@ typedef struct SBP_ATTR_PACKED {
 /** Inertial Navigation System status message
  *
  * The INS status message describes the state of the operation
- * and initialization of the inertial navigation system.
+ * and initialization of the inertial navigation system. 
  */
 #define SBP_MSG_INS_STATUS   0xFF03
 typedef struct SBP_ATTR_PACKED {
