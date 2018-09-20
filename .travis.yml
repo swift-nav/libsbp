@@ -1,10 +1,13 @@
-sudo: false
+sudo: required
 
-language: c
+dist: trusty
+language: python
+python: 2.7.13
 
 addons:
   apt:
     packages:
+    - build-essential
     - check
     - doxygen
     - cmake
@@ -35,7 +38,7 @@ before_install:
   - mv node_modules npm
   - npm/.bin/npm --version
   - npm/.bin/npm install
-  - pip install --user tox
+  - sudo pip install tox
 
 matrix:
   include:
@@ -65,7 +68,7 @@ install:
   # - tlmgr update --self
   # - tlmgr install standalone #standalone.sty
   # - tlmgr install cmbright #cmbright font
-  - pip install --upgrade --user Sphinx
+  - sudo pip install --upgrade Sphinx
   - npm install -g mocha
   - npm install
 
