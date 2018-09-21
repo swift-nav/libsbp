@@ -80,7 +80,7 @@ definitions:
                 SSR is used to indicate a change in the SSR 
                 generating configuration
         - iod:
-            type: u8
+            type: u16
             desc: Issue of broadcast ephemeris data
         - radial:
             type: s32
