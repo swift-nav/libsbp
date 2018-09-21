@@ -186,7 +186,7 @@ generating configuration
                    'sid' / construct.Struct(GnssSignal._parser),
                    'update_interval' / construct.Int8ul,
                    'iod_ssr' / construct.Int8ul,
-                   'iod' / construct.Int8ul,
+                   'iod' / construct.Int16ul,
                    'radial' / construct.Int32sl,
                    'along' / construct.Int32sl,
                    'cross' / construct.Int32sl,

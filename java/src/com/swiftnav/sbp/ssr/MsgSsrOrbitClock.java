@@ -98,7 +98,7 @@ generating configuration
         sid = new GnssSignal().parse(parser);
         update_interval = parser.getU8();
         iod_ssr = parser.getU8();
-        iod = parser.getU8();
+        iod = parser.getU16();
         radial = parser.getS32();
         along = parser.getS32();
         cross = parser.getS32();
@@ -116,7 +116,7 @@ generating configuration
         sid.build(builder);
         builder.putU8(update_interval);
         builder.putU8(iod_ssr);
-        builder.putU8(iod);
+        builder.putU16(iod);
         builder.putS32(radial);
         builder.putS32(along);
         builder.putS32(cross);

@@ -115,7 +115,7 @@ data MsgSsrOrbitClock = MsgSsrOrbitClock
   , _msgSsrOrbitClock_iod_ssr       :: !Word8
     -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
     -- indicate a change in the SSR  generating configuration
-  , _msgSsrOrbitClock_iod           :: !Word8
+  , _msgSsrOrbitClock_iod           :: !Word16
     -- ^ Issue of broadcast ephemeris data
   , _msgSsrOrbitClock_radial        :: !Int32
     -- ^ Orbit radial delta correction
@@ -143,7 +143,7 @@ instance Binary MsgSsrOrbitClock where
     _msgSsrOrbitClock_sid <- get
     _msgSsrOrbitClock_update_interval <- getWord8
     _msgSsrOrbitClock_iod_ssr <- getWord8
-    _msgSsrOrbitClock_iod <- getWord8
+    _msgSsrOrbitClock_iod <- getWord16le
     _msgSsrOrbitClock_radial <- fromIntegral <$> getWord32le
     _msgSsrOrbitClock_along <- fromIntegral <$> getWord32le
     _msgSsrOrbitClock_cross <- fromIntegral <$> getWord32le
@@ -160,7 +160,7 @@ instance Binary MsgSsrOrbitClock where
     put _msgSsrOrbitClock_sid
     putWord8 _msgSsrOrbitClock_update_interval
     putWord8 _msgSsrOrbitClock_iod_ssr
-    putWord8 _msgSsrOrbitClock_iod
+    putWord16le _msgSsrOrbitClock_iod
     putWord32le $ fromIntegral _msgSsrOrbitClock_radial
     putWord32le $ fromIntegral _msgSsrOrbitClock_along
     putWord32le $ fromIntegral _msgSsrOrbitClock_cross

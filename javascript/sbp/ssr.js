@@ -112,7 +112,7 @@ PhaseBiasesContent.prototype.fieldSpec.push(['bias', 'writeInt32LE', 4]);
  * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections
  * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
  *   change in the SSR  generating configuration
- * @field iod number (unsigned 8-bit int, 1 byte) Issue of broadcast ephemeris data
+ * @field iod number (unsigned 16-bit int, 2 bytes) Issue of broadcast ephemeris data
  * @field radial number (signed 32-bit int, 4 bytes) Orbit radial delta correction
  * @field along number (signed 32-bit int, 4 bytes) Orbit along delta correction
  * @field cross number (signed 32-bit int, 4 bytes) Orbit along delta correction
@@ -142,7 +142,7 @@ MsgSsrOrbitClock.prototype.parser = new Parser()
   .nest('sid', { type: GnssSignal.prototype.parser })
   .uint8('update_interval')
   .uint8('iod_ssr')
-  .uint8('iod')
+  .uint16('iod')
   .int32('radial')
   .int32('along')
   .int32('cross')
@@ -157,7 +157,7 @@ MsgSsrOrbitClock.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpe
 MsgSsrOrbitClock.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 MsgSsrOrbitClock.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
 MsgSsrOrbitClock.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['iod', 'writeUInt8', 1]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['iod', 'writeUInt16LE', 2]);
 MsgSsrOrbitClock.prototype.fieldSpec.push(['radial', 'writeInt32LE', 4]);
 MsgSsrOrbitClock.prototype.fieldSpec.push(['along', 'writeInt32LE', 4]);
 MsgSsrOrbitClock.prototype.fieldSpec.push(['cross', 'writeInt32LE', 4]);
