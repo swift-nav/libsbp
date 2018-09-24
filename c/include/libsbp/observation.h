@@ -57,9 +57,13 @@ typedef struct SBP_ATTR_PACKED {
 
 /** GNSS observations for a particular satellite signal.
  *
- * Pseudorange and carrier phase observation for a satellite being
- * tracked. The observations are interoperable with 3rd party
- * receivers and conform with typical RTCMv3 GNSS observations.
+ * Pseudorange and carrier phase observation for a satellite being tracked.
+ * The observations are interoperable with 3rd party receivers and conform with
+ * typical RTCM 3.1 message GPS/GLO observations.
+ * 
+ * Carrier phase observations are not guaranteed to be aligned to the RINEX 3
+ * or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
+ * peformed.
  */
 typedef struct SBP_ATTR_PACKED {
   u32 P;        /**< Pseudorange observation [2 cm] */
@@ -1027,7 +1031,7 @@ coordinate system
 
 /** GLONASS L1/L2 Code-Phase biases
  *
- * The GLONASS L1/L2 Code-Phase biases allows to perform 
+ * The GLONASS L1/L2 Code-Phase biases allows to perform
  * GPS+GLONASS integer ambiguity resolution for baselines
  * with mixed receiver types (e.g. receiver of different
  * manufacturers)

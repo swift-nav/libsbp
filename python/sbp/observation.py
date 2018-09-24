@@ -116,9 +116,13 @@ as positive for approaching satellites.
 class PackedObsContent(object):
   """PackedObsContent.
   
-  Pseudorange and carrier phase observation for a satellite being
-tracked. The observations are interoperable with 3rd party
-receivers and conform with typical RTCMv3 GNSS observations.
+  Pseudorange and carrier phase observation for a satellite being tracked.
+The observations are interoperable with 3rd party receivers and conform with
+typical RTCM 3.1 message GPS/GLO observations.
+
+Carrier phase observations are not guaranteed to be aligned to the RINEX 3
+or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
+peformed.
 
   
   Parameters
@@ -5316,7 +5320,7 @@ class MsgGloBiases(SBP):
   of its fields.
 
   
-  The GLONASS L1/L2 Code-Phase biases allows to perform 
+  The GLONASS L1/L2 Code-Phase biases allows to perform
 GPS+GLONASS integer ambiguity resolution for baselines
 with mixed receiver types (e.g. receiver of different
 manufacturers)

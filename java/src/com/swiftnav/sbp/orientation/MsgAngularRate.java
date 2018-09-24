@@ -34,7 +34,9 @@ import org.json.JSONArray;
  * The orientation and origin of the user frame is specified via device settings.
  * By convention, the vehicle x-axis is expected to be aligned with the forward
  * direction, while the vehicle y-axis is expected to be aligned with the right
- * direction, and the vehicle z-axis should be aligned with the down direction. */
+ * direction, and the vehicle z-axis should be aligned with the down direction.
+ * This message will only be available in future INS versions of Swift Products 
+ * and is not produced by Piksi Multi or Duro. */
 
 public class MsgAngularRate extends SBPMessage {
     public static final int TYPE = 0x0222;

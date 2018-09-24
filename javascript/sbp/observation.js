@@ -96,7 +96,9 @@ Doppler.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
  *
  * Pseudorange and carrier phase observation for a satellite being tracked. The
  * observations are interoperable with 3rd party receivers and conform with typical
- * RTCMv3 GNSS observations.
+ * RTCM 3.1 message GPS/GLO observations.  Carrier phase observations are not
+ * guaranteed to be aligned to the RINEX 3 or RTCM 3.3 MSM reference signal and no
+ * 1/4 cycle adjustments are currently peformed.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field P number (unsigned 32-bit int, 4 bytes) Pseudorange observation
@@ -2567,7 +2569,7 @@ MsgAlmanacGlo.prototype.fieldSpec.push(['omega', 'writeDoubleLE', 8]);
 /**
  * SBP class for message MSG_GLO_BIASES (0x0075).
  *
- * The GLONASS L1/L2 Code-Phase biases allows to perform  GPS+GLONASS integer
+ * The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer
  * ambiguity resolution for baselines with mixed receiver types (e.g. receiver of
  * different manufacturers)
  *
