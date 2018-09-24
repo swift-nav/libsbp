@@ -471,11 +471,10 @@ MsgBaselineEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * receiver, and NED coordinate system is defined at the local WGS84 tangent plane
  * centered at the base station position.  The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).  The NED coordinate
- * system rotation is extremely sensitive to the received base station coordinates.
- * A 1 meter change in the reference coordinate will change the vector components
- * by 1 centimeter. For applications requiring precise and stable baselines the
- * MSG_BASELINE_ECEF message should be used.  Note: Prior to firmware release v2.1
- * the NED coordinate system was centered at the rover position.
+ * system is sensitive to the received base station coordinates. A 1 meter change
+ * in the reference coordinate will change the vector components by 1 centimeter.
+ * For applications requiring stable baselines the MSG_BASELINE_ECEF message should
+ * be used.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
