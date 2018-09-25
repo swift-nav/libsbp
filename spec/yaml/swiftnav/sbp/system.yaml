@@ -139,7 +139,7 @@ definitions:
     short_desc: Inertial Navigation System status message
     desc: |
         The INS status message describes the state of the operation
-        and initialization of the inertial navigation system. 
+        and initialization of the inertial navigation system.
     fields:
         - flags:
             type: u32
@@ -147,21 +147,22 @@ definitions:
             fields:
               - 8-31:
                   desc: Reserved
-              - 5-7:
-                  desc:  IMU Status
+              - 4-7:
+                  desc:  INS Error
                   values:
-                      - 0: IMU Ready
-                      - 1: No raw IMU data
-                      - 2: No raw IMU timestamp
-                      - 3: Unrecommended raw IMU rate
-              - 3-4:
-                  desc: Initialization Routine Indicator
+                      - 0: Reserved
+                      - 1: IMU Data Error
+                      - 2: INS License Error
+                      - 3: IMU Calibration Data Error
+              - 3:
+                  desc: GNSS Fix
                   values:
-                      - 0: None
-                      - 1: Initial startup
+                      - 0: No GNSS fix available
+                      - 1: GNSS fix
               - 0-2:
-                  desc: INS Status
+                  desc: Mode
                   values:
-                      - 0: INS ready
-                      - 1: INS initializing
-                      - 2: INS error 
+                      - 0: Awaiting initialization
+                      - 1: Dynamically aligning
+                      - 2: Ready
+                      - 3: GNSS Outage exceeds max duration
