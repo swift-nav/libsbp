@@ -8,6 +8,6 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-from handler import Handler
-from framer import Framer
-from forwarder import Forwarder
+from .handler import Handler
+from .framer import Framer
+from .forwarder import Forwarder

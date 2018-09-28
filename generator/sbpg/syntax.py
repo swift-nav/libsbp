@@ -104,7 +104,7 @@ class Field(object):
   def __init__(self, identifier=None, type_id=None, options={}):
     self.identifier = identifier
     self.type_id = type_id
-    self.options = dict([(k, FieldOption(k, v)) for k, v in options.items()])
+    self.options = dict([(k, FieldOption(k, v)) for k, v in list(options.items())])
 
   @property
   def desc(self):

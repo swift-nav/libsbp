@@ -119,5 +119,5 @@ def pep386adapt(version):
 VERSION = get_git_version()
 
 if __name__ == "__main__":
-    print get_git_version()
+    print(get_git_version())
 

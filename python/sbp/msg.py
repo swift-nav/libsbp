@@ -60,7 +60,7 @@ def crc16(s, crc=0):
 
   """
   for ch in s:
-    crc = ((crc<<8)&0xFFFF) ^ crc16_tab[ ((crc>>8)&0xFF) ^ (ord(ch)&0xFF) ]
+    crc = ((crc<<8)&0xFFFF) ^ crc16_tab[ ((crc>>8)&0xFF) ^ (ch&0xFF) ]
     crc &= 0xFFFF
   return crc
 
@@ -183,9 +183,10 @@ class SBP(object):
     return sbp
 
   def to_json_dict(self):
-    return {'preamble': self.preamble,
-            'msg_type': self.msg_type,
-            'sender': self.sender,
-            'length': self.length,
-            'payload': base64.standard_b64encode(self.payload),
-            'crc': self.crc}
+    d = {'preamble': self.preamble,
+         'msg_type': self.msg_type,
+         'sender': self.sender,
+         'length': self.length,
+         'payload': base64.standard_b64encode(self.payload).decode('ascii'),
+         'crc': self.crc}
+    return d

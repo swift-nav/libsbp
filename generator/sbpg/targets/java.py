@@ -70,7 +70,7 @@ def commentify(value):
     return '\n'.join([' * ' + l for l in value.split('\n')[:-1]])
 
 def type_map(field):
-  if JAVA_TYPE_MAP.has_key(field.type_id):
+  if field.type_id in JAVA_TYPE_MAP:
     return JAVA_TYPE_MAP[field.type_id]
   elif field.type_id == 'array':
     t = field.options['fill'].value
@@ -83,23 +83,23 @@ def parse_type(field):
   Function to pull a type from the binary payload.
   """
   if field.type_id == 'string':
-    if field.options.has_key('size'):
+    if 'size' in field.options:
       return "parser.getString(%d)" % field.options['size'].value
     else:
       return "parser.getString()"
-  elif field.type_id in JAVA_TYPE_MAP.keys():
+  elif field.type_id in list(JAVA_TYPE_MAP.keys()):
     # Primitive java types have extractor methods in SBPMessage.Parser
     return "parser.get" + field.type_id.capitalize() + "()"
   if field.type_id == 'array':
     # Call function to build array
     t = field.options['fill'].value
-    if t in JAVA_TYPE_MAP.keys():
-      if field.options.has_key('size'):
+    if t in list(JAVA_TYPE_MAP.keys()):
+      if 'size' in field.options:
         return "parser.getArrayof%s(%d)" % (t.capitalize(), field.options['size'].value)
       else:
         return "parser.getArrayof%s()" % t.capitalize()
     else:
-      if field.options.has_key('size'):
+      if 'size' in field.options:
         return "parser.getArray(%s.class, %d)" % (t, field.options['size'].value)
       else:
         return "parser.getArray(%s.class)" % t
@@ -112,25 +112,25 @@ def build_type(field):
   Function to pack a type into the binary payload.
   """
   if field.type_id == 'string':
-    if field.options.has_key('size'):
+    if 'size' in field.options:
       return "builder.putString(%s, %d)" % (field.identifier, field.options['size'].value)
     else:
       return "builder.putString(%s)" % field.identifier
-  elif field.type_id in JAVA_TYPE_MAP.keys():
+  elif field.type_id in list(JAVA_TYPE_MAP.keys()):
     # Primitive java types have extractor methods in SBPMessage.Builder
     return "builder.put%s(%s)" % (field.type_id.capitalize(), field.identifier)
   if field.type_id == 'array':
     # Call function to build array
     t = field.options['fill'].value
-    if t in JAVA_TYPE_MAP.keys():
-      if field.options.has_key('size'):
+    if t in list(JAVA_TYPE_MAP.keys()):
+      if 'size' in field.options:
         return "builder.putArrayof%s(%s, %d)" % (t.capitalize(),
                                                  field.identifier,
                                                  field.options['size'].value)
       else:
         return "builder.putArrayof%s(%s)" % (t.capitalize(), field.identifier)
     else:
-      if field.options.has_key('size'):
+      if 'size' in field.options:
         return "builder.putArray(%s, %d)" % (field.identifier, field.options['size'].value)
       else:
         return "builder.putArray(%s)" % field.identifier
@@ -138,10 +138,10 @@ def build_type(field):
     return "%s.build(builder)" % field.identifier
 
 def jsonify(field):
-  if field.type_id in JAVA_TYPE_MAP.keys():
+  if field.type_id in list(JAVA_TYPE_MAP.keys()):
     return field.identifier
   elif field.type_id == 'array':
-    if field.options['fill'].value in JAVA_TYPE_MAP.keys():
+    if field.options['fill'].value in list(JAVA_TYPE_MAP.keys()):
       return "new JSONArray(%s)" % field.identifier
     else:
       return "SBPStruct.toJSONArray(%s)" % field.identifier
@@ -175,7 +175,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
       os.mkdir(os.path.dirname(destination_filename))
 
     with open(destination_filename, 'w+') as f:
-        print destination_filename
+        print(destination_filename)
         f.write(java_template.render(m=msg,
                                      filepath=yaml_filepath,
                                      module_path=module_path,
@@ -188,6 +188,6 @@ def render_table(output_dir, packages, jenv=JENV):
   """
   destination_filename = output_dir + "/com/swiftnav/sbp/client/MessageTable.java"
   with open(destination_filename, 'w+') as f:
-      print destination_filename
+      print(destination_filename)
       f.write(jenv.get_template(TEMPLATE_TABLE_NAME).render(packages=packages))
 

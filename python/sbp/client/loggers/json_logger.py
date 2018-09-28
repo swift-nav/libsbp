@@ -99,7 +99,7 @@ class JSONLogIterator(LogIterator):
 
     """
 
-    def next(self):
+    def __next__(self):
         """
         Return the next record tuple from log file containing
         JSON-serialized SBP. If an unknown SBP message type is found,
