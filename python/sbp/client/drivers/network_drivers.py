@@ -42,7 +42,7 @@ class TCPDriver(BaseDriver):
 
     def __init__(self, host, port, timeout=5, raise_initial_timeout=False):
         self._address = (host, port)
-        print(host, port)
+        print((host, port))
         self._create_connection = partial(socket.create_connection,
                                           (host, port),
                                           timeout=timeout
@@ -100,7 +100,7 @@ class TCPDriver(BaseDriver):
             self.handle.sendall(s)
         except socket.timeout:
             self._connect()
-        except socket.error, msg:
+        except socket.error as msg:
             raise IOError
         finally:
             self._write_lock.release()
@@ -242,21 +242,21 @@ class HTTPDriver(BaseDriver):
             gen = (msg.pack() for msg, _ in self.source)
             self.write_session.put(self.url, data=gen, headers=headers)
             self.write_response = True
-        except requests.exceptions.ConnectionError as err:
-            msg = "Client connection error to %s with [PUT] headers %s: msg=%s" \
-                  % (self.url, headers, err.message)
+        except requests.exceptions.ConnectionError:
+            msg = "Client connection error to %s with [PUT] headers %s" \
+                  % (self.url, headers)
             warnings.warn(msg)
         except requests.exceptions.ConnectTimeout as err:
-            msg = "Client connection timeout to %s with [PUT] headers %s: msg=%s" \
-                  % (self.url, headers, err.message)
+            msg = "Client connection timeout to %s with [PUT] headers %s" \
+                  % (self.url, headers)
             warnings.warn(msg)
         except requests.exceptions.RetryError:
-            msg = "Client retry error to %s with [PUT] headers %s: msg=%s" \
-                  % (self.url, headers, err.message)
+            msg = "Client retry error to %s with [PUT] headers %s" \
+                  % (self.url, headers)
             warnings.warn(msg)
         except requests.exceptions.ReadTimeout:
-            msg = "Client read timeout to %s with [PUT] headers %s: msg=%s" \
-                  % (self.url, headers, err.message)
+            msg = "Client read timeout to %s with [PUT] headers %s" \
+                  % (self.url, headers)
             warnings.warn(msg)
         return self.write_ok
 
@@ -311,20 +311,20 @@ class HTTPDriver(BaseDriver):
             self.read_response = self.read_session.get(
                 self.url, stream=True, headers=headers, timeout=self.timeout)
         except requests.exceptions.ConnectionError as err:
-            msg = "Client connection error to %s with [GET] headers %s: msg=%s" \
-                  % (self.url, headers, err.message)
+            msg = "Client connection error to %s with [GET] headers %s" \
+                  % (self.url, headers)
             warnings.warn(msg)
         except requests.exceptions.ConnectTimeout as err:
-            msg = "Client connection timeout to %s with [GET] headers %s: msg=%s" \
-                  % (self.url, headers, err.message)
+            msg = "Client connection timeout to %s with [GET] headers %s" \
+                  % (self.url, headers)
             warnings.warn(msg)
         except requests.exceptions.RetryError:
-            msg = "Client retry error to %s with [GET] headers %s: msg=%s" \
-                  % (self.url, headers, err.message)
+            msg = "Client retry error to %s with [GET] headers %s" \
+                  % (self.url, headers)
             warnings.warn(msg)
         except requests.exceptions.ReadTimeout:
-            msg = "Client read timeout to %s with [GET] headers %s: msg=%s" \
-                  % (self.url, headers, err.message)
+            msg = "Client read timeout to %s with [GET] headers %s" \
+                  % (self.url, headers)
             warnings.warn(msg)
         return self.read_ok
 

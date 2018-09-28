@@ -110,7 +110,7 @@ class LogIterator(object):
             data = msg
         return data
 
-    def next(self):
+    def __next__(self):
         """Return the next record tuple from the log file. If an unknown SBP
         message type is found, it'll return the raw SBP. If EOF, throws
         exception and then returns to start of file.

@@ -17,26 +17,27 @@ from Yaml.
 
 from voluptuous import Coerce
 from voluptuous import Optional
+from voluptuous import Required
 from voluptuous import Schema
 
 SBP_EXTENSION = "/*.yaml"
 
-filename = Schema(str)
-identifier = Schema(str)
-description = Schema(str)
-include = Schema([filename])
-bit = Schema(int)
-type_identifier = Schema(str)
-sbp_identifier = Schema(int)
+filename = str
+identifier = str
+description = str
+include = [filename]
+bit = int
+type_identifier = str
+sbp_identifier = int
 units = Coerce(str)
 bitmask = Coerce(str)
-size = Schema(int)
+size = int
 
-bitfield = Schema([{Optional(bitmask):
+bitfield = ([{Optional(bitmask):
                            {Optional('units'): units,
                             Optional('values'): [{bit: description}],
                             Optional('desc'): description}}])
-field = Schema({identifier:
+field = ({identifier:
                 {Optional('units'): units,
                  'type': type_identifier,
                  Optional('desc'): description,
@@ -45,7 +46,7 @@ field = Schema({identifier:
                  Optional('size'): size,
                  Optional('size_fn'): identifier,
                  Optional('fields'): bitfield}})
-definition = Schema({identifier:
+definition = ({identifier:
                      {Optional('id'): sbp_identifier,
                       Optional('short_desc'): description,
                       Optional('desc'): description,

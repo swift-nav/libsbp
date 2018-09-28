@@ -61,7 +61,7 @@ class TestSpecification(object):
     self.raw_json = raw_json
     self.raw_json_obj = json.loads(raw_json)
     self.packet = base64.standard_b64decode(self.raw_packet)
-    self.packet_as_byte_array = map(ord,list(self.packet))
+    self.packet_as_byte_array = list(map(ord,list(self.packet)))
     self.msg_type = msg_type
     self.msg = msg
     self.sbp = sbp

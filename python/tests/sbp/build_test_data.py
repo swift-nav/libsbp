@@ -98,7 +98,7 @@ def dump_modules_to_yaml(test_map, version):
     for making unit test cases.
 
   """
-  for k, v in test_map.iteritems():
+  for k, v in test_map.items():
     if not v:
       continue
     package = v[0]['msg']['module']
@@ -194,9 +194,9 @@ def main():
   # Build
   num_test_cases = 5
   message_table = _SBP_TABLE
-  test_table = dict((k, []) for (k, v) in message_table.copy().iteritems())
+  test_table = dict((k, []) for (k, v) in iter(message_table.copy().items()))
   with Iterator(log_datafile) as log:
-    for msg, metadata in log.next():
+    for msg, metadata in next(log):
       try:
         i = mk_readable_msg(msg)
       except TypeError as ex_info:

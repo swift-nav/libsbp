@@ -1,16 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import imp
+
 try:
   import sys
-  reload(sys).setdefaultencoding("UTF-8")
+  imp.reload(sys).setdefaultencoding("UTF-8")
 except:
   pass
 
 try:
   from setuptools import setup, find_packages
 except ImportError:
-  print 'Please install or upgrade setuptools or pip to continue.'
+  print('Please install or upgrade setuptools or pip to continue.')
   sys.exit(1)
 
 setup(name='sbp_gen',

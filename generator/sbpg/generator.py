@@ -99,14 +99,14 @@ def main():
       file_index = yaml.resolve_deps(*yaml.get_files(input_file))
 
     # Sort the files - we need them to be in a stable order for some test generation
-    file_index_items = sorted(file_index.items(), key=lambda f: f[0])
+    file_index_items = sorted(list(file_index.items()), key=lambda f: f[0])
 
     if verbose:
-      print "Reading files..."
-      pprint.pprint(file_index.keys())
-      print "Writing to %s" % output_dir
+      print("Reading files...")
+      pprint.pprint(list(file_index.keys()))
+      print("Writing to %s" % output_dir)
     if args.latex:
-      parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
+      parsed = [yaml.parse_spec(spec) for spec in list(file_index.values())]
       tex.render_source(output_dir, parsed, args.release[0])
     else:
       spec_no = 0
@@ -139,7 +139,7 @@ def main():
       elif args.python:
         py.render_version(output_dir, args.release[0])
       elif args.haskell:
-        parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
+        parsed = [yaml.parse_spec(spec) for spec in list(file_index.values())]
         hs.render_cabal(output_dir, parsed, args.release[0])
         hs.render_sbp(output_dir, parsed)
       elif args.java:
