@@ -113,7 +113,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
   module_path = ".".join(package_spec.identifier.split(".")[1:-1])
   includes = [".".join(i.split(".")[:-1]) for i in package_spec.includes]
   includes = [i for i in includes if i != "types"]
-  print destination_filename, includes
+  print(destination_filename, includes)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,
                                filepath="/".join(package_spec.filepath) + ".yaml",

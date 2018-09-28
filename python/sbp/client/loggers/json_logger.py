@@ -99,7 +99,7 @@ class JSONLogIterator(LogIterator):
 
     """
 
-    def next(self):
+    def __next__(self):
         """
         Return the next record tuple from log file containing
         JSON-serialized SBP. If an unknown SBP message type is found,
@@ -128,4 +128,3 @@ class JSONLogIterator(LogIterator):
                 warn = "Bad JSON decoding for line %s" % line
                 warnings.warn(warn, RuntimeWarning)
         self.handle.seek(0, 0)
-        raise StopIteration

@@ -186,7 +186,7 @@ def main():
             monitor.enable_channel(ch)
             while monitor.num_ffts(ch) < samples:
                 time.sleep(1)
-            print "Captured %d ffts from channel %d" % (samples, ch)
+            print("Captured %d ffts from channel %d" % (samples, ch))
             ffts = monitor.get_ffts(ch)
             #monitor.disable_channel(ch)
 

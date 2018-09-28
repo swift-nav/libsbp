@@ -57,7 +57,7 @@ response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
       super( MsgBootloaderHandshakeReq, self).__init__()
       self.msg_type = SBP_MSG_BOOTLOADER_HANDSHAKE_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -278,7 +278,7 @@ and not related to the Piksi's serial number.
       super( MsgNapDeviceDnaReq, self).__init__()
       self.msg_type = SBP_MSG_NAP_DEVICE_DNA_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)

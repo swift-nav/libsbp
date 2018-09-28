@@ -135,7 +135,7 @@ def resolve_test_deps(base_dir, file_index):
         index[fname] = read_test_spec(fname)
         index.update(flatten(index[fname], file_index))
     return index
-  for fname, contents in file_index.items():
+  for fname, contents in list(file_index.items()):
     file_index[fname] = read_test_spec(fname)
     file_index.update(flatten(file_index[fname], file_index))
   return file_index
@@ -157,7 +157,7 @@ def resolve_deps(base_dir, file_index):
         index[fname] = read_spec(fname)
         index.update(flatten(index[fname], file_index))
     return index
-  for fname, contents in file_index.items():
+  for fname, contents in list(file_index.items()):
     file_index[fname] = read_spec(fname)
     file_index.update(flatten(file_index[fname], file_index))
   return file_index
@@ -252,7 +252,7 @@ def mk_definition(defn):
 
   """
   assert len(defn) == 1
-  identifier, contents = defn.items()[0]
+  identifier, contents = list(defn.items())[0]
   fs = [mk_field(f) for f in contents.get('fields', [])]
   return sbp.resolve_type(sbp.Definition(identifier=identifier,
                                          sbp_id=contents.get('id', None),
@@ -276,8 +276,8 @@ def mk_field(field):
 
   """
   assert len(field) == 1
-  identifier, contents = field.items()[0]
-  contents = dict({'units': '', 'n_with_values': 0}.items() + contents.items())
+  identifier, contents = list(field.items())[0]
+  contents = dict(list({'units': '', 'n_with_values': 0}.items()) + list(contents.items()))
   return sbp.resolve_type(sbp.Field(identifier=identifier,
                                     type_id=contents.pop('type'),
                                     options=contents))

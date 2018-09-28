@@ -46,8 +46,7 @@ class SettingMonitor(object):
         expire = time.time() + wait_time
         ok = False
         while not ok and time.time() < expire:
-            settings = filter(lambda x: (x[0], x[1]) == (section, setting),
-                              self.settings)
+            settings = [x for x in self.settings if (x[0], x[1]) == (section, setting)]
             # Check to see if the last setting has the value we want
             if len(settings) > 0:
                 ok = settings[-1][2] == value
@@ -57,15 +56,13 @@ class SettingMonitor(object):
 
     def clear(self, section=None, setting=None, value=None):
         """Clear settings"""
-        match = map(lambda (x,y,z): all((section is None or x == section,
-                                         setting is None or y == setting,
-                                         value is None or z == value)),
-                    self.settings)
+        match = [all((section is None or x_y_z[0] == section,
+                                         setting is None or x_y_z[1] == setting,
+                                         value is None or x_y_z[2] == value)) for x_y_z in self.settings]
 
-        keep = filter(lambda (setting,remove): not remove,
-                      zip(self.settings,match))
+        keep = [setting_remove for setting_remove in zip(self.settings,match) if not setting_remove[1]]
 
-        self.settings[:] = map(lambda x: x[0], keep)
+        self.settings[:] = [x[0] for x in keep]
 
 
 if __name__ == "__main__":
@@ -75,7 +72,7 @@ if __name__ == "__main__":
     import argparse
 
     def print_setting(sbp_msg, **metadata):
-        print sbp_msg
+        print(sbp_msg)
 
     def main():
         parser = argparse.ArgumentParser(
@@ -118,7 +115,7 @@ if __name__ == "__main__":
                         'system_monitor', 'spectrum_analyzer', 'False')
 
                 assert(specan_off == True)
-                print "Spectrum analyzer turned off!"
+                print("Spectrum analyzer turned off!")
 
                 # Request the value of the system_monitor:spectrum_analyzer setting
                 link(MsgSettingsReadReq(setting='%s\0%s\0' % (
@@ -129,6 +126,6 @@ if __name__ == "__main__":
                         'system_monitor', 'spectrum_analyzer', 'True')
 
                 assert(specan_off == False)
-                print "Spectrum analyzer still off!"
+                print("Spectrum analyzer still off!")
 
     main()

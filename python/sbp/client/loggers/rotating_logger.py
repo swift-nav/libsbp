@@ -11,7 +11,7 @@
 from logging.handlers import TimedRotatingFileHandler
 from sbp.client.loggers.json_logger import JSONLogger
 from sbp.table import dispatch
-import Queue
+import queue
 import logging
 import threading
 import time
