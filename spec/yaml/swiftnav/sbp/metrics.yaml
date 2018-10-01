@@ -1,0 +1,165 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.system
+description: Standardized system messages from Swift Navigation devices.
+stable: True
+public: True
+include:
+  - types.yaml
+definitions:
+
+ - MSG_METRICS_LIST_REQ:
+    id: 0x0301
+    short_desc: List the available metrics on the system
+    desc: |
+      This message ask the system to return a list of available
+      metrics on the system.
+    fields:
+      - request_id:
+          type: u16
+          desc: a unique id for the request
+
+ - MSG_METRICS_LIST_RESP:
+  
+    id: 0x0302
+  
+    short_desc: A metric that's available on the system.
+    desc: |
+      This message details a metric that can be enabled in order
+      for a client to receive information reported by the metric.
+  
+    fields:
+      - request_id:
+          type: u16
+          desc: the unique id of the original request
+      - metric_index:
+          type: u16
+          desc: |
+            The index number of the metric, should be stable per firmware
+            version, and should not change between invocations of the metrics
+            daemon.  Doubles as the "id" that used when the metric is enabled.
+      - max_metrics_index:
+          type: u16
+          desc: |
+            The maximum number of metrics that are supported by the system.
+            When metric_index == max_metrics_index (and all metrics have been
+            received)
+      - metric_type:
+          type: u8
+          desc: |
+            Bit field describing the type of the metric: where 0x1 = s32, 0x2 = s64,
+            0x4 = u32, 0x01 = u64, 0x02 = f64, 0x04 = time (nanosecond).
+      - metric_interval:
+          type: u16
+          desc: |
+            The interval at which the metric updates, in 10s of milliseconds. A value
+            of 50 would mean the metric updates every 500 milliseconds. A value of
+            30,000 would mean the metric updates every 5 minutes.
+      - metric_name:
+          type: array
+          fill: u8
+          size: 240
+          desc: The human readable name of the metric
+ - MSG_METRICS_GET_INDEX_REQ:
+  
+    id: 0x0303
+  
+    short_desc: Request a specific metric by it's index.
+    desc: |
+      Allows the system to re-request a metric if it's lost
+      because of a link communication error.
+  
+    fields:
+      - request_id:
+          type: u16
+          desc: the unique id of the original request
+      - metric_index:
+          type: u16
+          desc: |
+            The index number of the metric that is being requested.
+           
+ - MSG_METRICS_ENABLE_REQ:
+ 
+    id: 0x0304
+    
+    short_desc: Tells the metrics daemon to begin emitting a metric.
+    desc: |
+      Upon receipt the metrics daemon will begin emitting a metric at
+      the specified interval.
+    
+    fields:
+      - request_id:
+          type: u16
+          desc: a unique id for the request
+      - enable_metrics_count:
+          type: u16
+          desc: |
+            The number of metrics that are being enabled, the special value
+            0xFFFF means all metrics are being enabled.
+      - enable_metrics_indexes:
+          type: array
+          fill: u16
+          size: 20
+          desc: |
+            The metrics indexes that are being enabled, the count of this array
+            should correspond to the value of `enable_metrics_count`
+      - metrics_reporting_intervals:
+          type: array
+          fill: u16
+          size: 20
+          desc: |
+            The interval at which the metrics should be reported. Each
+            enabled index in `enable_metrics_indexes` should have a corresponding
+            entry in this array.
+          
+ - MSG_METRICS_ENABLE_RESP:
+    id: 0x0305
+    short_desc: Indicates that the requested metrics have been enabled
+    desc: Indicates that the requested metrics have been enabled
+    fields:
+      - request_id:
+          type: u16
+          desc: the request id that was completed
+        
+ - MSG_METRICS_DISABLE_REQ:
+    id: 0x0306
+    short_desc: Tells the metrics daemon to begin emitting a metric.
+    desc: |
+      Upon receipt the metrics daemon will stop emitting the specified
+      metrics.
+    fields:
+      - disabled_metrics_count:
+          type: u16
+          desc: |
+            The number of metrics that are being disabled, the special value
+            0xFFFF means all metrics are being disabled.
+      - disabled_metrics_indexes:
+          type: array
+          fill: u16
+          size: 120
+          desc: |
+            The metrics indexes that are being disabled, the count of this array
+            should correspond to the value of `disabled_metrics_count`
+           
+
+ - MSG_METRICS_DISABLE_RESP:
+    id: 0x0307
+    short_desc: Indicates that the requested metrics have been disabled
+    desc: |
+      Indicates that the requested metrics have been disabled
+    fields:
+      - request_id:
+          type: u16
+          desc: a unique id for the request
+
+ 
+ 
+ 
