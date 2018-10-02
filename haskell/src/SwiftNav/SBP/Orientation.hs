@@ -80,7 +80,8 @@ msgOrientQuat = 0x0220
 -- This message reports the quaternion vector describing the vehicle body
 -- frame's orientation with respect to a local-level NED frame. The components
 -- of the vector should sum to a unit vector assuming that the LSB of each
--- component as a value of 2^-31.
+-- component as a value of 2^-31. This message will only be available in future
+-- INS versions of Swift Products and is not produced by Piksi Multi  or Duro.
 data MsgOrientQuat = MsgOrientQuat
   { _msgOrientQuat_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -142,7 +143,9 @@ msgOrientEuler = 0x0221
 -- This message reports the yaw, pitch, and roll angles of the vehicle body
 -- frame. The rotations should applied intrinsically in the order yaw, pitch,
 -- and roll  in order to rotate the from a frame aligned with the local-level
--- NED frame  to the vehicle body frame.
+-- NED frame  to the vehicle body frame.  This message will only be available
+-- in future  INS versions of Swift Products and is not produced by Piksi Multi
+-- or Duro.
 data MsgOrientEuler = MsgOrientEuler
   { _msgOrientEuler_tow          :: !Word32
     -- ^ GPS Time of Week
@@ -200,6 +203,8 @@ msgAngularRate = 0x0222
 -- By convention, the vehicle x-axis is expected to be aligned with the forward
 -- direction, while the vehicle y-axis is expected to be aligned with the right
 -- direction, and the vehicle z-axis should be aligned with the down direction.
+-- This message will only be available in future INS versions of Swift Products
+-- and is not produced by Piksi Multi or Duro.
 data MsgAngularRate = MsgAngularRate
   { _msgAngularRate_tow :: !Word32
     -- ^ GPS Time of Week
