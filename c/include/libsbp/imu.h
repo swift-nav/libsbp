@@ -32,7 +32,8 @@ SBP_PACK_START
  *
  * Raw data from the Inertial Measurement Unit, containing accelerometer and
  * gyroscope readings. The sense of the measurements are to be aligned with 
- * the indications on the device itself.
+ * the indications on the device itself. Measurement units, which are specific to the
+ * device hardware and settings, are communicated via the MSG_IMU_AUX message.
  */
 #define SBP_MSG_IMU_RAW 0x0900
 typedef struct SBP_ATTR_PACKED {
