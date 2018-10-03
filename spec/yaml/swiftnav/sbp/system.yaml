@@ -139,7 +139,7 @@ definitions:
     short_desc: Inertial Navigation System status message
     desc: |
         The INS status message describes the state of the operation
-        and initialization of the inertial navigation system.
+        and initialization of the inertial navigation system. 
     fields:
         - flags:
             type: u32
