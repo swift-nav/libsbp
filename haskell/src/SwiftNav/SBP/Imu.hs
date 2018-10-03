@@ -42,7 +42,9 @@ msgImuRaw = 0x0900
 --
 -- Raw data from the Inertial Measurement Unit, containing accelerometer and
 -- gyroscope readings. The sense of the measurements are to be aligned with
--- the indications on the device itself.
+-- the indications on the device itself. Measurement units, which are specific
+-- to the device hardware and settings, are communicated via the MSG_IMU_AUX
+-- message.
 data MsgImuRaw = MsgImuRaw
   { _msgImuRaw_tow :: !Word32
     -- ^ Milliseconds since start of GPS week. If the high bit is set, the time
