@@ -1,11 +1,33 @@
 # Change Log
 
-## [v2.4.0](https://github.com/swift-nav/libsbp/tree/v2.4.0)
+## [v2.4.1](https://github.com/swift-nav/libsbp/tree/v2.4.1) (2018-10-02)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.0...v2.4.1)
+
+**Merged pull requests:**
+
+- re-add space on ins-status message description [\#603](https://github.com/swift-nav/libsbp/pull/603)
+- Add sentence explaining how to find the measurement units. [\#602](https://github.com/swift-nav/libsbp/pull/602)
+- new ins status message definition as discussed with CRL [\#601](https://github.com/swift-nav/libsbp/pull/601)
+- SSR IOD should be 10bits for GAL and BDS [\#599](https://github.com/swift-nav/libsbp/pull/599)
+- Regenerated files [\#597](https://github.com/swift-nav/libsbp/pull/597)
+- Setup Travis CI to build Haskell based SBP tools [\#595](https://github.com/swift-nav/libsbp/pull/595)
+- Get rid of separate target for static library and stop fiddling BUILD… [\#594](https://github.com/swift-nav/libsbp/pull/594)
+- Add SSR messages to Libsbp [\#591](https://github.com/swift-nav/libsbp/pull/591)
+- Doc signal bds gal [\#590](https://github.com/swift-nav/libsbp/pull/590)
+- Note about carrier phase alignment [\#589](https://github.com/swift-nav/libsbp/pull/589)
+- Change `read\(\)` and `write\(\)` api from `size\_t` to `ssize\_t` [\#585](https://github.com/swift-nav/libsbp/pull/585)
+- Propagated time flag [\#584](https://github.com/swift-nav/libsbp/pull/584)
+- Inertial note [\#581](https://github.com/swift-nav/libsbp/pull/581)
+- Update pdf doc with better links [\#535](https://github.com/swift-nav/libsbp/pull/535)
+
+## [v2.4.0](https://github.com/swift-nav/libsbp/tree/v2.4.0) (2018-08-08)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.17...v2.4.0)
 
 **Merged pull requests:**
 
+- V2.4.0 branch [\#588](https://github.com/swift-nav/libsbp/pull/588)
+- Add units for magnetometer [\#587](https://github.com/swift-nav/libsbp/pull/587)
 - Turn off extra warnings [\#586](https://github.com/swift-nav/libsbp/pull/586)
 - Put memory packing outside the COMMON\_INT\_TYPES macro [\#583](https://github.com/swift-nav/libsbp/pull/583)
 - CortexA7 rule [\#582](https://github.com/swift-nav/libsbp/pull/582)
