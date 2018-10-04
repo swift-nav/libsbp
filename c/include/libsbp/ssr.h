@@ -72,7 +72,7 @@ typedef struct SBP_ATTR_PACKED {
 SSR is used to indicate a change in the SSR 
 generating configuration
  */
-  u16 iod;                /**< Issue of broadcast ephemeris data */
+  u32 iod;                /**< Issue of broadcast ephemeris data */
   s32 radial;             /**< Orbit radial delta correction [0.1 mm] */
   s32 along;              /**< Orbit along delta correction [0.4 mm] */
   s32 cross;              /**< Orbit along delta correction [0.4 mm] */
