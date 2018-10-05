@@ -55,7 +55,7 @@ definitions:
             desc: Phase bias for specified signal
 
  - MSG_SSR_ORBIT_CLOCK:
-    id: 0x05DC
+    id: 0x05DD
     short_desc: Precise orbit and clock correction
     desc: |
       The precise orbit and clock correction message is 
@@ -81,6 +81,71 @@ definitions:
                 generating configuration
         - iod:
             type: u32
+            desc: Issue of broadcast ephemeris data or IODCRC (Beidou)
+        - radial:
+            type: s32
+            units: 0.1 mm
+            desc: Orbit radial delta correction
+        - along:
+            type: s32
+            units: 0.4 mm
+            desc: Orbit along delta correction
+        - cross:
+            type: s32
+            units: 0.4 mm
+            desc: Orbit along delta correction
+        - dot_radial:
+            type: s32
+            units: 0.001 mm/s
+            desc: Velocity of orbit radial delta correction
+        - dot_along:
+            type: s32
+            units: 0.004 mm/s
+            desc: Velocity of orbit along delta correction
+        - dot_cross:
+            type: s32
+            units: 0.004 mm/s
+            desc: Velocity of orbit cross delta correction
+        - c0:
+            type: s32
+            units: 0.1 mm
+            desc: C0 polynomial coefficient for correction of broadcast satellite clock
+        - c1:
+            type: s32
+            units: 0.001 mm/s
+            desc: C1 polynomial coefficient for correction of broadcast satellite clock
+        - c2:
+            type: s32
+            units: 0.00002 mm/s^-2
+            desc: C2 polynomial coefficient for correction of broadcast satellite clock
+
+ - MSG_SSR_ORBIT_CLOCK_DEP_A:
+    id: 0x05DC
+    short_desc: Precise orbit and clock correction
+    desc: |
+      The precise orbit and clock correction message is 
+      to be applied as a delta correction to broadcast 
+      ephemeris and is typically an equivalent to the 1060
+      and 1066 RTCM message types
+    fields:
+        - time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the correction
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier (16 bit)
+        - update_interval:
+            type: u8
+            units: s
+            desc: Update interval between consecutive corrections
+        - iod_ssr:
+            type: u8
+            desc: |
+                IOD of the SSR correction. A change of Issue Of Data
+                SSR is used to indicate a change in the SSR 
+                generating configuration
+        - iod:
+            type: u8
             desc: Issue of broadcast ephemeris data
         - radial:
             type: s32
