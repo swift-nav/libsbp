@@ -23,9 +23,9 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
+/** SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).
  *
- * You can have MSG_SSR_ORBIT_CLOCK inherent its fields directly from
+ * You can have MSG_SSR_ORBIT_CLOCK_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
@@ -34,8 +34,8 @@ import org.json.JSONArray;
  * ephemeris and is typically an equivalent to the 1060
  * and 1066 RTCM message types */
 
-public class MsgSsrOrbitClock extends SBPMessage {
-    public static final int TYPE = 0x05DD;
+public class MsgSsrOrbitClockDepA extends SBPMessage {
+    public static final int TYPE = 0x05DC;
 
     
     /** GNSS reference time of the correction */
@@ -53,8 +53,8 @@ generating configuration
  */
     public int iod_ssr;
     
-    /** Issue of broadcast ephemeris data or IODCRC (Beidou) */
-    public long iod;
+    /** Issue of broadcast ephemeris data */
+    public int iod;
     
     /** Orbit radial delta correction */
     public int radial;
@@ -84,9 +84,9 @@ generating configuration
     public int c2;
     
 
-    public MsgSsrOrbitClock (int sender) { super(sender, TYPE); }
-    public MsgSsrOrbitClock () { super(TYPE); }
-    public MsgSsrOrbitClock (SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrOrbitClockDepA (int sender) { super(sender, TYPE); }
+    public MsgSsrOrbitClockDepA () { super(TYPE); }
+    public MsgSsrOrbitClockDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -98,7 +98,7 @@ generating configuration
         sid = new GnssSignal().parse(parser);
         update_interval = parser.getU8();
         iod_ssr = parser.getU8();
-        iod = parser.getU32();
+        iod = parser.getU8();
         radial = parser.getS32();
         along = parser.getS32();
         cross = parser.getS32();
@@ -116,7 +116,7 @@ generating configuration
         sid.build(builder);
         builder.putU8(update_interval);
         builder.putU8(iod_ssr);
-        builder.putU32(iod);
+        builder.putU8(iod);
         builder.putS32(radial);
         builder.putS32(along);
         builder.putS32(cross);

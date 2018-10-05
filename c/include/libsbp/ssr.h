@@ -63,7 +63,7 @@ Increased for every discontinuity in phase.
  * ephemeris and is typically an equivalent to the 1060
  * and 1066 RTCM message types
  */
-#define SBP_MSG_SSR_ORBIT_CLOCK  0x05DC
+#define SBP_MSG_SSR_ORBIT_CLOCK       0x05DD
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
@@ -72,7 +72,7 @@ typedef struct SBP_ATTR_PACKED {
 SSR is used to indicate a change in the SSR 
 generating configuration
  */
-  u32 iod;                /**< Issue of broadcast ephemeris data */
+  u32 iod;                /**< Issue of broadcast ephemeris data or IODCRC (Beidou) */
   s32 radial;             /**< Orbit radial delta correction [0.1 mm] */
   s32 along;              /**< Orbit along delta correction [0.4 mm] */
   s32 cross;              /**< Orbit along delta correction [0.4 mm] */
@@ -85,6 +85,35 @@ generating configuration
 } msg_ssr_orbit_clock_t;
 
 
+/** Precise orbit and clock correction
+ *
+ * The precise orbit and clock correction message is 
+ * to be applied as a delta correction to broadcast 
+ * ephemeris and is typically an equivalent to the 1060
+ * and 1066 RTCM message types
+ */
+#define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A 0x05DC
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t time;               /**< GNSS reference time of the correction */
+  sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
+  u8 update_interval;    /**< Update interval between consecutive corrections [s] */
+  u8 iod_ssr;            /**< IOD of the SSR correction. A change of Issue Of Data
+SSR is used to indicate a change in the SSR 
+generating configuration
+ */
+  u8 iod;                /**< Issue of broadcast ephemeris data */
+  s32 radial;             /**< Orbit radial delta correction [0.1 mm] */
+  s32 along;              /**< Orbit along delta correction [0.4 mm] */
+  s32 cross;              /**< Orbit along delta correction [0.4 mm] */
+  s32 dot_radial;         /**< Velocity of orbit radial delta correction [0.001 mm/s] */
+  s32 dot_along;          /**< Velocity of orbit along delta correction [0.004 mm/s] */
+  s32 dot_cross;          /**< Velocity of orbit cross delta correction [0.004 mm/s] */
+  s32 c0;                 /**< C0 polynomial coefficient for correction of broadcast satellite clock [0.1 mm] */
+  s32 c1;                 /**< C1 polynomial coefficient for correction of broadcast satellite clock [0.001 mm/s] */
+  s32 c2;                 /**< C2 polynomial coefficient for correction of broadcast satellite clock [0.00002 mm/s^-2] */
+} msg_ssr_orbit_clock_dep_a_t;
+
+
 /** Precise code biases correction
  *
  * The precise code biases message is to be added
@@ -92,7 +121,7 @@ generating configuration
  * to get corrected pseudorange. It is typically 
  * an equivalent to the 1059 and 1065 RTCM message types
  */
-#define SBP_MSG_SSR_CODE_BIASES  0x05E1
+#define SBP_MSG_SSR_CODE_BIASES       0x05E1
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
@@ -114,7 +143,7 @@ generating configuration
  * the phase wind-up correction. 
  * It is typically an equivalent to the 1265 RTCM message types
  */
-#define SBP_MSG_SSR_PHASE_BIASES 0x05E6
+#define SBP_MSG_SSR_PHASE_BIASES      0x05E6
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
