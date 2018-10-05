@@ -98,9 +98,9 @@ $(makeJSON "_phaseBiasesContent_" ''PhaseBiasesContent)
 $(makeLenses ''PhaseBiasesContent)
 
 msgSsrOrbitClock :: Word16
-msgSsrOrbitClock = 0x05DC
+msgSsrOrbitClock = 0x05DD
 
--- | SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DC).
+-- | SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
 --
 -- The precise orbit and clock correction message is  to be applied as a delta
 -- correction to broadcast  ephemeris and is typically an equivalent to the
@@ -116,7 +116,7 @@ data MsgSsrOrbitClock = MsgSsrOrbitClock
     -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
     -- indicate a change in the SSR  generating configuration
   , _msgSsrOrbitClock_iod           :: !Word32
-    -- ^ Issue of broadcast ephemeris data
+    -- ^ Issue of broadcast ephemeris data or IODCRC (Beidou)
   , _msgSsrOrbitClock_radial        :: !Int32
     -- ^ Orbit radial delta correction
   , _msgSsrOrbitClock_along         :: !Int32
@@ -174,6 +174,84 @@ instance Binary MsgSsrOrbitClock where
 $(makeSBP 'msgSsrOrbitClock ''MsgSsrOrbitClock)
 $(makeJSON "_msgSsrOrbitClock_" ''MsgSsrOrbitClock)
 $(makeLenses ''MsgSsrOrbitClock)
+
+msgSsrOrbitClockDepA :: Word16
+msgSsrOrbitClockDepA = 0x05DC
+
+-- | SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).
+--
+-- The precise orbit and clock correction message is  to be applied as a delta
+-- correction to broadcast  ephemeris and is typically an equivalent to the
+-- 1060 and 1066 RTCM message types
+data MsgSsrOrbitClockDepA = MsgSsrOrbitClockDepA
+  { _msgSsrOrbitClockDepA_time          :: !GpsTimeSec
+    -- ^ GNSS reference time of the correction
+  , _msgSsrOrbitClockDepA_sid           :: !GnssSignal
+    -- ^ GNSS signal identifier (16 bit)
+  , _msgSsrOrbitClockDepA_update_interval :: !Word8
+    -- ^ Update interval between consecutive corrections
+  , _msgSsrOrbitClockDepA_iod_ssr       :: !Word8
+    -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    -- indicate a change in the SSR  generating configuration
+  , _msgSsrOrbitClockDepA_iod           :: !Word8
+    -- ^ Issue of broadcast ephemeris data
+  , _msgSsrOrbitClockDepA_radial        :: !Int32
+    -- ^ Orbit radial delta correction
+  , _msgSsrOrbitClockDepA_along         :: !Int32
+    -- ^ Orbit along delta correction
+  , _msgSsrOrbitClockDepA_cross         :: !Int32
+    -- ^ Orbit along delta correction
+  , _msgSsrOrbitClockDepA_dot_radial    :: !Int32
+    -- ^ Velocity of orbit radial delta correction
+  , _msgSsrOrbitClockDepA_dot_along     :: !Int32
+    -- ^ Velocity of orbit along delta correction
+  , _msgSsrOrbitClockDepA_dot_cross     :: !Int32
+    -- ^ Velocity of orbit cross delta correction
+  , _msgSsrOrbitClockDepA_c0            :: !Int32
+    -- ^ C0 polynomial coefficient for correction of broadcast satellite clock
+  , _msgSsrOrbitClockDepA_c1            :: !Int32
+    -- ^ C1 polynomial coefficient for correction of broadcast satellite clock
+  , _msgSsrOrbitClockDepA_c2            :: !Int32
+    -- ^ C2 polynomial coefficient for correction of broadcast satellite clock
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrOrbitClockDepA where
+  get = do
+    _msgSsrOrbitClockDepA_time <- get
+    _msgSsrOrbitClockDepA_sid <- get
+    _msgSsrOrbitClockDepA_update_interval <- getWord8
+    _msgSsrOrbitClockDepA_iod_ssr <- getWord8
+    _msgSsrOrbitClockDepA_iod <- getWord8
+    _msgSsrOrbitClockDepA_radial <- fromIntegral <$> getWord32le
+    _msgSsrOrbitClockDepA_along <- fromIntegral <$> getWord32le
+    _msgSsrOrbitClockDepA_cross <- fromIntegral <$> getWord32le
+    _msgSsrOrbitClockDepA_dot_radial <- fromIntegral <$> getWord32le
+    _msgSsrOrbitClockDepA_dot_along <- fromIntegral <$> getWord32le
+    _msgSsrOrbitClockDepA_dot_cross <- fromIntegral <$> getWord32le
+    _msgSsrOrbitClockDepA_c0 <- fromIntegral <$> getWord32le
+    _msgSsrOrbitClockDepA_c1 <- fromIntegral <$> getWord32le
+    _msgSsrOrbitClockDepA_c2 <- fromIntegral <$> getWord32le
+    pure MsgSsrOrbitClockDepA {..}
+
+  put MsgSsrOrbitClockDepA {..} = do
+    put _msgSsrOrbitClockDepA_time
+    put _msgSsrOrbitClockDepA_sid
+    putWord8 _msgSsrOrbitClockDepA_update_interval
+    putWord8 _msgSsrOrbitClockDepA_iod_ssr
+    putWord8 _msgSsrOrbitClockDepA_iod
+    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_radial
+    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_along
+    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_cross
+    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_dot_radial
+    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_dot_along
+    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_dot_cross
+    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_c0
+    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_c1
+    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_c2
+
+$(makeSBP 'msgSsrOrbitClockDepA ''MsgSsrOrbitClockDepA)
+$(makeJSON "_msgSsrOrbitClockDepA_" ''MsgSsrOrbitClockDepA)
+$(makeLenses ''MsgSsrOrbitClockDepA)
 
 msgSsrCodeBiases :: Word16
 msgSsrCodeBiases = 0x05E1
