@@ -57,7 +57,7 @@ elseif (CMAKE_SYSTEM_PROCESSOR STREQUAL "cortex-m7")
 
   set(CMAKE_C_FLAGS
     "${CMAKE_C_FLAGS}"
-    "-mcpu=cortex-m7 -march=armv7e-m -mthumb"
+    "-mcpu=cortex-m7 -mthumb"
     "-mfpu=fpv5-d16 -mfloat-abi=hard"
   )
   
