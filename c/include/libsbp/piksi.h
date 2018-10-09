@@ -37,7 +37,7 @@ SBP_PACK_START
  * alamanac onto the Piksi's flash memory from the host.
  */
 #define SBP_MSG_ALMANAC                 0x0069
-
+int msg_almanac_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** Send GPS time from host (host => Piksi)
  *
@@ -45,7 +45,7 @@ SBP_PACK_START
  * time estimate sent by the host.
  */
 #define SBP_MSG_SET_TIME                0x0068
-
+int msg_set_time_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** Reset the device (host => Piksi)
  *
@@ -56,7 +56,7 @@ SBP_PACK_START
 typedef struct SBP_ATTR_PACKED {
   u32 flags;    /**< Reset flags */
 } msg_reset_t;
-
+int msg_reset_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_reset_t * in, uint64_t max_len, char* out_str);
 
 /** Reset the device (host => Piksi)
  *
@@ -64,7 +64,7 @@ typedef struct SBP_ATTR_PACKED {
  * bootloader.
  */
 #define SBP_MSG_RESET_DEP               0x00B2
-
+int msg_reset_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** Legacy message for CW interference channel (Piksi => host)
  *
@@ -73,7 +73,7 @@ typedef struct SBP_ATTR_PACKED {
  * removed in a future release.
  */
 #define SBP_MSG_CW_RESULTS              0x00C0
-
+int msg_cw_results_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** Legacy message for CW interference channel (host => Piksi)
  *
@@ -82,7 +82,7 @@ typedef struct SBP_ATTR_PACKED {
  * be removed in a future release.
  */
 #define SBP_MSG_CW_START                0x00C1
-
+int msg_cw_start_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** Reset IAR filters (host => Piksi)
  *
@@ -93,7 +93,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u8 filter;    /**< Filter flags */
 } msg_reset_filters_t;
-
+int msg_reset_filters_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_reset_filters_t * in, uint64_t max_len, char* out_str);
 
 /** Initialize IAR from known baseline (host => device)
  *
@@ -104,7 +104,7 @@ typedef struct SBP_ATTR_PACKED {
  * observations between the two.
  */
 #define SBP_MSG_INIT_BASE               0x0023
-
+int msg_init_base_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** State of an RTOS thread
  *
@@ -120,7 +120,7 @@ typedef struct SBP_ATTR_PACKED {
  */
   u32 stack_free;    /**< Free stack space for this thread [bytes] */
 } msg_thread_state_t;
-
+int msg_thread_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_thread_state_t * in, uint64_t max_len, char* out_str);
 
 /** State of the UART channel
  *
@@ -140,7 +140,7 @@ typedef struct SBP_ATTR_PACKED {
 0 to 255)
  */
 } uart_channel_t;
-
+int uart_channel_t_to_json_str( uart_channel_t * in, uint64_t max_len, char* out_str);
 
 /** base station observation message receipt period
  *
@@ -157,7 +157,7 @@ typedef struct SBP_ATTR_PACKED {
   s32 pmax;       /**< Maximum period [ms] */
   s32 current;    /**< Smoothed estimate of the current period [ms] */
 } period_t;
-
+int period_t_to_json_str( period_t * in, uint64_t max_len, char* out_str);
 
 /** Receiver-to-base station latency
  *
@@ -173,7 +173,7 @@ typedef struct SBP_ATTR_PACKED {
   s32 lmax;       /**< Maximum latency [ms] */
   s32 current;    /**< Smoothed estimate of the current latency [ms] */
 } latency_t;
-
+int latency_t_to_json_str( latency_t * in, uint64_t max_len, char* out_str);
 
 /** State of the UART channels
  *
@@ -195,7 +195,7 @@ typedef struct SBP_ATTR_PACKED {
   latency_t latency;       /**< UART communication latency */
   period_t obs_period;    /**< Observation receipt period */
 } msg_uart_state_t;
-
+int msg_uart_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_uart_state_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -208,7 +208,7 @@ typedef struct SBP_ATTR_PACKED {
   uart_channel_t uart_ftdi;    /**< State of UART FTDI (USB logger) */
   latency_t latency;      /**< UART communication latency */
 } msg_uart_state_depa_t;
-
+int msg_uart_state_depa_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_uart_state_depa_t * in, uint64_t max_len, char* out_str);
 
 /** State of the Integer Ambiguity Resolution (IAR) process
  *
@@ -221,7 +221,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u32 num_hyps;    /**< Number of integer ambiguity hypotheses remaining */
 } msg_iar_state_t;
-
+int msg_iar_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_iar_state_t * in, uint64_t max_len, char* out_str);
 
 /** Mask a satellite from use in Piksi subsystems
  *
@@ -233,7 +233,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   sbp_gnss_signal_t sid;     /**< GNSS signal for which the mask is applied */
 } msg_mask_satellite_t;
-
+int msg_mask_satellite_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_mask_satellite_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -244,7 +244,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   gnss_signal_dep_t sid;     /**< GNSS signal for which the mask is applied */
 } msg_mask_satellite_dep_t;
-
+int msg_mask_satellite_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_mask_satellite_dep_t * in, uint64_t max_len, char* out_str);
 
 /** Device temperature and voltage levels
  *
@@ -260,7 +260,7 @@ typedef struct SBP_ATTR_PACKED {
   s16 cpu_temperature;    /**< Processor temperature [degrees C / 100] */
   s16 fe_temperature;     /**< Frontend temperature (if available) [degrees C / 100] */
 } msg_device_monitor_t;
-
+int msg_device_monitor_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_device_monitor_t * in, uint64_t max_len, char* out_str);
 
 /** Execute a command (host => device)
  *
@@ -273,7 +273,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
   char command[0];  /**< Command line to execute */
 } msg_command_req_t;
-
+int msg_command_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_command_req_t * in, uint64_t max_len, char* out_str);
 
 /** Exit code from executed command (device => host)
  *
@@ -285,7 +285,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
   s32 code;        /**< Exit code */
 } msg_command_resp_t;
-
+int msg_command_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_command_resp_t * in, uint64_t max_len, char* out_str);
 
 /** Command output
  *
@@ -299,7 +299,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
   char line[0];     /**< Line of standard output or standard error */
 } msg_command_output_t;
-
+int msg_command_output_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_command_output_t * in, uint64_t max_len, char* out_str);
 
 /** Request state of Piksi network interfaces
  *
@@ -307,7 +307,7 @@ typedef struct SBP_ATTR_PACKED {
  * Output will be sent in MSG_NETWORK_STATE_RESP messages
  */
 #define SBP_MSG_NETWORK_STATE_REQ       0x00BA
-
+int msg_network_state_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** State of network interface
  *
@@ -326,7 +326,7 @@ typedef struct SBP_ATTR_PACKED {
   char interface_name[16]; /**< Interface Name */
   u32 flags;             /**< Interface flags from SIOCGIFFLAGS */
 } msg_network_state_resp_t;
-
+int msg_network_state_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_network_state_resp_t * in, uint64_t max_len, char* out_str);
 
 /** Bandwidth usage measurement for a single interface.
  *
@@ -344,7 +344,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 tx_bytes;          /**< Number of bytes received within period */
   char interface_name[16]; /**< Interface Name */
 } network_usage_t;
-
+int network_usage_t_to_json_str( network_usage_t * in, uint64_t max_len, char* out_str);
 
 /** Bandwidth usage reporting message
  *
@@ -354,7 +354,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   network_usage_t interfaces[0]; /**< Usage measurement array */
 } msg_network_bandwidth_usage_t;
-
+int msg_network_bandwidth_usage_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_network_bandwidth_usage_t * in, uint64_t max_len, char* out_str);
 
 /** Cell modem information update message
  *
@@ -368,7 +368,7 @@ typedef struct SBP_ATTR_PACKED {
   float signal_error_rate;    /**< BER as reported by the modem, zero translates to unknown */
   u8 reserved[0];          /**< Unspecified data TBD for this schema */
 } msg_cell_modem_status_t;
-
+int msg_cell_modem_status_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_cell_modem_status_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -389,7 +389,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 amplitude_value[0]; /**< Amplitude values (in the above units) of points in this packet
  */
 } msg_specan_dep_t;
-
+int msg_specan_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_specan_dep_t * in, uint64_t max_len, char* out_str);
 
 /** Spectrum analyzer
  *
@@ -410,7 +410,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 amplitude_value[0]; /**< Amplitude values (in the above units) of points in this packet
  */
 } msg_specan_t;
-
+int msg_specan_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_specan_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

@@ -126,6 +126,10 @@ START_TEST( test_auto_check_sbp_system_46 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->reserved == 0, "incorrect value for reserved, expected 0, is %d", msg->reserved);
+    // print to string
+    char test_str[1024];
+    msg_startup_t_to_json_str( last_sender_id, 0xff00, last_len, ( msg_startup_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -167,6 +171,10 @@ START_TEST( test_auto_check_sbp_system_46 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    // print to string
+    char test_str[1024];
+    msg_heartbeat_t_to_json_str( last_sender_id, 0xffff, last_len, ( msg_heartbeat_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

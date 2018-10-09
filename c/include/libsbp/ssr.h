@@ -38,7 +38,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 code;     /**< Signal constellation, band and code */
   s16 value;    /**< Code bias value [0.01 m] */
 } code_biases_content_t;
-
+int code_biases_content_t_to_json_str( code_biases_content_t * in, uint64_t max_len, char* out_str);
 
 /** SSR phase biases corrections for a particular satellite.
  *
@@ -54,7 +54,7 @@ Increased for every discontinuity in phase.
  */
   s32 bias;                          /**< Phase bias for specified signal [0.1 mm] */
 } phase_biases_content_t;
-
+int phase_biases_content_t_to_json_str( phase_biases_content_t * in, uint64_t max_len, char* out_str);
 
 /** Precise orbit and clock correction
  *
@@ -83,7 +83,7 @@ generating configuration
   s32 c1;                 /**< C1 polynomial coefficient for correction of broadcast satellite clock [0.001 mm/s] */
   s32 c2;                 /**< C2 polynomial coefficient for correction of broadcast satellite clock [0.00002 mm/s^-2] */
 } msg_ssr_orbit_clock_t;
-
+int msg_ssr_orbit_clock_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ssr_orbit_clock_t * in, uint64_t max_len, char* out_str);
 
 /** Precise orbit and clock correction
  *
@@ -112,7 +112,7 @@ generating configuration
   s32 c1;                 /**< C1 polynomial coefficient for correction of broadcast satellite clock [0.001 mm/s] */
   s32 c2;                 /**< C2 polynomial coefficient for correction of broadcast satellite clock [0.00002 mm/s^-2] */
 } msg_ssr_orbit_clock_dep_a_t;
-
+int msg_ssr_orbit_clock_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ssr_orbit_clock_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Precise code biases correction
  *
@@ -132,7 +132,7 @@ generating configuration
  */
   code_biases_content_t biases[0];          /**< Code biases for the different satellite signals */
 } msg_ssr_code_biases_t;
-
+int msg_ssr_code_biases_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ssr_code_biases_t * in, uint64_t max_len, char* out_str);
 
 /** Precise phase biases correction
  *
@@ -162,7 +162,7 @@ generating configuration
 satellite being tracked.
  */
 } msg_ssr_phase_biases_t;
-
+int msg_ssr_phase_biases_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ssr_phase_biases_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

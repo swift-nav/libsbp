@@ -125,9 +125,13 @@ START_TEST( test_auto_check_sbp_logging_42 )
     msg_fwd_t* msg = ( msg_fwd_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(strstr(msg->fwd_payload, ((char []){(char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103,0})) != NULL, "incorrect value for msg->fwd_payload, expected string '%s', is '%s'", ((char []){(char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103,0}), msg->fwd_payload);
-    fail_unless(msg->protocol == 0, "incorrect value for protocol, expected 0, is %d", msg->protocol);
     fail_unless(msg->source == 0, "incorrect value for source, expected 0, is %d", msg->source);
+    fail_unless(msg->protocol == 0, "incorrect value for protocol, expected 0, is %d", msg->protocol);
+    fail_unless(strstr(msg->fwd_payload, ((char []){(char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103,0})) != NULL, "incorrect value for msg->fwd_payload, expected string '%s', is '%s'", ((char []){(char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103,0}), msg->fwd_payload);
+    // print to string
+    char test_str[1024];
+    msg_fwd_t_to_json_str( last_sender_id, 0x402, last_len, ( msg_fwd_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

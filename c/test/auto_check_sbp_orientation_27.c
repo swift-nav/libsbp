@@ -127,9 +127,13 @@ START_TEST( test_auto_check_sbp_orientation_27 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
     fail_unless(msg->tow == 2, "incorrect value for tow, expected 2, is %d", msg->tow);
-    fail_unless(msg->x == 2, "incorrect value for x, expected 2, is %d", msg->x);
     fail_unless(msg->y == 5, "incorrect value for y, expected 5, is %d", msg->y);
+    fail_unless(msg->x == 2, "incorrect value for x, expected 2, is %d", msg->x);
     fail_unless(msg->z == 2, "incorrect value for z, expected 2, is %d", msg->z);
+    // print to string
+    char test_str[1024];
+    msg_angular_rate_t_to_json_str( last_sender_id, 0x222, last_len, ( msg_angular_rate_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

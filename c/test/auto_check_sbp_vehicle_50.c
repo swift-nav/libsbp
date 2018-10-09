@@ -128,6 +128,10 @@ START_TEST( test_auto_check_sbp_vehicle_50 )
     fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
     fail_unless(msg->tow == 8, "incorrect value for tow, expected 8, is %d", msg->tow);
     fail_unless(msg->velocity == 7, "incorrect value for velocity, expected 7, is %d", msg->velocity);
+    // print to string
+    char test_str[1024];
+    msg_odometry_t_to_json_str( last_sender_id, 0x903, last_len, ( msg_odometry_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

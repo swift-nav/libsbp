@@ -73,7 +73,7 @@ signal is in continuous track.
   u8 pset_flags;      /**< Parameters sets flags. */
   u8 misc_flags;      /**< Miscellaneous flags. */
 } msg_tracking_state_detailed_dep_a_t;
-
+int msg_tracking_state_detailed_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_tracking_state_detailed_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -118,7 +118,7 @@ signal is in continuous track.
   u8 pset_flags;      /**< Parameters sets flags. */
   u8 misc_flags;      /**< Miscellaneous flags. */
 } msg_tracking_state_detailed_dep_t;
-
+int msg_tracking_state_detailed_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_tracking_state_detailed_dep_t * in, uint64_t max_len, char* out_str);
 
 /** Signal tracking channel state
  *
@@ -130,7 +130,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 fcn;    /**< Frequency channel number (GLONASS only) */
   u8 cn0;    /**< Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
 } tracking_channel_state_t;
-
+int tracking_channel_state_t_to_json_str( tracking_channel_state_t * in, uint64_t max_len, char* out_str);
 
 /** Signal tracking channel states
  *
@@ -142,7 +142,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   tracking_channel_state_t states[0]; /**< Signal tracking channel state */
 } msg_tracking_state_t;
-
+int msg_tracking_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_tracking_state_t * in, uint64_t max_len, char* out_str);
 
 /** Measurement Engine signal tracking channel state
  *
@@ -156,7 +156,7 @@ typedef struct SBP_ATTR_PACKED {
   sbp_gnss_signal_t mesid;    /**< Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT) */
   u8 cn0;      /**< Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
 } measurement_state_t;
-
+int measurement_state_t_to_json_str( measurement_state_t * in, uint64_t max_len, char* out_str);
 
 /** Measurement Engine signal tracking channel states
  *
@@ -168,7 +168,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   measurement_state_t states[0]; /**< ME signal tracking channel state */
 } msg_measurement_state_t;
-
+int msg_measurement_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_measurement_state_t * in, uint64_t max_len, char* out_str);
 
 /** Complex correlation structure
  *
@@ -178,7 +178,7 @@ typedef struct SBP_ATTR_PACKED {
   s32 I;    /**< In-phase correlation */
   s32 Q;    /**< Quadrature correlation */
 } tracking_channel_correlation_t;
-
+int tracking_channel_correlation_t_to_json_str( tracking_channel_correlation_t * in, uint64_t max_len, char* out_str);
 
 /** Tracking channel correlations
  *
@@ -191,7 +191,7 @@ typedef struct SBP_ATTR_PACKED {
   sbp_gnss_signal_t sid;        /**< GNSS signal identifier */
   tracking_channel_correlation_t corrs[3];   /**< Early, Prompt and Late correlations */
 } msg_tracking_iq_t;
-
+int msg_tracking_iq_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_tracking_iq_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -203,7 +203,7 @@ typedef struct SBP_ATTR_PACKED {
   gnss_signal_dep_t sid;        /**< GNSS signal identifier */
   tracking_channel_correlation_t corrs[3];   /**< Early, Prompt and Late correlations */
 } msg_tracking_iq_dep_t;
-
+int msg_tracking_iq_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_tracking_iq_dep_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -214,7 +214,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 prn;      /**< PRN-1 being tracked */
   float cn0;      /**< Carrier-to-noise density [dB Hz] */
 } tracking_channel_state_dep_a_t;
-
+int tracking_channel_state_dep_a_t_to_json_str( tracking_channel_state_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -224,7 +224,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   tracking_channel_state_dep_a_t states[0]; /**< Satellite tracking channel state */
 } msg_tracking_state_dep_a_t;
-
+int msg_tracking_state_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_tracking_state_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated.
  *
@@ -235,7 +235,7 @@ typedef struct SBP_ATTR_PACKED {
   gnss_signal_dep_t sid;      /**< GNSS signal being tracked */
   float cn0;      /**< Carrier-to-noise density [dB Hz] */
 } tracking_channel_state_dep_b_t;
-
+int tracking_channel_state_dep_b_t_to_json_str( tracking_channel_state_dep_b_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated.
  *
@@ -245,7 +245,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   tracking_channel_state_dep_b_t states[0]; /**< Signal tracking channel state */
 } msg_tracking_state_dep_b_t;
-
+int msg_tracking_state_dep_b_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_tracking_state_dep_b_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

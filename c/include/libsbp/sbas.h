@@ -41,7 +41,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 message_type;    /**< SBAS message type (0-63) */
   u8 data[27];        /**< Raw SBAS data field of 212 bits (last byte padded with zeros). */
 } msg_sbas_raw_t;
-
+int msg_sbas_raw_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_sbas_raw_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 
