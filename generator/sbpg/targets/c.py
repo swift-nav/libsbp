@@ -44,7 +44,7 @@ import re
 CONSTRUCT_CODE = ['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double', 'string', 'char']
 
-FORMAT_STR = ['%hhu', '%hu', '%u', '%lu', '%hhd', '%hd', '%d',
+FORMAT_STR = ['%hhu', '%hu', '%u', '%llu', '%hhd', '%hd', '%d',
                       '%ld', '%f', '%f', r'\"%s\"', r'\"%s\"']
 FORMAT_DICT = {x:y for x,y in zip(CONSTRUCT_CODE,FORMAT_STR)}
 COLLISIONS = set(['GnssSignal', 'GPSTime'])
