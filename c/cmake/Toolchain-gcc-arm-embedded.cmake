@@ -41,13 +41,10 @@ message(STATUS "Cross-compiling with the gcc-arm-embedded toolchain")
 message(STATUS "Toolchain prefix: ${CMAKE_INSTALL_PREFIX}")
 
 set(CMAKE_FIND_ROOT_PATH  ${CMAKE_INSTALL_PREFIX})
-
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
-
 set(CMAKE_C_FLAGS "-fno-common -ffunction-sections -fdata-sections")
-
 if (CMAKE_SYSTEM_PROCESSOR STREQUAL "cortex-m4")
 
   set(CMAKE_C_FLAGS
@@ -55,7 +52,15 @@ if (CMAKE_SYSTEM_PROCESSOR STREQUAL "cortex-m4")
     "-mcpu=cortex-m4 -march=armv7e-m -mthumb"
     "-mfloat-abi=hard -mfpu=fpv4-sp-d16"
   )
+  
+elseif (CMAKE_SYSTEM_PROCESSOR STREQUAL "cortex-m7")
 
+  set(CMAKE_C_FLAGS
+    "${CMAKE_C_FLAGS}"
+    "-mcpu=cortex-m7 -mthumb"
+    "-mfpu=fpv5-d16 -mfloat-abi=hard"
+  )
+  
 elseif (CMAKE_SYSTEM_PROCESSOR STREQUAL "cortex-m3")
 
   set(CMAKE_C_FLAGS
@@ -92,5 +97,6 @@ string(REGEX REPLACE ";" " " CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}" CACHE STRING "")
 
-set(BUILD_SHARED_LIBS OFF)
+set(BUILD_SHARED_LIBS OFF)	
+
 
