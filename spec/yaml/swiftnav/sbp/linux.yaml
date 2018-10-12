@@ -1,0 +1,69 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.linux
+description: |
+  Linux state monitoring.
+
+stable: False
+public: False
+
+include:
+  - types.yaml
+
+definitions:
+
+ - MSG_LINUX_CPU_STATE:
+    id: 0x7F00
+    short_desc: List CPU state on the system
+    desc: |
+      This message indicates the process state of the top 10 heaviest
+      consumers of CPU on the system.
+    fields:
+      - index:
+          type: u8
+          desc: sequence of this status message, values from 0-9
+      - pid:
+          type: u16
+          desc: the PID of the process
+      - pcpu:
+          type: u8
+          desc: percent of cpu used, expressed as a fraction of 256
+      - tname:
+          type: string
+          size: 15
+          desc: fixed length string representing the thread name
+      - cmdline:
+          type: string
+          desc: the command line (as much as it fits in the remaining packet)
+
+ - MSG_LINUX_MEM_STATE:
+    id: 0x7F01
+    short_desc: List CPU state on the system
+    desc: |
+      This message indicates the process state of the top 10 heaviest
+      consumers of memory on the system.
+    fields:
+      - index:
+          type: u8
+          desc: sequence of this status message, values from 0-9
+      - pid:
+          type: u16
+          desc: the PID of the process
+      - pcpu:
+          type: u8
+          desc: percent of memory used, expressed as a fraction of 256
+      - tname:
+          type: string
+          size: 15
+          desc: fixed length string representing the thread name
+      - cmdline:
+          type: string
+          desc: the command line (as much as it fits in the remaining packet)
