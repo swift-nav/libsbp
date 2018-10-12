@@ -21,6 +21,7 @@ import SwiftNav.SBP.FileIo as Exports
 import SwiftNav.SBP.Flash as Exports
 import SwiftNav.SBP.Gnss as Exports
 import SwiftNav.SBP.Imu as Exports
+import SwiftNav.SBP.Linux as Exports
 import SwiftNav.SBP.Logging as Exports
 import SwiftNav.SBP.Mag as Exports
 import SwiftNav.SBP.Navigation as Exports

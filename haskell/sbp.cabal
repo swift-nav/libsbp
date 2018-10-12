@@ -32,6 +32,7 @@ library
                      , SwiftNav.SBP.Flash
                      , SwiftNav.SBP.Gnss
                      , SwiftNav.SBP.Imu
+                     , SwiftNav.SBP.Linux
                      , SwiftNav.SBP.Logging
                      , SwiftNav.SBP.Mag
                      , SwiftNav.SBP.Navigation
