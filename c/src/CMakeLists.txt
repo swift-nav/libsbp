@@ -8,6 +8,7 @@ set(libsbp_HEADERS
   "${PROJECT_SOURCE_DIR}/include/libsbp/flash.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/gnss.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/imu.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/linux.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/logging.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/mag.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/navigation.h"
