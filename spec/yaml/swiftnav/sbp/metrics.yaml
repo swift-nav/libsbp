@@ -16,6 +16,7 @@ include:
   - types.yaml
 definitions:
 
+
  - MSG_METRICS_LIST_REQ:
     id: 0x0301
     short_desc: List the available metrics on the system
@@ -40,30 +41,30 @@ definitions:
       - request_id:
           type: u16
           desc: the unique id of the original request
-      - metric_index:
+      - index:
           type: u16
           desc: |
             The index number of the metric, should be stable per firmware
             version, and should not change between invocations of the metrics
             daemon.  Doubles as the "id" that used when the metric is enabled.
-      - max_metrics_index:
+      - max_index:
           type: u16
           desc: |
             The maximum number of metrics that are supported by the system.
             When metric_index == max_metrics_index (and all metrics have been
             received)
-      - metric_type:
+      - type:
           type: u8
           desc: |
             Bit field describing the type of the metric: where 0x1 = s32, 0x2 = s64,
             0x4 = u32, 0x01 = u64, 0x02 = f64, 0x04 = time (nanosecond).
-      - metric_interval:
+      - interval:
           type: u16
           desc: |
             The interval at which the metric updates, in 10s of milliseconds. A value
             of 50 would mean the metric updates every 500 milliseconds. A value of
             30,000 would mean the metric updates every 5 minutes.
-      - metric_name:
+      - name:
           type: array
           fill: u8
           size: 240
@@ -81,84 +82,137 @@ definitions:
       - request_id:
           type: u16
           desc: the unique id of the original request
-      - metric_index:
+      - index:
           type: u16
           desc: |
             The index number of the metric that is being requested.
-           
- - MSG_METRICS_ENABLE_REQ:
- 
+ - MSG_METRICS_INTERVAL_REQ:
     id: 0x0304
-    
-    short_desc: Tells the metrics daemon to begin emitting a metric.
+    short_desc: Sets the reporting interval
     desc: |
-      Upon receipt the metrics daemon will begin emitting a metric at
-      the specified interval.
-    
-    fields:
-      - request_id:
-          type: u16
-          desc: a unique id for the request
-      - enable_metrics_count:
-          type: u16
-          desc: |
-            The number of metrics that are being enabled, the special value
-            0xFFFF means all metrics are being enabled.
-      - enable_metrics_indexes:
-          type: array
-          fill: u16
-          size: 20
-          desc: |
-            The metrics indexes that are being enabled, the count of this array
-            should correspond to the value of `enable_metrics_count`
-      - metrics_reporting_intervals:
-          type: array
-          fill: u16
-          size: 20
-          desc: |
-            The interval at which the metrics should be reported. Each
-            enabled index in `enable_metrics_indexes` should have a corresponding
-            entry in this array.
-          
- - MSG_METRICS_ENABLE_RESP:
-    id: 0x0305
-    short_desc: Indicates that the requested metrics have been enabled
-    desc: Indicates that the requested metrics have been enabled
+      Tells metrics daemon to begin reporting at the specified interval.
+      It should be possible to align the specified interval to a second
+      boundary.
     fields:
       - request_id:
           type: u16
           desc: the request id that was completed
-        
- - MSG_METRICS_DISABLE_REQ:
-    id: 0x0306
-    short_desc: Tells the metrics daemon to begin emitting a metric.
-    desc: |
-      Upon receipt the metrics daemon will stop emitting the specified
-      metrics.
-    fields:
-      - disabled_metrics_count:
+      - reporting_interval:
           type: u16
           desc: |
-            The number of metrics that are being disabled, the special value
-            0xFFFF means all metrics are being disabled.
-      - disabled_metrics_indexes:
-          type: array
-          fill: u16
-          size: 120
+            The interval at which the metrics should be reported, specified
+            in 10s of milliseconds. A value of 50 would mean the metric reports
+            every 500 milliseconds. A value of 30,000 would mean the reports
+            every 5 minutes.
+ 
+            The special value of 0 will disable metrics reporting, but leave
+            the daemon running.    
+ - MSG_METRICS_INTERVAL_RESP:
+    id: 0x0305
+    short_desc: Indicates that metrics reporting has begun
+    fields:
+      - request_id:
+          type: u16
+          desc: the request id that was completed
+      - result:
+          type: u8
           desc: |
-            The metrics indexes that are being disabled, the count of this array
-            should correspond to the value of `disabled_metrics_count`
-           
-
- - MSG_METRICS_DISABLE_RESP:
-    id: 0x0307
-    short_desc: Indicates that the requested metrics have been disabled
+            A value of zero means success, a non-zero value means an error
+            occurred.
+      - message:
+          type: array
+          fill: u8
+          size: 240
+          desc: |
+            A message describing the reason for a failure, or nothing if the
+            request was sucessful.  
+ - MSG_METRICS_DIVISOR_REQ:
+    id: 0x0306
+    short_desc: Sets the divisor for the specified metrics.
     desc: |
-      Indicates that the requested metrics have been disabled
+      Upon receipt the metrics daemon will begin emitting the specified metrics
+      with the associated divisors.
     fields:
       - request_id:
           type: u16
           desc: a unique id for the request
+      - count:
+          type: u8
+          desc: |
+            The number of metrics that are being configured. A count of
+            zero will result in a "success" response that results in no action.
+            A special value of 0xFF means all metrics are being configured
+            with a divisor of 1 (and the value of `metrics_reporting_divisor`
+            is ignored).
+      - index_mask:
+          type: array
+          fill: u64
+          size: 4
+          desc: |
+            An array of four u64 values indicating which metrics are being
+            configured.  Only ~245 metrics can be configured per one of these
+            messages, each on bit in the mask should correspond to an entry
+            in the `reporting_divisor` array, with the first on bit
+            corresponding to the first entry of the array.
+      - reporting_divisor:
+          type: array
+          fill: u8
+          size: 245
+          desc: |
+            The number of intervals that must expire before a metric is reported.
+            That is, if the reporting interval is 50ms, and the divisor is 2,
+            100ms will transpire before the metric is reported. Each enabled
+            index in `enable_metrics_indexes` should have a corresponding entry
+            in this array. The special value 0 will disable reporting of the
+            metric
+ - MSG_METRICS_DIVISOR_RESP:
+    id: 0x0307
+    short_desc: Indicates that the requested metrics have been enabled
+    fields:
+      - request_id:
+          type: u16
+          desc: the request id that was completed
+      - result:
+          type: u8
+          desc: |
+            A value of zero means the metrics where enabled successfully,
+            a non-zero value means an error occurred.
+      - message:
+          type: array
+          fill: u8
+          size: 240
+          desc: |
+            A message relating to the `result` value or nothing
+            if the enable request was successful.
+ - MSG_METRICS_REPORT:
+    id: 0x0308
+    short_desc: The actual metrics data.
+ 
+    fields:
+      - timestamp:
+          type: u64
+          desc:
+            Nano-second timestamp at which the metrics were collected.
+      - index_mask:
+          type: array
+          fill: u64
+          size: 4
+          desc: |
+            An array of four u64 values indicating which metrics are included
+            in the report.  A total of 1024 metrics can be reported currently.
+            If one metric report doesn't fit in a single SBP message, multiple
+            SBP message will be emitted.
+      - values:
+          type: array
+          fill: u8
+          size: 245
+          desc: |
+            Binary blob of metric data.  Metric values from the blob are
+            consumed in increasing order as they appear in the `index_mask`.
+            A mask value of 0x10010101 means that metrics with indexes 0
+            2, 4 and 7 appear in the report and in that order.  Clients are
+            expected to keep a map of metric indexes -> data type width
+            in order to correctly parse the values.
 
  
  
