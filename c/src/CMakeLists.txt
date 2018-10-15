@@ -10,6 +10,7 @@ set(libsbp_HEADERS
   "${PROJECT_SOURCE_DIR}/include/libsbp/imu.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/logging.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/mag.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/metrics.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/navigation.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/ndb.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/observation.h"
