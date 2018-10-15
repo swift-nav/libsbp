@@ -57,7 +57,7 @@ definitions:
       - pid:
           type: u16
           desc: the PID of the process
-      - pcpu:
+      - pmem:
           type: u8
           desc: percent of memory used, expressed as a fraction of 256
       - tname:

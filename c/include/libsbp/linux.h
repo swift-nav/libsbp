@@ -52,7 +52,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u8 index;      /**< sequence of this status message, values from 0-9 */
   u16 pid;        /**< the PID of the process */
-  u8 pcpu;       /**< percent of memory used, expressed as a fraction of 256 */
+  u8 pmem;       /**< percent of memory used, expressed as a fraction of 256 */
   char tname[15];  /**< fixed length string representing the thread name */
   char cmdline[0]; /**< the command line (as much as it fits in the remaining packet) */
 } msg_linux_mem_state_t;
