@@ -115,37 +115,41 @@ $(makeSBP 'msgLinuxMemState ''MsgLinuxMemState)
 $(makeJSON "_msgLinuxMemState_" ''MsgLinuxMemState)
 $(makeLenses ''MsgLinuxMemState)
 
-msgLinuxSysStateSummary :: Word16
-msgLinuxSysStateSummary = 0x7F02
+msgLinuxSysState :: Word16
+msgLinuxSysState = 0x7F02
 
--- | SBP class for message MSG_LINUX_SYS_STATE_SUMMARY (0x7F02).
+-- | SBP class for message MSG_LINUX_SYS_STATE (0x7F02).
 --
 -- This presents a summary of CPU and memory utilization.
-data MsgLinuxSysStateSummary = MsgLinuxSysStateSummary
-  { _msgLinuxSysStateSummary_pcpu         :: !Word8
+data MsgLinuxSysState = MsgLinuxSysState
+  { _msgLinuxSysState_mem_total    :: !Word16
+    -- ^ total system memory
+  , _msgLinuxSysState_pcpu         :: !Word8
     -- ^ percent of total cpu currently utilized
-  , _msgLinuxSysStateSummary_pmem         :: !Word8
+  , _msgLinuxSysState_pmem         :: !Word8
     -- ^ percent of total memory currently utilized
-  , _msgLinuxSysStateSummary_procs_starting :: !Word16
+  , _msgLinuxSysState_procs_starting :: !Word16
     -- ^ number of processes that started during collection phase
-  , _msgLinuxSysStateSummary_procs_stopping :: !Word16
+  , _msgLinuxSysState_procs_stopping :: !Word16
     -- ^ number of processes that stopped during collection phase
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgLinuxSysStateSummary where
+instance Binary MsgLinuxSysState where
   get = do
-    _msgLinuxSysStateSummary_pcpu <- getWord8
-    _msgLinuxSysStateSummary_pmem <- getWord8
-    _msgLinuxSysStateSummary_procs_starting <- getWord16le
-    _msgLinuxSysStateSummary_procs_stopping <- getWord16le
-    pure MsgLinuxSysStateSummary {..}
+    _msgLinuxSysState_mem_total <- getWord16le
+    _msgLinuxSysState_pcpu <- getWord8
+    _msgLinuxSysState_pmem <- getWord8
+    _msgLinuxSysState_procs_starting <- getWord16le
+    _msgLinuxSysState_procs_stopping <- getWord16le
+    pure MsgLinuxSysState {..}
 
-  put MsgLinuxSysStateSummary {..} = do
-    putWord8 _msgLinuxSysStateSummary_pcpu
-    putWord8 _msgLinuxSysStateSummary_pmem
-    putWord16le _msgLinuxSysStateSummary_procs_starting
-    putWord16le _msgLinuxSysStateSummary_procs_stopping
+  put MsgLinuxSysState {..} = do
+    putWord16le _msgLinuxSysState_mem_total
+    putWord8 _msgLinuxSysState_pcpu
+    putWord8 _msgLinuxSysState_pmem
+    putWord16le _msgLinuxSysState_procs_starting
+    putWord16le _msgLinuxSysState_procs_stopping
 
-$(makeSBP 'msgLinuxSysStateSummary ''MsgLinuxSysStateSummary)
-$(makeJSON "_msgLinuxSysStateSummary_" ''MsgLinuxSysStateSummary)
-$(makeLenses ''MsgLinuxSysStateSummary)
+$(makeSBP 'msgLinuxSysState ''MsgLinuxSysState)
+$(makeJSON "_msgLinuxSysState_" ''MsgLinuxSysState)
+$(makeLenses ''MsgLinuxSysState)
