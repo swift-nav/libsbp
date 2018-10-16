@@ -67,3 +67,23 @@ definitions:
       - cmdline:
           type: string
           desc: the command line (as much as it fits in the remaining packet)
+
+
+ - MSG_LINUX_SYS_STATE_SUMMARY:
+    id: 0x7F02
+    short_desc: CPU, Memory and Process Starts/Stops
+    desc: |
+      This presents a summary of CPU and memory utilization.
+    fields:
+      - pcpu:
+          type: u8
+          desc: percent of total cpu currently utilized
+      - pmem:
+          type: u8
+          desc: percent of total memory currently utilized
+      - procs_starting:
+          type: u16
+          desc: number of processes that started during collection phase
+      - procs_stopping:
+          type: u16
+          desc: number of processes that stopped during collection phase

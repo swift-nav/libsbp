@@ -33,7 +33,7 @@ SBP_PACK_START
  * This message indicates the process state of the top 10 heaviest
  * consumers of CPU on the system.
  */
-#define SBP_MSG_LINUX_CPU_STATE 0x7F00
+#define SBP_MSG_LINUX_CPU_STATE         0x7F00
 typedef struct SBP_ATTR_PACKED {
   u8 index;      /**< sequence of this status message, values from 0-9 */
   u16 pid;        /**< the PID of the process */
@@ -48,7 +48,7 @@ typedef struct SBP_ATTR_PACKED {
  * This message indicates the process state of the top 10 heaviest
  * consumers of memory on the system.
  */
-#define SBP_MSG_LINUX_MEM_STATE 0x7F01
+#define SBP_MSG_LINUX_MEM_STATE         0x7F01
 typedef struct SBP_ATTR_PACKED {
   u8 index;      /**< sequence of this status message, values from 0-9 */
   u16 pid;        /**< the PID of the process */
@@ -56,6 +56,19 @@ typedef struct SBP_ATTR_PACKED {
   char tname[15];  /**< fixed length string representing the thread name */
   char cmdline[0]; /**< the command line (as much as it fits in the remaining packet) */
 } msg_linux_mem_state_t;
+
+
+/** CPU, Memory and Process Starts/Stops
+ *
+ * This presents a summary of CPU and memory utilization.
+ */
+#define SBP_MSG_LINUX_SYS_STATE_SUMMARY 0x7F02
+typedef struct SBP_ATTR_PACKED {
+  u8 pcpu;              /**< percent of total cpu currently utilized */
+  u8 pmem;              /**< percent of total memory currently utilized */
+  u16 procs_starting;    /**< number of processes that started during collection phase */
+  u16 procs_stopping;    /**< number of processes that stopped during collection phase */
+} msg_linux_sys_state_summary_t;
 
 
 /** \} */
