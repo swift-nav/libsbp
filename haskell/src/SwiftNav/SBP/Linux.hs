@@ -268,11 +268,11 @@ data MsgLinuxSocketUsage = MsgLinuxSocketUsage
     -- ^ average socket queue depths across all sockets on the system
   , _msgLinuxSocketUsage_max_queue_depth   :: !Word32
     -- ^ the max queue depth seen within the reporting period
-  , _msgLinuxSocketUsage_socket_state_counts :: !Word16
+  , _msgLinuxSocketUsage_socket_state_counts :: ![Word16]
     -- ^ A count for each socket type reported in the `socket_types_reported`
     -- field, the first entry corresponds to the first enabled bit in
     -- `types_reported`.
-  , _msgLinuxSocketUsage_socket_type_counts :: !Word16
+  , _msgLinuxSocketUsage_socket_type_counts :: ![Word16]
     -- ^ A count for each socket type reported in the `socket_types_reported`
     -- field, the first entry corresponds to the first enabled bit in
     -- `types_reported`.
@@ -282,15 +282,15 @@ instance Binary MsgLinuxSocketUsage where
   get = do
     _msgLinuxSocketUsage_avg_queue_depth <- getWord32le
     _msgLinuxSocketUsage_max_queue_depth <- getWord32le
-    _msgLinuxSocketUsage_socket_state_counts <- getWord16le
-    _msgLinuxSocketUsage_socket_type_counts <- getWord16le
+    _msgLinuxSocketUsage_socket_state_counts <- replicateM 16 getWord16le
+    _msgLinuxSocketUsage_socket_type_counts <- replicateM 16 getWord16le
     pure MsgLinuxSocketUsage {..}
 
   put MsgLinuxSocketUsage {..} = do
     putWord32le _msgLinuxSocketUsage_avg_queue_depth
     putWord32le _msgLinuxSocketUsage_max_queue_depth
-    putWord16le _msgLinuxSocketUsage_socket_state_counts
-    putWord16le _msgLinuxSocketUsage_socket_type_counts
+    mapM_ putWord16le _msgLinuxSocketUsage_socket_state_counts
+    mapM_ putWord16le _msgLinuxSocketUsage_socket_type_counts
 
 $(makeSBP 'msgLinuxSocketUsage ''MsgLinuxSocketUsage)
 $(makeJSON "_msgLinuxSocketUsage_" ''MsgLinuxSocketUsage)
