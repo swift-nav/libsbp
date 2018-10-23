@@ -68,7 +68,6 @@ definitions:
           type: string
           desc: the command line (as much as it fits in the remaining packet)
 
-
  - MSG_LINUX_SYS_STATE:
     id: 0x7F02
     short_desc: CPU, Memory and Process Starts/Stops
@@ -90,3 +89,105 @@ definitions:
       - procs_stopping:
           type: u16
           desc: number of processes that stopped during collection phase
+
+ - MSG_LINUX_PROCESS_SOCKET_COUNTS:
+    id: 0x7F03
+    short_desc: A list of processes with high socket counts
+    desc: |
+      Top 10 list of processes with high socket counts.
+    fields:
+      - index:
+          type: u8
+          desc: sequence of this status message, values from 0-9
+      - pid:
+          type: u16
+          desc: the PID of the process in question
+      - socket_count:
+          type: u16
+          desc: the number of sockets the process is using
+      - socket_types:
+         type: u16
+         desc: |
+           A bitfield indicating the socket types used:
+             0x1 (tcp), 0x2 (udp), 0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink),
+             and 0x8000 (unknown)
+      - socket_states:
+         type: u16
+         desc: |
+           A bitfield indicating the socket states:
+             0x1 (established), 0x2 (syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1),
+             0x10 (fin-wait-2), 0x20 (time-wait), 0x40 (closed), 0x80 (close-wait),
+             0x100 (last-ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected),
+             and 0x8000 (unknown)
+      - cmdline:
+          type: string
+          desc: the command line of the process in question
+ 
+ - MSG_LINUX_PROCESS_SOCKET_QUEUES:
+    id: 0x7F04
+    short_desc: A list of processes with deep socket queues
+    desc: |
+      Top 10 list of sockets with deep queues.
+    fields:
+      - index:
+          type: u8
+          desc: sequence of this status message, values from 0-9
+      - pid:
+          type: u16
+          desc: the PID of the process in question
+      - recv_queued:
+          type: u16
+          desc: the total amount of receive data queued for this process
+      - send_queued:
+          type: u16
+          desc: the total amount of send data queued for this process
+      - socket_types:
+         type: u16
+         desc: |
+           A bitfield indicating the socket types used:
+             0x1 (tcp), 0x2 (udp), 0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink),
+             and 0x8000 (unknown)
+      - socket_states:
+         type: u16
+         desc: |
+           A bitfield indicating the socket states:
+             0x1 (established), 0x2 (syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1),
+             0x10 (fin-wait-2), 0x20 (time-wait), 0x40 (closed), 0x80 (close-wait),
+             0x100 (last-ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected),
+             and 0x8000 (unknown)
+      - address_of_largest:
+          type: string
+          size: 64 
+          desc: |
+             Address of the largest queue, remote or local depending on the directionality
+             of the connection.
+      - cmdline:
+          type: string
+          desc: the command line of the process in question
+ 
+ - MSG_LINUX_SOCKET_USAGE:
+    id: 0x7F05
+    short_desc: Summary of socket usage across the system
+    desc: |
+      Summaries the socket usage across the system.
+    fields:
+      - avg_queue_depth:
+          type: u32
+          desc: average socket queue depths across all sockets on the system
+      - max_queue_depth:
+          type: u32
+          desc: the max queue depth seen within the reporting period
+      - socket_state_counts:
+          type: array
+          size: 16
+          fill: u16
+          desc: |
+            A count for each socket type reported in the `socket_types_reported` field,
+            the first entry corresponds to the first enabled bit in `types_reported`.
+      - socket_type_counts:
+          type: array
+          size: 16
+          fill: u16
+          desc: |
+            A count for each socket type reported in the `socket_types_reported` field,
+            the first entry corresponds to the first enabled bit in `types_reported`.

@@ -153,3 +153,145 @@ instance Binary MsgLinuxSysState where
 $(makeSBP 'msgLinuxSysState ''MsgLinuxSysState)
 $(makeJSON "_msgLinuxSysState_" ''MsgLinuxSysState)
 $(makeLenses ''MsgLinuxSysState)
+
+msgLinuxProcessSocketCounts :: Word16
+msgLinuxProcessSocketCounts = 0x7F03
+
+-- | SBP class for message MSG_LINUX_PROCESS_SOCKET_COUNTS (0x7F03).
+--
+-- Top 10 list of processes with high socket counts.
+data MsgLinuxProcessSocketCounts = MsgLinuxProcessSocketCounts
+  { _msgLinuxProcessSocketCounts_index       :: !Word8
+    -- ^ sequence of this status message, values from 0-9
+  , _msgLinuxProcessSocketCounts_pid         :: !Word16
+    -- ^ the PID of the process in question
+  , _msgLinuxProcessSocketCounts_socket_count :: !Word16
+    -- ^ the number of sockets the process is using
+  , _msgLinuxProcessSocketCounts_socket_types :: !Word16
+    -- ^ A bitfield indicating the socket types used:   0x1 (tcp), 0x2 (udp), 0x4
+    -- (unix stream), 0x8 (unix dgram), 0x10 (netlink),   and 0x8000 (unknown)
+  , _msgLinuxProcessSocketCounts_socket_states :: !Word16
+    -- ^ A bitfield indicating the socket states:   0x1 (established), 0x2 (syn-
+    -- sent), 0x4 (syn-recv), 0x8 (fin-wait-1),   0x10 (fin-wait-2), 0x20
+    -- (time-wait), 0x40 (closed), 0x80 (close-wait),   0x100 (last-ack), 0x200
+    -- (listen), 0x400 (closing), 0x800 (unconnected),   and 0x8000 (unknown)
+  , _msgLinuxProcessSocketCounts_cmdline     :: !Text
+    -- ^ the command line of the process in question
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgLinuxProcessSocketCounts where
+  get = do
+    _msgLinuxProcessSocketCounts_index <- getWord8
+    _msgLinuxProcessSocketCounts_pid <- getWord16le
+    _msgLinuxProcessSocketCounts_socket_count <- getWord16le
+    _msgLinuxProcessSocketCounts_socket_types <- getWord16le
+    _msgLinuxProcessSocketCounts_socket_states <- getWord16le
+    _msgLinuxProcessSocketCounts_cmdline <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    pure MsgLinuxProcessSocketCounts {..}
+
+  put MsgLinuxProcessSocketCounts {..} = do
+    putWord8 _msgLinuxProcessSocketCounts_index
+    putWord16le _msgLinuxProcessSocketCounts_pid
+    putWord16le _msgLinuxProcessSocketCounts_socket_count
+    putWord16le _msgLinuxProcessSocketCounts_socket_types
+    putWord16le _msgLinuxProcessSocketCounts_socket_states
+    putByteString $ encodeUtf8 _msgLinuxProcessSocketCounts_cmdline
+
+$(makeSBP 'msgLinuxProcessSocketCounts ''MsgLinuxProcessSocketCounts)
+$(makeJSON "_msgLinuxProcessSocketCounts_" ''MsgLinuxProcessSocketCounts)
+$(makeLenses ''MsgLinuxProcessSocketCounts)
+
+msgLinuxProcessSocketQueues :: Word16
+msgLinuxProcessSocketQueues = 0x7F04
+
+-- | SBP class for message MSG_LINUX_PROCESS_SOCKET_QUEUES (0x7F04).
+--
+-- Top 10 list of sockets with deep queues.
+data MsgLinuxProcessSocketQueues = MsgLinuxProcessSocketQueues
+  { _msgLinuxProcessSocketQueues_index            :: !Word8
+    -- ^ sequence of this status message, values from 0-9
+  , _msgLinuxProcessSocketQueues_pid              :: !Word16
+    -- ^ the PID of the process in question
+  , _msgLinuxProcessSocketQueues_recv_queued      :: !Word16
+    -- ^ the total amount of receive data queued for this process
+  , _msgLinuxProcessSocketQueues_send_queued      :: !Word16
+    -- ^ the total amount of send data queued for this process
+  , _msgLinuxProcessSocketQueues_socket_types     :: !Word16
+    -- ^ A bitfield indicating the socket types used:   0x1 (tcp), 0x2 (udp), 0x4
+    -- (unix stream), 0x8 (unix dgram), 0x10 (netlink),   and 0x8000 (unknown)
+  , _msgLinuxProcessSocketQueues_socket_states    :: !Word16
+    -- ^ A bitfield indicating the socket states:   0x1 (established), 0x2 (syn-
+    -- sent), 0x4 (syn-recv), 0x8 (fin-wait-1),   0x10 (fin-wait-2), 0x20
+    -- (time-wait), 0x40 (closed), 0x80 (close-wait),   0x100 (last-ack), 0x200
+    -- (listen), 0x400 (closing), 0x800 (unconnected),   and 0x8000 (unknown)
+  , _msgLinuxProcessSocketQueues_address_of_largest :: !Text
+    -- ^ Address of the largest queue, remote or local depending on the
+    -- directionality of the connection.
+  , _msgLinuxProcessSocketQueues_cmdline          :: !Text
+    -- ^ the command line of the process in question
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgLinuxProcessSocketQueues where
+  get = do
+    _msgLinuxProcessSocketQueues_index <- getWord8
+    _msgLinuxProcessSocketQueues_pid <- getWord16le
+    _msgLinuxProcessSocketQueues_recv_queued <- getWord16le
+    _msgLinuxProcessSocketQueues_send_queued <- getWord16le
+    _msgLinuxProcessSocketQueues_socket_types <- getWord16le
+    _msgLinuxProcessSocketQueues_socket_states <- getWord16le
+    _msgLinuxProcessSocketQueues_address_of_largest <- decodeUtf8 <$> getByteString 64
+    _msgLinuxProcessSocketQueues_cmdline <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    pure MsgLinuxProcessSocketQueues {..}
+
+  put MsgLinuxProcessSocketQueues {..} = do
+    putWord8 _msgLinuxProcessSocketQueues_index
+    putWord16le _msgLinuxProcessSocketQueues_pid
+    putWord16le _msgLinuxProcessSocketQueues_recv_queued
+    putWord16le _msgLinuxProcessSocketQueues_send_queued
+    putWord16le _msgLinuxProcessSocketQueues_socket_types
+    putWord16le _msgLinuxProcessSocketQueues_socket_states
+    putByteString $ encodeUtf8 _msgLinuxProcessSocketQueues_address_of_largest
+    putByteString $ encodeUtf8 _msgLinuxProcessSocketQueues_cmdline
+
+$(makeSBP 'msgLinuxProcessSocketQueues ''MsgLinuxProcessSocketQueues)
+$(makeJSON "_msgLinuxProcessSocketQueues_" ''MsgLinuxProcessSocketQueues)
+$(makeLenses ''MsgLinuxProcessSocketQueues)
+
+msgLinuxSocketUsage :: Word16
+msgLinuxSocketUsage = 0x7F05
+
+-- | SBP class for message MSG_LINUX_SOCKET_USAGE (0x7F05).
+--
+-- Summaries the socket usage across the system.
+data MsgLinuxSocketUsage = MsgLinuxSocketUsage
+  { _msgLinuxSocketUsage_avg_queue_depth   :: !Word32
+    -- ^ average socket queue depths across all sockets on the system
+  , _msgLinuxSocketUsage_max_queue_depth   :: !Word32
+    -- ^ the max queue depth seen within the reporting period
+  , _msgLinuxSocketUsage_socket_state_counts :: !Word16
+    -- ^ A count for each socket type reported in the `socket_types_reported`
+    -- field, the first entry corresponds to the first enabled bit in
+    -- `types_reported`.
+  , _msgLinuxSocketUsage_socket_type_counts :: !Word16
+    -- ^ A count for each socket type reported in the `socket_types_reported`
+    -- field, the first entry corresponds to the first enabled bit in
+    -- `types_reported`.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgLinuxSocketUsage where
+  get = do
+    _msgLinuxSocketUsage_avg_queue_depth <- getWord32le
+    _msgLinuxSocketUsage_max_queue_depth <- getWord32le
+    _msgLinuxSocketUsage_socket_state_counts <- getWord16le
+    _msgLinuxSocketUsage_socket_type_counts <- getWord16le
+    pure MsgLinuxSocketUsage {..}
+
+  put MsgLinuxSocketUsage {..} = do
+    putWord32le _msgLinuxSocketUsage_avg_queue_depth
+    putWord32le _msgLinuxSocketUsage_max_queue_depth
+    putWord16le _msgLinuxSocketUsage_socket_state_counts
+    putWord16le _msgLinuxSocketUsage_socket_type_counts
+
+$(makeSBP 'msgLinuxSocketUsage ''MsgLinuxSocketUsage)
+$(makeJSON "_msgLinuxSocketUsage_" ''MsgLinuxSocketUsage)
+$(makeLenses ''MsgLinuxSocketUsage)
