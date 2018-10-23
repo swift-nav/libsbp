@@ -89,6 +89,9 @@ definitions:
       - procs_stopping:
           type: u16
           desc: number of processes that stopped during collection phase
+      - pid_count:
+          type: u16
+          desc: the count of processes on the system
 
  - MSG_LINUX_PROCESS_SOCKET_COUNTS:
     id: 0x7F03

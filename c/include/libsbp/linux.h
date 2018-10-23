@@ -69,6 +69,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 pmem;              /**< percent of total memory currently utilized */
   u16 procs_starting;    /**< number of processes that started during collection phase */
   u16 procs_stopping;    /**< number of processes that stopped during collection phase */
+  u16 pid_count;         /**< the count of processes on the system */
 } msg_linux_sys_state_t;
 
 

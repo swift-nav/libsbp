@@ -132,6 +132,8 @@ data MsgLinuxSysState = MsgLinuxSysState
     -- ^ number of processes that started during collection phase
   , _msgLinuxSysState_procs_stopping :: !Word16
     -- ^ number of processes that stopped during collection phase
+  , _msgLinuxSysState_pid_count    :: !Word16
+    -- ^ the count of processes on the system
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgLinuxSysState where
@@ -141,6 +143,7 @@ instance Binary MsgLinuxSysState where
     _msgLinuxSysState_pmem <- getWord8
     _msgLinuxSysState_procs_starting <- getWord16le
     _msgLinuxSysState_procs_stopping <- getWord16le
+    _msgLinuxSysState_pid_count <- getWord16le
     pure MsgLinuxSysState {..}
 
   put MsgLinuxSysState {..} = do
@@ -149,6 +152,7 @@ instance Binary MsgLinuxSysState where
     putWord8 _msgLinuxSysState_pmem
     putWord16le _msgLinuxSysState_procs_starting
     putWord16le _msgLinuxSysState_procs_stopping
+    putWord16le _msgLinuxSysState_pid_count
 
 $(makeSBP 'msgLinuxSysState ''MsgLinuxSysState)
 $(makeJSON "_msgLinuxSysState_" ''MsgLinuxSysState)
