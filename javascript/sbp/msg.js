@@ -95,6 +95,7 @@ var sbpImports = {
   flash: require('./flash.js'),
   gnss: require('./gnss.js'),
   imu: require('./imu.js'),
+  linux: require('./linux.js'),
   logging: require('./logging.js'),
   mag: require('./mag.js'),
   navigation: require('./navigation.js'),
