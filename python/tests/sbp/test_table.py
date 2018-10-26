@@ -16,6 +16,7 @@ from sbp import acquisition as acq
 from sbp import bootload as boot
 from sbp import file_io as file_io
 from sbp import flash as flash
+from sbp import linux as linux
 from sbp import logging as log
 from sbp import navigation as nav
 from sbp import observation as obs
@@ -43,7 +44,7 @@ def test_table_count():
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 152
+  number_of_messages = 158
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_table_unqiue_count():
@@ -54,6 +55,7 @@ def test_table_unqiue_count():
                         + len(boot.msg_classes)
                         + len(file_io.msg_classes)
                         + len(flash.msg_classes)
+                        + len(linux.msg_classes)
                         + len(log.msg_classes)
                         + len(nav.msg_classes)
                         + len(obs.msg_classes)

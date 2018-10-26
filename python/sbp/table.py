@@ -19,6 +19,7 @@ from . import acquisition as acq
 from . import bootload as boot
 from . import file_io as file_io
 from . import flash as flash
+from . import linux as linux
 from . import logging as log
 from . import navigation as nav
 from . import observation as obs
@@ -42,6 +43,7 @@ _SBP_TABLE = dict(acq.msg_classes.items()
                   + boot.msg_classes.items()
                   + file_io.msg_classes.items()
                   + flash.msg_classes.items()
+                  + linux.msg_classes.items()
                   + log.msg_classes.items()
                   + nav.msg_classes.items()
                   + obs.msg_classes.items()
