@@ -58,7 +58,7 @@ matrix:
 deploy:
   provider: releases
   api_key:
-    secure: "EbM5FzcjE5waVpl0fl3J/rorE3UbhbX+gyhbjIv35GqHU5Ifwo5oMo2xno8G8y83PTzVFvpF9n/AWxRtKUEB2j5gtK1uljBheeBHmXIs6G7LdBZPq2bexPRpO2N7GgS1huWd8Z8YSwsoxC5/OR/hwIU1KgEY/ol2q15XiZLsl4c="
+    secure: "kElMZA2rpuSswHZuQuFZYdOllg5b+cOcid+Ac8RZJlqM+EPi+5cDuNWGmqxNka9lvLwwB+Mq37+t9J1PSHuTf/WNcDeI82h//Prll6jP5aHuxrIZA6UTeqTAzhmVGHbcjorvROp5O2MeyJMHtyi3gi9XOf8OlfSLpO4pM37Ad1w="
   file: haskell/sbp_linux_tools.tar.gz
   skip_cleanup: true
   on:
