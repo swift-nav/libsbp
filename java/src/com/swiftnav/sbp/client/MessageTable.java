@@ -47,6 +47,12 @@ import com.swiftnav.sbp.flash.MsgStmUniqueIdResp;
 import com.swiftnav.sbp.flash.MsgM25FlashWriteStatus;
 import com.swiftnav.sbp.imu.MsgImuRaw;
 import com.swiftnav.sbp.imu.MsgImuAux;
+import com.swiftnav.sbp.linux.MsgLinuxCpuState;
+import com.swiftnav.sbp.linux.MsgLinuxMemState;
+import com.swiftnav.sbp.linux.MsgLinuxSysState;
+import com.swiftnav.sbp.linux.MsgLinuxProcessSocketCounts;
+import com.swiftnav.sbp.linux.MsgLinuxProcessSocketQueues;
+import com.swiftnav.sbp.linux.MsgLinuxSocketUsage;
 import com.swiftnav.sbp.logging.MsgLog;
 import com.swiftnav.sbp.logging.MsgFwd;
 import com.swiftnav.sbp.logging.MsgTweet;
@@ -235,6 +241,18 @@ final class MessageTable {
                 return new MsgImuRaw(msg);
             case MsgImuAux.TYPE:
                 return new MsgImuAux(msg);
+            case MsgLinuxCpuState.TYPE:
+                return new MsgLinuxCpuState(msg);
+            case MsgLinuxMemState.TYPE:
+                return new MsgLinuxMemState(msg);
+            case MsgLinuxSysState.TYPE:
+                return new MsgLinuxSysState(msg);
+            case MsgLinuxProcessSocketCounts.TYPE:
+                return new MsgLinuxProcessSocketCounts(msg);
+            case MsgLinuxProcessSocketQueues.TYPE:
+                return new MsgLinuxProcessSocketQueues(msg);
+            case MsgLinuxSocketUsage.TYPE:
+                return new MsgLinuxSocketUsage(msg);
             case MsgLog.TYPE:
                 return new MsgLog(msg);
             case MsgFwd.TYPE:
