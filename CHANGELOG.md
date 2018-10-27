@@ -1,5 +1,18 @@
 # Change Log
 
+## [v2.4.2](https://github.com/swift-nav/libsbp/tree/v2.4.2) (2018-10-27)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.1...v2.4.2)
+
+**Merged pull requests:**
+
+- Resource monitor support \[DEVC-1074\] [\#612](https://github.com/swift-nav/libsbp/pull/612)
+- Add cmake toolchain support for cortex-m7 [\#610](https://github.com/swift-nav/libsbp/pull/610)
+- Deprecate old orbit/clock message [\#609](https://github.com/swift-nav/libsbp/pull/609)
+- IOD of the SSR corrections [\#608](https://github.com/swift-nav/libsbp/pull/608)
+- Jkretzmer/tcp example [\#607](https://github.com/swift-nav/libsbp/pull/607)
+- Make generator for java have deterministic ordering [\#606](https://github.com/swift-nav/libsbp/pull/606)
+- Add 2.4.1 pdf [\#605](https://github.com/swift-nav/libsbp/pull/605)
+
 ## [v2.4.1](https://github.com/swift-nav/libsbp/tree/v2.4.1) (2018-10-02)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.0...v2.4.1)
