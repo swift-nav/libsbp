@@ -38,7 +38,7 @@ def tcp_server(handler):
   return (ip, port)
 
 def test_tcp_logger():
-  handler = tcp_handler(MsgPrintDep(text='abc').to_binary())
+  handler = tcp_handler(MsgPrintDep(text=b'abc').to_binary())
   ip, port = tcp_server(handler)
   port = "socket://%s:%s" % (ip, port)
   baud = 115200
@@ -49,8 +49,9 @@ def test_tcp_logger():
     assert s.msg_type==0x10
     assert s.sender==66
     assert s.length==3
-    assert s.payload=='abc'
+    assert s.payload==b'abc'
     assert s.crc==0xDAEE
+  # TODO: assert_logger function doesn't appear to be actually called?
   with PySerialDriver(port, baud) as driver:
     with Handler(Framer(driver.read, None, verbose=False)) as link:
       link.add_callback(assert_logger)
@@ -63,16 +64,16 @@ BASE_STATION_URI = "http://broker.testing.skylark.swiftnav.com"
 @activate
 def test_http_test_pass():
   assert is_enabled()
-  msg = MsgPrintDep(text='abcd')
+  msg = MsgPrintDep(text=b'abcd')
   register_uri(GET,
                BASE_STATION_URI,
                msg.to_binary(),
-               content_type="application/vnd.swiftnav.broker.v1+sbp2")
+               content_type=b"application/vnd.swiftnav.broker.v1+sbp2")
   register_uri(PUT,
                BASE_STATION_URI,
-               '',
-               content_type="application/vnd.swiftnav.broker.v1+sbp2")
-  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
+               b'',
+               content_type=b"application/vnd.swiftnav.broker.v1+sbp2")
+  with HTTPDriver(device_uid=b"Swift22", url=BASE_STATION_URI) as driver:
     assert not driver.read_ok
     assert driver.connect_read()
     assert driver.read_ok
@@ -84,7 +85,7 @@ def test_http_test_pass():
     assert not driver.read_ok
     with pytest.raises(ValueError):
       driver.read(size=255)
-  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as http:
+  with HTTPDriver(device_uid=b"Swift22", url=BASE_STATION_URI) as http:
     with Handler(Framer(http.read, http.write, False)) as link:
       def tester(sbp_msg, **metadata):
         assert sbp_msg.payload == msg.payload
@@ -98,18 +99,18 @@ def test_http_test_pass():
 @activate
 def test_http_test_fail():
   assert is_enabled()
-  msg = MsgPrintDep(text='abcd')
+  msg = MsgPrintDep(text=b'abcd')
   register_uri(GET,
                BASE_STATION_URI,
                msg.to_binary(),
-               content_type="application/vnd.swiftnav.broker.v1+sbp2",
+               content_type=b"application/vnd.swiftnav.broker.v1+sbp2",
                status=400)
   register_uri(PUT,
                BASE_STATION_URI,
-               '',
-               content_type="application/vnd.swiftnav.broker.v1+sbp2",
+               b'',
+               content_type=b"application/vnd.swiftnav.broker.v1+sbp2",
                status=400)
-  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
+  with HTTPDriver(device_uid=b"Swift22", url=BASE_STATION_URI) as driver:
     assert not driver.connect_read()
     assert not driver.read_ok
     with pytest.raises(IOError):
@@ -123,24 +124,24 @@ def mock_streaming_msgs(msgs, interval=0.1):
 @activate
 def test_http_test_pass_streaming():
   assert is_enabled()
-  msgs = [MsgPrintDep(text='foo'),
-          MsgPrintDep(text='bar'),
-          MsgPrintDep(text='baz')]
+  msgs = [MsgPrintDep(text=b'foo'),
+          MsgPrintDep(text=b'bar'),
+          MsgPrintDep(text=b'baz')]
   register_uri(GET,
                BASE_STATION_URI,
                mock_streaming_msgs([m.to_binary() for m in msgs]),
-               content_type="application/vnd.swiftnav.broker.v1+sbp2",
+               content_type=b"application/vnd.swiftnav.broker.v1+sbp2",
                streaming=True)
   register_uri(PUT,
                BASE_STATION_URI,
-               body='',
-               content_type="application/vnd.swiftnav.broker.v1+sbp2",
+               body=b'',
+               content_type=b"application/vnd.swiftnav.broker.v1+sbp2",
                streaming=True)
-  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
+  with HTTPDriver(device_uid=b"Swift22", url=BASE_STATION_URI) as driver:
     assert driver.connect_read()
     assert driver.read_ok
-    assert driver.read(size=255) == ''.join([m.to_binary() for m in msgs])
-    assert driver.read(size=255) == ''
+    assert driver.read(size=255) == b''.join([m.to_binary() for m in msgs])
+    assert driver.read(size=255) == b''
     assert not driver.read_close()
     assert driver.read_response is None
     assert not driver.read_ok
@@ -150,22 +151,22 @@ def test_http_test_pass_streaming():
 @activate
 def test_http_test_pass_retry():
   assert is_enabled()
-  msg = MsgPrintDep(text='abcd')
-  get_responses = [Response(body="first response",
+  msg = MsgPrintDep(text=b'abcd')
+  get_responses = [Response(body=b'first response',
                             status=500,
-                            content_type="application/vnd.swiftnav.broker.v1+sbp2"),
-                   Response(body='second and last response',
+                            content_type=b"application/vnd.swiftnav.broker.v1+sbp2"),
+                   Response(body=b'second and last response',
                             status=200,
-                            content_type="application/vnd.swiftnav.broker.v1+sbp2")]
-  post_responses = [Response(body="",
+                            content_type=b"application/vnd.swiftnav.broker.v1+sbp2")]
+  post_responses = [Response(body=b'',
                              status=500,
-                             content_type="application/vnd.swiftnav.broker.v1+sbp2"),
-                    Response(body='',
+                             content_type=b"application/vnd.swiftnav.broker.v1+sbp2"),
+                    Response(body=b'',
                              status=200,
-                             content_type="application/vnd.swiftnav.broker.v1+sbp2")]
-  register_uri(GET, BASE_STATION_URI, get_responses)
-  register_uri(PUT, BASE_STATION_URI, post_responses)
-  with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
+                             content_type=b"application/vnd.swiftnav.broker.v1+sbp2")]
+  register_uri(GET, BASE_STATION_URI, responses=get_responses)
+  register_uri(PUT, BASE_STATION_URI, responses=post_responses)
+  with HTTPDriver(device_uid=b"Swift22", url=BASE_STATION_URI) as driver:
     with pytest.raises(ValueError):
       driver.read(size=255)
     assert driver.connect_read()

@@ -81,7 +81,7 @@ def test_available_messages():
   table = {acq.SBP_MSG_ACQ_RESULT_DEP_A: acq.MsgAcqResultDepA,
            log.SBP_MSG_PRINT_DEP: log.MsgPrintDep}
   msg = SBP(msg_type=0x15, sender=1219, length=13,
-            payload='\x92$yA\x00\x00\xbcC\x81\xc1\xf9\xc5\x1d')
+            payload=b'\x92$yA\x00\x00\xbcC\x81\xc1\xf9\xc5\x1d')
   # TODO (Buro): Replace this message constructor once generated SBP
   # can support kwargs for constructor, instead of requiring SBP
   # object.

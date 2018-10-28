@@ -128,4 +128,3 @@ class JSONLogIterator(LogIterator):
                 warn = "Bad JSON decoding for line %s" % line
                 warnings.warn(warn, RuntimeWarning)
         self.handle.seek(0, 0)
-        raise StopIteration
