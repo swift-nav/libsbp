@@ -194,7 +194,7 @@ definitions:
           desc: |
             A count for each socket type reported in the `socket_types_reported` field,
             the first entry corresponds to the first enabled bit in `types_reported`.
- - SBP_MSG_LINUX_PROCESS_FD_COUNT:
+ - MSG_LINUX_PROCESS_FD_COUNT:
      id: 0x7F06 
      short_desc: Summary of processes large amount of open file descriptors
      desc: |
@@ -212,7 +212,7 @@ definitions:
        - cmdline:
            type: string
            desc: the command line of the process in question
- - SBP_MSG_LINUX_PROCESS_FD_SUMMARY:
+ - MSG_LINUX_PROCESS_FD_SUMMARY:
     id: 0x7F07
     short_desc: Summary of open file descriptors on the system
     desc: |
