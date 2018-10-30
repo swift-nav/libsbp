@@ -160,7 +160,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_LINUX_PROCESS_FD_SUMMARY    0x7F07
 typedef struct SBP_ATTR_PACKED {
   u32 sys_fd_count;    /**< count of total FDs open on the system */
-  null terminated list of strings_t most_opened;     /**< A null delimited list of strings which alternates between
+  char most_opened[0];  /**< A null delimited list of strings which alternates between
 a string representation of the process count and the file
 name whose count it being reported.  That is, in C string
 syntax "32\0/var/log/syslog\012\0/tmp/foo\0" with the end

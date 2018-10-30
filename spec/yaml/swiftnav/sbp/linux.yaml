@@ -222,7 +222,7 @@ definitions:
           type: u32
           desc: count of total FDs open on the system
       - most_opened:
-          type: null terminated list of strings
+          type: string
           desc: |
              A null delimited list of strings which alternates between
              a string representation of the process count and the file
