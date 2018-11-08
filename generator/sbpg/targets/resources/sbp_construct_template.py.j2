@@ -81,6 +81,7 @@ class ((( m.identifier )))(object):
     p = ((( m.identifier )))._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
+
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return ((( m.identifier ))).build(d)
@@ -191,7 +192,7 @@ class ((( m.identifier | classnameify )))(SBP):
     objdict.update({'obs':obs})
     for n in self.__class__.__slots__:
       setattr(self, n, objdict.get(n))
-  ((*- else *))
+  ((* else *))
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
     the message.
@@ -200,7 +201,7 @@ class ((( m.identifier | classnameify )))(SBP):
     p = ((( m.identifier | classnameify )))._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-  ((*- endif *))
+((* endif *))
   def to_binary(self):
     """Produce a framed/packed SBP message.
 
