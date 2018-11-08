@@ -24,13 +24,6 @@ def test_roundtrip_payload():
     assert payload_json == payload_in
     assert len(obs_dict['obs']) == len(obs_json.obs)
     assert len(obs_dict['obs']) == len(obs_binary.obs)
-
-    print type(obs_json.header)
-    print type(obs_json.header)
-    print type(obs_binary.obs)
-    print obs_binary.obs
-    dir(obs_binary)
-    dir(obs_json)
     obs_json.to_binary()
     obs_binary.to_binary()
     assert payload_bin == payload_in
