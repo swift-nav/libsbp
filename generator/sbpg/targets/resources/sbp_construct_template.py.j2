@@ -16,6 +16,7 @@
 
 import json
 
+import struct
 import construct
 
 from sbp.msg import SBP, SENDER_ID
@@ -80,7 +81,6 @@ class ((( m.identifier )))(object):
     p = ((( m.identifier )))._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return ((( m.identifier ))).build(d)
@@ -173,6 +173,25 @@ class ((( m.identifier | classnameify )))(SBP):
     return ((( m.identifier | classnameify )))(sbp, **d)
 
  ((* if m.fields *))
+  ((*- if m.identifier == 'MSG_OBS' *))
+  def from_binary(self, d):
+    hdr_fmt = "<IiHB"
+    hdr_size = struct.calcsize(hdr_fmt)
+    tow, ns, wn, seq = struct.unpack(hdr_fmt, d[:hdr_size])
+    objdict = {'header': construct.Container({'t':{'tow':tow, 'ns_residual':ns, 'wn':wn}, 'n_obs':seq})}
+    obs_fmt = '<IiBhBBBBBB'
+    obs_size = struct.calcsize(obs_fmt)
+    n_obs = (len(d) - hdr_size) / obs_size
+    start_offset = hdr_size
+    obs = []
+    for i in range(n_obs):
+      P, Li, Lf, Di, Df, snr, lock, flags, sat, code = struct.unpack(obs_fmt, d[start_offset:start_offset + obs_size])
+      obs.append(construct.Container({'P':P,'L':{'i': Li, 'f': Lf}, 'D':{'i': Di, 'f': Df}, 'cn0': snr, 'lock':lock, 'flags':flags, 'sid':{'sat':sat, 'code':code}}))
+      start_offset += obs_size
+    objdict.update({'obs':obs})
+    for n in self.__class__.__slots__:
+      setattr(self, n, objdict.get(n))
+  ((*- else *))
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
     the message.
@@ -181,7 +200,7 @@ class ((( m.identifier | classnameify )))(SBP):
     p = ((( m.identifier | classnameify )))._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
+  ((*- endif *))
   def to_binary(self):
     """Produce a framed/packed SBP message.
 
