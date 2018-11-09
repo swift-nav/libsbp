@@ -53,6 +53,8 @@ import com.swiftnav.sbp.linux.MsgLinuxSysState;
 import com.swiftnav.sbp.linux.MsgLinuxProcessSocketCounts;
 import com.swiftnav.sbp.linux.MsgLinuxProcessSocketQueues;
 import com.swiftnav.sbp.linux.MsgLinuxSocketUsage;
+import com.swiftnav.sbp.linux.MsgLinuxProcessFdCount;
+import com.swiftnav.sbp.linux.MsgLinuxProcessFdSummary;
 import com.swiftnav.sbp.logging.MsgLog;
 import com.swiftnav.sbp.logging.MsgFwd;
 import com.swiftnav.sbp.logging.MsgTweet;
@@ -253,6 +255,10 @@ final class MessageTable {
                 return new MsgLinuxProcessSocketQueues(msg);
             case MsgLinuxSocketUsage.TYPE:
                 return new MsgLinuxSocketUsage(msg);
+            case MsgLinuxProcessFdCount.TYPE:
+                return new MsgLinuxProcessFdCount(msg);
+            case MsgLinuxProcessFdSummary.TYPE:
+                return new MsgLinuxProcessFdSummary(msg);
             case MsgLog.TYPE:
                 return new MsgLog(msg);
             case MsgFwd.TYPE:
