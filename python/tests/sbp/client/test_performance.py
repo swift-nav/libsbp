@@ -64,7 +64,7 @@ def test_performance_json_logger():
    except IOError:
        pass
    elapsed_time = time.time() - start_time
-   assert elapsed_time < 1
+   assert elapsed_time < 5
 
 def test_performance_json_bin_logger():
    driver = FileDriver(open(PERF_FILE, 'rb'))
@@ -80,7 +80,7 @@ def test_performance_json_bin_logger():
    except IOError:
        pass
    elapsed_time = time.time() - start_time
-   assert elapsed_time < 1
+   assert elapsed_time < 2
 
 def test_performance_json_bin_logger_no_dispatch():
    driver = FileDriver(open(PERF_FILE, 'rb'))
