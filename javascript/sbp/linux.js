@@ -285,7 +285,7 @@ MsgLinuxSocketUsage.prototype.fieldSpec.push(['socket_type_counts', 'array', 'wr
 /**
  * SBP class for message MSG_LINUX_PROCESS_FD_COUNT (0x7F06).
  *
- * Top 10 list of file descriptors with a large number of open file descriptors.
+ * Top 10 list of processes with a large number of open file descriptors.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field index number (unsigned 8-bit int, 1 byte) sequence of this status message, values from 0-9

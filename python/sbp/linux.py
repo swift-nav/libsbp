@@ -685,7 +685,7 @@ class MsgLinuxProcessFdCount(SBP):
   of its fields.
 
   
-  Top 10 list of file descriptors with a large number of open file descriptors.
+  Top 10 list of processes with a large number of open file descriptors.
 
 
   Parameters

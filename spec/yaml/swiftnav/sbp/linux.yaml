@@ -197,9 +197,9 @@ definitions:
             
  - MSG_LINUX_PROCESS_FD_COUNT:
     id: 0x7F06
-    short_desc: Summary of processes large amount of open file descriptors
+    short_desc: Summary of processes with large amounts of open file descriptors
     desc: |
-      Top 10 list of file descriptors with a large number of open file descriptors.
+      Top 10 list of processes with a large number of open file descriptors.
     fields:
       - index:
           type: u8

@@ -97,3 +97,23 @@ message MsgLinuxSocketUsage {
     repeated uint32 socket_state_counts = 3;
     repeated uint32 socket_type_counts = 4;
 }
+
+/** Summary of processes with large amounts of open file descriptors
+ *
+ * Top 10 list of processes with a large number of open file descriptors.
+ */
+message MsgLinuxProcessFdCount {
+    uint32 index = 1;
+    uint32 pid = 2;
+    uint32 fd_count = 3;
+    string cmdline = 4;
+}
+
+/** Summary of open file descriptors on the system
+ *
+ * Summary of open file descriptors on the system.
+ */
+message MsgLinuxProcessFdSummary {
+    uint32 sys_fd_count = 1;
+    string most_opened = 2;
+}

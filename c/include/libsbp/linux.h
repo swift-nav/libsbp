@@ -140,9 +140,9 @@ the first entry corresponds to the first enabled bit in `types_reported`.
 } msg_linux_socket_usage_t;
 
 
-/** Summary of processes large amount of open file descriptors
+/** Summary of processes with large amounts of open file descriptors
  *
- * Top 10 list of file descriptors with a large number of open file descriptors.
+ * Top 10 list of processes with a large number of open file descriptors.
  */
 #define SBP_MSG_LINUX_PROCESS_FD_COUNT      0x7F06
 typedef struct SBP_ATTR_PACKED {

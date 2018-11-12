@@ -28,7 +28,7 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * Top 10 list of file descriptors with a large number of open file descriptors. */
+ * Top 10 list of processes with a large number of open file descriptors. */
 
 public class MsgLinuxProcessFdCount extends SBPMessage {
     public static final int TYPE = 0x7F06;

@@ -305,8 +305,7 @@ msgLinuxProcessFdCount = 0x7F06
 
 -- | SBP class for message MSG_LINUX_PROCESS_FD_COUNT (0x7F06).
 --
--- Top 10 list of file descriptors with a large number of open file
--- descriptors.
+-- Top 10 list of processes with a large number of open file descriptors.
 data MsgLinuxProcessFdCount = MsgLinuxProcessFdCount
   { _msgLinuxProcessFdCount_index  :: !Word8
     -- ^ sequence of this status message, values from 0-9
