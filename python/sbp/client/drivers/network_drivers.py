@@ -40,24 +40,25 @@ class TCPDriver(BaseDriver):
 
     """
 
-    def __init__(self, host, port, timeout=5):
+    def __init__(self, host, port, timeout=5, raise_initial_timeout=False):
         self._address = (host, port)
         print(host, port)
         self._create_connection = partial(socket.create_connection,
                                           (host, port),
                                           timeout=timeout
                                           )
-        self._connect()
+        self._connect(timeout_raises=raise_initial_timeout)
         super(TCPDriver, self).__init__(self.handle)
         self._write_lock = threading.Lock()
 
-    def _connect(self):
+    def _connect(self, timeout_raises=False):
         while True:
             try:
                 self.handle = self._create_connection()
                 return
             except socket.timeout:
-                pass
+                if timeout_raises:
+                    raise
 
     def read(self, size):
         """
