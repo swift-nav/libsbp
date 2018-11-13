@@ -40,7 +40,7 @@ class TCPDriver(BaseDriver):
 
     """
 
-    def __init__(self, host, port, timeout=5):
+    def __init__(self, host, port, timeout=5, initial_timeout_exits=False):
         self._address = (host, port)
         print(host, port)
         self._create_connection = partial(socket.create_connection,
@@ -48,7 +48,7 @@ class TCPDriver(BaseDriver):
                                           timeout=timeout
                                           )
         print("TCPDriver Connecting..")
-        self._connect(timeout_exits=True)
+        self._connect(timeout_exits=initial_timeout_exits)
         print("TCPDriver Connected..")
         super(TCPDriver, self).__init__(self.handle)
         print("TCPDriver Initialized..")
