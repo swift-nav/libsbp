@@ -42,22 +42,30 @@ class TCPDriver(BaseDriver):
 
     def __init__(self, host, port, timeout=5):
         self._address = (host, port)
+        self.initial_connect = threading.Event()
         print(host, port)
         self._create_connection = partial(socket.create_connection,
                                           (host, port),
                                           timeout=timeout
                                           )
+        print("TCPDriver Connecting..")
         self._connect()
+        print("TCPDriver Connected..")
         super(TCPDriver, self).__init__(self.handle)
+        print("TCPDriver Initialized..")
         self._write_lock = threading.Lock()
 
     def _connect(self):
         while True:
+            print("TCPDriver Connect Loop..")
             try:
                 self.handle = self._create_connection()
+                self.initial_connect.set()
                 return
             except socket.timeout:
-                pass
+                if not self.initial_connect.is_set():
+                    print("TCPDriver Initial Connect Socket Timout, Exiting..")
+                    raise
 
     def read(self, size):
         """
