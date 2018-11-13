@@ -299,3 +299,69 @@ instance Binary MsgLinuxSocketUsage where
 $(makeSBP 'msgLinuxSocketUsage ''MsgLinuxSocketUsage)
 $(makeJSON "_msgLinuxSocketUsage_" ''MsgLinuxSocketUsage)
 $(makeLenses ''MsgLinuxSocketUsage)
+
+msgLinuxProcessFdCount :: Word16
+msgLinuxProcessFdCount = 0x7F06
+
+-- | SBP class for message MSG_LINUX_PROCESS_FD_COUNT (0x7F06).
+--
+-- Top 10 list of processes with a large number of open file descriptors.
+data MsgLinuxProcessFdCount = MsgLinuxProcessFdCount
+  { _msgLinuxProcessFdCount_index  :: !Word8
+    -- ^ sequence of this status message, values from 0-9
+  , _msgLinuxProcessFdCount_pid    :: !Word16
+    -- ^ the PID of the process in question
+  , _msgLinuxProcessFdCount_fd_count :: !Word16
+    -- ^ a count of the number of file descriptors opened by the process
+  , _msgLinuxProcessFdCount_cmdline :: !Text
+    -- ^ the command line of the process in question
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgLinuxProcessFdCount where
+  get = do
+    _msgLinuxProcessFdCount_index <- getWord8
+    _msgLinuxProcessFdCount_pid <- getWord16le
+    _msgLinuxProcessFdCount_fd_count <- getWord16le
+    _msgLinuxProcessFdCount_cmdline <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    pure MsgLinuxProcessFdCount {..}
+
+  put MsgLinuxProcessFdCount {..} = do
+    putWord8 _msgLinuxProcessFdCount_index
+    putWord16le _msgLinuxProcessFdCount_pid
+    putWord16le _msgLinuxProcessFdCount_fd_count
+    putByteString $ encodeUtf8 _msgLinuxProcessFdCount_cmdline
+
+$(makeSBP 'msgLinuxProcessFdCount ''MsgLinuxProcessFdCount)
+$(makeJSON "_msgLinuxProcessFdCount_" ''MsgLinuxProcessFdCount)
+$(makeLenses ''MsgLinuxProcessFdCount)
+
+msgLinuxProcessFdSummary :: Word16
+msgLinuxProcessFdSummary = 0x7F07
+
+-- | SBP class for message MSG_LINUX_PROCESS_FD_SUMMARY (0x7F07).
+--
+-- Summary of open file descriptors on the system.
+data MsgLinuxProcessFdSummary = MsgLinuxProcessFdSummary
+  { _msgLinuxProcessFdSummary_sys_fd_count :: !Word32
+    -- ^ count of total FDs open on the system
+  , _msgLinuxProcessFdSummary_most_opened :: !Text
+    -- ^ A null delimited list of strings which alternates between a string
+    -- representation of the process count and the file name whose count it
+    -- being reported.  That is, in C string syntax
+    -- "32\0/var/log/syslog\012\0/tmp/foo\0" with the end of the list being 2
+    -- NULL terminators in a row.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgLinuxProcessFdSummary where
+  get = do
+    _msgLinuxProcessFdSummary_sys_fd_count <- getWord32le
+    _msgLinuxProcessFdSummary_most_opened <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    pure MsgLinuxProcessFdSummary {..}
+
+  put MsgLinuxProcessFdSummary {..} = do
+    putWord32le _msgLinuxProcessFdSummary_sys_fd_count
+    putByteString $ encodeUtf8 _msgLinuxProcessFdSummary_most_opened
+
+$(makeSBP 'msgLinuxProcessFdSummary ''MsgLinuxProcessFdSummary)
+$(makeJSON "_msgLinuxProcessFdSummary_" ''MsgLinuxProcessFdSummary)
+$(makeLenses ''MsgLinuxProcessFdSummary)

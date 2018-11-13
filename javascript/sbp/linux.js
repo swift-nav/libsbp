@@ -282,6 +282,75 @@ MsgLinuxSocketUsage.prototype.fieldSpec.push(['max_queue_depth', 'writeUInt32LE'
 MsgLinuxSocketUsage.prototype.fieldSpec.push(['socket_state_counts', 'array', 'writeUInt16LE', function () { return 2; }, 16]);
 MsgLinuxSocketUsage.prototype.fieldSpec.push(['socket_type_counts', 'array', 'writeUInt16LE', function () { return 2; }, 16]);
 
+/**
+ * SBP class for message MSG_LINUX_PROCESS_FD_COUNT (0x7F06).
+ *
+ * Top 10 list of processes with a large number of open file descriptors.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field index number (unsigned 8-bit int, 1 byte) sequence of this status message, values from 0-9
+ * @field pid number (unsigned 16-bit int, 2 bytes) the PID of the process in question
+ * @field fd_count number (unsigned 16-bit int, 2 bytes) a count of the number of file descriptors opened by the process
+ * @field cmdline string the command line of the process in question
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgLinuxProcessFdCount = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_LINUX_PROCESS_FD_COUNT";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgLinuxProcessFdCount.prototype = Object.create(SBP.prototype);
+MsgLinuxProcessFdCount.prototype.messageType = "MSG_LINUX_PROCESS_FD_COUNT";
+MsgLinuxProcessFdCount.prototype.msg_type = 0x7F06;
+MsgLinuxProcessFdCount.prototype.constructor = MsgLinuxProcessFdCount;
+MsgLinuxProcessFdCount.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('index')
+  .uint16('pid')
+  .uint16('fd_count')
+  .string('cmdline', { greedy: true });
+MsgLinuxProcessFdCount.prototype.fieldSpec = [];
+MsgLinuxProcessFdCount.prototype.fieldSpec.push(['index', 'writeUInt8', 1]);
+MsgLinuxProcessFdCount.prototype.fieldSpec.push(['pid', 'writeUInt16LE', 2]);
+MsgLinuxProcessFdCount.prototype.fieldSpec.push(['fd_count', 'writeUInt16LE', 2]);
+MsgLinuxProcessFdCount.prototype.fieldSpec.push(['cmdline', 'string', null]);
+
+/**
+ * SBP class for message MSG_LINUX_PROCESS_FD_SUMMARY (0x7F07).
+ *
+ * Summary of open file descriptors on the system.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sys_fd_count number (unsigned 32-bit int, 4 bytes) count of total FDs open on the system
+ * @field most_opened string A null delimited list of strings which alternates between a string
+ *   representation of the process count and the file name whose count it being
+ *   reported.  That is, in C string syntax "32\0/var/log/syslog\012\0/tmp/foo\0"
+ *   with the end of the list being 2 NULL terminators in a row.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgLinuxProcessFdSummary = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_LINUX_PROCESS_FD_SUMMARY";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgLinuxProcessFdSummary.prototype = Object.create(SBP.prototype);
+MsgLinuxProcessFdSummary.prototype.messageType = "MSG_LINUX_PROCESS_FD_SUMMARY";
+MsgLinuxProcessFdSummary.prototype.msg_type = 0x7F07;
+MsgLinuxProcessFdSummary.prototype.constructor = MsgLinuxProcessFdSummary;
+MsgLinuxProcessFdSummary.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('sys_fd_count')
+  .string('most_opened', { greedy: true });
+MsgLinuxProcessFdSummary.prototype.fieldSpec = [];
+MsgLinuxProcessFdSummary.prototype.fieldSpec.push(['sys_fd_count', 'writeUInt32LE', 4]);
+MsgLinuxProcessFdSummary.prototype.fieldSpec.push(['most_opened', 'string', null]);
+
 module.exports = {
   0x7F00: MsgLinuxCpuState,
   MsgLinuxCpuState: MsgLinuxCpuState,
@@ -295,4 +364,8 @@ module.exports = {
   MsgLinuxProcessSocketQueues: MsgLinuxProcessSocketQueues,
   0x7F05: MsgLinuxSocketUsage,
   MsgLinuxSocketUsage: MsgLinuxSocketUsage,
+  0x7F06: MsgLinuxProcessFdCount,
+  MsgLinuxProcessFdCount: MsgLinuxProcessFdCount,
+  0x7F07: MsgLinuxProcessFdSummary,
+  MsgLinuxProcessFdSummary: MsgLinuxProcessFdSummary,
 }

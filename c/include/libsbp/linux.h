@@ -140,6 +140,34 @@ the first entry corresponds to the first enabled bit in `types_reported`.
 } msg_linux_socket_usage_t;
 
 
+/** Summary of processes with large amounts of open file descriptors
+ *
+ * Top 10 list of processes with a large number of open file descriptors.
+ */
+#define SBP_MSG_LINUX_PROCESS_FD_COUNT      0x7F06
+typedef struct SBP_ATTR_PACKED {
+  u8 index;       /**< sequence of this status message, values from 0-9 */
+  u16 pid;         /**< the PID of the process in question */
+  u16 fd_count;    /**< a count of the number of file descriptors opened by the process */
+  char cmdline[0];  /**< the command line of the process in question */
+} msg_linux_process_fd_count_t;
+
+
+/** Summary of open file descriptors on the system
+ *
+ * Summary of open file descriptors on the system.
+ */
+#define SBP_MSG_LINUX_PROCESS_FD_SUMMARY    0x7F07
+typedef struct SBP_ATTR_PACKED {
+  u32 sys_fd_count;    /**< count of total FDs open on the system */
+  char most_opened[0];  /**< A null delimited list of strings which alternates between
+a string representation of the process count and the file
+name whose count it being reported.  That is, in C string
+syntax "32\0/var/log/syslog\012\0/tmp/foo\0" with the end
+of the list being 2 NULL terminators in a row. */
+} msg_linux_process_fd_summary_t;
+
+
 /** \} */
 
 SBP_PACK_END

@@ -676,6 +676,192 @@ the first entry corresponds to the first enabled bit in `types_reported`.
     d.update(j)
     return d
     
+SBP_MSG_LINUX_PROCESS_FD_COUNT = 0x7F06
+class MsgLinuxProcessFdCount(SBP):
+  """SBP class for message MSG_LINUX_PROCESS_FD_COUNT (0x7F06).
+
+  You can have MSG_LINUX_PROCESS_FD_COUNT inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Top 10 list of processes with a large number of open file descriptors.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  index : int
+    sequence of this status message, values from 0-9
+  pid : int
+    the PID of the process in question
+  fd_count : int
+    a count of the number of file descriptors opened by the process
+  cmdline : string
+    the command line of the process in question
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'index' / construct.Int8ul,
+                   'pid' / construct.Int16ul,
+                   'fd_count' / construct.Int16ul,
+                   'cmdline' / construct.GreedyBytes,)
+  __slots__ = [
+               'index',
+               'pid',
+               'fd_count',
+               'cmdline',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgLinuxProcessFdCount,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgLinuxProcessFdCount, self).__init__()
+      self.msg_type = SBP_MSG_LINUX_PROCESS_FD_COUNT
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.index = kwargs.pop('index')
+      self.pid = kwargs.pop('pid')
+      self.fd_count = kwargs.pop('fd_count')
+      self.cmdline = kwargs.pop('cmdline')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgLinuxProcessFdCount.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgLinuxProcessFdCount(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgLinuxProcessFdCount._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgLinuxProcessFdCount._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgLinuxProcessFdCount, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_LINUX_PROCESS_FD_SUMMARY = 0x7F07
+class MsgLinuxProcessFdSummary(SBP):
+  """SBP class for message MSG_LINUX_PROCESS_FD_SUMMARY (0x7F07).
+
+  You can have MSG_LINUX_PROCESS_FD_SUMMARY inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Summary of open file descriptors on the system.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  sys_fd_count : int
+    count of total FDs open on the system
+  most_opened : string
+    A null delimited list of strings which alternates between
+a string representation of the process count and the file
+name whose count it being reported.  That is, in C string
+syntax "32\0/var/log/syslog\012\0/tmp/foo\0" with the end
+of the list being 2 NULL terminators in a row.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'sys_fd_count' / construct.Int32ul,
+                   'most_opened' / construct.GreedyBytes,)
+  __slots__ = [
+               'sys_fd_count',
+               'most_opened',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgLinuxProcessFdSummary,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgLinuxProcessFdSummary, self).__init__()
+      self.msg_type = SBP_MSG_LINUX_PROCESS_FD_SUMMARY
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.sys_fd_count = kwargs.pop('sys_fd_count')
+      self.most_opened = kwargs.pop('most_opened')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgLinuxProcessFdSummary.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgLinuxProcessFdSummary(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgLinuxProcessFdSummary._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgLinuxProcessFdSummary._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgLinuxProcessFdSummary, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x7F00: MsgLinuxCpuState,
@@ -684,4 +870,6 @@ msg_classes = {
   0x7F03: MsgLinuxProcessSocketCounts,
   0x7F04: MsgLinuxProcessSocketQueues,
   0x7F05: MsgLinuxSocketUsage,
+  0x7F06: MsgLinuxProcessFdCount,
+  0x7F07: MsgLinuxProcessFdSummary,
 }
