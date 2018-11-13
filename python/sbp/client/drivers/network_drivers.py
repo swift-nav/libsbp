@@ -47,22 +47,17 @@ class TCPDriver(BaseDriver):
                                           (host, port),
                                           timeout=timeout
                                           )
-        print("TCPDriver Connecting..")
         self._connect(timeout_exits=initial_timeout_exits)
-        print("TCPDriver Connected..")
         super(TCPDriver, self).__init__(self.handle)
-        print("TCPDriver Initialized..")
         self._write_lock = threading.Lock()
 
     def _connect(self, timeout_exits=False):
         while True:
-            print("TCPDriver Connect Loop..")
             try:
                 self.handle = self._create_connection()
                 return
             except socket.timeout:
                 if timeout_exits:
-                    print("TCPDriver Timeout, Exiting..")
                     raise
 
     def read(self, size):
