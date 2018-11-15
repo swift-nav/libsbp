@@ -1,11 +1,11 @@
 # Change Log
 
 ## [v2.4.3](https://github.com/swift-nav/libsbp/tree/v2.4.3)
-
-[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.2...2.4.3)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.2...v2.4.3)
 
 **Merged pull requests:**
 
+- release libsbp 2.4.3 [\#618](https://github.com/swift-nav/libsbp/pull/618)
 - Modify initial connect logic for piksi\_tools to catch on timeouts \[ESD-632\] [\#617](https://github.com/swift-nav/libsbp/pull/617)
 - Resource monitor file descriptor query sbp message\[ESD-231\]\[ESD-232\] [\#616](https://github.com/swift-nav/libsbp/pull/616)
 
