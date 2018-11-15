@@ -102,6 +102,7 @@ var sbpImports = {
   ndb: require('./ndb.js'),
   observation: require('./observation.js'),
   piksi: require('./piksi.js'),
+  sbas: require('./sbas.js'),
   settings: require('./settings.js'),
   signal: require('./signal.js'),
   ssr: require('./ssr.js'),
