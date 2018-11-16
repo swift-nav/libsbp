@@ -11,13 +11,14 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-include(CMakeForceCompiler)
-
 # Targeting an embedded system, no OS.
 set(CMAKE_SYSTEM_NAME Generic)
 
-CMAKE_FORCE_C_COMPILER(arm-none-eabi-gcc GNU)
-CMAKE_FORCE_CXX_COMPILER(arm-none-eabi-g++ GNU)
+# Trust user to have cross compiler properly setup
+set(CMAKE_C_COMPILER_WORKS TRUE CACHE INTERNAL "")
+set(CMAKE_CXX_COMPILER_WORKS TRUE CACHE INTERNAL "")
+set(CMAKE_C_ABI_COMPILED TRUE CACHE INTERNAL "")
+set(CMAKE_CXX_ABI_COMPILED TRUE CACHE INTERNAL "")
 
 # Find the target environment prefix..
 # First see where gcc is keeping libc.a
@@ -97,6 +98,4 @@ string(REGEX REPLACE ";" " " CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}" CACHE STRING "")
 
-set(BUILD_SHARED_LIBS OFF)	
-
-
+set(BUILD_SHARED_LIBS OFF)
