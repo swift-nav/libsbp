@@ -294,7 +294,7 @@ alamanac onto the Piksi's flash memory from the host.
       super( MsgAlmanac, self).__init__()
       self.msg_type = SBP_MSG_ALMANAC
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -340,7 +340,7 @@ time estimate sent by the host.
       super( MsgSetTime, self).__init__()
       self.msg_type = SBP_MSG_SET_TIME
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -468,7 +468,7 @@ bootloader.
       super( MsgResetDep, self).__init__()
       self.msg_type = SBP_MSG_RESET_DEP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -515,7 +515,7 @@ removed in a future release.
       super( MsgCwResults, self).__init__()
       self.msg_type = SBP_MSG_CW_RESULTS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -562,7 +562,7 @@ be removed in a future release.
       super( MsgCwStart, self).__init__()
       self.msg_type = SBP_MSG_CW_START
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -693,7 +693,7 @@ observations between the two.
       super( MsgInitBase, self).__init__()
       self.msg_type = SBP_MSG_INIT_BASE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1661,7 +1661,7 @@ Output will be sent in MSG_NETWORK_STATE_RESP messages
       super( MsgNetworkStateReq, self).__init__()
       self.msg_type = SBP_MSG_NETWORK_STATE_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
