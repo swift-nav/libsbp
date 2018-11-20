@@ -1,11 +1,20 @@
 # Change Log
 
-## [v2.4.3](https://github.com/swift-nav/libsbp/tree/v2.4.3)
+## [v2.4.4](https://github.com/swift-nav/libsbp/tree/v2.4.4)
 
-[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.2...2.4.3)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.3...v2.4.4)
 
 **Merged pull requests:**
 
+- Replace deprecated CMAKE\_FORCE\_\<lang\>\_COMPILER macros [\#620](https://github.com/swift-nav/libsbp/pull/620)
+- fix missing require for sbas messages [\#619](https://github.com/swift-nav/libsbp/pull/619)
+
+## [v2.4.3](https://github.com/swift-nav/libsbp/tree/v2.4.3) (2018-11-15)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.2...v2.4.3)
+
+**Merged pull requests:**
+
+- release libsbp 2.4.3 [\#618](https://github.com/swift-nav/libsbp/pull/618)
 - Modify initial connect logic for piksi\_tools to catch on timeouts \[ESD-632\] [\#617](https://github.com/swift-nav/libsbp/pull/617)
 - Resource monitor file descriptor query sbp message\[ESD-231\]\[ESD-232\] [\#616](https://github.com/swift-nav/libsbp/pull/616)
 
@@ -14,6 +23,7 @@
 
 **Merged pull requests:**
 
+- Release v2.4.2 [\#613](https://github.com/swift-nav/libsbp/pull/613)
 - Resource monitor support \[DEVC-1074\] [\#612](https://github.com/swift-nav/libsbp/pull/612)
 - Add cmake toolchain support for cortex-m7 [\#610](https://github.com/swift-nav/libsbp/pull/610)
 - Deprecate old orbit/clock message [\#609](https://github.com/swift-nav/libsbp/pull/609)
@@ -22,12 +32,12 @@
 - Make generator for java have deterministic ordering [\#606](https://github.com/swift-nav/libsbp/pull/606)
 - Add 2.4.1 pdf [\#605](https://github.com/swift-nav/libsbp/pull/605)
 
-## [v2.4.1](https://github.com/swift-nav/libsbp/tree/v2.4.1) (2018-10-02)
-
+## [v2.4.1](https://github.com/swift-nav/libsbp/tree/v2.4.1) (2018-10-03)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.0...v2.4.1)
 
 **Merged pull requests:**
 
+- V2.4.1 branch [\#604](https://github.com/swift-nav/libsbp/pull/604)
 - re-add space on ins-status message description [\#603](https://github.com/swift-nav/libsbp/pull/603)
 - Add sentence explaining how to find the measurement units. [\#602](https://github.com/swift-nav/libsbp/pull/602)
 - new ins status message definition as discussed with CRL [\#601](https://github.com/swift-nav/libsbp/pull/601)
@@ -212,10 +222,6 @@
 
 ## [v2.2.17](https://github.com/swift-nav/libsbp/tree/v2.2.17) (2017-11-08)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.16...v2.2.17)
-
-**Closed issues:**
-
-- JS code does not generate imports [\#513](https://github.com/swift-nav/libsbp/issues/513)
 
 **Merged pull requests:**
 
