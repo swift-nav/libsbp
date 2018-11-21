@@ -156,6 +156,70 @@ MsgInsStatus.prototype.parser = new Parser()
 MsgInsStatus.prototype.fieldSpec = [];
 MsgInsStatus.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
+/**
+ * SBP class for message MSG_CSAC_TELEMETRY (0xFF04).
+ *
+ * The CSAC telemetry message has an implementation defined telemetry string from a
+ * device. It is not produced or available on general Swift Products. It is
+ * intended to be a low rate message for status purposes.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implemention defined.
+ * @field telemetry string Comma separated list of values as defined by the index
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgCsacTelemetry = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_CSAC_TELEMETRY";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgCsacTelemetry.prototype = Object.create(SBP.prototype);
+MsgCsacTelemetry.prototype.messageType = "MSG_CSAC_TELEMETRY";
+MsgCsacTelemetry.prototype.msg_type = 0xFF04;
+MsgCsacTelemetry.prototype.constructor = MsgCsacTelemetry;
+MsgCsacTelemetry.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('id')
+  .string('telemetry', { greedy: true });
+MsgCsacTelemetry.prototype.fieldSpec = [];
+MsgCsacTelemetry.prototype.fieldSpec.push(['id', 'writeUInt8', 1]);
+MsgCsacTelemetry.prototype.fieldSpec.push(['telemetry', 'string', null]);
+
+/**
+ * SBP class for message MSG_CSAC_TELEMETRY_LABELS (0xFF05).
+ *
+ * The CSAC telemetry message provides labels for each member of the string
+ * produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
+ * rate than the MSG_CSAC_TELEMETRY.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implemention defined.
+ * @field telemetry_labels string Comma separated list of telemetry field values
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgCsacTelemetryLabels = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_CSAC_TELEMETRY_LABELS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgCsacTelemetryLabels.prototype = Object.create(SBP.prototype);
+MsgCsacTelemetryLabels.prototype.messageType = "MSG_CSAC_TELEMETRY_LABELS";
+MsgCsacTelemetryLabels.prototype.msg_type = 0xFF05;
+MsgCsacTelemetryLabels.prototype.constructor = MsgCsacTelemetryLabels;
+MsgCsacTelemetryLabels.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('id')
+  .string('telemetry_labels', { greedy: true });
+MsgCsacTelemetryLabels.prototype.fieldSpec = [];
+MsgCsacTelemetryLabels.prototype.fieldSpec.push(['id', 'writeUInt8', 1]);
+MsgCsacTelemetryLabels.prototype.fieldSpec.push(['telemetry_labels', 'string', null]);
+
 module.exports = {
   0xFF00: MsgStartup,
   MsgStartup: MsgStartup,
@@ -165,4 +229,8 @@ module.exports = {
   MsgHeartbeat: MsgHeartbeat,
   0xFF03: MsgInsStatus,
   MsgInsStatus: MsgInsStatus,
+  0xFF04: MsgCsacTelemetry,
+  MsgCsacTelemetry: MsgCsacTelemetry,
+  0xFF05: MsgCsacTelemetryLabels,
+  MsgCsacTelemetryLabels: MsgCsacTelemetryLabels,
 }
