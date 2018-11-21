@@ -389,10 +389,188 @@ and initialization of the inertial navigation system.
     d.update(j)
     return d
     
+SBP_MSG_CSAC_TELEMETRY = 0xFF04
+class MsgCsacTelemetry(SBP):
+  """SBP class for message MSG_CSAC_TELEMETRY (0xFF04).
+
+  You can have MSG_CSAC_TELEMETRY inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The CSAC telemetry message has an implementation defined telemetry string
+from a device. It is not produced or available on general Swift Products.
+It is intended to be a low rate message for status purposes.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  id : int
+    Index representing the type of telemetry in use.  It is implemention defined.
+  telemetry : string
+    Comma separated list of values as defined by the index
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'id' / construct.Int8ul,
+                   'telemetry' / construct.GreedyBytes,)
+  __slots__ = [
+               'id',
+               'telemetry',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgCsacTelemetry,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgCsacTelemetry, self).__init__()
+      self.msg_type = SBP_MSG_CSAC_TELEMETRY
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.id = kwargs.pop('id')
+      self.telemetry = kwargs.pop('telemetry')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgCsacTelemetry.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgCsacTelemetry(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgCsacTelemetry._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgCsacTelemetry._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgCsacTelemetry, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_CSAC_TELEMETRY_LABELS = 0xFF05
+class MsgCsacTelemetryLabels(SBP):
+  """SBP class for message MSG_CSAC_TELEMETRY_LABELS (0xFF05).
+
+  You can have MSG_CSAC_TELEMETRY_LABELS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The CSAC telemetry message provides labels for each member of the string
+produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
+rate than the MSG_CSAC_TELEMETRY.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  id : int
+    Index representing the type of telemetry in use.  It is implemention defined.
+  telemetry_labels : string
+    Comma separated list of telemetry field values
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'id' / construct.Int8ul,
+                   'telemetry_labels' / construct.GreedyBytes,)
+  __slots__ = [
+               'id',
+               'telemetry_labels',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgCsacTelemetryLabels,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgCsacTelemetryLabels, self).__init__()
+      self.msg_type = SBP_MSG_CSAC_TELEMETRY_LABELS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.id = kwargs.pop('id')
+      self.telemetry_labels = kwargs.pop('telemetry_labels')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgCsacTelemetryLabels.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgCsacTelemetryLabels(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgCsacTelemetryLabels._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgCsacTelemetryLabels._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgCsacTelemetryLabels, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0xFF00: MsgStartup,
   0xFF02: MsgDgnssStatus,
   0xFFFF: MsgHeartbeat,
   0xFF03: MsgInsStatus,
+  0xFF04: MsgCsacTelemetry,
+  0xFF05: MsgCsacTelemetryLabels,
 }

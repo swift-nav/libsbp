@@ -83,6 +83,8 @@ data SBPMsg =
    | SBPMsgCommandOutput MsgCommandOutput Msg
    | SBPMsgCommandReq MsgCommandReq Msg
    | SBPMsgCommandResp MsgCommandResp Msg
+   | SBPMsgCsacTelemetry MsgCsacTelemetry Msg
+   | SBPMsgCsacTelemetryLabels MsgCsacTelemetryLabels Msg
    | SBPMsgCwResults MsgCwResults Msg
    | SBPMsgCwStart MsgCwStart Msg
    | SBPMsgDeviceMonitor MsgDeviceMonitor Msg
@@ -256,6 +258,8 @@ instance Binary SBPMsg where
           | _msgSBPType == msgCommandOutput = SBPMsgCommandOutput (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandReq = SBPMsgCommandReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandResp = SBPMsgCommandResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgCsacTelemetry = SBPMsgCsacTelemetry (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgCsacTelemetryLabels = SBPMsgCsacTelemetryLabels (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCwResults = SBPMsgCwResults (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCwStart = SBPMsgCwStart (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgDeviceMonitor = SBPMsgDeviceMonitor (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -421,6 +425,8 @@ instance Binary SBPMsg where
       encoder (SBPMsgCommandOutput _ m) = put m
       encoder (SBPMsgCommandReq _ m) = put m
       encoder (SBPMsgCommandResp _ m) = put m
+      encoder (SBPMsgCsacTelemetry _ m) = put m
+      encoder (SBPMsgCsacTelemetryLabels _ m) = put m
       encoder (SBPMsgCwResults _ m) = put m
       encoder (SBPMsgCwStart _ m) = put m
       encoder (SBPMsgDeviceMonitor _ m) = put m
@@ -590,6 +596,8 @@ instance FromJSON SBPMsg where
         | msgType == msgCommandOutput = SBPMsgCommandOutput <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandReq = SBPMsgCommandReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandResp = SBPMsgCommandResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgCsacTelemetry = SBPMsgCsacTelemetry <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgCsacTelemetryLabels = SBPMsgCsacTelemetryLabels <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCwResults = SBPMsgCwResults <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCwStart = SBPMsgCwStart <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgDeviceMonitor = SBPMsgDeviceMonitor <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -760,6 +768,8 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgCommandOutput n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgCsacTelemetry n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgCsacTelemetryLabels n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCwResults n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCwStart n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgDeviceMonitor n m) = toJSON n <<>> toJSON m
@@ -924,6 +934,8 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgCommandOutput n m) = SBPMsgCommandOutput n <$> f m
   msg f (SBPMsgCommandReq n m) = SBPMsgCommandReq n <$> f m
   msg f (SBPMsgCommandResp n m) = SBPMsgCommandResp n <$> f m
+  msg f (SBPMsgCsacTelemetry n m) = SBPMsgCsacTelemetry n <$> f m
+  msg f (SBPMsgCsacTelemetryLabels n m) = SBPMsgCsacTelemetryLabels n <$> f m
   msg f (SBPMsgCwResults n m) = SBPMsgCwResults n <$> f m
   msg f (SBPMsgCwStart n m) = SBPMsgCwStart n <$> f m
   msg f (SBPMsgDeviceMonitor n m) = SBPMsgDeviceMonitor n <$> f m

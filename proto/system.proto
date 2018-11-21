@@ -70,3 +70,25 @@ message MsgHeartbeat {
 message MsgInsStatus {
     uint32 flags = 1;
 }
+
+/** Experimental telemetry message
+ *
+ * The CSAC telemetry message has an implementation defined telemetry string
+ * from a device. It is not produced or available on general Swift Products.
+ * It is intended to be a low rate message for status purposes.
+ */
+message MsgCsacTelemetry {
+    uint32 id = 1;
+    string telemetry = 2;
+}
+
+/** Experimental telemetry message labels
+ *
+ * The CSAC telemetry message provides labels for each member of the string
+ * produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
+ * rate than the MSG_CSAC_TELEMETRY.
+ */
+message MsgCsacTelemetryLabels {
+    uint32 id = 1;
+    string telemetry_labels = 2;
+}
