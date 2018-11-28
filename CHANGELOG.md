@@ -1,11 +1,19 @@
 # Change Log
 
-## [v2.4.4](https://github.com/swift-nav/libsbp/tree/v2.4.4)
+## [v2.4.5](https://github.com/swift-nav/libsbp/tree/v2.4.5)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.4...v2.4.5)
+
+**Merged pull requests:**
+
+- Msg Timing Telem [\#622](https://github.com/swift-nav/libsbp/pull/622)
+
+## [v2.4.4](https://github.com/swift-nav/libsbp/tree/v2.4.4) (2018-11-20)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.3...v2.4.4)
 
 **Merged pull requests:**
 
+- 2.4.4 branch [\#621](https://github.com/swift-nav/libsbp/pull/621)
 - Replace deprecated CMAKE\_FORCE\_\<lang\>\_COMPILER macros [\#620](https://github.com/swift-nav/libsbp/pull/620)
 - fix missing require for sbas messages [\#619](https://github.com/swift-nav/libsbp/pull/619)
 
