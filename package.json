@@ -14,7 +14,7 @@
   "author": "dev@swift-nav.com",
   "license": "LGPL-3.0",
   "dependencies": {
-    "binary-parser": "git://github.com/JoshuaGross/binary-parser.git#jgross-greedy-string",
+    "binary-parser": "git://github.com/swift-nav/binary-parser.git#jgross-greedy-string",
     "cuint": "^0.2.2",
     "js-yaml": "^3.11.0",
     "node-int64": "^0.4.0"
