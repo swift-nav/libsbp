@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.client.loggers.rotating_logger &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sbp.client.loggers.rotating_logger</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2015 Swift Navigation Inc.</span>
+<span class="c1"># Contact: Bhaskar Mookerji &lt;mookerji@swiftnav.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
+<span class="c1"># be be distributed together with this source. All other rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
+<span class="c1"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
+<span class="c1"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
+
+<span class="kn">from</span> <span class="nn">logging.handlers</span> <span class="kn">import</span> <span class="n">TimedRotatingFileHandler</span>
+<span class="kn">from</span> <span class="nn">sbp.client.loggers.json_logger</span> <span class="kn">import</span> <span class="n">JSONLogger</span>
+<span class="kn">from</span> <span class="nn">sbp.table</span> <span class="kn">import</span> <span class="n">dispatch</span>
+<span class="kn">import</span> <span class="nn">Queue</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<div class="viewcode-block" id="RotatingFileLogger"><a class="viewcode-back" href="../../../../sbp.client.loggers.rotating_logger.html#sbp.client.loggers.rotating_logger.RotatingFileLogger">[docs]</a><span class="k">class</span> <span class="nc">RotatingFileLogger</span><span class="p">(</span><span class="n">JSONLogger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;RotatingFileLogger</span>
+
+<span class="sd">    The :class:`RotatingFileLogger` JSON logs SBP messages to a rotating</span>
+<span class="sd">    file handler that&#39;s turned over at a specified time interval</span>
+<span class="sd">    (defaults to 30 minutes). Intended to be a very low-overhead,</span>
+<span class="sd">    cross-platform rolling logger for field testing.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : string</span>
+<span class="sd">      Path to file to write SBP messages to.</span>
+<span class="sd">    when : str</span>
+<span class="sd">      Specifies a type of interval</span>
+<span class="sd">    interval : int</span>
+<span class="sd">      Specifies length of interval</span>
+<span class="sd">    backupCount : int</span>
+<span class="sd">      Number of backups to keep around</span>
+<span class="sd">    tags : dict</span>
+<span class="sd">      Tags to add to SBP message envelope</span>
+<span class="sd">    dispatcher: dict</span>
+<span class="sd">      SBP dispatch table</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">filename</span><span class="p">,</span>
+                 <span class="n">when</span><span class="o">=</span><span class="s1">&#39;M&#39;</span><span class="p">,</span>
+                 <span class="n">interval</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+                 <span class="n">backupCount</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RotatingFileLogger</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handler</span> <span class="o">=</span> <span class="n">TimedRotatingFileHandler</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">when</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span>
+                                                <span class="n">backupCount</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;Rotating Log&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RotatingFileLogger.flush"><a class="viewcode-back" href="../../../../sbp.client.loggers.rotating_logger.html#sbp.client.loggers.rotating_logger.RotatingFileLogger.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="RotatingFileLogger.close"><a class="viewcode-back" href="../../../../sbp.client.loggers.rotating_logger.html#sbp.client.loggers.rotating_logger.RotatingFileLogger.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="RotatingFileLogger.call"><a class="viewcode-back" href="../../../../sbp.client.loggers.rotating_logger.html#sbp.client.loggers.rotating_logger.RotatingFileLogger.call">[docs]</a>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

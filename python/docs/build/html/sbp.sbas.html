@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.sbas module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
+    <link rel="next" title="sbp.settings module" href="sbp.settings.html" />
+    <link rel="prev" title="sbp.piksi module" href="sbp.piksi.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.sbas">
+<span id="sbp-sbas-module"></span><h1>sbp.sbas module<a class="headerlink" href="#module-sbp.sbas" title="Permalink to this headline">¶</a></h1>
+<p>SBAS data</p>
+<dl class="class">
+<dt id="sbp.sbas.MsgSbasRaw">
+<em class="property">class </em><code class="descclassname">sbp.sbas.</code><code class="descname">MsgSbasRaw</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/sbas.html#MsgSbasRaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.sbas.MsgSbasRaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SBAS_RAW (0x7777).</p>
+<blockquote>
+<div><p>You can have MSG_SBAS_RAW inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message is sent once per second per SBAS satellite. ME checks the</p>
+</div></blockquote>
+<p>parity of the data block and sends only blocks that pass the check.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>GNSS signal identifier.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS time-of-week at the start of the data block.</dd>
+<dt>message_type</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>SBAS message type (0-63)</dd>
+<dt>data</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Raw SBAS data field of 212 bits (last byte padded with zeros).</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.sbas.MsgSbasRaw.data">
+<code class="descname">data</code><a class="headerlink" href="#sbp.sbas.MsgSbasRaw.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.sbas.MsgSbasRaw.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/sbas.html#MsgSbasRaw.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.sbas.MsgSbasRaw.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.sbas.MsgSbasRaw.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/sbas.html#MsgSbasRaw.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.sbas.MsgSbasRaw.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.sbas.MsgSbasRaw.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/sbas.html#MsgSbasRaw.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.sbas.MsgSbasRaw.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.sbas.MsgSbasRaw.message_type">
+<code class="descname">message_type</code><a class="headerlink" href="#sbp.sbas.MsgSbasRaw.message_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.sbas.MsgSbasRaw.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.sbas.MsgSbasRaw.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.sbas.MsgSbasRaw.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/sbas.html#MsgSbasRaw.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.sbas.MsgSbasRaw.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.sbas.MsgSbasRaw.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/sbas.html#MsgSbasRaw.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.sbas.MsgSbasRaw.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.sbas.MsgSbasRaw.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.sbas.MsgSbasRaw.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.piksi.html" title="previous chapter">sbp.piksi module</a></li>
+      <li>Next: <a href="sbp.settings.html" title="next chapter">sbp.settings module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.sbas.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/sbp.sbas.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -26,34 +26,14 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="sbp 0.27 documentation" href="index.html" />
     <link rel="up" title="sbp.client.loggers package" href="sbp.client.loggers.html" />
-    <link rel="next" title="sbp.client.loggers.null_logger module" href="sbp.client.loggers.null_logger.html" />
-    <link rel="prev" title="sbp.client.loggers.byte_logger module" href="sbp.client.loggers.byte_logger.html" />
+    <link rel="next" title="sbp.client.loggers.json_logger_all module" href="sbp.client.loggers.json_logger_all.html" />
+    <link rel="prev" title="sbp.client.loggers.base_logger module" href="sbp.client.loggers.base_logger.html" />
    
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="sbp.client.loggers.null_logger.html" title="sbp.client.loggers.null_logger module"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="sbp.client.loggers.byte_logger.html" title="sbp.client.loggers.byte_logger module"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="sbp.client.html" >sbp.client package</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="sbp.client.loggers.html" accesskey="U">sbp.client.loggers package</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
@@ -63,14 +43,31 @@
   <div class="section" id="module-sbp.client.loggers.json_logger">
 <span id="sbp-client-loggers-json-logger-module"></span><h1>sbp.client.loggers.json_logger module<a class="headerlink" href="#module-sbp.client.loggers.json_logger" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
+<dt id="sbp.client.loggers.json_logger.JSONBinLogger">
+<em class="property">class </em><code class="descclassname">sbp.client.loggers.json_logger.</code><code class="descname">JSONBinLogger</code><span class="sig-paren">(</span><em>handle</em>, <em>tags={}</em>, <em>dispatcher=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/json_logger.html#JSONBinLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.json_logger.JSONBinLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.client.loggers.base_logger.html#sbp.client.loggers.base_logger.BaseLogger" title="sbp.client.loggers.base_logger.BaseLogger"><code class="xref py py-class docutils literal"><span class="pre">sbp.client.loggers.base_logger.BaseLogger</span></code></a></p>
+<p>The <a class="reference internal" href="#sbp.client.loggers.json_logger.JSONLogger" title="sbp.client.loggers.json_logger.JSONLogger"><code class="xref py py-class docutils literal"><span class="pre">JSONLogger</span></code></a> logs JSON records without expanding the fields.</p>
+<dl class="method">
+<dt id="sbp.client.loggers.json_logger.JSONBinLogger.dump">
+<code class="descname">dump</code><span class="sig-paren">(</span><em>msg</em>, <em>**metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/json_logger.html#JSONBinLogger.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.json_logger.JSONBinLogger.dump" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.loggers.json_logger.JSONBinLogger.fmt_msg">
+<code class="descname">fmt_msg</code><span class="sig-paren">(</span><em>data</em>, <em>**metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/json_logger.html#JSONBinLogger.fmt_msg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.json_logger.JSONBinLogger.fmt_msg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="sbp.client.loggers.json_logger.JSONLogIterator">
 <em class="property">class </em><code class="descclassname">sbp.client.loggers.json_logger.</code><code class="descname">JSONLogIterator</code><span class="sig-paren">(</span><em>handle</em>, <em>dispatcher=&lt;function dispatch&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/json_logger.html#JSONLogIterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.json_logger.JSONLogIterator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="sbp.client.loggers.base_logger.html#sbp.client.loggers.base_logger.LogIterator" title="sbp.client.loggers.base_logger.LogIterator"><code class="xref py py-class docutils literal"><span class="pre">sbp.client.loggers.base_logger.LogIterator</span></code></a></p>
 <p>The <a class="reference internal" href="#sbp.client.loggers.json_logger.JSONLogIterator" title="sbp.client.loggers.json_logger.JSONLogIterator"><code class="xref py py-class docutils literal"><span class="pre">JSONLogIterator</span></code></a> is an iterator for reading JSON logs
 of SBP data.</p>
 <dl class="docutils">
-<dt>handle <span class="classifier-delimiter">:</span> <span class="classifier">File-like handle</span></dt>
-<dd>Any file-like handle providing SBP messages.</dd>
+<dt>filename</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>Path to file to read SBP messages from.</dd>
 </dl>
 <dl class="method">
 <dt id="sbp.client.loggers.json_logger.JSONLogIterator.next">
@@ -80,26 +77,29 @@ JSON-serialized SBP. If an unknown SBP message type is found,
 it&#8217;ll return the raw SBP. If EOF, throws exception and then
 returns to start of file.</p>
 <dl class="docutils">
-<dt>(float, float, object)</dt>
-<dd>(elapsed msec since beginning of log, UTC timestamp, msg)</dd>
+<dt>Tuple(sbp MSG object, {&#8216;time&#8217;:&#8217;ISO 8601 time&#8217;})</dt>
+<dd>Second item is for metadata. There used to be multiple fields and
+there could be more in the future.</dd>
 </dl>
+<p>In practice it seems like a lot of times JSONLogIterator objects return
+iterators instead of tuples due to weird usage of the class.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.client.loggers.json_logger.JSONLogger">
-<em class="property">class </em><code class="descclassname">sbp.client.loggers.json_logger.</code><code class="descname">JSONLogger</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/json_logger.html#JSONLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.json_logger.JSONLogger" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">sbp.client.loggers.json_logger.</code><code class="descname">JSONLogger</code><span class="sig-paren">(</span><em>handle</em>, <em>tags={}</em>, <em>dispatcher=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/json_logger.html#JSONLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.json_logger.JSONLogger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="sbp.client.loggers.base_logger.html#sbp.client.loggers.base_logger.BaseLogger" title="sbp.client.loggers.base_logger.BaseLogger"><code class="xref py py-class docutils literal"><span class="pre">sbp.client.loggers.base_logger.BaseLogger</span></code></a></p>
 <p>The <a class="reference internal" href="#sbp.client.loggers.json_logger.JSONLogger" title="sbp.client.loggers.json_logger.JSONLogger"><code class="xref py py-class docutils literal"><span class="pre">JSONLogger</span></code></a> logs JSON records.</p>
 <dl class="method">
-<dt id="sbp.client.loggers.json_logger.JSONLogger.call">
-<code class="descname">call</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/json_logger.html#JSONLogger.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.json_logger.JSONLogger.call" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.client.loggers.json_logger.JSONLogger.dump">
+<code class="descname">dump</code><span class="sig-paren">(</span><em>msg</em>, <em>**metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/json_logger.html#JSONLogger.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.json_logger.JSONLogger.dump" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.client.loggers.json_logger.JSONLogger.fmt_msg">
-<code class="descname">fmt_msg</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/json_logger.html#JSONLogger.fmt_msg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.json_logger.JSONLogger.fmt_msg" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fmt_msg</code><span class="sig-paren">(</span><em>data</em>, <em>**metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/loggers/json_logger.html#JSONLogger.fmt_msg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.loggers.json_logger.JSONLogger.fmt_msg" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -111,13 +111,21 @@ returns to start of file.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="sbp.client.loggers.byte_logger.html"
-                        title="previous chapter">sbp.client.loggers.byte_logger module</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="sbp.client.loggers.null_logger.html"
-                        title="next chapter">sbp.client.loggers.null_logger module</a></p>
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+  <li><a href="sbp.client.html">sbp.client package</a><ul>
+  <li><a href="sbp.client.loggers.html">sbp.client.loggers package</a><ul>
+      <li>Previous: <a href="sbp.client.loggers.base_logger.html" title="previous chapter">sbp.client.loggers.base_logger module</a></li>
+      <li>Next: <a href="sbp.client.loggers.json_logger_all.html" title="next chapter">sbp.client.loggers.json_logger_all module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -133,9 +141,6 @@ returns to start of file.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -146,12 +151,12 @@ returns to start of file.</p>
       &copy;2015, Swift Navigation.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
       |
       <a href="_sources/sbp.client.loggers.json_logger.txt"
-          rel="nofollow">Page source</a></li>
+          rel="nofollow">Page source</a>
     </div>
 
     

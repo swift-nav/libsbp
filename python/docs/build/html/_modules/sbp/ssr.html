@@ -1,0 +1,611 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.ssr &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sbp.ssr</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># Copyright (C) 2015-2018 Swift Navigation Inc.</span>
+<span class="c1"># Contact: Swift Navigation &lt;dev@swiftnav.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
+<span class="c1"># be be distributed together with this source. All other rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
+<span class="c1"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
+<span class="c1"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Precise State Space Representation (SSR) corrections format</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">import</span> <span class="nn">construct</span>
+
+<span class="kn">from</span> <span class="nn">sbp.msg</span> <span class="kn">import</span> <span class="n">SBP</span><span class="p">,</span> <span class="n">SENDER_ID</span>
+<span class="kn">from</span> <span class="nn">sbp.utils</span> <span class="kn">import</span> <span class="n">fmt_repr</span><span class="p">,</span> <span class="n">exclude_fields</span><span class="p">,</span> <span class="n">walk_json_dict</span><span class="p">,</span> <span class="n">containerize</span>
+<span class="kn">from</span> <span class="nn">sbp.gnss</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Automatically generated from piksi/yaml/swiftnav/sbp/ssr.yaml with generate.py.</span>
+<span class="c1"># Please do not hand edit!</span>
+
+
+<div class="viewcode-block" id="CodeBiasesContent"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.CodeBiasesContent">[docs]</a><span class="k">class</span> <span class="nc">CodeBiasesContent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;CodeBiasesContent.</span>
+<span class="sd">  </span>
+<span class="sd">  Code biases are to be added to pseudorange.</span>
+<span class="sd">The corrections are conform with typical RTCMv3 MT1059 and 1065.</span>
+
+<span class="sd">  </span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  code : int</span>
+<span class="sd">    Signal constellation, band and code</span>
+<span class="sd">  value : int</span>
+<span class="sd">    Code bias value</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Embedded</span><span class="p">(</span><span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                     <span class="s1">&#39;code&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                     <span class="s1">&#39;value&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16sl</span><span class="p">,))</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;code&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;value&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">payload</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  
+<div class="viewcode-block" id="CodeBiasesContent.from_binary"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.CodeBiasesContent.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">CodeBiasesContent</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="CodeBiasesContent.to_binary"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.CodeBiasesContent.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">CodeBiasesContent</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div></div>
+    
+<div class="viewcode-block" id="PhaseBiasesContent"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.PhaseBiasesContent">[docs]</a><span class="k">class</span> <span class="nc">PhaseBiasesContent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;PhaseBiasesContent.</span>
+<span class="sd">  </span>
+<span class="sd">  Phase biases are to be added to carrier phase measurements.</span>
+<span class="sd">The corrections are conform with typical RTCMv3 MT1059 and 1065.</span>
+
+<span class="sd">  </span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  code : int</span>
+<span class="sd">    Signal constellation, band and code</span>
+<span class="sd">  integer_indicator : int</span>
+<span class="sd">    Indicator for integer property</span>
+<span class="sd">  widelane_integer_indicator : int</span>
+<span class="sd">    Indicator for two groups of Wide-Lane(s) integer property</span>
+<span class="sd">  discontinuity_counter : int</span>
+<span class="sd">    Signal phase discontinuity counter. </span>
+<span class="sd">Increased for every discontinuity in phase.</span>
+
+<span class="sd">  bias : int</span>
+<span class="sd">    Phase bias for specified signal</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Embedded</span><span class="p">(</span><span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                     <span class="s1">&#39;code&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                     <span class="s1">&#39;integer_indicator&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                     <span class="s1">&#39;widelane_integer_indicator&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                     <span class="s1">&#39;discontinuity_counter&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                     <span class="s1">&#39;bias&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,))</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;code&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;integer_indicator&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;widelane_integer_indicator&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;discontinuity_counter&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;bias&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">payload</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">integer_indicator</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;integer_indicator&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">widelane_integer_indicator</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;widelane_integer_indicator&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">discontinuity_counter</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;discontinuity_counter&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;bias&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  
+<div class="viewcode-block" id="PhaseBiasesContent.from_binary"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.PhaseBiasesContent.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">PhaseBiasesContent</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="PhaseBiasesContent.to_binary"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.PhaseBiasesContent.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">PhaseBiasesContent</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div></div>
+    
+<span class="n">SBP_MSG_SSR_ORBIT_CLOCK</span> <span class="o">=</span> <span class="mh">0x05DC</span>
+<div class="viewcode-block" id="MsgSsrOrbitClock"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClock">[docs]</a><span class="k">class</span> <span class="nc">MsgSsrOrbitClock</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DC).</span>
+
+<span class="sd">  You can have MSG_SSR_ORBIT_CLOCK inherit its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The precise orbit and clock correction message is </span>
+<span class="sd">to be applied as a delta correction to broadcast </span>
+<span class="sd">ephemeris and is typically an equivalent to the 1060</span>
+<span class="sd">and 1066 RTCM message types</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  time : GPSTimeSec</span>
+<span class="sd">    GNSS reference time of the correction</span>
+<span class="sd">  sid : GnssSignal</span>
+<span class="sd">    GNSS signal identifier (16 bit)</span>
+<span class="sd">  update_interval : int</span>
+<span class="sd">    Update interval between consecutive corrections</span>
+<span class="sd">  iod_ssr : int</span>
+<span class="sd">    IOD of the SSR correction. A change of Issue Of Data</span>
+<span class="sd">SSR is used to indicate a change in the SSR </span>
+<span class="sd">generating configuration</span>
+
+<span class="sd">  iod : int</span>
+<span class="sd">    Issue of broadcast ephemeris data</span>
+<span class="sd">  radial : int</span>
+<span class="sd">    Orbit radial delta correction</span>
+<span class="sd">  along : int</span>
+<span class="sd">    Orbit along delta correction</span>
+<span class="sd">  cross : int</span>
+<span class="sd">    Orbit along delta correction</span>
+<span class="sd">  dot_radial : int</span>
+<span class="sd">    Velocity of orbit radial delta correction</span>
+<span class="sd">  dot_along : int</span>
+<span class="sd">    Velocity of orbit along delta correction</span>
+<span class="sd">  dot_cross : int</span>
+<span class="sd">    Velocity of orbit cross delta correction</span>
+<span class="sd">  c0 : int</span>
+<span class="sd">    C0 polynomial coefficient for correction of broadcast satellite clock</span>
+<span class="sd">  c1 : int</span>
+<span class="sd">    C1 polynomial coefficient for correction of broadcast satellite clock</span>
+<span class="sd">  c2 : int</span>
+<span class="sd">    C2 polynomial coefficient for correction of broadcast satellite clock</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="s1">&#39;time&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GPSTimeSec</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;sid&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GnssSignal</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;update_interval&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;iod_ssr&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;iod&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;radial&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;along&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;cross&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;dot_radial&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;dot_along&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;dot_cross&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;c0&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;c1&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;c2&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;time&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sid&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;update_interval&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;iod_ssr&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;iod&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;radial&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;along&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;cross&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;dot_radial&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;dot_along&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;dot_cross&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;c0&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;c1&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;c2&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSsrOrbitClock</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSsrOrbitClock</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_SSR_ORBIT_CLOCK</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sid</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sid&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">update_interval</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;update_interval&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">iod_ssr</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;iod_ssr&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">iod</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;iod&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">radial</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;radial&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">along</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;along&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cross</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cross&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">dot_radial</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;dot_radial&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">dot_along</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;dot_along&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">dot_cross</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;dot_cross&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">c0</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;c0&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">c1</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;c1&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">c2</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;c2&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgSsrOrbitClock.from_json"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClock.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgSsrOrbitClock</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgSsrOrbitClock.from_json_dict"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClock.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgSsrOrbitClock</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+ 
+<div class="viewcode-block" id="MsgSsrOrbitClock.from_binary"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClock.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgSsrOrbitClock</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgSsrOrbitClock.to_binary"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClock.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgSsrOrbitClock</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MsgSsrOrbitClock.to_json_dict"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClock.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSsrOrbitClock</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
+<span class="n">SBP_MSG_SSR_CODE_BIASES</span> <span class="o">=</span> <span class="mh">0x05E1</span>
+<div class="viewcode-block" id="MsgSsrCodeBiases"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrCodeBiases">[docs]</a><span class="k">class</span> <span class="nc">MsgSsrCodeBiases</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_SSR_CODE_BIASES (0x05E1).</span>
+
+<span class="sd">  You can have MSG_SSR_CODE_BIASES inherit its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The precise code biases message is to be added</span>
+<span class="sd">to the pseudorange of the corresponding signal</span>
+<span class="sd">to get corrected pseudorange. It is typically </span>
+<span class="sd">an equivalent to the 1059 and 1065 RTCM message types</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  time : GPSTimeSec</span>
+<span class="sd">    GNSS reference time of the correction</span>
+<span class="sd">  sid : GnssSignal</span>
+<span class="sd">    GNSS signal identifier (16 bit)</span>
+<span class="sd">  update_interval : int</span>
+<span class="sd">    Update interval between consecutive corrections</span>
+<span class="sd">  iod_ssr : int</span>
+<span class="sd">    IOD of the SSR correction. A change of Issue Of Data</span>
+<span class="sd">SSR is used to indicate a change in the SSR </span>
+<span class="sd">generating configuration</span>
+
+<span class="sd">  biases : array</span>
+<span class="sd">    Code biases for the different satellite signals</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="s1">&#39;time&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GPSTimeSec</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;sid&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GnssSignal</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;update_interval&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;iod_ssr&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="n">construct</span><span class="o">.</span><span class="n">GreedyRange</span><span class="p">(</span><span class="s1">&#39;biases&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">CodeBiasesContent</span><span class="o">.</span><span class="n">_parser</span><span class="p">)),)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;time&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sid&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;update_interval&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;iod_ssr&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;biases&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSsrCodeBiases</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSsrCodeBiases</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_SSR_CODE_BIASES</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sid</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sid&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">update_interval</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;update_interval&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">iod_ssr</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;iod_ssr&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">biases</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;biases&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgSsrCodeBiases.from_json"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrCodeBiases.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgSsrCodeBiases</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgSsrCodeBiases.from_json_dict"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrCodeBiases.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgSsrCodeBiases</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+ 
+<div class="viewcode-block" id="MsgSsrCodeBiases.from_binary"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrCodeBiases.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgSsrCodeBiases</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgSsrCodeBiases.to_binary"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrCodeBiases.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgSsrCodeBiases</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MsgSsrCodeBiases.to_json_dict"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrCodeBiases.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSsrCodeBiases</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
+<span class="n">SBP_MSG_SSR_PHASE_BIASES</span> <span class="o">=</span> <span class="mh">0x05E6</span>
+<div class="viewcode-block" id="MsgSsrPhaseBiases"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrPhaseBiases">[docs]</a><span class="k">class</span> <span class="nc">MsgSsrPhaseBiases</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_SSR_PHASE_BIASES (0x05E6).</span>
+
+<span class="sd">  You can have MSG_SSR_PHASE_BIASES inherit its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The precise phase biases message contains the biases</span>
+<span class="sd">to be added to the carrier phase of the corresponding</span>
+<span class="sd">signal to get corrected carrier phase measurement, as </span>
+<span class="sd">well as the satellite yaw angle to be applied to compute </span>
+<span class="sd">the phase wind-up correction. </span>
+<span class="sd">It is typically an equivalent to the 1265 RTCM message types</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  time : GPSTimeSec</span>
+<span class="sd">    GNSS reference time of the correction</span>
+<span class="sd">  sid : GnssSignal</span>
+<span class="sd">    GNSS signal identifier (16 bit)</span>
+<span class="sd">  update_interval : int</span>
+<span class="sd">    Update interval between consecutive corrections</span>
+<span class="sd">  iod_ssr : int</span>
+<span class="sd">    IOD of the SSR correction. A change of Issue Of Data</span>
+<span class="sd">SSR is used to indicate a change in the SSR </span>
+<span class="sd">generating configuration</span>
+
+<span class="sd">  dispersive_bias : int</span>
+<span class="sd">    Indicator for the dispersive phase biases property.</span>
+
+<span class="sd">  mw_consistency : int</span>
+<span class="sd">    Consistency indicator for Melbourne-Wubbena linear combinations</span>
+
+<span class="sd">  yaw : int</span>
+<span class="sd">    Satellite yaw angle</span>
+<span class="sd">  yaw_rate : int</span>
+<span class="sd">    Satellite yaw angle rate</span>
+<span class="sd">  biases : array</span>
+<span class="sd">    Phase biases corrections for a</span>
+<span class="sd">satellite being tracked.</span>
+
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="s1">&#39;time&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GPSTimeSec</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;sid&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GnssSignal</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;update_interval&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;iod_ssr&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;dispersive_bias&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;mw_consistency&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;yaw&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16ul</span><span class="p">,</span>
+                   <span class="s1">&#39;yaw_rate&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8sl</span><span class="p">,</span>
+                   <span class="n">construct</span><span class="o">.</span><span class="n">GreedyRange</span><span class="p">(</span><span class="s1">&#39;biases&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">PhaseBiasesContent</span><span class="o">.</span><span class="n">_parser</span><span class="p">)),)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;time&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sid&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;update_interval&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;iod_ssr&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;dispersive_bias&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;mw_consistency&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;yaw&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;yaw_rate&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;biases&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSsrPhaseBiases</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSsrPhaseBiases</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_SSR_PHASE_BIASES</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sid</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sid&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">update_interval</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;update_interval&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">iod_ssr</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;iod_ssr&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">dispersive_bias</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;dispersive_bias&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">mw_consistency</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;mw_consistency&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">yaw</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;yaw&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">yaw_rate</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">biases</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;biases&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgSsrPhaseBiases.from_json"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrPhaseBiases.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgSsrPhaseBiases</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgSsrPhaseBiases.from_json_dict"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrPhaseBiases.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgSsrPhaseBiases</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+ 
+<div class="viewcode-block" id="MsgSsrPhaseBiases.from_binary"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrPhaseBiases.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgSsrPhaseBiases</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgSsrPhaseBiases.to_binary"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrPhaseBiases.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgSsrPhaseBiases</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MsgSsrPhaseBiases.to_json_dict"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrPhaseBiases.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSsrPhaseBiases</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
+
+<span class="n">msg_classes</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="mh">0x05DC</span><span class="p">:</span> <span class="n">MsgSsrOrbitClock</span><span class="p">,</span>
+  <span class="mh">0x05E1</span><span class="p">:</span> <span class="n">MsgSsrCodeBiases</span><span class="p">,</span>
+  <span class="mh">0x05E6</span><span class="p">:</span> <span class="n">MsgSsrPhaseBiases</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

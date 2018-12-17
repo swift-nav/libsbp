@@ -1,0 +1,23 @@
+<map id="Logging" name="Logging">
+<area shape="rect" id="node1" href="$group__flash.html" title="Flash" alt="" coords="273,13,327,38"/>
+<area shape="rect" id="node2" href="$group__observation.html" title="Observation" alt="" coords="253,62,347,87"/>
+<area shape="rect" id="node3" href="$group__ext__events.html" title="Ext_events" alt="" coords="256,111,344,137"/>
+<area shape="rect" id="node5" href="$group__vehicle.html" title="Vehicle" alt="" coords="268,161,332,186"/>
+<area shape="rect" id="node6" href="$group__ssr.html" title="Ssr" alt="" coords="279,210,321,235"/>
+<area shape="rect" id="node7" href="$group__tracking.html" title="Tracking" alt="" coords="264,259,336,285"/>
+<area shape="rect" id="node8" href="$group__mag.html" title="Mag" alt="" coords="276,309,324,334"/>
+<area shape="rect" id="node9" href="$group__sbas.html" title="Sbas" alt="" coords="274,358,326,383"/>
+<area shape="rect" id="node10" href="$group__file__io.html" title="File_io" alt="" coords="270,407,330,433"/>
+<area shape="rect" id="node11" href="$group__bootload.html" title="Bootload" alt="" coords="263,457,337,482"/>
+<area shape="rect" id="node12" href="$group__acquisition.html" title="Acquisition" alt="" coords="257,506,343,531"/>
+<area shape="rect" id="node13" href="$group__imu.html" title="Imu" alt="" coords="278,555,322,581"/>
+<area shape="rect" id="node14" href="$group__orientation.html" title="Orientation" alt="" coords="257,605,343,630"/>
+<area shape="rect" id="node15" href="$group__ndb.html" title="Ndb" alt="" coords="277,654,323,679"/>
+<area shape="rect" id="node16" href="$group__settings.html" title="Settings" alt="" coords="265,703,335,729"/>
+<area shape="rect" id="node17" href="$group__navigation.html" title="Navigation" alt="" coords="258,753,342,778"/>
+<area shape="rect" id="node18" href="$group__system.html" title="System" alt="" coords="267,802,333,827"/>
+<area shape="rect" id="node19" href="$group__user.html" title="User" alt="" coords="275,851,325,877"/>
+<area shape="rect" id="node20" href="$group__piksi.html" title="Piksi" alt="" coords="275,901,325,926"/>
+<area shape="rect" id="node21" href="$group__linux.html" title="Linux" alt="" coords="273,950,327,975"/>
+<area shape="rect" id="node22" href="$group__gnss.html" title="Gnss" alt="" coords="274,999,326,1025"/>
+</map>

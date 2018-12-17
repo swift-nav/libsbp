@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.client.util.fftmonitor &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sbp.client.util.fftmonitor</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2017 Swift Navigation Inc.</span>
+<span class="c1"># Contact: Swift Navigation &lt;dev@swiftnav.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
+<span class="c1"># be be distributed together with this source. All other rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
+<span class="c1"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
+<span class="c1"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">the :mod:`sbp.client.util.fftmonitor` module contains functionality to log</span>
+<span class="sd">and assemble spectrum analyzer messages into FFT information</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">sbp.client.drivers.network_drivers</span> <span class="kn">import</span> <span class="n">TCPDriver</span>
+<span class="kn">from</span> <span class="nn">sbp.client</span> <span class="kn">import</span> <span class="n">Handler</span><span class="p">,</span> <span class="n">Framer</span>
+<span class="kn">from</span> <span class="nn">sbp.gnss</span> <span class="kn">import</span> <span class="n">GPSTimeSec</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">sbp.piksi</span> <span class="kn">import</span> <span class="n">SBP_MSG_SPECAN_DEP</span><span class="p">,</span> <span class="n">MsgSpecanDep</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">sbp.piksi</span> <span class="kn">import</span> <span class="n">SBP_MSG_SPECAN</span><span class="p">,</span> <span class="n">MsgSpecan</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="GPSTimeSecCmp"><a class="viewcode-back" href="../../../../sbp.client.util.fftmonitor.html#sbp.client.util.fftmonitor.GPSTimeSecCmp">[docs]</a><span class="k">class</span> <span class="nc">GPSTimeSecCmp</span><span class="p">(</span><span class="n">GPSTimeSec</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GPSTimeSecCmp</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__cmp__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">wn</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">wn</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">wn</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">wn</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tow</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">tow</span><span class="p">:</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tow</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">tow</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">GPSTimeSecCmp</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wn</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">wn</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tow</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">tow</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;(wn: {0}, tow: {1})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tow</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tow</span><span class="p">)</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="FFTMonitor"><a class="viewcode-back" href="../../../../sbp.client.util.fftmonitor.html#sbp.client.util.fftmonitor.FFTMonitor">[docs]</a><span class="k">class</span> <span class="nc">FFTMonitor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">CHANNELS</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mkvalue</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;frequencies&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]),</span>
+            <span class="s1">&#39;amplitudes&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ffts</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">FFTMonitor</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">incomplete_ffts</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">ch</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mkvalue</span><span class="p">)</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">FFTMonitor</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="bp">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">FFTMonitor</span><span class="o">.</span><span class="n">CHANNELS</span><span class="p">}</span>
+
+<div class="viewcode-block" id="FFTMonitor.get_frequencies"><a class="viewcode-back" href="../../../../sbp.client.util.fftmonitor.html#sbp.client.util.fftmonitor.FFTMonitor.get_frequencies">[docs]</a>    <span class="k">def</span> <span class="nf">get_frequencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp_msg</span><span class="p">):</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">sbp_msg</span><span class="o">.</span><span class="n">freq_ref</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="n">sbp_msg</span><span class="o">.</span><span class="n">freq_step</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sbp_msg</span><span class="o">.</span><span class="n">amplitude_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">ref</span> <span class="o">+</span> <span class="n">step</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span></div>
+
+<div class="viewcode-block" id="FFTMonitor.get_amplitudes"><a class="viewcode-back" href="../../../../sbp.client.util.fftmonitor.html#sbp.client.util.fftmonitor.FFTMonitor.get_amplitudes">[docs]</a>    <span class="k">def</span> <span class="nf">get_amplitudes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp_msg</span><span class="p">):</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">sbp_msg</span><span class="o">.</span><span class="n">amplitude_ref</span>
+        <span class="n">unit</span> <span class="o">=</span> <span class="n">sbp_msg</span><span class="o">.</span><span class="n">amplitude_unit</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">sbp_msg</span><span class="o">.</span><span class="n">amplitude_value</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">ref</span> <span class="o">+</span> <span class="n">unit</span> <span class="o">*</span> <span class="n">value</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="FFTMonitor.capture_fft"><a class="viewcode-back" href="../../../../sbp.client.util.fftmonitor.html#sbp.client.util.fftmonitor.FFTMonitor.capture_fft">[docs]</a>    <span class="k">def</span> <span class="nf">capture_fft</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp_msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+
+        <span class="c1"># print &quot;ch:%d, freq_ref: %f, freq_step: %f, amp_ref:%f, num_values:%d, wn:%d, tow:%d&quot; \</span>
+        <span class="c1">#         % (sbp_msg.channel_tag, sbp_msg.freq_ref, sbp_msg.freq_step, sbp_msg.amplitude_ref, len(sbp_msg.amplitude_value), sbp_msg.t.wn, sbp_msg.t.tow)</span>
+
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">sbp_msg</span><span class="o">.</span><span class="n">channel_tag</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">[</span><span class="n">channel</span><span class="p">]:</span>
+            <span class="k">return</span>
+
+        <span class="n">frequencies</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_frequencies</span><span class="p">(</span><span class="n">sbp_msg</span><span class="p">)</span>
+        <span class="n">amplitudes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_amplitudes</span><span class="p">(</span><span class="n">sbp_msg</span><span class="p">)</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">GPSTimeSecCmp</span><span class="p">(</span><span class="n">tow</span><span class="o">=</span><span class="n">sbp_msg</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">tow</span><span class="p">,</span> <span class="n">wn</span><span class="o">=</span><span class="n">sbp_msg</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">wn</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">incomplete_ffts</span><span class="p">[</span><span class="n">channel</span><span class="p">][</span><span class="n">timestamp</span><span class="p">][</span><span class="s1">&#39;frequencies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">incomplete_ffts</span><span class="p">[</span><span class="n">channel</span><span class="p">][</span><span class="n">timestamp</span><span class="p">][</span><span class="s1">&#39;frequencies&#39;</span><span class="p">],</span>
+            <span class="n">frequencies</span><span class="p">,</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">incomplete_ffts</span><span class="p">[</span><span class="n">channel</span><span class="p">][</span><span class="n">timestamp</span><span class="p">][</span><span class="s1">&#39;amplitudes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">incomplete_ffts</span><span class="p">[</span><span class="n">channel</span><span class="p">][</span><span class="n">timestamp</span><span class="p">][</span><span class="s1">&#39;amplitudes&#39;</span><span class="p">],</span>
+            <span class="n">amplitudes</span><span class="p">,</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incomplete_ffts</span><span class="p">[</span><span class="n">channel</span><span class="p">][</span><span class="n">timestamp</span><span class="p">][</span><span class="s1">&#39;frequencies&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">512</span><span class="p">:</span>
+            <span class="n">current_fft</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomplete_ffts</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+            <span class="c1"># Clear out any partial messages</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">incomplete_ffts</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mkvalue</span><span class="p">)</span>
+
+            <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">current_fft</span><span class="p">[</span><span class="s1">&#39;frequencies&#39;</span><span class="p">])</span> <span class="o">==</span>
+                   <span class="nb">len</span><span class="p">(</span><span class="n">current_fft</span><span class="p">[</span><span class="s1">&#39;amplitudes&#39;</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ffts</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_fft</span><span class="p">)</span></div>
+            <span class="c1">#print &quot;FFT Captured for channel %d&quot; % channel</span>
+
+    <span class="k">def</span> <span class="nf">_enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">en</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">channel</span> <span class="o">=</span> <span class="p">[</span><span class="n">channel</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">channel</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">channel</span> <span class="o">=</span> <span class="n">FFTMonitor</span><span class="o">.</span><span class="n">CHANNELS</span>
+        <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">channel</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="n">en</span>
+
+<div class="viewcode-block" id="FFTMonitor.enable_channel"><a class="viewcode-back" href="../../../../sbp.client.util.fftmonitor.html#sbp.client.util.fftmonitor.FFTMonitor.enable_channel">[docs]</a>    <span class="k">def</span> <span class="nf">enable_channel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_ffts</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="n">channel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enable</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="n">channel</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FFTMonitor.disable_channel"><a class="viewcode-back" href="../../../../sbp.client.util.fftmonitor.html#sbp.client.util.fftmonitor.FFTMonitor.disable_channel">[docs]</a>    <span class="k">def</span> <span class="nf">disable_channel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enable</span><span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="n">channel</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FFTMonitor.num_ffts"><a class="viewcode-back" href="../../../../sbp.client.util.fftmonitor.html#sbp.client.util.fftmonitor.FFTMonitor.num_ffts">[docs]</a>    <span class="k">def</span> <span class="nf">num_ffts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ffts</span><span class="p">[</span><span class="n">channel</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="FFTMonitor.get_ffts"><a class="viewcode-back" href="../../../../sbp.client.util.fftmonitor.html#sbp.client.util.fftmonitor.FFTMonitor.get_ffts">[docs]</a>    <span class="k">def</span> <span class="nf">get_ffts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ffts</span><span class="p">[</span><span class="n">channel</span><span class="p">][:]</span></div>
+
+<div class="viewcode-block" id="FFTMonitor.clear_ffts"><a class="viewcode-back" href="../../../../sbp.client.util.fftmonitor.html#sbp.client.util.fftmonitor.FFTMonitor.clear_ffts">[docs]</a>    <span class="k">def</span> <span class="nf">clear_ffts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">channel</span> <span class="o">=</span> <span class="p">[</span><span class="n">channel</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">channel</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">channel</span> <span class="o">=</span> <span class="n">FFTMonitor</span><span class="o">.</span><span class="n">CHANNELS</span>
+
+        <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">channel</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ffts</span><span class="p">[</span><span class="n">ch</span><span class="p">][:]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">incomplete_ffts</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mkvalue</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../../sbp.client.util.fftmonitor.html#sbp.client.util.fftmonitor.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Swift Navigation SBP FFT monitor example.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-H&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--host&quot;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;specify the host address.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-p&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--port&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">55556</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;specify the port to use.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-n&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--num-ffts&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;specify the number of FFTs to capture.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-c&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--channel&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;specify the channel to monitor.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--output&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;fftmonitor&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;specify the output filename.&quot;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">monitor</span> <span class="o">=</span> <span class="n">FFTMonitor</span><span class="p">()</span>
+    <span class="n">ch</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">channel</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">num_ffts</span>
+
+    <span class="k">with</span> <span class="n">TCPDriver</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">port</span><span class="p">)</span> <span class="k">as</span> <span class="n">driver</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">Handler</span><span class="p">(</span><span class="n">Framer</span><span class="p">(</span><span class="n">driver</span><span class="o">.</span><span class="n">read</span><span class="p">,</span> <span class="n">driver</span><span class="o">.</span><span class="n">write</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span> <span class="k">as</span> <span class="n">link</span><span class="p">:</span>
+            <span class="n">driver</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+            <span class="n">link</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="n">monitor</span><span class="o">.</span><span class="n">capture_fft</span><span class="p">,</span> <span class="n">SBP_MSG_SPECAN_DEP</span><span class="p">)</span>
+
+            <span class="c1"># Capture 5 FFTs from channel 1</span>
+            <span class="n">monitor</span><span class="o">.</span><span class="n">enable_channel</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+            <span class="k">while</span> <span class="n">monitor</span><span class="o">.</span><span class="n">num_ffts</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">samples</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s2">&quot;Captured </span><span class="si">%d</span><span class="s2"> ffts from channel </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">ch</span><span class="p">)</span>
+            <span class="n">ffts</span> <span class="o">=</span> <span class="n">monitor</span><span class="o">.</span><span class="n">get_ffts</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+            <span class="c1">#monitor.disable_channel(ch)</span>
+
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.pickle&#39;</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+                <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">ffts</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="n">pickle</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">argparse</span>
+    <span class="kn">import</span> <span class="nn">pickle</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,5 @@
+<map id="msg_ssr_code_biases_t" name="msg_ssr_code_biases_t">
+<area shape="rect" id="node2" href="$structgps__time__sec__t.html" title="Whole second accurate GPS time. " alt="" coords="5,6,120,31"/>
+<area shape="rect" id="node3" href="$structcode__biases__content__t.html" title="SSR code biases corrections for a particular satellite. " alt="" coords="143,6,301,31"/>
+<area shape="rect" id="node4" href="$structsbp__gnss__signal__t.html" title="Represents all the relevant information about the signal. " alt="" coords="326,6,457,31"/>
+</map>

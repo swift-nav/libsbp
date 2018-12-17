@@ -1,0 +1,504 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.orientation module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
+    <link rel="next" title="sbp.piksi module" href="sbp.piksi.html" />
+    <link rel="prev" title="sbp.observation module" href="sbp.observation.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.orientation">
+<span id="sbp-orientation-module"></span><h1>sbp.orientation module<a class="headerlink" href="#module-sbp.orientation" title="Permalink to this headline">¶</a></h1>
+<p>Orientation Messages</p>
+<dl class="class">
+<dt id="sbp.orientation.MsgAngularRate">
+<em class="property">class </em><code class="descclassname">sbp.orientation.</code><code class="descname">MsgAngularRate</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgAngularRate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgAngularRate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_ANGULAR_RATE (0x0222).</p>
+<blockquote>
+<div><p>You can have MSG_ANGULAR_RATE inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the orientation rates in the vehicle body frame.</p>
+</div></blockquote>
+<p>The values represent the measurements a strapped down gyroscope would 
+make and are not equivalent to the time derivative of the Euler angles.
+The orientation and origin of the user frame is specified via device settings.
+By convention, the vehicle x-axis is expected to be aligned with the forward
+direction, while the vehicle y-axis is expected to be aligned with the right
+direction, and the vehicle z-axis should be aligned with the down direction.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>angular rate about x axis</dd>
+<dt>y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>angular rate about y axis</dd>
+<dt>z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>angular rate about z axis</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.orientation.MsgAngularRate.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.orientation.MsgAngularRate.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.orientation.MsgAngularRate.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgAngularRate.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgAngularRate.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.orientation.MsgAngularRate.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgAngularRate.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgAngularRate.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.orientation.MsgAngularRate.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgAngularRate.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgAngularRate.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.orientation.MsgAngularRate.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgAngularRate.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgAngularRate.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.orientation.MsgAngularRate.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgAngularRate.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgAngularRate.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgAngularRate.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.orientation.MsgAngularRate.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgAngularRate.x">
+<code class="descname">x</code><a class="headerlink" href="#sbp.orientation.MsgAngularRate.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgAngularRate.y">
+<code class="descname">y</code><a class="headerlink" href="#sbp.orientation.MsgAngularRate.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgAngularRate.z">
+<code class="descname">z</code><a class="headerlink" href="#sbp.orientation.MsgAngularRate.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.orientation.MsgBaselineHeading">
+<em class="property">class </em><code class="descclassname">sbp.orientation.</code><code class="descname">MsgBaselineHeading</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgBaselineHeading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgBaselineHeading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_BASELINE_HEADING (0x020F).</p>
+<blockquote>
+<div><p>You can have MSG_BASELINE_HEADING inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the baseline heading pointing from the base station</p>
+</div></blockquote>
+<p>to the rover relative to True North. The full GPS time is given by the
+preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
+that time-matched RTK mode is used when the base station is moving.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>heading</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Heading</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.orientation.MsgBaselineHeading.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.orientation.MsgBaselineHeading.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.orientation.MsgBaselineHeading.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgBaselineHeading.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgBaselineHeading.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.orientation.MsgBaselineHeading.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgBaselineHeading.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgBaselineHeading.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.orientation.MsgBaselineHeading.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgBaselineHeading.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgBaselineHeading.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgBaselineHeading.heading">
+<code class="descname">heading</code><a class="headerlink" href="#sbp.orientation.MsgBaselineHeading.heading" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgBaselineHeading.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.orientation.MsgBaselineHeading.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.orientation.MsgBaselineHeading.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgBaselineHeading.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgBaselineHeading.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.orientation.MsgBaselineHeading.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgBaselineHeading.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgBaselineHeading.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgBaselineHeading.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.orientation.MsgBaselineHeading.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.orientation.MsgOrientEuler">
+<em class="property">class </em><code class="descclassname">sbp.orientation.</code><code class="descname">MsgOrientEuler</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgOrientEuler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgOrientEuler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_ORIENT_EULER (0x0221).</p>
+<blockquote>
+<div><p>You can have MSG_ORIENT_EULER inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the yaw, pitch, and roll angles of the vehicle body frame.</p>
+</div></blockquote>
+<p>The rotations should applied intrinsically in the order yaw, pitch, and roll 
+in order to rotate the from a frame aligned with the local-level NED frame 
+to the vehicle body frame.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>roll</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>rotation about the forward axis of the vehicle</dd>
+<dt>pitch</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>rotation about the rightward axis of the vehicle</dd>
+<dt>yaw</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>rotation about the downward axis of the vehicle</dd>
+<dt>roll_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated standard deviation of roll</dd>
+<dt>pitch_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated standard deviation of pitch</dd>
+<dt>yaw_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated standard deviation of yaw</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientEuler.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.orientation.MsgOrientEuler.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.orientation.MsgOrientEuler.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgOrientEuler.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgOrientEuler.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.orientation.MsgOrientEuler.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgOrientEuler.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgOrientEuler.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.orientation.MsgOrientEuler.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgOrientEuler.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgOrientEuler.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientEuler.pitch">
+<code class="descname">pitch</code><a class="headerlink" href="#sbp.orientation.MsgOrientEuler.pitch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientEuler.pitch_accuracy">
+<code class="descname">pitch_accuracy</code><a class="headerlink" href="#sbp.orientation.MsgOrientEuler.pitch_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientEuler.roll">
+<code class="descname">roll</code><a class="headerlink" href="#sbp.orientation.MsgOrientEuler.roll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientEuler.roll_accuracy">
+<code class="descname">roll_accuracy</code><a class="headerlink" href="#sbp.orientation.MsgOrientEuler.roll_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.orientation.MsgOrientEuler.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgOrientEuler.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgOrientEuler.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.orientation.MsgOrientEuler.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgOrientEuler.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgOrientEuler.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientEuler.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.orientation.MsgOrientEuler.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientEuler.yaw">
+<code class="descname">yaw</code><a class="headerlink" href="#sbp.orientation.MsgOrientEuler.yaw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientEuler.yaw_accuracy">
+<code class="descname">yaw_accuracy</code><a class="headerlink" href="#sbp.orientation.MsgOrientEuler.yaw_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.orientation.MsgOrientQuat">
+<em class="property">class </em><code class="descclassname">sbp.orientation.</code><code class="descname">MsgOrientQuat</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgOrientQuat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgOrientQuat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_ORIENT_QUAT (0x0220).</p>
+<blockquote>
+<div><p>You can have MSG_ORIENT_QUAT inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the quaternion vector describing the vehicle body frame&#8217;s orientation</p>
+</div></blockquote>
+<p>with respect to a local-level NED frame. The components of the vector should sum to a unit
+vector assuming that the LSB of each component as a value of 2^-31.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>w</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Real component</dd>
+<dt>x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>1st imaginary component</dd>
+<dt>y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>2nd imaginary component</dd>
+<dt>z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>3rd imaginary component</dd>
+<dt>w_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated standard deviation of w</dd>
+<dt>x_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated standard deviation of x</dd>
+<dt>y_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated standard deviation of y</dd>
+<dt>z_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated standard deviation of z</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientQuat.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.orientation.MsgOrientQuat.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgOrientQuat.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.orientation.MsgOrientQuat.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgOrientQuat.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.orientation.MsgOrientQuat.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgOrientQuat.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.orientation.MsgOrientQuat.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgOrientQuat.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.orientation.MsgOrientQuat.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/orientation.html#MsgOrientQuat.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientQuat.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientQuat.w">
+<code class="descname">w</code><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.w" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientQuat.w_accuracy">
+<code class="descname">w_accuracy</code><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.w_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientQuat.x">
+<code class="descname">x</code><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientQuat.x_accuracy">
+<code class="descname">x_accuracy</code><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.x_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientQuat.y">
+<code class="descname">y</code><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientQuat.y_accuracy">
+<code class="descname">y_accuracy</code><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.y_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientQuat.z">
+<code class="descname">z</code><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.orientation.MsgOrientQuat.z_accuracy">
+<code class="descname">z_accuracy</code><a class="headerlink" href="#sbp.orientation.MsgOrientQuat.z_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.observation.html" title="previous chapter">sbp.observation module</a></li>
+      <li>Next: <a href="sbp.piksi.html" title="next chapter">sbp.piksi module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.orientation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/sbp.orientation.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

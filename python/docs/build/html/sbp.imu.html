@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.imu module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
+    <link rel="next" title="sbp.logging module" href="sbp.logging.html" />
+    <link rel="prev" title="sbp.gnss module" href="sbp.gnss.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.imu">
+<span id="sbp-imu-module"></span><h1>sbp.imu module<a class="headerlink" href="#module-sbp.imu" title="Permalink to this headline">¶</a></h1>
+<p>Inertial Measurement Unit (IMU) messages.</p>
+<dl class="class">
+<dt id="sbp.imu.MsgImuAux">
+<em class="property">class </em><code class="descclassname">sbp.imu.</code><code class="descname">MsgImuAux</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/imu.html#MsgImuAux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.imu.MsgImuAux" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_IMU_AUX (0x0901).</p>
+<blockquote>
+<div><p>You can have MSG_IMU_AUX inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Auxiliary data specific to a particular IMU. The <cite>imu_type</cite> field will</p>
+</div></blockquote>
+<p>always be consistent but the rest of the payload is device specific and
+depends on the value of <cite>imu_type</cite>.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>imu_type</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>IMU type</dd>
+<dt>temp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Raw IMU temperature</dd>
+<dt>imu_conf</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>IMU configuration</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.imu.MsgImuAux.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/imu.html#MsgImuAux.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.imu.MsgImuAux.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.imu.MsgImuAux.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/imu.html#MsgImuAux.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.imu.MsgImuAux.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.imu.MsgImuAux.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/imu.html#MsgImuAux.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.imu.MsgImuAux.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.imu.MsgImuAux.imu_conf">
+<code class="descname">imu_conf</code><a class="headerlink" href="#sbp.imu.MsgImuAux.imu_conf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.imu.MsgImuAux.imu_type">
+<code class="descname">imu_type</code><a class="headerlink" href="#sbp.imu.MsgImuAux.imu_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.imu.MsgImuAux.temp">
+<code class="descname">temp</code><a class="headerlink" href="#sbp.imu.MsgImuAux.temp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.imu.MsgImuAux.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/imu.html#MsgImuAux.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.imu.MsgImuAux.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.imu.MsgImuAux.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/imu.html#MsgImuAux.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.imu.MsgImuAux.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.imu.MsgImuRaw">
+<em class="property">class </em><code class="descclassname">sbp.imu.</code><code class="descname">MsgImuRaw</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/imu.html#MsgImuRaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.imu.MsgImuRaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_IMU_RAW (0x0900).</p>
+<blockquote>
+<div><p>You can have MSG_IMU_RAW inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Raw data from the Inertial Measurement Unit, containing accelerometer and</p>
+</div></blockquote>
+<p>gyroscope readings. The sense of the measurements are to be aligned with 
+the indications on the device itself.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Milliseconds since start of GPS week. If the high bit is set, the</dd>
+</dl>
+</div></blockquote>
+<p>time is unknown or invalid.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>tow_f</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Milliseconds since start of GPS week, fractional part</dd>
+<dt>acc_x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Acceleration in the IMU frame X axis</dd>
+<dt>acc_y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Acceleration in the IMU frame Y axis</dd>
+<dt>acc_z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Acceleration in the IMU frame Z axis</dd>
+<dt>gyr_x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Angular rate around IMU frame X axis</dd>
+<dt>gyr_y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Angular rate around IMU frame Y axis</dd>
+<dt>gyr_z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Angular rate around IMU frame Z axis</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.imu.MsgImuRaw.acc_x">
+<code class="descname">acc_x</code><a class="headerlink" href="#sbp.imu.MsgImuRaw.acc_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.imu.MsgImuRaw.acc_y">
+<code class="descname">acc_y</code><a class="headerlink" href="#sbp.imu.MsgImuRaw.acc_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.imu.MsgImuRaw.acc_z">
+<code class="descname">acc_z</code><a class="headerlink" href="#sbp.imu.MsgImuRaw.acc_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.imu.MsgImuRaw.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/imu.html#MsgImuRaw.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.imu.MsgImuRaw.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.imu.MsgImuRaw.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/imu.html#MsgImuRaw.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.imu.MsgImuRaw.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.imu.MsgImuRaw.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/imu.html#MsgImuRaw.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.imu.MsgImuRaw.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.imu.MsgImuRaw.gyr_x">
+<code class="descname">gyr_x</code><a class="headerlink" href="#sbp.imu.MsgImuRaw.gyr_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.imu.MsgImuRaw.gyr_y">
+<code class="descname">gyr_y</code><a class="headerlink" href="#sbp.imu.MsgImuRaw.gyr_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.imu.MsgImuRaw.gyr_z">
+<code class="descname">gyr_z</code><a class="headerlink" href="#sbp.imu.MsgImuRaw.gyr_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.imu.MsgImuRaw.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/imu.html#MsgImuRaw.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.imu.MsgImuRaw.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.imu.MsgImuRaw.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/imu.html#MsgImuRaw.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.imu.MsgImuRaw.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.imu.MsgImuRaw.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.imu.MsgImuRaw.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.imu.MsgImuRaw.tow_f">
+<code class="descname">tow_f</code><a class="headerlink" href="#sbp.imu.MsgImuRaw.tow_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.gnss.html" title="previous chapter">sbp.gnss module</a></li>
+      <li>Next: <a href="sbp.logging.html" title="next chapter">sbp.logging module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.imu.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/sbp.imu.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

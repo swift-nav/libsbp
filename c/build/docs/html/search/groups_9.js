@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['piksi',['Piksi',['../group__piksi.html',1,'']]]
+  ['navigation',['Navigation',['../group__navigation.html',1,'']]],
+  ['ndb',['Ndb',['../group__ndb.html',1,'']]]
 ];

@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.ndb module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
+    <link rel="next" title="sbp.observation module" href="sbp.observation.html" />
+    <link rel="prev" title="sbp.navigation module" href="sbp.navigation.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.ndb">
+<span id="sbp-ndb-module"></span><h1>sbp.ndb module<a class="headerlink" href="#module-sbp.ndb" title="Permalink to this headline">¶</a></h1>
+<p>Messages for logging NDB events.</p>
+<dl class="class">
+<dt id="sbp.ndb.MsgNdbEvent">
+<em class="property">class </em><code class="descclassname">sbp.ndb.</code><code class="descname">MsgNdbEvent</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ndb.html#MsgNdbEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ndb.MsgNdbEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_NDB_EVENT (0x0400).</p>
+<blockquote>
+<div><p>You can have MSG_NDB_EVENT inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message is sent out when an object is stored into NDB. If needed</p>
+</div></blockquote>
+<p>message could also be sent out when fetching an object from NDB.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>recv_time</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>HW time in milliseconds.</dd>
+<dt>event</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Event type.</dd>
+<dt>object_type</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Event object type.</dd>
+<dt>result</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Event result.</dd>
+<dt>data_source</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Data source for STORE event, reserved for other events.</dd>
+<dt>object_sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>GNSS signal identifier,</dd>
+</dl>
+</div></blockquote>
+<p>If object_type is Ephemeris OR Almanac, sid indicates for which
+signal the object belongs to. Reserved in other cases.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>src_sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>GNSS signal identifier,</dd>
+</dl>
+</div></blockquote>
+<p>If object_type is Almanac, Almanac WN, Iono OR L2C capabilities
+AND data_source is NDB_DS_RECEIVER sid indicates from which SV
+data was decoded. Reserved in other cases.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>original_sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>A unique identifier of the sending hardware. For v1.0,</dd>
+</dl>
+</div></blockquote>
+<p>set to the 2 least significant bytes of the device serial
+number, valid only if data_source is NDB_DS_SBP. Reserved in case
+of other data_source.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.ndb.MsgNdbEvent.data_source">
+<code class="descname">data_source</code><a class="headerlink" href="#sbp.ndb.MsgNdbEvent.data_source" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ndb.MsgNdbEvent.event">
+<code class="descname">event</code><a class="headerlink" href="#sbp.ndb.MsgNdbEvent.event" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ndb.MsgNdbEvent.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ndb.html#MsgNdbEvent.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ndb.MsgNdbEvent.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.ndb.MsgNdbEvent.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ndb.html#MsgNdbEvent.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ndb.MsgNdbEvent.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.ndb.MsgNdbEvent.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ndb.html#MsgNdbEvent.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ndb.MsgNdbEvent.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ndb.MsgNdbEvent.object_sid">
+<code class="descname">object_sid</code><a class="headerlink" href="#sbp.ndb.MsgNdbEvent.object_sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ndb.MsgNdbEvent.object_type">
+<code class="descname">object_type</code><a class="headerlink" href="#sbp.ndb.MsgNdbEvent.object_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ndb.MsgNdbEvent.original_sender">
+<code class="descname">original_sender</code><a class="headerlink" href="#sbp.ndb.MsgNdbEvent.original_sender" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ndb.MsgNdbEvent.recv_time">
+<code class="descname">recv_time</code><a class="headerlink" href="#sbp.ndb.MsgNdbEvent.recv_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ndb.MsgNdbEvent.result">
+<code class="descname">result</code><a class="headerlink" href="#sbp.ndb.MsgNdbEvent.result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ndb.MsgNdbEvent.src_sid">
+<code class="descname">src_sid</code><a class="headerlink" href="#sbp.ndb.MsgNdbEvent.src_sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ndb.MsgNdbEvent.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ndb.html#MsgNdbEvent.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ndb.MsgNdbEvent.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.ndb.MsgNdbEvent.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ndb.html#MsgNdbEvent.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ndb.MsgNdbEvent.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.navigation.html" title="previous chapter">sbp.navigation module</a></li>
+      <li>Next: <a href="sbp.observation.html" title="next chapter">sbp.observation module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.ndb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/sbp.ndb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.client.drivers.network_drivers &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sbp.client.drivers.network_drivers</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2015 Swift Navigation Inc.</span>
+<span class="c1"># Contact: Bhaskar Mookerji &lt;mookerji@swiftnav.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
+<span class="c1"># be be distributed together with this source. All other rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
+<span class="c1"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
+<span class="c1"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span class="sd">&quot;&quot;&quot;TCP and HTTP networking client components.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">.base_driver</span> <span class="kn">import</span> <span class="n">BaseDriver</span>
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+<span class="kn">from</span> <span class="nn">requests.adapters</span> <span class="kn">import</span> <span class="n">DEFAULT_POOLBLOCK</span><span class="p">,</span> <span class="n">DEFAULT_POOLSIZE</span><span class="p">,</span> <span class="n">HTTPAdapter</span>
+<span class="kn">from</span> <span class="nn">requests.packages.urllib3.util</span> <span class="kn">import</span> <span class="n">Retry</span>
+<span class="kn">from</span> <span class="nn">requests_futures.sessions</span> <span class="kn">import</span> <span class="n">FuturesSession</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span> <span class="nn">errno</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+
+<div class="viewcode-block" id="TCPDriver"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.TCPDriver">[docs]</a><span class="k">class</span> <span class="nc">TCPDriver</span><span class="p">(</span><span class="n">BaseDriver</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;TCPDriver</span>
+
+<span class="sd">    The :class:`TCPDriver` class reads SBP messages to and from a TCP</span>
+<span class="sd">    socket.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    port : string</span>
+<span class="sd">      Path to port to read SBP messages from.</span>
+<span class="sd">    baud : int</span>
+<span class="sd">      Baud rate of serial port.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_address</span> <span class="o">=</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_connection</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">create_connection</span><span class="p">,</span>
+                                          <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">),</span>
+                                          <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span>
+                                          <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connect</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TCPDriver</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_connection</span><span class="p">()</span>
+                <span class="k">return</span>
+            <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+<div class="viewcode-block" id="TCPDriver.read"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.TCPDriver.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read wrapper.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        size : int</span>
+<span class="sd">          Number of bytes to read</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">IOError</span>
+            <span class="k">return</span> <span class="n">data</span>
+        <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connect</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># this is fine</span>
+            <span class="k">if</span> <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">errno</span><span class="o">.</span><span class="n">EINTR</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="c1"># we really shouldn&#39;t be doing this</span>
+            <span class="k">raise</span> <span class="ne">IOError</span></div>
+
+<div class="viewcode-block" id="TCPDriver.flush"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.TCPDriver.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TCPDriver.write"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.TCPDriver.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write wrapper.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        s : bytes</span>
+<span class="sd">          Bytes to write</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_write_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connect</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_write_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="HTTPException"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.HTTPException">[docs]</a><span class="k">class</span> <span class="nc">HTTPException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<span class="n">DEFAULT_CONNECT_TIMEOUT</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">DEFAULT_READ_TIMEOUT</span> <span class="o">=</span> <span class="mi">120</span>
+<span class="n">DEFAULT_TIMEOUT</span> <span class="o">=</span> <span class="p">(</span><span class="n">DEFAULT_CONNECT_TIMEOUT</span><span class="p">,</span> <span class="n">DEFAULT_READ_TIMEOUT</span><span class="p">)</span>
+<span class="n">MAX_CONNECT_RETRIES</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">MAX_READ_RETRIES</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">DEFAULT_RETRIES</span> <span class="o">=</span> <span class="p">(</span><span class="n">MAX_CONNECT_RETRIES</span><span class="p">,</span> <span class="n">MAX_READ_RETRIES</span><span class="p">)</span>
+<span class="n">MAX_REDIRECTS</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">DEFAULT_BACKOFF_FACTOR</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">BROKER_SBP_TYPE</span> <span class="o">=</span> <span class="s1">&#39;application/vnd.swiftnav.broker.v1+sbp2&#39;</span>
+
+
+<div class="viewcode-block" id="HTTPDriver"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.HTTPDriver">[docs]</a><span class="k">class</span> <span class="nc">HTTPDriver</span><span class="p">(</span><span class="n">BaseDriver</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;HTTPDriver</span>
+
+<span class="sd">    The :class:`HTTPDriver` class reads SBP messages from an HTTP</span>
+<span class="sd">    service for a device and writes out to a stream. This driver is like</span>
+<span class="sd">    a file-handle with read and writes over two separately HTTP</span>
+<span class="sd">    connections, but can also be enabled and disabled by its consumer.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    device_uid : uid</span>
+<span class="sd">      Device unique id</span>
+<span class="sd">    url : str</span>
+<span class="sd">      HTTP endpoint</span>
+<span class="sd">    retries : tuple</span>
+<span class="sd">      Configure connect and read retry count. Defaults to</span>
+<span class="sd">      (MAX_CONNECT_RETRIES, MAX_READ_RETRIES).</span>
+<span class="sd">    timeout : tuple</span>
+<span class="sd">      Configure connect and read timeouts. Defaults to</span>
+<span class="sd">      (DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">device_uid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://broker.staging.skylark.swiftnav.com&quot;</span><span class="p">,</span>
+            <span class="n">retries</span><span class="o">=</span><span class="n">DEFAULT_RETRIES</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">DEFAULT_TIMEOUT</span><span class="p">,</span> <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_retry</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span>
+            <span class="n">connect</span><span class="o">=</span><span class="n">DEFAULT_RETRIES</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">read</span><span class="o">=</span><span class="n">DEFAULT_RETRIES</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">redirect</span><span class="o">=</span><span class="n">MAX_REDIRECTS</span><span class="p">,</span>
+            <span class="n">status_forcelist</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">],</span>
+            <span class="n">backoff_factor</span><span class="o">=</span><span class="n">DEFAULT_BACKOFF_FACTOR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span>
+                                <span class="n">HTTPAdapter</span><span class="p">(</span>
+                                    <span class="n">pool_connections</span><span class="o">=</span><span class="n">DEFAULT_POOLSIZE</span><span class="p">,</span>
+                                    <span class="n">pool_maxsize</span><span class="o">=</span><span class="n">DEFAULT_POOLSIZE</span><span class="p">,</span>
+                                    <span class="n">pool_block</span><span class="o">=</span><span class="n">DEFAULT_POOLBLOCK</span><span class="p">,</span>
+                                    <span class="n">max_retries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_retry</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s2">&quot;https://&quot;</span><span class="p">,</span>
+                                <span class="n">HTTPAdapter</span><span class="p">(</span>
+                                    <span class="n">pool_connections</span><span class="o">=</span><span class="n">DEFAULT_POOLSIZE</span><span class="p">,</span>
+                                    <span class="n">pool_maxsize</span><span class="o">=</span><span class="n">DEFAULT_POOLSIZE</span><span class="p">,</span>
+                                    <span class="n">pool_block</span><span class="o">=</span><span class="n">DEFAULT_POOLBLOCK</span><span class="p">,</span>
+                                    <span class="n">max_retries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_retry</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_session</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_uid</span> <span class="o">=</span> <span class="n">device_uid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_response</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_response</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="HTTPDriver.flush"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.HTTPDriver.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;File-flush wrapper (noop).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="HTTPDriver.close"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.HTTPDriver.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;File-handle close wrapper (noop).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">read_close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_close</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">write_ok</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Are we connected for writes?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Note that self.write_response is either None or a Response</span>
+        <span class="c1"># object, which cast to False for 4xx and 5xx HTTP codes.</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write_response</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HTTPDriver.connect_write"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.HTTPDriver.connect_write">[docs]</a>    <span class="k">def</span> <span class="nf">connect_write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">whitelist</span><span class="p">,</span> <span class="n">device_uid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pragma</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize a streaming write HTTP response. Manually connects the</span>
+<span class="sd">        underlying file-handle. In the event of a network disconnection,</span>
+<span class="sd">        use to manually reinitiate an HTTP session.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        source : sbp.client.handler.Handler</span>
+<span class="sd">          Iterable source of SBP messages.</span>
+<span class="sd">        whitelist : [int]</span>
+<span class="sd">          Whitelist of messages to write</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">header_device_uid</span> <span class="o">=</span> <span class="n">device_uid</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_uid</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Device-Uid&#39;</span><span class="p">:</span> <span class="n">header_device_uid</span><span class="p">,</span>
+            <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="n">BROKER_SBP_TYPE</span><span class="p">,</span>
+            <span class="s1">&#39;Pragma&#39;</span><span class="p">:</span> <span class="n">pragma</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">pragma</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Pragma&#39;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">DEFAULT_POOLSIZE</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_session</span> <span class="o">=</span> <span class="n">FuturesSession</span><span class="p">(</span><span class="n">executor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">executor</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span>
+                                     <span class="n">HTTPAdapter</span><span class="p">(</span>
+                                         <span class="n">pool_connections</span><span class="o">=</span><span class="n">DEFAULT_POOLSIZE</span><span class="p">,</span>
+                                         <span class="n">pool_maxsize</span><span class="o">=</span><span class="n">DEFAULT_POOLSIZE</span><span class="p">,</span>
+                                         <span class="n">pool_block</span><span class="o">=</span><span class="n">DEFAULT_POOLBLOCK</span><span class="p">,</span>
+                                         <span class="n">max_retries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_retry</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s2">&quot;https://&quot;</span><span class="p">,</span>
+                                     <span class="n">HTTPAdapter</span><span class="p">(</span>
+                                         <span class="n">pool_connections</span><span class="o">=</span><span class="n">DEFAULT_POOLSIZE</span><span class="p">,</span>
+                                         <span class="n">pool_maxsize</span><span class="o">=</span><span class="n">DEFAULT_POOLSIZE</span><span class="p">,</span>
+                                         <span class="n">pool_block</span><span class="o">=</span><span class="n">DEFAULT_POOLBLOCK</span><span class="p">,</span>
+                                         <span class="n">max_retries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_retry</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">whitelist</span><span class="p">)</span>
+            <span class="n">gen</span> <span class="o">=</span> <span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span> <span class="k">for</span> <span class="n">msg</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_session</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">gen</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_response</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Client connection error to </span><span class="si">%s</span><span class="s2"> with [PUT] headers </span><span class="si">%s</span><span class="s2">: msg=</span><span class="si">%s</span><span class="s2">&quot;</span> \
+                  <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectTimeout</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Client connection timeout to </span><span class="si">%s</span><span class="s2"> with [PUT] headers </span><span class="si">%s</span><span class="s2">: msg=</span><span class="si">%s</span><span class="s2">&quot;</span> \
+                  <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RetryError</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Client retry error to </span><span class="si">%s</span><span class="s2"> with [PUT] headers </span><span class="si">%s</span><span class="s2">: msg=</span><span class="si">%s</span><span class="s2">&quot;</span> \
+                  <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ReadTimeout</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Client read timeout to </span><span class="si">%s</span><span class="s2"> with [PUT] headers </span><span class="si">%s</span><span class="s2">: msg=</span><span class="si">%s</span><span class="s2">&quot;</span> \
+                  <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_ok</span></div>
+
+<div class="viewcode-block" id="HTTPDriver.write"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.HTTPDriver.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write wrapper (noop). Actual stream is initiated by the write</span>
+<span class="sd">        connection.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : object</span>
+<span class="sd">          Data to write.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="HTTPDriver.write_close"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.HTTPDriver.write_close">[docs]</a>    <span class="k">def</span> <span class="nf">write_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;File-handle close wrapper (noop).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">breakiter</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_session</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">read_ok</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Are we connected for reads?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_response</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HTTPDriver.connect_read"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.HTTPDriver.connect_read">[docs]</a>    <span class="k">def</span> <span class="nf">connect_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_uid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pragma</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize a streaming read/write HTTP response. Manually connects</span>
+<span class="sd">        the underlying file-handle. In the event of a network</span>
+<span class="sd">        disconnection, use to manually reinitiate an HTTP session.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">header_device_uid</span> <span class="o">=</span> <span class="n">device_uid</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_uid</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Device-Uid&#39;</span><span class="p">:</span> <span class="n">header_device_uid</span><span class="p">,</span>
+            <span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="n">BROKER_SBP_TYPE</span><span class="p">,</span>
+            <span class="s1">&#39;Pragma&#39;</span><span class="p">:</span> <span class="n">pragma</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">pragma</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Pragma&#39;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">read_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Client connection error to </span><span class="si">%s</span><span class="s2"> with [GET] headers </span><span class="si">%s</span><span class="s2">: msg=</span><span class="si">%s</span><span class="s2">&quot;</span> \
+                  <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectTimeout</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Client connection timeout to </span><span class="si">%s</span><span class="s2"> with [GET] headers </span><span class="si">%s</span><span class="s2">: msg=</span><span class="si">%s</span><span class="s2">&quot;</span> \
+                  <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RetryError</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Client retry error to </span><span class="si">%s</span><span class="s2"> with [GET] headers </span><span class="si">%s</span><span class="s2">: msg=</span><span class="si">%s</span><span class="s2">&quot;</span> \
+                  <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ReadTimeout</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Client read timeout to </span><span class="si">%s</span><span class="s2"> with [GET] headers </span><span class="si">%s</span><span class="s2">: msg=</span><span class="si">%s</span><span class="s2">&quot;</span> \
+                  <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_ok</span></div>
+
+<div class="viewcode-block" id="HTTPDriver.read"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.HTTPDriver.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read wrapper. If the client connection is closed or some other</span>
+<span class="sd">        exception is thrown, raises an IOError.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        size : int</span>
+<span class="sd">          Size to read (in bytes).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bytearray, or None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_response</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_uid</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid/insufficient HTTP request parameters!&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_ok</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_response</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">closed</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;HTTP read closed?!&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_response</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;HTTP read error!&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HTTPDriver.read_close"><a class="viewcode-back" href="../../../../sbp.client.drivers.network_drivers.html#sbp.client.drivers.network_drivers.HTTPDriver.read_close">[docs]</a>    <span class="k">def</span> <span class="nf">read_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;File-handle close wrapper (noop).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">read_response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">read_response</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

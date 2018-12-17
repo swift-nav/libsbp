@@ -25,32 +25,15 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="sbp 0.27 documentation" href="index.html" />
-    <link rel="next" title="sbp.navigation module" href="sbp.navigation.html" />
-    <link rel="prev" title="sbp.flash module" href="sbp.flash.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
+    <link rel="next" title="sbp.mag module" href="sbp.mag.html" />
+    <link rel="prev" title="sbp.imu module" href="sbp.imu.html" />
    
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="sbp.navigation.html" title="sbp.navigation module"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="sbp.flash.html" title="sbp.flash module"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
@@ -59,29 +42,90 @@
             
   <div class="section" id="module-sbp.logging">
 <span id="sbp-logging-module"></span><h1>sbp.logging module<a class="headerlink" href="#module-sbp.logging" title="Permalink to this headline">¶</a></h1>
-<p>Logging and debugging messages from the device. These are in the
-implementation-defined range (0x0000-0x00FF).</p>
+<p>Logging and debugging messages from the device.</p>
 <dl class="class">
-<dt id="sbp.logging.MsgDebugVar">
-<em class="property">class </em><code class="descclassname">sbp.logging.</code><code class="descname">MsgDebugVar</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgDebugVar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgDebugVar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_DEBUG_VAR (0x0011).</p>
+<dt id="sbp.logging.MsgFwd">
+<em class="property">class </em><code class="descclassname">sbp.logging.</code><code class="descname">MsgFwd</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgFwd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgFwd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_FWD (0x0402).</p>
 <blockquote>
-<div><p>You can have MSG_DEBUG_VAR inherent its fields directly
+<div><p>You can have MSG_FWD inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>This is an unused legacy message for tracing variable values</p>
+<p>This message provides the ability to forward messages over SBP.  This may take the form</p>
 </div></blockquote>
-<p>within the device firmware and streaming those back to the host.</p>
+<p>of wrapping up SBP messages received by Piksi for logging purposes or wrapping 
+another protocol with SBP.</p>
+<p>The source identifier indicates from what interface a forwarded stream derived.
+The protocol identifier identifies what the expected protocol the forwarded msg contains.
+Protocol 0 represents SBP and the remaining values are implementation defined.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>source</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>source identifier</dd>
+<dt>protocol</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>protocol identifier</dd>
+<dt>fwd_payload</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>variable length wrapped binary message</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.logging.MsgFwd.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgFwd.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgFwd.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.logging.MsgFwd.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgFwd.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgFwd.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.logging.MsgFwd.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgFwd.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgFwd.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.logging.MsgFwd.fwd_payload">
+<code class="descname">fwd_payload</code><a class="headerlink" href="#sbp.logging.MsgFwd.fwd_payload" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.logging.MsgFwd.protocol">
+<code class="descname">protocol</code><a class="headerlink" href="#sbp.logging.MsgFwd.protocol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.logging.MsgFwd.source">
+<code class="descname">source</code><a class="headerlink" href="#sbp.logging.MsgFwd.source" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.logging.MsgFwd.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgFwd.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgFwd.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.logging.MsgFwd.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgFwd.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgFwd.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
-<dt id="sbp.logging.MsgPrint">
-<em class="property">class </em><code class="descclassname">sbp.logging.</code><code class="descname">MsgPrint</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_PRINT (0x0010).</p>
+<dt id="sbp.logging.MsgLog">
+<em class="property">class </em><code class="descclassname">sbp.logging.</code><code class="descname">MsgLog</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgLog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgLog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_LOG (0x0401).</p>
 <blockquote>
-<div><p>You can have MSG_PRINT inherent its fields directly
+<div><p>You can have MSG_LOG inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message contains a human-readable payload string from the</p>
@@ -90,36 +134,160 @@ of its fields.</p>
 ERROR, WARNING, DEBUG, INFO logging levels.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>text <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>Human-readable string</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>level</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Logging level</dd>
+<dt>text</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>Human-readable string</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
-<dt id="sbp.logging.MsgPrint.from_binary">
-<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrint.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrint.from_binary" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.logging.MsgLog.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgLog.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgLog.from_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a binary payload d, update the appropriate payload fields of
 the message.</p>
 </dd></dl>
 
 <dl class="staticmethod">
-<dt id="sbp.logging.MsgPrint.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrint.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrint.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<dt id="sbp.logging.MsgLog.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgLog.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgLog.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
 
+<dl class="staticmethod">
+<dt id="sbp.logging.MsgLog.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgLog.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgLog.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.logging.MsgLog.level">
+<code class="descname">level</code><a class="headerlink" href="#sbp.logging.MsgLog.level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.logging.MsgLog.text">
+<code class="descname">text</code><a class="headerlink" href="#sbp.logging.MsgLog.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
-<dt id="sbp.logging.MsgPrint.to_binary">
-<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrint.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrint.to_binary" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.logging.MsgLog.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgLog.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgLog.to_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Produce a framed/packed SBP message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.logging.MsgPrint.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrint.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrint.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.logging.MsgLog.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgLog.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgLog.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.logging.MsgPrintDep">
+<em class="property">class </em><code class="descclassname">sbp.logging.</code><code class="descname">MsgPrintDep</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrintDep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrintDep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_PRINT_DEP (0x0010).</p>
+<p>You can have MSG_PRINT_DEP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>text</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>Human-readable string</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.logging.MsgPrintDep.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrintDep.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrintDep.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.logging.MsgPrintDep.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrintDep.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrintDep.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.logging.MsgPrintDep.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrintDep.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrintDep.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.logging.MsgPrintDep.text">
+<code class="descname">text</code><a class="headerlink" href="#sbp.logging.MsgPrintDep.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.logging.MsgPrintDep.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrintDep.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrintDep.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.logging.MsgPrintDep.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgPrintDep.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgPrintDep.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.logging.MsgTweet">
+<em class="property">class </em><code class="descclassname">sbp.logging.</code><code class="descname">MsgTweet</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgTweet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgTweet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_TWEET (0x0012).</p>
+<p>You can have MSG_TWEET inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>All the news fit to tweet.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tweet</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>Human-readable string</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.logging.MsgTweet.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgTweet.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgTweet.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.logging.MsgTweet.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgTweet.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgTweet.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.logging.MsgTweet.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgTweet.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgTweet.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.logging.MsgTweet.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgTweet.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgTweet.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.logging.MsgTweet.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/logging.html#MsgTweet.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.logging.MsgTweet.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.logging.MsgTweet.tweet">
+<code class="descname">tweet</code><a class="headerlink" href="#sbp.logging.MsgTweet.tweet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -130,13 +298,17 @@ the message.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="sbp.flash.html"
-                        title="previous chapter">sbp.flash module</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="sbp.navigation.html"
-                        title="next chapter">sbp.navigation module</a></p>
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.imu.html" title="previous chapter">sbp.imu module</a></li>
+      <li>Next: <a href="sbp.mag.html" title="next chapter">sbp.mag module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -152,9 +324,6 @@ the message.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -165,12 +334,12 @@ the message.</p>
       &copy;2015, Swift Navigation.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
       |
       <a href="_sources/sbp.logging.txt"
-          rel="nofollow">Page source</a></li>
+          rel="nofollow">Page source</a>
     </div>
 
     

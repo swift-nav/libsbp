@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.client.drivers.network_drivers module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp.client.drivers package" href="sbp.client.drivers.html" />
+    <link rel="next" title="sbp.client.drivers.pyftdi_driver module" href="sbp.client.drivers.pyftdi_driver.html" />
+    <link rel="prev" title="sbp.client.drivers.file_driver module" href="sbp.client.drivers.file_driver.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.client.drivers.network_drivers">
+<span id="sbp-client-drivers-network-drivers-module"></span><h1>sbp.client.drivers.network_drivers module<a class="headerlink" href="#module-sbp.client.drivers.network_drivers" title="Permalink to this headline">¶</a></h1>
+<p>TCP and HTTP networking client components.</p>
+<dl class="class">
+<dt id="sbp.client.drivers.network_drivers.HTTPDriver">
+<em class="property">class </em><code class="descclassname">sbp.client.drivers.network_drivers.</code><code class="descname">HTTPDriver</code><span class="sig-paren">(</span><em>device_uid=None</em>, <em>url='https://broker.staging.skylark.swiftnav.com'</em>, <em>retries=(5</em>, <em>3)</em>, <em>timeout=(30</em>, <em>120)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#HTTPDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.HTTPDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.client.drivers.base_driver.html#sbp.client.drivers.base_driver.BaseDriver" title="sbp.client.drivers.base_driver.BaseDriver"><code class="xref py py-class docutils literal"><span class="pre">sbp.client.drivers.base_driver.BaseDriver</span></code></a></p>
+<p>The <a class="reference internal" href="#sbp.client.drivers.network_drivers.HTTPDriver" title="sbp.client.drivers.network_drivers.HTTPDriver"><code class="xref py py-class docutils literal"><span class="pre">HTTPDriver</span></code></a> class reads SBP messages from an HTTP
+service for a device and writes out to a stream. This driver is like
+a file-handle with read and writes over two separately HTTP
+connections, but can also be enabled and disabled by its consumer.</p>
+<dl class="docutils">
+<dt>device_uid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">uid</span><dd>Device unique id</dd>
+<dt>url</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">str</span><dd>HTTP endpoint</dd>
+<dt>retries</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span><dd>Configure connect and read retry count. Defaults to
+(MAX_CONNECT_RETRIES, MAX_READ_RETRIES).</dd>
+<dt>timeout</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span><dd>Configure connect and read timeouts. Defaults to
+(DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT).</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.client.drivers.network_drivers.HTTPDriver.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#HTTPDriver.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.HTTPDriver.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>File-handle close wrapper (noop).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.network_drivers.HTTPDriver.connect_read">
+<code class="descname">connect_read</code><span class="sig-paren">(</span><em>device_uid=None</em>, <em>pragma=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#HTTPDriver.connect_read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.HTTPDriver.connect_read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a streaming read/write HTTP response. Manually connects
+the underlying file-handle. In the event of a network
+disconnection, use to manually reinitiate an HTTP session.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.network_drivers.HTTPDriver.connect_write">
+<code class="descname">connect_write</code><span class="sig-paren">(</span><em>source</em>, <em>whitelist</em>, <em>device_uid=None</em>, <em>pragma=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#HTTPDriver.connect_write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.HTTPDriver.connect_write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a streaming write HTTP response. Manually connects the
+underlying file-handle. In the event of a network disconnection,
+use to manually reinitiate an HTTP session.</p>
+<dl class="docutils">
+<dt>source</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">sbp.client.handler.Handler</span><dd>Iterable source of SBP messages.</dd>
+<dt>whitelist</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">[int]</span><dd>Whitelist of messages to write</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.network_drivers.HTTPDriver.flush">
+<code class="descname">flush</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#HTTPDriver.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.HTTPDriver.flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>File-flush wrapper (noop).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.network_drivers.HTTPDriver.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#HTTPDriver.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.HTTPDriver.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read wrapper. If the client connection is closed or some other
+exception is thrown, raises an IOError.</p>
+<dl class="docutils">
+<dt>size</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Size to read (in bytes).</dd>
+</dl>
+<p>bytearray, or None</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.network_drivers.HTTPDriver.read_close">
+<code class="descname">read_close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#HTTPDriver.read_close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.HTTPDriver.read_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>File-handle close wrapper (noop).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.client.drivers.network_drivers.HTTPDriver.read_ok">
+<code class="descname">read_ok</code><a class="headerlink" href="#sbp.client.drivers.network_drivers.HTTPDriver.read_ok" title="Permalink to this definition">¶</a></dt>
+<dd><p>Are we connected for reads?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.network_drivers.HTTPDriver.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#HTTPDriver.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.HTTPDriver.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write wrapper (noop). Actual stream is initiated by the write
+connection.</p>
+<dl class="docutils">
+<dt>data</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">object</span><dd>Data to write.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.network_drivers.HTTPDriver.write_close">
+<code class="descname">write_close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#HTTPDriver.write_close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.HTTPDriver.write_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>File-handle close wrapper (noop).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.client.drivers.network_drivers.HTTPDriver.write_ok">
+<code class="descname">write_ok</code><a class="headerlink" href="#sbp.client.drivers.network_drivers.HTTPDriver.write_ok" title="Permalink to this definition">¶</a></dt>
+<dd><p>Are we connected for writes?</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="sbp.client.drivers.network_drivers.HTTPException">
+<em class="property">exception </em><code class="descclassname">sbp.client.drivers.network_drivers.</code><code class="descname">HTTPException</code><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#HTTPException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.HTTPException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.client.drivers.network_drivers.TCPDriver">
+<em class="property">class </em><code class="descclassname">sbp.client.drivers.network_drivers.</code><code class="descname">TCPDriver</code><span class="sig-paren">(</span><em>host</em>, <em>port</em>, <em>timeout=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#TCPDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.TCPDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.client.drivers.base_driver.html#sbp.client.drivers.base_driver.BaseDriver" title="sbp.client.drivers.base_driver.BaseDriver"><code class="xref py py-class docutils literal"><span class="pre">sbp.client.drivers.base_driver.BaseDriver</span></code></a></p>
+<p>The <a class="reference internal" href="#sbp.client.drivers.network_drivers.TCPDriver" title="sbp.client.drivers.network_drivers.TCPDriver"><code class="xref py py-class docutils literal"><span class="pre">TCPDriver</span></code></a> class reads SBP messages to and from a TCP
+socket.</p>
+<dl class="docutils">
+<dt>port</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>Path to port to read SBP messages from.</dd>
+<dt>baud</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baud rate of serial port.</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.client.drivers.network_drivers.TCPDriver.flush">
+<code class="descname">flush</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#TCPDriver.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.TCPDriver.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.network_drivers.TCPDriver.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#TCPDriver.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.TCPDriver.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read wrapper.</p>
+<dl class="docutils">
+<dt>size</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of bytes to read</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.network_drivers.TCPDriver.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/network_drivers.html#TCPDriver.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.network_drivers.TCPDriver.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write wrapper.</p>
+<dl class="docutils">
+<dt>s</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">bytes</span><dd>Bytes to write</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+  <li><a href="sbp.client.html">sbp.client package</a><ul>
+  <li><a href="sbp.client.drivers.html">sbp.client.drivers package</a><ul>
+      <li>Previous: <a href="sbp.client.drivers.file_driver.html" title="previous chapter">sbp.client.drivers.file_driver module</a></li>
+      <li>Next: <a href="sbp.client.drivers.pyftdi_driver.html" title="next chapter">sbp.client.drivers.pyftdi_driver module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.client.drivers.network_drivers.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/sbp.client.drivers.network_drivers.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

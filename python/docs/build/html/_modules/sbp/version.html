@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.version &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sbp.version</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Author: Douglas Creager &lt;dcreager@dcreager.net&gt;</span>
+<span class="c1"># This file is placed into the public domain.</span>
+<span class="c1"># Adapted from Gist: https://gist.github.com/3067886</span>
+
+<span class="c1"># Calculates the current version number.  If possible, this is the</span>
+<span class="c1"># output of “git describe”, modified to conform to the versioning</span>
+<span class="c1"># scheme that setuptools uses.  If “git describe” returns an error</span>
+<span class="c1"># (most likely because we&#39;re in an unpacked copy of a release tarball,</span>
+<span class="c1"># rather than in a git working copy), then we fall back on reading the</span>
+<span class="c1"># contents of the RELEASE-VERSION file.</span>
+<span class="c1">#</span>
+<span class="c1"># To use this script, simply import it your setup.py file, and use the</span>
+<span class="c1"># results of get_git_version() as your package version:</span>
+<span class="c1">#</span>
+<span class="c1"># from version import *</span>
+<span class="c1">#</span>
+<span class="c1"># setup(</span>
+<span class="c1">#     version=get_git_version(),</span>
+<span class="c1">#     .</span>
+<span class="c1">#     .</span>
+<span class="c1">#     .</span>
+<span class="c1"># )</span>
+<span class="c1">#</span>
+<span class="c1"># This will automatically update the RELEASE-VERSION file, if</span>
+<span class="c1"># necessary.  Note that the RELEASE-VERSION file should *not* be</span>
+<span class="c1"># checked into git; please add it to your top-level .gitignore file.</span>
+<span class="c1">#</span>
+<span class="c1"># You&#39;ll probably want to distribute the RELEASE-VERSION file in your</span>
+<span class="c1"># sdist tarballs; to do this, just create a MANIFEST.in file that</span>
+<span class="c1"># contains the following line:</span>
+<span class="c1">#</span>
+<span class="c1">#   include RELEASE-VERSION</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;get_git_version&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<div class="viewcode-block" id="call_git_describe"><a class="viewcode-back" href="../../sbp.version.html#sbp.version.call_git_describe">[docs]</a><span class="k">def</span> <span class="nf">call_git_describe</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;git&#39;</span><span class="p">,</span> <span class="s1">&#39;describe&#39;</span><span class="p">,</span> <span class="s1">&#39;--tags&#39;</span><span class="p">,</span> <span class="s1">&#39;--dirty&#39;</span><span class="p">,</span> <span class="s1">&#39;--always&#39;</span><span class="p">],</span>
+                  <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span></div>
+
+
+<div class="viewcode-block" id="read_release_version"><a class="viewcode-back" href="../../sbp.version.html#sbp.version.read_release_version">[docs]</a><span class="k">def</span> <span class="nf">read_release_version</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;RELEASE-VERSION&#39;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">version</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span></div>
+
+
+<div class="viewcode-block" id="write_release_version"><a class="viewcode-back" href="../../sbp.version.html#sbp.version.write_release_version">[docs]</a><span class="k">def</span> <span class="nf">write_release_version</span><span class="p">(</span><span class="n">version</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;RELEASE-VERSION&#39;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">version</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+      <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="get_git_version"><a class="viewcode-back" href="../../sbp.version.html#sbp.version.get_git_version">[docs]</a><span class="k">def</span> <span class="nf">get_git_version</span><span class="p">():</span>
+    <span class="c1"># Read in the version that&#39;s currently in RELEASE-VERSION.</span>
+    <span class="n">release_version</span> <span class="o">=</span> <span class="n">read_release_version</span><span class="p">()</span>
+
+    <span class="c1"># First try to get the current version using “git describe”.</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">call_git_describe</span><span class="p">()</span>
+
+    <span class="c1"># Take off the leading if present.</span>
+    <span class="k">if</span> <span class="n">version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;v&#39;</span><span class="p">:</span>
+      <span class="n">version</span> <span class="o">=</span> <span class="n">version</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="c1">#adapt to PEP 386 compatible versioning scheme</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">pep386adapt</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+
+    <span class="c1"># If that doesn&#39;t work, fall back on the value that&#39;s in</span>
+    <span class="c1"># RELEASE-VERSION.</span>
+    <span class="k">if</span> <span class="n">version</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">release_version</span>
+
+    <span class="c1"># If we still don&#39;t have anything, that&#39;s an error.</span>
+    <span class="k">if</span> <span class="n">version</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot find the version number!&quot;</span><span class="p">)</span>
+
+    <span class="c1"># If the current version is different from what&#39;s in the</span>
+    <span class="c1"># RELEASE-VERSION file, update the file to be current.</span>
+    <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="n">release_version</span><span class="p">:</span>
+        <span class="n">write_release_version</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+
+    <span class="c1"># Finally, return the current version.</span>
+    <span class="k">return</span> <span class="n">version</span></div>
+
+
+<div class="viewcode-block" id="pep386adapt"><a class="viewcode-back" href="../../sbp.version.html#sbp.version.pep386adapt">[docs]</a><span class="k">def</span> <span class="nf">pep386adapt</span><span class="p">(</span><span class="n">version</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">version</span><span class="p">:</span>
+        <span class="c1"># adapt git-describe version to be in line with PEP 386</span>
+        <span class="c1"># Break PEP 386 a bit here and append the Git hash</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">version</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+          <span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.post</span><span class="si">%s</span><span class="s1">-</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+              <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+              <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+          <span class="p">)</span>
+        <span class="k">return</span> <span class="n">version</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">version</span></div>
+
+<span class="n">VERSION</span> <span class="o">=</span> <span class="n">get_git_version</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">get_git_version</span><span class="p">()</span>
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -25,27 +25,13 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="sbp 0.27 documentation" href="../../index.html" />
-    <link rel="up" title="sbp" href="../sbp.html" />
+    <link rel="up" title="Module code" href="../index.html" />
    
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">sbp 0.27 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../sbp.html" accesskey="U">sbp</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
@@ -53,16 +39,16 @@
           <div class="body" role="main">
             
   <h1>Source code for sbp.tracking</h1><div class="highlight"><pre>
-<span class="c">#!/usr/bin/env python</span>
-<span class="c"># Copyright (C) 2015 Swift Navigation Inc.</span>
-<span class="c"># Contact: Fergus Noble &lt;fergus@swiftnav.com&gt;</span>
-<span class="c">#</span>
-<span class="c"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
-<span class="c"># be be distributed together with this source. All other rights reserved.</span>
-<span class="c">#</span>
-<span class="c"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
-<span class="c"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
-<span class="c"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># Copyright (C) 2015-2018 Swift Navigation Inc.</span>
+<span class="c1"># Contact: Swift Navigation &lt;dev@swiftnav.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
+<span class="c1"># be be distributed together with this source. All other rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
+<span class="c1"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
+<span class="c1"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
 
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -70,22 +56,155 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">construct</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">sbp</span> <span class="kn">import</span> <span class="n">SBP</span>
-<span class="kn">from</span> <span class="nn">sbp.utils</span> <span class="kn">import</span> <span class="n">fmt_repr</span><span class="p">,</span> <span class="n">exclude_fields</span><span class="p">,</span> <span class="n">walk_json_dict</span>
-<span class="kn">import</span> <span class="nn">six</span>
 
-<span class="c"># Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml</span>
-<span class="c"># with generate.py at 2015-04-15 12:17:09.629103. Please do not hand edit!</span>
+<span class="kn">import</span> <span class="nn">construct</span>
+
+<span class="kn">from</span> <span class="nn">sbp.msg</span> <span class="kn">import</span> <span class="n">SBP</span><span class="p">,</span> <span class="n">SENDER_ID</span>
+<span class="kn">from</span> <span class="nn">sbp.utils</span> <span class="kn">import</span> <span class="n">fmt_repr</span><span class="p">,</span> <span class="n">exclude_fields</span><span class="p">,</span> <span class="n">walk_json_dict</span><span class="p">,</span> <span class="n">containerize</span>
+<span class="kn">from</span> <span class="nn">sbp.gnss</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml with generate.py.</span>
+<span class="c1"># Please do not hand edit!</span>
 
 
 <div class="viewcode-block" id="TrackingChannelState"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelState">[docs]</a><span class="k">class</span> <span class="nc">TrackingChannelState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;TrackingChannelState.</span>
 <span class="sd">  </span>
-<span class="sd">  Tracking channel state for a specific satellite PRN and measured</span>
-<span class="sd">signal power.</span>
+<span class="sd">  Tracking channel state for a specific satellite signal and</span>
+<span class="sd">measured signal power.</span>
 
+<span class="sd">  </span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sid : GnssSignal</span>
+<span class="sd">    GNSS signal being tracked</span>
+<span class="sd">  fcn : int</span>
+<span class="sd">    Frequency channel number (GLONASS only)</span>
+<span class="sd">  cn0 : int</span>
+<span class="sd">    Carrier-to-Noise density.  Zero implies invalid cn0.</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Embedded</span><span class="p">(</span><span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                     <span class="s1">&#39;sid&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GnssSignal</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                     <span class="s1">&#39;fcn&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                     <span class="s1">&#39;cn0&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,))</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;sid&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;fcn&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;cn0&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">payload</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sid</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sid&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">fcn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;fcn&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cn0</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cn0&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  
+<div class="viewcode-block" id="TrackingChannelState.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelState.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">TrackingChannelState</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TrackingChannelState.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelState.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">TrackingChannelState</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div></div>
+    
+<div class="viewcode-block" id="MeasurementState"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MeasurementState">[docs]</a><span class="k">class</span> <span class="nc">MeasurementState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;MeasurementState.</span>
+<span class="sd">  </span>
+<span class="sd">  Measurement Engine tracking channel state for a specific satellite signal </span>
+<span class="sd">and measured signal power. </span>
+<span class="sd">The mesid field for Glonass can either </span>
+<span class="sd">carry the FCN as 100 + FCN where FCN is in [-7, +6] or </span>
+<span class="sd">the Slot ID (from 1 to 28)</span>
+
+<span class="sd">  </span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  mesid : GnssSignal</span>
+<span class="sd">    Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT)</span>
+<span class="sd">  cn0 : int</span>
+<span class="sd">    Carrier-to-Noise density.  Zero implies invalid cn0.</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Embedded</span><span class="p">(</span><span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                     <span class="s1">&#39;mesid&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GnssSignal</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                     <span class="s1">&#39;cn0&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,))</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;mesid&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;cn0&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">payload</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">mesid</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;mesid&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cn0</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cn0&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  
+<div class="viewcode-block" id="MeasurementState.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MeasurementState.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MeasurementState</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MeasurementState.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MeasurementState.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">MeasurementState</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div></div>
+    
+<div class="viewcode-block" id="TrackingChannelCorrelation"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelCorrelation">[docs]</a><span class="k">class</span> <span class="nc">TrackingChannelCorrelation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;TrackingChannelCorrelation.</span>
+<span class="sd">  </span>
+<span class="sd">  Structure containing in-phase and quadrature correlation components.</span>
+
+<span class="sd">  </span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  I : int</span>
+<span class="sd">    In-phase correlation</span>
+<span class="sd">  Q : int</span>
+<span class="sd">    Quadrature correlation</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Embedded</span><span class="p">(</span><span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                     <span class="s1">&#39;I&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                     <span class="s1">&#39;Q&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,))</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;I&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;Q&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">payload</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">I</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;I&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;Q&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  
+<div class="viewcode-block" id="TrackingChannelCorrelation.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelCorrelation.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">TrackingChannelCorrelation</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TrackingChannelCorrelation.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelCorrelation.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">TrackingChannelCorrelation</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div></div>
+    
+<div class="viewcode-block" id="TrackingChannelStateDepA"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelStateDepA">[docs]</a><span class="k">class</span> <span class="nc">TrackingChannelStateDepA</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;TrackingChannelStateDepA.</span>
+<span class="sd">  </span>
+<span class="sd">  Deprecated.</span>
 <span class="sd">  </span>
 <span class="sd">  Parameters</span>
 <span class="sd">  ----------</span>
@@ -97,36 +216,485 @@
 <span class="sd">    Carrier-to-noise density</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Embedded</span><span class="p">(</span><span class="n">Struct</span><span class="p">(</span><span class="s">&quot;TrackingChannelState&quot;</span><span class="p">,</span>
-                     <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;state&#39;</span><span class="p">),</span>
-                     <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;prn&#39;</span><span class="p">),</span>
-                     <span class="n">LFloat32</span><span class="p">(</span><span class="s">&#39;cn0&#39;</span><span class="p">),))</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Embedded</span><span class="p">(</span><span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                     <span class="s1">&#39;state&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                     <span class="s1">&#39;prn&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                     <span class="s1">&#39;cn0&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Float32l</span><span class="p">,))</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;state&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;prn&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;cn0&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
 
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">payload</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;state&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">prn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;prn&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cn0</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cn0&#39;</span><span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
   
-<div class="viewcode-block" id="TrackingChannelState.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelState.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">TrackingChannelState</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
-</div>
-<div class="viewcode-block" id="TrackingChannelState.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelState.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">TrackingChannelState</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
-    </div></div>
-<span class="n">SBP_MSG_TRACKING_STATE</span> <span class="o">=</span> <span class="mh">0x0016</span>
-<div class="viewcode-block" id="MsgTrackingState"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingState">[docs]</a><span class="k">class</span> <span class="nc">MsgTrackingState</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_TRACKING_STATE (0x0016).</span>
+<div class="viewcode-block" id="TrackingChannelStateDepA.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelStateDepA.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">TrackingChannelStateDepA</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
 
-<span class="sd">  You can have MSG_TRACKING_STATE inherent its fields directly</span>
+<div class="viewcode-block" id="TrackingChannelStateDepA.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelStateDepA.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">TrackingChannelStateDepA</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div></div>
+    
+<div class="viewcode-block" id="TrackingChannelStateDepB"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelStateDepB">[docs]</a><span class="k">class</span> <span class="nc">TrackingChannelStateDepB</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;TrackingChannelStateDepB.</span>
+<span class="sd">  </span>
+<span class="sd">  Deprecated.</span>
+<span class="sd">  </span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  state : int</span>
+<span class="sd">    Status of tracking channel</span>
+<span class="sd">  sid : GnssSignalDep</span>
+<span class="sd">    GNSS signal being tracked</span>
+<span class="sd">  cn0 : float</span>
+<span class="sd">    Carrier-to-noise density</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Embedded</span><span class="p">(</span><span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                     <span class="s1">&#39;state&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                     <span class="s1">&#39;sid&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GnssSignalDep</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                     <span class="s1">&#39;cn0&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Float32l</span><span class="p">,))</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;state&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sid&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;cn0&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">payload</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;state&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sid</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sid&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cn0</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cn0&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  
+<div class="viewcode-block" id="TrackingChannelStateDepB.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelStateDepB.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">TrackingChannelStateDepB</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TrackingChannelStateDepB.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.TrackingChannelStateDepB.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">TrackingChannelStateDepB</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div></div>
+    
+<span class="n">SBP_MSG_TRACKING_STATE_DETAILED_DEP_A</span> <span class="o">=</span> <span class="mh">0x0021</span>
+<div class="viewcode-block" id="MsgTrackingStateDetailedDepA"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDetailedDepA">[docs]</a><span class="k">class</span> <span class="nc">MsgTrackingStateDetailedDepA</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_TRACKING_STATE_DETAILED_DEP_A (0x0021).</span>
+
+<span class="sd">  You can have MSG_TRACKING_STATE_DETAILED_DEP_A inherit its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The tracking message returns a set tracking channel parameters for a</span>
+<span class="sd">single tracking channel useful for debugging issues.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  recv_time : int</span>
+<span class="sd">    Receiver clock time.</span>
+<span class="sd">  tot : GPSTime</span>
+<span class="sd">    Time of transmission of signal from satellite. TOW only valid when</span>
+<span class="sd">TOW status is decoded or propagated. WN only valid when week</span>
+<span class="sd">number valid flag is set.</span>
+
+<span class="sd">  P : int</span>
+<span class="sd">    Pseudorange observation. Valid only when pseudorange valid flag is</span>
+<span class="sd">set.</span>
+
+<span class="sd">  P_std : int</span>
+<span class="sd">    Pseudorange observation standard deviation. Valid only when</span>
+<span class="sd">pseudorange valid flag is set.</span>
+
+<span class="sd">  L : CarrierPhase</span>
+<span class="sd">    Carrier phase observation with typical sign convention. Valid only</span>
+<span class="sd">when PLL pessimistic lock is achieved.</span>
+
+<span class="sd">  cn0 : int</span>
+<span class="sd">    Carrier-to-Noise density</span>
+<span class="sd">  lock : int</span>
+<span class="sd">    Lock time. It is encoded according to DF402 from the RTCM 10403.2</span>
+<span class="sd">Amendment 2 specification. Valid values range from 0 to 15.</span>
+
+<span class="sd">  sid : GnssSignal</span>
+<span class="sd">    GNSS signal identifier.</span>
+<span class="sd">  doppler : int</span>
+<span class="sd">    Carrier Doppler frequency.</span>
+<span class="sd">  doppler_std : int</span>
+<span class="sd">    Carrier Doppler frequency standard deviation.</span>
+<span class="sd">  uptime : int</span>
+<span class="sd">    Number of seconds of continuous tracking. Specifies how much time</span>
+<span class="sd">signal is in continuous track.</span>
+
+<span class="sd">  clock_offset : int</span>
+<span class="sd">    TCXO clock offset. Valid only when valid clock valid flag is set.</span>
+
+<span class="sd">  clock_drift : int</span>
+<span class="sd">    TCXO clock drift. Valid only when valid clock valid flag is set.</span>
+
+<span class="sd">  corr_spacing : int</span>
+<span class="sd">    Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.</span>
+<span class="sd">  acceleration : int</span>
+<span class="sd">    Acceleration. Valid only when acceleration valid flag is set.</span>
+<span class="sd">  sync_flags : int</span>
+<span class="sd">    Synchronization status flags.</span>
+<span class="sd">  tow_flags : int</span>
+<span class="sd">    TOW status flags.</span>
+<span class="sd">  track_flags : int</span>
+<span class="sd">    Tracking loop status flags.</span>
+<span class="sd">  nav_flags : int</span>
+<span class="sd">    Navigation data status flags.</span>
+<span class="sd">  pset_flags : int</span>
+<span class="sd">    Parameters sets flags.</span>
+<span class="sd">  misc_flags : int</span>
+<span class="sd">    Miscellaneous flags.</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="s1">&#39;recv_time&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int64ul</span><span class="p">,</span>
+                   <span class="s1">&#39;tot&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GPSTime</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;P&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32ul</span><span class="p">,</span>
+                   <span class="s1">&#39;P_std&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16ul</span><span class="p">,</span>
+                   <span class="s1">&#39;L&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">CarrierPhase</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;cn0&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;lock&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16ul</span><span class="p">,</span>
+                   <span class="s1">&#39;sid&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GnssSignal</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;doppler&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;doppler_std&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16ul</span><span class="p">,</span>
+                   <span class="s1">&#39;uptime&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32ul</span><span class="p">,</span>
+                   <span class="s1">&#39;clock_offset&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16sl</span><span class="p">,</span>
+                   <span class="s1">&#39;clock_drift&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16sl</span><span class="p">,</span>
+                   <span class="s1">&#39;corr_spacing&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16ul</span><span class="p">,</span>
+                   <span class="s1">&#39;acceleration&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8sl</span><span class="p">,</span>
+                   <span class="s1">&#39;sync_flags&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;tow_flags&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;track_flags&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;nav_flags&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;pset_flags&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;misc_flags&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;recv_time&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;tot&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;P&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;P_std&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;L&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;cn0&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;lock&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sid&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;doppler&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;doppler_std&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;uptime&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;clock_offset&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;clock_drift&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;corr_spacing&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;acceleration&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sync_flags&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;tow_flags&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;track_flags&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;nav_flags&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;pset_flags&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;misc_flags&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingStateDetailedDepA</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingStateDetailedDepA</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_TRACKING_STATE_DETAILED_DEP_A</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">recv_time</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;recv_time&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">tot</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;tot&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">P</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;P&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">P_std</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;P_std&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cn0</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cn0&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;lock&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sid</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sid&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">doppler</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;doppler&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">doppler_std</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;doppler_std&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">uptime</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;uptime&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">clock_offset</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;clock_offset&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">clock_drift</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;clock_drift&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">corr_spacing</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;corr_spacing&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;acceleration&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sync_flags</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sync_flags&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">tow_flags</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;tow_flags&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">track_flags</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;track_flags&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">nav_flags</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;nav_flags&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">pset_flags</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;pset_flags&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">misc_flags</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;misc_flags&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgTrackingStateDetailedDepA.from_json"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDetailedDepA.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingStateDetailedDepA</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgTrackingStateDetailedDepA.from_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDetailedDepA.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingStateDetailedDepA</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+ 
+<div class="viewcode-block" id="MsgTrackingStateDetailedDepA.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDetailedDepA.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgTrackingStateDetailedDepA</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgTrackingStateDetailedDepA.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDetailedDepA.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgTrackingStateDetailedDepA</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MsgTrackingStateDetailedDepA.to_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDetailedDepA.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingStateDetailedDepA</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
+<span class="n">SBP_MSG_TRACKING_STATE_DETAILED_DEP</span> <span class="o">=</span> <span class="mh">0x0011</span>
+<div class="viewcode-block" id="MsgTrackingStateDetailedDep"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDetailedDep">[docs]</a><span class="k">class</span> <span class="nc">MsgTrackingStateDetailedDep</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_TRACKING_STATE_DETAILED_DEP (0x0011).</span>
+
+<span class="sd">  You can have MSG_TRACKING_STATE_DETAILED_DEP inherit its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  Deprecated.</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  recv_time : int</span>
+<span class="sd">    Receiver clock time.</span>
+<span class="sd">  tot : GPSTimeDep</span>
+<span class="sd">    Time of transmission of signal from satellite. TOW only valid when</span>
+<span class="sd">TOW status is decoded or propagated. WN only valid when week</span>
+<span class="sd">number valid flag is set.</span>
+
+<span class="sd">  P : int</span>
+<span class="sd">    Pseudorange observation. Valid only when pseudorange valid flag is</span>
+<span class="sd">set.</span>
+
+<span class="sd">  P_std : int</span>
+<span class="sd">    Pseudorange observation standard deviation. Valid only when</span>
+<span class="sd">pseudorange valid flag is set.</span>
+
+<span class="sd">  L : CarrierPhase</span>
+<span class="sd">    Carrier phase observation with typical sign convention. Valid only</span>
+<span class="sd">when PLL pessimistic lock is achieved.</span>
+
+<span class="sd">  cn0 : int</span>
+<span class="sd">    Carrier-to-Noise density</span>
+<span class="sd">  lock : int</span>
+<span class="sd">    Lock time. It is encoded according to DF402 from the RTCM 10403.2</span>
+<span class="sd">Amendment 2 specification. Valid values range from 0 to 15.</span>
+
+<span class="sd">  sid : GnssSignalDep</span>
+<span class="sd">    GNSS signal identifier.</span>
+<span class="sd">  doppler : int</span>
+<span class="sd">    Carrier Doppler frequency.</span>
+<span class="sd">  doppler_std : int</span>
+<span class="sd">    Carrier Doppler frequency standard deviation.</span>
+<span class="sd">  uptime : int</span>
+<span class="sd">    Number of seconds of continuous tracking. Specifies how much time</span>
+<span class="sd">signal is in continuous track.</span>
+
+<span class="sd">  clock_offset : int</span>
+<span class="sd">    TCXO clock offset. Valid only when valid clock valid flag is set.</span>
+
+<span class="sd">  clock_drift : int</span>
+<span class="sd">    TCXO clock drift. Valid only when valid clock valid flag is set.</span>
+
+<span class="sd">  corr_spacing : int</span>
+<span class="sd">    Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.</span>
+<span class="sd">  acceleration : int</span>
+<span class="sd">    Acceleration. Valid only when acceleration valid flag is set.</span>
+<span class="sd">  sync_flags : int</span>
+<span class="sd">    Synchronization status flags.</span>
+<span class="sd">  tow_flags : int</span>
+<span class="sd">    TOW status flags.</span>
+<span class="sd">  track_flags : int</span>
+<span class="sd">    Tracking loop status flags.</span>
+<span class="sd">  nav_flags : int</span>
+<span class="sd">    Navigation data status flags.</span>
+<span class="sd">  pset_flags : int</span>
+<span class="sd">    Parameters sets flags.</span>
+<span class="sd">  misc_flags : int</span>
+<span class="sd">    Miscellaneous flags.</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="s1">&#39;recv_time&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int64ul</span><span class="p">,</span>
+                   <span class="s1">&#39;tot&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GPSTimeDep</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;P&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32ul</span><span class="p">,</span>
+                   <span class="s1">&#39;P_std&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16ul</span><span class="p">,</span>
+                   <span class="s1">&#39;L&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">CarrierPhase</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;cn0&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;lock&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16ul</span><span class="p">,</span>
+                   <span class="s1">&#39;sid&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GnssSignalDep</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;doppler&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;doppler_std&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16ul</span><span class="p">,</span>
+                   <span class="s1">&#39;uptime&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32ul</span><span class="p">,</span>
+                   <span class="s1">&#39;clock_offset&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16sl</span><span class="p">,</span>
+                   <span class="s1">&#39;clock_drift&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16sl</span><span class="p">,</span>
+                   <span class="s1">&#39;corr_spacing&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int16ul</span><span class="p">,</span>
+                   <span class="s1">&#39;acceleration&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8sl</span><span class="p">,</span>
+                   <span class="s1">&#39;sync_flags&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;tow_flags&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;track_flags&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;nav_flags&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;pset_flags&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;misc_flags&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;recv_time&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;tot&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;P&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;P_std&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;L&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;cn0&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;lock&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sid&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;doppler&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;doppler_std&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;uptime&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;clock_offset&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;clock_drift&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;corr_spacing&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;acceleration&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sync_flags&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;tow_flags&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;track_flags&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;nav_flags&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;pset_flags&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;misc_flags&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingStateDetailedDep</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingStateDetailedDep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_TRACKING_STATE_DETAILED_DEP</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">recv_time</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;recv_time&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">tot</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;tot&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">P</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;P&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">P_std</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;P_std&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cn0</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cn0&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;lock&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sid</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sid&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">doppler</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;doppler&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">doppler_std</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;doppler_std&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">uptime</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;uptime&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">clock_offset</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;clock_offset&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">clock_drift</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;clock_drift&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">corr_spacing</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;corr_spacing&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;acceleration&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sync_flags</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sync_flags&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">tow_flags</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;tow_flags&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">track_flags</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;track_flags&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">nav_flags</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;nav_flags&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">pset_flags</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;pset_flags&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">misc_flags</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;misc_flags&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgTrackingStateDetailedDep.from_json"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDetailedDep.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingStateDetailedDep</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgTrackingStateDetailedDep.from_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDetailedDep.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingStateDetailedDep</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+ 
+<div class="viewcode-block" id="MsgTrackingStateDetailedDep.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDetailedDep.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgTrackingStateDetailedDep</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgTrackingStateDetailedDep.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDetailedDep.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgTrackingStateDetailedDep</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MsgTrackingStateDetailedDep.to_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDetailedDep.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingStateDetailedDep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
+<span class="n">SBP_MSG_TRACKING_STATE</span> <span class="o">=</span> <span class="mh">0x0041</span>
+<div class="viewcode-block" id="MsgTrackingState"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingState">[docs]</a><span class="k">class</span> <span class="nc">MsgTrackingState</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_TRACKING_STATE (0x0041).</span>
+
+<span class="sd">  You can have MSG_TRACKING_STATE inherit its fields directly</span>
 <span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
 <span class="sd">  The tracking message returns a variable-length array of tracking</span>
-<span class="sd">channel states. It reports status and snr power measurements for</span>
-<span class="sd">all tracked satellites.</span>
+<span class="sd">channel states. It reports status and carrier-to-noise density</span>
+<span class="sd">measurements for all tracked satellites.</span>
 
 
 <span class="sd">  Parameters</span>
@@ -134,21 +702,45 @@
 <span class="sd">  sbp : SBP</span>
 <span class="sd">    SBP parent object to inherit from.</span>
 <span class="sd">  states : array</span>
-<span class="sd">    Satellite tracking channel state</span>
+<span class="sd">    Signal tracking channel state</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgTrackingState&quot;</span><span class="p">,</span>
-                   <span class="n">OptionalGreedyRange</span><span class="p">(</span><span class="n">Struct</span><span class="p">(</span><span class="s">&#39;states&#39;</span><span class="p">,</span> <span class="n">TrackingChannelState</span><span class="o">.</span><span class="n">_parser</span><span class="p">)),)</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="n">construct</span><span class="o">.</span><span class="n">GreedyRange</span><span class="p">(</span><span class="s1">&#39;states&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">TrackingChannelState</span><span class="o">.</span><span class="n">_parser</span><span class="p">)),)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;states&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
 
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingState</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;states&#39;</span><span class="p">)</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingState</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_TRACKING_STATE</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;states&#39;</span><span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgTrackingState.from_json"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingState.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingState</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgTrackingState.from_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingState.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingState</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
  
 <div class="viewcode-block" id="MsgTrackingState.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingState.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
@@ -156,209 +748,459 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">MsgTrackingState</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
-</div>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="MsgTrackingState.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingState.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgTrackingState</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="MsgTrackingState.to_json"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingState.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MsgTrackingState.to_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingState.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
     <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingState</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
     <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-</div>
-  <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="MsgTrackingState.from_json"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingState.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
+<span class="n">SBP_MSG_MEASUREMENT_STATE</span> <span class="o">=</span> <span class="mh">0x0061</span>
+<div class="viewcode-block" id="MsgMeasurementState"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgMeasurementState">[docs]</a><span class="k">class</span> <span class="nc">MsgMeasurementState</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_MEASUREMENT_STATE (0x0061).</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">MsgTrackingState</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
-    </div></div>
-<span class="n">SBP_MSG_EPHEMERIS</span> <span class="o">=</span> <span class="mh">0x001A</span>
-<div class="viewcode-block" id="MsgEphemeris"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgEphemeris">[docs]</a><span class="k">class</span> <span class="nc">MsgEphemeris</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_EPHEMERIS (0x001A).</span>
-
-<span class="sd">  You can have MSG_EPHEMERIS inherent its fields directly</span>
+<span class="sd">  You can have MSG_MEASUREMENT_STATE inherit its fields directly</span>
 <span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
-<span class="sd">  The ephemeris message returns a set of satellite orbit</span>
-<span class="sd">parameters that is used to calculate GPS satellite position,</span>
-<span class="sd">velocity, and clock offset (WGS84). Please see the Navstar GPS</span>
-<span class="sd">Space Segment/Navigation user interfaces (ICD-GPS-200, Table</span>
-<span class="sd">20-III) for more details.</span>
+<span class="sd">  The tracking message returns a variable-length array of tracking</span>
+<span class="sd">channel states. It reports status and carrier-to-noise density</span>
+<span class="sd">measurements for all tracked satellites.</span>
 
 
 <span class="sd">  Parameters</span>
 <span class="sd">  ----------</span>
 <span class="sd">  sbp : SBP</span>
 <span class="sd">    SBP parent object to inherit from.</span>
-<span class="sd">  tgd : double</span>
-<span class="sd">    Group delay differential between L1 and L2</span>
-<span class="sd">  crs : double</span>
-<span class="sd">    Amplitude of the sine harmonic correction term to the orbit radius</span>
-<span class="sd">  crc : double</span>
-<span class="sd">    Amplitude of the cosine harmonic correction term to the orbit radius</span>
-<span class="sd">  cuc : double</span>
-<span class="sd">    Amplitude of the cosine harmonic correction term to the argument of latitude</span>
-<span class="sd">  cus : double</span>
-<span class="sd">    Amplitude of the sine harmonic correction term to the argument of latitude</span>
-<span class="sd">  cic : double</span>
-<span class="sd">    Amplitude of the cosine harmonic correction term to the angle of inclination</span>
-<span class="sd">  cis : double</span>
-<span class="sd">    Amplitude of the sine harmonic correction term to the angle of inclination</span>
-<span class="sd">  dn : double</span>
-<span class="sd">    Mean motion difference</span>
-<span class="sd">  m0 : double</span>
-<span class="sd">    Mean anomaly at reference time</span>
-<span class="sd">  ecc : double</span>
-<span class="sd">    Eccentricity of satellite orbit</span>
-<span class="sd">  sqrta : double</span>
-<span class="sd">    Square root of the semi-major axis of orbit</span>
-<span class="sd">  omega0 : double</span>
-<span class="sd">    Longitude of ascending node of orbit plane at weekly epoch</span>
-<span class="sd">  omegadot : double</span>
-<span class="sd">    Rate of right ascension</span>
-<span class="sd">  w : double</span>
-<span class="sd">    Argument of perigee</span>
-<span class="sd">  inc : double</span>
-<span class="sd">    Inclination</span>
-<span class="sd">  inc_dot : double</span>
-<span class="sd">    Inclination first derivative</span>
-<span class="sd">  af0 : double</span>
-<span class="sd">    Polynomial clock correction coefficient (clock bias)</span>
-<span class="sd">  af1 : double</span>
-<span class="sd">    Polynomial clock correction coefficient (clock drift)</span>
-<span class="sd">  af2 : double</span>
-<span class="sd">    Polynomial clock correction coefficient (rate of clock drift)</span>
-<span class="sd">  toe_tow : double</span>
-<span class="sd">    Time of week</span>
-<span class="sd">  toe_wn : int</span>
-<span class="sd">    Week number</span>
-<span class="sd">  toc_tow : double</span>
-<span class="sd">    Clock reference time of week</span>
-<span class="sd">  toc_wn : int</span>
-<span class="sd">    Clock reference week number</span>
-<span class="sd">  valid : int</span>
-<span class="sd">    Is valid?</span>
-<span class="sd">  healthy : int</span>
-<span class="sd">    Satellite is healthy?</span>
-<span class="sd">  prn : int</span>
-<span class="sd">    PRN being tracked</span>
+<span class="sd">  states : array</span>
+<span class="sd">    ME signal tracking channel state</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="n">_parser</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="s">&quot;MsgEphemeris&quot;</span><span class="p">,</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;tgd&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;crs&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;crc&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;cuc&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;cus&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;cic&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;cis&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;dn&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;m0&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;ecc&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;sqrta&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;omega0&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;omegadot&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;w&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;inc&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;inc_dot&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;af0&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;af1&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;af2&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;toe_tow&#39;</span><span class="p">),</span>
-                   <span class="n">ULInt16</span><span class="p">(</span><span class="s">&#39;toe_wn&#39;</span><span class="p">),</span>
-                   <span class="n">LFloat64</span><span class="p">(</span><span class="s">&#39;toc_tow&#39;</span><span class="p">),</span>
-                   <span class="n">ULInt16</span><span class="p">(</span><span class="s">&#39;toc_wn&#39;</span><span class="p">),</span>
-                   <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;valid&#39;</span><span class="p">),</span>
-                   <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;healthy&#39;</span><span class="p">),</span>
-                   <span class="n">ULInt8</span><span class="p">(</span><span class="s">&#39;prn&#39;</span><span class="p">),)</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="n">construct</span><span class="o">.</span><span class="n">GreedyRange</span><span class="p">(</span><span class="s1">&#39;states&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">MeasurementState</span><span class="o">.</span><span class="n">_parser</span><span class="p">)),)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;states&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
 
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgMeasurementState</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">tgd</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;tgd&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">crs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;crs&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">crc</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;crc&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">cuc</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;cuc&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">cus</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;cus&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">cic</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;cic&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">cis</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;cis&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">dn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;dn&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">m0</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;m0&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">ecc</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;ecc&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">sqrta</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;sqrta&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">omega0</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;omega0&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">omegadot</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;omegadot&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">inc</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;inc&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">inc_dot</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;inc_dot&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">af0</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;af0&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">af1</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;af1&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">af2</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;af2&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">toe_tow</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;toe_tow&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">toe_wn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;toe_wn&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">toc_tow</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;toc_tow&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">toc_wn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;toc_wn&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;valid&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">healthy</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;healthy&#39;</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">prn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;prn&#39;</span><span class="p">)</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgMeasurementState</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_MEASUREMENT_STATE</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;states&#39;</span><span class="p">)</span>
 
-  <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgMeasurementState.from_json"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgMeasurementState.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgMeasurementState</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgMeasurementState.from_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgMeasurementState.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgMeasurementState</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
  
-<div class="viewcode-block" id="MsgEphemeris.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgEphemeris.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+<div class="viewcode-block" id="MsgMeasurementState.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgMeasurementState.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
 <span class="sd">    the message.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgEphemeris</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">viewitems</span><span class="p">()))</span>
-</div>
-<div class="viewcode-block" id="MsgEphemeris.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgEphemeris.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgMeasurementState</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgMeasurementState.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgMeasurementState.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="o">**</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgEphemeris</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="MsgEphemeris.to_json"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgEphemeris.to_json">[docs]</a>  <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Produce a JSON-encoded SBP message.</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgMeasurementState</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgEphemeris</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+<div class="viewcode-block" id="MsgMeasurementState.to_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgMeasurementState.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgMeasurementState</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
     <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-</div>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
+<span class="n">SBP_MSG_TRACKING_IQ</span> <span class="o">=</span> <span class="mh">0x002C</span>
+<div class="viewcode-block" id="MsgTrackingIq"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingIq">[docs]</a><span class="k">class</span> <span class="nc">MsgTrackingIq</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_TRACKING_IQ (0x002C).</span>
+
+<span class="sd">  You can have MSG_TRACKING_IQ inherit its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  When enabled, a tracking channel can output the correlations at each</span>
+<span class="sd">update interval.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  channel : int</span>
+<span class="sd">    Tracking channel of origin</span>
+<span class="sd">  sid : GnssSignal</span>
+<span class="sd">    GNSS signal identifier</span>
+<span class="sd">  corrs : array</span>
+<span class="sd">    Early, Prompt and Late correlations</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="s1">&#39;channel&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;sid&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GnssSignal</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;corrs&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">construct</span><span class="o">.</span><span class="n">Byte</span><span class="p">),)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;channel&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sid&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;corrs&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingIq</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingIq</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_TRACKING_IQ</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;channel&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sid</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sid&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">corrs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;corrs&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
   <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="MsgEphemeris.from_json"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgEphemeris.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded message, build an object.</span>
+<div class="viewcode-block" id="MsgTrackingIq.from_json"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingIq.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingIq</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgTrackingIq.from_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingIq.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
     <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">MsgEphemeris</span><span class="p">(</span><span class="n">sbp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingIq</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+ 
+<div class="viewcode-block" id="MsgTrackingIq.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingIq.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgTrackingIq</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgTrackingIq.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingIq.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgTrackingIq</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MsgTrackingIq.to_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingIq.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingIq</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
     
-</div></div>
+<span class="n">SBP_MSG_TRACKING_IQ_DEP</span> <span class="o">=</span> <span class="mh">0x001C</span>
+<div class="viewcode-block" id="MsgTrackingIqDep"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingIqDep">[docs]</a><span class="k">class</span> <span class="nc">MsgTrackingIqDep</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_TRACKING_IQ_DEP (0x001C).</span>
+
+<span class="sd">  You can have MSG_TRACKING_IQ_DEP inherit its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  Deprecated.</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  channel : int</span>
+<span class="sd">    Tracking channel of origin</span>
+<span class="sd">  sid : GnssSignalDep</span>
+<span class="sd">    GNSS signal identifier</span>
+<span class="sd">  corrs : array</span>
+<span class="sd">    Early, Prompt and Late correlations</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="s1">&#39;channel&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;sid&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GnssSignalDep</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;corrs&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">construct</span><span class="o">.</span><span class="n">Byte</span><span class="p">),)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;channel&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sid&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;corrs&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingIqDep</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingIqDep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_TRACKING_IQ_DEP</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;channel&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sid</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sid&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">corrs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;corrs&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgTrackingIqDep.from_json"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingIqDep.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingIqDep</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgTrackingIqDep.from_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingIqDep.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingIqDep</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+ 
+<div class="viewcode-block" id="MsgTrackingIqDep.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingIqDep.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgTrackingIqDep</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgTrackingIqDep.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingIqDep.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgTrackingIqDep</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MsgTrackingIqDep.to_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingIqDep.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingIqDep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
+<span class="n">SBP_MSG_TRACKING_STATE_DEP_A</span> <span class="o">=</span> <span class="mh">0x0016</span>
+<div class="viewcode-block" id="MsgTrackingStateDepA"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDepA">[docs]</a><span class="k">class</span> <span class="nc">MsgTrackingStateDepA</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_TRACKING_STATE_DEP_A (0x0016).</span>
+
+<span class="sd">  You can have MSG_TRACKING_STATE_DEP_A inherit its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  Deprecated.</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  states : array</span>
+<span class="sd">    Satellite tracking channel state</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="n">construct</span><span class="o">.</span><span class="n">GreedyRange</span><span class="p">(</span><span class="s1">&#39;states&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">TrackingChannelStateDepA</span><span class="o">.</span><span class="n">_parser</span><span class="p">)),)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;states&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingStateDepA</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingStateDepA</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_TRACKING_STATE_DEP_A</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;states&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgTrackingStateDepA.from_json"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDepA.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingStateDepA</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgTrackingStateDepA.from_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDepA.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingStateDepA</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+ 
+<div class="viewcode-block" id="MsgTrackingStateDepA.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDepA.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgTrackingStateDepA</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgTrackingStateDepA.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDepA.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgTrackingStateDepA</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MsgTrackingStateDepA.to_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDepA.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingStateDepA</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
+<span class="n">SBP_MSG_TRACKING_STATE_DEP_B</span> <span class="o">=</span> <span class="mh">0x0013</span>
+<div class="viewcode-block" id="MsgTrackingStateDepB"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDepB">[docs]</a><span class="k">class</span> <span class="nc">MsgTrackingStateDepB</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_TRACKING_STATE_DEP_B (0x0013).</span>
+
+<span class="sd">  You can have MSG_TRACKING_STATE_DEP_B inherit its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  Deprecated.</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  states : array</span>
+<span class="sd">    Signal tracking channel state</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="n">construct</span><span class="o">.</span><span class="n">GreedyRange</span><span class="p">(</span><span class="s1">&#39;states&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">TrackingChannelStateDepB</span><span class="o">.</span><span class="n">_parser</span><span class="p">)),)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;states&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingStateDepB</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingStateDepB</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_TRACKING_STATE_DEP_B</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;states&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgTrackingStateDepB.from_json"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDepB.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingStateDepB</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgTrackingStateDepB.from_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDepB.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgTrackingStateDepB</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+ 
+<div class="viewcode-block" id="MsgTrackingStateDepB.from_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDepB.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgTrackingStateDepB</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgTrackingStateDepB.to_binary"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDepB.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgTrackingStateDepB</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MsgTrackingStateDepB.to_json_dict"><a class="viewcode-back" href="../../sbp.tracking.html#sbp.tracking.MsgTrackingStateDepB.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgTrackingStateDepB</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
+
 <span class="n">msg_classes</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="mh">0x0016</span><span class="p">:</span> <span class="n">MsgTrackingState</span><span class="p">,</span>
-  <span class="mh">0x001A</span><span class="p">:</span> <span class="n">MsgEphemeris</span><span class="p">,</span>
+  <span class="mh">0x0021</span><span class="p">:</span> <span class="n">MsgTrackingStateDetailedDepA</span><span class="p">,</span>
+  <span class="mh">0x0011</span><span class="p">:</span> <span class="n">MsgTrackingStateDetailedDep</span><span class="p">,</span>
+  <span class="mh">0x0041</span><span class="p">:</span> <span class="n">MsgTrackingState</span><span class="p">,</span>
+  <span class="mh">0x0061</span><span class="p">:</span> <span class="n">MsgMeasurementState</span><span class="p">,</span>
+  <span class="mh">0x002C</span><span class="p">:</span> <span class="n">MsgTrackingIq</span><span class="p">,</span>
+  <span class="mh">0x001C</span><span class="p">:</span> <span class="n">MsgTrackingIqDep</span><span class="p">,</span>
+  <span class="mh">0x0016</span><span class="p">:</span> <span class="n">MsgTrackingStateDepA</span><span class="p">,</span>
+  <span class="mh">0x0013</span><span class="p">:</span> <span class="n">MsgTrackingStateDepB</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -366,7 +1208,15 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
@@ -375,9 +1225,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -388,8 +1235,8 @@
       &copy;2015, Swift Navigation.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
     </div>
 

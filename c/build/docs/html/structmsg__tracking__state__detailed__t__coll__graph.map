@@ -1,0 +1,5 @@
+<map id="msg_tracking_state_detailed_t" name="msg_tracking_state_detailed_t">
+<area shape="rect" id="node2" href="$structsbp__gps__time__t.html" title="Nanosecond&#45;accurate receiver clock time. " alt="" coords="5,6,120,31"/>
+<area shape="rect" id="node3" href="$structcarrier__phase__t.html" title="GNSS carrier phase measurement. " alt="" coords="144,6,257,31"/>
+<area shape="rect" id="node4" href="$structsbp__gnss__signal__t.html" title="Represents all the relevant information about the signal. " alt="" coords="282,6,413,31"/>
+</map>
