@@ -25,32 +25,15 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
     <link rel="next" title="sbp.tracking module" href="sbp.tracking.html" />
     <link rel="prev" title="sbp.system module" href="sbp.system.html" />
    
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="sbp.tracking.html" title="sbp.tracking module"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="sbp.system.html" title="sbp.system module"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
@@ -63,20 +46,20 @@
 <dl class="exception">
 <dt id="sbp.table.InvalidSBPMessageType">
 <em class="property">exception </em><code class="descclassname">sbp.table.</code><code class="descname">InvalidSBPMessageType</code><a class="reference internal" href="_modules/sbp/table.html#InvalidSBPMessageType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.table.InvalidSBPMessageType" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/exceptions.html#exceptions.NotImplementedError" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">exceptions.NotImplementedError</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.NotImplementedError</span></code></p>
 <p>Base exception for messages with invalid message types.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="sbp.table.dispatch">
-<code class="descclassname">sbp.table.</code><code class="descname">dispatch</code><span class="sig-paren">(</span><em>msg</em>, <em>table={256: &lt;class 'sbp.navigation.MsgGPSTime'&gt;</em>, <em>512: &lt;class 'sbp.navigation.MsgPosECEF'&gt;</em>, <em>514: &lt;class 'sbp.navigation.MsgBaselineECEF'&gt;</em>, <em>515: &lt;class 'sbp.navigation.MsgBaselineNED'&gt;</em>, <em>516: &lt;class 'sbp.navigation.MsgVelECEF'&gt;</em>, <em>517: &lt;class 'sbp.navigation.MsgVelNED'&gt;</em>, <em>518: &lt;class 'sbp.navigation.MsgDops'&gt;</em>, <em>513: &lt;class 'sbp.navigation.MsgPosLLH'&gt;</em>, <em>16: &lt;class 'sbp.logging.MsgPrint'&gt;</em>, <em>17: &lt;class 'sbp.logging.MsgDebugVar'&gt;</em>, <em>21: &lt;class 'sbp.acquisition.MsgAcqResult'&gt;</em>, <em>22: &lt;class 'sbp.tracking.MsgTrackingState'&gt;</em>, <em>23: &lt;class 'sbp.piksi.MsgThreadState'&gt;</em>, <em>24: &lt;class 'sbp.piksi.MsgUartState'&gt;</em>, <em>25: &lt;class 'sbp.piksi.MsgIarState'&gt;</em>, <em>26: &lt;class 'sbp.tracking.MsgEphemeris'&gt;</em>, <em>160: &lt;class 'sbp.settings.MsgSettings'&gt;</em>, <em>161: &lt;class 'sbp.settings.MsgSettingsSave'&gt;</em>, <em>34: &lt;class 'sbp.piksi.MsgResetFilters'&gt;</em>, <em>35: &lt;class 'sbp.piksi.MsgInitBase'&gt;</em>, <em>168: &lt;class 'sbp.file_io.MsgFileioRead'&gt;</em>, <em>169: &lt;class 'sbp.file_io.MsgFileioReadDir'&gt;</em>, <em>172: &lt;class 'sbp.file_io.MsgFileioRemove'&gt;</em>, <em>173: &lt;class 'sbp.file_io.MsgFileioWrite'&gt;</em>, <em>176: &lt;class 'sbp.bootload.MsgBootloaderHandshake'&gt;</em>, <em>177: &lt;class 'sbp.bootload.MsgBootloaderJumpToApp'&gt;</em>, <em>178: &lt;class 'sbp.piksi.MsgReset'&gt;</em>, <em>192: &lt;class 'sbp.piksi.MsgCwResults'&gt;</em>, <em>193: &lt;class 'sbp.piksi.MsgCwStart'&gt;</em>, <em>68: &lt;class 'sbp.observation.MsgBasePos'&gt;</em>, <em>69: &lt;class 'sbp.observation.MsgObs'&gt;</em>, <em>162: &lt;class 'sbp.settings.MsgSettingsReadByIndex'&gt;</em>, <em>257: &lt;class 'sbp.ext_events.MsgExtEvent'&gt;</em>, <em>221: &lt;class 'sbp.bootload.MsgNapDeviceDna'&gt;</em>, <em>224: &lt;class 'sbp.flash.MsgFlashDone'&gt;</em>, <em>225: &lt;class 'sbp.flash.MsgFlashRead'&gt;</em>, <em>226: &lt;class 'sbp.flash.MsgFlashErase'&gt;</em>, <em>227: &lt;class 'sbp.flash.MsgStmFlashLockSector'&gt;</em>, <em>228: &lt;class 'sbp.flash.MsgStmFlashUnlockSector'&gt;</em>, <em>229: &lt;class 'sbp.flash.MsgStmUniqueId'&gt;</em>, <em>104: &lt;class 'sbp.piksi.MsgSetTime'&gt;</em>, <em>105: &lt;class 'sbp.piksi.MsgAlmanac'&gt;</em>, <em>243: &lt;class 'sbp.flash.MsgM25FlashWriteStatus'&gt;</em>, <em>65280: &lt;class 'sbp.system.MsgStartup'&gt;</em>, <em>65535: &lt;class 'sbp.system.MsgHeartbeat'&gt;}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/table.html#dispatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.table.dispatch" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sbp.table.</code><code class="descname">dispatch</code><span class="sig-paren">(</span><em>msg</em>, <em>table={512: &lt;class 'sbp.navigation.MsgPosECEFDepA'&gt;</em>, <em>1025: &lt;class 'sbp.logging.MsgLog'&gt;</em>, <em>1026: &lt;class 'sbp.logging.MsgFwd'&gt;</em>, <em>515: &lt;class 'sbp.navigation.MsgBaselineNEDDepA'&gt;</em>, <em>516: &lt;class 'sbp.navigation.MsgVelECEFDepA'&gt;</em>, <em>517: &lt;class 'sbp.navigation.MsgVelNEDDepA'&gt;</em>, <em>518: &lt;class 'sbp.navigation.MsgDopsDepA'&gt;</em>, <em>513: &lt;class 'sbp.navigation.MsgPosLLHDepA'&gt;</em>, <em>520: &lt;class 'sbp.navigation.MsgDops'&gt;</em>, <em>521: &lt;class 'sbp.navigation.MsgPosECEF'&gt;</em>, <em>522: &lt;class 'sbp.navigation.MsgPosLLH'&gt;</em>, <em>523: &lt;class 'sbp.navigation.MsgBaselineECEF'&gt;</em>, <em>524: &lt;class 'sbp.navigation.MsgBaselineNED'&gt;</em>, <em>525: &lt;class 'sbp.navigation.MsgVelECEF'&gt;</em>, <em>526: &lt;class 'sbp.navigation.MsgVelNED'&gt;</em>, <em>527: &lt;class 'sbp.orientation.MsgBaselineHeading'&gt;</em>, <em>16: &lt;class 'sbp.logging.MsgPrintDep'&gt;</em>, <em>529: &lt;class 'sbp.navigation.MsgPosLLHCov'&gt;</em>, <em>18: &lt;class 'sbp.logging.MsgTweet'&gt;</em>, <em>531: &lt;class 'sbp.navigation.MsgVelBody'&gt;</em>, <em>20: &lt;class 'sbp.acquisition.MsgAcqResultDepB'&gt;</em>, <em>21: &lt;class 'sbp.acquisition.MsgAcqResultDepA'&gt;</em>, <em>22: &lt;class 'sbp.tracking.MsgTrackingStateDepA'&gt;</em>, <em>23: &lt;class 'sbp.piksi.MsgThreadState'&gt;</em>, <em>24: &lt;class 'sbp.piksi.MsgUartStateDepa'&gt;</em>, <em>25: &lt;class 'sbp.piksi.MsgIarState'&gt;</em>, <em>26: &lt;class 'sbp.observation.MsgEphemerisDepA'&gt;</em>, <em>27: &lt;class 'sbp.piksi.MsgMaskSatelliteDep'&gt;</em>, <em>28: &lt;class 'sbp.tracking.MsgTrackingIqDep'&gt;</em>, <em>29: &lt;class 'sbp.piksi.MsgUartState'&gt;</em>, <em>30: &lt;class 'sbp.acquisition.MsgAcqSvProfileDep'&gt;</em>, <em>31: &lt;class 'sbp.acquisition.MsgAcqResultDepC'&gt;</em>, <em>544: &lt;class 'sbp.orientation.MsgOrientQuat'&gt;</em>, <em>33: &lt;class 'sbp.tracking.MsgTrackingStateDetailedDepA'&gt;</em>, <em>34: &lt;class 'sbp.piksi.MsgResetFilters'&gt;</em>, <em>35: &lt;class 'sbp.piksi.MsgInitBase'&gt;</em>, <em>1024: &lt;class 'sbp.ndb.MsgNdbEvent'&gt;</em>, <em>519: &lt;class 'sbp.navigation.MsgBaselineHeadingDepA'&gt;</em>, <em>44: &lt;class 'sbp.tracking.MsgTrackingIq'&gt;</em>, <em>46: &lt;class 'sbp.acquisition.MsgAcqSvProfile'&gt;</em>, <em>47: &lt;class 'sbp.acquisition.MsgAcqResult'&gt;</em>, <em>65282: &lt;class 'sbp.system.MsgDgnssStatus'&gt;</em>, <em>19: &lt;class 'sbp.tracking.MsgTrackingStateDepB'&gt;</em>, <em>65: &lt;class 'sbp.tracking.MsgTrackingState'&gt;</em>, <em>67: &lt;class 'sbp.observation.MsgObsDepB'&gt;</em>, <em>68: &lt;class 'sbp.observation.MsgBasePosLLH'&gt;</em>, <em>69: &lt;class 'sbp.observation.MsgObsDepA'&gt;</em>, <em>70: &lt;class 'sbp.observation.MsgEphemerisDepB'&gt;</em>, <em>71: &lt;class 'sbp.observation.MsgEphemerisDepC'&gt;</em>, <em>72: &lt;class 'sbp.observation.MsgBasePosECEF'&gt;</em>, <em>73: &lt;class 'sbp.observation.MsgObsDepC'&gt;</em>, <em>74: &lt;class 'sbp.observation.MsgObs'&gt;</em>, <em>2304: &lt;class 'sbp.imu.MsgImuRaw'&gt;</em>, <em>80: &lt;class 'sbp.piksi.MsgSpecanDep'&gt;</em>, <em>81: &lt;class 'sbp.piksi.MsgSpecan'&gt;</em>, <em>514: &lt;class 'sbp.navigation.MsgBaselineECEFDepA'&gt;</em>, <em>65283: &lt;class 'sbp.system.MsgInsStatus'&gt;</em>, <em>528: &lt;class 'sbp.navigation.MsgAgeCorrections'&gt;</em>, <em>17: &lt;class 'sbp.tracking.MsgTrackingStateDetailedDep'&gt;</em>, <em>104: &lt;class 'sbp.piksi.MsgSetTime'&gt;</em>, <em>105: &lt;class 'sbp.piksi.MsgAlmanac'&gt;</em>, <em>530: &lt;class 'sbp.navigation.MsgVelNEDCov'&gt;</em>, <em>112: &lt;class 'sbp.observation.MsgAlmanacGPSDep'&gt;</em>, <em>113: &lt;class 'sbp.observation.MsgAlmanacGloDep'&gt;</em>, <em>114: &lt;class 'sbp.observation.MsgAlmanacGPS'&gt;</em>, <em>115: &lt;class 'sbp.observation.MsgAlmanacGlo'&gt;</em>, <em>117: &lt;class 'sbp.observation.MsgGloBiases'&gt;</em>, <em>532: &lt;class 'sbp.navigation.MsgPosECEFCov'&gt;</em>, <em>533: &lt;class 'sbp.navigation.MsgVelECEFCov'&gt;</em>, <em>128: &lt;class 'sbp.observation.MsgEphemerisDepD'&gt;</em>, <em>129: &lt;class 'sbp.observation.MsgEphemerisGPSDepE'&gt;</em>, <em>130: &lt;class 'sbp.observation.MsgEphemerisSbasDepA'&gt;</em>, <em>131: &lt;class 'sbp.observation.MsgEphemerisGloDepA'&gt;</em>, <em>132: &lt;class 'sbp.observation.MsgEphemerisSbasDepB'&gt;</em>, <em>133: &lt;class 'sbp.observation.MsgEphemerisGloDepB'&gt;</em>, <em>134: &lt;class 'sbp.observation.MsgEphemerisGPSDepF'&gt;</em>, <em>135: &lt;class 'sbp.observation.MsgEphemerisGloDepC'&gt;</em>, <em>136: &lt;class 'sbp.observation.MsgEphemerisGloDepD'&gt;</em>, <em>137: &lt;class 'sbp.observation.MsgEphemerisBds'&gt;</em>, <em>138: &lt;class 'sbp.observation.MsgEphemerisGPS'&gt;</em>, <em>139: &lt;class 'sbp.observation.MsgEphemerisGlo'&gt;</em>, <em>140: &lt;class 'sbp.observation.MsgEphemerisSbas'&gt;</em>, <em>144: &lt;class 'sbp.observation.MsgIono'&gt;</em>, <em>145: &lt;class 'sbp.observation.MsgSvConfigurationGPS'&gt;</em>, <em>146: &lt;class 'sbp.observation.MsgGroupDelayDepA'&gt;</em>, <em>147: &lt;class 'sbp.observation.MsgGroupDelayDepB'&gt;</em>, <em>148: &lt;class 'sbp.observation.MsgGroupDelay'&gt;</em>, <em>149: &lt;class 'sbp.observation.MsgEphemerisGal'&gt;</em>, <em>160: &lt;class 'sbp.settings.MsgSettingsWrite'&gt;</em>, <em>161: &lt;class 'sbp.settings.MsgSettingsSave'&gt;</em>, <em>162: &lt;class 'sbp.settings.MsgSettingsReadByIndexReq'&gt;</em>, <em>163: &lt;class 'sbp.file_io.MsgFileioReadResp'&gt;</em>, <em>164: &lt;class 'sbp.settings.MsgSettingsReadReq'&gt;</em>, <em>165: &lt;class 'sbp.settings.MsgSettingsReadResp'&gt;</em>, <em>166: &lt;class 'sbp.settings.MsgSettingsReadByIndexDone'&gt;</em>, <em>167: &lt;class 'sbp.settings.MsgSettingsReadByIndexResp'&gt;</em>, <em>168: &lt;class 'sbp.file_io.MsgFileioReadReq'&gt;</em>, <em>169: &lt;class 'sbp.file_io.MsgFileioReadDirReq'&gt;</em>, <em>170: &lt;class 'sbp.file_io.MsgFileioReadDirResp'&gt;</em>, <em>171: &lt;class 'sbp.file_io.MsgFileioWriteResp'&gt;</em>, <em>172: &lt;class 'sbp.file_io.MsgFileioRemove'&gt;</em>, <em>173: &lt;class 'sbp.file_io.MsgFileioWriteReq'&gt;</em>, <em>174: &lt;class 'sbp.settings.MsgSettingsRegister'&gt;</em>, <em>175: &lt;class 'sbp.settings.MsgSettingsWriteResp'&gt;</em>, <em>176: &lt;class 'sbp.bootload.MsgBootloaderHandshakeDepA'&gt;</em>, <em>177: &lt;class 'sbp.bootload.MsgBootloaderJumpToApp'&gt;</em>, <em>178: &lt;class 'sbp.piksi.MsgResetDep'&gt;</em>, <em>179: &lt;class 'sbp.bootload.MsgBootloaderHandshakeReq'&gt;</em>, <em>180: &lt;class 'sbp.bootload.MsgBootloaderHandshakeResp'&gt;</em>, <em>181: &lt;class 'sbp.piksi.MsgDeviceMonitor'&gt;</em>, <em>182: &lt;class 'sbp.piksi.MsgReset'&gt;</em>, <em>184: &lt;class 'sbp.piksi.MsgCommandReq'&gt;</em>, <em>185: &lt;class 'sbp.piksi.MsgCommandResp'&gt;</em>, <em>186: &lt;class 'sbp.piksi.MsgNetworkStateReq'&gt;</em>, <em>187: &lt;class 'sbp.piksi.MsgNetworkStateResp'&gt;</em>, <em>188: &lt;class 'sbp.piksi.MsgCommandOutput'&gt;</em>, <em>189: &lt;class 'sbp.piksi.MsgNetworkBandwidthUsage'&gt;</em>, <em>190: &lt;class 'sbp.piksi.MsgCellModemStatus'&gt;</em>, <em>192: &lt;class 'sbp.piksi.MsgCwResults'&gt;</em>, <em>193: &lt;class 'sbp.piksi.MsgCwStart'&gt;</em>, <em>545: &lt;class 'sbp.orientation.MsgOrientEuler'&gt;</em>, <em>546: &lt;class 'sbp.orientation.MsgAngularRate'&gt;</em>, <em>221: &lt;class 'sbp.bootload.MsgNapDeviceDnaResp'&gt;</em>, <em>222: &lt;class 'sbp.bootload.MsgNapDeviceDnaReq'&gt;</em>, <em>224: &lt;class 'sbp.flash.MsgFlashDone'&gt;</em>, <em>225: &lt;class 'sbp.flash.MsgFlashReadResp'&gt;</em>, <em>226: &lt;class 'sbp.flash.MsgFlashErase'&gt;</em>, <em>227: &lt;class 'sbp.flash.MsgStmFlashLockSector'&gt;</em>, <em>228: &lt;class 'sbp.flash.MsgStmFlashUnlockSector'&gt;</em>, <em>229: &lt;class 'sbp.flash.MsgStmUniqueIdResp'&gt;</em>, <em>230: &lt;class 'sbp.flash.MsgFlashProgram'&gt;</em>, <em>231: &lt;class 'sbp.flash.MsgFlashReadReq'&gt;</em>, <em>232: &lt;class 'sbp.flash.MsgStmUniqueIdReq'&gt;</em>, <em>243: &lt;class 'sbp.flash.MsgM25FlashWriteStatus'&gt;</em>, <em>256: &lt;class 'sbp.navigation.MsgGPSTimeDepA'&gt;</em>, <em>2305: &lt;class 'sbp.imu.MsgImuAux'&gt;</em>, <em>258: &lt;class 'sbp.navigation.MsgGPSTime'&gt;</em>, <em>259: &lt;class 'sbp.navigation.MsgUtcTime'&gt;</em>, <em>43: &lt;class 'sbp.piksi.MsgMaskSatellite'&gt;</em>, <em>2307: &lt;class 'sbp.vehicle.MsgOdometry'&gt;</em>, <em>2048: &lt;class 'sbp.user.MsgUserData'&gt;</em>, <em>97: &lt;class 'sbp.tracking.MsgMeasurementState'&gt;</em>, <em>30583: &lt;class 'sbp.sbas.MsgSbasRaw'&gt;</em>, <em>2306: &lt;class 'sbp.mag.MsgMagRaw'&gt;</em>, <em>257: &lt;class 'sbp.ext_events.MsgExtEvent'&gt;</em>, <em>65280: &lt;class 'sbp.system.MsgStartup'&gt;</em>, <em>65535: &lt;class 'sbp.system.MsgHeartbeat'&gt;}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/table.html#dispatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.table.dispatch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dispatch an SBP message type based on its <cite>msg_type</cite> and parse its
 payload.</p>
 <dl class="docutils">
-<dt>driver <span class="classifier-delimiter">:</span> <span class="classifier"><code class="xref py py-class docutils literal"><span class="pre">SBP</span></code></span></dt>
-<dd>A parsed SBP object.</dd>
-<dt>table <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
-<dd>Any table mapping unique SBP message type IDs to SBP message
+<dt>driver</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier"><code class="xref py py-class docutils literal"><span class="pre">SBP</span></code></span><dd>A parsed SBP object.</dd>
+<dt>table</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">dict</span><dd>Any table mapping unique SBP message type IDs to SBP message
 constructors.</dd>
 </dl>
 <p>SBP message with a parsed payload.</p>
@@ -89,13 +72,17 @@ constructors.</dd>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="sbp.system.html"
-                        title="previous chapter">sbp.system module</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="sbp.tracking.html"
-                        title="next chapter">sbp.tracking module</a></p>
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.system.html" title="previous chapter">sbp.system module</a></li>
+      <li>Next: <a href="sbp.tracking.html" title="next chapter">sbp.tracking module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -111,9 +98,6 @@ constructors.</dd>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -124,12 +108,12 @@ constructors.</dd>
       &copy;2015, Swift Navigation.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
       |
       <a href="_sources/sbp.table.txt"
-          rel="nofollow">Page source</a></li>
+          rel="nofollow">Page source</a>
     </div>
 
     

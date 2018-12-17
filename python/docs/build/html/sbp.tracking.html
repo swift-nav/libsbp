@@ -25,32 +25,15 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="sbp 0.27 documentation" href="index.html" />
-    <link rel="next" title="sbp.utils module" href="sbp.utils.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
+    <link rel="next" title="sbp.user module" href="sbp.user.html" />
     <link rel="prev" title="sbp.table module" href="sbp.table.html" />
    
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="sbp.utils.html" title="sbp.utils module"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="sbp.table.html" title="sbp.table module"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
@@ -61,124 +44,265 @@
 <span id="sbp-tracking-module"></span><h1>sbp.tracking module<a class="headerlink" href="#module-sbp.tracking" title="Permalink to this headline">¶</a></h1>
 <p>Satellite code and carrier-phase tracking messages from the device.</p>
 <dl class="class">
-<dt id="sbp.tracking.MsgEphemeris">
-<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgEphemeris</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_EPHEMERIS (0x001A).</p>
+<dt id="sbp.tracking.MeasurementState">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MeasurementState</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MeasurementState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MeasurementState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>MeasurementState.</p>
 <blockquote>
-<div><p>You can have MSG_EPHEMERIS inherent its fields directly
-from an inherited SBP object, or construct it inline using a dict
-of its fields.</p>
-<p>The ephemeris message returns a set of satellite orbit</p>
-</div></blockquote>
-<p>parameters that is used to calculate GPS satellite position,
-velocity, and clock offset (WGS84). Please see the Navstar GPS
-Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-20-III) for more details.</p>
+<div>Measurement Engine tracking channel state for a specific satellite signal</div></blockquote>
+<p>and measured signal power. 
+The mesid field for Glonass can either 
+carry the FCN as 100 + FCN where FCN is in [-7, +6] or 
+the Slot ID (from 1 to 28)</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>tgd <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Group delay differential between L1 and L2</dd>
-<dt>crs <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Amplitude of the sine harmonic correction term to the orbit radius</dd>
-<dt>crc <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Amplitude of the cosine harmonic correction term to the orbit radius</dd>
-<dt>cuc <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Amplitude of the cosine harmonic correction term to the argument of latitude</dd>
-<dt>cus <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Amplitude of the sine harmonic correction term to the argument of latitude</dd>
-<dt>cic <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Amplitude of the cosine harmonic correction term to the angle of inclination</dd>
-<dt>cis <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Amplitude of the sine harmonic correction term to the angle of inclination</dd>
-<dt>dn <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Mean motion difference</dd>
-<dt>m0 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Mean anomaly at reference time</dd>
-<dt>ecc <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Eccentricity of satellite orbit</dd>
-<dt>sqrta <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Square root of the semi-major axis of orbit</dd>
-<dt>omega0 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Longitude of ascending node of orbit plane at weekly epoch</dd>
-<dt>omegadot <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Rate of right ascension</dd>
-<dt>w <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Argument of perigee</dd>
-<dt>inc <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Inclination</dd>
-<dt>inc_dot <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Inclination first derivative</dd>
-<dt>af0 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Polynomial clock correction coefficient (clock bias)</dd>
-<dt>af1 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Polynomial clock correction coefficient (clock drift)</dd>
-<dt>af2 <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Polynomial clock correction coefficient (rate of clock drift)</dd>
-<dt>toe_tow <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Time of week</dd>
-<dt>toe_wn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Week number</dd>
-<dt>toc_tow <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Clock reference time of week</dd>
-<dt>toc_wn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Clock reference week number</dd>
-<dt>valid <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Is valid?</dd>
-<dt>healthy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Satellite is healthy?</dd>
-<dt>prn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>PRN being tracked</dd>
+<dt>mesid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT)</dd>
+<dt>cn0</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Carrier-to-Noise density.  Zero implies invalid cn0.</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.tracking.MeasurementState.cn0">
+<code class="descname">cn0</code><a class="headerlink" href="#sbp.tracking.MeasurementState.cn0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MeasurementState.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MeasurementState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MeasurementState.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MeasurementState.mesid">
+<code class="descname">mesid</code><a class="headerlink" href="#sbp.tracking.MeasurementState.mesid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MeasurementState.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MeasurementState.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MeasurementState.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.MsgMeasurementState">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgMeasurementState</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgMeasurementState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgMeasurementState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_MEASUREMENT_STATE (0x0061).</p>
+<blockquote>
+<div><p>You can have MSG_MEASUREMENT_STATE inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The tracking message returns a variable-length array of tracking</p>
+</div></blockquote>
+<p>channel states. It reports status and carrier-to-noise density
+measurements for all tracked satellites.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>states</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>ME signal tracking channel state</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
-<dt id="sbp.tracking.MsgEphemeris.from_binary">
-<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris.from_binary" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.tracking.MsgMeasurementState.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgMeasurementState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgMeasurementState.from_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a binary payload d, update the appropriate payload fields of
 the message.</p>
 </dd></dl>
 
 <dl class="staticmethod">
-<dt id="sbp.tracking.MsgEphemeris.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<dt id="sbp.tracking.MsgMeasurementState.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgMeasurementState.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgMeasurementState.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
 
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgMeasurementState.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgMeasurementState.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgMeasurementState.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgMeasurementState.states">
+<code class="descname">states</code><a class="headerlink" href="#sbp.tracking.MsgMeasurementState.states" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
-<dt id="sbp.tracking.MsgEphemeris.to_binary">
-<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris.to_binary" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.tracking.MsgMeasurementState.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgMeasurementState.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgMeasurementState.to_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Produce a framed/packed SBP message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.tracking.MsgEphemeris.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgEphemeris.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgEphemeris.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.tracking.MsgMeasurementState.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgMeasurementState.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgMeasurementState.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.MsgTrackingIq">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgTrackingIq</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingIq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingIq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_TRACKING_IQ (0x002C).</p>
+<blockquote>
+<div><p>You can have MSG_TRACKING_IQ inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>When enabled, a tracking channel can output the correlations at each</p>
+</div></blockquote>
+<p>update interval.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>channel</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Tracking channel of origin</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>GNSS signal identifier</dd>
+<dt>corrs</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Early, Prompt and Late correlations</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingIq.channel">
+<code class="descname">channel</code><a class="headerlink" href="#sbp.tracking.MsgTrackingIq.channel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingIq.corrs">
+<code class="descname">corrs</code><a class="headerlink" href="#sbp.tracking.MsgTrackingIq.corrs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingIq.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingIq.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingIq.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingIq.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingIq.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingIq.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingIq.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingIq.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingIq.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingIq.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.tracking.MsgTrackingIq.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingIq.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingIq.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingIq.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingIq.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingIq.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingIq.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.MsgTrackingIqDep">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgTrackingIqDep</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingIqDep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingIqDep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_TRACKING_IQ_DEP (0x001C).</p>
+<p>You can have MSG_TRACKING_IQ_DEP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>channel</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Tracking channel of origin</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignalDep</span><dd>GNSS signal identifier</dd>
+<dt>corrs</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Early, Prompt and Late correlations</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingIqDep.channel">
+<code class="descname">channel</code><a class="headerlink" href="#sbp.tracking.MsgTrackingIqDep.channel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingIqDep.corrs">
+<code class="descname">corrs</code><a class="headerlink" href="#sbp.tracking.MsgTrackingIqDep.corrs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingIqDep.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingIqDep.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingIqDep.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingIqDep.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingIqDep.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingIqDep.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingIqDep.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingIqDep.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingIqDep.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingIqDep.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.tracking.MsgTrackingIqDep.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingIqDep.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingIqDep.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingIqDep.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingIqDep.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingIqDep.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingIqDep.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.tracking.MsgTrackingState">
 <em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgTrackingState</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_TRACKING_STATE (0x0016).</p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_TRACKING_STATE (0x0041).</p>
 <blockquote>
-<div><p>You can have MSG_TRACKING_STATE inherent its fields directly
+<div><p>You can have MSG_TRACKING_STATE inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The tracking message returns a variable-length array of tracking</p>
 </div></blockquote>
-<p>channel states. It reports status and snr power measurements for
-all tracked satellites.</p>
+<p>channel states. It reports status and carrier-to-noise density
+measurements for all tracked satellites.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>states <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
-<dd>Satellite tracking channel state</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>states</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Signal tracking channel state</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
@@ -190,9 +314,19 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.tracking.MsgTrackingState.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingState.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingState.states">
+<code class="descname">states</code><a class="headerlink" href="#sbp.tracking.MsgTrackingState.states" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.tracking.MsgTrackingState.to_binary">
@@ -201,39 +335,730 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.tracking.MsgTrackingState.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.tracking.MsgTrackingState.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingState.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingState.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.MsgTrackingStateDepA">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgTrackingStateDepA</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_TRACKING_STATE_DEP_A (0x0016).</p>
+<p>You can have MSG_TRACKING_STATE_DEP_A inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>states</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Satellite tracking channel state</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingStateDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingStateDepA.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDepA.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepA.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingStateDepA.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDepA.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepA.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDepA.states">
+<code class="descname">states</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepA.states" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingStateDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingStateDepA.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDepA.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepA.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.MsgTrackingStateDepB">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgTrackingStateDepB</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDepB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_TRACKING_STATE_DEP_B (0x0013).</p>
+<p>You can have MSG_TRACKING_STATE_DEP_B inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>states</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Signal tracking channel state</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingStateDepB.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDepB.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepB.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingStateDepB.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDepB.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepB.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingStateDepB.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDepB.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepB.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDepB.states">
+<code class="descname">states</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepB.states" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingStateDepB.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDepB.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepB.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingStateDepB.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDepB.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDepB.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgTrackingStateDetailedDep</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDetailedDep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_TRACKING_STATE_DETAILED_DEP (0x0011).</p>
+<blockquote>
+<div><p>You can have MSG_TRACKING_STATE_DETAILED_DEP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>recv_time</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Receiver clock time.</dd>
+<dt>tot</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GPSTimeDep</span><dd>Time of transmission of signal from satellite. TOW only valid when</dd>
+</dl>
+</div></blockquote>
+<p>TOW status is decoded or propagated. WN only valid when week
+number valid flag is set.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>P</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Pseudorange observation. Valid only when pseudorange valid flag is</dd>
+</dl>
+</div></blockquote>
+<p>set.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>P_std</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Pseudorange observation standard deviation. Valid only when</dd>
+</dl>
+</div></blockquote>
+<p>pseudorange valid flag is set.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>L</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">CarrierPhase</span><dd>Carrier phase observation with typical sign convention. Valid only</dd>
+</dl>
+</div></blockquote>
+<p>when PLL pessimistic lock is achieved.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>cn0</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Carrier-to-Noise density</dd>
+<dt>lock</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Lock time. It is encoded according to DF402 from the RTCM 10403.2</dd>
+</dl>
+</div></blockquote>
+<p>Amendment 2 specification. Valid values range from 0 to 15.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignalDep</span><dd>GNSS signal identifier.</dd>
+<dt>doppler</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Carrier Doppler frequency.</dd>
+<dt>doppler_std</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Carrier Doppler frequency standard deviation.</dd>
+<dt>uptime</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of seconds of continuous tracking. Specifies how much time</dd>
+</dl>
+</div></blockquote>
+<p>signal is in continuous track.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>clock_offset</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>TCXO clock offset. Valid only when valid clock valid flag is set.</dd>
+<dt>clock_drift</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>TCXO clock drift. Valid only when valid clock valid flag is set.</dd>
+<dt>corr_spacing</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.</dd>
+<dt>acceleration</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Acceleration. Valid only when acceleration valid flag is set.</dd>
+<dt>sync_flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Synchronization status flags.</dd>
+<dt>tow_flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>TOW status flags.</dd>
+<dt>track_flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Tracking loop status flags.</dd>
+<dt>nav_flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Navigation data status flags.</dd>
+<dt>pset_flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Parameters sets flags.</dd>
+<dt>misc_flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Miscellaneous flags.</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.L">
+<code class="descname">L</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.L" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.P">
+<code class="descname">P</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.P" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.P_std">
+<code class="descname">P_std</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.P_std" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.acceleration">
+<code class="descname">acceleration</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.acceleration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.clock_drift">
+<code class="descname">clock_drift</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.clock_drift" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.clock_offset">
+<code class="descname">clock_offset</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.clock_offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.cn0">
+<code class="descname">cn0</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.cn0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.corr_spacing">
+<code class="descname">corr_spacing</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.corr_spacing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.doppler">
+<code class="descname">doppler</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.doppler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.doppler_std">
+<code class="descname">doppler_std</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.doppler_std" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDetailedDep.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDetailedDep.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDetailedDep.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.lock">
+<code class="descname">lock</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.lock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.misc_flags">
+<code class="descname">misc_flags</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.misc_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.nav_flags">
+<code class="descname">nav_flags</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.nav_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.pset_flags">
+<code class="descname">pset_flags</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.pset_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.recv_time">
+<code class="descname">recv_time</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.recv_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.sync_flags">
+<code class="descname">sync_flags</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.sync_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDetailedDep.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDetailedDep.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.tot">
+<code class="descname">tot</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.tot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.tow_flags">
+<code class="descname">tow_flags</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.tow_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.track_flags">
+<code class="descname">track_flags</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.track_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDep.uptime">
+<code class="descname">uptime</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDep.uptime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">MsgTrackingStateDetailedDepA</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDetailedDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_TRACKING_STATE_DETAILED_DEP_A (0x0021).</p>
+<blockquote>
+<div><p>You can have MSG_TRACKING_STATE_DETAILED_DEP_A inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The tracking message returns a set tracking channel parameters for a</p>
+</div></blockquote>
+<p>single tracking channel useful for debugging issues.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>recv_time</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Receiver clock time.</dd>
+<dt>tot</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GPSTime</span><dd>Time of transmission of signal from satellite. TOW only valid when</dd>
+</dl>
+</div></blockquote>
+<p>TOW status is decoded or propagated. WN only valid when week
+number valid flag is set.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>P</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Pseudorange observation. Valid only when pseudorange valid flag is</dd>
+</dl>
+</div></blockquote>
+<p>set.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>P_std</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Pseudorange observation standard deviation. Valid only when</dd>
+</dl>
+</div></blockquote>
+<p>pseudorange valid flag is set.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>L</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">CarrierPhase</span><dd>Carrier phase observation with typical sign convention. Valid only</dd>
+</dl>
+</div></blockquote>
+<p>when PLL pessimistic lock is achieved.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>cn0</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Carrier-to-Noise density</dd>
+<dt>lock</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Lock time. It is encoded according to DF402 from the RTCM 10403.2</dd>
+</dl>
+</div></blockquote>
+<p>Amendment 2 specification. Valid values range from 0 to 15.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>GNSS signal identifier.</dd>
+<dt>doppler</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Carrier Doppler frequency.</dd>
+<dt>doppler_std</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Carrier Doppler frequency standard deviation.</dd>
+<dt>uptime</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of seconds of continuous tracking. Specifies how much time</dd>
+</dl>
+</div></blockquote>
+<p>signal is in continuous track.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>clock_offset</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>TCXO clock offset. Valid only when valid clock valid flag is set.</dd>
+<dt>clock_drift</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>TCXO clock drift. Valid only when valid clock valid flag is set.</dd>
+<dt>corr_spacing</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.</dd>
+<dt>acceleration</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Acceleration. Valid only when acceleration valid flag is set.</dd>
+<dt>sync_flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Synchronization status flags.</dd>
+<dt>tow_flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>TOW status flags.</dd>
+<dt>track_flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Tracking loop status flags.</dd>
+<dt>nav_flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Navigation data status flags.</dd>
+<dt>pset_flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Parameters sets flags.</dd>
+<dt>misc_flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Miscellaneous flags.</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.L">
+<code class="descname">L</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.L" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.P">
+<code class="descname">P</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.P" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.P_std">
+<code class="descname">P_std</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.P_std" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.acceleration">
+<code class="descname">acceleration</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.acceleration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.clock_drift">
+<code class="descname">clock_drift</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.clock_drift" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.clock_offset">
+<code class="descname">clock_offset</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.clock_offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.cn0">
+<code class="descname">cn0</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.cn0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.corr_spacing">
+<code class="descname">corr_spacing</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.corr_spacing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.doppler">
+<code class="descname">doppler</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.doppler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.doppler_std">
+<code class="descname">doppler_std</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.doppler_std" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDetailedDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDetailedDepA.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDetailedDepA.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.lock">
+<code class="descname">lock</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.lock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.misc_flags">
+<code class="descname">misc_flags</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.misc_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.nav_flags">
+<code class="descname">nav_flags</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.nav_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.pset_flags">
+<code class="descname">pset_flags</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.pset_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.recv_time">
+<code class="descname">recv_time</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.recv_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.sync_flags">
+<code class="descname">sync_flags</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.sync_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDetailedDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#MsgTrackingStateDetailedDepA.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.tot">
+<code class="descname">tot</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.tot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.tow_flags">
+<code class="descname">tow_flags</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.tow_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.track_flags">
+<code class="descname">track_flags</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.track_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.MsgTrackingStateDetailedDepA.uptime">
+<code class="descname">uptime</code><a class="headerlink" href="#sbp.tracking.MsgTrackingStateDetailedDepA.uptime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.TrackingChannelCorrelation">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">TrackingChannelCorrelation</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelCorrelation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelCorrelation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>TrackingChannelCorrelation.</p>
+<p>Structure containing in-phase and quadrature correlation components.</p>
+<dl class="docutils">
+<dt>I</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>In-phase correlation</dd>
+<dt>Q</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Quadrature correlation</dd>
+</dl>
+<dl class="attribute">
+<dt id="sbp.tracking.TrackingChannelCorrelation.I">
+<code class="descname">I</code><a class="headerlink" href="#sbp.tracking.TrackingChannelCorrelation.I" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.TrackingChannelCorrelation.Q">
+<code class="descname">Q</code><a class="headerlink" href="#sbp.tracking.TrackingChannelCorrelation.Q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.TrackingChannelCorrelation.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelCorrelation.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelCorrelation.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.TrackingChannelCorrelation.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelCorrelation.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelCorrelation.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.tracking.TrackingChannelState">
-<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">TrackingChannelState</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelState" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">TrackingChannelState</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <p>TrackingChannelState.</p>
 <blockquote>
-<div>Tracking channel state for a specific satellite PRN and measured</div></blockquote>
-<p>signal power.</p>
+<div>Tracking channel state for a specific satellite signal and</div></blockquote>
+<p>measured signal power.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>state <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Status of tracking channel</dd>
-<dt>prn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>PRN-1 being tracked</dd>
-<dt>cn0 <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>Carrier-to-noise density</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>GNSS signal being tracked</dd>
+<dt>fcn</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Frequency channel number (GLONASS only)</dd>
+<dt>cn0</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Carrier-to-Noise density.  Zero implies invalid cn0.</dd>
 </dl>
 </div></blockquote>
+<dl class="attribute">
+<dt id="sbp.tracking.TrackingChannelState.cn0">
+<code class="descname">cn0</code><a class="headerlink" href="#sbp.tracking.TrackingChannelState.cn0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.TrackingChannelState.fcn">
+<code class="descname">fcn</code><a class="headerlink" href="#sbp.tracking.TrackingChannelState.fcn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.tracking.TrackingChannelState.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelState.from_binary" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="attribute">
+<dt id="sbp.tracking.TrackingChannelState.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.tracking.TrackingChannelState.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.tracking.TrackingChannelState.to_binary">
 <code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelState.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelState.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.TrackingChannelStateDepA">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">TrackingChannelStateDepA</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelStateDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelStateDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>TrackingChannelStateDepA.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>state</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status of tracking channel</dd>
+<dt>prn</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>PRN-1 being tracked</dd>
+<dt>cn0</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Carrier-to-noise density</dd>
+</dl>
+<dl class="attribute">
+<dt id="sbp.tracking.TrackingChannelStateDepA.cn0">
+<code class="descname">cn0</code><a class="headerlink" href="#sbp.tracking.TrackingChannelStateDepA.cn0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.TrackingChannelStateDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelStateDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelStateDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.TrackingChannelStateDepA.prn">
+<code class="descname">prn</code><a class="headerlink" href="#sbp.tracking.TrackingChannelStateDepA.prn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.TrackingChannelStateDepA.state">
+<code class="descname">state</code><a class="headerlink" href="#sbp.tracking.TrackingChannelStateDepA.state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.TrackingChannelStateDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelStateDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelStateDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.tracking.TrackingChannelStateDepB">
+<em class="property">class </em><code class="descclassname">sbp.tracking.</code><code class="descname">TrackingChannelStateDepB</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelStateDepB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelStateDepB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>TrackingChannelStateDepB.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>state</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status of tracking channel</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignalDep</span><dd>GNSS signal being tracked</dd>
+<dt>cn0</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Carrier-to-noise density</dd>
+</dl>
+<dl class="attribute">
+<dt id="sbp.tracking.TrackingChannelStateDepB.cn0">
+<code class="descname">cn0</code><a class="headerlink" href="#sbp.tracking.TrackingChannelStateDepB.cn0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.TrackingChannelStateDepB.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelStateDepB.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelStateDepB.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.TrackingChannelStateDepB.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.tracking.TrackingChannelStateDepB.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.tracking.TrackingChannelStateDepB.state">
+<code class="descname">state</code><a class="headerlink" href="#sbp.tracking.TrackingChannelStateDepB.state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.tracking.TrackingChannelStateDepB.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/tracking.html#TrackingChannelStateDepB.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.tracking.TrackingChannelStateDepB.to_binary" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -245,13 +1070,17 @@ the message.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="sbp.table.html"
-                        title="previous chapter">sbp.table module</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="sbp.utils.html"
-                        title="next chapter">sbp.utils module</a></p>
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.table.html" title="previous chapter">sbp.table module</a></li>
+      <li>Next: <a href="sbp.user.html" title="next chapter">sbp.user module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -267,9 +1096,6 @@ the message.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -280,12 +1106,12 @@ the message.</p>
       &copy;2015, Swift Navigation.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
       |
       <a href="_sources/sbp.tracking.txt"
-          rel="nofollow">Page source</a></li>
+          rel="nofollow">Page source</a>
     </div>
 
     

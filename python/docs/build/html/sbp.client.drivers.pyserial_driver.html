@@ -26,34 +26,14 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="sbp 0.27 documentation" href="index.html" />
     <link rel="up" title="sbp.client.drivers package" href="sbp.client.drivers.html" />
-    <link rel="next" title="sbp.client.examples package" href="sbp.client.examples.html" />
+    <link rel="next" title="sbp.client.loggers package" href="sbp.client.loggers.html" />
     <link rel="prev" title="sbp.client.drivers.pyftdi_driver module" href="sbp.client.drivers.pyftdi_driver.html" />
    
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="sbp.client.examples.html" title="sbp.client.examples package"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="sbp.client.drivers.pyftdi_driver.html" title="sbp.client.drivers.pyftdi_driver module"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="sbp.client.html" >sbp.client package</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="sbp.client.drivers.html" accesskey="U">sbp.client.drivers package</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
@@ -64,23 +44,40 @@
 <span id="sbp-client-drivers-pyserial-driver-module"></span><h1>sbp.client.drivers.pyserial_driver module<a class="headerlink" href="#module-sbp.client.drivers.pyserial_driver" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="sbp.client.drivers.pyserial_driver.PySerialDriver">
-<em class="property">class </em><code class="descclassname">sbp.client.drivers.pyserial_driver.</code><code class="descname">PySerialDriver</code><span class="sig-paren">(</span><em>port</em>, <em>baud</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/pyserial_driver.html#PySerialDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.pyserial_driver.PySerialDriver" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">sbp.client.drivers.pyserial_driver.</code><code class="descname">PySerialDriver</code><span class="sig-paren">(</span><em>port</em>, <em>baud=115200</em>, <em>rtscts=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/pyserial_driver.html#PySerialDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.pyserial_driver.PySerialDriver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="sbp.client.drivers.base_driver.html#sbp.client.drivers.base_driver.BaseDriver" title="sbp.client.drivers.base_driver.BaseDriver"><code class="xref py py-class docutils literal"><span class="pre">sbp.client.drivers.base_driver.BaseDriver</span></code></a></p>
 <p>The <a class="reference internal" href="#sbp.client.drivers.pyserial_driver.PySerialDriver" title="sbp.client.drivers.pyserial_driver.PySerialDriver"><code class="xref py py-class docutils literal"><span class="pre">PySerialDriver</span></code></a> class reads SBP messages from a serial port
-using the pyserial driver.</p>
+using the pyserial driver.  This is mostly redundant, is the Serial object&#8217;s
+read and write methods can be used directly.</p>
 <dl class="docutils">
-<dt>port <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>Path to port to read SBP messages from.</dd>
-<dt>baud <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Baud rate of serial port.</dd>
+<dt>port</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>URI to port to read SBP messages from. Accepts the following types
+of URLs:
+- rfc2217://&lt;host&gt;:&lt;port&gt;[/&lt;option&gt;[/&lt;option&gt;]]
+- socket://&lt;host&gt;:&lt;port&gt;[/&lt;option&gt;[/&lt;option&gt;]]
+- loop://[&lt;option&gt;[/&lt;option&gt;]]
+and device names, such as /dev/ttyUSB0 (Linux) and COM3 (Windows). See
+http://pyserial.sourceforge.net/pyserial_api.html#urls for more details.</dd>
+<dt>baud</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baud rate of serial port (defaults to 115200)</dd>
 </dl>
 <dl class="method">
 <dt id="sbp.client.drivers.pyserial_driver.PySerialDriver.read">
 <code class="descname">read</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/pyserial_driver.html#PySerialDriver.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.pyserial_driver.PySerialDriver.read" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read wrapper.</p>
 <dl class="docutils">
-<dt>size <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of bytes to read.</dd>
+<dt>size</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of bytes to read.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.pyserial_driver.PySerialDriver.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/pyserial_driver.html#PySerialDriver.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.pyserial_driver.PySerialDriver.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write wrapper.</p>
+<dl class="docutils">
+<dt>s</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">bytes</span><dd>Bytes to write</dd>
 </dl>
 </dd></dl>
 
@@ -93,13 +90,21 @@ using the pyserial driver.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="sbp.client.drivers.pyftdi_driver.html"
-                        title="previous chapter">sbp.client.drivers.pyftdi_driver module</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="sbp.client.examples.html"
-                        title="next chapter">sbp.client.examples package</a></p>
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+  <li><a href="sbp.client.html">sbp.client package</a><ul>
+  <li><a href="sbp.client.drivers.html">sbp.client.drivers package</a><ul>
+      <li>Previous: <a href="sbp.client.drivers.pyftdi_driver.html" title="previous chapter">sbp.client.drivers.pyftdi_driver module</a></li>
+      <li>Next: <a href="sbp.client.loggers.html" title="next chapter">sbp.client.loggers package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -115,9 +120,6 @@ using the pyserial driver.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -128,12 +130,12 @@ using the pyserial driver.</p>
       &copy;2015, Swift Navigation.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
       |
       <a href="_sources/sbp.client.drivers.pyserial_driver.txt"
-          rel="nofollow">Page source</a></li>
+          rel="nofollow">Page source</a>
     </div>
 
     

@@ -25,32 +25,15 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="sbp 0.27 documentation" href="index.html" />
-    <link rel="next" title="sbp.observation module" href="sbp.observation.html" />
-    <link rel="prev" title="sbp.logging module" href="sbp.logging.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
+    <link rel="next" title="sbp.ndb module" href="sbp.ndb.html" />
+    <link rel="prev" title="sbp.msg module" href="sbp.msg.html" />
    
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="sbp.observation.html" title="sbp.observation module"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="sbp.logging.html" title="sbp.logging module"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
@@ -69,13 +52,83 @@ solution, which can use either a fixed/integer or floating carrier
 phase ambiguity. The pseudo-absolute position solution uses a
 user-provided, well-surveyed base station position (if available)
 and the RTK solution in tandem.</p>
+<p>When the inertial navigation mode indicates that the IMU is used,
+all messages are reported in the vehicle body frame as defined by
+device settings.  By default, the vehicle body frame is configured to be
+coincident with the antenna phase center.  When there is no inertial
+navigation, the solution will be reported at the phase center of the antenna.</p>
+<dl class="class">
+<dt id="sbp.navigation.MsgAgeCorrections">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgAgeCorrections</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgAgeCorrections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgAgeCorrections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_AGE_CORRECTIONS (0x0210).</p>
+<blockquote>
+<div><p>You can have MSG_AGE_CORRECTIONS inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the Age of the corrections used for the current</p>
+</div></blockquote>
+<p>Differential solution</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>age</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Age of the corrections (0xFFFF indicates invalid)</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgAgeCorrections.age">
+<code class="descname">age</code><a class="headerlink" href="#sbp.navigation.MsgAgeCorrections.age" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgAgeCorrections.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgAgeCorrections.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgAgeCorrections.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgAgeCorrections.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgAgeCorrections.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgAgeCorrections.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgAgeCorrections.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgAgeCorrections.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgAgeCorrections.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgAgeCorrections.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgAgeCorrections.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgAgeCorrections.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgAgeCorrections.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgAgeCorrections.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgAgeCorrections.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgAgeCorrections.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgAgeCorrections.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="class">
 <dt id="sbp.navigation.MsgBaselineECEF">
 <em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgBaselineECEF</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_BASELINE_ECEF (0x0202).</p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_BASELINE_ECEF (0x020B).</p>
 <blockquote>
-<div><p>You can have MSG_BASELINE_ECEF inherent its fields directly
+<div><p>You can have MSG_BASELINE_ECEF inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message reports the baseline solution in Earth Centered</p>
@@ -86,29 +139,36 @@ full GPS time is given by the preceding MSG_GPS_TIME with the
 matching time-of-week (tow).</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>GPS Time of Week</dd>
-<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Baseline ECEF X coordinate</dd>
-<dt>y <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Baseline ECEF Y coordinate</dd>
-<dt>z <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Baseline ECEF Z coordinate</dd>
-<dt>accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Position accuracy estimate (not implemented). Defaults</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baseline ECEF X coordinate</dd>
+<dt>y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baseline ECEF Y coordinate</dd>
+<dt>z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baseline ECEF Z coordinate</dd>
+<dt>accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Position estimated standard deviation</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
-<p>to 0.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of satellites used in solution</dd>
-<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Status flags</dd>
-</dl>
-</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEF.accuracy">
+<code class="descname">accuracy</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEF.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.navigation.MsgBaselineECEF.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEF.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -118,9 +178,19 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.navigation.MsgBaselineECEF.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEF.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEF.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgBaselineECEF.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEF.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEF.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.navigation.MsgBaselineECEF.to_binary">
@@ -129,61 +199,270 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.navigation.MsgBaselineECEF.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEF.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.navigation.MsgBaselineECEF.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEF.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEF.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEF.x">
+<code class="descname">x</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEF.y">
+<code class="descname">y</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEF.z">
+<code class="descname">z</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEF.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgBaselineECEFDepA">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgBaselineECEFDepA</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEFDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEFDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_BASELINE_ECEF_DEP_A (0x0202).</p>
+<blockquote>
+<div><p>You can have MSG_BASELINE_ECEF_DEP_A inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the baseline solution in Earth Centered</p>
+</div></blockquote>
+<p>Earth Fixed (ECEF) coordinates. This baseline is the relative
+vector distance from the base station to the rover receiver. The
+full GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baseline ECEF X coordinate</dd>
+<dt>y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baseline ECEF Y coordinate</dd>
+<dt>z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baseline ECEF Z coordinate</dd>
+<dt>accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Position accuracy estimate</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEFDepA.accuracy">
+<code class="descname">accuracy</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEFDepA.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEFDepA.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEFDepA.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgBaselineECEFDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEFDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEFDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgBaselineECEFDepA.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEFDepA.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEFDepA.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgBaselineECEFDepA.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEFDepA.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEFDepA.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEFDepA.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEFDepA.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgBaselineECEFDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEFDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEFDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgBaselineECEFDepA.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineECEFDepA.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineECEFDepA.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEFDepA.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEFDepA.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEFDepA.x">
+<code class="descname">x</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEFDepA.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEFDepA.y">
+<code class="descname">y</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEFDepA.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineECEFDepA.z">
+<code class="descname">z</code><a class="headerlink" href="#sbp.navigation.MsgBaselineECEFDepA.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgBaselineHeadingDepA">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgBaselineHeadingDepA</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineHeadingDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineHeadingDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_BASELINE_HEADING_DEP_A (0x0207).</p>
+<blockquote>
+<div><p>You can have MSG_BASELINE_HEADING_DEP_A inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the baseline heading pointing from the base station</p>
+</div></blockquote>
+<p>to the rover relative to True North. The full GPS time is given by the
+preceding MSG_GPS_TIME with the matching time-of-week (tow).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>heading</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Heading</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineHeadingDepA.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgBaselineHeadingDepA.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgBaselineHeadingDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineHeadingDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineHeadingDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgBaselineHeadingDepA.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineHeadingDepA.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineHeadingDepA.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgBaselineHeadingDepA.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineHeadingDepA.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineHeadingDepA.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineHeadingDepA.heading">
+<code class="descname">heading</code><a class="headerlink" href="#sbp.navigation.MsgBaselineHeadingDepA.heading" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineHeadingDepA.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgBaselineHeadingDepA.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgBaselineHeadingDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineHeadingDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineHeadingDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgBaselineHeadingDepA.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineHeadingDepA.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineHeadingDepA.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineHeadingDepA.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgBaselineHeadingDepA.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.navigation.MsgBaselineNED">
 <em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgBaselineNED</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNED"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNED" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_BASELINE_NED (0x0203).</p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_BASELINE_NED (0x020C).</p>
 <blockquote>
-<div><p>You can have MSG_BASELINE_NED inherent its fields directly
+<div><p>You can have MSG_BASELINE_NED inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message reports the baseline solution in North East Down</p>
 </div></blockquote>
 <p>(NED) coordinates. This baseline is the relative vector distance
 from the base station to the rover receiver, and NED coordinate
-system is defined at the local tangent plane centered at the
+system is defined at the local WGS84 tangent plane centered at the
 base station position.  The full GPS time is given by the
 preceding MSG_GPS_TIME with the matching time-of-week (tow).</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>GPS Time of Week</dd>
-<dt>n <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Baseline North coordinate</dd>
-<dt>e <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Baseline East coordinate</dd>
-<dt>d <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Baseline Down coordinate</dd>
-<dt>h_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Horizontal position accuracy estimate (not</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>n</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baseline North coordinate</dd>
+<dt>e</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baseline East coordinate</dd>
+<dt>d</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baseline Down coordinate</dd>
+<dt>h_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Horizontal position estimated standard deviation</dd>
+<dt>v_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Vertical position estimated standard deviation</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
-<p>implemented). Defaults to 0.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>v_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Vertical position accuracy estimate (not</dd>
-</dl>
-</div></blockquote>
-<p>implemented). Defaults to 0.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of satellites used in solution</dd>
-<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Status flags</dd>
-</dl>
-</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNED.d">
+<code class="descname">d</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNED.e">
+<code class="descname">e</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.e" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNED.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.navigation.MsgBaselineNED.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNED.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -193,9 +472,29 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.navigation.MsgBaselineNED.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNED.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNED.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgBaselineNED.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNED.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNED.h_accuracy">
+<code class="descname">h_accuracy</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.h_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNED.n">
+<code class="descname">n</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.n" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNED.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.navigation.MsgBaselineNED.to_binary">
@@ -204,44 +503,184 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.navigation.MsgBaselineNED.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNED.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.navigation.MsgBaselineNED.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNED.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNED.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNED.v_accuracy">
+<code class="descname">v_accuracy</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNED.v_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgBaselineNEDDepA">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgBaselineNEDDepA</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNEDDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_BASELINE_NED_DEP_A (0x0203).</p>
+<blockquote>
+<div><p>You can have MSG_BASELINE_NED_DEP_A inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the baseline solution in North East Down</p>
+</div></blockquote>
+<p>(NED) coordinates. This baseline is the relative vector distance
+from the base station to the rover receiver, and NED coordinate
+system is defined at the local WGS84 tangent plane centered at the
+base station position.  The full GPS time is given by the
+preceding MSG_GPS_TIME with the matching time-of-week (tow).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>n</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baseline North coordinate</dd>
+<dt>e</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baseline East coordinate</dd>
+<dt>d</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Baseline Down coordinate</dd>
+<dt>h_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Horizontal position accuracy estimate (not</dd>
+</dl>
+</div></blockquote>
+<p>implemented). Defaults to 0.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>v_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Vertical position accuracy estimate (not</dd>
+</dl>
+</div></blockquote>
+<p>implemented). Defaults to 0.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNEDDepA.d">
+<code class="descname">d</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA.d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNEDDepA.e">
+<code class="descname">e</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA.e" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNEDDepA.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgBaselineNEDDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNEDDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgBaselineNEDDepA.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNEDDepA.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgBaselineNEDDepA.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNEDDepA.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNEDDepA.h_accuracy">
+<code class="descname">h_accuracy</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA.h_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNEDDepA.n">
+<code class="descname">n</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA.n" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNEDDepA.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgBaselineNEDDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNEDDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgBaselineNEDDepA.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgBaselineNEDDepA.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNEDDepA.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgBaselineNEDDepA.v_accuracy">
+<code class="descname">v_accuracy</code><a class="headerlink" href="#sbp.navigation.MsgBaselineNEDDepA.v_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.navigation.MsgDops">
 <em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgDops</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDops" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_DOPS (0x0206).</p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_DOPS (0x0208).</p>
 <blockquote>
-<div><p>You can have MSG_DOPS inherent its fields directly
+<div><p>You can have MSG_DOPS inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This dilution of precision (DOP) message describes the effect of</p>
 </div></blockquote>
 <p>navigation satellite geometry on positional measurement
-precision.</p>
+precision.  The flags field indicated whether the DOP reported
+corresponds to differential or SPP solution.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>GPS Time of Week</dd>
-<dt>gdop <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Geometric Dilution of Precision</dd>
-<dt>pdop <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Position Dilution of Precision</dd>
-<dt>tdop <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Time Dilution of Precision</dd>
-<dt>hdop <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Horizontal Dilution of Precision</dd>
-<dt>vdop <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Vertical Dilution of Precision</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>gdop</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Geometric Dilution of Precision</dd>
+<dt>pdop</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Position Dilution of Precision</dd>
+<dt>tdop</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Time Dilution of Precision</dd>
+<dt>hdop</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Horizontal Dilution of Precision</dd>
+<dt>vdop</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Vertical Dilution of Precision</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Indicates the position solution with which the DOPS message corresponds</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgDops.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgDops.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.navigation.MsgDops.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDops.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDops.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -251,9 +690,34 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.navigation.MsgDops.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDops.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDops.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDops.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDops.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgDops.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDops.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDops.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgDops.gdop">
+<code class="descname">gdop</code><a class="headerlink" href="#sbp.navigation.MsgDops.gdop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgDops.hdop">
+<code class="descname">hdop</code><a class="headerlink" href="#sbp.navigation.MsgDops.hdop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgDops.pdop">
+<code class="descname">pdop</code><a class="headerlink" href="#sbp.navigation.MsgDops.pdop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgDops.tdop">
+<code class="descname">tdop</code><a class="headerlink" href="#sbp.navigation.MsgDops.tdop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.navigation.MsgDops.to_binary">
@@ -262,20 +726,123 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.navigation.MsgDops.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDops.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDops.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.navigation.MsgDops.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDops.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDops.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgDops.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgDops.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgDops.vdop">
+<code class="descname">vdop</code><a class="headerlink" href="#sbp.navigation.MsgDops.vdop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgDopsDepA">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgDopsDepA</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDopsDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDopsDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_DOPS_DEP_A (0x0206).</p>
+<blockquote>
+<div><p>You can have MSG_DOPS_DEP_A inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This dilution of precision (DOP) message describes the effect of</p>
+</div></blockquote>
+<p>navigation satellite geometry on positional measurement
+precision.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>gdop</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Geometric Dilution of Precision</dd>
+<dt>pdop</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Position Dilution of Precision</dd>
+<dt>tdop</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Time Dilution of Precision</dd>
+<dt>hdop</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Horizontal Dilution of Precision</dd>
+<dt>vdop</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Vertical Dilution of Precision</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.navigation.MsgDopsDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDopsDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDopsDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgDopsDepA.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDopsDepA.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDopsDepA.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgDopsDepA.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDopsDepA.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDopsDepA.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgDopsDepA.gdop">
+<code class="descname">gdop</code><a class="headerlink" href="#sbp.navigation.MsgDopsDepA.gdop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgDopsDepA.hdop">
+<code class="descname">hdop</code><a class="headerlink" href="#sbp.navigation.MsgDopsDepA.hdop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgDopsDepA.pdop">
+<code class="descname">pdop</code><a class="headerlink" href="#sbp.navigation.MsgDopsDepA.pdop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgDopsDepA.tdop">
+<code class="descname">tdop</code><a class="headerlink" href="#sbp.navigation.MsgDopsDepA.tdop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgDopsDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDopsDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDopsDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgDopsDepA.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgDopsDepA.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgDopsDepA.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgDopsDepA.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgDopsDepA.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgDopsDepA.vdop">
+<code class="descname">vdop</code><a class="headerlink" href="#sbp.navigation.MsgDopsDepA.vdop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.navigation.MsgGPSTime">
 <em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgGPSTime</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTime" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_GPS_TIME (0x0100).</p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_GPS_TIME (0x0102).</p>
 <blockquote>
-<div><p>You can have MSG_GPS_TIME inherent its fields directly
+<div><p>You can have MSG_GPS_TIME inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message reports the GPS time, representing the time since</p>
@@ -293,23 +860,30 @@ set of other navigation messages referenced to the same time
 these messages.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>wn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>GPS week number</dd>
-<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>GPS time of week rounded to the nearest millisecond</dd>
-<dt>ns <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Nanosecond residual of millisecond-rounded TOW (ranges</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>wn</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS week number</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS time of week rounded to the nearest millisecond</dd>
+<dt>ns_residual</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Nanosecond residual of millisecond-rounded TOW (ranges</dd>
 </dl>
 </div></blockquote>
 <p>from -500000 to 500000)</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Status flags (reserved)</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags (reserved)</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgGPSTime.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgGPSTime.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.navigation.MsgGPSTime.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTime.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTime.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -319,9 +893,19 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.navigation.MsgGPSTime.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTime.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTime.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTime.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTime.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgGPSTime.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTime.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTime.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgGPSTime.ns_residual">
+<code class="descname">ns_residual</code><a class="headerlink" href="#sbp.navigation.MsgGPSTime.ns_residual" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.navigation.MsgGPSTime.to_binary">
@@ -330,20 +914,123 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.navigation.MsgGPSTime.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTime.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTime.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.navigation.MsgGPSTime.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTime.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTime.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgGPSTime.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgGPSTime.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgGPSTime.wn">
+<code class="descname">wn</code><a class="headerlink" href="#sbp.navigation.MsgGPSTime.wn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgGPSTimeDepA">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgGPSTimeDepA</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTimeDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTimeDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_GPS_TIME_DEP_A (0x0100).</p>
+<blockquote>
+<div><p>You can have MSG_GPS_TIME_DEP_A inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the GPS time, representing the time since</p>
+</div></blockquote>
+<p>the GPS epoch began on midnight January 6, 1980 UTC. GPS time
+counts the weeks and seconds of the week. The weeks begin at the
+Saturday/Sunday transition. GPS week 0 began at the beginning of
+the GPS time scale.</p>
+<p>Within each week number, the GPS time of the week is between
+between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
+does not accumulate leap seconds, and as of now, has a small
+offset from UTC. In a message stream, this message precedes a
+set of other navigation messages referenced to the same time
+(but lacking the ns field) and indicates a more precise time of
+these messages.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>wn</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS week number</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS time of week rounded to the nearest millisecond</dd>
+<dt>ns_residual</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Nanosecond residual of millisecond-rounded TOW (ranges</dd>
+</dl>
+</div></blockquote>
+<p>from -500000 to 500000)</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags (reserved)</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgGPSTimeDepA.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgGPSTimeDepA.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgGPSTimeDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTimeDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTimeDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgGPSTimeDepA.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTimeDepA.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTimeDepA.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgGPSTimeDepA.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTimeDepA.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTimeDepA.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgGPSTimeDepA.ns_residual">
+<code class="descname">ns_residual</code><a class="headerlink" href="#sbp.navigation.MsgGPSTimeDepA.ns_residual" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgGPSTimeDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTimeDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTimeDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgGPSTimeDepA.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgGPSTimeDepA.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgGPSTimeDepA.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgGPSTimeDepA.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgGPSTimeDepA.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgGPSTimeDepA.wn">
+<code class="descname">wn</code><a class="headerlink" href="#sbp.navigation.MsgGPSTimeDepA.wn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.navigation.MsgPosECEF">
 <em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgPosECEF</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEF" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_POS_ECEF (0x0200).</p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_POS_ECEF (0x0209).</p>
 <blockquote>
-<div><p>You can have MSG_POS_ECEF inherent its fields directly
+<div><p>You can have MSG_POS_ECEF inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The position solution message reports absolute Earth Centered</p>
@@ -357,29 +1044,36 @@ baseline vector. The full GPS time is given by the preceding
 MSG_GPS_TIME with the matching time-of-week (tow).</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>GPS Time of Week</dd>
-<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>ECEF X coordinate</dd>
-<dt>y <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>ECEF Y coordinate</dd>
-<dt>z <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>ECEF Z coordinate</dd>
-<dt>accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Position accuracy estimate (not implemented). Defaults</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>ECEF X coordinate</dd>
+<dt>y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>ECEF Y coordinate</dd>
+<dt>z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>ECEF Z coordinate</dd>
+<dt>accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Position estimated standard deviation</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
-<p>to 0.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of satellites used in solution</dd>
-<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Status flags</dd>
-</dl>
-</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEF.accuracy">
+<code class="descname">accuracy</code><a class="headerlink" href="#sbp.navigation.MsgPosECEF.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEF.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgPosECEF.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.navigation.MsgPosECEF.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEF.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEF.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -389,9 +1083,19 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.navigation.MsgPosECEF.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEF.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEF.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEF.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEF.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgPosECEF.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEF.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEF.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEF.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgPosECEF.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.navigation.MsgPosECEF.to_binary">
@@ -400,20 +1104,292 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.navigation.MsgPosECEF.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEF.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEF.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.navigation.MsgPosECEF.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEF.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEF.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEF.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgPosECEF.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEF.x">
+<code class="descname">x</code><a class="headerlink" href="#sbp.navigation.MsgPosECEF.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEF.y">
+<code class="descname">y</code><a class="headerlink" href="#sbp.navigation.MsgPosECEF.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEF.z">
+<code class="descname">z</code><a class="headerlink" href="#sbp.navigation.MsgPosECEF.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgPosECEFCov">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgPosECEFCov</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEFCov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_POS_ECEF_COV (0x0214).</p>
+<blockquote>
+<div><p>You can have MSG_POS_ECEF_COV inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The position solution message reports absolute Earth Centered</p>
+</div></blockquote>
+<p>Earth Fixed (ECEF) coordinates and the status (single point vs
+pseudo-absolute RTK) of the position solution. The message also
+reports the upper triangular portion of the 3x3 covariance matrix.
+If the receiver knows the surveyed position of the base station and has
+an RTK solution, this reports a pseudo-absolute position
+solution using the base station position and the rover&#8217;s RTK
+baseline vector. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>ECEF X coordinate</dd>
+<dt>y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>ECEF Y coordinate</dd>
+<dt>z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>ECEF Z coordinate</dd>
+<dt>cov_x_x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of x</dd>
+<dt>cov_x_y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated covariance of x and y</dd>
+<dt>cov_x_z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated covariance of x and z</dd>
+<dt>cov_y_y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of y</dd>
+<dt>cov_y_z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated covariance of y and z</dd>
+<dt>cov_z_z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of z</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFCov.cov_x_x">
+<code class="descname">cov_x_x</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.cov_x_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFCov.cov_x_y">
+<code class="descname">cov_x_y</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.cov_x_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFCov.cov_x_z">
+<code class="descname">cov_x_z</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.cov_x_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFCov.cov_y_y">
+<code class="descname">cov_y_y</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.cov_y_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFCov.cov_y_z">
+<code class="descname">cov_y_z</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.cov_y_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFCov.cov_z_z">
+<code class="descname">cov_z_z</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.cov_z_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFCov.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosECEFCov.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEFCov.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgPosECEFCov.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEFCov.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgPosECEFCov.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEFCov.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFCov.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosECEFCov.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEFCov.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosECEFCov.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEFCov.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFCov.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFCov.x">
+<code class="descname">x</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFCov.y">
+<code class="descname">y</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFCov.z">
+<code class="descname">z</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFCov.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgPosECEFDepA">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgPosECEFDepA</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEFDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEFDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_POS_ECEF_DEP_A (0x0200).</p>
+<blockquote>
+<div><p>You can have MSG_POS_ECEF_DEP_A inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The position solution message reports absolute Earth Centered</p>
+</div></blockquote>
+<p>Earth Fixed (ECEF) coordinates and the status (single point vs
+pseudo-absolute RTK) of the position solution. If the rover
+receiver knows the surveyed position of the base station and has
+an RTK solution, this reports a pseudo-absolute position
+solution using the base station position and the rover&#8217;s RTK
+baseline vector. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>ECEF X coordinate</dd>
+<dt>y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>ECEF Y coordinate</dd>
+<dt>z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>ECEF Z coordinate</dd>
+<dt>accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Position accuracy estimate (not implemented). Defaults</dd>
+</dl>
+</div></blockquote>
+<p>to 0.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFDepA.accuracy">
+<code class="descname">accuracy</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFDepA.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFDepA.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFDepA.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosECEFDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEFDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEFDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgPosECEFDepA.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEFDepA.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEFDepA.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgPosECEFDepA.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEFDepA.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEFDepA.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFDepA.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFDepA.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosECEFDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEFDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEFDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosECEFDepA.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosECEFDepA.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosECEFDepA.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFDepA.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFDepA.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFDepA.x">
+<code class="descname">x</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFDepA.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFDepA.y">
+<code class="descname">y</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFDepA.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosECEFDepA.z">
+<code class="descname">z</code><a class="headerlink" href="#sbp.navigation.MsgPosECEFDepA.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.navigation.MsgPosLLH">
 <em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgPosLLH</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLH"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLH" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_POS_LLH (0x0201).</p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_POS_LLH (0x020A).</p>
 <blockquote>
-<div><p>You can have MSG_POS_LLH inherent its fields directly
+<div><p>You can have MSG_POS_LLH inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This position solution message reports the absolute geodetic</p>
@@ -427,36 +1403,33 @@ GPS time is given by the preceding MSG_GPS_TIME with the
 matching time-of-week (tow).</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>GPS Time of Week</dd>
-<dt>lat <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Latitude</dd>
-<dt>lon <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Longitude</dd>
-<dt>height <span class="classifier-delimiter">:</span> <span class="classifier">double</span></dt>
-<dd>Height</dd>
-<dt>h_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Horizontal position accuracy estimate (not</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>lat</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>Latitude</dd>
+<dt>lon</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>Longitude</dd>
+<dt>height</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>Height above WGS84 ellipsoid</dd>
+<dt>h_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Horizontal position estimated standard deviation</dd>
+<dt>v_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Vertical position estimated standard deviation</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution.</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
-<p>implemented). Defaults to 0.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>v_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Vertical position accuracy estimate (not</dd>
-</dl>
-</div></blockquote>
-<p>implemented). Defaults to 0.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of satellites used in solution.</dd>
-<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Status flags</dd>
-</dl>
-</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLH.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgPosLLH.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.navigation.MsgPosLLH.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLH.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLH.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -466,9 +1439,39 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.navigation.MsgPosLLH.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLH.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLH.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLH.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLH.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgPosLLH.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLH.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLH.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLH.h_accuracy">
+<code class="descname">h_accuracy</code><a class="headerlink" href="#sbp.navigation.MsgPosLLH.h_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLH.height">
+<code class="descname">height</code><a class="headerlink" href="#sbp.navigation.MsgPosLLH.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLH.lat">
+<code class="descname">lat</code><a class="headerlink" href="#sbp.navigation.MsgPosLLH.lat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLH.lon">
+<code class="descname">lon</code><a class="headerlink" href="#sbp.navigation.MsgPosLLH.lon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLH.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgPosLLH.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.navigation.MsgPosLLH.to_binary">
@@ -477,20 +1480,547 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.navigation.MsgPosLLH.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLH.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLH.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.navigation.MsgPosLLH.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLH.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLH.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLH.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgPosLLH.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLH.v_accuracy">
+<code class="descname">v_accuracy</code><a class="headerlink" href="#sbp.navigation.MsgPosLLH.v_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgPosLLHCov">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgPosLLHCov</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLHCov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_POS_LLH_COV (0x0211).</p>
+<blockquote>
+<div><p>You can have MSG_POS_LLH_COV inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This position solution message reports the absolute geodetic</p>
+</div></blockquote>
+<p>coordinates and the status (single point vs pseudo-absolute RTK)
+of the position solution as well as the upper triangle of the 3x3
+covariance matrix.  The position information and Fix Mode flags should
+follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+in the local-level North, East, Down frame, the covariance terms follow
+with that convention. Thus, covariances are reported against the &#8220;downward&#8221;
+measurement and care should be taken with the sign convention.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>lat</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>Latitude</dd>
+<dt>lon</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>Longitude</dd>
+<dt>height</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>Height above WGS84 ellipsoid</dd>
+<dt>cov_n_n</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of northing</dd>
+<dt>cov_n_e</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Covariance of northing and easting</dd>
+<dt>cov_n_d</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Covariance of northing and downward measurement</dd>
+<dt>cov_e_e</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of easting</dd>
+<dt>cov_e_d</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Covariance of easting and downward measurement</dd>
+<dt>cov_d_d</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of downward measurement</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution.</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHCov.cov_d_d">
+<code class="descname">cov_d_d</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.cov_d_d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHCov.cov_e_d">
+<code class="descname">cov_e_d</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.cov_e_d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHCov.cov_e_e">
+<code class="descname">cov_e_e</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.cov_e_e" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHCov.cov_n_d">
+<code class="descname">cov_n_d</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.cov_n_d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHCov.cov_n_e">
+<code class="descname">cov_n_e</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.cov_n_e" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHCov.cov_n_n">
+<code class="descname">cov_n_n</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.cov_n_n" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHCov.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosLLHCov.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLHCov.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgPosLLHCov.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLHCov.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgPosLLHCov.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLHCov.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHCov.height">
+<code class="descname">height</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHCov.lat">
+<code class="descname">lat</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.lat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHCov.lon">
+<code class="descname">lon</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.lon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHCov.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosLLHCov.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLHCov.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosLLHCov.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLHCov.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHCov.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHCov.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgPosLLHDepA">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgPosLLHDepA</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLHDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_POS_LLH_DEP_A (0x0201).</p>
+<blockquote>
+<div><p>You can have MSG_POS_LLH_DEP_A inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This position solution message reports the absolute geodetic</p>
+</div></blockquote>
+<p>coordinates and the status (single point vs pseudo-absolute RTK)
+of the position solution. If the rover receiver knows the
+surveyed position of the base station and has an RTK solution,
+this reports a pseudo-absolute position solution using the base
+station position and the rover&#8217;s RTK baseline vector. The full
+GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>lat</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>Latitude</dd>
+<dt>lon</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>Longitude</dd>
+<dt>height</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">double</span><dd>Height</dd>
+<dt>h_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Horizontal position accuracy estimate (not</dd>
+</dl>
+</div></blockquote>
+<p>implemented). Defaults to 0.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>v_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Vertical position accuracy estimate (not</dd>
+</dl>
+</div></blockquote>
+<p>implemented). Defaults to 0.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution.</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHDepA.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosLLHDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLHDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgPosLLHDepA.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLHDepA.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgPosLLHDepA.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLHDepA.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHDepA.h_accuracy">
+<code class="descname">h_accuracy</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA.h_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHDepA.height">
+<code class="descname">height</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHDepA.lat">
+<code class="descname">lat</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA.lat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHDepA.lon">
+<code class="descname">lon</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA.lon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHDepA.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosLLHDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLHDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgPosLLHDepA.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgPosLLHDepA.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHDepA.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgPosLLHDepA.v_accuracy">
+<code class="descname">v_accuracy</code><a class="headerlink" href="#sbp.navigation.MsgPosLLHDepA.v_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgUtcTime">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgUtcTime</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgUtcTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgUtcTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_UTC_TIME (0x0103).</p>
+<blockquote>
+<div><p>You can have MSG_UTC_TIME inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the Universal Coordinated Time (UTC).  Note the flags</p>
+</div></blockquote>
+<p>which indicate the source of the UTC offset value and source of the time fix.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Indicates source and time validity</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS time of week rounded to the nearest millisecond</dd>
+<dt>year</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Year</dd>
+<dt>month</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Month (range 1 .. 12)</dd>
+<dt>day</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>days in the month (range 1-31)</dd>
+<dt>hours</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>hours of day (range 0-23)</dd>
+<dt>minutes</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>minutes of hour (range 0-59)</dd>
+<dt>seconds</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>seconds of minute (range 0-60) rounded down</dd>
+<dt>ns</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>nanoseconds of second (range 0-999999999)</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgUtcTime.day">
+<code class="descname">day</code><a class="headerlink" href="#sbp.navigation.MsgUtcTime.day" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgUtcTime.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgUtcTime.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgUtcTime.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgUtcTime.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgUtcTime.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgUtcTime.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgUtcTime.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgUtcTime.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgUtcTime.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgUtcTime.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgUtcTime.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgUtcTime.hours">
+<code class="descname">hours</code><a class="headerlink" href="#sbp.navigation.MsgUtcTime.hours" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgUtcTime.minutes">
+<code class="descname">minutes</code><a class="headerlink" href="#sbp.navigation.MsgUtcTime.minutes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgUtcTime.month">
+<code class="descname">month</code><a class="headerlink" href="#sbp.navigation.MsgUtcTime.month" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgUtcTime.ns">
+<code class="descname">ns</code><a class="headerlink" href="#sbp.navigation.MsgUtcTime.ns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgUtcTime.seconds">
+<code class="descname">seconds</code><a class="headerlink" href="#sbp.navigation.MsgUtcTime.seconds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgUtcTime.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgUtcTime.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgUtcTime.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgUtcTime.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgUtcTime.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgUtcTime.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgUtcTime.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgUtcTime.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgUtcTime.year">
+<code class="descname">year</code><a class="headerlink" href="#sbp.navigation.MsgUtcTime.year" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgVelBody">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgVelBody</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelBody"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelBody" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_VEL_BODY (0x0213).</p>
+<blockquote>
+<div><p>You can have MSG_VEL_BODY inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the velocity in the Vehicle Body Frame. By convention,</p>
+</div></blockquote>
+<p>the x-axis should point out the nose of the vehicle and represent the forward
+direction, while as the y-axis should point out the right hand side of the vehicle.
+Since this is a right handed system, z should point out the bottom of the vehicle.
+The orientation and origin of the Vehicle Body Frame are specified via the device settings.
+The full GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity in x direction</dd>
+<dt>y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity in y direction</dd>
+<dt>z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity in z direction</dd>
+<dt>cov_x_x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of x</dd>
+<dt>cov_x_y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Covariance of x and y</dd>
+<dt>cov_x_z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Covariance of x and z</dd>
+<dt>cov_y_y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of y</dd>
+<dt>cov_y_z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Covariance of y and z</dd>
+<dt>cov_z_z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of z</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelBody.cov_x_x">
+<code class="descname">cov_x_x</code><a class="headerlink" href="#sbp.navigation.MsgVelBody.cov_x_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelBody.cov_x_y">
+<code class="descname">cov_x_y</code><a class="headerlink" href="#sbp.navigation.MsgVelBody.cov_x_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelBody.cov_x_z">
+<code class="descname">cov_x_z</code><a class="headerlink" href="#sbp.navigation.MsgVelBody.cov_x_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelBody.cov_y_y">
+<code class="descname">cov_y_y</code><a class="headerlink" href="#sbp.navigation.MsgVelBody.cov_y_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelBody.cov_y_z">
+<code class="descname">cov_y_z</code><a class="headerlink" href="#sbp.navigation.MsgVelBody.cov_y_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelBody.cov_z_z">
+<code class="descname">cov_z_z</code><a class="headerlink" href="#sbp.navigation.MsgVelBody.cov_z_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelBody.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgVelBody.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelBody.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelBody.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelBody.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgVelBody.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelBody.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelBody.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgVelBody.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelBody.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelBody.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelBody.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgVelBody.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelBody.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelBody.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelBody.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelBody.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelBody.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelBody.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelBody.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgVelBody.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelBody.x">
+<code class="descname">x</code><a class="headerlink" href="#sbp.navigation.MsgVelBody.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelBody.y">
+<code class="descname">y</code><a class="headerlink" href="#sbp.navigation.MsgVelBody.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelBody.z">
+<code class="descname">z</code><a class="headerlink" href="#sbp.navigation.MsgVelBody.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.navigation.MsgVelECEF">
 <em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgVelECEF</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEF" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_VEL_ECEF (0x0204).</p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_VEL_ECEF (0x020D).</p>
 <blockquote>
-<div><p>You can have MSG_VEL_ECEF inherent its fields directly
+<div><p>You can have MSG_VEL_ECEF inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message reports the velocity in Earth Centered Earth Fixed</p>
@@ -499,29 +2029,36 @@ of its fields.</p>
 MSG_GPS_TIME with the matching time-of-week (tow).</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>GPS Time of Week</dd>
-<dt>x <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Velocity ECEF X coordinate</dd>
-<dt>y <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Velocity ECEF Y coordinate</dd>
-<dt>z <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Velocity ECEF Z coordinate</dd>
-<dt>accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Velocity accuracy estimate (not implemented). Defaults</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity ECEF X coordinate</dd>
+<dt>y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity ECEF Y coordinate</dd>
+<dt>z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity ECEF Z coordinate</dd>
+<dt>accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity estimated standard deviation</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
-<p>to 0.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of satellites used in solution</dd>
-<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Status flags (reserved)</dd>
-</dl>
-</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEF.accuracy">
+<code class="descname">accuracy</code><a class="headerlink" href="#sbp.navigation.MsgVelECEF.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEF.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgVelECEF.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.navigation.MsgVelECEF.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEF.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEF.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -531,9 +2068,19 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.navigation.MsgVelECEF.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEF.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEF.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEF.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEF.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgVelECEF.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEF.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEF.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEF.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgVelECEF.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.navigation.MsgVelECEF.to_binary">
@@ -542,58 +2089,327 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.navigation.MsgVelECEF.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEF.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEF.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.navigation.MsgVelECEF.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEF.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEF.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEF.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgVelECEF.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEF.x">
+<code class="descname">x</code><a class="headerlink" href="#sbp.navigation.MsgVelECEF.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEF.y">
+<code class="descname">y</code><a class="headerlink" href="#sbp.navigation.MsgVelECEF.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEF.z">
+<code class="descname">z</code><a class="headerlink" href="#sbp.navigation.MsgVelECEF.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgVelECEFCov">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgVelECEFCov</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEFCov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_VEL_ECEF_COV (0x0215).</p>
+<blockquote>
+<div><p>You can have MSG_VEL_ECEF_COV inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the velocity in Earth Centered Earth Fixed</p>
+</div></blockquote>
+<p>(ECEF) coordinates. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity ECEF X coordinate</dd>
+<dt>y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity ECEF Y coordinate</dd>
+<dt>z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity ECEF Z coordinate</dd>
+<dt>cov_x_x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of x</dd>
+<dt>cov_x_y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated covariance of x and y</dd>
+<dt>cov_x_z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated covariance of x and z</dd>
+<dt>cov_y_y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of y</dd>
+<dt>cov_y_z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated covariance of y and z</dd>
+<dt>cov_z_z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of z</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFCov.cov_x_x">
+<code class="descname">cov_x_x</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.cov_x_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFCov.cov_x_y">
+<code class="descname">cov_x_y</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.cov_x_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFCov.cov_x_z">
+<code class="descname">cov_x_z</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.cov_x_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFCov.cov_y_y">
+<code class="descname">cov_y_y</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.cov_y_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFCov.cov_y_z">
+<code class="descname">cov_y_z</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.cov_y_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFCov.cov_z_z">
+<code class="descname">cov_z_z</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.cov_z_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFCov.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelECEFCov.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEFCov.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgVelECEFCov.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEFCov.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgVelECEFCov.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEFCov.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFCov.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelECEFCov.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEFCov.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelECEFCov.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEFCov.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFCov.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFCov.x">
+<code class="descname">x</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFCov.y">
+<code class="descname">y</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFCov.z">
+<code class="descname">z</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFCov.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgVelECEFDepA">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgVelECEFDepA</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEFDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEFDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_VEL_ECEF_DEP_A (0x0204).</p>
+<blockquote>
+<div><p>You can have MSG_VEL_ECEF_DEP_A inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the velocity in Earth Centered Earth Fixed</p>
+</div></blockquote>
+<p>(ECEF) coordinates. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>x</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity ECEF X coordinate</dd>
+<dt>y</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity ECEF Y coordinate</dd>
+<dt>z</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity ECEF Z coordinate</dd>
+<dt>accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity accuracy estimate (not implemented). Defaults</dd>
+</dl>
+</div></blockquote>
+<p>to 0.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags (reserved)</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFDepA.accuracy">
+<code class="descname">accuracy</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFDepA.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFDepA.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFDepA.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelECEFDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEFDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEFDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgVelECEFDepA.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEFDepA.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEFDepA.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgVelECEFDepA.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEFDepA.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEFDepA.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFDepA.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFDepA.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelECEFDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEFDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEFDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelECEFDepA.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelECEFDepA.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelECEFDepA.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFDepA.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFDepA.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFDepA.x">
+<code class="descname">x</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFDepA.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFDepA.y">
+<code class="descname">y</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFDepA.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelECEFDepA.z">
+<code class="descname">z</code><a class="headerlink" href="#sbp.navigation.MsgVelECEFDepA.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.navigation.MsgVelNED">
 <em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgVelNED</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNED"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNED" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_VEL_NED (0x0205).</p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_VEL_NED (0x020E).</p>
 <blockquote>
-<div><p>You can have MSG_VEL_NED inherent its fields directly
+<div><p>You can have MSG_VEL_NED inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message reports the velocity in local North East Down (NED)</p>
 </div></blockquote>
-<p>coordinates. The full GPS time is given by the preceding
-MSG_GPS_TIME with the matching time-of-week (tow).</p>
+<p>coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>tow <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>GPS Time of Week</dd>
-<dt>n <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Velocity North coordinate</dd>
-<dt>e <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Velocity East coordinate</dd>
-<dt>d <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Velocity Down coordinate</dd>
-<dt>h_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Horizontal velocity accuracy estimate (not</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>n</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity North coordinate</dd>
+<dt>e</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity East coordinate</dd>
+<dt>d</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity Down coordinate</dd>
+<dt>h_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Horizontal velocity estimated standard deviation</dd>
+<dt>v_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Vertical velocity estimated standard deviation</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
-<p>implemented). Defaults to 0.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>v_accuracy <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Vertical velocity accuracy estimate (not</dd>
-</dl>
-</div></blockquote>
-<p>implemented). Defaults to 0.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>n_sats <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of satellites used in solution</dd>
-<dt>flags <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Status flags (reserved)</dd>
-</dl>
-</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNED.d">
+<code class="descname">d</code><a class="headerlink" href="#sbp.navigation.MsgVelNED.d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNED.e">
+<code class="descname">e</code><a class="headerlink" href="#sbp.navigation.MsgVelNED.e" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNED.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgVelNED.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.navigation.MsgVelNED.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNED.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNED.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -603,9 +2419,29 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.navigation.MsgVelNED.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNED.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNED.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNED.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNED.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgVelNED.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNED.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNED.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNED.h_accuracy">
+<code class="descname">h_accuracy</code><a class="headerlink" href="#sbp.navigation.MsgVelNED.h_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNED.n">
+<code class="descname">n</code><a class="headerlink" href="#sbp.navigation.MsgVelNED.n" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNED.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgVelNED.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.navigation.MsgVelNED.to_binary">
@@ -614,10 +2450,277 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.navigation.MsgVelNED.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNED.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNED.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.navigation.MsgVelNED.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNED.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNED.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNED.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgVelNED.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNED.v_accuracy">
+<code class="descname">v_accuracy</code><a class="headerlink" href="#sbp.navigation.MsgVelNED.v_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgVelNEDCov">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgVelNEDCov</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNEDCov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_VEL_NED_COV (0x0212).</p>
+<blockquote>
+<div><p>You can have MSG_VEL_NED_COV inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the velocity in local North East Down (NED)</p>
+</div></blockquote>
+<p>coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+portion of the 3x3 covariance matrix.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>n</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity North coordinate</dd>
+<dt>e</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity East coordinate</dd>
+<dt>d</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity Down coordinate</dd>
+<dt>cov_n_n</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of northward measurement</dd>
+<dt>cov_n_e</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Covariance of northward and eastward measurement</dd>
+<dt>cov_n_d</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Covariance of northward and downward measurement</dd>
+<dt>cov_e_e</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of eastward measurement</dd>
+<dt>cov_e_d</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Covariance of eastward and downward measurement</dd>
+<dt>cov_d_d</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Estimated variance of downward measurement</dd>
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDCov.cov_d_d">
+<code class="descname">cov_d_d</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.cov_d_d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDCov.cov_e_d">
+<code class="descname">cov_e_d</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.cov_e_d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDCov.cov_e_e">
+<code class="descname">cov_e_e</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.cov_e_e" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDCov.cov_n_d">
+<code class="descname">cov_n_d</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.cov_n_d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDCov.cov_n_e">
+<code class="descname">cov_n_e</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.cov_n_e" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDCov.cov_n_n">
+<code class="descname">cov_n_n</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.cov_n_n" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDCov.d">
+<code class="descname">d</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDCov.e">
+<code class="descname">e</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.e" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDCov.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelNEDCov.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNEDCov.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgVelNEDCov.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNEDCov.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgVelNEDCov.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNEDCov.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDCov.n">
+<code class="descname">n</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.n" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDCov.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelNEDCov.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNEDCov.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelNEDCov.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNEDCov.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDCov.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDCov.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.navigation.MsgVelNEDDepA">
+<em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgVelNEDDepA</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNEDDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_VEL_NED_DEP_A (0x0205).</p>
+<blockquote>
+<div><p>You can have MSG_VEL_NED_DEP_A inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reports the velocity in local North East Down (NED)</p>
+</div></blockquote>
+<p>coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS Time of Week</dd>
+<dt>n</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity North coordinate</dd>
+<dt>e</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity East coordinate</dd>
+<dt>d</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity Down coordinate</dd>
+<dt>h_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Horizontal velocity accuracy estimate (not</dd>
+</dl>
+</div></blockquote>
+<p>implemented). Defaults to 0.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>v_accuracy</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Vertical velocity accuracy estimate (not</dd>
+</dl>
+</div></blockquote>
+<p>implemented). Defaults to 0.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>n_sats</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of satellites used in solution</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags (reserved)</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDDepA.d">
+<code class="descname">d</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA.d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDDepA.e">
+<code class="descname">e</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA.e" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDDepA.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelNEDDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNEDDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgVelNEDDepA.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNEDDepA.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.navigation.MsgVelNEDDepA.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNEDDepA.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDDepA.h_accuracy">
+<code class="descname">h_accuracy</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA.h_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDDepA.n">
+<code class="descname">n</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA.n" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDDepA.n_sats">
+<code class="descname">n_sats</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA.n_sats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelNEDDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNEDDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.navigation.MsgVelNEDDepA.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgVelNEDDepA.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDDepA.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.navigation.MsgVelNEDDepA.v_accuracy">
+<code class="descname">v_accuracy</code><a class="headerlink" href="#sbp.navigation.MsgVelNEDDepA.v_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -628,13 +2731,17 @@ the message.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="sbp.logging.html"
-                        title="previous chapter">sbp.logging module</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="sbp.observation.html"
-                        title="next chapter">sbp.observation module</a></p>
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.msg.html" title="previous chapter">sbp.msg module</a></li>
+      <li>Next: <a href="sbp.ndb.html" title="next chapter">sbp.ndb module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -650,9 +2757,6 @@ the message.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -663,12 +2767,12 @@ the message.</p>
       &copy;2015, Swift Navigation.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
       |
       <a href="_sources/sbp.navigation.txt"
-          rel="nofollow">Page source</a></li>
+          rel="nofollow">Page source</a>
     </div>
 
     

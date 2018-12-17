@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['sbp',['SBP',['../group__sbp.html',1,'']]],
-  ['settings',['Settings',['../group__settings.html',1,'']]],
-  ['system',['System',['../group__system.html',1,'']]]
+  ['observation',['Observation',['../group__observation.html',1,'']]],
+  ['orientation',['Orientation',['../group__orientation.html',1,'']]]
 ];

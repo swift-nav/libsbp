@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.vehicle module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
+    <link rel="next" title="sbp.version module" href="sbp.version.html" />
+    <link rel="prev" title="sbp.utils module" href="sbp.utils.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.vehicle">
+<span id="sbp-vehicle-module"></span><h1>sbp.vehicle module<a class="headerlink" href="#module-sbp.vehicle" title="Permalink to this headline">¶</a></h1>
+<p>Messages from a vehicle.</p>
+<dl class="class">
+<dt id="sbp.vehicle.MsgOdometry">
+<em class="property">class </em><code class="descclassname">sbp.vehicle.</code><code class="descname">MsgOdometry</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/vehicle.html#MsgOdometry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.vehicle.MsgOdometry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_ODOMETRY (0x0903).</p>
+<blockquote>
+<div><p>You can have MSG_ODOMETRY inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Message representing the x component of vehicle velocity in the user frame at the odometry</p>
+</div></blockquote>
+<p>reference point(s) specified by the user. The offset for the odometry reference point and 
+the definition and origin of the user frame are defined through the device settings interface.
+There are 4 possible user-defined sources of this message  which are labeled arbitrarily 
+source 0 through 3.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>tow</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Time field representing either milliseconds in the GPS Week or local CPU</dd>
+</dl>
+</div></blockquote>
+<p>time from the producing system in milliseconds.  See the tow_source flag
+for the exact source of this timestamp.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>velocity</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>The signed forward component of vehicle velocity.</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Status flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.vehicle.MsgOdometry.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.vehicle.MsgOdometry.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.vehicle.MsgOdometry.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/vehicle.html#MsgOdometry.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.vehicle.MsgOdometry.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.vehicle.MsgOdometry.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/vehicle.html#MsgOdometry.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.vehicle.MsgOdometry.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.vehicle.MsgOdometry.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/vehicle.html#MsgOdometry.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.vehicle.MsgOdometry.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.vehicle.MsgOdometry.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/vehicle.html#MsgOdometry.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.vehicle.MsgOdometry.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.vehicle.MsgOdometry.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/vehicle.html#MsgOdometry.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.vehicle.MsgOdometry.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.vehicle.MsgOdometry.tow">
+<code class="descname">tow</code><a class="headerlink" href="#sbp.vehicle.MsgOdometry.tow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.vehicle.MsgOdometry.velocity">
+<code class="descname">velocity</code><a class="headerlink" href="#sbp.vehicle.MsgOdometry.velocity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.utils.html" title="previous chapter">sbp.utils module</a></li>
+      <li>Next: <a href="sbp.version.html" title="next chapter">sbp.version module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.vehicle.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/sbp.vehicle.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.msg module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
+    <link rel="next" title="sbp.navigation module" href="sbp.navigation.html" />
+    <link rel="prev" title="sbp.mag module" href="sbp.mag.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.msg">
+<span id="sbp-msg-module"></span><h1>sbp.msg module<a class="headerlink" href="#module-sbp.msg" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sbp.msg.SBP">
+<em class="property">class </em><code class="descclassname">sbp.msg.</code><code class="descname">SBP</code><span class="sig-paren">(</span><em>msg_type=None</em>, <em>sender=66</em>, <em>length=None</em>, <em>payload=None</em>, <em>crc=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/msg.html#SBP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.msg.SBP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Swift Binary Protocol container.</p>
+<dl class="method">
+<dt id="sbp.msg.SBP.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/msg.html#SBP.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.msg.SBP.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.msg.SBP.crc">
+<code class="descname">crc</code><a class="headerlink" href="#sbp.msg.SBP.crc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.msg.SBP.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/msg.html#SBP.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.msg.SBP.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded message, build an object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.msg.SBP.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/msg.html#SBP.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.msg.SBP.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.msg.SBP.length">
+<code class="descname">length</code><a class="headerlink" href="#sbp.msg.SBP.length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.msg.SBP.msg_type">
+<code class="descname">msg_type</code><a class="headerlink" href="#sbp.msg.SBP.msg_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.msg.SBP.pack">
+<code class="descname">pack</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/msg.html#SBP.pack"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.msg.SBP.pack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pack to framed binary message.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.msg.SBP.payload">
+<code class="descname">payload</code><a class="headerlink" href="#sbp.msg.SBP.payload" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.msg.SBP.preamble">
+<code class="descname">preamble</code><a class="headerlink" href="#sbp.msg.SBP.preamble" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.msg.SBP.sender">
+<code class="descname">sender</code><a class="headerlink" href="#sbp.msg.SBP.sender" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.msg.SBP.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/msg.html#SBP.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.msg.SBP.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.msg.SBP.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/msg.html#SBP.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.msg.SBP.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a JSON-encoded SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.msg.SBP.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/msg.html#SBP.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.msg.SBP.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.msg.SBP.unpack">
+<em class="property">static </em><code class="descname">unpack</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/msg.html#SBP.unpack"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.msg.SBP.unpack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpack and return a framed binary message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sbp.msg.crc16">
+<code class="descclassname">sbp.msg.</code><code class="descname">crc16</code><span class="sig-paren">(</span><em>s</em>, <em>crc=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/msg.html#crc16"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.msg.crc16" title="Permalink to this definition">¶</a></dt>
+<dd><p>CRC16 implementation acording to CCITT standards.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.mag.html" title="previous chapter">sbp.mag module</a></li>
+      <li>Next: <a href="sbp.navigation.html" title="next chapter">sbp.navigation module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.msg.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/sbp.msg.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,583 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.ssr module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
+    <link rel="next" title="sbp.system module" href="sbp.system.html" />
+    <link rel="prev" title="sbp.settings module" href="sbp.settings.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.ssr">
+<span id="sbp-ssr-module"></span><h1>sbp.ssr module<a class="headerlink" href="#module-sbp.ssr" title="Permalink to this headline">¶</a></h1>
+<p>Precise State Space Representation (SSR) corrections format</p>
+<dl class="class">
+<dt id="sbp.ssr.CodeBiasesContent">
+<em class="property">class </em><code class="descclassname">sbp.ssr.</code><code class="descname">CodeBiasesContent</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#CodeBiasesContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.CodeBiasesContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>CodeBiasesContent.</p>
+<blockquote>
+<div>Code biases are to be added to pseudorange.</div></blockquote>
+<p>The corrections are conform with typical RTCMv3 MT1059 and 1065.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>code</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Signal constellation, band and code</dd>
+<dt>value</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Code bias value</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.ssr.CodeBiasesContent.code">
+<code class="descname">code</code><a class="headerlink" href="#sbp.ssr.CodeBiasesContent.code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.CodeBiasesContent.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#CodeBiasesContent.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.CodeBiasesContent.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.CodeBiasesContent.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#CodeBiasesContent.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.CodeBiasesContent.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.CodeBiasesContent.value">
+<code class="descname">value</code><a class="headerlink" href="#sbp.ssr.CodeBiasesContent.value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.ssr.MsgSsrCodeBiases">
+<em class="property">class </em><code class="descclassname">sbp.ssr.</code><code class="descname">MsgSsrCodeBiases</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrCodeBiases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrCodeBiases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SSR_CODE_BIASES (0x05E1).</p>
+<blockquote>
+<div><p>You can have MSG_SSR_CODE_BIASES inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The precise code biases message is to be added</p>
+</div></blockquote>
+<p>to the pseudorange of the corresponding signal
+to get corrected pseudorange. It is typically 
+an equivalent to the 1059 and 1065 RTCM message types</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>time</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GPSTimeSec</span><dd>GNSS reference time of the correction</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>GNSS signal identifier (16 bit)</dd>
+<dt>update_interval</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Update interval between consecutive corrections</dd>
+<dt>iod_ssr</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>IOD of the SSR correction. A change of Issue Of Data</dd>
+</dl>
+</div></blockquote>
+<p>SSR is used to indicate a change in the SSR 
+generating configuration</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>biases</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Code biases for the different satellite signals</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrCodeBiases.biases">
+<code class="descname">biases</code><a class="headerlink" href="#sbp.ssr.MsgSsrCodeBiases.biases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.MsgSsrCodeBiases.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrCodeBiases.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrCodeBiases.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.ssr.MsgSsrCodeBiases.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrCodeBiases.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrCodeBiases.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.ssr.MsgSsrCodeBiases.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrCodeBiases.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrCodeBiases.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrCodeBiases.iod_ssr">
+<code class="descname">iod_ssr</code><a class="headerlink" href="#sbp.ssr.MsgSsrCodeBiases.iod_ssr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrCodeBiases.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.ssr.MsgSsrCodeBiases.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrCodeBiases.time">
+<code class="descname">time</code><a class="headerlink" href="#sbp.ssr.MsgSsrCodeBiases.time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.MsgSsrCodeBiases.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrCodeBiases.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrCodeBiases.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.MsgSsrCodeBiases.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrCodeBiases.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrCodeBiases.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrCodeBiases.update_interval">
+<code class="descname">update_interval</code><a class="headerlink" href="#sbp.ssr.MsgSsrCodeBiases.update_interval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.ssr.MsgSsrOrbitClock">
+<em class="property">class </em><code class="descclassname">sbp.ssr.</code><code class="descname">MsgSsrOrbitClock</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrOrbitClock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DC).</p>
+<blockquote>
+<div><p>You can have MSG_SSR_ORBIT_CLOCK inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The precise orbit and clock correction message is</p>
+</div></blockquote>
+<p>to be applied as a delta correction to broadcast 
+ephemeris and is typically an equivalent to the 1060
+and 1066 RTCM message types</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>time</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GPSTimeSec</span><dd>GNSS reference time of the correction</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>GNSS signal identifier (16 bit)</dd>
+<dt>update_interval</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Update interval between consecutive corrections</dd>
+<dt>iod_ssr</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>IOD of the SSR correction. A change of Issue Of Data</dd>
+</dl>
+</div></blockquote>
+<p>SSR is used to indicate a change in the SSR 
+generating configuration</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>iod</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Issue of broadcast ephemeris data</dd>
+<dt>radial</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Orbit radial delta correction</dd>
+<dt>along</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Orbit along delta correction</dd>
+<dt>cross</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Orbit along delta correction</dd>
+<dt>dot_radial</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity of orbit radial delta correction</dd>
+<dt>dot_along</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity of orbit along delta correction</dd>
+<dt>dot_cross</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity of orbit cross delta correction</dd>
+<dt>c0</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>C0 polynomial coefficient for correction of broadcast satellite clock</dd>
+<dt>c1</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>C1 polynomial coefficient for correction of broadcast satellite clock</dd>
+<dt>c2</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>C2 polynomial coefficient for correction of broadcast satellite clock</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.along">
+<code class="descname">along</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.along" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.c0">
+<code class="descname">c0</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.c0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.c1">
+<code class="descname">c1</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.c1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.c2">
+<code class="descname">c2</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.c2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.cross">
+<code class="descname">cross</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.cross" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.dot_along">
+<code class="descname">dot_along</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.dot_along" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.dot_cross">
+<code class="descname">dot_cross</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.dot_cross" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.dot_radial">
+<code class="descname">dot_radial</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.dot_radial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.MsgSsrOrbitClock.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrOrbitClock.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.ssr.MsgSsrOrbitClock.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrOrbitClock.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.ssr.MsgSsrOrbitClock.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrOrbitClock.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.iod">
+<code class="descname">iod</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.iod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.iod_ssr">
+<code class="descname">iod_ssr</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.iod_ssr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.radial">
+<code class="descname">radial</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.radial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.time">
+<code class="descname">time</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.MsgSsrOrbitClock.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrOrbitClock.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.MsgSsrOrbitClock.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrOrbitClock.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClock.update_interval">
+<code class="descname">update_interval</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.update_interval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.ssr.MsgSsrPhaseBiases">
+<em class="property">class </em><code class="descclassname">sbp.ssr.</code><code class="descname">MsgSsrPhaseBiases</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrPhaseBiases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SSR_PHASE_BIASES (0x05E6).</p>
+<blockquote>
+<div><p>You can have MSG_SSR_PHASE_BIASES inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The precise phase biases message contains the biases</p>
+</div></blockquote>
+<p>to be added to the carrier phase of the corresponding
+signal to get corrected carrier phase measurement, as 
+well as the satellite yaw angle to be applied to compute 
+the phase wind-up correction. 
+It is typically an equivalent to the 1265 RTCM message types</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>time</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GPSTimeSec</span><dd>GNSS reference time of the correction</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>GNSS signal identifier (16 bit)</dd>
+<dt>update_interval</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Update interval between consecutive corrections</dd>
+<dt>iod_ssr</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>IOD of the SSR correction. A change of Issue Of Data</dd>
+</dl>
+</div></blockquote>
+<p>SSR is used to indicate a change in the SSR 
+generating configuration</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>dispersive_bias</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Indicator for the dispersive phase biases property.</dd>
+<dt>mw_consistency</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Consistency indicator for Melbourne-Wubbena linear combinations</dd>
+<dt>yaw</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Satellite yaw angle</dd>
+<dt>yaw_rate</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Satellite yaw angle rate</dd>
+<dt>biases</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Phase biases corrections for a</dd>
+</dl>
+</div></blockquote>
+<p>satellite being tracked.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.biases">
+<code class="descname">biases</code><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.biases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.dispersive_bias">
+<code class="descname">dispersive_bias</code><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.dispersive_bias" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrPhaseBiases.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrPhaseBiases.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrPhaseBiases.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.iod_ssr">
+<code class="descname">iod_ssr</code><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.iod_ssr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.mw_consistency">
+<code class="descname">mw_consistency</code><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.mw_consistency" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.time">
+<code class="descname">time</code><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrPhaseBiases.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrPhaseBiases.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.update_interval">
+<code class="descname">update_interval</code><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.update_interval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.yaw">
+<code class="descname">yaw</code><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.yaw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrPhaseBiases.yaw_rate">
+<code class="descname">yaw_rate</code><a class="headerlink" href="#sbp.ssr.MsgSsrPhaseBiases.yaw_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.ssr.PhaseBiasesContent">
+<em class="property">class </em><code class="descclassname">sbp.ssr.</code><code class="descname">PhaseBiasesContent</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#PhaseBiasesContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.PhaseBiasesContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>PhaseBiasesContent.</p>
+<blockquote>
+<div>Phase biases are to be added to carrier phase measurements.</div></blockquote>
+<p>The corrections are conform with typical RTCMv3 MT1059 and 1065.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>code</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Signal constellation, band and code</dd>
+<dt>integer_indicator</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Indicator for integer property</dd>
+<dt>widelane_integer_indicator</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Indicator for two groups of Wide-Lane(s) integer property</dd>
+<dt>discontinuity_counter</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Signal phase discontinuity counter.</dd>
+</dl>
+</div></blockquote>
+<p>Increased for every discontinuity in phase.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>bias</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Phase bias for specified signal</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.ssr.PhaseBiasesContent.bias">
+<code class="descname">bias</code><a class="headerlink" href="#sbp.ssr.PhaseBiasesContent.bias" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.PhaseBiasesContent.code">
+<code class="descname">code</code><a class="headerlink" href="#sbp.ssr.PhaseBiasesContent.code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.PhaseBiasesContent.discontinuity_counter">
+<code class="descname">discontinuity_counter</code><a class="headerlink" href="#sbp.ssr.PhaseBiasesContent.discontinuity_counter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.PhaseBiasesContent.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#PhaseBiasesContent.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.PhaseBiasesContent.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.PhaseBiasesContent.integer_indicator">
+<code class="descname">integer_indicator</code><a class="headerlink" href="#sbp.ssr.PhaseBiasesContent.integer_indicator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.PhaseBiasesContent.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#PhaseBiasesContent.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.PhaseBiasesContent.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.PhaseBiasesContent.widelane_integer_indicator">
+<code class="descname">widelane_integer_indicator</code><a class="headerlink" href="#sbp.ssr.PhaseBiasesContent.widelane_integer_indicator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.settings.html" title="previous chapter">sbp.settings module</a></li>
+      <li>Next: <a href="sbp.system.html" title="next chapter">sbp.system module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.ssr.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/sbp.ssr.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

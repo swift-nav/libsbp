@@ -1,0 +1,4 @@
+<map id="packed_obs_content_dep_b_t" name="packed_obs_content_dep_b_t">
+<area shape="rect" id="node2" href="$structcarrier__phase__dep__a__t.html" title="GPS carrier phase measurement. " alt="" coords="5,6,163,31"/>
+<area shape="rect" id="node3" href="$structgnss__signal__dep__t.html" title="Deprecated. " alt="" coords="187,6,319,31"/>
+</map>

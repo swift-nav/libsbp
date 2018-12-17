@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sbp.client.drivers.cdc_driver module &mdash; sbp 0.27 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.27',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp.client.drivers package" href="sbp.client.drivers.html" />
+    <link rel="next" title="sbp.client.drivers.file_driver module" href="sbp.client.drivers.file_driver.html" />
+    <link rel="prev" title="sbp.client.drivers.base_driver module" href="sbp.client.drivers.base_driver.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sbp.client.drivers.cdc_driver">
+<span id="sbp-client-drivers-cdc-driver-module"></span><h1>sbp.client.drivers.cdc_driver module<a class="headerlink" href="#module-sbp.client.drivers.cdc_driver" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sbp.client.drivers.cdc_driver.CdcDriver">
+<em class="property">class </em><code class="descclassname">sbp.client.drivers.cdc_driver.</code><code class="descname">CdcDriver</code><span class="sig-paren">(</span><em>handle</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/cdc_driver.html#CdcDriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.cdc_driver.CdcDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.client.drivers.base_driver.html#sbp.client.drivers.base_driver.BaseDriver" title="sbp.client.drivers.base_driver.BaseDriver"><code class="xref py py-class docutils literal"><span class="pre">sbp.client.drivers.base_driver.BaseDriver</span></code></a></p>
+<p>The <a class="reference internal" href="#sbp.client.drivers.cdc_driver.CdcDriver" title="sbp.client.drivers.cdc_driver.CdcDriver"><code class="xref py py-class docutils literal"><span class="pre">CdcDriver</span></code></a> class wraps IO sources of SBP messages and provides
+context management.  It is intended for the devices that use the USB Gadget
+CDC ACM drivers and is preferred over PySerial for these devices.</p>
+<dl class="docutils">
+<dt>handle</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">port</span><dd>Stream of bytes to read from and write to.</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.client.drivers.cdc_driver.CdcDriver.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/cdc_driver.html#CdcDriver.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.cdc_driver.CdcDriver.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close wrapper.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.cdc_driver.CdcDriver.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/cdc_driver.html#CdcDriver.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.cdc_driver.CdcDriver.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read wrapper.</p>
+<dl class="docutils">
+<dt>size</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of bytes to read.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.client.drivers.cdc_driver.CdcDriver.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/client/drivers/cdc_driver.html#CdcDriver.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.client.drivers.cdc_driver.CdcDriver.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write wrapper.</p>
+<dl class="docutils">
+<dt>s</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">bytes</span><dd>Bytes to write</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+  <li><a href="sbp.client.html">sbp.client package</a><ul>
+  <li><a href="sbp.client.drivers.html">sbp.client.drivers package</a><ul>
+      <li>Previous: <a href="sbp.client.drivers.base_driver.html" title="previous chapter">sbp.client.drivers.base_driver module</a></li>
+      <li>Next: <a href="sbp.client.drivers.file_driver.html" title="next chapter">sbp.client.drivers.file_driver module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sbp.client.drivers.cdc_driver.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Swift Navigation.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/sbp.client.drivers.cdc_driver.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

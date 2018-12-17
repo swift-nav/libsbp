@@ -25,27 +25,13 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="sbp 0.27 documentation" href="../../../index.html" />
-    <link rel="up" title="sbp" href="../../sbp.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
    
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">sbp 0.27 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li>
-          <li class="nav-item nav-item-2"><a href="../../sbp.html" accesskey="U">sbp</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
@@ -53,271 +39,304 @@
           <div class="body" role="main">
             
   <h1>Source code for sbp.client.handler</h1><div class="highlight"><pre>
-<span class="c"># Copyright (C) 2015 Swift Navigation Inc.</span>
-<span class="c"># Contact: Mark Fine &lt;mark@swiftnav.com&gt;</span>
-<span class="c">#</span>
-<span class="c"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
-<span class="c"># be be distributed together with this source. All other rights reserved.</span>
-<span class="c">#</span>
-<span class="c"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
-<span class="c"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
-<span class="c"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
-
+<span></span><span class="c1"># Copyright (C) 2015 Swift Navigation Inc.</span>
+<span class="c1"># Contact: Mark Fine &lt;mark@swiftnav.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># This source is subject to the license found in the file &#39;LICENSE&#39; which must</span>
+<span class="c1"># be be distributed together with this source. All other rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># THIS CODE AND INFORMATION IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND,</span>
+<span class="c1"># EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED</span>
+<span class="c1"># WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">The :mod:`sbp.client.handler` module contains classes related to</span>
 <span class="sd">SBP message handling.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">collections</span>
-<span class="kn">import</span> <span class="nn">struct</span>
 <span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+<span class="kn">from</span> <span class="nn">Queue</span> <span class="kn">import</span> <span class="n">Queue</span>
 
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">crc16</span><span class="p">,</span> <span class="n">SBP</span><span class="p">,</span> <span class="n">SBP_PREAMBLE</span>
 
-<div class="viewcode-block" id="Framer"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Framer">[docs]</a><span class="k">class</span> <span class="nc">Framer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Framer</span>
-
-<span class="sd">  The :class:`Framer` class frames bytes into SBP messages.</span>
-
-<span class="sd">  Parameters</span>
-<span class="sd">  ----------</span>
-<span class="sd">  read : port</span>
-<span class="sd">    Stream of bytes to read from.</span>
-<span class="sd">  write : port</span>
-<span class="sd">    Stream of bytes to write to.</span>
-<span class="sd">  &quot;&quot;&quot;</span>
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">read</span><span class="p">,</span> <span class="n">write</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">read</span> <span class="o">=</span> <span class="n">read</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span> <span class="o">=</span> <span class="n">write</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
-
-<div class="viewcode-block" id="Framer.readall"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Framer.readall">[docs]</a>  <span class="k">def</span> <span class="nf">readall</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Read until all bytes are collected.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    size : int</span>
-<span class="sd">      Number of bytes to read.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">:</span>
-      <span class="n">data</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">size</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">data</span>
-</div>
-<div class="viewcode-block" id="Framer.receive"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Framer.receive">[docs]</a>  <span class="k">def</span> <span class="nf">receive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Read and build SBP message.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c"># preamble - not readall(1) to allow breaking before messages, empty input</span>
-    <span class="n">preamble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">preamble</span><span class="p">:</span>
-      <span class="k">return</span> <span class="bp">None</span>
-    <span class="k">elif</span> <span class="nb">ord</span><span class="p">(</span><span class="n">preamble</span><span class="p">)</span> <span class="o">!=</span> <span class="n">SBP_PREAMBLE</span><span class="p">:</span>
-      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;Host Side Unhandled byte: 0x</span><span class="si">%02x</span><span class="s">&quot;</span> <span class="o">%</span> <span class="nb">ord</span><span class="p">(</span><span class="n">preamble</span><span class="p">)</span>
-      <span class="k">return</span> <span class="bp">None</span>
-
-    <span class="c"># hdr</span>
-    <span class="n">hdr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readall</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-    <span class="n">msg_crc</span> <span class="o">=</span> <span class="n">crc16</span><span class="p">(</span><span class="n">hdr</span><span class="p">)</span>
-    <span class="n">msg_type</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="n">msg_len</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">&quot;&lt;HHB&quot;</span><span class="p">,</span> <span class="n">hdr</span><span class="p">)</span>
-
-    <span class="c"># data</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readall</span><span class="p">(</span><span class="n">msg_len</span><span class="p">)</span>
-    <span class="n">msg_crc</span> <span class="o">=</span> <span class="n">crc16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">msg_crc</span><span class="p">)</span>
-
-    <span class="c"># crc</span>
-    <span class="n">crc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readall</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">crc</span><span class="p">,</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">&quot;&lt;H&quot;</span><span class="p">,</span> <span class="n">crc</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">crc</span> <span class="o">!=</span> <span class="n">msg_crc</span><span class="p">:</span>
-      <span class="k">print</span> <span class="s">&quot;crc mismatch: 0x</span><span class="si">%04X</span><span class="s"> 0x</span><span class="si">%04X</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">msg_crc</span><span class="p">,</span> <span class="n">crc</span><span class="p">)</span>
-      <span class="k">return</span> <span class="bp">None</span>
-
-    <span class="k">return</span> <span class="n">SBP</span><span class="p">(</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="n">msg_len</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">crc</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="Framer.send"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Framer.send">[docs]</a>  <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">sender</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Build and write SBP message.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    msg_type : int</span>
-<span class="sd">      SBP message type.</span>
-<span class="sd">    data : string</span>
-<span class="sd">      SBP message payload.</span>
-<span class="sd">    sender : int</span>
-<span class="sd">      SBP sender id.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s">&quot;&lt;BHHB&quot;</span><span class="p">,</span> <span class="n">SBP_PREAMBLE</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-    <span class="n">msg</span> <span class="o">+=</span> <span class="n">data</span>
-    <span class="n">crc</span> <span class="o">=</span> <span class="n">crc16</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-    <span class="n">msg</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s">&quot;&lt;H&quot;</span><span class="p">,</span> <span class="n">crc</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-</div></div>
-<div class="viewcode-block" id="ReceiveThread"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.ReceiveThread">[docs]</a><span class="k">class</span> <span class="nc">ReceiveThread</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  ReceiveThread</span>
-
-<span class="sd">  The :class:`ReceiveThread` class provides a processing thread for</span>
-<span class="sd">  framing and handling SBP messages.</span>
-
-<span class="sd">  Parameters</span>
-<span class="sd">  ----------</span>
-<span class="sd">  receive : fn</span>
-<span class="sd">    Receiving function returns SBP messages.</span>
-<span class="sd">  call : fn</span>
-<span class="sd">    Callback functions.</span>
-<span class="sd">  &quot;&quot;&quot;</span>
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">receive</span><span class="p">,</span> <span class="n">call</span><span class="p">):</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">ReceiveThread</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">receive</span> <span class="o">=</span> <span class="n">receive</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">call</span> <span class="o">=</span> <span class="n">call</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">stopping</span> <span class="o">=</span> <span class="bp">False</span>
-
-<div class="viewcode-block" id="ReceiveThread.stop"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.ReceiveThread.stop">[docs]</a>  <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Stop the thread before the next message.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">stopping</span> <span class="o">=</span> <span class="bp">True</span>
-</div>
-<div class="viewcode-block" id="ReceiveThread.run"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.ReceiveThread.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Reading and handling loop.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopping</span><span class="p">:</span>
-      <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">receive</span><span class="p">()</span>
-      <span class="k">if</span> <span class="n">msg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">msg_type</span><span class="p">:</span>
-          <span class="bp">self</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-</div></div>
 <div class="viewcode-block" id="Handler"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler">[docs]</a><span class="k">class</span> <span class="nc">Handler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Handler</span>
-
-<span class="sd">  The :class:`Handler` class provides an interface for connecting handlers</span>
-<span class="sd">  to a driver providing SBP messages.</span>
-
-<span class="sd">  Parameters</span>
-<span class="sd">  ----------</span>
-<span class="sd">  read : port</span>
-<span class="sd">    Stream of bytes to read from.</span>
-<span class="sd">  write : port</span>
-<span class="sd">    Stream of bytes to write to.</span>
-<span class="sd">  verbose : bool</span>
-<span class="sd">    Print out errors.</span>
-<span class="sd">  &quot;&quot;&quot;</span>
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">read</span><span class="p">,</span> <span class="n">write</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">framer</span> <span class="o">=</span> <span class="n">Framer</span><span class="p">(</span><span class="n">read</span><span class="p">,</span> <span class="n">write</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">receive_thread</span> <span class="o">=</span> <span class="n">ReceiveThread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">framer</span><span class="o">.</span><span class="n">receive</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">call</span><span class="p">)</span>
-
-  <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="bp">self</span>
-
-  <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-
-<div class="viewcode-block" id="Handler.add_callback"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.add_callback">[docs]</a>  <span class="k">def</span> <span class="nf">add_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">msg_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Add per message type or global callback.</span>
+<span class="sd">    Handler</span>
+
+<span class="sd">    The :class:`Handler` class provides an interface for connecting handlers</span>
+<span class="sd">    to a driver providing SBP messages.  Also provides queued and filtered</span>
+<span class="sd">    iterators for synchronous, blocking use in other threads.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    callback : fn</span>
-<span class="sd">      Callback function</span>
-<span class="sd">    msg_type : int</span>
-<span class="sd">      Message type to register callback against. Default `None` means global callback.</span>
+<span class="sd">    source : Iterable of tuple(SBP message, {&#39;time&#39;:&#39;ISO 8601 str&#39;})</span>
+<span class="sd">      Stream of SBP messages</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">[</span><span class="n">msg_type</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="Handler.remove_callback"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.remove_callback">[docs]</a>  <span class="k">def</span> <span class="nf">remove_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">msg_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Remove per message type of global callback.</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    callback : fn</span>
-<span class="sd">      Callback function</span>
-<span class="sd">    msg_type : int</span>
-<span class="sd">      Message type to remove callback from. Default `None` means global callback.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">[</span><span class="n">msg_type</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="Handler.get_callbacks"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.get_callbacks">[docs]</a>  <span class="k">def</span> <span class="nf">get_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return all callbacks (global and per message type) for a message type.</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_source</span> <span class="o">=</span> <span class="n">source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
+            <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_recv_thread</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Handler&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sinks</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># This is a list of weakrefs to upstream iterators</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dead</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    msg_type : int</span>
-<span class="sd">      Message type to return callbacks for.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">[</span><span class="n">msg_type</span><span class="p">]</span>
-</div>
-<div class="viewcode-block" id="Handler.call"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.call">[docs]</a>  <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Process message with all callbacks (global and per message type).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">msg_type</span><span class="p">:</span>
-      <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_callbacks</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">msg_type</span><span class="p">):</span>
-        <span class="n">callback</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="Handler.start"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.start">[docs]</a>  <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Start processing SBP messages with handlers.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">receive_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="Handler.stop"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.stop">[docs]</a>  <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Stop processing SBP messages.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">receive_thread</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="Handler.send"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.send">[docs]</a>  <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="mh">0x42</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Build and write SBP message.</span>
+    <span class="k">def</span> <span class="nf">_recv_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Internal thread to iterate over source messages and dispatch callbacks.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">msg</span><span class="p">,</span> <span class="n">metadata</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">msg_type</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_call</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">)</span>
+        <span class="c1"># Break any upstream iterators</span>
+        <span class="k">for</span> <span class="n">sink</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sinks</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">sink</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">i</span><span class="o">.</span><span class="n">breakiter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dead</span> <span class="o">=</span> <span class="bp">True</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    msg_type : int</span>
-<span class="sd">      SBP message type.</span>
-<span class="sd">    data : string</span>
-<span class="sd">      SBP message payload.</span>
-<span class="sd">    sender : int</span>
-<span class="sd">      SBP sender id.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">framer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">sender</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="Handler.wait"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.wait">[docs]</a>  <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Wait for a SBP message.</span>
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    msg_type : int</span>
-<span class="sd">      SBP message type.</span>
-<span class="sd">    timeout : float</span>
-<span class="sd">      Waiting period</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">def</span> <span class="nf">cb</span><span class="p">(</span><span class="n">sbp_msg</span><span class="p">):</span>
-      <span class="n">payload</span> <span class="o">=</span> <span class="n">sbp_msg</span><span class="o">.</span><span class="n">payload</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">)</span>
-    <span class="n">event</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">payload</span></div></div>
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+    <span class="c1"># This exception is raised when a message is dispatched to a garbage</span>
+    <span class="c1"># collected upstream iterator.</span>
+    <span class="k">class</span> <span class="nc">_DeadCallbackException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Handler.filter"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg_type</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a filtered iterator of messages for synchronous, blocking use in</span>
+<span class="sd">        another thread.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dead</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">iter</span><span class="p">(())</span>
+        <span class="n">iterator</span> <span class="o">=</span> <span class="n">Handler</span><span class="o">.</span><span class="n">_SBPQueueIterator</span><span class="p">(</span><span class="n">maxsize</span><span class="p">)</span>
+        <span class="c1"># We use a weakref so that the iterator may be garbage collected if it&#39;s</span>
+        <span class="c1"># consumer no longer has a reference.</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sinks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">feediter</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">ref</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">i</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">Handler</span><span class="o">.</span><span class="n">_DeadCallbackException</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="n">feediter</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">iterator</span></div>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a queued iterator that will provide the same unfiltered messages</span>
+<span class="sd">        read from the source iterator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Handler.add_callback"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.add_callback">[docs]</a>    <span class="k">def</span> <span class="nf">add_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">msg_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add per message type or global callback.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        callback : fn</span>
+<span class="sd">          Callback function</span>
+<span class="sd">        msg_type : int | iterable</span>
+<span class="sd">          Message type to register callback against. Default `None` means global callback.</span>
+<span class="sd">          Iterable type adds the callback to all the message types.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">msg_type</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">[</span><span class="n">mt</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">[</span><span class="n">msg_type</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Handler.remove_callback"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.remove_callback">[docs]</a>    <span class="k">def</span> <span class="nf">remove_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">msg_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove per message type of global callback.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        callback : fn</span>
+<span class="sd">          Callback function</span>
+<span class="sd">        msg_type : int | iterable</span>
+<span class="sd">          Message type to remove callback from. Default `None` means global callback.</span>
+<span class="sd">          Iterable type removes the callback from all the message types.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">msg_type</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">msg_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">mt</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">msg_type</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">[</span><span class="n">mt</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">[</span><span class="n">msg_type</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_gc_dead_sinks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove any dead weakrefs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">deadsinks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sinks</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span><span class="p">()</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">deadsinks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">deadsinks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sinks</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return all callbacks (global and per message type) for a message type.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        msg_type : int</span>
+<span class="sd">          Message type to return callbacks for.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">[</span><span class="n">msg_type</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process message with all callbacks (global and per message type).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">msg_type</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_callbacks</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">msg_type</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">callback</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">Handler</span><span class="o">.</span><span class="n">_DeadCallbackException</span><span class="p">:</span>
+                    <span class="c1"># The callback was an upstream iterator that has been garbage</span>
+                    <span class="c1"># collected.  Remove it from our internal structures.</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">remove_callback</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_gc_dead_sinks</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
+                    <span class="k">raise</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="kn">import</span> <span class="nn">traceback</span>
+                    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Handler.start"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Start processing SBP messages with handlers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Handler.stop"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stop processing SBP messages.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="o">.</span><span class="n">breakiter</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Handler.is_alive"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.is_alive">[docs]</a>    <span class="k">def</span> <span class="nf">is_alive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return whether the processes thread is alive.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Handler.wait"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.wait">[docs]</a>    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wait for a SBP message.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        msg_type : int</span>
+<span class="sd">          SBP message type.</span>
+<span class="sd">        timeout : float</span>
+<span class="sd">          Waiting period</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">}</span>
+
+        <span class="k">def</span> <span class="nf">cb</span><span class="p">(</span><span class="n">sbp_msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+            <span class="n">payload</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sbp_msg</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">)</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_callback</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">payload</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Handler.wait_callback"><a class="viewcode-back" href="../../../sbp.client.handler.html#sbp.client.handler.Handler.wait_callback">[docs]</a>    <span class="k">def</span> <span class="nf">wait_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">msg_type</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wait for a SBP message with a callback.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        callback : fn</span>
+<span class="sd">          Callback function</span>
+<span class="sd">        msg_type : int | iterable</span>
+<span class="sd">          Message type to register callback against. Default `None` means global callback.</span>
+<span class="sd">          Iterable type adds the callback to all the message types.</span>
+<span class="sd">        timeout : float</span>
+<span class="sd">          Waiting period</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">cb</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+            <span class="n">callback</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">)</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">)</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_callback</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_write_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">_SBPQueueIterator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class for upstream iterators.  Implements callable interface for adding</span>
+<span class="sd">        messages into the queue, and iterable interface for getting them out.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxsize</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_broken</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">msg</span><span class="p">,</span> <span class="n">metadata</span><span class="p">),</span> <span class="bp">False</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">breakiter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_broken</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_broken</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">StopIteration</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_broken</span> <span class="ow">and</span> <span class="n">m</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">StopIteration</span>
+            <span class="k">return</span> <span class="n">m</span></div>
 </pre></div>
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
@@ -326,9 +345,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -339,8 +355,8 @@
       &copy;2015, Swift Navigation.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
     </div>
 

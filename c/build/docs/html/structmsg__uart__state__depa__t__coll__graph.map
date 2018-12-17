@@ -1,0 +1,4 @@
+<map id="msg_uart_state_depa_t" name="msg_uart_state_depa_t">
+<area shape="rect" id="node2" href="$structuart__channel__t.html" title="State of the UART channel. " alt="" coords="5,6,115,31"/>
+<area shape="rect" id="node3" href="$structlatency__t.html" title="Receiver&#45;to&#45;base station latency. " alt="" coords="139,6,213,31"/>
+</map>

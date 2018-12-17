@@ -1,0 +1,6 @@
+<map id="msg_obs_dep_a_t" name="msg_obs_dep_a_t">
+<area shape="rect" id="node2" href="$structobservation__header__dep__t.html" title="Header for observation message. " alt="" coords="5,94,144,133"/>
+<area shape="rect" id="node3" href="$structgps__time__dep__t.html" title="Millisecond&#45;accurate GPS time. " alt="" coords="17,6,132,31"/>
+<area shape="rect" id="node4" href="$structpacked__obs__content__dep__a__t.html" title="Deprecated. " alt="" coords="168,94,312,133"/>
+<area shape="rect" id="node5" href="$structcarrier__phase__dep__a__t.html" title="GPS carrier phase measurement. " alt="" coords="161,6,319,31"/>
+</map>

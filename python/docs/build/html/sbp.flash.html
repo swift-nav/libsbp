@@ -25,32 +25,15 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="sbp 0.27 documentation" href="index.html" />
-    <link rel="next" title="sbp.logging module" href="sbp.logging.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
+    <link rel="next" title="sbp.gnss module" href="sbp.gnss.html" />
     <link rel="prev" title="sbp.file_io module" href="sbp.file_io.html" />
    
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="sbp.logging.html" title="sbp.logging module"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="sbp.file_io.html" title="sbp.file_io module"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
@@ -62,29 +45,30 @@
 <p>Messages for reading/writing the device&#8217;s onboard flash memory. Many
 of these messages target specific flash memory peripherals used in
 Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
-configuration flash.</p>
-<p>These are in the implementation-defined range (0x0000-0x00FF), and
-are intended for internal-use only.</p>
+configuration flash from Piksi 2.3.1.  This module does not apply 
+to Piksi Multi.</p>
 <dl class="class">
 <dt id="sbp.flash.MsgFlashDone">
 <em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgFlashDone</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashDone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashDone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_FLASH_DONE (0x00E0).</p>
 <blockquote>
-<div><p>You can have MSG_FLASH_DONE inherent its fields directly
+<div><p>You can have MSG_FLASH_DONE inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message defines success or failure codes for a variety of</p>
 </div></blockquote>
-<p>flash memory requests from the host to the device. Flash read and
-write messages, such as MSG_FLASH_READ or MSG_FLASH_WRITE, may
-return this message on failure.</p>
+<p>flash memory requests from the host to the device. Flash read
+and write messages, such as MSG_FLASH_READ_REQ, or
+MSG_FLASH_PROGRAM, may return this message on failure.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>response <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Response flags</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>response</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Response flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
@@ -96,9 +80,19 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.flash.MsgFlashDone.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashDone.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashDone.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashDone.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashDone.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.flash.MsgFlashDone.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashDone.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashDone.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgFlashDone.response">
+<code class="descname">response</code><a class="headerlink" href="#sbp.flash.MsgFlashDone.response" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.flash.MsgFlashDone.to_binary">
@@ -107,20 +101,19 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.flash.MsgFlashDone.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashDone.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashDone.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
-</dd></dl>
+<dt id="sbp.flash.MsgFlashDone.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashDone.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashDone.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.flash.MsgFlashErase">
 <em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgFlashErase</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashErase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashErase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_FLASH_ERASE (0x00E2).</p>
 <blockquote>
-<div><p>You can have MSG_FLASH_ERASE inherent its fields directly
+<div><p>You can have MSG_FLASH_ERASE inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The flash erase message from the host erases a sector of either</p>
@@ -131,15 +124,21 @@ on success or FLASH_INVALID_FLASH (1) if the flash specified is
 invalid.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>target <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Target flags</dd>
-<dt>sector_num <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Flash sector number to erase (0-11 for the STM, 0-15 for</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>target</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Target flags</dd>
+<dt>sector_num</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Flash sector number to erase (0-11 for the STM, 0-15 for</dd>
 </dl>
 </div></blockquote>
 <p>the M25)</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
 <dl class="method">
 <dt id="sbp.flash.MsgFlashErase.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashErase.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashErase.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -149,9 +148,24 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.flash.MsgFlashErase.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashErase.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashErase.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashErase.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashErase.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.flash.MsgFlashErase.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashErase.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashErase.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgFlashErase.sector_num">
+<code class="descname">sector_num</code><a class="headerlink" href="#sbp.flash.MsgFlashErase.sector_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgFlashErase.target">
+<code class="descname">target</code><a class="headerlink" href="#sbp.flash.MsgFlashErase.target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.flash.MsgFlashErase.to_binary">
@@ -160,20 +174,19 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.flash.MsgFlashErase.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashErase.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashErase.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
-</dd></dl>
+<dt id="sbp.flash.MsgFlashErase.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashErase.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashErase.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.flash.MsgFlashProgram">
 <em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgFlashProgram</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashProgram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashProgram" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_FLASH_PROGRAM (0x00E0).</p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_FLASH_PROGRAM (0x00E6).</p>
 <blockquote>
-<div><p>You can have MSG_FLASH_PROGRAM inherent its fields directly
+<div><p>You can have MSG_FLASH_PROGRAM inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The flash program message programs a set of addresses of either</p>
@@ -185,23 +198,40 @@ is exceeded. Note that the sector-containing addresses must be
 erased before addresses can be programmed.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>target <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Target flags</dd>
-<dt>addr_start <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
-<dd>Starting address offset to program</dd>
-<dt>addr_len <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Length of set of addresses to program, counting up from</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>target</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Target flags</dd>
+<dt>addr_start</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Starting address offset to program</dd>
+<dt>addr_len</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Length of set of addresses to program, counting up from</dd>
 </dl>
 </div></blockquote>
 <p>starting address</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>data <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
-<dd>Data to program addresses with, with length N=addr_len</dd>
+<dt>data</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Data to program addresses with, with length N=addr_len</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
+<dl class="attribute">
+<dt id="sbp.flash.MsgFlashProgram.addr_len">
+<code class="descname">addr_len</code><a class="headerlink" href="#sbp.flash.MsgFlashProgram.addr_len" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgFlashProgram.addr_start">
+<code class="descname">addr_start</code><a class="headerlink" href="#sbp.flash.MsgFlashProgram.addr_start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgFlashProgram.data">
+<code class="descname">data</code><a class="headerlink" href="#sbp.flash.MsgFlashProgram.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.flash.MsgFlashProgram.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashProgram.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashProgram.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -211,9 +241,19 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.flash.MsgFlashProgram.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashProgram.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashProgram.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashProgram.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashProgram.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.flash.MsgFlashProgram.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashProgram.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashProgram.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgFlashProgram.target">
+<code class="descname">target</code><a class="headerlink" href="#sbp.flash.MsgFlashProgram.target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.flash.MsgFlashProgram.to_binary">
@@ -222,77 +262,183 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.flash.MsgFlashProgram.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashProgram.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashProgram.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
-</dd></dl>
+<dt id="sbp.flash.MsgFlashProgram.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashProgram.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashProgram.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="sbp.flash.MsgFlashRead">
-<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgFlashRead</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashRead"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashRead" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_FLASH_READ (0x00E1).</p>
+<dt id="sbp.flash.MsgFlashReadReq">
+<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgFlashReadReq</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashReadReq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashReadReq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_FLASH_READ_REQ (0x00E7).</p>
 <blockquote>
-<div><p>You can have MSG_FLASH_READ inherent its fields directly
+<div><p>You can have MSG_FLASH_READ_REQ inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The flash read message reads a set of addresses of either the</p>
 </div></blockquote>
 <p>STM or M25 onboard flash. The device replies with a
-MSG_FLASH_READ message containing either the read data on
+MSG_FLASH_READ_RESP message containing either the read data on
 success or a MSG_FLASH_DONE message containing the return code
 FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
 FLASH_INVALID_ADDR (3) if the address is outside of the allowed
 range.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>target <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Target flags</dd>
-<dt>addr_start <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
-<dd>Starting address offset to read from</dd>
-<dt>addr_len <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Length of set of addresses to read, counting up from</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>target</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Target flags</dd>
+<dt>addr_start</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Starting address offset to read from</dd>
+<dt>addr_len</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Length of set of addresses to read, counting up from</dd>
 </dl>
 </div></blockquote>
 <p>starting address</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.flash.MsgFlashReadReq.addr_len">
+<code class="descname">addr_len</code><a class="headerlink" href="#sbp.flash.MsgFlashReadReq.addr_len" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgFlashReadReq.addr_start">
+<code class="descname">addr_start</code><a class="headerlink" href="#sbp.flash.MsgFlashReadReq.addr_start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
-<dt id="sbp.flash.MsgFlashRead.from_binary">
-<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashRead.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashRead.from_binary" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.flash.MsgFlashReadReq.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashReadReq.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashReadReq.from_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a binary payload d, update the appropriate payload fields of
 the message.</p>
 </dd></dl>
 
 <dl class="staticmethod">
-<dt id="sbp.flash.MsgFlashRead.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashRead.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashRead.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<dt id="sbp.flash.MsgFlashReadReq.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashReadReq.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashReadReq.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
 
+<dl class="staticmethod">
+<dt id="sbp.flash.MsgFlashReadReq.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashReadReq.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashReadReq.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgFlashReadReq.target">
+<code class="descname">target</code><a class="headerlink" href="#sbp.flash.MsgFlashReadReq.target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
-<dt id="sbp.flash.MsgFlashRead.to_binary">
-<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashRead.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashRead.to_binary" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.flash.MsgFlashReadReq.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashReadReq.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashReadReq.to_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Produce a framed/packed SBP message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.flash.MsgFlashRead.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashRead.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashRead.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.flash.MsgFlashReadReq.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashReadReq.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashReadReq.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.flash.MsgFlashReadResp">
+<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgFlashReadResp</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashReadResp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashReadResp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_FLASH_READ_RESP (0x00E1).</p>
+<blockquote>
+<div><p>You can have MSG_FLASH_READ_RESP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The flash read message reads a set of addresses of either the</p>
+</div></blockquote>
+<p>STM or M25 onboard flash. The device replies with a
+MSG_FLASH_READ_RESP message containing either the read data on
+success or a MSG_FLASH_DONE message containing the return code
+FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
+FLASH_INVALID_ADDR (3) if the address is outside of the allowed
+range.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>target</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Target flags</dd>
+<dt>addr_start</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Starting address offset to read from</dd>
+<dt>addr_len</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Length of set of addresses to read, counting up from</dd>
+</dl>
+</div></blockquote>
+<p>starting address</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.flash.MsgFlashReadResp.addr_len">
+<code class="descname">addr_len</code><a class="headerlink" href="#sbp.flash.MsgFlashReadResp.addr_len" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgFlashReadResp.addr_start">
+<code class="descname">addr_start</code><a class="headerlink" href="#sbp.flash.MsgFlashReadResp.addr_start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.flash.MsgFlashReadResp.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashReadResp.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashReadResp.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.flash.MsgFlashReadResp.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashReadResp.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashReadResp.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.flash.MsgFlashReadResp.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashReadResp.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashReadResp.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgFlashReadResp.target">
+<code class="descname">target</code><a class="headerlink" href="#sbp.flash.MsgFlashReadResp.target" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.flash.MsgFlashReadResp.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashReadResp.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashReadResp.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.flash.MsgFlashReadResp.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgFlashReadResp.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgFlashReadResp.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.flash.MsgM25FlashWriteStatus">
 <em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgM25FlashWriteStatus</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgM25FlashWriteStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgM25FlashWriteStatus" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_M25_FLASH_WRITE_STATUS (0x00F3).</p>
 <blockquote>
-<div><p>You can have MSG_M25_FLASH_WRITE_STATUS inherent its fields directly
+<div><p>You can have MSG_M25_FLASH_WRITE_STATUS inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The flash status message writes to the 8-bit M25 flash status</p>
@@ -300,10 +446,12 @@ of its fields.</p>
 <p>register. The device replies with a MSG_FLASH_DONE message.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>status <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
-<dd>Byte to write to the M25 flash status register</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>status</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Byte to write to the M25 flash status register</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
@@ -315,9 +463,19 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.flash.MsgM25FlashWriteStatus.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgM25FlashWriteStatus.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgM25FlashWriteStatus.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgM25FlashWriteStatus.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgM25FlashWriteStatus.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.flash.MsgM25FlashWriteStatus.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgM25FlashWriteStatus.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgM25FlashWriteStatus.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgM25FlashWriteStatus.status">
+<code class="descname">status</code><a class="headerlink" href="#sbp.flash.MsgM25FlashWriteStatus.status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.flash.MsgM25FlashWriteStatus.to_binary">
@@ -326,20 +484,19 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.flash.MsgM25FlashWriteStatus.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgM25FlashWriteStatus.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgM25FlashWriteStatus.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
-</dd></dl>
+<dt id="sbp.flash.MsgM25FlashWriteStatus.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgM25FlashWriteStatus.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgM25FlashWriteStatus.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.flash.MsgStmFlashLockSector">
 <em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgStmFlashLockSector</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashLockSector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashLockSector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_STM_FLASH_LOCK_SECTOR (0x00E3).</p>
 <blockquote>
-<div><p>You can have MSG_STM_FLASH_LOCK_SECTOR inherent its fields directly
+<div><p>You can have MSG_STM_FLASH_LOCK_SECTOR inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The flash lock message locks a sector of the STM flash</p>
@@ -347,10 +504,12 @@ of its fields.</p>
 <p>memory. The device replies with a MSG_FLASH_DONE message.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>sector <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Flash sector number to lock</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>sector</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Flash sector number to lock</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
@@ -362,9 +521,19 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.flash.MsgStmFlashLockSector.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashLockSector.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashLockSector.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashLockSector.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashLockSector.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.flash.MsgStmFlashLockSector.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashLockSector.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashLockSector.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgStmFlashLockSector.sector">
+<code class="descname">sector</code><a class="headerlink" href="#sbp.flash.MsgStmFlashLockSector.sector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.flash.MsgStmFlashLockSector.to_binary">
@@ -373,20 +542,19 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.flash.MsgStmFlashLockSector.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashLockSector.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashLockSector.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
-</dd></dl>
+<dt id="sbp.flash.MsgStmFlashLockSector.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashLockSector.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashLockSector.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.flash.MsgStmFlashUnlockSector">
 <em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgStmFlashUnlockSector</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashUnlockSector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashUnlockSector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_STM_FLASH_UNLOCK_SECTOR (0x00E4).</p>
 <blockquote>
-<div><p>You can have MSG_STM_FLASH_UNLOCK_SECTOR inherent its fields directly
+<div><p>You can have MSG_STM_FLASH_UNLOCK_SECTOR inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The flash unlock message unlocks a sector of the STM flash</p>
@@ -394,10 +562,12 @@ of its fields.</p>
 <p>memory. The device replies with a MSG_FLASH_DONE message.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>sector <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Flash sector number to unlock</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>sector</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Flash sector number to unlock</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
@@ -409,9 +579,19 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.flash.MsgStmFlashUnlockSector.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashUnlockSector.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashUnlockSector.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashUnlockSector.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashUnlockSector.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.flash.MsgStmFlashUnlockSector.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashUnlockSector.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashUnlockSector.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgStmFlashUnlockSector.sector">
+<code class="descname">sector</code><a class="headerlink" href="#sbp.flash.MsgStmFlashUnlockSector.sector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.flash.MsgStmFlashUnlockSector.to_binary">
@@ -420,57 +600,96 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.flash.MsgStmFlashUnlockSector.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashUnlockSector.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashUnlockSector.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
-</dd></dl>
+<dt id="sbp.flash.MsgStmFlashUnlockSector.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmFlashUnlockSector.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmFlashUnlockSector.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="sbp.flash.MsgStmUniqueId">
-<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgStmUniqueId</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueId" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_STM_UNIQUE_ID (0x00E5).</p>
+<dt id="sbp.flash.MsgStmUniqueIdReq">
+<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgStmUniqueIdReq</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueIdReq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueIdReq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_STM_UNIQUE_ID_REQ (0x00E8).</p>
 <blockquote>
-<div><p>You can have MSG_STM_UNIQUE_ID inherent its fields directly
+<div><p>You can have MSG_STM_UNIQUE_ID_REQ inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>This message reads the device&#8217;s hardcoded unique ID. The device</p>
+<p>This message reads the device&#8217;s hardcoded unique ID. The host</p>
 </div></blockquote>
-<p>returns 12-byte unique ID back to host.</p>
+<p>requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
+responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
+ID in the payload.</p>
+<dl class="staticmethod">
+<dt id="sbp.flash.MsgStmUniqueIdReq.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueIdReq.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueIdReq.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.flash.MsgStmUniqueIdReq.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueIdReq.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueIdReq.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.flash.MsgStmUniqueIdResp">
+<em class="property">class </em><code class="descclassname">sbp.flash.</code><code class="descname">MsgStmUniqueIdResp</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueIdResp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueIdResp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_STM_UNIQUE_ID_RESP (0x00E5).</p>
+<blockquote>
+<div><p>You can have MSG_STM_UNIQUE_ID_RESP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message reads the device&#8217;s hardcoded unique ID. The host</p>
+</div></blockquote>
+<p>requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
+responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
+ID in the payload..</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>stm_id <span class="classifier-delimiter">:</span> <span class="classifier">array</span></dt>
-<dd>Device unique ID</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>stm_id</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Device unique ID</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
-<dt id="sbp.flash.MsgStmUniqueId.from_binary">
-<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueId.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueId.from_binary" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.flash.MsgStmUniqueIdResp.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueIdResp.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueIdResp.from_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a binary payload d, update the appropriate payload fields of
 the message.</p>
 </dd></dl>
 
 <dl class="staticmethod">
-<dt id="sbp.flash.MsgStmUniqueId.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueId.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueId.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<dt id="sbp.flash.MsgStmUniqueIdResp.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueIdResp.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueIdResp.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
 
+<dl class="staticmethod">
+<dt id="sbp.flash.MsgStmUniqueIdResp.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueIdResp.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueIdResp.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.flash.MsgStmUniqueIdResp.stm_id">
+<code class="descname">stm_id</code><a class="headerlink" href="#sbp.flash.MsgStmUniqueIdResp.stm_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
-<dt id="sbp.flash.MsgStmUniqueId.to_binary">
-<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueId.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueId.to_binary" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.flash.MsgStmUniqueIdResp.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueIdResp.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueIdResp.to_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Produce a framed/packed SBP message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.flash.MsgStmUniqueId.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueId.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueId.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
-</dd></dl>
+<dt id="sbp.flash.MsgStmUniqueIdResp.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/flash.html#MsgStmUniqueIdResp.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.flash.MsgStmUniqueIdResp.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -481,13 +700,17 @@ the message.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="sbp.file_io.html"
-                        title="previous chapter">sbp.file_io module</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="sbp.logging.html"
-                        title="next chapter">sbp.logging module</a></p>
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.file_io.html" title="previous chapter">sbp.file_io module</a></li>
+      <li>Next: <a href="sbp.gnss.html" title="next chapter">sbp.gnss module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -503,9 +726,6 @@ the message.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -516,12 +736,12 @@ the message.</p>
       &copy;2015, Swift Navigation.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
       |
       <a href="_sources/sbp.flash.txt"
-          rel="nofollow">Page source</a></li>
+          rel="nofollow">Page source</a>
     </div>
 
     
