@@ -21,13 +21,12 @@ Find compiled documentation in java/build/docs/javadoc
 Usage Examples
 --------------
 
-A simple example is provided to read from a serial port, log received
-messages to a JSON logfile, and write log messages and tracking state to
-stdout.
+A simple example is provided to read from a serial port and write log messages,
+as well as the latitude, longitude, and altitude from MsgPosLLH to stdout.
 
   $ cd java/example
-  $ javac -cp ../build/libs/sbp.jar:/path/to/jssc.jar:/path/to/json.jar SerialLink.java
-  $ java -cp ../build/libs/sbp.jar:/path/to/jssc.jar:/path/to/json.jar SerialLink /dev/ttyUSB0
+  $ javac -cp ../build/libs/sbp.jar:/path/to/jssc.jar SerialLink.java
+  $ java -cp ../build/libs/sbp.jar:/path/to/jssc.jar:./ SerialLink /dev/ttyUSB0
 
 License
 -------
