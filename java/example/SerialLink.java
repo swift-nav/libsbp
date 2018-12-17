@@ -10,108 +10,96 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 import com.swiftnav.sbp.SBPMessage;
-import com.swiftnav.sbp.client.SBPDriver;
-import com.swiftnav.sbp.client.SBPForwarder;
 import com.swiftnav.sbp.client.SBPFramer;
 import com.swiftnav.sbp.client.SBPHandler;
 import com.swiftnav.sbp.drivers.SBPDriverJSSC;
-import com.swiftnav.sbp.drivers.SBPDriverHTTP;
 import com.swiftnav.sbp.logging.MsgLog;
-import com.swiftnav.sbp.tracking.MsgTrackingState;
-import com.swiftnav.sbp.tracking.TrackingChannelState;
-
-import java.lang.Integer;
-import java.lang.NumberFormatException;
-import java.lang.System;
-import java.net.MalformedURLException;
-
+import com.swiftnav.sbp.navigation.MsgPosLLH;
 import jssc.SerialPortException;
 
 public class SerialLink {
-    public static final String SKYLARK_OBS_URL = "http://broker.testing.skylark.swiftnav.com";
-    public static final String PIKSI_UUID = "6762d1d5-6282-5874-8557-b80ae55d9a84";
-    private SBPHandler handler;
-    private SBPFramer framer;
+  private SBPHandler handler;
+  private SBPFramer framer;
+  private String[] fix_type = new String[8];
 
-    public static void main(String[] args) {
-        if (args.length == 1) {
-            new SerialLink(args[0]);
-        } else if (args.length == 2) {
-            int baudrate = 0;
-            try {
-                baudrate = Integer.parseInt(args[1]);
-            } catch (NumberFormatException e) {
-                usage();
-            }
-            new SerialLink(args[0], baudrate);
-        } else {
-            usage();
-        }
+  public static void main(String[] args) {
+    if (args.length == 1) {
+      new SerialLink(args[0]);
+    } else if (args.length == 2) {
+      int baudrate = 0;
+      try {
+        baudrate = Integer.parseInt(args[1]);
+      } catch (NumberFormatException e) {
+        usage();
+      }
+      new SerialLink(args[0], baudrate);
+    } else {
+      usage();
     }
+  }
 
-    public static void usage() {
-        System.out.println("usage: SerialLink <port> [baudrate]");
-        System.exit(-1);
+  private void populate_fix_type() {
+    fix_type[0] = "No fix";
+    fix_type[1] = "SPP";
+    fix_type[2] = "DGPS";
+    fix_type[3] = "float";
+    fix_type[4] = "fixed";
+    fix_type[5] = "DR";
+    fix_type[6] = "SBAS";
+    fix_type[7] = "UNKNOWN";
+  }
+
+  public static void usage() {
+    System.out.println("usage: SerialLink <port> [baudrate]");
+    System.exit(-1);
+  }
+
+  SerialLink(String port) {
+    this(port, SBPDriverJSSC.BAUDRATE_DEFAULT);
+  }
+
+  SerialLink(String port, int baudrate) {
+    populate_fix_type();
+    try {
+      framer = new SBPFramer(new SBPDriverJSSC(port, baudrate));
+      handler = new SBPHandler(framer);
+      handler.start();
+    } catch (SerialPortException e) {
+      System.err.println("Failed to open serial port: " + e.toString());
+      System.exit(-2);
     }
-
-    private Iterable<SBPMessage> connectObsServer() {
-        try {
-            SBPDriver driver = new SBPDriverHTTP(PIKSI_UUID, SKYLARK_OBS_URL);
-            return new SBPFramer(driver);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
-        }
+    for (SBPMessage msg : handler) {
+      switch (msg.type) {
+        case MsgLog.TYPE:
+          logHandler(msg);
+          break;
+        case MsgPosLLH.TYPE:
+          llhHandler(msg);
+          break;
+      }
     }
+  }
 
-    SerialLink(String port) {
-        this(port, SBPDriverJSSC.BAUDRATE_DEFAULT);
+  public void logHandler(SBPMessage msg_) {
+    MsgLog msg = (MsgLog) msg_;
+    System.out.print(msg.text);
+  }
+
+  public void llhHandler(SBPMessage msg_) {
+    MsgPosLLH msg = (MsgPosLLH) msg_;
+    int fix_type = msg.flags & 0x7;
+    System.out.printf(
+        "POSLLH message received -- fix_type: %s, tow [ms]: %d", this.fix_type[fix_type], msg.tow);
+    if (fix_type != 0) {
+      System.out.printf(
+          ", lat[deg]: %f, lon[deg]: %f, ellipsoid alt[m]: %f, horizontal accuracy[m]: %f, vertical_accuracy[m]: %f, n_sats: %d",
+          msg.lat,
+          msg.lon,
+          msg.height,
+          msg.h_accuracy / 1000.0,
+          msg.v_accuracy / 1000.0,
+          msg.n_sats);
     }
-    SerialLink(String port, int baudrate) {
-        try {
-            framer = new SBPFramer(new SBPDriverJSSC(port, baudrate));
-            handler = new SBPHandler(framer);
-            handler.start();
-        } catch (SerialPortException e) {
-            System.err.println("Failed to open serial port: " + e.toString());
-            System.exit(-2);
-        }
-        Iterable<SBPMessage> obsServer = connectObsServer();
-        if (obsServer != null)
-            new SBPForwarder(obsServer, framer).start();
-
-        for (SBPMessage msg : handler) {
-            switch (msg.type) {
-                case MsgLog.TYPE:
-                    logHandler(msg);
-                    break;
-                case MsgTrackingState.TYPE:
-                    trackingHandler(msg);
-                    break;
-            }
-        }
-    }
-
-    public void logHandler(SBPMessage msg_) {
-        MsgLog msg = (MsgLog) msg_;
-        System.out.print(msg.text);
-    }
-
-    public void trackingHandler(SBPMessage msg_) {
-        MsgTrackingState msg = (MsgTrackingState) msg_;
-
-        boolean tracking = false;
-        for (TrackingChannelState state : msg.states)
-            if (state.state != 0)
-                tracking = true;
-        if (!tracking)
-            return;
-
-        System.out.print("Tracking: ");
-        for (TrackingChannelState state : msg.states) {
-            if (state.state != 0)
-                System.out.printf("PRN%d(%.1f) ", state.sid + 1, state.cn0);
-        }
-        System.out.println();
-    }
+    System.out.println();
+  }
 }
