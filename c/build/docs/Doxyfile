@@ -32,7 +32,7 @@ PROJECT_NAME           = libsbp
 # This could be handy for archiving the generated documentation or
 # if some version control system is used.
 
-PROJECT_NUMBER         = v2.4.5-9-gc0285f25-dirty
+PROJECT_NUMBER         = v2.4.5-10-g0a767a15-dirty
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer
