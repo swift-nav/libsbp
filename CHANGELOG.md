@@ -1,11 +1,25 @@
 # Change Log
 
-## [v2.4.5](https://github.com/swift-nav/libsbp/tree/v2.4.5)
+## [v2.4.6](https://github.com/swift-nav/libsbp/tree/v2.4.6)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.5...v2.4.6)
+
+**Closed issues:**
+
+- link to Piksi settings in sbp.settings module doc is really outdated [\#626](https://github.com/swift-nav/libsbp/issues/626)
+- Publish v2.3.15 as a release [\#573](https://github.com/swift-nav/libsbp/issues/573)
+
+**Merged pull requests:**
+
+- Use OpenJDK 8 so we aren't chasing Oracle \[ESD-940\] [\#625](https://github.com/swift-nav/libsbp/pull/625)
+- Attempt to resolve JavaScript security warnings [\#624](https://github.com/swift-nav/libsbp/pull/624)
+
+## [v2.4.5](https://github.com/swift-nav/libsbp/tree/v2.4.5) (2018-11-28)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.4...v2.4.5)
 
 **Merged pull requests:**
 
+- v2.4.5 files [\#623](https://github.com/swift-nav/libsbp/pull/623)
 - Msg Timing Telem [\#622](https://github.com/swift-nav/libsbp/pull/622)
 
 ## [v2.4.4](https://github.com/swift-nav/libsbp/tree/v2.4.4) (2018-11-20)
