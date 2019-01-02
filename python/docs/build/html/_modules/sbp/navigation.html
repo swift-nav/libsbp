@@ -69,6 +69,7 @@
 <span class="sd">device settings.  By default, the vehicle body frame is configured to be</span>
 <span class="sd">coincident with the antenna phase center.  When there is no inertial</span>
 <span class="sd">navigation, the solution will be reported at the phase center of the antenna.</span>
+<span class="sd">There is no inertial navigation capability on Piksi Multi or Duro. </span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -1722,7 +1723,8 @@
 <span class="sd">Since this is a right handed system, z should point out the bottom of the vehicle.</span>
 <span class="sd">The orientation and origin of the Vehicle Body Frame are specified via the device settings.</span>
 <span class="sd">The full GPS time is given by the preceding MSG_GPS_TIME with the</span>
-<span class="sd">matching time-of-week (tow).</span>
+<span class="sd">matching time-of-week (tow). This message is only produced by inertial versions of Swift</span>
+<span class="sd">products and is not available from Piksi Multi or Duro.</span>
 
 
 <span class="sd">  Parameters</span>

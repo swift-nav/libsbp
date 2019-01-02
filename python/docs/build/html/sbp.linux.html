@@ -37,8 +37,717 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="sbp-linux-module">
-<h1>sbp.linux module<a class="headerlink" href="#sbp-linux-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-sbp.linux">
+<span id="sbp-linux-module"></span><h1>sbp.linux module<a class="headerlink" href="#module-sbp.linux" title="Permalink to this headline">¶</a></h1>
+<p>Linux state monitoring.</p>
+<dl class="class">
+<dt id="sbp.linux.MsgLinuxCpuState">
+<em class="property">class </em><code class="descclassname">sbp.linux.</code><code class="descname">MsgLinuxCpuState</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxCpuState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxCpuState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_LINUX_CPU_STATE (0x7F00).</p>
+<blockquote>
+<div><p>You can have MSG_LINUX_CPU_STATE inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message indicates the process state of the top 10 heaviest</p>
+</div></blockquote>
+<p>consumers of CPU on the system.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>index</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>sequence of this status message, values from 0-9</dd>
+<dt>pid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>the PID of the process</dd>
+<dt>pcpu</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>percent of cpu used, expressed as a fraction of 256</dd>
+<dt>tname</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>fixed length string representing the thread name</dd>
+<dt>cmdline</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>the command line (as much as it fits in the remaining packet)</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxCpuState.cmdline">
+<code class="descname">cmdline</code><a class="headerlink" href="#sbp.linux.MsgLinuxCpuState.cmdline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxCpuState.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxCpuState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxCpuState.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxCpuState.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxCpuState.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxCpuState.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxCpuState.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxCpuState.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxCpuState.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxCpuState.index">
+<code class="descname">index</code><a class="headerlink" href="#sbp.linux.MsgLinuxCpuState.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxCpuState.pcpu">
+<code class="descname">pcpu</code><a class="headerlink" href="#sbp.linux.MsgLinuxCpuState.pcpu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxCpuState.pid">
+<code class="descname">pid</code><a class="headerlink" href="#sbp.linux.MsgLinuxCpuState.pid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxCpuState.tname">
+<code class="descname">tname</code><a class="headerlink" href="#sbp.linux.MsgLinuxCpuState.tname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxCpuState.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxCpuState.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxCpuState.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxCpuState.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxCpuState.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxCpuState.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.linux.MsgLinuxMemState">
+<em class="property">class </em><code class="descclassname">sbp.linux.</code><code class="descname">MsgLinuxMemState</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxMemState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxMemState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_LINUX_MEM_STATE (0x7F01).</p>
+<blockquote>
+<div><p>You can have MSG_LINUX_MEM_STATE inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message indicates the process state of the top 10 heaviest</p>
+</div></blockquote>
+<p>consumers of memory on the system.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>index</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>sequence of this status message, values from 0-9</dd>
+<dt>pid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>the PID of the process</dd>
+<dt>pmem</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>percent of memory used, expressed as a fraction of 256</dd>
+<dt>tname</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>fixed length string representing the thread name</dd>
+<dt>cmdline</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>the command line (as much as it fits in the remaining packet)</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxMemState.cmdline">
+<code class="descname">cmdline</code><a class="headerlink" href="#sbp.linux.MsgLinuxMemState.cmdline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxMemState.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxMemState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxMemState.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxMemState.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxMemState.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxMemState.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxMemState.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxMemState.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxMemState.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxMemState.index">
+<code class="descname">index</code><a class="headerlink" href="#sbp.linux.MsgLinuxMemState.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxMemState.pid">
+<code class="descname">pid</code><a class="headerlink" href="#sbp.linux.MsgLinuxMemState.pid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxMemState.pmem">
+<code class="descname">pmem</code><a class="headerlink" href="#sbp.linux.MsgLinuxMemState.pmem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxMemState.tname">
+<code class="descname">tname</code><a class="headerlink" href="#sbp.linux.MsgLinuxMemState.tname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxMemState.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxMemState.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxMemState.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxMemState.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxMemState.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxMemState.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.linux.MsgLinuxProcessFdCount">
+<em class="property">class </em><code class="descclassname">sbp.linux.</code><code class="descname">MsgLinuxProcessFdCount</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessFdCount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_LINUX_PROCESS_FD_COUNT (0x7F06).</p>
+<p>You can have MSG_LINUX_PROCESS_FD_COUNT inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Top 10 list of processes with a large number of open file descriptors.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>index</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>sequence of this status message, values from 0-9</dd>
+<dt>pid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>the PID of the process in question</dd>
+<dt>fd_count</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>a count of the number of file descriptors opened by the process</dd>
+<dt>cmdline</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>the command line of the process in question</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessFdCount.cmdline">
+<code class="descname">cmdline</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdCount.cmdline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessFdCount.fd_count">
+<code class="descname">fd_count</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdCount.fd_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxProcessFdCount.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessFdCount.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdCount.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxProcessFdCount.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessFdCount.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdCount.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxProcessFdCount.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessFdCount.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdCount.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessFdCount.index">
+<code class="descname">index</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdCount.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessFdCount.pid">
+<code class="descname">pid</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdCount.pid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxProcessFdCount.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessFdCount.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdCount.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxProcessFdCount.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessFdCount.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdCount.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.linux.MsgLinuxProcessFdSummary">
+<em class="property">class </em><code class="descclassname">sbp.linux.</code><code class="descname">MsgLinuxProcessFdSummary</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessFdSummary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdSummary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_LINUX_PROCESS_FD_SUMMARY (0x7F07).</p>
+<blockquote>
+<div><p>You can have MSG_LINUX_PROCESS_FD_SUMMARY inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Summary of open file descriptors on the system.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>sys_fd_count</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>count of total FDs open on the system</dd>
+<dt>most_opened</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>A null delimited list of strings which alternates between</dd>
+</dl>
+</div></blockquote>
+<p>a string representation of the process count and the file
+name whose count it being reported.  That is, in C string
+syntax &#8220;32/var/log/syslog
+/tmp/foo&#8221; with the end
+of the list being 2 NULL terminators in a row.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxProcessFdSummary.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessFdSummary.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdSummary.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxProcessFdSummary.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessFdSummary.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdSummary.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxProcessFdSummary.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessFdSummary.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdSummary.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessFdSummary.most_opened">
+<code class="descname">most_opened</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdSummary.most_opened" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessFdSummary.sys_fd_count">
+<code class="descname">sys_fd_count</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdSummary.sys_fd_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxProcessFdSummary.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessFdSummary.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdSummary.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxProcessFdSummary.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessFdSummary.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessFdSummary.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.linux.MsgLinuxProcessSocketCounts">
+<em class="property">class </em><code class="descclassname">sbp.linux.</code><code class="descname">MsgLinuxProcessSocketCounts</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessSocketCounts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketCounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_LINUX_PROCESS_SOCKET_COUNTS (0x7F03).</p>
+<p>You can have MSG_LINUX_PROCESS_SOCKET_COUNTS inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Top 10 list of processes with high socket counts.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>index</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>sequence of this status message, values from 0-9</dd>
+<dt>pid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>the PID of the process in question</dd>
+<dt>socket_count</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>the number of sockets the process is using</dd>
+<dt>socket_types</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>A bitfield indicating the socket types used:</dd>
+</dl>
+<p>0x1 (tcp), 0x2 (udp), 0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink),
+and 0x8000 (unknown)</p>
+<dl class="docutils">
+<dt>socket_states</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>A bitfield indicating the socket states:</dd>
+</dl>
+<p>0x1 (established), 0x2 (syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1),
+0x10 (fin-wait-2), 0x20 (time-wait), 0x40 (closed), 0x80 (close-wait),
+0x100 (last-ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected),
+and 0x8000 (unknown)</p>
+<dl class="docutils">
+<dt>cmdline</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>the command line of the process in question</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketCounts.cmdline">
+<code class="descname">cmdline</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketCounts.cmdline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxProcessSocketCounts.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessSocketCounts.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketCounts.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxProcessSocketCounts.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessSocketCounts.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketCounts.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxProcessSocketCounts.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessSocketCounts.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketCounts.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketCounts.index">
+<code class="descname">index</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketCounts.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketCounts.pid">
+<code class="descname">pid</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketCounts.pid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketCounts.socket_count">
+<code class="descname">socket_count</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketCounts.socket_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketCounts.socket_states">
+<code class="descname">socket_states</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketCounts.socket_states" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketCounts.socket_types">
+<code class="descname">socket_types</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketCounts.socket_types" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxProcessSocketCounts.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessSocketCounts.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketCounts.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxProcessSocketCounts.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessSocketCounts.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketCounts.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues">
+<em class="property">class </em><code class="descclassname">sbp.linux.</code><code class="descname">MsgLinuxProcessSocketQueues</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessSocketQueues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_LINUX_PROCESS_SOCKET_QUEUES (0x7F04).</p>
+<blockquote>
+<div><p>You can have MSG_LINUX_PROCESS_SOCKET_QUEUES inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Top 10 list of sockets with deep queues.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>index</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>sequence of this status message, values from 0-9</dd>
+<dt>pid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>the PID of the process in question</dd>
+<dt>recv_queued</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>the total amount of receive data queued for this process</dd>
+<dt>send_queued</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>the total amount of send data queued for this process</dd>
+<dt>socket_types</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>A bitfield indicating the socket types used:</dd>
+</dl>
+<p>0x1 (tcp), 0x2 (udp), 0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink),
+and 0x8000 (unknown)</p>
+<dl class="docutils">
+<dt>socket_states</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>A bitfield indicating the socket states:</dd>
+</dl>
+<p>0x1 (established), 0x2 (syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1),
+0x10 (fin-wait-2), 0x20 (time-wait), 0x40 (closed), 0x80 (close-wait),
+0x100 (last-ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected),
+and 0x8000 (unknown)</p>
+<dl class="docutils">
+<dt>address_of_largest</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>Address of the largest queue, remote or local depending on the directionality</dd>
+</dl>
+</div></blockquote>
+<p>of the connection.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>cmdline</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>the command line of the process in question</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues.address_of_largest">
+<code class="descname">address_of_largest</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues.address_of_largest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues.cmdline">
+<code class="descname">cmdline</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues.cmdline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessSocketQueues.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessSocketQueues.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessSocketQueues.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues.index">
+<code class="descname">index</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues.pid">
+<code class="descname">pid</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues.pid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues.recv_queued">
+<code class="descname">recv_queued</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues.recv_queued" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues.send_queued">
+<code class="descname">send_queued</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues.send_queued" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues.socket_states">
+<code class="descname">socket_states</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues.socket_states" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues.socket_types">
+<code class="descname">socket_types</code><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues.socket_types" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessSocketQueues.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxProcessSocketQueues.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxProcessSocketQueues.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxProcessSocketQueues.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.linux.MsgLinuxSocketUsage">
+<em class="property">class </em><code class="descclassname">sbp.linux.</code><code class="descname">MsgLinuxSocketUsage</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxSocketUsage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxSocketUsage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_LINUX_SOCKET_USAGE (0x7F05).</p>
+<blockquote>
+<div><p>You can have MSG_LINUX_SOCKET_USAGE inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Summaries the socket usage across the system.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>avg_queue_depth</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>average socket queue depths across all sockets on the system</dd>
+<dt>max_queue_depth</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>the max queue depth seen within the reporting period</dd>
+<dt>socket_state_counts</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>A count for each socket type reported in the <cite>socket_types_reported</cite> field,</dd>
+</dl>
+</div></blockquote>
+<p>the first entry corresponds to the first enabled bit in <cite>types_reported</cite>.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>socket_type_counts</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>A count for each socket type reported in the <cite>socket_types_reported</cite> field,</dd>
+</dl>
+</div></blockquote>
+<p>the first entry corresponds to the first enabled bit in <cite>types_reported</cite>.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxSocketUsage.avg_queue_depth">
+<code class="descname">avg_queue_depth</code><a class="headerlink" href="#sbp.linux.MsgLinuxSocketUsage.avg_queue_depth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxSocketUsage.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxSocketUsage.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxSocketUsage.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxSocketUsage.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxSocketUsage.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxSocketUsage.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxSocketUsage.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxSocketUsage.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxSocketUsage.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxSocketUsage.max_queue_depth">
+<code class="descname">max_queue_depth</code><a class="headerlink" href="#sbp.linux.MsgLinuxSocketUsage.max_queue_depth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxSocketUsage.socket_state_counts">
+<code class="descname">socket_state_counts</code><a class="headerlink" href="#sbp.linux.MsgLinuxSocketUsage.socket_state_counts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxSocketUsage.socket_type_counts">
+<code class="descname">socket_type_counts</code><a class="headerlink" href="#sbp.linux.MsgLinuxSocketUsage.socket_type_counts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxSocketUsage.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxSocketUsage.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxSocketUsage.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxSocketUsage.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxSocketUsage.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxSocketUsage.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.linux.MsgLinuxSysState">
+<em class="property">class </em><code class="descclassname">sbp.linux.</code><code class="descname">MsgLinuxSysState</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxSysState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxSysState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_LINUX_SYS_STATE (0x7F02).</p>
+<p>You can have MSG_LINUX_SYS_STATE inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This presents a summary of CPU and memory utilization.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>mem_total</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>total system memory</dd>
+<dt>pcpu</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>percent of total cpu currently utilized</dd>
+<dt>pmem</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>percent of total memory currently utilized</dd>
+<dt>procs_starting</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>number of processes that started during collection phase</dd>
+<dt>procs_stopping</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>number of processes that stopped during collection phase</dd>
+<dt>pid_count</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>the count of processes on the system</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxSysState.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxSysState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxSysState.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxSysState.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxSysState.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxSysState.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.linux.MsgLinuxSysState.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxSysState.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxSysState.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxSysState.mem_total">
+<code class="descname">mem_total</code><a class="headerlink" href="#sbp.linux.MsgLinuxSysState.mem_total" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxSysState.pcpu">
+<code class="descname">pcpu</code><a class="headerlink" href="#sbp.linux.MsgLinuxSysState.pcpu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxSysState.pid_count">
+<code class="descname">pid_count</code><a class="headerlink" href="#sbp.linux.MsgLinuxSysState.pid_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxSysState.pmem">
+<code class="descname">pmem</code><a class="headerlink" href="#sbp.linux.MsgLinuxSysState.pmem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxSysState.procs_starting">
+<code class="descname">procs_starting</code><a class="headerlink" href="#sbp.linux.MsgLinuxSysState.procs_starting" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.linux.MsgLinuxSysState.procs_stopping">
+<code class="descname">procs_stopping</code><a class="headerlink" href="#sbp.linux.MsgLinuxSysState.procs_stopping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxSysState.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxSysState.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxSysState.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.linux.MsgLinuxSysState.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/linux.html#MsgLinuxSysState.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.linux.MsgLinuxSysState.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 
 

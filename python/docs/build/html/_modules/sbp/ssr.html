@@ -168,9 +168,9 @@
     <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">PhaseBiasesContent</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div></div>
     
-<span class="n">SBP_MSG_SSR_ORBIT_CLOCK</span> <span class="o">=</span> <span class="mh">0x05DC</span>
+<span class="n">SBP_MSG_SSR_ORBIT_CLOCK</span> <span class="o">=</span> <span class="mh">0x05DD</span>
 <div class="viewcode-block" id="MsgSsrOrbitClock"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClock">[docs]</a><span class="k">class</span> <span class="nc">MsgSsrOrbitClock</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DC).</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).</span>
 
 <span class="sd">  You can have MSG_SSR_ORBIT_CLOCK inherit its fields directly</span>
 <span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
@@ -199,7 +199,7 @@
 <span class="sd">generating configuration</span>
 
 <span class="sd">  iod : int</span>
-<span class="sd">    Issue of broadcast ephemeris data</span>
+<span class="sd">    Issue of broadcast ephemeris data or IODCRC (Beidou)</span>
 <span class="sd">  radial : int</span>
 <span class="sd">    Orbit radial delta correction</span>
 <span class="sd">  along : int</span>
@@ -227,7 +227,7 @@
                    <span class="s1">&#39;sid&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GnssSignal</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
                    <span class="s1">&#39;update_interval&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
                    <span class="s1">&#39;iod_ssr&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
-                   <span class="s1">&#39;iod&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;iod&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32ul</span><span class="p">,</span>
                    <span class="s1">&#39;radial&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
                    <span class="s1">&#39;along&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
                    <span class="s1">&#39;cross&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
@@ -316,6 +316,158 @@
 <div class="viewcode-block" id="MsgSsrOrbitClock.to_json_dict"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClock.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
     <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSsrOrbitClock</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
+<span class="n">SBP_MSG_SSR_ORBIT_CLOCK_DEP_A</span> <span class="o">=</span> <span class="mh">0x05DC</span>
+<div class="viewcode-block" id="MsgSsrOrbitClockDepA"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClockDepA">[docs]</a><span class="k">class</span> <span class="nc">MsgSsrOrbitClockDepA</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).</span>
+
+<span class="sd">  You can have MSG_SSR_ORBIT_CLOCK_DEP_A inherit its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The precise orbit and clock correction message is </span>
+<span class="sd">to be applied as a delta correction to broadcast </span>
+<span class="sd">ephemeris and is typically an equivalent to the 1060</span>
+<span class="sd">and 1066 RTCM message types</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  time : GPSTimeSec</span>
+<span class="sd">    GNSS reference time of the correction</span>
+<span class="sd">  sid : GnssSignal</span>
+<span class="sd">    GNSS signal identifier (16 bit)</span>
+<span class="sd">  update_interval : int</span>
+<span class="sd">    Update interval between consecutive corrections</span>
+<span class="sd">  iod_ssr : int</span>
+<span class="sd">    IOD of the SSR correction. A change of Issue Of Data</span>
+<span class="sd">SSR is used to indicate a change in the SSR </span>
+<span class="sd">generating configuration</span>
+
+<span class="sd">  iod : int</span>
+<span class="sd">    Issue of broadcast ephemeris data</span>
+<span class="sd">  radial : int</span>
+<span class="sd">    Orbit radial delta correction</span>
+<span class="sd">  along : int</span>
+<span class="sd">    Orbit along delta correction</span>
+<span class="sd">  cross : int</span>
+<span class="sd">    Orbit along delta correction</span>
+<span class="sd">  dot_radial : int</span>
+<span class="sd">    Velocity of orbit radial delta correction</span>
+<span class="sd">  dot_along : int</span>
+<span class="sd">    Velocity of orbit along delta correction</span>
+<span class="sd">  dot_cross : int</span>
+<span class="sd">    Velocity of orbit cross delta correction</span>
+<span class="sd">  c0 : int</span>
+<span class="sd">    C0 polynomial coefficient for correction of broadcast satellite clock</span>
+<span class="sd">  c1 : int</span>
+<span class="sd">    C1 polynomial coefficient for correction of broadcast satellite clock</span>
+<span class="sd">  c2 : int</span>
+<span class="sd">    C2 polynomial coefficient for correction of broadcast satellite clock</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="s1">&#39;time&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GPSTimeSec</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;sid&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GnssSignal</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;update_interval&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;iod_ssr&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;iod&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;radial&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;along&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;cross&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;dot_radial&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;dot_along&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;dot_cross&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;c0&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;c1&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,</span>
+                   <span class="s1">&#39;c2&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32sl</span><span class="p">,)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;time&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sid&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;update_interval&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;iod_ssr&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;iod&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;radial&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;along&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;cross&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;dot_radial&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;dot_along&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;dot_cross&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;c0&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;c1&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;c2&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSsrOrbitClockDepA</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSsrOrbitClockDepA</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_SSR_ORBIT_CLOCK_DEP_A</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sid</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sid&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">update_interval</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;update_interval&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">iod_ssr</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;iod_ssr&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">iod</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;iod&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">radial</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;radial&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">along</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;along&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cross</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cross&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">dot_radial</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;dot_radial&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">dot_along</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;dot_along&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">dot_cross</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;dot_cross&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">c0</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;c0&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">c1</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;c1&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">c2</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;c2&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgSsrOrbitClockDepA.from_json"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClockDepA.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgSsrOrbitClockDepA</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgSsrOrbitClockDepA.from_json_dict"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClockDepA.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgSsrOrbitClockDepA</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+ 
+<div class="viewcode-block" id="MsgSsrOrbitClockDepA.from_binary"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClockDepA.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgSsrOrbitClockDepA</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgSsrOrbitClockDepA.to_binary"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClockDepA.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgSsrOrbitClockDepA</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MsgSsrOrbitClockDepA.to_json_dict"><a class="viewcode-back" href="../../sbp.ssr.html#sbp.ssr.MsgSsrOrbitClockDepA.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSsrOrbitClockDepA</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
     <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">d</span></div></div>
@@ -562,7 +714,8 @@
     
 
 <span class="n">msg_classes</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="mh">0x05DC</span><span class="p">:</span> <span class="n">MsgSsrOrbitClock</span><span class="p">,</span>
+  <span class="mh">0x05DD</span><span class="p">:</span> <span class="n">MsgSsrOrbitClock</span><span class="p">,</span>
+  <span class="mh">0x05DC</span><span class="p">:</span> <span class="n">MsgSsrOrbitClockDepA</span><span class="p">,</span>
   <span class="mh">0x05E1</span><span class="p">:</span> <span class="n">MsgSsrCodeBiases</span><span class="p">,</span>
   <span class="mh">0x05E6</span><span class="p">:</span> <span class="n">MsgSsrPhaseBiases</span><span class="p">,</span>
 <span class="p">}</span>

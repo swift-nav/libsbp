@@ -492,6 +492,142 @@ Others: 0 = valid, non-zero = invalid</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="sbp.observation.GnssCapb">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">GnssCapb</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#GnssCapb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.GnssCapb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>GnssCapb.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>gps_active</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS SV active mask</dd>
+<dt>gps_l2c</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS L2C active mask</dd>
+<dt>gps_l5</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GPS L5 active mask</dd>
+<dt>glo_active</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GLO active mask</dd>
+<dt>glo_l2of</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GLO L2OF active mask</dd>
+<dt>glo_l3</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GLO L3 active mask</dd>
+<dt>sbas_active</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,</dd>
+</dl>
+</div></blockquote>
+<p><a class="reference external" href="https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf">https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf</a>)</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbas_l5</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,</dd>
+</dl>
+</div></blockquote>
+<p><a class="reference external" href="https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf">https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf</a>)</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>bds_active</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>BDS active mask</dd>
+<dt>bds_d2nav</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>BDS D2NAV active mask</dd>
+<dt>bds_b2</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>BDS B2 active mask</dd>
+<dt>bds_b2a</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>BDS B2A active mask</dd>
+<dt>qzss_active</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>QZSS active mask</dd>
+<dt>gal_active</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GAL active mask</dd>
+<dt>gal_e5</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>GAL E5 active mask</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.bds_active">
+<code class="descname">bds_active</code><a class="headerlink" href="#sbp.observation.GnssCapb.bds_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.bds_b2">
+<code class="descname">bds_b2</code><a class="headerlink" href="#sbp.observation.GnssCapb.bds_b2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.bds_b2a">
+<code class="descname">bds_b2a</code><a class="headerlink" href="#sbp.observation.GnssCapb.bds_b2a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.bds_d2nav">
+<code class="descname">bds_d2nav</code><a class="headerlink" href="#sbp.observation.GnssCapb.bds_d2nav" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.GnssCapb.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#GnssCapb.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.GnssCapb.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.gal_active">
+<code class="descname">gal_active</code><a class="headerlink" href="#sbp.observation.GnssCapb.gal_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.gal_e5">
+<code class="descname">gal_e5</code><a class="headerlink" href="#sbp.observation.GnssCapb.gal_e5" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.glo_active">
+<code class="descname">glo_active</code><a class="headerlink" href="#sbp.observation.GnssCapb.glo_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.glo_l2of">
+<code class="descname">glo_l2of</code><a class="headerlink" href="#sbp.observation.GnssCapb.glo_l2of" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.glo_l3">
+<code class="descname">glo_l3</code><a class="headerlink" href="#sbp.observation.GnssCapb.glo_l3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.gps_active">
+<code class="descname">gps_active</code><a class="headerlink" href="#sbp.observation.GnssCapb.gps_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.gps_l2c">
+<code class="descname">gps_l2c</code><a class="headerlink" href="#sbp.observation.GnssCapb.gps_l2c" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.gps_l5">
+<code class="descname">gps_l5</code><a class="headerlink" href="#sbp.observation.GnssCapb.gps_l5" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.qzss_active">
+<code class="descname">qzss_active</code><a class="headerlink" href="#sbp.observation.GnssCapb.qzss_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.sbas_active">
+<code class="descname">sbas_active</code><a class="headerlink" href="#sbp.observation.GnssCapb.sbas_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.GnssCapb.sbas_l5">
+<code class="descname">sbas_l5</code><a class="headerlink" href="#sbp.observation.GnssCapb.sbas_l5" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.GnssCapb.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#GnssCapb.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.GnssCapb.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="sbp.observation.MsgAlmanacGPS">
 <em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">MsgAlmanacGPS</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgAlmanacGPS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgAlmanacGPS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
@@ -4066,6 +4202,65 @@ the message.</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="sbp.observation.MsgGnssCapb">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">MsgGnssCapb</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgGnssCapb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgGnssCapb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_GNSS_CAPB (0x0096).</p>
+<p>You can have MSG_GNSS_CAPB inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>t_nmct</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GPSTimeSec</span><dd>Navigation Message Correction Table Validity Time</dd>
+<dt>gc</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssCapb</span><dd>GNSS capabilities masks</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.observation.MsgGnssCapb.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgGnssCapb.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgGnssCapb.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.observation.MsgGnssCapb.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgGnssCapb.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgGnssCapb.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.observation.MsgGnssCapb.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgGnssCapb.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgGnssCapb.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.MsgGnssCapb.gc">
+<code class="descname">gc</code><a class="headerlink" href="#sbp.observation.MsgGnssCapb.gc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.observation.MsgGnssCapb.t_nmct">
+<code class="descname">t_nmct</code><a class="headerlink" href="#sbp.observation.MsgGnssCapb.t_nmct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.MsgGnssCapb.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgGnssCapb.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgGnssCapb.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.observation.MsgGnssCapb.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgGnssCapb.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgGnssCapb.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="sbp.observation.MsgGroupDelay">
 <em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">MsgGroupDelay</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgGroupDelay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgGroupDelay" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
@@ -4741,11 +4936,11 @@ the message.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="sbp.observation.MsgSvConfigurationGPS">
-<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">MsgSvConfigurationGPS</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgSvConfigurationGPS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPS" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.observation.MsgSvConfigurationGPSDep">
+<em class="property">class </em><code class="descclassname">sbp.observation.</code><code class="descname">MsgSvConfigurationGPSDep</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgSvConfigurationGPSDep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPSDep" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
-<p>SBP class for message MSG_SV_CONFIGURATION_GPS (0x0091).</p>
-<p>You can have MSG_SV_CONFIGURATION_GPS inherit its fields directly
+<p>SBP class for message MSG_SV_CONFIGURATION_GPS_DEP (0x0091).</p>
+<p>You can have MSG_SV_CONFIGURATION_GPS_DEP inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.</p>
@@ -4760,42 +4955,42 @@ of its fields.</p>
  <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 <dl class="method">
-<dt id="sbp.observation.MsgSvConfigurationGPS.from_binary">
-<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgSvConfigurationGPS.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPS.from_binary" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.observation.MsgSvConfigurationGPSDep.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgSvConfigurationGPSDep.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPSDep.from_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a binary payload d, update the appropriate payload fields of
 the message.</p>
 </dd></dl>
 
 <dl class="staticmethod">
-<dt id="sbp.observation.MsgSvConfigurationGPS.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgSvConfigurationGPS.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPS.from_json" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.observation.MsgSvConfigurationGPSDep.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgSvConfigurationGPSDep.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPSDep.from_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
 
 <dl class="staticmethod">
-<dt id="sbp.observation.MsgSvConfigurationGPS.from_json_dict">
-<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgSvConfigurationGPS.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPS.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.observation.MsgSvConfigurationGPSDep.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgSvConfigurationGPSDep.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPSDep.from_json_dict" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="sbp.observation.MsgSvConfigurationGPS.l2c_mask">
-<code class="descname">l2c_mask</code><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPS.l2c_mask" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.observation.MsgSvConfigurationGPSDep.l2c_mask">
+<code class="descname">l2c_mask</code><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPSDep.l2c_mask" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="sbp.observation.MsgSvConfigurationGPS.t_nmct">
-<code class="descname">t_nmct</code><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPS.t_nmct" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.observation.MsgSvConfigurationGPSDep.t_nmct">
+<code class="descname">t_nmct</code><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPSDep.t_nmct" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="sbp.observation.MsgSvConfigurationGPS.to_binary">
-<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgSvConfigurationGPS.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPS.to_binary" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.observation.MsgSvConfigurationGPSDep.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgSvConfigurationGPSDep.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPSDep.to_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Produce a framed/packed SBP message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.observation.MsgSvConfigurationGPS.to_json_dict">
-<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgSvConfigurationGPS.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPS.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.observation.MsgSvConfigurationGPSDep.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/observation.html#MsgSvConfigurationGPSDep.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.observation.MsgSvConfigurationGPSDep.to_json_dict" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -4882,9 +5077,12 @@ counter (ith packet of n)</p>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <p>PackedObsContent.</p>
 <blockquote>
-<div>Pseudorange and carrier phase observation for a satellite being</div></blockquote>
-<p>tracked. The observations are interoperable with 3rd party
-receivers and conform with typical RTCMv3 GNSS observations.</p>
+<div>Pseudorange and carrier phase observation for a satellite being tracked.</div></blockquote>
+<p>The observations are interoperable with 3rd party receivers and conform with
+typical RTCM 3.1 message GPS/GLO observations.</p>
+<p>Carrier phase observations are not guaranteed to be aligned to the RINEX 3
+or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
+peformed.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>P</dt>

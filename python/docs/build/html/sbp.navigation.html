@@ -56,7 +56,8 @@ and the RTK solution in tandem.</p>
 all messages are reported in the vehicle body frame as defined by
 device settings.  By default, the vehicle body frame is configured to be
 coincident with the antenna phase center.  When there is no inertial
-navigation, the solution will be reported at the phase center of the antenna.</p>
+navigation, the solution will be reported at the phase center of the antenna.
+There is no inertial navigation capability on Piksi Multi or Duro.</p>
 <dl class="class">
 <dt id="sbp.navigation.MsgAgeCorrections">
 <em class="property">class </em><code class="descclassname">sbp.navigation.</code><code class="descname">MsgAgeCorrections</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/navigation.html#MsgAgeCorrections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.navigation.MsgAgeCorrections" title="Permalink to this definition">¶</a></dt>
@@ -1890,7 +1891,8 @@ direction, while as the y-axis should point out the right hand side of the vehic
 Since this is a right handed system, z should point out the bottom of the vehicle.
 The orientation and origin of the Vehicle Body Frame are specified via the device settings.
 The full GPS time is given by the preceding MSG_GPS_TIME with the
-matching time-of-week (tow).</p>
+matching time-of-week (tow). This message is only produced by inertial versions of Swift
+products and is not available from Piksi Multi or Duro.</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>sbp</dt>

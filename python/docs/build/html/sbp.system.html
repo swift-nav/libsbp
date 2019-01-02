@@ -44,6 +44,138 @@
 <span id="sbp-system-module"></span><h1>sbp.system module<a class="headerlink" href="#module-sbp.system" title="Permalink to this headline">¶</a></h1>
 <p>Standardized system messages from Swift Navigation devices.</p>
 <dl class="class">
+<dt id="sbp.system.MsgCsacTelemetry">
+<em class="property">class </em><code class="descclassname">sbp.system.</code><code class="descname">MsgCsacTelemetry</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgCsacTelemetry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgCsacTelemetry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_CSAC_TELEMETRY (0xFF04).</p>
+<blockquote>
+<div><p>You can have MSG_CSAC_TELEMETRY inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The CSAC telemetry message has an implementation defined telemetry string</p>
+</div></blockquote>
+<p>from a device. It is not produced or available on general Swift Products.
+It is intended to be a low rate message for status purposes.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>id</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Index representing the type of telemetry in use.  It is implemention defined.</dd>
+<dt>telemetry</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>Comma separated list of values as defined by the index</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.system.MsgCsacTelemetry.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgCsacTelemetry.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgCsacTelemetry.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.system.MsgCsacTelemetry.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgCsacTelemetry.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgCsacTelemetry.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.system.MsgCsacTelemetry.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgCsacTelemetry.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgCsacTelemetry.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.system.MsgCsacTelemetry.id">
+<code class="descname">id</code><a class="headerlink" href="#sbp.system.MsgCsacTelemetry.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.system.MsgCsacTelemetry.telemetry">
+<code class="descname">telemetry</code><a class="headerlink" href="#sbp.system.MsgCsacTelemetry.telemetry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.system.MsgCsacTelemetry.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgCsacTelemetry.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgCsacTelemetry.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.system.MsgCsacTelemetry.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgCsacTelemetry.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgCsacTelemetry.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.system.MsgCsacTelemetryLabels">
+<em class="property">class </em><code class="descclassname">sbp.system.</code><code class="descname">MsgCsacTelemetryLabels</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgCsacTelemetryLabels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgCsacTelemetryLabels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_CSAC_TELEMETRY_LABELS (0xFF05).</p>
+<blockquote>
+<div><p>You can have MSG_CSAC_TELEMETRY_LABELS inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The CSAC telemetry message provides labels for each member of the string</p>
+</div></blockquote>
+<p>produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
+rate than the MSG_CSAC_TELEMETRY.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>id</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Index representing the type of telemetry in use.  It is implemention defined.</dd>
+<dt>telemetry_labels</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>Comma separated list of telemetry field values</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.system.MsgCsacTelemetryLabels.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgCsacTelemetryLabels.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgCsacTelemetryLabels.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.system.MsgCsacTelemetryLabels.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgCsacTelemetryLabels.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgCsacTelemetryLabels.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.system.MsgCsacTelemetryLabels.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgCsacTelemetryLabels.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgCsacTelemetryLabels.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.system.MsgCsacTelemetryLabels.id">
+<code class="descname">id</code><a class="headerlink" href="#sbp.system.MsgCsacTelemetryLabels.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.system.MsgCsacTelemetryLabels.telemetry_labels">
+<code class="descname">telemetry_labels</code><a class="headerlink" href="#sbp.system.MsgCsacTelemetryLabels.telemetry_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.system.MsgCsacTelemetryLabels.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgCsacTelemetryLabels.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgCsacTelemetryLabels.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.system.MsgCsacTelemetryLabels.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgCsacTelemetryLabels.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgCsacTelemetryLabels.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="sbp.system.MsgDgnssStatus">
 <em class="property">class </em><code class="descclassname">sbp.system.</code><code class="descname">MsgDgnssStatus</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/system.html#MsgDgnssStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.system.MsgDgnssStatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>

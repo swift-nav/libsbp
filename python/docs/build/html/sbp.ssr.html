@@ -179,7 +179,7 @@ the message.</p>
 <dt id="sbp.ssr.MsgSsrOrbitClock">
 <em class="property">class </em><code class="descclassname">sbp.ssr.</code><code class="descname">MsgSsrOrbitClock</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrOrbitClock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
-<p>SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DC).</p>
+<p>SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).</p>
 <blockquote>
 <div><p>You can have MSG_SSR_ORBIT_CLOCK inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
@@ -208,7 +208,7 @@ generating configuration</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>iod</dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Issue of broadcast ephemeris data</dd>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Issue of broadcast ephemeris data or IODCRC (Beidou)</dd>
 <dt>radial</dt>
  <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Orbit radial delta correction</dd>
 <dt>along</dt>
@@ -328,6 +328,163 @@ the message.</p>
 <dl class="attribute">
 <dt id="sbp.ssr.MsgSsrOrbitClock.update_interval">
 <code class="descname">update_interval</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClock.update_interval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA">
+<em class="property">class </em><code class="descclassname">sbp.ssr.</code><code class="descname">MsgSsrOrbitClockDepA</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrOrbitClockDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).</p>
+<blockquote>
+<div><p>You can have MSG_SSR_ORBIT_CLOCK_DEP_A inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The precise orbit and clock correction message is</p>
+</div></blockquote>
+<p>to be applied as a delta correction to broadcast 
+ephemeris and is typically an equivalent to the 1060
+and 1066 RTCM message types</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>time</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GPSTimeSec</span><dd>GNSS reference time of the correction</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>GNSS signal identifier (16 bit)</dd>
+<dt>update_interval</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Update interval between consecutive corrections</dd>
+<dt>iod_ssr</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>IOD of the SSR correction. A change of Issue Of Data</dd>
+</dl>
+</div></blockquote>
+<p>SSR is used to indicate a change in the SSR 
+generating configuration</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>iod</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Issue of broadcast ephemeris data</dd>
+<dt>radial</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Orbit radial delta correction</dd>
+<dt>along</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Orbit along delta correction</dd>
+<dt>cross</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Orbit along delta correction</dd>
+<dt>dot_radial</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity of orbit radial delta correction</dd>
+<dt>dot_along</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity of orbit along delta correction</dd>
+<dt>dot_cross</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Velocity of orbit cross delta correction</dd>
+<dt>c0</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>C0 polynomial coefficient for correction of broadcast satellite clock</dd>
+<dt>c1</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>C1 polynomial coefficient for correction of broadcast satellite clock</dd>
+<dt>c2</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>C2 polynomial coefficient for correction of broadcast satellite clock</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.along">
+<code class="descname">along</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.along" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.c0">
+<code class="descname">c0</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.c0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.c1">
+<code class="descname">c1</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.c1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.c2">
+<code class="descname">c2</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.c2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.cross">
+<code class="descname">cross</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.cross" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.dot_along">
+<code class="descname">dot_along</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.dot_along" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.dot_cross">
+<code class="descname">dot_cross</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.dot_cross" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.dot_radial">
+<code class="descname">dot_radial</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.dot_radial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrOrbitClockDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrOrbitClockDepA.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrOrbitClockDepA.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.iod">
+<code class="descname">iod</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.iod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.iod_ssr">
+<code class="descname">iod_ssr</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.iod_ssr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.radial">
+<code class="descname">radial</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.radial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.time">
+<code class="descname">time</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrOrbitClockDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/ssr.html#MsgSsrOrbitClockDepA.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.ssr.MsgSsrOrbitClockDepA.update_interval">
+<code class="descname">update_interval</code><a class="headerlink" href="#sbp.ssr.MsgSsrOrbitClockDepA.update_interval" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

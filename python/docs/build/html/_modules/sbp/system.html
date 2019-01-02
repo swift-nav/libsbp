@@ -430,12 +430,190 @@
     <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">d</span></div></div>
     
+<span class="n">SBP_MSG_CSAC_TELEMETRY</span> <span class="o">=</span> <span class="mh">0xFF04</span>
+<div class="viewcode-block" id="MsgCsacTelemetry"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgCsacTelemetry">[docs]</a><span class="k">class</span> <span class="nc">MsgCsacTelemetry</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_CSAC_TELEMETRY (0xFF04).</span>
+
+<span class="sd">  You can have MSG_CSAC_TELEMETRY inherit its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The CSAC telemetry message has an implementation defined telemetry string</span>
+<span class="sd">from a device. It is not produced or available on general Swift Products.</span>
+<span class="sd">It is intended to be a low rate message for status purposes.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  id : int</span>
+<span class="sd">    Index representing the type of telemetry in use.  It is implemention defined.</span>
+<span class="sd">  telemetry : string</span>
+<span class="sd">    Comma separated list of values as defined by the index</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="s1">&#39;id&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;telemetry&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">GreedyBytes</span><span class="p">,)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;id&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;telemetry&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgCsacTelemetry</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgCsacTelemetry</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_CSAC_TELEMETRY</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">telemetry</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;telemetry&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgCsacTelemetry.from_json"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgCsacTelemetry.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgCsacTelemetry</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgCsacTelemetry.from_json_dict"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgCsacTelemetry.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgCsacTelemetry</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+ 
+<div class="viewcode-block" id="MsgCsacTelemetry.from_binary"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgCsacTelemetry.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgCsacTelemetry</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgCsacTelemetry.to_binary"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgCsacTelemetry.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgCsacTelemetry</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MsgCsacTelemetry.to_json_dict"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgCsacTelemetry.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgCsacTelemetry</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
+<span class="n">SBP_MSG_CSAC_TELEMETRY_LABELS</span> <span class="o">=</span> <span class="mh">0xFF05</span>
+<div class="viewcode-block" id="MsgCsacTelemetryLabels"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgCsacTelemetryLabels">[docs]</a><span class="k">class</span> <span class="nc">MsgCsacTelemetryLabels</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_CSAC_TELEMETRY_LABELS (0xFF05).</span>
+
+<span class="sd">  You can have MSG_CSAC_TELEMETRY_LABELS inherit its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+<span class="sd">  The CSAC telemetry message provides labels for each member of the string</span>
+<span class="sd">produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower</span>
+<span class="sd">rate than the MSG_CSAC_TELEMETRY.</span>
+
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  id : int</span>
+<span class="sd">    Index representing the type of telemetry in use.  It is implemention defined.</span>
+<span class="sd">  telemetry_labels : string</span>
+<span class="sd">    Comma separated list of telemetry field values</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="s1">&#39;id&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int8ul</span><span class="p">,</span>
+                   <span class="s1">&#39;telemetry_labels&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">GreedyBytes</span><span class="p">,)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;id&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;telemetry_labels&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgCsacTelemetryLabels</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgCsacTelemetryLabels</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_CSAC_TELEMETRY_LABELS</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">telemetry_labels</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;telemetry_labels&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgCsacTelemetryLabels.from_json"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgCsacTelemetryLabels.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgCsacTelemetryLabels</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgCsacTelemetryLabels.from_json_dict"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgCsacTelemetryLabels.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgCsacTelemetryLabels</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+ 
+<div class="viewcode-block" id="MsgCsacTelemetryLabels.from_binary"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgCsacTelemetryLabels.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgCsacTelemetryLabels</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgCsacTelemetryLabels.to_binary"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgCsacTelemetryLabels.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgCsacTelemetryLabels</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MsgCsacTelemetryLabels.to_json_dict"><a class="viewcode-back" href="../../sbp.system.html#sbp.system.MsgCsacTelemetryLabels.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgCsacTelemetryLabels</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
 
 <span class="n">msg_classes</span> <span class="o">=</span> <span class="p">{</span>
   <span class="mh">0xFF00</span><span class="p">:</span> <span class="n">MsgStartup</span><span class="p">,</span>
   <span class="mh">0xFF02</span><span class="p">:</span> <span class="n">MsgDgnssStatus</span><span class="p">,</span>
   <span class="mh">0xFFFF</span><span class="p">:</span> <span class="n">MsgHeartbeat</span><span class="p">,</span>
   <span class="mh">0xFF03</span><span class="p">:</span> <span class="n">MsgInsStatus</span><span class="p">,</span>
+  <span class="mh">0xFF04</span><span class="p">:</span> <span class="n">MsgCsacTelemetry</span><span class="p">,</span>
+  <span class="mh">0xFF05</span><span class="p">:</span> <span class="n">MsgCsacTelemetryLabels</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 

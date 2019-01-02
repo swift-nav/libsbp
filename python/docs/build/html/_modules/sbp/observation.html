@@ -157,9 +157,13 @@
 <div class="viewcode-block" id="PackedObsContent"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.PackedObsContent">[docs]</a><span class="k">class</span> <span class="nc">PackedObsContent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;PackedObsContent.</span>
 <span class="sd">  </span>
-<span class="sd">  Pseudorange and carrier phase observation for a satellite being</span>
-<span class="sd">tracked. The observations are interoperable with 3rd party</span>
-<span class="sd">receivers and conform with typical RTCMv3 GNSS observations.</span>
+<span class="sd">  Pseudorange and carrier phase observation for a satellite being tracked.</span>
+<span class="sd">The observations are interoperable with 3rd party receivers and conform with</span>
+<span class="sd">typical RTCM 3.1 message GPS/GLO observations.</span>
+
+<span class="sd">Carrier phase observations are not guaranteed to be aligned to the RINEX 3</span>
+<span class="sd">or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently</span>
+<span class="sd">peformed.</span>
 
 <span class="sd">  </span>
 <span class="sd">  Parameters</span>
@@ -685,6 +689,114 @@
 <div class="viewcode-block" id="PackedObsContentDepC.to_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.PackedObsContentDepC.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">PackedObsContentDepC</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div></div>
+    
+<div class="viewcode-block" id="GnssCapb"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.GnssCapb">[docs]</a><span class="k">class</span> <span class="nc">GnssCapb</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;GnssCapb.</span>
+<span class="sd">  </span>
+<span class="sd">  </span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  gps_active : int</span>
+<span class="sd">    GPS SV active mask</span>
+<span class="sd">  gps_l2c : int</span>
+<span class="sd">    GPS L2C active mask</span>
+<span class="sd">  gps_l5 : int</span>
+<span class="sd">    GPS L5 active mask</span>
+<span class="sd">  glo_active : int</span>
+<span class="sd">    GLO active mask</span>
+<span class="sd">  glo_l2of : int</span>
+<span class="sd">    GLO L2OF active mask</span>
+<span class="sd">  glo_l3 : int</span>
+<span class="sd">    GLO L3 active mask</span>
+<span class="sd">  sbas_active : int</span>
+<span class="sd">    SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,</span>
+<span class="sd">https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)</span>
+
+<span class="sd">  sbas_l5 : int</span>
+<span class="sd">    SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,</span>
+<span class="sd">https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)</span>
+
+<span class="sd">  bds_active : int</span>
+<span class="sd">    BDS active mask</span>
+<span class="sd">  bds_d2nav : int</span>
+<span class="sd">    BDS D2NAV active mask</span>
+<span class="sd">  bds_b2 : int</span>
+<span class="sd">    BDS B2 active mask</span>
+<span class="sd">  bds_b2a : int</span>
+<span class="sd">    BDS B2A active mask</span>
+<span class="sd">  qzss_active : int</span>
+<span class="sd">    QZSS active mask</span>
+<span class="sd">  gal_active : int</span>
+<span class="sd">    GAL active mask</span>
+<span class="sd">  gal_e5 : int</span>
+<span class="sd">    GAL E5 active mask</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Embedded</span><span class="p">(</span><span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                     <span class="s1">&#39;gps_active&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int64ul</span><span class="p">,</span>
+                     <span class="s1">&#39;gps_l2c&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int64ul</span><span class="p">,</span>
+                     <span class="s1">&#39;gps_l5&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int64ul</span><span class="p">,</span>
+                     <span class="s1">&#39;glo_active&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32ul</span><span class="p">,</span>
+                     <span class="s1">&#39;glo_l2of&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32ul</span><span class="p">,</span>
+                     <span class="s1">&#39;glo_l3&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32ul</span><span class="p">,</span>
+                     <span class="s1">&#39;sbas_active&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int64ul</span><span class="p">,</span>
+                     <span class="s1">&#39;sbas_l5&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int64ul</span><span class="p">,</span>
+                     <span class="s1">&#39;bds_active&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int64ul</span><span class="p">,</span>
+                     <span class="s1">&#39;bds_d2nav&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int64ul</span><span class="p">,</span>
+                     <span class="s1">&#39;bds_b2&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int64ul</span><span class="p">,</span>
+                     <span class="s1">&#39;bds_b2a&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int64ul</span><span class="p">,</span>
+                     <span class="s1">&#39;qzss_active&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int32ul</span><span class="p">,</span>
+                     <span class="s1">&#39;gal_active&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int64ul</span><span class="p">,</span>
+                     <span class="s1">&#39;gal_e5&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Int64ul</span><span class="p">,))</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;gps_active&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;gps_l2c&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;gps_l5&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;glo_active&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;glo_l2of&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;glo_l3&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sbas_active&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sbas_l5&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;bds_active&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;bds_d2nav&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;bds_b2&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;bds_b2a&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;qzss_active&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;gal_active&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;gal_e5&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">payload</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gps_active</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;gps_active&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gps_l2c</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;gps_l2c&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gps_l5</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;gps_l5&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">glo_active</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;glo_active&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">glo_l2of</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;glo_l2of&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">glo_l3</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;glo_l3&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sbas_active</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sbas_active&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sbas_l5</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sbas_l5&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">bds_active</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;bds_active&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">bds_d2nav</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;bds_d2nav&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">bds_b2</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;bds_b2&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">bds_b2a</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;bds_b2a&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">qzss_active</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;qzss_active&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gal_active</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;gal_active&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gal_e5</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;gal_e5&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  
+<div class="viewcode-block" id="GnssCapb.from_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.GnssCapb.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">GnssCapb</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="GnssCapb.to_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.GnssCapb.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">GnssCapb</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div></div>
     
 <div class="viewcode-block" id="AlmanacCommonContent"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.AlmanacCommonContent">[docs]</a><span class="k">class</span> <span class="nc">AlmanacCommonContent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;AlmanacCommonContent.</span>
@@ -4255,11 +4367,11 @@
     <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">d</span></div></div>
     
-<span class="n">SBP_MSG_SV_CONFIGURATION_GPS</span> <span class="o">=</span> <span class="mh">0x0091</span>
-<div class="viewcode-block" id="MsgSvConfigurationGPS"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgSvConfigurationGPS">[docs]</a><span class="k">class</span> <span class="nc">MsgSvConfigurationGPS</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_SV_CONFIGURATION_GPS (0x0091).</span>
+<span class="n">SBP_MSG_SV_CONFIGURATION_GPS_DEP</span> <span class="o">=</span> <span class="mh">0x0091</span>
+<div class="viewcode-block" id="MsgSvConfigurationGPSDep"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgSvConfigurationGPSDep">[docs]</a><span class="k">class</span> <span class="nc">MsgSvConfigurationGPSDep</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_SV_CONFIGURATION_GPS_DEP (0x0091).</span>
 
-<span class="sd">  You can have MSG_SV_CONFIGURATION_GPS inherit its fields directly</span>
+<span class="sd">  You can have MSG_SV_CONFIGURATION_GPS_DEP inherit its fields directly</span>
 <span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
 <span class="sd">  of its fields.</span>
 
@@ -4289,13 +4401,13 @@
 
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
-      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSvConfigurationGPS</span><span class="p">,</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSvConfigurationGPSDep</span><span class="p">,</span>
              <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
                             <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSvConfigurationGPS</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_SV_CONFIGURATION_GPS</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSvConfigurationGPSDep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_SV_CONFIGURATION_GPS_DEP</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">t_nmct</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;t_nmct&#39;</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">l2c_mask</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;l2c_mask&#39;</span><span class="p">)</span>
@@ -4304,39 +4416,123 @@
     <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
   <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="MsgSvConfigurationGPS.from_json"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgSvConfigurationGPS.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<div class="viewcode-block" id="MsgSvConfigurationGPSDep.from_json"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgSvConfigurationGPSDep.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">MsgSvConfigurationGPS</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">MsgSvConfigurationGPSDep</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
 
   <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="MsgSvConfigurationGPS.from_json_dict"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgSvConfigurationGPS.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+<div class="viewcode-block" id="MsgSvConfigurationGPSDep.from_json_dict"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgSvConfigurationGPSDep.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
     <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">MsgSvConfigurationGPS</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">MsgSvConfigurationGPSDep</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
 
  
-<div class="viewcode-block" id="MsgSvConfigurationGPS.from_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgSvConfigurationGPS.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+<div class="viewcode-block" id="MsgSvConfigurationGPSDep.from_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgSvConfigurationGPSDep.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
 <span class="sd">    the message.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgSvConfigurationGPS</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgSvConfigurationGPSDep</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
       <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="MsgSvConfigurationGPS.to_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgSvConfigurationGPS.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MsgSvConfigurationGPSDep.to_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgSvConfigurationGPSDep.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgSvConfigurationGPS</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgSvConfigurationGPSDep</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="MsgSvConfigurationGPS.to_json_dict"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgSvConfigurationGPS.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MsgSvConfigurationGPSDep.to_json_dict"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgSvConfigurationGPSDep.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSvConfigurationGPS</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgSvConfigurationGPSDep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span></div></div>
+    
+<span class="n">SBP_MSG_GNSS_CAPB</span> <span class="o">=</span> <span class="mh">0x0096</span>
+<div class="viewcode-block" id="MsgGnssCapb"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgGnssCapb">[docs]</a><span class="k">class</span> <span class="nc">MsgGnssCapb</span><span class="p">(</span><span class="n">SBP</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;SBP class for message MSG_GNSS_CAPB (0x0096).</span>
+
+<span class="sd">  You can have MSG_GNSS_CAPB inherit its fields directly</span>
+<span class="sd">  from an inherited SBP object, or construct it inline using a dict</span>
+<span class="sd">  of its fields.</span>
+
+<span class="sd">  </span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  sbp : SBP</span>
+<span class="sd">    SBP parent object to inherit from.</span>
+<span class="sd">  t_nmct : GPSTimeSec</span>
+<span class="sd">    Navigation Message Correction Table Validity Time</span>
+<span class="sd">  gc : GnssCapb</span>
+<span class="sd">    GNSS capabilities masks</span>
+<span class="sd">  sender : int</span>
+<span class="sd">    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_parser</span> <span class="o">=</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span>
+                   <span class="s1">&#39;t_nmct&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GPSTimeSec</span><span class="o">.</span><span class="n">_parser</span><span class="p">),</span>
+                   <span class="s1">&#39;gc&#39;</span> <span class="o">/</span> <span class="n">construct</span><span class="o">.</span><span class="n">Struct</span><span class="p">(</span><span class="n">GnssCapb</span><span class="o">.</span><span class="n">_parser</span><span class="p">),)</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="s1">&#39;t_nmct&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;gc&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sbp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sbp</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgGnssCapb</span><span class="p">,</span>
+             <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+                            <span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="n">sbp</span><span class="o">.</span><span class="n">crc</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">sbp</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">super</span><span class="p">(</span> <span class="n">MsgGnssCapb</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">SBP_MSG_GNSS_CAPB</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="n">SENDER_ID</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">t_nmct</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;t_nmct&#39;</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gc</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;gc&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">fmt_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgGnssCapb.from_json"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgGnssCapb.from_json">[docs]</a>  <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a JSON-encoded string s, build a message object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgGnssCapb</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+  <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MsgGnssCapb.from_json_dict"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgGnssCapb.from_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">sbp</span> <span class="o">=</span> <span class="n">SBP</span><span class="o">.</span><span class="n">from_json_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MsgGnssCapb</span><span class="p">(</span><span class="n">sbp</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+ 
+<div class="viewcode-block" id="MsgGnssCapb.from_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgGnssCapb.from_binary">[docs]</a>  <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a binary payload d, update the appropriate payload fields of</span>
+<span class="sd">    the message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MsgGnssCapb</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+      <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MsgGnssCapb.to_binary"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgGnssCapb.to_binary">[docs]</a>  <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Produce a framed/packed SBP message.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">containerize</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">MsgGnssCapb</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MsgGnssCapb.to_json_dict"><a class="viewcode-back" href="../../sbp.observation.html#sbp.observation.MsgGnssCapb.to_json_dict">[docs]</a>  <span class="k">def</span> <span class="nf">to_json_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_binary</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span> <span class="n">MsgGnssCapb</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_json_dict</span><span class="p">()</span>
     <span class="n">j</span> <span class="o">=</span> <span class="n">walk_json_dict</span><span class="p">(</span><span class="n">exclude_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
     <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">d</span></div></div>
@@ -5165,7 +5361,7 @@
 <span class="sd">  of its fields.</span>
 
 <span class="sd">  </span>
-<span class="sd">  The GLONASS L1/L2 Code-Phase biases allows to perform </span>
+<span class="sd">  The GLONASS L1/L2 Code-Phase biases allows to perform</span>
 <span class="sd">GPS+GLONASS integer ambiguity resolution for baselines</span>
 <span class="sd">with mixed receiver types (e.g. receiver of different</span>
 <span class="sd">manufacturers)</span>
@@ -5286,7 +5482,8 @@
   <span class="mh">0x0043</span><span class="p">:</span> <span class="n">MsgObsDepB</span><span class="p">,</span>
   <span class="mh">0x0049</span><span class="p">:</span> <span class="n">MsgObsDepC</span><span class="p">,</span>
   <span class="mh">0x0090</span><span class="p">:</span> <span class="n">MsgIono</span><span class="p">,</span>
-  <span class="mh">0x0091</span><span class="p">:</span> <span class="n">MsgSvConfigurationGPS</span><span class="p">,</span>
+  <span class="mh">0x0091</span><span class="p">:</span> <span class="n">MsgSvConfigurationGPSDep</span><span class="p">,</span>
+  <span class="mh">0x0096</span><span class="p">:</span> <span class="n">MsgGnssCapb</span><span class="p">,</span>
   <span class="mh">0x0092</span><span class="p">:</span> <span class="n">MsgGroupDelayDepA</span><span class="p">,</span>
   <span class="mh">0x0093</span><span class="p">:</span> <span class="n">MsgGroupDelayDepB</span><span class="p">,</span>
   <span class="mh">0x0094</span><span class="p">:</span> <span class="n">MsgGroupDelay</span><span class="p">,</span>

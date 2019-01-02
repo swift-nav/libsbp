@@ -60,6 +60,7 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">bootload</span> <span class="k">as</span> <span class="n">boot</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">file_io</span> <span class="k">as</span> <span class="n">file_io</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">flash</span> <span class="k">as</span> <span class="n">flash</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">linux</span> <span class="k">as</span> <span class="n">linux</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">logging</span> <span class="k">as</span> <span class="n">log</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">navigation</span> <span class="k">as</span> <span class="n">nav</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">observation</span> <span class="k">as</span> <span class="n">obs</span>
@@ -75,6 +76,7 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">vehicle</span> <span class="k">as</span> <span class="n">vehicle</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">orientation</span> <span class="k">as</span> <span class="n">orientation</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sbas</span> <span class="k">as</span> <span class="n">sbas</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">ssr</span> <span class="k">as</span> <span class="n">ssr</span>
 
 <span class="kn">import</span> <span class="nn">warnings</span>
 
@@ -82,6 +84,7 @@
                   <span class="o">+</span> <span class="n">boot</span><span class="o">.</span><span class="n">msg_classes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                   <span class="o">+</span> <span class="n">file_io</span><span class="o">.</span><span class="n">msg_classes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                   <span class="o">+</span> <span class="n">flash</span><span class="o">.</span><span class="n">msg_classes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                  <span class="o">+</span> <span class="n">linux</span><span class="o">.</span><span class="n">msg_classes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                   <span class="o">+</span> <span class="n">log</span><span class="o">.</span><span class="n">msg_classes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                   <span class="o">+</span> <span class="n">nav</span><span class="o">.</span><span class="n">msg_classes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                   <span class="o">+</span> <span class="n">obs</span><span class="o">.</span><span class="n">msg_classes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
@@ -97,6 +100,7 @@
                   <span class="o">+</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">msg_classes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                   <span class="o">+</span> <span class="n">orientation</span><span class="o">.</span><span class="n">msg_classes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                   <span class="o">+</span> <span class="n">sbas</span><span class="o">.</span><span class="n">msg_classes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                  <span class="o">+</span> <span class="n">ssr</span><span class="o">.</span><span class="n">msg_classes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                   <span class="p">)</span>
 
 <div class="viewcode-block" id="InvalidSBPMessageType"><a class="viewcode-back" href="../../sbp.table.html#sbp.table.InvalidSBPMessageType">[docs]</a><span class="k">class</span> <span class="nc">InvalidSBPMessageType</span><span class="p">(</span><span class="ne">NotImplementedError</span><span class="p">):</span>
