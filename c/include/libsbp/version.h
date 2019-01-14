@@ -25,7 +25,7 @@
 /** Protocol minor version. */
 #define SBP_MINOR_VERSION 4
 /** Protocol patch version. */
-#define SBP_PATCH_VERSION 6
+#define SBP_PATCH_VERSION 7
 
 /** \} */
 

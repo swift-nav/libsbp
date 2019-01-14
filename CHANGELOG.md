@@ -1,7 +1,14 @@
 # Change Log
 
-## [v2.4.6](https://github.com/swift-nav/libsbp/tree/v2.4.6)
+## [v2.4.7](https://github.com/swift-nav/libsbp/tree/v2.4.7)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.6...v2.4.7)
+
+**Merged pull requests:**
+
+- Update settings write response docs \[ESD-970\] [\#628](https://github.com/swift-nav/libsbp/pull/628)
+
+## [v2.4.6](https://github.com/swift-nav/libsbp/tree/v2.4.6) (2019-01-02)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.5...v2.4.6)
 
 **Closed issues:**
@@ -11,6 +18,8 @@
 
 **Merged pull requests:**
 
+- v2.4.6 generated files, pdf, and changelog [\#629](https://github.com/swift-nav/libsbp/pull/629)
+- Improve java example [\#627](https://github.com/swift-nav/libsbp/pull/627)
 - Use OpenJDK 8 so we aren't chasing Oracle \[ESD-940\] [\#625](https://github.com/swift-nav/libsbp/pull/625)
 - Attempt to resolve JavaScript security warnings [\#624](https://github.com/swift-nav/libsbp/pull/624)
 
