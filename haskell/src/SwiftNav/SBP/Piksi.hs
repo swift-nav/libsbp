@@ -898,3 +898,35 @@ instance Binary MsgSpecan where
 $(makeSBP 'msgSpecan ''MsgSpecan)
 $(makeJSON "_msgSpecan_" ''MsgSpecan)
 $(makeLenses ''MsgSpecan)
+
+msgFrontEndGain :: Word16
+msgFrontEndGain = 0x00BF
+
+-- | SBP class for message MSG_FRONT_END_GAIN (0x00BF).
+--
+-- This message describes the gain of each channel in the receiver frontend.
+-- Each  gain is encoded as a non-dimensional percentage relative to the
+-- maximum range   possible for the gain stage of the frontend. By convention,
+-- each gain array  has 8 entries and the index of the array corresponding to
+-- the index of the rf channel  in the frontend. A gain of 256 encodes that the
+-- gain is invalid or that the rf channel  is not present in the frontend.
+data MsgFrontEndGain = MsgFrontEndGain
+  { _msgFrontEndGain_rf_gain :: ![Word8]
+    -- ^ RF gain for each frontend channel
+  , _msgFrontEndGain_if_gain :: ![Word8]
+    -- ^ Intermediate frequency gain for each frontend channel
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgFrontEndGain where
+  get = do
+    _msgFrontEndGain_rf_gain <- replicateM 8 getWord8
+    _msgFrontEndGain_if_gain <- replicateM 8 getWord8
+    pure MsgFrontEndGain {..}
+
+  put MsgFrontEndGain {..} = do
+    mapM_ putWord8 _msgFrontEndGain_rf_gain
+    mapM_ putWord8 _msgFrontEndGain_if_gain
+
+$(makeSBP 'msgFrontEndGain ''MsgFrontEndGain)
+$(makeJSON "_msgFrontEndGain_" ''MsgFrontEndGain)
+$(makeLenses ''MsgFrontEndGain)

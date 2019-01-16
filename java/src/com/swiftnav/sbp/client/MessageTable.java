@@ -147,6 +147,7 @@ import com.swiftnav.sbp.piksi.MsgNetworkBandwidthUsage;
 import com.swiftnav.sbp.piksi.MsgCellModemStatus;
 import com.swiftnav.sbp.piksi.MsgSpecanDep;
 import com.swiftnav.sbp.piksi.MsgSpecan;
+import com.swiftnav.sbp.piksi.MsgFrontEndGain;
 import com.swiftnav.sbp.sbas.MsgSbasRaw;
 import com.swiftnav.sbp.settings.MsgSettingsSave;
 import com.swiftnav.sbp.settings.MsgSettingsWrite;
@@ -445,6 +446,8 @@ final class MessageTable {
                 return new MsgSpecanDep(msg);
             case MsgSpecan.TYPE:
                 return new MsgSpecan(msg);
+            case MsgFrontEndGain.TYPE:
+                return new MsgFrontEndGain(msg);
             case MsgSbasRaw.TYPE:
                 return new MsgSbasRaw(msg);
             case MsgSettingsSave.TYPE:

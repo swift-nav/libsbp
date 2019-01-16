@@ -121,6 +121,7 @@ data SBPMsg =
    | SBPMsgFlashProgram MsgFlashProgram Msg
    | SBPMsgFlashReadReq MsgFlashReadReq Msg
    | SBPMsgFlashReadResp MsgFlashReadResp Msg
+   | SBPMsgFrontEndGain MsgFrontEndGain Msg
    | SBPMsgFwd MsgFwd Msg
    | SBPMsgGloBiases MsgGloBiases Msg
    | SBPMsgGnssCapb MsgGnssCapb Msg
@@ -296,6 +297,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgFlashProgram = SBPMsgFlashProgram (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFlashReadReq = SBPMsgFlashReadReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFlashReadResp = SBPMsgFlashReadResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFrontEndGain = SBPMsgFrontEndGain (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFwd = SBPMsgFwd (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGloBiases = SBPMsgGloBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGnssCapb = SBPMsgGnssCapb (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -463,6 +465,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgFlashProgram _ m) = put m
       encoder (SBPMsgFlashReadReq _ m) = put m
       encoder (SBPMsgFlashReadResp _ m) = put m
+      encoder (SBPMsgFrontEndGain _ m) = put m
       encoder (SBPMsgFwd _ m) = put m
       encoder (SBPMsgGloBiases _ m) = put m
       encoder (SBPMsgGnssCapb _ m) = put m
@@ -634,6 +637,7 @@ instance FromJSON SBPMsg where
         | msgType == msgFlashProgram = SBPMsgFlashProgram <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFlashReadReq = SBPMsgFlashReadReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFlashReadResp = SBPMsgFlashReadResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFrontEndGain = SBPMsgFrontEndGain <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFwd = SBPMsgFwd <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGloBiases = SBPMsgGloBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGnssCapb = SBPMsgGnssCapb <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -806,6 +810,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgFlashProgram n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFlashReadReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFlashReadResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFrontEndGain n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFwd n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGloBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGnssCapb n m) = toJSON n <<>> toJSON m
@@ -972,6 +977,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgFlashProgram n m) = SBPMsgFlashProgram n <$> f m
   msg f (SBPMsgFlashReadReq n m) = SBPMsgFlashReadReq n <$> f m
   msg f (SBPMsgFlashReadResp n m) = SBPMsgFlashReadResp n <$> f m
+  msg f (SBPMsgFrontEndGain n m) = SBPMsgFrontEndGain n <$> f m
   msg f (SBPMsgFwd n m) = SBPMsgFwd n <$> f m
   msg f (SBPMsgGloBiases n m) = SBPMsgGloBiases n <$> f m
   msg f (SBPMsgGnssCapb n m) = SBPMsgGnssCapb n <$> f m
