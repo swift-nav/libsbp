@@ -2204,6 +2204,97 @@ class MsgSpecan(SBP):
     d.update(j)
     return d
     
+SBP_MSG_FRONT_END_GAIN = 0x00BF
+class MsgFrontEndGain(SBP):
+  """SBP class for message MSG_FRONT_END_GAIN (0x00BF).
+
+  You can have MSG_FRONT_END_GAIN inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message describes the gain of each channel in the receiver frontend. Each 
+gain is encoded as a non-dimensional percentage relative to the maximum range  
+possible for the gain stage of the frontend. By convention, each gain array 
+has 8 entries and the index of the array corresponding to the index of the rf channel 
+in the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.
+A negative value implies an error for the particular gain stage as reported by the frontend.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  rf_gain : array
+    RF gain for each frontend channel
+  if_gain : array
+    Intermediate frequency gain for each frontend channel
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'rf_gain' / construct.Array(8, construct.Int8sl),
+                   'if_gain' / construct.Array(8, construct.Int8sl),)
+  __slots__ = [
+               'rf_gain',
+               'if_gain',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgFrontEndGain,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgFrontEndGain, self).__init__()
+      self.msg_type = SBP_MSG_FRONT_END_GAIN
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.rf_gain = kwargs.pop('rf_gain')
+      self.if_gain = kwargs.pop('if_gain')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFrontEndGain.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFrontEndGain(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgFrontEndGain._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgFrontEndGain._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgFrontEndGain, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0069: MsgAlmanac,
@@ -2230,4 +2321,5 @@ msg_classes = {
   0x00BE: MsgCellModemStatus,
   0x0050: MsgSpecanDep,
   0x0051: MsgSpecan,
+  0x00BF: MsgFrontEndGain,
 }
