@@ -1,11 +1,20 @@
 # Change Log
 
-## [v2.4.7](https://github.com/swift-nav/libsbp/tree/v2.4.7)
+## [v2.4.8](https://github.com/swift-nav/libsbp/tree/v2.4.8)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.7...v2.4.8)
+
+**Merged pull requests:**
+
+- Parens around sign operators [\#635](https://github.com/swift-nav/libsbp/pull/635)
+- Front end gain message [\#634](https://github.com/swift-nav/libsbp/pull/634)
+
+## [v2.4.7](https://github.com/swift-nav/libsbp/tree/v2.4.7) (2019-01-14)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.6...v2.4.7)
 
 **Merged pull requests:**
 
+- v2.4.7 release files [\#632](https://github.com/swift-nav/libsbp/pull/632)
 - Update settings write response docs \[ESD-970\] [\#628](https://github.com/swift-nav/libsbp/pull/628)
 
 ## [v2.4.6](https://github.com/swift-nav/libsbp/tree/v2.4.6) (2019-01-02)
