@@ -313,10 +313,10 @@ message MsgSpecan {
  * gain is encoded as a non-dimensional percentage relative to the maximum range  
  * possible for the gain stage of the frontend. By convention, each gain array 
  * has 8 entries and the index of the array corresponding to the index of the rf channel 
- * in the frontend. A gain of 256 encodes that the gain is invalid or that the rf channel 
- * is not present in the frontend.
+ * in the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.
+ * A negative value implies an error for the particular gain stage as reported by the frontend.
  */
 message MsgFrontEndGain {
-    repeated uint32 rf_gain = 1;
-    repeated uint32 if_gain = 2;
+    repeated sint32 rf_gain = 1;
+    repeated sint32 if_gain = 2;
 }
