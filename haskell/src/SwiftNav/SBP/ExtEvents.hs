@@ -69,7 +69,7 @@ instance Binary MsgExtEvent where
   put MsgExtEvent {..} = do
     putWord16le _msgExtEvent_wn
     putWord32le _msgExtEvent_tow
-    putWord32le $ fromIntegral _msgExtEvent_ns_residual
+    (putWord32le . fromIntegral) _msgExtEvent_ns_residual
     putWord8 _msgExtEvent_flags
     putWord8 _msgExtEvent_pin
 

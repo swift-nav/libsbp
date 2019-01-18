@@ -309,10 +309,10 @@ instance Binary Period where
     pure Period {..}
 
   put Period {..} = do
-    putWord32le $ fromIntegral _period_avg
-    putWord32le $ fromIntegral _period_pmin
-    putWord32le $ fromIntegral _period_pmax
-    putWord32le $ fromIntegral _period_current
+    (putWord32le . fromIntegral) _period_avg
+    (putWord32le . fromIntegral) _period_pmin
+    (putWord32le . fromIntegral) _period_pmax
+    (putWord32le . fromIntegral) _period_current
 
 $(makeJSON "_period_" ''Period)
 $(makeLenses ''Period)
@@ -343,10 +343,10 @@ instance Binary Latency where
     pure Latency {..}
 
   put Latency {..} = do
-    putWord32le $ fromIntegral _latency_avg
-    putWord32le $ fromIntegral _latency_lmin
-    putWord32le $ fromIntegral _latency_lmax
-    putWord32le $ fromIntegral _latency_current
+    (putWord32le . fromIntegral) _latency_avg
+    (putWord32le . fromIntegral) _latency_lmin
+    (putWord32le . fromIntegral) _latency_lmax
+    (putWord32le . fromIntegral) _latency_current
 
 $(makeJSON "_latency_" ''Latency)
 $(makeLenses ''Latency)
@@ -543,11 +543,11 @@ instance Binary MsgDeviceMonitor where
     pure MsgDeviceMonitor {..}
 
   put MsgDeviceMonitor {..} = do
-    putWord16le $ fromIntegral _msgDeviceMonitor_dev_vin
-    putWord16le $ fromIntegral _msgDeviceMonitor_cpu_vint
-    putWord16le $ fromIntegral _msgDeviceMonitor_cpu_vaux
-    putWord16le $ fromIntegral _msgDeviceMonitor_cpu_temperature
-    putWord16le $ fromIntegral _msgDeviceMonitor_fe_temperature
+    (putWord16le . fromIntegral) _msgDeviceMonitor_dev_vin
+    (putWord16le . fromIntegral) _msgDeviceMonitor_cpu_vint
+    (putWord16le . fromIntegral) _msgDeviceMonitor_cpu_vaux
+    (putWord16le . fromIntegral) _msgDeviceMonitor_cpu_temperature
+    (putWord16le . fromIntegral) _msgDeviceMonitor_fe_temperature
 
 $(makeSBP 'msgDeviceMonitor ''MsgDeviceMonitor)
 $(makeJSON "_msgDeviceMonitor_" ''MsgDeviceMonitor)
@@ -603,7 +603,7 @@ instance Binary MsgCommandResp where
 
   put MsgCommandResp {..} = do
     putWord32le _msgCommandResp_sequence
-    putWord32le $ fromIntegral _msgCommandResp_code
+    (putWord32le . fromIntegral) _msgCommandResp_code
 
 $(makeSBP 'msgCommandResp ''MsgCommandResp)
 $(makeJSON "_msgCommandResp_" ''MsgCommandResp)
@@ -797,7 +797,7 @@ instance Binary MsgCellModemStatus where
     pure MsgCellModemStatus {..}
 
   put MsgCellModemStatus {..} = do
-    putWord8 $ fromIntegral _msgCellModemStatus_signal_strength
+    (putWord8 . fromIntegral) _msgCellModemStatus_signal_strength
     putFloat32le _msgCellModemStatus_signal_error_rate
     mapM_ putWord8 _msgCellModemStatus_reserved
 
@@ -908,24 +908,25 @@ msgFrontEndGain = 0x00BF
 -- Each  gain is encoded as a non-dimensional percentage relative to the
 -- maximum range   possible for the gain stage of the frontend. By convention,
 -- each gain array  has 8 entries and the index of the array corresponding to
--- the index of the rf channel  in the frontend. A gain of 256 encodes that the
--- gain is invalid or that the rf channel  is not present in the frontend.
+-- the index of the rf channel  in the frontend. A gain of 127 percent encodes
+-- that rf channel is not present in the hardware. A negative value implies an
+-- error for the particular gain stage as reported by the frontend.
 data MsgFrontEndGain = MsgFrontEndGain
-  { _msgFrontEndGain_rf_gain :: ![Word8]
+  { _msgFrontEndGain_rf_gain :: ![Int8]
     -- ^ RF gain for each frontend channel
-  , _msgFrontEndGain_if_gain :: ![Word8]
+  , _msgFrontEndGain_if_gain :: ![Int8]
     -- ^ Intermediate frequency gain for each frontend channel
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgFrontEndGain where
   get = do
-    _msgFrontEndGain_rf_gain <- replicateM 8 getWord8
-    _msgFrontEndGain_if_gain <- replicateM 8 getWord8
+    _msgFrontEndGain_rf_gain <- replicateM 8 fromIntegral <$> getWord8
+    _msgFrontEndGain_if_gain <- replicateM 8 fromIntegral <$> getWord8
     pure MsgFrontEndGain {..}
 
   put MsgFrontEndGain {..} = do
-    mapM_ putWord8 _msgFrontEndGain_rf_gain
-    mapM_ putWord8 _msgFrontEndGain_if_gain
+    mapM_ (putWord8 . fromIntegral) _msgFrontEndGain_rf_gain
+    mapM_ (putWord8 . fromIntegral) _msgFrontEndGain_if_gain
 
 $(makeSBP 'msgFrontEndGain ''MsgFrontEndGain)
 $(makeJSON "_msgFrontEndGain_" ''MsgFrontEndGain)

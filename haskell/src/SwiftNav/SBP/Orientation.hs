@@ -121,10 +121,10 @@ instance Binary MsgOrientQuat where
 
   put MsgOrientQuat {..} = do
     putWord32le _msgOrientQuat_tow
-    putWord32le $ fromIntegral _msgOrientQuat_w
-    putWord32le $ fromIntegral _msgOrientQuat_x
-    putWord32le $ fromIntegral _msgOrientQuat_y
-    putWord32le $ fromIntegral _msgOrientQuat_z
+    (putWord32le . fromIntegral) _msgOrientQuat_w
+    (putWord32le . fromIntegral) _msgOrientQuat_x
+    (putWord32le . fromIntegral) _msgOrientQuat_y
+    (putWord32le . fromIntegral) _msgOrientQuat_z
     putFloat32le _msgOrientQuat_w_accuracy
     putFloat32le _msgOrientQuat_x_accuracy
     putFloat32le _msgOrientQuat_y_accuracy
@@ -179,9 +179,9 @@ instance Binary MsgOrientEuler where
 
   put MsgOrientEuler {..} = do
     putWord32le _msgOrientEuler_tow
-    putWord32le $ fromIntegral _msgOrientEuler_roll
-    putWord32le $ fromIntegral _msgOrientEuler_pitch
-    putWord32le $ fromIntegral _msgOrientEuler_yaw
+    (putWord32le . fromIntegral) _msgOrientEuler_roll
+    (putWord32le . fromIntegral) _msgOrientEuler_pitch
+    (putWord32le . fromIntegral) _msgOrientEuler_yaw
     putFloat32le _msgOrientEuler_roll_accuracy
     putFloat32le _msgOrientEuler_pitch_accuracy
     putFloat32le _msgOrientEuler_yaw_accuracy
@@ -229,9 +229,9 @@ instance Binary MsgAngularRate where
 
   put MsgAngularRate {..} = do
     putWord32le _msgAngularRate_tow
-    putWord32le $ fromIntegral _msgAngularRate_x
-    putWord32le $ fromIntegral _msgAngularRate_y
-    putWord32le $ fromIntegral _msgAngularRate_z
+    (putWord32le . fromIntegral) _msgAngularRate_x
+    (putWord32le . fromIntegral) _msgAngularRate_y
+    (putWord32le . fromIntegral) _msgAngularRate_z
     putWord8 _msgAngularRate_flags
 
 $(makeSBP 'msgAngularRate ''MsgAngularRate)

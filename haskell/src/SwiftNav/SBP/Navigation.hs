@@ -85,7 +85,7 @@ instance Binary MsgGpsTime where
   put MsgGpsTime {..} = do
     putWord16le _msgGpsTime_wn
     putWord32le _msgGpsTime_tow
-    putWord32le $ fromIntegral _msgGpsTime_ns_residual
+    (putWord32le . fromIntegral) _msgGpsTime_ns_residual
     putWord8 _msgGpsTime_flags
 
 $(makeSBP 'msgGpsTime ''MsgGpsTime)
@@ -496,9 +496,9 @@ instance Binary MsgBaselineEcef where
 
   put MsgBaselineEcef {..} = do
     putWord32le _msgBaselineEcef_tow
-    putWord32le $ fromIntegral _msgBaselineEcef_x
-    putWord32le $ fromIntegral _msgBaselineEcef_y
-    putWord32le $ fromIntegral _msgBaselineEcef_z
+    (putWord32le . fromIntegral) _msgBaselineEcef_x
+    (putWord32le . fromIntegral) _msgBaselineEcef_y
+    (putWord32le . fromIntegral) _msgBaselineEcef_z
     putWord16le _msgBaselineEcef_accuracy
     putWord8 _msgBaselineEcef_n_sats
     putWord8 _msgBaselineEcef_flags
@@ -551,9 +551,9 @@ instance Binary MsgBaselineNed where
 
   put MsgBaselineNed {..} = do
     putWord32le _msgBaselineNed_tow
-    putWord32le $ fromIntegral _msgBaselineNed_n
-    putWord32le $ fromIntegral _msgBaselineNed_e
-    putWord32le $ fromIntegral _msgBaselineNed_d
+    (putWord32le . fromIntegral) _msgBaselineNed_n
+    (putWord32le . fromIntegral) _msgBaselineNed_e
+    (putWord32le . fromIntegral) _msgBaselineNed_d
     putWord16le _msgBaselineNed_h_accuracy
     putWord16le _msgBaselineNed_v_accuracy
     putWord8 _msgBaselineNed_n_sats
@@ -601,9 +601,9 @@ instance Binary MsgVelEcef where
 
   put MsgVelEcef {..} = do
     putWord32le _msgVelEcef_tow
-    putWord32le $ fromIntegral _msgVelEcef_x
-    putWord32le $ fromIntegral _msgVelEcef_y
-    putWord32le $ fromIntegral _msgVelEcef_z
+    (putWord32le . fromIntegral) _msgVelEcef_x
+    (putWord32le . fromIntegral) _msgVelEcef_y
+    (putWord32le . fromIntegral) _msgVelEcef_z
     putWord16le _msgVelEcef_accuracy
     putWord8 _msgVelEcef_n_sats
     putWord8 _msgVelEcef_flags
@@ -665,9 +665,9 @@ instance Binary MsgVelEcefCov where
 
   put MsgVelEcefCov {..} = do
     putWord32le _msgVelEcefCov_tow
-    putWord32le $ fromIntegral _msgVelEcefCov_x
-    putWord32le $ fromIntegral _msgVelEcefCov_y
-    putWord32le $ fromIntegral _msgVelEcefCov_z
+    (putWord32le . fromIntegral) _msgVelEcefCov_x
+    (putWord32le . fromIntegral) _msgVelEcefCov_y
+    (putWord32le . fromIntegral) _msgVelEcefCov_z
     putFloat32le _msgVelEcefCov_cov_x_x
     putFloat32le _msgVelEcefCov_cov_x_y
     putFloat32le _msgVelEcefCov_cov_x_z
@@ -723,9 +723,9 @@ instance Binary MsgVelNed where
 
   put MsgVelNed {..} = do
     putWord32le _msgVelNed_tow
-    putWord32le $ fromIntegral _msgVelNed_n
-    putWord32le $ fromIntegral _msgVelNed_e
-    putWord32le $ fromIntegral _msgVelNed_d
+    (putWord32le . fromIntegral) _msgVelNed_n
+    (putWord32le . fromIntegral) _msgVelNed_e
+    (putWord32le . fromIntegral) _msgVelNed_d
     putWord16le _msgVelNed_h_accuracy
     putWord16le _msgVelNed_v_accuracy
     putWord8 _msgVelNed_n_sats
@@ -791,9 +791,9 @@ instance Binary MsgVelNedCov where
 
   put MsgVelNedCov {..} = do
     putWord32le _msgVelNedCov_tow
-    putWord32le $ fromIntegral _msgVelNedCov_n
-    putWord32le $ fromIntegral _msgVelNedCov_e
-    putWord32le $ fromIntegral _msgVelNedCov_d
+    (putWord32le . fromIntegral) _msgVelNedCov_n
+    (putWord32le . fromIntegral) _msgVelNedCov_e
+    (putWord32le . fromIntegral) _msgVelNedCov_d
     putFloat32le _msgVelNedCov_cov_n_n
     putFloat32le _msgVelNedCov_cov_n_e
     putFloat32le _msgVelNedCov_cov_n_d
@@ -866,9 +866,9 @@ instance Binary MsgVelBody where
 
   put MsgVelBody {..} = do
     putWord32le _msgVelBody_tow
-    putWord32le $ fromIntegral _msgVelBody_x
-    putWord32le $ fromIntegral _msgVelBody_y
-    putWord32le $ fromIntegral _msgVelBody_z
+    (putWord32le . fromIntegral) _msgVelBody_x
+    (putWord32le . fromIntegral) _msgVelBody_y
+    (putWord32le . fromIntegral) _msgVelBody_z
     putFloat32le _msgVelBody_cov_x_x
     putFloat32le _msgVelBody_cov_x_y
     putFloat32le _msgVelBody_cov_x_z
@@ -947,7 +947,7 @@ instance Binary MsgGpsTimeDepA where
   put MsgGpsTimeDepA {..} = do
     putWord16le _msgGpsTimeDepA_wn
     putWord32le _msgGpsTimeDepA_tow
-    putWord32le $ fromIntegral _msgGpsTimeDepA_ns_residual
+    (putWord32le . fromIntegral) _msgGpsTimeDepA_ns_residual
     putWord8 _msgGpsTimeDepA_flags
 
 $(makeSBP 'msgGpsTimeDepA ''MsgGpsTimeDepA)
@@ -1147,9 +1147,9 @@ instance Binary MsgBaselineEcefDepA where
 
   put MsgBaselineEcefDepA {..} = do
     putWord32le _msgBaselineEcefDepA_tow
-    putWord32le $ fromIntegral _msgBaselineEcefDepA_x
-    putWord32le $ fromIntegral _msgBaselineEcefDepA_y
-    putWord32le $ fromIntegral _msgBaselineEcefDepA_z
+    (putWord32le . fromIntegral) _msgBaselineEcefDepA_x
+    (putWord32le . fromIntegral) _msgBaselineEcefDepA_y
+    (putWord32le . fromIntegral) _msgBaselineEcefDepA_z
     putWord16le _msgBaselineEcefDepA_accuracy
     putWord8 _msgBaselineEcefDepA_n_sats
     putWord8 _msgBaselineEcefDepA_flags
@@ -1202,9 +1202,9 @@ instance Binary MsgBaselineNedDepA where
 
   put MsgBaselineNedDepA {..} = do
     putWord32le _msgBaselineNedDepA_tow
-    putWord32le $ fromIntegral _msgBaselineNedDepA_n
-    putWord32le $ fromIntegral _msgBaselineNedDepA_e
-    putWord32le $ fromIntegral _msgBaselineNedDepA_d
+    (putWord32le . fromIntegral) _msgBaselineNedDepA_n
+    (putWord32le . fromIntegral) _msgBaselineNedDepA_e
+    (putWord32le . fromIntegral) _msgBaselineNedDepA_d
     putWord16le _msgBaselineNedDepA_h_accuracy
     putWord16le _msgBaselineNedDepA_v_accuracy
     putWord8 _msgBaselineNedDepA_n_sats
@@ -1252,9 +1252,9 @@ instance Binary MsgVelEcefDepA where
 
   put MsgVelEcefDepA {..} = do
     putWord32le _msgVelEcefDepA_tow
-    putWord32le $ fromIntegral _msgVelEcefDepA_x
-    putWord32le $ fromIntegral _msgVelEcefDepA_y
-    putWord32le $ fromIntegral _msgVelEcefDepA_z
+    (putWord32le . fromIntegral) _msgVelEcefDepA_x
+    (putWord32le . fromIntegral) _msgVelEcefDepA_y
+    (putWord32le . fromIntegral) _msgVelEcefDepA_z
     putWord16le _msgVelEcefDepA_accuracy
     putWord8 _msgVelEcefDepA_n_sats
     putWord8 _msgVelEcefDepA_flags
@@ -1305,9 +1305,9 @@ instance Binary MsgVelNedDepA where
 
   put MsgVelNedDepA {..} = do
     putWord32le _msgVelNedDepA_tow
-    putWord32le $ fromIntegral _msgVelNedDepA_n
-    putWord32le $ fromIntegral _msgVelNedDepA_e
-    putWord32le $ fromIntegral _msgVelNedDepA_d
+    (putWord32le . fromIntegral) _msgVelNedDepA_n
+    (putWord32le . fromIntegral) _msgVelNedDepA_e
+    (putWord32le . fromIntegral) _msgVelNedDepA_d
     putWord16le _msgVelNedDepA_h_accuracy
     putWord16le _msgVelNedDepA_v_accuracy
     putWord8 _msgVelNedDepA_n_sats

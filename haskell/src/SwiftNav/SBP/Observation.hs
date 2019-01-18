@@ -79,7 +79,7 @@ instance Binary Doppler where
     pure Doppler {..}
 
   put Doppler {..} = do
-    putWord16le $ fromIntegral _doppler_i
+    (putWord16le . fromIntegral) _doppler_i
     putWord8 _doppler_f
 
 $(makeJSON "_doppler_" ''Doppler)
@@ -1917,7 +1917,7 @@ instance Binary CarrierPhaseDepA where
     pure CarrierPhaseDepA {..}
 
   put CarrierPhaseDepA {..} = do
-    putWord32le $ fromIntegral _carrierPhaseDepA_i
+    (putWord32le . fromIntegral) _carrierPhaseDepA_i
     putWord8 _carrierPhaseDepA_f
 
 $(makeJSON "_carrierPhaseDepA_" ''CarrierPhaseDepA)
@@ -2333,9 +2333,9 @@ instance Binary MsgGroupDelayDepA where
     put _msgGroupDelayDepA_t_op
     putWord8 _msgGroupDelayDepA_prn
     putWord8 _msgGroupDelayDepA_valid
-    putWord16le $ fromIntegral _msgGroupDelayDepA_tgd
-    putWord16le $ fromIntegral _msgGroupDelayDepA_isc_l1ca
-    putWord16le $ fromIntegral _msgGroupDelayDepA_isc_l2c
+    (putWord16le . fromIntegral) _msgGroupDelayDepA_tgd
+    (putWord16le . fromIntegral) _msgGroupDelayDepA_isc_l1ca
+    (putWord16le . fromIntegral) _msgGroupDelayDepA_isc_l2c
 
 $(makeSBP 'msgGroupDelayDepA ''MsgGroupDelayDepA)
 $(makeJSON "_msgGroupDelayDepA_" ''MsgGroupDelayDepA)
@@ -2374,9 +2374,9 @@ instance Binary MsgGroupDelayDepB where
     put _msgGroupDelayDepB_t_op
     put _msgGroupDelayDepB_sid
     putWord8 _msgGroupDelayDepB_valid
-    putWord16le $ fromIntegral _msgGroupDelayDepB_tgd
-    putWord16le $ fromIntegral _msgGroupDelayDepB_isc_l1ca
-    putWord16le $ fromIntegral _msgGroupDelayDepB_isc_l2c
+    (putWord16le . fromIntegral) _msgGroupDelayDepB_tgd
+    (putWord16le . fromIntegral) _msgGroupDelayDepB_isc_l1ca
+    (putWord16le . fromIntegral) _msgGroupDelayDepB_isc_l2c
 
 $(makeSBP 'msgGroupDelayDepB ''MsgGroupDelayDepB)
 $(makeJSON "_msgGroupDelayDepB_" ''MsgGroupDelayDepB)
@@ -2415,9 +2415,9 @@ instance Binary MsgGroupDelay where
     put _msgGroupDelay_t_op
     put _msgGroupDelay_sid
     putWord8 _msgGroupDelay_valid
-    putWord16le $ fromIntegral _msgGroupDelay_tgd
-    putWord16le $ fromIntegral _msgGroupDelay_isc_l1ca
-    putWord16le $ fromIntegral _msgGroupDelay_isc_l2c
+    (putWord16le . fromIntegral) _msgGroupDelay_tgd
+    (putWord16le . fromIntegral) _msgGroupDelay_isc_l1ca
+    (putWord16le . fromIntegral) _msgGroupDelay_isc_l2c
 
 $(makeSBP 'msgGroupDelay ''MsgGroupDelay)
 $(makeJSON "_msgGroupDelay_" ''MsgGroupDelay)
@@ -2779,10 +2779,10 @@ instance Binary MsgGloBiases where
 
   put MsgGloBiases {..} = do
     putWord8 _msgGloBiases_mask
-    putWord16le $ fromIntegral _msgGloBiases_l1ca_bias
-    putWord16le $ fromIntegral _msgGloBiases_l1p_bias
-    putWord16le $ fromIntegral _msgGloBiases_l2ca_bias
-    putWord16le $ fromIntegral _msgGloBiases_l2p_bias
+    (putWord16le . fromIntegral) _msgGloBiases_l1ca_bias
+    (putWord16le . fromIntegral) _msgGloBiases_l1p_bias
+    (putWord16le . fromIntegral) _msgGloBiases_l2ca_bias
+    (putWord16le . fromIntegral) _msgGloBiases_l2p_bias
 
 $(makeSBP 'msgGloBiases ''MsgGloBiases)
 $(makeJSON "_msgGloBiases_" ''MsgGloBiases)

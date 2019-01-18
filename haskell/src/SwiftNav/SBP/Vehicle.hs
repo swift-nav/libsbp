@@ -65,7 +65,7 @@ instance Binary MsgOdometry where
 
   put MsgOdometry {..} = do
     putWord32le _msgOdometry_tow
-    putWord32le $ fromIntegral _msgOdometry_velocity
+    (putWord32le . fromIntegral) _msgOdometry_velocity
     putWord8 _msgOdometry_flags
 
 $(makeSBP 'msgOdometry ''MsgOdometry)
