@@ -239,9 +239,9 @@ instance Binary AcqSvProfile where
     putWord16le _acqSvProfile_bin_width
     putWord32le _acqSvProfile_timestamp
     putWord32le _acqSvProfile_time_spent
-    putWord32le $ fromIntegral _acqSvProfile_cf_min
-    putWord32le $ fromIntegral _acqSvProfile_cf_max
-    putWord32le $ fromIntegral _acqSvProfile_cf
+    (putWord32le . fromIntegral) _acqSvProfile_cf_min
+    (putWord32le . fromIntegral) _acqSvProfile_cf_max
+    (putWord32le . fromIntegral) _acqSvProfile_cf
     putWord32le _acqSvProfile_cp
 
 $(makeJSON "_acqSvProfile_" ''AcqSvProfile)
@@ -302,9 +302,9 @@ instance Binary AcqSvProfileDep where
     putWord16le _acqSvProfileDep_bin_width
     putWord32le _acqSvProfileDep_timestamp
     putWord32le _acqSvProfileDep_time_spent
-    putWord32le $ fromIntegral _acqSvProfileDep_cf_min
-    putWord32le $ fromIntegral _acqSvProfileDep_cf_max
-    putWord32le $ fromIntegral _acqSvProfileDep_cf
+    (putWord32le . fromIntegral) _acqSvProfileDep_cf_min
+    (putWord32le . fromIntegral) _acqSvProfileDep_cf_max
+    (putWord32le . fromIntegral) _acqSvProfileDep_cf
     putWord32le _acqSvProfileDep_cp
 
 $(makeJSON "_acqSvProfileDep_" ''AcqSvProfileDep)

@@ -55,7 +55,7 @@ instance Binary CodeBiasesContent where
 
   put CodeBiasesContent {..} = do
     putWord8 _codeBiasesContent_code
-    putWord16le $ fromIntegral _codeBiasesContent_value
+    (putWord16le . fromIntegral) _codeBiasesContent_value
 
 $(makeJSON "_codeBiasesContent_" ''CodeBiasesContent)
 $(makeLenses ''CodeBiasesContent)
@@ -92,7 +92,7 @@ instance Binary PhaseBiasesContent where
     putWord8 _phaseBiasesContent_integer_indicator
     putWord8 _phaseBiasesContent_widelane_integer_indicator
     putWord8 _phaseBiasesContent_discontinuity_counter
-    putWord32le $ fromIntegral _phaseBiasesContent_bias
+    (putWord32le . fromIntegral) _phaseBiasesContent_bias
 
 $(makeJSON "_phaseBiasesContent_" ''PhaseBiasesContent)
 $(makeLenses ''PhaseBiasesContent)
@@ -161,15 +161,15 @@ instance Binary MsgSsrOrbitClock where
     putWord8 _msgSsrOrbitClock_update_interval
     putWord8 _msgSsrOrbitClock_iod_ssr
     putWord32le _msgSsrOrbitClock_iod
-    putWord32le $ fromIntegral _msgSsrOrbitClock_radial
-    putWord32le $ fromIntegral _msgSsrOrbitClock_along
-    putWord32le $ fromIntegral _msgSsrOrbitClock_cross
-    putWord32le $ fromIntegral _msgSsrOrbitClock_dot_radial
-    putWord32le $ fromIntegral _msgSsrOrbitClock_dot_along
-    putWord32le $ fromIntegral _msgSsrOrbitClock_dot_cross
-    putWord32le $ fromIntegral _msgSsrOrbitClock_c0
-    putWord32le $ fromIntegral _msgSsrOrbitClock_c1
-    putWord32le $ fromIntegral _msgSsrOrbitClock_c2
+    (putWord32le . fromIntegral) _msgSsrOrbitClock_radial
+    (putWord32le . fromIntegral) _msgSsrOrbitClock_along
+    (putWord32le . fromIntegral) _msgSsrOrbitClock_cross
+    (putWord32le . fromIntegral) _msgSsrOrbitClock_dot_radial
+    (putWord32le . fromIntegral) _msgSsrOrbitClock_dot_along
+    (putWord32le . fromIntegral) _msgSsrOrbitClock_dot_cross
+    (putWord32le . fromIntegral) _msgSsrOrbitClock_c0
+    (putWord32le . fromIntegral) _msgSsrOrbitClock_c1
+    (putWord32le . fromIntegral) _msgSsrOrbitClock_c2
 
 $(makeSBP 'msgSsrOrbitClock ''MsgSsrOrbitClock)
 $(makeJSON "_msgSsrOrbitClock_" ''MsgSsrOrbitClock)
@@ -239,15 +239,15 @@ instance Binary MsgSsrOrbitClockDepA where
     putWord8 _msgSsrOrbitClockDepA_update_interval
     putWord8 _msgSsrOrbitClockDepA_iod_ssr
     putWord8 _msgSsrOrbitClockDepA_iod
-    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_radial
-    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_along
-    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_cross
-    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_dot_radial
-    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_dot_along
-    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_dot_cross
-    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_c0
-    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_c1
-    putWord32le $ fromIntegral _msgSsrOrbitClockDepA_c2
+    (putWord32le . fromIntegral) _msgSsrOrbitClockDepA_radial
+    (putWord32le . fromIntegral) _msgSsrOrbitClockDepA_along
+    (putWord32le . fromIntegral) _msgSsrOrbitClockDepA_cross
+    (putWord32le . fromIntegral) _msgSsrOrbitClockDepA_dot_radial
+    (putWord32le . fromIntegral) _msgSsrOrbitClockDepA_dot_along
+    (putWord32le . fromIntegral) _msgSsrOrbitClockDepA_dot_cross
+    (putWord32le . fromIntegral) _msgSsrOrbitClockDepA_c0
+    (putWord32le . fromIntegral) _msgSsrOrbitClockDepA_c1
+    (putWord32le . fromIntegral) _msgSsrOrbitClockDepA_c2
 
 $(makeSBP 'msgSsrOrbitClockDepA ''MsgSsrOrbitClockDepA)
 $(makeJSON "_msgSsrOrbitClockDepA_" ''MsgSsrOrbitClockDepA)
@@ -348,7 +348,7 @@ instance Binary MsgSsrPhaseBiases where
     putWord8 _msgSsrPhaseBiases_dispersive_bias
     putWord8 _msgSsrPhaseBiases_mw_consistency
     putWord16le _msgSsrPhaseBiases_yaw
-    putWord8 $ fromIntegral _msgSsrPhaseBiases_yaw_rate
+    (putWord8 . fromIntegral) _msgSsrPhaseBiases_yaw_rate
     mapM_ put _msgSsrPhaseBiases_biases
 
 $(makeSBP 'msgSsrPhaseBiases ''MsgSsrPhaseBiases)

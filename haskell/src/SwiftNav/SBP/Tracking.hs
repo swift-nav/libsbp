@@ -128,13 +128,13 @@ instance Binary MsgTrackingStateDetailedDepA where
     putWord8 _msgTrackingStateDetailedDepA_cn0
     putWord16le _msgTrackingStateDetailedDepA_lock
     put _msgTrackingStateDetailedDepA_sid
-    putWord32le $ fromIntegral _msgTrackingStateDetailedDepA_doppler
+    (putWord32le . fromIntegral) _msgTrackingStateDetailedDepA_doppler
     putWord16le _msgTrackingStateDetailedDepA_doppler_std
     putWord32le _msgTrackingStateDetailedDepA_uptime
-    putWord16le $ fromIntegral _msgTrackingStateDetailedDepA_clock_offset
-    putWord16le $ fromIntegral _msgTrackingStateDetailedDepA_clock_drift
+    (putWord16le . fromIntegral) _msgTrackingStateDetailedDepA_clock_offset
+    (putWord16le . fromIntegral) _msgTrackingStateDetailedDepA_clock_drift
     putWord16le _msgTrackingStateDetailedDepA_corr_spacing
-    putWord8 $ fromIntegral _msgTrackingStateDetailedDepA_acceleration
+    (putWord8 . fromIntegral) _msgTrackingStateDetailedDepA_acceleration
     putWord8 _msgTrackingStateDetailedDepA_sync_flags
     putWord8 _msgTrackingStateDetailedDepA_tow_flags
     putWord8 _msgTrackingStateDetailedDepA_track_flags
@@ -237,13 +237,13 @@ instance Binary MsgTrackingStateDetailedDep where
     putWord8 _msgTrackingStateDetailedDep_cn0
     putWord16le _msgTrackingStateDetailedDep_lock
     put _msgTrackingStateDetailedDep_sid
-    putWord32le $ fromIntegral _msgTrackingStateDetailedDep_doppler
+    (putWord32le . fromIntegral) _msgTrackingStateDetailedDep_doppler
     putWord16le _msgTrackingStateDetailedDep_doppler_std
     putWord32le _msgTrackingStateDetailedDep_uptime
-    putWord16le $ fromIntegral _msgTrackingStateDetailedDep_clock_offset
-    putWord16le $ fromIntegral _msgTrackingStateDetailedDep_clock_drift
+    (putWord16le . fromIntegral) _msgTrackingStateDetailedDep_clock_offset
+    (putWord16le . fromIntegral) _msgTrackingStateDetailedDep_clock_drift
     putWord16le _msgTrackingStateDetailedDep_corr_spacing
-    putWord8 $ fromIntegral _msgTrackingStateDetailedDep_acceleration
+    (putWord8 . fromIntegral) _msgTrackingStateDetailedDep_acceleration
     putWord8 _msgTrackingStateDetailedDep_sync_flags
     putWord8 _msgTrackingStateDetailedDep_tow_flags
     putWord8 _msgTrackingStateDetailedDep_track_flags
@@ -376,8 +376,8 @@ instance Binary TrackingChannelCorrelation where
     pure TrackingChannelCorrelation {..}
 
   put TrackingChannelCorrelation {..} = do
-    putWord32le $ fromIntegral _trackingChannelCorrelation_I
-    putWord32le $ fromIntegral _trackingChannelCorrelation_Q
+    (putWord32le . fromIntegral) _trackingChannelCorrelation_I
+    (putWord32le . fromIntegral) _trackingChannelCorrelation_Q
 
 $(makeJSON "_trackingChannelCorrelation_" ''TrackingChannelCorrelation)
 $(makeLenses ''TrackingChannelCorrelation)
