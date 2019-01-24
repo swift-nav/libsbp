@@ -57,12 +57,12 @@ class SettingMonitor(object):
 
     def clear(self, section=None, setting=None, value=None):
         """Clear settings"""
-        match = map(lambda (x,y,z): all((section is None or x == section,
+        match = map(lambda x,y,z: all((section is None or x == section,
                                          setting is None or y == setting,
                                          value is None or z == value)),
                     self.settings)
 
-        keep = filter(lambda (setting,remove): not remove,
+        keep = filter(lambda setting,remove: not remove,
                       zip(self.settings,match))
 
         self.settings[:] = map(lambda x: x[0], keep)
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     import argparse
 
     def print_setting(sbp_msg, **metadata):
-        print sbp_msg
+        print(sbp_msg)
 
     def main():
         parser = argparse.ArgumentParser(
@@ -118,7 +118,7 @@ if __name__ == "__main__":
                         'system_monitor', 'spectrum_analyzer', 'False')
 
                 assert(specan_off == True)
-                print "Spectrum analyzer turned off!"
+                print("Spectrum analyzer turned off!")
 
                 # Request the value of the system_monitor:spectrum_analyzer setting
                 link(MsgSettingsReadReq(setting='%s\0%s\0' % (
@@ -129,6 +129,6 @@ if __name__ == "__main__":
                         'system_monitor', 'spectrum_analyzer', 'True')
 
                 assert(specan_off == False)
-                print "Spectrum analyzer still off!"
+                print("Spectrum analyzer still off!")
 
     main()

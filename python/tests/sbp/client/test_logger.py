@@ -19,7 +19,7 @@ from sbp.logging import MsgPrintDep
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
 import pytest
-import SocketServer
+import socketserver
 import threading
 import warnings
 
@@ -83,12 +83,12 @@ def test_msg_print():
         assert str(w[0].message).startswith('Bad message parsing for line')
 
 def udp_handler(data):
-  class MockRequestHandler(SocketServer.BaseRequestHandler):
+  class MockRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
       assert data == self.request[0].strip()
   return MockRequestHandler
 
-class MockServer(SocketServer.ThreadingMixIn, SocketServer.UDPServer):
+class MockServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
   pass
 
 def udp_server(handler):
@@ -119,7 +119,7 @@ def test_rolling_json_log():
   r_interval = 2
   try:
     with tempfile.NamedTemporaryFile(mode='w', delete=False) as tf:
-      #print tf.name
+      #print(tf.name)
       with RotatingFileLogger(tf.name, when='S', interval=r_interval) as log:
         t0 = time.time()
         t = time.time()

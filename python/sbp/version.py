@@ -44,7 +44,7 @@ def call_git_describe():
                   stdout=PIPE, stderr=PIPE)
         p.stderr.close()
         line = p.stdout.readlines()[0]
-        return line.strip()
+        return line.decode("utf-8") .strip()
     except:
         return None
 
@@ -119,5 +119,5 @@ def pep386adapt(version):
 VERSION = get_git_version()
 
 if __name__ == "__main__":
-    print get_git_version()
+    print(get_git_version())
 

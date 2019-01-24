@@ -100,7 +100,7 @@ class TCPDriver(BaseDriver):
             self.handle.sendall(s)
         except socket.timeout:
             self._connect()
-        except socket.error, msg:
+        except (socket.error, msg):
             raise IOError
         finally:
             self._write_lock.release()

@@ -4,3 +4,7 @@ cov-core==1.15.0
 coverage==4.4.1
 tox
 ruamel.yaml
+twitter
+pusher
+pusherclient
+numpy

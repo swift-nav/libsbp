@@ -58,7 +58,7 @@ def field_eq(p, e):
 
   """
   if isinstance(e, dict):
-    return all(field_eq(p[i], j) for (i, j) in e.iteritems())
+    return all(field_eq(p[i], j) for (i, j) in e.items())
   elif isinstance(e, list):
     return all(field_eq(p[i], j) for (i, j) in enumerate(e))
   else:
@@ -79,7 +79,7 @@ def _assert_msg(msg, test_case):
   """
   assert msg.__class__.__name__ == test_case['name']
   if test_case['fields']:
-    for field_name, field_value in test_case['fields'].iteritems():
+    for field_name, field_value in test_case['fields'].items():
       assert field_eq(getattr(msg, field_name), field_value), \
         "Unequal field values: got %s, but expected %s!" \
         % (getattr(msg, field_name), field_value)

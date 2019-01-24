@@ -50,20 +50,20 @@ class PySerialDriver(BaseDriver):
             handle.rtscts = rtscts
             super(PySerialDriver, self).__init__(handle)
         except (OSError, serial.SerialException) as e:
-            print
-            print "Error opening serial device '%s':" % port
-            print e
-            print
-            print "The following serial devices were detected:"
-            print
+            print()
+            print("Error opening serial device '%s':" % port)
+            print(e)
+            print()
+            print("The following serial devices were detected:")
+            print()
             for (name, desc, _) in serial.tools.list_ports.comports():
                 if desc[0:4] == "ttyS":
                     continue
                 if name == desc:
-                    print "\t%s" % name
+                    print("\t%s" % name)
                 else:
-                    print "\t%s (%s)" % (name, desc)
-            print
+                    print("\t%s (%s)" % (name, desc))
+            print()
             raise SystemExit
 
     def read(self, size):
@@ -78,9 +78,9 @@ class PySerialDriver(BaseDriver):
         try:
             return self.handle.read(size)
         except (OSError, serial.SerialException):
-            print
-            print "Piksi disconnected"
-            print
+            print()
+            print("Piksi disconnected")
+            print()
             raise IOError
 
     def write(self, s):
@@ -97,12 +97,12 @@ class PySerialDriver(BaseDriver):
         except (OSError, serial.SerialException,
                 serial.writeTimeoutError) as e:
             if e == serial.writeTimeoutError:
-                print "sbp pyserial_driver: writeTimeoutError"
+                print("sbp pyserial_driver: writeTimeoutError")
                 return 0
             else:
-                print
-                print "Piksi disconnected"
-                print
+                print()
+                print("Piksi disconnected")
+                print()
                 raise IOError
 
     def __enter__(self):

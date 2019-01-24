@@ -36,7 +36,7 @@ def walk_json_dict(coll):
 
   """
   if isinstance(coll, dict):
-    return dict((k, walk_json_dict(v)) for (k, v) in coll.iteritems())
+    return dict((k, walk_json_dict(v)) for (k, v) in coll.items())
   elif hasattr(coll, '__iter__'):
     return [walk_json_dict(seq) for seq in coll]
   else:
@@ -54,7 +54,7 @@ def containerize(coll):
 
   """
   if isinstance(coll, Container):
-    [setattr(coll, k, containerize(v)) for (k, v) in coll.iteritems()]
+    [setattr(coll, k, containerize(v)) for (k, v) in coll.items()]
     return coll
   elif isinstance(coll, dict):
     return containerize(Container(**coll))

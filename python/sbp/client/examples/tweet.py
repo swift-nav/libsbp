@@ -14,7 +14,8 @@ them to the twitter API.
 """
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
-from sbp.client.handler import Handler, Framer
+from sbp.client.handler import Handler
+from sbp.client.framer import Framer
 from sbp.logging import SBP_MSG_TWEET, MsgTweet
 
 import time

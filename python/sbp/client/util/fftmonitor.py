@@ -79,8 +79,8 @@ class FFTMonitor(object):
 
     def capture_fft(self, sbp_msg, **metadata):
 
-        # print "ch:%d, freq_ref: %f, freq_step: %f, amp_ref:%f, num_values:%d, wn:%d, tow:%d" \
-        #         % (sbp_msg.channel_tag, sbp_msg.freq_ref, sbp_msg.freq_step, sbp_msg.amplitude_ref, len(sbp_msg.amplitude_value), sbp_msg.t.wn, sbp_msg.t.tow)
+        # print("ch:%d, freq_ref: %f, freq_step: %f, amp_ref:%f, num_values:%d, wn:%d, tow:%d" \
+        #         % (sbp_msg.channel_tag, sbp_msg.freq_ref, sbp_msg.freq_step, sbp_msg.amplitude_ref, len(sbp_msg.amplitude_value), sbp_msg.t.wn, sbp_msg.t.tow))
 
         channel = sbp_msg.channel_tag
         if not self.enabled[channel]:
@@ -108,7 +108,7 @@ class FFTMonitor(object):
             assert(len(current_fft['frequencies']) ==
                    len(current_fft['amplitudes']))
             self.ffts[channel].append(current_fft)
-            #print "FFT Captured for channel %d" % channel
+            #print("FFT Captured for channel %d" % channel)
 
     def _enable(self, en, channel=None):
         if isinstance(channel, int):
@@ -188,7 +188,7 @@ def main():
             monitor.enable_channel(ch)
             while monitor.num_ffts(ch) < samples:
                 time.sleep(1)
-            print "Captured %d ffts from channel %d" % (samples, ch)
+            print("Captured %d ffts from channel %d" % (samples, ch))
             ffts = monitor.get_ffts(ch)
             #monitor.disable_channel(ch)
 

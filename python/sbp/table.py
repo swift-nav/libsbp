@@ -39,28 +39,30 @@ from . import ssr as ssr
 
 import warnings
 
-_SBP_TABLE = dict(acq.msg_classes.items()
-                  + boot.msg_classes.items()
-                  + file_io.msg_classes.items()
-                  + flash.msg_classes.items()
-                  + linux.msg_classes.items()
-                  + log.msg_classes.items()
-                  + nav.msg_classes.items()
-                  + obs.msg_classes.items()
-                  + piksi.msg_classes.items()
-                  + settings.msg_classes.items()
-                  + sys.msg_classes.items()
-                  + trac.msg_classes.items()
-                  + user.msg_classes.items()
-                  + imu.msg_classes.items()
-                  + mag.msg_classes.items()
-                  + ext_events.msg_classes.items()
-                  + ndb.msg_classes.items()
-                  + vehicle.msg_classes.items()
-                  + orientation.msg_classes.items()
-                  + sbas.msg_classes.items()
-                  + ssr.msg_classes.items()
-                  )
+_SBP_TABLE = {}
+
+for d in (acq.msg_classes,
+ boot.msg_classes,
+ file_io.msg_classes,
+ flash.msg_classes,
+ linux.msg_classes,
+ log.msg_classes,
+ nav.msg_classes,
+ obs.msg_classes,
+ piksi.msg_classes,
+ settings.msg_classes,
+ sys.msg_classes,
+ trac.msg_classes,
+ user.msg_classes,
+ imu.msg_classes,
+ mag.msg_classes,
+ ext_events.msg_classes,
+ ndb.msg_classes,
+ vehicle.msg_classes,
+ orientation.msg_classes,
+ sbas.msg_classes,
+ ssr.msg_classes):
+  _SBP_TABLE.update(d)
 
 class InvalidSBPMessageType(NotImplementedError):
   """
