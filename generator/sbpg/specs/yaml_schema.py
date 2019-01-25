@@ -21,6 +21,11 @@ from voluptuous import Schema
 
 SBP_EXTENSION = "/*.yaml"
 
+def dummy_hash(self):
+    return id(self)
+Schema.hash = dummy_hash
+Schema.__hash__ = dummy_hash
+
 filename = Schema(str)
 identifier = Schema(str)
 description = Schema(str)

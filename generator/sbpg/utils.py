@@ -22,7 +22,7 @@ def fmt_repr(obj):
 def rejig_values(values):
     new_values = []
     for v in values:
-        value, desc = v.iteritems().next()
+        value, desc = next(iter(v.items()))
         new_values.append({
             'value': value,
             'desc': desc
@@ -33,12 +33,12 @@ def rejig_bitfields(bfs):
     new_bfs = []
     n_with_values = 0
     for bf in bfs:
-        rng, info = bf.iteritems().next()
+        rng, info = next(iter(bf.items()))
         if 'values' in info:
             n_with_values += 1
             info['vals'] = rejig_values(info['values'])
             del info['values']
-        rng = map(int, str(rng).split('-'))
+        rng = list(map(int, str(rng).split('-')))
         if len(rng) == 1:
             lsb = rng[0]
             bf_len = 1

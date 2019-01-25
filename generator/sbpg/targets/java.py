@@ -175,7 +175,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
       os.mkdir(os.path.dirname(destination_filename))
 
     with open(destination_filename, 'w+') as f:
-        print destination_filename
+        print(destination_filename)
         f.write(java_template.render(m=msg,
                                      filepath=yaml_filepath,
                                      module_path=module_path,
@@ -188,6 +188,6 @@ def render_table(output_dir, packages, jenv=JENV):
   """
   destination_filename = output_dir + "/com/swiftnav/sbp/client/MessageTable.java"
   with open(destination_filename, 'w+') as f:
-      print destination_filename
+      print(destination_filename)
       f.write(jenv.get_template(TEMPLATE_TABLE_NAME).render(packages=packages))
 

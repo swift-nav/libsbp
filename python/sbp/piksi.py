@@ -237,7 +237,7 @@ though may not necessarily be populated with a value.
                      'total_bytes' / construct.Int64ul,
                      'rx_bytes' / construct.Int32ul,
                      'tx_bytes' / construct.Int32ul,
-                     'interface_name'/construct.Padded(16, construct.CString('ascii')),))
+                     'interface_name'/ construct.Padded(16, construct.CString('ascii')),))
   __slots__ = [
                'duration',
                'total_bytes',

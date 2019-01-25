@@ -252,7 +252,7 @@ def mk_definition(defn):
 
   """
   assert len(defn) == 1
-  identifier, contents = defn.items()[0]
+  identifier, contents = next(iter(defn.items()))
   fs = [mk_field(f) for f in contents.get('fields', [])]
   return sbp.resolve_type(sbp.Definition(identifier=identifier,
                                          sbp_id=contents.get('id', None),
@@ -276,8 +276,8 @@ def mk_field(field):
 
   """
   assert len(field) == 1
-  identifier, contents = field.items()[0]
-  contents = dict({'units': '', 'n_with_values': 0}.items() + contents.items())
+  identifier, contents = next(iter(field.items()))
+  contents.update({'units': '', 'n_with_values': 0})
   return sbp.resolve_type(sbp.Field(identifier=identifier,
                                     type_id=contents.pop('type'),
                                     options=contents))
