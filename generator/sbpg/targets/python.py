@@ -62,10 +62,10 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
     return "'{identifier}' / {type_id}".format(type_id=type_map.get(f.type_id),
                                              identifier=f.identifier)
   elif f.type_id == 'string' and f.options.get('size', None):
-    return "'{id}'/ construct.Bytes({size})".format(id=f.identifier,
+    return "'{id}'/ construct.Padded({size}, construct.CString('ascii'))".format(id=f.identifier,
                                                    size=f.options['size'].value)
   elif f.type_id == 'string':
-    return "'{id}' / construct.GreedyBytes".format(id=f.identifier)
+    return "'{id}' / construct.GreedyString".format(id=f.identifier)
   elif f.type_id == 'array' and f.options.get('size', None):
     fill = f.options['fill'].value
     f_ = copy.copy(f)

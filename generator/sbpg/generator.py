@@ -102,9 +102,9 @@ def main():
     file_index_items = sorted(file_index.items(), key=lambda f: f[0])
 
     if verbose:
-      print "Reading files..."
+      print("Reading files...")
       pprint.pprint(file_index.keys())
-      print "Writing to %s" % output_dir
+      print("Writing to %s" % output_dir)
     if args.latex:
       parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
       tex.render_source(output_dir, parsed, args.release[0])
