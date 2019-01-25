@@ -153,7 +153,7 @@ corrections packet.
                    'flags' / construct.Int8ul,
                    'latency' / construct.Int16ul,
                    'num_signals' / construct.Int8ul,
-                   'source' / construct.GreedyBytes,)
+                   'source' / construct.GreedyString('utf8'),)
   __slots__ = [
                'flags',
                'latency',
@@ -417,7 +417,7 @@ It is intended to be a low rate message for status purposes.
   """
   _parser = construct.Struct(
                    'id' / construct.Int8ul,
-                   'telemetry' / construct.GreedyBytes,)
+                   'telemetry' / construct.GreedyString('utf8'),)
   __slots__ = [
                'id',
                'telemetry',
@@ -505,7 +505,7 @@ rate than the MSG_CSAC_TELEMETRY.
   """
   _parser = construct.Struct(
                    'id' / construct.Int8ul,
-                   'telemetry_labels' / construct.GreedyBytes,)
+                   'telemetry_labels' / construct.GreedyString('utf8'),)
   __slots__ = [
                'id',
                'telemetry_labels',

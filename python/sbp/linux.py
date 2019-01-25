@@ -61,8 +61,8 @@ consumers of CPU on the system.
                    'index' / construct.Int8ul,
                    'pid' / construct.Int16ul,
                    'pcpu' / construct.Int8ul,
-                   'tname'/ construct.Bytes(15),
-                   'cmdline' / construct.GreedyBytes,)
+                   'tname'/ construct.Padded(15, construct.CString('ascii')),
+                   'cmdline' / construct.GreedyString('utf8'),)
   __slots__ = [
                'index',
                'pid',
@@ -163,8 +163,8 @@ consumers of memory on the system.
                    'index' / construct.Int8ul,
                    'pid' / construct.Int16ul,
                    'pmem' / construct.Int8ul,
-                   'tname'/ construct.Bytes(15),
-                   'cmdline' / construct.GreedyBytes,)
+                   'tname'/ construct.Padded(15, construct.CString('ascii')),
+                   'cmdline' / construct.GreedyString('utf8'),)
   __slots__ = [
                'index',
                'pid',
@@ -382,7 +382,7 @@ class MsgLinuxProcessSocketCounts(SBP):
                    'socket_count' / construct.Int16ul,
                    'socket_types' / construct.Int16ul,
                    'socket_states' / construct.Int16ul,
-                   'cmdline' / construct.GreedyBytes,)
+                   'cmdline' / construct.GreedyString('utf8'),)
   __slots__ = [
                'index',
                'pid',
@@ -503,8 +503,8 @@ of the connection.
                    'send_queued' / construct.Int16ul,
                    'socket_types' / construct.Int16ul,
                    'socket_states' / construct.Int16ul,
-                   'address_of_largest'/ construct.Bytes(64),
-                   'cmdline' / construct.GreedyBytes,)
+                   'address_of_largest'/ construct.Padded(64, construct.CString('ascii')),
+                   'cmdline' / construct.GreedyString('utf8'),)
   __slots__ = [
                'index',
                'pid',
@@ -708,7 +708,7 @@ class MsgLinuxProcessFdCount(SBP):
                    'index' / construct.Int8ul,
                    'pid' / construct.Int16ul,
                    'fd_count' / construct.Int16ul,
-                   'cmdline' / construct.GreedyBytes,)
+                   'cmdline' / construct.GreedyString('utf8'),)
   __slots__ = [
                'index',
                'pid',
@@ -802,7 +802,7 @@ of the list being 2 NULL terminators in a row.
   """
   _parser = construct.Struct(
                    'sys_fd_count' / construct.Int32ul,
-                   'most_opened' / construct.GreedyBytes,)
+                   'most_opened' / construct.GreedyString('utf8'),)
   __slots__ = [
                'sys_fd_count',
                'most_opened',

@@ -37,7 +37,7 @@ def _assert_sbp(sbp, test_case):
   assert sbp.msg_type == int(test_case['msg_type'], 0), "Invalid msg_type."
   assert sbp.sender == int(test_case['sender'], 0), "Invalid sender."
   assert sbp.length == test_case['length'], "Invalid length."
-  assert base64.standard_b64encode(sbp.payload) == test_case['payload'], \
+  assert base64.standard_b64encode(sbp.payload).decode() == test_case['payload'], \
     "Invalid payload."
 
 def field_eq(p, e):
@@ -81,8 +81,8 @@ def _assert_msg(msg, test_case):
   if test_case['fields']:
     for field_name, field_value in test_case['fields'].items():
       assert field_eq(getattr(msg, field_name), field_value), \
-        "Unequal field values: got %s, but expected %s!" \
-        % (getattr(msg, field_name), field_value)
+        "Unequal field %s values: got %s, but expected %s! %d %d" \
+        % (field_name, getattr(msg, field_name), field_value, len(getattr(msg, field_name)), len(field_value))
 
 def _assert_msg_roundtrip(msg, raw_packet):
   """
@@ -97,7 +97,7 @@ def _assert_msg_roundtrip(msg, raw_packet):
     Unit test case for this message.
 
   """
-  assert base64.standard_b64encode(msg.to_binary()) == raw_packet
+  assert base64.standard_b64encode(msg.to_binary()).decode() == raw_packet
 
 def _assert_msg_roundtrip_json(msg, raw_json):
   """

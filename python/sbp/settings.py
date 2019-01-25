@@ -128,7 +128,7 @@ An example string that could be sent to a device is
 
   """
   _parser = construct.Struct(
-                   'setting' / construct.GreedyBytes,)
+                   'setting' / construct.GreedyString('utf8'),)
   __slots__ = [
                'setting',
               ]
@@ -220,7 +220,7 @@ are omitted. An example string that could be sent from device is
   """
   _parser = construct.Struct(
                    'status' / construct.Int8ul,
-                   'setting' / construct.GreedyBytes,)
+                   'setting' / construct.GreedyString('utf8'),)
   __slots__ = [
                'status',
                'setting',
@@ -312,7 +312,7 @@ message (msg_id 0x00A5).
 
   """
   _parser = construct.Struct(
-                   'setting' / construct.GreedyBytes,)
+                   'setting' / construct.GreedyString('utf8'),)
   __slots__ = [
                'setting',
               ]
@@ -402,7 +402,7 @@ example string that could be sent from device is
 
   """
   _parser = construct.Struct(
-                   'setting' / construct.GreedyBytes,)
+                   'setting' / construct.GreedyString('utf8'),)
   __slots__ = [
                'setting',
               ]
@@ -584,7 +584,7 @@ the device is "simulator\0enabled\0True\0enum:True,False\0"
   """
   _parser = construct.Struct(
                    'index' / construct.Int16ul,
-                   'setting' / construct.GreedyBytes,)
+                   'setting' / construct.GreedyString('utf8'),)
   __slots__ = [
                'index',
                'setting',
@@ -716,7 +716,7 @@ for this setting to set the initial value.
 
   """
   _parser = construct.Struct(
-                   'setting' / construct.GreedyBytes,)
+                   'setting' / construct.GreedyString('utf8'),)
   __slots__ = [
                'setting',
               ]

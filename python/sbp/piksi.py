@@ -237,7 +237,7 @@ though may not necessarily be populated with a value.
                      'total_bytes' / construct.Int64ul,
                      'rx_bytes' / construct.Int32ul,
                      'tx_bytes' / construct.Int32ul,
-                     'interface_name'/ construct.Bytes(16),))
+                     'interface_name'/construct.Padded(16, construct.CString('ascii')),))
   __slots__ = [
                'duration',
                'total_bytes',
@@ -744,7 +744,7 @@ thread. The reported percentage values must be normalized.
 
   """
   _parser = construct.Struct(
-                   'name'/ construct.Bytes(20),
+                   'name'/ construct.Padded(20, construct.CString('ascii')),
                    'cpu' / construct.Int16ul,
                    'stack_free' / construct.Int32ul,)
   __slots__ = [
@@ -1399,7 +1399,7 @@ code will be returned with MSG_COMMAND_RESP.
   """
   _parser = construct.Struct(
                    'sequence' / construct.Int32ul,
-                   'command' / construct.GreedyBytes,)
+                   'command' / construct.GreedyString('utf8'),)
   __slots__ = [
                'sequence',
                'command',
@@ -1575,7 +1575,7 @@ the correct command.
   """
   _parser = construct.Struct(
                    'sequence' / construct.Int32ul,
-                   'line' / construct.GreedyBytes,)
+                   'line' / construct.GreedyString('utf8'),)
   __slots__ = [
                'sequence',
                'line',
@@ -1726,7 +1726,7 @@ in c.
                    'ipv6_mask_size' / construct.Int8ul,
                    'rx_bytes' / construct.Int32ul,
                    'tx_bytes' / construct.Int32ul,
-                   'interface_name'/ construct.Bytes(16),
+                   'interface_name'/ construct.Padded(16, construct.CString('ascii')),
                    'flags' / construct.Int32ul,)
   __slots__ = [
                'ipv4_address',

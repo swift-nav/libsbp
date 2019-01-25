@@ -7,14 +7,14 @@ tests:
 - msg:
     fields:
       cpu: 0
-      name: "main\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      name: "main"
       stack_free: 2460
     module: sbp.piksi
     name: MsgThreadState
   msg_type: '0x17'
   raw_json: '{"sender": 55286, "msg_type": 23, "cpu": 0, "crc": 35401, "length": 26,
     "stack_free": 2460, "preamble": 85, "payload": "bWFpbgAAAAAAAAAAAAAAAAAAAAAAAJwJAAA=",
-    "name": "main\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
+    "name": "main"}'
   raw_packet: VRcA9tcabWFpbgAAAAAAAAAAAAAAAAAAAAAAAJwJAABJig==
   sbp:
     crc: '0x8a49'
@@ -27,14 +27,14 @@ tests:
 - msg:
     fields:
       cpu: 595
-      name: "idle\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      name: "idle"
       stack_free: 36
     module: sbp.piksi
     name: MsgThreadState
   msg_type: '0x17'
   raw_json: '{"sender": 55286, "msg_type": 23, "cpu": 595, "crc": 5271, "length":
     26, "stack_free": 36, "preamble": 85, "payload": "aWRsZQAAAAAAAAAAAAAAAAAAAABTAiQAAAA=",
-    "name": "idle\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
+    "name": "idle"}'
   raw_packet: VRcA9tcaaWRsZQAAAAAAAAAAAAAAAAAAAABTAiQAAACXFA==
   sbp:
     crc: '0x1497'
@@ -47,14 +47,14 @@ tests:
 - msg:
     fields:
       cpu: 14
-      name: "NAP ISR\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      name: "NAP ISR"
       stack_free: 1140
     module: sbp.piksi
     name: MsgThreadState
   msg_type: '0x17'
   raw_json: '{"sender": 55286, "msg_type": 23, "cpu": 14, "crc": 15586, "length":
     26, "stack_free": 1140, "preamble": 85, "payload": "TkFQIElTUgAAAAAAAAAAAAAAAAAOAHQEAAA=",
-    "name": "NAP ISR\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
+    "name": "NAP ISR"}'
   raw_packet: VRcA9tcaTkFQIElTUgAAAAAAAAAAAAAAAAAOAHQEAADiPA==
   sbp:
     crc: '0x3ce2'
@@ -67,14 +67,14 @@ tests:
 - msg:
     fields:
       cpu: 1
-      name: "SBP\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      name: "SBP"
       stack_free: 5060
     module: sbp.piksi
     name: MsgThreadState
   msg_type: '0x17'
   raw_json: '{"sender": 55286, "msg_type": 23, "cpu": 1, "crc": 43354, "length": 26,
     "stack_free": 5060, "preamble": 85, "payload": "U0JQAAAAAAAAAAAAAAAAAAAAAAABAMQTAAA=",
-    "name": "SBP\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
+    "name": "SBP"}'
   raw_packet: VRcA9tcaU0JQAAAAAAAAAAAAAAAAAAAAAAABAMQTAABaqQ==
   sbp:
     crc: '0xa95a'
@@ -87,14 +87,14 @@ tests:
 - msg:
     fields:
       cpu: 7
-      name: "manage acq\0\0\0\0\0\0\0\0\0\0"
+      name: "manage acq"
       stack_free: 2324
     module: sbp.piksi
     name: MsgThreadState
   msg_type: '0x17'
   raw_json: '{"sender": 55286, "msg_type": 23, "cpu": 7, "crc": 19247, "length": 26,
     "stack_free": 2324, "preamble": 85, "payload": "bWFuYWdlIGFjcQAAAAAAAAAAAAAHABQJAAA=",
-    "name": "manage acq\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}'
+    "name": "manage acq"}'
   raw_packet: VRcA9tcabWFuYWdlIGFjcQAAAAAAAAAAAAAHABQJAAAvSw==
   sbp:
     crc: '0x4b2f'

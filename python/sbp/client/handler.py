@@ -281,3 +281,6 @@ class Handler(object):
             if self._broken and m is None:
                 raise StopIteration
             return m
+
+        def __next__(self):
+            return self.next()

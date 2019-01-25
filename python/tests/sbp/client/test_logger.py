@@ -33,7 +33,7 @@ def test_log():
       with pytest.raises(NotImplementedError) as exc_info:
         for msg, metadata in log.next():
           pass
-  assert exc_info.value.message == "next() not implemented!"
+  assert exc_info.value.args[0] == "next() not implemented!"
 
 def test_json_log():
   """
@@ -45,7 +45,7 @@ def test_json_log():
     with open(log_datafile, 'r') as infile:
       with JSONLogIterator(infile) as log:
         for msg, metadata in log.next():
-          assert type(metadata['time']) == unicode
+          assert type(metadata['time']) == str
           assert isinstance(msg, SBP) or issubclass(type(msg), SBP)
           count += 1
         warnings.simplefilter("always")
@@ -100,7 +100,7 @@ def udp_server(handler):
   return (ip, port)
 
 def test_udp_logger():
-  msg = SBP(1, 2, 3, 'abc', 4)
+  msg = SBP(1, 2, 3, b'abc', 4)
   handler = udp_handler(msg.pack())
   ip, port = udp_server(handler)
   with UdpLogger(ip, port) as udp:
@@ -123,7 +123,7 @@ def test_rolling_json_log():
       with RotatingFileLogger(tf.name, when='S', interval=r_interval) as log:
         t0 = time.time()
         t = time.time()
-        msg = SBP(0x10, 2, 3, 'abc\n', 4)
+        msg = SBP(0x10, 2, 3, b'abc\n', 4)
         msgs = []
         while t - t0 < test_interval:
           log(msg, delta=t-t0, timestamp=t)

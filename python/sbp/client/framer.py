@@ -81,7 +81,7 @@ class Framer(object):
         size : int
           Number of bytes to read.
         """
-        data = ""
+        data = b""
         while len(data) < size:
             d = self._read(size - len(data))
             if self._broken:

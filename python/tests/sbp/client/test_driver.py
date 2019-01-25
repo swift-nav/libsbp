@@ -139,8 +139,8 @@ def test_http_test_pass_streaming():
   with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
     assert driver.connect_read()
     assert driver.read_ok
-    assert driver.read(size=255) == ''.join([m.to_binary() for m in msgs])
-    assert driver.read(size=255) == ''
+    assert driver.read(size=255) == b''.join([m.to_binary() for m in msgs])
+    assert driver.read(size=255) == b''
     assert not driver.read_close()
     assert driver.read_response is None
     assert not driver.read_ok
@@ -163,8 +163,8 @@ def test_http_test_pass_retry():
                     Response(body='',
                              status=200,
                              content_type="application/vnd.swiftnav.broker.v1+sbp2")]
-  register_uri(GET, BASE_STATION_URI, get_responses)
-  register_uri(PUT, BASE_STATION_URI, post_responses)
+  register_uri(GET, BASE_STATION_URI, responses=get_responses)
+  register_uri(PUT, BASE_STATION_URI, responses=post_responses)
   with HTTPDriver(device_uid="Swift22", url=BASE_STATION_URI) as driver:
     with pytest.raises(ValueError):
       driver.read(size=255)
