@@ -51,7 +51,8 @@ def do_parse(root, config):
     cwd = os.getcwd()
     try:
         os.chdir(root)
-        tag = subprocess.check_output(['git', 'describe']).strip()
+        describe_output = subprocess.check_output(['git', 'describe'])
+        tag = describe_output.decode('ascii').strip()
     except OSError:
         return meta("99.99.99")
     finally:
