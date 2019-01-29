@@ -1,0 +1,119 @@
+/*
+ * Copyright (C) 2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+syntax = "proto3";
+
+/** Linux
+ *
+  * Linux state monitoring.
+ */
+
+package swiftnav.sbp.linux;
+
+
+/** List CPU state on the system
+ *
+ * This message indicates the process state of the top 10 heaviest
+ * consumers of CPU on the system.
+ */
+message MsgLinuxCpuState {
+    uint32 index = 1;
+    uint32 pid = 2;
+    uint32 pcpu = 3;
+    string tname = 4;
+    string cmdline = 5;
+}
+
+/** List CPU state on the system
+ *
+ * This message indicates the process state of the top 10 heaviest
+ * consumers of memory on the system.
+ */
+message MsgLinuxMemState {
+    uint32 index = 1;
+    uint32 pid = 2;
+    uint32 pmem = 3;
+    string tname = 4;
+    string cmdline = 5;
+}
+
+/** CPU, Memory and Process Starts/Stops
+ *
+ * This presents a summary of CPU and memory utilization.
+ */
+message MsgLinuxSysState {
+    uint32 mem_total = 1;
+    uint32 pcpu = 2;
+    uint32 pmem = 3;
+    uint32 procs_starting = 4;
+    uint32 procs_stopping = 5;
+    uint32 pid_count = 6;
+}
+
+/** A list of processes with high socket counts
+ *
+ * Top 10 list of processes with high socket counts.
+ */
+message MsgLinuxProcessSocketCounts {
+    uint32 index = 1;
+    uint32 pid = 2;
+    uint32 socket_count = 3;
+    uint32 socket_types = 4;
+    uint32 socket_states = 5;
+    string cmdline = 6;
+}
+
+/** A list of processes with deep socket queues
+ *
+ * Top 10 list of sockets with deep queues.
+ */
+message MsgLinuxProcessSocketQueues {
+    uint32 index = 1;
+    uint32 pid = 2;
+    uint32 recv_queued = 3;
+    uint32 send_queued = 4;
+    uint32 socket_types = 5;
+    uint32 socket_states = 6;
+    string address_of_largest = 7;
+    string cmdline = 8;
+}
+
+/** Summary of socket usage across the system
+ *
+ * Summaries the socket usage across the system.
+ */
+message MsgLinuxSocketUsage {
+    uint32 avg_queue_depth = 1;
+    uint32 max_queue_depth = 2;
+    repeated uint32 socket_state_counts = 3;
+    repeated uint32 socket_type_counts = 4;
+}
+
+/** Summary of processes with large amounts of open file descriptors
+ *
+ * Top 10 list of processes with a large number of open file descriptors.
+ */
+message MsgLinuxProcessFdCount {
+    uint32 index = 1;
+    uint32 pid = 2;
+    uint32 fd_count = 3;
+    string cmdline = 4;
+}
+
+/** Summary of open file descriptors on the system
+ *
+ * Summary of open file descriptors on the system.
+ */
+message MsgLinuxProcessFdSummary {
+    uint32 sys_fd_count = 1;
+    string most_opened = 2;
+}

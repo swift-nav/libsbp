@@ -951,6 +951,42 @@ MsgSpecan.prototype.fieldSpec.push(['amplitude_ref', 'writeFloatLE', 4]);
 MsgSpecan.prototype.fieldSpec.push(['amplitude_unit', 'writeFloatLE', 4]);
 MsgSpecan.prototype.fieldSpec.push(['amplitude_value', 'array', 'writeUInt8', function () { return 1; }, null]);
 
+/**
+ * SBP class for message MSG_FRONT_END_GAIN (0x00BF).
+ *
+ * This message describes the gain of each channel in the receiver frontend. Each
+ * gain is encoded as a non-dimensional percentage relative to the maximum range
+ * possible for the gain stage of the frontend. By convention, each gain array  has
+ * 8 entries and the index of the array corresponding to the index of the rf
+ * channel  in the frontend. A gain of 127 percent encodes that rf channel is not
+ * present in the hardware. A negative value implies an error for the particular
+ * gain stage as reported by the frontend.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field rf_gain array RF gain for each frontend channel
+ * @field if_gain array Intermediate frequency gain for each frontend channel
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgFrontEndGain = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_FRONT_END_GAIN";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgFrontEndGain.prototype = Object.create(SBP.prototype);
+MsgFrontEndGain.prototype.messageType = "MSG_FRONT_END_GAIN";
+MsgFrontEndGain.prototype.msg_type = 0x00BF;
+MsgFrontEndGain.prototype.constructor = MsgFrontEndGain;
+MsgFrontEndGain.prototype.parser = new Parser()
+  .endianess('little')
+  .array('rf_gain', { length: 8, type: 'int8' })
+  .array('if_gain', { length: 8, type: 'int8' });
+MsgFrontEndGain.prototype.fieldSpec = [];
+MsgFrontEndGain.prototype.fieldSpec.push(['rf_gain', 'array', 'writeInt8', function () { return 1; }, 8]);
+MsgFrontEndGain.prototype.fieldSpec.push(['if_gain', 'array', 'writeInt8', function () { return 1; }, 8]);
+
 module.exports = {
   0x0069: MsgAlmanac,
   MsgAlmanac: MsgAlmanac,
@@ -1004,4 +1040,6 @@ module.exports = {
   MsgSpecanDep: MsgSpecanDep,
   0x0051: MsgSpecan,
   MsgSpecan: MsgSpecan,
+  0x00BF: MsgFrontEndGain,
+  MsgFrontEndGain: MsgFrontEndGain,
 }

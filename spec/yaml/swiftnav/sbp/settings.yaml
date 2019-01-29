@@ -88,8 +88,12 @@ definitions:
                 desc: Write status
                 values:
                     - 0: Accepted; value updated
-                    - 1: Value rejected; unparsable or out-of-range
-                    - 2: Setting rejected; the requested setting does not exist
+                    - 1: Rejected; value unparsable or out-of-range
+                    - 2: Rejected; requested setting does not exist
+                    - 3: Rejected; setting name could not be parsed
+                    - 4: Rejected; setting is read only
+                    - 5: Rejected; modification is temporarily disabled
+                    - 6: Rejected; unspecified error
       - setting:
           type: string
           desc: |

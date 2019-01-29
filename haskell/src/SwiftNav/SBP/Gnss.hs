@@ -160,7 +160,7 @@ instance Binary GpsTime where
 
   put GpsTime {..} = do
     putWord32le _gpsTime_tow
-    putWord32le $ fromIntegral _gpsTime_ns_residual
+    (putWord32le . fromIntegral) _gpsTime_ns_residual
     putWord16le _gpsTime_wn
 
 $(makeJSON "_gpsTime_" ''GpsTime)
@@ -185,7 +185,7 @@ instance Binary CarrierPhase where
     pure CarrierPhase {..}
 
   put CarrierPhase {..} = do
-    putWord32le $ fromIntegral _carrierPhase_i
+    (putWord32le . fromIntegral) _carrierPhase_i
     putWord8 _carrierPhase_f
 
 $(makeJSON "_carrierPhase_" ''CarrierPhase)

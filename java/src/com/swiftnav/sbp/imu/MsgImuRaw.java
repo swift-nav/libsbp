@@ -30,7 +30,8 @@ import org.json.JSONArray;
  *
  * Raw data from the Inertial Measurement Unit, containing accelerometer and
  * gyroscope readings. The sense of the measurements are to be aligned with 
- * the indications on the device itself. */
+ * the indications on the device itself. Measurement units, which are specific to the
+ * device hardware and settings, are communicated via the MSG_IMU_AUX message. */
 
 public class MsgImuRaw extends SBPMessage {
     public static final int TYPE = 0x0900;

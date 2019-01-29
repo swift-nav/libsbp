@@ -31,6 +31,7 @@ import SwiftNav.SBP.FileIo
 import SwiftNav.SBP.Flash
 import SwiftNav.SBP.Gnss
 import SwiftNav.SBP.Imu
+import SwiftNav.SBP.Linux
 import SwiftNav.SBP.Logging
 import SwiftNav.SBP.Mag
 import SwiftNav.SBP.Navigation
@@ -82,6 +83,8 @@ data SBPMsg =
    | SBPMsgCommandOutput MsgCommandOutput Msg
    | SBPMsgCommandReq MsgCommandReq Msg
    | SBPMsgCommandResp MsgCommandResp Msg
+   | SBPMsgCsacTelemetry MsgCsacTelemetry Msg
+   | SBPMsgCsacTelemetryLabels MsgCsacTelemetryLabels Msg
    | SBPMsgCwResults MsgCwResults Msg
    | SBPMsgCwStart MsgCwStart Msg
    | SBPMsgDeviceMonitor MsgDeviceMonitor Msg
@@ -118,6 +121,7 @@ data SBPMsg =
    | SBPMsgFlashProgram MsgFlashProgram Msg
    | SBPMsgFlashReadReq MsgFlashReadReq Msg
    | SBPMsgFlashReadResp MsgFlashReadResp Msg
+   | SBPMsgFrontEndGain MsgFrontEndGain Msg
    | SBPMsgFwd MsgFwd Msg
    | SBPMsgGloBiases MsgGloBiases Msg
    | SBPMsgGnssCapb MsgGnssCapb Msg
@@ -133,6 +137,14 @@ data SBPMsg =
    | SBPMsgInitBase MsgInitBase Msg
    | SBPMsgInsStatus MsgInsStatus Msg
    | SBPMsgIono MsgIono Msg
+   | SBPMsgLinuxCpuState MsgLinuxCpuState Msg
+   | SBPMsgLinuxMemState MsgLinuxMemState Msg
+   | SBPMsgLinuxProcessFdCount MsgLinuxProcessFdCount Msg
+   | SBPMsgLinuxProcessFdSummary MsgLinuxProcessFdSummary Msg
+   | SBPMsgLinuxProcessSocketCounts MsgLinuxProcessSocketCounts Msg
+   | SBPMsgLinuxProcessSocketQueues MsgLinuxProcessSocketQueues Msg
+   | SBPMsgLinuxSocketUsage MsgLinuxSocketUsage Msg
+   | SBPMsgLinuxSysState MsgLinuxSysState Msg
    | SBPMsgLog MsgLog Msg
    | SBPMsgM25FlashWriteStatus MsgM25FlashWriteStatus Msg
    | SBPMsgMagRaw MsgMagRaw Msg
@@ -177,6 +189,7 @@ data SBPMsg =
    | SBPMsgSpecanDep MsgSpecanDep Msg
    | SBPMsgSsrCodeBiases MsgSsrCodeBiases Msg
    | SBPMsgSsrOrbitClock MsgSsrOrbitClock Msg
+   | SBPMsgSsrOrbitClockDepA MsgSsrOrbitClockDepA Msg
    | SBPMsgSsrPhaseBiases MsgSsrPhaseBiases Msg
    | SBPMsgStartup MsgStartup Msg
    | SBPMsgStmFlashLockSector MsgStmFlashLockSector Msg
@@ -246,6 +259,8 @@ instance Binary SBPMsg where
           | _msgSBPType == msgCommandOutput = SBPMsgCommandOutput (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandReq = SBPMsgCommandReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandResp = SBPMsgCommandResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgCsacTelemetry = SBPMsgCsacTelemetry (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgCsacTelemetryLabels = SBPMsgCsacTelemetryLabels (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCwResults = SBPMsgCwResults (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCwStart = SBPMsgCwStart (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgDeviceMonitor = SBPMsgDeviceMonitor (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -282,6 +297,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgFlashProgram = SBPMsgFlashProgram (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFlashReadReq = SBPMsgFlashReadReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFlashReadResp = SBPMsgFlashReadResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFrontEndGain = SBPMsgFrontEndGain (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFwd = SBPMsgFwd (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGloBiases = SBPMsgGloBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGnssCapb = SBPMsgGnssCapb (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -297,6 +313,14 @@ instance Binary SBPMsg where
           | _msgSBPType == msgInitBase = SBPMsgInitBase (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgInsStatus = SBPMsgInsStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgIono = SBPMsgIono (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgLinuxCpuState = SBPMsgLinuxCpuState (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgLinuxMemState = SBPMsgLinuxMemState (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgLinuxProcessFdCount = SBPMsgLinuxProcessFdCount (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgLinuxProcessFdSummary = SBPMsgLinuxProcessFdSummary (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgLinuxProcessSocketCounts = SBPMsgLinuxProcessSocketCounts (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgLinuxProcessSocketQueues = SBPMsgLinuxProcessSocketQueues (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgLinuxSocketUsage = SBPMsgLinuxSocketUsage (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgLinuxSysState = SBPMsgLinuxSysState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLog = SBPMsgLog (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgMagRaw = SBPMsgMagRaw (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -341,6 +365,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSpecanDep = SBPMsgSpecanDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrCodeBiases = SBPMsgSsrCodeBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrOrbitClock = SBPMsgSsrOrbitClock (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStmFlashLockSector = SBPMsgStmFlashLockSector (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -402,6 +427,8 @@ instance Binary SBPMsg where
       encoder (SBPMsgCommandOutput _ m) = put m
       encoder (SBPMsgCommandReq _ m) = put m
       encoder (SBPMsgCommandResp _ m) = put m
+      encoder (SBPMsgCsacTelemetry _ m) = put m
+      encoder (SBPMsgCsacTelemetryLabels _ m) = put m
       encoder (SBPMsgCwResults _ m) = put m
       encoder (SBPMsgCwStart _ m) = put m
       encoder (SBPMsgDeviceMonitor _ m) = put m
@@ -438,6 +465,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgFlashProgram _ m) = put m
       encoder (SBPMsgFlashReadReq _ m) = put m
       encoder (SBPMsgFlashReadResp _ m) = put m
+      encoder (SBPMsgFrontEndGain _ m) = put m
       encoder (SBPMsgFwd _ m) = put m
       encoder (SBPMsgGloBiases _ m) = put m
       encoder (SBPMsgGnssCapb _ m) = put m
@@ -453,6 +481,14 @@ instance Binary SBPMsg where
       encoder (SBPMsgInitBase _ m) = put m
       encoder (SBPMsgInsStatus _ m) = put m
       encoder (SBPMsgIono _ m) = put m
+      encoder (SBPMsgLinuxCpuState _ m) = put m
+      encoder (SBPMsgLinuxMemState _ m) = put m
+      encoder (SBPMsgLinuxProcessFdCount _ m) = put m
+      encoder (SBPMsgLinuxProcessFdSummary _ m) = put m
+      encoder (SBPMsgLinuxProcessSocketCounts _ m) = put m
+      encoder (SBPMsgLinuxProcessSocketQueues _ m) = put m
+      encoder (SBPMsgLinuxSocketUsage _ m) = put m
+      encoder (SBPMsgLinuxSysState _ m) = put m
       encoder (SBPMsgLog _ m) = put m
       encoder (SBPMsgM25FlashWriteStatus _ m) = put m
       encoder (SBPMsgMagRaw _ m) = put m
@@ -497,6 +533,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgSpecanDep _ m) = put m
       encoder (SBPMsgSsrCodeBiases _ m) = put m
       encoder (SBPMsgSsrOrbitClock _ m) = put m
+      encoder (SBPMsgSsrOrbitClockDepA _ m) = put m
       encoder (SBPMsgSsrPhaseBiases _ m) = put m
       encoder (SBPMsgStartup _ m) = put m
       encoder (SBPMsgStmFlashLockSector _ m) = put m
@@ -562,6 +599,8 @@ instance FromJSON SBPMsg where
         | msgType == msgCommandOutput = SBPMsgCommandOutput <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandReq = SBPMsgCommandReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandResp = SBPMsgCommandResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgCsacTelemetry = SBPMsgCsacTelemetry <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgCsacTelemetryLabels = SBPMsgCsacTelemetryLabels <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCwResults = SBPMsgCwResults <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCwStart = SBPMsgCwStart <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgDeviceMonitor = SBPMsgDeviceMonitor <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -598,6 +637,7 @@ instance FromJSON SBPMsg where
         | msgType == msgFlashProgram = SBPMsgFlashProgram <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFlashReadReq = SBPMsgFlashReadReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFlashReadResp = SBPMsgFlashReadResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFrontEndGain = SBPMsgFrontEndGain <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFwd = SBPMsgFwd <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGloBiases = SBPMsgGloBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGnssCapb = SBPMsgGnssCapb <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -613,6 +653,14 @@ instance FromJSON SBPMsg where
         | msgType == msgInitBase = SBPMsgInitBase <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgInsStatus = SBPMsgInsStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgIono = SBPMsgIono <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgLinuxCpuState = SBPMsgLinuxCpuState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgLinuxMemState = SBPMsgLinuxMemState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgLinuxProcessFdCount = SBPMsgLinuxProcessFdCount <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgLinuxProcessFdSummary = SBPMsgLinuxProcessFdSummary <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgLinuxProcessSocketCounts = SBPMsgLinuxProcessSocketCounts <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgLinuxProcessSocketQueues = SBPMsgLinuxProcessSocketQueues <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgLinuxSocketUsage = SBPMsgLinuxSocketUsage <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgLinuxSysState = SBPMsgLinuxSysState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLog = SBPMsgLog <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgMagRaw = SBPMsgMagRaw <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -657,6 +705,7 @@ instance FromJSON SBPMsg where
         | msgType == msgSpecanDep = SBPMsgSpecanDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrCodeBiases = SBPMsgSsrCodeBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrOrbitClock = SBPMsgSsrOrbitClock <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStartup = SBPMsgStartup <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStmFlashLockSector = SBPMsgStmFlashLockSector <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -723,6 +772,8 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgCommandOutput n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgCsacTelemetry n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgCsacTelemetryLabels n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCwResults n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCwStart n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgDeviceMonitor n m) = toJSON n <<>> toJSON m
@@ -759,6 +810,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgFlashProgram n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFlashReadReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFlashReadResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFrontEndGain n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFwd n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGloBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGnssCapb n m) = toJSON n <<>> toJSON m
@@ -774,6 +826,14 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgInitBase n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgInsStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgIono n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgLinuxCpuState n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgLinuxMemState n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgLinuxProcessFdCount n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgLinuxProcessFdSummary n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgLinuxProcessSocketCounts n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgLinuxProcessSocketQueues n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgLinuxSocketUsage n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgLinuxSysState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLog n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgM25FlashWriteStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgMagRaw n m) = toJSON n <<>> toJSON m
@@ -818,6 +878,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSpecanDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrCodeBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrOrbitClock n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrOrbitClockDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrPhaseBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStartup n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStmFlashLockSector n m) = toJSON n <<>> toJSON m
@@ -878,6 +939,8 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgCommandOutput n m) = SBPMsgCommandOutput n <$> f m
   msg f (SBPMsgCommandReq n m) = SBPMsgCommandReq n <$> f m
   msg f (SBPMsgCommandResp n m) = SBPMsgCommandResp n <$> f m
+  msg f (SBPMsgCsacTelemetry n m) = SBPMsgCsacTelemetry n <$> f m
+  msg f (SBPMsgCsacTelemetryLabels n m) = SBPMsgCsacTelemetryLabels n <$> f m
   msg f (SBPMsgCwResults n m) = SBPMsgCwResults n <$> f m
   msg f (SBPMsgCwStart n m) = SBPMsgCwStart n <$> f m
   msg f (SBPMsgDeviceMonitor n m) = SBPMsgDeviceMonitor n <$> f m
@@ -914,6 +977,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgFlashProgram n m) = SBPMsgFlashProgram n <$> f m
   msg f (SBPMsgFlashReadReq n m) = SBPMsgFlashReadReq n <$> f m
   msg f (SBPMsgFlashReadResp n m) = SBPMsgFlashReadResp n <$> f m
+  msg f (SBPMsgFrontEndGain n m) = SBPMsgFrontEndGain n <$> f m
   msg f (SBPMsgFwd n m) = SBPMsgFwd n <$> f m
   msg f (SBPMsgGloBiases n m) = SBPMsgGloBiases n <$> f m
   msg f (SBPMsgGnssCapb n m) = SBPMsgGnssCapb n <$> f m
@@ -929,6 +993,14 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgInitBase n m) = SBPMsgInitBase n <$> f m
   msg f (SBPMsgInsStatus n m) = SBPMsgInsStatus n <$> f m
   msg f (SBPMsgIono n m) = SBPMsgIono n <$> f m
+  msg f (SBPMsgLinuxCpuState n m) = SBPMsgLinuxCpuState n <$> f m
+  msg f (SBPMsgLinuxMemState n m) = SBPMsgLinuxMemState n <$> f m
+  msg f (SBPMsgLinuxProcessFdCount n m) = SBPMsgLinuxProcessFdCount n <$> f m
+  msg f (SBPMsgLinuxProcessFdSummary n m) = SBPMsgLinuxProcessFdSummary n <$> f m
+  msg f (SBPMsgLinuxProcessSocketCounts n m) = SBPMsgLinuxProcessSocketCounts n <$> f m
+  msg f (SBPMsgLinuxProcessSocketQueues n m) = SBPMsgLinuxProcessSocketQueues n <$> f m
+  msg f (SBPMsgLinuxSocketUsage n m) = SBPMsgLinuxSocketUsage n <$> f m
+  msg f (SBPMsgLinuxSysState n m) = SBPMsgLinuxSysState n <$> f m
   msg f (SBPMsgLog n m) = SBPMsgLog n <$> f m
   msg f (SBPMsgM25FlashWriteStatus n m) = SBPMsgM25FlashWriteStatus n <$> f m
   msg f (SBPMsgMagRaw n m) = SBPMsgMagRaw n <$> f m
@@ -973,6 +1045,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSpecanDep n m) = SBPMsgSpecanDep n <$> f m
   msg f (SBPMsgSsrCodeBiases n m) = SBPMsgSsrCodeBiases n <$> f m
   msg f (SBPMsgSsrOrbitClock n m) = SBPMsgSsrOrbitClock n <$> f m
+  msg f (SBPMsgSsrOrbitClockDepA n m) = SBPMsgSsrOrbitClockDepA n <$> f m
   msg f (SBPMsgSsrPhaseBiases n m) = SBPMsgSsrPhaseBiases n <$> f m
   msg f (SBPMsgStartup n m) = SBPMsgStartup n <$> f m
   msg f (SBPMsgStmFlashLockSector n m) = SBPMsgStmFlashLockSector n <$> f m

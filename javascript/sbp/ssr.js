@@ -100,7 +100,76 @@ PhaseBiasesContent.prototype.fieldSpec.push(['discontinuity_counter', 'writeUInt
 PhaseBiasesContent.prototype.fieldSpec.push(['bias', 'writeInt32LE', 4]);
 
 /**
- * SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DC).
+ * SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
+ *
+ * The precise orbit and clock correction message is  to be applied as a delta
+ * correction to broadcast  ephemeris and is typically an equivalent to the 1060
+ * and 1066 RTCM message types
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time GPSTimeSec GNSS reference time of the correction
+ * @field sid GnssSignal GNSS signal identifier (16 bit)
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections
+ * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
+ *   change in the SSR  generating configuration
+ * @field iod number (unsigned 32-bit int, 4 bytes) Issue of broadcast ephemeris data or IODCRC (Beidou)
+ * @field radial number (signed 32-bit int, 4 bytes) Orbit radial delta correction
+ * @field along number (signed 32-bit int, 4 bytes) Orbit along delta correction
+ * @field cross number (signed 32-bit int, 4 bytes) Orbit along delta correction
+ * @field dot_radial number (signed 32-bit int, 4 bytes) Velocity of orbit radial delta correction
+ * @field dot_along number (signed 32-bit int, 4 bytes) Velocity of orbit along delta correction
+ * @field dot_cross number (signed 32-bit int, 4 bytes) Velocity of orbit cross delta correction
+ * @field c0 number (signed 32-bit int, 4 bytes) C0 polynomial coefficient for correction of broadcast satellite clock
+ * @field c1 number (signed 32-bit int, 4 bytes) C1 polynomial coefficient for correction of broadcast satellite clock
+ * @field c2 number (signed 32-bit int, 4 bytes) C2 polynomial coefficient for correction of broadcast satellite clock
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrOrbitClock = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_ORBIT_CLOCK";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrOrbitClock.prototype = Object.create(SBP.prototype);
+MsgSsrOrbitClock.prototype.messageType = "MSG_SSR_ORBIT_CLOCK";
+MsgSsrOrbitClock.prototype.msg_type = 0x05DD;
+MsgSsrOrbitClock.prototype.constructor = MsgSsrOrbitClock;
+MsgSsrOrbitClock.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('time', { type: GPSTimeSec.prototype.parser })
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .uint8('update_interval')
+  .uint8('iod_ssr')
+  .uint32('iod')
+  .int32('radial')
+  .int32('along')
+  .int32('cross')
+  .int32('dot_radial')
+  .int32('dot_along')
+  .int32('dot_cross')
+  .int32('c0')
+  .int32('c1')
+  .int32('c2');
+MsgSsrOrbitClock.prototype.fieldSpec = [];
+MsgSsrOrbitClock.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['iod', 'writeUInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['radial', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['along', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['cross', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['dot_radial', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['dot_along', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['dot_cross', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['c0', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['c1', 'writeInt32LE', 4]);
+MsgSsrOrbitClock.prototype.fieldSpec.push(['c2', 'writeInt32LE', 4]);
+
+/**
+ * SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).
  *
  * The precise orbit and clock correction message is  to be applied as a delta
  * correction to broadcast  ephemeris and is typically an equivalent to the 1060
@@ -125,18 +194,18 @@ PhaseBiasesContent.prototype.fieldSpec.push(['bias', 'writeInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrOrbitClock = function (sbp, fields) {
+var MsgSsrOrbitClockDepA = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_SSR_ORBIT_CLOCK";
+  this.messageType = "MSG_SSR_ORBIT_CLOCK_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgSsrOrbitClock.prototype = Object.create(SBP.prototype);
-MsgSsrOrbitClock.prototype.messageType = "MSG_SSR_ORBIT_CLOCK";
-MsgSsrOrbitClock.prototype.msg_type = 0x05DC;
-MsgSsrOrbitClock.prototype.constructor = MsgSsrOrbitClock;
-MsgSsrOrbitClock.prototype.parser = new Parser()
+MsgSsrOrbitClockDepA.prototype = Object.create(SBP.prototype);
+MsgSsrOrbitClockDepA.prototype.messageType = "MSG_SSR_ORBIT_CLOCK_DEP_A";
+MsgSsrOrbitClockDepA.prototype.msg_type = 0x05DC;
+MsgSsrOrbitClockDepA.prototype.constructor = MsgSsrOrbitClockDepA;
+MsgSsrOrbitClockDepA.prototype.parser = new Parser()
   .endianess('little')
   .nest('time', { type: GPSTimeSec.prototype.parser })
   .nest('sid', { type: GnssSignal.prototype.parser })
@@ -152,21 +221,21 @@ MsgSsrOrbitClock.prototype.parser = new Parser()
   .int32('c0')
   .int32('c1')
   .int32('c2');
-MsgSsrOrbitClock.prototype.fieldSpec = [];
-MsgSsrOrbitClock.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['iod', 'writeUInt8', 1]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['radial', 'writeInt32LE', 4]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['along', 'writeInt32LE', 4]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['cross', 'writeInt32LE', 4]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['dot_radial', 'writeInt32LE', 4]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['dot_along', 'writeInt32LE', 4]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['dot_cross', 'writeInt32LE', 4]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['c0', 'writeInt32LE', 4]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['c1', 'writeInt32LE', 4]);
-MsgSsrOrbitClock.prototype.fieldSpec.push(['c2', 'writeInt32LE', 4]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec = [];
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['iod', 'writeUInt8', 1]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['radial', 'writeInt32LE', 4]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['along', 'writeInt32LE', 4]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['cross', 'writeInt32LE', 4]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['dot_radial', 'writeInt32LE', 4]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['dot_along', 'writeInt32LE', 4]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['dot_cross', 'writeInt32LE', 4]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['c0', 'writeInt32LE', 4]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['c1', 'writeInt32LE', 4]);
+MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['c2', 'writeInt32LE', 4]);
 
 /**
  * SBP class for message MSG_SSR_CODE_BIASES (0x05E1).
@@ -268,8 +337,10 @@ MsgSsrPhaseBiases.prototype.fieldSpec.push(['biases', 'array', PhaseBiasesConten
 module.exports = {
   CodeBiasesContent: CodeBiasesContent,
   PhaseBiasesContent: PhaseBiasesContent,
-  0x05DC: MsgSsrOrbitClock,
+  0x05DD: MsgSsrOrbitClock,
   MsgSsrOrbitClock: MsgSsrOrbitClock,
+  0x05DC: MsgSsrOrbitClockDepA,
+  MsgSsrOrbitClockDepA: MsgSsrOrbitClockDepA,
   0x05E1: MsgSsrCodeBiases,
   MsgSsrCodeBiases: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,

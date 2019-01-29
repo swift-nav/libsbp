@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DC).
+/** SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
  *
  * You can have MSG_SSR_ORBIT_CLOCK inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -35,7 +35,7 @@ import org.json.JSONArray;
  * and 1066 RTCM message types */
 
 public class MsgSsrOrbitClock extends SBPMessage {
-    public static final int TYPE = 0x05DC;
+    public static final int TYPE = 0x05DD;
 
     
     /** GNSS reference time of the correction */
@@ -53,8 +53,8 @@ generating configuration
  */
     public int iod_ssr;
     
-    /** Issue of broadcast ephemeris data */
-    public int iod;
+    /** Issue of broadcast ephemeris data or IODCRC (Beidou) */
+    public long iod;
     
     /** Orbit radial delta correction */
     public int radial;
@@ -98,7 +98,7 @@ generating configuration
         sid = new GnssSignal().parse(parser);
         update_interval = parser.getU8();
         iod_ssr = parser.getU8();
-        iod = parser.getU8();
+        iod = parser.getU32();
         radial = parser.getS32();
         along = parser.getS32();
         cross = parser.getS32();
@@ -116,7 +116,7 @@ generating configuration
         sid.build(builder);
         builder.putU8(update_interval);
         builder.putU8(iod_ssr);
-        builder.putU8(iod);
+        builder.putU32(iod);
         builder.putS32(radial);
         builder.putS32(along);
         builder.putS32(cross);

@@ -67,9 +67,9 @@ instance Binary MsgMagRaw where
   put MsgMagRaw {..} = do
     putWord32le _msgMagRaw_tow
     putWord8 _msgMagRaw_tow_f
-    putWord16le $ fromIntegral _msgMagRaw_mag_x
-    putWord16le $ fromIntegral _msgMagRaw_mag_y
-    putWord16le $ fromIntegral _msgMagRaw_mag_z
+    (putWord16le . fromIntegral) _msgMagRaw_mag_x
+    (putWord16le . fromIntegral) _msgMagRaw_mag_y
+    (putWord16le . fromIntegral) _msgMagRaw_mag_z
 
 $(makeSBP 'msgMagRaw ''MsgMagRaw)
 $(makeJSON "_msgMagRaw_" ''MsgMagRaw)

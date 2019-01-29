@@ -1,11 +1,105 @@
 # Change Log
 
-## [v2.4.0](https://github.com/swift-nav/libsbp/tree/v2.4.0)
+## [v2.4.8](https://github.com/swift-nav/libsbp/tree/v2.4.8)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.7...v2.4.8)
+
+**Merged pull requests:**
+
+- Parens around sign operators [\#635](https://github.com/swift-nav/libsbp/pull/635)
+- Front end gain message [\#634](https://github.com/swift-nav/libsbp/pull/634)
+
+## [v2.4.7](https://github.com/swift-nav/libsbp/tree/v2.4.7) (2019-01-14)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.6...v2.4.7)
+
+**Merged pull requests:**
+
+- v2.4.7 release files [\#632](https://github.com/swift-nav/libsbp/pull/632)
+- Update settings write response docs \[ESD-970\] [\#628](https://github.com/swift-nav/libsbp/pull/628)
+
+## [v2.4.6](https://github.com/swift-nav/libsbp/tree/v2.4.6) (2019-01-02)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.5...v2.4.6)
+
+**Closed issues:**
+
+- link to Piksi settings in sbp.settings module doc is really outdated [\#626](https://github.com/swift-nav/libsbp/issues/626)
+- Publish v2.3.15 as a release [\#573](https://github.com/swift-nav/libsbp/issues/573)
+
+**Merged pull requests:**
+
+- v2.4.6 generated files, pdf, and changelog [\#629](https://github.com/swift-nav/libsbp/pull/629)
+- Improve java example [\#627](https://github.com/swift-nav/libsbp/pull/627)
+- Use OpenJDK 8 so we aren't chasing Oracle \[ESD-940\] [\#625](https://github.com/swift-nav/libsbp/pull/625)
+- Attempt to resolve JavaScript security warnings [\#624](https://github.com/swift-nav/libsbp/pull/624)
+
+## [v2.4.5](https://github.com/swift-nav/libsbp/tree/v2.4.5) (2018-11-28)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.4...v2.4.5)
+
+**Merged pull requests:**
+
+- v2.4.5 files [\#623](https://github.com/swift-nav/libsbp/pull/623)
+- Msg Timing Telem [\#622](https://github.com/swift-nav/libsbp/pull/622)
+
+## [v2.4.4](https://github.com/swift-nav/libsbp/tree/v2.4.4) (2018-11-20)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.3...v2.4.4)
+
+**Merged pull requests:**
+
+- 2.4.4 branch [\#621](https://github.com/swift-nav/libsbp/pull/621)
+- Replace deprecated CMAKE\_FORCE\_\<lang\>\_COMPILER macros [\#620](https://github.com/swift-nav/libsbp/pull/620)
+- fix missing require for sbas messages [\#619](https://github.com/swift-nav/libsbp/pull/619)
+
+## [v2.4.3](https://github.com/swift-nav/libsbp/tree/v2.4.3) (2018-11-15)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.2...v2.4.3)
+
+**Merged pull requests:**
+
+- release libsbp 2.4.3 [\#618](https://github.com/swift-nav/libsbp/pull/618)
+- Modify initial connect logic for piksi\_tools to catch on timeouts \[ESD-632\] [\#617](https://github.com/swift-nav/libsbp/pull/617)
+- Resource monitor file descriptor query sbp message\[ESD-231\]\[ESD-232\] [\#616](https://github.com/swift-nav/libsbp/pull/616)
+
+## [v2.4.2](https://github.com/swift-nav/libsbp/tree/v2.4.2) (2018-10-27)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.1...v2.4.2)
+
+**Merged pull requests:**
+
+- Release v2.4.2 [\#613](https://github.com/swift-nav/libsbp/pull/613)
+- Resource monitor support \[DEVC-1074\] [\#612](https://github.com/swift-nav/libsbp/pull/612)
+- Add cmake toolchain support for cortex-m7 [\#610](https://github.com/swift-nav/libsbp/pull/610)
+- Deprecate old orbit/clock message [\#609](https://github.com/swift-nav/libsbp/pull/609)
+- IOD of the SSR corrections [\#608](https://github.com/swift-nav/libsbp/pull/608)
+- Jkretzmer/tcp example [\#607](https://github.com/swift-nav/libsbp/pull/607)
+- Make generator for java have deterministic ordering [\#606](https://github.com/swift-nav/libsbp/pull/606)
+- Add 2.4.1 pdf [\#605](https://github.com/swift-nav/libsbp/pull/605)
+
+## [v2.4.1](https://github.com/swift-nav/libsbp/tree/v2.4.1) (2018-10-03)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.0...v2.4.1)
+
+**Merged pull requests:**
+
+- V2.4.1 branch [\#604](https://github.com/swift-nav/libsbp/pull/604)
+- re-add space on ins-status message description [\#603](https://github.com/swift-nav/libsbp/pull/603)
+- Add sentence explaining how to find the measurement units. [\#602](https://github.com/swift-nav/libsbp/pull/602)
+- new ins status message definition as discussed with CRL [\#601](https://github.com/swift-nav/libsbp/pull/601)
+- SSR IOD should be 10bits for GAL and BDS [\#599](https://github.com/swift-nav/libsbp/pull/599)
+- Regenerated files [\#597](https://github.com/swift-nav/libsbp/pull/597)
+- Setup Travis CI to build Haskell based SBP tools [\#595](https://github.com/swift-nav/libsbp/pull/595)
+- Get rid of separate target for static library and stop fiddling BUILD… [\#594](https://github.com/swift-nav/libsbp/pull/594)
+- Add SSR messages to Libsbp [\#591](https://github.com/swift-nav/libsbp/pull/591)
+- Doc signal bds gal [\#590](https://github.com/swift-nav/libsbp/pull/590)
+- Note about carrier phase alignment [\#589](https://github.com/swift-nav/libsbp/pull/589)
+- Change `read\(\)` and `write\(\)` api from `size\_t` to `ssize\_t` [\#585](https://github.com/swift-nav/libsbp/pull/585)
+- Propagated time flag [\#584](https://github.com/swift-nav/libsbp/pull/584)
+- Inertial note [\#581](https://github.com/swift-nav/libsbp/pull/581)
+- Update pdf doc with better links [\#535](https://github.com/swift-nav/libsbp/pull/535)
+
+## [v2.4.0](https://github.com/swift-nav/libsbp/tree/v2.4.0) (2018-08-08)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.3.17...v2.4.0)
 
 **Merged pull requests:**
 
+- V2.4.0 branch [\#588](https://github.com/swift-nav/libsbp/pull/588)
+- Add units for magnetometer [\#587](https://github.com/swift-nav/libsbp/pull/587)
 - Turn off extra warnings [\#586](https://github.com/swift-nav/libsbp/pull/586)
 - Put memory packing outside the COMMON\_INT\_TYPES macro [\#583](https://github.com/swift-nav/libsbp/pull/583)
 - CortexA7 rule [\#582](https://github.com/swift-nav/libsbp/pull/582)
@@ -168,10 +262,6 @@
 
 ## [v2.2.17](https://github.com/swift-nav/libsbp/tree/v2.2.17) (2017-11-08)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.2.16...v2.2.17)
-
-**Closed issues:**
-
-- JS code does not generate imports [\#513](https://github.com/swift-nav/libsbp/issues/513)
 
 **Merged pull requests:**
 

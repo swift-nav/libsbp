@@ -127,9 +127,9 @@ Increased for every discontinuity in phase.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return PhaseBiasesContent.build(d)
     
-SBP_MSG_SSR_ORBIT_CLOCK = 0x05DC
+SBP_MSG_SSR_ORBIT_CLOCK = 0x05DD
 class MsgSsrOrbitClock(SBP):
-  """SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DC).
+  """SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
 
   You can have MSG_SSR_ORBIT_CLOCK inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -158,7 +158,7 @@ SSR is used to indicate a change in the SSR
 generating configuration
 
   iod : int
-    Issue of broadcast ephemeris data
+    Issue of broadcast ephemeris data or IODCRC (Beidou)
   radial : int
     Orbit radial delta correction
   along : int
@@ -186,7 +186,7 @@ generating configuration
                    'sid' / construct.Struct(GnssSignal._parser),
                    'update_interval' / construct.Int8ul,
                    'iod_ssr' / construct.Int8ul,
-                   'iod' / construct.Int8ul,
+                   'iod' / construct.Int32ul,
                    'radial' / construct.Int32sl,
                    'along' / construct.Int32sl,
                    'cross' / construct.Int32sl,
@@ -275,6 +275,158 @@ generating configuration
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgSsrOrbitClock, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_ORBIT_CLOCK_DEP_A = 0x05DC
+class MsgSsrOrbitClockDepA(SBP):
+  """SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).
+
+  You can have MSG_SSR_ORBIT_CLOCK_DEP_A inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The precise orbit and clock correction message is 
+to be applied as a delta correction to broadcast 
+ephemeris and is typically an equivalent to the 1060
+and 1066 RTCM message types
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  time : GPSTimeSec
+    GNSS reference time of the correction
+  sid : GnssSignal
+    GNSS signal identifier (16 bit)
+  update_interval : int
+    Update interval between consecutive corrections
+  iod_ssr : int
+    IOD of the SSR correction. A change of Issue Of Data
+SSR is used to indicate a change in the SSR 
+generating configuration
+
+  iod : int
+    Issue of broadcast ephemeris data
+  radial : int
+    Orbit radial delta correction
+  along : int
+    Orbit along delta correction
+  cross : int
+    Orbit along delta correction
+  dot_radial : int
+    Velocity of orbit radial delta correction
+  dot_along : int
+    Velocity of orbit along delta correction
+  dot_cross : int
+    Velocity of orbit cross delta correction
+  c0 : int
+    C0 polynomial coefficient for correction of broadcast satellite clock
+  c1 : int
+    C1 polynomial coefficient for correction of broadcast satellite clock
+  c2 : int
+    C2 polynomial coefficient for correction of broadcast satellite clock
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'time' / construct.Struct(GPSTimeSec._parser),
+                   'sid' / construct.Struct(GnssSignal._parser),
+                   'update_interval' / construct.Int8ul,
+                   'iod_ssr' / construct.Int8ul,
+                   'iod' / construct.Int8ul,
+                   'radial' / construct.Int32sl,
+                   'along' / construct.Int32sl,
+                   'cross' / construct.Int32sl,
+                   'dot_radial' / construct.Int32sl,
+                   'dot_along' / construct.Int32sl,
+                   'dot_cross' / construct.Int32sl,
+                   'c0' / construct.Int32sl,
+                   'c1' / construct.Int32sl,
+                   'c2' / construct.Int32sl,)
+  __slots__ = [
+               'time',
+               'sid',
+               'update_interval',
+               'iod_ssr',
+               'iod',
+               'radial',
+               'along',
+               'cross',
+               'dot_radial',
+               'dot_along',
+               'dot_cross',
+               'c0',
+               'c1',
+               'c2',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrOrbitClockDepA,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrOrbitClockDepA, self).__init__()
+      self.msg_type = SBP_MSG_SSR_ORBIT_CLOCK_DEP_A
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.time = kwargs.pop('time')
+      self.sid = kwargs.pop('sid')
+      self.update_interval = kwargs.pop('update_interval')
+      self.iod_ssr = kwargs.pop('iod_ssr')
+      self.iod = kwargs.pop('iod')
+      self.radial = kwargs.pop('radial')
+      self.along = kwargs.pop('along')
+      self.cross = kwargs.pop('cross')
+      self.dot_radial = kwargs.pop('dot_radial')
+      self.dot_along = kwargs.pop('dot_along')
+      self.dot_cross = kwargs.pop('dot_cross')
+      self.c0 = kwargs.pop('c0')
+      self.c1 = kwargs.pop('c1')
+      self.c2 = kwargs.pop('c2')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrOrbitClockDepA.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrOrbitClockDepA(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrOrbitClockDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrOrbitClockDepA._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrOrbitClockDepA, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -521,7 +673,8 @@ satellite being tracked.
     
 
 msg_classes = {
-  0x05DC: MsgSsrOrbitClock,
+  0x05DD: MsgSsrOrbitClock,
+  0x05DC: MsgSsrOrbitClockDepA,
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
 }

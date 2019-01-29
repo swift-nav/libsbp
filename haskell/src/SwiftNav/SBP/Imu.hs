@@ -42,7 +42,9 @@ msgImuRaw = 0x0900
 --
 -- Raw data from the Inertial Measurement Unit, containing accelerometer and
 -- gyroscope readings. The sense of the measurements are to be aligned with
--- the indications on the device itself.
+-- the indications on the device itself. Measurement units, which are specific
+-- to the device hardware and settings, are communicated via the MSG_IMU_AUX
+-- message.
 data MsgImuRaw = MsgImuRaw
   { _msgImuRaw_tow :: !Word32
     -- ^ Milliseconds since start of GPS week. If the high bit is set, the time
@@ -78,12 +80,12 @@ instance Binary MsgImuRaw where
   put MsgImuRaw {..} = do
     putWord32le _msgImuRaw_tow
     putWord8 _msgImuRaw_tow_f
-    putWord16le $ fromIntegral _msgImuRaw_acc_x
-    putWord16le $ fromIntegral _msgImuRaw_acc_y
-    putWord16le $ fromIntegral _msgImuRaw_acc_z
-    putWord16le $ fromIntegral _msgImuRaw_gyr_x
-    putWord16le $ fromIntegral _msgImuRaw_gyr_y
-    putWord16le $ fromIntegral _msgImuRaw_gyr_z
+    (putWord16le . fromIntegral) _msgImuRaw_acc_x
+    (putWord16le . fromIntegral) _msgImuRaw_acc_y
+    (putWord16le . fromIntegral) _msgImuRaw_acc_z
+    (putWord16le . fromIntegral) _msgImuRaw_gyr_x
+    (putWord16le . fromIntegral) _msgImuRaw_gyr_y
+    (putWord16le . fromIntegral) _msgImuRaw_gyr_z
 
 $(makeSBP 'msgImuRaw ''MsgImuRaw)
 $(makeJSON "_msgImuRaw_" ''MsgImuRaw)
@@ -115,7 +117,7 @@ instance Binary MsgImuAux where
 
   put MsgImuAux {..} = do
     putWord8 _msgImuAux_imu_type
-    putWord16le $ fromIntegral _msgImuAux_temp
+    (putWord16le . fromIntegral) _msgImuAux_temp
     putWord8 _msgImuAux_imu_conf
 
 $(makeSBP 'msgImuAux ''MsgImuAux)

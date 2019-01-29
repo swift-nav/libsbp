@@ -156,6 +156,26 @@ public class SBPMessage {
             return ret;
         }
 
+        public int[] getArrayofS8() {
+            return getArrayofS8(buf.remaining());
+        }
+        public int[] getArrayofS8(int n) {
+            int[] ret = new int[n];
+            for (int i = 0; i < n; i++)
+                ret[i] = getS8();
+            return ret;
+        }
+
+        public int[] getArrayofU16() {
+            return getArrayofU16(buf.remaining());
+        }
+        public int[] getArrayofU16(int n) {
+            int[] ret = new int[n];
+            for (int i = 0; i < n; i++)
+                ret[i] = getU16();
+            return ret;
+        }
+
         public float[] getArrayofFloat() {
             return getArrayofFloat(buf.remaining());
         }
@@ -267,6 +287,24 @@ public class SBPMessage {
         public void putArrayofU8(int[] data, int n) {
             assert(n == data.length);
             putArrayofU8(data);
+        }
+
+        public void putArrayofS8(int[] data) {
+            for (int x : data)
+                buf.put((byte)x);
+        }
+        public void putArrayofS8(int[] data, int n) {
+            assert(n == data.length);
+            putArrayofS8(data);
+        }
+
+        public void putArrayofU16(int[] data) {
+            for (int x : data)
+                buf.putShort((short)x);
+        }
+        public void putArrayofU16(int[] data, int n) {
+            assert(n == data.length);
+            putArrayofU16(data);
         }
 
         public void putArrayofDouble(double[] data) {
