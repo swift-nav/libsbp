@@ -31,18 +31,47 @@ PLATFORMS = [
 
 cwd = os.path.abspath(os.path.dirname(__file__))
 with open(cwd + '/README.rst') as f:
-  readme = f.read()
+    readme = f.read()
 
 with open(cwd + '/requirements.txt') as f:
-  INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
+    INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
 
 with open(cwd + '/test_requirements.txt') as f:
-  TEST_REQUIRES = [i.strip() for i in f.readlines()]
+    TEST_REQUIRES = [i.strip() for i in f.readlines()]
+
+
+def sbp_root():
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+
+def do_parse(root, config):
+    import subprocess
+    from setuptools_scm.version import meta
+    tag = None
+    cwd = os.getcwd()
+    try:
+        os.chdir(root)
+        tag = subprocess.check_output(['git', 'describe']).strip()
+    except OSError:
+        return meta("99.99.99")
+    finally:
+        os.chdir(cwd)
+    parts = tag.split('-')
+    kw_params = {}
+    version = parts[0].lstrip('v')
+    if len(parts) > 2:
+        kw_params['distance'] = parts[1]
+        kw_params['node'] = parts[2]
+    if tag.endswith('-dirty'):
+        kw_params['dirty'] = True
+    return meta(version, **kw_params)
+
 
 setup(name='sbp',
       description='Python bindings for Swift Binary Protocol',
       long_description=readme,
-      use_scm_version = {'root': '..', 'relative_to': __file__},
+      use_scm_version={'root': sbp_root(), 'parse': do_parse},
+      parse=do_parse,
       setup_requires=['setuptools_scm'],
       author='Swift Navigation',
       author_email='dev@swiftnav.com',
