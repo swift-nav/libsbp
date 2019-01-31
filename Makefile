@@ -7,10 +7,11 @@ SWIFTNAV_ROOT := $(shell pwd)
 MAKEFLAGS += SWIFTNAV_ROOT=$(SWIFTNAV_ROOT)
 SBP_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/yaml/swiftnav/sbp/
 SBP_TESTS_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/tests/yaml/
-PYTHON := $(SWIFTNAV_ROOT)/.venv/bin/python
-SBP_GEN_BIN := tox --
 
-SBP_VERSION := $(shell python2.7 python/sbp/version.py)
+GENENV ?= py  # the system's default python version
+SBP_GEN_BIN := tox -e $(GENENV) --
+
+SBP_VERSION := $(shell python python/sbp/version.py)
 SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
 SBP_MINOR_VERSION := $(word 2, $(subst ., , $(SBP_VERSION)))
 SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
@@ -201,7 +202,11 @@ test-c:
 
 test-python:
 	$(call announce-begin,"Running Python tests")
+ifdef TRAVIS_TARGET
 	cd $(SWIFTNAV_ROOT)/python/ && tox
+else
+	cd $(SWIFTNAV_ROOT)/python/ && tox --skip-missing-interpreters
+endif
 	$(call announce-end,"Finished running Python tests")
 
 test-javascript:
