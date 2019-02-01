@@ -15,7 +15,8 @@ SBP message handling.
 import collections
 import threading
 import weakref
-from queue import Queue
+import six
+from six.moves.queue import Queue
 
 
 class Handler(object):
@@ -129,7 +130,7 @@ class Handler(object):
           Iterable type removes the callback from all the message types.
         """
         if msg_type is None:
-            msg_type = list(self._callbacks.keys())
+            msg_type = self._callbacks.keys()
 
         try:
             for mt in iter(msg_type):
@@ -266,7 +267,7 @@ class Handler(object):
         with self._write_lock:
             self._source(*msgs, **metadata)
 
-    class _SBPQueueIterator(object):
+    class _SBPQueueIterator(six.Iterator):
         """
         Class for upstream iterators.  Implements callable interface for adding
         messages into the queue, and iterable interface for getting them out.

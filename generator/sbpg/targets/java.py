@@ -87,13 +87,13 @@ def parse_type(field):
       return "parser.getString(%d)" % field.options['size'].value
     else:
       return "parser.getString()"
-  elif field.type_id in list(JAVA_TYPE_MAP.keys()):
+  elif field.type_id in JAVA_TYPE_MAP:
     # Primitive java types have extractor methods in SBPMessage.Parser
     return "parser.get" + field.type_id.capitalize() + "()"
   if field.type_id == 'array':
     # Call function to build array
     t = field.options['fill'].value
-    if t in list(JAVA_TYPE_MAP.keys()):
+    if t in JAVA_TYPE_MAP:
       if 'size' in field.options:
         return "parser.getArrayof%s(%d)" % (t.capitalize(), field.options['size'].value)
       else:
@@ -116,13 +116,13 @@ def build_type(field):
       return "builder.putString(%s, %d)" % (field.identifier, field.options['size'].value)
     else:
       return "builder.putString(%s)" % field.identifier
-  elif field.type_id in list(JAVA_TYPE_MAP.keys()):
+  elif field.type_id in JAVA_TYPE_MAP:
     # Primitive java types have extractor methods in SBPMessage.Builder
     return "builder.put%s(%s)" % (field.type_id.capitalize(), field.identifier)
   if field.type_id == 'array':
     # Call function to build array
     t = field.options['fill'].value
-    if t in list(JAVA_TYPE_MAP.keys()):
+    if t in JAVA_TYPE_MAP:
       if 'size' in field.options:
         return "builder.putArrayof%s(%s, %d)" % (t.capitalize(),
                                                  field.identifier,
@@ -138,10 +138,10 @@ def build_type(field):
     return "%s.build(builder)" % field.identifier
 
 def jsonify(field):
-  if field.type_id in list(JAVA_TYPE_MAP.keys()):
+  if field.type_id in JAVA_TYPE_MAP:
     return field.identifier
   elif field.type_id == 'array':
-    if field.options['fill'].value in list(JAVA_TYPE_MAP.keys()):
+    if field.options['fill'].value in JAVA_TYPE_MAP:
       return "new JSONArray(%s)" % field.identifier
     else:
       return "SBPStruct.toJSONArray(%s)" % field.identifier

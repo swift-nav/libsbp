@@ -17,25 +17,25 @@ from voluptuous import IsFalse
 
 SBP_EXTENSION = "/*.yaml"
 
-msg = ({
-  'fields': Any({str: Coerce(str)}, IsFalse),
+msg = Schema({
+  'fields': Any(Schema({ Coerce(str): Coerce(str) }), IsFalse),
   'module': Coerce(str),
   'name': Coerce(str)
 })
 
-test = ({
+test = Schema({
   'msg': msg,
-  'msg_type': str,
-  'raw_json': str,
+  'msg_type': Schema(str),
+  'raw_json': Schema(str),
   'raw_packet': Coerce(str),
-  'sbp': ({ str: Coerce(str) }),
+  'sbp': Schema({ Coerce(str): Coerce(str) }),
 })
 
-tests = ([test])
+tests = Schema([test])
 
 test_schema = Schema({
-  'package': str,
-  'description': str,
+  'package': Schema(str),
+  'description': Schema(str),
   'version': Coerce(str),
   'generated_on': Coerce(str),
   'tests': tests

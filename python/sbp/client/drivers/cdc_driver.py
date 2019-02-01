@@ -70,5 +70,5 @@ class CdcDriver(BaseDriver):
         """
         try:
             self.handle.close()
-        except OSError as IOError:
+        except (OSError, IOError):
             pass

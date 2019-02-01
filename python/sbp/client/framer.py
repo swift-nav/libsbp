@@ -15,9 +15,10 @@ import struct
 import datetime
 import time
 import uuid
+import six
 
 
-class Framer(object):
+class Framer(six.Iterator):
     """
     Framer
 
@@ -119,7 +120,8 @@ class Framer(object):
         crc = self._readall(2)
         crc, = struct.unpack("<H", crc)
         if crc != msg_crc:
-            print("crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc))
+            if self._verbose:
+                print("crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc))
             return None
         msg = SBP(msg_type, sender, msg_len, data, crc)
         try:

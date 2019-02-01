@@ -59,7 +59,7 @@ def crc16(s, crc=0):
   """CRC16 implementation acording to CCITT standards.
 
   """
-  for ch in s:
+  for ch in bytearray(s): # bytearray's elements are integers in both python 2 and 3
     crc = ((crc<<8)&0xFFFF) ^ crc16_tab[ ((crc>>8)&0xFF) ^ (ch&0xFF) ]
     crc &= 0xFFFF
   return crc

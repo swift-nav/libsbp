@@ -246,7 +246,7 @@ class HTTPDriver(BaseDriver):
             msg = "Client connection error to %s with [PUT] headers %s" \
                   % (self.url, headers)
             warnings.warn(msg)
-        except requests.exceptions.ConnectTimeout as err:
+        except requests.exceptions.ConnectTimeout:
             msg = "Client connection timeout to %s with [PUT] headers %s" \
                   % (self.url, headers)
             warnings.warn(msg)
@@ -310,11 +310,11 @@ class HTTPDriver(BaseDriver):
         try:
             self.read_response = self.read_session.get(
                 self.url, stream=True, headers=headers, timeout=self.timeout)
-        except requests.exceptions.ConnectionError as err:
+        except requests.exceptions.ConnectionError:
             msg = "Client connection error to %s with [GET] headers %s" \
                   % (self.url, headers)
             warnings.warn(msg)
-        except requests.exceptions.ConnectTimeout as err:
+        except requests.exceptions.ConnectTimeout:
             msg = "Client connection timeout to %s with [GET] headers %s" \
                   % (self.url, headers)
             warnings.warn(msg)

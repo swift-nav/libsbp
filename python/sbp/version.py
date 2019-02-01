@@ -43,7 +43,7 @@ def call_git_describe():
         p = Popen(['git', 'describe', '--tags', '--dirty', '--always'],
                   stdout=PIPE, stderr=PIPE)
         p.stderr.close()
-        line = p.stdout.readlines()[0]
+        line = p.stdout.readlines()[0].decode('ascii')
         return line.strip()
     except Exception:
         return None
