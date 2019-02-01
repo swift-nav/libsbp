@@ -94,8 +94,10 @@ START_TEST( test_(((s.suite_name))) )
     ((*- for ff in value *))((( compare_value( (((prefix))) + '[' + (((loop.index0|toStr))) + ']', (((ff))) ) )))((*- endfor *))
     ((*- elif value is dictType *))
     ((*- for k in (((value|sorted))) *))((( compare_value( (((prefix))) + '.' + (((k))), (((value[k]))) ) )))((*- endfor *))
-    ((*- elif value is floatType *))
-    fail_unless((msg->(((prefix)))*100 - (((value)))*100) < 0.05, "incorrect value for (((prefix))), expected (((value))), is %f", msg->(((prefix))));
+    ((*- elif value is floatType *))((=
+        Note: the ("%.12g"|format(value)|float) filter is intended to keep float
+        literal precision unchanged whether generated under Python 2.7 or 3.x. =))
+    fail_unless((msg->(((prefix)))*100 - ((("%.12g"|format(value)|float)))*100) < 0.05, "incorrect value for (((prefix))), expected ((("%.12g"|format(value)|float))), is %f", msg->(((prefix))));
     ((*- else *))
     fail_unless(msg->(((prefix))) == (((value))), "incorrect value for (((prefix))), expected (((value))), is %d", msg->(((prefix))));
     ((*- endif *))

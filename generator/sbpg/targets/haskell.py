@@ -68,7 +68,7 @@ def camel_case(s):
   """
   Convert snake_case to camel_case.
   """
-  return "".join([string.capitalize(i) for i in s.split("_")])
+  return "".join([i.capitalize() for i in s.split("_")])
 
 def to_global(s):
   """
@@ -78,7 +78,7 @@ def to_global(s):
     s = 'Gps' + s[3:]
 
   if '_' in s:
-    s = "".join([string.capitalize(i) for i in s.split("_")])
+    s = "".join([i.capitalize() for i in s.split("_")])
   return s[0].lower() + s[1:]
 
 def to_data(s):
@@ -89,7 +89,7 @@ def to_data(s):
     s = 'Gps' + s[3:]
 
   if '_' in s:
-    return "".join([string.capitalize(i) for i in s.split("_")])
+    return "".join([i.capitalize() for i in s.split("_")])
   return s
 
 def to_type(f, type_map=CONSTRUCT_CODE):

@@ -19,7 +19,8 @@ from sbp.logging import MsgPrintDep
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
 import pytest
-import socketserver
+import six
+from six.moves import socketserver
 import threading
 import warnings
 
@@ -45,7 +46,7 @@ def test_json_log():
     with open(log_datafile, 'r') as infile:
       with JSONLogIterator(infile) as log:
         for msg, metadata in next(log):
-          assert type(metadata['time']) == str
+          assert type(metadata['time']) == six.text_type
           assert isinstance(msg, SBP) or issubclass(type(msg), SBP)
           count += 1
         warnings.simplefilter("always")

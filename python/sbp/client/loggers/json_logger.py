@@ -66,7 +66,7 @@ class JSONBinLogger(BaseLogger):
                 'msg_type': msg.msg_type,
                 'sender': msg.sender,
                 'length': msg.length,
-                'payload': base64.standard_b64encode(msg.payload),
+                'payload': base64.standard_b64encode(msg.payload).decode('ascii'),
                 'crc': msg.crc
             }
             return json.dumps(self.fmt_msg(data, **metadata), allow_nan=False)

@@ -38,7 +38,7 @@ def rejig_bitfields(bfs):
             n_with_values += 1
             info['vals'] = rejig_values(info['values'])
             del info['values']
-        rng = list(map(int, str(rng).split('-')))
+        rng = [int(x) for x in str(rng).split('-')]
         if len(rng) == 1:
             lsb = rng[0]
             bf_len = 1

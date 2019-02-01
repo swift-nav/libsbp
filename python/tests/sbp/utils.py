@@ -21,8 +21,9 @@ from ruamel.yaml import YAML
 
 yaml = YAML(typ='safe')
 
-def S(s):
-    return s.encode('ascii') if hasattr(s, 'encode') else s
+def _encoded_string(s):
+  """Encode the string-like argument as bytes if suitable"""
+  return s.encode('ascii') if hasattr(s, 'encode') else s
 
 def _assert_sbp(sbp, test_case):
   """
@@ -40,7 +41,7 @@ def _assert_sbp(sbp, test_case):
   assert sbp.msg_type == int(test_case['msg_type'], 0), "Invalid msg_type."
   assert sbp.sender == int(test_case['sender'], 0), "Invalid sender."
   assert sbp.length == test_case['length'], "Invalid length."
-  assert base64.standard_b64encode(sbp.payload) == S(test_case['payload']), \
+  assert base64.standard_b64encode(sbp.payload) == _encoded_string(test_case['payload']), \
     "Invalid payload."
 
 def field_eq(p, e):
@@ -83,7 +84,7 @@ def _assert_msg(msg, test_case):
   assert msg.__class__.__name__ == test_case['name']
   if test_case['fields']:
     for field_name, field_value in test_case['fields'].items():
-      assert field_eq(getattr(msg, field_name), S(field_value)), \
+      assert field_eq(getattr(msg, field_name), _encoded_string(field_value)), \
         "Unequal field values (name: %s): got %r, but expected %r!" \
         % (field_name, getattr(msg, field_name), field_value)
 
@@ -101,7 +102,7 @@ def _assert_msg_roundtrip(msg, raw_packet):
 
   """
   encoding = base64.standard_b64encode(msg.to_binary())
-  assert encoding == S(raw_packet)
+  assert encoding == _encoded_string(raw_packet)
 
 def _assert_msg_roundtrip_json(msg, raw_json):
   """

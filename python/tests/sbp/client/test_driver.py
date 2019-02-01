@@ -16,7 +16,7 @@ from sbp.client.drivers.pyserial_driver import PySerialDriver
 from sbp.client import Handler, Framer
 from sbp.logging import MsgPrintDep, MsgLog, SBP_MSG_PRINT_DEP
 import pytest
-import socketserver
+from six.moves import socketserver
 import threading
 import time
 

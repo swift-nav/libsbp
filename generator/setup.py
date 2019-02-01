@@ -1,13 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import imp
-
-try:
-  import sys
-  imp.reload(sys).setdefaultencoding("UTF-8")
-except:
-  pass
+import sys
 
 try:
   from setuptools import setup, find_packages

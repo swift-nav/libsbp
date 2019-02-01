@@ -11,6 +11,7 @@
 from ...table import dispatch
 from construct.core import ConstructError
 import warnings
+import six
 
 
 class BaseLogger(object):
@@ -59,7 +60,7 @@ class BaseLogger(object):
         return data
 
 
-class LogIterator(object):
+class LogIterator(six.Iterator):
     """
     LogIterator
 
