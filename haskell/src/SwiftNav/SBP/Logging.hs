@@ -101,29 +101,6 @@ $(makeSBP 'msgFwd ''MsgFwd)
 $(makeJSON "_msgFwd_" ''MsgFwd)
 $(makeLenses ''MsgFwd)
 
-msgTweet :: Word16
-msgTweet = 0x0012
-
--- | SBP class for message MSG_TWEET (0x0012).
---
--- All the news fit to tweet.
-data MsgTweet = MsgTweet
-  { _msgTweet_tweet :: !Text
-    -- ^ Human-readable string
-  } deriving ( Show, Read, Eq )
-
-instance Binary MsgTweet where
-  get = do
-    _msgTweet_tweet <- decodeUtf8 <$> getByteString 140
-    pure MsgTweet {..}
-
-  put MsgTweet {..} = do
-    putByteString $ encodeUtf8 _msgTweet_tweet
-
-$(makeSBP 'msgTweet ''MsgTweet)
-$(makeJSON "_msgTweet_" ''MsgTweet)
-$(makeLenses ''MsgTweet)
-
 msgPrintDep :: Word16
 msgPrintDep = 0x0010
 
