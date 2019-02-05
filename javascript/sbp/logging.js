@@ -94,33 +94,6 @@ MsgFwd.prototype.fieldSpec.push(['protocol', 'writeUInt8', 1]);
 MsgFwd.prototype.fieldSpec.push(['fwd_payload', 'string', null]);
 
 /**
- * SBP class for message MSG_TWEET (0x0012).
- *
- * All the news fit to tweet.
- *
- * Fields in the SBP payload (`sbp.payload`):
- * @field tweet string Human-readable string
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-var MsgTweet = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "MSG_TWEET";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-MsgTweet.prototype = Object.create(SBP.prototype);
-MsgTweet.prototype.messageType = "MSG_TWEET";
-MsgTweet.prototype.msg_type = 0x0012;
-MsgTweet.prototype.constructor = MsgTweet;
-MsgTweet.prototype.parser = new Parser()
-  .endianess('little')
-  .string('tweet', { length: 140 });
-MsgTweet.prototype.fieldSpec = [];
-MsgTweet.prototype.fieldSpec.push(['tweet', 'string', 140]);
-
-/**
  * SBP class for message MSG_PRINT_DEP (0x0010).
  *
  * Deprecated.
@@ -152,8 +125,6 @@ module.exports = {
   MsgLog: MsgLog,
   0x0402: MsgFwd,
   MsgFwd: MsgFwd,
-  0x0012: MsgTweet,
-  MsgTweet: MsgTweet,
   0x0010: MsgPrintDep,
   MsgPrintDep: MsgPrintDep,
 }
