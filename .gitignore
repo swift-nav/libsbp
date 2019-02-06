@@ -1,5 +1,3 @@
-*.rst
-.*.sw*
 .DS_Store
 *.*~
 limbo/
@@ -15,7 +13,6 @@ __pycache__/
 node_modules
 .Python
 env/
-build/
 develop-eggs/
 dist/
 downloads/
@@ -68,5 +65,4 @@ RELEASE-VERSION
 
 # Haskell
 .stack-work/
-.build/
 
