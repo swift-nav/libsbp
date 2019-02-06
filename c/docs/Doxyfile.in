@@ -1847,4 +1847,4 @@ DOT_CLEANUP            = YES
 ENABLE_PREPROCESSING   = YES 
 MACRO_EXPANSION        = YES 
 EXPAND_ONLY_PREDEF     = YES 
-PREDEFINED             = __attribute__(x)= 
+PREDEFINED             = SBP_ATTR_PACKED= 
