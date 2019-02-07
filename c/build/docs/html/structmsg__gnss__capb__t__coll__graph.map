@@ -1,0 +1,4 @@
+<map id="msg_gnss_capb_t" name="msg_gnss_capb_t">
+<area shape="rect" id="node2" href="$structgps__time__sec__t.html" title="Whole second accurate GPS time. " alt="" coords="5,6,120,31"/>
+<area shape="rect" id="node3" href="$structgnss__capb__t.html" title="gnss_capb_t" alt="" coords="144,6,240,31"/>
+</map>

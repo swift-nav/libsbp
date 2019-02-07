@@ -1,6 +1,8 @@
 <map id="msg_obs_t" name="msg_obs_t">
-<area shape="rect" id="node2" href="$structpacked__obs__content__t.html" title="GPS observations for a particular satellite signal. " alt="" coords="5,96,160,123"/>
-<area shape="rect" id="node3" href="$structcarrier__phase__t.html" title="GPS carrier phase measurement. " alt="" coords="25,5,140,32"/>
-<area shape="rect" id="node4" href="$structobservation__header__t.html" title="Header for observation message. " alt="" coords="185,96,335,123"/>
-<area shape="rect" id="node5" href="$structobs__gps__time__t.html" title="Millisecond&#45;accurate GPS time. " alt="" coords="202,5,317,32"/>
+<area shape="rect" id="node2" href="$structpacked__obs__content__t.html" title="GNSS observations for a particular satellite signal. " alt="" coords="114,94,269,119"/>
+<area shape="rect" id="node3" href="$structdoppler__t.html" title="GNSS doppler measurement. " alt="" coords="4,6,80,31"/>
+<area shape="rect" id="node4" href="$structcarrier__phase__t.html" title="GNSS carrier phase measurement. " alt="" coords="106,6,219,31"/>
+<area shape="rect" id="node5" href="$structsbp__gnss__signal__t.html" title="Represents all the relevant information about the signal. " alt="" coords="243,6,375,31"/>
+<area shape="rect" id="node6" href="$structobservation__header__t.html" title="Header for observation message. " alt="" coords="368,94,517,119"/>
+<area shape="rect" id="node7" href="$structsbp__gps__time__t.html" title="Nanosecond&#45;accurate receiver clock time. " alt="" coords="400,6,515,31"/>
 </map>

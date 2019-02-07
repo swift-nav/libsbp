@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['logging',['Logging',['../group__logging.html',1,'']]]
+  ['integer_20types',['Integer types',['../group__common__inttypes.html',1,'']]],
+  ['imu',['Imu',['../group__imu.html',1,'']]],
+  ['input_20_2f_20output',['Input / Output',['../group__io.html',1,'']]]
 ];

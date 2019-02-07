@@ -1,0 +1,4 @@
+<map id="msg_group_delay_dep_b_t" name="msg_group_delay_dep_b_t">
+<area shape="rect" id="node2" href="$structgps__time__sec__t.html" title="Whole second accurate GPS time. " alt="" coords="5,6,120,31"/>
+<area shape="rect" id="node3" href="$structgnss__signal__dep__t.html" title="Deprecated. " alt="" coords="144,6,276,31"/>
+</map>

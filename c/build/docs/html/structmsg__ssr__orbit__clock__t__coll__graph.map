@@ -1,0 +1,4 @@
+<map id="msg_ssr_orbit_clock_t" name="msg_ssr_orbit_clock_t">
+<area shape="rect" id="node2" href="$structgps__time__sec__t.html" title="Whole second accurate GPS time. " alt="" coords="5,6,120,31"/>
+<area shape="rect" id="node3" href="$structsbp__gnss__signal__t.html" title="Represents all the relevant information about the signal. " alt="" coords="143,6,275,31"/>
+</map>

@@ -25,32 +25,15 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="sbp 0.27 documentation" href="index.html" />
-    <link rel="next" title="sbp.settings module" href="sbp.settings.html" />
-    <link rel="prev" title="sbp.observation module" href="sbp.observation.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
+    <link rel="next" title="sbp.sbas module" href="sbp.sbas.html" />
+    <link rel="prev" title="sbp.orientation module" href="sbp.orientation.html" />
    
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="sbp.settings.html" title="sbp.settings module"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="sbp.observation.html" title="sbp.observation module"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
@@ -62,12 +45,10 @@
 <p>System health, configuration, and diagnostic messages specific to
 the Piksi L1 receiver, including a variety of legacy messages that
 may no longer be used.</p>
-<p>These messages are in the implementation-defined range
-(0x0000-0x00FF), and largely intended for internal-use only.</p>
 <dl class="class">
 <dt id="sbp.piksi.Latency">
-<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">Latency</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#Latency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.Latency" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">Latency</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#Latency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.Latency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <p>Latency.</p>
 <blockquote>
 <div>Statistics on the latency of observations received from the base</div></blockquote>
@@ -77,19 +58,39 @@ receiver to give a precise measurement of the end-to-end
 communication latency in the system.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>avg <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Average latency</dd>
-<dt>lmin <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Minimum latency</dd>
-<dt>lmax <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Maximum latency</dd>
-<dt>current <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Smoothed estimate of the current latency</dd>
+<dt>avg</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Average latency</dd>
+<dt>lmin</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Minimum latency</dd>
+<dt>lmax</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Maximum latency</dd>
+<dt>current</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Smoothed estimate of the current latency</dd>
 </dl>
 </div></blockquote>
+<dl class="attribute">
+<dt id="sbp.piksi.Latency.avg">
+<code class="descname">avg</code><a class="headerlink" href="#sbp.piksi.Latency.avg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.Latency.current">
+<code class="descname">current</code><a class="headerlink" href="#sbp.piksi.Latency.current" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.piksi.Latency.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#Latency.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.Latency.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.Latency.lmax">
+<code class="descname">lmax</code><a class="headerlink" href="#sbp.piksi.Latency.lmax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.Latency.lmin">
+<code class="descname">lmin</code><a class="headerlink" href="#sbp.piksi.Latency.lmin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -102,54 +103,445 @@ communication latency in the system.</p>
 <dl class="class">
 <dt id="sbp.piksi.MsgAlmanac">
 <em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgAlmanac</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgAlmanac"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgAlmanac" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_ALMANAC (0x0069).</p>
 <blockquote>
-<div><p>You can have MSG_ALMANAC inherent its fields directly
+<div><p>You can have MSG_ALMANAC inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This is a legacy message for sending and loading a satellite</p>
 </div></blockquote>
 <p>alamanac onto the Piksi&#8217;s flash memory from the host.</p>
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgAlmanac.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgAlmanac.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgAlmanac.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgAlmanac.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgAlmanac.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgAlmanac.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgCellModemStatus">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgCellModemStatus</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCellModemStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCellModemStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_CELL_MODEM_STATUS (0x00BE).</p>
+<blockquote>
+<div><p>You can have MSG_CELL_MODEM_STATUS inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>If a cell modem is present on a piksi device, this message</p>
+</div></blockquote>
+<p>will be send periodically to update the host on the status
+of the modem and its various parameters.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>signal_strength</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Received cell signal strength in dBm, zero translates to unknown</dd>
+<dt>signal_error_rate</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>BER as reported by the modem, zero translates to unknown</dd>
+<dt>reserved</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Unspecified data TBD for this schema</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.piksi.MsgCellModemStatus.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCellModemStatus.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCellModemStatus.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgCellModemStatus.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCellModemStatus.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCellModemStatus.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgCellModemStatus.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCellModemStatus.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCellModemStatus.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgCellModemStatus.reserved">
+<code class="descname">reserved</code><a class="headerlink" href="#sbp.piksi.MsgCellModemStatus.reserved" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgCellModemStatus.signal_error_rate">
+<code class="descname">signal_error_rate</code><a class="headerlink" href="#sbp.piksi.MsgCellModemStatus.signal_error_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgCellModemStatus.signal_strength">
+<code class="descname">signal_strength</code><a class="headerlink" href="#sbp.piksi.MsgCellModemStatus.signal_strength" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgCellModemStatus.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCellModemStatus.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCellModemStatus.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgCellModemStatus.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCellModemStatus.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCellModemStatus.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgCommandOutput">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgCommandOutput</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandOutput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_COMMAND_OUTPUT (0x00BC).</p>
+<blockquote>
+<div><p>You can have MSG_COMMAND_OUTPUT inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Returns the standard output and standard error of the</p>
+</div></blockquote>
+<p>command requested by MSG_COMMAND_REQ.
+The sequence number can be used to filter for filtering
+the correct command.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>sequence</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Sequence number</dd>
+<dt>line</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>Line of standard output or standard error</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.piksi.MsgCommandOutput.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandOutput.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandOutput.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgCommandOutput.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandOutput.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandOutput.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgCommandOutput.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandOutput.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandOutput.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgCommandOutput.line">
+<code class="descname">line</code><a class="headerlink" href="#sbp.piksi.MsgCommandOutput.line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgCommandOutput.sequence">
+<code class="descname">sequence</code><a class="headerlink" href="#sbp.piksi.MsgCommandOutput.sequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgCommandOutput.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandOutput.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandOutput.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgCommandOutput.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandOutput.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandOutput.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgCommandReq">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgCommandReq</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandReq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandReq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_COMMAND_REQ (0x00B8).</p>
+<blockquote>
+<div><p>You can have MSG_COMMAND_REQ inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Request the recipient to execute an command.</p>
+</div></blockquote>
+<p>Output will be sent in MSG_LOG messages, and the exit
+code will be returned with MSG_COMMAND_RESP.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>sequence</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Sequence number</dd>
+<dt>command</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>Command line to execute</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.piksi.MsgCommandReq.command">
+<code class="descname">command</code><a class="headerlink" href="#sbp.piksi.MsgCommandReq.command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgCommandReq.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandReq.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandReq.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgCommandReq.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandReq.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandReq.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgCommandReq.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandReq.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandReq.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgCommandReq.sequence">
+<code class="descname">sequence</code><a class="headerlink" href="#sbp.piksi.MsgCommandReq.sequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgCommandReq.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandReq.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandReq.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgCommandReq.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandReq.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandReq.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgCommandResp">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgCommandResp</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandResp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandResp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_COMMAND_RESP (0x00B9).</p>
+<blockquote>
+<div><p>You can have MSG_COMMAND_RESP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The response to MSG_COMMAND_REQ with the return code of</p>
+</div></blockquote>
+<p>the command.  A return code of zero indicates success.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>sequence</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Sequence number</dd>
+<dt>code</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Exit code</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.piksi.MsgCommandResp.code">
+<code class="descname">code</code><a class="headerlink" href="#sbp.piksi.MsgCommandResp.code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgCommandResp.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandResp.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandResp.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgCommandResp.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandResp.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandResp.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgCommandResp.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandResp.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandResp.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgCommandResp.sequence">
+<code class="descname">sequence</code><a class="headerlink" href="#sbp.piksi.MsgCommandResp.sequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgCommandResp.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandResp.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandResp.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgCommandResp.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCommandResp.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCommandResp.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.piksi.MsgCwResults">
 <em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgCwResults</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCwResults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCwResults" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_CW_RESULTS (0x00C0).</p>
 <blockquote>
-<div><p>You can have MSG_CW_RESULTS inherent its fields directly
+<div><p>You can have MSG_CW_RESULTS inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This is an unused legacy message for result reporting from the</p>
 </div></blockquote>
 <p>CW interference channel on the SwiftNAP. This message will be
 removed in a future release.</p>
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgCwResults.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCwResults.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCwResults.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgCwResults.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCwResults.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCwResults.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.piksi.MsgCwStart">
 <em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgCwStart</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCwStart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCwStart" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_CW_START (0x00C1).</p>
 <blockquote>
-<div><p>You can have MSG_CW_START inherent its fields directly
+<div><p>You can have MSG_CW_START inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>This is an unused legacy message from those host for starting</p>
+<p>This is an unused legacy message from the host for starting</p>
 </div></blockquote>
 <p>the CW interference channel on the SwiftNAP. This message will
 be removed in a future release.</p>
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgCwStart.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCwStart.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCwStart.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgCwStart.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgCwStart.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgCwStart.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgDeviceMonitor">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgDeviceMonitor</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgDeviceMonitor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgDeviceMonitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_DEVICE_MONITOR (0x00B5).</p>
+<blockquote>
+<div><p>You can have MSG_DEVICE_MONITOR inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message contains temperature and voltage level measurements from the</p>
+</div></blockquote>
+<p>processor&#8217;s monitoring system and the RF frontend die temperature if
+available.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>dev_vin</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Device V_in</dd>
+<dt>cpu_vint</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Processor V_int</dd>
+<dt>cpu_vaux</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Processor V_aux</dd>
+<dt>cpu_temperature</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Processor temperature</dd>
+<dt>fe_temperature</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Frontend temperature (if available)</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.piksi.MsgDeviceMonitor.cpu_temperature">
+<code class="descname">cpu_temperature</code><a class="headerlink" href="#sbp.piksi.MsgDeviceMonitor.cpu_temperature" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgDeviceMonitor.cpu_vaux">
+<code class="descname">cpu_vaux</code><a class="headerlink" href="#sbp.piksi.MsgDeviceMonitor.cpu_vaux" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgDeviceMonitor.cpu_vint">
+<code class="descname">cpu_vint</code><a class="headerlink" href="#sbp.piksi.MsgDeviceMonitor.cpu_vint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgDeviceMonitor.dev_vin">
+<code class="descname">dev_vin</code><a class="headerlink" href="#sbp.piksi.MsgDeviceMonitor.dev_vin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgDeviceMonitor.fe_temperature">
+<code class="descname">fe_temperature</code><a class="headerlink" href="#sbp.piksi.MsgDeviceMonitor.fe_temperature" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgDeviceMonitor.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgDeviceMonitor.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgDeviceMonitor.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgDeviceMonitor.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgDeviceMonitor.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgDeviceMonitor.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgDeviceMonitor.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgDeviceMonitor.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgDeviceMonitor.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgDeviceMonitor.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgDeviceMonitor.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgDeviceMonitor.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgDeviceMonitor.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgDeviceMonitor.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgDeviceMonitor.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.piksi.MsgIarState">
 <em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgIarState</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgIarState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgIarState" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_IAR_STATE (0x0019).</p>
 <blockquote>
-<div><p>You can have MSG_IAR_STATE inherent its fields directly
+<div><p>You can have MSG_IAR_STATE inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message reports the state of the Integer Ambiguity</p>
@@ -159,10 +551,12 @@ ambiguities from double-differenced carrier-phase measurements
 from satellite observations.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>num_hyps <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of integer ambiguity hypotheses remaining</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>num_hyps</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of integer ambiguity hypotheses remaining</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
@@ -174,9 +568,19 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.piksi.MsgIarState.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgIarState.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgIarState.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgIarState.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgIarState.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgIarState.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgIarState.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgIarState.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgIarState.num_hyps">
+<code class="descname">num_hyps</code><a class="headerlink" href="#sbp.piksi.MsgIarState.num_hyps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.piksi.MsgIarState.to_binary">
@@ -185,20 +589,19 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.piksi.MsgIarState.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgIarState.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgIarState.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
-</dd></dl>
+<dt id="sbp.piksi.MsgIarState.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgIarState.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgIarState.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.piksi.MsgInitBase">
 <em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgInitBase</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgInitBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgInitBase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_INIT_BASE (0x0023).</p>
 <blockquote>
-<div><p>You can have MSG_INIT_BASE inherent its fields directly
+<div><p>You can have MSG_INIT_BASE inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message initializes the integer ambiguity resolution (IAR)</p>
@@ -207,29 +610,420 @@ of its fields.</p>
 the base station and rover receivers. Warns via MSG_PRINT if
 there aren&#8217;t a shared minimum number (4) of satellite
 observations between the two.</p>
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgInitBase.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgInitBase.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgInitBase.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgInitBase.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgInitBase.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgInitBase.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgMaskSatellite">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgMaskSatellite</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgMaskSatellite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgMaskSatellite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_MASK_SATELLITE (0x002B).</p>
+<blockquote>
+<div><p>You can have MSG_MASK_SATELLITE inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message allows setting a mask to prevent a particular satellite</p>
+</div></blockquote>
+<p>from being used in various Piksi subsystems.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>mask</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Mask of systems that should ignore this satellite.</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>GNSS signal for which the mask is applied</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.piksi.MsgMaskSatellite.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgMaskSatellite.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgMaskSatellite.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgMaskSatellite.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgMaskSatellite.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgMaskSatellite.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgMaskSatellite.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgMaskSatellite.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgMaskSatellite.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgMaskSatellite.mask">
+<code class="descname">mask</code><a class="headerlink" href="#sbp.piksi.MsgMaskSatellite.mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgMaskSatellite.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.piksi.MsgMaskSatellite.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgMaskSatellite.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgMaskSatellite.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgMaskSatellite.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgMaskSatellite.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgMaskSatellite.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgMaskSatellite.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgMaskSatelliteDep">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgMaskSatelliteDep</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgMaskSatelliteDep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgMaskSatelliteDep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_MASK_SATELLITE_DEP (0x001B).</p>
+<p>You can have MSG_MASK_SATELLITE_DEP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>mask</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Mask of systems that should ignore this satellite.</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignalDep</span><dd>GNSS signal for which the mask is applied</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.piksi.MsgMaskSatelliteDep.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgMaskSatelliteDep.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgMaskSatelliteDep.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgMaskSatelliteDep.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgMaskSatelliteDep.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgMaskSatelliteDep.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgMaskSatelliteDep.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgMaskSatelliteDep.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgMaskSatelliteDep.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgMaskSatelliteDep.mask">
+<code class="descname">mask</code><a class="headerlink" href="#sbp.piksi.MsgMaskSatelliteDep.mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgMaskSatelliteDep.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.piksi.MsgMaskSatelliteDep.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgMaskSatelliteDep.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgMaskSatelliteDep.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgMaskSatelliteDep.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgMaskSatelliteDep.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgMaskSatelliteDep.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgMaskSatelliteDep.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgNetworkBandwidthUsage">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgNetworkBandwidthUsage</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkBandwidthUsage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkBandwidthUsage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_NETWORK_BANDWIDTH_USAGE (0x00BD).</p>
+<p>You can have MSG_NETWORK_BANDWIDTH_USAGE inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The bandwidth usage, a list of usage by interface.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>interfaces</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Usage measurement array</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.piksi.MsgNetworkBandwidthUsage.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkBandwidthUsage.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkBandwidthUsage.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgNetworkBandwidthUsage.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkBandwidthUsage.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkBandwidthUsage.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgNetworkBandwidthUsage.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkBandwidthUsage.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkBandwidthUsage.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgNetworkBandwidthUsage.interfaces">
+<code class="descname">interfaces</code><a class="headerlink" href="#sbp.piksi.MsgNetworkBandwidthUsage.interfaces" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgNetworkBandwidthUsage.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkBandwidthUsage.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkBandwidthUsage.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgNetworkBandwidthUsage.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkBandwidthUsage.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkBandwidthUsage.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgNetworkStateReq">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgNetworkStateReq</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkStateReq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkStateReq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_NETWORK_STATE_REQ (0x00BA).</p>
+<blockquote>
+<div><p>You can have MSG_NETWORK_STATE_REQ inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Request state of Piksi network interfaces.</p>
+</div></blockquote>
+<p>Output will be sent in MSG_NETWORK_STATE_RESP messages</p>
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgNetworkStateReq.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkStateReq.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkStateReq.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgNetworkStateReq.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkStateReq.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkStateReq.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgNetworkStateResp">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgNetworkStateResp</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkStateResp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_NETWORK_STATE_RESP (0x00BB).</p>
+<blockquote>
+<div><p>You can have MSG_NETWORK_STATE_RESP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The state of a network interface on the Piksi.</p>
+</div></blockquote>
+<p>Data is made to reflect output of ifaddrs struct returned by getifaddrs
+in c.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>ipv4_address</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>IPv4 address (all zero when unavailable)</dd>
+<dt>ipv4_mask_size</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>IPv4 netmask CIDR notation</dd>
+<dt>ipv6_address</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>IPv6 address (all zero when unavailable)</dd>
+<dt>ipv6_mask_size</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>IPv6 netmask CIDR notation</dd>
+<dt>rx_bytes</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of Rx bytes</dd>
+<dt>tx_bytes</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of Tx bytes</dd>
+<dt>interface_name</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>Interface Name</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Interface flags from SIOCGIFFLAGS</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.piksi.MsgNetworkStateResp.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgNetworkStateResp.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkStateResp.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgNetworkStateResp.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkStateResp.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgNetworkStateResp.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkStateResp.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgNetworkStateResp.interface_name">
+<code class="descname">interface_name</code><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp.interface_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgNetworkStateResp.ipv4_address">
+<code class="descname">ipv4_address</code><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp.ipv4_address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgNetworkStateResp.ipv4_mask_size">
+<code class="descname">ipv4_mask_size</code><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp.ipv4_mask_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgNetworkStateResp.ipv6_address">
+<code class="descname">ipv6_address</code><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp.ipv6_address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgNetworkStateResp.ipv6_mask_size">
+<code class="descname">ipv6_mask_size</code><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp.ipv6_mask_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgNetworkStateResp.rx_bytes">
+<code class="descname">rx_bytes</code><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp.rx_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgNetworkStateResp.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkStateResp.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgNetworkStateResp.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgNetworkStateResp.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgNetworkStateResp.tx_bytes">
+<code class="descname">tx_bytes</code><a class="headerlink" href="#sbp.piksi.MsgNetworkStateResp.tx_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.piksi.MsgReset">
 <em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgReset</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgReset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgReset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_RESET (0x00B2).</p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_RESET (0x00B6).</p>
 <blockquote>
-<div><p>You can have MSG_RESET inherent its fields directly
+<div><p>You can have MSG_RESET inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message from the host resets the Piksi back into the</p>
 </div></blockquote>
 <p>bootloader.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>flags</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Reset flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.piksi.MsgReset.flags">
+<code class="descname">flags</code><a class="headerlink" href="#sbp.piksi.MsgReset.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgReset.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgReset.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgReset.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgReset.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgReset.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgReset.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgReset.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgReset.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgReset.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgReset.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgReset.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgReset.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgReset.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgReset.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgReset.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgResetDep">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgResetDep</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgResetDep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgResetDep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_RESET_DEP (0x00B2).</p>
+<blockquote>
+<div><p>You can have MSG_RESET_DEP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message from the host resets the Piksi back into the</p>
+</div></blockquote>
+<p>bootloader.</p>
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgResetDep.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgResetDep.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgResetDep.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgResetDep.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgResetDep.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgResetDep.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.piksi.MsgResetFilters">
 <em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgResetFilters</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgResetFilters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgResetFilters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_RESET_FILTERS (0x0022).</p>
 <blockquote>
-<div><p>You can have MSG_RESET_FILTERS inherent its fields directly
+<div><p>You can have MSG_RESET_FILTERS inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message resets either the DGNSS Kalman filters or Integer</p>
@@ -237,12 +1031,19 @@ of its fields.</p>
 <p>Ambiguity Resolution (IAR) process.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>filter <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Filter flags</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>filter</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Filter flags</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
+<dl class="attribute">
+<dt id="sbp.piksi.MsgResetFilters.filter">
+<code class="descname">filter</code><a class="headerlink" href="#sbp.piksi.MsgResetFilters.filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.piksi.MsgResetFilters.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgResetFilters.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgResetFilters.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -252,9 +1053,14 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.piksi.MsgResetFilters.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgResetFilters.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgResetFilters.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgResetFilters.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgResetFilters.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgResetFilters.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgResetFilters.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgResetFilters.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.piksi.MsgResetFilters.to_binary">
@@ -263,59 +1069,267 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.piksi.MsgResetFilters.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgResetFilters.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgResetFilters.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
-</dd></dl>
+<dt id="sbp.piksi.MsgResetFilters.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgResetFilters.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgResetFilters.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.piksi.MsgSetTime">
 <em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgSetTime</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSetTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSetTime" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_SET_TIME (0x0068).</p>
 <blockquote>
-<div><p>You can have MSG_SET_TIME inherent its fields directly
+<div><p>You can have MSG_SET_TIME inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message sets up timing functionality using a coarse GPS</p>
 </div></blockquote>
 <p>time estimate sent by the host.</p>
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgSetTime.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSetTime.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSetTime.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgSetTime.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSetTime.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSetTime.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgSpecan">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgSpecan</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSpecan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSpecan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SPECAN (0x0051).</p>
+<p>You can have MSG_SPECAN inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Spectrum analyzer packet.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>channel_tag</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Channel ID</dd>
+<dt>t</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GPSTime</span><dd>Receiver time of this observation</dd>
+<dt>freq_ref</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Reference frequency of this packet</dd>
+<dt>freq_step</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Frequency step of points in this packet</dd>
+<dt>amplitude_ref</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Reference amplitude of this packet</dd>
+<dt>amplitude_unit</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Amplitude unit value of points in this packet</dd>
+<dt>amplitude_value</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Amplitude values (in the above units) of points in this packet</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecan.amplitude_ref">
+<code class="descname">amplitude_ref</code><a class="headerlink" href="#sbp.piksi.MsgSpecan.amplitude_ref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecan.amplitude_unit">
+<code class="descname">amplitude_unit</code><a class="headerlink" href="#sbp.piksi.MsgSpecan.amplitude_unit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecan.amplitude_value">
+<code class="descname">amplitude_value</code><a class="headerlink" href="#sbp.piksi.MsgSpecan.amplitude_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecan.channel_tag">
+<code class="descname">channel_tag</code><a class="headerlink" href="#sbp.piksi.MsgSpecan.channel_tag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecan.freq_ref">
+<code class="descname">freq_ref</code><a class="headerlink" href="#sbp.piksi.MsgSpecan.freq_ref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecan.freq_step">
+<code class="descname">freq_step</code><a class="headerlink" href="#sbp.piksi.MsgSpecan.freq_step" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgSpecan.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSpecan.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSpecan.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgSpecan.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSpecan.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSpecan.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgSpecan.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSpecan.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSpecan.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecan.t">
+<code class="descname">t</code><a class="headerlink" href="#sbp.piksi.MsgSpecan.t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgSpecan.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSpecan.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSpecan.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgSpecan.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSpecan.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSpecan.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgSpecanDep">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgSpecanDep</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSpecanDep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSpecanDep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SPECAN_DEP (0x0050).</p>
+<p>You can have MSG_SPECAN_DEP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>channel_tag</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Channel ID</dd>
+<dt>t</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GPSTimeDep</span><dd>Receiver time of this observation</dd>
+<dt>freq_ref</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Reference frequency of this packet</dd>
+<dt>freq_step</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Frequency step of points in this packet</dd>
+<dt>amplitude_ref</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Reference amplitude of this packet</dd>
+<dt>amplitude_unit</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Amplitude unit value of points in this packet</dd>
+<dt>amplitude_value</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>Amplitude values (in the above units) of points in this packet</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecanDep.amplitude_ref">
+<code class="descname">amplitude_ref</code><a class="headerlink" href="#sbp.piksi.MsgSpecanDep.amplitude_ref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecanDep.amplitude_unit">
+<code class="descname">amplitude_unit</code><a class="headerlink" href="#sbp.piksi.MsgSpecanDep.amplitude_unit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecanDep.amplitude_value">
+<code class="descname">amplitude_value</code><a class="headerlink" href="#sbp.piksi.MsgSpecanDep.amplitude_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecanDep.channel_tag">
+<code class="descname">channel_tag</code><a class="headerlink" href="#sbp.piksi.MsgSpecanDep.channel_tag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecanDep.freq_ref">
+<code class="descname">freq_ref</code><a class="headerlink" href="#sbp.piksi.MsgSpecanDep.freq_ref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecanDep.freq_step">
+<code class="descname">freq_step</code><a class="headerlink" href="#sbp.piksi.MsgSpecanDep.freq_step" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgSpecanDep.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSpecanDep.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSpecanDep.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgSpecanDep.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSpecanDep.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSpecanDep.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgSpecanDep.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSpecanDep.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSpecanDep.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgSpecanDep.t">
+<code class="descname">t</code><a class="headerlink" href="#sbp.piksi.MsgSpecanDep.t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgSpecanDep.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSpecanDep.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSpecanDep.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgSpecanDep.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgSpecanDep.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgSpecanDep.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.piksi.MsgThreadState">
 <em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgThreadState</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgThreadState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgThreadState" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_THREAD_STATE (0x0017).</p>
 <blockquote>
-<div><p>You can have MSG_THREAD_STATE inherent its fields directly
+<div><p>You can have MSG_THREAD_STATE inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The thread usage message from the device reports real-time</p>
 </div></blockquote>
 <p>operating system (RTOS) thread usage statistics for the named
-thread. The reported percentage values require to be normalized.</p>
+thread. The reported percentage values must be normalized.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>name <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>Thread name (NULL terminated)</dd>
-<dt>cpu <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Percentage cpu use for this thread. Values range from 0</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>name</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>Thread name (NULL terminated)</dd>
+<dt>cpu</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Percentage cpu use for this thread. Values range from 0</dd>
 </dl>
 </div></blockquote>
 <ul>
 <li><p class="first">1000 and needs to be renormalized to 100</p>
 <dl class="docutils">
-<dt>stack_free <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd><p class="first last">Free stack space for this thread</p>
+<dt>stack_free</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd><p class="first last">Free stack space for this thread</p>
+</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd><p class="first last">Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</p>
 </dd>
 </dl>
 </li>
 </ul>
+<dl class="attribute">
+<dt id="sbp.piksi.MsgThreadState.cpu">
+<code class="descname">cpu</code><a class="headerlink" href="#sbp.piksi.MsgThreadState.cpu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.piksi.MsgThreadState.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgThreadState.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgThreadState.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -325,9 +1339,24 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.piksi.MsgThreadState.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgThreadState.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgThreadState.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgThreadState.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgThreadState.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgThreadState.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgThreadState.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgThreadState.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgThreadState.name">
+<code class="descname">name</code><a class="headerlink" href="#sbp.piksi.MsgThreadState.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgThreadState.stack_free">
+<code class="descname">stack_free</code><a class="headerlink" href="#sbp.piksi.MsgThreadState.stack_free" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.piksi.MsgThreadState.to_binary">
@@ -336,40 +1365,47 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.piksi.MsgThreadState.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgThreadState.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgThreadState.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
-</dd></dl>
+<dt id="sbp.piksi.MsgThreadState.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgThreadState.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgThreadState.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.piksi.MsgUartState">
 <em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgUartState</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartState" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_UART_STATE (0x0018).</p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_UART_STATE (0x001D).</p>
 <blockquote>
-<div><p>You can have MSG_UART_STATE inherent its fields directly
+<div><p>You can have MSG_UART_STATE inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The UART message reports data latency and throughput of the UART</p>
 </div></blockquote>
 <p>channels providing SBP I/O. On the default Piksi configuration,
-UARTs A and B are used for telemetry radios, but can also be be
+UARTs A and B are used for telemetry radios, but can also be
 host access ports for embedded hosts, or other interfaces in
-future. The reported percentage values require to be normalized.</p>
+future. The reported percentage values must be normalized.
+Observations latency and period can be used to assess the
+health of the differential corrections link. Latency provides
+the timeliness of received base observations while the
+period indicates their likelihood of transmission.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>uart_a <span class="classifier-delimiter">:</span> <span class="classifier">UARTChannel</span></dt>
-<dd>State of UART A</dd>
-<dt>uart_b <span class="classifier-delimiter">:</span> <span class="classifier">UARTChannel</span></dt>
-<dd>State of UART B</dd>
-<dt>uart_ftdi <span class="classifier-delimiter">:</span> <span class="classifier">UARTChannel</span></dt>
-<dd>State of UART FTDI (USB logger)</dd>
-<dt>latency <span class="classifier-delimiter">:</span> <span class="classifier">Latency</span></dt>
-<dd>UART communication latency</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>uart_a</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">UARTChannel</span><dd>State of UART A</dd>
+<dt>uart_b</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">UARTChannel</span><dd>State of UART B</dd>
+<dt>uart_ftdi</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">UARTChannel</span><dd>State of UART FTDI (USB logger)</dd>
+<dt>latency</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">Latency</span><dd>UART communication latency</dd>
+<dt>obs_period</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">Period</span><dd>Observation receipt period</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
 <dl class="method">
@@ -381,9 +1417,24 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.piksi.MsgUartState.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartState.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartState.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartState.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartState.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgUartState.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartState.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartState.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgUartState.latency">
+<code class="descname">latency</code><a class="headerlink" href="#sbp.piksi.MsgUartState.latency" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgUartState.obs_period">
+<code class="descname">obs_period</code><a class="headerlink" href="#sbp.piksi.MsgUartState.obs_period" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.piksi.MsgUartState.to_binary">
@@ -392,52 +1443,289 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.piksi.MsgUartState.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartState.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartState.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.piksi.MsgUartState.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartState.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartState.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgUartState.uart_a">
+<code class="descname">uart_a</code><a class="headerlink" href="#sbp.piksi.MsgUartState.uart_a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgUartState.uart_b">
+<code class="descname">uart_b</code><a class="headerlink" href="#sbp.piksi.MsgUartState.uart_b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgUartState.uart_ftdi">
+<code class="descname">uart_ftdi</code><a class="headerlink" href="#sbp.piksi.MsgUartState.uart_ftdi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.MsgUartStateDepa">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">MsgUartStateDepa</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartStateDepa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartStateDepa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_UART_STATE_DEPA (0x0018).</p>
+<p>You can have MSG_UART_STATE_DEPA inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Deprecated</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>uart_a</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">UARTChannel</span><dd>State of UART A</dd>
+<dt>uart_b</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">UARTChannel</span><dd>State of UART B</dd>
+<dt>uart_ftdi</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">UARTChannel</span><dd>State of UART FTDI (USB logger)</dd>
+<dt>latency</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">Latency</span><dd>UART communication latency</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="method">
+<dt id="sbp.piksi.MsgUartStateDepa.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartStateDepa.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartStateDepa.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgUartStateDepa.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartStateDepa.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartStateDepa.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.piksi.MsgUartStateDepa.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartStateDepa.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartStateDepa.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgUartStateDepa.latency">
+<code class="descname">latency</code><a class="headerlink" href="#sbp.piksi.MsgUartStateDepa.latency" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgUartStateDepa.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartStateDepa.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartStateDepa.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.MsgUartStateDepa.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#MsgUartStateDepa.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.MsgUartStateDepa.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgUartStateDepa.uart_a">
+<code class="descname">uart_a</code><a class="headerlink" href="#sbp.piksi.MsgUartStateDepa.uart_a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgUartStateDepa.uart_b">
+<code class="descname">uart_b</code><a class="headerlink" href="#sbp.piksi.MsgUartStateDepa.uart_b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.MsgUartStateDepa.uart_ftdi">
+<code class="descname">uart_ftdi</code><a class="headerlink" href="#sbp.piksi.MsgUartStateDepa.uart_ftdi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.NetworkUsage">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">NetworkUsage</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#NetworkUsage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.NetworkUsage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>NetworkUsage.</p>
+<blockquote>
+<div>The bandwidth usage for each interface can be reported</div></blockquote>
+<p>within this struct and utilize multiple fields to fully
+specify the type of traffic that is being tracked. As
+either the interval of collection or the collection time
+may vary, both a timestamp and period field is provided,
+though may not necessarily be populated with a value.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>duration</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Duration over which the measurement was collected</dd>
+<dt>total_bytes</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of bytes handled in total within period</dd>
+<dt>rx_bytes</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of bytes transmitted within period</dd>
+<dt>tx_bytes</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Number of bytes received within period</dd>
+<dt>interface_name</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>Interface Name</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.piksi.NetworkUsage.duration">
+<code class="descname">duration</code><a class="headerlink" href="#sbp.piksi.NetworkUsage.duration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.NetworkUsage.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#NetworkUsage.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.NetworkUsage.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.NetworkUsage.interface_name">
+<code class="descname">interface_name</code><a class="headerlink" href="#sbp.piksi.NetworkUsage.interface_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.NetworkUsage.rx_bytes">
+<code class="descname">rx_bytes</code><a class="headerlink" href="#sbp.piksi.NetworkUsage.rx_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.NetworkUsage.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#NetworkUsage.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.NetworkUsage.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.NetworkUsage.total_bytes">
+<code class="descname">total_bytes</code><a class="headerlink" href="#sbp.piksi.NetworkUsage.total_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.NetworkUsage.tx_bytes">
+<code class="descname">tx_bytes</code><a class="headerlink" href="#sbp.piksi.NetworkUsage.tx_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.piksi.Period">
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">Period</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#Period"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.Period" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Period.</p>
+<blockquote>
+<div>Statistics on the period of observations received from the base</div></blockquote>
+<p>station. As complete observation sets are received, their time
+of reception is compared with the prior set&#8217;&#8217;s time of reception.
+This measurement provides a proxy for link quality as incomplete
+or missing sets will increase the period.  Long periods
+can cause momentary RTK solution outages.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>avg</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Average period</dd>
+<dt>pmin</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Minimum period</dd>
+<dt>pmax</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Maximum period</dd>
+<dt>current</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Smoothed estimate of the current period</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.piksi.Period.avg">
+<code class="descname">avg</code><a class="headerlink" href="#sbp.piksi.Period.avg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.Period.current">
+<code class="descname">current</code><a class="headerlink" href="#sbp.piksi.Period.current" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.Period.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#Period.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.Period.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.Period.pmax">
+<code class="descname">pmax</code><a class="headerlink" href="#sbp.piksi.Period.pmax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.Period.pmin">
+<code class="descname">pmin</code><a class="headerlink" href="#sbp.piksi.Period.pmin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.piksi.Period.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#Period.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.Period.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.piksi.UARTChannel">
-<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">UARTChannel</code><span class="sig-paren">(</span><em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#UARTChannel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.UARTChannel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<em class="property">class </em><code class="descclassname">sbp.piksi.</code><code class="descname">UARTChannel</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#UARTChannel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.UARTChannel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <p>UARTChannel.</p>
 <blockquote>
 <div>Throughput, utilization, and error counts on the RX/TX buffers</div></blockquote>
-<p>of this UART channel. The reported percentage values require to
+<p>of this UART channel. The reported percentage values must
 be normalized.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>tx_throughput <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>UART transmit throughput</dd>
-<dt>rx_throughput <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>UART receive throughput</dd>
-<dt>crc_error_count <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>UART CRC error count</dd>
-<dt>io_error_count <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>UART IO error count</dd>
-<dt>tx_buffer_level <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>UART transmit buffer percentage utilization (ranges from</dd>
-</dl>
-</div></blockquote>
-<p>0 - 255)</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>rx_buffer_level <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>UART receive buffer percentage utilization (ranges from</dd>
+<dt>tx_throughput</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>UART transmit throughput</dd>
+<dt>rx_throughput</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>UART receive throughput</dd>
+<dt>crc_error_count</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>UART CRC error count</dd>
+<dt>io_error_count</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>UART IO error count</dd>
+<dt>tx_buffer_level</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>UART transmit buffer percentage utilization (ranges from</dd>
 </dl>
 </div></blockquote>
 <p>0 to 255)</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>rx_buffer_level</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>UART receive buffer percentage utilization (ranges from</dd>
+</dl>
+</div></blockquote>
+<p>0 to 255)</p>
+<dl class="attribute">
+<dt id="sbp.piksi.UARTChannel.crc_error_count">
+<code class="descname">crc_error_count</code><a class="headerlink" href="#sbp.piksi.UARTChannel.crc_error_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.piksi.UARTChannel.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#UARTChannel.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.UARTChannel.from_binary" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="attribute">
+<dt id="sbp.piksi.UARTChannel.io_error_count">
+<code class="descname">io_error_count</code><a class="headerlink" href="#sbp.piksi.UARTChannel.io_error_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.UARTChannel.rx_buffer_level">
+<code class="descname">rx_buffer_level</code><a class="headerlink" href="#sbp.piksi.UARTChannel.rx_buffer_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.UARTChannel.rx_throughput">
+<code class="descname">rx_throughput</code><a class="headerlink" href="#sbp.piksi.UARTChannel.rx_throughput" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.piksi.UARTChannel.to_binary">
 <code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/piksi.html#UARTChannel.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.piksi.UARTChannel.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.UARTChannel.tx_buffer_level">
+<code class="descname">tx_buffer_level</code><a class="headerlink" href="#sbp.piksi.UARTChannel.tx_buffer_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.piksi.UARTChannel.tx_throughput">
+<code class="descname">tx_throughput</code><a class="headerlink" href="#sbp.piksi.UARTChannel.tx_throughput" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -449,13 +1737,17 @@ be normalized.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="sbp.observation.html"
-                        title="previous chapter">sbp.observation module</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="sbp.settings.html"
-                        title="next chapter">sbp.settings module</a></p>
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.orientation.html" title="previous chapter">sbp.orientation module</a></li>
+      <li>Next: <a href="sbp.sbas.html" title="next chapter">sbp.sbas module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -471,9 +1763,6 @@ be normalized.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -484,12 +1773,12 @@ be normalized.</p>
       &copy;2015, Swift Navigation.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
       |
       <a href="_sources/sbp.piksi.txt"
-          rel="nofollow">Page source</a></li>
+          rel="nofollow">Page source</a>
     </div>
 
     

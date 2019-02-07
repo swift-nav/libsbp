@@ -1,3 +1,5 @@
 <map id="packed_obs_content_t" name="packed_obs_content_t">
-<area shape="rect" id="node2" href="$structcarrier__phase__t.html" title="GPS carrier phase measurement. " alt="" coords="25,5,140,32"/>
+<area shape="rect" id="node2" href="$structdoppler__t.html" title="GNSS doppler measurement. " alt="" coords="4,6,80,31"/>
+<area shape="rect" id="node3" href="$structcarrier__phase__t.html" title="GNSS carrier phase measurement. " alt="" coords="106,6,219,31"/>
+<area shape="rect" id="node4" href="$structsbp__gnss__signal__t.html" title="Represents all the relevant information about the signal. " alt="" coords="243,6,375,31"/>
 </map>

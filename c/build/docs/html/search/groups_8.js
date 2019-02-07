@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['observation',['Observation',['../group__observation.html',1,'']]]
+  ['mag',['Mag',['../group__mag.html',1,'']]]
 ];

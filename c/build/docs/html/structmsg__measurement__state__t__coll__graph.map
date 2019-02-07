@@ -1,0 +1,4 @@
+<map id="msg_measurement_state_t" name="msg_measurement_state_t">
+<area shape="rect" id="node2" href="$structmeasurement__state__t.html" title="Measurement Engine signal tracking channel state. " alt="" coords="21,94,171,119"/>
+<area shape="rect" id="node3" href="$structsbp__gnss__signal__t.html" title="Represents all the relevant information about the signal. " alt="" coords="30,6,161,31"/>
+</map>

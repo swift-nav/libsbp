@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['uart_5fchannel_5ft',['uart_channel_t',['../structuart__channel__t.html',1,'']]]
+  ['network_5fusage_5ft',['network_usage_t',['../structnetwork__usage__t.html',1,'']]]
 ];

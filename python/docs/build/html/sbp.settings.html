@@ -25,32 +25,15 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="sbp 0.27 documentation" href="index.html" />
-    <link rel="next" title="sbp.system module" href="sbp.system.html" />
-    <link rel="prev" title="sbp.piksi module" href="sbp.piksi.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
+    <link rel="next" title="sbp.ssr module" href="sbp.ssr.html" />
+    <link rel="prev" title="sbp.sbas module" href="sbp.sbas.html" />
    
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="sbp.system.html" title="sbp.system module"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="sbp.piksi.html" title="sbp.piksi module"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
@@ -59,120 +42,563 @@
             
   <div class="section" id="module-sbp.settings">
 <span id="sbp-settings-module"></span><h1>sbp.settings module<a class="headerlink" href="#module-sbp.settings" title="Permalink to this headline">¶</a></h1>
-<p>Messages for reading and writing the device&#8217;s device settings.</p>
-<p>These are in the implementation-defined range (0x0000-0x00FF). Note
-that some of these messages share the same message type ID for both
-the host request and the device response. See the accompanying
-document for descriptions of settings configurations and examples:
-<a class="reference external" href="https://github.com/swift-nav/piksi_firmware/blob/master/docs/settings.pdf">https://github.com/swift-nav/piksi_firmware/blob/master/docs/settings.pdf</a></p>
+<p>Messages for reading, writing, and discovering device settings. Settings
+with a &#8220;string&#8221; field have multiple values in this field delimited with a
+null character (the c style null terminator).  For instance, when querying
+the &#8216;firmware_version&#8217; setting in the &#8216;system_info&#8217; section, the following
+array of characters needs to be sent for the string field in
+MSG_SETTINGS_READ: &#8220;system_infofirmware_version&#8221;, where the delimiting 
+null characters are specified with the escape sequence &#8216;&#8217; and all
+quotation marks should be omitted.</p>
+<p>In the message descriptions below, the generic strings SECTION_SETTING and
+SETTING are used to refer to the two strings that comprise the identifier
+of an individual setting.In firmware_version example above, SECTION_SETTING
+is the &#8216;system_info&#8217;, and the SETTING portion is &#8216;firmware_version&#8217;.</p>
+<p>See the &#8220;Software Settings Manual&#8221; on support.swiftnav.com for detailed
+documentation about all settings and sections available for each Swift
+firmware version. Settings manuals are available for each firmware version
+at the following link: <a class="reference external" href="https://support.swiftnav.com/customer/en/portal/articles/2628580-piksi-multi-specifications#settings">https://support.swiftnav.com/customer/en/portal/articles/2628580-piksi-multi-specifications#settings</a>.
+The latest settings document is also available at the following link: 
+<a class="reference external" href="http://swiftnav.com/latest/piksi-multi-settings">http://swiftnav.com/latest/piksi-multi-settings</a> .
+See lastly <a class="reference external" href="https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.py">https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.py</a> , 
+the open source python command line utility for reading, writing, and
+saving settings in the piksi_tools repository on github as a helpful
+reference and example.</p>
 <dl class="class">
-<dt id="sbp.settings.MsgSettings">
-<em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettings</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_SETTINGS (0x00A0).</p>
-<blockquote>
-<div><p>You can have MSG_SETTINGS inherent its fields directly
+<dt id="sbp.settings.MsgSettingsReadByIndexDone">
+<em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettingsReadByIndexDone</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexDone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexDone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SETTINGS_READ_BY_INDEX_DONE (0x00A6).</p>
+<p>You can have MSG_SETTINGS_READ_BY_INDEX_DONE inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
-<p>The setting message reads and writes the device&#8217;s configuration.</p>
-<dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>setting <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>A NULL-terminated and delimited string with contents</dd>
-</dl>
-</div></blockquote>
-<p>[SECTION_SETTING, SETTING, VALUE] on writes or a series of
-such strings on reads.</p>
-<dl class="method">
-<dt id="sbp.settings.MsgSettings.from_binary">
-<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettings.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettings.from_binary" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a binary payload d, update the appropriate payload fields of
-the message.</p>
+<p>The settings message for indicating end of the settings values.</p>
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsReadByIndexDone.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexDone.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexDone.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
 
 <dl class="staticmethod">
-<dt id="sbp.settings.MsgSettings.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettings.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettings.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="sbp.settings.MsgSettings.to_binary">
-<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettings.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettings.to_binary" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a framed/packed SBP message.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="sbp.settings.MsgSettings.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettings.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettings.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
-</dd></dl>
+<dt id="sbp.settings.MsgSettingsReadByIndexDone.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexDone.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexDone.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="sbp.settings.MsgSettingsReadByIndex">
-<em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettingsReadByIndex</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndex" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_SETTINGS_READ_BY_INDEX (0x00A2).</p>
+<dt id="sbp.settings.MsgSettingsReadByIndexReq">
+<em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettingsReadByIndexReq</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexReq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexReq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SETTINGS_READ_BY_INDEX_REQ (0x00A2).</p>
 <blockquote>
-<div><p>You can have MSG_SETTINGS_READ_BY_INDEX inherent its fields directly
+<div><p>You can have MSG_SETTINGS_READ_BY_INDEX_REQ inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The settings message for iterating through the settings</p>
 </div></blockquote>
-<p>values. It will read the setting at an index, returning a
-NULL-terminated and delimited string with contents
-[SECTION_SETTING, SETTING, VALUE].</p>
+<p>values. A device will respond to this message with a 
+&#8220;MSG_SETTINGS_READ_BY_INDEX_RESP&#8221;.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>index <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>An index into the device settings, with values ranging from</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>index</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>An index into the device settings, with values ranging from</dd>
 </dl>
 </div></blockquote>
 <p>0 to length(settings)</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
 <dl class="method">
-<dt id="sbp.settings.MsgSettingsReadByIndex.from_binary">
-<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndex.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndex.from_binary" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.settings.MsgSettingsReadByIndexReq.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexReq.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexReq.from_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a binary payload d, update the appropriate payload fields of
 the message.</p>
 </dd></dl>
 
 <dl class="staticmethod">
-<dt id="sbp.settings.MsgSettingsReadByIndex.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndex.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndex.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<dt id="sbp.settings.MsgSettingsReadByIndexReq.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexReq.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexReq.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
 
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsReadByIndexReq.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexReq.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexReq.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.settings.MsgSettingsReadByIndexReq.index">
+<code class="descname">index</code><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexReq.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
-<dt id="sbp.settings.MsgSettingsReadByIndex.to_binary">
-<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndex.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndex.to_binary" title="Permalink to this definition">¶</a></dt>
+<dt id="sbp.settings.MsgSettingsReadByIndexReq.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexReq.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexReq.to_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Produce a framed/packed SBP message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.settings.MsgSettingsReadByIndex.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndex.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndex.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.settings.MsgSettingsReadByIndexReq.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexReq.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexReq.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.settings.MsgSettingsReadByIndexResp">
+<em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettingsReadByIndexResp</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexResp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexResp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SETTINGS_READ_BY_INDEX_RESP (0x00A7).</p>
+<blockquote>
+<div><p>You can have MSG_SETTINGS_READ_BY_INDEX_RESP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The settings message that reports the value of a setting at an index.</p>
+</div></blockquote>
+<p>In the string field, it reports NULL-terminated and delimited string
+with contents &#8220;SECTION_SETTINGSETTINGVALUEFORMAT_TYPE&#8221;. where
+the &#8216;&#8217; escape sequence denotes the NULL character and where quotation
+marks are omitted. The FORMAT_TYPE field is optional and denotes
+possible string values of the setting as a hint to the user. If
+included, the format type portion of the string has the format
+&#8220;enum:value1,value2,value3&#8221;. An example string that could be sent from
+the device is &#8220;simulatorenabledTrueenum:True,False&#8221;</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>index</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>An index into the device settings, with values ranging from</dd>
+</dl>
+</div></blockquote>
+<p>0 to length(settings)</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>setting</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>A NULL-terminated and delimited string with contents</dd>
+</dl>
+</div></blockquote>
+<p>&#8220;SECTION_SETTINGSETTINGVALUEFORMAT_TYPE&#8221;</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsReadByIndexResp.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexResp.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexResp.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsReadByIndexResp.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexResp.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexResp.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsReadByIndexResp.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexResp.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexResp.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.settings.MsgSettingsReadByIndexResp.index">
+<code class="descname">index</code><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexResp.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.settings.MsgSettingsReadByIndexResp.setting">
+<code class="descname">setting</code><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexResp.setting" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsReadByIndexResp.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexResp.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexResp.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsReadByIndexResp.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadByIndexResp.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadByIndexResp.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.settings.MsgSettingsReadReq">
+<em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettingsReadReq</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadReq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadReq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SETTINGS_READ_REQ (0x00A4).</p>
+<blockquote>
+<div><p>You can have MSG_SETTINGS_READ_REQ inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The setting message that reads the device configuration. The string</p>
+</div></blockquote>
+<p>field is a NULL-terminated and NULL-delimited string with contents
+&#8220;SECTION_SETTINGSETTING&#8221; where the &#8216;&#8217; escape sequence denotes the
+NULL character and where quotation marks are omitted. An example
+string that could be sent to a device is &#8220;solutionsoln_freq&#8221;. A
+device will only respond to this message when it is received from
+sender ID 0x42. A device should respond with a MSG_SETTINGS_READ_RESP
+message (msg_id 0x00A5).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>setting</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>A NULL-terminated and NULL-delimited string with contents</dd>
+</dl>
+</div></blockquote>
+<p>&#8220;SECTION_SETTINGSETTING&#8221;</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsReadReq.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadReq.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadReq.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsReadReq.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadReq.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadReq.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsReadReq.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadReq.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadReq.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.settings.MsgSettingsReadReq.setting">
+<code class="descname">setting</code><a class="headerlink" href="#sbp.settings.MsgSettingsReadReq.setting" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsReadReq.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadReq.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadReq.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsReadReq.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadReq.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadReq.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.settings.MsgSettingsReadResp">
+<em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettingsReadResp</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadResp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadResp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SETTINGS_READ_RESP (0x00A5).</p>
+<blockquote>
+<div><p>You can have MSG_SETTINGS_READ_RESP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The setting message wich which the device responds after a</p>
+</div></blockquote>
+<p>MSG_SETTING_READ_REQ is sent to device. The string field is a
+NULL-terminated and NULL-delimited string with contents
+&#8220;SECTION_SETTINGSETTINGVALUE&#8221; where the &#8216;&#8217; escape sequence
+denotes the NULL character and where quotation marks are omitted. An
+example string that could be sent from device is
+&#8220;solutionsoln_freq&#8221;.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>setting</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>A NULL-terminated and NULL-delimited string with contents</dd>
+</dl>
+</div></blockquote>
+<p>&#8220;SECTION_SETTINGSETTINGVALUE&#8221;</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsReadResp.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadResp.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadResp.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsReadResp.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadResp.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadResp.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsReadResp.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadResp.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadResp.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.settings.MsgSettingsReadResp.setting">
+<code class="descname">setting</code><a class="headerlink" href="#sbp.settings.MsgSettingsReadResp.setting" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsReadResp.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadResp.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadResp.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsReadResp.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsReadResp.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsReadResp.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.settings.MsgSettingsRegister">
+<em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettingsRegister</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsRegister"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsRegister" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SETTINGS_REGISTER (0x00AE).</p>
+<blockquote>
+<div><p>You can have MSG_SETTINGS_REGISTER inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>This message registers the presence and default value of a setting</p>
+</div></blockquote>
+<p>with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE
+for this setting to set the initial value.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>setting</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>A NULL-terminated and delimited string with contents</dd>
+</dl>
+</div></blockquote>
+<p>&#8220;SECTION_SETTINGSETTINGVALUE&#8221;.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsRegister.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsRegister.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsRegister.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsRegister.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsRegister.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsRegister.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsRegister.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsRegister.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsRegister.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.settings.MsgSettingsRegister.setting">
+<code class="descname">setting</code><a class="headerlink" href="#sbp.settings.MsgSettingsRegister.setting" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsRegister.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsRegister.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsRegister.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsRegister.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsRegister.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsRegister.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="sbp.settings.MsgSettingsSave">
 <em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettingsSave</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsSave"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsSave" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
 <p>SBP class for message MSG_SETTINGS_SAVE (0x00A1).</p>
 <blockquote>
-<div><p>You can have MSG_SETTINGS_SAVE inherent its fields directly
+<div><p>You can have MSG_SETTINGS_SAVE inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>The save settings message persists the device&#8217;s current settings</p>
 </div></blockquote>
 <p>configuration to its onboard flash memory file system.</p>
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsSave.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsSave.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsSave.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsSave.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsSave.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsSave.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.settings.MsgSettingsWrite">
+<em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettingsWrite</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsWrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsWrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SETTINGS_WRITE (0x00A0).</p>
+<blockquote>
+<div><p>You can have MSG_SETTINGS_WRITE inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The setting message writes the device configuration for a particular</p>
+</div></blockquote>
+<p>setting via A NULL-terminated and NULL-delimited string with contents
+&#8220;SECTION_SETTINGSETTINGVALUE&#8221; where the &#8216;&#8217; escape sequence denotes 
+the NULL character and where quotation marks are omitted. A device will
+only process to this message when it is received from sender ID 0x42.
+An example string that could be sent to a device is
+&#8220;solutionsoln_freq&#8221;.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>setting</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>A NULL-terminated and NULL-delimited string with contents</dd>
+</dl>
+</div></blockquote>
+<p>&#8220;SECTION_SETTINGSETTINGVALUE&#8221;</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsWrite.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsWrite.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsWrite.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsWrite.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsWrite.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsWrite.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsWrite.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsWrite.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsWrite.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.settings.MsgSettingsWrite.setting">
+<code class="descname">setting</code><a class="headerlink" href="#sbp.settings.MsgSettingsWrite.setting" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsWrite.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsWrite.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsWrite.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsWrite.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsWrite.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsWrite.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.settings.MsgSettingsWriteResp">
+<em class="property">class </em><code class="descclassname">sbp.settings.</code><code class="descname">MsgSettingsWriteResp</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsWriteResp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsWriteResp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_SETTINGS_WRITE_RESP (0x00AF).</p>
+<blockquote>
+<div><p>You can have MSG_SETTINGS_WRITE_RESP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Return the status of a write request with the new value of the</p>
+</div></blockquote>
+<p>setting.  If the requested value is rejected, the current value
+will be returned. The string field is a NULL-terminated and NULL-delimited
+string with contents &#8220;SECTION_SETTINGSETTINGVALUE&#8221; where the &#8216;&#8217;
+escape sequence denotes the NULL character and where quotation marks
+are omitted. An example string that could be sent from device is
+&#8220;solutionsoln_freq&#8221;.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>status</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Write status</dd>
+<dt>setting</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">string</span><dd>A NULL-terminated and delimited string with contents</dd>
+</dl>
+</div></blockquote>
+<p>&#8220;SECTION_SETTINGSETTINGVALUE&#8221;</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsWriteResp.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsWriteResp.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsWriteResp.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsWriteResp.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsWriteResp.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsWriteResp.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.settings.MsgSettingsWriteResp.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsWriteResp.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsWriteResp.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.settings.MsgSettingsWriteResp.setting">
+<code class="descname">setting</code><a class="headerlink" href="#sbp.settings.MsgSettingsWriteResp.setting" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.settings.MsgSettingsWriteResp.status">
+<code class="descname">status</code><a class="headerlink" href="#sbp.settings.MsgSettingsWriteResp.status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsWriteResp.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsWriteResp.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsWriteResp.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.settings.MsgSettingsWriteResp.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/settings.html#MsgSettingsWriteResp.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.settings.MsgSettingsWriteResp.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </div>
@@ -182,13 +608,17 @@ of its fields.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="sbp.piksi.html"
-                        title="previous chapter">sbp.piksi module</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="sbp.system.html"
-                        title="next chapter">sbp.system module</a></p>
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.sbas.html" title="previous chapter">sbp.sbas module</a></li>
+      <li>Next: <a href="sbp.ssr.html" title="next chapter">sbp.ssr module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -204,9 +634,6 @@ of its fields.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -217,12 +644,12 @@ of its fields.</p>
       &copy;2015, Swift Navigation.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
       |
       <a href="_sources/sbp.settings.txt"
-          rel="nofollow">Page source</a></li>
+          rel="nofollow">Page source</a>
     </div>
 
     

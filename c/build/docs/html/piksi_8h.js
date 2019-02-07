@@ -1,13 +1,27 @@
 var piksi_8h =
 [
     [ "SBP_MSG_ALMANAC", "group__piksi.html#ga7c136114cd9549e6a852175e6451b6cb", null ],
+    [ "SBP_MSG_CELL_MODEM_STATUS", "group__piksi.html#ga333db59b3fb423300c85e6cd354235d2", null ],
+    [ "SBP_MSG_COMMAND_OUTPUT", "group__piksi.html#ga6f5ff8ecef9fe3351d731f7cba02e5a8", null ],
+    [ "SBP_MSG_COMMAND_REQ", "group__piksi.html#gadd26a960f5e46f9a108378be0e026eeb", null ],
+    [ "SBP_MSG_COMMAND_RESP", "group__piksi.html#ga3eb9bcacdabad9c7a56e2fa901fa9b32", null ],
     [ "SBP_MSG_CW_RESULTS", "group__piksi.html#ga113418fce4d9899913160391fec2cc32", null ],
     [ "SBP_MSG_CW_START", "group__piksi.html#gaffc75ec26c6cfc4dca0f91d72abe3f06", null ],
+    [ "SBP_MSG_DEVICE_MONITOR", "group__piksi.html#ga387caab41c6dd223cc81f24e9e1409bf", null ],
     [ "SBP_MSG_IAR_STATE", "group__piksi.html#gadb1cc4b70e59119819215208d1c3eadf", null ],
     [ "SBP_MSG_INIT_BASE", "group__piksi.html#ga3f8e8348c35d09d524816a37c0bf5afb", null ],
+    [ "SBP_MSG_MASK_SATELLITE", "group__piksi.html#ga518973eb90b8ece50f5b2bbc3d567bfd", null ],
+    [ "SBP_MSG_MASK_SATELLITE_DEP", "group__piksi.html#gada4fbbe1a0b87f11112561d105441c0a", null ],
+    [ "SBP_MSG_NETWORK_BANDWIDTH_USAGE", "group__piksi.html#gae32515413a2723d3cef03460c2fa8b88", null ],
+    [ "SBP_MSG_NETWORK_STATE_REQ", "group__piksi.html#ga378ca15ea2d33df4cda781d9fde8b152", null ],
+    [ "SBP_MSG_NETWORK_STATE_RESP", "group__piksi.html#ga727ec77a6e4d5fbb25fe3b2f65e1a4c4", null ],
     [ "SBP_MSG_RESET", "group__piksi.html#ga493e05c55ff8fca2a074cc1b190b8b9c", null ],
+    [ "SBP_MSG_RESET_DEP", "group__piksi.html#ga408b9fa7140b7e632ee64b107cca816d", null ],
     [ "SBP_MSG_RESET_FILTERS", "group__piksi.html#ga6767b6e5ce2a90732ad40e4e2b7623d9", null ],
     [ "SBP_MSG_SET_TIME", "group__piksi.html#ga4e38d93ad11018b1b2390a22c86cfc61", null ],
+    [ "SBP_MSG_SPECAN", "group__piksi.html#gabbddaa4d0b7147b97b15dce8f54cd093", null ],
+    [ "SBP_MSG_SPECAN_DEP", "group__piksi.html#gaff7005ddf9f2187892f37425b4d839cd", null ],
     [ "SBP_MSG_THREAD_STATE", "group__piksi.html#ga8434690c40a3b1e4ac2f6043dff7091e", null ],
-    [ "SBP_MSG_UART_STATE", "group__piksi.html#ga4b44d69e5338c1895b76d380446f1235", null ]
+    [ "SBP_MSG_UART_STATE", "group__piksi.html#ga4b44d69e5338c1895b76d380446f1235", null ],
+    [ "SBP_MSG_UART_STATE_DEPA", "group__piksi.html#gac0e9e0f318db4f34bac56ae5a3d93daf", null ]
 ];

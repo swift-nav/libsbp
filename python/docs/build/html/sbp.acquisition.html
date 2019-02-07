@@ -25,32 +25,15 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="sbp 0.27 documentation" href="index.html" />
+    <link rel="up" title="sbp package" href="sbp.html" />
     <link rel="next" title="sbp.bootload module" href="sbp.bootload.html" />
-    <link rel="prev" title="sbp.client.watchdog module" href="sbp.client.watchdog.html" />
+    <link rel="prev" title="sbp.client.handler module" href="sbp.client.handler.html" />
    
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="sbp.bootload.html" title="sbp.bootload module"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="sbp.client.watchdog.html" title="sbp.client.watchdog module"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">sbp 0.27 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
@@ -61,40 +44,264 @@
 <span id="sbp-acquisition-module"></span><h1>sbp.acquisition module<a class="headerlink" href="#module-sbp.acquisition" title="Permalink to this headline">¶</a></h1>
 <p>Satellite acquisition messages from the device.</p>
 <dl class="class">
+<dt id="sbp.acquisition.AcqSvProfile">
+<em class="property">class </em><code class="descclassname">sbp.acquisition.</code><code class="descname">AcqSvProfile</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#AcqSvProfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.AcqSvProfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>AcqSvProfile.</p>
+<blockquote>
+<div>Profile for a specific SV for debugging purposes</div></blockquote>
+<p>The message describes SV profile during acquisition time.
+The message is used to debug and measure the performance.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>job_type</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>SV search job type (deep, fallback, etc)</dd>
+<dt>status</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Acquisition status 1 is Success, 0 is Failure</dd>
+<dt>cn0</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>CN0 value. Only valid if status is &#8216;1&#8217;</dd>
+<dt>int_time</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Acquisition integration time</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>GNSS signal for which acquisition was attempted</dd>
+<dt>bin_width</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Acq frequency bin width</dd>
+<dt>timestamp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Timestamp of the job complete event</dd>
+<dt>time_spent</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Time spent to search for sid.code</dd>
+<dt>cf_min</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Doppler range lowest frequency</dd>
+<dt>cf_max</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Doppler range highest frequency</dd>
+<dt>cf</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Doppler value of detected peak. Only valid if status is &#8216;1&#8217;</dd>
+<dt>cp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Codephase of detected peak. Only valid if status is &#8216;1&#8217;</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfile.bin_width">
+<code class="descname">bin_width</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.bin_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfile.cf">
+<code class="descname">cf</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.cf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfile.cf_max">
+<code class="descname">cf_max</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.cf_max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfile.cf_min">
+<code class="descname">cf_min</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.cf_min" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfile.cn0">
+<code class="descname">cn0</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.cn0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfile.cp">
+<code class="descname">cp</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.cp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.AcqSvProfile.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#AcqSvProfile.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfile.int_time">
+<code class="descname">int_time</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.int_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfile.job_type">
+<code class="descname">job_type</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.job_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfile.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfile.status">
+<code class="descname">status</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfile.time_spent">
+<code class="descname">time_spent</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.time_spent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfile.timestamp">
+<code class="descname">timestamp</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.timestamp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.AcqSvProfile.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#AcqSvProfile.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.AcqSvProfile.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.acquisition.AcqSvProfileDep">
+<em class="property">class </em><code class="descclassname">sbp.acquisition.</code><code class="descname">AcqSvProfileDep</code><span class="sig-paren">(</span><em>payload=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#AcqSvProfileDep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>AcqSvProfileDep.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>job_type</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>SV search job type (deep, fallback, etc)</dd>
+<dt>status</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Acquisition status 1 is Success, 0 is Failure</dd>
+<dt>cn0</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>CN0 value. Only valid if status is &#8216;1&#8217;</dd>
+<dt>int_time</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Acquisition integration time</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignalDep</span><dd>GNSS signal for which acquisition was attempted</dd>
+<dt>bin_width</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Acq frequency bin width</dd>
+<dt>timestamp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Timestamp of the job complete event</dd>
+<dt>time_spent</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Time spent to search for sid.code</dd>
+<dt>cf_min</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Doppler range lowest frequency</dd>
+<dt>cf_max</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Doppler range highest frequency</dd>
+<dt>cf</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Doppler value of detected peak. Only valid if status is &#8216;1&#8217;</dd>
+<dt>cp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Codephase of detected peak. Only valid if status is &#8216;1&#8217;</dd>
+</dl>
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfileDep.bin_width">
+<code class="descname">bin_width</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.bin_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfileDep.cf">
+<code class="descname">cf</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.cf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfileDep.cf_max">
+<code class="descname">cf_max</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.cf_max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfileDep.cf_min">
+<code class="descname">cf_min</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.cf_min" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfileDep.cn0">
+<code class="descname">cn0</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.cn0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfileDep.cp">
+<code class="descname">cp</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.cp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.AcqSvProfileDep.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#AcqSvProfileDep.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfileDep.int_time">
+<code class="descname">int_time</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.int_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfileDep.job_type">
+<code class="descname">job_type</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.job_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfileDep.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfileDep.status">
+<code class="descname">status</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfileDep.time_spent">
+<code class="descname">time_spent</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.time_spent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.AcqSvProfileDep.timestamp">
+<code class="descname">timestamp</code><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.timestamp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.AcqSvProfileDep.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#AcqSvProfileDep.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.AcqSvProfileDep.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="sbp.acquisition.MsgAcqResult">
 <em class="property">class </em><code class="descclassname">sbp.acquisition.</code><code class="descname">MsgAcqResult</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResult" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="sbp.html#sbp.SBP" title="sbp.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.SBP</span></code></a></p>
-<p>SBP class for message MSG_ACQ_RESULT (0x0015).</p>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_ACQ_RESULT (0x002F).</p>
 <blockquote>
-<div><p>You can have MSG_ACQ_RESULT inherent its fields directly
+<div><p>You can have MSG_ACQ_RESULT inherit its fields directly
 from an inherited SBP object, or construct it inline using a dict
 of its fields.</p>
 <p>This message describes the results from an attempted GPS signal</p>
 </div></blockquote>
 <p>acquisition search for a satellite PRN over a code phase/carrier
 frequency range. It contains the parameters of the point in the
-acquisition search space with the best signal-to-noise (SNR)
+acquisition search space with the best carrier-to-noise (CN/0)
 ratio.</p>
 <blockquote>
 <div><dl class="docutils">
-<dt>sbp <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span></dt>
-<dd>SBP parent object to inherit from.</dd>
-<dt>snr <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>SNR of best point. Currently dimensonless, but will have</dd>
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>cn0</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>CN/0 of best point</dd>
+<dt>cp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Code phase of best point</dd>
+<dt>cf</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Carrier frequency of best point</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignal</span><dd>GNSS signal for which acquisition was attempted</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
 </dl>
 </div></blockquote>
-<p>units of dB Hz in the revision of this message.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>cp <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>Code phase of best point</dd>
-<dt>cf <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>Carrier frequency of best point</dd>
-<dt>prn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>PRN-1 identifier of the satellite signal for which</dd>
-</dl>
-</div></blockquote>
-<p>acquisition was attempted</p>
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResult.cf">
+<code class="descname">cf</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResult.cf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResult.cn0">
+<code class="descname">cn0</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResult.cn0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResult.cp">
+<code class="descname">cp</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResult.cp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sbp.acquisition.MsgAcqResult.from_binary">
 <code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResult.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResult.from_binary" title="Permalink to this definition">¶</a></dt>
@@ -104,9 +311,19 @@ the message.</p>
 
 <dl class="staticmethod">
 <dt id="sbp.acquisition.MsgAcqResult.from_json">
-<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResult.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResult.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a JSON-encoded message, build an object.</p>
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResult.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResult.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.acquisition.MsgAcqResult.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResult.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResult.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResult.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResult.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sbp.acquisition.MsgAcqResult.to_binary">
@@ -115,10 +332,361 @@ the message.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="sbp.acquisition.MsgAcqResult.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResult.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResult.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a JSON-encoded SBP message.</p>
+<dt id="sbp.acquisition.MsgAcqResult.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResult.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResult.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
+
+<dl class="class">
+<dt id="sbp.acquisition.MsgAcqResultDepA">
+<em class="property">class </em><code class="descclassname">sbp.acquisition.</code><code class="descname">MsgAcqResultDepA</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_ACQ_RESULT_DEP_A (0x0015).</p>
+<blockquote>
+<div><p>You can have MSG_ACQ_RESULT_DEP_A inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>snr</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>SNR of best point. Currently dimensonless, but will have</dd>
+</dl>
+</div></blockquote>
+<p>units of dB Hz in the revision of this message.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>cp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Code phase of best point</dd>
+<dt>cf</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Carrier frequency of best point</dd>
+<dt>prn</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>PRN-1 identifier of the satellite signal for which</dd>
+</dl>
+</div></blockquote>
+<p>acquisition was attempted</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResultDepA.cf">
+<code class="descname">cf</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepA.cf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResultDepA.cp">
+<code class="descname">cp</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepA.cp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqResultDepA.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepA.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepA.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.acquisition.MsgAcqResultDepA.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepA.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepA.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.acquisition.MsgAcqResultDepA.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepA.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepA.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResultDepA.prn">
+<code class="descname">prn</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepA.prn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResultDepA.snr">
+<code class="descname">snr</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepA.snr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqResultDepA.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepA.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepA.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqResultDepA.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepA.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepA.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.acquisition.MsgAcqResultDepB">
+<em class="property">class </em><code class="descclassname">sbp.acquisition.</code><code class="descname">MsgAcqResultDepB</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_ACQ_RESULT_DEP_B (0x0014).</p>
+<blockquote>
+<div><p>You can have MSG_ACQ_RESULT_DEP_B inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>snr</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>SNR of best point. Currently in arbitrary SNR points, but will</dd>
+</dl>
+</div></blockquote>
+<p>be in units of dB Hz in a later revision of this message.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>cp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Code phase of best point</dd>
+<dt>cf</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Carrier frequency of best point</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignalDep</span><dd>GNSS signal for which acquisition was attempted</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResultDepB.cf">
+<code class="descname">cf</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepB.cf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResultDepB.cp">
+<code class="descname">cp</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepB.cp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqResultDepB.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepB.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepB.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.acquisition.MsgAcqResultDepB.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepB.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepB.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.acquisition.MsgAcqResultDepB.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepB.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepB.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResultDepB.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepB.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResultDepB.snr">
+<code class="descname">snr</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepB.snr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqResultDepB.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepB.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepB.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqResultDepB.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepB.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepB.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.acquisition.MsgAcqResultDepC">
+<em class="property">class </em><code class="descclassname">sbp.acquisition.</code><code class="descname">MsgAcqResultDepC</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_ACQ_RESULT_DEP_C (0x001F).</p>
+<p>You can have MSG_ACQ_RESULT_DEP_C inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>cn0</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>CN/0 of best point</dd>
+<dt>cp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Code phase of best point</dd>
+<dt>cf</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">float</span><dd>Carrier frequency of best point</dd>
+<dt>sid</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">GnssSignalDep</span><dd>GNSS signal for which acquisition was attempted</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResultDepC.cf">
+<code class="descname">cf</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepC.cf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResultDepC.cn0">
+<code class="descname">cn0</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepC.cn0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResultDepC.cp">
+<code class="descname">cp</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepC.cp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqResultDepC.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepC.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepC.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.acquisition.MsgAcqResultDepC.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepC.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepC.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.acquisition.MsgAcqResultDepC.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepC.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepC.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqResultDepC.sid">
+<code class="descname">sid</code><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepC.sid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqResultDepC.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepC.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepC.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqResultDepC.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqResultDepC.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqResultDepC.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.acquisition.MsgAcqSvProfile">
+<em class="property">class </em><code class="descclassname">sbp.acquisition.</code><code class="descname">MsgAcqSvProfile</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqSvProfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_ACQ_SV_PROFILE (0x002E).</p>
+<blockquote>
+<div><p>You can have MSG_ACQ_SV_PROFILE inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>The message describes all SV profiles during acquisition time.</p>
+</div></blockquote>
+<p>The message is used to debug and measure the performance.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>acq_sv_profile</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>SV profiles during acquisition time</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqSvProfile.acq_sv_profile">
+<code class="descname">acq_sv_profile</code><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfile.acq_sv_profile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqSvProfile.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqSvProfile.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfile.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.acquisition.MsgAcqSvProfile.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqSvProfile.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfile.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.acquisition.MsgAcqSvProfile.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqSvProfile.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfile.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqSvProfile.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqSvProfile.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfile.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqSvProfile.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqSvProfile.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfile.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sbp.acquisition.MsgAcqSvProfileDep">
+<em class="property">class </em><code class="descclassname">sbp.acquisition.</code><code class="descname">MsgAcqSvProfileDep</code><span class="sig-paren">(</span><em>sbp=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqSvProfileDep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfileDep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sbp.msg.html#sbp.msg.SBP" title="sbp.msg.SBP"><code class="xref py py-class docutils literal"><span class="pre">sbp.msg.SBP</span></code></a></p>
+<p>SBP class for message MSG_ACQ_SV_PROFILE_DEP (0x001E).</p>
+<p>You can have MSG_ACQ_SV_PROFILE_DEP inherit its fields directly
+from an inherited SBP object, or construct it inline using a dict
+of its fields.</p>
+<p>Deprecated.</p>
+<dl class="docutils">
+<dt>sbp</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">SBP</span><dd>SBP parent object to inherit from.</dd>
+<dt>acq_sv_profile</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">array</span><dd>SV profiles during acquisition time</dd>
+<dt>sender</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">int</span><dd>Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).</dd>
+</dl>
+<dl class="attribute">
+<dt id="sbp.acquisition.MsgAcqSvProfileDep.acq_sv_profile">
+<code class="descname">acq_sv_profile</code><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfileDep.acq_sv_profile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqSvProfileDep.from_binary">
+<code class="descname">from_binary</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqSvProfileDep.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfileDep.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a binary payload d, update the appropriate payload fields of
+the message.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.acquisition.MsgAcqSvProfileDep.from_json">
+<em class="property">static </em><code class="descname">from_json</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqSvProfileDep.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfileDep.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a JSON-encoded string s, build a message object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sbp.acquisition.MsgAcqSvProfileDep.from_json_dict">
+<em class="property">static </em><code class="descname">from_json_dict</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqSvProfileDep.from_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfileDep.from_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqSvProfileDep.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqSvProfileDep.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfileDep.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a framed/packed SBP message.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sbp.acquisition.MsgAcqSvProfileDep.to_json_dict">
+<code class="descname">to_json_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sbp/acquisition.html#MsgAcqSvProfileDep.to_json_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sbp.acquisition.MsgAcqSvProfileDep.to_json_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -129,13 +697,17 @@ the message.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="sbp.client.watchdog.html"
-                        title="previous chapter">sbp.client.watchdog module</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="sbp.bootload.html"
-                        title="next chapter">sbp.bootload module</a></p>
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="sbp.html">sbp package</a><ul>
+      <li>Previous: <a href="sbp.client.handler.html" title="previous chapter">sbp.client.handler module</a></li>
+      <li>Next: <a href="sbp.bootload.html" title="next chapter">sbp.bootload module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -151,9 +723,6 @@ the message.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -164,12 +733,12 @@ the message.</p>
       &copy;2015, Swift Navigation.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
       |
       <a href="_sources/sbp.acquisition.txt"
-          rel="nofollow">Page source</a></li>
+          rel="nofollow">Page source</a>
     </div>
 
     

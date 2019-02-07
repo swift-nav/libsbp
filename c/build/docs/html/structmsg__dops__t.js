@@ -1,5 +1,6 @@
 var structmsg__dops__t =
 [
+    [ "flags", "structmsg__dops__t.html#aa246fa433d167a7f6f8533227e40b76e", null ],
     [ "gdop", "structmsg__dops__t.html#acb2537704ecdbd89b362ab90d669015e", null ],
     [ "hdop", "structmsg__dops__t.html#acf41a0f579de34ff054f90e432cc2065", null ],
     [ "pdop", "structmsg__dops__t.html#abaa192b3c43ab0872f403e71d63ce26a", null ],
