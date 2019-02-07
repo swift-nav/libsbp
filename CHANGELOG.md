@@ -1,11 +1,22 @@
 # Change Log
 
-## [v2.4.8](https://github.com/swift-nav/libsbp/tree/v2.4.8)
+## [v2.4.9](https://github.com/swift-nav/libsbp/tree/v2.4.9)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.8...v2.4.9)
+
+**Merged pull requests:**
+
+- Small python fixes \[EX-476\] [\#641](https://github.com/swift-nav/libsbp/pull/641)
+- Allow multiple messages be sent at once \[ESD-1038\] [\#638](https://github.com/swift-nav/libsbp/pull/638)
+- Compile c library with -fPIC. [\#637](https://github.com/swift-nav/libsbp/pull/637)
+- Add MSG\_SETTINGS\_REGISTER\_RESP \[ESD-1012\] [\#631](https://github.com/swift-nav/libsbp/pull/631)
+
+## [v2.4.8](https://github.com/swift-nav/libsbp/tree/v2.4.8) (2019-01-18)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.7...v2.4.8)
 
 **Merged pull requests:**
 
+- 2.4.8 release [\#636](https://github.com/swift-nav/libsbp/pull/636)
 - Parens around sign operators [\#635](https://github.com/swift-nav/libsbp/pull/635)
 - Front end gain message [\#634](https://github.com/swift-nav/libsbp/pull/634)
 
