@@ -155,3 +155,15 @@ message MsgSettingsReadByIndexDone {
 message MsgSettingsRegister {
     string setting = 1;
 }
+
+/** Register setting and default value (device <= host)
+ *
+ * This message responds to setting registration with the effective value.
+ * The effective value shall differ from the given default value if setting
+ * was already registered or is available in the permanent setting storage
+ * and had a different value.
+ */
+message MsgSettingsRegisterResp {
+    uint32 status = 1;
+    string setting = 2;
+}

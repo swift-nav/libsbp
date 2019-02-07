@@ -322,6 +322,41 @@ MsgSettingsRegister.prototype.parser = new Parser()
 MsgSettingsRegister.prototype.fieldSpec = [];
 MsgSettingsRegister.prototype.fieldSpec.push(['setting', 'string', null]);
 
+/**
+ * SBP class for message MSG_SETTINGS_REGISTER_RESP (0x01AF).
+ *
+ * This message responds to setting registration with the effective value. The
+ * effective value shall differ from the given default value if setting was already
+ * registered or is available in the permanent setting storage and had a different
+ * value.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field status number (unsigned 8-bit int, 1 byte) Register status
+ * @field setting string A NULL-terminated and delimited string with contents
+ *   "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined according to
+ *   the status field.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSettingsRegisterResp = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SETTINGS_REGISTER_RESP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSettingsRegisterResp.prototype = Object.create(SBP.prototype);
+MsgSettingsRegisterResp.prototype.messageType = "MSG_SETTINGS_REGISTER_RESP";
+MsgSettingsRegisterResp.prototype.msg_type = 0x01AF;
+MsgSettingsRegisterResp.prototype.constructor = MsgSettingsRegisterResp;
+MsgSettingsRegisterResp.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('status')
+  .string('setting', { greedy: true });
+MsgSettingsRegisterResp.prototype.fieldSpec = [];
+MsgSettingsRegisterResp.prototype.fieldSpec.push(['status', 'writeUInt8', 1]);
+MsgSettingsRegisterResp.prototype.fieldSpec.push(['setting', 'string', null]);
+
 module.exports = {
   0x00A1: MsgSettingsSave,
   MsgSettingsSave: MsgSettingsSave,
@@ -341,4 +376,6 @@ module.exports = {
   MsgSettingsReadByIndexDone: MsgSettingsReadByIndexDone,
   0x00AE: MsgSettingsRegister,
   MsgSettingsRegister: MsgSettingsRegister,
+  0x01AF: MsgSettingsRegisterResp,
+  MsgSettingsRegisterResp: MsgSettingsRegisterResp,
 }
