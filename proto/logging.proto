@@ -46,11 +46,3 @@ message MsgFwd {
     uint32 protocol = 2;
     string fwd_payload = 3;
 }
-
-/** Tweet
- *
-* All the news fit to tweet.
- */
-message MsgTweet {
-    string tweet = 1;
-}

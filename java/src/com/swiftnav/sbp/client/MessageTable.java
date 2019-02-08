@@ -59,7 +59,6 @@ import com.swiftnav.sbp.linux.MsgLinuxProcessFdCount;
 import com.swiftnav.sbp.linux.MsgLinuxProcessFdSummary;
 import com.swiftnav.sbp.logging.MsgLog;
 import com.swiftnav.sbp.logging.MsgFwd;
-import com.swiftnav.sbp.logging.MsgTweet;
 import com.swiftnav.sbp.logging.MsgPrintDep;
 import com.swiftnav.sbp.mag.MsgMagRaw;
 import com.swiftnav.sbp.navigation.MsgGPSTime;
@@ -273,8 +272,6 @@ final class MessageTable {
                 return new MsgLog(msg);
             case MsgFwd.TYPE:
                 return new MsgFwd(msg);
-            case MsgTweet.TYPE:
-                return new MsgTweet(msg);
             case MsgPrintDep.TYPE:
                 return new MsgPrintDep(msg);
             case MsgMagRaw.TYPE:
