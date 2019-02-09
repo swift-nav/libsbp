@@ -36,7 +36,7 @@
 __all__ = ("get_git_version")
 
 from subprocess import Popen, PIPE
-import os
+
 
 def call_git_describe():
     try:
@@ -45,29 +45,16 @@ def call_git_describe():
         p.stderr.close()
         line = p.stdout.readlines()[0]
         return line.strip()
-    except:
+    except Exception:
         return None
 
 
 def read_release_version():
     try:
-        f = open(os.path.join(os.path.dirname(__file__), 'RELEASE-VERSION'), "r")
-        try:
-            version = f.readlines()[0]
-            return version.strip()
-        finally:
-            f.close()
-    except:
+        from sbp import __version__ as version
+        return version
+    except Exception:
         return None
-
-
-def write_release_version(version):
-    try:
-        f = open(os.path.join(os.path.dirname(__file__), 'RELEASE-VERSION'), "w")
-        f.write("%s\n" % version)
-        f.close()
-    except:
-      pass
 
 
 def get_git_version():
@@ -79,9 +66,9 @@ def get_git_version():
 
     # Take off the leading if present.
     if version is not None and version[0] == 'v':
-      version = version[1:]
+        version = version[1:]
 
-    #adapt to PEP 386 compatible versioning scheme
+    # Adapt to PEP 386 compatible versioning scheme
     version = pep386adapt(version)
 
     # If that doesn't work, fall back on the value that's in
@@ -93,11 +80,6 @@ def get_git_version():
     if version is None:
         raise ValueError("Cannot find the version number!")
 
-    # If the current version is different from what's in the
-    # RELEASE-VERSION file, update the file to be current.
-    if version != release_version:
-        write_release_version(version)
-
     # Finally, return the current version.
     return version
 
@@ -108,16 +90,14 @@ def pep386adapt(version):
         # Break PEP 386 a bit here and append the Git hash
         parts = version.split('-')
         if len(parts) > 2:
-          version = '%s.post%s-%s' % (
-              parts[0], parts[1],
-              '-'.join(parts[2:])
-          )
+            version = '%s.dev%s+%s' % (parts[0], parts[1], '-'.join(parts[2:]))
         return version
     else:
         return version
 
+
 VERSION = get_git_version()
 
-if __name__ == "__main__":
-    print get_git_version()
 
+if __name__ == "__main__":
+    print(VERSION)

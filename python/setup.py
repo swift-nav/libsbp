@@ -2,6 +2,7 @@
 
 from setuptools import setup
 
+import sys
 import re
 import os
 
@@ -71,29 +72,33 @@ def git_version():
             cmd, stdout=subprocess.PIPE, env=env,
         ).communicate()[0]
         return out
-
     try:
         out = _minimal_ext_cmd(['git', 'describe', '--tags'])
     except OSError:
         out = ''
-
     git_description = out.strip().decode('ascii')
+    sys.stderr.write("**** GIT DESC ****\n")
+    sys.stderr.write(git_description)
+    sys.stderr.write("\n")
+    sys.stderr.write("**** GIT DESC ****\n")
     expr = r'.*?\-(?P<count>\d+)-g(?P<hash>[a-fA-F0-9]+)'
     match = re.match(expr, git_description)
     if match is None:
         git_revision, git_count = 'Unknown', '0'
     else:
         git_revision, git_count = match.group('hash'), match.group('count')
-
     return git_revision, git_count
 
 
 def write_version_py(filename=VERSION_PY_PATH):
+
+    filedir = os.path.abspath(os.path.dirname(__file__))
+
     # Adding the git rev number needs to be done inside
     # write_version_py(), otherwise the import of ._version messes
     # up the build under Python 3.
     fullversion = VERSION
-    if os.path.exists('.git'):
+    if os.path.exists(os.path.join(filedir, '..', '.git')):
         git_rev, dev_num = git_version()
     elif os.path.exists(VERSION_PY_PATH):
         # must be a source distribution, use existing version file
@@ -115,9 +120,11 @@ def write_version_py(filename=VERSION_PY_PATH):
         dev_num = '0'
 
     if not IS_RELEASED:
-        fullversion += '.dev{0}'.format(dev_num)
+        fullversion += '.dev{0}+g{1}'.format(dev_num, git_rev)
 
-    with open(filename, "wt") as fp:
+    filename_fullpath = os.path.join(filedir, filename)
+
+    with open(filename_fullpath, "wt") as fp:
         fp.write(VERSION_PY_TEMPLATE.format(version=VERSION,
                                             full_version=fullversion,
                                             git_revision=git_rev,
@@ -126,15 +133,15 @@ def write_version_py(filename=VERSION_PY_PATH):
 
 if __name__ == "__main__":
 
-    cwd = os.path.abspath(os.path.dirname(__file__))
+    filedir = os.path.abspath(os.path.dirname(__file__))
 
-    with open(os.path.join(cwd, 'README.rst')) as f:
+    with open(os.path.join(filedir, 'README.rst')) as f:
         readme = f.read()
 
-    with open(os.path.join(cwd, 'requirements.txt')) as f:
+    with open(os.path.join(filedir, 'requirements.txt')) as f:
         INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
 
-    with open(os.path.join(cwd, 'test_requirements.txt')) as f:
+    with open(os.path.join(filedir, 'test_requirements.txt')) as f:
         TEST_REQUIRES = [i.strip() for i in f.readlines()]
 
     write_version_py()
