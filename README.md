@@ -36,6 +36,33 @@ Some bindings are available on package managers:
 * [`haskell`](https://github.com/swift-nav/libsbp/tree/HEAD/haskell): available on Hackage
 * [`javascript`](https://github.com/swift-nav/libsbp/tree/HEAD/javascript): available on NPM
 
+### Installing development Python versions
+
+To install the Python binding from source (using pip) run the following command:
+
+```sh
+pip install 'file:///path/to/libsbp#subdirectory=python'
+```
+
+Or via setuptools directly:
+```sh
+cd /path/to/libsbp
+cd python
+python setup.py
+```
+
+### Adding development version as a pip dependency
+
+Run the following command:
+```sh
+pip install git+https://github.com/swift-nav/libsbp@<GIT_REVISION>#egg=sbp&subdirectory=python
+```
+
+Or add this to `requirements.txt`:
+```
+git+https://github.com/swift-nav/libsbp@<GIT_REVISION>#egg=sbp&subdirectory=python
+```
+
 ### Installing from source
 You can build one binding at a time or update all at once:
 
