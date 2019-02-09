@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 
+#
+# Python setuptools specification for Swift Navigation's libsbp
+#
+# Version handling code pulled from Enthought's TraitsUI:
+#   https://github.com/swift-nav/traitsui/blob/swift-2019.01/setup.py
+#
+
 from setuptools import setup
 
 import re
@@ -89,9 +96,6 @@ def write_version_py(filename=VERSION_PY_PATH):
 
     filedir = os.path.abspath(os.path.dirname(__file__))
 
-    # Adding the git rev number needs to be done inside
-    # write_version_py(), otherwise the import of ._version messes
-    # up the build under Python 3.
     fullversion = VERSION
     if os.path.exists(os.path.join(filedir, '..', '.git')):
         git_rev, dev_num = git_version()
@@ -115,6 +119,13 @@ def write_version_py(filename=VERSION_PY_PATH):
         dev_num = '0'
 
     if not IS_RELEASED:
+        # According to the original source for this setup.py
+        # version handling (see link at top of the file):
+        #
+        # We may need to add the git rev number outside of
+        # write_version_py(), otherwise the import of ._version
+        # might mess up the build under Python 3.
+        #
         fullversion += '.dev{0}+g{1}'.format(dev_num, git_rev)
 
     filename_fullpath = os.path.join(filedir, filename)
