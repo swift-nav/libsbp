@@ -12,5 +12,7 @@ stdenv.mkDerivation rec {
     zlib.dev
     ghc
     cabal-install
+    python2
+    nodejs
   ];
 }
