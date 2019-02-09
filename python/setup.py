@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 
 from setuptools import setup
+
+import re
 import os
+
+import subprocess
 
 CLASSIFIERS = [
   'Intended Audience :: Developers',
@@ -29,28 +33,124 @@ PLATFORMS = [
   'win32',
 ]
 
-cwd = os.path.abspath(os.path.dirname(__file__))
-with open(cwd + '/README.rst') as f:
-  readme = f.read()
+MAJOR = 2
+MINOR = 4
+MICRO = 8
 
-with open(cwd + '/requirements.txt') as f:
-  INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
+IS_RELEASED = False
 
-with open(cwd + '/test_requirements.txt') as f:
-  TEST_REQUIRES = [i.strip() for i in f.readlines()]
+VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
 
-setup(name='sbp',
-      description='Python bindings for Swift Binary Protocol',
-      long_description=readme,
-      use_scm_version = {'root': '..', 'relative_to': __file__},
-      setup_requires=['setuptools_scm'],
-      author='Swift Navigation',
-      author_email='dev@swiftnav.com',
-      url='https://github.com/swift-nav/libsbp',
-      classifiers=CLASSIFIERS,
-      packages=PACKAGES,
-      platforms=PLATFORMS,
-      install_requires=INSTALL_REQUIRES,
-      tests_require=TEST_REQUIRES,
-      use_2to3=False,
-      zip_safe=False)
+VERSION_PY_TEMPLATE = """\
+# THIS FILE IS GENERATED FROM TRAITS SETUP.PY
+version = '{version}'
+full_version = '{full_version}'
+git_revision = '{git_revision}'
+is_released = {is_released}
+if not is_released:
+    version = full_version
+"""
+
+VERSION_PY_PATH = 'sbp/_version.py'
+
+
+# Return the git revision as a string
+def git_version():
+    def _minimal_ext_cmd(cmd):
+        # construct minimal environment
+        env = {}
+        for k in ['SYSTEMROOT', 'PATH']:
+            v = os.environ.get(k)
+            if v is not None:
+                env[k] = v
+        # LANGUAGE is used on win32
+        env['LANGUAGE'] = 'C'
+        env['LANG'] = 'C'
+        env['LC_ALL'] = 'C'
+        out = subprocess.Popen(
+            cmd, stdout=subprocess.PIPE, env=env,
+        ).communicate()[0]
+        return out
+
+    try:
+        out = _minimal_ext_cmd(['git', 'describe', '--tags'])
+    except OSError:
+        out = ''
+
+    git_description = out.strip().decode('ascii')
+    expr = r'.*?\-(?P<count>\d+)-g(?P<hash>[a-fA-F0-9]+)'
+    match = re.match(expr, git_description)
+    if match is None:
+        git_revision, git_count = 'Unknown', '0'
+    else:
+        git_revision, git_count = match.group('hash'), match.group('count')
+
+    return git_revision, git_count
+
+
+def write_version_py(filename=VERSION_PY_PATH):
+    # Adding the git rev number needs to be done inside
+    # write_version_py(), otherwise the import of ._version messes
+    # up the build under Python 3.
+    fullversion = VERSION
+    if os.path.exists('.git'):
+        git_rev, dev_num = git_version()
+    elif os.path.exists(VERSION_PY_PATH):
+        # must be a source distribution, use existing version file
+        try:
+            from sbp._version import git_revision as git_rev
+            from sbp._version import full_version as full_v
+        except ImportError:
+            raise ImportError("Unable to import git_revision. Try removing "
+                              "sbp/_version.py and the build directory "
+                              "before building.")
+
+        match = re.match(r'.*?\.dev(?P<dev_num>\d+)', full_v)
+        if match is None:
+            dev_num = '0'
+        else:
+            dev_num = match.group('dev_num')
+    else:
+        git_rev = 'Unknown'
+        dev_num = '0'
+
+    if not IS_RELEASED:
+        fullversion += '.dev{0}'.format(dev_num)
+
+    with open(filename, "wt") as fp:
+        fp.write(VERSION_PY_TEMPLATE.format(version=VERSION,
+                                            full_version=fullversion,
+                                            git_revision=git_rev,
+                                            is_released=IS_RELEASED))
+
+
+if __name__ == "__main__":
+
+    cwd = os.path.abspath(os.path.dirname(__file__))
+
+    with open(os.path.join(cwd, 'README.rst')) as f:
+        readme = f.read()
+
+    with open(os.path.join(cwd, 'requirements.txt')) as f:
+        INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
+
+    with open(os.path.join(cwd, 'test_requirements.txt')) as f:
+        TEST_REQUIRES = [i.strip() for i in f.readlines()]
+
+    write_version_py()
+    from sbp import __version__
+
+    setup(name='sbp',
+          version=__version__,
+          description='Python bindings for Swift Binary Protocol',
+          long_description=readme,
+          author='Swift Navigation',
+          author_email='dev@swiftnav.com',
+          url='https://github.com/swift-nav/libsbp',
+          classifiers=CLASSIFIERS,
+          packages=PACKAGES,
+          platforms=PLATFORMS,
+          install_requires=INSTALL_REQUIRES,
+          tests_require=TEST_REQUIRES,
+          use_2to3=False,
+          zip_safe=False)
