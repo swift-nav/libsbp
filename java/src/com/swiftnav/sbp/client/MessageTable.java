@@ -35,6 +35,8 @@ import com.swiftnav.sbp.file_io.MsgFileioReadDirResp;
 import com.swiftnav.sbp.file_io.MsgFileioRemove;
 import com.swiftnav.sbp.file_io.MsgFileioWriteReq;
 import com.swiftnav.sbp.file_io.MsgFileioWriteResp;
+import com.swiftnav.sbp.file_io.MsgFileioConfigReq;
+import com.swiftnav.sbp.file_io.MsgFileioConfigResp;
 import com.swiftnav.sbp.flash.MsgFlashProgram;
 import com.swiftnav.sbp.flash.MsgFlashDone;
 import com.swiftnav.sbp.flash.MsgFlashReadReq;
@@ -57,7 +59,6 @@ import com.swiftnav.sbp.linux.MsgLinuxProcessFdCount;
 import com.swiftnav.sbp.linux.MsgLinuxProcessFdSummary;
 import com.swiftnav.sbp.logging.MsgLog;
 import com.swiftnav.sbp.logging.MsgFwd;
-import com.swiftnav.sbp.logging.MsgTweet;
 import com.swiftnav.sbp.logging.MsgPrintDep;
 import com.swiftnav.sbp.mag.MsgMagRaw;
 import com.swiftnav.sbp.navigation.MsgGPSTime;
@@ -223,6 +224,10 @@ final class MessageTable {
                 return new MsgFileioWriteReq(msg);
             case MsgFileioWriteResp.TYPE:
                 return new MsgFileioWriteResp(msg);
+            case MsgFileioConfigReq.TYPE:
+                return new MsgFileioConfigReq(msg);
+            case MsgFileioConfigResp.TYPE:
+                return new MsgFileioConfigResp(msg);
             case MsgFlashProgram.TYPE:
                 return new MsgFlashProgram(msg);
             case MsgFlashDone.TYPE:
@@ -267,8 +272,6 @@ final class MessageTable {
                 return new MsgLog(msg);
             case MsgFwd.TYPE:
                 return new MsgFwd(msg);
-            case MsgTweet.TYPE:
-                return new MsgTweet(msg);
             case MsgPrintDep.TYPE:
                 return new MsgPrintDep(msg);
             case MsgMagRaw.TYPE:

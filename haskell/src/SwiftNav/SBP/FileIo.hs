@@ -272,3 +272,66 @@ instance Binary MsgFileioWriteResp where
 $(makeSBP 'msgFileioWriteResp ''MsgFileioWriteResp)
 $(makeJSON "_msgFileioWriteResp_" ''MsgFileioWriteResp)
 $(makeLenses ''MsgFileioWriteResp)
+
+msgFileioConfigReq :: Word16
+msgFileioConfigReq = 0x1001
+
+-- | SBP class for message MSG_FILEIO_CONFIG_REQ (0x1001).
+--
+-- Returns advise on the optimal configuration for FileIO requests and
+-- response.  Newer version of FileIO can support greater throughput by support
+-- a larger window of FileIO data that can be in flight during read or write
+-- operation.
+data MsgFileioConfigReq = MsgFileioConfigReq
+  { _msgFileioConfigReq_sequence :: !Word32
+    -- ^ Advice sequence number
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgFileioConfigReq where
+  get = do
+    _msgFileioConfigReq_sequence <- getWord32le
+    pure MsgFileioConfigReq {..}
+
+  put MsgFileioConfigReq {..} = do
+    putWord32le _msgFileioConfigReq_sequence
+
+$(makeSBP 'msgFileioConfigReq ''MsgFileioConfigReq)
+$(makeJSON "_msgFileioConfigReq_" ''MsgFileioConfigReq)
+$(makeLenses ''MsgFileioConfigReq)
+
+msgFileioConfigResp :: Word16
+msgFileioConfigResp = 0x1002
+
+-- | SBP class for message MSG_FILEIO_CONFIG_RESP (0x1002).
+--
+-- Returns advise on the optimal configuration for FileIO requests and
+-- response.  Newer version of FileIO can support greater throughput by support
+-- a larger window of FileIO data that can
+data MsgFileioConfigResp = MsgFileioConfigResp
+  { _msgFileioConfigResp_sequence     :: !Word32
+    -- ^ Advice sequence number
+  , _msgFileioConfigResp_window_size  :: !Word32
+    -- ^ The number of SBP packets in the data in-flight window
+  , _msgFileioConfigResp_batch_size   :: !Word32
+    -- ^ The number of SBP packets sent in one PDU
+  , _msgFileioConfigResp_fileio_version :: !Word32
+    -- ^ The version of FileIO that is supported
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgFileioConfigResp where
+  get = do
+    _msgFileioConfigResp_sequence <- getWord32le
+    _msgFileioConfigResp_window_size <- getWord32le
+    _msgFileioConfigResp_batch_size <- getWord32le
+    _msgFileioConfigResp_fileio_version <- getWord32le
+    pure MsgFileioConfigResp {..}
+
+  put MsgFileioConfigResp {..} = do
+    putWord32le _msgFileioConfigResp_sequence
+    putWord32le _msgFileioConfigResp_window_size
+    putWord32le _msgFileioConfigResp_batch_size
+    putWord32le _msgFileioConfigResp_fileio_version
+
+$(makeSBP 'msgFileioConfigResp ''MsgFileioConfigResp)
+$(makeJSON "_msgFileioConfigResp_" ''MsgFileioConfigResp)
+$(makeLenses ''MsgFileioConfigResp)

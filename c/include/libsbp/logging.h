@@ -59,16 +59,6 @@ typedef struct SBP_ATTR_PACKED {
 } msg_fwd_t;
 
 
-/** Tweet
- *
-* All the news fit to tweet.
- */
-#define SBP_MSG_TWEET     0x0012
-typedef struct SBP_ATTR_PACKED {
-  char tweet[140]; /**< Human-readable string */
-} msg_tweet_t;
-
-
 /** Deprecated
  *
 * Deprecated.

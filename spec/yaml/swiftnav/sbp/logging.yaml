@@ -68,17 +68,6 @@ definitions:
           type: string
           desc: variable length wrapped binary message     
 
- - MSG_TWEET:
-    id: 0x0012
-    short_desc: Tweet
-    desc: All the news fit to tweet.
-    public: False
-    fields:
-      - tweet:
-          type: string
-          size: 140
-          desc: Human-readable string
-
  - MSG_PRINT_DEP:
     id: 0x0010
     short_desc: Deprecated

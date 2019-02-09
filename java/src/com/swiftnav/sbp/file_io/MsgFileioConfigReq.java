@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-package com.swiftnav.sbp.logging;
+package com.swiftnav.sbp.file_io;
 
 import java.math.BigInteger;
 
@@ -22,25 +22,28 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_TWEET (0x0012).
+/** SBP class for message MSG_FILEIO_CONFIG_REQ (0x1001).
  *
- * You can have MSG_TWEET inherent its fields directly from
+ * You can have MSG_FILEIO_CONFIG_REQ inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
-* All the news fit to tweet. */
+ * Returns advise on the optimal configuration for FileIO requests
+ * and response.  Newer version of FileIO can support greater
+ * throughput by support a larger window of FileIO data that can
+ * be in flight during read or write operation. */
 
-public class MsgTweet extends SBPMessage {
-    public static final int TYPE = 0x0012;
+public class MsgFileioConfigReq extends SBPMessage {
+    public static final int TYPE = 0x1001;
 
     
-    /** Human-readable string */
-    public String tweet;
+    /** Advice sequence number */
+    public long sequence;
     
 
-    public MsgTweet (int sender) { super(sender, TYPE); }
-    public MsgTweet () { super(TYPE); }
-    public MsgTweet (SBPMessage msg) throws SBPBinaryException {
+    public MsgFileioConfigReq (int sender) { super(sender, TYPE); }
+    public MsgFileioConfigReq () { super(TYPE); }
+    public MsgFileioConfigReq (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -48,18 +51,18 @@ public class MsgTweet extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        tweet = parser.getString(140);
+        sequence = parser.getU32();
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putString(tweet, 140);
+        builder.putU32(sequence);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("tweet", tweet);
+        obj.put("sequence", sequence);
         return obj;
     }
 }

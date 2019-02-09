@@ -109,6 +109,8 @@ data SBPMsg =
    | SBPMsgEphemerisSbasDepA MsgEphemerisSbasDepA Msg
    | SBPMsgEphemerisSbasDepB MsgEphemerisSbasDepB Msg
    | SBPMsgExtEvent MsgExtEvent Msg
+   | SBPMsgFileioConfigReq MsgFileioConfigReq Msg
+   | SBPMsgFileioConfigResp MsgFileioConfigResp Msg
    | SBPMsgFileioReadDirReq MsgFileioReadDirReq Msg
    | SBPMsgFileioReadDirResp MsgFileioReadDirResp Msg
    | SBPMsgFileioReadReq MsgFileioReadReq Msg
@@ -206,7 +208,6 @@ data SBPMsg =
    | SBPMsgTrackingStateDepB MsgTrackingStateDepB Msg
    | SBPMsgTrackingStateDetailedDep MsgTrackingStateDetailedDep Msg
    | SBPMsgTrackingStateDetailedDepA MsgTrackingStateDetailedDepA Msg
-   | SBPMsgTweet MsgTweet Msg
    | SBPMsgUartState MsgUartState Msg
    | SBPMsgUartStateDepa MsgUartStateDepa Msg
    | SBPMsgUserData MsgUserData Msg
@@ -286,6 +287,8 @@ instance Binary SBPMsg where
           | _msgSBPType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisSbasDepB = SBPMsgEphemerisSbasDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgExtEvent = SBPMsgExtEvent (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFileioConfigReq = SBPMsgFileioConfigReq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFileioConfigResp = SBPMsgFileioConfigResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFileioReadDirReq = SBPMsgFileioReadDirReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFileioReadDirResp = SBPMsgFileioReadDirResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFileioReadReq = SBPMsgFileioReadReq (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -383,7 +386,6 @@ instance Binary SBPMsg where
           | _msgSBPType == msgTrackingStateDepB = SBPMsgTrackingStateDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingStateDetailedDep = SBPMsgTrackingStateDetailedDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingStateDetailedDepA = SBPMsgTrackingStateDetailedDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgTweet = SBPMsgTweet (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUartStateDepa = SBPMsgUartStateDepa (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUserData = SBPMsgUserData (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -455,6 +457,8 @@ instance Binary SBPMsg where
       encoder (SBPMsgEphemerisSbasDepA _ m) = put m
       encoder (SBPMsgEphemerisSbasDepB _ m) = put m
       encoder (SBPMsgExtEvent _ m) = put m
+      encoder (SBPMsgFileioConfigReq _ m) = put m
+      encoder (SBPMsgFileioConfigResp _ m) = put m
       encoder (SBPMsgFileioReadDirReq _ m) = put m
       encoder (SBPMsgFileioReadDirResp _ m) = put m
       encoder (SBPMsgFileioReadReq _ m) = put m
@@ -552,7 +556,6 @@ instance Binary SBPMsg where
       encoder (SBPMsgTrackingStateDepB _ m) = put m
       encoder (SBPMsgTrackingStateDetailedDep _ m) = put m
       encoder (SBPMsgTrackingStateDetailedDepA _ m) = put m
-      encoder (SBPMsgTweet _ m) = put m
       encoder (SBPMsgUartState _ m) = put m
       encoder (SBPMsgUartStateDepa _ m) = put m
       encoder (SBPMsgUserData _ m) = put m
@@ -628,6 +631,8 @@ instance FromJSON SBPMsg where
         | msgType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisSbasDepB = SBPMsgEphemerisSbasDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgExtEvent = SBPMsgExtEvent <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFileioConfigReq = SBPMsgFileioConfigReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFileioConfigResp = SBPMsgFileioConfigResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFileioReadDirReq = SBPMsgFileioReadDirReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFileioReadDirResp = SBPMsgFileioReadDirResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFileioReadReq = SBPMsgFileioReadReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -725,7 +730,6 @@ instance FromJSON SBPMsg where
         | msgType == msgTrackingStateDepB = SBPMsgTrackingStateDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingStateDetailedDep = SBPMsgTrackingStateDetailedDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingStateDetailedDepA = SBPMsgTrackingStateDetailedDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgTweet = SBPMsgTweet <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUartState = SBPMsgUartState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUartStateDepa = SBPMsgUartStateDepa <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUserData = SBPMsgUserData <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -802,6 +806,8 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgEphemerisSbasDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisSbasDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgExtEvent n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFileioConfigReq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFileioConfigResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFileioReadDirReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFileioReadDirResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFileioReadReq n m) = toJSON n <<>> toJSON m
@@ -899,7 +905,6 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgTrackingStateDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingStateDetailedDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingStateDetailedDepA n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgTweet n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUartState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUartStateDepa n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUserData n m) = toJSON n <<>> toJSON m
@@ -970,6 +975,8 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgEphemerisSbasDepA n m) = SBPMsgEphemerisSbasDepA n <$> f m
   msg f (SBPMsgEphemerisSbasDepB n m) = SBPMsgEphemerisSbasDepB n <$> f m
   msg f (SBPMsgExtEvent n m) = SBPMsgExtEvent n <$> f m
+  msg f (SBPMsgFileioConfigReq n m) = SBPMsgFileioConfigReq n <$> f m
+  msg f (SBPMsgFileioConfigResp n m) = SBPMsgFileioConfigResp n <$> f m
   msg f (SBPMsgFileioReadDirReq n m) = SBPMsgFileioReadDirReq n <$> f m
   msg f (SBPMsgFileioReadDirResp n m) = SBPMsgFileioReadDirResp n <$> f m
   msg f (SBPMsgFileioReadReq n m) = SBPMsgFileioReadReq n <$> f m
@@ -1067,7 +1074,6 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgTrackingStateDepB n m) = SBPMsgTrackingStateDepB n <$> f m
   msg f (SBPMsgTrackingStateDetailedDep n m) = SBPMsgTrackingStateDetailedDep n <$> f m
   msg f (SBPMsgTrackingStateDetailedDepA n m) = SBPMsgTrackingStateDetailedDepA n <$> f m
-  msg f (SBPMsgTweet n m) = SBPMsgTweet n <$> f m
   msg f (SBPMsgUartState n m) = SBPMsgUartState n <$> f m
   msg f (SBPMsgUartStateDepa n m) = SBPMsgUartStateDepa n <$> f m
   msg f (SBPMsgUserData n m) = SBPMsgUserData n <$> f m
