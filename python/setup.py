@@ -2,7 +2,6 @@
 
 from setuptools import setup
 
-import sys
 import re
 import os
 
@@ -77,10 +76,6 @@ def git_version():
     except OSError:
         out = ''
     git_description = out.strip().decode('ascii')
-    sys.stderr.write("**** GIT DESC ****\n")
-    sys.stderr.write(git_description)
-    sys.stderr.write("\n")
-    sys.stderr.write("**** GIT DESC ****\n")
     expr = r'.*?\-(?P<count>\d+)-g(?P<hash>[a-fA-F0-9]+)'
     match = re.match(expr, git_description)
     if match is None:
