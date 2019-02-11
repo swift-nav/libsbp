@@ -11,4 +11,7 @@
 
 from __future__ import absolute_import
 
-from ._version import full_version as __version__
+try:
+    from ._version import full_version as __version__
+except ImportError:
+    __version__ = "0.0.0"
