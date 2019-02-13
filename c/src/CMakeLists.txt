@@ -30,9 +30,11 @@ set(libsbp_HEADERS
 set(libsbp_SRCS
   edc.c
   sbp.c
-)
+  )
+set(LIBSBP_CFLAGS "-fpic" CACHE STRING "Compile flags for libsbp.")
 
 add_library(sbp ${libsbp_SRCS})
+target_compile_options(sbp PRIVATE "${LIBSBP_CFLAGS}")
 target_include_directories(sbp PUBLIC "${PROJECT_SOURCE_DIR}/include")
 install(TARGETS sbp DESTINATION lib${LIB_SUFFIX})
 install(FILES ${libsbp_HEADERS} DESTINATION include/libsbp)

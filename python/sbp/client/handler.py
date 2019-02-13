@@ -250,9 +250,21 @@ class Handler(object):
         event.wait(timeout)
         self.remove_callback(cb, msg_type)
 
-    def __call__(self, msg, **metadata):
+    def __call__(self, *msgs, **metadata):
+        """
+        Pass messages to the `source` to be consumed.  Typically this means
+        the messages will be framed and transmitted via whatever transport
+        layer is currently active.
+
+        Parameters
+        ----------
+        msgs : SBP messages
+          SBP messages to send.
+        metadata : dict
+          Metadata for this batch of messages, passed to the `source`.
+        """
         with self._write_lock:
-            self._source(msg, **metadata)
+            self._source(*msgs, **metadata)
 
     class _SBPQueueIterator(object):
         """

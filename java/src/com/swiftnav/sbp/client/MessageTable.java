@@ -57,7 +57,6 @@ import com.swiftnav.sbp.linux.MsgLinuxProcessFdCount;
 import com.swiftnav.sbp.linux.MsgLinuxProcessFdSummary;
 import com.swiftnav.sbp.logging.MsgLog;
 import com.swiftnav.sbp.logging.MsgFwd;
-import com.swiftnav.sbp.logging.MsgTweet;
 import com.swiftnav.sbp.logging.MsgPrintDep;
 import com.swiftnav.sbp.mag.MsgMagRaw;
 import com.swiftnav.sbp.navigation.MsgGPSTime;
@@ -158,6 +157,7 @@ import com.swiftnav.sbp.settings.MsgSettingsReadByIndexReq;
 import com.swiftnav.sbp.settings.MsgSettingsReadByIndexResp;
 import com.swiftnav.sbp.settings.MsgSettingsReadByIndexDone;
 import com.swiftnav.sbp.settings.MsgSettingsRegister;
+import com.swiftnav.sbp.settings.MsgSettingsRegisterResp;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClock;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClockDepA;
 import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
@@ -266,8 +266,6 @@ final class MessageTable {
                 return new MsgLog(msg);
             case MsgFwd.TYPE:
                 return new MsgFwd(msg);
-            case MsgTweet.TYPE:
-                return new MsgTweet(msg);
             case MsgPrintDep.TYPE:
                 return new MsgPrintDep(msg);
             case MsgMagRaw.TYPE:
@@ -468,6 +466,8 @@ final class MessageTable {
                 return new MsgSettingsReadByIndexDone(msg);
             case MsgSettingsRegister.TYPE:
                 return new MsgSettingsRegister(msg);
+            case MsgSettingsRegisterResp.TYPE:
+                return new MsgSettingsRegisterResp(msg);
             case MsgSsrOrbitClock.TYPE:
                 return new MsgSsrOrbitClock(msg);
             case MsgSsrOrbitClockDepA.TYPE:

@@ -199,3 +199,30 @@ definitions:
             A NULL-terminated and delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE".
 
+ - MSG_SETTINGS_REGISTER_RESP:
+    id: 0x01AF
+    public: false
+    short_desc: Register setting and default value (device <= host)
+    desc: |
+      This message responds to setting registration with the effective value.
+      The effective value shall differ from the given default value if setting
+      was already registered or is available in the permanent setting storage
+      and had a different value.
+    fields:
+      - status:
+          type: u8
+          desc: Register status
+          fields:
+            - 0-1:
+                desc: Register status
+                values:
+                    - 0: Accepted; requested default value returned
+                    - 1: Accepted; setting found in permanent storage, value from storage returned
+                    - 2: Rejected; setting already registered, value from memory returned
+                    - 3: Rejected; malformed message
+      - setting:
+          type: string
+          desc: |
+            A NULL-terminated and delimited string with contents
+            "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
+            according to the status field.

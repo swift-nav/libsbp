@@ -182,6 +182,7 @@ data SBPMsg =
    | SBPMsgSettingsReadReq MsgSettingsReadReq Msg
    | SBPMsgSettingsReadResp MsgSettingsReadResp Msg
    | SBPMsgSettingsRegister MsgSettingsRegister Msg
+   | SBPMsgSettingsRegisterResp MsgSettingsRegisterResp Msg
    | SBPMsgSettingsSave MsgSettingsSave Msg
    | SBPMsgSettingsWrite MsgSettingsWrite Msg
    | SBPMsgSettingsWriteResp MsgSettingsWriteResp Msg
@@ -205,7 +206,6 @@ data SBPMsg =
    | SBPMsgTrackingStateDepB MsgTrackingStateDepB Msg
    | SBPMsgTrackingStateDetailedDep MsgTrackingStateDetailedDep Msg
    | SBPMsgTrackingStateDetailedDepA MsgTrackingStateDetailedDepA Msg
-   | SBPMsgTweet MsgTweet Msg
    | SBPMsgUartState MsgUartState Msg
    | SBPMsgUartStateDepa MsgUartStateDepa Msg
    | SBPMsgUserData MsgUserData Msg
@@ -358,6 +358,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSettingsReadReq = SBPMsgSettingsReadReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSettingsReadResp = SBPMsgSettingsReadResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSettingsRegister = SBPMsgSettingsRegister (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSettingsRegisterResp = SBPMsgSettingsRegisterResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSettingsSave = SBPMsgSettingsSave (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSettingsWrite = SBPMsgSettingsWrite (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSettingsWriteResp = SBPMsgSettingsWriteResp (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -381,7 +382,6 @@ instance Binary SBPMsg where
           | _msgSBPType == msgTrackingStateDepB = SBPMsgTrackingStateDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingStateDetailedDep = SBPMsgTrackingStateDetailedDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingStateDetailedDepA = SBPMsgTrackingStateDetailedDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgTweet = SBPMsgTweet (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUartStateDepa = SBPMsgUartStateDepa (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUserData = SBPMsgUserData (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -526,6 +526,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgSettingsReadReq _ m) = put m
       encoder (SBPMsgSettingsReadResp _ m) = put m
       encoder (SBPMsgSettingsRegister _ m) = put m
+      encoder (SBPMsgSettingsRegisterResp _ m) = put m
       encoder (SBPMsgSettingsSave _ m) = put m
       encoder (SBPMsgSettingsWrite _ m) = put m
       encoder (SBPMsgSettingsWriteResp _ m) = put m
@@ -549,7 +550,6 @@ instance Binary SBPMsg where
       encoder (SBPMsgTrackingStateDepB _ m) = put m
       encoder (SBPMsgTrackingStateDetailedDep _ m) = put m
       encoder (SBPMsgTrackingStateDetailedDepA _ m) = put m
-      encoder (SBPMsgTweet _ m) = put m
       encoder (SBPMsgUartState _ m) = put m
       encoder (SBPMsgUartStateDepa _ m) = put m
       encoder (SBPMsgUserData _ m) = put m
@@ -698,6 +698,7 @@ instance FromJSON SBPMsg where
         | msgType == msgSettingsReadReq = SBPMsgSettingsReadReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSettingsReadResp = SBPMsgSettingsReadResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSettingsRegister = SBPMsgSettingsRegister <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSettingsRegisterResp = SBPMsgSettingsRegisterResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSettingsSave = SBPMsgSettingsSave <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSettingsWrite = SBPMsgSettingsWrite <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSettingsWriteResp = SBPMsgSettingsWriteResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -721,7 +722,6 @@ instance FromJSON SBPMsg where
         | msgType == msgTrackingStateDepB = SBPMsgTrackingStateDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingStateDetailedDep = SBPMsgTrackingStateDetailedDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingStateDetailedDepA = SBPMsgTrackingStateDetailedDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgTweet = SBPMsgTweet <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUartState = SBPMsgUartState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUartStateDepa = SBPMsgUartStateDepa <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUserData = SBPMsgUserData <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -871,6 +871,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSettingsReadReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSettingsReadResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSettingsRegister n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSettingsRegisterResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSettingsSave n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSettingsWrite n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSettingsWriteResp n m) = toJSON n <<>> toJSON m
@@ -894,7 +895,6 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgTrackingStateDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingStateDetailedDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingStateDetailedDepA n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgTweet n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUartState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUartStateDepa n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUserData n m) = toJSON n <<>> toJSON m
@@ -1038,6 +1038,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSettingsReadReq n m) = SBPMsgSettingsReadReq n <$> f m
   msg f (SBPMsgSettingsReadResp n m) = SBPMsgSettingsReadResp n <$> f m
   msg f (SBPMsgSettingsRegister n m) = SBPMsgSettingsRegister n <$> f m
+  msg f (SBPMsgSettingsRegisterResp n m) = SBPMsgSettingsRegisterResp n <$> f m
   msg f (SBPMsgSettingsSave n m) = SBPMsgSettingsSave n <$> f m
   msg f (SBPMsgSettingsWrite n m) = SBPMsgSettingsWrite n <$> f m
   msg f (SBPMsgSettingsWriteResp n m) = SBPMsgSettingsWriteResp n <$> f m
@@ -1061,7 +1062,6 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgTrackingStateDepB n m) = SBPMsgTrackingStateDepB n <$> f m
   msg f (SBPMsgTrackingStateDetailedDep n m) = SBPMsgTrackingStateDetailedDep n <$> f m
   msg f (SBPMsgTrackingStateDetailedDepA n m) = SBPMsgTrackingStateDetailedDepA n <$> f m
-  msg f (SBPMsgTweet n m) = SBPMsgTweet n <$> f m
   msg f (SBPMsgUartState n m) = SBPMsgUartState n <$> f m
   msg f (SBPMsgUartStateDepa n m) = SBPMsgUartStateDepa n <$> f m
   msg f (SBPMsgUserData n m) = SBPMsgUserData n <$> f m

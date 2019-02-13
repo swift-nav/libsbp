@@ -16,10 +16,8 @@ from collections import defaultdict
 from sbp.client.drivers.network_drivers import TCPDriver
 from sbp.client import Handler, Framer
 from sbp.gnss import GPSTimeSec
-try:
-    from sbp.piksi import SBP_MSG_SPECAN_DEP, MsgSpecanDep
-except ImportError:
-    from sbp.piksi import SBP_MSG_SPECAN, MsgSpecan
+from sbp.piksi import SBP_MSG_SPECAN_DEP, MsgSpecanDep
+from sbp.piksi import SBP_MSG_SPECAN, MsgSpecan
 import numpy as np
 
 class GPSTimeSecCmp(GPSTimeSec):
@@ -182,7 +180,7 @@ def main():
     with TCPDriver(args.host, args.port) as driver:
         with Handler(Framer(driver.read, driver.write, verbose=True)) as link:
             driver.flush()
-            link.add_callback(monitor.capture_fft, SBP_MSG_SPECAN_DEP)
+            link.add_callback(monitor.capture_fft, [SBP_MSG_SPECAN, SBP_MSG_SPECAN_DEP])
 
             # Capture 5 FFTs from channel 1
             monitor.enable_channel(ch)

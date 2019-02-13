@@ -128,15 +128,16 @@ class Framer(object):
             pass
         return msg
 
-    def __call__(self, msg, **metadata):
+    def __call__(self, *msgs, **metadata):
         """
         Build and write SBP message.
 
         Parameters
         ----------
-        msg : SBP message
-          SBP message to send.
+        msgs : SBP messages
+          SBP messages to send.  Multiple messages are sent in one batch.
         metadata : dict
-          {'time': 'ISO 8601 str'} (ignored for now)
+          Metadata for this batch of messages, e.g. `{'time': 'ISO 8601 str'}`
+          (ignored for now).
         """
-        self._write(msg.to_binary())
+        self._write(bytes.join(b'', (msg.to_binary() for msg in msgs)))
