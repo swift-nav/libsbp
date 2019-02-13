@@ -88,6 +88,13 @@ Ubuntu 16.04.
    libsbp version number in the C, Python, JavaScript, and LaTeX developer
    documentation are consistent.
 
+   - Python: In `python/setup.py` change `IS_RELEASED = False` to
+     `IS_RELEASED = True`.
+
+   - JavaScript: Manually update `package-lock.json`.
+
+   - Others: should be automatically extracted from git tag
+
 2. Add to RELEASE_NOTES.md and update the CHANGELOG details with `make
    release`. Submit a pull request and get it merged. This requires
    [github-changelog-generator](https://github.com/skywinder/github-changelog-generator),

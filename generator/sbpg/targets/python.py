@@ -21,6 +21,7 @@ from sbpg.utils import comment_links
 import copy
 
 TEMPLATE_NAME = "sbp_construct_template.py.j2"
+VERSION_TEMPLATE_NAME = "sbp_python_relver_template.j2"
 
 CONSTRUCT_CODE = {
   'u8': 'construct.Int8ul',
@@ -120,3 +121,12 @@ def render_source(output_dir, package_spec, jenv=JENV):
                                include=includes,
                                timestamp=package_spec.creation_timestamp,
                                description=package_spec.description))
+
+
+def render_version(output_dir, release):
+  destination_filename = "%s/RELEASE-VERSION" % output_dir
+  print(destination_filename)
+  major, minor, patch = release.split('.')[:3]
+  py_template = JENV.get_template(VERSION_TEMPLATE_NAME)
+  with open(destination_filename, 'w') as f:
+    f.write(py_template.render(major=major, minor=minor, patch=patch))
