@@ -44,22 +44,30 @@ def test_tcp_logger():
   baud = 115200
   t0 = time.time()
   sleep = 0.1
-  def assert_logger(s):
+  timeout = 1.0
+  cb_context = {'assert_logger_called': False}
+  def assert_logger(s, **metadata):
+    cb_context['assert_logger_called'] = True
     assert s.preamble==0x55
     assert s.msg_type==0x10
     assert s.sender==66
     assert s.length==3
     assert s.payload==b'abc'
     assert s.crc==0xDAEE
-  # TODO: assert_logger function doesn't appear to be actually called?
   with PySerialDriver(port, baud) as driver:
     with Handler(Framer(driver.read, None, verbose=False)) as link:
       link.add_callback(assert_logger)
       while True:
-        if time.time() - t0 < sleep:
+        if time.time() - t0 > timeout or cb_context['assert_logger_called']:
           break
+        time.sleep(sleep)
+  assert cb_context['assert_logger_called'], "SBP msg callback function was not called"
 
 BASE_STATION_URI = "http://broker.testing.skylark.swiftnav.com"
+
+# TODO: the HTTP driver test likely needs to be scrapped completely.
+# This is left-over from our initial concept of skylark over a proprietary
+# HTTP stream initiated by the console.
 
 @activate
 def test_http_test_pass():
