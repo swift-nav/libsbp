@@ -2,7 +2,7 @@ sudo: required
 
 dist: trusty
 language: python
-python: 2.7.13
+python: 2.7.14
 
 addons:
   apt:
@@ -60,7 +60,7 @@ matrix:
 deploy:
   provider: releases
   api_key:
-    secure: "kElMZA2rpuSswHZuQuFZYdOllg5b+cOcid+Ac8RZJlqM+EPi+5cDuNWGmqxNka9lvLwwB+Mq37+t9J1PSHuTf/WNcDeI82h//Prll6jP5aHuxrIZA6UTeqTAzhmVGHbcjorvROp5O2MeyJMHtyi3gi9XOf8OlfSLpO4pM37Ad1w="
+    secure: "WDZRT7VevzQidPo8Mn1ozV6azwNFe7qGwKbLCb8rmKpPmiF+wcQ3KrhTnGj0EmqGqQ2q1c3UZzVCr+nLhLvIFLhkvNK42bs8Byc+HolKNX/diPAlB/mczGHI08rV4EJFmJL56vopdoafOAsqtZBnD4hZ8BDETNqMyJefo70pyY8="
   file: haskell/sbp_linux_tools.tar.gz
   skip_cleanup: true
   on:

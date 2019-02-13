@@ -40,13 +40,27 @@ PLATFORMS = [
   'win32',
 ]
 
-MAJOR = 2
-MINOR = 4
-MICRO = 8
 
+def _read_release_version():
+    this_dir = os.path.dirname(__file__)
+    relver_path = os.path.join(this_dir, 'sbp/RELEASE-VERSION')
+    try:
+        with open(relver_path, "r") as f:
+            version = f.readlines()[0]
+            return version.strip()
+    except IOError:
+        return "0.0.0"
+
+
+def read_release_version():
+    major, minor, patch = _read_release_version().split('.')
+    return (int(major), int(minor), int(patch))
+
+
+MAJOR, MINOR, PATCH = read_release_version()
 IS_RELEASED = False
 
-VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
+VERSION = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
 
 VERSION_PY_TEMPLATE = """\
 # THIS FILE IS GENERATED FROM TRAITS SETUP.PY

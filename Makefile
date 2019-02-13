@@ -126,7 +126,7 @@ gen-c:
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/c/test \
-                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
+                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
 	               --test-c
 
 	$(call announce-end,"Finished generating C. Please check $(SWIFTNAV_ROOT)/c/include/libsbp.")
@@ -136,7 +136,7 @@ gen-python:
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/python/sbp/ \
-                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
+                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
 		       --python
 	$(call announce-end,"Finished generating Python bindings. Please check $(SWIFTNAV_ROOT)/python/sbp")
 
