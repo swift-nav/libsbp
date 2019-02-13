@@ -31,7 +31,10 @@ set(libsbp_SRCS
   edc.c
   sbp.c
   )
-set(LIBSBP_CFLAGS "-fpic" CACHE STRING "Compile flags for libsbp.")
+
+if (NOT MSVC)
+  set(LIBSBP_CFLAGS "-fpic" CACHE STRING "Compile flags for libsbp.")
+endif (NOT MSVC)
 
 add_library(sbp ${libsbp_SRCS})
 target_compile_options(sbp PRIVATE "${LIBSBP_CFLAGS}")
