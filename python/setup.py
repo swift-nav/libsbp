@@ -58,7 +58,7 @@ def read_release_version():
 
 
 MAJOR, MINOR, PATCH = read_release_version()
-IS_RELEASED = True
+IS_RELEASED = False
 
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
 
