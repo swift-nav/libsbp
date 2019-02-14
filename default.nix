@@ -24,6 +24,7 @@ stdenv.mkDerivation rec {
     gnutar
     zip
     cmake
+    git
   ];
   shellHook = ''
     [[ -z "$SOURCE_DATE_EPOCH" ]] || unset SOURCE_DATE_EPOCH
