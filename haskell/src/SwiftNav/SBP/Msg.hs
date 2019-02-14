@@ -109,6 +109,8 @@ data SBPMsg =
    | SBPMsgEphemerisSbasDepA MsgEphemerisSbasDepA Msg
    | SBPMsgEphemerisSbasDepB MsgEphemerisSbasDepB Msg
    | SBPMsgExtEvent MsgExtEvent Msg
+   | SBPMsgFileioConfigReq MsgFileioConfigReq Msg
+   | SBPMsgFileioConfigResp MsgFileioConfigResp Msg
    | SBPMsgFileioReadDirReq MsgFileioReadDirReq Msg
    | SBPMsgFileioReadDirResp MsgFileioReadDirResp Msg
    | SBPMsgFileioReadReq MsgFileioReadReq Msg
@@ -285,6 +287,8 @@ instance Binary SBPMsg where
           | _msgSBPType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisSbasDepB = SBPMsgEphemerisSbasDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgExtEvent = SBPMsgExtEvent (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFileioConfigReq = SBPMsgFileioConfigReq (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgFileioConfigResp = SBPMsgFileioConfigResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFileioReadDirReq = SBPMsgFileioReadDirReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFileioReadDirResp = SBPMsgFileioReadDirResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgFileioReadReq = SBPMsgFileioReadReq (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -453,6 +457,8 @@ instance Binary SBPMsg where
       encoder (SBPMsgEphemerisSbasDepA _ m) = put m
       encoder (SBPMsgEphemerisSbasDepB _ m) = put m
       encoder (SBPMsgExtEvent _ m) = put m
+      encoder (SBPMsgFileioConfigReq _ m) = put m
+      encoder (SBPMsgFileioConfigResp _ m) = put m
       encoder (SBPMsgFileioReadDirReq _ m) = put m
       encoder (SBPMsgFileioReadDirResp _ m) = put m
       encoder (SBPMsgFileioReadReq _ m) = put m
@@ -625,6 +631,8 @@ instance FromJSON SBPMsg where
         | msgType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisSbasDepB = SBPMsgEphemerisSbasDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgExtEvent = SBPMsgExtEvent <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFileioConfigReq = SBPMsgFileioConfigReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgFileioConfigResp = SBPMsgFileioConfigResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFileioReadDirReq = SBPMsgFileioReadDirReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFileioReadDirResp = SBPMsgFileioReadDirResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgFileioReadReq = SBPMsgFileioReadReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -798,6 +806,8 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgEphemerisSbasDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisSbasDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgExtEvent n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFileioConfigReq n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgFileioConfigResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFileioReadDirReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFileioReadDirResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgFileioReadReq n m) = toJSON n <<>> toJSON m
@@ -965,6 +975,8 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgEphemerisSbasDepA n m) = SBPMsgEphemerisSbasDepA n <$> f m
   msg f (SBPMsgEphemerisSbasDepB n m) = SBPMsgEphemerisSbasDepB n <$> f m
   msg f (SBPMsgExtEvent n m) = SBPMsgExtEvent n <$> f m
+  msg f (SBPMsgFileioConfigReq n m) = SBPMsgFileioConfigReq n <$> f m
+  msg f (SBPMsgFileioConfigResp n m) = SBPMsgFileioConfigResp n <$> f m
   msg f (SBPMsgFileioReadDirReq n m) = SBPMsgFileioReadDirReq n <$> f m
   msg f (SBPMsgFileioReadDirResp n m) = SBPMsgFileioReadDirResp n <$> f m
   msg f (SBPMsgFileioReadReq n m) = SBPMsgFileioReadReq n <$> f m

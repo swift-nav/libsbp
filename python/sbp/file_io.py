@@ -690,6 +690,188 @@ request.
     d.update(j)
     return d
     
+SBP_MSG_FILEIO_CONFIG_REQ = 0x1001
+class MsgFileioConfigReq(SBP):
+  """SBP class for message MSG_FILEIO_CONFIG_REQ (0x1001).
+
+  You can have MSG_FILEIO_CONFIG_REQ inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Returns advise on the optimal configuration for FileIO requests
+and response.  Newer version of FileIO can support greater
+throughput by support a larger window of FileIO data that can
+be in flight during read or write operation.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  sequence : int
+    Advice sequence number
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'sequence' / construct.Int32ul,)
+  __slots__ = [
+               'sequence',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgFileioConfigReq,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgFileioConfigReq, self).__init__()
+      self.msg_type = SBP_MSG_FILEIO_CONFIG_REQ
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.sequence = kwargs.pop('sequence')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFileioConfigReq.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFileioConfigReq(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgFileioConfigReq._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgFileioConfigReq._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgFileioConfigReq, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_FILEIO_CONFIG_RESP = 0x1002
+class MsgFileioConfigResp(SBP):
+  """SBP class for message MSG_FILEIO_CONFIG_RESP (0x1002).
+
+  You can have MSG_FILEIO_CONFIG_RESP inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Returns advise on the optimal configuration for FileIO requests
+and response.  Newer version of FileIO can support greater
+throughput by support a larger window of FileIO data that can
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  sequence : int
+    Advice sequence number
+  window_size : int
+    The number of SBP packets in the data in-flight window
+  batch_size : int
+    The number of SBP packets sent in one PDU
+  fileio_version : int
+    The version of FileIO that is supported
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'sequence' / construct.Int32ul,
+                   'window_size' / construct.Int32ul,
+                   'batch_size' / construct.Int32ul,
+                   'fileio_version' / construct.Int32ul,)
+  __slots__ = [
+               'sequence',
+               'window_size',
+               'batch_size',
+               'fileio_version',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgFileioConfigResp,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgFileioConfigResp, self).__init__()
+      self.msg_type = SBP_MSG_FILEIO_CONFIG_RESP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.sequence = kwargs.pop('sequence')
+      self.window_size = kwargs.pop('window_size')
+      self.batch_size = kwargs.pop('batch_size')
+      self.fileio_version = kwargs.pop('fileio_version')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFileioConfigResp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFileioConfigResp(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgFileioConfigResp._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgFileioConfigResp._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgFileioConfigResp, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x00A8: MsgFileioReadReq,
@@ -699,4 +881,6 @@ msg_classes = {
   0x00AC: MsgFileioRemove,
   0x00AD: MsgFileioWriteReq,
   0x00AB: MsgFileioWriteResp,
+  0x1001: MsgFileioConfigReq,
+  0x1002: MsgFileioConfigResp,
 }

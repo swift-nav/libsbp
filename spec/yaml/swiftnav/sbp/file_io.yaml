@@ -169,3 +169,39 @@ definitions:
       - sequence:
           type: u32
           desc: Write sequence number
+
+ - MSG_FILEIO_CONFIG_REQ:
+    id: 0x1001
+    short_desc: Request advice on the optimal configuration for FileIO.
+    desc: |
+      Requests advice on the optimal configuration for a FileIO 
+      transfer.  Newer version of FileIO can support greater
+      throughput by supporting a large window of FileIO data
+      that can be in-flight during read or write operations.
+    fields:
+      - sequence:
+          type: u32
+          desc: Advice sequence number
+
+ - MSG_FILEIO_CONFIG_RESP:
+    id: 0x1002
+    short_desc: |
+      Response with advice on the optimal configuration for FileIO.
+    desc: |
+      The advice on the optimal configuration for a FileIO
+      transfer.  Newer version of FileIO can support greater
+      throughput by supporting a large window of FileIO data
+      that can be in-flight during read or write operations.
+    fields:
+      - sequence:
+          type: u32
+          desc: Advice sequence number
+      - window_size:
+          type: u32
+          desc: The number of SBP packets in the data in-flight window
+      - batch_size:
+          type: u32
+          desc: The number of SBP packets sent in one PDU
+      - fileio_version:
+          type: u32
+          desc: The version of FileIO that is supported

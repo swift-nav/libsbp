@@ -35,6 +35,8 @@ import com.swiftnav.sbp.file_io.MsgFileioReadDirResp;
 import com.swiftnav.sbp.file_io.MsgFileioRemove;
 import com.swiftnav.sbp.file_io.MsgFileioWriteReq;
 import com.swiftnav.sbp.file_io.MsgFileioWriteResp;
+import com.swiftnav.sbp.file_io.MsgFileioConfigReq;
+import com.swiftnav.sbp.file_io.MsgFileioConfigResp;
 import com.swiftnav.sbp.flash.MsgFlashProgram;
 import com.swiftnav.sbp.flash.MsgFlashDone;
 import com.swiftnav.sbp.flash.MsgFlashReadReq;
@@ -222,6 +224,10 @@ final class MessageTable {
                 return new MsgFileioWriteReq(msg);
             case MsgFileioWriteResp.TYPE:
                 return new MsgFileioWriteResp(msg);
+            case MsgFileioConfigReq.TYPE:
+                return new MsgFileioConfigReq(msg);
+            case MsgFileioConfigResp.TYPE:
+                return new MsgFileioConfigResp(msg);
             case MsgFlashProgram.TYPE:
                 return new MsgFlashProgram(msg);
             case MsgFlashDone.TYPE:
