@@ -699,10 +699,10 @@ class MsgFileioConfigReq(SBP):
   of its fields.
 
   
-  Returns advise on the optimal configuration for FileIO requests
-and response.  Newer version of FileIO can support greater
-throughput by support a larger window of FileIO data that can
-be in flight during read or write operation.
+  Requests advice on the optimal configuration for a FileIO 
+transfer.  Newer version of FileIO can support greater
+throughput by supporting a large window of FileIO data
+that can be in-flight during read or write operations.
 
 
   Parameters
@@ -783,9 +783,10 @@ class MsgFileioConfigResp(SBP):
   of its fields.
 
   
-  Returns advise on the optimal configuration for FileIO requests
-and response.  Newer version of FileIO can support greater
-throughput by support a larger window of FileIO data that can
+  The advice on the optimal configuration for a FileIO
+transfer.  Newer version of FileIO can support greater
+throughput by supporting a large window of FileIO data
+that can be in-flight during read or write operations.
 
 
   Parameters

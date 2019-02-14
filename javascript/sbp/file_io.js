@@ -281,9 +281,9 @@ MsgFileioWriteResp.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
 /**
  * SBP class for message MSG_FILEIO_CONFIG_REQ (0x1001).
  *
- * Returns advise on the optimal configuration for FileIO requests and response.
- * Newer version of FileIO can support greater throughput by support a larger
- * window of FileIO data that can be in flight during read or write operation.
+ * Requests advice on the optimal configuration for a FileIO  transfer.  Newer
+ * version of FileIO can support greater throughput by supporting a large window of
+ * FileIO data that can be in-flight during read or write operations.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sequence number (unsigned 32-bit int, 4 bytes) Advice sequence number
@@ -310,9 +310,9 @@ MsgFileioConfigReq.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
 /**
  * SBP class for message MSG_FILEIO_CONFIG_RESP (0x1002).
  *
- * Returns advise on the optimal configuration for FileIO requests and response.
- * Newer version of FileIO can support greater throughput by support a larger
- * window of FileIO data that can
+ * The advice on the optimal configuration for a FileIO transfer.  Newer version of
+ * FileIO can support greater throughput by supporting a large window of FileIO
+ * data that can be in-flight during read or write operations.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sequence number (unsigned 32-bit int, 4 bytes) Advice sequence number

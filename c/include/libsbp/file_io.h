@@ -157,10 +157,10 @@ typedef struct SBP_ATTR_PACKED {
 
 /** Request advice on the optimal configuration for FileIO.
  *
- * Returns advise on the optimal configuration for FileIO requests
- * and response.  Newer version of FileIO can support greater
- * throughput by support a larger window of FileIO data that can
- * be in flight during read or write operation.
+ * Requests advice on the optimal configuration for a FileIO 
+ * transfer.  Newer version of FileIO can support greater
+ * throughput by supporting a large window of FileIO data
+ * that can be in-flight during read or write operations.
  */
 #define SBP_MSG_FILEIO_CONFIG_REQ    0x1001
 typedef struct SBP_ATTR_PACKED {
@@ -171,9 +171,10 @@ typedef struct SBP_ATTR_PACKED {
 /** Response with advice on the optimal configuration for FileIO.
 
  *
- * Returns advise on the optimal configuration for FileIO requests
- * and response.  Newer version of FileIO can support greater
- * throughput by support a larger window of FileIO data that can
+ * The advice on the optimal configuration for a FileIO
+ * transfer.  Newer version of FileIO can support greater
+ * throughput by supporting a large window of FileIO data
+ * that can be in-flight during read or write operations.
  */
 #define SBP_MSG_FILEIO_CONFIG_RESP   0x1002
 typedef struct SBP_ATTR_PACKED {
