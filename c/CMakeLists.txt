@@ -50,9 +50,11 @@ cmake_minimum_required(VERSION 2.8)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 # Some compiler options used globally
-if (NOT MSVC)
+if (MSVC)
+  set(CMAKE_C_FLAGS "/Wall /WX ${CMAKE_C_FLAGS}")
+else (MSVC)
   set(CMAKE_C_FLAGS "-Wall -Werror -std=gnu99 ${CMAKE_C_FLAGS}")
-endif (NOT MSVC)
+endif (MSVC)
 
 add_subdirectory(src)
 add_subdirectory(docs)
