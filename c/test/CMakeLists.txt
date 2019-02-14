@@ -21,6 +21,9 @@ else (CMAKE_CROSSCOMPILING)
     add_executable(test_libsbp check_main.c check_edc.c check_sbp.c ${generated_c_sources})
 
     target_link_libraries(test_libsbp ${TEST_LIBS})
+    set_property(TARGET test_libsbp PROPERTY C_STANDARD 99)
+    set_property(TARGET test_libsbp PROPERTY C_STANDARD_REQUIRED ON)
+
     add_custom_command(
       TARGET test_libsbp POST_BUILD
       COMMENT "Running unit tests"
