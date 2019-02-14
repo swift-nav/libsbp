@@ -1,11 +1,22 @@
 # Change Log
 
-## [v2.4.9](https://github.com/swift-nav/libsbp/tree/v2.4.9)
+## [v2.4.10](https://github.com/swift-nav/libsbp/tree/v2.4.10) (2019-02-14)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.9...v2.4.10)
 
+**Merged pull requests:**
+
+- Try updating the deploy key for sbp\_linux\_tools [\#649](https://github.com/swift-nav/libsbp/pull/649)
+- Bump Python version to latest 2.7 [\#648](https://github.com/swift-nav/libsbp/pull/648)
+- Remove dependency on setuptools\_scm \[ESD-1038\] [\#645](https://github.com/swift-nav/libsbp/pull/645)
+- New messages: SBP\_MSG\_FILEIO\_CONFIG\_{REQ,RESP} [\#644](https://github.com/swift-nav/libsbp/pull/644)
+
+## [v2.4.9](https://github.com/swift-nav/libsbp/tree/v2.4.9) (2019-02-07)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.8...v2.4.9)
 
 **Merged pull requests:**
 
+- 2.4.9 Release [\#643](https://github.com/swift-nav/libsbp/pull/643)
+- Remove obsolete examples and SBP\_MSG\_TWEET \[EX-476\] [\#642](https://github.com/swift-nav/libsbp/pull/642)
 - Small python fixes \[EX-476\] [\#641](https://github.com/swift-nav/libsbp/pull/641)
 - Allow multiple messages be sent at once \[ESD-1038\] [\#638](https://github.com/swift-nav/libsbp/pull/638)
 - Compile c library with -fPIC. [\#637](https://github.com/swift-nav/libsbp/pull/637)
