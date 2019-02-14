@@ -32,9 +32,7 @@ set(libsbp_SRCS
   sbp.c
   )
 
-if (NOT MSVC)
-  set(LIBSBP_CFLAGS "-fpic" CACHE STRING "Compile flags for libsbp.")
-endif (NOT MSVC)
+set(POSITION_INDEPENDENT_CODE TRUE CACHE STRING "libsbp as position independent code")
 
 add_library(sbp ${libsbp_SRCS})
 target_compile_options(sbp PRIVATE "${LIBSBP_CFLAGS}")
