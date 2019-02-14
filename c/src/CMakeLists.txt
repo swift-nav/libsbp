@@ -32,8 +32,17 @@ set(libsbp_SRCS
   sbp.c
   )
 
+set(LIBSBP_CFLAGS "-fpic -Wall -Werror" CACHE STRING "Compile flags for libsbp.")
+
 add_library(sbp ${libsbp_SRCS})
-target_compile_options(sbp PRIVATE -fpic -Wall -Werror)
+
+if(MSVC)
+    separate_arguments(LIBSBP_COMPILER_OPTIONS WINDOWS_COMMAND ${LIBSBP_CFLAGS})
+else()
+    separate_arguments(LIBSBP_COMPILER_OPTIONS UNIX_COMMAND ${LIBSBP_CFLAGS})
+endif()
+target_compile_options(sbp PRIVATE ${LIBSBP_COMPILER_OPTIONS})
+
 target_include_directories(sbp PUBLIC "${PROJECT_SOURCE_DIR}/include")
 set_property(TARGET sbp PROPERTY C_STANDARD 99)
 set_property(TARGET sbp PROPERTY C_STANDARD_REQUIRED ON)
