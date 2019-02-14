@@ -52,10 +52,12 @@ matrix:
         sudo apt-get update
         sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
       script: |
-        cd haskell
+        pushd haskell
         docker build -t sbp2json .
         docker run --rm --name sbp2json sbp2json >sbp_linux_tools.tar
         gzip sbp_linux_tools.tar
+        ls -l
+        popd
 
 deploy:
   provider: releases
