@@ -1,16 +1,16 @@
 HAS_NIX := $(shell which nix-shell || echo y)
 
-DEPLOY_PYTHON := "( \
-python setup.py sdist bdist_wheel && \
-twine upload -u '$(PYPI_USERNAME)' -p '$(PYPI_PASSWORD)' dist/sbp-$(SBP_VERSION)-*.whl )"
+DEPLOY_PYTHON := $(CURDIR)/deploy.sh
 
 .PHONY: deploy
 
 ifneq ($(HAS_NIX),)
-DEPLOY_COMMAND := nix-shell ../default.nix --pure	--command $(DEPLOY_PYTHON)
+DEPLOY_COMMAND := nix-shell ../default.nix --pure	--run "SBP_VERSION=$(SBP_VERSION) $(DEPLOY_PYTHON)"
 else
-DEPLOY_COMMAND := $(SHELL) -c $(DEPLOY_PYTHON)
+DEPLOY_COMMAND := SBP_VERSION=$(SBP_VERSION) $(SHELL) -c $(DEPLOY_PYTHON)
 endif
 
 deploy:
-	@$(DEPLOY_COMMAND)
+	@[ -n "$(PYPI_USERNAME)" ] || { echo "\n!!! Please set PYPI_USERNAME in the environment !!!\n"; exit 1; }
+	@[ -n "$(PYPI_PASSWORD)" ] || { echo "\n!!! Please set PYPI_PASSWORD in the environment !!!\n"; exit 1; }
+	$(DEPLOY_COMMAND)
