@@ -7,7 +7,7 @@ DEPLOY_PYTHON := $(CURDIR)/deploy.sh
 ifneq ($(HAS_NIX),)
 DEPLOY_COMMAND := nix-shell ../default.nix --pure	--run "SBP_VERSION=$(SBP_VERSION) $(DEPLOY_PYTHON)"
 else
-DEPLOY_COMMAND := SBP_VERSION=$(SBP_VERSION) $(SHELL) -c $(DEPLOY_PYTHON)
+DEPLOY_COMMAND := SBP_VERSION=$(SBP_VERSION) $(SHELL) $(DEPLOY_PYTHON)
 endif
 
 deploy:
