@@ -30,7 +30,11 @@ class JSONLogger(BaseLogger):
 
     def dump(self, msg, **metadata):
         try:
-            data = self.dispatch(msg).to_json_dict()
+            if type(msg) == SBP:
+                dispatched = self.dispatch(msg)
+                data = dispatched.to_json_dict()
+            else:
+                data = msg.to_json_dict()
             return json.dumps(self.fmt_msg(data, **metadata), allow_nan=False)
         except (ValueError, UnicodeDecodeError):
             try:
@@ -45,6 +49,13 @@ class JSONLogger(BaseLogger):
         output = self.dump(msg, **metadata)
         if output:
             self.handle.write(output + "\n")
+
+    def __init__(self, *args, **kwargs):
+        super( JSONLogger,
+               self).__init__(*args, **kwargs)
+        if 'dispatcher' not in kwargs.keys():
+            self.dispatcher = dispatch
+
 
 
 class JSONBinLogger(BaseLogger):
