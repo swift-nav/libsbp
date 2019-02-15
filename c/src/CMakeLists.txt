@@ -32,8 +32,6 @@ set(libsbp_SRCS
   sbp.c
   )
 
-set(LIBSBP_CFLAGS "-fpic -Wall -Werror" CACHE STRING "Compile flags for libsbp.")
-
 add_library(sbp ${libsbp_SRCS})
 
 if(MSVC)
@@ -44,8 +42,10 @@ endif()
 target_compile_options(sbp PRIVATE ${LIBSBP_COMPILER_OPTIONS})
 
 target_include_directories(sbp PUBLIC "${PROJECT_SOURCE_DIR}/include")
-set_property(TARGET sbp PROPERTY C_STANDARD 99)
-set_property(TARGET sbp PROPERTY C_STANDARD_REQUIRED ON)
+set_target_properties(sbp PROPERTIES
+        POSITION_INDEPENDENT_CODE ON
+        C_STANDARD 99
+        C_STANDARD_REQUIRED ON)
 
 install(TARGETS sbp
         EXPORT sbp-export
