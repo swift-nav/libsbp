@@ -3,7 +3,7 @@
 set -e
 
 deploy_dir=$(mktemp -d)
-#trap 'rm -rf "$deploy_dir"' EXIT
+trap 'rm -rf "$deploy_dir"' EXIT
 
 echo "$deploy_dir"
 cd "$deploy_dir"
