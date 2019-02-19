@@ -31,10 +31,27 @@ set(libsbp_SRCS
   edc.c
   sbp.c
   )
-set(LIBSBP_CFLAGS "-fpic" CACHE STRING "Compile flags for libsbp.")
 
 add_library(sbp ${libsbp_SRCS})
-target_compile_options(sbp PRIVATE "${LIBSBP_CFLAGS}")
-target_include_directories(sbp PUBLIC "${PROJECT_SOURCE_DIR}/include")
-install(TARGETS sbp DESTINATION lib${LIB_SUFFIX})
+
+if(MSVC)
+    separate_arguments(LIBSBP_COMPILER_OPTIONS WINDOWS_COMMAND ${LIBSBP_CFLAGS})
+else()
+    separate_arguments(LIBSBP_COMPILER_OPTIONS UNIX_COMMAND ${LIBSBP_CFLAGS})
+endif()
+target_compile_options(sbp PRIVATE ${LIBSBP_COMPILER_OPTIONS})
+
+target_include_directories(sbp PUBLIC ${PROJECT_SOURCE_DIR}/include)
+set_target_properties(sbp PROPERTIES
+        POSITION_INDEPENDENT_CODE ON
+        C_STANDARD 99
+        C_STANDARD_REQUIRED ON)
+
+install(TARGETS sbp
+        EXPORT sbp-export
+        DESTINATION lib${LIB_SUFFIX})
 install(FILES ${libsbp_HEADERS} DESTINATION include/libsbp)
+
+export(EXPORT sbp-export
+        NAMESPACE LibSbp::
+        FILE ${PROJECT_BINARY_DIR}/LibSbpImport.cmake)
