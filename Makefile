@@ -229,11 +229,13 @@ test-protobuf:
 	$(call announce-begin,"Running Protocol Buffer tests")
 	$(call announce-end,"Finished running Protocol Buffer tests")
 
-dist:
+dist-python:
+	$(call announce-begin,"Deploying Python package")
+	make -C $(SWIFTNAV_ROOT)/python SBP_VERSION="$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" deploy 
+	$(call announce-end,"Finished deploying Python package")
+
+dist: dist-python
 	$(call announce-begin,"Deploying packages")
-	pushd $(SWIFTNAV_ROOT)/python
-	python setup.py sdist upload -r pypi
-	popd
 	npm publish
 	pushd $(SWIFTNAV_ROOT)/haskell
 	stack sdist

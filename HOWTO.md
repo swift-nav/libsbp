@@ -88,9 +88,6 @@ Ubuntu 16.04.
    libsbp version number in the C, Python, JavaScript, and LaTeX developer
    documentation are consistent.
 
-   - Python: In `python/setup.py` change `IS_RELEASED = False` to
-     `IS_RELEASED = True`.
-
    - JavaScript: Manually update `package-lock.json`.
 
    - Others: should be automatically extracted from git tag
