@@ -41,7 +41,7 @@ else()
 endif()
 target_compile_options(sbp PRIVATE ${LIBSBP_COMPILER_OPTIONS})
 
-target_include_directories(sbp PUBLIC "${PROJECT_SOURCE_DIR}/include")
+target_include_directories(sbp PUBLIC ${PROJECT_SOURCE_DIR}/include)
 set_target_properties(sbp PROPERTIES
         POSITION_INDEPENDENT_CODE ON
         C_STANDARD 99
