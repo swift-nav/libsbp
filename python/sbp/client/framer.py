@@ -16,6 +16,7 @@ import datetime
 import time
 import uuid
 import six
+import warnings
 
 
 class Framer(six.Iterator):
@@ -126,8 +127,8 @@ class Framer(six.Iterator):
         msg = SBP(msg_type, sender, msg_len, data, crc)
         try:
             msg = self._dispatch(msg)
-        except:
-            pass
+        except Exception as exc:
+            warnings.warn("SBP dispatch error: %s" % (exc,))
         return msg
 
     def __call__(self, *msgs, **metadata):
