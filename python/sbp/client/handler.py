@@ -12,6 +12,7 @@ The :mod:`sbp.client.handler` module contains classes related to
 SBP message handling.
 """
 
+import warnings
 import collections
 import threading
 import weakref
@@ -209,8 +210,12 @@ class Handler(object):
         try:
             self._source.breakiter()
             self._receive_thread.join(0.1)
-        except:
+        except Exception as exc:
+            warnings.warn("Handler stop error: %s" % (exc,))
             pass
+
+    def join(self, timeout=None):
+        self._receive_thread.join(timeout)
 
     def is_alive(self):
         """
