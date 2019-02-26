@@ -179,6 +179,26 @@ An example string that could be sent to a device is
     self.payload = MsgSettingsWrite._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgSettingsWrite._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgSettingsWrite, self).to_json_dict()
@@ -273,6 +293,26 @@ are omitted. An example string that could be sent from device is
     self.payload = MsgSettingsWriteResp._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgSettingsWriteResp._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgSettingsWriteResp, self).to_json_dict()
@@ -362,6 +402,26 @@ message (msg_id 0x00A5).
     c = containerize(exclude_fields(self))
     self.payload = MsgSettingsReadReq._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgSettingsReadReq._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -453,6 +513,26 @@ example string that could be sent from device is
     self.payload = MsgSettingsReadResp._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgSettingsReadResp._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgSettingsReadResp, self).to_json_dict()
@@ -537,6 +617,26 @@ values. A device will respond to this message with a
     c = containerize(exclude_fields(self))
     self.payload = MsgSettingsReadByIndexReq._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgSettingsReadByIndexReq._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -636,6 +736,26 @@ the device is "simulator\0enabled\0True\0enum:True,False\0"
     c = containerize(exclude_fields(self))
     self.payload = MsgSettingsReadByIndexResp._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgSettingsReadByIndexResp._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -767,6 +887,26 @@ for this setting to set the initial value.
     self.payload = MsgSettingsRegister._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgSettingsRegister._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgSettingsRegister, self).to_json_dict()
@@ -858,6 +998,26 @@ according to the status field.
     c = containerize(exclude_fields(self))
     self.payload = MsgSettingsRegisterResp._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgSettingsRegisterResp._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
     self.to_binary()

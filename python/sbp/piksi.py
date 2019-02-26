@@ -435,6 +435,26 @@ bootloader.
     self.payload = MsgReset._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgReset._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgReset, self).to_json_dict()
@@ -657,6 +677,26 @@ Ambiguity Resolution (IAR) process.
     self.payload = MsgResetFilters._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgResetFilters._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgResetFilters, self).to_json_dict()
@@ -801,6 +841,26 @@ thread. The reported percentage values must be normalized.
     self.payload = MsgThreadState._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgThreadState._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgThreadState, self).to_json_dict()
@@ -910,6 +970,26 @@ period indicates their likelihood of transmission.
     self.payload = MsgUartState._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgUartState._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgUartState, self).to_json_dict()
@@ -1005,6 +1085,26 @@ class MsgUartStateDepa(SBP):
     self.payload = MsgUartStateDepa._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgUartStateDepa._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgUartStateDepa, self).to_json_dict()
@@ -1088,6 +1188,26 @@ from satellite observations.
     c = containerize(exclude_fields(self))
     self.payload = MsgIarState._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgIarState._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -1176,6 +1296,26 @@ from being used in various Piksi subsystems.
     self.payload = MsgMaskSatellite._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgMaskSatellite._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgMaskSatellite, self).to_json_dict()
@@ -1260,6 +1400,26 @@ class MsgMaskSatelliteDep(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgMaskSatelliteDep._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgMaskSatelliteDep._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -1364,6 +1524,26 @@ available.
     self.payload = MsgDeviceMonitor._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgDeviceMonitor._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgDeviceMonitor, self).to_json_dict()
@@ -1452,6 +1632,26 @@ code will be returned with MSG_COMMAND_RESP.
     self.payload = MsgCommandReq._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgCommandReq._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgCommandReq, self).to_json_dict()
@@ -1538,6 +1738,26 @@ the command.  A return code of zero indicates success.
     c = containerize(exclude_fields(self))
     self.payload = MsgCommandResp._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgCommandResp._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -1627,6 +1847,26 @@ the correct command.
     c = containerize(exclude_fields(self))
     self.payload = MsgCommandOutput._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgCommandOutput._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -1792,6 +2032,26 @@ in c.
     self.payload = MsgNetworkStateResp._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgNetworkStateResp._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgNetworkStateResp, self).to_json_dict()
@@ -1872,6 +2132,26 @@ class MsgNetworkBandwidthUsage(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgNetworkBandwidthUsage._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgNetworkBandwidthUsage._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -1965,6 +2245,26 @@ of the modem and its various parameters.
     c = containerize(exclude_fields(self))
     self.payload = MsgCellModemStatus._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgCellModemStatus._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -2080,6 +2380,26 @@ class MsgSpecanDep(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSpecanDep._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgSpecanDep._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -2197,6 +2517,26 @@ class MsgSpecan(SBP):
     self.payload = MsgSpecan._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgSpecan._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgSpecan, self).to_json_dict()
@@ -2287,6 +2627,26 @@ A negative value implies an error for the particular gain stage as reported by t
     c = containerize(exclude_fields(self))
     self.payload = MsgFrontEndGain._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgFrontEndGain._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
     self.to_binary()

@@ -116,6 +116,26 @@ parity of the data block and sends only blocks that pass the check.
     self.payload = MsgSbasRaw._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    def build_payload(buf, offset, payload):
+        total_length = [0]
+        class StreamPayload(object):
+            def write(self, data):
+                try:
+                    length = len(data)
+                    buf[offset:offset+length] = bytearray(data)
+                    total_length[0] += length
+                    return length
+                except Exception as exc:
+                    print(exc)
+        MsgSbasRaw._parser.build_stream(payload, StreamPayload())
+        return total_length[0]
+    return self.pack_into(buf, offset, build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgSbasRaw, self).to_json_dict()
