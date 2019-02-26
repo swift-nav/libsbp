@@ -17,6 +17,9 @@ import time
 import uuid
 import six
 
+import numpy as np
+import numba as nb
+
 
 class Framer(six.Iterator):
     """
@@ -40,6 +43,8 @@ class Framer(six.Iterator):
         self._broken = False
         self._dispatch = dispatcher
         self._session = str(uuid.uuid4())
+        # self._buffer = bytearray(4096)
+        self._buffer = np.zeros(16*1024, dtype=np.uint8)
 
     def __iter__(self):
         self._broken = False
@@ -85,14 +90,8 @@ class Framer(six.Iterator):
         data = b""
         while len(data) < size:
             d = self._read(size - len(data))
-            if self._broken:
+            if not d or self._broken:
                 raise StopIteration
-            if not d:
-                # NOTE (Buro/jgross): Force a yield here to another thread. In
-                # case the stream fails midstream, the spinning here causes
-                # the UI thread to lock up without yielding.
-                time.sleep(0)
-                continue
             data += d
         return data
 
@@ -104,7 +103,7 @@ class Framer(six.Iterator):
         # empty input
         preamble = self._read(1)
         if not preamble:
-            return None
+            raise StopIteration
         elif ord(preamble) != SBP_PREAMBLE:
             if self._verbose:
                 print("Host Side Unhandled byte: 0x%02x" % ord(preamble))
@@ -142,4 +141,14 @@ class Framer(six.Iterator):
           Metadata for this batch of messages, e.g. `{'time': 'ISO 8601 str'}`
           (ignored for now).
         """
-        self._write(bytes.join(b'', (msg.to_binary() for msg in msgs)))
+        index, into_buffer = 0, len(msgs) > 0 and hasattr(msgs[0], 'into_buffer')
+        for msg in msgs:
+            if not into_buffer:
+                msg_buff = msg.to_binary()
+                buff_len = len(msg_buff)
+                # print((index, buff_len))
+                self._buffer[index:(index+buff_len)] = msg_buff
+                index += buff_len
+            else:
+                index += msg.into_buffer(self._buffer, index)
+        self._write(memoryview(self._buffer)[:index])

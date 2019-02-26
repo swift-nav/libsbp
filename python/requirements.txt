@@ -7,3 +7,5 @@ pylibftdi
 pyserial
 requests>=2.8.1
 requests-futures>=0.9.5
+numpy==1.13.1
+numba
