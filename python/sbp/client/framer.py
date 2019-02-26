@@ -102,14 +102,8 @@ class Framer(six.Iterator):
         data = b""
         while len(data) < size:
             d = self._read(size - len(data))
-            if self._broken:
+            if not d or self._broken:
                 raise StopIteration
-            if not d:
-                # NOTE (Buro/jgross): Force a yield here to another thread. In
-                # case the stream fails midstream, the spinning here causes
-                # the UI thread to lock up without yielding.
-                time.sleep(0)
-                continue
             data += d
         return data
 
@@ -121,7 +115,7 @@ class Framer(six.Iterator):
         # empty input
         preamble = self._read(1)
         if not preamble:
-            return None
+            raise StopIteration
         elif ord(preamble) != SBP_PREAMBLE:
             if self._verbose:
                 print("Host Side Unhandled byte: 0x%02x" % ord(preamble))
