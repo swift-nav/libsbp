@@ -126,19 +126,7 @@ consumers of CPU on the system.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgLinuxCpuState._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgLinuxCpuState._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -248,19 +236,7 @@ consumers of memory on the system.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgLinuxMemState._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgLinuxMemState._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -374,19 +350,7 @@ class MsgLinuxSysState(SBP):
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgLinuxSysState._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgLinuxSysState._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -508,19 +472,7 @@ class MsgLinuxProcessSocketCounts(SBP):
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgLinuxProcessSocketCounts._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgLinuxProcessSocketCounts._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -654,19 +606,7 @@ of the connection.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgLinuxProcessSocketQueues._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgLinuxProcessSocketQueues._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -774,19 +714,7 @@ the first entry corresponds to the first enabled bit in `types_reported`.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgLinuxSocketUsage._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgLinuxSocketUsage._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -890,19 +818,7 @@ class MsgLinuxProcessFdCount(SBP):
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgLinuxProcessFdCount._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgLinuxProcessFdCount._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -1000,19 +916,7 @@ of the list being 2 NULL terminators in a row.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgLinuxProcessFdSummary._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgLinuxProcessFdSummary._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):

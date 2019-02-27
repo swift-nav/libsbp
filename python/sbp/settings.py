@@ -184,19 +184,7 @@ An example string that could be sent to a device is
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgSettingsWrite._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgSettingsWrite._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -298,19 +286,7 @@ are omitted. An example string that could be sent from device is
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgSettingsWriteResp._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgSettingsWriteResp._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -408,19 +384,7 @@ message (msg_id 0x00A5).
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgSettingsReadReq._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgSettingsReadReq._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -518,19 +482,7 @@ example string that could be sent from device is
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgSettingsReadResp._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgSettingsReadResp._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -623,19 +575,7 @@ values. A device will respond to this message with a
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgSettingsReadByIndexReq._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgSettingsReadByIndexReq._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -742,19 +682,7 @@ the device is "simulator\0enabled\0True\0enum:True,False\0"
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgSettingsReadByIndexResp._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgSettingsReadByIndexResp._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -892,19 +820,7 @@ for this setting to set the initial value.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgSettingsRegister._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgSettingsRegister._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -1004,19 +920,7 @@ according to the status field.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgSettingsRegisterResp._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgSettingsRegisterResp._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):

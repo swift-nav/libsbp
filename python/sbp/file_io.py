@@ -134,19 +134,7 @@ to this message when it is received from sender ID 0x42.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgFileioReadReq._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgFileioReadReq._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -244,19 +232,7 @@ preserved from the request.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgFileioReadResp._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgFileioReadResp._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -365,19 +341,7 @@ from sender ID 0x42.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgFileioReadDirReq._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgFileioReadDirReq._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -476,19 +440,7 @@ the response is preserved from the request.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgFileioReadDirResp._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgFileioReadDirResp._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -580,19 +532,7 @@ process this message when it is received from sender ID 0x42.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgFileioRemove._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgFileioRemove._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -703,19 +643,7 @@ only  process this message when it is received from sender ID
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgFileioWriteReq._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgFileioWriteReq._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -808,19 +736,7 @@ request.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgFileioWriteResp._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgFileioWriteResp._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -912,19 +828,7 @@ that can be in-flight during read or write operations.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgFileioConfigReq._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgFileioConfigReq._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -1031,19 +935,7 @@ that can be in-flight during read or write operations.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgFileioConfigResp._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgFileioConfigResp._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):

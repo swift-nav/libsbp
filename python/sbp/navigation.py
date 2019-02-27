@@ -151,19 +151,7 @@ from -500000 to 500000)
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgGPSTime._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgGPSTime._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -293,19 +281,7 @@ which indicate the source of the UTC offset value and source of the time fix.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgUtcTime._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgUtcTime._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -427,19 +403,7 @@ corresponds to differential or SPP solution.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgDops._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgDops._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -565,19 +529,7 @@ MSG_GPS_TIME with the matching time-of-week (tow).
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgPosECEF._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgPosECEF._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -729,19 +681,7 @@ MSG_GPS_TIME with the matching time-of-week (tow).
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgPosECEFCov._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgPosECEFCov._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -872,19 +812,7 @@ matching time-of-week (tow).
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgPosLLH._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgPosLLH._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -1035,19 +963,7 @@ measurement and care should be taken with the sign convention.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgPosLLHCov._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgPosLLHCov._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -1170,19 +1086,7 @@ matching time-of-week (tow).
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgBaselineECEF._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgBaselineECEF._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -1311,19 +1215,7 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgBaselineNED._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgBaselineNED._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -1445,19 +1337,7 @@ MSG_GPS_TIME with the matching time-of-week (tow).
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgVelECEF._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgVelECEF._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -1603,19 +1483,7 @@ MSG_GPS_TIME with the matching time-of-week (tow).
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgVelECEFCov._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgVelECEFCov._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -1744,19 +1612,7 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgVelNED._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgVelNED._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -1905,19 +1761,7 @@ portion of the 3x3 covariance matrix.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgVelNEDCov._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgVelNEDCov._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -2068,19 +1912,7 @@ products and is not available from Piksi Multi or Duro.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgVelBody._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgVelBody._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -2175,19 +2007,7 @@ Differential solution
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgAgeCorrections._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgAgeCorrections._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -2305,19 +2125,7 @@ from -500000 to 500000)
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgGPSTimeDepA._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgGPSTimeDepA._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -2433,19 +2241,7 @@ precision.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgDopsDepA._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgDopsDepA._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -2573,19 +2369,7 @@ to 0.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgPosECEFDepA._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgPosECEFDepA._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -2720,19 +2504,7 @@ implemented). Defaults to 0.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgPosLLHDepA._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgPosLLHDepA._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -2856,19 +2628,7 @@ matching time-of-week (tow).
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgBaselineECEFDepA._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgBaselineECEFDepA._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -3001,19 +2761,7 @@ implemented). Defaults to 0.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgBaselineNEDDepA._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgBaselineNEDDepA._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -3136,19 +2884,7 @@ to 0.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgVelECEFDepA._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgVelECEFDepA._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -3279,19 +3015,7 @@ implemented). Defaults to 0.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgVelNEDDepA._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgVelNEDDepA._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -3397,19 +3121,7 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgBaselineHeadingDepA._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgBaselineHeadingDepA._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):

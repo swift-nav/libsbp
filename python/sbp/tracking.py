@@ -445,19 +445,7 @@ signal is in continuous track.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgTrackingStateDetailedDepA._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgTrackingStateDetailedDepA._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -660,19 +648,7 @@ signal is in continuous track.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgTrackingStateDetailedDep._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgTrackingStateDetailedDep._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -763,19 +739,7 @@ measurements for all tracked satellites.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgTrackingState._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgTrackingState._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -866,19 +830,7 @@ measurements for all tracked satellites.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgMeasurementState._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgMeasurementState._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -978,19 +930,7 @@ update interval.
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgTrackingIq._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgTrackingIq._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -1088,19 +1028,7 @@ class MsgTrackingIqDep(SBP):
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgTrackingIqDep._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgTrackingIqDep._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -1188,19 +1116,7 @@ class MsgTrackingStateDepA(SBP):
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgTrackingStateDepA._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgTrackingStateDepA._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
@@ -1288,19 +1204,7 @@ class MsgTrackingStateDepB(SBP):
 
     """
     self.payload = containerize(exclude_fields(self))
-    def build_payload(buf, offset, payload):
-        total_length = [0]
-        class StreamPayload(object):
-            def write(self, data):
-                try:
-                    length = len(data)
-                    buf[offset:offset+length] = bytearray(data)
-                    total_length[0] += length
-                    return length
-                except Exception as exc:
-                    print(exc)
-        MsgTrackingStateDepB._parser.build_stream(payload, StreamPayload())
-        return total_length[0]
+    build_payload = SBP.mk_build_payload( MsgTrackingStateDepB._parser)
     return self.pack_into(buf, offset, build_payload)
 
   def to_json_dict(self):
