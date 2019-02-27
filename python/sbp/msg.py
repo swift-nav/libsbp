@@ -163,7 +163,8 @@ class SBP(object):
     crc_over_len = self._header_len + self.length - preamble_bytes
     self.crc = crc16jit(buf, offset+1, 0, crc_over_len)
     struct.pack_into(self._crc_fmt, buf, crc_offset, self.crc)
-    return preamble_bytes + crc_over_len + self._crc_len
+    length = preamble_bytes + crc_over_len + self._crc_len
+    return length
 
   def pack(self):
     """Pack to framed binary message.
@@ -240,3 +241,24 @@ class SBP(object):
          'payload': base64.standard_b64encode(self.payload).decode('ascii'),
          'crc': self.crc}
     return d
+
+  @staticmethod
+  def mk_build_payload(parser):
+    def build_payload(buf, offset, payload):
+      class StreamPayload(object):
+        def __init__(self, offset):
+          self.length = 0
+          self.offset = offset
+        def write(self, data):
+          try:
+            length = len(data)
+            buf[self.offset:self.offset+length] = bytearray(data)
+            self.length += length
+            self.offset += length
+            return length
+          except Exception as exc:
+            print(exc)
+      stream_payload = StreamPayload(offset)
+      parser.build_stream(payload, stream_payload)
+      return stream_payload.length
+    return build_payload
