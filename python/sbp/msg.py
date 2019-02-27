@@ -61,8 +61,6 @@ _crc16_tab = [
 
 crc16_tab = np.array(_crc16_tab, dtype=np.uint32)
 
-print(nb)
-
 
 @nb.jit('u2(u1[:], u4, u2, u4)', nopython=True, nogil=True)
 def crc16jit(buf, offset, crc, length):
@@ -110,8 +108,8 @@ class SBP(object):
                'payload',
                'crc']
 
-  _preamble_fmt = '<BHHB'
-  _preamble_len = struct.calcsize(_preamble_fmt)
+  _header_fmt = '<BHHB'
+  _header_len = struct.calcsize(_header_fmt)
 
   _crc_fmt = '<H'
   _crc_len = struct.calcsize(_crc_fmt)
@@ -151,20 +149,21 @@ class SBP(object):
     """Returns the framed message and updates the CRC.
 
     """
-    preamble_offset = offset + self._preamble_len
-    self.length = insert_payload(buf, preamble_offset, self.payload)
-    struct.pack_into(self._preamble_fmt,
+    header_offset = offset + self._header_len
+    self.length = insert_payload(buf, header_offset, self.payload)
+    struct.pack_into(self._header_fmt,
                      buf,
                      offset,
                      self.preamble,
                      self.msg_type,
                      self.sender,
                      self.length)
-    crc_offset = preamble_offset + self.length
-    crc_over_len = self._preamble_len + self.length
+    crc_offset = header_offset + self.length
+    preamble_bytes = 1
+    crc_over_len = self._header_len + self.length - preamble_bytes
     self.crc = crc16jit(buf, offset+1, 0, crc_over_len)
     struct.pack_into(self._crc_fmt, buf, crc_offset, self.crc)
-    return crc_over_len + self._crc_len
+    return preamble_bytes + crc_over_len + self._crc_len
 
   def pack(self):
     """Pack to framed binary message.
