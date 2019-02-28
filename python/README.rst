@@ -23,7 +23,7 @@ Install package from pypi::
 Setup using a virtual environment
 -----
 
-Install the `virtualenv`::
+Setup and activate the `virtualenv`::
 
    $ virtualenv .env && source .env/bin/activate
 
