@@ -6,7 +6,7 @@ Python client for Swift Binary Protocol (SBP).
 Setup
 -----
 
-Youmust have `python` and `pip` installed.
+You must have `python` and `pip` installed.
 
 Install dependencies only::
 
@@ -19,6 +19,23 @@ Install from repo::
 Install package from pypi::
 
   $ sudo pip install sbp
+
+Setup using a virtual environment
+-----
+
+Setup and activate the `virtualenv`::
+
+   $ virtualenv .env && source .env/bin/activate
+
+Install `py.test` in the virtualenv::
+
+   $ pip install pytest-virtualenv
+
+Install the `pt.test` coverage tools::
+
+   $ pip install pytest-cov
+
+Finally, proceed to the standard setup instructions.
 
 Usage Examples
 --------------
