@@ -1,5 +1,16 @@
 # Change Log
 
+## [2.5.0](https://github.com/swift-nav/libsbp/tree/v2.5.0)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.10...v2.5.0)
+
+**Merged pull requests:**
+
+- Python 3 support
+- added virtualenv instructions for the python bindings for libsbp [\#654](https://github.com/swift-nav/libsbp/pull/654)
+- Updated CMake files [\#652](https://github.com/swift-nav/libsbp/pull/652)
+- Use twine/nix to push to PyPI, auto-mangle IS\_RELEASED \[ESD-1038\] [\#651](https://github.com/swift-nav/libsbp/pull/651)
+
 ## [v2.4.10](https://github.com/swift-nav/libsbp/tree/v2.4.10) (2019-02-14)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.9...v2.4.10)
 
