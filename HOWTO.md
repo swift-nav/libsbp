@@ -92,8 +92,8 @@ Ubuntu 16.04.
 
    - Others: should be automatically extracted from git tag
 
-2. Add to RELEASE_NOTES.md and update the CHANGELOG details with `make
-   release`. Submit a pull request and get it merged. This requires
+2. Update the CHANGELOG details with `make release`. Submit a pull request and
+   get it merged. This requires
    [github-changelog-generator](https://github.com/skywinder/github-changelog-generator),
    and a `CHANGELOG_GITHUB_TOKEN` in your `PATH` if you don't already have
    them.
