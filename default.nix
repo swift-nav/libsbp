@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     libiconv
     zlib
-    clang_5
+    clang_6
     check
     gradle
     zlib.dev
@@ -17,6 +17,11 @@ stdenv.mkDerivation rec {
     python27Packages.setuptools
     python27Packages.wheel
     python27Packages.twine
+    python37Full
+    python37Packages.virtualenv
+    python37Packages.setuptools
+    python37Packages.wheel
+    python37Packages.twine
     nodejs
     coreutils
     bash
