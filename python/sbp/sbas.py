@@ -17,10 +17,8 @@ SBAS data
 import construct
 import json
 from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
-                      greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import numpy as np
-import traceback
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/sbas.yaml with generate.py.

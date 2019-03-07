@@ -46,7 +46,6 @@ def walk_json_dict(coll):
   else:
     return coll
 
-
 def containerize(coll, key=None):
   """Walk attribute fields passed from an SBP message and convert to
   Containers where appropriate. Needed for Construct proper
@@ -62,6 +61,15 @@ def containerize(coll, key=None):
     return coll
   elif isinstance(coll, dict):
     return containerize(Container(**coll))
+  elif hasattr(coll, '__slots__'):
+    return dict((k, containerize(getattr(coll, k))) for k in coll.__slots__)
+  elif isinstance(coll, list):
+    for j, i in enumerate(coll):
+      if isinstance(i, dict):
+        coll[j] = containerize(Container(**i))
+      elif hasattr(i, '__slots__'):
+        coll[j] = containerize(i)
+    return coll
   else:
     return coll
 

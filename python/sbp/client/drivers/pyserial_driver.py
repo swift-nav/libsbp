@@ -79,11 +79,7 @@ class PySerialDriver(BaseDriver):
           Number of bytes to read.
         """
         try:
-            while len(self.buf) < size:
-                self.buf += self.handle.read(16 * 1024)
-            ret = self.buf[:size]
-            self.buf = self.buf[size:]
-            return ret
+            return self.handle.read(size)
         except (OSError, serial.SerialException):
             print()
             print("Piksi disconnected")

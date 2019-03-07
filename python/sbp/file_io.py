@@ -25,8 +25,7 @@ host request and the device response.
 import construct
 import json
 from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize,\
-                      greedy_string
+from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 import numpy as np
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/file_io.yaml with generate.py.
@@ -817,10 +816,7 @@ that can be in-flight during read or write operations.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)
@@ -929,10 +925,7 @@ that can be in-flight during read or write operations.
     the message.
 
     """
-    try:
-      self._from_binary(d)
-    except:
-      print traceback.print_exc()
+    self._from_binary(d)
 
   def __getitem__(self, item):
     return getattr(self, item)

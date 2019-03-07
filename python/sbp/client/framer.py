@@ -132,8 +132,9 @@ class Framer(six.Iterator):
         msg = SBP(msg_type, sender, msg_len, data, crc)
         try:
             msg = self._dispatch(msg)
-        except:
-            print 'Error dispatching sbp msg of type:', msg_type
+        except Exception as e:
+            print("Error dispatching sbp msg of type: %d" % msg_type)
+            print(e)
         return msg
 
     def __call__(self, *msgs, **metadata):

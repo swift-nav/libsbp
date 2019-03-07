@@ -211,16 +211,16 @@ class SBP(object):
         # for backwards compatibility with Struct('x', Array(3, LFloat64('x')))
         # style dual packaging
         if array_size is not None:
-          res = Container(**{field_name: res})
- 
+          res = construct.Container(**{field_name: res})
+
       # string
       elif field_type.startswith('str'):
         count = int(field_type.split(':')[1]) if ':' in field_type else -1
         res = ''.join(chr(c) for c in np.frombuffer(data, 'u1', count, offset))
         offset += len(res)
-        res = res.ljust(count, '\x00')  
-  
-      # custom embedded type       
+        res = bytes(bytearray(res.ljust(count, '\x00'), 'utf-8'))  
+
+      # custom embedded type
       else:
         res = self._get_embedded_type(field_type)()
         offset += res.from_binary(data, offset)

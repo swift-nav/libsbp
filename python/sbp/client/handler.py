@@ -7,7 +7,6 @@
 # THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-
 """
 The :mod:`sbp.client.handler` module contains classes related to
 SBP message handling.
@@ -16,18 +15,12 @@ SBP message handling.
 import collections
 import threading
 import weakref
-<<<<<<< 89075dc6ee1fcfe38610b3ad9f8ee9f3cba75cba
 import six
-from six.moves.queue import Queue
-=======
-
 from collections import deque
 from time import sleep
->>>>>>> SBPQueueIterator internals from Queue to deque
 
 
 class Handler(object):
-
     """
     Handler
     The :class:`Handler` class provides an interface for connecting handlers
@@ -94,6 +87,7 @@ class Handler(object):
                 i(msg, **metadata)
             else:
                 raise Handler._DeadCallbackException
+
         self.add_callback(feediter, msg_type)
         return iterator
 
@@ -222,6 +216,7 @@ class Handler(object):
         def cb(sbp_msg, **metadata):
             payload['data'] = sbp_msg
             event.set()
+
         self.add_callback(cb, msg_type)
         event.wait(timeout)
         self.remove_callback(cb, msg_type)
@@ -245,13 +240,25 @@ class Handler(object):
         def cb(msg, **metadata):
             callback(msg, **metadata)
             event.set()
+
         self.add_callback(cb, msg_type)
         event.wait(timeout)
         self.remove_callback(cb, msg_type)
 
-    def __call__(self, msg, **metadata):
+    def __call__(self, *msgs, **metadata):
+        """
+        Pass messages to the `source` to be consumed.  Typically this means
+        the messages will be framed and transmitted via whatever transport
+        layer is currently active.
+        Parameters
+        ----------
+        msgs : SBP messages
+          SBP messages to send.
+        metadata : dict
+          Metadata for this batch of messages, passed to the `source`.
+        """
         with self._write_lock:
-            self._source(msg, **metadata)
+            self._source(*msgs, **metadata)
 
     class _SBPQueueIterator(six.Iterator):
         """
@@ -271,9 +278,9 @@ class Handler(object):
 
         def breakiter(self):
             self._broken = True
-            self._queue.append(None)
+            self._queue.put(None, True, 1.0)
 
-        def next(self):
+        def __next__(self):
             m = None
             while True:
                 if self._broken and not self._queue:
@@ -282,7 +289,7 @@ class Handler(object):
                     m = self._queue.popleft()
                     break
                 else:
-                    sleep(0.5)
+                    sleep(0.001)
             if self._broken and m is None:
                 raise StopIteration
             return m
