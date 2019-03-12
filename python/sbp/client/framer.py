@@ -40,7 +40,7 @@ class Framer(six.Iterator):
                  write,
                  verbose=False,
                  dispatcher=dispatch,
-                 into_buffer=False,
+                 into_buffer=True,
                  skip_metadata=False):
         self._read = read
         self._write = write
