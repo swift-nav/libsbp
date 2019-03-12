@@ -121,6 +121,15 @@ consumers of CPU on the system.
     self.payload = MsgLinuxCpuState._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgLinuxCpuState._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgLinuxCpuState, self).to_json_dict()
@@ -222,6 +231,15 @@ consumers of memory on the system.
     c = containerize(exclude_fields(self))
     self.payload = MsgLinuxMemState._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgLinuxMemState._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -328,6 +346,15 @@ class MsgLinuxSysState(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgLinuxSysState._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgLinuxSysState._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -442,6 +469,15 @@ class MsgLinuxProcessSocketCounts(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgLinuxProcessSocketCounts._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgLinuxProcessSocketCounts._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -569,6 +605,15 @@ of the connection.
     self.payload = MsgLinuxProcessSocketQueues._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgLinuxProcessSocketQueues._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgLinuxProcessSocketQueues, self).to_json_dict()
@@ -669,6 +714,15 @@ the first entry corresponds to the first enabled bit in `types_reported`.
     self.payload = MsgLinuxSocketUsage._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgLinuxSocketUsage._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgLinuxSocketUsage, self).to_json_dict()
@@ -765,6 +819,15 @@ class MsgLinuxProcessFdCount(SBP):
     self.payload = MsgLinuxProcessFdCount._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgLinuxProcessFdCount._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgLinuxProcessFdCount, self).to_json_dict()
@@ -854,6 +917,15 @@ of the list being 2 NULL terminators in a row.
     c = containerize(exclude_fields(self))
     self.payload = MsgLinuxProcessFdSummary._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgLinuxProcessFdSummary._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
