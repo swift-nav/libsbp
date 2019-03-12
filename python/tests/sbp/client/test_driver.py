@@ -19,6 +19,7 @@ import pytest
 from six.moves import socketserver
 import threading
 import time
+import socket
 
 def tcp_handler(data):
   class MockRequestHandler(socketserver.BaseRequestHandler):
@@ -30,7 +31,7 @@ class MockServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
   pass
 
 def tcp_server(handler):
-  server = MockServer(("localhost", 0), handler)
+  server = MockServer((socket.gethostbyname("localhost"), 0), handler)
   ip, port = server.server_address
   server_thread = threading.Thread(target=server.serve_forever)
   server_thread.daemon = True
