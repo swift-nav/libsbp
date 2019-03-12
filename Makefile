@@ -80,6 +80,7 @@ verify-prereq-python: verify-prereq-generator
 	@command -v pip 1>/dev/null 2>/dev/null    || { echo >&2 -e "I require \`pip\` but it's not installed. Aborting.\n\nHave you installed pip? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
 	@command -v tox 1>/dev/null 2>/dev/null    || { echo >&2 -e "I require \`tox\` but it's not installed. Aborting.\n\nHave you installed tox? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
 	@command -v pandoc 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pandoc\` but it's not installed. Aborting.\n\nHave you installed pandoc? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
+	@command -v llvm-config 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`llvm-config\` but it's not installed. Aborting.\n\nHave you installed LLVM? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
 
 verify-prereq-javascript: verify-prereq-generator
 	@command -v node   1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`node\` but it's not installed. Aborting.\n\nHave you installed Node.js? See the JavaScript readme at \`javascript/README.md\` for setup instructions.\n"; exit 1; }
