@@ -190,6 +190,15 @@ class ((( m.identifier | classnameify )))(SBP):
     self.payload = ((( m.identifier | classnameify )))._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = ((( m.identifier | classnameify )))._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( ((( m.identifier | classnameify ))), self).to_json_dict()
