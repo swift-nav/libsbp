@@ -106,6 +106,12 @@ class Handler(object):
         """
         return self.filter()
 
+    def _to_iter(self, maybe_iter):
+        try:
+            return iter(maybe_iter)
+        except TypeError:
+            return None
+
     def add_callback(self, callback, msg_type=None):
         """
         Add per message type or global callback.
@@ -118,10 +124,11 @@ class Handler(object):
           Message type to register callback against. Default `None` means global callback.
           Iterable type adds the callback to all the message types.
         """
-        try:
-            for mt in iter(msg_type):
-                self._callbacks[mt].add(callback)
-        except TypeError:
+        cb_keys = self._to_iter(msg_type)
+        if cb_keys is not None:
+            for msg_type_ in cb_keys:
+                self._callbacks[msg_type_].add(callback)
+        else:
             self._callbacks[msg_type].add(callback)
 
     def remove_callback(self, callback, msg_type=None):
@@ -138,14 +145,14 @@ class Handler(object):
         """
         if msg_type is None:
             msg_type = self._callbacks.keys()
-
-        try:
-            for mt in iter(msg_type):
+        cb_keys = self._to_iter(msg_type)
+        if cb_keys is not None:
+            for msg_type_ in cb_keys:
                 try:
-                    self._callbacks[mt].remove(callback)
+                    self._callbacks[msg_type_].remove(callback)
                 except KeyError:
                     pass
-        except TypeError as e:
+        else:
             self._callbacks[msg_type].remove(callback)
 
     def _gc_dead_sinks(self):
