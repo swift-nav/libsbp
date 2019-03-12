@@ -17,6 +17,8 @@ import time
 import uuid
 import six
 
+import numpy as np
+
 
 class Framer(six.Iterator):
     """
@@ -38,6 +40,7 @@ class Framer(six.Iterator):
                  write,
                  verbose=False,
                  dispatcher=dispatch,
+                 into_buffer=False,
                  skip_metadata=False):
         self._read = read
         self._write = write
@@ -45,6 +48,8 @@ class Framer(six.Iterator):
         self._broken = False
         self._dispatch = dispatcher
         self._session = str(uuid.uuid4())
+        self._buffer = np.zeros(16*1024, dtype=np.uint8)
+        self._into_buffer = into_buffer
         self._skip_metadata = skip_metadata
 
     def __iter__(self):
@@ -154,4 +159,14 @@ class Framer(six.Iterator):
           Metadata for this batch of messages, e.g. `{'time': 'ISO 8601 str'}`
           (ignored for now).
         """
-        self._write(bytes.join(b'', (msg.to_binary() for msg in msgs)))
+        index = 0
+        if self._into_buffer:
+            for msg in msgs:
+                index += msg.into_buffer(self._buffer, index)
+        else:
+            for msg in msgs:
+                msg_buff = msg.to_binary()
+                buff_len = len(msg_buff)
+                self._buffer[index:(index+buff_len)] = bytearray(msg_buff)
+                index += buff_len
+        self._write(memoryview(self._buffer)[:index])
