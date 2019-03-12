@@ -160,6 +160,15 @@ protocol version number.
     self.payload = MsgBootloaderHandshakeResp._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgBootloaderHandshakeResp._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgBootloaderHandshakeResp, self).to_json_dict()
@@ -240,6 +249,15 @@ class MsgBootloaderJumpToApp(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgBootloaderJumpToApp._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgBootloaderJumpToApp._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -379,6 +397,15 @@ on the right.
     self.payload = MsgNapDeviceDnaResp._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgNapDeviceDnaResp._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgNapDeviceDnaResp, self).to_json_dict()
@@ -458,6 +485,15 @@ class MsgBootloaderHandshakeDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgBootloaderHandshakeDepA._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgBootloaderHandshakeDepA._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
