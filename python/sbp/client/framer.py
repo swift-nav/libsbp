@@ -33,13 +33,19 @@ class Framer(six.Iterator):
       Stream of bytes to write to.
     """
 
-    def __init__(self, read, write, verbose=False, dispatcher=dispatch):
+    def __init__(self,
+                 read,
+                 write,
+                 verbose=False,
+                 dispatcher=dispatch,
+                 skip_metadata=False):
         self._read = read
         self._write = write
         self._verbose = verbose
         self._broken = False
         self._dispatch = dispatcher
         self._session = str(uuid.uuid4())
+        self._skip_metadata = skip_metadata
 
     def __iter__(self):
         self._broken = False
@@ -71,7 +77,13 @@ class Framer(six.Iterator):
                     raise StopIteration
             except IOError:
                 raise StopIteration
-        return (msg, {'time': self._time(), 'session-uid': self._session})
+
+        metadata = {}
+        if not self._skip_metadata:
+            metadata['time'] = self._time()
+            metadata['session-uid'] = self._session
+
+        return (msg, metadata)
 
     def _readall(self, size):
         """
