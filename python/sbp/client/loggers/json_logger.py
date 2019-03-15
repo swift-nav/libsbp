@@ -24,9 +24,12 @@ class JSONLogger(BaseLogger):
     """
 
     def fmt_msg(self, data, **metadata):
-        metadata.update(self.tags)
-        metadata['data'] = data
-        return metadata
+        if metadata:
+            metadata.update(self.tags)
+            metadata['data'] = data
+            return metadata
+
+        return data
 
     def dump(self, msg, **metadata):
         try:
@@ -55,9 +58,12 @@ class JSONBinLogger(BaseLogger):
     """
 
     def fmt_msg(self, data, **metadata):
-        metadata.update(self.tags)
-        metadata['data'] = data
-        return metadata
+        if metadata:
+            metadata.update(self.tags)
+            metadata['data'] = data
+            return metadata
+
+        return data
 
     def dump(self, msg, **metadata):
         try:
