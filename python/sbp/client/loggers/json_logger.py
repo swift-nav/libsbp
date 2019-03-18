@@ -53,7 +53,8 @@ class JSONLogger(JSONLoggerBase):
             data = self.dispatch(msg).to_json_dict()
             return json.dumps(self.fmt_msg(data, **metadata),
                               allow_nan=False,
-                              sort_keys=self._sort_keys)
+                              sort_keys=self._sort_keys,
+                              separators=(',',':'))
         except (ValueError, UnicodeDecodeError):
             try:
                 warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
@@ -83,7 +84,8 @@ class JSONBinLogger(JSONLoggerBase):
             }
             return json.dumps(self.fmt_msg(data, **metadata),
                               allow_nan=False,
-                              sort_keys=self._sort_keys)
+                              sort_keys=self._sort_keys,
+                              separators=(',',':'))
         except (ValueError, UnicodeDecodeError):
             try:
                 warn = "Bad values in JSON encoding for msg_type %d for msg %s" \
