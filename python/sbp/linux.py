@@ -15,12 +15,11 @@ Linux state monitoring.
 
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import numpy as np
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/linux.yaml with generate.py.
 # Please do not hand edit!
@@ -70,6 +69,13 @@ consumers of CPU on the system.
                'tname',
                'cmdline',
               ]
+  _fields = [
+             ( 'u8', 'index' ),
+             ( 'u16', 'pid' ),
+             ( 'u8', 'pcpu' ),
+             ( 'str:15', 'tname' ),
+             ( 'str', 'cmdline' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -109,9 +115,13 @@ consumers of CPU on the system.
     the message.
 
     """
-    p = MsgLinuxCpuState._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -172,6 +182,13 @@ consumers of memory on the system.
                'tname',
                'cmdline',
               ]
+  _fields = [
+             ( 'u8', 'index' ),
+             ( 'u16', 'pid' ),
+             ( 'u8', 'pmem' ),
+             ( 'str:15', 'tname' ),
+             ( 'str', 'cmdline' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -211,9 +228,13 @@ consumers of memory on the system.
     the message.
 
     """
-    p = MsgLinuxMemState._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -277,6 +298,14 @@ class MsgLinuxSysState(SBP):
                'procs_stopping',
                'pid_count',
               ]
+  _fields = [
+             ( 'u16', 'mem_total' ),
+             ( 'u8', 'pcpu' ),
+             ( 'u8', 'pmem' ),
+             ( 'u16', 'procs_starting' ),
+             ( 'u16', 'procs_stopping' ),
+             ( 'u16', 'pid_count' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -317,9 +346,13 @@ class MsgLinuxSysState(SBP):
     the message.
 
     """
-    p = MsgLinuxSysState._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -391,6 +424,14 @@ class MsgLinuxProcessSocketCounts(SBP):
                'socket_states',
                'cmdline',
               ]
+  _fields = [
+             ( 'u8', 'index' ),
+             ( 'u16', 'pid' ),
+             ( 'u16', 'socket_count' ),
+             ( 'u16', 'socket_types' ),
+             ( 'u16', 'socket_states' ),
+             ( 'str', 'cmdline' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -431,9 +472,13 @@ class MsgLinuxProcessSocketCounts(SBP):
     the message.
 
     """
-    p = MsgLinuxProcessSocketCounts._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -515,6 +560,16 @@ of the connection.
                'address_of_largest',
                'cmdline',
               ]
+  _fields = [
+             ( 'u8', 'index' ),
+             ( 'u16', 'pid' ),
+             ( 'u16', 'recv_queued' ),
+             ( 'u16', 'send_queued' ),
+             ( 'u16', 'socket_types' ),
+             ( 'u16', 'socket_states' ),
+             ( 'str:64', 'address_of_largest' ),
+             ( 'str', 'cmdline' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -557,9 +612,13 @@ of the connection.
     the message.
 
     """
-    p = MsgLinuxProcessSocketQueues._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -619,6 +678,12 @@ the first entry corresponds to the first enabled bit in `types_reported`.
                'socket_state_counts',
                'socket_type_counts',
               ]
+  _fields = [
+             ( 'u32', 'avg_queue_depth' ),
+             ( 'u32', 'max_queue_depth' ),
+             ( 'array:u16:16', 'socket_state_counts' ),
+             ( 'array:u16:16', 'socket_type_counts' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -657,9 +722,13 @@ the first entry corresponds to the first enabled bit in `types_reported`.
     the message.
 
     """
-    p = MsgLinuxSocketUsage._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -715,6 +784,12 @@ class MsgLinuxProcessFdCount(SBP):
                'fd_count',
                'cmdline',
               ]
+  _fields = [
+             ( 'u8', 'index' ),
+             ( 'u16', 'pid' ),
+             ( 'u16', 'fd_count' ),
+             ( 'str', 'cmdline' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -753,9 +828,13 @@ class MsgLinuxProcessFdCount(SBP):
     the message.
 
     """
-    p = MsgLinuxProcessFdCount._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -807,6 +886,10 @@ of the list being 2 NULL terminators in a row.
                'sys_fd_count',
                'most_opened',
               ]
+  _fields = [
+             ( 'u32', 'sys_fd_count' ),
+             ( 'str', 'most_opened' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -843,9 +926,13 @@ of the list being 2 NULL terminators in a row.
     the message.
 
     """
-    p = MsgLinuxProcessFdSummary._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

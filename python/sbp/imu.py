@@ -14,12 +14,11 @@
 Inertial Measurement Unit (IMU) messages.
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import numpy as np
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/imu.yaml with generate.py.
 # Please do not hand edit!
@@ -86,6 +85,16 @@ time is unknown or invalid.
                'gyr_y',
                'gyr_z',
               ]
+  _fields = [
+             ( 'u32', 'tow' ),
+             ( 'u8', 'tow_f' ),
+             ( 's16', 'acc_x' ),
+             ( 's16', 'acc_y' ),
+             ( 's16', 'acc_z' ),
+             ( 's16', 'gyr_x' ),
+             ( 's16', 'gyr_y' ),
+             ( 's16', 'gyr_z' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -128,9 +137,13 @@ time is unknown or invalid.
     the message.
 
     """
-    p = MsgImuRaw._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -184,6 +197,11 @@ depends on the value of `imu_type`.
                'temp',
                'imu_conf',
               ]
+  _fields = [
+             ( 'u8', 'imu_type' ),
+             ( 's16', 'temp' ),
+             ( 'u8', 'imu_conf' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -221,9 +239,13 @@ depends on the value of `imu_type`.
     the message.
 
     """
-    p = MsgImuAux._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

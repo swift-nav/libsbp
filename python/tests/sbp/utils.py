@@ -85,8 +85,8 @@ def _assert_msg(msg, test_case):
   if test_case['fields']:
     for field_name, field_value in test_case['fields'].items():
       assert field_eq(getattr(msg, field_name), _encoded_string(field_value)), \
-        "Unequal field values (name: %s): got %r, but expected %r!" \
-        % (field_name, getattr(msg, field_name), field_value)
+        "Unequal field values (name: %s.%s): got %r, but expected %r!" \
+        % (msg.__class__.__name__, field_name, getattr(msg, field_name), field_value)
 
 def _assert_msg_roundtrip(msg, raw_packet):
   """

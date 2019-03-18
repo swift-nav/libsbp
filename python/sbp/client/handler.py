@@ -16,17 +16,16 @@ import collections
 import threading
 import weakref
 import six
-from six.moves.queue import Queue
+from collections import deque
+from time import sleep
 
 
 class Handler(object):
     """
     Handler
-
     The :class:`Handler` class provides an interface for connecting handlers
     to a driver providing SBP messages.  Also provides queued and filtered
     iterators for synchronous, blocking use in other threads.
-
     Parameters
     ----------
     source : Iterable of tuple(SBP message, {'time':'ISO 8601 str'})
@@ -102,7 +101,6 @@ class Handler(object):
     def add_callback(self, callback, msg_type=None):
         """
         Add per message type or global callback.
-
         Parameters
         ----------
         callback : fn
@@ -120,7 +118,6 @@ class Handler(object):
     def remove_callback(self, callback, msg_type=None):
         """
         Remove per message type of global callback.
-
         Parameters
         ----------
         callback : fn
@@ -155,7 +152,6 @@ class Handler(object):
     def _get_callbacks(self, msg_type):
         """
         Return all callbacks (global and per message type) for a message type.
-
         Parameters
         ----------
         msg_type : int
@@ -207,7 +203,6 @@ class Handler(object):
     def wait(self, msg_type, timeout=1.0):
         """
         Wait for a SBP message.
-
         Parameters
         ----------
         msg_type : int
@@ -230,7 +225,6 @@ class Handler(object):
     def wait_callback(self, callback, msg_type=None, timeout=1.0):
         """
         Wait for a SBP message with a callback.
-
         Parameters
         ----------
         callback : fn
@@ -256,7 +250,6 @@ class Handler(object):
         Pass messages to the `source` to be consumed.  Typically this means
         the messages will be framed and transmitted via whatever transport
         layer is currently active.
-
         Parameters
         ----------
         msgs : SBP messages
@@ -274,23 +267,29 @@ class Handler(object):
         """
 
         def __init__(self, maxsize):
-            self._queue = Queue(maxsize)
+            self._queue = deque()
             self._broken = False
 
         def __iter__(self):
             return self
 
         def __call__(self, msg, **metadata):
-            self._queue.put((msg, metadata), False)
+            self._queue.append((msg, metadata))
 
         def breakiter(self):
             self._broken = True
             self._queue.put(None, True, 1.0)
 
         def __next__(self):
-            if self._broken and self._queue.empty():
-                raise StopIteration
-            m = self._queue.get(True)
+            m = None
+            while True:
+                if self._broken and not self._queue:
+                    raise StopIteration
+                if self._queue:
+                    m = self._queue.popleft()
+                    break
+                else:
+                    sleep(0.001)
             if self._broken and m is None:
                 raise StopIteration
             return m

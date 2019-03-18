@@ -14,12 +14,11 @@
 Standardized system messages from Swift Navigation devices.
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import numpy as np
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/system.yaml with generate.py.
 # Please do not hand edit!
@@ -63,6 +62,11 @@ or configuration requests.
                'startup_type',
                'reserved',
               ]
+  _fields = [
+             ( 'u8', 'cause' ),
+             ( 'u8', 'startup_type' ),
+             ( 'u16', 'reserved' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -100,9 +104,13 @@ or configuration requests.
     the message.
 
     """
-    p = MsgStartup._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -160,6 +168,12 @@ corrections packet.
                'num_signals',
                'source',
               ]
+  _fields = [
+             ( 'u8', 'flags' ),
+             ( 'u16', 'latency' ),
+             ( 'u8', 'num_signals' ),
+             ( 'str', 'source' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -198,9 +212,13 @@ corrections packet.
     the message.
 
     """
-    p = MsgDgnssStatus._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -253,6 +271,9 @@ the remaining error flags should be inspected.
   __slots__ = [
                'flags',
               ]
+  _fields = [
+             ( 'u32', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -288,9 +309,13 @@ the remaining error flags should be inspected.
     the message.
 
     """
-    p = MsgHeartbeat._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -335,6 +360,9 @@ and initialization of the inertial navigation system.
   __slots__ = [
                'flags',
               ]
+  _fields = [
+             ( 'u32', 'flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -370,9 +398,13 @@ and initialization of the inertial navigation system.
     the message.
 
     """
-    p = MsgInsStatus._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -422,6 +454,10 @@ It is intended to be a low rate message for status purposes.
                'id',
                'telemetry',
               ]
+  _fields = [
+             ( 'u8', 'id' ),
+             ( 'str', 'telemetry' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -458,9 +494,13 @@ It is intended to be a low rate message for status purposes.
     the message.
 
     """
-    p = MsgCsacTelemetry._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -510,6 +550,10 @@ rate than the MSG_CSAC_TELEMETRY.
                'id',
                'telemetry_labels',
               ]
+  _fields = [
+             ( 'u8', 'id' ),
+             ( 'str', 'telemetry_labels' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -546,9 +590,13 @@ rate than the MSG_CSAC_TELEMETRY.
     the message.
 
     """
-    p = MsgCsacTelemetryLabels._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

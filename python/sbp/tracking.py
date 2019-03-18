@@ -15,12 +15,11 @@ Satellite code and carrier-phase tracking messages from the device.
 
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import numpy as np
 from sbp.gnss import *
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml with generate.py.
@@ -53,22 +52,31 @@ measured signal power.
                'fcn',
                'cn0',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.sid = kwargs.pop('sid')
-      self.fcn = kwargs.pop('fcn')
-      self.cn0 = kwargs.pop('cn0')
+  _fields = [
+             ( 'GnssSignal', 'sid' ),
+             ( 'u8', 'fcn' ),
+             ( 'u8', 'cn0' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = TrackingChannelState._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, data, offset=0):
+    size = 0
+    for field_type, field_name in TrackingChannelState._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
+      else:
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
+    return size
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
@@ -99,21 +107,30 @@ the Slot ID (from 1 to 28)
                'mesid',
                'cn0',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.mesid = kwargs.pop('mesid')
-      self.cn0 = kwargs.pop('cn0')
+  _fields = [
+             ( 'GnssSignal', 'mesid' ),
+             ( 'u8', 'cn0' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = MeasurementState._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, data, offset=0):
+    size = 0
+    for field_type, field_name in MeasurementState._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
+      else:
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
+    return size
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
@@ -140,21 +157,30 @@ class TrackingChannelCorrelation(object):
                'I',
                'Q',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.I = kwargs.pop('I')
-      self.Q = kwargs.pop('Q')
+  _fields = [
+             ( 's32', 'I' ),
+             ( 's32', 'Q' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = TrackingChannelCorrelation._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, data, offset=0):
+    size = 0
+    for field_type, field_name in TrackingChannelCorrelation._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
+      else:
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
+    return size
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
@@ -184,22 +210,31 @@ class TrackingChannelStateDepA(object):
                'prn',
                'cn0',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.state = kwargs.pop('state')
-      self.prn = kwargs.pop('prn')
-      self.cn0 = kwargs.pop('cn0')
+  _fields = [
+             ( 'u8', 'state' ),
+             ( 'u8', 'prn' ),
+             ( 'float', 'cn0' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = TrackingChannelStateDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, data, offset=0):
+    size = 0
+    for field_type, field_name in TrackingChannelStateDepA._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
+      else:
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
+    return size
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
@@ -229,22 +264,31 @@ class TrackingChannelStateDepB(object):
                'sid',
                'cn0',
               ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.state = kwargs.pop('state')
-      self.sid = kwargs.pop('sid')
-      self.cn0 = kwargs.pop('cn0')
+  _fields = [
+             ( 'u8', 'state' ),
+             ( 'GnssSignalDep', 'sid' ),
+             ( 'float', 'cn0' ),
+            ]
 
   def __repr__(self):
     return fmt_repr(self)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
   
-  def from_binary(self, d):
-    p = TrackingChannelStateDepB._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+  def from_binary(self, data, offset=0):
+    size = 0
+    for field_type, field_name in TrackingChannelStateDepB._fields:
+      if field_type in TYPES_KEYS_NP:
+        parsed = np.ndarray(1, TYPES_NP[field_type], data, size + offset)
+        size += parsed.itemsize
+        setattr(self, field_name, parsed.item())
+      else:
+        obj = globals()[field_type]()
+        size += obj.from_binary(data, size + offset)
+        setattr(self, field_name, obj)
+    return size
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
@@ -373,6 +417,29 @@ signal is in continuous track.
                'pset_flags',
                'misc_flags',
               ]
+  _fields = [
+             ( 'u64', 'recv_time' ),
+             ( 'GPSTime', 'tot' ),
+             ( 'u32', 'P' ),
+             ( 'u16', 'P_std' ),
+             ( 'CarrierPhase', 'L' ),
+             ( 'u8', 'cn0' ),
+             ( 'u16', 'lock' ),
+             ( 'GnssSignal', 'sid' ),
+             ( 's32', 'doppler' ),
+             ( 'u16', 'doppler_std' ),
+             ( 'u32', 'uptime' ),
+             ( 's16', 'clock_offset' ),
+             ( 's16', 'clock_drift' ),
+             ( 'u16', 'corr_spacing' ),
+             ( 's8', 'acceleration' ),
+             ( 'u8', 'sync_flags' ),
+             ( 'u8', 'tow_flags' ),
+             ( 'u8', 'track_flags' ),
+             ( 'u8', 'nav_flags' ),
+             ( 'u8', 'pset_flags' ),
+             ( 'u8', 'misc_flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -428,9 +495,13 @@ signal is in continuous track.
     the message.
 
     """
-    p = MsgTrackingStateDetailedDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -568,6 +639,29 @@ signal is in continuous track.
                'pset_flags',
                'misc_flags',
               ]
+  _fields = [
+             ( 'u64', 'recv_time' ),
+             ( 'GPSTimeDep', 'tot' ),
+             ( 'u32', 'P' ),
+             ( 'u16', 'P_std' ),
+             ( 'CarrierPhase', 'L' ),
+             ( 'u8', 'cn0' ),
+             ( 'u16', 'lock' ),
+             ( 'GnssSignalDep', 'sid' ),
+             ( 's32', 'doppler' ),
+             ( 'u16', 'doppler_std' ),
+             ( 'u32', 'uptime' ),
+             ( 's16', 'clock_offset' ),
+             ( 's16', 'clock_drift' ),
+             ( 'u16', 'corr_spacing' ),
+             ( 's8', 'acceleration' ),
+             ( 'u8', 'sync_flags' ),
+             ( 'u8', 'tow_flags' ),
+             ( 'u8', 'track_flags' ),
+             ( 'u8', 'nav_flags' ),
+             ( 'u8', 'pset_flags' ),
+             ( 'u8', 'misc_flags' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -623,9 +717,13 @@ signal is in continuous track.
     the message.
 
     """
-    p = MsgTrackingStateDetailedDep._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -671,6 +769,9 @@ measurements for all tracked satellites.
   __slots__ = [
                'states',
               ]
+  _fields = [
+             ( 'array:TrackingChannelState', 'states' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -706,9 +807,13 @@ measurements for all tracked satellites.
     the message.
 
     """
-    p = MsgTrackingState._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -754,6 +859,9 @@ measurements for all tracked satellites.
   __slots__ = [
                'states',
               ]
+  _fields = [
+             ( 'array:MeasurementState', 'states' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -789,9 +897,13 @@ measurements for all tracked satellites.
     the message.
 
     """
-    p = MsgMeasurementState._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -844,6 +956,11 @@ update interval.
                'sid',
                'corrs',
               ]
+  _fields = [
+             ( 'u8', 'channel' ),
+             ( 'GnssSignal', 'sid' ),
+             ( 'array:TrackingChannelCorrelation:3', 'corrs' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -881,9 +998,13 @@ update interval.
     the message.
 
     """
-    p = MsgTrackingIq._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -934,6 +1055,11 @@ class MsgTrackingIqDep(SBP):
                'sid',
                'corrs',
               ]
+  _fields = [
+             ( 'u8', 'channel' ),
+             ( 'GnssSignalDep', 'sid' ),
+             ( 'array:TrackingChannelCorrelation:3', 'corrs' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -971,9 +1097,13 @@ class MsgTrackingIqDep(SBP):
     the message.
 
     """
-    p = MsgTrackingIqDep._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1016,6 +1146,9 @@ class MsgTrackingStateDepA(SBP):
   __slots__ = [
                'states',
               ]
+  _fields = [
+             ( 'array:TrackingChannelStateDepA', 'states' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1051,9 +1184,13 @@ class MsgTrackingStateDepA(SBP):
     the message.
 
     """
-    p = MsgTrackingStateDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -1096,6 +1233,9 @@ class MsgTrackingStateDepB(SBP):
   __slots__ = [
                'states',
               ]
+  _fields = [
+             ( 'array:TrackingChannelStateDepB', 'states' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -1131,9 +1271,13 @@ class MsgTrackingStateDepB(SBP):
     the message.
 
     """
-    p = MsgTrackingStateDepB._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.

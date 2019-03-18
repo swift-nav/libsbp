@@ -22,12 +22,11 @@ host request and the device response.
 
 """
 
-import json
-
 import construct
-
-from sbp.msg import SBP, SENDER_ID
+import json
+from sbp.msg import SBP, SENDER_ID, TYPES_NP, TYPES_KEYS_NP
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+import numpy as np
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/file_io.yaml with generate.py.
 # Please do not hand edit!
@@ -79,6 +78,12 @@ to this message when it is received from sender ID 0x42.
                'chunk_size',
                'filename',
               ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'u32', 'offset' ),
+             ( 'u8', 'chunk_size' ),
+             ( 'str', 'filename' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -117,9 +122,13 @@ to this message when it is received from sender ID 0x42.
     the message.
 
     """
-    p = MsgFileioReadReq._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -171,6 +180,10 @@ preserved from the request.
                'sequence',
                'contents',
               ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'array:u8', 'contents' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -207,9 +220,13 @@ preserved from the request.
     the message.
 
     """
-    p = MsgFileioReadResp._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -271,6 +288,11 @@ from sender ID 0x42.
                'offset',
                'dirname',
               ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'u32', 'offset' ),
+             ( 'str', 'dirname' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -308,9 +330,13 @@ from sender ID 0x42.
     the message.
 
     """
-    p = MsgFileioReadDirReq._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -363,6 +389,10 @@ the response is preserved from the request.
                'sequence',
                'contents',
               ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'array:u8', 'contents' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -399,9 +429,13 @@ the response is preserved from the request.
     the message.
 
     """
-    p = MsgFileioReadDirResp._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -448,6 +482,9 @@ process this message when it is received from sender ID 0x42.
   __slots__ = [
                'filename',
               ]
+  _fields = [
+             ( 'str', 'filename' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -483,9 +520,13 @@ process this message when it is received from sender ID 0x42.
     the message.
 
     """
-    p = MsgFileioRemove._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -548,6 +589,12 @@ only  process this message when it is received from sender ID
                'filename',
                'data',
               ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'u32', 'offset' ),
+             ( 'str', 'filename' ),
+             ( 'array:u8', 'data' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -586,9 +633,13 @@ only  process this message when it is received from sender ID
     the message.
 
     """
-    p = MsgFileioWriteReq._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -636,6 +687,9 @@ request.
   __slots__ = [
                'sequence',
               ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -671,9 +725,13 @@ request.
     the message.
 
     """
-    p = MsgFileioWriteResp._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -720,6 +778,9 @@ that can be in-flight during read or write operations.
   __slots__ = [
                'sequence',
               ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -755,9 +816,13 @@ that can be in-flight during read or write operations.
     the message.
 
     """
-    p = MsgFileioConfigReq._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
@@ -816,6 +881,12 @@ that can be in-flight during read or write operations.
                'batch_size',
                'fileio_version',
               ]
+  _fields = [
+             ( 'u32', 'sequence' ),
+             ( 'u32', 'window_size' ),
+             ( 'u32', 'batch_size' ),
+             ( 'u32', 'fileio_version' ),
+            ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
@@ -854,9 +925,13 @@ that can be in-flight during read or write operations.
     the message.
 
     """
-    p = MsgFileioConfigResp._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
+    self._from_binary(d)
+
+  def __getitem__(self, item):
+    return getattr(self, item)
+
+  def _get_embedded_type(self, t):
+    return globals()[t]
 
   def to_binary(self):
     """Produce a framed/packed SBP message.
