@@ -656,3 +656,15 @@ definitions:
           type: array
           fill: TrackingChannelStateDepB
           desc: Signal tracking channel state
+
+ - MSG_WRAPPED_NMEA_GSV_DEP:
+    id: 0x8800
+    short_desc: Deprecated, do not use.
+    desc: Deprecated, do not use.
+    public: False
+    replaced_by:
+      - MSG_NONE
+    fields:
+      - gsv_sentence:
+          type: string
+          desc: GSV string wrapped in SBP

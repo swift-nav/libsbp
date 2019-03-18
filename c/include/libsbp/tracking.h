@@ -247,6 +247,16 @@ typedef struct SBP_ATTR_PACKED {
 } msg_tracking_state_dep_b_t;
 
 
+/** Deprecated, do not use.
+ *
+* Deprecated, do not use.
+ */
+#define SBP_MSG_WRAPPED_NMEA_GSV_DEP          0x8800
+typedef struct SBP_ATTR_PACKED {
+  char gsv_sentence[0]; /**< GSV string wrapped in SBP */
+} msg_wrapped_nmea_gsv_dep_t;
+
+
 /** \} */
 
 SBP_PACK_END
