@@ -55,8 +55,9 @@ def test_tcp_logger():
     assert s.payload==b'abc'
     assert s.crc==0xDAEE
   with PySerialDriver(port, baud) as driver:
-    with Handler(Framer(driver.read, None, verbose=False)) as link:
+    with Handler(Framer(driver.read, None, verbose=False), autostart=False) as link:
       link.add_callback(assert_logger)
+      link.start()
       while True:
         if time.time() - t0 > timeout or cb_context['assert_logger_called']:
           break
