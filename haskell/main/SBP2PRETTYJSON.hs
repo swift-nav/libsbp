@@ -1,3 +1,5 @@
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# OPTIONS_GHC -fno-cse #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
@@ -12,7 +14,7 @@
 -- SBP to JSON tool - reads SBP binary from stdin and sends SBP JSON
 -- to stdout.
 
-import BasicPrelude                      hiding (map)
+import BasicPrelude                      hiding (map, print)
 import Control.Monad.Trans.Resource
 import Data.Aeson.Encode.Pretty
 import Data.ByteString.Lazy              hiding (ByteString, map)
@@ -21,16 +23,29 @@ import Data.Conduit.Binary
 import Data.Conduit.List
 import Data.Conduit.Serialization.Binary
 import SwiftNav.SBP
+import System.Console.CmdArgs
 import System.IO
 
+data Cfg = Cfg {skiporder :: Bool
+               ,spaces :: Int}
+           deriving (Show, Data, Typeable)
+
+defaultCfg :: Cfg
+defaultCfg = Cfg{skiporder = False
+                ,spaces = 0}
+
 -- | Encode a SBPMsg to a line of JSON.
-encodeLine :: SBPMsg -> ByteString
-encodeLine v = toStrict $ encodePretty' (defConfig  {confIndent = Spaces 0, confCompare = compare}) v <> "\n"
+encodeLine :: Cfg -> SBPMsg -> ByteString
+encodeLine c v = toStrict
+                   $ encodePretty'
+                     (defConfig  {confIndent = Spaces (spaces c), 
+                                  confCompare = if (skiporder c) then mempty else compare}) v <> "\n"
 
 main :: IO ()
-main =
+main = do
+  cfg <- cmdArgs defaultCfg
   runResourceT $
     sourceHandle stdin
       =$= conduitDecode
-      =$= map encodeLine
+      =$= map (encodeLine cfg)
       $$  sinkHandle stdout

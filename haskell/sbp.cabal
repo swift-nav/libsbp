@@ -54,7 +54,6 @@ library
   hs-source-dirs:      src
   ghc-options:         -Wall
   build-depends:       aeson
-                     , aeson-pretty
                      , array
                      , base >= 4.8 && < 5
                      , base64-bytestring
@@ -92,6 +91,7 @@ executable sbp2prettyjson
                      , basic-prelude
                      , binary-conduit
                      , bytestring
+                     , cmdargs
                      , conduit
                      , conduit-extra
                      , resourcet
