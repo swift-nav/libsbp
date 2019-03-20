@@ -156,12 +156,12 @@ class SBP(object):
     ret += struct.pack("<H", crc)
     return ret
 
-  def to_json(self):
+  def to_json(self, sort_keys=False):
     """Produce a JSON-encoded SBP message.
 
     """
     d = self.to_json_dict()
-    return json.dumps(d)
+    return json.dumps(d, sort_keys=sort_keys)
 
   @staticmethod
   def from_json(s):
