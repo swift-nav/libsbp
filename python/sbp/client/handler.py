@@ -31,9 +31,15 @@ class Handler(object):
     ----------
     source : Iterable of tuple(SBP message, {'time':'ISO 8601 str'})
       Stream of SBP messages
+    autostart : Boolean
+      If false, start() shall be skipped when entering context scope and it
+      should be explicitly called by the parent. This will prevent losing
+      messages in case where receive thread would otherwise be started before
+      consumers are ready.
     """
 
-    def __init__(self, source):
+    def __init__(self, source, autostart=True):
+        self._autostart = autostart
         self._source = source
         self._callbacks = collections.defaultdict(set)
         self._receive_thread = threading.Thread(
@@ -58,7 +64,8 @@ class Handler(object):
         self._dead = True
 
     def __enter__(self):
-        self.start()
+        if self._autostart:
+            self.start()
         return self
 
     def __exit__(self, *args):
