@@ -202,7 +202,8 @@ data SBPMsg =
    | SBPMsgSvConfigurationGpsDep MsgSvConfigurationGpsDep Msg
    | SBPMsgThreadState MsgThreadState Msg
    | SBPMsgTrackingIq MsgTrackingIq Msg
-   | SBPMsgTrackingIqDep MsgTrackingIqDep Msg
+   | SBPMsgTrackingIqDepA MsgTrackingIqDepA Msg
+   | SBPMsgTrackingIqDepB MsgTrackingIqDepB Msg
    | SBPMsgTrackingState MsgTrackingState Msg
    | SBPMsgTrackingStateDepA MsgTrackingStateDepA Msg
    | SBPMsgTrackingStateDepB MsgTrackingStateDepB Msg
@@ -380,7 +381,8 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSvConfigurationGpsDep = SBPMsgSvConfigurationGpsDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgThreadState = SBPMsgThreadState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingIq = SBPMsgTrackingIq (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgTrackingIqDep = SBPMsgTrackingIqDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgTrackingIqDepA = SBPMsgTrackingIqDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgTrackingIqDepB = SBPMsgTrackingIqDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingState = SBPMsgTrackingState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingStateDepA = SBPMsgTrackingStateDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingStateDepB = SBPMsgTrackingStateDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -550,7 +552,8 @@ instance Binary SBPMsg where
       encoder (SBPMsgSvConfigurationGpsDep _ m) = put m
       encoder (SBPMsgThreadState _ m) = put m
       encoder (SBPMsgTrackingIq _ m) = put m
-      encoder (SBPMsgTrackingIqDep _ m) = put m
+      encoder (SBPMsgTrackingIqDepA _ m) = put m
+      encoder (SBPMsgTrackingIqDepB _ m) = put m
       encoder (SBPMsgTrackingState _ m) = put m
       encoder (SBPMsgTrackingStateDepA _ m) = put m
       encoder (SBPMsgTrackingStateDepB _ m) = put m
@@ -724,7 +727,8 @@ instance FromJSON SBPMsg where
         | msgType == msgSvConfigurationGpsDep = SBPMsgSvConfigurationGpsDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgThreadState = SBPMsgThreadState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingIq = SBPMsgTrackingIq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgTrackingIqDep = SBPMsgTrackingIqDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgTrackingIqDepA = SBPMsgTrackingIqDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgTrackingIqDepB = SBPMsgTrackingIqDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingState = SBPMsgTrackingState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingStateDepA = SBPMsgTrackingStateDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingStateDepB = SBPMsgTrackingStateDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -899,7 +903,8 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSvConfigurationGpsDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgThreadState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingIq n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgTrackingIqDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgTrackingIqDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgTrackingIqDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingStateDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingStateDepB n m) = toJSON n <<>> toJSON m
@@ -1068,7 +1073,8 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSvConfigurationGpsDep n m) = SBPMsgSvConfigurationGpsDep n <$> f m
   msg f (SBPMsgThreadState n m) = SBPMsgThreadState n <$> f m
   msg f (SBPMsgTrackingIq n m) = SBPMsgTrackingIq n <$> f m
-  msg f (SBPMsgTrackingIqDep n m) = SBPMsgTrackingIqDep n <$> f m
+  msg f (SBPMsgTrackingIqDepA n m) = SBPMsgTrackingIqDepA n <$> f m
+  msg f (SBPMsgTrackingIqDepB n m) = SBPMsgTrackingIqDepB n <$> f m
   msg f (SBPMsgTrackingState n m) = SBPMsgTrackingState n <$> f m
   msg f (SBPMsgTrackingStateDepA n m) = SBPMsgTrackingStateDepA n <$> f m
   msg f (SBPMsgTrackingStateDepB n m) = SBPMsgTrackingStateDepB n <$> f m

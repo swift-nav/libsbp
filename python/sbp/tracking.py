@@ -77,10 +77,10 @@ measured signal power.
 class MeasurementState(object):
   """MeasurementState.
   
-  Measurement Engine tracking channel state for a specific satellite signal 
-and measured signal power. 
-The mesid field for Glonass can either 
-carry the FCN as 100 + FCN where FCN is in [-7, +6] or 
+  Measurement Engine tracking channel state for a specific satellite signal
+and measured signal power.
+The mesid field for Glonass can either
+carry the FCN as 100 + FCN where FCN is in [-7, +6] or
 the Slot ID (from 1 to 28)
 
   
@@ -134,8 +134,8 @@ class TrackingChannelCorrelation(object):
 
   """
   _parser = construct.Embedded(construct.Struct(
-                     'I' / construct.Int32sl,
-                     'Q' / construct.Int32sl,))
+                     'I' / construct.Int16sl,
+                     'Q' / construct.Int16sl,))
   __slots__ = [
                'I',
                'Q',
@@ -159,6 +159,47 @@ class TrackingChannelCorrelation(object):
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return TrackingChannelCorrelation.build(d)
+    
+class TrackingChannelCorrelationDep(object):
+  """TrackingChannelCorrelationDep.
+  
+  Structure containing in-phase and quadrature correlation components.
+
+  
+  Parameters
+  ----------
+  I : int
+    In-phase correlation
+  Q : int
+    Quadrature correlation
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'I' / construct.Int32sl,
+                     'Q' / construct.Int32sl,))
+  __slots__ = [
+               'I',
+               'Q',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.I = kwargs.pop('I')
+      self.Q = kwargs.pop('Q')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = TrackingChannelCorrelationDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return TrackingChannelCorrelationDep.build(d)
     
 class TrackingChannelStateDepA(object):
   """TrackingChannelStateDepA.
@@ -808,9 +849,9 @@ measurements for all tracked satellites.
     d.update(j)
     return d
     
-SBP_MSG_TRACKING_IQ = 0x002C
+SBP_MSG_TRACKING_IQ = 0x002D
 class MsgTrackingIq(SBP):
-  """SBP class for message MSG_TRACKING_IQ (0x002C).
+  """SBP class for message MSG_TRACKING_IQ (0x002D).
 
   You can have MSG_TRACKING_IQ inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -900,11 +941,103 @@ update interval.
     d.update(j)
     return d
     
-SBP_MSG_TRACKING_IQ_DEP = 0x001C
-class MsgTrackingIqDep(SBP):
-  """SBP class for message MSG_TRACKING_IQ_DEP (0x001C).
+SBP_MSG_TRACKING_IQ_DEP_B = 0x002C
+class MsgTrackingIqDepB(SBP):
+  """SBP class for message MSG_TRACKING_IQ_DEP_B (0x002C).
 
-  You can have MSG_TRACKING_IQ_DEP inherit its fields directly
+  You can have MSG_TRACKING_IQ_DEP_B inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  When enabled, a tracking channel can output the correlations at each
+update interval.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  channel : int
+    Tracking channel of origin
+  sid : GnssSignal
+    GNSS signal identifier
+  corrs : array
+    Early, Prompt and Late correlations
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'channel' / construct.Int8ul,
+                   'sid' / construct.Struct(GnssSignal._parser),
+                   'corrs' / construct.Array(3, construct.Byte),)
+  __slots__ = [
+               'channel',
+               'sid',
+               'corrs',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgTrackingIqDepB,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgTrackingIqDepB, self).__init__()
+      self.msg_type = SBP_MSG_TRACKING_IQ_DEP_B
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.channel = kwargs.pop('channel')
+      self.sid = kwargs.pop('sid')
+      self.corrs = kwargs.pop('corrs')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgTrackingIqDepB.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgTrackingIqDepB(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgTrackingIqDepB._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgTrackingIqDepB._parser.build(c)
+    return self.pack()
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgTrackingIqDepB, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_TRACKING_IQ_DEP_A = 0x001C
+class MsgTrackingIqDepA(SBP):
+  """SBP class for message MSG_TRACKING_IQ_DEP_A (0x001C).
+
+  You can have MSG_TRACKING_IQ_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -937,13 +1070,13 @@ class MsgTrackingIqDep(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgTrackingIqDep,
+      super( MsgTrackingIqDepA,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgTrackingIqDep, self).__init__()
-      self.msg_type = SBP_MSG_TRACKING_IQ_DEP
+      super( MsgTrackingIqDepA, self).__init__()
+      self.msg_type = SBP_MSG_TRACKING_IQ_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.channel = kwargs.pop('channel')
       self.sid = kwargs.pop('sid')
@@ -958,12 +1091,12 @@ class MsgTrackingIqDep(SBP):
 
     """
     d = json.loads(s)
-    return MsgTrackingIqDep.from_json_dict(d)
+    return MsgTrackingIqDepA.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgTrackingIqDep(sbp, **d)
+    return MsgTrackingIqDepA(sbp, **d)
 
  
   def from_binary(self, d):
@@ -971,7 +1104,7 @@ class MsgTrackingIqDep(SBP):
     the message.
 
     """
-    p = MsgTrackingIqDep._parser.parse(d)
+    p = MsgTrackingIqDepA._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -980,12 +1113,12 @@ class MsgTrackingIqDep(SBP):
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgTrackingIqDep._parser.build(c)
+    self.payload = MsgTrackingIqDepA._parser.build(c)
     return self.pack()
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgTrackingIqDep, self).to_json_dict()
+    d = super( MsgTrackingIqDepA, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -1156,8 +1289,9 @@ msg_classes = {
   0x0011: MsgTrackingStateDetailedDep,
   0x0041: MsgTrackingState,
   0x0061: MsgMeasurementState,
-  0x002C: MsgTrackingIq,
-  0x001C: MsgTrackingIqDep,
+  0x002D: MsgTrackingIq,
+  0x002C: MsgTrackingIqDepB,
+  0x001C: MsgTrackingIqDepA,
   0x0016: MsgTrackingStateDepA,
   0x0013: MsgTrackingStateDepB,
 }

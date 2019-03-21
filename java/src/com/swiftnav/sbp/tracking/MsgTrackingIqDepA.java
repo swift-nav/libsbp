@@ -23,32 +23,31 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_TRACKING_IQ (0x002D).
+/** SBP class for message MSG_TRACKING_IQ_DEP_A (0x001C).
  *
- * You can have MSG_TRACKING_IQ inherent its fields directly from
+ * You can have MSG_TRACKING_IQ_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * When enabled, a tracking channel can output the correlations at each
- * update interval. */
+* Deprecated. */
 
-public class MsgTrackingIq extends SBPMessage {
-    public static final int TYPE = 0x002D;
+public class MsgTrackingIqDepA extends SBPMessage {
+    public static final int TYPE = 0x001C;
 
     
     /** Tracking channel of origin */
     public int channel;
     
     /** GNSS signal identifier */
-    public GnssSignal sid;
+    public GnssSignalDep sid;
     
     /** Early, Prompt and Late correlations */
-    public TrackingChannelCorrelation[] corrs;
+    public TrackingChannelCorrelationDep[] corrs;
     
 
-    public MsgTrackingIq (int sender) { super(sender, TYPE); }
-    public MsgTrackingIq () { super(TYPE); }
-    public MsgTrackingIq (SBPMessage msg) throws SBPBinaryException {
+    public MsgTrackingIqDepA (int sender) { super(sender, TYPE); }
+    public MsgTrackingIqDepA () { super(TYPE); }
+    public MsgTrackingIqDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -57,8 +56,8 @@ public class MsgTrackingIq extends SBPMessage {
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         channel = parser.getU8();
-        sid = new GnssSignal().parse(parser);
-        corrs = parser.getArray(TrackingChannelCorrelation.class, 3);
+        sid = new GnssSignalDep().parse(parser);
+        corrs = parser.getArray(TrackingChannelCorrelationDep.class, 3);
     }
 
     @Override
