@@ -175,7 +175,8 @@ import com.swiftnav.sbp.tracking.MsgTrackingStateDetailedDep;
 import com.swiftnav.sbp.tracking.MsgTrackingState;
 import com.swiftnav.sbp.tracking.MsgMeasurementState;
 import com.swiftnav.sbp.tracking.MsgTrackingIq;
-import com.swiftnav.sbp.tracking.MsgTrackingIqDep;
+import com.swiftnav.sbp.tracking.MsgTrackingIqDepB;
+import com.swiftnav.sbp.tracking.MsgTrackingIqDepA;
 import com.swiftnav.sbp.tracking.MsgTrackingStateDepA;
 import com.swiftnav.sbp.tracking.MsgTrackingStateDepB;
 import com.swiftnav.sbp.user.MsgUserData;
@@ -504,8 +505,10 @@ final class MessageTable {
                 return new MsgMeasurementState(msg);
             case MsgTrackingIq.TYPE:
                 return new MsgTrackingIq(msg);
-            case MsgTrackingIqDep.TYPE:
-                return new MsgTrackingIqDep(msg);
+            case MsgTrackingIqDepB.TYPE:
+                return new MsgTrackingIqDepB(msg);
+            case MsgTrackingIqDepA.TYPE:
+                return new MsgTrackingIqDepA(msg);
             case MsgTrackingStateDepA.TYPE:
                 return new MsgTrackingStateDepA(msg);
             case MsgTrackingStateDepB.TYPE:

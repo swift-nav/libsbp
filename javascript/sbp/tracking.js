@@ -280,9 +280,9 @@ MsgTrackingState.prototype.fieldSpec.push(['states', 'array', TrackingChannelSta
 /**
  * SBP class for message fragment MeasurementState
  *
- * Measurement Engine tracking channel state for a specific satellite signal  and
- * measured signal power.  The mesid field for Glonass can either  carry the FCN as
- * 100 + FCN where FCN is in [-7, +6] or  the Slot ID (from 1 to 28)
+ * Measurement Engine tracking channel state for a specific satellite signal and
+ * measured signal power. The mesid field for Glonass can either carry the FCN as
+ * 100 + FCN where FCN is in [-7, +6] or the Slot ID (from 1 to 28)
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field mesid GnssSignal Measurement Engine GNSS signal being tracked (carries either Glonass FCN or
@@ -344,8 +344,8 @@ MsgMeasurementState.prototype.fieldSpec.push(['states', 'array', MeasurementStat
  * Structure containing in-phase and quadrature correlation components.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field I number (signed 32-bit int, 4 bytes) In-phase correlation
- * @field Q number (signed 32-bit int, 4 bytes) Quadrature correlation
+ * @field I number (signed 16-bit int, 2 bytes) In-phase correlation
+ * @field Q number (signed 16-bit int, 2 bytes) Quadrature correlation
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -361,14 +361,14 @@ TrackingChannelCorrelation.prototype.messageType = "TrackingChannelCorrelation";
 TrackingChannelCorrelation.prototype.constructor = TrackingChannelCorrelation;
 TrackingChannelCorrelation.prototype.parser = new Parser()
   .endianess('little')
-  .int32('I')
-  .int32('Q');
+  .int16('I')
+  .int16('Q');
 TrackingChannelCorrelation.prototype.fieldSpec = [];
-TrackingChannelCorrelation.prototype.fieldSpec.push(['I', 'writeInt32LE', 4]);
-TrackingChannelCorrelation.prototype.fieldSpec.push(['Q', 'writeInt32LE', 4]);
+TrackingChannelCorrelation.prototype.fieldSpec.push(['I', 'writeInt16LE', 2]);
+TrackingChannelCorrelation.prototype.fieldSpec.push(['Q', 'writeInt16LE', 2]);
 
 /**
- * SBP class for message MSG_TRACKING_IQ (0x002C).
+ * SBP class for message MSG_TRACKING_IQ (0x002D).
  *
  * When enabled, a tracking channel can output the correlations at each update
  * interval.
@@ -389,7 +389,7 @@ var MsgTrackingIq = function (sbp, fields) {
 };
 MsgTrackingIq.prototype = Object.create(SBP.prototype);
 MsgTrackingIq.prototype.messageType = "MSG_TRACKING_IQ";
-MsgTrackingIq.prototype.msg_type = 0x002C;
+MsgTrackingIq.prototype.msg_type = 0x002D;
 MsgTrackingIq.prototype.constructor = MsgTrackingIq;
 MsgTrackingIq.prototype.parser = new Parser()
   .endianess('little')
@@ -402,7 +402,70 @@ MsgTrackingIq.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 MsgTrackingIq.prototype.fieldSpec.push(['corrs', 'array', TrackingChannelCorrelation.prototype.fieldSpec, function () { return this.fields.array.length; }, 3]);
 
 /**
- * SBP class for message MSG_TRACKING_IQ_DEP (0x001C).
+ * SBP class for message fragment TrackingChannelCorrelationDep
+ *
+ * Structure containing in-phase and quadrature correlation components.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field I number (signed 32-bit int, 4 bytes) In-phase correlation
+ * @field Q number (signed 32-bit int, 4 bytes) Quadrature correlation
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var TrackingChannelCorrelationDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "TrackingChannelCorrelationDep";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+TrackingChannelCorrelationDep.prototype = Object.create(SBP.prototype);
+TrackingChannelCorrelationDep.prototype.messageType = "TrackingChannelCorrelationDep";
+TrackingChannelCorrelationDep.prototype.constructor = TrackingChannelCorrelationDep;
+TrackingChannelCorrelationDep.prototype.parser = new Parser()
+  .endianess('little')
+  .int32('I')
+  .int32('Q');
+TrackingChannelCorrelationDep.prototype.fieldSpec = [];
+TrackingChannelCorrelationDep.prototype.fieldSpec.push(['I', 'writeInt32LE', 4]);
+TrackingChannelCorrelationDep.prototype.fieldSpec.push(['Q', 'writeInt32LE', 4]);
+
+/**
+ * SBP class for message MSG_TRACKING_IQ_DEP_B (0x002C).
+ *
+ * When enabled, a tracking channel can output the correlations at each update
+ * interval.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field channel number (unsigned 8-bit int, 1 byte) Tracking channel of origin
+ * @field sid GnssSignal GNSS signal identifier
+ * @field corrs array Early, Prompt and Late correlations
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgTrackingIqDepB = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_TRACKING_IQ_DEP_B";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgTrackingIqDepB.prototype = Object.create(SBP.prototype);
+MsgTrackingIqDepB.prototype.messageType = "MSG_TRACKING_IQ_DEP_B";
+MsgTrackingIqDepB.prototype.msg_type = 0x002C;
+MsgTrackingIqDepB.prototype.constructor = MsgTrackingIqDepB;
+MsgTrackingIqDepB.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('channel')
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .array('corrs', { length: 3, type: TrackingChannelCorrelationDep.prototype.parser });
+MsgTrackingIqDepB.prototype.fieldSpec = [];
+MsgTrackingIqDepB.prototype.fieldSpec.push(['channel', 'writeUInt8', 1]);
+MsgTrackingIqDepB.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+MsgTrackingIqDepB.prototype.fieldSpec.push(['corrs', 'array', TrackingChannelCorrelationDep.prototype.fieldSpec, function () { return this.fields.array.length; }, 3]);
+
+/**
+ * SBP class for message MSG_TRACKING_IQ_DEP_A (0x001C).
  *
  * Deprecated.
  *
@@ -413,26 +476,26 @@ MsgTrackingIq.prototype.fieldSpec.push(['corrs', 'array', TrackingChannelCorrela
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingIqDep = function (sbp, fields) {
+var MsgTrackingIqDepA = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_TRACKING_IQ_DEP";
+  this.messageType = "MSG_TRACKING_IQ_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgTrackingIqDep.prototype = Object.create(SBP.prototype);
-MsgTrackingIqDep.prototype.messageType = "MSG_TRACKING_IQ_DEP";
-MsgTrackingIqDep.prototype.msg_type = 0x001C;
-MsgTrackingIqDep.prototype.constructor = MsgTrackingIqDep;
-MsgTrackingIqDep.prototype.parser = new Parser()
+MsgTrackingIqDepA.prototype = Object.create(SBP.prototype);
+MsgTrackingIqDepA.prototype.messageType = "MSG_TRACKING_IQ_DEP_A";
+MsgTrackingIqDepA.prototype.msg_type = 0x001C;
+MsgTrackingIqDepA.prototype.constructor = MsgTrackingIqDepA;
+MsgTrackingIqDepA.prototype.parser = new Parser()
   .endianess('little')
   .uint8('channel')
   .nest('sid', { type: GnssSignalDep.prototype.parser })
-  .array('corrs', { length: 3, type: TrackingChannelCorrelation.prototype.parser });
-MsgTrackingIqDep.prototype.fieldSpec = [];
-MsgTrackingIqDep.prototype.fieldSpec.push(['channel', 'writeUInt8', 1]);
-MsgTrackingIqDep.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
-MsgTrackingIqDep.prototype.fieldSpec.push(['corrs', 'array', TrackingChannelCorrelation.prototype.fieldSpec, function () { return this.fields.array.length; }, 3]);
+  .array('corrs', { length: 3, type: TrackingChannelCorrelationDep.prototype.parser });
+MsgTrackingIqDepA.prototype.fieldSpec = [];
+MsgTrackingIqDepA.prototype.fieldSpec.push(['channel', 'writeUInt8', 1]);
+MsgTrackingIqDepA.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldSpec]);
+MsgTrackingIqDepA.prototype.fieldSpec.push(['corrs', 'array', TrackingChannelCorrelationDep.prototype.fieldSpec, function () { return this.fields.array.length; }, 3]);
 
 /**
  * SBP class for message fragment TrackingChannelStateDepA
@@ -564,10 +627,13 @@ module.exports = {
   0x0061: MsgMeasurementState,
   MsgMeasurementState: MsgMeasurementState,
   TrackingChannelCorrelation: TrackingChannelCorrelation,
-  0x002C: MsgTrackingIq,
+  0x002D: MsgTrackingIq,
   MsgTrackingIq: MsgTrackingIq,
-  0x001C: MsgTrackingIqDep,
-  MsgTrackingIqDep: MsgTrackingIqDep,
+  TrackingChannelCorrelationDep: TrackingChannelCorrelationDep,
+  0x002C: MsgTrackingIqDepB,
+  MsgTrackingIqDepB: MsgTrackingIqDepB,
+  0x001C: MsgTrackingIqDepA,
+  MsgTrackingIqDepA: MsgTrackingIqDepA,
   TrackingChannelStateDepA: TrackingChannelStateDepA,
   0x0016: MsgTrackingStateDepA,
   MsgTrackingStateDepA: MsgTrackingStateDepA,

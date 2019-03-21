@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class TrackingChannelCorrelation extends SBPStruct {
+public class TrackingChannelCorrelationDep extends SBPStruct {
     
     /** In-phase correlation */
     public int I;
@@ -32,21 +32,21 @@ public class TrackingChannelCorrelation extends SBPStruct {
     public int Q;
     
 
-    public TrackingChannelCorrelation () {}
+    public TrackingChannelCorrelationDep () {}
 
     @Override
-    public TrackingChannelCorrelation parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public TrackingChannelCorrelationDep parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        I = parser.getS16();
-        Q = parser.getS16();
+        I = parser.getS32();
+        Q = parser.getS32();
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        builder.putS16(I);
-        builder.putS16(Q);
+        builder.putS32(I);
+        builder.putS32(Q);
     }
 
     @Override
