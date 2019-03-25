@@ -26,20 +26,24 @@ import SwiftNav.SBP
 import System.Console.CmdArgs
 import System.IO
 
-data Cfg = Cfg {skiporder :: Bool
-               ,spaces :: Int}
+data Cfg = Cfg { skiporder :: Bool
+               , spaces :: Int
+               , skipfilter :: Bool }
            deriving (Show, Data, Typeable)
 
 defaultCfg :: Cfg
-defaultCfg = Cfg{skiporder = False
-                ,spaces = 0}
+defaultCfg = Cfg { skiporder = False
+                 , spaces = 0
+                 , skipfilter = False }
 
 -- | Encode a SBPMsg to a line of JSON.
 encodeLine :: Cfg -> SBPMsg -> ByteString
-encodeLine c v = toStrict
-                   $ encodePretty'
-                     (defConfig  {confIndent = Spaces (spaces c), 
-                                  confCompare = if (skiporder c) then mempty else compare}) v <> "\n"
+encodeLine c (SBPMsgBadCrc _v)  | not (skipfilter c) = mempty
+encodeLine c (SBPMsgUnknown _v) | not (skipfilter c) = mempty
+encodeLine c v = toStrict $ encodePretty' (defConfig
+  { confIndent = Spaces (spaces c)
+  , confCompare = if (skiporder c) then mempty else compare
+  }) v <> "\n"
 
 main :: IO ()
 main = do
