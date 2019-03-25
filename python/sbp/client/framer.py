@@ -115,7 +115,7 @@ class Framer(six.Iterator):
         # empty input
         preamble = self._read(1)
         if not preamble:
-            raise StopIteration
+            return None
         elif ord(preamble) != SBP_PREAMBLE:
             if self._verbose:
                 print("Host Side Unhandled byte: 0x%02x" % ord(preamble))

@@ -1,5 +1,10 @@
 import cffi
 
+import glob
+import ntpath
+import os
+import shutil
+
 ffi = cffi.FFI()
 ffi.cdef("""
 float get_f32(unsigned char a, unsigned char b, unsigned char c, unsigned char d);
@@ -32,6 +37,13 @@ double get_f64(unsigned char a, unsigned char b, unsigned char c, unsigned char 
 }
 """
 
-ffi.set_source(module_name="parse_float_c", source=source)
+module_name = "parse_float_c"
+
+ffi.set_source(module_name=module_name, source=source)
 
 ffi.compile()
+
+# Move deliverables to same dir as the script
+dest_dir = os.path.dirname(os.path.realpath(__file__))
+for f in glob.glob(os.path.join(os.getcwd(), module_name + '.*')):
+    shutil.move(f, os.path.join(dest_dir, ntpath.basename(f)))

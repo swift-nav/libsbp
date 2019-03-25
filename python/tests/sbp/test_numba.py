@@ -2,7 +2,6 @@ import numba as nb
 import numpy as np
 
 from sbp.file_io import MsgFileioWriteReq
-from sbp.jit.file_io import MsgFileioWriteReq as MsgFileioWriteReq_j
 
 from sbp.jit.msg import SBP
 
@@ -13,7 +12,7 @@ from sbp.jit.table import dispatch
 
 
 def _mk_string(val, null='\x00'):
-    ba = bytearray(val + (null if null is not None else ''))
+    ba = bytearray(val + (null if null is not None else ''), 'ascii')
     return np.array(ba, dtype=np.uint8)
 
 
@@ -21,35 +20,35 @@ def test_get_string():
     s = _mk_string('thisisastring')
     out, offset, length = get_string(s, 0, len(s))
     assert len(out) == len('thisisastring')
-    assert out == 'thisisastring'
+    assert out == b'thisisastring'
 
 
 def test_get_string_no_null():
     s = _mk_string('thisisastring', null=None)
     out, offset, length = get_string(s, 0, len(s))
     assert len(out) == len('thisisastring')
-    assert out == 'thisisastring'
+    assert out == b'thisisastring'
 
 
 def test_get_string_offset_no_null():
     s = _mk_string('________thisisastring', null=None)
     out, offset, length = get_string(s, 8, len(s) - 8)
     assert len(out) == len('thisisastring')
-    assert out == 'thisisastring'
+    assert out == b'thisisastring'
 
 
 def test_get_string_offset():
     s = _mk_string('________thisisastring')
     out, offset, length = get_string(s, 8, len(s))
     assert len(out) == len('thisisastring')
-    assert out == 'thisisastring'
+    assert out == b'thisisastring'
 
 
 def test_get_fixed_string_offset():
     s = _mk_string('________thisisastring')
     out, offset, length = get_fixed_string(6)(s, 8, len(s))
     assert len(out) == len('thisis')
-    assert out == 'thisis'
+    assert out == b'thisis'
 
 
 def test_parse():
@@ -63,10 +62,9 @@ def test_parse():
         filename=b'floof.bin\0' + data,
         data=b'')
 
-    buf = m.to_binary()
-    b = buf.tobytes()
+    buf = np.fromstring(m.to_binary(), dtype=np.uint8)
 
-    assert b != b''
+    assert len(buf) > 0
 
     pkt_len, payload_len, msg_type, sender, crc, crc_fail = SBP.unpack_payload(buf, 0, len(buf))
     assert not crc_fail
