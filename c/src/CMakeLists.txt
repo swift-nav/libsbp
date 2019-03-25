@@ -49,8 +49,8 @@ set_target_properties(sbp PROPERTIES
 
 install(TARGETS sbp
         EXPORT sbp-export
-        DESTINATION lib${LIB_SUFFIX})
-install(FILES ${libsbp_HEADERS} DESTINATION include/libsbp)
+        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
+install(FILES ${libsbp_HEADERS} DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/libsbp)
 
 export(EXPORT sbp-export
         NAMESPACE LibSbp::
