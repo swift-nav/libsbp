@@ -3,6 +3,8 @@ project(libsbp)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
+include(GNUInstallDirs)
+
 ##########################################################
 # Set some reasonable default compiler flags.
 # Users of LibSbp that need different flags to be used can specify them
