@@ -1,3 +1,6 @@
+include(DoubleIncludeGuard)
+DoubleIncludeGuard(sbp)
+
 set(libsbp_HEADERS
   "${PROJECT_SOURCE_DIR}/include/libsbp/acquisition.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/bootload.h"
