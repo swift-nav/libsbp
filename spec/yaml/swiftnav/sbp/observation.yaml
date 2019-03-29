@@ -2274,3 +2274,31 @@ definitions:
             type: s16
             units: m * 0.02
             desc: GLONASS L2 P Code-Phase Bias
+
+ - SvAzEl:
+    short_desc: Satellite azimuth and elevation.
+    desc: Satellite azimuth and elevation.
+    fields:
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier
+        - az:
+            type: u8
+            units: deg * 2
+            desc: Azimuth angle (range 0..179)
+        - el:
+            type: s8
+            units: deg
+            desc: Elevation angle (range -90..90)
+
+ - MSG_SV_AZ_EL:
+    id: 0x0097
+    short_desc: Satellite azimuths and elevations
+    desc: |
+      Azimuth and elevation angles of all the visible satellites
+      that the device does have ephemeris or almanac for.
+    fields:
+      - azel:
+          type: array
+          fill: SvAzEl
+          desc: Azimuth and elevation per satellite

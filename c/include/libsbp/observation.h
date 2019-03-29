@@ -1046,6 +1046,28 @@ typedef struct SBP_ATTR_PACKED {
 } msg_glo_biases_t;
 
 
+/** Satellite azimuth and elevation.
+ *
+* Satellite azimuth and elevation.
+ */
+typedef struct SBP_ATTR_PACKED {
+  sbp_gnss_signal_t sid;    /**< GNSS signal identifier */
+  u8 az;     /**< Azimuth angle (range 0..179) [deg * 2] */
+  s8 el;     /**< Elevation angle (range -90..90) [deg] */
+} sv_az_el_t;
+
+
+/** Satellite azimuths and elevations
+ *
+ * Azimuth and elevation angles of all the visible satellites
+ * that the device does have ephemeris or almanac for.
+ */
+#define SBP_MSG_SV_AZ_EL                 0x0097
+typedef struct SBP_ATTR_PACKED {
+  sv_az_el_t azel[0]; /**< Azimuth and elevation per satellite */
+} msg_sv_az_el_t;
+
+
 /** \} */
 
 SBP_PACK_END

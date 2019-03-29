@@ -381,3 +381,22 @@ message MsgGloBiases {
     sint32 l2ca_bias = 4;
     sint32 l2p_bias = 5;
 }
+
+/** Satellite azimuth and elevation.
+ *
+* Satellite azimuth and elevation.
+ */
+message SvAzEl {
+    gnss.GnssSignal sid = 1;
+    uint32 az = 2;
+    sint32 el = 3;
+}
+
+/** Satellite azimuths and elevations
+ *
+ * Azimuth and elevation angles of all the visible satellites
+ * that the device does have ephemeris or almanac for.
+ */
+message MsgSvAzEl {
+    repeated SvAzEl azel = 1;
+}

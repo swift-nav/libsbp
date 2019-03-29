@@ -905,6 +905,51 @@ Satellite health status for GLO:
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return AlmanacCommonContentDep.build(d)
     
+class SvAzEl(object):
+  """SvAzEl.
+  
+  Satellite azimuth and elevation.
+  
+  Parameters
+  ----------
+  sid : GnssSignal
+    GNSS signal identifier
+  az : int
+    Azimuth angle (range 0..179)
+  el : int
+    Elevation angle (range -90..90)
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'sid' / construct.Struct(GnssSignal._parser),
+                     'az' / construct.Int8ul,
+                     'el' / construct.Int8sl,))
+  __slots__ = [
+               'sid',
+               'az',
+               'el',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sid = kwargs.pop('sid')
+      self.az = kwargs.pop('az')
+      self.el = kwargs.pop('el')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = SvAzEl._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return SvAzEl.build(d)
+    
 SBP_MSG_OBS = 0x004A
 class MsgObs(SBP):
   """SBP class for message MSG_OBS (0x004A).
@@ -5721,6 +5766,97 @@ manufacturers)
     d.update(j)
     return d
     
+SBP_MSG_SV_AZ_EL = 0x0097
+class MsgSvAzEl(SBP):
+  """SBP class for message MSG_SV_AZ_EL (0x0097).
+
+  You can have MSG_SV_AZ_EL inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Azimuth and elevation angles of all the visible satellites
+that the device does have ephemeris or almanac for.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  azel : array
+    Azimuth and elevation per satellite
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   construct.GreedyRange('azel' / construct.Struct(SvAzEl._parser)),)
+  __slots__ = [
+               'azel',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSvAzEl,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSvAzEl, self).__init__()
+      self.msg_type = SBP_MSG_SV_AZ_EL
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.azel = kwargs.pop('azel')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSvAzEl.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSvAzEl(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSvAzEl._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSvAzEl._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSvAzEl._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSvAzEl, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x004A: MsgObs,
@@ -5757,4 +5893,5 @@ msg_classes = {
   0x0071: MsgAlmanacGloDep,
   0x0073: MsgAlmanacGlo,
   0x0075: MsgGloBiases,
+  0x0097: MsgSvAzEl,
 }
