@@ -2607,6 +2607,66 @@ MsgGloBiases.prototype.fieldSpec.push(['l1p_bias', 'writeInt16LE', 2]);
 MsgGloBiases.prototype.fieldSpec.push(['l2ca_bias', 'writeInt16LE', 2]);
 MsgGloBiases.prototype.fieldSpec.push(['l2p_bias', 'writeInt16LE', 2]);
 
+/**
+ * SBP class for message fragment SvAzEl
+ *
+ * Satellite azimuth and elevation.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sid GnssSignal GNSS signal identifier
+ * @field az number (unsigned 8-bit int, 1 byte) Azimuth angle (range 0..179)
+ * @field el number (signed 8-bit int, 1 byte) Elevation angle (range -90..90)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var SvAzEl = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "SvAzEl";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+SvAzEl.prototype = Object.create(SBP.prototype);
+SvAzEl.prototype.messageType = "SvAzEl";
+SvAzEl.prototype.constructor = SvAzEl;
+SvAzEl.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .uint8('az')
+  .int8('el');
+SvAzEl.prototype.fieldSpec = [];
+SvAzEl.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+SvAzEl.prototype.fieldSpec.push(['az', 'writeUInt8', 1]);
+SvAzEl.prototype.fieldSpec.push(['el', 'writeInt8', 1]);
+
+/**
+ * SBP class for message MSG_SV_AZ_EL (0x0097).
+ *
+ * Azimuth and elevation angles of all the visible satellites that the device does
+ * have ephemeris or almanac for.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field azel array Azimuth and elevation per satellite
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSvAzEl = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SV_AZ_EL";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSvAzEl.prototype = Object.create(SBP.prototype);
+MsgSvAzEl.prototype.messageType = "MSG_SV_AZ_EL";
+MsgSvAzEl.prototype.msg_type = 0x0097;
+MsgSvAzEl.prototype.constructor = MsgSvAzEl;
+MsgSvAzEl.prototype.parser = new Parser()
+  .endianess('little')
+  .array('azel', { type: SvAzEl.prototype.parser, readUntil: 'eof' });
+MsgSvAzEl.prototype.fieldSpec = [];
+MsgSvAzEl.prototype.fieldSpec.push(['azel', 'array', SvAzEl.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
 module.exports = {
   ObservationHeader: ObservationHeader,
   Doppler: Doppler,
@@ -2690,4 +2750,7 @@ module.exports = {
   MsgAlmanacGlo: MsgAlmanacGlo,
   0x0075: MsgGloBiases,
   MsgGloBiases: MsgGloBiases,
+  SvAzEl: SvAzEl,
+  0x0097: MsgSvAzEl,
+  MsgSvAzEl: MsgSvAzEl,
 }

@@ -199,6 +199,7 @@ data SBPMsg =
    | SBPMsgStmFlashUnlockSector MsgStmFlashUnlockSector Msg
    | SBPMsgStmUniqueIdReq MsgStmUniqueIdReq Msg
    | SBPMsgStmUniqueIdResp MsgStmUniqueIdResp Msg
+   | SBPMsgSvAzEl MsgSvAzEl Msg
    | SBPMsgSvConfigurationGpsDep MsgSvConfigurationGpsDep Msg
    | SBPMsgThreadState MsgThreadState Msg
    | SBPMsgTrackingIq MsgTrackingIq Msg
@@ -378,6 +379,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSvAzEl = SBPMsgSvAzEl (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSvConfigurationGpsDep = SBPMsgSvConfigurationGpsDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgThreadState = SBPMsgThreadState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingIq = SBPMsgTrackingIq (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -549,6 +551,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgStmFlashUnlockSector _ m) = put m
       encoder (SBPMsgStmUniqueIdReq _ m) = put m
       encoder (SBPMsgStmUniqueIdResp _ m) = put m
+      encoder (SBPMsgSvAzEl _ m) = put m
       encoder (SBPMsgSvConfigurationGpsDep _ m) = put m
       encoder (SBPMsgThreadState _ m) = put m
       encoder (SBPMsgTrackingIq _ m) = put m
@@ -724,6 +727,7 @@ instance FromJSON SBPMsg where
         | msgType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSvAzEl = SBPMsgSvAzEl <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSvConfigurationGpsDep = SBPMsgSvConfigurationGpsDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgThreadState = SBPMsgThreadState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingIq = SBPMsgTrackingIq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -900,6 +904,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgStmFlashUnlockSector n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStmUniqueIdReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStmUniqueIdResp n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSvAzEl n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSvConfigurationGpsDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgThreadState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingIq n m) = toJSON n <<>> toJSON m
@@ -1070,6 +1075,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgStmFlashUnlockSector n m) = SBPMsgStmFlashUnlockSector n <$> f m
   msg f (SBPMsgStmUniqueIdReq n m) = SBPMsgStmUniqueIdReq n <$> f m
   msg f (SBPMsgStmUniqueIdResp n m) = SBPMsgStmUniqueIdResp n <$> f m
+  msg f (SBPMsgSvAzEl n m) = SBPMsgSvAzEl n <$> f m
   msg f (SBPMsgSvConfigurationGpsDep n m) = SBPMsgSvConfigurationGpsDep n <$> f m
   msg f (SBPMsgThreadState n m) = SBPMsgThreadState n <$> f m
   msg f (SBPMsgTrackingIq n m) = SBPMsgTrackingIq n <$> f m

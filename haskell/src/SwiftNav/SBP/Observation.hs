@@ -2787,3 +2787,54 @@ instance Binary MsgGloBiases where
 $(makeSBP 'msgGloBiases ''MsgGloBiases)
 $(makeJSON "_msgGloBiases_" ''MsgGloBiases)
 $(makeLenses ''MsgGloBiases)
+
+-- | SvAzEl.
+--
+-- Satellite azimuth and elevation.
+data SvAzEl = SvAzEl
+  { _svAzEl_sid :: !GnssSignal
+    -- ^ GNSS signal identifier
+  , _svAzEl_az :: !Word8
+    -- ^ Azimuth angle (range 0..179)
+  , _svAzEl_el :: !Int8
+    -- ^ Elevation angle (range -90..90)
+  } deriving ( Show, Read, Eq )
+
+instance Binary SvAzEl where
+  get = do
+    _svAzEl_sid <- get
+    _svAzEl_az <- getWord8
+    _svAzEl_el <- fromIntegral <$> getWord8
+    pure SvAzEl {..}
+
+  put SvAzEl {..} = do
+    put _svAzEl_sid
+    putWord8 _svAzEl_az
+    (putWord8 . fromIntegral) _svAzEl_el
+
+$(makeJSON "_svAzEl_" ''SvAzEl)
+$(makeLenses ''SvAzEl)
+
+msgSvAzEl :: Word16
+msgSvAzEl = 0x0097
+
+-- | SBP class for message MSG_SV_AZ_EL (0x0097).
+--
+-- Azimuth and elevation angles of all the visible satellites that the device
+-- does have ephemeris or almanac for.
+data MsgSvAzEl = MsgSvAzEl
+  { _msgSvAzEl_azel :: ![SvAzEl]
+    -- ^ Azimuth and elevation per satellite
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSvAzEl where
+  get = do
+    _msgSvAzEl_azel <- whileM (not <$> isEmpty) get
+    pure MsgSvAzEl {..}
+
+  put MsgSvAzEl {..} = do
+    mapM_ put _msgSvAzEl_azel
+
+$(makeSBP 'msgSvAzEl ''MsgSvAzEl)
+$(makeJSON "_msgSvAzEl_" ''MsgSvAzEl)
+$(makeLenses ''MsgSvAzEl)
