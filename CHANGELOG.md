@@ -1,5 +1,30 @@
 # Change Log
 
+## [v2.5.1](https://github.com/swift-nav/libsbp/tree/v2.5.1) (2019-03-29)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.0...v2.5.1)
+
+**Closed issues:**
+
+- non-iterator of type framer [\#639](https://github.com/swift-nav/libsbp/issues/639)
+- Support Python 3 [\#600](https://github.com/swift-nav/libsbp/issues/600)
+- No moduled named 'handler' [\#574](https://github.com/swift-nav/libsbp/issues/574)
+- MSG\_UART\_STATE: status of uart A and B with all 0s [\#472](https://github.com/swift-nav/libsbp/issues/472)
+- Improve ability to use C SBP messaging libraries and headers with Microsoft Visual Studio [\#437](https://github.com/swift-nav/libsbp/issues/437)
+
+**Merged pull requests:**
+
+- Release version 2.5.1 [\#672](https://github.com/swift-nav/libsbp/pull/672)
+- EX-569: new message for SV azimuths/elevations [\#670](https://github.com/swift-nav/libsbp/pull/670)
+- Use system defined install paths [\#669](https://github.com/swift-nav/libsbp/pull/669)
+- sbp2prettyjson: Filter out SBPMsgBadCrc and SBPMsgUnknown \[ESD-1189\] [\#668](https://github.com/swift-nav/libsbp/pull/668)
+- Add option for explicit start \[ESD-1166\] [\#665](https://github.com/swift-nav/libsbp/pull/665)
+- Sort JSON by keys \[ESD-1169\] [\#664](https://github.com/swift-nav/libsbp/pull/664)
+- Add option to omit metadata \[ESD-1170\] [\#663](https://github.com/swift-nav/libsbp/pull/663)
+- Patch lodash to resolve GH security warning [\#661](https://github.com/swift-nav/libsbp/pull/661)
+- Close serial port fd when piksi disconnects \[ESD-1111\] [\#660](https://github.com/swift-nav/libsbp/pull/660)
+- Add JIT for crc, build into existing buffer to avoid copies \[ESD-1108\] [\#658](https://github.com/swift-nav/libsbp/pull/658)
+- \[ME-166\] Add 16 bit correlator message [\#646](https://github.com/swift-nav/libsbp/pull/646)
+
 ## [2.5.0](https://github.com/swift-nav/libsbp/tree/v2.5.0)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.10...v2.5.0)
