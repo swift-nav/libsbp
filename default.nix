@@ -16,10 +16,12 @@ stdenv.mkDerivation rec {
     python27Packages.setuptools
     python27Packages.virtualenv
     python27Packages.pip
+    python27Packages.cython
     python37Full
     python37Packages.setuptools
     python27Packages.virtualenv
     python37Packages.pip
+    python37Packages.cython
     nodejs
     coreutils
     bash
@@ -29,6 +31,8 @@ stdenv.mkDerivation rec {
     cmake
     git
     which
+    llvm
+    libcxxStdenv
   ];
   shellHook = ''
     [[ -z "$SOURCE_DATE_EPOCH" ]] || unset SOURCE_DATE_EPOCH

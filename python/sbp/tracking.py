@@ -1071,6 +1071,15 @@ update interval.
     self.payload = MsgTrackingIqDepB._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgTrackingIqDepB._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgTrackingIqDepB, self).to_json_dict()
@@ -1166,7 +1175,7 @@ class MsgTrackingIqDepA(SBP):
 
     """
     self.payload = containerize(exclude_fields(self))
-    self.parser = MsgTrackingIqDep._parser
+    self.parser = MsgTrackingIqDepA._parser
     self.stream_payload.reset(buf, offset)
     return self.pack_into(buf, offset, self._build_payload)
 
