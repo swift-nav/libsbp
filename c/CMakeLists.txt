@@ -4,6 +4,8 @@ project(libsbp)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 include(GNUInstallDirs)
+include(SwiftUtils)
+headerguard(sbp)
 
 ##########################################################
 # Set some reasonable default compiler flags.
