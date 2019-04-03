@@ -3,8 +3,8 @@ import cffi
 ffi = cffi.FFI()
 ffi.cdef("""
 float get_f32(unsigned char a, unsigned char b, unsigned char c, unsigned char d);
-float get_f64(unsigned char a, unsigned char b, unsigned char c, unsigned char d,
-	      unsigned char e, unsigned char f, unsigned char g, unsigned char h);
+double get_f64(unsigned char a, unsigned char b, unsigned char c, unsigned char d,
+               unsigned char e, unsigned char f, unsigned char g, unsigned char h);
 """)
 
 source = """
@@ -17,8 +17,8 @@ float get_f32(unsigned char a, unsigned char b, unsigned char c, unsigned char d
     return u.f;
 }
 
-float get_f64(unsigned char a, unsigned char b, unsigned char c, unsigned char d,
-	      unsigned char e, unsigned char f, unsigned char g, unsigned char h) {
+double get_f64(unsigned char a, unsigned char b, unsigned char c, unsigned char d,
+               unsigned char e, unsigned char f, unsigned char g, unsigned char h) {
     union { unsigned char buf[8]; double d; } u;
     u.buf[0] = a;
     u.buf[1] = b;
