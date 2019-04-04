@@ -17,11 +17,13 @@ Messages reserved for use by the user.
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
-from sbp.jit.msg import get_f32, get_f64
-from sbp.jit.msg import get_string, get_fixed_string
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
 from sbp.jit.msg import get_array, get_fixed_array
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/user.yaml with generate.py.
@@ -44,13 +46,10 @@ maximum length of 255 bytes per message.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__contents, offset, length) = offset, get_array(get_u8)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'contents' : __contents,
-    }, offset, length
+    ret = {}
+    (__contents, offset, length) = get_array(get_u8)(buf, offset, length)
+    ret['contents'] = __contents
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -58,6 +57,13 @@ maximum length of 255 bytes per message.
       return {}, offset, length
     self.contents = res['contents']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # contents: array of u8
+    ret += 247
+    return ret
   
 
 msg_classes = {

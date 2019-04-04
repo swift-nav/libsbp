@@ -16,11 +16,13 @@ Orientation Messages
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
-from sbp.jit.msg import get_f32, get_f64
-from sbp.jit.msg import get_string, get_fixed_string
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
 from sbp.jit.msg import get_array, get_fixed_array
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/orientation.yaml with generate.py.
@@ -48,25 +50,16 @@ that time-matched RTK mode is used when the base station is moving.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__tow, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__heading, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__n_sats, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'tow' : __tow,
-      'heading' : __heading,
-      'n_sats' : __n_sats,
-      'flags' : __flags,
-    }, offset, length
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__heading, offset, length) = get_u32(buf, offset, length)
+    ret['heading'] = __heading
+    (__n_sats, offset, length) = get_u8(buf, offset, length)
+    ret['n_sats'] = __n_sats
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -77,6 +70,19 @@ that time-matched RTK mode is used when the base station is moving.
     self.n_sats = res['n_sats']
     self.flags = res['flags']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # heading: u32
+    ret += 4
+    # n_sats: u8
+    ret += 1
+    # flags: u8
+    ret += 1
+    return ret
   
 SBP_MSG_ORIENT_QUAT = 0x0220
 class MsgOrientQuat(SBP):
@@ -108,49 +114,28 @@ or Duro.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__tow, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__w, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__x, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__y, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__z, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__w_accuracy, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__x_accuracy, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__y_accuracy, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__z_accuracy, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'tow' : __tow,
-      'w' : __w,
-      'x' : __x,
-      'y' : __y,
-      'z' : __z,
-      'w_accuracy' : __w_accuracy,
-      'x_accuracy' : __x_accuracy,
-      'y_accuracy' : __y_accuracy,
-      'z_accuracy' : __z_accuracy,
-      'flags' : __flags,
-    }, offset, length
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__w, offset, length) = get_s32(buf, offset, length)
+    ret['w'] = __w
+    (__x, offset, length) = get_s32(buf, offset, length)
+    ret['x'] = __x
+    (__y, offset, length) = get_s32(buf, offset, length)
+    ret['y'] = __y
+    (__z, offset, length) = get_s32(buf, offset, length)
+    ret['z'] = __z
+    (__w_accuracy, offset, length) = get_f32(buf, offset, length)
+    ret['w_accuracy'] = judicious_round(nb.f4(__w_accuracy)) if SBP.judicious_rounding else __w_accuracy
+    (__x_accuracy, offset, length) = get_f32(buf, offset, length)
+    ret['x_accuracy'] = judicious_round(nb.f4(__x_accuracy)) if SBP.judicious_rounding else __x_accuracy
+    (__y_accuracy, offset, length) = get_f32(buf, offset, length)
+    ret['y_accuracy'] = judicious_round(nb.f4(__y_accuracy)) if SBP.judicious_rounding else __y_accuracy
+    (__z_accuracy, offset, length) = get_f32(buf, offset, length)
+    ret['z_accuracy'] = judicious_round(nb.f4(__z_accuracy)) if SBP.judicious_rounding else __z_accuracy
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -167,6 +152,31 @@ or Duro.
     self.z_accuracy = res['z_accuracy']
     self.flags = res['flags']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # w: s32
+    ret += 4
+    # x: s32
+    ret += 4
+    # y: s32
+    ret += 4
+    # z: s32
+    ret += 4
+    # w_accuracy: float
+    ret += 4
+    # x_accuracy: float
+    ret += 4
+    # y_accuracy: float
+    ret += 4
+    # z_accuracy: float
+    ret += 4
+    # flags: u8
+    ret += 1
+    return ret
   
 SBP_MSG_ORIENT_EULER = 0x0221
 class MsgOrientEuler(SBP):
@@ -196,41 +206,24 @@ INS versions of Swift Products and is not produced by Piksi Multi or Duro.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__tow, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__roll, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__pitch, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__yaw, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__roll_accuracy, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__pitch_accuracy, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__yaw_accuracy, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'tow' : __tow,
-      'roll' : __roll,
-      'pitch' : __pitch,
-      'yaw' : __yaw,
-      'roll_accuracy' : __roll_accuracy,
-      'pitch_accuracy' : __pitch_accuracy,
-      'yaw_accuracy' : __yaw_accuracy,
-      'flags' : __flags,
-    }, offset, length
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__roll, offset, length) = get_s32(buf, offset, length)
+    ret['roll'] = __roll
+    (__pitch, offset, length) = get_s32(buf, offset, length)
+    ret['pitch'] = __pitch
+    (__yaw, offset, length) = get_s32(buf, offset, length)
+    ret['yaw'] = __yaw
+    (__roll_accuracy, offset, length) = get_f32(buf, offset, length)
+    ret['roll_accuracy'] = judicious_round(nb.f4(__roll_accuracy)) if SBP.judicious_rounding else __roll_accuracy
+    (__pitch_accuracy, offset, length) = get_f32(buf, offset, length)
+    ret['pitch_accuracy'] = judicious_round(nb.f4(__pitch_accuracy)) if SBP.judicious_rounding else __pitch_accuracy
+    (__yaw_accuracy, offset, length) = get_f32(buf, offset, length)
+    ret['yaw_accuracy'] = judicious_round(nb.f4(__yaw_accuracy)) if SBP.judicious_rounding else __yaw_accuracy
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -245,6 +238,27 @@ INS versions of Swift Products and is not produced by Piksi Multi or Duro.
     self.yaw_accuracy = res['yaw_accuracy']
     self.flags = res['flags']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # roll: s32
+    ret += 4
+    # pitch: s32
+    ret += 4
+    # yaw: s32
+    ret += 4
+    # roll_accuracy: float
+    ret += 4
+    # pitch_accuracy: float
+    ret += 4
+    # yaw_accuracy: float
+    ret += 4
+    # flags: u8
+    ret += 1
+    return ret
   
 SBP_MSG_ANGULAR_RATE = 0x0222
 class MsgAngularRate(SBP):
@@ -275,29 +289,18 @@ and is not produced by Piksi Multi or Duro.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__tow, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__x, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__y, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__z, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'tow' : __tow,
-      'x' : __x,
-      'y' : __y,
-      'z' : __z,
-      'flags' : __flags,
-    }, offset, length
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__x, offset, length) = get_s32(buf, offset, length)
+    ret['x'] = __x
+    (__y, offset, length) = get_s32(buf, offset, length)
+    ret['y'] = __y
+    (__z, offset, length) = get_s32(buf, offset, length)
+    ret['z'] = __z
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -309,6 +312,21 @@ and is not produced by Piksi Multi or Duro.
     self.z = res['z']
     self.flags = res['flags']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # x: s32
+    ret += 4
+    # y: s32
+    ret += 4
+    # z: s32
+    ret += 4
+    # flags: u8
+    ret += 1
+    return ret
   
 
 msg_classes = {

@@ -19,11 +19,13 @@ may no longer be used.
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
-from sbp.jit.msg import get_f32, get_f64
-from sbp.jit.msg import get_string, get_fixed_string
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
 from sbp.jit.msg import get_array, get_fixed_array
 from sbp.jit.gnss import *
 
@@ -44,6 +46,11 @@ alamanac onto the Piksi's flash memory from the host.
 
   """
   __slots__ = []
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def _payload_size(self):
+    return 0
   
 SBP_MSG_SET_TIME = 0x0068
 class MsgSetTime(SBP):
@@ -60,6 +67,11 @@ time estimate sent by the host.
 
   """
   __slots__ = []
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def _payload_size(self):
+    return 0
   
 SBP_MSG_RESET = 0x00B6
 class MsgReset(SBP):
@@ -79,13 +91,10 @@ bootloader.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__flags, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'flags' : __flags,
-    }, offset, length
+    ret = {}
+    (__flags, offset, length) = get_u32(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -93,6 +102,13 @@ bootloader.
       return {}, offset, length
     self.flags = res['flags']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # flags: u32
+    ret += 4
+    return ret
   
 SBP_MSG_RESET_DEP = 0x00B2
 class MsgResetDep(SBP):
@@ -109,6 +125,11 @@ bootloader.
 
   """
   __slots__ = []
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def _payload_size(self):
+    return 0
   
 SBP_MSG_CW_RESULTS = 0x00C0
 class MsgCwResults(SBP):
@@ -126,6 +147,11 @@ removed in a future release.
 
   """
   __slots__ = []
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def _payload_size(self):
+    return 0
   
 SBP_MSG_CW_START = 0x00C1
 class MsgCwStart(SBP):
@@ -143,6 +169,11 @@ be removed in a future release.
 
   """
   __slots__ = []
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def _payload_size(self):
+    return 0
   
 SBP_MSG_RESET_FILTERS = 0x0022
 class MsgResetFilters(SBP):
@@ -162,13 +193,10 @@ Ambiguity Resolution (IAR) process.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__filter, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'filter' : __filter,
-    }, offset, length
+    ret = {}
+    (__filter, offset, length) = get_u8(buf, offset, length)
+    ret['filter'] = __filter
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -176,6 +204,13 @@ Ambiguity Resolution (IAR) process.
       return {}, offset, length
     self.filter = res['filter']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # filter: u8
+    ret += 1
+    return ret
   
 SBP_MSG_INIT_BASE = 0x0023
 class MsgInitBase(SBP):
@@ -195,6 +230,11 @@ observations between the two.
 
   """
   __slots__ = []
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def _payload_size(self):
+    return 0
   
 SBP_MSG_THREAD_STATE = 0x0017
 class MsgThreadState(SBP):
@@ -217,21 +257,14 @@ thread. The reported percentage values must be normalized.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__name, offset, length) = offset, get_fixed_string(20)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cpu, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__stack_free, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'name' : __name,
-      'cpu' : __cpu,
-      'stack_free' : __stack_free,
-    }, offset, length
+    ret = {}
+    (__name, offset, length) = get_fixed_string(20)(buf, offset, length)
+    ret['name'] = __name
+    (__cpu, offset, length) = get_u16(buf, offset, length)
+    ret['cpu'] = __cpu
+    (__stack_free, offset, length) = get_u32(buf, offset, length)
+    ret['stack_free'] = __stack_free
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -241,6 +274,17 @@ thread. The reported percentage values must be normalized.
     self.cpu = res['cpu']
     self.stack_free = res['stack_free']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # name: string
+    ret += 20
+    # cpu: u16
+    ret += 2
+    # stack_free: u32
+    ret += 4
+    return ret
   
 class UARTChannel(object):
   """SBP class for message UARTChannel
@@ -265,33 +309,20 @@ be normalized.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__tx_throughput, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__rx_throughput, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__crc_error_count, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__io_error_count, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__tx_buffer_level, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__rx_buffer_level, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'tx_throughput' : __tx_throughput,
-      'rx_throughput' : __rx_throughput,
-      'crc_error_count' : __crc_error_count,
-      'io_error_count' : __io_error_count,
-      'tx_buffer_level' : __tx_buffer_level,
-      'rx_buffer_level' : __rx_buffer_level,
-    }, offset, length
+    ret = {}
+    (__tx_throughput, offset, length) = get_f32(buf, offset, length)
+    ret['tx_throughput'] = judicious_round(nb.f4(__tx_throughput)) if SBP.judicious_rounding else __tx_throughput
+    (__rx_throughput, offset, length) = get_f32(buf, offset, length)
+    ret['rx_throughput'] = judicious_round(nb.f4(__rx_throughput)) if SBP.judicious_rounding else __rx_throughput
+    (__crc_error_count, offset, length) = get_u16(buf, offset, length)
+    ret['crc_error_count'] = __crc_error_count
+    (__io_error_count, offset, length) = get_u16(buf, offset, length)
+    ret['io_error_count'] = __io_error_count
+    (__tx_buffer_level, offset, length) = get_u8(buf, offset, length)
+    ret['tx_buffer_level'] = __tx_buffer_level
+    (__rx_buffer_level, offset, length) = get_u8(buf, offset, length)
+    ret['rx_buffer_level'] = __rx_buffer_level
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -304,6 +335,23 @@ be normalized.
     self.tx_buffer_level = res['tx_buffer_level']
     self.rx_buffer_level = res['rx_buffer_level']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tx_throughput: float
+    ret += 4
+    # rx_throughput: float
+    ret += 4
+    # crc_error_count: u16
+    ret += 2
+    # io_error_count: u16
+    ret += 2
+    # tx_buffer_level: u8
+    ret += 1
+    # rx_buffer_level: u8
+    ret += 1
+    return ret
   
 class Period(object):
   """SBP class for message Period
@@ -329,25 +377,16 @@ can cause momentary RTK solution outages.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__avg, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__pmin, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__pmax, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__current, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'avg' : __avg,
-      'pmin' : __pmin,
-      'pmax' : __pmax,
-      'current' : __current,
-    }, offset, length
+    ret = {}
+    (__avg, offset, length) = get_s32(buf, offset, length)
+    ret['avg'] = __avg
+    (__pmin, offset, length) = get_s32(buf, offset, length)
+    ret['pmin'] = __pmin
+    (__pmax, offset, length) = get_s32(buf, offset, length)
+    ret['pmax'] = __pmax
+    (__current, offset, length) = get_s32(buf, offset, length)
+    ret['current'] = __current
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -358,6 +397,19 @@ can cause momentary RTK solution outages.
     self.pmax = res['pmax']
     self.current = res['current']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # avg: s32
+    ret += 4
+    # pmin: s32
+    ret += 4
+    # pmax: s32
+    ret += 4
+    # current: s32
+    ret += 4
+    return ret
   
 class Latency(object):
   """SBP class for message Latency
@@ -382,25 +434,16 @@ communication latency in the system.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__avg, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__lmin, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__lmax, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__current, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'avg' : __avg,
-      'lmin' : __lmin,
-      'lmax' : __lmax,
-      'current' : __current,
-    }, offset, length
+    ret = {}
+    (__avg, offset, length) = get_s32(buf, offset, length)
+    ret['avg'] = __avg
+    (__lmin, offset, length) = get_s32(buf, offset, length)
+    ret['lmin'] = __lmin
+    (__lmax, offset, length) = get_s32(buf, offset, length)
+    ret['lmax'] = __lmax
+    (__current, offset, length) = get_s32(buf, offset, length)
+    ret['current'] = __current
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -411,6 +454,19 @@ communication latency in the system.
     self.lmax = res['lmax']
     self.current = res['current']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # avg: s32
+    ret += 4
+    # lmin: s32
+    ret += 4
+    # lmax: s32
+    ret += 4
+    # current: s32
+    ret += 4
+    return ret
   
 SBP_MSG_UART_STATE = 0x001D
 class MsgUartState(SBP):
@@ -441,29 +497,18 @@ period indicates their likelihood of transmission.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__uart_a, offset, length) = offset, UARTChannel.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__uart_b, offset, length) = offset, UARTChannel.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__uart_ftdi, offset, length) = offset, UARTChannel.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__latency, offset, length) = offset, Latency.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__obs_period, offset, length) = offset, Period.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'uart_a' : __uart_a,
-      'uart_b' : __uart_b,
-      'uart_ftdi' : __uart_ftdi,
-      'latency' : __latency,
-      'obs_period' : __obs_period,
-    }, offset, length
+    ret = {}
+    (__uart_a, offset, length) = UARTChannel.parse_members(buf, offset, length)
+    ret['uart_a'] = __uart_a
+    (__uart_b, offset, length) = UARTChannel.parse_members(buf, offset, length)
+    ret['uart_b'] = __uart_b
+    (__uart_ftdi, offset, length) = UARTChannel.parse_members(buf, offset, length)
+    ret['uart_ftdi'] = __uart_ftdi
+    (__latency, offset, length) = Latency.parse_members(buf, offset, length)
+    ret['latency'] = __latency
+    (__obs_period, offset, length) = Period.parse_members(buf, offset, length)
+    ret['obs_period'] = __obs_period
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -475,6 +520,21 @@ period indicates their likelihood of transmission.
     self.latency = res['latency']
     self.obs_period = res['obs_period']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # uart_a: UARTChannel
+    ret += UARTChannel._payload_size()
+    # uart_b: UARTChannel
+    ret += UARTChannel._payload_size()
+    # uart_ftdi: UARTChannel
+    ret += UARTChannel._payload_size()
+    # latency: Latency
+    ret += Latency._payload_size()
+    # obs_period: Period
+    ret += Period._payload_size()
+    return ret
   
 SBP_MSG_UART_STATE_DEPA = 0x0018
 class MsgUartStateDepa(SBP):
@@ -495,25 +555,16 @@ class MsgUartStateDepa(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__uart_a, offset, length) = offset, UARTChannel.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__uart_b, offset, length) = offset, UARTChannel.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__uart_ftdi, offset, length) = offset, UARTChannel.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__latency, offset, length) = offset, Latency.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'uart_a' : __uart_a,
-      'uart_b' : __uart_b,
-      'uart_ftdi' : __uart_ftdi,
-      'latency' : __latency,
-    }, offset, length
+    ret = {}
+    (__uart_a, offset, length) = UARTChannel.parse_members(buf, offset, length)
+    ret['uart_a'] = __uart_a
+    (__uart_b, offset, length) = UARTChannel.parse_members(buf, offset, length)
+    ret['uart_b'] = __uart_b
+    (__uart_ftdi, offset, length) = UARTChannel.parse_members(buf, offset, length)
+    ret['uart_ftdi'] = __uart_ftdi
+    (__latency, offset, length) = Latency.parse_members(buf, offset, length)
+    ret['latency'] = __latency
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -524,6 +575,19 @@ class MsgUartStateDepa(SBP):
     self.uart_ftdi = res['uart_ftdi']
     self.latency = res['latency']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # uart_a: UARTChannel
+    ret += UARTChannel._payload_size()
+    # uart_b: UARTChannel
+    ret += UARTChannel._payload_size()
+    # uart_ftdi: UARTChannel
+    ret += UARTChannel._payload_size()
+    # latency: Latency
+    ret += Latency._payload_size()
+    return ret
   
 SBP_MSG_IAR_STATE = 0x0019
 class MsgIarState(SBP):
@@ -545,13 +609,10 @@ from satellite observations.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__num_hyps, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'num_hyps' : __num_hyps,
-    }, offset, length
+    ret = {}
+    (__num_hyps, offset, length) = get_u32(buf, offset, length)
+    ret['num_hyps'] = __num_hyps
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -559,6 +620,13 @@ from satellite observations.
       return {}, offset, length
     self.num_hyps = res['num_hyps']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # num_hyps: u32
+    ret += 4
+    return ret
   
 SBP_MSG_MASK_SATELLITE = 0x002B
 class MsgMaskSatellite(SBP):
@@ -579,17 +647,12 @@ from being used in various Piksi subsystems.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__mask, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignal.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'mask' : __mask,
-      'sid' : __sid,
-    }, offset, length
+    ret = {}
+    (__mask, offset, length) = get_u8(buf, offset, length)
+    ret['mask'] = __mask
+    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -598,6 +661,15 @@ from being used in various Piksi subsystems.
     self.mask = res['mask']
     self.sid = res['sid']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # mask: u8
+    ret += 1
+    # sid: GnssSignal
+    ret += GnssSignal._payload_size()
+    return ret
   
 SBP_MSG_MASK_SATELLITE_DEP = 0x001B
 class MsgMaskSatelliteDep(SBP):
@@ -616,17 +688,12 @@ class MsgMaskSatelliteDep(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__mask, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignalDep.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'mask' : __mask,
-      'sid' : __sid,
-    }, offset, length
+    ret = {}
+    (__mask, offset, length) = get_u8(buf, offset, length)
+    ret['mask'] = __mask
+    (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -635,6 +702,15 @@ class MsgMaskSatelliteDep(SBP):
     self.mask = res['mask']
     self.sid = res['sid']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # mask: u8
+    ret += 1
+    # sid: GnssSignalDep
+    ret += GnssSignalDep._payload_size()
+    return ret
   
 SBP_MSG_DEVICE_MONITOR = 0x00B5
 class MsgDeviceMonitor(SBP):
@@ -659,29 +735,18 @@ available.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__dev_vin, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cpu_vint, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cpu_vaux, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cpu_temperature, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__fe_temperature, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'dev_vin' : __dev_vin,
-      'cpu_vint' : __cpu_vint,
-      'cpu_vaux' : __cpu_vaux,
-      'cpu_temperature' : __cpu_temperature,
-      'fe_temperature' : __fe_temperature,
-    }, offset, length
+    ret = {}
+    (__dev_vin, offset, length) = get_s16(buf, offset, length)
+    ret['dev_vin'] = __dev_vin
+    (__cpu_vint, offset, length) = get_s16(buf, offset, length)
+    ret['cpu_vint'] = __cpu_vint
+    (__cpu_vaux, offset, length) = get_s16(buf, offset, length)
+    ret['cpu_vaux'] = __cpu_vaux
+    (__cpu_temperature, offset, length) = get_s16(buf, offset, length)
+    ret['cpu_temperature'] = __cpu_temperature
+    (__fe_temperature, offset, length) = get_s16(buf, offset, length)
+    ret['fe_temperature'] = __fe_temperature
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -693,6 +758,21 @@ available.
     self.cpu_temperature = res['cpu_temperature']
     self.fe_temperature = res['fe_temperature']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # dev_vin: s16
+    ret += 2
+    # cpu_vint: s16
+    ret += 2
+    # cpu_vaux: s16
+    ret += 2
+    # cpu_temperature: s16
+    ret += 2
+    # fe_temperature: s16
+    ret += 2
+    return ret
   
 SBP_MSG_COMMAND_REQ = 0x00B8
 class MsgCommandReq(SBP):
@@ -714,17 +794,12 @@ code will be returned with MSG_COMMAND_RESP.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__sequence, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__command, offset, length) = offset, get_string(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'sequence' : __sequence,
-      'command' : __command,
-    }, offset, length
+    ret = {}
+    (__sequence, offset, length) = get_u32(buf, offset, length)
+    ret['sequence'] = __sequence
+    (__command, offset, length) = get_string(buf, offset, length)
+    ret['command'] = __command
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -733,6 +808,15 @@ code will be returned with MSG_COMMAND_RESP.
     self.sequence = res['sequence']
     self.command = res['command']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # sequence: u32
+    ret += 4
+    # command: string
+    ret += 247
+    return ret
   
 SBP_MSG_COMMAND_RESP = 0x00B9
 class MsgCommandResp(SBP):
@@ -753,17 +837,12 @@ the command.  A return code of zero indicates success.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__sequence, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__code, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'sequence' : __sequence,
-      'code' : __code,
-    }, offset, length
+    ret = {}
+    (__sequence, offset, length) = get_u32(buf, offset, length)
+    ret['sequence'] = __sequence
+    (__code, offset, length) = get_s32(buf, offset, length)
+    ret['code'] = __code
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -772,6 +851,15 @@ the command.  A return code of zero indicates success.
     self.sequence = res['sequence']
     self.code = res['code']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # sequence: u32
+    ret += 4
+    # code: s32
+    ret += 4
+    return ret
   
 SBP_MSG_COMMAND_OUTPUT = 0x00BC
 class MsgCommandOutput(SBP):
@@ -794,17 +882,12 @@ the correct command.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__sequence, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__line, offset, length) = offset, get_string(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'sequence' : __sequence,
-      'line' : __line,
-    }, offset, length
+    ret = {}
+    (__sequence, offset, length) = get_u32(buf, offset, length)
+    ret['sequence'] = __sequence
+    (__line, offset, length) = get_string(buf, offset, length)
+    ret['line'] = __line
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -813,6 +896,15 @@ the correct command.
     self.sequence = res['sequence']
     self.line = res['line']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # sequence: u32
+    ret += 4
+    # line: string
+    ret += 247
+    return ret
   
 SBP_MSG_NETWORK_STATE_REQ = 0x00BA
 class MsgNetworkStateReq(SBP):
@@ -829,6 +921,11 @@ Output will be sent in MSG_NETWORK_STATE_RESP messages
 
   """
   __slots__ = []
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def _payload_size(self):
+    return 0
   
 SBP_MSG_NETWORK_STATE_RESP = 0x00BB
 class MsgNetworkStateResp(SBP):
@@ -856,41 +953,24 @@ in c.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__ipv4_address, offset, length) = offset, get_fixed_array(get_u8, 4, 1)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__ipv4_mask_size, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__ipv6_address, offset, length) = offset, get_fixed_array(get_u8, 16, 1)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__ipv6_mask_size, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__rx_bytes, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__tx_bytes, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__interface_name, offset, length) = offset, get_fixed_string(16)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__flags, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'ipv4_address' : __ipv4_address,
-      'ipv4_mask_size' : __ipv4_mask_size,
-      'ipv6_address' : __ipv6_address,
-      'ipv6_mask_size' : __ipv6_mask_size,
-      'rx_bytes' : __rx_bytes,
-      'tx_bytes' : __tx_bytes,
-      'interface_name' : __interface_name,
-      'flags' : __flags,
-    }, offset, length
+    ret = {}
+    (__ipv4_address, offset, length) = get_fixed_array(get_u8, 4, 1)(buf, offset, length)
+    ret['ipv4_address'] = __ipv4_address
+    (__ipv4_mask_size, offset, length) = get_u8(buf, offset, length)
+    ret['ipv4_mask_size'] = __ipv4_mask_size
+    (__ipv6_address, offset, length) = get_fixed_array(get_u8, 16, 1)(buf, offset, length)
+    ret['ipv6_address'] = __ipv6_address
+    (__ipv6_mask_size, offset, length) = get_u8(buf, offset, length)
+    ret['ipv6_mask_size'] = __ipv6_mask_size
+    (__rx_bytes, offset, length) = get_u32(buf, offset, length)
+    ret['rx_bytes'] = __rx_bytes
+    (__tx_bytes, offset, length) = get_u32(buf, offset, length)
+    ret['tx_bytes'] = __tx_bytes
+    (__interface_name, offset, length) = get_fixed_string(16)(buf, offset, length)
+    ret['interface_name'] = __interface_name
+    (__flags, offset, length) = get_u32(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -905,6 +985,27 @@ in c.
     self.interface_name = res['interface_name']
     self.flags = res['flags']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # ipv4_address: array of u8
+    ret += 1 * 4
+    # ipv4_mask_size: u8
+    ret += 1
+    # ipv6_address: array of u8
+    ret += 1 * 16
+    # ipv6_mask_size: u8
+    ret += 1
+    # rx_bytes: u32
+    ret += 4
+    # tx_bytes: u32
+    ret += 4
+    # interface_name: string
+    ret += 16
+    # flags: u32
+    ret += 4
+    return ret
   
 class NetworkUsage(object):
   """SBP class for message NetworkUsage
@@ -931,29 +1032,18 @@ though may not necessarily be populated with a value.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__duration, offset, length) = offset, get_u64(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__total_bytes, offset, length) = offset, get_u64(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__rx_bytes, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__tx_bytes, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__interface_name, offset, length) = offset, get_fixed_string(16)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'duration' : __duration,
-      'total_bytes' : __total_bytes,
-      'rx_bytes' : __rx_bytes,
-      'tx_bytes' : __tx_bytes,
-      'interface_name' : __interface_name,
-    }, offset, length
+    ret = {}
+    (__duration, offset, length) = get_u64(buf, offset, length)
+    ret['duration'] = __duration
+    (__total_bytes, offset, length) = get_u64(buf, offset, length)
+    ret['total_bytes'] = __total_bytes
+    (__rx_bytes, offset, length) = get_u32(buf, offset, length)
+    ret['rx_bytes'] = __rx_bytes
+    (__tx_bytes, offset, length) = get_u32(buf, offset, length)
+    ret['tx_bytes'] = __tx_bytes
+    (__interface_name, offset, length) = get_fixed_string(16)(buf, offset, length)
+    ret['interface_name'] = __interface_name
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -965,6 +1055,21 @@ though may not necessarily be populated with a value.
     self.tx_bytes = res['tx_bytes']
     self.interface_name = res['interface_name']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # duration: u64
+    ret += 8
+    # total_bytes: u64
+    ret += 8
+    # rx_bytes: u32
+    ret += 4
+    # tx_bytes: u32
+    ret += 4
+    # interface_name: string
+    ret += 16
+    return ret
   
 SBP_MSG_NETWORK_BANDWIDTH_USAGE = 0x00BD
 class MsgNetworkBandwidthUsage(SBP):
@@ -983,13 +1088,10 @@ class MsgNetworkBandwidthUsage(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__interfaces, offset, length) = offset, get_array(NetworkUsage.parse_members)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'interfaces' : __interfaces,
-    }, offset, length
+    ret = {}
+    (__interfaces, offset, length) = get_array(NetworkUsage.parse_members)(buf, offset, length)
+    ret['interfaces'] = __interfaces
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -997,6 +1099,13 @@ class MsgNetworkBandwidthUsage(SBP):
       return {}, offset, length
     self.interfaces = res['interfaces']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # interfaces: array of NetworkUsage
+    ret += 247
+    return ret
   
 SBP_MSG_CELL_MODEM_STATUS = 0x00BE
 class MsgCellModemStatus(SBP):
@@ -1019,21 +1128,14 @@ of the modem and its various parameters.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__signal_strength, offset, length) = offset, get_s8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__signal_error_rate, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__reserved, offset, length) = offset, get_array(get_u8)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'signal_strength' : __signal_strength,
-      'signal_error_rate' : __signal_error_rate,
-      'reserved' : __reserved,
-    }, offset, length
+    ret = {}
+    (__signal_strength, offset, length) = get_s8(buf, offset, length)
+    ret['signal_strength'] = __signal_strength
+    (__signal_error_rate, offset, length) = get_f32(buf, offset, length)
+    ret['signal_error_rate'] = judicious_round(nb.f4(__signal_error_rate)) if SBP.judicious_rounding else __signal_error_rate
+    (__reserved, offset, length) = get_array(get_u8)(buf, offset, length)
+    ret['reserved'] = __reserved
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -1043,6 +1145,17 @@ of the modem and its various parameters.
     self.signal_error_rate = res['signal_error_rate']
     self.reserved = res['reserved']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # signal_strength: s8
+    ret += 1
+    # signal_error_rate: float
+    ret += 4
+    # reserved: array of u8
+    ret += 247
+    return ret
   
 SBP_MSG_SPECAN_DEP = 0x0050
 class MsgSpecanDep(SBP):
@@ -1066,37 +1179,22 @@ class MsgSpecanDep(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__channel_tag, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__t, offset, length) = offset, GPSTimeDep.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__freq_ref, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__freq_step, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__amplitude_ref, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__amplitude_unit, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__amplitude_value, offset, length) = offset, get_array(get_u8)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'channel_tag' : __channel_tag,
-      't' : __t,
-      'freq_ref' : __freq_ref,
-      'freq_step' : __freq_step,
-      'amplitude_ref' : __amplitude_ref,
-      'amplitude_unit' : __amplitude_unit,
-      'amplitude_value' : __amplitude_value,
-    }, offset, length
+    ret = {}
+    (__channel_tag, offset, length) = get_u16(buf, offset, length)
+    ret['channel_tag'] = __channel_tag
+    (__t, offset, length) = GPSTimeDep.parse_members(buf, offset, length)
+    ret['t'] = __t
+    (__freq_ref, offset, length) = get_f32(buf, offset, length)
+    ret['freq_ref'] = judicious_round(nb.f4(__freq_ref)) if SBP.judicious_rounding else __freq_ref
+    (__freq_step, offset, length) = get_f32(buf, offset, length)
+    ret['freq_step'] = judicious_round(nb.f4(__freq_step)) if SBP.judicious_rounding else __freq_step
+    (__amplitude_ref, offset, length) = get_f32(buf, offset, length)
+    ret['amplitude_ref'] = judicious_round(nb.f4(__amplitude_ref)) if SBP.judicious_rounding else __amplitude_ref
+    (__amplitude_unit, offset, length) = get_f32(buf, offset, length)
+    ret['amplitude_unit'] = judicious_round(nb.f4(__amplitude_unit)) if SBP.judicious_rounding else __amplitude_unit
+    (__amplitude_value, offset, length) = get_array(get_u8)(buf, offset, length)
+    ret['amplitude_value'] = __amplitude_value
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -1110,6 +1208,25 @@ class MsgSpecanDep(SBP):
     self.amplitude_unit = res['amplitude_unit']
     self.amplitude_value = res['amplitude_value']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # channel_tag: u16
+    ret += 2
+    # t: GPSTimeDep
+    ret += GPSTimeDep._payload_size()
+    # freq_ref: float
+    ret += 4
+    # freq_step: float
+    ret += 4
+    # amplitude_ref: float
+    ret += 4
+    # amplitude_unit: float
+    ret += 4
+    # amplitude_value: array of u8
+    ret += 247
+    return ret
   
 SBP_MSG_SPECAN = 0x0051
 class MsgSpecan(SBP):
@@ -1134,37 +1251,22 @@ class MsgSpecan(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__channel_tag, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__t, offset, length) = offset, GPSTime.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__freq_ref, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__freq_step, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__amplitude_ref, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__amplitude_unit, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__amplitude_value, offset, length) = offset, get_array(get_u8)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'channel_tag' : __channel_tag,
-      't' : __t,
-      'freq_ref' : __freq_ref,
-      'freq_step' : __freq_step,
-      'amplitude_ref' : __amplitude_ref,
-      'amplitude_unit' : __amplitude_unit,
-      'amplitude_value' : __amplitude_value,
-    }, offset, length
+    ret = {}
+    (__channel_tag, offset, length) = get_u16(buf, offset, length)
+    ret['channel_tag'] = __channel_tag
+    (__t, offset, length) = GPSTime.parse_members(buf, offset, length)
+    ret['t'] = __t
+    (__freq_ref, offset, length) = get_f32(buf, offset, length)
+    ret['freq_ref'] = judicious_round(nb.f4(__freq_ref)) if SBP.judicious_rounding else __freq_ref
+    (__freq_step, offset, length) = get_f32(buf, offset, length)
+    ret['freq_step'] = judicious_round(nb.f4(__freq_step)) if SBP.judicious_rounding else __freq_step
+    (__amplitude_ref, offset, length) = get_f32(buf, offset, length)
+    ret['amplitude_ref'] = judicious_round(nb.f4(__amplitude_ref)) if SBP.judicious_rounding else __amplitude_ref
+    (__amplitude_unit, offset, length) = get_f32(buf, offset, length)
+    ret['amplitude_unit'] = judicious_round(nb.f4(__amplitude_unit)) if SBP.judicious_rounding else __amplitude_unit
+    (__amplitude_value, offset, length) = get_array(get_u8)(buf, offset, length)
+    ret['amplitude_value'] = __amplitude_value
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -1178,6 +1280,25 @@ class MsgSpecan(SBP):
     self.amplitude_unit = res['amplitude_unit']
     self.amplitude_value = res['amplitude_value']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # channel_tag: u16
+    ret += 2
+    # t: GPSTime
+    ret += GPSTime._payload_size()
+    # freq_ref: float
+    ret += 4
+    # freq_step: float
+    ret += 4
+    # amplitude_ref: float
+    ret += 4
+    # amplitude_unit: float
+    ret += 4
+    # amplitude_value: array of u8
+    ret += 247
+    return ret
   
 SBP_MSG_FRONT_END_GAIN = 0x00BF
 class MsgFrontEndGain(SBP):
@@ -1202,17 +1323,12 @@ A negative value implies an error for the particular gain stage as reported by t
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__rf_gain, offset, length) = offset, get_fixed_array(get_u8, 8, 1)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__if_gain, offset, length) = offset, get_fixed_array(get_u8, 8, 1)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'rf_gain' : __rf_gain,
-      'if_gain' : __if_gain,
-    }, offset, length
+    ret = {}
+    (__rf_gain, offset, length) = get_fixed_array(get_s8, 8, 1)(buf, offset, length)
+    ret['rf_gain'] = __rf_gain
+    (__if_gain, offset, length) = get_fixed_array(get_s8, 8, 1)(buf, offset, length)
+    ret['if_gain'] = __if_gain
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -1221,6 +1337,15 @@ A negative value implies an error for the particular gain stage as reported by t
     self.rf_gain = res['rf_gain']
     self.if_gain = res['if_gain']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # rf_gain: array of s8
+    ret += 1 * 8
+    # if_gain: array of s8
+    ret += 1 * 8
+    return ret
   
 
 msg_classes = {

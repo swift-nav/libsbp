@@ -16,11 +16,13 @@ SBAS data
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
-from sbp.jit.msg import get_f32, get_f64
-from sbp.jit.msg import get_string, get_fixed_string
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
 from sbp.jit.msg import get_array, get_fixed_array
 from sbp.jit.gnss import *
 
@@ -47,25 +49,16 @@ parity of the data block and sends only blocks that pass the check.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__sid, offset, length) = offset, GnssSignal.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__tow, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__message_type, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__data, offset, length) = offset, get_fixed_array(get_u8, 27, 1)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'sid' : __sid,
-      'tow' : __tow,
-      'message_type' : __message_type,
-      'data' : __data,
-    }, offset, length
+    ret = {}
+    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__message_type, offset, length) = get_u8(buf, offset, length)
+    ret['message_type'] = __message_type
+    (__data, offset, length) = get_fixed_array(get_u8, 27, 1)(buf, offset, length)
+    ret['data'] = __data
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -76,6 +69,19 @@ parity of the data block and sends only blocks that pass the check.
     self.message_type = res['message_type']
     self.data = res['data']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # sid: GnssSignal
+    ret += GnssSignal._payload_size()
+    # tow: u32
+    ret += 4
+    # message_type: u8
+    ret += 1
+    # data: array of u8
+    ret += 1 * 27
+    return ret
   
 
 msg_classes = {

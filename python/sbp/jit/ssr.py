@@ -16,11 +16,13 @@ Precise State Space Representation (SSR) corrections format
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
-from sbp.jit.msg import get_f32, get_f64
-from sbp.jit.msg import get_string, get_fixed_string
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
 from sbp.jit.msg import get_array, get_fixed_array
 from sbp.jit.gnss import *
 
@@ -44,17 +46,12 @@ The corrections are conform with typical RTCMv3 MT1059 and 1065.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__code, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__value, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'code' : __code,
-      'value' : __value,
-    }, offset, length
+    ret = {}
+    (__code, offset, length) = get_u8(buf, offset, length)
+    ret['code'] = __code
+    (__value, offset, length) = get_s16(buf, offset, length)
+    ret['value'] = __value
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -63,6 +60,15 @@ The corrections are conform with typical RTCMv3 MT1059 and 1065.
     self.code = res['code']
     self.value = res['value']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # code: u8
+    ret += 1
+    # value: s16
+    ret += 2
+    return ret
   
 class PhaseBiasesContent(object):
   """SBP class for message PhaseBiasesContent
@@ -85,29 +91,18 @@ The corrections are conform with typical RTCMv3 MT1059 and 1065.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__code, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__integer_indicator, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__widelane_integer_indicator, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__discontinuity_counter, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__bias, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'code' : __code,
-      'integer_indicator' : __integer_indicator,
-      'widelane_integer_indicator' : __widelane_integer_indicator,
-      'discontinuity_counter' : __discontinuity_counter,
-      'bias' : __bias,
-    }, offset, length
+    ret = {}
+    (__code, offset, length) = get_u8(buf, offset, length)
+    ret['code'] = __code
+    (__integer_indicator, offset, length) = get_u8(buf, offset, length)
+    ret['integer_indicator'] = __integer_indicator
+    (__widelane_integer_indicator, offset, length) = get_u8(buf, offset, length)
+    ret['widelane_integer_indicator'] = __widelane_integer_indicator
+    (__discontinuity_counter, offset, length) = get_u8(buf, offset, length)
+    ret['discontinuity_counter'] = __discontinuity_counter
+    (__bias, offset, length) = get_s32(buf, offset, length)
+    ret['bias'] = __bias
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -119,6 +114,21 @@ The corrections are conform with typical RTCMv3 MT1059 and 1065.
     self.discontinuity_counter = res['discontinuity_counter']
     self.bias = res['bias']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # code: u8
+    ret += 1
+    # integer_indicator: u8
+    ret += 1
+    # widelane_integer_indicator: u8
+    ret += 1
+    # discontinuity_counter: u8
+    ret += 1
+    # bias: s32
+    ret += 4
+    return ret
   
 SBP_MSG_SSR_ORBIT_CLOCK = 0x05DD
 class MsgSsrOrbitClock(SBP):
@@ -153,65 +163,36 @@ and 1066 RTCM message types
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__time, offset, length) = offset, GPSTimeSec.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignal.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__update_interval, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__iod_ssr, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__iod, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__radial, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__along, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cross, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__dot_radial, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__dot_along, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__dot_cross, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__c0, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__c1, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__c2, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'time' : __time,
-      'sid' : __sid,
-      'update_interval' : __update_interval,
-      'iod_ssr' : __iod_ssr,
-      'iod' : __iod,
-      'radial' : __radial,
-      'along' : __along,
-      'cross' : __cross,
-      'dot_radial' : __dot_radial,
-      'dot_along' : __dot_along,
-      'dot_cross' : __dot_cross,
-      'c0' : __c0,
-      'c1' : __c1,
-      'c2' : __c2,
-    }, offset, length
+    ret = {}
+    (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
+    ret['time'] = __time
+    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__update_interval, offset, length) = get_u8(buf, offset, length)
+    ret['update_interval'] = __update_interval
+    (__iod_ssr, offset, length) = get_u8(buf, offset, length)
+    ret['iod_ssr'] = __iod_ssr
+    (__iod, offset, length) = get_u32(buf, offset, length)
+    ret['iod'] = __iod
+    (__radial, offset, length) = get_s32(buf, offset, length)
+    ret['radial'] = __radial
+    (__along, offset, length) = get_s32(buf, offset, length)
+    ret['along'] = __along
+    (__cross, offset, length) = get_s32(buf, offset, length)
+    ret['cross'] = __cross
+    (__dot_radial, offset, length) = get_s32(buf, offset, length)
+    ret['dot_radial'] = __dot_radial
+    (__dot_along, offset, length) = get_s32(buf, offset, length)
+    ret['dot_along'] = __dot_along
+    (__dot_cross, offset, length) = get_s32(buf, offset, length)
+    ret['dot_cross'] = __dot_cross
+    (__c0, offset, length) = get_s32(buf, offset, length)
+    ret['c0'] = __c0
+    (__c1, offset, length) = get_s32(buf, offset, length)
+    ret['c1'] = __c1
+    (__c2, offset, length) = get_s32(buf, offset, length)
+    ret['c2'] = __c2
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -232,6 +213,39 @@ and 1066 RTCM message types
     self.c1 = res['c1']
     self.c2 = res['c2']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # time: GPSTimeSec
+    ret += GPSTimeSec._payload_size()
+    # sid: GnssSignal
+    ret += GnssSignal._payload_size()
+    # update_interval: u8
+    ret += 1
+    # iod_ssr: u8
+    ret += 1
+    # iod: u32
+    ret += 4
+    # radial: s32
+    ret += 4
+    # along: s32
+    ret += 4
+    # cross: s32
+    ret += 4
+    # dot_radial: s32
+    ret += 4
+    # dot_along: s32
+    ret += 4
+    # dot_cross: s32
+    ret += 4
+    # c0: s32
+    ret += 4
+    # c1: s32
+    ret += 4
+    # c2: s32
+    ret += 4
+    return ret
   
 SBP_MSG_SSR_ORBIT_CLOCK_DEP_A = 0x05DC
 class MsgSsrOrbitClockDepA(SBP):
@@ -266,65 +280,36 @@ and 1066 RTCM message types
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__time, offset, length) = offset, GPSTimeSec.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignal.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__update_interval, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__iod_ssr, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__iod, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__radial, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__along, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cross, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__dot_radial, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__dot_along, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__dot_cross, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__c0, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__c1, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__c2, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'time' : __time,
-      'sid' : __sid,
-      'update_interval' : __update_interval,
-      'iod_ssr' : __iod_ssr,
-      'iod' : __iod,
-      'radial' : __radial,
-      'along' : __along,
-      'cross' : __cross,
-      'dot_radial' : __dot_radial,
-      'dot_along' : __dot_along,
-      'dot_cross' : __dot_cross,
-      'c0' : __c0,
-      'c1' : __c1,
-      'c2' : __c2,
-    }, offset, length
+    ret = {}
+    (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
+    ret['time'] = __time
+    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__update_interval, offset, length) = get_u8(buf, offset, length)
+    ret['update_interval'] = __update_interval
+    (__iod_ssr, offset, length) = get_u8(buf, offset, length)
+    ret['iod_ssr'] = __iod_ssr
+    (__iod, offset, length) = get_u8(buf, offset, length)
+    ret['iod'] = __iod
+    (__radial, offset, length) = get_s32(buf, offset, length)
+    ret['radial'] = __radial
+    (__along, offset, length) = get_s32(buf, offset, length)
+    ret['along'] = __along
+    (__cross, offset, length) = get_s32(buf, offset, length)
+    ret['cross'] = __cross
+    (__dot_radial, offset, length) = get_s32(buf, offset, length)
+    ret['dot_radial'] = __dot_radial
+    (__dot_along, offset, length) = get_s32(buf, offset, length)
+    ret['dot_along'] = __dot_along
+    (__dot_cross, offset, length) = get_s32(buf, offset, length)
+    ret['dot_cross'] = __dot_cross
+    (__c0, offset, length) = get_s32(buf, offset, length)
+    ret['c0'] = __c0
+    (__c1, offset, length) = get_s32(buf, offset, length)
+    ret['c1'] = __c1
+    (__c2, offset, length) = get_s32(buf, offset, length)
+    ret['c2'] = __c2
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -345,6 +330,39 @@ and 1066 RTCM message types
     self.c1 = res['c1']
     self.c2 = res['c2']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # time: GPSTimeSec
+    ret += GPSTimeSec._payload_size()
+    # sid: GnssSignal
+    ret += GnssSignal._payload_size()
+    # update_interval: u8
+    ret += 1
+    # iod_ssr: u8
+    ret += 1
+    # iod: u8
+    ret += 1
+    # radial: s32
+    ret += 4
+    # along: s32
+    ret += 4
+    # cross: s32
+    ret += 4
+    # dot_radial: s32
+    ret += 4
+    # dot_along: s32
+    ret += 4
+    # dot_cross: s32
+    ret += 4
+    # c0: s32
+    ret += 4
+    # c1: s32
+    ret += 4
+    # c2: s32
+    ret += 4
+    return ret
   
 SBP_MSG_SSR_CODE_BIASES = 0x05E1
 class MsgSsrCodeBiases(SBP):
@@ -370,29 +388,18 @@ an equivalent to the 1059 and 1065 RTCM message types
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__time, offset, length) = offset, GPSTimeSec.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignal.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__update_interval, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__iod_ssr, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__biases, offset, length) = offset, get_array(CodeBiasesContent.parse_members)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'time' : __time,
-      'sid' : __sid,
-      'update_interval' : __update_interval,
-      'iod_ssr' : __iod_ssr,
-      'biases' : __biases,
-    }, offset, length
+    ret = {}
+    (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
+    ret['time'] = __time
+    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__update_interval, offset, length) = get_u8(buf, offset, length)
+    ret['update_interval'] = __update_interval
+    (__iod_ssr, offset, length) = get_u8(buf, offset, length)
+    ret['iod_ssr'] = __iod_ssr
+    (__biases, offset, length) = get_array(CodeBiasesContent.parse_members)(buf, offset, length)
+    ret['biases'] = __biases
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -404,6 +411,21 @@ an equivalent to the 1059 and 1065 RTCM message types
     self.iod_ssr = res['iod_ssr']
     self.biases = res['biases']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # time: GPSTimeSec
+    ret += GPSTimeSec._payload_size()
+    # sid: GnssSignal
+    ret += GnssSignal._payload_size()
+    # update_interval: u8
+    ret += 1
+    # iod_ssr: u8
+    ret += 1
+    # biases: array of CodeBiasesContent
+    ret += 247
+    return ret
   
 SBP_MSG_SSR_PHASE_BIASES = 0x05E6
 class MsgSsrPhaseBiases(SBP):
@@ -435,45 +457,26 @@ It is typically an equivalent to the 1265 RTCM message types
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__time, offset, length) = offset, GPSTimeSec.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignal.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__update_interval, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__iod_ssr, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__dispersive_bias, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__mw_consistency, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__yaw, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__yaw_rate, offset, length) = offset, get_s8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__biases, offset, length) = offset, get_array(PhaseBiasesContent.parse_members)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'time' : __time,
-      'sid' : __sid,
-      'update_interval' : __update_interval,
-      'iod_ssr' : __iod_ssr,
-      'dispersive_bias' : __dispersive_bias,
-      'mw_consistency' : __mw_consistency,
-      'yaw' : __yaw,
-      'yaw_rate' : __yaw_rate,
-      'biases' : __biases,
-    }, offset, length
+    ret = {}
+    (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
+    ret['time'] = __time
+    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__update_interval, offset, length) = get_u8(buf, offset, length)
+    ret['update_interval'] = __update_interval
+    (__iod_ssr, offset, length) = get_u8(buf, offset, length)
+    ret['iod_ssr'] = __iod_ssr
+    (__dispersive_bias, offset, length) = get_u8(buf, offset, length)
+    ret['dispersive_bias'] = __dispersive_bias
+    (__mw_consistency, offset, length) = get_u8(buf, offset, length)
+    ret['mw_consistency'] = __mw_consistency
+    (__yaw, offset, length) = get_u16(buf, offset, length)
+    ret['yaw'] = __yaw
+    (__yaw_rate, offset, length) = get_s8(buf, offset, length)
+    ret['yaw_rate'] = __yaw_rate
+    (__biases, offset, length) = get_array(PhaseBiasesContent.parse_members)(buf, offset, length)
+    ret['biases'] = __biases
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -489,6 +492,29 @@ It is typically an equivalent to the 1265 RTCM message types
     self.yaw_rate = res['yaw_rate']
     self.biases = res['biases']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # time: GPSTimeSec
+    ret += GPSTimeSec._payload_size()
+    # sid: GnssSignal
+    ret += GnssSignal._payload_size()
+    # update_interval: u8
+    ret += 1
+    # iod_ssr: u8
+    ret += 1
+    # dispersive_bias: u8
+    ret += 1
+    # mw_consistency: u8
+    ret += 1
+    # yaw: u16
+    ret += 2
+    # yaw_rate: s8
+    ret += 1
+    # biases: array of PhaseBiasesContent
+    ret += 247
+    return ret
   
 
 msg_classes = {

@@ -16,11 +16,13 @@ Satellite acquisition messages from the device.
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
-from sbp.jit.msg import get_f32, get_f64
-from sbp.jit.msg import get_string, get_fixed_string
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
 from sbp.jit.msg import get_array, get_fixed_array
 from sbp.jit.gnss import *
 
@@ -50,25 +52,16 @@ ratio.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__cn0, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cp, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cf, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignal.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'cn0' : __cn0,
-      'cp' : __cp,
-      'cf' : __cf,
-      'sid' : __sid,
-    }, offset, length
+    ret = {}
+    (__cn0, offset, length) = get_f32(buf, offset, length)
+    ret['cn0'] = judicious_round(nb.f4(__cn0)) if SBP.judicious_rounding else __cn0
+    (__cp, offset, length) = get_f32(buf, offset, length)
+    ret['cp'] = judicious_round(nb.f4(__cp)) if SBP.judicious_rounding else __cp
+    (__cf, offset, length) = get_f32(buf, offset, length)
+    ret['cf'] = judicious_round(nb.f4(__cf)) if SBP.judicious_rounding else __cf
+    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -79,6 +72,19 @@ ratio.
     self.cf = res['cf']
     self.sid = res['sid']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # cn0: float
+    ret += 4
+    # cp: float
+    ret += 4
+    # cf: float
+    ret += 4
+    # sid: GnssSignal
+    ret += GnssSignal._payload_size()
+    return ret
   
 SBP_MSG_ACQ_RESULT_DEP_C = 0x001F
 class MsgAcqResultDepC(SBP):
@@ -99,25 +105,16 @@ class MsgAcqResultDepC(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__cn0, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cp, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cf, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignalDep.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'cn0' : __cn0,
-      'cp' : __cp,
-      'cf' : __cf,
-      'sid' : __sid,
-    }, offset, length
+    ret = {}
+    (__cn0, offset, length) = get_f32(buf, offset, length)
+    ret['cn0'] = judicious_round(nb.f4(__cn0)) if SBP.judicious_rounding else __cn0
+    (__cp, offset, length) = get_f32(buf, offset, length)
+    ret['cp'] = judicious_round(nb.f4(__cp)) if SBP.judicious_rounding else __cp
+    (__cf, offset, length) = get_f32(buf, offset, length)
+    ret['cf'] = judicious_round(nb.f4(__cf)) if SBP.judicious_rounding else __cf
+    (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -128,6 +125,19 @@ class MsgAcqResultDepC(SBP):
     self.cf = res['cf']
     self.sid = res['sid']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # cn0: float
+    ret += 4
+    # cp: float
+    ret += 4
+    # cf: float
+    ret += 4
+    # sid: GnssSignalDep
+    ret += GnssSignalDep._payload_size()
+    return ret
   
 SBP_MSG_ACQ_RESULT_DEP_B = 0x0014
 class MsgAcqResultDepB(SBP):
@@ -148,25 +158,16 @@ class MsgAcqResultDepB(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__snr, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cp, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cf, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignalDep.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'snr' : __snr,
-      'cp' : __cp,
-      'cf' : __cf,
-      'sid' : __sid,
-    }, offset, length
+    ret = {}
+    (__snr, offset, length) = get_f32(buf, offset, length)
+    ret['snr'] = judicious_round(nb.f4(__snr)) if SBP.judicious_rounding else __snr
+    (__cp, offset, length) = get_f32(buf, offset, length)
+    ret['cp'] = judicious_round(nb.f4(__cp)) if SBP.judicious_rounding else __cp
+    (__cf, offset, length) = get_f32(buf, offset, length)
+    ret['cf'] = judicious_round(nb.f4(__cf)) if SBP.judicious_rounding else __cf
+    (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -177,6 +178,19 @@ class MsgAcqResultDepB(SBP):
     self.cf = res['cf']
     self.sid = res['sid']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # snr: float
+    ret += 4
+    # cp: float
+    ret += 4
+    # cf: float
+    ret += 4
+    # sid: GnssSignalDep
+    ret += GnssSignalDep._payload_size()
+    return ret
   
 SBP_MSG_ACQ_RESULT_DEP_A = 0x0015
 class MsgAcqResultDepA(SBP):
@@ -197,25 +211,16 @@ class MsgAcqResultDepA(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__snr, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cp, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cf, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__prn, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'snr' : __snr,
-      'cp' : __cp,
-      'cf' : __cf,
-      'prn' : __prn,
-    }, offset, length
+    ret = {}
+    (__snr, offset, length) = get_f32(buf, offset, length)
+    ret['snr'] = judicious_round(nb.f4(__snr)) if SBP.judicious_rounding else __snr
+    (__cp, offset, length) = get_f32(buf, offset, length)
+    ret['cp'] = judicious_round(nb.f4(__cp)) if SBP.judicious_rounding else __cp
+    (__cf, offset, length) = get_f32(buf, offset, length)
+    ret['cf'] = judicious_round(nb.f4(__cf)) if SBP.judicious_rounding else __cf
+    (__prn, offset, length) = get_u8(buf, offset, length)
+    ret['prn'] = __prn
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -226,6 +231,19 @@ class MsgAcqResultDepA(SBP):
     self.cf = res['cf']
     self.prn = res['prn']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # snr: float
+    ret += 4
+    # cp: float
+    ret += 4
+    # cf: float
+    ret += 4
+    # prn: u8
+    ret += 1
+    return ret
   
 class AcqSvProfile(object):
   """SBP class for message AcqSvProfile
@@ -256,57 +274,32 @@ The message is used to debug and measure the performance.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__job_type, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__status, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cn0, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__int_time, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignal.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__bin_width, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__timestamp, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__time_spent, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cf_min, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cf_max, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cf, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cp, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'job_type' : __job_type,
-      'status' : __status,
-      'cn0' : __cn0,
-      'int_time' : __int_time,
-      'sid' : __sid,
-      'bin_width' : __bin_width,
-      'timestamp' : __timestamp,
-      'time_spent' : __time_spent,
-      'cf_min' : __cf_min,
-      'cf_max' : __cf_max,
-      'cf' : __cf,
-      'cp' : __cp,
-    }, offset, length
+    ret = {}
+    (__job_type, offset, length) = get_u8(buf, offset, length)
+    ret['job_type'] = __job_type
+    (__status, offset, length) = get_u8(buf, offset, length)
+    ret['status'] = __status
+    (__cn0, offset, length) = get_u16(buf, offset, length)
+    ret['cn0'] = __cn0
+    (__int_time, offset, length) = get_u8(buf, offset, length)
+    ret['int_time'] = __int_time
+    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__bin_width, offset, length) = get_u16(buf, offset, length)
+    ret['bin_width'] = __bin_width
+    (__timestamp, offset, length) = get_u32(buf, offset, length)
+    ret['timestamp'] = __timestamp
+    (__time_spent, offset, length) = get_u32(buf, offset, length)
+    ret['time_spent'] = __time_spent
+    (__cf_min, offset, length) = get_s32(buf, offset, length)
+    ret['cf_min'] = __cf_min
+    (__cf_max, offset, length) = get_s32(buf, offset, length)
+    ret['cf_max'] = __cf_max
+    (__cf, offset, length) = get_s32(buf, offset, length)
+    ret['cf'] = __cf
+    (__cp, offset, length) = get_u32(buf, offset, length)
+    ret['cp'] = __cp
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -325,6 +318,35 @@ The message is used to debug and measure the performance.
     self.cf = res['cf']
     self.cp = res['cp']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # job_type: u8
+    ret += 1
+    # status: u8
+    ret += 1
+    # cn0: u16
+    ret += 2
+    # int_time: u8
+    ret += 1
+    # sid: GnssSignal
+    ret += GnssSignal._payload_size()
+    # bin_width: u16
+    ret += 2
+    # timestamp: u32
+    ret += 4
+    # time_spent: u32
+    ret += 4
+    # cf_min: s32
+    ret += 4
+    # cf_max: s32
+    ret += 4
+    # cf: s32
+    ret += 4
+    # cp: u32
+    ret += 4
+    return ret
   
 class AcqSvProfileDep(object):
   """SBP class for message AcqSvProfileDep
@@ -352,57 +374,32 @@ class AcqSvProfileDep(object):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__job_type, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__status, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cn0, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__int_time, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignalDep.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__bin_width, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__timestamp, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__time_spent, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cf_min, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cf_max, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cf, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cp, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'job_type' : __job_type,
-      'status' : __status,
-      'cn0' : __cn0,
-      'int_time' : __int_time,
-      'sid' : __sid,
-      'bin_width' : __bin_width,
-      'timestamp' : __timestamp,
-      'time_spent' : __time_spent,
-      'cf_min' : __cf_min,
-      'cf_max' : __cf_max,
-      'cf' : __cf,
-      'cp' : __cp,
-    }, offset, length
+    ret = {}
+    (__job_type, offset, length) = get_u8(buf, offset, length)
+    ret['job_type'] = __job_type
+    (__status, offset, length) = get_u8(buf, offset, length)
+    ret['status'] = __status
+    (__cn0, offset, length) = get_u16(buf, offset, length)
+    ret['cn0'] = __cn0
+    (__int_time, offset, length) = get_u8(buf, offset, length)
+    ret['int_time'] = __int_time
+    (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__bin_width, offset, length) = get_u16(buf, offset, length)
+    ret['bin_width'] = __bin_width
+    (__timestamp, offset, length) = get_u32(buf, offset, length)
+    ret['timestamp'] = __timestamp
+    (__time_spent, offset, length) = get_u32(buf, offset, length)
+    ret['time_spent'] = __time_spent
+    (__cf_min, offset, length) = get_s32(buf, offset, length)
+    ret['cf_min'] = __cf_min
+    (__cf_max, offset, length) = get_s32(buf, offset, length)
+    ret['cf_max'] = __cf_max
+    (__cf, offset, length) = get_s32(buf, offset, length)
+    ret['cf'] = __cf
+    (__cp, offset, length) = get_u32(buf, offset, length)
+    ret['cp'] = __cp
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -421,6 +418,35 @@ class AcqSvProfileDep(object):
     self.cf = res['cf']
     self.cp = res['cp']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # job_type: u8
+    ret += 1
+    # status: u8
+    ret += 1
+    # cn0: u16
+    ret += 2
+    # int_time: u8
+    ret += 1
+    # sid: GnssSignalDep
+    ret += GnssSignalDep._payload_size()
+    # bin_width: u16
+    ret += 2
+    # timestamp: u32
+    ret += 4
+    # time_spent: u32
+    ret += 4
+    # cf_min: s32
+    ret += 4
+    # cf_max: s32
+    ret += 4
+    # cf: s32
+    ret += 4
+    # cp: u32
+    ret += 4
+    return ret
   
 SBP_MSG_ACQ_SV_PROFILE = 0x002E
 class MsgAcqSvProfile(SBP):
@@ -440,13 +466,10 @@ The message is used to debug and measure the performance.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__acq_sv_profile, offset, length) = offset, get_array(AcqSvProfile.parse_members)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'acq_sv_profile' : __acq_sv_profile,
-    }, offset, length
+    ret = {}
+    (__acq_sv_profile, offset, length) = get_array(AcqSvProfile.parse_members)(buf, offset, length)
+    ret['acq_sv_profile'] = __acq_sv_profile
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -454,6 +477,13 @@ The message is used to debug and measure the performance.
       return {}, offset, length
     self.acq_sv_profile = res['acq_sv_profile']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # acq_sv_profile: array of AcqSvProfile
+    ret += 247
+    return ret
   
 SBP_MSG_ACQ_SV_PROFILE_DEP = 0x001E
 class MsgAcqSvProfileDep(SBP):
@@ -471,13 +501,10 @@ class MsgAcqSvProfileDep(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__acq_sv_profile, offset, length) = offset, get_array(AcqSvProfileDep.parse_members)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'acq_sv_profile' : __acq_sv_profile,
-    }, offset, length
+    ret = {}
+    (__acq_sv_profile, offset, length) = get_array(AcqSvProfileDep.parse_members)(buf, offset, length)
+    ret['acq_sv_profile'] = __acq_sv_profile
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -485,6 +512,13 @@ class MsgAcqSvProfileDep(SBP):
       return {}, offset, length
     self.acq_sv_profile = res['acq_sv_profile']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # acq_sv_profile: array of AcqSvProfileDep
+    ret += 247
+    return ret
   
 
 msg_classes = {

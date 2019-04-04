@@ -16,11 +16,13 @@ Inertial Measurement Unit (IMU) messages.
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
-from sbp.jit.msg import get_f32, get_f64
-from sbp.jit.msg import get_string, get_fixed_string
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
 from sbp.jit.msg import get_array, get_fixed_array
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/imu.yaml with generate.py.
@@ -52,41 +54,24 @@ device hardware and settings, are communicated via the MSG_IMU_AUX message.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__tow, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__tow_f, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__acc_x, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__acc_y, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__acc_z, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__gyr_x, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__gyr_y, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__gyr_z, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'tow' : __tow,
-      'tow_f' : __tow_f,
-      'acc_x' : __acc_x,
-      'acc_y' : __acc_y,
-      'acc_z' : __acc_z,
-      'gyr_x' : __gyr_x,
-      'gyr_y' : __gyr_y,
-      'gyr_z' : __gyr_z,
-    }, offset, length
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__tow_f, offset, length) = get_u8(buf, offset, length)
+    ret['tow_f'] = __tow_f
+    (__acc_x, offset, length) = get_s16(buf, offset, length)
+    ret['acc_x'] = __acc_x
+    (__acc_y, offset, length) = get_s16(buf, offset, length)
+    ret['acc_y'] = __acc_y
+    (__acc_z, offset, length) = get_s16(buf, offset, length)
+    ret['acc_z'] = __acc_z
+    (__gyr_x, offset, length) = get_s16(buf, offset, length)
+    ret['gyr_x'] = __gyr_x
+    (__gyr_y, offset, length) = get_s16(buf, offset, length)
+    ret['gyr_y'] = __gyr_y
+    (__gyr_z, offset, length) = get_s16(buf, offset, length)
+    ret['gyr_z'] = __gyr_z
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -101,6 +86,27 @@ device hardware and settings, are communicated via the MSG_IMU_AUX message.
     self.gyr_y = res['gyr_y']
     self.gyr_z = res['gyr_z']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # tow_f: u8
+    ret += 1
+    # acc_x: s16
+    ret += 2
+    # acc_y: s16
+    ret += 2
+    # acc_z: s16
+    ret += 2
+    # gyr_x: s16
+    ret += 2
+    # gyr_y: s16
+    ret += 2
+    # gyr_z: s16
+    ret += 2
+    return ret
   
 SBP_MSG_IMU_AUX = 0x0901
 class MsgImuAux(SBP):
@@ -123,21 +129,14 @@ depends on the value of `imu_type`.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__imu_type, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__temp, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__imu_conf, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'imu_type' : __imu_type,
-      'temp' : __temp,
-      'imu_conf' : __imu_conf,
-    }, offset, length
+    ret = {}
+    (__imu_type, offset, length) = get_u8(buf, offset, length)
+    ret['imu_type'] = __imu_type
+    (__temp, offset, length) = get_s16(buf, offset, length)
+    ret['temp'] = __temp
+    (__imu_conf, offset, length) = get_u8(buf, offset, length)
+    ret['imu_conf'] = __imu_conf
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -147,6 +146,17 @@ depends on the value of `imu_type`.
     self.temp = res['temp']
     self.imu_conf = res['imu_conf']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # imu_type: u8
+    ret += 1
+    # temp: s16
+    ret += 2
+    # imu_conf: u8
+    ret += 1
+    return ret
   
 
 msg_classes = {

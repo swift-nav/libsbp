@@ -16,11 +16,13 @@ Standardized system messages from Swift Navigation devices.
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
-from sbp.jit.msg import get_f32, get_f64
-from sbp.jit.msg import get_string, get_fixed_string
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
 from sbp.jit.msg import get_array, get_fixed_array
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/system.yaml with generate.py.
@@ -47,21 +49,14 @@ or configuration requests.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__cause, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__startup_type, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__reserved, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'cause' : __cause,
-      'startup_type' : __startup_type,
-      'reserved' : __reserved,
-    }, offset, length
+    ret = {}
+    (__cause, offset, length) = get_u8(buf, offset, length)
+    ret['cause'] = __cause
+    (__startup_type, offset, length) = get_u8(buf, offset, length)
+    ret['startup_type'] = __startup_type
+    (__reserved, offset, length) = get_u16(buf, offset, length)
+    ret['reserved'] = __reserved
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -71,6 +66,17 @@ or configuration requests.
     self.startup_type = res['startup_type']
     self.reserved = res['reserved']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # cause: u8
+    ret += 1
+    # startup_type: u8
+    ret += 1
+    # reserved: u16
+    ret += 2
+    return ret
   
 SBP_MSG_DGNSS_STATUS = 0xFF02
 class MsgDgnssStatus(SBP):
@@ -94,25 +100,16 @@ corrections packet.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__latency, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__num_signals, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__source, offset, length) = offset, get_string(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'flags' : __flags,
-      'latency' : __latency,
-      'num_signals' : __num_signals,
-      'source' : __source,
-    }, offset, length
+    ret = {}
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    (__latency, offset, length) = get_u16(buf, offset, length)
+    ret['latency'] = __latency
+    (__num_signals, offset, length) = get_u8(buf, offset, length)
+    ret['num_signals'] = __num_signals
+    (__source, offset, length) = get_string(buf, offset, length)
+    ret['source'] = __source
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -123,6 +120,19 @@ corrections packet.
     self.num_signals = res['num_signals']
     self.source = res['source']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # flags: u8
+    ret += 1
+    # latency: u16
+    ret += 2
+    # num_signals: u8
+    ret += 1
+    # source: string
+    ret += 247
+    return ret
   
 SBP_MSG_HEARTBEAT = 0xFFFF
 class MsgHeartbeat(SBP):
@@ -150,13 +160,10 @@ the remaining error flags should be inspected.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__flags, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'flags' : __flags,
-    }, offset, length
+    ret = {}
+    (__flags, offset, length) = get_u32(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -164,6 +171,13 @@ the remaining error flags should be inspected.
       return {}, offset, length
     self.flags = res['flags']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # flags: u32
+    ret += 4
+    return ret
   
 SBP_MSG_INS_STATUS = 0xFF03
 class MsgInsStatus(SBP):
@@ -183,13 +197,10 @@ and initialization of the inertial navigation system.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__flags, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'flags' : __flags,
-    }, offset, length
+    ret = {}
+    (__flags, offset, length) = get_u32(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -197,6 +208,13 @@ and initialization of the inertial navigation system.
       return {}, offset, length
     self.flags = res['flags']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # flags: u32
+    ret += 4
+    return ret
   
 SBP_MSG_CSAC_TELEMETRY = 0xFF04
 class MsgCsacTelemetry(SBP):
@@ -218,17 +236,12 @@ It is intended to be a low rate message for status purposes.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__id, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__telemetry, offset, length) = offset, get_string(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'id' : __id,
-      'telemetry' : __telemetry,
-    }, offset, length
+    ret = {}
+    (__id, offset, length) = get_u8(buf, offset, length)
+    ret['id'] = __id
+    (__telemetry, offset, length) = get_string(buf, offset, length)
+    ret['telemetry'] = __telemetry
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -237,6 +250,15 @@ It is intended to be a low rate message for status purposes.
     self.id = res['id']
     self.telemetry = res['telemetry']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # id: u8
+    ret += 1
+    # telemetry: string
+    ret += 247
+    return ret
   
 SBP_MSG_CSAC_TELEMETRY_LABELS = 0xFF05
 class MsgCsacTelemetryLabels(SBP):
@@ -258,17 +280,12 @@ rate than the MSG_CSAC_TELEMETRY.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__id, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__telemetry_labels, offset, length) = offset, get_string(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'id' : __id,
-      'telemetry_labels' : __telemetry_labels,
-    }, offset, length
+    ret = {}
+    (__id, offset, length) = get_u8(buf, offset, length)
+    ret['id'] = __id
+    (__telemetry_labels, offset, length) = get_string(buf, offset, length)
+    ret['telemetry_labels'] = __telemetry_labels
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -277,6 +294,15 @@ rate than the MSG_CSAC_TELEMETRY.
     self.id = res['id']
     self.telemetry_labels = res['telemetry_labels']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # id: u8
+    ret += 1
+    # telemetry_labels: string
+    ret += 247
+    return ret
   
 
 msg_classes = {

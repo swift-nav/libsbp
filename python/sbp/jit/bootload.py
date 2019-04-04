@@ -21,11 +21,13 @@ host request and the device response.
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
-from sbp.jit.msg import get_f32, get_f64
-from sbp.jit.msg import get_string, get_fixed_string
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
 from sbp.jit.msg import get_array, get_fixed_array
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/bootload.yaml with generate.py.
@@ -46,6 +48,11 @@ response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
 
   """
   __slots__ = []
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def _payload_size(self):
+    return 0
   
 SBP_MSG_BOOTLOADER_HANDSHAKE_RESP = 0x00B4
 class MsgBootloaderHandshakeResp(SBP):
@@ -69,17 +76,12 @@ protocol version number.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__flags, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__version, offset, length) = offset, get_string(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'flags' : __flags,
-      'version' : __version,
-    }, offset, length
+    ret = {}
+    (__flags, offset, length) = get_u32(buf, offset, length)
+    ret['flags'] = __flags
+    (__version, offset, length) = get_string(buf, offset, length)
+    ret['version'] = __version
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -88,6 +90,15 @@ protocol version number.
     self.flags = res['flags']
     self.version = res['version']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # flags: u32
+    ret += 4
+    # version: string
+    ret += 247
+    return ret
   
 SBP_MSG_BOOTLOADER_JUMP_TO_APP = 0x00B1
 class MsgBootloaderJumpToApp(SBP):
@@ -106,13 +117,10 @@ class MsgBootloaderJumpToApp(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__jump, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'jump' : __jump,
-    }, offset, length
+    ret = {}
+    (__jump, offset, length) = get_u8(buf, offset, length)
+    ret['jump'] = __jump
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -120,6 +128,13 @@ class MsgBootloaderJumpToApp(SBP):
       return {}, offset, length
     self.jump = res['jump']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # jump: u8
+    ret += 1
+    return ret
   
 SBP_MSG_NAP_DEVICE_DNA_REQ = 0x00DE
 class MsgNapDeviceDnaReq(SBP):
@@ -140,6 +155,11 @@ and not related to the Piksi's serial number.
 
   """
   __slots__ = []
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def _payload_size(self):
+    return 0
   
 SBP_MSG_NAP_DEVICE_DNA_RESP = 0x00DD
 class MsgNapDeviceDnaResp(SBP):
@@ -163,13 +183,10 @@ and not related to the Piksi's serial number.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__dna, offset, length) = offset, get_fixed_array(get_u8, 8, 1)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'dna' : __dna,
-    }, offset, length
+    ret = {}
+    (__dna, offset, length) = get_fixed_array(get_u8, 8, 1)(buf, offset, length)
+    ret['dna'] = __dna
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -177,6 +194,13 @@ and not related to the Piksi's serial number.
       return {}, offset, length
     self.dna = res['dna']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # dna: array of u8
+    ret += 1 * 8
+    return ret
   
 SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A = 0x00B0
 class MsgBootloaderHandshakeDepA(SBP):
@@ -194,13 +218,10 @@ class MsgBootloaderHandshakeDepA(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__handshake, offset, length) = offset, get_array(get_u8)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'handshake' : __handshake,
-    }, offset, length
+    ret = {}
+    (__handshake, offset, length) = get_array(get_u8)(buf, offset, length)
+    ret['handshake'] = __handshake
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -208,6 +229,13 @@ class MsgBootloaderHandshakeDepA(SBP):
       return {}, offset, length
     self.handshake = res['handshake']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # handshake: array of u8
+    ret += 247
+    return ret
   
 
 msg_classes = {

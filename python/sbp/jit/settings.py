@@ -42,11 +42,13 @@ reference and example.
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
-from sbp.jit.msg import get_f32, get_f64
-from sbp.jit.msg import get_string, get_fixed_string
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
 from sbp.jit.msg import get_array, get_fixed_array
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/settings.yaml with generate.py.
@@ -66,6 +68,11 @@ configuration to its onboard flash memory file system.
 
   """
   __slots__ = []
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def _payload_size(self):
+    return 0
   
 SBP_MSG_SETTINGS_WRITE = 0x00A0
 class MsgSettingsWrite(SBP):
@@ -90,13 +97,10 @@ An example string that could be sent to a device is
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__setting, offset, length) = offset, get_string(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'setting' : __setting,
-    }, offset, length
+    ret = {}
+    (__setting, offset, length) = get_setting(buf, offset, length)
+    ret['setting'] = __setting
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -104,6 +108,13 @@ An example string that could be sent to a device is
       return {}, offset, length
     self.setting = res['setting']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # setting: string
+    ret += 247
+    return ret
   
 SBP_MSG_SETTINGS_WRITE_RESP = 0x00AF
 class MsgSettingsWriteResp(SBP):
@@ -129,17 +140,12 @@ are omitted. An example string that could be sent from device is
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__status, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__setting, offset, length) = offset, get_string(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'status' : __status,
-      'setting' : __setting,
-    }, offset, length
+    ret = {}
+    (__status, offset, length) = get_u8(buf, offset, length)
+    ret['status'] = __status
+    (__setting, offset, length) = get_setting(buf, offset, length)
+    ret['setting'] = __setting
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -148,6 +154,15 @@ are omitted. An example string that could be sent from device is
     self.status = res['status']
     self.setting = res['setting']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # status: u8
+    ret += 1
+    # setting: string
+    ret += 247
+    return ret
   
 SBP_MSG_SETTINGS_READ_REQ = 0x00A4
 class MsgSettingsReadReq(SBP):
@@ -173,13 +188,10 @@ message (msg_id 0x00A5).
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__setting, offset, length) = offset, get_string(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'setting' : __setting,
-    }, offset, length
+    ret = {}
+    (__setting, offset, length) = get_setting(buf, offset, length)
+    ret['setting'] = __setting
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -187,6 +199,13 @@ message (msg_id 0x00A5).
       return {}, offset, length
     self.setting = res['setting']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # setting: string
+    ret += 247
+    return ret
   
 SBP_MSG_SETTINGS_READ_RESP = 0x00A5
 class MsgSettingsReadResp(SBP):
@@ -211,13 +230,10 @@ example string that could be sent from device is
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__setting, offset, length) = offset, get_string(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'setting' : __setting,
-    }, offset, length
+    ret = {}
+    (__setting, offset, length) = get_setting(buf, offset, length)
+    ret['setting'] = __setting
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -225,6 +241,13 @@ example string that could be sent from device is
       return {}, offset, length
     self.setting = res['setting']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # setting: string
+    ret += 247
+    return ret
   
 SBP_MSG_SETTINGS_READ_BY_INDEX_REQ = 0x00A2
 class MsgSettingsReadByIndexReq(SBP):
@@ -245,13 +268,10 @@ values. A device will respond to this message with a
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__index, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'index' : __index,
-    }, offset, length
+    ret = {}
+    (__index, offset, length) = get_u16(buf, offset, length)
+    ret['index'] = __index
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -259,6 +279,13 @@ values. A device will respond to this message with a
       return {}, offset, length
     self.index = res['index']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # index: u16
+    ret += 2
+    return ret
   
 SBP_MSG_SETTINGS_READ_BY_INDEX_RESP = 0x00A7
 class MsgSettingsReadByIndexResp(SBP):
@@ -287,17 +314,12 @@ the device is "simulator\0enabled\0True\0enum:True,False\0"
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__index, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__setting, offset, length) = offset, get_string(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'index' : __index,
-      'setting' : __setting,
-    }, offset, length
+    ret = {}
+    (__index, offset, length) = get_u16(buf, offset, length)
+    ret['index'] = __index
+    (__setting, offset, length) = get_setting(buf, offset, length)
+    ret['setting'] = __setting
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -306,6 +328,15 @@ the device is "simulator\0enabled\0True\0enum:True,False\0"
     self.index = res['index']
     self.setting = res['setting']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # index: u16
+    ret += 2
+    # setting: string
+    ret += 247
+    return ret
   
 SBP_MSG_SETTINGS_READ_BY_INDEX_DONE = 0x00A6
 class MsgSettingsReadByIndexDone(SBP):
@@ -321,6 +352,11 @@ class MsgSettingsReadByIndexDone(SBP):
 
   """
   __slots__ = []
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def _payload_size(self):
+    return 0
   
 SBP_MSG_SETTINGS_REGISTER = 0x00AE
 class MsgSettingsRegister(SBP):
@@ -341,13 +377,10 @@ for this setting to set the initial value.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__setting, offset, length) = offset, get_string(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'setting' : __setting,
-    }, offset, length
+    ret = {}
+    (__setting, offset, length) = get_setting(buf, offset, length)
+    ret['setting'] = __setting
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -355,6 +388,13 @@ for this setting to set the initial value.
       return {}, offset, length
     self.setting = res['setting']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # setting: string
+    ret += 247
+    return ret
   
 SBP_MSG_SETTINGS_REGISTER_RESP = 0x01AF
 class MsgSettingsRegisterResp(SBP):
@@ -377,17 +417,12 @@ and had a different value.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__status, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__setting, offset, length) = offset, get_string(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'status' : __status,
-      'setting' : __setting,
-    }, offset, length
+    ret = {}
+    (__status, offset, length) = get_u8(buf, offset, length)
+    ret['status'] = __status
+    (__setting, offset, length) = get_setting(buf, offset, length)
+    ret['setting'] = __setting
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -396,6 +431,15 @@ and had a different value.
     self.status = res['status']
     self.setting = res['setting']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # status: u8
+    ret += 1
+    # setting: string
+    ret += 247
+    return ret
   
 
 msg_classes = {

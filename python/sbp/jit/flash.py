@@ -21,11 +21,13 @@ to Piksi Multi.
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
-from sbp.jit.msg import get_f32, get_f64
-from sbp.jit.msg import get_string, get_fixed_string
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
 from sbp.jit.msg import get_array, get_fixed_array
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/flash.yaml with generate.py.
@@ -55,25 +57,16 @@ erased before addresses can be programmed.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__target, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__addr_start, offset, length) = offset, get_fixed_array(get_u8, 3, 1)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__addr_len, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__data, offset, length) = offset, get_array(get_u8)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'target' : __target,
-      'addr_start' : __addr_start,
-      'addr_len' : __addr_len,
-      'data' : __data,
-    }, offset, length
+    ret = {}
+    (__target, offset, length) = get_u8(buf, offset, length)
+    ret['target'] = __target
+    (__addr_start, offset, length) = get_fixed_array(get_u8, 3, 1)(buf, offset, length)
+    ret['addr_start'] = __addr_start
+    (__addr_len, offset, length) = get_u8(buf, offset, length)
+    ret['addr_len'] = __addr_len
+    (__data, offset, length) = get_array(get_u8)(buf, offset, length)
+    ret['data'] = __data
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -84,6 +77,19 @@ erased before addresses can be programmed.
     self.addr_len = res['addr_len']
     self.data = res['data']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # target: u8
+    ret += 1
+    # addr_start: array of u8
+    ret += 1 * 3
+    # addr_len: u8
+    ret += 1
+    # data: array of u8
+    ret += 247
+    return ret
   
 SBP_MSG_FLASH_DONE = 0x00E0
 class MsgFlashDone(SBP):
@@ -105,13 +111,10 @@ MSG_FLASH_PROGRAM, may return this message on failure.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__response, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'response' : __response,
-    }, offset, length
+    ret = {}
+    (__response, offset, length) = get_u8(buf, offset, length)
+    ret['response'] = __response
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -119,6 +122,13 @@ MSG_FLASH_PROGRAM, may return this message on failure.
       return {}, offset, length
     self.response = res['response']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # response: u8
+    ret += 1
+    return ret
   
 SBP_MSG_FLASH_READ_REQ = 0x00E7
 class MsgFlashReadReq(SBP):
@@ -145,21 +155,14 @@ range.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__target, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__addr_start, offset, length) = offset, get_fixed_array(get_u8, 3, 1)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__addr_len, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'target' : __target,
-      'addr_start' : __addr_start,
-      'addr_len' : __addr_len,
-    }, offset, length
+    ret = {}
+    (__target, offset, length) = get_u8(buf, offset, length)
+    ret['target'] = __target
+    (__addr_start, offset, length) = get_fixed_array(get_u8, 3, 1)(buf, offset, length)
+    ret['addr_start'] = __addr_start
+    (__addr_len, offset, length) = get_u8(buf, offset, length)
+    ret['addr_len'] = __addr_len
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -169,6 +172,17 @@ range.
     self.addr_start = res['addr_start']
     self.addr_len = res['addr_len']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # target: u8
+    ret += 1
+    # addr_start: array of u8
+    ret += 1 * 3
+    # addr_len: u8
+    ret += 1
+    return ret
   
 SBP_MSG_FLASH_READ_RESP = 0x00E1
 class MsgFlashReadResp(SBP):
@@ -195,21 +209,14 @@ range.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__target, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__addr_start, offset, length) = offset, get_fixed_array(get_u8, 3, 1)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__addr_len, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'target' : __target,
-      'addr_start' : __addr_start,
-      'addr_len' : __addr_len,
-    }, offset, length
+    ret = {}
+    (__target, offset, length) = get_u8(buf, offset, length)
+    ret['target'] = __target
+    (__addr_start, offset, length) = get_fixed_array(get_u8, 3, 1)(buf, offset, length)
+    ret['addr_start'] = __addr_start
+    (__addr_len, offset, length) = get_u8(buf, offset, length)
+    ret['addr_len'] = __addr_len
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -219,6 +226,17 @@ range.
     self.addr_start = res['addr_start']
     self.addr_len = res['addr_len']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # target: u8
+    ret += 1
+    # addr_start: array of u8
+    ret += 1 * 3
+    # addr_len: u8
+    ret += 1
+    return ret
   
 SBP_MSG_FLASH_ERASE = 0x00E2
 class MsgFlashErase(SBP):
@@ -242,17 +260,12 @@ invalid.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__target, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sector_num, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'target' : __target,
-      'sector_num' : __sector_num,
-    }, offset, length
+    ret = {}
+    (__target, offset, length) = get_u8(buf, offset, length)
+    ret['target'] = __target
+    (__sector_num, offset, length) = get_u32(buf, offset, length)
+    ret['sector_num'] = __sector_num
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -261,6 +274,15 @@ invalid.
     self.target = res['target']
     self.sector_num = res['sector_num']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # target: u8
+    ret += 1
+    # sector_num: u32
+    ret += 4
+    return ret
   
 SBP_MSG_STM_FLASH_LOCK_SECTOR = 0x00E3
 class MsgStmFlashLockSector(SBP):
@@ -280,13 +302,10 @@ memory. The device replies with a MSG_FLASH_DONE message.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__sector, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'sector' : __sector,
-    }, offset, length
+    ret = {}
+    (__sector, offset, length) = get_u32(buf, offset, length)
+    ret['sector'] = __sector
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -294,6 +313,13 @@ memory. The device replies with a MSG_FLASH_DONE message.
       return {}, offset, length
     self.sector = res['sector']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # sector: u32
+    ret += 4
+    return ret
   
 SBP_MSG_STM_FLASH_UNLOCK_SECTOR = 0x00E4
 class MsgStmFlashUnlockSector(SBP):
@@ -313,13 +339,10 @@ memory. The device replies with a MSG_FLASH_DONE message.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__sector, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'sector' : __sector,
-    }, offset, length
+    ret = {}
+    (__sector, offset, length) = get_u32(buf, offset, length)
+    ret['sector'] = __sector
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -327,6 +350,13 @@ memory. The device replies with a MSG_FLASH_DONE message.
       return {}, offset, length
     self.sector = res['sector']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # sector: u32
+    ret += 4
+    return ret
   
 SBP_MSG_STM_UNIQUE_ID_REQ = 0x00E8
 class MsgStmUniqueIdReq(SBP):
@@ -345,6 +375,11 @@ ID in the payload.
 
   """
   __slots__ = []
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def _payload_size(self):
+    return 0
   
 SBP_MSG_STM_UNIQUE_ID_RESP = 0x00E5
 class MsgStmUniqueIdResp(SBP):
@@ -366,13 +401,10 @@ ID in the payload..
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__stm_id, offset, length) = offset, get_fixed_array(get_u8, 12, 1)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'stm_id' : __stm_id,
-    }, offset, length
+    ret = {}
+    (__stm_id, offset, length) = get_fixed_array(get_u8, 12, 1)(buf, offset, length)
+    ret['stm_id'] = __stm_id
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -380,6 +412,13 @@ ID in the payload..
       return {}, offset, length
     self.stm_id = res['stm_id']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # stm_id: array of u8
+    ret += 1 * 12
+    return ret
   
 SBP_MSG_M25_FLASH_WRITE_STATUS = 0x00F3
 class MsgM25FlashWriteStatus(SBP):
@@ -399,13 +438,10 @@ register. The device replies with a MSG_FLASH_DONE message.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__status, offset, length) = offset, get_fixed_array(get_u8, 1, 1)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'status' : __status,
-    }, offset, length
+    ret = {}
+    (__status, offset, length) = get_fixed_array(get_u8, 1, 1)(buf, offset, length)
+    ret['status'] = __status
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -413,6 +449,13 @@ register. The device replies with a MSG_FLASH_DONE message.
       return {}, offset, length
     self.status = res['status']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # status: array of u8
+    ret += 1 * 1
+    return ret
   
 
 msg_classes = {

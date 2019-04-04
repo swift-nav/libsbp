@@ -17,11 +17,13 @@ Satellite code and carrier-phase tracking messages from the device.
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
-from sbp.jit.msg import get_f32, get_f64
-from sbp.jit.msg import get_string, get_fixed_string
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
 from sbp.jit.msg import get_array, get_fixed_array
 from sbp.jit.gnss import *
 
@@ -65,93 +67,50 @@ single tracking channel useful for debugging issues.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__recv_time, offset, length) = offset, get_u64(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__tot, offset, length) = offset, GPSTime.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__P, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__P_std, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__L, offset, length) = offset, CarrierPhase.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cn0, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__lock, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignal.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__doppler, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__doppler_std, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__uptime, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__clock_offset, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__clock_drift, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__corr_spacing, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__acceleration, offset, length) = offset, get_s8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sync_flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__tow_flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__track_flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__nav_flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__pset_flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__misc_flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'recv_time' : __recv_time,
-      'tot' : __tot,
-      'P' : __P,
-      'P_std' : __P_std,
-      'L' : __L,
-      'cn0' : __cn0,
-      'lock' : __lock,
-      'sid' : __sid,
-      'doppler' : __doppler,
-      'doppler_std' : __doppler_std,
-      'uptime' : __uptime,
-      'clock_offset' : __clock_offset,
-      'clock_drift' : __clock_drift,
-      'corr_spacing' : __corr_spacing,
-      'acceleration' : __acceleration,
-      'sync_flags' : __sync_flags,
-      'tow_flags' : __tow_flags,
-      'track_flags' : __track_flags,
-      'nav_flags' : __nav_flags,
-      'pset_flags' : __pset_flags,
-      'misc_flags' : __misc_flags,
-    }, offset, length
+    ret = {}
+    (__recv_time, offset, length) = get_u64(buf, offset, length)
+    ret['recv_time'] = __recv_time
+    (__tot, offset, length) = GPSTime.parse_members(buf, offset, length)
+    ret['tot'] = __tot
+    (__P, offset, length) = get_u32(buf, offset, length)
+    ret['P'] = __P
+    (__P_std, offset, length) = get_u16(buf, offset, length)
+    ret['P_std'] = __P_std
+    (__L, offset, length) = CarrierPhase.parse_members(buf, offset, length)
+    ret['L'] = __L
+    (__cn0, offset, length) = get_u8(buf, offset, length)
+    ret['cn0'] = __cn0
+    (__lock, offset, length) = get_u16(buf, offset, length)
+    ret['lock'] = __lock
+    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__doppler, offset, length) = get_s32(buf, offset, length)
+    ret['doppler'] = __doppler
+    (__doppler_std, offset, length) = get_u16(buf, offset, length)
+    ret['doppler_std'] = __doppler_std
+    (__uptime, offset, length) = get_u32(buf, offset, length)
+    ret['uptime'] = __uptime
+    (__clock_offset, offset, length) = get_s16(buf, offset, length)
+    ret['clock_offset'] = __clock_offset
+    (__clock_drift, offset, length) = get_s16(buf, offset, length)
+    ret['clock_drift'] = __clock_drift
+    (__corr_spacing, offset, length) = get_u16(buf, offset, length)
+    ret['corr_spacing'] = __corr_spacing
+    (__acceleration, offset, length) = get_s8(buf, offset, length)
+    ret['acceleration'] = __acceleration
+    (__sync_flags, offset, length) = get_u8(buf, offset, length)
+    ret['sync_flags'] = __sync_flags
+    (__tow_flags, offset, length) = get_u8(buf, offset, length)
+    ret['tow_flags'] = __tow_flags
+    (__track_flags, offset, length) = get_u8(buf, offset, length)
+    ret['track_flags'] = __track_flags
+    (__nav_flags, offset, length) = get_u8(buf, offset, length)
+    ret['nav_flags'] = __nav_flags
+    (__pset_flags, offset, length) = get_u8(buf, offset, length)
+    ret['pset_flags'] = __pset_flags
+    (__misc_flags, offset, length) = get_u8(buf, offset, length)
+    ret['misc_flags'] = __misc_flags
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -179,6 +138,53 @@ single tracking channel useful for debugging issues.
     self.pset_flags = res['pset_flags']
     self.misc_flags = res['misc_flags']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # recv_time: u64
+    ret += 8
+    # tot: GPSTime
+    ret += GPSTime._payload_size()
+    # P: u32
+    ret += 4
+    # P_std: u16
+    ret += 2
+    # L: CarrierPhase
+    ret += CarrierPhase._payload_size()
+    # cn0: u8
+    ret += 1
+    # lock: u16
+    ret += 2
+    # sid: GnssSignal
+    ret += GnssSignal._payload_size()
+    # doppler: s32
+    ret += 4
+    # doppler_std: u16
+    ret += 2
+    # uptime: u32
+    ret += 4
+    # clock_offset: s16
+    ret += 2
+    # clock_drift: s16
+    ret += 2
+    # corr_spacing: u16
+    ret += 2
+    # acceleration: s8
+    ret += 1
+    # sync_flags: u8
+    ret += 1
+    # tow_flags: u8
+    ret += 1
+    # track_flags: u8
+    ret += 1
+    # nav_flags: u8
+    ret += 1
+    # pset_flags: u8
+    ret += 1
+    # misc_flags: u8
+    ret += 1
+    return ret
   
 SBP_MSG_TRACKING_STATE_DETAILED_DEP = 0x0011
 class MsgTrackingStateDetailedDep(SBP):
@@ -216,93 +222,50 @@ class MsgTrackingStateDetailedDep(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__recv_time, offset, length) = offset, get_u64(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__tot, offset, length) = offset, GPSTimeDep.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__P, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__P_std, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__L, offset, length) = offset, CarrierPhase.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cn0, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__lock, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignalDep.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__doppler, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__doppler_std, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__uptime, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__clock_offset, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__clock_drift, offset, length) = offset, get_s16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__corr_spacing, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__acceleration, offset, length) = offset, get_s8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sync_flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__tow_flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__track_flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__nav_flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__pset_flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__misc_flags, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'recv_time' : __recv_time,
-      'tot' : __tot,
-      'P' : __P,
-      'P_std' : __P_std,
-      'L' : __L,
-      'cn0' : __cn0,
-      'lock' : __lock,
-      'sid' : __sid,
-      'doppler' : __doppler,
-      'doppler_std' : __doppler_std,
-      'uptime' : __uptime,
-      'clock_offset' : __clock_offset,
-      'clock_drift' : __clock_drift,
-      'corr_spacing' : __corr_spacing,
-      'acceleration' : __acceleration,
-      'sync_flags' : __sync_flags,
-      'tow_flags' : __tow_flags,
-      'track_flags' : __track_flags,
-      'nav_flags' : __nav_flags,
-      'pset_flags' : __pset_flags,
-      'misc_flags' : __misc_flags,
-    }, offset, length
+    ret = {}
+    (__recv_time, offset, length) = get_u64(buf, offset, length)
+    ret['recv_time'] = __recv_time
+    (__tot, offset, length) = GPSTimeDep.parse_members(buf, offset, length)
+    ret['tot'] = __tot
+    (__P, offset, length) = get_u32(buf, offset, length)
+    ret['P'] = __P
+    (__P_std, offset, length) = get_u16(buf, offset, length)
+    ret['P_std'] = __P_std
+    (__L, offset, length) = CarrierPhase.parse_members(buf, offset, length)
+    ret['L'] = __L
+    (__cn0, offset, length) = get_u8(buf, offset, length)
+    ret['cn0'] = __cn0
+    (__lock, offset, length) = get_u16(buf, offset, length)
+    ret['lock'] = __lock
+    (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__doppler, offset, length) = get_s32(buf, offset, length)
+    ret['doppler'] = __doppler
+    (__doppler_std, offset, length) = get_u16(buf, offset, length)
+    ret['doppler_std'] = __doppler_std
+    (__uptime, offset, length) = get_u32(buf, offset, length)
+    ret['uptime'] = __uptime
+    (__clock_offset, offset, length) = get_s16(buf, offset, length)
+    ret['clock_offset'] = __clock_offset
+    (__clock_drift, offset, length) = get_s16(buf, offset, length)
+    ret['clock_drift'] = __clock_drift
+    (__corr_spacing, offset, length) = get_u16(buf, offset, length)
+    ret['corr_spacing'] = __corr_spacing
+    (__acceleration, offset, length) = get_s8(buf, offset, length)
+    ret['acceleration'] = __acceleration
+    (__sync_flags, offset, length) = get_u8(buf, offset, length)
+    ret['sync_flags'] = __sync_flags
+    (__tow_flags, offset, length) = get_u8(buf, offset, length)
+    ret['tow_flags'] = __tow_flags
+    (__track_flags, offset, length) = get_u8(buf, offset, length)
+    ret['track_flags'] = __track_flags
+    (__nav_flags, offset, length) = get_u8(buf, offset, length)
+    ret['nav_flags'] = __nav_flags
+    (__pset_flags, offset, length) = get_u8(buf, offset, length)
+    ret['pset_flags'] = __pset_flags
+    (__misc_flags, offset, length) = get_u8(buf, offset, length)
+    ret['misc_flags'] = __misc_flags
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -330,6 +293,53 @@ class MsgTrackingStateDetailedDep(SBP):
     self.pset_flags = res['pset_flags']
     self.misc_flags = res['misc_flags']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # recv_time: u64
+    ret += 8
+    # tot: GPSTimeDep
+    ret += GPSTimeDep._payload_size()
+    # P: u32
+    ret += 4
+    # P_std: u16
+    ret += 2
+    # L: CarrierPhase
+    ret += CarrierPhase._payload_size()
+    # cn0: u8
+    ret += 1
+    # lock: u16
+    ret += 2
+    # sid: GnssSignalDep
+    ret += GnssSignalDep._payload_size()
+    # doppler: s32
+    ret += 4
+    # doppler_std: u16
+    ret += 2
+    # uptime: u32
+    ret += 4
+    # clock_offset: s16
+    ret += 2
+    # clock_drift: s16
+    ret += 2
+    # corr_spacing: u16
+    ret += 2
+    # acceleration: s8
+    ret += 1
+    # sync_flags: u8
+    ret += 1
+    # tow_flags: u8
+    ret += 1
+    # track_flags: u8
+    ret += 1
+    # nav_flags: u8
+    ret += 1
+    # pset_flags: u8
+    ret += 1
+    # misc_flags: u8
+    ret += 1
+    return ret
   
 class TrackingChannelState(object):
   """SBP class for message TrackingChannelState
@@ -350,21 +360,14 @@ measured signal power.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__sid, offset, length) = offset, GnssSignal.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__fcn, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cn0, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'sid' : __sid,
-      'fcn' : __fcn,
-      'cn0' : __cn0,
-    }, offset, length
+    ret = {}
+    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__fcn, offset, length) = get_u8(buf, offset, length)
+    ret['fcn'] = __fcn
+    (__cn0, offset, length) = get_u8(buf, offset, length)
+    ret['cn0'] = __cn0
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -374,6 +377,17 @@ measured signal power.
     self.fcn = res['fcn']
     self.cn0 = res['cn0']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # sid: GnssSignal
+    ret += GnssSignal._payload_size()
+    # fcn: u8
+    ret += 1
+    # cn0: u8
+    ret += 1
+    return ret
   
 SBP_MSG_TRACKING_STATE = 0x0041
 class MsgTrackingState(SBP):
@@ -394,13 +408,10 @@ measurements for all tracked satellites.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__states, offset, length) = offset, get_array(TrackingChannelState.parse_members)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'states' : __states,
-    }, offset, length
+    ret = {}
+    (__states, offset, length) = get_array(TrackingChannelState.parse_members)(buf, offset, length)
+    ret['states'] = __states
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -408,6 +419,13 @@ measurements for all tracked satellites.
       return {}, offset, length
     self.states = res['states']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # states: array of TrackingChannelState
+    ret += 247
+    return ret
   
 class MeasurementState(object):
   """SBP class for message MeasurementState
@@ -417,10 +435,10 @@ class MeasurementState(object):
   of its fields.
 
   
-  Measurement Engine tracking channel state for a specific satellite signal 
-and measured signal power. 
-The mesid field for Glonass can either 
-carry the FCN as 100 + FCN where FCN is in [-7, +6] or 
+  Measurement Engine tracking channel state for a specific satellite signal
+and measured signal power.
+The mesid field for Glonass can either
+carry the FCN as 100 + FCN where FCN is in [-7, +6] or
 the Slot ID (from 1 to 28)
 
 
@@ -430,17 +448,12 @@ the Slot ID (from 1 to 28)
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__mesid, offset, length) = offset, GnssSignal.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cn0, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'mesid' : __mesid,
-      'cn0' : __cn0,
-    }, offset, length
+    ret = {}
+    (__mesid, offset, length) = GnssSignal.parse_members(buf, offset, length)
+    ret['mesid'] = __mesid
+    (__cn0, offset, length) = get_u8(buf, offset, length)
+    ret['cn0'] = __cn0
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -449,6 +462,15 @@ the Slot ID (from 1 to 28)
     self.mesid = res['mesid']
     self.cn0 = res['cn0']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # mesid: GnssSignal
+    ret += GnssSignal._payload_size()
+    # cn0: u8
+    ret += 1
+    return ret
   
 SBP_MSG_MEASUREMENT_STATE = 0x0061
 class MsgMeasurementState(SBP):
@@ -469,13 +491,10 @@ measurements for all tracked satellites.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__states, offset, length) = offset, get_array(MeasurementState.parse_members)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'states' : __states,
-    }, offset, length
+    ret = {}
+    (__states, offset, length) = get_array(MeasurementState.parse_members)(buf, offset, length)
+    ret['states'] = __states
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -483,6 +502,13 @@ measurements for all tracked satellites.
       return {}, offset, length
     self.states = res['states']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # states: array of MeasurementState
+    ret += 247
+    return ret
   
 class TrackingChannelCorrelation(object):
   """SBP class for message TrackingChannelCorrelation
@@ -501,17 +527,12 @@ class TrackingChannelCorrelation(object):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__I, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__Q, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'I' : __I,
-      'Q' : __Q,
-    }, offset, length
+    ret = {}
+    (__I, offset, length) = get_s16(buf, offset, length)
+    ret['I'] = __I
+    (__Q, offset, length) = get_s16(buf, offset, length)
+    ret['Q'] = __Q
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -520,10 +541,19 @@ class TrackingChannelCorrelation(object):
     self.I = res['I']
     self.Q = res['Q']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # I: s16
+    ret += 2
+    # Q: s16
+    ret += 2
+    return ret
   
-SBP_MSG_TRACKING_IQ = 0x002C
+SBP_MSG_TRACKING_IQ = 0x002D
 class MsgTrackingIq(SBP):
-  """SBP class for message MSG_TRACKING_IQ (0x002C).
+  """SBP class for message MSG_TRACKING_IQ (0x002D).
 
   You can have MSG_TRACKING_IQ inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -541,21 +571,14 @@ update interval.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__channel, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignal.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__corrs, offset, length) = offset, get_fixed_array(get_u8, 3, 1)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'channel' : __channel,
-      'sid' : __sid,
-      'corrs' : __corrs,
-    }, offset, length
+    ret = {}
+    (__channel, offset, length) = get_u8(buf, offset, length)
+    ret['channel'] = __channel
+    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__corrs, offset, length) = get_fixed_array(TrackingChannelCorrelation._unpack_members, 3, TrackingChannelCorrelation._payload_size())(buf, offset, length)
+    ret['corrs'] = __corrs
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -565,12 +588,113 @@ update interval.
     self.sid = res['sid']
     self.corrs = res['corrs']
     return res, off, length
-  
-SBP_MSG_TRACKING_IQ_DEP = 0x001C
-class MsgTrackingIqDep(SBP):
-  """SBP class for message MSG_TRACKING_IQ_DEP (0x001C).
 
-  You can have MSG_TRACKING_IQ_DEP inherit its fields directly
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # channel: u8
+    ret += 1
+    # sid: GnssSignal
+    ret += GnssSignal._payload_size()
+    # corrs: array of TrackingChannelCorrelation
+    ret += TrackingChannelCorrelation._payload_size() * 3
+    return ret
+  
+class TrackingChannelCorrelationDep(object):
+  """SBP class for message TrackingChannelCorrelationDep
+
+  You can have TrackingChannelCorrelationDep inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Structure containing in-phase and quadrature correlation components.
+
+
+  """
+  __slots__ = ['I',
+               'Q',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__I, offset, length) = get_s32(buf, offset, length)
+    ret['I'] = __I
+    (__Q, offset, length) = get_s32(buf, offset, length)
+    ret['Q'] = __Q
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.I = res['I']
+    self.Q = res['Q']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # I: s32
+    ret += 4
+    # Q: s32
+    ret += 4
+    return ret
+  
+SBP_MSG_TRACKING_IQ_DEP_B = 0x002C
+class MsgTrackingIqDepB(SBP):
+  """SBP class for message MSG_TRACKING_IQ_DEP_B (0x002C).
+
+  You can have MSG_TRACKING_IQ_DEP_B inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  When enabled, a tracking channel can output the correlations at each
+update interval.
+
+
+  """
+  __slots__ = ['channel',
+               'sid',
+               'corrs',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__channel, offset, length) = get_u8(buf, offset, length)
+    ret['channel'] = __channel
+    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__corrs, offset, length) = get_fixed_array(TrackingChannelCorrelationDep._unpack_members, 3, TrackingChannelCorrelationDep._payload_size())(buf, offset, length)
+    ret['corrs'] = __corrs
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.channel = res['channel']
+    self.sid = res['sid']
+    self.corrs = res['corrs']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # channel: u8
+    ret += 1
+    # sid: GnssSignal
+    ret += GnssSignal._payload_size()
+    # corrs: array of TrackingChannelCorrelationDep
+    ret += TrackingChannelCorrelationDep._payload_size() * 3
+    return ret
+  
+SBP_MSG_TRACKING_IQ_DEP_A = 0x001C
+class MsgTrackingIqDepA(SBP):
+  """SBP class for message MSG_TRACKING_IQ_DEP_A (0x001C).
+
+  You can have MSG_TRACKING_IQ_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -584,21 +708,14 @@ class MsgTrackingIqDep(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__channel, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignalDep.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__corrs, offset, length) = offset, get_fixed_array(get_u8, 3, 1)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'channel' : __channel,
-      'sid' : __sid,
-      'corrs' : __corrs,
-    }, offset, length
+    ret = {}
+    (__channel, offset, length) = get_u8(buf, offset, length)
+    ret['channel'] = __channel
+    (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__corrs, offset, length) = get_fixed_array(TrackingChannelCorrelationDep._unpack_members, 3, TrackingChannelCorrelationDep._payload_size())(buf, offset, length)
+    ret['corrs'] = __corrs
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -608,6 +725,17 @@ class MsgTrackingIqDep(SBP):
     self.sid = res['sid']
     self.corrs = res['corrs']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # channel: u8
+    ret += 1
+    # sid: GnssSignalDep
+    ret += GnssSignalDep._payload_size()
+    # corrs: array of TrackingChannelCorrelationDep
+    ret += TrackingChannelCorrelationDep._payload_size() * 3
+    return ret
   
 class TrackingChannelStateDepA(object):
   """SBP class for message TrackingChannelStateDepA
@@ -626,21 +754,14 @@ class TrackingChannelStateDepA(object):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__state, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__prn, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cn0, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'state' : __state,
-      'prn' : __prn,
-      'cn0' : __cn0,
-    }, offset, length
+    ret = {}
+    (__state, offset, length) = get_u8(buf, offset, length)
+    ret['state'] = __state
+    (__prn, offset, length) = get_u8(buf, offset, length)
+    ret['prn'] = __prn
+    (__cn0, offset, length) = get_f32(buf, offset, length)
+    ret['cn0'] = judicious_round(nb.f4(__cn0)) if SBP.judicious_rounding else __cn0
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -650,6 +771,17 @@ class TrackingChannelStateDepA(object):
     self.prn = res['prn']
     self.cn0 = res['cn0']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # state: u8
+    ret += 1
+    # prn: u8
+    ret += 1
+    # cn0: float
+    ret += 4
+    return ret
   
 SBP_MSG_TRACKING_STATE_DEP_A = 0x0016
 class MsgTrackingStateDepA(SBP):
@@ -667,13 +799,10 @@ class MsgTrackingStateDepA(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__states, offset, length) = offset, get_array(TrackingChannelStateDepA.parse_members)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'states' : __states,
-    }, offset, length
+    ret = {}
+    (__states, offset, length) = get_array(TrackingChannelStateDepA.parse_members)(buf, offset, length)
+    ret['states'] = __states
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -681,6 +810,13 @@ class MsgTrackingStateDepA(SBP):
       return {}, offset, length
     self.states = res['states']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # states: array of TrackingChannelStateDepA
+    ret += 247
+    return ret
   
 class TrackingChannelStateDepB(object):
   """SBP class for message TrackingChannelStateDepB
@@ -699,21 +835,14 @@ class TrackingChannelStateDepB(object):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__state, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__sid, offset, length) = offset, GnssSignalDep.parse_members(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__cn0, offset, length) = offset, get_f32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'state' : __state,
-      'sid' : __sid,
-      'cn0' : __cn0,
-    }, offset, length
+    ret = {}
+    (__state, offset, length) = get_u8(buf, offset, length)
+    ret['state'] = __state
+    (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
+    ret['sid'] = __sid
+    (__cn0, offset, length) = get_f32(buf, offset, length)
+    ret['cn0'] = judicious_round(nb.f4(__cn0)) if SBP.judicious_rounding else __cn0
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -723,6 +852,17 @@ class TrackingChannelStateDepB(object):
     self.sid = res['sid']
     self.cn0 = res['cn0']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # state: u8
+    ret += 1
+    # sid: GnssSignalDep
+    ret += GnssSignalDep._payload_size()
+    # cn0: float
+    ret += 4
+    return ret
   
 SBP_MSG_TRACKING_STATE_DEP_B = 0x0013
 class MsgTrackingStateDepB(SBP):
@@ -740,13 +880,10 @@ class MsgTrackingStateDepB(SBP):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__states, offset, length) = offset, get_array(TrackingChannelStateDepB.parse_members)(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'states' : __states,
-    }, offset, length
+    ret = {}
+    (__states, offset, length) = get_array(TrackingChannelStateDepB.parse_members)(buf, offset, length)
+    ret['states'] = __states
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -754,6 +891,13 @@ class MsgTrackingStateDepB(SBP):
       return {}, offset, length
     self.states = res['states']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # states: array of TrackingChannelStateDepB
+    ret += 247
+    return ret
   
 
 msg_classes = {
@@ -761,8 +905,9 @@ msg_classes = {
   0x0011: MsgTrackingStateDetailedDep,
   0x0041: MsgTrackingState,
   0x0061: MsgMeasurementState,
-  0x002C: MsgTrackingIq,
-  0x001C: MsgTrackingIqDep,
+  0x002D: MsgTrackingIq,
+  0x002C: MsgTrackingIqDepB,
+  0x001C: MsgTrackingIqDepA,
   0x0016: MsgTrackingStateDepA,
   0x0013: MsgTrackingStateDepB,
 }

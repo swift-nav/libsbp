@@ -16,11 +16,13 @@ Various structs shared between modules
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
-from sbp.jit.msg import get_f32, get_f64
-from sbp.jit.msg import get_string, get_fixed_string
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
 from sbp.jit.msg import get_array, get_fixed_array
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/gnss.yaml with generate.py.
@@ -42,17 +44,12 @@ class GnssSignal(object):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__sat, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__code, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'sat' : __sat,
-      'code' : __code,
-    }, offset, length
+    ret = {}
+    (__sat, offset, length) = get_u8(buf, offset, length)
+    ret['sat'] = __sat
+    (__code, offset, length) = get_u8(buf, offset, length)
+    ret['code'] = __code
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -61,6 +58,15 @@ class GnssSignal(object):
     self.sat = res['sat']
     self.code = res['code']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # sat: u8
+    ret += 1
+    # code: u8
+    ret += 1
+    return ret
   
 class GnssSignalDep(object):
   """SBP class for message GnssSignalDep
@@ -79,21 +85,14 @@ class GnssSignalDep(object):
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__sat, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__code, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__reserved, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'sat' : __sat,
-      'code' : __code,
-      'reserved' : __reserved,
-    }, offset, length
+    ret = {}
+    (__sat, offset, length) = get_u16(buf, offset, length)
+    ret['sat'] = __sat
+    (__code, offset, length) = get_u8(buf, offset, length)
+    ret['code'] = __code
+    (__reserved, offset, length) = get_u8(buf, offset, length)
+    ret['reserved'] = __reserved
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -103,6 +102,17 @@ class GnssSignalDep(object):
     self.code = res['code']
     self.reserved = res['reserved']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # sat: u16
+    ret += 2
+    # code: u8
+    ret += 1
+    # reserved: u8
+    ret += 1
+    return ret
   
 class GPSTimeDep(object):
   """SBP class for message GPSTimeDep
@@ -123,17 +133,12 @@ transition.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__tow, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__wn, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'tow' : __tow,
-      'wn' : __wn,
-    }, offset, length
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__wn, offset, length) = get_u16(buf, offset, length)
+    ret['wn'] = __wn
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -142,6 +147,15 @@ transition.
     self.tow = res['tow']
     self.wn = res['wn']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # wn: u16
+    ret += 2
+    return ret
   
 class GPSTimeSec(object):
   """SBP class for message GPSTimeSec
@@ -162,17 +176,12 @@ transition.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__tow, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__wn, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'tow' : __tow,
-      'wn' : __wn,
-    }, offset, length
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__wn, offset, length) = get_u16(buf, offset, length)
+    ret['wn'] = __wn
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -181,6 +190,15 @@ transition.
     self.tow = res['tow']
     self.wn = res['wn']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # wn: u16
+    ret += 2
+    return ret
   
 class GPSTime(object):
   """SBP class for message GPSTime
@@ -203,21 +221,14 @@ so ns field will be 0.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__tow, offset, length) = offset, get_u32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__ns_residual, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__wn, offset, length) = offset, get_u16(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'tow' : __tow,
-      'ns_residual' : __ns_residual,
-      'wn' : __wn,
-    }, offset, length
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__ns_residual, offset, length) = get_s32(buf, offset, length)
+    ret['ns_residual'] = __ns_residual
+    (__wn, offset, length) = get_u16(buf, offset, length)
+    ret['wn'] = __wn
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -227,6 +238,17 @@ so ns field will be 0.
     self.ns_residual = res['ns_residual']
     self.wn = res['wn']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # ns_residual: s32
+    ret += 4
+    # wn: u16
+    ret += 2
+    return ret
   
 class CarrierPhase(object):
   """SBP class for message CarrierPhase
@@ -248,17 +270,12 @@ same sign as the pseudorange.
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
-    o_1, (__i, offset, length) = offset, get_s32(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    o_1, (__f, offset, length) = offset, get_u8(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
-    return {
-      'i' : __i,
-      'f' : __f,
-    }, offset, length
+    ret = {}
+    (__i, offset, length) = get_s32(buf, offset, length)
+    ret['i'] = __i
+    (__f, offset, length) = get_u8(buf, offset, length)
+    ret['f'] = __f
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
@@ -267,6 +284,15 @@ same sign as the pseudorange.
     self.i = res['i']
     self.f = res['f']
     return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # i: s32
+    ret += 4
+    # f: u8
+    ret += 1
+    return ret
   
 
 msg_classes = {
