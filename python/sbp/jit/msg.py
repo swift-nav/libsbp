@@ -19,6 +19,7 @@ import numba.cffi_support
 
 from sbp.msg import crc16jit
 from sbp.msg import SENDER_ID as _SENDER_ID
+from sbp.msg import SBP_PREAMBLE as _SBP_PREAMBLE
 
 from sbp.jit import parse_float_c
 
@@ -29,6 +30,7 @@ _get_f32 = parse_float_c.lib.get_f32
 _get_f64 = parse_float_c.lib.get_f64
 
 SENDER_ID = _SENDER_ID
+SBP_PREAMBLE = _SBP_PREAMBLE
 
 
 @nb.jit('Tuple((u1,u4,u4))(u1[:],u4,u4)', nopython=True, nogil=True)
@@ -217,6 +219,7 @@ class SBP(object):
                  length=None,
                  payload=None,
                  crc=None):
+        self.preamble = SBP_PREAMBLE
         self.msg_type = msg_type
         self.sender = sender
         self.length = length
@@ -283,9 +286,13 @@ class SBP(object):
     def unpack(self, payload, offset, length):
         # res, offset, length = {}, offset+length, 0
         res, offset, length = self._unpack_members(payload, offset, length)
+
         if not res:
             return res, offset, length
+
+        res['preamble'] = self.preamble
         res['msg_type'] = self.msg_type
+        res['sender'] = self.sender
         if self.payload is not None:
             res['payload'] = standard_b64encode(self.payload.tobytes()).decode('ascii')
         res['crc'] = self.crc
