@@ -76,9 +76,9 @@ class TCPDriver(BaseDriver):
             return data
         except socket.timeout:
             self._connect()
-        except socket.error as socket_exception:
+        except socket.error as socket_error:
             # this is fine
-            if socket_exception.errno == errno.EINTR:
+            if socket_error.errno == errno.EINTR:
                 return
             # we really shouldn't be doing this
             raise IOError
