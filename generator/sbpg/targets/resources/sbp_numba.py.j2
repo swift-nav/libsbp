@@ -16,6 +16,8 @@
 
 import json
 
+import numba as nb
+
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
 from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
@@ -72,7 +74,7 @@ class ((( m.identifier )))(object):
     ((*- endfor *))
     return {
     ((*- for f in m.fields *))
-      '(((f.identifier)))' : __(((f.identifier))),
+      '(((f.identifier)))' : ((( f | numba_type ))),
     ((*- endfor *))
     }, offset, length
 

@@ -80,7 +80,10 @@ def is_array():
 
 
 def numba_type(f):
-  return NUMBA_TYPE[f]
+  if f.type_id == 'float' or f.type_id == 'double':
+    return 'nb.' + NUMBA_TYPE[f.type_id] + '(__' + f.identifier + ')'
+  else:
+    return '__' + f.identifier
 
 
 def numba_format(f):
@@ -124,6 +127,7 @@ def classnameify(s):
 
 
 JENV.filters['numba_py'] = numba_format
+JENV.filters['numba_type'] = numba_type
 JENV.filters['classnameify'] = classnameify
 JENV.filters['pydoc'] = pydoc_format
 JENV.filters['comment_links'] = comment_links
