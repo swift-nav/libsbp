@@ -1,5 +1,15 @@
 # Change Log
 
+## [v2.5.2](https://github.com/swift-nav/libsbp/tree/v2.5.2)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.1...v2.5.2)
+
+**Merged pull requests:**
+
+- Add base into\_buffer method for messages with no payload \[ESD-1154\] [\#674](https://github.com/swift-nav/libsbp/pull/674)
+- py3 compat: use errno attribute for socket.error [\#673](https://github.com/swift-nav/libsbp/pull/673)
+
+
 ## [v2.5.1](https://github.com/swift-nav/libsbp/tree/v2.5.1) (2019-03-29)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.0...v2.5.1)
 
