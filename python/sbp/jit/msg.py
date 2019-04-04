@@ -143,13 +143,13 @@ def get_f64(buf, offset, length):
     return res, offset + 8, length - 8
 
 
-@nb.jit('Tuple((u1[:],u4,u4))(u1[:],u4,u4)', nopython=True, nogil=True)
-def _get_string(buf_in, offset, length):
+@nb.jit('Tuple((u1[:],u4,u4))(u1[:],u4,u4,b1)', nopython=True, nogil=True)
+def _get_string(buf_in, offset, length, check_null):
     buf_out = np.zeros(256, dtype=np.uint8)
     i = nb.u4(0)
     null_term = False
     while i < length:
-        if buf_in[offset + i] == 0:
+        if check_null and buf_in[offset + i] == 0:
             null_term = True
             break
         buf_out[i] = buf_in[offset + i]
@@ -161,7 +161,7 @@ def _get_string(buf_in, offset, length):
 
 
 def get_string(buf, offset, length):
-    buf, offset, length = _get_string(buf, offset, length)
+    buf, offset, length = _get_string(buf, offset, length, True)
     return buf.tobytes(), offset, length
 
 
@@ -169,7 +169,7 @@ def get_fixed_string(size):
     def func(buf, offset_in, length):
         if length < size:
             return '', offset_in, length
-        buf, offset, length = _get_string(buf, offset_in, size)
+        buf, offset, length = _get_string(buf, offset_in, size, False)
         return buf.tobytes(), offset_in + size, length
     return func
 

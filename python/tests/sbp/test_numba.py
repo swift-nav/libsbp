@@ -44,6 +44,14 @@ def test_get_string_offset():
     assert out == b'thisisastring'
 
 
+def test_get_fixed_string():
+    s = b'main\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    a = np.fromstring(s, dtype=np.uint8)
+    out, offset, length = get_fixed_string(len(s))(a, 0, len(a))
+    assert len(out) == len(s)
+    assert out == s
+
+
 def test_get_fixed_string_offset():
     s = _mk_string('________thisisastring')
     out, offset, length = get_fixed_string(6)(s, 8, len(s))
