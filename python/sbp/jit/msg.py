@@ -10,7 +10,7 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-import pybase64
+from pybase64 import standard_b64encode
 
 import numpy as np
 import numba as nb
@@ -278,7 +278,7 @@ class SBP(object):
         raise NotImplementedError()
 
     def _unpack_members(self, buf, offset, length):
-        raise NotImplementedError()
+        raise NotImplementedError(self.msg_type)
 
     def unpack(self, payload, offset, length):
         # res, offset, length = {}, offset+length, 0
@@ -287,7 +287,7 @@ class SBP(object):
             return res, offset, length
         res['msg_type'] = self.msg_type
         if self.payload is not None:
-            res['payload'] = pybase64.standard_b64encode(self.payload.tobytes())
+            res['payload'] = standard_b64encode(self.payload.tobytes()).decode('ascii')
         res['crc'] = self.crc
         res['length'] = self.length
         return res, offset, length
