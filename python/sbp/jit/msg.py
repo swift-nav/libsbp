@@ -287,7 +287,7 @@ class SBP(object):
             return res, offset, length
         res['msg_type'] = self.msg_type
         if self.payload is not None:
-            res['payload'] = pybase64.encodebytes(self.payload.tobytes())
+            res['payload'] = pybase64.standard_b64encode(self.payload.tobytes())
         res['crc'] = self.crc
         res['length'] = self.length
         return res, offset, length
