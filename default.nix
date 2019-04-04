@@ -12,16 +12,6 @@ stdenv.mkDerivation rec {
     zlib.dev
     ghc
     cabal-install
-    python27Full
-    python27Packages.setuptools
-    python27Packages.virtualenv
-    python27Packages.pip
-    python27Packages.cython
-    python37Full
-    python37Packages.setuptools
-    python27Packages.virtualenv
-    python37Packages.pip
-    python37Packages.cython
     nodejs
     coreutils
     bash
@@ -34,14 +24,7 @@ stdenv.mkDerivation rec {
     llvm
     libcxxStdenv
   ];
-  shellHook = ''
-    [[ -z "$SOURCE_DATE_EPOCH" ]] || unset SOURCE_DATE_EPOCH
-    rm -rf .dist.py2
-    rm -rf .dist.py3
-    virtualenv .dist.py2
-    virtualenv .dist.py3 --python=`which python3`
-    .dist.py2/bin/pip install --ignore-installed twine wheel virtualenv
-    .dist.py3/bin/pip install --ignore-installed twine wheel virtualenv
-    source .dist.py3/bin/activate
+  shellHook = ''  
+    [[ -z "$SOURCE_DATE_EPOCH" ]] || unset SOURCE_DATE_EPOCH  
   '';
 }
