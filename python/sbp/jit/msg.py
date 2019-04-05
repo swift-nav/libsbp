@@ -181,6 +181,7 @@ def get_setting(buf, offset, length):
 
 def get_array(getter):
     def func(buf, offset, length):
+        # TODO verify this function
         arr = []
         while length > 0:
             o_1, (res, offset, length) = offset, getter(buf, offset, length)
@@ -196,15 +197,15 @@ def get_fixed_array(getter, count, el_size):
         offset_start = offset
         total_size = count * el_size
         if length < total_size:
-            return [], offset_start, 0
+            return [], offset_start, length
         arr = []
-        while length > 0:
+        while total_size > 0:
             o_1, (res, offset, length) = offset, getter(buf, offset, length)
             if o_1 == offset:
-                return [], offset_start, 0
+                return [], offset_start, length
             arr.append(res)
-            length -= el_size
-        return arr, offset, length-total_size
+            total_size -= el_size
+        return arr, offset, length
     return func
 
 
