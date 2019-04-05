@@ -87,8 +87,9 @@ class ((( m.identifier )))(object):
     ((*- endfor *))
     return res, off, length
   ((* else *))
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
   ((* endif *))
-
 ((*- endif *))
 ((*- endfor *))
 
