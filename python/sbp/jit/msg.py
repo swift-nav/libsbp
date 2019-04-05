@@ -251,34 +251,50 @@ class SBP(object):
     def unpack_payload(buf, offset, length):
         crc_fail = False
         crc = 0
-        pkt_len = 0
         payload_len = 0
         msg_type = 0
         sender = 0
         offset_start = offset
-        header_len = 6
+        pkt_len = 0
+
+        preamble_len = 1
+        if length < preamble_len:
+            return (pkt_len, payload_len, msg_type, sender, crc, crc_fail)
+
+        preamble, offset, length = get_u8(buf, offset, length)
+        if preamble != SBP_PREAMBLE:
+            return (preamble_len, payload_len, msg_type, sender, crc, crc_fail)
+
+        header_len = 5
         if length < header_len:
             return (pkt_len, payload_len, msg_type, sender, crc, crc_fail)
-        preamble, offset, length = get_u8(buf, offset, length)
+
         typ, offset, length = get_u16(buf, offset, length)
         sender, offset, length = get_u16(buf, offset, length)
         payload_len, offset, length = get_u8(buf, offset, length)
+
         if length < payload_len:
             return (pkt_len, payload_len, msg_type, sender, crc, crc_fail)
+
         msg_type = typ
+
         # Consume payload
         offset += payload_len
         length -= payload_len
+
         crc_len = 2
         if length < crc_len:
             return (pkt_len, payload_len, msg_type, sender, crc, crc_fail)
+
         crc, offset, length = get_u16(buf, offset, length)
         buf_start = offset_start + 1
-        buf_end = offset_start + 1 + (header_len - 1) + payload_len
+        buf_end = offset_start + 1 + (preamble_len + header_len - 1) + payload_len
+
         calc_crc = crc16jit(buf, buf_start, 0, buf_end - buf_start)
         if calc_crc != crc:
             crc_fail = True
-        pkt_len = header_len + payload_len + crc_len
+
+        pkt_len = preamble_len + header_len + payload_len + crc_len
         return (pkt_len, payload_len, msg_type, sender, crc, crc_fail)
 
     @classmethod
