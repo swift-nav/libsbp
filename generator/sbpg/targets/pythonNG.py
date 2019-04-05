@@ -89,6 +89,9 @@ def numba_type(f):
 def numba_format(f):
   if NUMBA_GET_FN.get(f.type_id, None):
     return NUMBA_GET_FN.get(f.type_id)
+  elif f.type_id == 'string' and f.identifier == 'setting' and not f.options.get('size', None):
+    # setting string with null delimiters as a special case
+    return 'get_setting'
   elif f.type_id == 'string' and f.options.get('size', None):
     s = f.options.get('size', None).value
     return 'get_fixed_string(%d)' % (s,)

@@ -174,6 +174,11 @@ def get_fixed_string(size):
     return func
 
 
+def get_setting(buf, offset, length):
+    buf, offset, length = _get_string(buf, offset, length, False)
+    return buf.tobytes(), offset, length
+
+
 def get_array(getter):
     def func(buf, offset, length):
         arr = []
