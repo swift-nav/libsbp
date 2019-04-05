@@ -66,17 +66,12 @@ class ((( m.identifier )))(object):
   ((*- if m.fields *))
   @classmethod
   def parse_members(cls, buf, offset, length):
-    o_0 = offset
+    ret = {}
     ((*- for f in m.fields *))
-    o_1, (__(((f.identifier))), offset, length) = offset, ((( f | numba_py )))(buf, offset, length)
-    if o_1 == offset:
-      return {}, o_0, length
+    (__(((f.identifier))), offset, length) = ((( f | numba_py )))(buf, offset, length)
+    ret['(((f.identifier)))'] = ((( f | numba_type )))
     ((*- endfor *))
-    return {
-    ((*- for f in m.fields *))
-      '(((f.identifier)))' : ((( f | numba_type ))),
-    ((*- endfor *))
-    }, offset, length
+    return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
