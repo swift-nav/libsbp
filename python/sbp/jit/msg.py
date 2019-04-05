@@ -276,8 +276,6 @@ class SBP(object):
         if length < payload_len:
             return (pkt_len, payload_len, msg_type, sender, crc, crc_fail)
 
-        msg_type = typ
-
         # Consume payload
         offset += payload_len
         length -= payload_len
@@ -285,6 +283,8 @@ class SBP(object):
         crc_len = 2
         if length < crc_len:
             return (pkt_len, payload_len, msg_type, sender, crc, crc_fail)
+
+        msg_type = typ
 
         crc, offset, length = get_u16(buf, offset, length)
         buf_start = offset_start + 1
