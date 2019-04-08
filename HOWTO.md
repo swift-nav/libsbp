@@ -84,7 +84,12 @@ Ubuntu 16.04.
     git tag -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
 
-1. Run `make all`
+1. Run `make all`.  If running the release macOS you may need to install
+   llvm though brew (recommend installing llvm 6 with `brew instal llvm@6`)
+   then add it to your path with `export PATH=$(brew --prefix llvm@6)/bin:$PATH`.
+   You can also use Nixpkgs to setup a complete build environment for
+   running a release.  [Install Nixpkgs](https://nixos.org/nix/download.html)
+   and then run `nix-shell` prior to running `make all`.
 
 2. Verify that package dependencies, their version numbers, and the
    libsbp version number in the C, Python, JavaScript, and LaTeX developer
