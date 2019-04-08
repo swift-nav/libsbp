@@ -1,6 +1,14 @@
 # Change Log
 
-## [v2.5.2](https://github.com/swift-nav/libsbp/tree/v2.5.2)
+## [v2.5.3](https://github.com/swift-nav/libsbp/tree/v2.5.3) (2019-04-08)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.2...v2.5.3)
+
+**Merged pull requests:**
+
+- Write payload if given [\#676](https://github.com/swift-nav/libsbp/pull/676)
+
+## [v2.5.2](https://github.com/swift-nav/libsbp/tree/v2.5.2) (2019-04-04)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.1...v2.5.2)
 
@@ -11,6 +19,7 @@
 
 
 ## [v2.5.1](https://github.com/swift-nav/libsbp/tree/v2.5.1) (2019-03-29)
+
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.0...v2.5.1)
 
 **Closed issues:**
