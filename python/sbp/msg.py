@@ -271,7 +271,15 @@ class SBP(object):
     self.parser.build_stream(payload, self.stream_payload)
     return self.stream_payload.length
 
+  def _write_payload(self, buf, offset, payload):
+    self.stream_payload.reset(buf, offset)
+    self.stream_payload.write(payload)
+    return self.stream_payload.length
+
   def into_buffer(self, buf, offset):
-    def _empty_payload(_buf, _offset, _payload):
+    if self.payload:
+      return self.pack_into(buf, offset, self._write_payload)
+    else:
+      def _empty_payload(_buf, _offset, _payload):
         return 0
-    return self.pack_into(buf, offset, _empty_payload)
+      return self.pack_into(buf, offset, _empty_payload)
