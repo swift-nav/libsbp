@@ -91,7 +91,30 @@ Ubuntu 16.04.
    running a release.  [Install Nixpkgs](https://nixos.org/nix/download.html)
    and then run `nix-shell` prior to running `make all`.
 
-2. Verify that package dependencies, their version numbers, and the
+2. This will bump versions in the following files:
+   - `python/sbp/RELEASE-VERSION`
+   - `docs/sbp.pdf`
+   - `haskell/sbp.cabal.m4`
+   - `package.json`
+   - `c/include/libsbp/version.h`
+   - `package-lock.json` -- you can typically revert all the changes in this
+     file except for the libsbp version change:
+     ```shell
+     git add -p package-lock.json
+     # enter 'y' for version change, 'd' to stop adding changes
+     git commit -m 'package-lock.json version bump'
+     git checkout package-lock.json
+     ```
+   Commit the docs, these above version bumps and re-tag:
+   ```shell
+   git add docs/sbp.pdf
+   git commit -m 'Update docs'
+   git add python/sbp/RELEASE-VERSION haskell/sbp.cabal.m4 package.json c/include/libsbp/version.h
+   git commit -m 'Version bumps'
+   git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
+   ```
+
+3. Verify that package dependencies, their version numbers, and the
    libsbp version number in the C, Python, JavaScript, and LaTeX developer
    documentation are consistent.
 
@@ -99,13 +122,13 @@ Ubuntu 16.04.
 
    - Others: should be automatically extracted from git tag
 
-3. Update the CHANGELOG details with `make release`. Submit a pull request and
+4. Update the CHANGELOG details with `make release`. Submit a pull request and
    get it merged. This requires
    [github-changelog-generator](https://github.com/skywinder/github-changelog-generator),
    and a `CHANGELOG_GITHUB_TOKEN` in your `PATH` if you don't already have
    them.
 
-4. After the release PR is merged, recreate the tag:
+5. After the release PR is merged, recreate the tag:
     ```shell
     git checkout master
     git pull
@@ -114,16 +137,16 @@ Ubuntu 16.04.
     git push origin INCREMENTED_TAG
     ```
 
-5. Create a release on
+6. Create a release on
    [GitHub](https://github.com/swift-nav/libsbp/releases) and add the
    RELEASE_NOTES.md.
 
-6. Distribute release packages: `make dist`. You may need credentials
+7. Distribute release packages: `make dist`. You may need credentials
    on the appropriate package repositories. Ignore the GPG error in `stack`,
-   the package will get uploaded correctly anyway.
-
-7. Announce release to the
-   [forum](https://groups.google.com/forum/#!forum/swiftnav-discuss).
+   the package will get uploaded correctly anyway.  If the release is
+   a Python only change it may be appropriate to just publish to PyPI
+   with `make dist-python` -- we typically update all other supported
+   languages when we make an official firmware release.
 
 8. Releases are not only never perfect, they never really end. Please
    pay special attention to any downstream projects or users that may
