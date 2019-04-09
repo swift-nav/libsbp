@@ -87,6 +87,7 @@ class TCPDriver(BaseDriver):
         size : int
           Number of bytes to read
         """
+        data = None
         while True:
             try:
                 data = self.handle.recv(size)
