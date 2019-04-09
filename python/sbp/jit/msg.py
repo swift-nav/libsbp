@@ -192,7 +192,7 @@ def get_array(getter):
     return func
 
 
-def get_fixed_array(getter, count, el_size):
+def get_fixed_array(getter, count, el_size, nb_type=None):
     def func(buf, offset, length):
         offset_start = offset
         total_size = count * el_size
@@ -203,7 +203,7 @@ def get_fixed_array(getter, count, el_size):
             o_1, (res, offset, length) = offset, getter(buf, offset, length)
             if o_1 == offset:
                 return [], offset_start, length
-            arr.append(res)
+            arr.append(nb_type(res) if nb_type else res)
             total_size -= el_size
         return arr, offset, length
     return func
