@@ -1,12 +1,8 @@
 construct==2.9.33
-futures>=2.2.0
-httpretty==0.9.4
-# httpretty 0.9.5 is causing issues on travis: https://github.com/gabrielfalcao/HTTPretty/issues/340
 pyftdi==0.13.4
 pylibftdi
 pyserial
 requests>=2.8.1
-requests-futures>=0.9.5
 llvmlite==0.26.0
 numpy==1.16.2
 numba==0.41.0
