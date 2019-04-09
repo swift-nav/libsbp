@@ -86,6 +86,13 @@ def numba_type(f):
     return '__' + f.identifier
 
 
+def numba_size(f):
+  if f.type_id in NUMBA_TY_BYTES:
+    return NUMBA_TY_BYTES[f.type_id]
+  else:
+    return f.identifier + '._payload_size()'
+
+
 def numba_format(f):
   if NUMBA_GET_FN.get(f.type_id, None):
     return NUMBA_GET_FN.get(f.type_id)
@@ -99,12 +106,21 @@ def numba_format(f):
     return 'get_string'
   elif f.type_id == 'array' and f.options.get('size', None):
     count = f.options.get('size', None).value
-    t = NUMBA_GET_FN.get(f.type_id, 'u8')
-    if t not in NUMBA_GET_FN:
-        raise NotImplementedError()
-    fill_func = NUMBA_GET_FN[t]
-    el_size = NUMBA_TY_BYTES[t]
-    return "get_fixed_array(%s, %d, %d)" % (fill_func, count, el_size)
+    t = f.options['fill'].value
+    if t in NUMBA_GET_FN:
+      fill_func = NUMBA_GET_FN[t]
+      el_size = NUMBA_TY_BYTES[t]
+      # TODO clean..
+      if f.options['fill'].value == 'float':
+        return "get_fixed_array(%s, %d, %d, %s)" % (fill_func, count, el_size, 'nb.f4')
+      elif f.options['fill'].value == 'double':
+        return "get_fixed_array(%s, %d, %d, %s)" % (fill_func, count, el_size, 'nb.f8')
+      else:
+        return "get_fixed_array(%s, %d, %d)" % (fill_func, count, el_size)
+    else:
+      fill_func = f.options['fill'].value + '._unpack_members'
+      el_size = f.options['fill'].value + '._payload_size()'
+      return "get_fixed_array(%s, %d, %s)" % (fill_func, count, el_size)
   elif f.type_id == 'array':
     fill = f.options['fill'].value
     f_ = copy.copy(f)
@@ -131,6 +147,7 @@ def classnameify(s):
 
 JENV.filters['numba_py'] = numba_format
 JENV.filters['numba_type'] = numba_type
+JENV.filters['numba_size'] = numba_size
 JENV.filters['classnameify'] = classnameify
 JENV.filters['pydoc'] = pydoc_format
 JENV.filters['comment_links'] = comment_links
