@@ -6,7 +6,7 @@ message(STATUS "Building libsbp version ${VERSION}")
 
 project(libsbp LANGUAGES C CXX VERSION ${VERSION})
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 include(GNUInstallDirs)
 
 ##########################################################
