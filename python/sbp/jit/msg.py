@@ -306,11 +306,7 @@ class SBP(object):
         raise NotImplementedError(self.msg_type)
 
     def unpack(self, payload, offset, length):
-        # res, offset, length = {}, offset+length, 0
         res, offset, length = self._unpack_members(payload, offset, length)
-
-        if not res:
-            return res, offset, length
 
         res['preamble'] = self.preamble
         res['msg_type'] = self.msg_type
