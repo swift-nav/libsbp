@@ -20,32 +20,32 @@ def test_get_string():
     s = _mk_string('thisisastring')
     out, offset, length = get_string(s, 0, len(s))
     assert len(out) == len('thisisastring')
-    assert out == b'thisisastring'
+    assert out == 'thisisastring'
 
 
 def test_get_string_no_null():
     s = _mk_string('thisisastring', null=None)
     out, offset, length = get_string(s, 0, len(s))
     assert len(out) == len('thisisastring')
-    assert out == b'thisisastring'
+    assert out == 'thisisastring'
 
 
 def test_get_string_offset_no_null():
     s = _mk_string('________thisisastring', null=None)
     out, offset, length = get_string(s, 8, len(s) - 8)
     assert len(out) == len('thisisastring')
-    assert out == b'thisisastring'
+    assert out == 'thisisastring'
 
 
 def test_get_string_offset():
     s = _mk_string('________thisisastring')
     out, offset, length = get_string(s, 8, len(s))
     assert len(out) == len('thisisastring')
-    assert out == b'thisisastring'
+    assert out == 'thisisastring'
 
 
 def test_get_fixed_string():
-    s = b'main\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    s = 'main\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
     a = np.fromstring(s, dtype=np.uint8)
     out, offset, length = get_fixed_string(len(s))(a, 0, len(a))
     assert len(out) == len(s)
@@ -56,7 +56,7 @@ def test_get_fixed_string_offset():
     s = _mk_string('________thisisastring')
     out, offset, length = get_fixed_string(6)(s, 8, len(s))
     assert len(out) == len('thisis')
-    assert out == b'thisis'
+    assert out == 'thisis'
 
 
 def test_parse():
@@ -84,7 +84,7 @@ def test_parse():
 
     assert res['sequence'] == 123
     assert res['offset'] == 42
-    assert res['filename'] == b'floof.bin'
+    assert res['filename'] == 'floof.bin'
 
     assert bytearray(res['data']) == bytearray(data)
 
