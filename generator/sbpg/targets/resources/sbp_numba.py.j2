@@ -82,6 +82,7 @@ class ((( m.identifier )))(object):
     ((*- endfor *))
     return res, off, length
 
+  @classmethod
   def _payload_size(self):
     ret = 0
     ((*- for f in m.fields *))

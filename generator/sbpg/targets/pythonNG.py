@@ -87,10 +87,28 @@ def numba_type(f):
 
 
 def numba_size(f):
+  # the worst case 255 - 6 (header) - 2 (crc)
+  UNKNOWN_LEN = 255 - 6 - 2
+
   if f.type_id in NUMBA_TY_BYTES:
     return NUMBA_TY_BYTES[f.type_id]
+  elif f.type_id == 'string':
+    if f.options.get('size', None) is not None:
+      return f.options.get('size', None).value
+    return UNKNOWN_LEN
+  elif f.type_id == 'array':
+    # NOTE: arrays of arrays are not supported
+    t = f.options['fill'].value
+    count = f.options.get('size', None)
+    if count:
+      if t in NUMBA_TY_BYTES:
+        return "%d * %d" % (NUMBA_TY_BYTES[t], count.value)
+      else:
+        return t + "._payload_size() * %d" % (count.value)
+    else:
+      return UNKNOWN_LEN
   else:
-    return f.identifier + '._payload_size()'
+    return f.type_id + '._payload_size()'
 
 
 def numba_format(f):
