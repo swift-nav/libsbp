@@ -1,5 +1,14 @@
 # Change Log
 
+## [2.5.4](https://github.com/swift-nav/libsbp/tree/v2.5.4)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.3...v2.5.4)
+
+**Merged pull requests:**
+
+- Add TCP reconnect, purge "Skylark broker" support [\#678](https://github.com/swift-nav/libsbp/pull/678)
+
+
 ## [v2.5.3](https://github.com/swift-nav/libsbp/tree/v2.5.3) (2019-04-08)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.2...v2.5.3)
