@@ -86,6 +86,7 @@ class ((( m.identifier )))(object):
   def _payload_size(self):
     ret = 0
     ((*- for f in m.fields *))
+    # (((f.identifier))): (((f.type_id))) ((*- if f.options['fill'] *)) of (((f.options['fill'].value))) ((*- endif *))
     ret += (((f | numba_size)))
     ((*- endfor *))
     return ret
