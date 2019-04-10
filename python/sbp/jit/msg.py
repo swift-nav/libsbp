@@ -162,7 +162,7 @@ def _get_string(buf_in, offset, length, check_null):
 
 def get_string(buf, offset, length):
     buf, offset, length = _get_string(buf, offset, length, True)
-    return buf.tobytes(), offset, length
+    return buf.tobytes().decode('ascii'), offset, length
 
 
 def get_fixed_string(size):
@@ -170,13 +170,13 @@ def get_fixed_string(size):
         if length < size:
             return '', offset_in, length
         buf, offset, length = _get_string(buf, offset_in, size, False)
-        return buf.tobytes(), offset_in + size, length
+        return buf.tobytes().decode('ascii'), offset_in + size, length
     return func
 
 
 def get_setting(buf, offset, length):
     buf, offset, length = _get_string(buf, offset, length, False)
-    return buf.tobytes(), offset, length
+    return buf.tobytes().decode('ascii'), offset, length
 
 
 def get_array(getter):
