@@ -81,7 +81,7 @@ def is_array():
 
 def numba_type(f):
   if f.type_id == 'float' or f.type_id == 'double':
-    return 'nb.' + NUMBA_TYPE[f.type_id] + '(__' + f.identifier + ')'
+    return 'nb.' + NUMBA_TYPE[f.type_id] + '(__' + f.identifier + ') if SBP.float_meta else __' + f.identifier
   else:
     return '__' + f.identifier
 
@@ -130,9 +130,9 @@ def numba_format(f):
       el_size = NUMBA_TY_BYTES[t]
       # TODO clean..
       if f.options['fill'].value == 'float':
-        return "get_fixed_array(%s, %d, %d, %s)" % (fill_func, count, el_size, 'nb.f4')
+        return "get_fixed_array(%s, %d, %d, %s if SBP.float_meta else None)" % (fill_func, count, el_size, 'nb.f4')
       elif f.options['fill'].value == 'double':
-        return "get_fixed_array(%s, %d, %d, %s)" % (fill_func, count, el_size, 'nb.f8')
+        return "get_fixed_array(%s, %d, %d, %s if SBP.float_meta else None)" % (fill_func, count, el_size, 'nb.f8')
       else:
         return "get_fixed_array(%s, %d, %d)" % (fill_func, count, el_size)
     else:

@@ -212,6 +212,11 @@ def get_fixed_array(getter, count, el_size, nb_type=None):
 class SBP(object):
     """Swift Binary Protocol container.  """
 
+    # Class variable for controlling whether floating point variables should be
+    # stored in numba.float32/64 format or native Python float. This affects
+    # the rounding and string representation.
+    float_meta = False
+
     __slots__ = ['preamble',
                  'msg_type',
                  'sender',
