@@ -209,7 +209,7 @@ def render_sbp(output_dir, package_specs):
     modules.append(full_module_name)
     for m in package_spec.definitions:
       if m.static and m.sbp_id:
-        msgs.append(to_data(m.identifier))
+        msgs.append(m)
   destination_filename = "%s/src/SwiftNav/SBP.hs" % output_dir
   py_template = JENV.get_template(SBP_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
