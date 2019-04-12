@@ -215,10 +215,10 @@ def render_sbp(output_dir, package_specs):
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(modules=sorted(modules),
                                pkgs=package_specs,
-                               msgs=sorted(msgs)))
+                               msgs=sorted(msgs, key=lambda m:to_data(m.identifier))))
   destination_filename = "%s/src/SwiftNav/SBP/Msg.hs" % output_dir
   py_template = JENV.get_template(MESSAGE_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(modules=sorted(modules),
                                pkgs=package_specs,
-                               msgs=sorted(msgs)))
+                               msgs=sorted(msgs, key=lambda m:to_data(m.identifier))))
