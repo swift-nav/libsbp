@@ -194,6 +194,84 @@ estimate for the signal is valid.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return PackedObsContent.build(d)
     
+class PackedOsrContent(object):
+  """PackedOsrContent.
+  
+  Pseudorange and carrier phase network corrections for a satellite signal.
+
+  
+  Parameters
+  ----------
+  P : int
+    Pseudorange observation
+  L : CarrierPhase
+    Carrier phase observation with typical sign convention.
+  lock : int
+    Lock timer. This value gives an indication of the time
+for which a signal has maintained continuous phase lock.
+Whenever a signal has lost and regained lock, this
+value is reset to zero. It is encoded according to DF402 from
+the RTCM 10403.2 Amendment 2 specification.  Valid values range
+from 0 to 15 and the most significant nibble is reserved for future use.
+
+  flags : int
+    Correction flags.
+
+  sid : GnssSignal
+    GNSS signal identifier (16 bit)
+  iono_std : int
+    Slant ionospheric correction standard deviation
+  tropo_std : int
+    Slant tropospheric correction standard deviation
+  range_std : int
+    Orbit/clock/bias correction projected on range standard deviation
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'P' / construct.Int32ul,
+                     'L' / construct.Struct(CarrierPhase._parser),
+                     'lock' / construct.Int8ul,
+                     'flags' / construct.Int8ul,
+                     'sid' / construct.Struct(GnssSignal._parser),
+                     'iono_std' / construct.Int16ul,
+                     'tropo_std' / construct.Int16ul,
+                     'range_std' / construct.Int16ul,))
+  __slots__ = [
+               'P',
+               'L',
+               'lock',
+               'flags',
+               'sid',
+               'iono_std',
+               'tropo_std',
+               'range_std',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.P = kwargs.pop('P')
+      self.L = kwargs.pop('L')
+      self.lock = kwargs.pop('lock')
+      self.flags = kwargs.pop('flags')
+      self.sid = kwargs.pop('sid')
+      self.iono_std = kwargs.pop('iono_std')
+      self.tropo_std = kwargs.pop('tropo_std')
+      self.range_std = kwargs.pop('range_std')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = PackedOsrContent._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return PackedOsrContent.build(d)
+    
 class EphemerisCommonContent(object):
   """EphemerisCommonContent.
   
@@ -5857,6 +5935,103 @@ that the device does have ephemeris or almanac for.
     d.update(j)
     return d
     
+SBP_MSG_OSR = 0x0640
+class MsgOsr(SBP):
+  """SBP class for message MSG_OSR (0x0640).
+
+  You can have MSG_OSR inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The OSR message contains network corrections in an observation-like format
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : ObservationHeader
+    Header of a GPS observation message
+  obs : array
+    Network correction for a
+satellite signal.
+
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / construct.Struct(ObservationHeader._parser),
+                   construct.GreedyRange('obs' / construct.Struct(PackedOsrContent._parser)),)
+  __slots__ = [
+               'header',
+               'obs',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgOsr,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgOsr, self).__init__()
+      self.msg_type = SBP_MSG_OSR
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.obs = kwargs.pop('obs')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgOsr.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgOsr(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgOsr._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgOsr._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgOsr._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgOsr, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x004A: MsgObs,
@@ -5894,4 +6069,5 @@ msg_classes = {
   0x0073: MsgAlmanacGlo,
   0x0075: MsgGloBiases,
   0x0097: MsgSvAzEl,
+  0x0640: MsgOsr,
 }

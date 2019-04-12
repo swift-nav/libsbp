@@ -146,6 +146,57 @@ PackedObsContent.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 PackedObsContent.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 
 /**
+ * SBP class for message fragment PackedOsrContent
+ *
+ * Pseudorange and carrier phase network corrections for a satellite signal.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field P number (unsigned 32-bit int, 4 bytes) Pseudorange observation
+ * @field L CarrierPhase Carrier phase observation with typical sign convention.
+ * @field lock number (unsigned 8-bit int, 1 byte) Lock timer. This value gives an indication of the time for which a signal has
+ *   maintained continuous phase lock. Whenever a signal has lost and regained lock,
+ *   this value is reset to zero. It is encoded according to DF402 from the RTCM
+ *   10403.2 Amendment 2 specification.  Valid values range from 0 to 15 and the most
+ *   significant nibble is reserved for future use.
+ * @field flags number (unsigned 8-bit int, 1 byte) Correction flags.
+ * @field sid GnssSignal GNSS signal identifier (16 bit)
+ * @field iono_std number (unsigned 16-bit int, 2 bytes) Slant ionospheric correction standard deviation
+ * @field tropo_std number (unsigned 16-bit int, 2 bytes) Slant tropospheric correction standard deviation
+ * @field range_std number (unsigned 16-bit int, 2 bytes) Orbit/clock/bias correction projected on range standard deviation
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var PackedOsrContent = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "PackedOsrContent";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+PackedOsrContent.prototype = Object.create(SBP.prototype);
+PackedOsrContent.prototype.messageType = "PackedOsrContent";
+PackedOsrContent.prototype.constructor = PackedOsrContent;
+PackedOsrContent.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('P')
+  .nest('L', { type: CarrierPhase.prototype.parser })
+  .uint8('lock')
+  .uint8('flags')
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .uint16('iono_std')
+  .uint16('tropo_std')
+  .uint16('range_std');
+PackedOsrContent.prototype.fieldSpec = [];
+PackedOsrContent.prototype.fieldSpec.push(['P', 'writeUInt32LE', 4]);
+PackedOsrContent.prototype.fieldSpec.push(['L', CarrierPhase.prototype.fieldSpec]);
+PackedOsrContent.prototype.fieldSpec.push(['lock', 'writeUInt8', 1]);
+PackedOsrContent.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+PackedOsrContent.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+PackedOsrContent.prototype.fieldSpec.push(['iono_std', 'writeUInt16LE', 2]);
+PackedOsrContent.prototype.fieldSpec.push(['tropo_std', 'writeUInt16LE', 2]);
+PackedOsrContent.prototype.fieldSpec.push(['range_std', 'writeUInt16LE', 2]);
+
+/**
  * SBP class for message MSG_OBS (0x004A).
  *
  * The GPS observations message reports all the raw pseudorange and carrier phase
@@ -2667,10 +2718,41 @@ MsgSvAzEl.prototype.parser = new Parser()
 MsgSvAzEl.prototype.fieldSpec = [];
 MsgSvAzEl.prototype.fieldSpec.push(['azel', 'array', SvAzEl.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
+/**
+ * SBP class for message MSG_OSR (0x0640).
+ *
+ * The OSR message contains network corrections in an observation-like format
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field header ObservationHeader Header of a GPS observation message
+ * @field obs array Network correction for a satellite signal.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgOsr = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_OSR";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgOsr.prototype = Object.create(SBP.prototype);
+MsgOsr.prototype.messageType = "MSG_OSR";
+MsgOsr.prototype.msg_type = 0x0640;
+MsgOsr.prototype.constructor = MsgOsr;
+MsgOsr.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('header', { type: ObservationHeader.prototype.parser })
+  .array('obs', { type: PackedOsrContent.prototype.parser, readUntil: 'eof' });
+MsgOsr.prototype.fieldSpec = [];
+MsgOsr.prototype.fieldSpec.push(['header', ObservationHeader.prototype.fieldSpec]);
+MsgOsr.prototype.fieldSpec.push(['obs', 'array', PackedOsrContent.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
 module.exports = {
   ObservationHeader: ObservationHeader,
   Doppler: Doppler,
   PackedObsContent: PackedObsContent,
+  PackedOsrContent: PackedOsrContent,
   0x004A: MsgObs,
   MsgObs: MsgObs,
   0x0044: MsgBasePosLlh,
@@ -2753,4 +2835,6 @@ module.exports = {
   SvAzEl: SvAzEl,
   0x0097: MsgSvAzEl,
   MsgSvAzEl: MsgSvAzEl,
+  0x0640: MsgOsr,
+  MsgOsr: MsgOsr,
 }

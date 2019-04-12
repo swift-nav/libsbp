@@ -121,6 +121,7 @@ import com.swiftnav.sbp.observation.MsgAlmanacGloDep;
 import com.swiftnav.sbp.observation.MsgAlmanacGlo;
 import com.swiftnav.sbp.observation.MsgGloBiases;
 import com.swiftnav.sbp.observation.MsgSvAzEl;
+import com.swiftnav.sbp.observation.MsgOsr;
 import com.swiftnav.sbp.orientation.MsgBaselineHeading;
 import com.swiftnav.sbp.orientation.MsgOrientQuat;
 import com.swiftnav.sbp.orientation.MsgOrientEuler;
@@ -398,6 +399,8 @@ final class MessageTable {
                 return new MsgGloBiases(msg);
             case MsgSvAzEl.TYPE:
                 return new MsgSvAzEl(msg);
+            case MsgOsr.TYPE:
+                return new MsgOsr(msg);
             case MsgBaselineHeading.TYPE:
                 return new MsgBaselineHeading(msg);
             case MsgOrientQuat.TYPE:
