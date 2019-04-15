@@ -30,6 +30,9 @@ matrix:
         - sudo apt-get install python2.7 python2.7-dev
         - sudo apt-get install python3.5 python3.5-dev
         - sudo pip install tox
+        - git clone https://github.com/swift-nav/piksi_tools.git ../piksi_tools
+        - git -C ../piksi_tools fetch
+        - git -C ../piksi_tools checkout silverjam/sbp2json
       script: make test-python
     - env:
         - TRAVIS_TARGET=default JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
