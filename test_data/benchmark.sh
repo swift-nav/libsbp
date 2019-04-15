@@ -4,6 +4,8 @@ if [ "$#" -ne 1 ]; then
     exit 0
 fi
 
+set -e
+
 TESTDATA_ROOT=$(git rev-parse --show-toplevel)/test_data
 echo "Running benchmark, please wait.."
 # http://mywiki.wooledge.org/BashFAQ/032

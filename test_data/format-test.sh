@@ -4,6 +4,8 @@ if [ "$#" -ne 1 ]; then
     exit 0
 fi
 
+set -e
+
 TESTDATA_ROOT=$(git rev-parse --show-toplevel)/test_data
 PYTHONPATH=$TESTDATA_ROOT/../python/ \
     python $TESTDATA_ROOT/../../piksi_tools/piksi_tools/sbp2json.py \
