@@ -14,7 +14,7 @@ time_py=$(TIMEFORMAT="%R"; { time PYTHONPATH=$TESTDATA_ROOT/../python/ \
     < $TESTDATA_ROOT/long.sbp --mode ujson > $TESTDATA_ROOT/long_py.json; } 2>&1)
 echo "Python" $time_py
 time_hs=$(TIMEFORMAT="%R"; { time \
-    $TESTDATA_ROOT/../haskell/.stack-work/install/x86_64-linux/lts-10.10/8.2.2/bin/sbp2json \
+    $(find $TESTDATA_ROOT/../haskell/.stack-work/install -name sbp2json) \
     < $TESTDATA_ROOT/long.sbp > $TESTDATA_ROOT/long_hask.json; } 2>&1)
 echo "Haskell" $time_hs
 
