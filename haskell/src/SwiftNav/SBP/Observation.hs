@@ -139,6 +139,58 @@ instance Binary PackedObsContent where
 $(makeJSON "_packedObsContent_" ''PackedObsContent)
 $(makeLenses ''PackedObsContent)
 
+-- | PackedOsrContent.
+--
+-- Pseudorange and carrier phase network corrections for a satellite signal.
+data PackedOsrContent = PackedOsrContent
+  { _packedOsrContent_P       :: !Word32
+    -- ^ Pseudorange observation
+  , _packedOsrContent_L       :: !CarrierPhase
+    -- ^ Carrier phase observation with typical sign convention.
+  , _packedOsrContent_lock    :: !Word8
+    -- ^ Lock timer. This value gives an indication of the time for which a
+    -- signal has maintained continuous phase lock. Whenever a signal has lost
+    -- and regained lock, this value is reset to zero. It is encoded according
+    -- to DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values
+    -- range from 0 to 15 and the most significant nibble is reserved for
+    -- future use.
+  , _packedOsrContent_flags   :: !Word8
+    -- ^ Correction flags.
+  , _packedOsrContent_sid     :: !GnssSignal
+    -- ^ GNSS signal identifier (16 bit)
+  , _packedOsrContent_iono_std :: !Word16
+    -- ^ Slant ionospheric correction standard deviation
+  , _packedOsrContent_tropo_std :: !Word16
+    -- ^ Slant tropospheric correction standard deviation
+  , _packedOsrContent_range_std :: !Word16
+    -- ^ Orbit/clock/bias correction projected on range standard deviation
+  } deriving ( Show, Read, Eq )
+
+instance Binary PackedOsrContent where
+  get = do
+    _packedOsrContent_P <- getWord32le
+    _packedOsrContent_L <- get
+    _packedOsrContent_lock <- getWord8
+    _packedOsrContent_flags <- getWord8
+    _packedOsrContent_sid <- get
+    _packedOsrContent_iono_std <- getWord16le
+    _packedOsrContent_tropo_std <- getWord16le
+    _packedOsrContent_range_std <- getWord16le
+    pure PackedOsrContent {..}
+
+  put PackedOsrContent {..} = do
+    putWord32le _packedOsrContent_P
+    put _packedOsrContent_L
+    putWord8 _packedOsrContent_lock
+    putWord8 _packedOsrContent_flags
+    put _packedOsrContent_sid
+    putWord16le _packedOsrContent_iono_std
+    putWord16le _packedOsrContent_tropo_std
+    putWord16le _packedOsrContent_range_std
+
+$(makeJSON "_packedOsrContent_" ''PackedOsrContent)
+$(makeLenses ''PackedOsrContent)
+
 msgObs :: Word16
 msgObs = 0x004A
 
@@ -2838,3 +2890,30 @@ instance Binary MsgSvAzEl where
 $(makeSBP 'msgSvAzEl ''MsgSvAzEl)
 $(makeJSON "_msgSvAzEl_" ''MsgSvAzEl)
 $(makeLenses ''MsgSvAzEl)
+
+msgOsr :: Word16
+msgOsr = 0x0640
+
+-- | SBP class for message MSG_OSR (0x0640).
+--
+-- The OSR message contains network corrections in an observation-like format
+data MsgOsr = MsgOsr
+  { _msgOsr_header :: !ObservationHeader
+    -- ^ Header of a GPS observation message
+  , _msgOsr_obs  :: ![PackedOsrContent]
+    -- ^ Network correction for a satellite signal.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgOsr where
+  get = do
+    _msgOsr_header <- get
+    _msgOsr_obs <- whileM (not <$> isEmpty) get
+    pure MsgOsr {..}
+
+  put MsgOsr {..} = do
+    put _msgOsr_header
+    mapM_ put _msgOsr_obs
+
+$(makeSBP 'msgOsr ''MsgOsr)
+$(makeJSON "_msgOsr_" ''MsgOsr)
+$(makeLenses ''MsgOsr)

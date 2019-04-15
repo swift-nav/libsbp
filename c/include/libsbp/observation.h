@@ -85,6 +85,29 @@ estimate for the signal is valid.
 } packed_obs_content_t;
 
 
+/** Network correction for a particular satellite signal.
+ *
+ * Pseudorange and carrier phase network corrections for a satellite signal.
+ */
+typedef struct SBP_ATTR_PACKED {
+  u32 P;            /**< Pseudorange observation [2 cm] */
+  carrier_phase_t L;            /**< Carrier phase observation with typical sign convention. [cycles] */
+  u8 lock;         /**< Lock timer. This value gives an indication of the time
+for which a signal has maintained continuous phase lock.
+Whenever a signal has lost and regained lock, this
+value is reset to zero. It is encoded according to DF402 from
+the RTCM 10403.2 Amendment 2 specification.  Valid values range
+from 0 to 15 and the most significant nibble is reserved for future use.
+ */
+  u8 flags;        /**< Correction flags.
+ */
+  sbp_gnss_signal_t sid;          /**< GNSS signal identifier (16 bit) */
+  u16 iono_std;     /**< Slant ionospheric correction standard deviation [5 mm] */
+  u16 tropo_std;    /**< Slant tropospheric correction standard deviation [5 mm] */
+  u16 range_std;    /**< Orbit/clock/bias correction projected on range standard deviation [5 mm] */
+} packed_osr_content_t;
+
+
 /** GPS satellite observations
  *
  * The GPS observations message reports all the raw pseudorange and
@@ -1066,6 +1089,19 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   sv_az_el_t azel[0]; /**< Azimuth and elevation per satellite */
 } msg_sv_az_el_t;
+
+
+/** OSR corrections
+ *
+ * The OSR message contains network corrections in an observation-like format
+ */
+#define SBP_MSG_OSR                      0x0640
+typedef struct SBP_ATTR_PACKED {
+  observation_header_t header;    /**< Header of a GPS observation message */
+  packed_osr_content_t obs[0];    /**< Network correction for a
+satellite signal.
+ */
+} msg_osr_t;
 
 
 /** \} */
