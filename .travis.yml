@@ -38,6 +38,7 @@ matrix:
         pushd haskell
         docker build -t sbp2json .
         docker run --rm --name sbp2json sbp2json >sbp_linux_tools.tar
+        tar xf sbp_linux_tools.tar
         gzip sbp_linux_tools.tar
         ls -l
         popd

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 if [ "$#" -ne 1 ]; then
-    echo "Skipping format-test.sh, enable with --enable"
+    echo "Skipping format-test.sh, enable by providing a full path to Haskell SBP tools"
     exit 0
 fi
 
@@ -20,7 +20,7 @@ PYTHONPATH=$TESTDATA_ROOT/../python/ \
     < $INPUT_SHORT --mode json --sort-keys --float-meta > $OUTPUT_SHORT_PY
 
 if [ ! -f $OUTPUT_SHORT_HS ]; then
-  $(find $TESTDATA_ROOT/../haskell/.stack-work/install -name sbp2prettyjson) < $INPUT_SHORT > $OUTPUT_SHORT_HS
+  $1/sbp2prettyjson < $INPUT_SHORT > $OUTPUT_SHORT_HS
 fi
 
 diff $OUTPUT_SHORT_HS $OUTPUT_SHORT_PY || exit 1
@@ -32,7 +32,7 @@ PYTHONPATH=$TESTDATA_ROOT/../python/ \
     < $INPUT_LONG --mode json --sort-keys --float-meta > $OUTPUT_LONG_PY
 
 if [ ! -f $OUTPUT_LONG_HS ]; then
-  $(find $TESTDATA_ROOT/../haskell/.stack-work/install -name sbp2prettyjson) < $INPUT_LONG > $OUTPUT_LONG_HS
+  $1/sbp2prettyjson < $INPUT_LONG > $OUTPUT_LONG_HS
 fi
 
 diff $OUTPUT_LONG_HS $OUTPUT_LONG_PY || exit 1

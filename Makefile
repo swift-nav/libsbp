@@ -216,7 +216,7 @@ test-c:
 test-python:
 	$(call announce-begin,"Running Python tests")
 ifdef TRAVIS_TARGET
-	cd $(SWIFTNAV_ROOT)/python/ && tox -- --enable-format-benchmark
+	cd $(SWIFTNAV_ROOT)/python/ && tox -- $(SWIFTNAV_ROOT)/haskell
 else
 	cd $(SWIFTNAV_ROOT)/python/ && tox --skip-missing-interpreters
 endif

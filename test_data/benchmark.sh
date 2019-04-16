@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 if [ "$#" -ne 1 ]; then
-    echo "Skipping benchmark.sh, enable with --enable"
+    echo "Skipping benchmark.sh, enable by providing a full path to Haskell SBP tools"
     exit 0
 fi
 
@@ -8,14 +8,14 @@ set -e
 
 TESTDATA_ROOT=$(git rev-parse --show-toplevel)/test_data
 echo "Running benchmark, please wait.."
+
 # http://mywiki.wooledge.org/BashFAQ/032
 time_py=$(TIMEFORMAT="%R"; { time PYTHONPATH=$TESTDATA_ROOT/../python/ \
     python $TESTDATA_ROOT/../../piksi_tools/piksi_tools/sbp2json.py \
     < $TESTDATA_ROOT/long.sbp --mode ujson > $TESTDATA_ROOT/long_py.json; } 2>&1)
 echo "Python" $time_py
-time_hs=$(TIMEFORMAT="%R"; { time \
-    $(find $TESTDATA_ROOT/../haskell/.stack-work/install -name sbp2json) \
-    < $TESTDATA_ROOT/long.sbp > $TESTDATA_ROOT/long_hask.json; } 2>&1)
+
+time_hs=$(TIMEFORMAT="%R"; { time $1/sbp2json < $TESTDATA_ROOT/long.sbp > $TESTDATA_ROOT/long_hask.json; } 2>&1)
 echo "Haskell" $time_hs
 
 threshold=2.0
