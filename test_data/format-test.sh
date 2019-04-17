@@ -17,7 +17,7 @@ OUTPUT_LONG_PY=$TESTDATA_ROOT/long_py_pretty.json
 
 PYTHONPATH=$TESTDATA_ROOT/../python/ \
     python $TESTDATA_ROOT/../../piksi_tools/piksi_tools/sbp2json.py \
-    < $INPUT_SHORT --mode json --sort-keys --float-meta > $OUTPUT_SHORT_PY
+    < $INPUT_SHORT --mode json --sort-keys --judicious-rounding > $OUTPUT_SHORT_PY
 
 if [ ! -f $OUTPUT_SHORT_HS ]; then
   $1/sbp2prettyjson < $INPUT_SHORT > $OUTPUT_SHORT_HS
@@ -29,7 +29,7 @@ echo -e "Sanity check \e[32mOK\e[0m, please wait for format test.."
 
 PYTHONPATH=$TESTDATA_ROOT/../python/ \
     python $TESTDATA_ROOT/../../piksi_tools/piksi_tools/sbp2json.py \
-    < $INPUT_LONG --mode json --sort-keys --float-meta > $OUTPUT_LONG_PY
+    < $INPUT_LONG --mode json --sort-keys --judicious-rounding > $OUTPUT_LONG_PY
 
 if [ ! -f $OUTPUT_LONG_HS ]; then
   $1/sbp2prettyjson < $INPUT_LONG > $OUTPUT_LONG_HS
