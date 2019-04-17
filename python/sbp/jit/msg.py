@@ -12,6 +12,8 @@
 
 from pybase64 import standard_b64encode
 
+import decimal as dec
+
 import numpy as np
 import numba as nb
 
@@ -160,6 +162,15 @@ def _get_string(buf_in, offset, length, check_null):
         return buf_out[:i], offset + i, i
 
 
+def judicious_round(f):
+    # Let numpy's judicious rounding tell us the amount of digits we
+    # want as it seems to align with Haskell's output
+    d = dec.Decimal(np.format_float_positional(f, precision=None, unique=True, trim='0'))
+    # Round it using correct rounding strategy and return it as native float
+    # NOTE: Can't this be done already on libsbp side?
+    return float(round(dec.Decimal(float(f)), abs(d.as_tuple().exponent)))
+
+
 def get_string(buf, offset, length):
     buf, offset, length = _get_string(buf, offset, length, True)
     return buf.tobytes().decode('ascii'), offset, length
@@ -203,7 +214,7 @@ def get_fixed_array(getter, count, el_size, nb_type=None):
             o_1, (res, offset, length) = offset, getter(buf, offset, length)
             if o_1 == offset:
                 return [], offset_start, length
-            arr.append(nb_type(res) if nb_type else res)
+            arr.append(judicious_round(nb_type(res)) if nb_type else res)
             total_size -= el_size
         return arr, offset, length
     return func
@@ -212,10 +223,17 @@ def get_fixed_array(getter, count, el_size, nb_type=None):
 class SBP(object):
     """Swift Binary Protocol container.  """
 
-    # Class variable for controlling whether floating point variables should be
-    # stored in numba.float32/64 format or native Python float. This affects
-    # the rounding and string representation.
-    float_meta = False
+    # Class variable for controlling the rounding.
+    # False: Only Python native float context will be used, this is faster
+    #        but does not distuingish 32 and 64 bit floats. In practise this
+    #        means that 32 bit float value reprentations will have higher
+    #        precision than they actually have.
+    # True:  Floating point values are handled internally as numpy.float32 and
+    #        numpy.float64. This is slower but doesn't add arbitrary precision
+    #        to the 32 bit values. In practise only 32 bit values are rounded
+    #        as the effect of rounding 64 bit values is lost immediately when
+    #        stored back to Python native float.
+    judicious_rounding = False
 
     __slots__ = ['preamble',
                  'msg_type',

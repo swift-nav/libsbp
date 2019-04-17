@@ -80,8 +80,9 @@ def is_array():
 
 
 def numba_type(f):
-  if f.type_id == 'float' or f.type_id == 'double':
-    return 'nb.' + NUMBA_TYPE[f.type_id] + '(__' + f.identifier + ') if SBP.float_meta else __' + f.identifier
+  if f.type_id == 'float':
+    return 'judicious_round(nb.' + NUMBA_TYPE[f.type_id] + \
+      '(__' + f.identifier + ')) if SBP.judicious_rounding else __' + f.identifier
   else:
     return '__' + f.identifier
 
@@ -128,11 +129,9 @@ def numba_format(f):
     if t in NUMBA_GET_FN:
       fill_func = NUMBA_GET_FN[t]
       el_size = NUMBA_TY_BYTES[t]
-      # TODO clean..
       if f.options['fill'].value == 'float':
-        return "get_fixed_array(%s, %d, %d, %s if SBP.float_meta else None)" % (fill_func, count, el_size, 'nb.f4')
-      elif f.options['fill'].value == 'double':
-        return "get_fixed_array(%s, %d, %d, %s if SBP.float_meta else None)" % (fill_func, count, el_size, 'nb.f8')
+        return "get_fixed_array(%s, %d, %d, %s if SBP.judicious_rounding else None)" \
+          % (fill_func, count, el_size, 'nb.f4')
       else:
         return "get_fixed_array(%s, %d, %d)" % (fill_func, count, el_size)
     else:
