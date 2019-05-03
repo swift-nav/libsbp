@@ -103,3 +103,40 @@ message MsgSsrPhaseBiases {
     sint32 yaw_rate = 8;
     repeated PhaseBiasesContent biases = 9;
 }
+
+/** Precise orbit correction
+ *
+ * The precise orbit correction message is to be applied 
+ * as a delta correction to broadcast ephemeris and is 
+ * typically an equivalent to the 1057 RTCM message types
+ */
+message MsgSsrOrbit {
+    gnss.GpsTimeSec time = 1;
+    gnss.GnssSignal sid = 2;
+    uint32 update_interval = 3;
+    uint32 iod_ssr = 4;
+    uint32 iod = 5;
+    sint32 radial = 6;
+    sint32 along = 7;
+    sint32 cross = 8;
+    sint32 dot_radial = 9;
+    sint32 dot_along = 10;
+    sint32 dot_cross = 11;
+}
+
+/** Precise clock correction
+ *
+ * The precise clock correction message is to be applied 
+ * as a delta correction to broadcast ephemeris and is 
+ * typically an equivalent to the 1058 RTCM message types
+ */
+message MsgSsrClock {
+    gnss.GpsTimeSec time = 1;
+    gnss.GnssSignal sid = 2;
+    uint32 update_interval = 3;
+    uint32 iod_ssr = 4;
+    uint32 iod = 5;
+    sint32 c0 = 6;
+    sint32 c1 = 7;
+    sint32 c2 = 8;
+}

@@ -354,3 +354,123 @@ instance Binary MsgSsrPhaseBiases where
 $(makeSBP 'msgSsrPhaseBiases ''MsgSsrPhaseBiases)
 $(makeJSON "_msgSsrPhaseBiases_" ''MsgSsrPhaseBiases)
 $(makeLenses ''MsgSsrPhaseBiases)
+
+msgSsrOrbit :: Word16
+msgSsrOrbit = 0x05DB
+
+-- | SBP class for message MSG_SSR_ORBIT (0x05DB).
+--
+-- The precise orbit correction message is to be applied  as a delta correction
+-- to broadcast ephemeris and is  typically an equivalent to the 1057 RTCM
+-- message types
+data MsgSsrOrbit = MsgSsrOrbit
+  { _msgSsrOrbit_time          :: !GpsTimeSec
+    -- ^ GNSS reference time of the correction
+  , _msgSsrOrbit_sid           :: !GnssSignal
+    -- ^ GNSS signal identifier (16 bit)
+  , _msgSsrOrbit_update_interval :: !Word8
+    -- ^ Update interval between consecutive corrections
+  , _msgSsrOrbit_iod_ssr       :: !Word8
+    -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    -- indicate a change in the SSR  generating configuration
+  , _msgSsrOrbit_iod           :: !Word32
+    -- ^ Issue of broadcast ephemeris data or IODCRC (Beidou)
+  , _msgSsrOrbit_radial        :: !Int32
+    -- ^ Orbit radial delta correction
+  , _msgSsrOrbit_along         :: !Int32
+    -- ^ Orbit along delta correction
+  , _msgSsrOrbit_cross         :: !Int32
+    -- ^ Orbit along delta correction
+  , _msgSsrOrbit_dot_radial    :: !Int32
+    -- ^ Velocity of orbit radial delta correction
+  , _msgSsrOrbit_dot_along     :: !Int32
+    -- ^ Velocity of orbit along delta correction
+  , _msgSsrOrbit_dot_cross     :: !Int32
+    -- ^ Velocity of orbit cross delta correction
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrOrbit where
+  get = do
+    _msgSsrOrbit_time <- get
+    _msgSsrOrbit_sid <- get
+    _msgSsrOrbit_update_interval <- getWord8
+    _msgSsrOrbit_iod_ssr <- getWord8
+    _msgSsrOrbit_iod <- getWord32le
+    _msgSsrOrbit_radial <- fromIntegral <$> getWord32le
+    _msgSsrOrbit_along <- fromIntegral <$> getWord32le
+    _msgSsrOrbit_cross <- fromIntegral <$> getWord32le
+    _msgSsrOrbit_dot_radial <- fromIntegral <$> getWord32le
+    _msgSsrOrbit_dot_along <- fromIntegral <$> getWord32le
+    _msgSsrOrbit_dot_cross <- fromIntegral <$> getWord32le
+    pure MsgSsrOrbit {..}
+
+  put MsgSsrOrbit {..} = do
+    put _msgSsrOrbit_time
+    put _msgSsrOrbit_sid
+    putWord8 _msgSsrOrbit_update_interval
+    putWord8 _msgSsrOrbit_iod_ssr
+    putWord32le _msgSsrOrbit_iod
+    (putWord32le . fromIntegral) _msgSsrOrbit_radial
+    (putWord32le . fromIntegral) _msgSsrOrbit_along
+    (putWord32le . fromIntegral) _msgSsrOrbit_cross
+    (putWord32le . fromIntegral) _msgSsrOrbit_dot_radial
+    (putWord32le . fromIntegral) _msgSsrOrbit_dot_along
+    (putWord32le . fromIntegral) _msgSsrOrbit_dot_cross
+
+$(makeSBP 'msgSsrOrbit ''MsgSsrOrbit)
+$(makeJSON "_msgSsrOrbit_" ''MsgSsrOrbit)
+$(makeLenses ''MsgSsrOrbit)
+
+msgSsrClock :: Word16
+msgSsrClock = 0x05DA
+
+-- | SBP class for message MSG_SSR_CLOCK (0x05DA).
+--
+-- The precise clock correction message is to be applied  as a delta correction
+-- to broadcast ephemeris and is  typically an equivalent to the 1058 RTCM
+-- message types
+data MsgSsrClock = MsgSsrClock
+  { _msgSsrClock_time          :: !GpsTimeSec
+    -- ^ GNSS reference time of the correction
+  , _msgSsrClock_sid           :: !GnssSignal
+    -- ^ GNSS signal identifier (16 bit)
+  , _msgSsrClock_update_interval :: !Word8
+    -- ^ Update interval between consecutive corrections
+  , _msgSsrClock_iod_ssr       :: !Word8
+    -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    -- indicate a change in the SSR  generating configuration
+  , _msgSsrClock_iod           :: !Word32
+    -- ^ Issue of broadcast ephemeris data or IODCRC (Beidou)
+  , _msgSsrClock_c0            :: !Int32
+    -- ^ C0 polynomial coefficient for correction of broadcast satellite clock
+  , _msgSsrClock_c1            :: !Int32
+    -- ^ C1 polynomial coefficient for correction of broadcast satellite clock
+  , _msgSsrClock_c2            :: !Int32
+    -- ^ C2 polynomial coefficient for correction of broadcast satellite clock
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrClock where
+  get = do
+    _msgSsrClock_time <- get
+    _msgSsrClock_sid <- get
+    _msgSsrClock_update_interval <- getWord8
+    _msgSsrClock_iod_ssr <- getWord8
+    _msgSsrClock_iod <- getWord32le
+    _msgSsrClock_c0 <- fromIntegral <$> getWord32le
+    _msgSsrClock_c1 <- fromIntegral <$> getWord32le
+    _msgSsrClock_c2 <- fromIntegral <$> getWord32le
+    pure MsgSsrClock {..}
+
+  put MsgSsrClock {..} = do
+    put _msgSsrClock_time
+    put _msgSsrClock_sid
+    putWord8 _msgSsrClock_update_interval
+    putWord8 _msgSsrClock_iod_ssr
+    putWord32le _msgSsrClock_iod
+    (putWord32le . fromIntegral) _msgSsrClock_c0
+    (putWord32le . fromIntegral) _msgSsrClock_c1
+    (putWord32le . fromIntegral) _msgSsrClock_c2
+
+$(makeSBP 'msgSsrClock ''MsgSsrClock)
+$(makeJSON "_msgSsrClock_" ''MsgSsrClock)
+$(makeLenses ''MsgSsrClock)

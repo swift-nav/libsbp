@@ -164,6 +164,53 @@ satellite being tracked.
 } msg_ssr_phase_biases_t;
 
 
+/** Precise orbit correction
+ *
+ * The precise orbit correction message is to be applied 
+ * as a delta correction to broadcast ephemeris and is 
+ * typically an equivalent to the 1057 RTCM message types
+ */
+#define SBP_MSG_SSR_ORBIT             0x05DB
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t time;               /**< GNSS reference time of the correction */
+  sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
+  u8 update_interval;    /**< Update interval between consecutive corrections [s] */
+  u8 iod_ssr;            /**< IOD of the SSR correction. A change of Issue Of Data
+SSR is used to indicate a change in the SSR 
+generating configuration
+ */
+  u32 iod;                /**< Issue of broadcast ephemeris data or IODCRC (Beidou) */
+  s32 radial;             /**< Orbit radial delta correction [0.1 mm] */
+  s32 along;              /**< Orbit along delta correction [0.4 mm] */
+  s32 cross;              /**< Orbit along delta correction [0.4 mm] */
+  s32 dot_radial;         /**< Velocity of orbit radial delta correction [0.001 mm/s] */
+  s32 dot_along;          /**< Velocity of orbit along delta correction [0.004 mm/s] */
+  s32 dot_cross;          /**< Velocity of orbit cross delta correction [0.004 mm/s] */
+} msg_ssr_orbit_t;
+
+
+/** Precise clock correction
+ *
+ * The precise clock correction message is to be applied 
+ * as a delta correction to broadcast ephemeris and is 
+ * typically an equivalent to the 1058 RTCM message types
+ */
+#define SBP_MSG_SSR_CLOCK             0x05DA
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t time;               /**< GNSS reference time of the correction */
+  sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
+  u8 update_interval;    /**< Update interval between consecutive corrections [s] */
+  u8 iod_ssr;            /**< IOD of the SSR correction. A change of Issue Of Data
+SSR is used to indicate a change in the SSR 
+generating configuration
+ */
+  u32 iod;                /**< Issue of broadcast ephemeris data or IODCRC (Beidou) */
+  s32 c0;                 /**< C0 polynomial coefficient for correction of broadcast satellite clock [0.1 mm] */
+  s32 c1;                 /**< C1 polynomial coefficient for correction of broadcast satellite clock [0.001 mm/s] */
+  s32 c2;                 /**< C2 polynomial coefficient for correction of broadcast satellite clock [0.00002 mm/s^-2] */
+} msg_ssr_clock_t;
+
+
 /** \} */
 
 SBP_PACK_END

@@ -166,6 +166,8 @@ import com.swiftnav.sbp.ssr.MsgSsrOrbitClock;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClockDepA;
 import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
 import com.swiftnav.sbp.ssr.MsgSsrPhaseBiases;
+import com.swiftnav.sbp.ssr.MsgSsrOrbit;
+import com.swiftnav.sbp.ssr.MsgSsrClock;
 import com.swiftnav.sbp.system.MsgStartup;
 import com.swiftnav.sbp.system.MsgDgnssStatus;
 import com.swiftnav.sbp.system.MsgHeartbeat;
@@ -489,6 +491,10 @@ final class MessageTable {
                 return new MsgSsrCodeBiases(msg);
             case MsgSsrPhaseBiases.TYPE:
                 return new MsgSsrPhaseBiases(msg);
+            case MsgSsrOrbit.TYPE:
+                return new MsgSsrOrbit(msg);
+            case MsgSsrClock.TYPE:
+                return new MsgSsrClock(msg);
             case MsgStartup.TYPE:
                 return new MsgStartup(msg);
             case MsgDgnssStatus.TYPE:

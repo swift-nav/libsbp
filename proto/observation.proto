@@ -62,6 +62,21 @@ message PackedObsContent {
     gnss.GnssSignal sid = 7;
 }
 
+/** Network correction for a particular satellite signal.
+ *
+ * Pseudorange and carrier phase network corrections for a satellite signal.
+ */
+message PackedOsrContent {
+    uint32 P = 1;
+    gnss.CarrierPhase L = 2;
+    uint32 lock = 3;
+    uint32 flags = 4;
+    gnss.GnssSignal sid = 5;
+    uint32 iono_std = 6;
+    uint32 tropo_std = 7;
+    uint32 range_std = 8;
+}
+
 /** GPS satellite observations
  *
  * The GPS observations message reports all the raw pseudorange and
@@ -399,4 +414,13 @@ message SvAzEl {
  */
 message MsgSvAzEl {
     repeated SvAzEl azel = 1;
+}
+
+/** OSR corrections
+ *
+ * The OSR message contains network corrections in an observation-like format
+ */
+message MsgOsr {
+    ObservationHeader header = 1;
+    repeated PackedOsrContent obs = 2;
 }
