@@ -135,8 +135,7 @@ message MsgSsrClock {
     gnss.GnssSignal sid = 2;
     uint32 update_interval = 3;
     uint32 iod_ssr = 4;
-    uint32 iod = 5;
-    sint32 c0 = 6;
-    sint32 c1 = 7;
-    sint32 c2 = 8;
+    sint32 c0 = 5;
+    sint32 c1 = 6;
+    sint32 c2 = 7;
 }

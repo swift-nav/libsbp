@@ -344,9 +344,6 @@ definitions:
                 IOD of the SSR correction. A change of Issue Of Data
                 SSR is used to indicate a change in the SSR 
                 generating configuration
-        - iod:
-            type: u32
-            desc: Issue of broadcast ephemeris data or IODCRC (Beidou)
         - c0:
             type: s32
             units: 0.1 mm

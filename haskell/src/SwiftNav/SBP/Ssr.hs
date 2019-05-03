@@ -439,8 +439,6 @@ data MsgSsrClock = MsgSsrClock
   , _msgSsrClock_iod_ssr       :: !Word8
     -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
     -- indicate a change in the SSR  generating configuration
-  , _msgSsrClock_iod           :: !Word32
-    -- ^ Issue of broadcast ephemeris data or IODCRC (Beidou)
   , _msgSsrClock_c0            :: !Int32
     -- ^ C0 polynomial coefficient for correction of broadcast satellite clock
   , _msgSsrClock_c1            :: !Int32
@@ -455,7 +453,6 @@ instance Binary MsgSsrClock where
     _msgSsrClock_sid <- get
     _msgSsrClock_update_interval <- getWord8
     _msgSsrClock_iod_ssr <- getWord8
-    _msgSsrClock_iod <- getWord32le
     _msgSsrClock_c0 <- fromIntegral <$> getWord32le
     _msgSsrClock_c1 <- fromIntegral <$> getWord32le
     _msgSsrClock_c2 <- fromIntegral <$> getWord32le
@@ -466,7 +463,6 @@ instance Binary MsgSsrClock where
     put _msgSsrClock_sid
     putWord8 _msgSsrClock_update_interval
     putWord8 _msgSsrClock_iod_ssr
-    putWord32le _msgSsrClock_iod
     (putWord32le . fromIntegral) _msgSsrClock_c0
     (putWord32le . fromIntegral) _msgSsrClock_c1
     (putWord32le . fromIntegral) _msgSsrClock_c2

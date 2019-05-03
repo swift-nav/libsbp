@@ -204,7 +204,6 @@ typedef struct SBP_ATTR_PACKED {
 SSR is used to indicate a change in the SSR 
 generating configuration
  */
-  u32 iod;                /**< Issue of broadcast ephemeris data or IODCRC (Beidou) */
   s32 c0;                 /**< C0 polynomial coefficient for correction of broadcast satellite clock [0.1 mm] */
   s32 c1;                 /**< C1 polynomial coefficient for correction of broadcast satellite clock [0.001 mm/s] */
   s32 c2;                 /**< C2 polynomial coefficient for correction of broadcast satellite clock [0.00002 mm/s^-2] */

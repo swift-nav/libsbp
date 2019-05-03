@@ -881,8 +881,6 @@ typically an equivalent to the 1058 RTCM message types
 SSR is used to indicate a change in the SSR 
 generating configuration
 
-  iod : int
-    Issue of broadcast ephemeris data or IODCRC (Beidou)
   c0 : int
     C0 polynomial coefficient for correction of broadcast satellite clock
   c1 : int
@@ -898,7 +896,6 @@ generating configuration
                    'sid' / construct.Struct(GnssSignal._parser),
                    'update_interval' / construct.Int8ul,
                    'iod_ssr' / construct.Int8ul,
-                   'iod' / construct.Int32ul,
                    'c0' / construct.Int32sl,
                    'c1' / construct.Int32sl,
                    'c2' / construct.Int32sl,)
@@ -907,7 +904,6 @@ generating configuration
                'sid',
                'update_interval',
                'iod_ssr',
-               'iod',
                'c0',
                'c1',
                'c2',
@@ -927,7 +923,6 @@ generating configuration
       self.sid = kwargs.pop('sid')
       self.update_interval = kwargs.pop('update_interval')
       self.iod_ssr = kwargs.pop('iod_ssr')
-      self.iod = kwargs.pop('iod')
       self.c0 = kwargs.pop('c0')
       self.c1 = kwargs.pop('c1')
       self.c2 = kwargs.pop('c2')

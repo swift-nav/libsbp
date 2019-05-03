@@ -52,9 +52,6 @@ generating configuration
  */
     public int iod_ssr;
     
-    /** Issue of broadcast ephemeris data or IODCRC (Beidou) */
-    public long iod;
-    
     /** C0 polynomial coefficient for correction of broadcast satellite clock */
     public int c0;
     
@@ -79,7 +76,6 @@ generating configuration
         sid = new GnssSignal().parse(parser);
         update_interval = parser.getU8();
         iod_ssr = parser.getU8();
-        iod = parser.getU32();
         c0 = parser.getS32();
         c1 = parser.getS32();
         c2 = parser.getS32();
@@ -91,7 +87,6 @@ generating configuration
         sid.build(builder);
         builder.putU8(update_interval);
         builder.putU8(iod_ssr);
-        builder.putU32(iod);
         builder.putS32(c0);
         builder.putS32(c1);
         builder.putS32(c2);
@@ -104,7 +99,6 @@ generating configuration
         obj.put("sid", sid.toJSON());
         obj.put("update_interval", update_interval);
         obj.put("iod_ssr", iod_ssr);
-        obj.put("iod", iod);
         obj.put("c0", c0);
         obj.put("c1", c1);
         obj.put("c2", c2);

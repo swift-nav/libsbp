@@ -407,7 +407,6 @@ MsgSsrOrbit.prototype.fieldSpec.push(['dot_cross', 'writeInt32LE', 4]);
  * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections
  * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
  *   change in the SSR  generating configuration
- * @field iod number (unsigned 32-bit int, 4 bytes) Issue of broadcast ephemeris data or IODCRC (Beidou)
  * @field c0 number (signed 32-bit int, 4 bytes) C0 polynomial coefficient for correction of broadcast satellite clock
  * @field c1 number (signed 32-bit int, 4 bytes) C1 polynomial coefficient for correction of broadcast satellite clock
  * @field c2 number (signed 32-bit int, 4 bytes) C2 polynomial coefficient for correction of broadcast satellite clock
@@ -431,7 +430,6 @@ MsgSsrClock.prototype.parser = new Parser()
   .nest('sid', { type: GnssSignal.prototype.parser })
   .uint8('update_interval')
   .uint8('iod_ssr')
-  .uint32('iod')
   .int32('c0')
   .int32('c1')
   .int32('c2');
@@ -440,7 +438,6 @@ MsgSsrClock.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
 MsgSsrClock.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
 MsgSsrClock.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
 MsgSsrClock.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
-MsgSsrClock.prototype.fieldSpec.push(['iod', 'writeUInt32LE', 4]);
 MsgSsrClock.prototype.fieldSpec.push(['c0', 'writeInt32LE', 4]);
 MsgSsrClock.prototype.fieldSpec.push(['c1', 'writeInt32LE', 4]);
 MsgSsrClock.prototype.fieldSpec.push(['c2', 'writeInt32LE', 4]);
