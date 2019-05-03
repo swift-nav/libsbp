@@ -8,7 +8,11 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+import io
+
 from .base_driver import BaseDriver
+
+
 class FileDriver(BaseDriver):
     """
     BaseDriver
@@ -36,5 +40,25 @@ class FileDriver(BaseDriver):
             raise IOError
         else: 
             return return_val
+
+    def readinto(self, b):
+        """
+        Read into wrapper.
+
+        Parameters
+        ----------
+        b : buffer
+          Buffer to read into
+        """
+        read = self._reader.readinto(b)
+        if not read:
+            raise IOError
+        else: 
+            return read
+
     def __init__(self, fd):
         self.handle = fd
+        self._reader = io.open(fd.fileno(), 'rb')
+
+    def __del__(self):
+        self._reader.close()
