@@ -399,7 +399,7 @@ bootloader.
       super( MsgReset, self).__init__()
       self.msg_type = SBP_MSG_RESET
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.flags = kwargs.pop('flags')
+      self.flags = kwargs.pop('flags', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -630,7 +630,7 @@ Ambiguity Resolution (IAR) process.
       super( MsgResetFilters, self).__init__()
       self.msg_type = SBP_MSG_RESET_FILTERS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.filter = kwargs.pop('filter')
+      self.filter = kwargs.pop('filter', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -781,9 +781,9 @@ thread. The reported percentage values must be normalized.
       super( MsgThreadState, self).__init__()
       self.msg_type = SBP_MSG_THREAD_STATE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.name = kwargs.pop('name')
-      self.cpu = kwargs.pop('cpu')
-      self.stack_free = kwargs.pop('stack_free')
+      self.name = kwargs.pop('name', None)
+      self.cpu = kwargs.pop('cpu', None)
+      self.stack_free = kwargs.pop('stack_free', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -897,11 +897,11 @@ period indicates their likelihood of transmission.
       super( MsgUartState, self).__init__()
       self.msg_type = SBP_MSG_UART_STATE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.uart_a = kwargs.pop('uart_a')
-      self.uart_b = kwargs.pop('uart_b')
-      self.uart_ftdi = kwargs.pop('uart_ftdi')
-      self.latency = kwargs.pop('latency')
-      self.obs_period = kwargs.pop('obs_period')
+      self.uart_a = kwargs.pop('uart_a', None)
+      self.uart_b = kwargs.pop('uart_b', None)
+      self.uart_ftdi = kwargs.pop('uart_ftdi', None)
+      self.latency = kwargs.pop('latency', None)
+      self.obs_period = kwargs.pop('obs_period', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1002,10 +1002,10 @@ class MsgUartStateDepa(SBP):
       super( MsgUartStateDepa, self).__init__()
       self.msg_type = SBP_MSG_UART_STATE_DEPA
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.uart_a = kwargs.pop('uart_a')
-      self.uart_b = kwargs.pop('uart_b')
-      self.uart_ftdi = kwargs.pop('uart_ftdi')
-      self.latency = kwargs.pop('latency')
+      self.uart_a = kwargs.pop('uart_a', None)
+      self.uart_b = kwargs.pop('uart_b', None)
+      self.uart_ftdi = kwargs.pop('uart_ftdi', None)
+      self.latency = kwargs.pop('latency', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1098,7 +1098,7 @@ from satellite observations.
       super( MsgIarState, self).__init__()
       self.msg_type = SBP_MSG_IAR_STATE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.num_hyps = kwargs.pop('num_hyps')
+      self.num_hyps = kwargs.pop('num_hyps', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1193,8 +1193,8 @@ from being used in various Piksi subsystems.
       super( MsgMaskSatellite, self).__init__()
       self.msg_type = SBP_MSG_MASK_SATELLITE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.mask = kwargs.pop('mask')
-      self.sid = kwargs.pop('sid')
+      self.mask = kwargs.pop('mask', None)
+      self.sid = kwargs.pop('sid', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1287,8 +1287,8 @@ class MsgMaskSatelliteDep(SBP):
       super( MsgMaskSatelliteDep, self).__init__()
       self.msg_type = SBP_MSG_MASK_SATELLITE_DEP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.mask = kwargs.pop('mask')
-      self.sid = kwargs.pop('sid')
+      self.mask = kwargs.pop('mask', None)
+      self.sid = kwargs.pop('sid', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1396,11 +1396,11 @@ available.
       super( MsgDeviceMonitor, self).__init__()
       self.msg_type = SBP_MSG_DEVICE_MONITOR
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.dev_vin = kwargs.pop('dev_vin')
-      self.cpu_vint = kwargs.pop('cpu_vint')
-      self.cpu_vaux = kwargs.pop('cpu_vaux')
-      self.cpu_temperature = kwargs.pop('cpu_temperature')
-      self.fe_temperature = kwargs.pop('fe_temperature')
+      self.dev_vin = kwargs.pop('dev_vin', None)
+      self.cpu_vint = kwargs.pop('cpu_vint', None)
+      self.cpu_vaux = kwargs.pop('cpu_vaux', None)
+      self.cpu_temperature = kwargs.pop('cpu_temperature', None)
+      self.fe_temperature = kwargs.pop('fe_temperature', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1496,8 +1496,8 @@ code will be returned with MSG_COMMAND_RESP.
       super( MsgCommandReq, self).__init__()
       self.msg_type = SBP_MSG_COMMAND_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sequence = kwargs.pop('sequence')
-      self.command = kwargs.pop('command')
+      self.sequence = kwargs.pop('sequence', None)
+      self.command = kwargs.pop('command', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1592,8 +1592,8 @@ the command.  A return code of zero indicates success.
       super( MsgCommandResp, self).__init__()
       self.msg_type = SBP_MSG_COMMAND_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sequence = kwargs.pop('sequence')
-      self.code = kwargs.pop('code')
+      self.sequence = kwargs.pop('sequence', None)
+      self.code = kwargs.pop('code', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1690,8 +1690,8 @@ the correct command.
       super( MsgCommandOutput, self).__init__()
       self.msg_type = SBP_MSG_COMMAND_OUTPUT
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sequence = kwargs.pop('sequence')
-      self.line = kwargs.pop('line')
+      self.sequence = kwargs.pop('sequence', None)
+      self.line = kwargs.pop('line', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1857,14 +1857,14 @@ in c.
       super( MsgNetworkStateResp, self).__init__()
       self.msg_type = SBP_MSG_NETWORK_STATE_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.ipv4_address = kwargs.pop('ipv4_address')
-      self.ipv4_mask_size = kwargs.pop('ipv4_mask_size')
-      self.ipv6_address = kwargs.pop('ipv6_address')
-      self.ipv6_mask_size = kwargs.pop('ipv6_mask_size')
-      self.rx_bytes = kwargs.pop('rx_bytes')
-      self.tx_bytes = kwargs.pop('tx_bytes')
-      self.interface_name = kwargs.pop('interface_name')
-      self.flags = kwargs.pop('flags')
+      self.ipv4_address = kwargs.pop('ipv4_address', None)
+      self.ipv4_mask_size = kwargs.pop('ipv4_mask_size', None)
+      self.ipv6_address = kwargs.pop('ipv6_address', None)
+      self.ipv6_mask_size = kwargs.pop('ipv6_mask_size', None)
+      self.rx_bytes = kwargs.pop('rx_bytes', None)
+      self.tx_bytes = kwargs.pop('tx_bytes', None)
+      self.interface_name = kwargs.pop('interface_name', None)
+      self.flags = kwargs.pop('flags', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1954,7 +1954,7 @@ class MsgNetworkBandwidthUsage(SBP):
       super( MsgNetworkBandwidthUsage, self).__init__()
       self.msg_type = SBP_MSG_NETWORK_BANDWIDTH_USAGE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.interfaces = kwargs.pop('interfaces')
+      self.interfaces = kwargs.pop('interfaces', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -2054,9 +2054,9 @@ of the modem and its various parameters.
       super( MsgCellModemStatus, self).__init__()
       self.msg_type = SBP_MSG_CELL_MODEM_STATUS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.signal_strength = kwargs.pop('signal_strength')
-      self.signal_error_rate = kwargs.pop('signal_error_rate')
-      self.reserved = kwargs.pop('reserved')
+      self.signal_strength = kwargs.pop('signal_strength', None)
+      self.signal_error_rate = kwargs.pop('signal_error_rate', None)
+      self.reserved = kwargs.pop('reserved', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -2174,13 +2174,13 @@ class MsgSpecanDep(SBP):
       super( MsgSpecanDep, self).__init__()
       self.msg_type = SBP_MSG_SPECAN_DEP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.channel_tag = kwargs.pop('channel_tag')
-      self.t = kwargs.pop('t')
-      self.freq_ref = kwargs.pop('freq_ref')
-      self.freq_step = kwargs.pop('freq_step')
-      self.amplitude_ref = kwargs.pop('amplitude_ref')
-      self.amplitude_unit = kwargs.pop('amplitude_unit')
-      self.amplitude_value = kwargs.pop('amplitude_value')
+      self.channel_tag = kwargs.pop('channel_tag', None)
+      self.t = kwargs.pop('t', None)
+      self.freq_ref = kwargs.pop('freq_ref', None)
+      self.freq_step = kwargs.pop('freq_step', None)
+      self.amplitude_ref = kwargs.pop('amplitude_ref', None)
+      self.amplitude_unit = kwargs.pop('amplitude_unit', None)
+      self.amplitude_value = kwargs.pop('amplitude_value', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -2299,13 +2299,13 @@ class MsgSpecan(SBP):
       super( MsgSpecan, self).__init__()
       self.msg_type = SBP_MSG_SPECAN
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.channel_tag = kwargs.pop('channel_tag')
-      self.t = kwargs.pop('t')
-      self.freq_ref = kwargs.pop('freq_ref')
-      self.freq_step = kwargs.pop('freq_step')
-      self.amplitude_ref = kwargs.pop('amplitude_ref')
-      self.amplitude_unit = kwargs.pop('amplitude_unit')
-      self.amplitude_value = kwargs.pop('amplitude_value')
+      self.channel_tag = kwargs.pop('channel_tag', None)
+      self.t = kwargs.pop('t', None)
+      self.freq_ref = kwargs.pop('freq_ref', None)
+      self.freq_step = kwargs.pop('freq_step', None)
+      self.amplitude_ref = kwargs.pop('amplitude_ref', None)
+      self.amplitude_unit = kwargs.pop('amplitude_unit', None)
+      self.amplitude_value = kwargs.pop('amplitude_value', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -2404,8 +2404,8 @@ A negative value implies an error for the particular gain stage as reported by t
       super( MsgFrontEndGain, self).__init__()
       self.msg_type = SBP_MSG_FRONT_END_GAIN
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.rf_gain = kwargs.pop('rf_gain')
-      self.if_gain = kwargs.pop('if_gain')
+      self.rf_gain = kwargs.pop('rf_gain', None)
+      self.if_gain = kwargs.pop('if_gain', None)
 
   def __repr__(self):
     return fmt_repr(self)

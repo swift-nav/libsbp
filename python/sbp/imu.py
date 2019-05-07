@@ -97,14 +97,14 @@ time is unknown or invalid.
       super( MsgImuRaw, self).__init__()
       self.msg_type = SBP_MSG_IMU_RAW
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.tow = kwargs.pop('tow')
-      self.tow_f = kwargs.pop('tow_f')
-      self.acc_x = kwargs.pop('acc_x')
-      self.acc_y = kwargs.pop('acc_y')
-      self.acc_z = kwargs.pop('acc_z')
-      self.gyr_x = kwargs.pop('gyr_x')
-      self.gyr_y = kwargs.pop('gyr_y')
-      self.gyr_z = kwargs.pop('gyr_z')
+      self.tow = kwargs.pop('tow', None)
+      self.tow_f = kwargs.pop('tow_f', None)
+      self.acc_x = kwargs.pop('acc_x', None)
+      self.acc_y = kwargs.pop('acc_y', None)
+      self.acc_z = kwargs.pop('acc_z', None)
+      self.gyr_x = kwargs.pop('gyr_x', None)
+      self.gyr_y = kwargs.pop('gyr_y', None)
+      self.gyr_z = kwargs.pop('gyr_z', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -204,9 +204,9 @@ depends on the value of `imu_type`.
       super( MsgImuAux, self).__init__()
       self.msg_type = SBP_MSG_IMU_AUX
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.imu_type = kwargs.pop('imu_type')
-      self.temp = kwargs.pop('temp')
-      self.imu_conf = kwargs.pop('imu_conf')
+      self.imu_type = kwargs.pop('imu_type', None)
+      self.temp = kwargs.pop('temp', None)
+      self.imu_conf = kwargs.pop('imu_conf', None)
 
   def __repr__(self):
     return fmt_repr(self)

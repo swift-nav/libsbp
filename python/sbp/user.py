@@ -65,7 +65,7 @@ maximum length of 255 bytes per message.
       super( MsgUserData, self).__init__()
       self.msg_type = SBP_MSG_USER_DATA
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.contents = kwargs.pop('contents')
+      self.contents = kwargs.pop('contents', None)
 
   def __repr__(self):
     return fmt_repr(self)

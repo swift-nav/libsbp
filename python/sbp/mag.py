@@ -82,11 +82,11 @@ time is unknown or invalid.
       super( MsgMagRaw, self).__init__()
       self.msg_type = SBP_MSG_MAG_RAW
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.tow = kwargs.pop('tow')
-      self.tow_f = kwargs.pop('tow_f')
-      self.mag_x = kwargs.pop('mag_x')
-      self.mag_y = kwargs.pop('mag_y')
-      self.mag_z = kwargs.pop('mag_z')
+      self.tow = kwargs.pop('tow', None)
+      self.tow_f = kwargs.pop('tow_f', None)
+      self.mag_x = kwargs.pop('mag_x', None)
+      self.mag_y = kwargs.pop('mag_y', None)
+      self.mag_z = kwargs.pop('mag_z', None)
 
   def __repr__(self):
     return fmt_repr(self)

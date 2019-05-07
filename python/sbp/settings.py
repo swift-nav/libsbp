@@ -143,7 +143,7 @@ An example string that could be sent to a device is
       super( MsgSettingsWrite, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_WRITE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.setting = kwargs.pop('setting')
+      self.setting = kwargs.pop('setting', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -245,8 +245,8 @@ are omitted. An example string that could be sent from device is
       super( MsgSettingsWriteResp, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_WRITE_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.status = kwargs.pop('status')
-      self.setting = kwargs.pop('setting')
+      self.status = kwargs.pop('status', None)
+      self.setting = kwargs.pop('setting', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -345,7 +345,7 @@ message (msg_id 0x00A5).
       super( MsgSettingsReadReq, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_READ_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.setting = kwargs.pop('setting')
+      self.setting = kwargs.pop('setting', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -444,7 +444,7 @@ example string that could be sent from device is
       super( MsgSettingsReadResp, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_READ_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.setting = kwargs.pop('setting')
+      self.setting = kwargs.pop('setting', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -538,7 +538,7 @@ values. A device will respond to this message with a
       super( MsgSettingsReadByIndexReq, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_READ_BY_INDEX_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.index = kwargs.pop('index')
+      self.index = kwargs.pop('index', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -645,8 +645,8 @@ the device is "simulator\0enabled\0True\0enum:True,False\0"
       super( MsgSettingsReadByIndexResp, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_READ_BY_INDEX_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.index = kwargs.pop('index')
-      self.setting = kwargs.pop('setting')
+      self.index = kwargs.pop('index', None)
+      self.setting = kwargs.pop('setting', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -785,7 +785,7 @@ for this setting to set the initial value.
       super( MsgSettingsRegister, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_REGISTER
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.setting = kwargs.pop('setting')
+      self.setting = kwargs.pop('setting', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -885,8 +885,8 @@ according to the status field.
       super( MsgSettingsRegisterResp, self).__init__()
       self.msg_type = SBP_MSG_SETTINGS_REGISTER_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.status = kwargs.pop('status')
-      self.setting = kwargs.pop('setting')
+      self.status = kwargs.pop('status', None)
+      self.setting = kwargs.pop('setting', None)
 
   def __repr__(self):
     return fmt_repr(self)

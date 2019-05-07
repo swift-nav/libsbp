@@ -74,9 +74,9 @@ or configuration requests.
       super( MsgStartup, self).__init__()
       self.msg_type = SBP_MSG_STARTUP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.cause = kwargs.pop('cause')
-      self.startup_type = kwargs.pop('startup_type')
-      self.reserved = kwargs.pop('reserved')
+      self.cause = kwargs.pop('cause', None)
+      self.startup_type = kwargs.pop('startup_type', None)
+      self.reserved = kwargs.pop('reserved', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -180,10 +180,10 @@ corrections packet.
       super( MsgDgnssStatus, self).__init__()
       self.msg_type = SBP_MSG_DGNSS_STATUS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.flags = kwargs.pop('flags')
-      self.latency = kwargs.pop('latency')
-      self.num_signals = kwargs.pop('num_signals')
-      self.source = kwargs.pop('source')
+      self.flags = kwargs.pop('flags', None)
+      self.latency = kwargs.pop('latency', None)
+      self.num_signals = kwargs.pop('num_signals', None)
+      self.source = kwargs.pop('source', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -282,7 +282,7 @@ the remaining error flags should be inspected.
       super( MsgHeartbeat, self).__init__()
       self.msg_type = SBP_MSG_HEARTBEAT
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.flags = kwargs.pop('flags')
+      self.flags = kwargs.pop('flags', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -373,7 +373,7 @@ and initialization of the inertial navigation system.
       super( MsgInsStatus, self).__init__()
       self.msg_type = SBP_MSG_INS_STATUS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.flags = kwargs.pop('flags')
+      self.flags = kwargs.pop('flags', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -469,8 +469,8 @@ It is intended to be a low rate message for status purposes.
       super( MsgCsacTelemetry, self).__init__()
       self.msg_type = SBP_MSG_CSAC_TELEMETRY
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.id = kwargs.pop('id')
-      self.telemetry = kwargs.pop('telemetry')
+      self.id = kwargs.pop('id', None)
+      self.telemetry = kwargs.pop('telemetry', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -566,8 +566,8 @@ rate than the MSG_CSAC_TELEMETRY.
       super( MsgCsacTelemetryLabels, self).__init__()
       self.msg_type = SBP_MSG_CSAC_TELEMETRY_LABELS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.id = kwargs.pop('id')
-      self.telemetry_labels = kwargs.pop('telemetry_labels')
+      self.id = kwargs.pop('id', None)
+      self.telemetry_labels = kwargs.pop('telemetry_labels', None)
 
   def __repr__(self):
     return fmt_repr(self)

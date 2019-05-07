@@ -77,10 +77,10 @@ parity of the data block and sends only blocks that pass the check.
       super( MsgSbasRaw, self).__init__()
       self.msg_type = SBP_MSG_SBAS_RAW
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sid = kwargs.pop('sid')
-      self.tow = kwargs.pop('tow')
-      self.message_type = kwargs.pop('message_type')
-      self.data = kwargs.pop('data')
+      self.sid = kwargs.pop('sid', None)
+      self.tow = kwargs.pop('tow', None)
+      self.message_type = kwargs.pop('message_type', None)
+      self.data = kwargs.pop('data', None)
 
   def __repr__(self):
     return fmt_repr(self)

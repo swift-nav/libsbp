@@ -87,10 +87,10 @@ starting address
       super( MsgFlashProgram, self).__init__()
       self.msg_type = SBP_MSG_FLASH_PROGRAM
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.target = kwargs.pop('target')
-      self.addr_start = kwargs.pop('addr_start')
-      self.addr_len = kwargs.pop('addr_len')
-      self.data = kwargs.pop('data')
+      self.target = kwargs.pop('target', None)
+      self.addr_start = kwargs.pop('addr_start', None)
+      self.addr_len = kwargs.pop('addr_len', None)
+      self.data = kwargs.pop('data', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -183,7 +183,7 @@ MSG_FLASH_PROGRAM, may return this message on failure.
       super( MsgFlashDone, self).__init__()
       self.msg_type = SBP_MSG_FLASH_DONE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.response = kwargs.pop('response')
+      self.response = kwargs.pop('response', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -289,9 +289,9 @@ starting address
       super( MsgFlashReadReq, self).__init__()
       self.msg_type = SBP_MSG_FLASH_READ_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.target = kwargs.pop('target')
-      self.addr_start = kwargs.pop('addr_start')
-      self.addr_len = kwargs.pop('addr_len')
+      self.target = kwargs.pop('target', None)
+      self.addr_start = kwargs.pop('addr_start', None)
+      self.addr_len = kwargs.pop('addr_len', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -397,9 +397,9 @@ starting address
       super( MsgFlashReadResp, self).__init__()
       self.msg_type = SBP_MSG_FLASH_READ_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.target = kwargs.pop('target')
-      self.addr_start = kwargs.pop('addr_start')
-      self.addr_len = kwargs.pop('addr_len')
+      self.target = kwargs.pop('target', None)
+      self.addr_start = kwargs.pop('addr_start', None)
+      self.addr_len = kwargs.pop('addr_len', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -499,8 +499,8 @@ the M25)
       super( MsgFlashErase, self).__init__()
       self.msg_type = SBP_MSG_FLASH_ERASE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.target = kwargs.pop('target')
-      self.sector_num = kwargs.pop('sector_num')
+      self.target = kwargs.pop('target', None)
+      self.sector_num = kwargs.pop('sector_num', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -591,7 +591,7 @@ memory. The device replies with a MSG_FLASH_DONE message.
       super( MsgStmFlashLockSector, self).__init__()
       self.msg_type = SBP_MSG_STM_FLASH_LOCK_SECTOR
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sector = kwargs.pop('sector')
+      self.sector = kwargs.pop('sector', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -682,7 +682,7 @@ memory. The device replies with a MSG_FLASH_DONE message.
       super( MsgStmFlashUnlockSector, self).__init__()
       self.msg_type = SBP_MSG_STM_FLASH_UNLOCK_SECTOR
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sector = kwargs.pop('sector')
+      self.sector = kwargs.pop('sector', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -823,7 +823,7 @@ ID in the payload..
       super( MsgStmUniqueIdResp, self).__init__()
       self.msg_type = SBP_MSG_STM_UNIQUE_ID_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.stm_id = kwargs.pop('stm_id')
+      self.stm_id = kwargs.pop('stm_id', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -914,7 +914,7 @@ register. The device replies with a MSG_FLASH_DONE message.
       super( MsgM25FlashWriteStatus, self).__init__()
       self.msg_type = SBP_MSG_M25_FLASH_WRITE_STATUS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.status = kwargs.pop('status')
+      self.status = kwargs.pop('status', None)
 
   def __repr__(self):
     return fmt_repr(self)

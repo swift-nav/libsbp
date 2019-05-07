@@ -263,10 +263,10 @@ ratio.
       super( MsgAcqResult, self).__init__()
       self.msg_type = SBP_MSG_ACQ_RESULT
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.cn0 = kwargs.pop('cn0')
-      self.cp = kwargs.pop('cp')
-      self.cf = kwargs.pop('cf')
-      self.sid = kwargs.pop('sid')
+      self.cn0 = kwargs.pop('cn0', None)
+      self.cp = kwargs.pop('cp', None)
+      self.cf = kwargs.pop('cf', None)
+      self.sid = kwargs.pop('sid', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -367,10 +367,10 @@ class MsgAcqResultDepC(SBP):
       super( MsgAcqResultDepC, self).__init__()
       self.msg_type = SBP_MSG_ACQ_RESULT_DEP_C
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.cn0 = kwargs.pop('cn0')
-      self.cp = kwargs.pop('cp')
-      self.cf = kwargs.pop('cf')
-      self.sid = kwargs.pop('sid')
+      self.cn0 = kwargs.pop('cn0', None)
+      self.cp = kwargs.pop('cp', None)
+      self.cf = kwargs.pop('cf', None)
+      self.sid = kwargs.pop('sid', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -473,10 +473,10 @@ be in units of dB Hz in a later revision of this message.
       super( MsgAcqResultDepB, self).__init__()
       self.msg_type = SBP_MSG_ACQ_RESULT_DEP_B
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.snr = kwargs.pop('snr')
-      self.cp = kwargs.pop('cp')
-      self.cf = kwargs.pop('cf')
-      self.sid = kwargs.pop('sid')
+      self.snr = kwargs.pop('snr', None)
+      self.cp = kwargs.pop('cp', None)
+      self.cf = kwargs.pop('cf', None)
+      self.sid = kwargs.pop('sid', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -581,10 +581,10 @@ acquisition was attempted
       super( MsgAcqResultDepA, self).__init__()
       self.msg_type = SBP_MSG_ACQ_RESULT_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.snr = kwargs.pop('snr')
-      self.cp = kwargs.pop('cp')
-      self.cf = kwargs.pop('cf')
-      self.prn = kwargs.pop('prn')
+      self.snr = kwargs.pop('snr', None)
+      self.cp = kwargs.pop('cp', None)
+      self.cf = kwargs.pop('cf', None)
+      self.prn = kwargs.pop('prn', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -675,7 +675,7 @@ The message is used to debug and measure the performance.
       super( MsgAcqSvProfile, self).__init__()
       self.msg_type = SBP_MSG_ACQ_SV_PROFILE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.acq_sv_profile = kwargs.pop('acq_sv_profile')
+      self.acq_sv_profile = kwargs.pop('acq_sv_profile', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -764,7 +764,7 @@ class MsgAcqSvProfileDep(SBP):
       super( MsgAcqSvProfileDep, self).__init__()
       self.msg_type = SBP_MSG_ACQ_SV_PROFILE_DEP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.acq_sv_profile = kwargs.pop('acq_sv_profile')
+      self.acq_sv_profile = kwargs.pop('acq_sv_profile', None)
 
   def __repr__(self):
     return fmt_repr(self)

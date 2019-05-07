@@ -84,11 +84,11 @@ from -500000 to 500000)
       super( MsgExtEvent, self).__init__()
       self.msg_type = SBP_MSG_EXT_EVENT
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.wn = kwargs.pop('wn')
-      self.tow = kwargs.pop('tow')
-      self.ns_residual = kwargs.pop('ns_residual')
-      self.flags = kwargs.pop('flags')
-      self.pin = kwargs.pop('pin')
+      self.wn = kwargs.pop('wn', None)
+      self.tow = kwargs.pop('tow', None)
+      self.ns_residual = kwargs.pop('ns_residual', None)
+      self.flags = kwargs.pop('flags', None)
+      self.pin = kwargs.pop('pin', None)
 
   def __repr__(self):
     return fmt_repr(self)

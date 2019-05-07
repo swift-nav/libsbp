@@ -425,27 +425,27 @@ signal is in continuous track.
       super( MsgTrackingStateDetailedDepA, self).__init__()
       self.msg_type = SBP_MSG_TRACKING_STATE_DETAILED_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.recv_time = kwargs.pop('recv_time')
-      self.tot = kwargs.pop('tot')
-      self.P = kwargs.pop('P')
-      self.P_std = kwargs.pop('P_std')
-      self.L = kwargs.pop('L')
-      self.cn0 = kwargs.pop('cn0')
-      self.lock = kwargs.pop('lock')
-      self.sid = kwargs.pop('sid')
-      self.doppler = kwargs.pop('doppler')
-      self.doppler_std = kwargs.pop('doppler_std')
-      self.uptime = kwargs.pop('uptime')
-      self.clock_offset = kwargs.pop('clock_offset')
-      self.clock_drift = kwargs.pop('clock_drift')
-      self.corr_spacing = kwargs.pop('corr_spacing')
-      self.acceleration = kwargs.pop('acceleration')
-      self.sync_flags = kwargs.pop('sync_flags')
-      self.tow_flags = kwargs.pop('tow_flags')
-      self.track_flags = kwargs.pop('track_flags')
-      self.nav_flags = kwargs.pop('nav_flags')
-      self.pset_flags = kwargs.pop('pset_flags')
-      self.misc_flags = kwargs.pop('misc_flags')
+      self.recv_time = kwargs.pop('recv_time', None)
+      self.tot = kwargs.pop('tot', None)
+      self.P = kwargs.pop('P', None)
+      self.P_std = kwargs.pop('P_std', None)
+      self.L = kwargs.pop('L', None)
+      self.cn0 = kwargs.pop('cn0', None)
+      self.lock = kwargs.pop('lock', None)
+      self.sid = kwargs.pop('sid', None)
+      self.doppler = kwargs.pop('doppler', None)
+      self.doppler_std = kwargs.pop('doppler_std', None)
+      self.uptime = kwargs.pop('uptime', None)
+      self.clock_offset = kwargs.pop('clock_offset', None)
+      self.clock_drift = kwargs.pop('clock_drift', None)
+      self.corr_spacing = kwargs.pop('corr_spacing', None)
+      self.acceleration = kwargs.pop('acceleration', None)
+      self.sync_flags = kwargs.pop('sync_flags', None)
+      self.tow_flags = kwargs.pop('tow_flags', None)
+      self.track_flags = kwargs.pop('track_flags', None)
+      self.nav_flags = kwargs.pop('nav_flags', None)
+      self.pset_flags = kwargs.pop('pset_flags', None)
+      self.misc_flags = kwargs.pop('misc_flags', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -629,27 +629,27 @@ signal is in continuous track.
       super( MsgTrackingStateDetailedDep, self).__init__()
       self.msg_type = SBP_MSG_TRACKING_STATE_DETAILED_DEP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.recv_time = kwargs.pop('recv_time')
-      self.tot = kwargs.pop('tot')
-      self.P = kwargs.pop('P')
-      self.P_std = kwargs.pop('P_std')
-      self.L = kwargs.pop('L')
-      self.cn0 = kwargs.pop('cn0')
-      self.lock = kwargs.pop('lock')
-      self.sid = kwargs.pop('sid')
-      self.doppler = kwargs.pop('doppler')
-      self.doppler_std = kwargs.pop('doppler_std')
-      self.uptime = kwargs.pop('uptime')
-      self.clock_offset = kwargs.pop('clock_offset')
-      self.clock_drift = kwargs.pop('clock_drift')
-      self.corr_spacing = kwargs.pop('corr_spacing')
-      self.acceleration = kwargs.pop('acceleration')
-      self.sync_flags = kwargs.pop('sync_flags')
-      self.tow_flags = kwargs.pop('tow_flags')
-      self.track_flags = kwargs.pop('track_flags')
-      self.nav_flags = kwargs.pop('nav_flags')
-      self.pset_flags = kwargs.pop('pset_flags')
-      self.misc_flags = kwargs.pop('misc_flags')
+      self.recv_time = kwargs.pop('recv_time', None)
+      self.tot = kwargs.pop('tot', None)
+      self.P = kwargs.pop('P', None)
+      self.P_std = kwargs.pop('P_std', None)
+      self.L = kwargs.pop('L', None)
+      self.cn0 = kwargs.pop('cn0', None)
+      self.lock = kwargs.pop('lock', None)
+      self.sid = kwargs.pop('sid', None)
+      self.doppler = kwargs.pop('doppler', None)
+      self.doppler_std = kwargs.pop('doppler_std', None)
+      self.uptime = kwargs.pop('uptime', None)
+      self.clock_offset = kwargs.pop('clock_offset', None)
+      self.clock_drift = kwargs.pop('clock_drift', None)
+      self.corr_spacing = kwargs.pop('corr_spacing', None)
+      self.acceleration = kwargs.pop('acceleration', None)
+      self.sync_flags = kwargs.pop('sync_flags', None)
+      self.tow_flags = kwargs.pop('tow_flags', None)
+      self.track_flags = kwargs.pop('track_flags', None)
+      self.nav_flags = kwargs.pop('nav_flags', None)
+      self.pset_flags = kwargs.pop('pset_flags', None)
+      self.misc_flags = kwargs.pop('misc_flags', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -741,7 +741,7 @@ measurements for all tracked satellites.
       super( MsgTrackingState, self).__init__()
       self.msg_type = SBP_MSG_TRACKING_STATE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.states = kwargs.pop('states')
+      self.states = kwargs.pop('states', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -833,7 +833,7 @@ measurements for all tracked satellites.
       super( MsgMeasurementState, self).__init__()
       self.msg_type = SBP_MSG_MEASUREMENT_STATE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.states = kwargs.pop('states')
+      self.states = kwargs.pop('states', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -932,9 +932,9 @@ update interval.
       super( MsgTrackingIq, self).__init__()
       self.msg_type = SBP_MSG_TRACKING_IQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.channel = kwargs.pop('channel')
-      self.sid = kwargs.pop('sid')
-      self.corrs = kwargs.pop('corrs')
+      self.channel = kwargs.pop('channel', None)
+      self.sid = kwargs.pop('sid', None)
+      self.corrs = kwargs.pop('corrs', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1033,9 +1033,9 @@ update interval.
       super( MsgTrackingIqDepB, self).__init__()
       self.msg_type = SBP_MSG_TRACKING_IQ_DEP_B
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.channel = kwargs.pop('channel')
-      self.sid = kwargs.pop('sid')
-      self.corrs = kwargs.pop('corrs')
+      self.channel = kwargs.pop('channel', None)
+      self.sid = kwargs.pop('sid', None)
+      self.corrs = kwargs.pop('corrs', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1132,9 +1132,9 @@ class MsgTrackingIqDepA(SBP):
       super( MsgTrackingIqDepA, self).__init__()
       self.msg_type = SBP_MSG_TRACKING_IQ_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.channel = kwargs.pop('channel')
-      self.sid = kwargs.pop('sid')
-      self.corrs = kwargs.pop('corrs')
+      self.channel = kwargs.pop('channel', None)
+      self.sid = kwargs.pop('sid', None)
+      self.corrs = kwargs.pop('corrs', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1223,7 +1223,7 @@ class MsgTrackingStateDepA(SBP):
       super( MsgTrackingStateDepA, self).__init__()
       self.msg_type = SBP_MSG_TRACKING_STATE_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.states = kwargs.pop('states')
+      self.states = kwargs.pop('states', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1312,7 +1312,7 @@ class MsgTrackingStateDepB(SBP):
       super( MsgTrackingStateDepB, self).__init__()
       self.msg_type = SBP_MSG_TRACKING_STATE_DEP_B
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.states = kwargs.pop('states')
+      self.states = kwargs.pop('states', None)
 
   def __repr__(self):
     return fmt_repr(self)

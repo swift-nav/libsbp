@@ -123,8 +123,8 @@ protocol version number.
       super( MsgBootloaderHandshakeResp, self).__init__()
       self.msg_type = SBP_MSG_BOOTLOADER_HANDSHAKE_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.flags = kwargs.pop('flags')
-      self.version = kwargs.pop('version')
+      self.flags = kwargs.pop('flags', None)
+      self.version = kwargs.pop('version', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -214,7 +214,7 @@ class MsgBootloaderJumpToApp(SBP):
       super( MsgBootloaderJumpToApp, self).__init__()
       self.msg_type = SBP_MSG_BOOTLOADER_JUMP_TO_APP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.jump = kwargs.pop('jump')
+      self.jump = kwargs.pop('jump', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -361,7 +361,7 @@ on the right.
       super( MsgNapDeviceDnaResp, self).__init__()
       self.msg_type = SBP_MSG_NAP_DEVICE_DNA_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.dna = kwargs.pop('dna')
+      self.dna = kwargs.pop('dna', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -450,7 +450,7 @@ class MsgBootloaderHandshakeDepA(SBP):
       super( MsgBootloaderHandshakeDepA, self).__init__()
       self.msg_type = SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.handshake = kwargs.pop('handshake')
+      self.handshake = kwargs.pop('handshake', None)
 
   def __repr__(self):
     return fmt_repr(self)

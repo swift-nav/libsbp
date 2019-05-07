@@ -79,9 +79,9 @@ for the exact source of this timestamp.
       super( MsgOdometry, self).__init__()
       self.msg_type = SBP_MSG_ODOMETRY
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.tow = kwargs.pop('tow')
-      self.velocity = kwargs.pop('velocity')
-      self.flags = kwargs.pop('flags')
+      self.tow = kwargs.pop('tow', None)
+      self.velocity = kwargs.pop('velocity', None)
+      self.flags = kwargs.pop('flags', None)
 
   def __repr__(self):
     return fmt_repr(self)

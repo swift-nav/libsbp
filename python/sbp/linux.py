@@ -81,11 +81,11 @@ consumers of CPU on the system.
       super( MsgLinuxCpuState, self).__init__()
       self.msg_type = SBP_MSG_LINUX_CPU_STATE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.index = kwargs.pop('index')
-      self.pid = kwargs.pop('pid')
-      self.pcpu = kwargs.pop('pcpu')
-      self.tname = kwargs.pop('tname')
-      self.cmdline = kwargs.pop('cmdline')
+      self.index = kwargs.pop('index', None)
+      self.pid = kwargs.pop('pid', None)
+      self.pcpu = kwargs.pop('pcpu', None)
+      self.tname = kwargs.pop('tname', None)
+      self.cmdline = kwargs.pop('cmdline', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -192,11 +192,11 @@ consumers of memory on the system.
       super( MsgLinuxMemState, self).__init__()
       self.msg_type = SBP_MSG_LINUX_MEM_STATE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.index = kwargs.pop('index')
-      self.pid = kwargs.pop('pid')
-      self.pmem = kwargs.pop('pmem')
-      self.tname = kwargs.pop('tname')
-      self.cmdline = kwargs.pop('cmdline')
+      self.index = kwargs.pop('index', None)
+      self.pid = kwargs.pop('pid', None)
+      self.pmem = kwargs.pop('pmem', None)
+      self.tname = kwargs.pop('tname', None)
+      self.cmdline = kwargs.pop('cmdline', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -306,12 +306,12 @@ class MsgLinuxSysState(SBP):
       super( MsgLinuxSysState, self).__init__()
       self.msg_type = SBP_MSG_LINUX_SYS_STATE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.mem_total = kwargs.pop('mem_total')
-      self.pcpu = kwargs.pop('pcpu')
-      self.pmem = kwargs.pop('pmem')
-      self.procs_starting = kwargs.pop('procs_starting')
-      self.procs_stopping = kwargs.pop('procs_stopping')
-      self.pid_count = kwargs.pop('pid_count')
+      self.mem_total = kwargs.pop('mem_total', None)
+      self.pcpu = kwargs.pop('pcpu', None)
+      self.pmem = kwargs.pop('pmem', None)
+      self.procs_starting = kwargs.pop('procs_starting', None)
+      self.procs_stopping = kwargs.pop('procs_stopping', None)
+      self.pid_count = kwargs.pop('pid_count', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -429,12 +429,12 @@ class MsgLinuxProcessSocketCounts(SBP):
       super( MsgLinuxProcessSocketCounts, self).__init__()
       self.msg_type = SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.index = kwargs.pop('index')
-      self.pid = kwargs.pop('pid')
-      self.socket_count = kwargs.pop('socket_count')
-      self.socket_types = kwargs.pop('socket_types')
-      self.socket_states = kwargs.pop('socket_states')
-      self.cmdline = kwargs.pop('cmdline')
+      self.index = kwargs.pop('index', None)
+      self.pid = kwargs.pop('pid', None)
+      self.socket_count = kwargs.pop('socket_count', None)
+      self.socket_types = kwargs.pop('socket_types', None)
+      self.socket_states = kwargs.pop('socket_states', None)
+      self.cmdline = kwargs.pop('cmdline', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -562,14 +562,14 @@ of the connection.
       super( MsgLinuxProcessSocketQueues, self).__init__()
       self.msg_type = SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.index = kwargs.pop('index')
-      self.pid = kwargs.pop('pid')
-      self.recv_queued = kwargs.pop('recv_queued')
-      self.send_queued = kwargs.pop('send_queued')
-      self.socket_types = kwargs.pop('socket_types')
-      self.socket_states = kwargs.pop('socket_states')
-      self.address_of_largest = kwargs.pop('address_of_largest')
-      self.cmdline = kwargs.pop('cmdline')
+      self.index = kwargs.pop('index', None)
+      self.pid = kwargs.pop('pid', None)
+      self.recv_queued = kwargs.pop('recv_queued', None)
+      self.send_queued = kwargs.pop('send_queued', None)
+      self.socket_types = kwargs.pop('socket_types', None)
+      self.socket_states = kwargs.pop('socket_states', None)
+      self.address_of_largest = kwargs.pop('address_of_largest', None)
+      self.cmdline = kwargs.pop('cmdline', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -675,10 +675,10 @@ the first entry corresponds to the first enabled bit in `types_reported`.
       super( MsgLinuxSocketUsage, self).__init__()
       self.msg_type = SBP_MSG_LINUX_SOCKET_USAGE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.avg_queue_depth = kwargs.pop('avg_queue_depth')
-      self.max_queue_depth = kwargs.pop('max_queue_depth')
-      self.socket_state_counts = kwargs.pop('socket_state_counts')
-      self.socket_type_counts = kwargs.pop('socket_type_counts')
+      self.avg_queue_depth = kwargs.pop('avg_queue_depth', None)
+      self.max_queue_depth = kwargs.pop('max_queue_depth', None)
+      self.socket_state_counts = kwargs.pop('socket_state_counts', None)
+      self.socket_type_counts = kwargs.pop('socket_type_counts', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -780,10 +780,10 @@ class MsgLinuxProcessFdCount(SBP):
       super( MsgLinuxProcessFdCount, self).__init__()
       self.msg_type = SBP_MSG_LINUX_PROCESS_FD_COUNT
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.index = kwargs.pop('index')
-      self.pid = kwargs.pop('pid')
-      self.fd_count = kwargs.pop('fd_count')
-      self.cmdline = kwargs.pop('cmdline')
+      self.index = kwargs.pop('index', None)
+      self.pid = kwargs.pop('pid', None)
+      self.fd_count = kwargs.pop('fd_count', None)
+      self.cmdline = kwargs.pop('cmdline', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -881,8 +881,8 @@ of the list being 2 NULL terminators in a row.
       super( MsgLinuxProcessFdSummary, self).__init__()
       self.msg_type = SBP_MSG_LINUX_PROCESS_FD_SUMMARY
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sys_fd_count = kwargs.pop('sys_fd_count')
-      self.most_opened = kwargs.pop('most_opened')
+      self.sys_fd_count = kwargs.pop('sys_fd_count', None)
+      self.most_opened = kwargs.pop('most_opened', None)
 
   def __repr__(self):
     return fmt_repr(self)

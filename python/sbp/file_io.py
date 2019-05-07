@@ -90,10 +90,10 @@ to this message when it is received from sender ID 0x42.
       super( MsgFileioReadReq, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_READ_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sequence = kwargs.pop('sequence')
-      self.offset = kwargs.pop('offset')
-      self.chunk_size = kwargs.pop('chunk_size')
-      self.filename = kwargs.pop('filename')
+      self.sequence = kwargs.pop('sequence', None)
+      self.offset = kwargs.pop('offset', None)
+      self.chunk_size = kwargs.pop('chunk_size', None)
+      self.filename = kwargs.pop('filename', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -191,8 +191,8 @@ preserved from the request.
       super( MsgFileioReadResp, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_READ_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sequence = kwargs.pop('sequence')
-      self.contents = kwargs.pop('contents')
+      self.sequence = kwargs.pop('sequence', None)
+      self.contents = kwargs.pop('contents', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -300,9 +300,9 @@ from sender ID 0x42.
       super( MsgFileioReadDirReq, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_READ_DIR_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sequence = kwargs.pop('sequence')
-      self.offset = kwargs.pop('offset')
-      self.dirname = kwargs.pop('dirname')
+      self.sequence = kwargs.pop('sequence', None)
+      self.offset = kwargs.pop('offset', None)
+      self.dirname = kwargs.pop('dirname', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -401,8 +401,8 @@ the response is preserved from the request.
       super( MsgFileioReadDirResp, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_READ_DIR_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sequence = kwargs.pop('sequence')
-      self.contents = kwargs.pop('contents')
+      self.sequence = kwargs.pop('sequence', None)
+      self.contents = kwargs.pop('contents', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -495,7 +495,7 @@ process this message when it is received from sender ID 0x42.
       super( MsgFileioRemove, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_REMOVE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.filename = kwargs.pop('filename')
+      self.filename = kwargs.pop('filename', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -604,10 +604,10 @@ only  process this message when it is received from sender ID
       super( MsgFileioWriteReq, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_WRITE_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sequence = kwargs.pop('sequence')
-      self.offset = kwargs.pop('offset')
-      self.filename = kwargs.pop('filename')
-      self.data = kwargs.pop('data')
+      self.sequence = kwargs.pop('sequence', None)
+      self.offset = kwargs.pop('offset', None)
+      self.filename = kwargs.pop('filename', None)
+      self.data = kwargs.pop('data', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -701,7 +701,7 @@ request.
       super( MsgFileioWriteResp, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_WRITE_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sequence = kwargs.pop('sequence')
+      self.sequence = kwargs.pop('sequence', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -794,7 +794,7 @@ that can be in-flight during read or write operations.
       super( MsgFileioConfigReq, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_CONFIG_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sequence = kwargs.pop('sequence')
+      self.sequence = kwargs.pop('sequence', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -899,10 +899,10 @@ that can be in-flight during read or write operations.
       super( MsgFileioConfigResp, self).__init__()
       self.msg_type = SBP_MSG_FILEIO_CONFIG_RESP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.sequence = kwargs.pop('sequence')
-      self.window_size = kwargs.pop('window_size')
-      self.batch_size = kwargs.pop('batch_size')
-      self.fileio_version = kwargs.pop('fileio_version')
+      self.sequence = kwargs.pop('sequence', None)
+      self.window_size = kwargs.pop('window_size', None)
+      self.batch_size = kwargs.pop('batch_size', None)
+      self.fileio_version = kwargs.pop('fileio_version', None)
 
   def __repr__(self):
     return fmt_repr(self)

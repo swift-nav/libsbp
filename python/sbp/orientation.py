@@ -78,10 +78,10 @@ that time-matched RTK mode is used when the base station is moving.
       super( MsgBaselineHeading, self).__init__()
       self.msg_type = SBP_MSG_BASELINE_HEADING
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.tow = kwargs.pop('tow')
-      self.heading = kwargs.pop('heading')
-      self.n_sats = kwargs.pop('n_sats')
-      self.flags = kwargs.pop('flags')
+      self.tow = kwargs.pop('tow', None)
+      self.heading = kwargs.pop('heading', None)
+      self.n_sats = kwargs.pop('n_sats', None)
+      self.flags = kwargs.pop('flags', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -211,16 +211,16 @@ or Duro.
       super( MsgOrientQuat, self).__init__()
       self.msg_type = SBP_MSG_ORIENT_QUAT
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.tow = kwargs.pop('tow')
-      self.w = kwargs.pop('w')
-      self.x = kwargs.pop('x')
-      self.y = kwargs.pop('y')
-      self.z = kwargs.pop('z')
-      self.w_accuracy = kwargs.pop('w_accuracy')
-      self.x_accuracy = kwargs.pop('x_accuracy')
-      self.y_accuracy = kwargs.pop('y_accuracy')
-      self.z_accuracy = kwargs.pop('z_accuracy')
-      self.flags = kwargs.pop('flags')
+      self.tow = kwargs.pop('tow', None)
+      self.w = kwargs.pop('w', None)
+      self.x = kwargs.pop('x', None)
+      self.y = kwargs.pop('y', None)
+      self.z = kwargs.pop('z', None)
+      self.w_accuracy = kwargs.pop('w_accuracy', None)
+      self.x_accuracy = kwargs.pop('x_accuracy', None)
+      self.y_accuracy = kwargs.pop('y_accuracy', None)
+      self.z_accuracy = kwargs.pop('z_accuracy', None)
+      self.flags = kwargs.pop('flags', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -342,14 +342,14 @@ INS versions of Swift Products and is not produced by Piksi Multi or Duro.
       super( MsgOrientEuler, self).__init__()
       self.msg_type = SBP_MSG_ORIENT_EULER
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.tow = kwargs.pop('tow')
-      self.roll = kwargs.pop('roll')
-      self.pitch = kwargs.pop('pitch')
-      self.yaw = kwargs.pop('yaw')
-      self.roll_accuracy = kwargs.pop('roll_accuracy')
-      self.pitch_accuracy = kwargs.pop('pitch_accuracy')
-      self.yaw_accuracy = kwargs.pop('yaw_accuracy')
-      self.flags = kwargs.pop('flags')
+      self.tow = kwargs.pop('tow', None)
+      self.roll = kwargs.pop('roll', None)
+      self.pitch = kwargs.pop('pitch', None)
+      self.yaw = kwargs.pop('yaw', None)
+      self.roll_accuracy = kwargs.pop('roll_accuracy', None)
+      self.pitch_accuracy = kwargs.pop('pitch_accuracy', None)
+      self.yaw_accuracy = kwargs.pop('yaw_accuracy', None)
+      self.flags = kwargs.pop('flags', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -463,11 +463,11 @@ and is not produced by Piksi Multi or Duro.
       super( MsgAngularRate, self).__init__()
       self.msg_type = SBP_MSG_ANGULAR_RATE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.tow = kwargs.pop('tow')
-      self.x = kwargs.pop('x')
-      self.y = kwargs.pop('y')
-      self.z = kwargs.pop('z')
-      self.flags = kwargs.pop('flags')
+      self.tow = kwargs.pop('tow', None)
+      self.x = kwargs.pop('x', None)
+      self.y = kwargs.pop('y', None)
+      self.z = kwargs.pop('z', None)
+      self.flags = kwargs.pop('flags', None)
 
   def __repr__(self):
     return fmt_repr(self)

@@ -70,8 +70,8 @@ ERROR, WARNING, DEBUG, INFO logging levels.
       super( MsgLog, self).__init__()
       self.msg_type = SBP_MSG_LOG
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.level = kwargs.pop('level')
-      self.text = kwargs.pop('text')
+      self.level = kwargs.pop('level', None)
+      self.text = kwargs.pop('text', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -175,9 +175,9 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
       super( MsgFwd, self).__init__()
       self.msg_type = SBP_MSG_FWD
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.source = kwargs.pop('source')
-      self.protocol = kwargs.pop('protocol')
-      self.fwd_payload = kwargs.pop('fwd_payload')
+      self.source = kwargs.pop('source', None)
+      self.protocol = kwargs.pop('protocol', None)
+      self.fwd_payload = kwargs.pop('fwd_payload', None)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -266,7 +266,7 @@ class MsgPrintDep(SBP):
       super( MsgPrintDep, self).__init__()
       self.msg_type = SBP_MSG_PRINT_DEP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.text = kwargs.pop('text')
+      self.text = kwargs.pop('text', None)
 
   def __repr__(self):
     return fmt_repr(self)

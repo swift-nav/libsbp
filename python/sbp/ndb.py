@@ -105,14 +105,14 @@ of other data_source.
       super( MsgNdbEvent, self).__init__()
       self.msg_type = SBP_MSG_NDB_EVENT
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.recv_time = kwargs.pop('recv_time')
-      self.event = kwargs.pop('event')
-      self.object_type = kwargs.pop('object_type')
-      self.result = kwargs.pop('result')
-      self.data_source = kwargs.pop('data_source')
-      self.object_sid = kwargs.pop('object_sid')
-      self.src_sid = kwargs.pop('src_sid')
-      self.original_sender = kwargs.pop('original_sender')
+      self.recv_time = kwargs.pop('recv_time', None)
+      self.event = kwargs.pop('event', None)
+      self.object_type = kwargs.pop('object_type', None)
+      self.result = kwargs.pop('result', None)
+      self.data_source = kwargs.pop('data_source', None)
+      self.object_sid = kwargs.pop('object_sid', None)
+      self.src_sid = kwargs.pop('src_sid', None)
+      self.original_sender = kwargs.pop('original_sender', None)
 
   def __repr__(self):
     return fmt_repr(self)
