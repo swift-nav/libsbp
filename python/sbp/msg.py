@@ -223,6 +223,13 @@ class SBP(object):
     fmt = "<SBP (preamble=0x%X, msg_type=0x%X, sender=%s, length=%d, payload=%s, crc=0x%X)>"
     return fmt % p
 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    pass
+
   def to_binary(self):
     ret = struct.pack("<BHHB", SBP_PREAMBLE,
                       self.msg_type, self.sender, len(self.payload))
