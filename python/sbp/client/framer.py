@@ -188,7 +188,7 @@ class Framer(six.Iterator):
             if self._greedy:
                 to_read = len(self._rx_buf) - self._rx_buf_unprocessed
             else:
-                to_read = self._rx_buf_unprocessed - size
+                to_read = size - self._rx_buf_unprocessed
 
             # Bytes are read into the tail of the buffer. If the index is too
             # far to fit the new data, buffer needs to be rolled.
