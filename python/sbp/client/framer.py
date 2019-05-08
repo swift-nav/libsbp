@@ -162,7 +162,6 @@ class Framer(six.Iterator):
                     raise StopIteration
                 data += d
 
-            #self._rx_buf = np.roll(self._rx_buf, -1 * self._rx_buf_idx)
             self._rx_buf = self._shift(self._rx_buf, -self._rx_buf_idx)
             self._rx_buf_idx = 0
             l = len(data)
@@ -227,7 +226,11 @@ class Framer(six.Iterator):
 
         if preamble != _SBP_PREAMBLE:
             if self._verbose:
-                print("Preamble failure")
+                if (sys.version_info > (3, 0)):
+                    print("Host Side Unhandled byte: 0x%02x" % preamble)
+                else:
+                    # In Python 2, memoryview index is presented as 'str'
+                    print("Host Side Unhandled byte: 0x%02x" % ord(preamble))
             return None
 
         # hdr
