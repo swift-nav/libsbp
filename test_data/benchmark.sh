@@ -22,7 +22,7 @@ threshold=2.0
 perf_diff=$(echo "$time_py / $time_hs" | bc -l)
 
 if (( $(echo "$perf_diff > $threshold" | bc -l) )); then
-  printf "\e[31mOK\e[0m: Python was %.2f times slower than Haskell. Threshold is < %.2f.\n" $perf_diff $threshold
+  printf "\e[31mFAIL\e[0m: Python was %.2f times slower than Haskell. Threshold is < %.2f.\n" $perf_diff $threshold
   exit 1
 fi
 
