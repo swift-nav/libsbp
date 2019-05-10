@@ -171,12 +171,12 @@ def judicious_round(f):
     # NOTE: Can't this be done already on libsbp side?
     return float(round(dec.Decimal(float(f)), abs(d.as_tuple().exponent)))
 
-
+@nb.jit
 def get_string(buf, offset, length):
     buf, offset, length = _get_string(buf, offset, length, True)
     return buf.tobytes().decode('ascii'), offset, length
 
-
+@nb.jit
 def get_fixed_string(size):
     def func(buf, offset_in, length):
         if length < size:
@@ -185,7 +185,7 @@ def get_fixed_string(size):
         return buf.tobytes().decode('ascii'), offset_in + size, length
     return func
 
-
+@nb.jit
 def get_setting(buf, offset, length):
     buf, offset, length = _get_string(buf, offset, length, False)
     return buf.tobytes().decode('ascii'), offset, length
@@ -330,7 +330,8 @@ class SBP(object):
         raise NotImplementedError(self.msg_type)
 
     def unpack(self, payload, offset, length):
-        res, offset, length = self._unpack_members(payload, offset, length)
+        res, offset, length = self.parse_members(payload, offset, length)
+        #res, offset, length = self._unpack_members(payload, offset, length)
 
         res['preamble'] = self.preamble
         res['msg_type'] = self.msg_type

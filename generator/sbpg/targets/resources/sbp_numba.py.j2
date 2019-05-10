@@ -17,6 +17,7 @@
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -63,35 +64,64 @@ class ((( m.identifier )))(object):
   __slots__ = []
   ((*- endif *))
 
+
   ((*- if m.fields *))
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    ((*- for f in m.fields *))
-    (__(((f.identifier))), offset, length) = ((( f | numba_py )))(buf, offset, length)
-    ret['(((f.identifier)))'] = ((( f | numba_type )))
-    ((*- endfor *))
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    ((*- for f in m.fields *))
-    self.(((f.identifier))) = res['(((f.identifier)))']
-    ((*- endfor *))
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+        ((*- for f in m.fields *))
+          ((( f | numpy_type )))
+        ((*- endfor *))
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+        ((*- for f in m.fields *))
+          ((( f | numpy_type )))
+        ((*- endfor *))
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = ((( m | numba_py )))
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
     ((*- for f in m.fields *))
-    # (((f.identifier))): (((f.type_id))) ((*- if f.options['fill'] *)) of (((f.options['fill'].value))) ((*- endif *))
-    ret += (((f | numba_size)))
+      ((( f | numpy_unpack ))),
     ((*- endfor *))
-    return ret
+    }
+    return d
+
   ((* else *))
   def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def parse_members(self, buf, offset, length):
     return {}, offset, length
 
   def _payload_size(self):
