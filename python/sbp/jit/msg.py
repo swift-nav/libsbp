@@ -23,6 +23,7 @@ from sbp.msg import crc16jit
 from sbp.msg import SENDER_ID as _SENDER_ID
 from sbp.msg import SBP_PREAMBLE as _SBP_PREAMBLE
 
+from sbp.jit import parse_float
 from sbp.jit import parse_float_c
 
 
